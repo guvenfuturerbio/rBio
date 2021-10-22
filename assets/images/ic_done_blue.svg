@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>esclip</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#4B66EA" offset="0%"></stop>
+            <stop stop-color="#82A0F6" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-2" points="12.25 0.5 0 0.5 0 19 24.5 19 24.5 0.5"></polygon>
+    </defs>
+    <g id="Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="27_Call-Doctor" transform="translate(-200.000000, -634.000000)">
+            <g id="esclip" transform="translate(200.000000, 634.000000)">
+                <rect id="Rectangle" fill="#4B66EA" x="7.5" y="15" width="45" height="45" rx="22.5"></rect>
+                <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="60" height="60" rx="30"></rect>
+                <g id="check-symbol" transform="translate(19.000000, 22.000000)">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <g id="Clip-2"></g>
+                    <polygon id="Fill-1" fill="#FFFFFF" mask="url(#mask-3)" points="7.79656201 15.1356936 1.95088081 9.33837112 0 11.2662095 7.79656201 19 24.5 2.43474205 22.5560804 0.5"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

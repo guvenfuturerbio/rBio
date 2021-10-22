@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>baget</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FF6F6F" offset="0%"></stop>
+            <stop stop-color="#FF2323" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="24_Maps-Doctors" transform="translate(-34.000000, -560.000000)">
+            <g id="doctor" transform="translate(24.000000, 548.000000)">
+                <g id="baget" transform="translate(10.000000, 12.000000)">
+                    <path d="M6.5,8.75 C6.5,6.67893219 8.18314639,5 10.25,5 L10.25,5 C12.3210678,5 14,6.68314639 14,8.75 L14,8.75 C14,10.8210678 12.3168536,12.5 10.25,12.5 L10.25,12.5 C8.17893219,12.5 6.5,10.8168536 6.5,8.75 L6.5,8.75 Z" id="shadow" fill="#4B66EA"></path>
+                    <circle id="Oval-2" fill="url(#linearGradient-1)" cx="7.5" cy="7.5" r="7.5"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

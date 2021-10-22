@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#c84954"/>
+      <stop offset="0.999" stop-color="#e18a93"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_9" data-name="Group 9" transform="translate(0 0)">
+    <circle id="Ellipse_1" data-name="Ellipse 1" cx="60" cy="60" r="60" transform="translate(0 0)" fill="url(#linear-gradient)"/>
+    <g id="Group_8" data-name="Group 8">
+      <g id="Group_7" data-name="Group 7">
+        <g id="Group_1" data-name="Group 1">
+          <path id="Path_1" data-name="Path 1" d="M59,48.468H88.889V45.1H60.76V40.549l.149-.081c5.878-3.047,8.855-7.225,8.855-12.416,0-8.637-7.418-13.985-14.293-13.985s-14.3,5.348-14.3,13.985c0,5.535,3.518,10.223,9.648,12.861l.167.072.064,4.116h-20.8v3.367h22.58a1.8,1.8,0,0,0,1.258-.508,1.607,1.607,0,0,0,.5-1.2l-.108-6.939a1.7,1.7,0,0,0-1.135-1.548c-3.234-1.178-8.662-4.071-8.662-10.224a10.787,10.787,0,0,1,21.572,0c0,4.138-2.554,7.3-8.041,9.975a1.672,1.672,0,0,0-.968,1.493v7.262a1.63,1.63,0,0,0,.51,1.186,1.811,1.811,0,0,0,1.242.5" fill="#fff"/>
+        </g>
+        <g id="Group_2" data-name="Group 2">
+          <path id="Path_2" data-name="Path 2" d="M76.768,81.3h12.12V78.076H78.476l.031-1.884.159-.071c3.805-1.77,5.9-4.89,5.9-8.782a9.949,9.949,0,0,0-19.892,0,10.151,10.151,0,0,0,5.381,8.718l.144.077v1.942H62.38V81.3h9.5a1.7,1.7,0,0,0,1.191-.478,1.565,1.565,0,0,0,.49-1.138V75.16a1.591,1.591,0,0,0-.921-1.439c-3.225-1.562-4.6-3.651-4.6-6.382a6.579,6.579,0,0,1,13.157,0c0,4.314-3.1,5.591-4.95,6.27a1.615,1.615,0,0,0-1.08,1.485l-.078,4.563a1.563,1.563,0,0,0,.482,1.151,1.714,1.714,0,0,0,1.2.493" fill="#fff"/>
+        </g>
+        <g id="Group_3" data-name="Group 3">
+          <path id="Path_3" data-name="Path 3" d="M53.892,51.563a1.785,1.785,0,0,0-1.412-.683H30.251v3.366H50.118L34.137,104.622h3.67L54.159,53.045a1.635,1.635,0,0,0-.267-1.482" fill="#fff"/>
+        </g>
+        <g id="Group_4" data-name="Group 4">
+          <path id="Path_4" data-name="Path 4" d="M88.888,50.879H58.354A1.719,1.719,0,0,0,56.6,52.561v52.061h3.508V54.246H88.888Z" fill="#fff"/>
+        </g>
+        <g id="Group_5" data-name="Group 5">
+          <path id="Path_5" data-name="Path 5" d="M73.575,104.822V84.629a1.653,1.653,0,0,0-1.683-1.613H62.38v3.227h7.825v18.579Z" fill="#fff"/>
+        </g>
+        <g id="Group_6" data-name="Group 6">
+          <path id="Path_6" data-name="Path 6" d="M88.888,86.243V83.016H77a1.7,1.7,0,0,0-1.355.66,1.607,1.607,0,0,0-.26,1.42l5.84,19.726h3.509L79.258,86.243Z" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

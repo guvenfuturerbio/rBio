@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "265636530937",
+    "project_id": "rbio-ec8b1",
+    "storage_bucket": "rbio-ec8b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265636530937:android:60d0f66454c33970263028",
+        "android_client_info": {
+          "package_name": "com.guvenfuture.onedosehealth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265636530937-pue2jtdspp3b2n623fsnkgfapn47djtp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvQeKHRr9uSo8oG1eTWTM-_xPdeVdVHFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265636530937-pue2jtdspp3b2n623fsnkgfapn47djtp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

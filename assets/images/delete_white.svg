@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.525" height="26.5" viewBox="0 0 19.525 26.5">
+  <g id="Group_1" data-name="Group 1" transform="translate(-2.783 0.75)">
+    <path id="Rectangle_1" data-name="Rectangle 1" d="M0,0H14.366a0,0,0,0,1,0,0V14.355a3.5,3.5,0,0,1-3.5,3.5h-7.4A3.468,3.468,0,0,1,0,14.383V0A0,0,0,0,1,0,0Z" transform="translate(5.362 7.149)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1.5"/>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="18.025" height="4.37" rx="2.185" transform="translate(3.533 2.779)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Path_1" data-name="Path 1" d="M16.08,2.371H9.011C9.011,1.062,10.593,0,12.545,0S16.08,1.062,16.08,2.371Z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1.5"/>
+    <rect id="Rectangle_3" data-name="Rectangle 3" width="1.496" height="10.617" rx="0.748" transform="translate(11.752 11.955)" fill="#fff"/>
+    <rect id="Rectangle_4" data-name="Rectangle 4" width="1.496" height="10.617" rx="0.748" transform="translate(15.264 11.955)" fill="#fff"/>
+    <rect id="Rectangle_5" data-name="Rectangle 5" width="1.496" height="10.617" rx="0.748" transform="translate(8.323 11.955)" fill="#fff"/>
+  </g>
+</svg>

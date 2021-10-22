@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28.438" height="28.151" viewBox="0 0 28.438 28.151">
+  <g id="Group_1" data-name="Group 1" transform="translate(0.411 -0.921)">
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="12.609" height="12.895" rx="3.336" transform="translate(14.668 15.427)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1.5"/>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="12.609" height="12.895" rx="3.336" transform="translate(0.339 1.671)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1.5"/>
+    <g id="A" style="isolation: isolate">
+      <text id="A-2" data-name="A" transform="translate(17.422 24.86)" fill="#fff" font-size="10.03" font-family="Poppins-Medium, Poppins" font-weight="500" style="isolation: isolate"><tspan x="0" y="0">A</tspan></text>
+    </g>
+    <g id="_" data-name=" " style="isolation: isolate">
+      <text id="_2" data-name="ㅈ" transform="translate(1.206 12.686)" fill="#fff" font-size="11.463" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo" style="isolation: isolate"><tspan x="0" y="0">ㅈ</tspan></text>
+    </g>
+    <path id="Path_1" data-name="Path 1" d="M7.933,26.03,9.94,24.024,7.933,22.016" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_2" data-name="Path 2" d="M9.94,24.024H5.2a1.856,1.856,0,0,1-1.856-1.856V17.719" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_3" data-name="Path 3" d="M18.393,4.967l-2,2.006L18.394,8.98" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_4" data-name="Path 4" d="M16.388,6.973h4.735a1.854,1.854,0,0,1,1.855,1.854v4.45" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>

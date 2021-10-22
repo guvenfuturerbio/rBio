@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.74" height="26.062" viewBox="0 0 21.74 26.062">
+  <g id="Group_1" data-name="Group 1" transform="translate(-1.63 0.531)">
+    <path id="Path_1" data-name="Path 1" d="M20.79,4.912H18.1a2.256,2.256,0,0,1-2.257-2.257V-.031" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <line id="Line_1" data-name="Line 1" x2="4.943" y2="4.943" transform="translate(15.847 -0.031)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_2" data-name="Path 2" d="M20.79,13.842V4.912L15.847-.031h-4.94a2.257,2.257,0,0,0-2.25,2.075" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_3" data-name="Path 3" d="M18.661,6.982H15.974a2.257,2.257,0,0,1-2.257-2.257V2.039" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <line id="Line_2" data-name="Line 2" x2="4.943" y2="4.943" transform="translate(13.717 2.039)" fill="none" stroke="#161615" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_4" data-name="Path 4" d="M18.661,13.842V6.982L13.717,2.039H8.778A2.257,2.257,0,0,0,6.522,4.23" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_5" data-name="Path 5" d="M16.35,9.173H13.664a2.256,2.256,0,0,1-2.257-2.257V4.23" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_6" data-name="Path 6" d="M16.35,13.842V9.173L11.407,4.23H6.467A2.258,2.258,0,0,0,4.21,6.487v7.355" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_7" data-name="Path 7" d="M22.87,13.842H2.13v9.593a1.6,1.6,0,0,0,1.6,1.6H21.273a1.6,1.6,0,0,0,1.6-1.6Z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="4.943" height="1.908" rx="0.954" transform="translate(10.028 15.468)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>

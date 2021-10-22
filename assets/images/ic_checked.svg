@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>ic_checked</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#4B66EA" offset="0%"></stop>
+            <stop stop-color="#82A0F6" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-2" points="6.53489778 0.257939394 0.0554666667 0.257939394 0.0554666667 10.1324121 13.0143289 10.1324121 13.0143289 0.257939394"></polygon>
+    </defs>
+    <g id="Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="36_Indicators-Settings-Devices" transform="translate(-311.000000, -198.000000)">
+            <g id="info" transform="translate(16.000000, 184.000000)">
+                <g id="ic_checked" transform="translate(295.000000, 14.000000)">
+                    <path d="M4,20 C4,13.372583 9.37112582,8 16,8 L16,8 C22.627417,8 28,13.3711258 28,20 L28,20 C28,26.627417 22.6288742,32 16,32 L16,32 C9.372583,32 4,26.6288742 4,20 L4,20 Z" id="Rectangle" fill="#4B66EA"></path>
+                    <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="32" height="32" rx="16"></rect>
+                    <g id="check-symbol" transform="translate(10.133333, 11.733333)">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <g id="Clip-2"></g>
+                        <polygon id="Fill-1" fill="#FFFFFF" mask="url(#mask-3)" points="4.14151111 8.06981818 1.03630222 4.97546667 0 6.00446061 4.14151111 10.1324121 13.0143289 1.29061818 11.9817244 0.257939394"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>esclip</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="36_Indicators-Settings-Devices" transform="translate(-311.000000, -282.000000)">
+            <g id="info" transform="translate(16.000000, 268.000000)">
+                <g id="esclip" transform="translate(295.000000, 14.000000)">
+                    <rect id="Rectangle" stroke="#969696" x="0.5" y="0.5" width="31" height="31" rx="15.5"></rect>
+                    <polygon id="Fill-1" fill="#969696" points="14.2748444 19.8031515 11.1696356 16.7088 10.1333333 17.7377939 14.2748444 21.8657455 23.1476622 13.0239515 22.1150578 11.9912727"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

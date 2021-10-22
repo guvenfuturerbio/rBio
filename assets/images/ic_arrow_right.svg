@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="16px" viewBox="0 0 9 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>ic_arrow_right</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="25_Doctor-Details" transform="translate(-326.000000, -504.000000)" fill="#696969">
+            <g id="calendar" transform="translate(24.000000, 484.000000)">
+                <path d="M310.86118,27.6811472 L302.82392,20.133254 C302.63459,19.955582 302.331226,19.955582 302.141897,20.133254 C301.952701,20.3110516 301.952701,20.5959387 302.141897,20.7737364 L309.836382,27.9995651 L302.141897,35.2256035 C301.952701,35.4032335 301.952701,35.6882882 302.141897,35.8659182 C302.234821,35.9531825 302.359657,36 302.481145,36 C302.6025,36 302.727514,35.9564517 302.82026,35.8659182 L310.857699,28.3181927 C311.04685,28.1438319 311.04685,27.8555079 310.86118,27.6811472 L310.86118,27.6811472 Z" id="ic_arrow_right"></path>
+            </g>
+        </g>
+    </g>
+</svg>

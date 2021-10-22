@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>next</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#4B66EA" offset="0%"></stop>
+            <stop stop-color="#82A0F6" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02_Walkthroughs-_03" transform="translate(-295.000000, -702.000000)">
+            <g id="next" transform="translate(295.000000, 702.000000)">
+                <rect id="Rectangle" fill="#4B66EA" x="6.90410959" y="13.8082192" width="42.1917808" height="42.1917808" rx="21.0958904"></rect>
+                <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="56" height="56" rx="28"></rect>
+                <path d="M24.2075672,16.3140335 C23.9332269,16.0414409 23.4936486,16.0414409 23.2193083,16.3140335 C22.9451621,16.586819 22.9451621,17.0239059 23.2193083,17.2966914 L34.3686999,28.3828945 L23.2193083,39.469419 C22.9451621,39.7419473 22.9451621,40.1792915 23.2193083,40.4518198 C23.3539563,40.5857046 23.534845,40.6575342 23.7108832,40.6575342 C23.8867275,40.6575342 24.0678748,40.5907204 24.2022641,40.4518198 L35.8485984,28.8717477 C36.12268,28.6042353 36.12268,28.1618752 35.8536428,27.8943628 L24.2075672,16.3140335 Z" id="ic_arrow_right" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

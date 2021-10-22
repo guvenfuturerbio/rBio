@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <g id="Group_1" data-name="Group 1" transform="translate(0 0)">
+    <circle id="Ellipse_1" data-name="Ellipse 1" cx="60" cy="60" r="60" transform="translate(0 0)" fill="#fff"/>
+    <path id="Path_1" data-name="Path 1" d="M120,60.364a60,60,0,1,0-69.375,59.272V77.708H35.391V60.364H50.625V47.146c0-15.038,8.958-23.344,22.663-23.344a92.27,92.27,0,0,1,13.431,1.172V39.739H79.153c-7.454,0-9.778,4.626-9.778,9.37V60.364H86.016L83.355,77.708H69.375v41.928A60.016,60.016,0,0,0,120,60.364" fill="#1877f1"/>
+  </g>
+</svg>
