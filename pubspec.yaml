@@ -122,6 +122,9 @@ flutter:
     - family: Ic
       fonts:
         - asset: assets/fonts/ic/ic_medicine.ttf
+    - family: SourceSans
+      fonts:
+        - asset: assets/fonts/SourceSansVariable_Roman.otf
 
 flutter_icons:
   android: true

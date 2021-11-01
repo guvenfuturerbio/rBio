@@ -118,6 +118,7 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor:
                   themeNotifier.theme.scaffoldBackgroundColor,
               fontFamily: themeNotifier.theme.fontFamily,
+              textTheme: themeNotifier.theme.textTheme,
             ),
 
             //

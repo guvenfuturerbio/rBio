@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:onedosehealth/features/account/profile/view/profile_screen.dart';
 import 'package:onedosehealth/features/home/view/home_screen.dart';
 import 'package:onedosehealth/features/home/viewmodel/home_vm.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,6 @@ import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
-import '../../features/auth/login/login_screen.dart';
 import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
@@ -44,12 +44,12 @@ class VRouterRoutes {
   static var routes = [
     VWidget(
       path: PagePaths.MAIN,
-      widget: HomeScreen(title: 'title'),
+      widget: ProfileScreen(),
     ),
 
     VWidget(
       path: PagePaths.LOGIN,
-      widget: HomeScreen(title: 'title'), // LoginScreen(),
+      widget: ProfileScreen(), // LoginScreen(),
     ),
 
     VWidget(

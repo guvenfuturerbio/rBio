@@ -6,7 +6,12 @@ abstract class ITheme {
   ThemeType get type;
   String get fontFamily;
   Color get mainColor;
+  Color get secondaryColor;
   Color get scaffoldBackgroundColor;
+  Color get textColor;
+  Color get textColorSecondary;
+  TextTheme get textTheme;
+  Color get cardBackgroundColor;
 }
 
 class GreenTheme extends ITheme {
@@ -17,8 +22,66 @@ class GreenTheme extends ITheme {
   String get fontFamily => 'Poppins';
 
   @override
-  Color get mainColor => const Color.fromARGB(255, 70, 155, 81);
+  Color get mainColor => GuvenColors.green;
+
+  @override
+  Color get secondaryColor => GuvenColors.green2;
 
   @override
   Color get scaffoldBackgroundColor => const Color.fromARGB(255, 238, 238, 238);
+
+  @override
+  Color get textColor => Colors.white;
+
+  @override
+  Color get textColorSecondary => Colors.black;
+
+  @override
+  TextTheme get textTheme => TextTheme(
+        headline1: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(60),
+          fontWeight: FontWeight.normal,
+        ),
+        headline2: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(55),
+          fontWeight: FontWeight.normal,
+        ),
+        headline3: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(50),
+          fontWeight: FontWeight.normal,
+        ),
+        headline4: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(45),
+          fontWeight: FontWeight.normal,
+        ),
+        headline5: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(40),
+          fontWeight: FontWeight.normal,
+        ),
+        bodyText1: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(35),
+          fontWeight: FontWeight.normal,
+        ),
+        bodyText2: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(30),
+          fontWeight: FontWeight.normal,
+        ),
+        caption: TextStyle(
+          color: Colors.black,
+          fontSize: convertFontSize(25),
+          fontWeight: FontWeight.normal,
+        ),
+      );
+
+  double convertFontSize(double value) => value / 2.7777778;
+
+  @override
+  Color get cardBackgroundColor => GuvenColors.white;
 }

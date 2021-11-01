@@ -2,7 +2,16 @@ part of 'constants.dart';
 
 class _Images {
   // New
+  final mockAvatar =
+      'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
   final oneDoseHealthPng = 'assets/images/new/onedose_health.png';
+  final chat_bubble = 'assets/images/new/chat_bubble.svg';
+  final appbar_back = 'assets/images/new/appbar_back.svg';
+  final right_arrow = 'assets/images/new/right_arrow.svg';
+  final bottom_arrow = 'assets/images/new/bottom_arrow.svg';
+  final katman5 = 'assets/images/new/katman5.svg';
+  final add = 'assets/images/new/add.svg';
+  final close = 'assets/images/new/close.svg';
 
   final guvenhospital_logo = 'assets/images/guvenhospital_logo.svg';
   final for_you = 'assets/images/sizeozel_icon.svg';

@@ -136,8 +136,6 @@ PODS:
     - Flutter
   - flutter_share (0.0.1):
     - Flutter
-  - flutter_zoom_plugin (0.0.1):
-    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -247,7 +245,6 @@ DEPENDENCIES:
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_share (from `.symlinks/plugins/flutter_share/ios`)
-  - flutter_zoom_plugin (from `.symlinks/plugins/flutter_zoom_plugin/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - jitsi_meet (from `.symlinks/plugins/jitsi_meet/ios`)
   - move_to_background (from `.symlinks/plugins/move_to_background/ios`)
@@ -318,8 +315,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_share:
     :path: ".symlinks/plugins/flutter_share/ios"
-  flutter_zoom_plugin:
-    :path: ".symlinks/plugins/flutter_zoom_plugin/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   jitsi_meet:
@@ -373,7 +368,6 @@ SPEC CHECKSUMS:
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_share: 4be0208963c60b537e6255ed2ce1faae61cd9ac2
-  flutter_zoom_plugin: 13810562aa7c9848ef91eab14d197b0c98f9e86d
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleAppMeasurement: 5ba1164e3c844ba84272555e916d0a6d3d977e91
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9

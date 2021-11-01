@@ -1,5 +1,21 @@
 part of 'constants.dart';
 
+class GuvenColors {
+  GuvenColors._();
+
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+  static const Color green = Color.fromARGB(255, 0, 158, 71);
+  static const Color green2 = Color.fromARGB(255, 202, 234, 216);
+  static const Color grey = Color.fromARGB(255, 238, 238, 238);
+}
+
+class _Sizes {
+  final EdgeInsets screenHorizontalPadding =
+      EdgeInsets.symmetric(horizontal: 13);
+  final BorderRadiusGeometry borderRadiusCircular = BorderRadius.circular(12);
+}
+
 class _Color {
   final gray = Color(0xFF969696);
   final grey = Color(0xFF696969);
