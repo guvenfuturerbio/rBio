@@ -1,6 +1,8 @@
+import '../../../core/core.dart';
+
 import '../filter_tenants_response.dart';
 
-class FilterDepartmentsResponse {
+class FilterDepartmentsResponse extends IBaseModel<FilterDepartmentsResponse> {
   bool enabled;
   int id;
   List<FilterTenantsResponse> tenants;
@@ -25,6 +27,7 @@ class FilterDepartmentsResponse {
     title = json['title'];
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['enabled'] = this.enabled;
@@ -34,5 +37,10 @@ class FilterDepartmentsResponse {
     }
     data['title'] = this.title;
     return data;
+  }
+
+  @override
+  FilterDepartmentsResponse fromJson(Map<String, dynamic> json) {
+    return FilterDepartmentsResponse.fromJson(json);
   }
 }

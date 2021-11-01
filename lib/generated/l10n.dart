@@ -665,6 +665,16 @@ class LocaleProvider {
     );
   }
 
+  /// `We couldn't find a relevant result`
+  String get searchEmpty {
+    return Intl.message(
+      'We couldn\'t find a relevant result',
+      name: 'searchEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Do you want delete doctor $doctor on list?`
   String get content_delete_doctor {
     return Intl.message(
@@ -2915,11 +2925,41 @@ class LocaleProvider {
     );
   }
 
+  /// `Start`
+  String get start {
+    return Intl.message(
+      'Start',
+      name: 'start',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End`
+  String get end {
+    return Intl.message(
+      'End',
+      name: 'end',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Free`
   String get free {
     return Intl.message(
       'Free',
       name: 'free',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date range:`
+  String get range {
+    return Intl.message(
+      'Date range:',
+      name: 'range',
       desc: '',
       args: [],
     );
@@ -3080,6 +3120,16 @@ class LocaleProvider {
     return Intl.message(
       'My Children',
       name: 'kids',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Countries`
+  String get country {
+    return Intl.message(
+      'Countries',
+      name: 'country',
       desc: '',
       args: [],
     );

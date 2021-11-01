@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../generated/l10n.dart';
-import '../constants/constants.dart';
+import '../core.dart';
 
 class DetailedGradientMessageWidget extends StatelessWidget {
   final String currentLocale;
@@ -19,24 +19,22 @@ class DetailedGradientMessageWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(LocaleProvider.current.detailed_error_dialog_part1,
-            style: new TextStyle(
-              fontSize: 14.0,
-              fontFamily: 'Roboto',
-              color: R.color.white,
-            )),
-        Text(LocaleProvider.current.detailed_error_dialog_part2,
-            style: new TextStyle(
-              fontSize: 14.0,
-              fontFamily: 'Roboto',
-              color: R.color.white,
-            )),
-        Text(LocaleProvider.current.detailed_error_dialog_part3,
-            style: new TextStyle(
-              fontSize: 14.0,
-              fontFamily: 'Roboto',
-              color: R.color.white,
-            )),
+        //
+        GuvenAlert.buildSmallDescription(
+          LocaleProvider.current.detailed_error_dialog_part1,
+        ),
+
+        //
+        GuvenAlert.buildSmallDescription(
+          LocaleProvider.current.detailed_error_dialog_part2,
+        ),
+
+        //
+        GuvenAlert.buildSmallDescription(
+          LocaleProvider.current.detailed_error_dialog_part3,
+        ),
+
+        //
         GestureDetector(
           onTap: () {
             launch("tel://4449494");
@@ -44,9 +42,13 @@ class DetailedGradientMessageWidget extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: EdgeInsets.only(top: 12.0),
-              child: Text(LocaleProvider.current.phone_guven,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: R.color.white)),
+              child: Text(
+                LocaleProvider.current.phone_guven,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
             ),
           ),
         ),

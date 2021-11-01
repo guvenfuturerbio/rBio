@@ -1,4 +1,6 @@
-class DoctorCvResponse {
+import '../../../core/core.dart';
+
+class DoctorCvResponse extends IBaseModel<DoctorCvResponse> {
   int id;
   String title;
   String firstName;
@@ -69,49 +71,49 @@ class DoctorCvResponse {
     birthplace = json['birthplace'];
     birthdate = json['birthdate'];
     if (json['specialties'] != null) {
-      specialties = new List<Specialties>();
+      specialties = <Specialties>[];
       json['specialties'].forEach((v) {
         specialties.add(new Specialties.fromJson(v));
       });
     }
     if (json['treatments'] != null) {
-      treatments = new List<Treatments>();
+      treatments = <Treatments>[];
       json['treatments'].forEach((v) {
         treatments.add(new Treatments.fromJson(v));
       });
     }
     if (json['experiences'] != null) {
-      experiences = new List<Experiences>();
+      experiences = <Experiences>[];
       json['experiences'].forEach((v) {
         experiences.add(new Experiences.fromJson(v));
       });
     }
     if (json['educations'] != null) {
-      educations = new List<Educations>();
+      educations = <Educations>[];
       json['educations'].forEach((v) {
         educations.add(new Educations.fromJson(v));
       });
     }
     if (json['publications'] != null) {
-      publications = new List<Publications>();
+      publications = <Publications>[];
       json['publications'].forEach((v) {
         publications.add(new Publications.fromJson(v));
       });
     }
     if (json['memberships'] != null) {
-      memberships = new List<Memberships>();
+      memberships = <Memberships>[];
       json['memberships'].forEach((v) {
         memberships.add(new Memberships.fromJson(v));
       });
     }
     if (json['trainings'] != null) {
-      trainings = new List<Trainings>();
+      trainings = <Trainings>[];
       json['trainings'].forEach((v) {
         trainings.add(new Trainings.fromJson(v));
       });
     }
     if (json['awards'] != null) {
-      awards = new List<Awards>();
+      awards = <Awards>[];
       json['awards'].forEach((v) {
         awards.add(new Awards.fromJson(v));
       });
@@ -180,6 +182,11 @@ class DoctorCvResponse {
     data['is_completed'] = this.isCompleted;
     data['notes'] = this.notes;
     return data;
+  }
+
+  @override
+  DoctorCvResponse fromJson(Map<String, dynamic> json) {
+    return DoctorCvResponse.fromJson(json);
   }
 }
 

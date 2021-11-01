@@ -55,7 +55,7 @@ class PatientAppointmentsResponse {
     patientId = json['patientId'];
     patientType = json['patientType'];
     if (json['resources'] != null) {
-      resources = new List<Resources>();
+      resources = <Resources>[];
       json['resources'].forEach((v) {
         resources.add(new Resources.fromJson(v));
       });

@@ -133,8 +133,6 @@ R ParseModel<R, T extends IBaseModel>(dynamic responseBody, T model) {
 }
 
 class DioHelper with DioMixin implements Dio, IDioHelper {
-  bool didTry401 = false;
-
   // #region Settings
   DioHelper() {
     options = BaseOptions(
@@ -144,6 +142,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       responseType: ResponseType.json,
       headers: {
         HttpHeaders.userAgentHeader: 'dio',
+        'clientVersion': getIt<GuvenSettings>().version,
       },
     );
 

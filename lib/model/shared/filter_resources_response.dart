@@ -1,6 +1,8 @@
+import '../../core/domain/base_model.dart';
+
 import '../model.dart';
 
-class FilterResourcesResponse {
+class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse> {
   List<FilterTenantsResponse> departments;
   bool enabled;
   String gender;
@@ -27,7 +29,7 @@ class FilterResourcesResponse {
 
   FilterResourcesResponse.fromJson(Map<String, dynamic> json) {
     if (json['departments'] != null) {
-      departments = new List<FilterTenantsResponse>();
+      departments = <FilterTenantsResponse>[];
       json['departments'].forEach((v) {
         departments.add(new FilterTenantsResponse.fromJson(v));
       });
@@ -38,7 +40,7 @@ class FilterResourcesResponse {
     isSSIContractor = json['isSSIContractor'];
     isTSSContractor = json['isTSSContractor'];
     if (json['tenants'] != null) {
-      tenants = new List<FilterTenantsResponse>();
+      tenants = <FilterTenantsResponse>[];
       json['tenants'].forEach((v) {
         tenants.add(new FilterTenantsResponse.fromJson(v));
       });
@@ -48,6 +50,7 @@ class FilterResourcesResponse {
     isOnlineForWeb = json['isOnlineForWeb'];
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.departments != null) {
@@ -65,5 +68,10 @@ class FilterResourcesResponse {
     data['isOnline'] = this.isOnline;
     data['isOnlineForWeb'] = this.isOnlineForWeb;
     return data;
+  }
+
+  @override
+  FilterResourcesResponse fromJson(Map<String, dynamic> json) {
+    return FilterResourcesResponse.fromJson(json);
   }
 }

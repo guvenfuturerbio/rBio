@@ -1,14 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_plugin/zoom_options.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import '../../features/shared/consent_form/consent_form_dialog.dart';
+import '../../features/shared/rate_dialog/rate_dialog.dart';
 
 import '../../model/model.dart';
-import '../../ui/shared/consent_form/consent_form_dialog.dart';
-import '../../ui/shared/rate_dialog/rate_dialog.dart';
 import '../core.dart';
 
 abstract class UserManager {
@@ -191,7 +190,7 @@ class UserManagerImpl extends UserManager {
       StreamType streamTypeResponse = new StreamType.fromJson(datum);
       streamType = streamTypeResponse.provider;
       return streamType;
-    } on Exception catch (e) {
+    } catch (_) {
       return streamType;
     }
   }
@@ -228,34 +227,36 @@ class UserManagerImpl extends UserManager {
 
   @override
   Future startMeeting(
-      BuildContext context, String webConsultantId, int availabilityId) async {
+    BuildContext context,
+    String webConsultantId,
+    int availabilityId,
+  ) async {
     final token =
         getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.JWT_TOKEN);
     String streamType = "Jitsi";
-    String hostId = "";
 
     if (streamType == "Zoom") {
-      ZoomOptions zoomOptions = new ZoomOptions(
-        domain: "zoom.us",
-        appKey: R.strings.zoom_app_key,
-        appSecret: R.strings.zoom_app_secret,
-      );
+      // ZoomOptions zoomOptions = new ZoomOptions(
+      //   domain: "zoom.us",
+      //   appKey: R.strings.zoom_app_key,
+      //   appSecret: R.strings.zoom_app_secret,
+      // );
 
-      // Setting Zoom meeting options (default to false if not set)
-      ZoomMeetingOptions meetingOptions = new ZoomMeetingOptions(
-          userId: parseJwtPayLoad(token)['name'] != null
-              ? parseJwtPayLoad(token)['name']
-              : parseJwtPayLoad(token)['fullname'],
-          meetingId: webConsultantId,
-          meetingPassword: R.strings.zoomMeetingRoomPass,
-          disableDialIn: "true",
-          disableDrive: "true",
-          disableInvite: "true",
-          disableShare: "true",
-          noAudio: "false",
-          noDisconnectAudio: "false");
-      Get.rootDelegate
-          .toNamed('MeetingPage', arguments: {meetingOptions, zoomOptions});
+      // // Setting Zoom meeting options (default to false if not set)
+      // ZoomMeetingOptions meetingOptions = new ZoomMeetingOptions(
+      //     userId: parseJwtPayLoad(token)['name'] != null
+      //         ? parseJwtPayLoad(token)['name']
+      //         : parseJwtPayLoad(token)['fullname'],
+      //     meetingId: webConsultantId,
+      //     meetingPassword: R.strings.zoomMeetingRoomPass,
+      //     disableDialIn: "true",
+      //     disableDrive: "true",
+      //     disableInvite: "true",
+      //     disableShare: "true",
+      //     noAudio: "false",
+      //     noDisconnectAudio: "false");
+      // Get.rootDelegate
+      //     .toNamed('MeetingPage', arguments: {meetingOptions, zoomOptions});
     } else {
       String name = parseJwtPayLoad(token)['name'] != null
           ? parseJwtPayLoad(token)['name']

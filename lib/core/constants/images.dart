@@ -1,6 +1,10 @@
 part of 'constants.dart';
 
 class _Images {
+  // New
+  final oneDoseHealthPng = 'assets/images/new/onedose_health.png';
+
+  final guvenhospital_logo = 'assets/images/guvenhospital_logo.svg';
   final for_you = 'assets/images/sizeozel_icon.svg';
   final ic_appoitment = 'assets/images/ic_appoitment.svg';
   final ic_doctor = 'assets/images/ic_doctor.svg';

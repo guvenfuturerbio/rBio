@@ -1,6 +1,6 @@
 import '../../../core/domain/base_model.dart';
 
-class ForYouCategoryResponse extends IBaseModel {
+class ForYouCategoryResponse extends IBaseModel<ForYouCategoryResponse> {
   int id;
   String text;
   String icon;

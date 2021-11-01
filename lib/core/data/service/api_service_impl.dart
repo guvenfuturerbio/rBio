@@ -56,10 +56,8 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<List<ForYouCategoryResponse>> getAllSubCategories(id) async {
-    final response = await helper.getGuven(
-        R.endpoints.getAllSubCategoriesPath(id),
-        options: authOptions);
+  Future<List<ForYouCategoryResponse>> getAllSubCategories(String path) async {
+    final response = await helper.getGuven(path, options: authOptions);
     if (response.isSuccessful) {
       final result = response.datum
           .map((item) => ForYouCategoryResponse.fromJson(item))
@@ -67,15 +65,14 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/getAllSubCategories/${id} : ${response.isSuccessful}');
+      throw Exception('/getAllSubCategories : ${response.isSuccessful}');
     }
   }
 
   @override
-  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(id) async {
-    final response = await helper.getGuven(
-        R.endpoints.getSubCategoryDetailPath(id),
-        options: authOptions);
+  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
+      String path) async {
+    final response = await helper.getGuven(path, options: authOptions);
     if (response.isSuccessful) {
       final result = response.datum
           .map((item) => ForYouSubCategoryDetailResponse.fromJson(item))
@@ -83,12 +80,13 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/getSubCategoryDetail/${id} : ${response.isSuccessful}');
+      throw Exception('/getSubCategoryDetail/ : ${response.isSuccessful}');
     }
   }
 
   @override
-  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(id) async {
+  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(
+      int id) async {
     final response = await helper.getGuven(
         R.endpoints.getSubCategoryItemsPath(id),
         options: authOptions);
@@ -238,9 +236,8 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<List<FilterTenantsResponse>> filterTenants(
-      FilterTenantsRequest filterTenantsRequest) async {
-    final response = await helper.postGuven(
-        R.endpoints.filterTenantsPath, filterTenantsRequest.toJson(),
+      String path, FilterTenantsRequest filterTenantsRequest) async {
+    final response = await helper.postGuven(path, filterTenantsRequest.toJson(),
         options: authOptions);
     if (response.isSuccessful) {
       final result = response.datum

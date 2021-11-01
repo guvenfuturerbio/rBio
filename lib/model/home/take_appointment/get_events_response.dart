@@ -11,7 +11,7 @@ class GetEventsResponse {
 
   GetEventsResponse.fromJson(Map<String, dynamic> json) {
     if (json['events'] != null) {
-      events = new List<Events>();
+      events = <Events>[];
       json['events'].forEach((v) {
         events.add(new Events.fromJson(v));
       });

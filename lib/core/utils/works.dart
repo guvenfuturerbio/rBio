@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../../generated/l10n.dart';
 import '../data/repository/repository.dart';
 import '../locator.dart';
-import '../widgets/gradient_dialog.dart';
+import '../widgets/warning_dialog.dart';
 import '../widgets/loading_dialog.dart';
 
 class Works {
@@ -55,12 +55,12 @@ class Works {
     }
   }
 
-  showGradientDialog(BuildContext context, String title, String text) {
+  void showGradientDialog(BuildContext context, String title, String text) {
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return GradientDialog(title, text);
+        return WarningDialog(title, text);
       },
     );
   }

@@ -3,12 +3,14 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'core/core.dart';
+import 'features/home/viewmodel/home_vm.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,7 @@ Future<void> main() async {
       options.dsn = SecretUtils.instance.get(SecretKeys.SENTRY_DSN);
       options.enablePrintBreadcrumbs = true;
       options.attachStacktrace = true;
-      options.release = "com.guvenfuture.online@3.2.6+73";
+      options.release = "com.guvenfuture.online@3.2.8+75";
       options.environment = Environment.PROD.toString();
       options.diagnosticLevel = SentryLevel.debug; //The most verbose mode
       options.sendDefaultPii = true;
@@ -61,49 +63,74 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<FirebaseAnalytics>.value(value: analytics),
         Provider<FirebaseAnalyticsObserver>.value(value: observer),
+        ChangeNotifierProvider<ListItemVm>(
+          create: (context) => ListItemVm(),
+        ),
+        ChangeNotifierProvider<ThemeNotifier>(
+          create: (context) => ThemeNotifier(),
+        ),
       ],
-      child: AtomMaterialApp(
-        initialUrl: PagePaths.LOGIN,
-        routes: VRouterRoutes.routes,
+      child: Consumer<ThemeNotifier>(
+        builder: (
+          BuildContext context,
+          ThemeNotifier themeNotifier,
+          Widget child,
+        ) {
+          return AtomMaterialApp(
+            initialUrl: PagePaths.LOGIN,
+            routes: VRouterRoutes.routes,
+            onSystemPop: (data) async {
+              final currentUrl = data.fromUrl;
+              if (currentUrl.contains('/home') && currentUrl.length > 6) {
+                data.to(PagePaths.MAIN, isReplacement: true);
+              } else if (currentUrl.contains('/home')) {
+                SystemNavigator.pop();
+              } else if (data.historyCanBack()) {
+                data.historyBack();
+              }
+            },
 
-        //
-        title: 'Güven Online',
-        debugShowCheckedModeBanner: false,
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: analytics),
-          routeObserver
-        ],
+            //
+            title: 'Güven Online',
+            debugShowCheckedModeBanner: false,
+            navigatorObservers: [
+              FirebaseAnalyticsObserver(analytics: analytics),
+              routeObserver
+            ],
 
-        //
-        builder: (BuildContext context, Widget child) {
-          return Directionality(
-            textDirection: TextDirection.ltr,
-            child: MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                textScaleFactor:
-                    MediaQuery.of(context).size.width <= 400 ? 0.8 : 1.0,
-              ),
-              child: child,
+            //
+            builder: (BuildContext context, Widget child) {
+              return Directionality(
+                textDirection: TextDirection.ltr,
+                child: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaleFactor:
+                        MediaQuery.of(context).size.width <= 400 ? 0.8 : 1.0,
+                  ),
+                  child: child,
+                ),
+              );
+            },
+
+            //
+            theme: ThemeData(
+              primaryColor: themeNotifier.theme.mainColor,
+              scaffoldBackgroundColor:
+                  themeNotifier.theme.scaffoldBackgroundColor,
+              fontFamily: themeNotifier.theme.fontFamily,
             ),
+
+            //
+            localizationsDelegates: const [
+              LocaleProvider.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              DefaultCupertinoLocalizations.delegate
+            ],
+            supportedLocales: LocaleProvider.delegate.supportedLocales,
           );
         },
-
-        //
-        theme: ThemeData(
-          //backgroundColor: Color(0xFFe2e2e2),
-          primaryColor: R.color.blue,
-          accentColor: Colors.white,
-          //scaffoldBackgroundColor: Color(0xFFe2e2e2),
-          fontFamily: 'Poppins',
-        ),
-        localizationsDelegates: const [
-          LocaleProvider.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate
-        ],
-        supportedLocales: LocaleProvider.delegate.supportedLocales,
       ),
     );
   }

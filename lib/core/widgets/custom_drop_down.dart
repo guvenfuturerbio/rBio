@@ -38,7 +38,6 @@ class _CustomDropDownState extends State<CustomDropDown>
   Offset buttonPosition;
   Size buttonSize;
   OverlayEntry _overlayEntry;
-  BorderRadius _borderRadius;
   AnimationController _animationController;
 
   @override
@@ -47,7 +46,6 @@ class _CustomDropDownState extends State<CustomDropDown>
       vsync: this,
       duration: Duration(milliseconds: 250),
     );
-    _borderRadius = widget.borderRadius ?? BorderRadius.circular(4);
     _key = LabeledGlobalKey("button_icon");
     super.initState();
   }
@@ -106,6 +104,7 @@ class _CustomDropDownState extends State<CustomDropDown>
             IconButton(
               icon: SvgPicture.asset(R.image.ic_translator),
               color: Colors.white,
+              onPressed: () {},
             ),
             Text(
               widget.selectedLanguage == ""

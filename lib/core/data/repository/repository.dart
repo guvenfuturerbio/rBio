@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../model/model.dart';
 import '../../constants/constants.dart';
+import '../../core.dart';
 import '../service/api_service.dart';
 import '../service/local_cache_service.dart';
 
@@ -17,6 +18,47 @@ class Repository {
     @required this.apiService,
     @required this.localCacheService,
   });
+
+  Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
+    String url,
+    Future<List<T>> Function() apiCall,
+    Duration cacheDuration,
+    T model,
+  ) async {
+    final localData = await localCacheService.get(url);
+    if (localData == null) {
+      final apiData = await apiCall();
+      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      return apiData;
+    } else {
+      final localModel = json.decode(localData);
+      if (localModel is List) {
+        return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
+      }
+      return [];
+    }
+  }
+
+  Future<T> getCacheApiCallModel<T extends IBaseModel>(
+    String url,
+    Future<T> Function() apiCall,
+    Duration cacheDuration,
+    T model,
+  ) async {
+    final localData = await localCacheService.get(url);
+    if (localData == null) {
+      final apiData = await apiCall();
+      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      return apiData;
+    } else {
+      final localModel = json.decode(localData);
+      if (localModel is Map) {
+        return model.fromJson(localModel);
+      }
+
+      throw Exception('getCacheApiCallModel : ${model.runtimeType}');
+    }
+  }
 
   Future<GuvenLogin> login(
           String clientId,
@@ -30,31 +72,36 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = R.endpoints.getAllPackagePath;
-    final localData = await localCacheService.get(url);
-    if (localData == null) {
-      final apiData = await apiService.getAllPackage(url);
-      await localCacheService.write(
-          url, json.encode(apiData), Duration(days: 1));
-      return apiData;
-    } else {
-      final localModel = json.decode(localData);
-      if (localModel is List) {
-        return localModel
-            .map((e) => ForYouCategoryResponse.fromJson(e))
-            .cast<ForYouCategoryResponse>()
-            .toList();
-      }
-      return [];
-    }
+    return await getCacheApiCallList(
+      url,
+      () => apiService.getAllPackage(url),
+      Duration(days: 1),
+      ForYouCategoryResponse(),
+    );
   }
 
-  Future<List<ForYouCategoryResponse>> getAllSubCategories(id) =>
-      apiService.getAllSubCategories(id);
+  Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
+    final url = R.endpoints.getAllSubCategoriesPath(id);
+    return await getCacheApiCallList(
+      url,
+      () => apiService.getAllSubCategories(url),
+      Duration(days: 1),
+      ForYouCategoryResponse(),
+    );
+  }
 
-  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(id) =>
-      apiService.getSubCategoryDetail(id);
+  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
+      int id) async {
+    final url = R.endpoints.getSubCategoryDetailPath(id);
+    return await getCacheApiCallList(
+      url,
+      () => apiService.getSubCategoryDetail(url),
+      Duration(days: 1),
+      ForYouSubCategoryDetailResponse(),
+    );
+  }
 
-  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(id) =>
+  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(int id) =>
       apiService.getSubCategoryItems(id);
 
   Future<String> doPackagePayment(PackagePaymentRequest packagePayment) =>
@@ -96,19 +143,49 @@ class Repository {
   }
 
   Future<List<FilterTenantsResponse>> filterTenants(
-          FilterTenantsRequest filterTenantsRequest) =>
-      apiService.filterTenants(filterTenantsRequest);
+      FilterTenantsRequest filterTenantsRequest) async {
+    final url = R.endpoints.filterTenantsPath;
+    return await getCacheApiCallList<FilterTenantsResponse>(
+      url,
+      () => apiService.filterTenants(url, filterTenantsRequest),
+      Duration(days: 10),
+      FilterTenantsResponse(),
+    );
+  }
 
   Future<List<FilterDepartmentsResponse>> filterDepartments(
-          FilterDepartmentsRequest filterDepartmentsRequest) =>
-      apiService.filterDepartments(filterDepartmentsRequest);
+      FilterDepartmentsRequest filterDepartmentsRequest) async {
+    final url = R.endpoints.filterDepartmentsPath;
+    final bodyString = json.encode(filterDepartmentsRequest.toJson());
+    return await getCacheApiCallList<FilterDepartmentsResponse>(
+      url + bodyString,
+      () => apiService.filterDepartments(filterDepartmentsRequest),
+      Duration(days: 1),
+      FilterDepartmentsResponse(),
+    );
+  }
 
   Future<List<FilterResourcesResponse>> filterResources(
-          FilterResourcesRequest filterResourcesRequest) =>
-      apiService.filterResources(filterResourcesRequest);
+      FilterResourcesRequest filterResourcesRequest) async {
+    final url = R.endpoints.filterResourcesPath;
+    final bodyString = json.encode(filterResourcesRequest.toJson());
+    return await getCacheApiCallList<FilterResourcesResponse>(
+      url + bodyString,
+      () => apiService.filterResources(filterResourcesRequest),
+      Duration(days: 1),
+      FilterResourcesResponse(),
+    );
+  }
 
-  Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) =>
-      apiService.getDoctorCvDetails(doctorWebID);
+  Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
+    final url = R.endpoints.getDoctorCvDetailsPath(doctorWebID);
+    return await getCacheApiCallModel<DoctorCvResponse>(
+      url,
+      () => apiService.getDoctorCvDetails(doctorWebID),
+      Duration(days: 1),
+      DoctorCvResponse(),
+    );
+  }
 
   Future<List<GetEventsResponse>> getEvents(
           GetEventsRequest getEventsRequest) =>
@@ -122,7 +199,8 @@ class Repository {
   Future<int> saveAppointment(AppointmentRequest appointmentRequest) =>
       apiService.saveAppointment(appointmentRequest);
 
-  Future<PatientRelativeInfoResponse> getAllRelatives(GetAllRelativesRequest bodyPages) =>
+  Future<PatientRelativeInfoResponse> getAllRelatives(
+          GetAllRelativesRequest bodyPages) =>
       apiService.getAllRelatives(bodyPages);
 
   Future<GuvenResponseModel> getCountries() => apiService.getCountries();
@@ -210,7 +288,15 @@ class Repository {
   Future<GuvenResponseModel> filterSocialPosts(String search) =>
       apiService.filterSocialPosts(search);
 
-  Future<GuvenResponseModel> socialResource() => apiService.socialResource();
+  Future<GuvenResponseModel> socialResource() async {
+    final url = R.endpoints.socialResourcePath;
+    return await getCacheApiCallModel<GuvenResponseModel>(
+      url,
+      () => apiService.socialResource(),
+      Duration(days: 1),
+      GuvenResponseModel(),
+    );
+  }
 
   Future<GuvenResponseModel> getAppointmentTypeViaWebConsultantId() =>
       apiService.getAppointmentTypeViaWebConsultantId();

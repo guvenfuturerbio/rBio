@@ -45,6 +45,8 @@ class PasswordAdvisor {
         return PasswordScore.Strong;
       case 5:
         return PasswordScore.VeryStrong;
+      default:
+        return PasswordScore.Blank;
     }
   }
 

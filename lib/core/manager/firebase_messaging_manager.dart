@@ -10,7 +10,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
 import 'package:onedosehealth/core/core.dart';
 
 /// Define a top-level named handler which background/terminated messages will
@@ -74,15 +73,14 @@ class FirebaseMessagingManager {
       }
 
       if (message.data['route'] != null)
-        Get.rootDelegate.toNamed(message.data['route'],
-            parameters: message.data['parameters']);
+        Atom.to(message.data['route'],
+            queryParameters: message.data['parameters']);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
       if (message.data['route'] != null)
-        Get.rootDelegate.toNamed(message.data['route'],
-            parameters: message.data['parameters']);
+        Atom.to(message.data['route'],
+            queryParameters: message.data['parameters']);
     });
   }
 

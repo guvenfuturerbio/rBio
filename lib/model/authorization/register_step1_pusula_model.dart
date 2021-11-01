@@ -47,7 +47,7 @@ class RegisterStep1PusulaModel {
     patientType = json['patientType'];
   }
 
-  UserRegistrationStep1Model toOldModel() {
+  void toOldModel() {
     var result = UserRegistrationStep1Model();
     result.name = firstName;
     result.surname = lastName;

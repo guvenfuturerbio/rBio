@@ -13,6 +13,7 @@ enum SharedPreferencesKeys {
   PATIENT,
   USERACCOUNT,
   CANACCESSHOSPITALOPS,
+  THEME,
 }
 
 extension SharedPreferencesKeysStringExt on String {

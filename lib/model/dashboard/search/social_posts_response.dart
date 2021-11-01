@@ -30,7 +30,7 @@ class SocialPostsResponse {
         ? new SocialPlatform.fromJson(json['social_platform'])
         : null;
     if (json['blog_post_tags'] != null) {
-      blogPostTags = new List<BlogPostTags>();
+      blogPostTags = <BlogPostTags>[];
       json['blog_post_tags'].forEach((v) {
         blogPostTags.add(new BlogPostTags.fromJson(v));
       });

@@ -1,68 +1,55 @@
 import 'package:flutter/cupertino.dart';
+import 'package:onedosehealth/features/home/view/home_screen.dart';
+import 'package:onedosehealth/features/home/viewmodel/home_vm.dart';
+import 'package:provider/provider.dart';
+import '../../features/appointments/patient_appointments_screen.dart';
+import '../../features/appointments/web_conferance_screen.dart';
+import '../../features/results/e_result_screen.dart';
+import '../../features/results/visit_detail_screen.dart';
+import '../../features/store/covid_19/covid_19_screen.dart';
+import '../../features/store/credit_card/credit_card_screen.dart';
+import '../../features/store/for_you_categories/for_you_categories_screen.dart';
+import '../../features/store/for_you_order_summary/order_summary.dart';
+import '../../features/store/for_you_sub_categories/for_you_sub_categories_screen.dart';
+import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
+import '../../features/store/shopping_cart/shopping_cart_screen.dart';
+import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
+import '../../features/take_appointment/department_list/department_list_screen.dart';
+import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
+import '../../features/take_appointment/events/events_screen.dart';
+import '../../features/take_appointment/resources/resources_screen.dart';
+import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
 import 'package:vrouter/vrouter.dart';
 
-import '../../ui/account/ada/ada_symptom_analyzer.dart';
-import '../../ui/account/add_patient_relatives/add_patient_relatives_screen.dart';
-import '../../ui/account/all_files/all_files_screen.dart';
-import '../../ui/account/change_password/change_password_screen.dart';
-import '../../ui/account/full_image_viewer_screen.dart';
-import '../../ui/account/patient_relatives/patient_relatives_screen.dart';
-import '../../ui/account/personal_information/personal_information_screen.dart';
-import '../../ui/account/profile_image_viewer_screen.dart';
-import '../../ui/account/youtube/youtube_viewer_mobile_screen.dart';
-import '../../ui/account/youtube/youtube_viewer_web_screen.dart';
-import '../../ui/dashboard/dashboard_navigation.dart';
-import '../../ui/dashboard/home/e_result/e_result_screen.dart';
-import '../../ui/dashboard/home/e_result/visit_detail_screen.dart';
-import '../../ui/dashboard/patient_appointments/patient_appointments_screen.dart';
-import '../../ui/dashboard/patient_appointments/web_conferance_screen.dart';
-import '../../ui/dashboard/search/search_screen.dart';
-import '../../ui/home/for_you/covid_19/covid_19_screen.dart';
-import '../../ui/home/for_you/credit_card/credit_card_screen.dart';
-import '../../ui/home/for_you/for_you_categories/for_you_categories_screen.dart';
-import '../../ui/home/for_you/for_you_order_summary/order_summary.dart';
-import '../../ui/home/for_you/for_you_sub_categories/for_you_sub_categories_screen.dart';
-import '../../ui/home/for_you/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
-import '../../ui/home/for_you/shopping_cart/shopping_cart_screen.dart';
-import '../../ui/home/request_suggestions/request_suggestions_screen.dart';
-import '../../ui/home/take_appointment/appointment_summary/appointment_summary_screen.dart';
-import '../../ui/home/take_appointment/department_list/department_list_screen.dart';
-import '../../ui/home/take_appointment/doctor_cv/doctor_cv_screen.dart';
-import '../../ui/home/take_appointment/events/events_screen.dart';
-import '../../ui/home/take_appointment/resources/resources_screen.dart';
-import '../../ui/home/take_appointment/tenant_list/tenant_list_screen.dart';
-import '../../ui/shared/full_pdf_viewer_screen.dart';
-import '../../ui/shared/webview_screen.dart';
-import '../../ui/authorization/forgot_password/forgot_password_step1_screen.dart';
-import '../../ui/authorization/forgot_password/forgot_password_step2_screen.dart';
-import '../../ui/authorization/login/login_screen.dart';
-import '../../ui/authorization/register/register_step1_screen.dart';
-import '../../ui/authorization/register/register_step2_screen.dart';
-import '../../ui/authorization/register/register_step3_screen.dart';
-import '../locator.dart';
-import '../utils/user_info.dart';
+import '../../features/account/ada/ada_symptom_analyzer.dart';
+import '../../features/account/add_patient_relatives/add_patient_relatives_screen.dart';
+import '../../features/account/all_files/all_files_screen.dart';
+import '../../features/account/change_password/change_password_screen.dart';
+import '../../features/account/full_image_viewer_screen.dart';
+import '../../features/account/patient_relatives/patient_relatives_screen.dart';
+import '../../features/account/personal_information/personal_information_screen.dart';
+import '../../features/account/profile_image_viewer_screen.dart';
+import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
+import '../../features/account/youtube/youtube_viewer_web_screen.dart';
+import '../../features/shared/full_pdf_viewer_screen.dart';
+import '../../features/shared/webview_screen.dart';
+import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
+import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
+import '../../features/auth/login/login_screen.dart';
+import '../../features/auth/register/register_step1_screen.dart';
+import '../../features/auth/register/register_step2_screen.dart';
+import '../../features/auth/register/register_step3_screen.dart';
 
 class VRouterRoutes {
   static var routes = [
-    VGuard(
-      beforeEnter: (vRedirector) async =>
-          (await getIt<UserInfo>().checkAccessToken()) == false
-              ? vRedirector.to(PagePaths.LOGIN)
-              : null,
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.MAIN,
-          widget: Container(),
-          stackedRoutes: [
-            DashboardNavigation(true),
-          ],
-        ),
-      ],
+    VWidget(
+      path: PagePaths.MAIN,
+      widget: HomeScreen(title: 'title'),
     ),
 
     VWidget(
       path: PagePaths.LOGIN,
-      widget: LoginScreen(),
+      widget: HomeScreen(title: 'title'), // LoginScreen(),
     ),
 
     VWidget(
@@ -98,11 +85,6 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.DOCTOR_CV,
       widget: DoctorCvScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.SEARCH,
-      widget: SearchScreen(),
     ),
 
     VWidget(
@@ -168,11 +150,6 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.DEPARTMENTS,
       widget: DepartmentListScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.REQUEST_SUGGESTION,
-      widget: RequestSuggestionsScreen(),
     ),
 
     VWidget(
@@ -267,7 +244,6 @@ class PagePaths {
   static const FORGOT_PASSWORD_STEP_2 = '/change-password-with-old';
   static const APPOINTMENT_SUMMARY = '/appointment-summary';
   static const DOCTOR_CV = '/doctor-cv';
-  static const SEARCH = '/search';
   static const HOSPITALS = '/hospitals';
   static const COVID19 = '/covid19';
   static const ERESULT = '/results';
@@ -281,7 +257,6 @@ class PagePaths {
   static const RELATIVES = '/relatives';
   static const CHANGE_PASSWORD = '/change-password';
   static const DEPARTMENTS = '/departments';
-  static const REQUEST_SUGGESTION = '/request-suggestion';
   static const RESOURCES = '/resources';
   static const EVENTS = '/events';
   static const APPOINTMENTS = '/appointments';

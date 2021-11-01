@@ -5,7 +5,7 @@ class _Endpoints {
       '/auth/realms/GuvenComplex/protocol/openid-connect/token'.xSSOPath;
 
   final getAllPackagePath = '/Package/get-all'.xBasePath;
-  String getAllSubCategoriesPath(id) =>
+  String getAllSubCategoriesPath(int id) =>
       '/Package/get-all-sub-categories/$id'.xBasePath;
   String getSubCategoryDetailPath(id) =>
       '/Package/get-all-sub-category-pages/$id'.xBasePath;

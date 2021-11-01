@@ -1,4 +1,6 @@
-class ForYouSubCategoryDetailResponse {
+import '../../../core/core.dart';
+
+class ForYouSubCategoryDetailResponse extends IBaseModel<ForYouSubCategoryDetailResponse> {
   String text;
   String title;
   String image;
@@ -18,6 +20,7 @@ class ForYouSubCategoryDetailResponse {
     id = json['id'];
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['text'] = this.text;
@@ -25,5 +28,10 @@ class ForYouSubCategoryDetailResponse {
     data['image'] = this.image;
     data['id'] = this.id;
     return data;
+  }
+
+  @override
+  ForYouSubCategoryDetailResponse fromJson(Map<String, dynamic> json) {
+    return ForYouSubCategoryDetailResponse.fromJson(json);
   }
 }

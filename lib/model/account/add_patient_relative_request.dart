@@ -46,7 +46,7 @@ class AddPatientRelativeRequest {
     passportNumber = json['passportNumber'];
     patientType = json['patientType'];
     if (json['patinet_health_companies'] != null) {
-      patinetHealthCompanies = new List<PatinetHealthCompanies>();
+      patinetHealthCompanies = <PatinetHealthCompanies>[];
       json['patinet_health_companies'].forEach((v) {
         patinetHealthCompanies.add(new PatinetHealthCompanies.fromJson(v));
       });

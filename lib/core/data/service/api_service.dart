@@ -18,9 +18,9 @@ abstract class ApiService {
 
   // for_you_services.dart
   Future<List<ForYouCategoryResponse>> getAllPackage(String path);
-  Future<List<ForYouCategoryResponse>> getAllSubCategories(var id);
-  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(var id);
-  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(var id);
+  Future<List<ForYouCategoryResponse>> getAllSubCategories(String path);
+  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(String path);
+  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(int id);
   Future<String> doPackagePayment(PackagePaymentRequest packagePayment);
 
   Future<GuvenResponseModel> registerStep2Ui(
@@ -40,7 +40,7 @@ abstract class ApiService {
 
   //
   Future<List<FilterTenantsResponse>> filterTenants(
-      FilterTenantsRequest filterTenantsRequest);
+     String path, FilterTenantsRequest filterTenantsRequest);
   Future<List<FilterDepartmentsResponse>> filterDepartments(
       FilterDepartmentsRequest filterDepartmentsRequest);
   Future<List<FilterResourcesResponse>> filterResources(

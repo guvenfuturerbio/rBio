@@ -456,7 +456,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
     if (pickerData != null &&
         pickerData.length > 0 &&
         (data == null || data.length == 0)) {
-      if (data == null) data = new List<PickerItem<T>>();
+      if (data == null) data = <PickerItem<T>>[];
       if (isArray) {
         _parseArrayPickerDataItem(pickerData, data);
       } else {
@@ -465,7 +465,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
     }
   }
 
-  _parseArrayPickerDataItem(List pickerData, List<PickerItem> data) {
+  void _parseArrayPickerDataItem(List pickerData, List<PickerItem> data) {
     if (pickerData == null) return;
     for (int i = 0; i < pickerData.length; i++) {
       var v = pickerData[i];
@@ -473,7 +473,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
       List lv = v;
       if (lv.length == 0) continue;
 
-      PickerItem item = new PickerItem<T>(children: List<PickerItem<T>>());
+      PickerItem item = new PickerItem<T>(children: <PickerItem<T>>[]);
       data.add(item);
 
       for (int j = 0; j < lv.length; j++) {
@@ -503,7 +503,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
         for (int j = 0; j < _mapList.length; j++) {
           var _o = map[_mapList[j]];
           if (_o is List && _o.length > 0) {
-            List<PickerItem> _children = new List<PickerItem<T>>();
+            List<PickerItem> _children = <PickerItem<T>>[];
             //print('add: ${data.runtimeType.toString()}');
             data.add(
                 new PickerItem<T>(value: _mapList[j], children: _children));
@@ -563,7 +563,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
   @override
   void initSelects() {
     if (picker.selecteds == null || picker.selecteds.length == 0) {
-      if (picker.selecteds == null) picker.selecteds = new List<int>();
+      if (picker.selecteds == null) picker.selecteds = <int>[];
       for (int i = 0; i < _maxLevel; i++) picker.selecteds.add(0);
     }
   }
@@ -694,7 +694,7 @@ class NumberPickerAdapter extends PickerAdapter<int> {
   void initSelects() {
     int _maxLevel = getMaxLevel();
     if (picker.selecteds == null || picker.selecteds.length == 0) {
-      if (picker.selecteds == null) picker.selecteds = new List<int>();
+      if (picker.selecteds == null) picker.selecteds = <int>[];
       for (int i = 0; i < _maxLevel; i++) {
         int v = data[i].indexOf(data[i].initValue);
         if (v < 0) v = 0;
@@ -915,7 +915,7 @@ class DateTimePickerAdapter extends PickerAdapter<DateTime> {
     _colAP = _getAPColIndex();
     int _maxLevel = getMaxLevel();
     if (picker.selecteds == null || picker.selecteds.length == 0) {
-      if (picker.selecteds == null) picker.selecteds = new List<int>();
+      if (picker.selecteds == null) picker.selecteds = <int>[];
       for (int i = 0; i < _maxLevel; i++) picker.selecteds.add(0);
     }
   }

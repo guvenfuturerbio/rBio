@@ -33,4 +33,9 @@ class ResourcesRequest {
         'to': to,
         'id': id,
       };
+
+  @override
+  String toString() {
+    return 'ResourcesRequest(tenantId: $tenantId, departmentId: $departmentId, resourceId: $resourceId, from: $from, to: $to, id: $id)';
+  }
 }

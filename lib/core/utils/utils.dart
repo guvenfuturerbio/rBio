@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -11,17 +13,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:onedosehealth/features/shared/do_not_show_again_dialog.dart';
 
 import '../../generated/i18n.dart';
 import '../../model/model.dart';
-import '../../ui/shared/do_not_show_again_dialog.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';
 import '../events/success_events.dart';
 import '../locator.dart';
 import '../manager/analytics_manager.dart';
 import '../navigation/app_paths.dart';
-import '../widgets/gradient_dialog.dart';
+import '../widgets/warning_dialog.dart';
 import '../widgets/guven_alert.dart';
 
 InputDecoration inputImageDecoration(
@@ -97,11 +99,12 @@ CircularProgressIndicator progress({
       backgroundColor: R.color.light_blue,
     );
 
-GradientButton button(
-        {text: String,
-        Function onPressed,
-        double height = 16,
-        double width = 200}) =>
+GradientButton button({
+  text: String,
+  Function onPressed,
+  double height = 16,
+  double width = 200,
+}) =>
     GradientButton(
       increaseHeightBy: height,
       increaseWidthBy: width,
@@ -114,27 +117,7 @@ GradientButton button(
       textStyle: TextStyle(
           fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
       callback: onPressed,
-      gradient: BlueGradient(),
-      shadowColor: Colors.black,
-    );
-
-GradientButton dialogFormButton(
-        {text: String, Function onPressed, double height, double width}) =>
-    GradientButton(
-      increaseHeightBy: height ?? 16,
-      increaseWidthBy: width ?? 50,
-      shapeRadius: BorderRadius.all(Radius.zero),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(color: R.color.blue),
-      ),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-      callback: onPressed,
-      gradient: LinearGradient(
-          colors: [R.color.white, R.color.white],
-          begin: Alignment.bottomLeft,
-          end: Alignment.centerRight),
+      gradient: AppGradient(),
       shadowColor: Colors.black,
     );
 
@@ -224,6 +207,9 @@ Widget CallMeWidget({BuildContext context, Function onPressed}) => Column(
 
 Widget ButtonBackWhite(BuildContext context) => IconButton(
       icon: SvgPicture.asset(R.image.ic_back_white),
+      padding: EdgeInsets.only(
+        top: Atom.isWeb ? 8 : 4,
+      ),
       onPressed: () {
         Atom.historyBack();
       },
@@ -302,11 +288,7 @@ Widget MainAppBar(
           child: Stack(
             children: <Widget>[
               Positioned(
-                child: leading == null
-                    ? Container()
-                    : kIsWeb
-                        ? Container()
-                        : leading,
+                child: leading == null ? Container() : leading,
                 left: 0,
               ),
               Center(
@@ -326,7 +308,7 @@ Widget MainAppBar(
               )
             ],
           ),
-          decoration: BoxDecoration(gradient: BlueGradient()),
+          decoration: BoxDecoration(gradient: AppGradient()),
         ),
         preferredSize: Size(MediaQuery.of(context).size.width, 50.0));
 
@@ -447,11 +429,6 @@ String getFormattedDateWithTime(String date) {
   return textDate;
 }
 
-Gradient BlueGradient() => LinearGradient(
-    colors: [R.color.blue, R.color.light_blue],
-    begin: Alignment.bottomLeft,
-    end: Alignment.centerRight);
-
 Gradient passiveBlueGradient() => LinearGradient(
     colors: [R.color.blue.withAlpha(50), R.color.light_blue.withAlpha(50)],
     begin: Alignment.bottomLeft,
@@ -467,14 +444,6 @@ BoxDecoration ShadowDecorationWhite() => BoxDecoration(
             offset: Offset(0, 1))
       ],
     );
-
-class AppUtils {
-  static void _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
-}
 
 /// Page Irrelevant operations
 class UtilityManager {
@@ -493,17 +462,6 @@ class UtilityManager {
       return;
     } else {
       FocusScope.of(context).requestFocus(nextFocus);
-    }
-  }
-
-  String getHospitalNameById(int id) {
-    switch (id) {
-      case 3:
-        return "Güven Hastanesi Çayyolu";
-      case 4:
-        return "Güven Çayyolu Kampüsü";
-      case 11:
-        return "Online Hospital";
     }
   }
 
@@ -552,12 +510,12 @@ class UtilityManager {
     );
   }
 
-  showGradientDialog(BuildContext context, String title, String text) {
+  void showGradientDialog(BuildContext context, String title, String text) {
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return GradientDialog(title, text);
+        return WarningDialog(title, text);
       },
     );
   }
@@ -607,7 +565,6 @@ class UtilityManager {
 }
 
 extension on AndroidDeviceInfo {
-  @override
   String toJsonString() {
     Map<String, dynamic> jsonMap = new Map();
     jsonMap.addAll({
@@ -634,7 +591,6 @@ extension on AndroidDeviceInfo {
 }
 
 extension on IosDeviceInfo {
-  @override
   String toJsonString() {
     Map<String, dynamic> jsonMap = new Map();
     jsonMap.addAll({
@@ -888,3 +844,9 @@ String fillAllFields(String formContext, String userName, String email,
 }
 
 String GetEnumValue(e) => e.toString().split('.').last;
+
+Gradient AppGradient() => LinearGradient(
+      colors: [R.color.blue, R.color.light_blue],
+      begin: Alignment.bottomLeft,
+      end: Alignment.centerRight,
+    );

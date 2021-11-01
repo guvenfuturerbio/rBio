@@ -22,62 +22,55 @@ class CustomPopUpDropDown extends StatefulWidget {
 class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
   @override
   Widget build(BuildContext context) {
-    Widget okButton = FlatButton(
-      child: Text(LocaleProvider.of(context).btn_cancel.toUpperCase()),
-      textColor: Colors.white,
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
     return GuvenAlert(
-      backgroundColor: R.color.online_appointment,
-      title: Text(
-        widget.title,
-        style: TextStyle(
-            fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white),
-        textAlign: TextAlign.center,
-      ),
+      backgroundColor: Colors.white,
+      title: GuvenAlert.buildTitle(widget.title),
       actions: [
-        okButton,
+        GuvenAlert.buildMaterialAction(
+          LocaleProvider.of(context).btn_cancel.toUpperCase(),
+          () {
+            Navigator.of(context).pop();
+          },
+        ),
       ],
+
+      //
       content: Container(
-        margin: EdgeInsets.all(30),
         height: 200,
-        decoration: new BoxDecoration(
-            borderRadius: BorderRadius.circular(50), gradient: BlueGradient()),
+        margin: EdgeInsets.all(30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+        ),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: List.generate(widget.translators.length, (index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                  widget.onChange(index);
-                },
-                child: Container(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.translators[index].language,
-                        style: TextStyle(color: R.color.white),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
+            children: List.generate(
+              widget.translators.length,
+              (index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    widget.onChange(index);
+                  },
+                  child: Container(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.translators[index].language,
+                          style: TextStyle(color: R.color.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              },
+            ),
           ),
         ),
       ),
     );
   }
-
-  Gradient BlueGradient() => LinearGradient(
-      colors: [R.color.online_appointment, R.color.light_online_appointment],
-      begin: Alignment.bottomLeft,
-      end: Alignment.centerRight);
 }

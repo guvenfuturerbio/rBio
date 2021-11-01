@@ -1,4 +1,4 @@
-export 'atom/atom.dart';
+export 'package:atom/atom.dart';
 
 export "constants/constants.dart";
 
@@ -30,6 +30,10 @@ export "manager/user_manager.dart";
 
 export "navigation/app_paths.dart";
 
+export 'theme/main_theme.dart';
+export 'theme/theme_notifier.dart';
+export 'theme/theme_type.dart';
+
 export "utils/deep_link_handler_new.dart";
 export "utils/jwt_token_parser.dart";
 export "utils/logger_helper.dart";
@@ -47,7 +51,7 @@ export "widgets/custom_drop_down.dart";
 export "widgets/custom_gradient_prgress.dart";
 export "widgets/custom_spakline_widget.dart";
 export "widgets/detailed_gradient_message.dart";
-export "widgets/gradient_dialog.dart";
+export 'widgets/warning_dialog.dart';
 export 'widgets/gradient_dialog_for_payment_dialog.dart';
 export 'widgets/gradient_dialog_possible_errors_dialog.dart';
 export "widgets/loading_dialog.dart";
@@ -56,6 +60,8 @@ export "widgets/picker.dart";
 export "widgets/query_parameters_error_widget.dart";
 export 'widgets/guven_alert.dart';
 export 'widgets/custom_popup_dropdown.dart';
+export 'widgets/rbio_appbar.dart';
+export 'widgets/guven_date_range.dart';
 
 export 'locator.dart';
 export 'package:onedosehealth/generated/l10n.dart';
