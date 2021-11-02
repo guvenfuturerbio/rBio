@@ -44,7 +44,7 @@ class RbioAppBar extends PreferredSize {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    height: Atom.height * 0.08,
+                    height: Atom.height * 0.075,
                     child: Image.asset(
                       R.image.oneDoseHealthPng,
                       fit: BoxFit.fitHeight,

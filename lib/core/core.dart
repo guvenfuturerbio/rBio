@@ -63,6 +63,7 @@ export "widgets/query_parameters_error_widget.dart";
 export 'widgets/guven_alert.dart';
 export 'widgets/custom_popup_dropdown.dart';
 export 'widgets/rbio_appbar.dart';
+export 'widgets/rbio_user_tile.dart';
 export 'widgets/guven_date_range.dart';
 
 export 'locator.dart';

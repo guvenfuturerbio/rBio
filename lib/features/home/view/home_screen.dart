@@ -21,50 +21,55 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    /// Alt kısım ana ekran tasarımı.
-    /// ------------------------------------------
     return Consumer<ListItemVm>(
-      builder: (BuildContext context, ListItemVm val, Widget child) =>
-          GestureDetector(
-        onLongPress: () {
-          val.changeStatus();
+      builder: (
+        BuildContext context,
+        ListItemVm val,
+        Widget child,
+      ) {
+        return GestureDetector(
+          onLongPress: () {
+            val.changeStatus();
+          },
+          child: Scaffold(
+            appBar: _buildAppBar(val),
+            body: _buildBody(val),
+          ),
+        );
+      },
+    );
+  }
+
+  PreferredSize _buildAppBar(ListItemVm val) {
+    return RbioAppBar(
+      actions: [
+        IconButton(
+          onPressed: () {
+            val.showRemovedWidgets();
+          },
+          icon: Icon(
+            Icons.add,
+            size: Atom.width * 0.08,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBody(ListItemVm val) {
+    return Padding(
+      padding: R.sizes.screenHorizontalPadding,
+      child: ReorderableWrap(
+        alignment: WrapAlignment.center,
+        buildDraggableFeedback: (_, __, children) {
+          return children;
         },
-        child: Scaffold(
-            appBar: RbioAppBar(
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    val.showRemovedWidgets();
-                  },
-                  icon: const Icon(
-                    Icons.add,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Atom.width * .02,
-                vertical: Atom.height * .01,
-              ),
-              child: ReorderableWrap(
-                alignment: WrapAlignment.center,
-                /*buildItemsContainer: (_, __, children) {
-                  print(children);
-                  return Wrap(children: val.widgetsInUse);
-                },*/
-                buildDraggableFeedback: (_, __, children) {
-                  return children;
-                },
-                spacing: Atom.width * .03,
-                runSpacing: Atom.width * .03,
-                needsLongPressDraggable: true,
-                children: val.widgetsInUse,
-                onReorder: val.onReorder,
-              ),
-            )),
+        spacing: Atom.width * .03,
+        runSpacing: Atom.width * .03,
+        needsLongPressDraggable: true,
+        children: val.widgetsInUse,
+        onReorder: val.onReorder,
       ),
     );
   }

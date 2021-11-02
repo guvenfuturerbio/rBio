@@ -1,12 +1,27 @@
-import 'package:flutter/cupertino.dart';
-import 'package:onedosehealth/features/account/profile/view/profile_screen.dart';
-import 'package:onedosehealth/features/home/view/home_screen.dart';
-import 'package:onedosehealth/features/home/viewmodel/home_vm.dart';
-import 'package:provider/provider.dart';
+import 'package:vrouter/vrouter.dart';
+
+import '../../features/account/ada/ada_symptom_analyzer.dart';
+import '../../features/account/add_patient_relatives/add_patient_relatives_screen.dart';
+import '../../features/account/all_files/all_files_screen.dart';
+import '../../features/account/change_password/change_password_screen.dart';
+import '../../features/account/full_image_viewer_screen.dart';
+import '../../features/account/patient_relatives/patient_relatives_screen.dart';
+import '../../features/account/personal_information/personal_information_screen.dart';
+import '../../features/account/profile_image_viewer_screen.dart';
+import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
+import '../../features/account/youtube/youtube_viewer_web_screen.dart';
 import '../../features/appointments/patient_appointments_screen.dart';
 import '../../features/appointments/web_conferance_screen.dart';
+import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
+import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
+import '../../features/auth/register/register_step1_screen.dart';
+import '../../features/auth/register/register_step2_screen.dart';
+import '../../features/auth/register/register_step3_screen.dart';
+import '../../features/home/view/home_screen.dart';
 import '../../features/results/e_result_screen.dart';
 import '../../features/results/visit_detail_screen.dart';
+import '../../features/shared/full_pdf_viewer_screen.dart';
+import '../../features/shared/webview_screen.dart';
 import '../../features/store/covid_19/covid_19_screen.dart';
 import '../../features/store/credit_card/credit_card_screen.dart';
 import '../../features/store/for_you_categories/for_you_categories_screen.dart';
@@ -20,36 +35,17 @@ import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../../features/take_appointment/events/events_screen.dart';
 import '../../features/take_appointment/resources/resources_screen.dart';
 import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
-import 'package:vrouter/vrouter.dart';
-
-import '../../features/account/ada/ada_symptom_analyzer.dart';
-import '../../features/account/add_patient_relatives/add_patient_relatives_screen.dart';
-import '../../features/account/all_files/all_files_screen.dart';
-import '../../features/account/change_password/change_password_screen.dart';
-import '../../features/account/full_image_viewer_screen.dart';
-import '../../features/account/patient_relatives/patient_relatives_screen.dart';
-import '../../features/account/personal_information/personal_information_screen.dart';
-import '../../features/account/profile_image_viewer_screen.dart';
-import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
-import '../../features/account/youtube/youtube_viewer_web_screen.dart';
-import '../../features/shared/full_pdf_viewer_screen.dart';
-import '../../features/shared/webview_screen.dart';
-import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
-import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
-import '../../features/auth/register/register_step1_screen.dart';
-import '../../features/auth/register/register_step2_screen.dart';
-import '../../features/auth/register/register_step3_screen.dart';
 
 class VRouterRoutes {
   static var routes = [
     VWidget(
       path: PagePaths.MAIN,
-      widget: ProfileScreen(),
+      widget: HomeScreen(title: ''),
     ),
 
     VWidget(
       path: PagePaths.LOGIN,
-      widget: ProfileScreen(), // LoginScreen(),
+      widget: HomeScreen(title: ''), // LoginScreen(),
     ),
 
     VWidget(

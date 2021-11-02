@@ -37,7 +37,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _buildVerticalGap(),
 
           //
-          _buildCircleTile(),
+          RbioUserTile(
+            name: 'Ayşe Yıldırım',
+            onTap: () {},
+          ),
 
           //
           Container(
@@ -78,6 +81,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
+
+          //
+          _buildVerticalGap(),
         ],
       ),
     );
@@ -86,45 +92,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildVerticalGap() => SizedBox(height: Atom.height * 0.015);
 
   Widget _buildHorizontalGap() => SizedBox(width: Atom.width * 0.025);
-
-  Widget _buildCircleTile({
-    bool isBackColor = false,
-    bool isTrailingArrow = false,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: isBackColor ? Colors.white : Colors.transparent,
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 14,
-        ),
-        leading: CircleAvatar(
-          backgroundColor: getIt<ITheme>().mainColor,
-          backgroundImage: NetworkImage(R.image.mockAvatar),
-          radius: Atom.width * 0.050,
-        ),
-        title: Text(
-          'Ayşe Yıldırım',
-          style: context.xHeadline3.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        trailing: isTrailingArrow
-            ? const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.grey,
-                size: 25,
-              )
-            : SizedBox(),
-      ),
-    );
-  }
 
   Widget _buildNumberTile(int number, String title) {
     return Expanded(
