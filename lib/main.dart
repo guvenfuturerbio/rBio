@@ -11,7 +11,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'core/core.dart';
 import 'features/home/viewmodel/home_vm.dart';
-
+ 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SecretUtils.instance.setup(Environment.PROD);
@@ -20,6 +20,16 @@ Future<void> main() async {
   _setupLogging();
   _initFirebaseMessaging();
   RegisterViews.instance.init();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.black,
+      systemNavigationBarDividerColor: Colors.grey,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
   await SentryFlutter.init(
     (SentryFlutterOptions options) {
       options.dsn = SecretUtils.instance.get(SecretKeys.SENTRY_DSN);

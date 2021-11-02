@@ -23,9 +23,11 @@ class RbioAppBar extends PreferredSize {
             leading: leading ??
                 Align(
                   alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: Atom.width * 0.01,
+                  child: Container(
+                    color: Colors.transparent,
+                    padding: EdgeInsets.symmetric(
+                      vertical: Atom.width * 0.04,
+                      horizontal: Atom.width * 0.02,
                     ),
                     child: InkWell(
                       child: SvgPicture.asset(
@@ -44,7 +46,7 @@ class RbioAppBar extends PreferredSize {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    height: Atom.height * 0.075,
+                    height: Atom.height * 0.065,
                     child: Image.asset(
                       R.image.oneDoseHealthPng,
                       fit: BoxFit.fitHeight,

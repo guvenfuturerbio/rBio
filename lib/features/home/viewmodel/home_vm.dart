@@ -16,16 +16,22 @@ class ListItemVm extends ChangeNotifier {
   double startAngle = 0;
   double endAngle = 0;
   ShakeMod status = ShakeMod.notShaken;
+
   //Kullanımda olan ve ekranda gösterilen widgetların tutulduğu liste
   List<Widget> widgetsInUse = [];
+
   //Ekrandan silinen ama menüde görünmesi gereken silinmiş widgetları gösteren liste
   List<Widget> widgetsDeleted = [];
+
   //Silinmiş widgetların keylerini tutan listemiz. Shared Preferences için kullanılıyor.
   List<String> deletedKeysHolder = [];
+
   //Elde tutulan widgetların sırasını tutan listemiz. Shared Preferences için kullanılıyor.
   List<String> queryOfWidgetsInUse = [];
+
   //Widgetların içerisinde bulunan onTap methodu için kullanılan bool değerimiz.
   bool isForDelete = false;
+
   SpringController springController;
 
   ListItemVm({this.mContext}) {
@@ -37,7 +43,7 @@ class ListItemVm extends ChangeNotifier {
     });
   }
 
-//Uygulama ilk açıldığında, silinmiş widgetların keylerini tutan veriyi shared preferences içinden çekip kullanılan widget listesini dolduran method.
+  // Uygulama ilk açıldığında, silinmiş widgetların keylerini tutan veriyi shared preferences içinden çekip kullanılan widget listesini dolduran method.
   fetchWidgets() {
     if (getIt<ISharedPreferencesManager>()
         .containsKey(SharedPreferencesKeys.DELETED_WIDGETS)) {
@@ -64,7 +70,7 @@ class ListItemVm extends ChangeNotifier {
     }
   }
 
-//Kullanıcı widget sildiğinde çalışan fonks.
+  // Kullanıcı widget sildiğinde çalışan fonks.
   Future<void> removeWidget(Key widgetKey) async {
     for (var element in widgetsInUse) {
       if (element.key == widgetKey) {
@@ -79,7 +85,7 @@ class ListItemVm extends ChangeNotifier {
     notifyListeners();
   }
 
-//Kullanıcı widget eklediğinde çalışan fonks.
+  // Kullanıcı widget eklediğinde çalışan fonks.
   Future<void> addWidget(Key widgetKey) async {
     for (var elementO in widgetsDeleted) {
       if (elementO.key == widgetKey) {
@@ -96,14 +102,14 @@ class ListItemVm extends ChangeNotifier {
     Atom.dismiss();
   }
 
-//Kullanıcı widgetların sırasını değiştirdiğinde çalışan fonks.
+  // Kullanıcı widgetların sırasını değiştirdiğinde çalışan fonks.
   void onReorder(int oldIndex, int newIndex) async {
     Widget row = widgetsInUse.removeAt(oldIndex);
     await widgetsInUse.insert(newIndex, row);
     await querySaver();
   }
 
-//Yeri değişmiş, silinmiş veya eklenmiş widgetlardan sonra çalışan sıra kaydedici fonks.
+  // Yeri değişmiş, silinmiş veya eklenmiş widgetlardan sonra çalışan sıra kaydedici fonks.
   void querySaver() async {
     queryOfWidgetsInUse.clear();
     widgetsInUse.forEach((element) {
@@ -125,43 +131,46 @@ class ListItemVm extends ChangeNotifier {
     notifyListeners();
   }
 
-//Widget eklemek için açılan menü
+  // Widget eklemek için açılan menü
   void showRemovedWidgets() {
     isForDelete = true;
     notifyListeners();
+
     Atom.show(
       Container(
         color: Colors.black12.withOpacity(0.8),
         child: Consumer<ListItemVm>(
-          builder: (_, val, __) => SizedBox.expand(
+          builder: (BuildContext context, ListItemVm val, Widget child) {
+            return SizedBox.expand(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Wrap(
-                //alignment: WrapAlignment.center,
-                spacing: 10,
-                runSpacing: 0,
-                children: widgetsDeleted,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 0,
+                    children: widgetsDeleted,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      isForDelete = false;
+                      notifyListeners();
+                      Atom.dismiss();
+                    },
+                    child: const Text(
+                      'Dismiss',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  isForDelete = false;
-                  notifyListeners();
-                  Atom.dismiss();
-                },
-                child: const Text(
-                  'Dismiss',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
-          )),
+            );
+          },
         ),
       ),
     );
   }
 
-//Widgetların sırasını çektikten sonra sırasına göre doldurluğumuz listenin beslendiği map.
+  // Widgetların sırasını çektikten sonra sırasına göre doldurluğumuz listenin beslendiği map.
   Map<String, Widget> widgetMap() {
     List<Widget> returner = widgets();
     return <String, Widget>{
@@ -176,7 +185,7 @@ class ListItemVm extends ChangeNotifier {
     };
   }
 
-  //Tüm widgetları çeken fonks.
+  // Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
         MyReorderableWidget(
           key: const Key('1'),
@@ -188,22 +197,14 @@ class ListItemVm extends ChangeNotifier {
                 Atom.to(PagePaths.PROFILE);
               }
             },
-            child: CustomCard.getImageSquare(
-              "assets/images/asd.png",
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Ergün Yunus Cengiz",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Atom.height * 0.07,
-              Atom.height * 0.07,
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.grey,
-                size: 25,
-              ),
+            child: RbioUserTile(
+              name: "Ergün Yunus Cengiz",
+              imageUrl: R.image.mockAvatar,
+              leadingImage: UserLeadingImage.Circle,
+              trailingIcon: UserTrailingIcons.RightArrow,
+              onTap: () {
+                Atom.to(PagePaths.PROFILE);
+              },
             ),
           ),
         ),
@@ -237,11 +238,12 @@ class ListItemVm extends ChangeNotifier {
               }
             },
             child: VerticalCard.topImage(
-                bottomTitle: const Text("Görüntülü Görüşme Randevusu",
-                    style: TextStyle(fontSize: 18)),
-                topImg: "assets/images/top_mid.png",
-                height: Atom.height * .25,
-                width: Atom.width * .3),
+              bottomTitle: const Text("Görüntülü Görüşme Randevusu",
+                  style: TextStyle(fontSize: 18)),
+              topImg: "assets/images/top_mid.png",
+              height: Atom.height * .25,
+              width: Atom.width * .3,
+            ),
           ),
         ),
 

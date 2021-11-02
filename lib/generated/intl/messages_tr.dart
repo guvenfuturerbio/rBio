@@ -125,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "doctor_cv_not_uploaded" : MessageLookupByLibrary.simpleMessage("özgeçmiş bilgileri henüz yüklenmedi"),
     "doctor_legand" : MessageLookupByLibrary.simpleMessage("(Memnun Kalmadım 1 … 5 Çok Memnun Kaldım)"),
     "doesnt_match_tc" : MessageLookupByLibrary.simpleMessage("Girilen Tc kimlik numarası kayıt bilgilerinizle uyuşmuyor."),
+    "done" : MessageLookupByLibrary.simpleMessage("Bitti"),
     "dont_ask_again" : MessageLookupByLibrary.simpleMessage("Tekrar sorma"),
     "educations" : MessageLookupByLibrary.simpleMessage("Eğitimleri"),
     "email_address" : MessageLookupByLibrary.simpleMessage("E-Posta Adresiniz"),

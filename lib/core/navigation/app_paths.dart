@@ -1,4 +1,3 @@
-import 'package:onedosehealth/features/account/profile/view/profile_screen.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../features/account/ada/ada_symptom_analyzer.dart';
@@ -8,6 +7,7 @@ import '../../features/account/change_password/change_password_screen.dart';
 import '../../features/account/full_image_viewer_screen.dart';
 import '../../features/account/patient_relatives/patient_relatives_screen.dart';
 import '../../features/account/personal_information/personal_information_screen.dart';
+import '../../features/account/profile/view/profile_screen.dart';
 import '../../features/account/profile_image_viewer_screen.dart';
 import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
 import '../../features/account/youtube/youtube_viewer_web_screen.dart';
@@ -18,6 +18,7 @@ import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
 import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
+import '../../features/account/followers/view/followers_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/results/e_result_screen.dart';
 import '../../features/results/visit_detail_screen.dart';
@@ -40,6 +41,11 @@ import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
 class VRouterRoutes {
   static var routes = [
     VWidget(
+      path: PagePaths.LOGIN,
+      widget: HomeScreen(), // LoginScreen(),
+    ),
+
+    VWidget(
       path: PagePaths.MAIN,
       widget: HomeScreen(),
     ),
@@ -50,8 +56,8 @@ class VRouterRoutes {
     ),
 
     VWidget(
-      path: PagePaths.LOGIN,
-      widget: HomeScreen(), // LoginScreen(),
+      path: PagePaths.FOLLOWERS,
+      widget: FollowersScreen(),
     ),
 
     VWidget(
@@ -239,6 +245,8 @@ class PagePaths {
 
   static const MAIN = '/home';
   static const PROFILE = '/profile';
+  static const FOLLOWERS = '/followers';
+
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';
   static const REGISTER_STEP_2 = '/register-2';

@@ -40,26 +40,6 @@ class VerticalCard extends StatelessWidget {
     );
   }
 
-  factory VerticalCard.midCount(
-      {int midCount, Widget bottomTitle, double width, double height}) {
-    Widget midImg = Expanded(
-        child: Container(
-      alignment: Alignment.bottomRight,
-      width: Atom.height * 0.25,
-      height: Atom.height * 0.25,
-      decoration:
-          BoxDecoration(shape: BoxShape.circle, color: Colors.green.shade200),
-      child: Center(
-          child: Text(
-        midCount.toString(),
-        style: const TextStyle(fontSize: 20),
-      )),
-    ));
-    Widget bottomTtl = bottomTitle;
-    return VerticalCard(
-        topImage: midImg, bottomTitle: bottomTtl, width: width, height: height);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(

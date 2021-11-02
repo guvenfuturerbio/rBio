@@ -19,7 +19,7 @@ class MyReorderableWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ListItemVm>(
       builder: (_, val, __) {
-        final Widget chiddd = Container(
+        final Widget child = Container(
           padding: padding,
           child: ReorderableWidget(
             key: key,
@@ -27,15 +27,19 @@ class MyReorderableWidget extends StatelessWidget {
             child: Stack(
               alignment: Alignment.topRight,
               children: [
+                //
                 Spring.rotate(
-                    springController: val.springController,
-                    alignment: Alignment.center, //def=center
-                    startAngle: val.startAngle, //def=0
-                    endAngle: val.endAngle, //def=360
-                    animDuration: const Duration(milliseconds: 150), //def=1s
-                    animStatus: (AnimStatus status) {},
-                    curve: Curves.linear, //def=Curves.easInOut
-                    child: body),
+                  springController: val.springController,
+                  alignment: Alignment.center, //def=center
+                  startAngle: val.startAngle, //def=0
+                  endAngle: val.endAngle, //def=360
+                  animDuration: const Duration(milliseconds: 150), //def=1s
+                  animStatus: (AnimStatus status) {},
+                  curve: Curves.linear, //def=Curves.easInOut
+                  child: body,
+                ),
+
+                //
                 Visibility(
                   visible: val.status.isShaken,
                   child: GestureDetector(
@@ -44,15 +48,19 @@ class MyReorderableWidget extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red.withOpacity(.6)),
+                        shape: BoxShape.circle,
+                        color: Colors.red.withOpacity(.6),
+                      ),
                       height: 30,
                       width: 30,
-                      child: const Icon(Icons.remove,
-                          color: Colors.white, size: 10),
+                      child: const Icon(
+                        Icons.remove,
+                        color: Colors.white,
+                        size: 10,
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -64,10 +72,10 @@ class MyReorderableWidget extends StatelessWidget {
               val.changeStatus();
             },
             onTap: () {},
-            child: chiddd,
+            child: child,
           );
         } else {
-          return chiddd;
+          return child;
         }
       },
     );

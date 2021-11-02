@@ -135,6 +135,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Done`
+  String get done {
+    return Intl.message(
+      'Done',
+      name: 'done',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Do you want delete doctor `
   String get content_delete_doctor_first {
     return Intl.message(

@@ -7,7 +7,6 @@ import 'package:reorderables/reorderables.dart';
 
 import '../../../core/core.dart';
 import '../viewmodel/home_vm.dart';
-import '../widgets/card_appo_result.dart';
 
 enum ShakeMod { shaken, notShaken }
 
@@ -42,128 +41,73 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PreferredSize _buildAppBar(ListItemVm val) {
     return RbioAppBar(
-      leading: AnimatedCrossFade(
-        alignment: Alignment.center,
-        duration: kTabScrollDuration,
-        crossFadeState: val.status.isShaken
-            ? CrossFadeState.showFirst
-            : CrossFadeState.showSecond,
-        firstChild: Center(
-          child: IconButton(
-            onPressed: () {
-              val.showRemovedWidgets();
-            },
-            icon: Icon(
-              Icons.add,
-              size: Atom.width * 0.08,
-              color: Colors.white,
+      leading: Center(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: Atom.isWeb ? Atom.width * 0.01 : Atom.width * 0.04),
+          child: RbioSwitcher(
+            showFirstChild: val.status.isShaken,
+            child1: InkWell(
+              onTap: () {
+                val.showRemovedWidgets();
+              },
+              child: Icon(
+                Icons.add,
+                size: Atom.isWeb ? Atom.width * 0.025 : Atom.width * 0.08,
+                color: Colors.white,
+              ),
             ),
-          ),
-        ),
-        secondChild: Center(
-          child: SvgPicture.asset(
-            R.image.ic_relatives,
-            color: Colors.white,
-            width: Atom.width * 0.07,
+            child2: SvgPicture.asset(
+              R.image.ic_relatives,
+              color: Colors.white,
+              width: Atom.isWeb ? Atom.width * 0.020 : Atom.width * 0.07,
+            ),
           ),
         ),
       ),
       actions: [
         //
         Center(
-          child: SizedBox(
-            width: Atom.width * 0.15,
-            child: AnimatedCrossFade(
-              alignment: Alignment.center,
-              duration: kTabScrollDuration,
-              crossFadeState: val.status.isShaken
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              firstChild: TextButton(
-                onPressed: () {
-                  val.changeStatus();
-                },
-                child: Text(
-                  'Done',
-                  style: context.xHeadline3.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              secondChild: Center(
-                child: SvgPicture.asset(
-                  R.image.chat_bubble,
-                  width: Atom.width * 0.07,
+          child: RbioSwitcher(
+            showFirstChild: val.status.isShaken,
+            child1: InkWell(
+              onTap: () {
+                val.changeStatus();
+              },
+              child: Text(
+                LocaleProvider.current.done,
+                style: context.xHeadline3.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+            child2: SvgPicture.asset(
+              R.image.chat_bubble,
+              width: Atom.isWeb ? Atom.width * 0.020 : Atom.width * 0.075,
+            ),
           ),
         ),
+
+        //
+        SizedBox(width: Atom.isWeb ? Atom.width * 0.01 : Atom.width * 0.04),
       ],
     );
   }
 
   Widget _buildBody(ListItemVm val) {
-    return Padding(
-      padding: R.sizes.screenHorizontalPadding,
-      child: ReorderableWrap(
-        alignment: WrapAlignment.center,
-        /*buildItemsContainer: (_, __, children) {
-                  print(children);
-                  return Wrap(children: val.widgetsInUse);
-                },*/
-        buildDraggableFeedback: (_, __, children) {
-          return children;
-        },
-        spacing: Atom.width * 0.0099,
-        runSpacing: Atom.width * .03,
-        needsLongPressDraggable: true,
-        children: val.widgetsInUse,
-        onReorder: val.onReorder,
-      ),
-    );
-  }
-
-  Widget buildListScreen() {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey.shade300,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CardAppoResult.appointment(
-                  date: "10-10-2021",
-                  departmentName: "Endokronoloji",
-                  doctorName: "Cüneyt Akın",
-                  icon: Icon(
-                    Icons.close,
-                    color: Colors.grey.shade700,
-                  ),
-                  tenantName: "Güven Hastanesi Ayrancı",
-                  time: "10:00"),
-              const SizedBox(
-                height: 25,
-              ),
-              CardAppoResult.result(
-                date: "10-10-2021",
-                departmentName: "Endokronoloji",
-                doctorName: "Cüneyt Akın",
-                tenantName: "Güven Hastanesi Ayrancı",
-                isActive: true,
-              ),
-              CardAppoResult.result(
-                date: "10-10-2021",
-                departmentName: "Endokronoloji",
-                doctorName: "Cüneyt Akın",
-                tenantName: "Güven Hastanesi Ayrancı",
-                isActive: false,
-              )
-            ],
-          ),
-        ),
-      ),
+    return ReorderableWrap(
+      alignment: WrapAlignment.center,
+      buildDraggableFeedback: (_, __, children) {
+        return children;
+      },
+      spacing: Atom.width * 0.0099,
+      runSpacing: Atom.width * .03,
+      needsLongPressDraggable: true,
+      children: val.widgetsInUse,
+      onReorder: val.onReorder,
+      scrollDirection: Axis.vertical,
+      padding: R.sizes.screenPadding,
     );
   }
 }

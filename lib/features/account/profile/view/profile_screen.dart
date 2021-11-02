@@ -27,18 +27,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
-      padding: R.sizes.screenHorizontalPadding,
+      padding: R.sizes.screenPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          _buildVerticalGap(),
-
-          //
           RbioUserTile(
-            name: 'Ayşe Yıldırım',
+            name: "Ergün Yunus Cengiz",
+            imageUrl: R.image.mockAvatar,
+            leadingImage: UserLeadingImage.Circle,
             onTap: () {},
           ),
 
@@ -48,11 +47,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildNumberTile(2, 'Çocuklarım'),
+                _buildNumberTile(
+                  2,
+                  'Çocuklarım',
+                  () {},
+                ),
                 _buildHorizontalGap(),
-                _buildNumberTile(2, 'Takipçilerim'),
+                _buildNumberTile(
+                  2,
+                  'Takipçilerim',
+                  () {
+                    Atom.to(PagePaths.FOLLOWERS);
+                  },
+                ),
                 _buildHorizontalGap(),
-                _buildNumberTile(1, 'Takip Ettiklerim'),
+                _buildNumberTile(
+                  1,
+                  'Takip Ettiklerim',
+                  () {},
+                ),
               ],
             ),
           ),
@@ -93,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildHorizontalGap() => SizedBox(width: Atom.width * 0.025);
 
-  Widget _buildNumberTile(int number, String title) {
+  Widget _buildNumberTile(int number, String title, VoidCallback onTap) {
     return Expanded(
       child: ClipRRect(
         borderRadius: R.sizes.borderRadiusCircular,
@@ -141,6 +154,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+
+            //
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -154,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         //
         Container(
           padding: EdgeInsets.symmetric(
-            vertical: 28.0,
+            vertical: 20.0,
             horizontal: 16.0,
           ),
           child: Row(
@@ -173,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //
               SvgPicture.asset(
                 R.image.ic_arrow_right,
-                width: Atom.width * 0.025,
+                width: Atom.isWeb ? Atom.width * 0.005 : Atom.width * 0.025,
               ),
             ],
           ),

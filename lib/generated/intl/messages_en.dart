@@ -129,6 +129,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "doctor_cv_not_uploaded" : MessageLookupByLibrary.simpleMessage("CV has not been uploaded yet"),
     "doctor_legand" : MessageLookupByLibrary.simpleMessage("(Not Satisfied 1 … 5 Very Satisfied)"),
     "doesnt_match_tc" : MessageLookupByLibrary.simpleMessage("The entered Identity number does not match your registration information"),
+    "done" : MessageLookupByLibrary.simpleMessage("Done"),
     "dont_ask_again" : MessageLookupByLibrary.simpleMessage("Don\'t ask me again"),
     "educations" : MessageLookupByLibrary.simpleMessage("Educations"),
     "email_address" : MessageLookupByLibrary.simpleMessage("E-mail Address"),

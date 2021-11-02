@@ -13,33 +13,6 @@ class CustomCard extends StatelessWidget {
     this.trailing = const SizedBox(),
   }) : super(key: key);
 
-  factory CustomCard.getImageSquare(
-    String leadingSquareImage,
-    Widget centerWidget,
-    double height,
-    double width,
-    Widget trailing,
-  ) {
-    Widget leadingSquare = Container(
-      margin: const EdgeInsets.fromLTRB(10, 10, 0, 10),
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        image: DecorationImage(
-          image: AssetImage(leadingSquareImage),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-
-    return CustomCard(
-      leading: leadingSquare,
-      centerWidget: centerWidget,
-      trailing: trailing,
-    );
-  }
-
   factory CustomCard.getImageCircle(String leadingCircleImage,
       Widget centerWidget, double height, double width, Widget trailing) {
     Widget leadingCircle = Container(
