@@ -1,3 +1,4 @@
+import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
 
 class VerticalCard extends StatelessWidget {
@@ -14,21 +15,29 @@ class VerticalCard extends StatelessWidget {
     this.height,
   }) : super(key: key);
 
-  factory VerticalCard.topImage(
-      {String topImg, Widget bottomTitle, double width, double height,}) {
+  factory VerticalCard.topImage({
+    String topImg,
+    Widget bottomTitle,
+    double width,
+    double height,
+  }) {
     Widget topImage = Align(
-        alignment: Alignment.topRight,
-        child: Image.asset(
-          topImg,
-          width: 90,
-          height: 90,
-        ));
+      alignment: Alignment.topRight,
+      child: Image.asset(
+        topImg,
+        width: Atom.height * 0.10,
+        height: Atom.height * 0.10,
+      ),
+    );
+
     Widget bottomTtl = bottomTitle;
+
     return VerticalCard(
-        topImage: topImage,
-        bottomTitle: bottomTtl,
-        width: width,
-        height: height);
+      topImage: topImage,
+      bottomTitle: bottomTtl,
+      width: width,
+      height: height,
+    );
   }
 
   factory VerticalCard.midCount(
@@ -36,8 +45,8 @@ class VerticalCard extends StatelessWidget {
     Widget midImg = Expanded(
         child: Container(
       alignment: Alignment.bottomRight,
-      width: 60,
-      height: 60,
+      width: Atom.height * 0.25,
+      height: Atom.height * 0.25,
       decoration:
           BoxDecoration(shape: BoxShape.circle, color: Colors.green.shade200),
       child: Center(

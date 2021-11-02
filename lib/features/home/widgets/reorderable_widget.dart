@@ -60,10 +60,10 @@ class MyReorderableWidget extends StatelessWidget {
 
         if (!val.status.isShaken) {
           return InkWell(
-            onLongPress: () {},
-            onTap: () {
-              print("MyReorderableWidget Tap");
+            onLongPress: () {
+              val.changeStatus();
             },
+            onTap: () {},
             child: chiddd,
           );
         } else {

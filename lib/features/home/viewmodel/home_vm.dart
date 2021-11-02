@@ -107,7 +107,6 @@ class ListItemVm extends ChangeNotifier {
   void querySaver() async {
     queryOfWidgetsInUse.clear();
     widgetsInUse.forEach((element) {
-      print(element.key.toString());
       queryOfWidgetsInUse.add(element.key.toString());
     });
     await getIt<ISharedPreferencesManager>()
@@ -177,7 +176,7 @@ class ListItemVm extends ChangeNotifier {
     };
   }
 
-//Tüm widgetları çeken fonks.
+  //Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
         MyReorderableWidget(
           key: const Key('1'),
@@ -185,6 +184,8 @@ class ListItemVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(Key('1'));
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.PROFILE);
               }
             },
             child: CustomCard.getImageSquare(

@@ -1,3 +1,4 @@
+import 'package:onedosehealth/features/account/profile/view/profile_screen.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../features/account/ada/ada_symptom_analyzer.dart';
@@ -40,12 +41,17 @@ class VRouterRoutes {
   static var routes = [
     VWidget(
       path: PagePaths.MAIN,
-      widget: HomeScreen(title: ''),
+      widget: HomeScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.PROFILE,
+      widget: ProfileScreen(),
     ),
 
     VWidget(
       path: PagePaths.LOGIN,
-      widget: HomeScreen(title: ''), // LoginScreen(),
+      widget: HomeScreen(), // LoginScreen(),
     ),
 
     VWidget(
@@ -232,6 +238,7 @@ class PagePaths {
   PagePaths._();
 
   static const MAIN = '/home';
+  static const PROFILE = '/profile';
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';
   static const REGISTER_STEP_2 = '/register-2';

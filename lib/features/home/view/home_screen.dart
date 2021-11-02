@@ -1,5 +1,7 @@
 import 'package:atom/atom.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -10,9 +12,7 @@ import '../widgets/card_appo_result.dart';
 enum ShakeMod { shaken, notShaken }
 
 class HomeScreen extends StatefulWidget {
-  final String title;
-
-  const HomeScreen({Key key, @required this.title}) : super(key: key);
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -42,15 +42,62 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PreferredSize _buildAppBar(ListItemVm val) {
     return RbioAppBar(
-      actions: [
-        IconButton(
-          onPressed: () {
-            val.showRemovedWidgets();
-          },
-          icon: Icon(
-            Icons.add,
-            size: Atom.width * 0.08,
+      leading: AnimatedCrossFade(
+        alignment: Alignment.center,
+        duration: kTabScrollDuration,
+        crossFadeState: val.status.isShaken
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
+        firstChild: Center(
+          child: IconButton(
+            onPressed: () {
+              val.showRemovedWidgets();
+            },
+            icon: Icon(
+              Icons.add,
+              size: Atom.width * 0.08,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        secondChild: Center(
+          child: SvgPicture.asset(
+            R.image.ic_relatives,
             color: Colors.white,
+            width: Atom.width * 0.07,
+          ),
+        ),
+      ),
+      actions: [
+        //
+        Center(
+          child: SizedBox(
+            width: Atom.width * 0.15,
+            child: AnimatedCrossFade(
+              alignment: Alignment.center,
+              duration: kTabScrollDuration,
+              crossFadeState: val.status.isShaken
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              firstChild: TextButton(
+                onPressed: () {
+                  val.changeStatus();
+                },
+                child: Text(
+                  'Done',
+                  style: context.xHeadline3.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              secondChild: Center(
+                child: SvgPicture.asset(
+                  R.image.chat_bubble,
+                  width: Atom.width * 0.07,
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -62,10 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: R.sizes.screenHorizontalPadding,
       child: ReorderableWrap(
         alignment: WrapAlignment.center,
+        /*buildItemsContainer: (_, __, children) {
+                  print(children);
+                  return Wrap(children: val.widgetsInUse);
+                },*/
         buildDraggableFeedback: (_, __, children) {
           return children;
         },
-        spacing: Atom.width * .03,
+        spacing: Atom.width * .02,
         runSpacing: Atom.width * .03,
         needsLongPressDraggable: true,
         children: val.widgetsInUse,
