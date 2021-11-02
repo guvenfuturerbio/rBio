@@ -14,6 +14,8 @@ enum SharedPreferencesKeys {
   USERACCOUNT,
   CANACCESSHOSPITALOPS,
   THEME,
+  DELETED_WIDGETS,
+  WIDGET_QUERY
 }
 
 extension SharedPreferencesKeysStringExt on String {
