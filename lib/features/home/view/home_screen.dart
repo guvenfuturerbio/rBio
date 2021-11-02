@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
         buildDraggableFeedback: (_, __, children) {
           return children;
         },
-        spacing: Atom.width * .02,
+        spacing: Atom.width * 0.0099,
         runSpacing: Atom.width * .03,
         needsLongPressDraggable: true,
         children: val.widgetsInUse,
