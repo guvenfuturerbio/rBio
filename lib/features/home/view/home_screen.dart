@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
               actions: [
                 IconButton(
                   onPressed: () {
-                    val.addItem();
+                    val.showRemovedWidgets();
                   },
                   icon: const Icon(
                     Icons.add,

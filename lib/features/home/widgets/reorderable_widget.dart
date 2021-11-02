@@ -38,16 +38,16 @@ class MyReorderableWidget extends StatelessWidget {
                     child: body),
                 Visibility(
                   visible: val.status.isShaken,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red.withOpacity(.6)),
-                    height: 30,
-                    width: 30,
-                    child: GestureDetector(
-                      onTap: () {
-                        val.removeWidget(key);
-                      },
+                  child: GestureDetector(
+                    onTap: () {
+                      val.removeWidget(key);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red.withOpacity(.6)),
+                      height: 30,
+                      width: 30,
                       child: const Icon(Icons.remove,
                           color: Colors.white, size: 10),
                     ),
