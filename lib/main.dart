@@ -11,7 +11,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'core/core.dart';
 import 'features/home/viewmodel/home_vm.dart';
- 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SecretUtils.instance.setup(Environment.PROD);
@@ -61,18 +61,35 @@ void _initFirebaseMessaging() {
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 // ignore: must_be_immutable
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(
+      Duration(seconds: 1),
+      () async {
+        loginExampleUser();
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseAnalytics>.value(value: analytics),
-        Provider<FirebaseAnalyticsObserver>.value(value: observer),
+        Provider<FirebaseAnalytics>.value(value: MyApp.analytics),
+        Provider<FirebaseAnalyticsObserver>.value(value: MyApp.observer),
         ChangeNotifierProvider<ListItemVm>(
           create: (context) => ListItemVm(),
         ),
@@ -104,7 +121,7 @@ class MyApp extends StatelessWidget {
             title: 'Güven Online',
             debugShowCheckedModeBanner: false,
             navigatorObservers: [
-              FirebaseAnalyticsObserver(analytics: analytics),
+              FirebaseAnalyticsObserver(analytics: MyApp.analytics),
               routeObserver
             ],
 
@@ -144,5 +161,27 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+Future<void> loginExampleUser() async {
+  final widgetsBinding = WidgetsBinding.instance;
+  if (widgetsBinding != null) {
+    widgetsBinding.addPostFrameCallback((_) async {
+      // TODO: Örnek kullanıcı ile giriş yapıyoruz.
+      final username = '18620716416';
+      final password = 'Numlock1234!!';
+      await getIt<UserManager>().login(username, password);
+      await getIt<ISharedPreferencesManager>()
+          .setString(SharedPreferencesKeys.LOGIN_USERNAME, username);
+      await getIt<ISharedPreferencesManager>()
+          .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
+      await getIt<Repository>().getPatientDetail();
+      final response = await getIt<Repository>().getProfilePicture();
+      if (response != null && response != '') {
+        await getIt<ISharedPreferencesManager>()
+            .setString(SharedPreferencesKeys.PROFILE_IMAGE, response);
+      }
+    });
   }
 }

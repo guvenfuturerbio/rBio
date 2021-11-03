@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -5,7 +7,7 @@ import '../core.dart';
 
 class RbioUserTile extends StatelessWidget {
   final String name;
-  final String imageUrl;
+  final String imageBytes;
   final void Function() onTap;
   final UserLeadingImage leadingImage;
   final UserTrailingIcons trailingIcon;
@@ -13,7 +15,7 @@ class RbioUserTile extends StatelessWidget {
   RbioUserTile({
     Key key,
     @required this.name,
-    @required this.imageUrl,
+    this.imageBytes,
     @required this.onTap,
     @required this.leadingImage,
     this.trailingIcon,
@@ -63,14 +65,20 @@ class RbioUserTile extends StatelessWidget {
       case UserLeadingImage.Circle:
         return CircleAvatar(
           backgroundColor: getIt<ITheme>().mainColor,
-          backgroundImage: NetworkImage(imageUrl),
+          backgroundImage: imageBytes != null
+              ? MemoryImage(base64.decode(imageBytes))
+              : NetworkImage(R.image.mockAvatar),
           radius: Atom.width * 0.06,
         );
 
       case UserLeadingImage.Rectangle:
         return Container(
           decoration: BoxDecoration(
-            image: DecorationImage(image: NetworkImage(imageUrl)),
+            image: DecorationImage(
+              image: imageBytes != null
+                  ? MemoryImage(base64.decode(imageBytes))
+                  : NetworkImage(R.image.mockAvatar),
+            ),
           ),
           width: Atom.width * 0.12,
         );
@@ -83,17 +91,16 @@ class RbioUserTile extends StatelessWidget {
   Widget _getTrailingIcon(UserTrailingIcons type) {
     switch (type) {
       case UserTrailingIcons.RightArrow:
-        return Icon(
-          Icons.arrow_forward_ios,
-          color: Colors.grey,
-          size: 25,
+        return SvgPicture.asset(
+          R.image.ic_arrow_right,
+          width: R.sizes.iconSize4,
         );
 
       case UserTrailingIcons.Cancel:
         return SvgPicture.asset(
           R.image.close,
           color: Colors.black,
-          width: 20,
+          width: R.sizes.iconSize2,
         );
 
       default:

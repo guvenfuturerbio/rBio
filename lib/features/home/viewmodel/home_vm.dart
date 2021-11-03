@@ -199,7 +199,6 @@ class ListItemVm extends ChangeNotifier {
             },
             child: RbioUserTile(
               name: "Ergün Yunus Cengiz",
-              imageUrl: R.image.mockAvatar,
               leadingImage: UserLeadingImage.Circle,
               trailingIcon: UserTrailingIcons.RightArrow,
               onTap: () {

@@ -187,8 +187,9 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         },
         onError: (DioError error, ErrorInterceptorHandler handler) {
           LoggerUtils.instance.v(error.requestOptions.uri);
-          LoggerUtils.instance.w(error.response.statusCode);
-          LoggerUtils.instance.wtf(error.response.toString());
+          LoggerUtils.instance.w(error.response?.statusCode);
+          LoggerUtils.instance.wtf(error.response?.toString());
+          LoggerUtils.instance.wtf(error.error?.toString());
 
           return handler.next(error);
         },

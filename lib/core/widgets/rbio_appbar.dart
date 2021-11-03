@@ -13,9 +13,9 @@ class RbioAppBar extends PreferredSize {
     this.leading,
     this.actions,
   }) : super(
-          preferredSize: Size.fromHeight(Atom.height * 0.09),
+          preferredSize: Size.fromHeight(64),
           child: AppBar(
-            toolbarHeight: Atom.height * 0.09,
+            toolbarHeight: 64,
             actions: actions,
             centerTitle: true,
 
@@ -23,21 +23,18 @@ class RbioAppBar extends PreferredSize {
             leading: leading ??
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsets.symmetric(
-                      vertical: Atom.width * 0.04,
-                      horizontal: Atom.width * 0.02,
-                    ),
-                    child: InkWell(
+                  child: InkWell(
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.all(8.0),
                       child: SvgPicture.asset(
                         R.image.appbar_back,
-                        width: Atom.width * 0.075,
+                        width: R.sizes.iconSize,
                       ),
-                      onTap: () {
-                        Atom.historyBack();
-                      },
                     ),
+                    onTap: () {
+                      Atom.historyBack();
+                    },
                   ),
                 ),
 
@@ -46,7 +43,7 @@ class RbioAppBar extends PreferredSize {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    height: Atom.height * 0.065,
+                    height: 50,
                     child: Image.asset(
                       R.image.oneDoseHealthPng,
                       fit: BoxFit.fitHeight,

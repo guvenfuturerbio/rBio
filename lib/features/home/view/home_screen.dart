@@ -42,25 +42,30 @@ class _HomeScreenState extends State<HomeScreen> {
   PreferredSize _buildAppBar(ListItemVm val) {
     return RbioAppBar(
       leading: Center(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: Atom.isWeb ? Atom.width * 0.01 : Atom.width * 0.04),
-          child: RbioSwitcher(
-            showFirstChild: val.status.isShaken,
-            child1: InkWell(
-              onTap: () {
-                val.showRemovedWidgets();
-              },
-              child: Icon(
-                Icons.add,
-                size: Atom.isWeb ? Atom.width * 0.025 : Atom.width * 0.08,
-                color: Colors.white,
-              ),
-            ),
-            child2: SvgPicture.asset(
-              R.image.ic_relatives,
+        child: RbioSwitcher(
+          showFirstChild: val.status.isShaken,
+          child1: InkWell(
+            onTap: () {
+              val.showRemovedWidgets();
+            },
+            child: Icon(
+              Icons.add,
+              size: R.sizes.iconSize,
               color: Colors.white,
-              width: Atom.isWeb ? Atom.width * 0.020 : Atom.width * 0.07,
+            ),
+          ),
+          child2: SizedBox(
+            child: InkWell(
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(8),
+                child: SvgPicture.asset(
+                  R.image.ic_relatives,
+                  color: Colors.white,
+                  width: R.sizes.iconSize,
+                ),
+              ),
+              onTap: () {},
             ),
           ),
         ),
@@ -70,21 +75,31 @@ class _HomeScreenState extends State<HomeScreen> {
         Center(
           child: RbioSwitcher(
             showFirstChild: val.status.isShaken,
-            child1: InkWell(
-              onTap: () {
-                val.changeStatus();
-              },
-              child: Text(
-                LocaleProvider.current.done,
-                style: context.xHeadline3.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            child1: SizedBox(
+              child: InkWell(
+                onTap: () {
+                  val.changeStatus();
+                },
+                child: Text(
+                  LocaleProvider.current.done,
+                  style: context.xHeadline3.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-            child2: SvgPicture.asset(
-              R.image.chat_bubble,
-              width: Atom.isWeb ? Atom.width * 0.020 : Atom.width * 0.075,
+            child2: InkWell(
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(8),
+                child: SvgPicture.asset(
+                  R.image.chat_bubble,
+                  color: Colors.white,
+                  width: R.sizes.iconSize,
+                ),
+              ),
+              onTap: () {},
             ),
           ),
         ),

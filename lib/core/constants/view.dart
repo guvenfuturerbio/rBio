@@ -15,7 +15,15 @@ class _Sizes {
         horizontal: Atom.width * .04,
         vertical: Atom.width * .04,
       );
+
+  // BorderRadius
   final BorderRadiusGeometry borderRadiusCircular = BorderRadius.circular(12);
+
+  // Icons
+  final double iconSize = 30;
+  final double iconSize2 = 24;
+  final double iconSize3 = 18;
+  final double iconSize4 = 14;
 }
 
 class _Color {

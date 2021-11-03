@@ -39,7 +39,6 @@ class _FollowersScreenState extends State<FollowersScreen> {
           //
           RbioUserTile(
             name: "Endokronoloji Cüneyt Akın",
-            imageUrl: R.image.mockAvatar,
             leadingImage: UserLeadingImage.Circle,
             trailingIcon: UserTrailingIcons.Cancel,
             onTap: () {},
@@ -51,7 +50,6 @@ class _FollowersScreenState extends State<FollowersScreen> {
           //
           RbioUserTile(
             name: "İnsan Kaynakları Müdürü",
-            imageUrl: R.image.mockAvatar,
             leadingImage: UserLeadingImage.Circle,
             trailingIcon: UserTrailingIcons.Cancel,
             onTap: () {},
@@ -70,7 +68,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
       child: Center(
         child: SvgPicture.asset(
           R.image.add,
-          width: 30,
+          width: R.sizes.iconSize2,
         ),
       ),
     );

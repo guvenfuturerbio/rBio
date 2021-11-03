@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../viewmodel/profile_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key key}) : super(key: key);
@@ -12,6 +14,17 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
+  void initState() {
+    super.initState();
+    final widgetsBinding = WidgetsBinding.instance;
+    if (widgetsBinding != null) {
+      widgetsBinding.addPostFrameCallback((_) {
+        Provider.of<ProfileVm>(context, listen: false).getNumbers();
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RbioAppBar(
@@ -19,87 +32,130 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
 
       //
-      body: _buildBody(),
+      body: Consumer<ProfileVm>(
+        builder: (context, value, child) {
+          return _buildBody(value);
+        },
+      ),
     );
   }
 
-  Widget _buildBody() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
-      padding: R.sizes.screenPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          RbioUserTile(
-            name: "Ergün Yunus Cengiz",
-            imageUrl: R.image.mockAvatar,
-            leadingImage: UserLeadingImage.Circle,
-            onTap: () {},
-          ),
+  Widget _buildBody(ProfileVm vm) {
+    switch (vm.state) {
+      case LoadingProgress.DONE:
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: BouncingScrollPhysics(),
+          padding: R.sizes.screenPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //
+              RbioUserTile(
+                name:
+                    '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
+                // imageUrl: R.image.mockAvatar,
+                imageBytes: getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.PROFILE_IMAGE),
+                leadingImage: UserLeadingImage.Circle,
+                onTap: () {},
+              ),
 
-          //
-          Container(
-            height: Atom.height * 0.25,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildNumberTile(
-                  2,
-                  'Çocuklarım',
-                  () {},
+              //
+              Container(
+                height: Atom.height * 0.25,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildNumberTile(
+                      vm.numbers?.relatives ?? 0,
+                      LocaleProvider.current.relatives,
+                      () {},
+                    ),
+                    _buildHorizontalGap(),
+                    _buildNumberTile(
+                      vm.numbers?.followers ?? 0,
+                      LocaleProvider.current.followers,
+                      () {
+                        Atom.to(PagePaths.FOLLOWERS);
+                      },
+                    ),
+                    _buildHorizontalGap(),
+                    _buildNumberTile(
+                      vm.numbers?.subscriptions ?? 0,
+                      LocaleProvider.current.subscriptions,
+                      () {},
+                    ),
+                  ],
                 ),
-                _buildHorizontalGap(),
-                _buildNumberTile(
-                  2,
-                  'Takipçilerim',
-                  () {
-                    Atom.to(PagePaths.FOLLOWERS);
-                  },
+              ),
+
+              //
+              _buildVerticalGap(),
+
+              //
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: getIt<ITheme>().cardBackgroundColor,
+                  borderRadius: R.sizes.borderRadiusCircular,
                 ),
-                _buildHorizontalGap(),
-                _buildNumberTile(
-                  1,
-                  'Takip Ettiklerim',
-                  () {},
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //
+                    _buildListItem(
+                      LocaleProvider.current.lbl_personal_information,
+                      () {},
+                    ),
+
+                    //
+                    _buildListItem(
+                      LocaleProvider.current.health_information,
+                      () {},
+                    ),
+
+                    //
+                    _buildListItem(
+                      LocaleProvider.current.devices,
+                      () {},
+                    ),
+
+                    //
+                    _buildListItem(
+                      LocaleProvider.current.reminders,
+                      () {},
+                    ),
+
+                    //
+                    _buildListItem(
+                      LocaleProvider.current.request_and_suggestions,
+                      () {},
+                      isDivider: false,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+
+              //
+              _buildVerticalGap(),
+            ],
           ),
+        );
 
-          //
-          _buildVerticalGap(),
+      case LoadingProgress.ERROR:
+        return Center(child: QueryParametersError());
 
-          //
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
-              borderRadius: R.sizes.borderRadiusCircular,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //
-                _buildListItem('Kişisel Bilgiler'),
-                _buildListItem('Sağlık Bilgilerim'),
-                _buildListItem('Cihazlarım'),
-                _buildListItem('Hatırlatıcılarım'),
-                _buildListItem('İstek ve Önerilerim', isDivider: false),
-              ],
-            ),
-          ),
+      case LoadingProgress.LOADING:
+        return Center(child: CircularProgressIndicator());
 
-          //
-          _buildVerticalGap(),
-        ],
-      ),
-    );
+      default:
+        return SizedBox();
+    }
   }
 
   Widget _buildVerticalGap() => SizedBox(height: Atom.height * 0.015);
@@ -170,35 +226,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildListItem(String title, {bool isDivider = true}) {
+  Widget _buildListItem(String title, VoidCallback onTap,
+      {bool isDivider = true}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //
-        Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 20.0,
-            horizontal: 16.0,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //
-              Expanded(
-                child: Text(
-                  title,
-                  style: context.xHeadline3,
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(
+              vertical: 20.0,
+              horizontal: 16.0,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                Expanded(
+                  child: Text(
+                    title,
+                    style: context.xHeadline3,
+                  ),
                 ),
-              ),
 
-              //
-              SvgPicture.asset(
-                R.image.ic_arrow_right,
-                width: Atom.isWeb ? Atom.width * 0.005 : Atom.width * 0.025,
-              ),
-            ],
+                //
+                SvgPicture.asset(
+                  R.image.ic_arrow_right,
+                  width: R.sizes.iconSize4,
+                ),
+              ],
+            ),
           ),
         ),
 
