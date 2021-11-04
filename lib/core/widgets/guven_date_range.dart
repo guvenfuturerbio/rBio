@@ -30,60 +30,38 @@ class GuvenDateRange extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         //
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              children: [
-                //
-                Text(
-                  LocaleProvider.current.start,
-                  style: TextStyle(
-                    color: R.color.blue,
-                    fontSize: 16,
-                  ),
-                ),
+        InkWell(
+          onTap: () async {
+            final result = await showGuvenDatePicker(
+              context,
+              startMinDate ?? DateTime(2000, 1, 1),
+              startMaxDate ?? now,
+              startCurrentDate,
+            );
 
-                //
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 30,
-                    ),
-                    child: InkWell(
-                      onTap: () async {
-                        final result = await showGuvenDatePicker(
-                          context,
-                          startMinDate ?? DateTime(2000, 1, 1),
-                          startMaxDate ?? now,
-                          startCurrentDate,
-                        );
-
-                        if (result != null) {
-                          onStartDateChange(result);
-                        }
-                      },
-                      child: Text(
-                        DateFormat.yMMMd(Intl.getCurrentLocale())
-                            .format(startCurrentDate),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            if (result != null) {
+              onStartDateChange(result);
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: getIt<ITheme>().cardBackgroundColor,
+              borderRadius: R.sizes.borderRadiusCircular,
+            ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 16,
+            ),
+            child: Text(
+              DateFormat.yMMMd(Intl.getCurrentLocale())
+                  .format(startCurrentDate),
+              textAlign: TextAlign.center,
+              style: context.xHeadline3,
             ),
           ),
         ),
@@ -91,69 +69,42 @@ class GuvenDateRange extends StatelessWidget {
         //
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
+            horizontal: 10.0,
           ),
           child: Text(
-            "_",
+            "-",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: R.color.blue,
-              fontSize: 32,
-            ),
+            style: context.xHeadline1,
           ),
         ),
 
         //
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              children: [
-                Text(
-                  LocaleProvider.current.end,
-                  style: TextStyle(
-                    color: R.color.blue,
-                    fontSize: 16,
-                  ),
-                ),
+        InkWell(
+          onTap: () async {
+            final result = await showGuvenDatePicker(
+              context,
+              endMinDate ?? now,
+              endMaxDate ?? DateTime(now.year + 1, now.month, now.day),
+              endCurrentDate,
+            );
 
-                //
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 30,
-                    ),
-                    child: InkWell(
-                      onTap: () async {
-                        final result = await showGuvenDatePicker(
-                          context,
-                          endMinDate ?? now,
-                          endMaxDate ??
-                              DateTime(now.year + 1, now.month, now.day),
-                          endCurrentDate,
-                        );
-
-                        if (result != null) {
-                          onEndDateChange(result);
-                        }
-                      },
-                      child: Text(
-                        DateFormat.yMMMd(Intl.getCurrentLocale())
-                            .format(endCurrentDate),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            if (result != null) {
+              onEndDateChange(result);
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: getIt<ITheme>().cardBackgroundColor,
+              borderRadius: R.sizes.borderRadiusCircular,
+            ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 16,
+            ),
+            child: Text(
+              DateFormat.yMMMd(Intl.getCurrentLocale()).format(endCurrentDate),
+              textAlign: TextAlign.center,
+              style: context.xHeadline3,
             ),
           ),
         ),

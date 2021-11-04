@@ -280,16 +280,17 @@ class ListItemVm extends ChangeNotifier {
             child: SizedBox(
               height: Atom.height * .2,
               child: Card(
-                  margin: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(
-                      "assets/images/mid_pic.svg",
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                margin: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    "assets/images/mid_pic.svg",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -322,6 +323,8 @@ class ListItemVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(Key('7'));
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.ERESULT);
               }
             },
             child: VerticalCard.topImage(

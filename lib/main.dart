@@ -177,6 +177,7 @@ Future<void> loginExampleUser() async {
       await getIt<ISharedPreferencesManager>()
           .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
       await getIt<Repository>().getPatientDetail();
+      await getIt<UserManager>().getUserProfile();
       final response = await getIt<Repository>().getProfilePicture();
       if (response != null && response != '') {
         await getIt<ISharedPreferencesManager>()

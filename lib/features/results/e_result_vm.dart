@@ -17,14 +17,18 @@ class EResultScreenVm extends ChangeNotifier {
   EResultScreenVm({BuildContext context}) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (getIt<UserInfo>().canAccessHospital()) {
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-          await fetchVisits();
-        });
-      } else {
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-          await showNecessary();
-        });
+      try {
+        if (getIt<UserInfo>().canAccessHospital()) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+            await fetchVisits();
+          });
+        } else {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+            await showNecessary();
+          });
+        }
+      } catch (e) {
+        LoggerUtils.instance.wtf(e);
       }
     });
   }

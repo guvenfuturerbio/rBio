@@ -22,7 +22,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
 
   PreferredSizeWidget _buildAppbar() {
     return RbioAppBar(
-      title: RbioAppBar.textTitle(context, 'Takipçilerim'),
+      title: RbioAppBar.textTitle(context, LocaleProvider.current.followers),
     );
   }
 

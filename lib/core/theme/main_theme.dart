@@ -10,6 +10,7 @@ abstract class ITheme {
   Color get scaffoldBackgroundColor;
   Color get textColor;
   Color get textColorSecondary;
+  Color get textColorPassive;
   TextTheme get textTheme;
   Color get cardBackgroundColor;
 }
@@ -35,6 +36,9 @@ class GreenTheme extends ITheme {
 
   @override
   Color get textColorSecondary => Colors.black;
+
+  @override
+  Color get textColorPassive => Color.fromARGB(255, 187, 186, 186);
 
   @override
   TextTheme get textTheme => TextTheme(

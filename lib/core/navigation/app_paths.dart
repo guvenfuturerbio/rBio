@@ -1,3 +1,4 @@
+import 'package:onedosehealth/features/results/e_result_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -123,7 +124,10 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.ERESULT,
-      widget: EResultScreen(),
+      widget: ChangeNotifierProvider<EResultScreenVm>(
+        create: (context) => EResultScreenVm(),
+        child: EResultScreen(),
+      ),
     ),
 
     VWidget(

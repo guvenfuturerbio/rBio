@@ -12,6 +12,8 @@ class VisitResponse {
   String patient;
   int patientId;
   String physician;
+  String tenant;
+  int tenantId;
 
   VisitResponse({
     this.countOfLaboratoryResults,
@@ -27,6 +29,8 @@ class VisitResponse {
     this.patient,
     this.patientId,
     this.physician,
+    this.tenant,
+    this.tenantId,
   });
 
   VisitResponse.fromJson(Map<String, dynamic> json) {
@@ -43,6 +47,8 @@ class VisitResponse {
     patient = json['patient'];
     patientId = json['patientId'];
     physician = json['physician'];
+    tenant = json['tenant'];
+    tenantId = json['tenantId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +66,8 @@ class VisitResponse {
     data['patient'] = this.patient;
     data['patientId'] = this.patientId;
     data['physician'] = this.physician;
+    data['tenant'] = this.tenant;
+    data['tenantId'] = this.tenantId;
     return data;
   }
 }
