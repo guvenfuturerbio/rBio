@@ -185,6 +185,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Profile`
+  String get profile {
+    return Intl.message(
+      'Profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Reminders`
   String get reminders {
     return Intl.message(

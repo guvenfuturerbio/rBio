@@ -3,23 +3,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../viewmodel/relatives_vm.dart';
+import '../viewmodel/devices_vm.dart';
 
-class RelativesScreen extends StatefulWidget {
-  RelativesScreen({Key key}) : super(key: key);
+class DevicesScreen extends StatefulWidget {
+  DevicesScreen({Key key}) : super(key: key);
 
   @override
-  _RelativesScreenState createState() => _RelativesScreenState();
+  _DevicesScreenState createState() => _DevicesScreenState();
 }
 
-class _RelativesScreenState extends State<RelativesScreen> {
+class _DevicesScreenState extends State<DevicesScreen> {
   @override
   void initState() {
     super.initState();
     final widgetsBinding = WidgetsBinding.instance;
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) {
-        Provider.of<RelativesVm>(context, listen: false).getAll();
+        Provider.of<DevicesVm>(context, listen: false).getAll();
       });
     }
   }
@@ -28,9 +28,9 @@ class _RelativesScreenState extends State<RelativesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RbioAppBar(
-        title: RbioAppBar.textTitle(context, LocaleProvider.current.kids),
+        title: RbioAppBar.textTitle(context, LocaleProvider.current.devices),
       ),
-      body: Consumer<RelativesVm>(
+      body: Consumer<DevicesVm>(
         builder: (context, value, child) {
           return _buildBody(value);
         },
@@ -39,14 +39,14 @@ class _RelativesScreenState extends State<RelativesScreen> {
     );
   }
 
-  Widget _buildBody(RelativesVm vm) {
+  Widget _buildBody(DevicesVm vm) {
     switch (vm.state) {
       case LoadingProgress.DONE:
         return ListView.builder(
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
           padding: R.sizes.screenPadding,
-          itemCount: vm.relatives.length,
+          itemCount: vm.devices.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,11 +55,11 @@ class _RelativesScreenState extends State<RelativesScreen> {
               children: [
                 //
                 RbioUserTile(
-                  name:
-                      '${vm.relatives[index].name} ${vm.relatives[index].surname}',
+                  name: '${vm.devices[index].title}',
                   onTap: () {},
-                  leadingImage: UserLeadingImage.Circle,
-                  trailingIcon: UserTrailingIcons.RightArrow,
+                  imageUrl: vm.devices[index].image,
+                  leadingImage: UserLeadingImage.Rectangle,
+                  trailingIcon: UserTrailingIcons.Cancel,
                 ),
 
                 //

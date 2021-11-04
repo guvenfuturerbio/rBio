@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RbioAppBar(
-        title: RbioAppBar.textTitle(context, 'Profile'),
+        title: RbioAppBar.textTitle(context, LocaleProvider.current.profile),
       ),
 
       //
@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     _buildNumberTile(
                       vm.numbers?.relatives ?? 0,
-                      LocaleProvider.current.relatives,
+                      LocaleProvider.current.kids,
                       () {
                         Atom.to(PagePaths.RELATIVES);
                       },
@@ -123,7 +123,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //
                     _buildListItem(
                       LocaleProvider.current.devices,
-                      () {},
+                      () {
+                        Atom.to(PagePaths.DEVICES);
+                      },
                     ),
 
                     //
@@ -148,11 +150,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         );
 
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
       case LoadingProgress.ERROR:
         return Center(child: QueryParametersError());
-
-      case LoadingProgress.LOADING:
-        return Center(child: CircularProgressIndicator());
 
       default:
         return SizedBox();

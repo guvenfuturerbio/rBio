@@ -8,6 +8,7 @@ import '../core.dart';
 class RbioUserTile extends StatelessWidget {
   final String name;
   final String imageBytes;
+  final String imageUrl;
   final void Function() onTap;
   final UserLeadingImage leadingImage;
   final UserTrailingIcons trailingIcon;
@@ -16,6 +17,7 @@ class RbioUserTile extends StatelessWidget {
     Key key,
     @required this.name,
     this.imageBytes,
+    this.imageUrl,
     @required this.onTap,
     @required this.leadingImage,
     this.trailingIcon,
@@ -67,7 +69,9 @@ class RbioUserTile extends StatelessWidget {
           backgroundColor: getIt<ITheme>().mainColor,
           backgroundImage: imageBytes != null
               ? MemoryImage(base64.decode(imageBytes))
-              : NetworkImage(R.image.mockAvatar),
+              : imageUrl == null
+                  ? NetworkImage(R.image.mockAvatar)
+                  : NetworkImage(imageUrl),
           radius: Atom.width * 0.06,
         );
 
@@ -77,7 +81,9 @@ class RbioUserTile extends StatelessWidget {
             image: DecorationImage(
               image: imageBytes != null
                   ? MemoryImage(base64.decode(imageBytes))
-                  : NetworkImage(R.image.mockAvatar),
+                  : imageUrl == null
+                      ? NetworkImage(R.image.mockAvatar)
+                      : NetworkImage(imageUrl),
             ),
           ),
           width: Atom.width * 0.12,
@@ -100,7 +106,7 @@ class RbioUserTile extends StatelessWidget {
         return SvgPicture.asset(
           R.image.close,
           color: Colors.black,
-          width: R.sizes.iconSize2,
+          width: R.sizes.iconSize3,
         );
 
       default:

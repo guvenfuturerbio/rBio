@@ -66,6 +66,7 @@ export 'widgets/rbio_appbar.dart';
 export 'widgets/rbio_user_tile.dart';
 export 'widgets/guven_date_range.dart';
 export 'widgets/rbio_switcher.dart';
+export 'widgets/rbio_loading.dart';
 
 export 'locator.dart';
 export 'package:onedosehealth/generated/l10n.dart';

@@ -26,7 +26,7 @@ class RbioAppBar extends PreferredSize {
                   child: InkWell(
                     child: Container(
                       color: Colors.transparent,
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
                         R.image.appbar_back,
                         width: R.sizes.iconSize,
@@ -64,6 +64,8 @@ class RbioAppBar extends PreferredSize {
   static Widget textTitle(BuildContext context, String text) {
     return Text(
       text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: context.xHeadline1.copyWith(
         color: Colors.white,
         fontWeight: FontWeight.w400,
