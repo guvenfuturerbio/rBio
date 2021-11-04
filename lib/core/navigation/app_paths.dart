@@ -1,3 +1,5 @@
+import 'package:onedosehealth/features/profile/relatives/view/relatives_screen.dart';
+import 'package:onedosehealth/features/profile/relatives/viewmodel/relatives_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -9,8 +11,8 @@ import '../../features/account/followers/view/followers_screen.dart';
 import '../../features/account/full_image_viewer_screen.dart';
 import '../../features/account/patient_relatives/patient_relatives_screen.dart';
 import '../../features/account/personal_information/personal_information_screen.dart';
-import '../../features/account/profile/view/profile_screen.dart';
-import '../../features/account/profile/viewmodel/profile_vm.dart';
+import '../../features/profile/profile/view/profile_screen.dart';
+import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/account/profile_image_viewer_screen.dart';
 import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
 import '../../features/account/youtube/youtube_viewer_web_screen.dart';
@@ -152,7 +154,10 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.RELATIVES,
-      widget: PatientRelativesScreen(),
+      widget: ChangeNotifierProvider<RelativesVm>(
+        create: (context) => RelativesVm(),
+        child: RelativesScreen(),
+      ),
     ),
 
     VWidget(

@@ -56,7 +56,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               RbioUserTile(
                 name:
                     '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
-                // imageUrl: R.image.mockAvatar,
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.PROFILE_IMAGE),
                 leadingImage: UserLeadingImage.Circle,
@@ -72,7 +71,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _buildNumberTile(
                       vm.numbers?.relatives ?? 0,
                       LocaleProvider.current.relatives,
-                      () {},
+                      () {
+                        Atom.to(PagePaths.RELATIVES);
+                      },
                     ),
                     _buildHorizontalGap(),
                     _buildNumberTile(
