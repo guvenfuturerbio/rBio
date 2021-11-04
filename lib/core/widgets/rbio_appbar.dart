@@ -28,7 +28,7 @@ class RbioAppBar extends PreferredSize {
                       color: Colors.transparent,
                       padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
-                        R.image.appbar_back,
+                        R.image.back_icon,
                         width: R.sizes.iconSize,
                       ),
                     ),

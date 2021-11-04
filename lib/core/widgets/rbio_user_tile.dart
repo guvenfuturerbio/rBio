@@ -104,7 +104,7 @@ class RbioUserTile extends StatelessWidget {
 
       case UserTrailingIcons.Cancel:
         return SvgPicture.asset(
-          R.image.close,
+          R.image.cancel_icon,
           color: Colors.black,
           width: R.sizes.iconSize3,
         );

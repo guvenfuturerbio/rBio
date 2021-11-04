@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.transparent,
                 padding: const EdgeInsets.all(8),
                 child: SvgPicture.asset(
-                  R.image.chat_bubble,
+                  R.image.chat_icon,
                   color: Colors.white,
                   width: R.sizes.iconSize,
                 ),

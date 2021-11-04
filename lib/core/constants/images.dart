@@ -2,16 +2,33 @@ part of 'constants.dart';
 
 class _Images {
   // New
-  final mockAvatar =
-      'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
+  final mockAvatar = 'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
+
+  final add = 'assets/images/new/add_icon.svg';
+  final appointment_icon = 'assets/images/new/appointment_icon.svg';
+  final arrow_down_icon = 'assets/images/new/arrow_down_icon.svg';
+  final arrow_left_icon = 'assets/images/new/arrow_left_icon.svg';
+  final arrow_right_icon = 'assets/images/new/arrow_right_icon.svg';
+  final back_icon = 'assets/images/new/back_icon.svg';
+  final blood_icon = 'assets/images/new/blood_icon.svg';
+  final cancel_icon = 'assets/images/new/cancel_icon.svg';
+  final chat_icon = 'assets/images/new/chat_icon.svg';
+  final checkup_icon = 'assets/images/new/checkup_icon.svg';
+  final deviceconnect_icon = 'assets/images/new/deviceconnect_icon.svg';
+  final doctor_icon = 'assets/images/new/doctor_icon.svg';
+  final hearthpressure_icon = 'assets/images/new/hearthpressure_icon.svg';
+  final hospital_icon = 'assets/images/new/hospital_icon.svg';
+  final other_icon = 'assets/images/new/other_icon.svg';
+  final phone_icon = 'assets/images/new/phone_icon.svg';
+  final photo_icon = 'assets/images/new/photo_icon.svg';
+  final profile_icon = 'assets/images/new/profile_icon.svg';
+  final results_icon = 'assets/images/new/results_icon.svg';
+  final send_icon = 'assets/images/new/send_icon.svg';
+  final video_icon_80 = 'assets/images/new/video_icon_80.svg';
+  final video_icon = 'assets/images/new/video_icon.svg';
+  final weight_icon = 'assets/images/new/weight_icon.svg';
+
   final oneDoseHealthPng = 'assets/images/new/onedose_health.png';
-  final chat_bubble = 'assets/images/new/chat_bubble.svg';
-  final appbar_back = 'assets/images/new/appbar_back.svg';
-  final right_arrow = 'assets/images/new/right_arrow.svg';
-  final bottom_arrow = 'assets/images/new/bottom_arrow.svg';
-  final katman5 = 'assets/images/new/katman5.svg';
-  final add = 'assets/images/new/add.svg';
-  final close = 'assets/images/new/close.svg';
 
   final guvenhospital_logo = 'assets/images/guvenhospital_logo.svg';
   final for_you = 'assets/images/sizeozel_icon.svg';
