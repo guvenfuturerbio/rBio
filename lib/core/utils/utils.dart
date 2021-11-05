@@ -429,10 +429,10 @@ String getFormattedDateWithTime(String date) {
   return textDate;
 }
 
-Gradient passiveBlueGradient() => LinearGradient(
-    colors: [R.color.blue.withAlpha(50), R.color.light_blue.withAlpha(50)],
-    begin: Alignment.bottomLeft,
-    end: Alignment.centerRight);
+Gradient passiveBlueGradient() => LinearGradient(colors: [
+      getIt<ITheme>().mainColor.withAlpha(15),
+      getIt<ITheme>().mainColor.withAlpha(15)
+    ], begin: Alignment.bottomLeft, end: Alignment.centerRight);
 
 BoxDecoration ShadowDecorationWhite() => BoxDecoration(
       color: R.color.white,
@@ -697,48 +697,6 @@ Future<void> showOptionalUpdateDialog({
   );
 }
 
-BoxDecoration tabButtonDecoration(bool isActive) {
-  return BoxDecoration(
-    color: isActive ? R.color.blue : Colors.white,
-    border: Border.all(width: 1.0, color: R.color.blue),
-    borderRadius: BorderRadius.all(
-        Radius.circular(15.0) //                 <--- border radius here
-        ),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.5),
-        spreadRadius: 5,
-        blurRadius: 7,
-        offset: Offset(0, 3), // changes position of shadow
-      ),
-    ],
-  );
-}
-
-Widget tabButton(
-        {Function onPressed(), bool visibility, String text, bool isActive}) =>
-    Visibility(
-      visible: visibility,
-      child: Expanded(
-        child: InkWell(
-          onTap: () => onPressed(),
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 200),
-            margin: EdgeInsets.all(8),
-            padding: const EdgeInsets.all(10.0),
-            decoration: tabButtonDecoration(
-                isActive), //             <--- BoxDecoration here
-            child: Text(
-              text,
-              style: TextStyle(
-                  fontSize: 10.0,
-                  color: isActive ? Colors.white : Colors.black),
-            ),
-          ),
-        ),
-      ),
-    );
-
 Widget loadingDialog() => Center(
       child: CircularProgressIndicator(
         valueColor: new AlwaysStoppedAnimation<Color>(R.color.dark_blue),
@@ -827,7 +785,10 @@ String fillAllFields(String formContext, String userName, String email,
 String GetEnumValue(e) => e.toString().split('.').last;
 
 Gradient AppGradient() => LinearGradient(
-      colors: [R.color.blue, R.color.light_blue],
+      colors: [
+        getIt<ITheme>().mainColor,
+        getIt<ITheme>().secondaryColor,
+      ],
       begin: Alignment.bottomLeft,
       end: Alignment.centerRight,
     );

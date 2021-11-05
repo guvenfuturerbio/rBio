@@ -12,8 +12,8 @@ class GuvenColors {
 
 class _Sizes {
   EdgeInsets get screenPadding => EdgeInsets.symmetric(
-        horizontal: Atom.width * .04,
-        vertical: Atom.width * .04,
+        horizontal: 12,
+        vertical: 12,
       );
 
   // BorderRadius

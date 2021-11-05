@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_html/html.dart' as html;
@@ -25,6 +26,9 @@ class VisitDetailScreenVm extends ChangeNotifier {
   LaboratoryPdfResultRequest _laboratoryPdfResultRequest;
   LoadingProgress _progress;
 
+  String laboratoryFileBytes;
+  String mobiletempDocumentPath;
+
   VisitDetailScreenVm({
     BuildContext context,
     int countOfLaboratoryResults,
@@ -45,7 +49,7 @@ class VisitDetailScreenVm extends ChangeNotifier {
     }
   }
 
-  get progress => this._progress ?? LoadingProgress.LOADING;
+  LoadingProgress get progress => this._progress ?? LoadingProgress.LOADING;
 
   get pathologySelected => this._pathologySelected ?? false;
 
@@ -55,7 +59,7 @@ class VisitDetailScreenVm extends ChangeNotifier {
 
   VisitDetailRequest get visitDetailRequest => this._visitDetailRequest;
 
-  togglePathologySelected() async {
+  Future<void> togglePathologySelected() async {
     this._pathologySelected = !pathologySelected;
     if (pathologySelected) {
       this._laboratorySelected = false;
@@ -65,29 +69,35 @@ class VisitDetailScreenVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  toggleRadiologySelected() async {
+  Future<void> toggleRadiologySelected() async {
     this._radiologySelected = !radiologySelected;
     if (radiologySelected) {
       this._laboratorySelected = false;
       this._pathologySelected = false;
       await fetchRadiologyResults();
     }
+
     notifyListeners();
   }
 
-  toggleLaboratorySelected() async {
+  Future<void> toggleLaboratorySelected() async {
     this._laboratorySelected = !laboratorySelected;
     if (laboratorySelected) {
       this._pathologySelected = false;
       this._radiologySelected = false;
       await fetchLaboratoryResults();
+      await getLaboratoryResultsAsPdf();
+    } else {
+      laboratoryFileBytes = null;
     }
+
     notifyListeners();
   }
 
   Future<void> fetchPathologyResults() async {
     this._progress = LoadingProgress.LOADING;
     notifyListeners();
+
     try {
       this._pathologyResults =
           await getIt<Repository>().getPathologyResults(visitDetailRequest);
@@ -182,20 +192,33 @@ class VisitDetailScreenVm extends ChangeNotifier {
   List<LaboratoryResponse> get laboratoryResults =>
       this._laboratoryResults ?? [LaboratoryResponse()];
 
-  Future<void> getLaboratoryResultsAsPdf() async {
-    showLoadingDialog(mContext);
-    try {
-      String pdfByte = await getIt<Repository>()
-          .getLaboratoryPdfResult(laboratoryPdfResultRequest);
-      hideDialog(mContext);
-      kIsWeb ? downloadPdf(pdfByte, true) : goPdfPage(pdfByte);
-      notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      hideDialog(mContext);
-      print(e.toString());
-      notifyListeners();
+  Future<void> shareFile() async {
+    if (laboratoryFileBytes != null) {
+      if (kIsWeb) {
+        downloadPdf(laboratoryFileBytes, true);
+      } else {
+        await FlutterShare.shareFile(
+          title: LocaleProvider.current.share,
+          text: LocaleProvider.current.detailed_report,
+          filePath: mobiletempDocumentPath,
+        );
+      }
     }
+  }
+
+  Future<void> getLaboratoryResultsAsPdf() async {
+    String pdfByte = await getIt<Repository>()
+        .getLaboratoryPdfResult(laboratoryPdfResultRequest);
+    laboratoryFileBytes = pdfByte;
+    if (!kIsWeb) {
+      final decodedBytes = base64Decode(pdfByte);
+      final tempDir = await getTemporaryDirectory();
+      final tempDocumentPath = '${tempDir.path}/$_documentPath';
+      final file = await File(tempDocumentPath).create(recursive: true);
+      file.writeAsBytesSync(decodedBytes);
+      mobiletempDocumentPath = tempDocumentPath;
+    }
+    notifyListeners();
   }
 
   Future<void> getRadiologyResultsAsPdf(int processId) async {
@@ -204,7 +227,6 @@ class VisitDetailScreenVm extends ChangeNotifier {
       String pdfByte = await getIt<Repository>().getRadiologyPdfResult(
         RadiologyPdfRequest(processId: processId),
       );
-      ;
       hideDialog(mContext);
       kIsWeb ? downloadPdf(pdfByte, false) : goPdfPage(pdfByte);
       notifyListeners();
@@ -234,8 +256,8 @@ class VisitDetailScreenVm extends ChangeNotifier {
     }
   }
 
-  setLaboratoryPdfResultRequest() {
-    List<int> processList = List<int>();
+  void setLaboratoryPdfResultRequest() {
+    List<int> processList = <int>[];
     for (var data in laboratoryResults) {
       processList.add(data.id);
     }
