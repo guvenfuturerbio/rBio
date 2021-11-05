@@ -140,11 +140,11 @@ class GuvenAlert extends StatelessWidget {
         color: Colors.transparent,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        padding: padding ?? EdgeInsets.zero,
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 18,
             color: Colors.white,
           ),
         ),

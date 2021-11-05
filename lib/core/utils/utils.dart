@@ -643,45 +643,26 @@ class TabToNextFieldTextInputFormatter extends TextInputFormatter {
   }
 }
 
-showCompulsoryUpdateDialog(
-    {Function onPressed, context, String message}) async {
+Future<void> showCompulsoryUpdateDialog({
+  Function onPressed,
+  context,
+  String message,
+}) async {
   await showDialog<String>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
       String title = LocaleProvider.of(context).app_update_available;
       String btnLabel = LocaleProvider.of(context).update_now;
-      return Platform.isIOS
-          ? new CupertinoAlertDialog(
-              title: Text(title),
-              content: Text(message),
-              actions: <Widget>[
-                CupertinoDialogAction(
-                  child: Text(
-                    btnLabel,
-                  ),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    onPressed();
-                  },
-                ),
-              ],
-            )
-          : GuvenAlert(
-              title: Text(
-                title,
-                style: TextStyle(fontSize: 22),
-              ),
-              content: Text(message),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(btnLabel),
-                  onPressed: () {
-                    onPressed();
-                  },
-                ),
-              ],
-            );
+
+      return GuvenAlert(
+        backgroundColor: Colors.white,
+        title: GuvenAlert.buildTitle(title),
+        content: GuvenAlert.buildDescription(message),
+        actions: <Widget>[
+          GuvenAlert.buildMaterialAction(btnLabel, onPressed),
+        ],
+      );
     },
   );
 }

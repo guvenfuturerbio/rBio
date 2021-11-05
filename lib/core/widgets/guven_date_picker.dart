@@ -22,9 +22,9 @@ Future<DateTime> showGuvenDatePicker(
     builder: (BuildContext context, Widget child) {
       return Theme(
         data: ThemeData.light().copyWith(
-          primaryColor: R.color.blue,
-          accentColor: R.color.dark_blue,
-          colorScheme: ColorScheme.light(primary: R.color.blue),
+          colorScheme: ColorScheme.light(
+            primary: getIt<ITheme>().mainColor,
+          ),
           buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
         ),
         child: child,

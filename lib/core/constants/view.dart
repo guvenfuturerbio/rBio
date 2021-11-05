@@ -24,6 +24,7 @@ class _Sizes {
   final double iconSize2 = 24;
   final double iconSize3 = 18;
   final double iconSize4 = 14;
+  final double iconSize5 = 10;
 }
 
 class _Color {

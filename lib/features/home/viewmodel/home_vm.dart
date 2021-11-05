@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
 import '../view/home_screen.dart';
-import '../widgets/card_widget.dart';
 import '../widgets/reorderable_widget.dart';
 import '../widgets/vertical_card_widget.dart';
 
@@ -215,6 +214,8 @@ class ListItemVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(Key('2'));
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.HOSPITALS);
               }
             },
             child: VerticalCard.topImage(

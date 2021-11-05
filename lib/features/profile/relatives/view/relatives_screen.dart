@@ -46,7 +46,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
           padding: R.sizes.screenPadding,
-          itemCount: vm.relatives.length,
+          itemCount: vm.response.patientRelatives.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
                 //
                 RbioUserTile(
                   name:
-                      '${vm.relatives[index].name} ${vm.relatives[index].surname}',
+                      '${vm.response.patientRelatives[index].name} ${vm.response.patientRelatives[index].surname}',
                   onTap: () {},
                   leadingImage: UserLeadingImage.Circle,
                   trailingIcon: UserTrailingIcons.RightArrow,
