@@ -28,6 +28,7 @@ class RbioUserTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: Atom.width,
         decoration: BoxDecoration(
           color: trailingIcon != null ? Colors.white : Colors.transparent,
           borderRadius: R.sizes.borderRadiusCircular,
@@ -98,8 +99,8 @@ class RbioUserTile extends StatelessWidget {
     switch (type) {
       case UserTrailingIcons.RightArrow:
         return SvgPicture.asset(
-          R.image.ic_arrow_right,
-          width: R.sizes.iconSize4,
+          R.image.arrow_right_icon,
+          width: R.sizes.iconSize5,
         );
 
       case UserTrailingIcons.Cancel:

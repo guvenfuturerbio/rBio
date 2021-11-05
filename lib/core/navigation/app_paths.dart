@@ -1,3 +1,4 @@
+import 'package:onedosehealth/features/auth/login/login_screen.dart';
 import 'package:onedosehealth/features/results/e_result_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
@@ -46,10 +47,10 @@ import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
 
 class VRouterRoutes {
   static var routes = [
-    VWidget(
-      path: PagePaths.LOGIN,
-      widget: HomeScreen(), // LoginScreen(),
-    ),
+    // VWidget(
+    //   path: PagePaths.LOGIN,
+    //   widget: HomeScreen(), // LoginScreen(),
+    // ),
 
     VWidget(
       path: PagePaths.MAIN,

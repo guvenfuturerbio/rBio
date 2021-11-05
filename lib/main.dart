@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'core/core.dart';
 import 'features/home/viewmodel/home_vm.dart';
@@ -30,18 +29,7 @@ Future<void> main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-  await SentryFlutter.init(
-    (SentryFlutterOptions options) {
-      options.dsn = SecretUtils.instance.get(SecretKeys.SENTRY_DSN);
-      options.enablePrintBreadcrumbs = true;
-      options.attachStacktrace = true;
-      options.release = "com.guvenfuture.online@3.2.8+75";
-      options.environment = Environment.PROD.toString();
-      options.diagnosticLevel = SentryLevel.debug; //The most verbose mode
-      options.sendDefaultPii = true;
-    },
-    appRunner: () => runApp(MyApp()),
-  );
+  runApp(MyApp());
 }
 
 void _setupLogging() {
@@ -73,116 +61,100 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(
-      Duration(seconds: 1),
-      () async {
-        loginExampleUser();
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<FirebaseAnalytics>.value(value: MyApp.analytics),
-        Provider<FirebaseAnalyticsObserver>.value(value: MyApp.observer),
-        ChangeNotifierProvider<ListItemVm>(
-          create: (context) => ListItemVm(),
-        ),
-        ChangeNotifierProvider<ThemeNotifier>(
-          create: (context) => ThemeNotifier(),
-        ),
-      ],
-      child: Consumer<ThemeNotifier>(
-        builder: (
-          BuildContext context,
-          ThemeNotifier themeNotifier,
-          Widget child,
-        ) {
-          return AtomMaterialApp(
-            initialUrl: PagePaths.LOGIN,
-            routes: VRouterRoutes.routes,
-            onSystemPop: (data) async {
-              final currentUrl = data.fromUrl;
-              if (currentUrl.contains('/home') && currentUrl.length > 6) {
-                data.to(PagePaths.MAIN, isReplacement: true);
-              } else if (currentUrl.contains('/home')) {
-                SystemNavigator.pop();
-              } else if (data.historyCanBack()) {
-                data.historyBack();
-              }
-            },
-
-            //
-            title: 'Güven Online',
-            debugShowCheckedModeBanner: false,
-            navigatorObservers: [
-              FirebaseAnalyticsObserver(analytics: MyApp.analytics),
-              routeObserver
-            ],
-
-            //
-            builder: (BuildContext context, Widget child) {
-              return Directionality(
-                textDirection: TextDirection.ltr,
-                child: MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaleFactor:
-                        MediaQuery.of(context).size.width <= 400 ? 0.8 : 1.0,
-                  ),
-                  child: child,
+    return Container(
+      color: Colors.white,
+      child: MultiProvider(
+        providers: [
+          Provider<FirebaseAnalytics>.value(
+            value: MyApp.analytics,
+          ),
+          Provider<FirebaseAnalyticsObserver>.value(
+            value: MyApp.observer,
+          ),
+          ChangeNotifierProvider<HomeVm>(
+            create: (context) => HomeVm(),
+          ),
+          ChangeNotifierProvider<ThemeNotifier>(
+            create: (context) => ThemeNotifier(),
+          ),
+          ChangeNotifierProvider<UserNotifier>(
+            create: (context) => UserNotifier()..loginExampleUser(),
+          ),
+        ],
+        child: Consumer2<ThemeNotifier, UserNotifier>(
+          builder: (
+            BuildContext context,
+            ThemeNotifier themeNotifier,
+            UserNotifier userNotifier,
+            Widget child,
+          ) {
+            if (userNotifier.username == null)
+              return SizedBox.expand(
+                child: Container(
+                  color: Colors.white,
+                  child: Center(child: CircularProgressIndicator()),
                 ),
               );
-            },
 
-            //
-            theme: ThemeData(
-              primaryColor: themeNotifier.theme.mainColor,
-              scaffoldBackgroundColor:
-                  themeNotifier.theme.scaffoldBackgroundColor,
-              fontFamily: themeNotifier.theme.fontFamily,
-              textTheme: themeNotifier.theme.textTheme,
-            ),
+            return AtomMaterialApp(
+              initialUrl: PagePaths.MAIN,
+              routes: VRouterRoutes.routes,
+              onSystemPop: (data) async {
+                final currentUrl = data.fromUrl;
+                if (currentUrl.contains('/home') && currentUrl.length > 6) {
+                  data.to(PagePaths.MAIN, isReplacement: true);
+                } else if (currentUrl.contains('/home')) {
+                  SystemNavigator.pop();
+                } else if (data.historyCanBack()) {
+                  data.historyBack();
+                }
+              },
 
-            //
-            localizationsDelegates: const [
-              LocaleProvider.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              DefaultCupertinoLocalizations.delegate
-            ],
-            supportedLocales: LocaleProvider.delegate.supportedLocales,
-          );
-        },
+              //
+              title: 'Güven Online',
+              debugShowCheckedModeBanner: false,
+              navigatorObservers: [
+                FirebaseAnalyticsObserver(analytics: MyApp.analytics),
+                routeObserver
+              ],
+
+              //
+              builder: (BuildContext context, Widget child) {
+                return Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                      textScaleFactor:
+                          MediaQuery.of(context).size.width <= 400 ? 0.8 : 1.0,
+                    ),
+                    child: child,
+                  ),
+                );
+              },
+
+              //
+              theme: ThemeData(
+                primaryColor: themeNotifier.theme.mainColor,
+                scaffoldBackgroundColor:
+                    themeNotifier.theme.scaffoldBackgroundColor,
+                fontFamily: themeNotifier.theme.fontFamily,
+                textTheme: themeNotifier.theme.textTheme,
+              ),
+
+              //
+              localizationsDelegates: const [
+                LocaleProvider.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                DefaultCupertinoLocalizations.delegate
+              ],
+              supportedLocales: LocaleProvider.delegate.supportedLocales,
+            );
+          },
+        ),
       ),
     );
-  }
-}
-
-Future<void> loginExampleUser() async {
-  final widgetsBinding = WidgetsBinding.instance;
-  if (widgetsBinding != null) {
-    widgetsBinding.addPostFrameCallback((_) async {
-      // TODO: Örnek kullanıcı ile giriş yapıyoruz.
-      final username = '18620716416';
-      final password = 'Numlock1234!!';
-      await getIt<UserManager>().login(username, password);
-      await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.LOGIN_USERNAME, username);
-      await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
-      await getIt<Repository>().getPatientDetail();
-      await getIt<UserManager>().getUserProfile();
-      final response = await getIt<Repository>().getProfilePicture();
-      if (response != null && response != '') {
-        await getIt<ISharedPreferencesManager>()
-            .setString(SharedPreferencesKeys.PROFILE_IMAGE, response);
-      }
-    });
   }
 }

@@ -79,6 +79,7 @@ dependencies:
   provider: ^6.0.1
   pub_semver: ^2.0.0
   reorderables: ^0.4.1
+  responsive_framework: ^0.1.5
   rxdart: ^0.26.0
   sentry_flutter: ^5.1.0
   shared_preferences: ^2.0.5

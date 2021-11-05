@@ -17,22 +17,22 @@ class MyReorderableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ListItemVm>(
-      builder: (_, val, __) {
+    return Consumer<HomeVm>(
+      builder: (BuildContext context, HomeVm vm, Widget child) {
         final Widget child = Container(
           padding: padding,
           child: ReorderableWidget(
             key: key,
-            reorderable: val.status.isShaken,
+            reorderable: vm.status.isShaken,
             child: Stack(
               alignment: Alignment.topRight,
               children: [
                 //
                 Spring.rotate(
-                  springController: val.springController,
+                  springController: vm.springController,
                   alignment: Alignment.center, //def=center
-                  startAngle: val.startAngle, //def=0
-                  endAngle: val.endAngle, //def=360
+                  startAngle: vm.startAngle, //def=0
+                  endAngle: vm.endAngle, //def=360
                   animDuration: const Duration(milliseconds: 150), //def=1s
                   animStatus: (AnimStatus status) {},
                   curve: Curves.linear, //def=Curves.easInOut
@@ -41,10 +41,10 @@ class MyReorderableWidget extends StatelessWidget {
 
                 //
                 Visibility(
-                  visible: val.status.isShaken,
+                  visible: vm.status.isShaken,
                   child: GestureDetector(
                     onTap: () {
-                      val.removeWidget(key);
+                      vm.removeWidget(key);
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -66,10 +66,10 @@ class MyReorderableWidget extends StatelessWidget {
           ),
         );
 
-        if (!val.status.isShaken) {
+        if (!vm.status.isShaken) {
           return InkWell(
             onLongPress: () {
-              val.changeStatus();
+              vm.changeStatus();
             },
             onTap: () {},
             child: child,

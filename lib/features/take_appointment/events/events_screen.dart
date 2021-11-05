@@ -387,7 +387,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 weekendTextStyle: TextStyle(color: R.color.black),
                 selectedTextStyle: TextStyle(color: Colors.green),
                 selectedDecoration:
-                    BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+                    BoxDecoration(color: Colors.red, shape: BoxShape.circle),
               ),
               headerStyle: HeaderStyle(
                 rightChevronIcon:
@@ -428,16 +428,41 @@ class _EventsScreenState extends State<EventsScreen> {
                 value.setSelectedDate(date);
               },
               calendarBuilders: CalendarBuilders(
+                //
                 selectedBuilder: (context, date, events) => Container(
-                    margin: const EdgeInsets.all(4.0),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(20.0)),
-                    child: Text(
-                      date.day.toString(),
-                      style: TextStyle(color: Colors.white),
-                    )),
+                  margin: const EdgeInsets.all(4.0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    date.day.toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+
+                //
+                defaultBuilder: (context, day, focusedDay) => Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    border: Border(
+                      right: BorderSide(
+                        color: Colors.grey.withOpacity(0.25),
+                      ),
+                      top: BorderSide(
+                        color: Colors.grey.withOpacity(0.25),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    day.day.toString(),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+
+                // TODAY
                 todayBuilder: (context, date, events) => Container(
                     margin: const EdgeInsets.all(4.0),
                     alignment: Alignment.center,

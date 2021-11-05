@@ -32,6 +32,8 @@ export "manager/user_manager.dart";
 
 export "navigation/app_paths.dart";
 
+export "notifiers/user_notifier.dart";
+
 export 'theme/main_theme.dart';
 export 'theme/theme_notifier.dart';
 export 'theme/theme_type.dart';

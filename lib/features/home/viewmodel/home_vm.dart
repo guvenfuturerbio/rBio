@@ -7,11 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
 import '../view/home_screen.dart';
-import '../widgets/card_widget.dart';
 import '../widgets/reorderable_widget.dart';
 import '../widgets/vertical_card_widget.dart';
 
-class ListItemVm extends ChangeNotifier {
+class HomeVm extends ChangeNotifier {
   final BuildContext mContext;
   double startAngle = 0;
   double endAngle = 0;
@@ -34,7 +33,7 @@ class ListItemVm extends ChangeNotifier {
 
   SpringController springController;
 
-  ListItemVm({this.mContext}) {
+  HomeVm({this.mContext}) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       springController = SpringController(initialAnim: Motion.mirror);
       widgetsInUse = await widgets();
@@ -139,8 +138,8 @@ class ListItemVm extends ChangeNotifier {
     Atom.show(
       Container(
         color: Colors.black12.withOpacity(0.8),
-        child: Consumer<ListItemVm>(
-          builder: (BuildContext context, ListItemVm val, Widget child) {
+        child: Consumer<HomeVm>(
+          builder: (BuildContext context, HomeVm val, Widget child) {
             return SizedBox.expand(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -198,7 +197,7 @@ class ListItemVm extends ChangeNotifier {
               }
             },
             child: RbioUserTile(
-              name: "Ergün Yunus Cengiz",
+              name: '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
               leadingImage: UserLeadingImage.Circle,
               trailingIcon: UserTrailingIcons.RightArrow,
               onTap: () {
@@ -215,6 +214,8 @@ class ListItemVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(Key('2'));
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.HOSPITALS);
               }
             },
             child: VerticalCard.topImage(
