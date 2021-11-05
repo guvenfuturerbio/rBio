@@ -20,10 +20,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ListItemVm>(
+    return Consumer<HomeVm>(
       builder: (
         BuildContext context,
-        ListItemVm val,
+        HomeVm val,
         Widget child,
       ) {
         return GestureDetector(
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  PreferredSize _buildAppBar(ListItemVm val) {
+  PreferredSize _buildAppBar(HomeVm val) {
     return RbioAppBar(
       leading: Center(
         child: RbioSwitcher(
@@ -65,7 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: R.sizes.iconSize,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Atom.to(PagePaths.RELATIVES);
+              },
             ),
           ),
         ),
@@ -110,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBody(ListItemVm val) {
+  Widget _buildBody(HomeVm val) {
     return ReorderableWrap(
       alignment: WrapAlignment.center,
       buildDraggableFeedback: (_, __, children) {

@@ -28,6 +28,7 @@ class RbioUserTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: Atom.width,
         decoration: BoxDecoration(
           color: trailingIcon != null ? Colors.white : Colors.transparent,
           borderRadius: R.sizes.borderRadiusCircular,

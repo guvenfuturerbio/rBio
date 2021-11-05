@@ -47,10 +47,10 @@ import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
 
 class VRouterRoutes {
   static var routes = [
-    VWidget(
-      path: PagePaths.LOGIN,
-      widget: HomeScreen(), // LoginScreen(),
-    ),
+    // VWidget(
+    //   path: PagePaths.LOGIN,
+    //   widget: HomeScreen(), // LoginScreen(),
+    // ),
 
     VWidget(
       path: PagePaths.MAIN,
