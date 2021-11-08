@@ -1,3 +1,5 @@
+import 'package:onedosehealth/features/take_appointment/create_appointment/view/create_appointment.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -74,6 +76,14 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.FOLLOWERS,
       widget: FollowersScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.CREATE_APPOINTMENT,
+      widget: ChangeNotifierProvider<CreateAppointmentVm>(
+        create: (context) => CreateAppointmentVm(),
+        child: CreateAppointment(),
+      ),
     ),
 
     VWidget(
@@ -266,6 +276,7 @@ class PagePaths {
   static const PROFILE = '/profile';
   static const FOLLOWERS = '/followers';
   static const DEVICES = '/devices';
+  static const CREATE_APPOINTMENT = '/create_appointment';
 
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';

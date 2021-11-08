@@ -215,6 +215,8 @@ class ListItemVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(Key('2'));
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.CREATE_APPOINTMENT);
               }
             },
             child: VerticalCard.topImage(
