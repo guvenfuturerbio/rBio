@@ -215,7 +215,7 @@ class HomeVm extends ChangeNotifier {
               if (isForDelete) {
                 addWidget(Key('2'));
               } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.HOSPITALS);
+                Atom.to(PagePaths.CREATE_APPOINTMENT);
               }
             },
             child: VerticalCard.topImage(
