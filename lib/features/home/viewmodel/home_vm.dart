@@ -197,7 +197,8 @@ class HomeVm extends ChangeNotifier {
               }
             },
             child: RbioUserTile(
-              name: '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
+              name:
+                  '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
               leadingImage: UserLeadingImage.Circle,
               trailingIcon: UserTrailingIcons.RightArrow,
               onTap: () {
@@ -303,6 +304,8 @@ class HomeVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(Key('6'));
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.APPOINTMENTS);
               }
             },
             child: VerticalCard.topImage(
