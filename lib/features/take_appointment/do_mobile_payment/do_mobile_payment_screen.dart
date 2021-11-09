@@ -63,7 +63,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
     return LoadingOverlay(
       opacity: 0,
       isLoading: value.showOverlay,
-      progressIndicator: loadingDialog(),
+      progressIndicator: RbioLoading(),
       child: DefaultTabController(
           length: 2,
           child: Scaffold(

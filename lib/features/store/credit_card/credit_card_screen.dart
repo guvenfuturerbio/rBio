@@ -240,7 +240,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                           ]),
                           Container(
                             child: value.progress == LoadingProgress.LOADING
-                                ? progress()
+                                ? RbioLoading()
                                 : button(
                                     text: LocaleProvider.current.confirm
                                         .toUpperCase(),

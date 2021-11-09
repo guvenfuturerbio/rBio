@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../../core/packages/table_calendar/table_calendar.dart';
 import 'events_vm.dart';
 
 class EventsScreen extends StatefulWidget {
@@ -291,7 +291,7 @@ class _EventsScreenState extends State<EventsScreen> {
               if (value.progress == LoadingProgress.LOADING) ...[
                 Container(
                   margin: EdgeInsets.all(16),
-                  child: loadingDialog(),
+                  child: RbioLoading(),
                 ),
               ],
             ],
@@ -372,6 +372,10 @@ class _EventsScreenState extends State<EventsScreen> {
                       topRight: Radius.circular(12))),
             ),
             TableCalendar(
+              backgroundColor: getIt<ITheme>().secondaryColor,
+              foregroundColor: getIt<ITheme>().cardBackgroundColor,
+
+              //
               focusedDay: value.selectedDate,
               lastDay: DateTime.now().add(Duration(days: 365)),
               firstDay: DateTime.now().subtract(Duration(days: 30)),
@@ -522,7 +526,7 @@ class _EventsScreenState extends State<EventsScreen> {
             child: Stack(
           alignment: Alignment.center,
           children: [
-            progress(),
+            RbioLoading(),
             Center(
                 child: Container(
               width: 120,

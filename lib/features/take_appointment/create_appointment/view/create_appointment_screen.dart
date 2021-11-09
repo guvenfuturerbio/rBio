@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/widgets/rbio_appbar.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/widgets/create_appo_widget.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/widgets/history_doctor_image_widget.dart';
 import 'package:provider/provider.dart';
 
-class CreateAppointment extends StatefulWidget {
-  const CreateAppointment({Key key}) : super(key: key);
+import '../../../../core/core.dart';
+import '../../../../core/widgets/rbio_appbar.dart';
+import '../viewmodel/create_appointment_vm.dart';
+import '../widgets/create_appo_widget.dart';
+import '../widgets/history_doctor_image_widget.dart';
+
+class CreateAppointmentScreen extends StatefulWidget {
+  const CreateAppointmentScreen({Key key}) : super(key: key);
 
   @override
-  State<CreateAppointment> createState() => _CreateAppointmentState();
+  _CreateAppointmentScreenState createState() =>
+      _CreateAppointmentScreenState();
 }
 
-class _CreateAppointmentState extends State<CreateAppointment> {
+class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<CreateAppointmentVm>(
@@ -139,8 +141,8 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                                         val.hospitalSelected &&
                                         val.doctorSelected
                                     ? () {
-                                        print("Works");
-                                        //TODO : Buradan randevu almaya gideceğiz
+                                        Atom.to(PagePaths
+                                            .CREATE_APPOINTMENT_EVENTS);
                                       }
                                     : null,
                                 child: Text("Bölüm Analizi",

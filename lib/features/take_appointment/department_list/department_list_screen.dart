@@ -51,7 +51,7 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
             body: value.progress == LoadingProgress.DONE
                 ? _webBuildPosts(context, value.filterDepartmentResponse)
                 : value.progress == LoadingProgress.LOADING
-                    ? loadingDialog()
+                    ? RbioLoading()
                     : Container(),
           );
         },

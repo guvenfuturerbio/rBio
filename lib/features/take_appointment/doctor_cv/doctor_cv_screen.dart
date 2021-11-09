@@ -104,7 +104,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                progress(),
+                                RbioLoading(),
                                 Center(
                                     child: Container(
                                   width: 120,
@@ -399,7 +399,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ],
                     )
                   : value.progress == LoadingProgress.LOADING
-                      ? progress()
+                      ? RbioLoading()
                       : Container(
                           margin:
                               EdgeInsets.only(bottom: 20, left: 20, right: 20),

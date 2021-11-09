@@ -43,11 +43,10 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
   }
 
   PreferredSize _buildAppBar() {
-    return MainAppBar(
-      context: context,
-      leading: ButtonBackWhite(context),
-      title: TitleAppBarWhite(
-        title: LocaleProvider.of(context).all_appointment_file,
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).all_appointment_file,
       ),
     );
   }

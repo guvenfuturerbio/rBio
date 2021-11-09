@@ -61,7 +61,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             body: value.progress == LoadingProgress.DONE
                 ? _webBuildPosts(context, value.filterResources)
                 : value.progress == LoadingProgress.LOADING
-                    ? loadingDialog()
+                    ? RbioLoading()
                     : Container(),
           );
         },

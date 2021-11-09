@@ -74,7 +74,7 @@ class _AppointmentSummaryScreenState extends State<AppointmentSummaryScreen> {
           return LoadingOverlay(
             isLoading: value.showOverlayLoading,
             opacity: 0,
-            progressIndicator: loadingDialog(),
+            progressIndicator: RbioLoading(),
             child: Scaffold(
               appBar: _buildAppBar(),
               body: _buildBody(value, context),
@@ -154,7 +154,7 @@ class _AppointmentSummaryScreenState extends State<AppointmentSummaryScreen> {
                                 child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                progress(),
+                                RbioLoading(),
                                 Center(
                                     child: Container(
                                   width: 100,

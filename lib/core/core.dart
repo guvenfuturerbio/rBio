@@ -23,7 +23,7 @@ export "events/success_events.dart";
 export "exception/network_connection_exception.dart";
 export "exception/unauth_exception.dart";
 
-export "extension/build_context_extension.dart";
+export "extension/extension.dart";
 
 export "manager/analytics_manager.dart";
 export "manager/firebase_messaging_manager.dart";
