@@ -1,6 +1,5 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/core.dart';
@@ -16,6 +15,8 @@ class CreateAppointmentEventsScreen extends StatefulWidget {
 
 class _CreateAppointmentEventsScreenState
     extends State<CreateAppointmentEventsScreen> {
+  ValueNotifier<bool> completeNotifier = ValueNotifier(false);
+
   ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
@@ -28,20 +29,13 @@ class _CreateAppointmentEventsScreenState
   @override
   void initState() {
     super.initState();
-
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
   }
 
   @override
   void dispose() {
     _selectedEvents.dispose();
     super.dispose();
-  }
-
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -54,7 +48,7 @@ class _CreateAppointmentEventsScreenState
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay);
+      // _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
@@ -119,7 +113,6 @@ class _CreateAppointmentEventsScreenState
                     // Use `CalendarStyle` to customize the UI
                     outsideDaysVisible: true,
                   ),
-
                   daysOfWeekVisible: true,
                   daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: context.xBodyText1,
@@ -138,23 +131,31 @@ class _CreateAppointmentEventsScreenState
                     ),
 
                     //
-                    leftChevronMargin: EdgeInsets.zero,
+                    leftChevronMargin: EdgeInsets.only(
+                      top: 8,
+                      left: 12,
+                      bottom: 8,
+                    ),
                     leftChevronPadding: EdgeInsets.zero,
                     leftChevronVisible: true,
-                    leftChevronIcon: Icon(
-                      Icons.chevron_left,
+                    leftChevronIcon: SvgPicture.asset(
+                      R.image.arrow_left_icon,
                       color: Colors.black,
-                      size: 38,
+                      width: R.sizes.iconSize5,
                     ),
 
                     //
-                    rightChevronMargin: EdgeInsets.zero,
+                    rightChevronMargin: EdgeInsets.only(
+                      top: 8,
+                      right: 12,
+                      bottom: 8,
+                    ),
                     rightChevronPadding: EdgeInsets.zero,
                     rightChevronVisible: true,
-                    rightChevronIcon: Icon(
-                      Icons.chevron_right,
+                    rightChevronIcon: SvgPicture.asset(
+                      R.image.arrow_right_icon,
                       color: Colors.black,
-                      size: 38,
+                      width: R.sizes.iconSize5,
                     ),
                   ),
 
@@ -282,29 +283,8 @@ class _CreateAppointmentEventsScreenState
 
             //
             Expanded(
-              child: ValueListenableBuilder<List<Event>>(
-                valueListenable: _selectedEvents,
-                builder: (context, value, _) {
-                  return ListView.builder(
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 12.0,
-                          vertical: 4.0,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: ListTile(
-                          onTap: () => print('${value[index]}'),
-                          title: Text('${value[index]}'),
-                        ),
-                      );
-                    },
-                  );
-                },
+              child: ListBody(
+                completeNotifier: completeNotifier,
               ),
             ),
           ],
@@ -324,29 +304,142 @@ class Event {
   String toString() => title;
 }
 
-/// Example events.
-///
-/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
-final kEvents = LinkedHashMap<DateTime, List<Event>>(
-  equals: isSameDay,
-  hashCode: getHashCode,
-)..addAll(_kEventSource);
-
-final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
-    value: (item) => List.generate(
-        item % 4 + 1, (index) => Event('Event $item | ${index + 1}')))
-  ..addAll({
-    kToday: [
-      Event('Today\'s Event 1'),
-      Event('Today\'s Event 2'),
-    ],
-  });
-
-int getHashCode(DateTime key) {
-  return key.millisecondsSinceEpoch;
-}
-
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
 final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
+
+class ListBody extends StatelessWidget {
+  final ValueNotifier<bool> completeNotifier;
+
+  const ListBody({
+    Key key,
+    @required this.completeNotifier,
+  }) : super(key: key);
+
+  static const List<String> list = <String>[
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        //
+        Positioned.fill(
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //
+                    SizedBox(height: 4),
+
+                    //
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 15,
+                      ),
+                      child: Text(
+                        '11 Ekim',
+                        style: context.xHeadline2.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+
+                    //
+                    _buildTimeCard(context, list[index]),
+                  ],
+                );
+              }
+
+              return _buildTimeCard(context, list[index]);
+            },
+          ),
+        ),
+
+        //
+        Align(
+          
+        ),
+
+        //
+        Align(
+          alignment: Alignment.bottomRight,
+          child: ValueListenableBuilder(
+            valueListenable: completeNotifier,
+            builder: (BuildContext context, bool value, Widget child) {
+              return RbioSwitcher(
+                showFirstChild: value,
+                child1: child,
+                child2: Visibility(
+                  visible: value,
+                  child: child,
+                ),
+              );
+            },
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: getIt<ITheme>().mainColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                "Devam Et",
+                style: context.xHeadline3.copyWith(
+                  color: getIt<ITheme>().textColor,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTimeCard(BuildContext context, String value) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: GestureDetector(
+        onTap: () {
+          completeNotifier.value = !completeNotifier.value;
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: getIt<ITheme>().cardBackgroundColor,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          margin: EdgeInsets.only(top: 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 5,
+          ),
+          child: Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: context.xHeadline2.copyWith(),
+          ),
+        ),
+      ),
+    );
+  }
+}
