@@ -1,4 +1,5 @@
 import 'package:atom/atom.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,6 +15,44 @@ class HomeVm extends ChangeNotifier {
   final BuildContext mContext;
   double startAngle = 0;
   double endAngle = 0;
+  int _currentIndexCarousel = 0;
+
+  CarouselController _controller = CarouselController();
+  List<Card> cardList = [
+    Card(
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SvgPicture.asset(
+          "assets/images/mid_pic.svg",
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+    Card(
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SvgPicture.asset(
+          "assets/images/mid_pic.svg",
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+    Card(
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SvgPicture.asset(
+          "assets/images/mid_pic.svg",
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+  ];
   ShakeMod status = ShakeMod.notShaken;
 
   //Kullanımda olan ve ekranda gösterilen widgetların tutulduğu liste
@@ -279,21 +318,36 @@ class HomeVm extends ChangeNotifier {
                 addWidget(Key('5'));
               }
             },
-            child: SizedBox(
-              height: Atom.height * .2,
-              child: Card(
-                margin: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    "assets/images/mid_pic.svg",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
+            child: Stack(children: [
+              CarouselSlider(
+                  carouselController: _controller,
+                  options: CarouselOptions(
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 1,
+                      onPageChanged: (index, reason) {
+                        _currentIndexCarousel = index;
+                        notifyListeners();
+                      }),
+                  items: cardList),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: cardList.map((urlOfItem) {
+                  int index = cardList.indexOf(urlOfItem);
+                  return Container(
+                    width: 10.0,
+                    height: 10.0,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndexCarousel == index
+                          ? Color.fromRGBO(0, 0, 0, 0.8)
+                          : Color.fromRGBO(0, 0, 0, 0.3),
+                    ),
+                  );
+                }).toList(),
+              )
+            ]),
           ),
         ),
 
