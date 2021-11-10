@@ -24,7 +24,9 @@ class _TenantsScreenState extends State<TenantsScreen> {
             //
             appBar: RbioAppBar(
               title: RbioAppBar.textTitle(
-                  context, LocaleProvider.current.title_hospital),
+                context,
+                LocaleProvider.current.title_hospital,
+              ),
             ),
 
             //

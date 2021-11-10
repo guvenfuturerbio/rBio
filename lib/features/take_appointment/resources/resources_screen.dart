@@ -53,11 +53,18 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           Widget child,
         ) {
           return Scaffold(
-            appBar: MainAppBar(
-                context: context,
-                title: getTitleBar(context),
-                leading: ButtonBackWhite(context),
-                actions: getActions(context)),
+            appBar: RbioAppBar(
+              title: RbioAppBar.textTitle(
+                context,
+                widget.tenantId == 1
+                    ? LocaleProvider.current.guven_hospital_ayranci
+                    : widget.tenantId == 7
+                        ? LocaleProvider.current.guven_cayyolu_campus
+                        : LocaleProvider.current.online_hospital,
+              ),
+            ),
+
+            //
             body: value.progress == LoadingProgress.DONE
                 ? _webBuildPosts(context, value.filterResources)
                 : value.progress == LoadingProgress.LOADING
@@ -67,28 +74,6 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         },
       ),
     );
-  }
-
-  List<Widget> getActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-        icon: SvgPicture.asset(
-          R.image.search_grey,
-          color: R.color.white,
-        ),
-        padding: EdgeInsets.only(
-          top: Atom.isWeb ? 8 : 4,
-        ),
-        onPressed: () {
-          // Atom.to(
-          //   PagePaths.SEARCH,
-          //   queryParameters: {
-          //     'isFromHomePage': true.toString(),
-          //   },
-          // );
-        },
-      )
-    ];
   }
 
   Widget _webBuildPosts(
@@ -144,14 +129,5 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         },
       ),
     );
-  }
-
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(
-        title: widget.tenantId == 1
-            ? LocaleProvider.current.guven_hospital_ayranci
-            : widget.tenantId == 7
-                ? LocaleProvider.current.guven_cayyolu_campus
-                : LocaleProvider.current.online_hospital);
   }
 }

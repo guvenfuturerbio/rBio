@@ -149,16 +149,13 @@ class HomeVm extends ChangeNotifier {
                     runSpacing: 0,
                     children: widgetsDeleted,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
+                  RbioElevatedButton(
+                    onTap: () {
                       isForDelete = false;
                       notifyListeners();
                       Atom.dismiss();
                     },
-                    child: const Text(
-                      'Dismiss',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    title: 'Dismiss',
                   ),
                 ],
               ),

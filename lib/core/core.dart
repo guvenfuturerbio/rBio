@@ -70,6 +70,7 @@ export 'widgets/guven_date_range.dart';
 export 'widgets/rbio_switcher.dart';
 export 'widgets/rbio_loading.dart';
 export 'widgets/rbio_card_appo_card.dart';
+export 'widgets/rbio_buttons.dart';
 
 export 'locator.dart';
 export 'package:onedosehealth/generated/l10n.dart';

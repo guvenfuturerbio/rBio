@@ -375,9 +375,7 @@ class ListBody extends StatelessWidget {
         ),
 
         //
-        Align(
-          
-        ),
+        Align(),
 
         //
         Align(
@@ -394,20 +392,9 @@ class ListBody extends StatelessWidget {
                 ),
               );
             },
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: getIt<ITheme>().mainColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-              ),
-              onPressed: () {},
-              child: Text(
-                "Devam Et",
-                style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColor,
-                ),
-              ),
+            child: RbioElevatedButton(
+              onTap: () {},
+              title: "Devam Et",
             ),
           ),
         ),
