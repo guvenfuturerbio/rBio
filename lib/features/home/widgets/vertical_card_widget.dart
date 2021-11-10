@@ -1,5 +1,6 @@
 import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/core.dart';
 
 class VerticalCard extends StatelessWidget {
   final Widget topImage;
@@ -18,8 +19,6 @@ class VerticalCard extends StatelessWidget {
   factory VerticalCard.topImage({
     String topImg,
     Widget bottomTitle,
-    double width,
-    double height,
   }) {
     Widget topImage = Align(
       alignment: Alignment.topRight,
@@ -35,32 +34,41 @@ class VerticalCard extends StatelessWidget {
     return VerticalCard(
       topImage: topImage,
       bottomTitle: bottomTtl,
-      width: width,
-      height: height,
+      height: Atom.height * .25,
+      width: Atom.width * .3,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            topImage,
-            Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: bottomTitle,
-                ))
-          ],
-        ),
-      ),
+    return RbioOrientationBuilder(
+      builder: (BuildContext context, AsyncSnapshot<Orientation> snapshot) {
+        if (snapshot.hasData) {
+          return Card(
+            margin: EdgeInsets.zero,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: SizedBox(
+              width: width,
+              height: height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  topImage,
+                  Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: bottomTitle,
+                      ))
+                ],
+              ),
+            ),
+          );
+        }
+
+        return SizedBox();
+      },
     );
   }
 }

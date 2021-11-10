@@ -29,7 +29,11 @@ Future<void> main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-  runApp(MyApp());
+  runApp(
+    RbioConfig(
+      child: MyApp(),
+    ),
+  );
 }
 
 void _setupLogging() {
@@ -97,61 +101,68 @@ class _MyAppState extends State<MyApp> {
                 ),
               );
 
-            return AtomMaterialApp(
-              initialUrl: PagePaths.MAIN,
-              routes: VRouterRoutes.routes,
-              onSystemPop: (data) async {
-                final currentUrl = data.fromUrl;
-                if (currentUrl.contains('/home') && currentUrl.length > 6) {
-                  data.to(PagePaths.MAIN, isReplacement: true);
-                } else if (currentUrl.contains('/home')) {
-                  SystemNavigator.pop();
-                } else if (data.historyCanBack()) {
-                  data.historyBack();
-                }
-              },
+            return OrientationBuilder(
+                builder: (BuildContext context, Orientation orientation) {
+              RbioConfig.of(context).changeOrientation(orientation);
 
-              //
-              title: 'Güven Online',
-              debugShowCheckedModeBanner: false,
-              navigatorObservers: [
-                FirebaseAnalyticsObserver(analytics: MyApp.analytics),
-                routeObserver
-              ],
+              return AtomMaterialApp(
+                initialUrl: PagePaths.MAIN,
+                routes: VRouterRoutes.routes,
+                onSystemPop: (data) async {
+                  final currentUrl = data.fromUrl;
+                  if (currentUrl.contains('/home') && currentUrl.length > 6) {
+                    data.to(PagePaths.MAIN, isReplacement: true);
+                  } else if (currentUrl.contains('/home')) {
+                    SystemNavigator.pop();
+                  } else if (data.historyCanBack()) {
+                    data.historyBack();
+                  }
+                },
 
-              //
-              builder: (BuildContext context, Widget child) {
-                return Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: MediaQuery(
-                    data: MediaQuery.of(context).copyWith(
-                      textScaleFactor:
-                          MediaQuery.of(context).size.width <= 400 ? 0.8 : 1.0,
+                //
+                title: 'Güven Online',
+                debugShowCheckedModeBanner: false,
+                navigatorObservers: [
+                  FirebaseAnalyticsObserver(analytics: MyApp.analytics),
+                  routeObserver
+                ],
+
+                //
+                builder: (BuildContext context, Widget child) {
+                  return Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: MediaQuery(
+                      data: MediaQuery.of(context).copyWith(
+                        textScaleFactor:
+                            MediaQuery.of(context).size.width <= 400
+                                ? 0.8
+                                : 1.0,
+                      ),
+                      child: child,
                     ),
-                    child: child,
-                  ),
-                );
-              },
+                  );
+                },
 
-              //
-              theme: ThemeData(
-                primaryColor: themeNotifier.theme.mainColor,
-                scaffoldBackgroundColor:
-                    themeNotifier.theme.scaffoldBackgroundColor,
-                fontFamily: themeNotifier.theme.fontFamily,
-                textTheme: themeNotifier.theme.textTheme,
-              ),
+                //
+                theme: ThemeData(
+                  primaryColor: themeNotifier.theme.mainColor,
+                  scaffoldBackgroundColor:
+                      themeNotifier.theme.scaffoldBackgroundColor,
+                  fontFamily: themeNotifier.theme.fontFamily,
+                  textTheme: themeNotifier.theme.textTheme,
+                ),
 
-              //
-              localizationsDelegates: const [
-                LocaleProvider.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                DefaultCupertinoLocalizations.delegate
-              ],
-              supportedLocales: LocaleProvider.delegate.supportedLocales,
-            );
+                //
+                localizationsDelegates: const [
+                  LocaleProvider.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  DefaultCupertinoLocalizations.delegate
+                ],
+                supportedLocales: LocaleProvider.delegate.supportedLocales,
+              );
+            });
           },
         ),
       ),

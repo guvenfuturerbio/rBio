@@ -71,6 +71,8 @@ export 'widgets/rbio_switcher.dart';
 export 'widgets/rbio_loading.dart';
 export 'widgets/rbio_card_appo_card.dart';
 export 'widgets/rbio_buttons.dart';
+export 'widgets/rbio_orientation_builder.dart';
 
 export 'locator.dart';
+export 'rbio_config.dart';
 export 'package:onedosehealth/generated/l10n.dart';

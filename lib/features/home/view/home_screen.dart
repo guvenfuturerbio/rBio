@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           showFirstChild: val.status.isShaken,
           child1: InkWell(
             onTap: () {
+              val.changeStatus();
               val.showRemovedWidgets();
             },
             child: Icon(

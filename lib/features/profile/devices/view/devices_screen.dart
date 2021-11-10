@@ -60,6 +60,7 @@ class _DevicesScreenState extends State<DevicesScreen> {
                   imageUrl: vm.devices[index].image,
                   leadingImage: UserLeadingImage.Rectangle,
                   trailingIcon: UserTrailingIcons.Cancel,
+                  width: Atom.width,
                 ),
 
                 //

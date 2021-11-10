@@ -60,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     .getString(SharedPreferencesKeys.PROFILE_IMAGE),
                 leadingImage: UserLeadingImage.Circle,
                 onTap: () {},
+                width: Atom.width,
               ),
 
               //
