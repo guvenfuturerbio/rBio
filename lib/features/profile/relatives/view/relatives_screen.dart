@@ -60,6 +60,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
                   onTap: () {},
                   leadingImage: UserLeadingImage.Circle,
                   trailingIcon: UserTrailingIcons.RightArrow,
+                  width: Atom.width,
                 ),
 
                 //

@@ -42,6 +42,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
             leadingImage: UserLeadingImage.Circle,
             trailingIcon: UserTrailingIcons.Cancel,
             onTap: () {},
+            width: Atom.width,
           ),
 
           //
@@ -53,6 +54,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
             leadingImage: UserLeadingImage.Circle,
             trailingIcon: UserTrailingIcons.Cancel,
             onTap: () {},
+            width: Atom.width,
           ),
         ],
       ),

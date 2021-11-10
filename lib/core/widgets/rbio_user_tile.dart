@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../core.dart';
 
 class RbioUserTile extends StatelessWidget {
+  final double width;
   final String name;
   final String imageBytes;
   final String imageUrl;
@@ -15,6 +16,7 @@ class RbioUserTile extends StatelessWidget {
 
   RbioUserTile({
     Key key,
+    @required this.width,
     @required this.name,
     this.imageBytes,
     this.imageUrl,
@@ -28,7 +30,7 @@ class RbioUserTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: Atom.width,
+        width: width,
         decoration: BoxDecoration(
           color: trailingIcon != null ? Colors.white : Colors.transparent,
           borderRadius: R.sizes.borderRadiusCircular,
