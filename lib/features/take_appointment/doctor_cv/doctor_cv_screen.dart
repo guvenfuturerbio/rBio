@@ -52,11 +52,9 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
       child: Consumer<DoctorCvScreenVm>(
         builder: (BuildContext context, DoctorCvScreenVm value, Widget child) {
           return Scaffold(
-            appBar: MainAppBar(
-              context: context,
-              title: TitleAppBarWhite(
-                  title: LocaleProvider.of(context).title_doctors_profiles),
-              leading: ButtonBackWhite(context),
+            appBar: RbioAppBar(
+              title: RbioAppBar.textTitle(
+                  context, LocaleProvider.of(context).title_doctors_profiles),
             ),
             body: _buildBody(context, value),
           );
@@ -104,7 +102,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                progress(),
+                                RbioLoading(),
                                 Center(
                                     child: Container(
                                   width: 120,
@@ -399,7 +397,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ],
                     )
                   : value.progress == LoadingProgress.LOADING
-                      ? progress()
+                      ? RbioLoading()
                       : Container(
                           margin:
                               EdgeInsets.only(bottom: 20, left: 20, right: 20),

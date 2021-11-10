@@ -145,6 +145,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Create Appointment`
+  String get create_appointment_events {
+    return Intl.message(
+      'Create Appointment',
+      name: 'create_appointment_events',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Followers`
   String get followers {
     return Intl.message(

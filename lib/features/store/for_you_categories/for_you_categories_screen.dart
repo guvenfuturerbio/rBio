@@ -43,9 +43,7 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
 
             //
             body: value.progress == LoadingProgress.LOADING
-                ? Center(
-                    child: progress(),
-                  )
+                ? RbioLoading()
                 : kIsWeb
                     ? Padding(
                         padding: EdgeInsets.only(

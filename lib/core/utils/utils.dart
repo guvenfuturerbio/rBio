@@ -87,18 +87,6 @@ TextStyle inputTextStyle() =>
 
 TextStyle hintStyle() => TextStyle(fontSize: 16, color: R.color.gray);
 
-CircularProgressIndicator progress({
-  Key key,
-  double value,
-  Color backgroundColor,
-  Animation valueColor,
-  String semanticsLabel,
-  String semanticsValue,
-}) =>
-    CircularProgressIndicator(
-      backgroundColor: R.color.light_blue,
-    );
-
 GradientButton button({
   text: String,
   Function onPressed,
@@ -612,6 +600,18 @@ extension on IosDeviceInfo {
   }
 }
 
+String getHospitalName(BuildContext context, PatientAppointmentsResponse data) {
+  if (data.type == R.dynamicVar.onlineAppointmentType) {
+    return (LocaleProvider.current.online_appo);
+  } else if (data.tenantId == R.dynamicVar.tenantAyranciId) {
+    return (LocaleProvider.current.guven_hospital_ayranci);
+  } else if (data.tenantId == R.dynamicVar.tenantCayyoluId) {
+    return (LocaleProvider.current.guven_cayyolu_campus);
+  }
+
+  return "";
+}
+
 /// Captures tab key and switches to next input field(focus node)
 /// If next input field(focus node) is null, unfocuses the first field
 class TabToNextFieldTextInputFormatter extends TextInputFormatter {
@@ -697,53 +697,12 @@ Future<void> showOptionalUpdateDialog({
   );
 }
 
-Widget loadingDialog() => Center(
-      child: CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation<Color>(R.color.dark_blue),
-      ),
-    );
-
 String clearDoctorTitle(String text) {
   if (text.contains('dr.')) {
     return text.split('dr.')[1];
   } else {
     return text;
   }
-}
-
-String turkishCharacterToEnglish(String text) {
-  List<String> turkishChars = [
-    'ı',
-    'ğ',
-    'İ',
-    'Ğ',
-    'ç',
-    'Ç',
-    'ş',
-    'Ş',
-    'ö',
-    'Ö',
-    'ü',
-    'Ü'
-  ];
-  List<String> englishChars = [
-    'i',
-    'g',
-    'I',
-    'G',
-    'c',
-    'C',
-    's',
-    'S',
-    'o',
-    'O',
-    'u',
-    'U'
-  ];
-  // Match chars
-  for (int i = 0; i < turkishChars.length; i++)
-    text = text.replaceAll(turkishChars[i], englishChars[i]);
-  return text;
 }
 
 String fillAllFields(String formContext, String userName, String email,

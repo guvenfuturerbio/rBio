@@ -206,27 +206,9 @@ class RbioCardAppoCard extends StatelessWidget {
                                 ],
                               ),
                             )
-                          : ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.green.shade700,
-                                onSurface: Colors.green,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0,
-                                  vertical: 12.0,
-                                ),
-                                child: Text(
-                                  onTap != null ? "Görüntüle" : "Bekleniyor",
-                                  style: context.xHeadline3.copyWith(
-                                    color: getIt<ITheme>().textColor,
-                                  ),
-                                ),
-                              ),
-                              onPressed: onTap != null ? onTap : null,
+                          : RbioElevatedButton(
+                              title: onTap != null ? "Görüntüle" : "Bekleniyor",
+                              onTap: onTap != null ? onTap : null,
                             ),
 
                       //

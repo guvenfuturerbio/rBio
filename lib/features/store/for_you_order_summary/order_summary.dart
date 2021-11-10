@@ -44,9 +44,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                 leading: ButtonBackWhite(context),
               ),
               body: value.progress == LoadingProgress.LOADING
-                  ? Center(
-                      child: progress(),
-                    )
+                  ? RbioLoading()
                   : SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),

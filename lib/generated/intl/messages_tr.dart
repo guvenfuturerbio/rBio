@@ -97,6 +97,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "covid_title_5" : MessageLookupByLibrary.simpleMessage("COVID-19 (Yeni Koronavirüs) bulaşması açısından kimler daha yüksek risk altındadır?"),
     "covid_title_6" : MessageLookupByLibrary.simpleMessage("COVID-19 (Yeni Koronavirüs) tanısı nasıl konulmaktadır?"),
     "covid_title_7" : MessageLookupByLibrary.simpleMessage("COVID-19 (Yeni Koronavirüs) belirtileri nelerdir?"),
+    "create_appointment_events" : MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
     "create_password" : MessageLookupByLibrary.simpleMessage("Şifre Oluştur"),
     "credential_already_exist" : MessageLookupByLibrary.simpleMessage("Kimlik bilgileri bir hesaba bağlı olarak zaten mevcuttur. Öncelikle bağlı olduğu hesabın altından silinmesi gereklidir"),
     "credit_card_cvv" : MessageLookupByLibrary.simpleMessage("CVV"),

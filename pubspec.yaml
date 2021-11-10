@@ -83,12 +83,12 @@ dependencies:
   rxdart: ^0.26.0
   sentry_flutter: ^5.1.0
   shared_preferences: ^2.0.5
+  simple_gesture_detector: ^0.2.0
   slugify: 1.0.0
   spring: ^2.0.2
   sqflite: null
   swipedetector: ^1.2.0
   syncfusion_flutter_pdfviewer: ^19.2.44-beta
-  table_calendar: ^3.0.0
   time: ^2.0.0
   turkish: ^0.2.0
   universal_html: ^2.0.8

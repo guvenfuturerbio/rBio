@@ -19,19 +19,23 @@ class _TenantsScreenState extends State<TenantsScreen> {
     return ChangeNotifierProvider(
       create: (context) => TenantListPageVm(context: context),
       child: Consumer<TenantListPageVm>(
-        builder: (context, value, child) {
+        builder: (BuildContext context, TenantListPageVm value, Widget child) {
           return Scaffold(
-            appBar: MainAppBar(
-              context: context,
-              title: getTitleBar(context),
-              leading: ButtonBackWhite(context),
+            //
+            appBar: RbioAppBar(
+              title: RbioAppBar.textTitle(
+                context,
+                LocaleProvider.current.title_hospital,
+              ),
             ),
+
+            //
             body: value.progress == LoadingProgress.DONE
                 ? kIsWeb
                     ? _webBuildPosts(context, value.tenantsFilterResponse)
                     : _buildPosts(context, value.tenantsFilterResponse)
                 : value.progress == LoadingProgress.LOADING
-                    ? loadingDialog()
+                    ? RbioLoading()
                     : Container(),
           );
         },
@@ -47,7 +51,6 @@ class _TenantsScreenState extends State<TenantsScreen> {
       itemCount: tenantList.length,
       padding: EdgeInsets.all(8),
       itemBuilder: (context, index) {
-        print(tenantList.toString());
         return InkWell(
           child: _ItemHospitalList(
               title: tenantList[index].id == R.dynamicVar.tenantAyranciId
@@ -208,25 +211,23 @@ class _TenantsScreenState extends State<TenantsScreen> {
           ],
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-            image: new DecorationImage(
-              image: new ExactAssetImage(image),
-              fit: BoxFit.fill,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+          image: new DecorationImage(
+            image: new ExactAssetImage(image),
+            fit: BoxFit.fill,
+          ),
+          gradient: LinearGradient(colors: [
+            R.color.blue,
+            R.color.light_blue,
+          ], begin: Alignment.topLeft, end: Alignment.topRight),
+          boxShadow: [
+            BoxShadow(
+              color: R.color.dark_black.withAlpha(50),
+              blurRadius: 15,
+              spreadRadius: 0,
+              offset: Offset(5, 10),
             ),
-            gradient: LinearGradient(colors: [
-              R.color.blue,
-              R.color.light_blue,
-            ], begin: Alignment.topLeft, end: Alignment.topRight),
-            boxShadow: [
-              BoxShadow(
-                  color: R.color.dark_black.withAlpha(50),
-                  blurRadius: 15,
-                  spreadRadius: 0,
-                  offset: Offset(5, 10))
-            ]),
+          ],
+        ),
       );
-
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(title: LocaleProvider.current.title_hospital);
-  }
 }

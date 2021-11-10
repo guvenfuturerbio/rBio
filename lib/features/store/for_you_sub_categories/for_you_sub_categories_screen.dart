@@ -50,9 +50,7 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
               ],
             ),
             body: value.progress == LoadingProgress.LOADING
-                ? Center(
-                    child: progress(),
-                  )
+                ? RbioLoading()
                 : kIsWeb
                     ? Padding(
                         padding: EdgeInsets.only(

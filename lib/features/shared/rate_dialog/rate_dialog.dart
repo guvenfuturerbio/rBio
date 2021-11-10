@@ -41,7 +41,7 @@ class _RateDialogState extends State<RateDialog> {
 
             return LoadingOverlay(
               isLoading: value.showLoadingOverlay,
-              progressIndicator: loadingDialog(),
+              progressIndicator: RbioLoading(),
               opacity: 0,
               child: SingleChildScrollView(
                 child: Container(

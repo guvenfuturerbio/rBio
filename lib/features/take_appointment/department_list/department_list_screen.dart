@@ -43,42 +43,20 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
         builder:
             (BuildContext context, DepartmentListScreenVm value, Widget child) {
           return Scaffold(
-            appBar: MainAppBar(
-                context: context,
-                title: getTitleBar(context),
-                leading: ButtonBackWhite(context),
-                actions: getActions(context)),
+            appBar: RbioAppBar(
+              title: RbioAppBar.textTitle(context, getTitleBar()),
+            ),
+
+            //
             body: value.progress == LoadingProgress.DONE
                 ? _webBuildPosts(context, value.filterDepartmentResponse)
                 : value.progress == LoadingProgress.LOADING
-                    ? loadingDialog()
+                    ? RbioLoading()
                     : Container(),
           );
         },
       ),
     );
-  }
-
-  List<Widget> getActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: SvgPicture.asset(
-          R.image.search_grey,
-          color: R.color.white,
-        ),
-        padding: EdgeInsets.only(
-          top: Atom.isWeb ? 8 : 4,
-        ),
-        onPressed: () {
-          // Atom.to(
-          //   PagePaths.SEARCH,
-          //   queryParameters: {
-          //     'isFromHomePage': true.toString(),
-          //   },
-          // );
-        },
-      ),
-    ];
   }
 
   Widget _webBuildPosts(
@@ -125,14 +103,13 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
     );
   }
 
-  Widget getTitleBar(BuildContext context) {
+  String getTitleBar() {
     if (widget.fromOnlineSelection == true) {
-      return TitleAppBarWhite(title: LocaleProvider.current.online_hospital);
+      return LocaleProvider.current.online_hospital;
     }
 
-    return TitleAppBarWhite(
-        title: widget.tenantId == R.dynamicVar.tenantAyranciId
+    return widget.tenantId == R.dynamicVar.tenantAyranciId
             ? LocaleProvider.current.guven_hospital_ayranci
-            : LocaleProvider.current.guven_cayyolu_campus);
+            : LocaleProvider.current.guven_cayyolu_campus;
   }
 }

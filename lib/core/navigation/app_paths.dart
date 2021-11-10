@@ -1,7 +1,3 @@
-import 'package:onedosehealth/features/auth/login/login_screen.dart';
-import 'package:onedosehealth/features/results/e_result_vm.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/view/create_appointment.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -30,6 +26,7 @@ import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/profile/relatives/view/relatives_screen.dart';
 import '../../features/profile/relatives/viewmodel/relatives_vm.dart';
 import '../../features/results/e_result_screen.dart';
+import '../../features/results/e_result_vm.dart';
 import '../../features/results/visit_detail_screen.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
@@ -41,6 +38,9 @@ import '../../features/store/for_you_sub_categories/for_you_sub_categories_scree
 import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
 import '../../features/store/shopping_cart/shopping_cart_screen.dart';
 import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
+import '../../features/take_appointment/create_appointment/view/create_appointment_events_screen.dart';
+import '../../features/take_appointment/create_appointment/view/create_appointment_screen.dart';
+import '../../features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
 import '../../features/take_appointment/department_list/department_list_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../../features/take_appointment/events/events_screen.dart';
@@ -84,8 +84,13 @@ class VRouterRoutes {
       path: PagePaths.CREATE_APPOINTMENT,
       widget: ChangeNotifierProvider<CreateAppointmentVm>(
         create: (context) => CreateAppointmentVm(),
-        child: CreateAppointment(),
+        child: CreateAppointmentScreen(),
       ),
+    ),
+
+    VWidget(
+      path: PagePaths.CREATE_APPOINTMENT_EVENTS,
+      widget: CreateAppointmentEventsScreen(),
     ),
 
     VWidget(
@@ -281,7 +286,8 @@ class PagePaths {
   static const PROFILE = '/profile';
   static const FOLLOWERS = '/followers';
   static const DEVICES = '/devices';
-  static const CREATE_APPOINTMENT = '/create_appointment';
+  static const CREATE_APPOINTMENT = '/create-appointment';
+  static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-evens';
 
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';

@@ -61,12 +61,10 @@ class _ForYouSubCategoriesDetailScreenState
               leading: ButtonBackWhite(context),
             ),
             body: value.progress == LoadingProgress.LOADING
-                ? Center(
-                    child: progress(),
-                  )
+                ? RbioLoading()
                 : LoadingOverlay(
                     isLoading: value.showLoadingOverlay,
-                    progressIndicator: loadingDialog(),
+                    progressIndicator: RbioLoading(),
                     opacity: 0.26,
                     color: Colors.black,
                     child: Padding(

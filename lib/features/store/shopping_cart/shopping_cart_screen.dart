@@ -31,9 +31,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 leading: ButtonBackWhite(context),
               ),
               body: value.progress == LoadingProgress.LOADING
-                  ? Center(
-                      child: progress(),
-                    )
+                  ? RbioLoading()
                   : SingleChildScrollView(
                       child: Padding(
                         padding: kIsWeb
