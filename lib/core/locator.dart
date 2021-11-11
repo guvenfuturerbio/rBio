@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:onedosehealth/core/data/service/symptom_api_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'data/helper/dio_helper.dart';
 import 'data/repository/repository.dart';
+import 'data/repository/symptom_repository.dart';
 import 'data/service/api_service.dart';
 import 'data/service/local_cache_service.dart';
 import 'manager/shared_preferences_manager.dart';
@@ -33,6 +35,11 @@ Future<void> setupLocator() async {
   getIt.registerSingleton<Repository>(Repository(
       apiService: getIt<ApiService>(),
       localCacheService: getIt<LocalCacheService>()));
+
+  getIt.registerSingleton<SymptomApiService>(
+      SymptomApiServiceImpl(getIt<IDioHelper>()));
+  getIt.registerSingleton<SymptomRepository>(
+      SymptomRepository(getIt<SymptomApiService>()));
 
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();

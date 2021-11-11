@@ -12,6 +12,7 @@ part 'endpoints.dart';
 part 'images.dart';
 part 'variables.dart';
 part 'regexp.dart';
+part 'bodydatas.dart';
 
 class R {
   static final image = _Images();
@@ -21,4 +22,5 @@ class R {
   static final strings = _Strings();
   static final sizes = _Sizes();
   static final regExp = _RegExp();
+  static final bodyDatas = _Constants();
 }

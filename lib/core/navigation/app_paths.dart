@@ -1,3 +1,4 @@
+import 'package:onedosehealth/features/symptom_checker/symptoms_pages/symptoms_page.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -269,6 +270,11 @@ class VRouterRoutes {
       widget: WebConferanceScreen(),
     ),
 
+    VWidget(
+      path: PagePaths.SYMPTOM_MAIN_MENU,
+      widget: SymptomsAuthPage(),
+    ),
+
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -327,4 +333,6 @@ class PagePaths {
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
+  //Symptom checker
+  static const SYMPTOM_MAIN_MENU = '/symptom-main';
 }
