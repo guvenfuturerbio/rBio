@@ -10,6 +10,8 @@ enum SecretKeys {
   MOCK_APPOINTMENT,
   DEV_4_GUVEN,
   SENTRY_DSN,
+  SYMPTOM_CHECKER_LOGIN,
+  SYMPTOM_REQUEST_URL
 }
 
 extension SecretKeysStringExt on String {

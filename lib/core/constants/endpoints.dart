@@ -114,6 +114,16 @@ class _Endpoints {
   final addNewPatientRelativePath = '/profile/add-pusula'.xBasePath;
   String uploadPatientDocumentsPath(String webAppoId) =>
       '/file/upload-patient-document-for-appoinment/$webAppoId'.xBasePath;
+
+  final symptomCheckerLogin = '/login'.xSymptomCheckerLogin;
+  final symptomGetProposed = '/symptoms/proposed'.xSymptomCheckerRequest;
+  final symptomGetSpecialisations =
+      '/diagnosis/specialisations'.xSymptomCheckerRequest;
+  final symptomGetBodyLocations = '/body/locations'.xSymptomCheckerRequest;
+  String symptomGetBodySubLocations(int locationID) =>
+      '/body/locations/${locationID}'.xSymptomCheckerRequest;
+  String symptomGetBodySymptoms(int locationID, int gender) =>
+      '/symptoms/${locationID}/${gender}'.xSymptomCheckerRequest;
 }
 
 extension _EndpointsExtension on String {
@@ -121,4 +131,8 @@ extension _EndpointsExtension on String {
   String get xGuvenPath =>
       SecretUtils.instance.get(SecretKeys.DEV_4_GUVEN) + this;
   String get xSSOPath => SecretUtils.instance.get(SecretKeys.SSO_URL) + this;
+  String get xSymptomCheckerLogin =>
+      SecretUtils.instance.get(SecretKeys.SYMPTOM_CHECKER_LOGIN) + this;
+  String get xSymptomCheckerRequest =>
+      SecretUtils.instance.get(SecretKeys.SYMPTOM_REQUEST_URL) + this;
 }

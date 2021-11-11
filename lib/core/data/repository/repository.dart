@@ -19,47 +19,6 @@ class Repository {
     @required this.localCacheService,
   });
 
-  Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
-    String url,
-    Future<List<T>> Function() apiCall,
-    Duration cacheDuration,
-    T model,
-  ) async {
-    final localData = await localCacheService.get(url);
-    if (localData == null) {
-      final apiData = await apiCall();
-      await localCacheService.write(url, json.encode(apiData), cacheDuration);
-      return apiData;
-    } else {
-      final localModel = json.decode(localData);
-      if (localModel is List) {
-        return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
-      }
-      return [];
-    }
-  }
-
-  Future<T> getCacheApiCallModel<T extends IBaseModel>(
-    String url,
-    Future<T> Function() apiCall,
-    Duration cacheDuration,
-    T model,
-  ) async {
-    final localData = await localCacheService.get(url);
-    if (localData == null) {
-      final apiData = await apiCall();
-      await localCacheService.write(url, json.encode(apiData), cacheDuration);
-      return apiData;
-    } else {
-      final localModel = json.decode(localData);
-      if (localModel is Map) {
-        return model.fromJson(localModel);
-      }
-
-      throw Exception('getCacheApiCallModel : ${model.runtimeType}');
-    }
-  }
-
   Future<GuvenLogin> login(
           String clientId,
           String grantType,
@@ -72,32 +31,35 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = R.endpoints.getAllPackagePath;
-    return await getCacheApiCallList(
+    return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllPackage(url),
       Duration(days: 1),
       ForYouCategoryResponse(),
+      localCacheService,
     );
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
     final url = R.endpoints.getAllSubCategoriesPath(id);
-    return await getCacheApiCallList(
+    return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllSubCategories(url),
       Duration(days: 1),
       ForYouCategoryResponse(),
+      localCacheService,
     );
   }
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
       int id) async {
     final url = R.endpoints.getSubCategoryDetailPath(id);
-    return await getCacheApiCallList(
+    return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getSubCategoryDetail(url),
       Duration(days: 1),
       ForYouSubCategoryDetailResponse(),
+      localCacheService,
     );
   }
 
@@ -145,11 +107,12 @@ class Repository {
   Future<List<FilterTenantsResponse>> filterTenants(
       FilterTenantsRequest filterTenantsRequest) async {
     final url = R.endpoints.filterTenantsPath;
-    return await getCacheApiCallList<FilterTenantsResponse>(
+    return await Utils.instance.getCacheApiCallList<FilterTenantsResponse>(
       url,
       () => apiService.filterTenants(url, filterTenantsRequest),
       Duration(days: 10),
       FilterTenantsResponse(),
+      localCacheService,
     );
   }
 
@@ -157,11 +120,12 @@ class Repository {
       FilterDepartmentsRequest filterDepartmentsRequest) async {
     final url = R.endpoints.filterDepartmentsPath;
     final bodyString = json.encode(filterDepartmentsRequest.toJson());
-    return await getCacheApiCallList<FilterDepartmentsResponse>(
+    return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url + bodyString,
       () => apiService.filterDepartments(filterDepartmentsRequest),
       Duration(days: 1),
       FilterDepartmentsResponse(),
+      localCacheService,
     );
   }
 
@@ -169,21 +133,23 @@ class Repository {
       FilterResourcesRequest filterResourcesRequest) async {
     final url = R.endpoints.filterResourcesPath;
     final bodyString = json.encode(filterResourcesRequest.toJson());
-    return await getCacheApiCallList<FilterResourcesResponse>(
+    return await Utils.instance.getCacheApiCallList<FilterResourcesResponse>(
       url + bodyString,
       () => apiService.filterResources(filterResourcesRequest),
       Duration(days: 1),
       FilterResourcesResponse(),
+      localCacheService,
     );
   }
 
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
     final url = R.endpoints.getDoctorCvDetailsPath(doctorWebID);
-    return await getCacheApiCallModel<DoctorCvResponse>(
+    return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
       url,
       () => apiService.getDoctorCvDetails(doctorWebID),
       Duration(days: 1),
       DoctorCvResponse(),
+      localCacheService,
     );
   }
 
@@ -290,11 +256,12 @@ class Repository {
 
   Future<GuvenResponseModel> socialResource() async {
     final url = R.endpoints.socialResourcePath;
-    return await getCacheApiCallModel<GuvenResponseModel>(
+    return await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
       url,
       () => apiService.socialResource(),
       Duration(days: 1),
       GuvenResponseModel(),
+      localCacheService,
     );
   }
 

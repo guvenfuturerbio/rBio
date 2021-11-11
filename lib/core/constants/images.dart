@@ -2,7 +2,8 @@ part of 'constants.dart';
 
 class _Images {
   // New
-  final mockAvatar = 'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
+  final mockAvatar =
+      'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
 
   final add = 'assets/images/new/add_icon.svg';
   final appointment_icon = 'assets/images/new/appointment_icon.svg';
@@ -205,4 +206,10 @@ class _Images {
   final website_icon = "assets/images/websitesiicon.svg";
   final uygulama_icon = "assets/images/uygulamaicon.svg";
   final danisma_icon = "assets/images/ic_danisma.svg";
+
+  //
+  final boy_child_icon = "assets/images/boy_child_icon.svg";
+  final girl_child_icon = "assets/images/girl_child_icon.svg";
+  final man_icon = "assets/images/man_icon.svg";
+  final women_icon = "assets/images/women_icon.svg";
 }

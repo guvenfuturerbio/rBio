@@ -751,3 +751,57 @@ Gradient AppGradient() => LinearGradient(
       begin: Alignment.bottomLeft,
       end: Alignment.centerRight,
     );
+
+class Utils {
+  Utils._();
+
+  static Utils _instance;
+
+  static Utils get instance {
+    _instance ??= Utils._();
+    return _instance;
+  }
+
+  Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
+    String url,
+    Future<List<T>> Function() apiCall,
+    Duration cacheDuration,
+    T model,
+    LocalCacheService localCacheService,
+  ) async {
+    final localData = await localCacheService.get(url);
+    if (localData == null) {
+      final apiData = await apiCall();
+      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      return apiData;
+    } else {
+      final localModel = json.decode(localData);
+      if (localModel is List) {
+        return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
+      }
+      return [];
+    }
+  }
+
+  Future<T> getCacheApiCallModel<T extends IBaseModel>(
+    String url,
+    Future<T> Function() apiCall,
+    Duration cacheDuration,
+    T model,
+    LocalCacheService localCacheService,
+  ) async {
+    final localData = await localCacheService.get(url);
+    if (localData == null) {
+      final apiData = await apiCall();
+      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      return apiData;
+    } else {
+      final localModel = json.decode(localData);
+      if (localModel is Map) {
+        return model.fromJson(localModel);
+      }
+
+      throw Exception('getCacheApiCallModel : ${model.runtimeType}');
+    }
+  }
+}

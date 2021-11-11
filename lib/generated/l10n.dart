@@ -2375,6 +2375,16 @@ class LocaleProvider {
     );
   }
 
+  /// `en-gb`
+  String get symptomChecker_language {
+    return Intl.message(
+      'en-gb',
+      name: 'symptomChecker_language',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Old Password`
   String get hint_input_old_password {
     return Intl.message(
@@ -3310,6 +3320,276 @@ class LocaleProvider {
     return Intl.message(
       'DISTANCE SALES AGREEMENT\nUpdated as of: 16.09.2021\nARTICLE 1: PARTIES and SUBJECT MATTER\n1.	This Distance Sales Agreement (the “Agreement”) has been entered into by the parties listed below: \nSELLER (“Güven Hospital”) \nTrade Name	: Güven Hastanesi A.Ş.\nAddress		: Remzi Oğuz Arık Mahallesi Paris Cad. No:58 Çankaya Ankara\nTelephone	: 444 94 94\nE-mail 		: guven@guven.com.tr\nMERSİS No.	: 0451001685100012\nBUYER (“Buyer”)\nFull Name 	: <userName>\nAddress 		:<adress>\nTelephone	: <phoneNumber>\nE-mail 		: <email>\nThe Buyer and Güven Hospital may be individually referred to as a “Party” and jointly as the “Parties”. \n2.	Güven Hospital is a private hospital providing patients with ambulatory and in-patient medical examination, diagnosis and treatment services of various medical specialities and seated at the address of Paris Caddesi No: 58 Kavaklıdere Ankara, in the Ankara province, holding the qualifications prescribed for under the “Private Hospitals Regulation” published on the Official Gazette dated 11.03.2009 and numbered 27166 and other relevant legislation. \n3.	This Agreement has been prepared in accordance with the Consumer Protection Law No. 6502 (the “Law”) and the Distance Agreements Regulation. This Agreement provides for the Parties’ mutual rights and obligations for the Buyer’s purchase of the healthcare service package as defined under Article 2.2 of this Agreement (the “Service Package”) from the web site and mobile applications owned by Güven Hospital (the “Online Platform”). \n4.	The Parties to this Agreement accept and represent that they are informed of and understand their obligations and responsibilities arising out of the Law and the Distance Agreements Regulation within the context of this Agreement. \n5.	By way of approving this Agreement and the Preliminary Disclosure Form by electronic means, Buyer confirms the complete and accurate receipt of the information that must be provided by Güven Hospital to the Buyer prior to the execution of a distance agreement, namely those on address, the essential features of the service that is ordered, the full price of the service including taxes and payment information. \nARTICLE 2: ESSENTIAL FEATURES OF THE SUBJECT MATTER OF THE AGREEMENT AND PRICE \n1.	The essential features of the Service Package are listed on the Online Platform and may likewise be reviewed on the Online Platform. Where the Service Package is an “online meeting”, the Service Package is not a substitute for a medical examination in cases where the patient and the physician must be together and is solely for the purposes of the Buyer inquiring and consulting with the physician chosen on the Online Platform. \n2.	Information as to the Service Package purchased by the Buyer by this Agreement are as below:\nExplanation on the Service Package	Quantity	Unit Price	Subtotal (VAT Inclusive)\n<packageName>\n		\nTotal:	\n\nPayment Method and Plan	: <paymentPlan>\nInvoice Address			: <adress>\nDelivery Address		: <adress>\nRecipient			: <userName>\nDate of Purchase		: <currentDate>\n3.	Prices published on the Online Platform are sales prices. Published prices and offers are valid until they are updated or changed. Prices published for a certain term are valid until the expiry of said term. \n4.	The Service Package approved and purchased by the Buyer over the Online Platform shall be processed no later than 24 hours by Güven Hospital and relayed to its relevant units. \n5.	Service shall be provided by Güven Hospital to the Buyer as soon as possible and in any event no later than 7 (seven) business days. In cases where the Service Package corresponds to a service that is for a single use only, the Buyer must use the Service Package by <expirationDate> at the latest. In cases where the Service Package corresponds to a service that is by nature continuous over a certain term, the Buyer must commence the use of the Service Package by <currentDate> at the latest and must then finish the use of all the Service Package in 3 (three) months starting from said date. Service Packages that are not used prior to the dates specified in this article shall not be usable after the expiry of said dates, no payment / repayment shall be made to the Buyer in this regard and the Buyer shall correspondingly have no rights of recourse. \n6.	In the event of any delays that are not attributable to Güven Hospital, Güven Hospital shall promptly notify the event to the Buyer. \n7.	The full or deferred price of the Service Package purchased by the Buyer shall be listed on the order form, shall be approved by the Buyer, and shall be sent to the Buyer’s e-mail address as an e-invoice following the completion of the order. Any discounts and promotion, if applied, shall be reflected on the sales price. \n8.	Where the Service Package requires a physical delivery to the Buyer, delivery charges are on the Buyer unless otherwise indicated by Güven Hospital. In this case, Güven Hospital shall deliver the Service Package in 30 (thirty) days following the order date. Güven Hospital reserves its right to extend this term by an additional 10 (ten) days via written notice during this period. Upon the delivery of the Service Package to the post or to the courier company, the risk shall pass to the Buyer. \n9.	This Agreement shall come into effect upon its approval by the Buyer on the Online Platform and shall be deemed to have been performed by the delivery of the Service Package purchased by the Buyer from Güven Hospital physically and/or via online means. \n10.	The Service Package shall be delivered to the person or persons present at the address indicated by the Buyer on the order form and in this Agreement. \nARTICLE 3: BUYER’S REPRESENTATIONS AND UNDERTAKINGS\n1.	The Buyer represents that it has duly received preliminary information on the features of the Service Package, its sales price inclusive of taxes, the payment method, delivery, its right of withdrawal and terms of use, and that it has read, understood, has been fully informed of, has electronically agreed to, and has electronically made all necessary approvals for the information provided to itself by Güven Hospital over the Online Platform. \n2.	By way of accepting this Agreement, the Buyer agrees in advance that upon its approval of the Service Package subject matter to this Agreement, it is under the obligation to pay for the price of the Service Package and additional fees such as tax and that it has been informed in this regard. \n3.	For the intended performance of the chosen Service Package and limited with purpose of performing the service listed under the Service Package, the Buyer expressly consents to the processing of its medical data that is deemed as sensitive personal data by the Personal Data Protection Law No. 6698.\n4.	The Buyer may relay its requests and complaints to Güven Hospital’s communication channels listed above. Güven Hospital shall promptly revert to the Buyer following the evaluation of said requests and complaints. \n5.	The Buyer agrees, represents, and undertakes that in case of any failure to pay for the price of the Service Package subject matter to this Agreement and/or the cancellation of the payment over bank records, Güven Hospital’s obligation to perform and/or deliver the Service Package subject matter to this Agreement shall expire. \n6.	The Buyer agrees and represents that in and while accepting this Agreement, the Buyer is at least 18 years of age or is at an age mandated by the relevant country’s laws to be legally capable of accepting this Agreement, that its capacity is not restricted and that it is authorized to accept this Agreement. If it is determined that the Buyer is younger than the age prescribed for in this article, is of restricted capacity or is not in any manner authorized to execute this Agreement, Güven Hospital may immediately terminate this Agreement and no return payments shall be made to the Buyer or its legal representative. \n7.	Where the Service Package is an “online meeting”, the Buyer is required to log in to the Güven Online application no later than 5 (five) minutes before the appointment time, be ready for connection and commence the meeting with the physician. If the Buyer is not ready as prescribed for under this article and/or does not attend the meeting at all, the meeting shall be priced as if it were duly conducted, and no return payments shall be made to the Buyer. \n8.	Where the Service Package is an “online meeting”, issues necessary for the Buyer’s consideration to conduct a video meeting and information on the software and hardware necessary for the utilization of the service are listed in the relevant sections of the web page “https://www.guven.com.tr/online-doktor” and may be updated from time to time by Güven Hospital. The Buyer is under the obligation to abide by these as well as to keep track of any updates. \n9.	The Buyer represents and undertakes that it has read, understood, and accepted the information listed under Annex-1: Information on the Scope of the Online Doctor and E-Consultation Service and Informed Consent Document. \nARTICLE 4: SEQUENCE OF PERFORMANCE, DEFAULT, AND ITS LEGAL CONSEQUENCES\n1.	Following payment by the Buyer, in compliance with the terms of this Agreement, Güven Hospital shall provide the service prescribed under the Service Package specified in this Agreement. \n2.	In the event of any default on the side of the Buyer, the Buyer agrees to pay for any damages and costs incurred by Güven Hospital due to the late performance of its obligation. \nARTICLE 5: RIGHT OF WITHDRAWAL\n1.	The Buyer, without any civil or criminal consequences and without providing for a cause, may use its right of withdrawal within 14 (fourteen) days, which starts from the date of delivery for the sale of goods, and starts from the date of purchase for the sale of services. For transactions on the sale of goods, the Buyer may also use its right of withdrawal until the delivery of the goods. \n2.	The right of withdrawal cannot be used by the Buyer if the service within the scope of the Service Package is used, in part or in full, by the Buyer. Similarly, the right of withdrawal may not be used for services that are being performed following the Buyer’s consent prior to the expiry of the term available for the right of withdrawal. \n3.	Within 14 (fourteen) days starting from the date of the Buyer’s use of its right of withdrawal (and on condition that for the sale of goods, the goods are returned through the courier specified for this purpose by Güven Hospital), all payments made by the Buyer to Güven Hospital for the relevant good or service shall be returned to or through the payment instrument used by the Buyer for the purchase of the Service Package, without any costs or obligations to the Buyer and in one payment. \n4.	Any notifications for the right of withdrawal shall be made to the e-mail address of <hospitalEmail> operated by Güven Hospital. \n5.	Any costs arising out of the utilization of the right of withdrawal shall be borne by Güven Hospital. The Buyer agrees in advance that by way of accepting this Agreement, it has been informed of its right of withdrawal. \nARTICLE 6: LIMITATION OF LIABILITY\n1.	In all cases, for medical diagnoses, treatments and disease prevention, Buyer is required to consult its physician freely chosen at its own ultimate discretion, not to skip any routine controls and in case of all emergencies, to apply to the closest emergency ward without any delay. Güven Hospital shall have absolutely no liability for any acts or actions to the contrary. \n2.	No medical procedures (such as examinations, diagnoses, or treatments) are offered or provided by the physicians attending Güven Online through the scope of the “online meeting”, and Güven Hospital and/or the physicians attending Güven Online shall have absolutely no liability for any professed malpractice. \n3.	The physicians attending Güven Online for an “online meeting” are not providing any advice. It is the Buyer’s responsibility and obligation to verify the correctness of any information or data provided during an “online meeting”. Güven Hospital and the physicians attending Güven Online shall have absolutely no liability for the use or failure to use of Güven Online and/or the “online meeting” feature, any disruption of the service provided over Güven Online and any wounding, physical injuries, actual or moral damages, loss of profit, loss of employment opportunity and similar direct or indirect damages. \n4.	To the extent possible under the applicable law, Güven Hospital’s liability for any damages incurred by the Buyer due to the Service Package and Agreement shall be limited by whichever is the lowest of (i) the sum total of the amounts paid by the Buyer to Güven Hospital over Güven Online within the 1 (one) calendar month before the occurrence of the event giving rise to liability, or (ii) 1,000 (one thousand) Turkish Liras. \n5.	The Buyer shall hold Güven Hospital harmless in cases where the Buyer damages any third parties by its breach of this Agreement. If Güven Hospital incurs any damages due to any reason attributable to the Buyer, said damages shall be compensated for by the Buyer promptly, in cash and in full. \nARTICLE 7: MISCELLANEOUS PROVISIONS\n1.	All correspondence related with this Agreement by and between the Parties shall be done so through e-mail, except in cases where the applicable legislation explicitly requires another form of communication. For these cases provided for in the applicable legislation, the Parties’ designated addresses shall be deemed as their service addresses. Unless any changes of address are notified to the other Party in 15 (fifteen) days, all notifications to the former address shall be deemed to have been duly served. \n2.	Güven Hospital shall bear no liability for any damages or losses arising out of or in connection with any delays or a failure to perform any obligations due to unforeseeable and unpreventable force majeure events out of its control, such as natural disasters, fires, explosions, civil wars, wars, uprisings, riots, mobilizations, strikes, lockouts, and pandemics. In cases where a force majeure event directly affects Güven Hospital’s obligations provided for in this Agreement, Güven Hospital reserves its right to unilaterally terminate this agreement without compensation. \n3.	If any of the articles or any part of this agreement is deemed as invalid, void or unenforceable, then said article or part shall be construed and performed in a manner and form that is enforceable and that is closest to its literal purpose; however, in cases where this is not possible, said article or part shall be deemed to have been severed and removed from this Agreement and such severance and removal shall in no manner affect or invalidate the remaining articles and terms of this Agreement, and the remaining articles and terms of this Agreement shall continue to remain valid and in full effect. \n4.	No waiver shall be valid unless it is in writing and is done so by the Parties. Any failure to request the performance of any of the terms and conditions of this Agreement by any Party, or the waiver of any Party’s rights of recourse due to the breach of this Agreement, shall not prevent the performance of said term or condition in the future or shall not be construed as a waiver of any potential future breach. \n5.	Güven Hospital reserves its right to assign any of its rights or liabilities arising out of this Agreement to third parties without any restriction. \n6.	The Parties agree and undertake that the laws and regulations of the Republic of Turkey, excluding its choice of law provisions, shall exclusively govern this Agreement, and shall be used to interpret the validity, performance, and construction of this Agreement. \n7.	In connection with any disputes arising out of this Agreement, for issues at or below the monetary limit announced annually by the Ministry of Commerce, the District or Provincial Consumer Issues Arbitration Tribunal seated at the registered address of the Buyer or at the location where the Buyer purchased the Service Package shall be authorized, and for any disputes above said monetary limit, Consumer Courts shall have jurisdiction. \n8.	Güven Hospital’s official books and commercial records, as well as the electronic information and computer data held in its servers and database, shall be binding, exclusive and definitive evidence. This article is a contract for evidence within the context of Article 193 of the Civil Procedural Law.\n9.	THE BUYER AGREES AND REPRESENTS THAT IT HAS READ AND UNDERSTOOD THE INFORMATION PROVIDED TO ITSELF BY GÜVEN HOSPITAL ON THE FEATURES OF THE SERVICE THAT IS TO BE PROVIDED OVER GÜVEN ONLINE AND THROUGH THIS AGREEMENT AND ITS OBLIGATIONS THEREFROM, THAT IT HAS POSED INQUIRIES ON ISSUES THAT IT DID NOT UNDERSTAND, THAT SUCH INQUIRIES WERE ANSWERED BY AUTHORIZED PERSONNEL AND THAT IT WAS INFORMED IN FULL. \nThis Agreement, being comprised of 7 (seven) articles and 1 (one) annex, has been executed by the Buyer by way of being read and approved electronically, and came into effect immediately. \n\nAnnex-1: Information on the Scope of the Online Doctor and E-Consultation Service and Informed Consent Document\n\nBUYER	                          GÜVEN HASTANESİ A.Ş.\n\n \nANNEX-1:\nINFORMATION ON THE SCOPE OF THE ONLINE DOCTOR AND E-CONSULTATION SERVICE\n AND \nINFORMED CONSENT DOCUMENT\nUpdated as of: 03.04.2020\n\nI have been informed in writing of the scope of the ONLINE DOCTOR AND E-CONSULTATION SERVICE (the “Service”) provided by the web site and mobile applications (the “Online Platform”) owned by Güven Hastanesi A.Ş. (“Güven Hospital”).\nI have been clearly informed in writing that \n1.	Within the scope of the Service, through the Online Platform, the possibility of Güven Hospital physicians’ advice and consultation is being offered, \n2.	In cases where the patient and the physician must be together, the Service is not a substitute for medical examination, \n3.	For all personal needs of medical diagnosis and treatment, I must apply to my physician freely chosen at my own ultimate discretion and that I must be physically examined, \n4.	In emergency cases that concern my health, I must apply to the nearest emergency ward without delay, and\n5.	Güven Hospital carries absolutely no liability for any adverse consequences due to any failure to abide by the above.\nI was provided with phone numbers that I may contact if I had any inquiries as to the above. \nAccordingly: \nI accept and represent that I have read, understood, and accepted all written information relayed to me as they are, and that I will utilize the ONLINE DOCTOR AND E-CONSULTATION SERVICE within the guidelines set forth in said information. \n(This Document has been signed by the BUYER as a supplementary part of the DISTANCE SALES AGREEMENT by and between GÜVEN HOSPITAL and the BUYER.)\n\n\n',
       name: 'distance_sales_contract_context',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `BOY`
+  String get boy {
+    return Intl.message(
+      'BOY',
+      name: 'boy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GIRL`
+  String get girl {
+    return Intl.message(
+      'GIRL',
+      name: 'girl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Which department should I go to?`
+  String get symptom_checker {
+    return Intl.message(
+      'Which department should I go to?',
+      name: 'symptom_checker',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In this section of the application, you are presented with an informative feature (“Symptom Checker”), which indicates which section you should refer to by ticking the areas of your body where you feel discomfort and the options appropriate for your symptoms. The Symptom Checker is a feature that has been produced for you to get support while identifying the potentially relevant section(s) that you only need to apply according to the symptoms marked by you; The Symptom Checker does not guarantee or warrant a precise, accurate, complete and flawless result. If, following the examination of the relevant physician, it is determined that the department(s) applied using the Symptom Controller is irrelevant and/or it is determined that another department(s) should be consulted, no fault can be attributed to us, nor is any liability for compensation for any damages or payments accepted. The Symptom Controller cannot be considered to have made any referrals. No medical procedure (such as examination, diagnosis, diagnosis, treatment) is offered or promised to you with the Symptom Controller; The services provided by the Symptom Controller cannot be interpreted as creating liability for medical malpractice. You are solely responsible for your health and any decisions, actions and practices related to your health. Based on the service provided by the Symptom Controller, you should never stop receiving medical care, delay receiving medical care, refuse medical advice, or terminate your ongoing treatment. The Symptom Controller is not a substitute for physician examination and/or treatment of the patient or monitoring of the patient's health status by a physician. Information presented with the Symptom Controller cannot be considered a medical opinion. In any case, you should consult your doctor for medical diagnosis, treatment and prevention of diseases, do not delay your controls, and apply to the nearest emergency service without losing time in any emergency. Otherwise, we have no responsibility. The Symptom Controller is provided as is (as is) and no representation, commitment or warranty is given to you. No warranty or commitment is made that the Symptom Checker is flawless, error-free, perfect, and will fully meet all your particular needs.`
+  String get symptom_checker_consent_form_text {
+    return Intl.message(
+      'In this section of the application, you are presented with an informative feature (“Symptom Checker”), which indicates which section you should refer to by ticking the areas of your body where you feel discomfort and the options appropriate for your symptoms. The Symptom Checker is a feature that has been produced for you to get support while identifying the potentially relevant section(s) that you only need to apply according to the symptoms marked by you; The Symptom Checker does not guarantee or warrant a precise, accurate, complete and flawless result. If, following the examination of the relevant physician, it is determined that the department(s) applied using the Symptom Controller is irrelevant and/or it is determined that another department(s) should be consulted, no fault can be attributed to us, nor is any liability for compensation for any damages or payments accepted. The Symptom Controller cannot be considered to have made any referrals. No medical procedure (such as examination, diagnosis, diagnosis, treatment) is offered or promised to you with the Symptom Controller; The services provided by the Symptom Controller cannot be interpreted as creating liability for medical malpractice. You are solely responsible for your health and any decisions, actions and practices related to your health. Based on the service provided by the Symptom Controller, you should never stop receiving medical care, delay receiving medical care, refuse medical advice, or terminate your ongoing treatment. The Symptom Controller is not a substitute for physician examination and/or treatment of the patient or monitoring of the patient\'s health status by a physician. Information presented with the Symptom Controller cannot be considered a medical opinion. In any case, you should consult your doctor for medical diagnosis, treatment and prevention of diseases, do not delay your controls, and apply to the nearest emergency service without losing time in any emergency. Otherwise, we have no responsibility. The Symptom Controller is provided as is (as is) and no representation, commitment or warranty is given to you. No warranty or commitment is made that the Symptom Checker is flawless, error-free, perfect, and will fully meet all your particular needs.',
+      name: 'symptom_checker_consent_form_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Symptom`
+  String get add_symptom {
+    return Intl.message(
+      'Add Symptom',
+      name: 'add_symptom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department Analysis`
+  String get analyze_department {
+    return Intl.message(
+      'Department Analysis',
+      name: 'analyze_department',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your complaints:`
+  String get your_complaints {
+    return Intl.message(
+      'Your complaints:',
+      name: 'your_complaints',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your birth year:`
+  String get select_birth_year {
+    return Intl.message(
+      'Choose your birth year:',
+      name: 'select_birth_year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue`
+  String get continue_lbl {
+    return Intl.message(
+      'Continue',
+      name: 'continue_lbl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your Choice : `
+  String get choice {
+    return Intl.message(
+      'Your Choice : ',
+      name: 'choice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No results were found for the specified symptoms.`
+  String get no_symptom_result {
+    return Intl.message(
+      'No results were found for the specified symptoms.',
+      name: 'no_symptom_result',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Symptoms`
+  String get my_symptoms {
+    return Intl.message(
+      'My Symptoms',
+      name: 'my_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Free Health Counseling`
+  String get free_counseling {
+    return Intl.message(
+      'Free Health Counseling',
+      name: 'free_counseling',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you have one of the following symptoms?`
+  String get proposed_symptom {
+    return Intl.message(
+      'Do you have one of the following symptoms?',
+      name: 'proposed_symptom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have chosen a critical symptom, you need to see a doctor urgently!`
+  String get emergency {
+    return Intl.message(
+      'You have chosen a critical symptom, you need to see a doctor urgently!',
+      name: 'emergency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emergency`
+  String get emergency_lbl {
+    return Intl.message(
+      'Emergency',
+      name: 'emergency_lbl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close_lbl {
+    return Intl.message(
+      'Close',
+      name: 'close_lbl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detailed Health Check`
+  String get detailed_check {
+    return Intl.message(
+      'Detailed Health Check',
+      name: 'detailed_check',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In which part of your body is your complaint located?`
+  String get complaint_body_part {
+    return Intl.message(
+      'In which part of your body is your complaint located?',
+      name: 'complaint_body_part',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your preselection:`
+  String get preselection {
+    return Intl.message(
+      'Choose your preselection:',
+      name: 'preselection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Appointment`
+  String get create_appo {
+    return Intl.message(
+      'Create Appointment',
+      name: 'create_appo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Güven Hospital Ayrancı`
+  String get mars_hosp {
+    return Intl.message(
+      'Güven Hospital Ayrancı',
+      name: 'mars_hosp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Güven Çayyolu Campus`
+  String get neptune_hosp {
+    return Intl.message(
+      'Güven Çayyolu Campus',
+      name: 'neptune_hosp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Digital Checkup`
+  String get digitalcheckup {
+    return Intl.message(
+      'Digital Checkup',
+      name: 'digitalcheckup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complaint Declaration`
+  String get info_report {
+    return Intl.message(
+      'Complaint Declaration',
+      name: 'info_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detaylı Sağlık Kontrolüne hoşgeldiniz, lütfen cinsiyetinizi ve doğum yılınızı sesli bir şekilde söyler misiniz? Örneğin, Erkek, 1980`
+  String get symptom_checker_welcome {
+    return Intl.message(
+      'Detaylı Sağlık Kontrolüne hoşgeldiniz, lütfen cinsiyetinizi ve doğum yılınızı sesli bir şekilde söyler misiniz? Örneğin, Erkek, 1980',
+      name: 'symptom_checker_welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Voice Health Assistant`
+  String get voice_nlp {
+    return Intl.message(
+      'Voice Health Assistant',
+      name: 'voice_nlp',
       desc: '',
       args: [],
     );

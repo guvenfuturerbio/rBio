@@ -40,6 +40,12 @@ class HomeVm extends ChangeNotifier {
       widgetsInUse = await widgets();
       await fetchWidgets();
       notifyListeners();
+      try {
+        print("BURDAYIM");
+        getIt<SymptomRepository>().getSymtptomsApiToken();
+      } catch (e) {
+        print(e);
+      }
     });
   }
 
@@ -328,6 +334,8 @@ class HomeVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(Key('8'));
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
               }
             },
             child: VerticalCard.topImage(

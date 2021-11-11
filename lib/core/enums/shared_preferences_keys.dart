@@ -16,7 +16,8 @@ enum SharedPreferencesKeys {
   CANACCESSHOSPITALOPS,
   THEME,
   DELETED_WIDGETS,
-  WIDGET_QUERY
+  WIDGET_QUERY,
+  SYMPTOM_AUTH_TOKEN,
 }
 
 extension SharedPreferencesKeysStringExt on String {
