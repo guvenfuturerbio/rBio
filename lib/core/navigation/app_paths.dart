@@ -1,4 +1,3 @@
-import 'package:onedosehealth/features/symptom_checker/symptoms_pages/symptoms_page.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -38,6 +37,8 @@ import '../../features/store/for_you_order_summary/order_summary.dart';
 import '../../features/store/for_you_sub_categories/for_you_sub_categories_screen.dart';
 import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
 import '../../features/store/shopping_cart/shopping_cart_screen.dart';
+import '../../features/symptom_checker/body_location/symptoms_body_locations_screen.dart';
+import '../../features/symptom_checker/home/view/symptoms_home_screen.dart';
 import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_events_screen.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_screen.dart';
@@ -270,9 +271,15 @@ class VRouterRoutes {
       widget: WebConferanceScreen(),
     ),
 
+    // Symptom Checker
     VWidget(
       path: PagePaths.SYMPTOM_MAIN_MENU,
-      widget: SymptomsAuthPage(),
+      widget: SymptomsHomeScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.SYMPTOM_BODY_LOCATIONS,
+      widget: SymptomsBodyLocationsScreen(),
     ),
 
     //
@@ -333,6 +340,8 @@ class PagePaths {
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
-  //Symptom checker
+
+  // Symptom Checker
   static const SYMPTOM_MAIN_MENU = '/symptom-main';
+  static const SYMPTOM_BODY_LOCATIONS = '/symptom-body-locations';
 }

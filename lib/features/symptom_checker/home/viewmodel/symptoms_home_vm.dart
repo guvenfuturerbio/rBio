@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../symptoms_result_page/symptoms_result_page_vm.dart';
+import '../../../../core/core.dart';
 
-class SymptomsPageVm extends ChangeNotifier {
+class SymptomsHomeVm extends ChangeNotifier {
   BuildContext mContext;
   LoadingProgress _progress = LoadingProgress.LOADING;
   String _tokenOfSymptom;
@@ -13,7 +11,7 @@ class SymptomsPageVm extends ChangeNotifier {
   String _resultOfTts;
   bool selectionsIsCompleted = false;
 
-  SymptomsPageVm({BuildContext context}) {
+  SymptomsHomeVm({BuildContext context}) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchSymptomToken();
@@ -26,14 +24,14 @@ class SymptomsPageVm extends ChangeNotifier {
   String get yearOfBirth => this._yearOfBirth ?? '2000';
   String get resultOfTts => this._resultOfTts ?? "Nope";
 
-  //Kullanıcının vücut bölgelerini seçtikten sonra karşısına çıkan radiobutton seçeneklerini handle eden fonksiyon
-  fetchGenderSelection(int genderId) async {
+  // Kullanıcının vücut bölgelerini seçtikten sonra karşısına çıkan radiobutton seçeneklerini handle eden fonksiyon
+  void fetchGenderSelection(int genderId) async {
     this._genderIdHolder = genderId;
     notifyListeners();
   }
 
-  //Doğum yılı handle metodu
-  yearOfBirthHandle(String year, int genderIdHld) {
+  // Doğum yılı handle metodu
+  void yearOfBirthHandle(String year, int genderIdHld) {
     this._yearOfBirth = year;
     if (DateTime.now().year - int.parse(year) < 18) {
       this._genderIdHolder = genderIdHld == 0 || genderIdHld == 2 ? 2 : 3;
@@ -44,9 +42,10 @@ class SymptomsPageVm extends ChangeNotifier {
   }
 
   //Token generator fonksiyon
-  fetchSymptomToken() async {
+  Future<void> fetchSymptomToken() async {
     this._progress = LoadingProgress.LOADING;
     notifyListeners();
+
     try {
       this._tokenOfSymptom =
           (await getIt<SymptomRepository>().getSymtptomsApiToken()).token;
@@ -61,12 +60,13 @@ class SymptomsPageVm extends ChangeNotifier {
     }
   }
 
-  showGradientDialog(BuildContext context, String title, String text) {
+  void showGradientDialog(BuildContext context, String title, String text) {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return WarningDialog(title, text);
-        });
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return WarningDialog(title, text);
+      },
+    );
   }
 }

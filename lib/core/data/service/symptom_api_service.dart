@@ -63,7 +63,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         },
       );
       if (response is List) {
-        return response.map((e) => GetBodySymptomsResponse.fromJson(e));
+        return response.map((e) => GetBodySymptomsResponse.fromJson(e)).toList();
       } else {
         throw Exception('/getSymtptomsApiToken : Data is not list!');
       }
@@ -93,7 +93,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         },
       );
       if (response is List) {
-        return response.map((e) => GetSpecialisationsResponse.fromJson(e));
+        return response.map((e) => GetSpecialisationsResponse.fromJson(e)).toList();
       } else {
         throw Exception('/getSpeacialisations : Data is not list!');
       }
@@ -114,7 +114,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         },
       );
       if (response is List) {
-        return response.map((e) => GetBodyLocationResponse.fromJson(e));
+        return response.map((e) => GetBodyLocationResponse.fromJson(e)).toList();
       } else {
         throw Exception('/getBodyLocations : Data is not list!');
       }
@@ -135,7 +135,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         },
       );
       if (response is List) {
-        return response.map((e) => GetBodySublocationResponse.fromJson(e));
+        return response.map((e) => GetBodySublocationResponse.fromJson(e)).toList();
       } else {
         throw Exception('/getBodySubLocations : Data is not list!');
       }
@@ -156,7 +156,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         },
       );
       if (response is List) {
-        return response.map((e) => GetBodySymptomsResponse.fromJson(e));
+        return response.map((e) => GetBodySymptomsResponse.fromJson(e)).toList();
       } else {
         throw Exception('/getBodySymptoms : Data is not list!');
       }

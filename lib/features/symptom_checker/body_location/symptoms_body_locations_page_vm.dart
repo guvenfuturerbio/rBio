@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../symptoms_result_page/symptoms_result_page_vm.dart';
 import 'dart:async';
 
-class BodyLocationsVm extends ChangeNotifier {
+class SymptomsBodyLocationsVm extends ChangeNotifier {
   BuildContext mContext;
   List<GetBodyLocationResponse> _bodyLocations;
   GetBodyLocationResponse _selectedBodyLocation;
@@ -32,12 +32,13 @@ class BodyLocationsVm extends ChangeNotifier {
   bool isStart = false;
   bool isSaved = false;
 
-  BodyLocationsVm(
-      {BuildContext context,
-      bool isFromVoice,
-      ValueNotifier<Offset> notifierFromPage,
-      int selectedGenderIdFromPage,
-      String yearOfBirth}) {
+  SymptomsBodyLocationsVm({
+    BuildContext context,
+    bool isFromVoice,
+    ValueNotifier<Offset> notifierFromPage,
+    int selectedGenderIdFromPage,
+    String yearOfBirth,
+  }) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       this._notifier = notifierFromPage;
