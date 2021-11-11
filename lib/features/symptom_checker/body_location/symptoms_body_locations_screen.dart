@@ -1,42 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/core.dart';
+import 'package:provider/provider.dart';
+
+import '../../../core/core.dart';
+import '../symptoms_body_sublocations_page/symptoms_body_sublocations_page.dart';
 import 'body_parts_paint.dart';
 import 'symptoms_body_locations_page_vm.dart';
-import '../symptoms_body_sublocations_page/symptoms_body_sublocations_page.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/rendering.dart';
 
-class BodyLocationsPage extends StatefulWidget {
-  const BodyLocationsPage(
-      {Key key, this.selectedGenderId, this.yearOfBirth, this.isFromVoice})
-      : super(key: key);
+class SymptomsBodyLocationsScreen extends StatefulWidget {
+  int selectedGenderId;
+  String yearOfBirth;
+  bool isFromVoice;
 
-  final int selectedGenderId;
-  final String yearOfBirth;
-  final bool isFromVoice;
+  SymptomsBodyLocationsScreen({Key key}) : super(key: key);
 
   @override
-  _BodyLocationsPageState createState() => _BodyLocationsPageState();
+  _SymptomsBodyLocationsScreenState createState() =>
+      _SymptomsBodyLocationsScreenState();
 }
 
-class _BodyLocationsPageState extends State<BodyLocationsPage> {
+class _SymptomsBodyLocationsScreenState
+    extends State<SymptomsBodyLocationsScreen> {
   State state;
   final notifier = ValueNotifier(Offset.zero);
   String bodyPart = '';
-  Size _size = Size.zero;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => BodyLocationsVm(
+    try {
+      widget.selectedGenderId =
+          int.parse(Atom.queryParameters['selectedGenderId']);
+      widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
+      widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
+    } catch (_) {
+      return QueryParametersError();
+    }
+
+    return ChangeNotifierProvider<SymptomsBodyLocationsVm>(
+      create: (context) => SymptomsBodyLocationsVm(
           context: context,
           isFromVoice: widget.isFromVoice,
           notifierFromPage: notifier,
           selectedGenderIdFromPage: widget.selectedGenderId,
           yearOfBirth: widget.yearOfBirth),
-      child: Consumer<BodyLocationsVm>(builder: (context, value, child) {
+      child:
+          Consumer<SymptomsBodyLocationsVm>(builder: (context, value, child) {
         return Scaffold(
           appBar: RbioAppBar(
             title: RbioAppBar.textTitle(
