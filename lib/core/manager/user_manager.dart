@@ -1,12 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/rate_dialog.dart';
-
 import '../../model/model.dart';
 import '../core.dart';
 

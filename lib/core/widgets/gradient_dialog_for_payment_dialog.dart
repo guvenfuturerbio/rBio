@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../generated/l10n.dart';
-import '../constants/constants.dart';
 import '../core.dart';
-import '../navigation/app_paths.dart';
 import 'guven_alert.dart';
 
 class GradientDialogForPaymentDialog extends StatefulWidget {

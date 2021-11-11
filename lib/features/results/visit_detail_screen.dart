@@ -98,7 +98,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   // #region _buildBody
   Widget _buildBody(VisitDetailScreenVm vm) {
     return Padding(
-      padding: R.sizes.screenPadding,
+      padding: R.sizes.screenPadding(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

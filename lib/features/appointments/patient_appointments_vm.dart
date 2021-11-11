@@ -146,7 +146,6 @@ class PatientAppointmentsScreenVm extends ChangeNotifier {
       this._progress = LoadingProgress.DONE;
       notifyListeners();
     } catch (e) {
-      LoggerUtils.instance.i(e);
       this._progress = LoadingProgress.ERROR;
       notifyListeners();
       showGradientDialog(LocaleProvider.current.warning,

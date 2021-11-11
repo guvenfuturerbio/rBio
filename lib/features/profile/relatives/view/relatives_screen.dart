@@ -45,7 +45,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
         return ListView.builder(
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
-          padding: R.sizes.screenPadding,
+          padding: R.sizes.screenPadding(context),
           itemCount: vm.response.patientRelatives.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
