@@ -114,18 +114,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(HomeVm val) {
-    return ReorderableWrap(
-      alignment: WrapAlignment.center,
-      buildDraggableFeedback: (_, __, children) {
-        return children;
-      },
-      spacing: Atom.width * 0.0099,
-      runSpacing: Atom.width * .03,
-      needsLongPressDraggable: true,
-      children: val.widgetsInUse,
-      onReorder: val.onReorder,
-      scrollDirection: Axis.vertical,
-      padding: R.sizes.screenPadding,
+    return Padding(
+      padding: R.sizes.screenPadding(context),
+      child: ReorderableWrap(
+        alignment: WrapAlignment.center,
+        buildDraggableFeedback: (_, __, children) {
+          return children;
+        },
+        spacing: Atom.width * 0.0099,
+        runSpacing: Atom.width * .03,
+        needsLongPressDraggable: true,
+        children: val.widgetsInUse,
+        onReorder: val.onReorder,
+        scrollDirection: Axis.vertical,
+      ),
     );
   }
 }

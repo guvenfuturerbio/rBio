@@ -46,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
-          padding: R.sizes.screenPadding,
+          padding: R.sizes.screenPadding(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

@@ -5,15 +5,11 @@ import 'package:onedosehealth/core/core.dart';
 class VerticalCard extends StatelessWidget {
   final Widget topImage;
   final Widget bottomTitle;
-  final double width;
-  final double height;
 
   const VerticalCard({
     Key key,
     this.topImage,
     this.bottomTitle,
-    this.width,
-    this.height,
   }) : super(key: key);
 
   factory VerticalCard.topImage({
@@ -34,8 +30,6 @@ class VerticalCard extends StatelessWidget {
     return VerticalCard(
       topImage: topImage,
       bottomTitle: bottomTtl,
-      height: Atom.height * .25,
-      width: Atom.width * .3,
     );
   }
 
@@ -44,13 +38,13 @@ class VerticalCard extends StatelessWidget {
     return RbioOrientationBuilder(
       builder: (BuildContext context, AsyncSnapshot<Orientation> snapshot) {
         if (snapshot.hasData) {
-          return Card(
-            margin: EdgeInsets.zero,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            child: SizedBox(
-              width: width,
-              height: height,
+          return SizedBox(
+            width: getWidth(context),
+            height: getHeight(context),
+            child: Card(
+              margin: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,5 +64,34 @@ class VerticalCard extends StatelessWidget {
         return SizedBox();
       },
     );
+  }
+
+  double getWidth(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width < 576) {
+      // Mobile
+      return width * .3;
+    } else if (width >= 576 && width < 850) {
+      // Tablet
+      return width * 0.2;
+    } else {
+      // Desktop
+      return width * 0.1471;
+    }
+  }
+
+  double getHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    if (width < 576) {
+      // Mobile
+      return height * 0.25;
+    } else if (width >= 576 && width < 850) {
+      // Tablet
+      return height * 0.25;
+    } else {
+      // Desktop
+      return height * 0.25;
+    }
   }
 }

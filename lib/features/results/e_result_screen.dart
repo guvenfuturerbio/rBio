@@ -29,7 +29,7 @@ class _EResultScreenState extends State<EResultScreen> {
 
   Widget _buildBody(EResultScreenVm vm) {
     return Padding(
-      padding: R.sizes.screenPadding,
+      padding: R.sizes.screenPadding(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

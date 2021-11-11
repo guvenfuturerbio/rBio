@@ -26,7 +26,7 @@ class _HomeSliderState extends State<HomeSlider> {
       Widget child,
     ) {
       return SizedBox(
-        height: Atom.height * 0.20,
+        height: getHeight(context),
         width: Atom.width,
         child: Stack(
           children: [
@@ -38,11 +38,11 @@ class _HomeSliderState extends State<HomeSlider> {
                 options: CarouselOptions(
                   autoPlay: !vm.isForDelete,
                   enlargeCenterPage: true,
-                  aspectRatio: 1.0,
+                  //aspectRatio: 1.0,
                   viewportFraction: 1,
-                  scrollPhysics: vm.isForDelete
-                      ? NeverScrollableScrollPhysics()
-                      : BouncingScrollPhysics(),
+                  // scrollPhysics: vm.isForDelete
+                  //     ? NeverScrollableScrollPhysics()
+                  //     : ClampingScrollPhysics(),
                   onPageChanged: (index, reason) {
                     setState(() {
                       _current = index;
@@ -91,37 +91,64 @@ class _HomeSliderState extends State<HomeSlider> {
     });
   }
 
-  List<Card> cardList = [
-    Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SvgPicture.asset(
-          "assets/images/mid_pic.svg",
-          fit: BoxFit.cover,
+  double getHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    if (width < 576) {
+      // Mobile
+      return height * 0.25;
+    } else if (width >= 576 && width < 850) {
+      // Tablet
+      return height * 0.25;
+    } else {
+      // Desktop
+      return height * 0.25;
+    }
+  }
+
+  List<Widget> cardList = [
+    SizedBox(
+      width: Atom.width,
+      child: Card(
+        margin: EdgeInsets.zero,
+        shape:
+            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.network(
+            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
+            fit: BoxFit.fitWidth,
+          ),
         ),
       ),
     ),
-    Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SvgPicture.asset(
-          "assets/images/mid_pic.svg",
-          fit: BoxFit.cover,
+    SizedBox(
+      width: Atom.width,
+      child: Card(
+        margin: EdgeInsets.zero,
+        shape:
+            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.network(
+            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
+            fit: BoxFit.fitWidth,
+          ),
         ),
       ),
     ),
-    Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SvgPicture.asset(
-          "assets/images/mid_pic.svg",
-          fit: BoxFit.cover,
+    SizedBox(
+      width: Atom.width,
+      child: Card(
+        margin: EdgeInsets.zero,
+        shape:
+            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.network(
+            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
+            fit: BoxFit.fitWidth,
+          ),
         ),
       ),
     ),

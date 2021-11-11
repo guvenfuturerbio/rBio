@@ -69,7 +69,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
 
       case LoadingProgress.DONE:
         return Padding(
-          padding: R.sizes.screenPadding,
+          padding: R.sizes.screenPadding(context),
           child: LoadingOverlay(
             child: _buildPosts(context, value.patientAppointments, value),
             isLoading: value.showProgressOverlay,

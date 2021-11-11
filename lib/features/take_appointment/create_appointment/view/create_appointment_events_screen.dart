@@ -78,7 +78,7 @@ class _CreateAppointmentEventsScreenState
 
       //
       body: Padding(
-        padding: R.sizes.screenPadding,
+        padding: R.sizes.screenPadding(context),
         child: Column(
           children: [
             //

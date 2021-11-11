@@ -11,10 +11,34 @@ class GuvenColors {
 }
 
 class _Sizes {
-  EdgeInsets get screenPadding => EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 12,
-      );
+  double mobilePadding = 12;
+  double tabletPadding = 24;
+  double desktopPadding = 48;
+
+  T screenHandler<T>(
+    BuildContext context, {
+    @required T mobile,
+    @required T tablet,
+    @required T desktop,
+  }) {
+    final width = MediaQuery.of(context).size.width;
+    if (width < 576) {
+      return mobile;
+    } else if (width >= 576 && width < 850) {
+      return tablet;
+    } else {
+      return desktop;
+    }
+  }
+
+  EdgeInsets screenPadding(BuildContext context) {
+    return screenHandler<EdgeInsets>(
+      context,
+      mobile: EdgeInsets.symmetric(horizontal: mobilePadding, vertical: 12),
+      tablet: EdgeInsets.symmetric(horizontal: tabletPadding, vertical: 12),
+      desktop: EdgeInsets.symmetric(horizontal: desktopPadding, vertical: 12),
+    );
+  }
 
   // BorderRadius
   final BorderRadiusGeometry borderRadiusCircular = BorderRadius.circular(12);
