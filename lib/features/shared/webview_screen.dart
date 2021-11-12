@@ -36,7 +36,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
       widget.title = Uri.decodeFull(Atom.queryParameters['title']);
       widget.url = Uri.decodeFull(Atom.queryParameters['url']);
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return Scaffold(

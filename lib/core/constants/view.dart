@@ -11,9 +11,9 @@ class GuvenColors {
 }
 
 class _Sizes {
-  double mobilePadding = 12;
-  double tabletPadding = 24;
-  double desktopPadding = 48;
+  double _mobilePadding = 12;
+  double _tabletPadding = 24;
+  double _desktopPadding = 48;
 
   T screenHandler<T>(
     BuildContext context, {
@@ -34,9 +34,9 @@ class _Sizes {
   EdgeInsets screenPadding(BuildContext context) {
     return screenHandler<EdgeInsets>(
       context,
-      mobile: EdgeInsets.symmetric(horizontal: mobilePadding, vertical: 12),
-      tablet: EdgeInsets.symmetric(horizontal: tabletPadding, vertical: 12),
-      desktop: EdgeInsets.symmetric(horizontal: desktopPadding, vertical: 12),
+      mobile: EdgeInsets.symmetric(horizontal: _mobilePadding, vertical: 12),
+      tablet: EdgeInsets.symmetric(horizontal: _tabletPadding, vertical: 12),
+      desktop: EdgeInsets.symmetric(horizontal: _desktopPadding, vertical: 12),
     );
   }
 

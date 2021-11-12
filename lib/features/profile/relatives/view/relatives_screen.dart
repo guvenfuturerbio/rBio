@@ -74,7 +74,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
         return RbioLoading();
 
       case LoadingProgress.ERROR:
-        return Center(child: QueryParametersError());
+        return RbioError();
 
       default:
         return SizedBox();

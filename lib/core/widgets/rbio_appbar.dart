@@ -18,6 +18,7 @@ class RbioAppBar extends PreferredSize {
             toolbarHeight: 64,
             actions: actions,
             centerTitle: true,
+            elevation: 0,
 
             //
             leading: leading ??
@@ -53,11 +54,11 @@ class RbioAppBar extends PreferredSize {
 
             //
             backgroundColor: getIt<ITheme>().mainColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(15),
-              ),
-            ),
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.vertical(
+            //     bottom: Radius.circular(15),
+            //   ),
+            // ),
           ),
         );
 

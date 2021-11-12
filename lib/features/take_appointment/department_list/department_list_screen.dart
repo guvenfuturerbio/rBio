@@ -30,7 +30,7 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
       widget.fromOnlineSelection =
           Atom.queryParameters['fromOnlineSelection'] == 'true';
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<DepartmentListScreenVm>(
@@ -109,7 +109,7 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
     }
 
     return widget.tenantId == R.dynamicVar.tenantAyranciId
-            ? LocaleProvider.current.guven_hospital_ayranci
-            : LocaleProvider.current.guven_cayyolu_campus;
+        ? LocaleProvider.current.guven_hospital_ayranci
+        : LocaleProvider.current.guven_cayyolu_campus;
   }
 }

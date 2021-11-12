@@ -42,7 +42,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       widget.visitId = int.parse(Atom.queryParameters['visitId']);
       widget.patientId = int.parse(Atom.queryParameters['patientId']);
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<VisitDetailScreenVm>(
@@ -205,7 +205,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
         return _buildDone(vm);
 
       case LoadingProgress.ERROR:
-        return QueryParametersError();
+        return RbioError();
 
       default:
         return SizedBox();

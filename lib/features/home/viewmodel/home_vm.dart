@@ -189,14 +189,23 @@ class HomeVm extends ChangeNotifier {
     };
   }
 
+  final _key1 = const Key('1');
+  final _key2 = const Key('2');
+  final _key3 = const Key('3');
+  final _key4 = const Key('4');
+  final _key5 = const Key('5');
+  final _key6 = const Key('6');
+  final _key7 = const Key('7');
+  final _key8 = const Key('8');
+
   // Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
         MyReorderableWidget(
-          key: const Key('1'),
+          key: _key1,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('1'));
+                addWidget(_key1);
               } else if (status == ShakeMod.notShaken) {
                 Atom.to(PagePaths.PROFILE);
               }
@@ -216,67 +225,71 @@ class HomeVm extends ChangeNotifier {
 
         //
         MyReorderableWidget(
-          key: const Key('2'),
+          key: _key2,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('2'));
+                addWidget(_key2);
               } else if (status == ShakeMod.notShaken) {
                 Atom.to(PagePaths.CREATE_APPOINTMENT);
               }
             },
-            child: VerticalCard.topImage(
-              bottomTitle: const Text("Hastane Randevusu",
-                  style: TextStyle(fontSize: 18)),
-              topImg: "assets/images/top_left.png",
+            child: VerticalCard(
+              topImage: R.image.homeTopLeft,
+              bottomTitle: Text(
+                "Hastane Randevusu",
+                style: getIt<ITheme>().textTheme.headline2,
+              ),
             ),
           ),
         ),
 
         //
         MyReorderableWidget(
-          key: const Key('3'),
+          key: _key3,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('3'));
+                addWidget(_key3);
               }
             },
-            child: VerticalCard.topImage(
-              bottomTitle: const Text("Görüntülü Görüşme Randevusu",
-                  style: TextStyle(fontSize: 18)),
-              topImg: "assets/images/top_mid.png",
+            child: VerticalCard(
+              topImage: R.image.homeTopMid,
+              bottomTitle: Text(
+                "Görüntülü Görüşme Randevusu",
+                style: getIt<ITheme>().textTheme.headline2,
+              ),
             ),
           ),
         ),
 
         //
         MyReorderableWidget(
-          key: const Key('4'),
+          key: _key4,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('4'));
+                addWidget(_key4);
               }
             },
-            child: VerticalCard.topImage(
-              bottomTitle: const Text(
+            child: VerticalCard(
+              topImage: R.image.homeTopRight,
+              bottomTitle: Text(
                 "Kronik\nTakip",
                 textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 18),
+                style: getIt<ITheme>().textTheme.headline2,
               ),
-              topImg: "assets/images/top_right.png",
             ),
           ),
         ),
 
         //
         MyReorderableWidget(
-          key: const Key('5'),
+          key: _key5,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('5'));
+                addWidget(_key5);
               }
             },
             child: HomeSlider(),
@@ -285,67 +298,63 @@ class HomeVm extends ChangeNotifier {
 
         //
         MyReorderableWidget(
-          key: const Key('6'),
+          key: _key6,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('6'));
+                addWidget(_key6);
               } else if (status == ShakeMod.notShaken) {
                 Atom.to(PagePaths.APPOINTMENTS);
               }
             },
-            child: VerticalCard.topImage(
-              bottomTitle: const Text(
+            child: VerticalCard(
+              topImage: R.image.homeBottomLeft,
+              bottomTitle: Text(
                 "Randevular",
-                style: TextStyle(fontSize: 18),
+                style: getIt<ITheme>().textTheme.headline2,
               ),
-              topImg: "assets/images/bottom_left.png",
             ),
           ),
         ),
 
         //
         MyReorderableWidget(
-          key: const Key('7'),
+          key: _key7,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('7'));
+                addWidget(_key7);
               } else if (status == ShakeMod.notShaken) {
                 Atom.to(PagePaths.ERESULT);
               }
             },
-            child: VerticalCard.topImage(
-              bottomTitle: const Text(
+            child: VerticalCard(
+              topImage: R.image.homeBottomMid,
+              bottomTitle: Text(
                 "Sonuçlar",
-                style: TextStyle(
-                  fontSize: 18,
-                ),
+                style: getIt<ITheme>().textTheme.headline2,
               ),
-              topImg: "assets/images/bottom_mid.png",
             ),
           ),
         ),
 
         //
         MyReorderableWidget(
-          key: const Key('8'),
+          key: _key8,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(Key('8'));
+                addWidget(_key8);
               } else if (status == ShakeMod.notShaken) {
                 Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
               }
             },
-            child: VerticalCard.topImage(
-              bottomTitle: const Text(
+            child: VerticalCard(
+              topImage: R.image.homeBottomRight,
+              bottomTitle: Text(
                 "Hangi Bölüme Gitmeliyim",
-                style: TextStyle(
-                  fontSize: 18,
-                ),
+                style: getIt<ITheme>().textTheme.headline2,
               ),
-              topImg: "assets/images/bottom_right.png",
             ),
           ),
         ),

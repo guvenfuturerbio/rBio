@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
           onLongPress: () {
             val.changeStatus();
           },
-          child: Scaffold(
-            appBar: _buildAppBar(val),
+          child: RbioScaffold(
+            appbar: _buildAppBar(val),
             body: _buildBody(val),
           ),
         );
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  PreferredSize _buildAppBar(HomeVm val) {
+  RbioAppBar _buildAppBar(HomeVm val) {
     return RbioAppBar(
       leading: Center(
         child: RbioSwitcher(
@@ -114,15 +114,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(HomeVm val) {
-    return Padding(
-      padding: R.sizes.screenPadding(context),
+    return Center(
       child: ReorderableWrap(
         alignment: WrapAlignment.center,
         buildDraggableFeedback: (_, __, children) {
           return children;
         },
-        spacing: Atom.width * 0.0099,
-        runSpacing: Atom.width * .03,
+        spacing: R.sizes.screenHandler<double>(
+          context,
+          mobile: Atom.width * 0.01,
+          tablet: Atom.width * .025,
+          desktop: Atom.width * .031,
+        ),
+        runSpacing: R.sizes.screenHandler<double>(
+          context,
+          mobile: Atom.width * .020,
+          tablet: Atom.width * .025,
+          desktop: Atom.width * .02,
+        ),
         needsLongPressDraggable: true,
         children: val.widgetsInUse,
         onReorder: val.onReorder,

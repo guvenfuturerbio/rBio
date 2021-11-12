@@ -23,7 +23,7 @@ class FullPdfViewerScreen extends StatelessWidget {
       title = Uri.decodeFull(Atom.queryParameters['title']);
       pdfPath = Uri.decodeFull(Atom.queryParameters['pdfPath']);
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return Scaffold(

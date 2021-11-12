@@ -29,7 +29,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
       widget.subCategoryId = Atom.queryParameters['subCategoryId'];
       widget.categoryName = Atom.queryParameters['categoryName'];
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<OrderSummaryScreenVm>(

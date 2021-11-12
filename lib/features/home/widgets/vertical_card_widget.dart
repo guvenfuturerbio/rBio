@@ -1,9 +1,10 @@
 import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
+
+import '../../../core/core.dart';
 
 class VerticalCard extends StatelessWidget {
-  final Widget topImage;
+  final String topImage;
   final Widget bottomTitle;
 
   const VerticalCard({
@@ -11,27 +12,6 @@ class VerticalCard extends StatelessWidget {
     this.topImage,
     this.bottomTitle,
   }) : super(key: key);
-
-  factory VerticalCard.topImage({
-    String topImg,
-    Widget bottomTitle,
-  }) {
-    Widget topImage = Align(
-      alignment: Alignment.topRight,
-      child: Image.asset(
-        topImg,
-        width: Atom.height * 0.10,
-        height: Atom.height * 0.10,
-      ),
-    );
-
-    Widget bottomTtl = bottomTitle;
-
-    return VerticalCard(
-      topImage: topImage,
-      bottomTitle: bottomTtl,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +28,23 @@ class VerticalCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  topImage,
                   Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: bottomTitle,
-                      ))
+                    alignment: Alignment.topRight,
+                    child: Image.asset(
+                      topImage,
+                      width: Atom.height * 0.10,
+                      height: Atom.height * 0.10,
+                    ),
+                  ),
+
+                  //
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: bottomTitle,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -69,29 +59,27 @@ class VerticalCard extends StatelessWidget {
   double getWidth(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     if (width < 576) {
-      // Mobile
       return width * .3;
-    } else if (width >= 576 && width < 850) {
-      // Tablet
-      return width * 0.2;
-    } else {
-      // Desktop
-      return width * 0.1471;
+    } else if (width < 860) {
+      return width * 0.27;
+    } else if (width < 1000) {
+      return width * 0.26;
+    } else if (width < 1350) {
+      return width * 0.23;
+    } else if (width < 1600) {
+      return width * 0.1871;
     }
+
+    return width * 0.183;
   }
 
   double getHeight(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    if (width < 576) {
-      // Mobile
-      return height * 0.25;
-    } else if (width >= 576 && width < 850) {
-      // Tablet
-      return height * 0.25;
-    } else {
-      // Desktop
-      return height * 0.25;
-    }
+    return R.sizes.screenHandler<double>(
+      context,
+      mobile: height * 0.25,
+      tablet: height * 0.25,
+      desktop: height * 0.25,
+    );
   }
 }

@@ -34,7 +34,7 @@ class _SymptomsBodyLocationsScreenState
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<SymptomsBodyLocationsVm>(

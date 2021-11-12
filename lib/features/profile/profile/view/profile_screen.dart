@@ -155,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return RbioLoading();
 
       case LoadingProgress.ERROR:
-        return Center(child: QueryParametersError());
+        return RbioError();
 
       default:
         return SizedBox();

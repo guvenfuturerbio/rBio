@@ -171,7 +171,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               );
 
             case LoadingProgress.ERROR:
-              return QueryParametersError();
+              return RbioError();
 
             default:
               return SizedBox();

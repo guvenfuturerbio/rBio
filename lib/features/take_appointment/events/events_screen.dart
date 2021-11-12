@@ -48,7 +48,7 @@ class _EventsScreenState extends State<EventsScreen> {
           Atom.queryParameters['fromOnlineSelect'] == 'true' ? true : false;
       widget.imageUrl = Atom.queryParameters['imageUrl'];
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<EventsScreenVm>(
