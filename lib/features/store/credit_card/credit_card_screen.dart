@@ -55,7 +55,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       widget.packageName = Uri.decodeFull(Atom.queryParameters['packageName']);
       widget.price = Atom.queryParameters['price'];
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return ChangeNotifierProvider<CreditCardScreenVm>(

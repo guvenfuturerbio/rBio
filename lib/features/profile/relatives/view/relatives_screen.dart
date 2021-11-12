@@ -26,12 +26,19 @@ class _RelativesScreenState extends State<RelativesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(
-        title: RbioAppBar.textTitle(context, LocaleProvider.current.kids),
+    return RbioScaffold(
+      appbar: RbioAppBar(
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.current.kids,
+        ),
       ),
       body: Consumer<RelativesVm>(
-        builder: (context, value, child) {
+        builder: (
+          BuildContext context,
+          RelativesVm value,
+          Widget child,
+        ) {
           return _buildBody(value);
         },
       ),
@@ -41,11 +48,13 @@ class _RelativesScreenState extends State<RelativesScreen> {
 
   Widget _buildBody(RelativesVm vm) {
     switch (vm.state) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
       case LoadingProgress.DONE:
         return ListView.builder(
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
-          padding: R.sizes.screenPadding(context),
           itemCount: vm.response.patientRelatives.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
@@ -69,9 +78,6 @@ class _RelativesScreenState extends State<RelativesScreen> {
             );
           },
         );
-
-      case LoadingProgress.LOADING:
-        return RbioLoading();
 
       case LoadingProgress.ERROR:
         return RbioError();

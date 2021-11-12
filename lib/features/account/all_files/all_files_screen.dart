@@ -36,13 +36,13 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
+    return RbioScaffold(
+      appbar: _buildAppBar(),
       body: _builBody(context),
     );
   }
 
-  PreferredSize _buildAppBar() {
+  RbioAppBar _buildAppBar() {
     return RbioAppBar(
       title: RbioAppBar.textTitle(
         context,
@@ -54,9 +54,11 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
   Widget _builBody(BuildContext context) {
     return FutureBuilder<GuvenResponseModel>(
       future: futureResponse,
-      builder: (context, snapshot) {
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<GuvenResponseModel> snapshot,
+      ) {
         if (snapshot.connectionState == ConnectionState.done) {
-          // Exceptions thrown by the Future are stored inside the "error" field of the AsyncSnapshot
           if (snapshot.hasError) {
             return Center(
               child: Text(
@@ -90,12 +92,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
             );
           }
         } else {
-          // Show a loading indicator while waiting for the posts
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(R.color.dark_blue),
-            ),
-          );
+          return RbioLoading();
         }
       },
     );

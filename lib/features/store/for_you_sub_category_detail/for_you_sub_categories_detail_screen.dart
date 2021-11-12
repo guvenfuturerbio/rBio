@@ -45,7 +45,7 @@ class _ForYouSubCategoriesDetailScreenState
       widget.itemId = int.parse(Atom.queryParameters['subCategoryId']);
       widget.title = Uri.decodeFull(Atom.queryParameters['title']);
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return ChangeNotifierProvider<ForYouSubCategoriesDetailScreenVm>(

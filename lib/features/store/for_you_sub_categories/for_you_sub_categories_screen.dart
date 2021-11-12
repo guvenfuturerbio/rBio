@@ -25,7 +25,7 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
       categoryId = int.parse(Atom.queryParameters['categoryId']);
       title = Uri.decodeFull(Atom.queryParameters['title']);
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return ChangeNotifierProvider<ForUSubCategoriesScreenVm>(

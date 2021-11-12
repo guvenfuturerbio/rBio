@@ -36,23 +36,25 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SymptomsHomeVm>(
       create: (context) => SymptomsHomeVm(context: context),
-      child: Consumer<SymptomsHomeVm>(
-        builder: (context, value, child) {
-          return RbioScaffold(
-            resizeToAvoidBottomInset: false,
-            appbar: _buildAppBar(),
-            body: _buildBody(value),
-          );
-        },
+      child: RbioScaffold(
+        resizeToAvoidBottomInset: false,
+        appbar: _buildAppBar(),
+        body: Consumer<SymptomsHomeVm>(
+          builder: (context, value, child) {
+            return _buildBody(value);
+          },
+        ),
       ),
     );
   }
 
   // #region _buildAppBar
-  PreferredSize _buildAppBar() {
+  RbioAppBar _buildAppBar() {
     return RbioAppBar(
-      title:
-          RbioAppBar.textTitle(context, LocaleProvider.of(context).my_symptoms),
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).my_symptoms,
+      ),
     );
   }
   // #endregion
@@ -77,148 +79,145 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
 
   // #region _buildSuccess
   Widget _buildSuccess(BuildContext context, SymptomsHomeVm value) {
-    return Padding(
-      padding: R.sizes.screenPadding(context),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              _buildExplanationText(LocaleProvider.of(context).preselection),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            _buildExplanationText(LocaleProvider.of(context).preselection),
 
-              //
-              _buildSelectionTile(
-                context,
-                value,
-                true,
-                LocaleProvider.of(context).gender_male,
-                R.image.man_icon,
-                0,
-              ),
+            //
+            _buildSelectionTile(
+              context,
+              value,
+              true,
+              LocaleProvider.of(context).gender_male,
+              R.image.man_icon,
+              0,
+            ),
 
-              //
-              _buildSelectionTile(
-                context,
-                value,
-                true,
-                LocaleProvider.of(context).gender_female,
-                R.image.women_icon,
-                1,
-              ),
+            //
+            _buildSelectionTile(
+              context,
+              value,
+              true,
+              LocaleProvider.of(context).gender_female,
+              R.image.women_icon,
+              1,
+            ),
 
-              //
-              _buildSelectionTile(
-                context,
-                value,
-                false,
-                LocaleProvider.of(context).boy,
-                R.image.boy_child_icon,
-                2,
-              ),
+            //
+            _buildSelectionTile(
+              context,
+              value,
+              false,
+              LocaleProvider.of(context).boy,
+              R.image.boy_child_icon,
+              2,
+            ),
 
-              //
-              _buildSelectionTile(
-                context,
-                value,
-                false,
-                LocaleProvider.of(context).girl,
-                R.image.girl_child_icon,
-                3,
-              ),
+            //
+            _buildSelectionTile(
+              context,
+              value,
+              false,
+              LocaleProvider.of(context).girl,
+              R.image.girl_child_icon,
+              3,
+            ),
 
-              //
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    //
-                    _buildExplanationText(
-                        LocaleProvider.of(context).select_birth_year),
+            //
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  //
+                  _buildExplanationText(
+                      LocaleProvider.of(context).select_birth_year),
 
-                    //
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        height: 50,
-                        child: Card(
-                          elevation: 6,
-                          child: Container(
-                            child: Center(
-                              child: Text(
-                                value.yearOfBirth,
-                                style: TextStyle(fontSize: 25),
-                              ),
+                  //
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      height: 50,
+                      child: Card(
+                        elevation: 6,
+                        child: Container(
+                          child: Center(
+                            child: Text(
+                              value.yearOfBirth,
+                              style: TextStyle(fontSize: 25),
                             ),
                           ),
                         ),
                       ),
                     ),
+                  ),
 
-                    //
-                    Divider(),
+                  //
+                  Divider(),
 
-                    //
-                    Container(
-                      width: MediaQuery.of(context).size.width - 20,
-                      alignment: Alignment.center,
-                      child: NumberPicker(
-                        value: int.parse(value.yearOfBirth),
-                        minValue: 1900,
-                        maxValue: DateTime.now().year.toInt(),
-                        step: 1,
-                        itemHeight: 25,
-                        axis: Axis.vertical,
-                        onChanged: (newValue) {
-                          value.yearOfBirthHandle(
-                              newValue.toString(), value.genderIdHolder);
-                        },
-                        textStyle: context.xHeadline3,
-                        selectedTextStyle: context.xHeadline1.copyWith(
-                          color: getIt<ITheme>().mainColor,
-                        ),
+                  //
+                  Container(
+                    width: MediaQuery.of(context).size.width - 20,
+                    alignment: Alignment.center,
+                    child: NumberPicker(
+                      value: int.parse(value.yearOfBirth),
+                      minValue: 1900,
+                      maxValue: DateTime.now().year.toInt(),
+                      step: 1,
+                      itemHeight: 25,
+                      axis: Axis.vertical,
+                      onChanged: (newValue) {
+                        value.yearOfBirthHandle(
+                            newValue.toString(), value.genderIdHolder);
+                      },
+                      textStyle: context.xHeadline3,
+                      selectedTextStyle: context.xHeadline1.copyWith(
+                        color: getIt<ITheme>().mainColor,
                       ),
                     ),
+                  ),
 
-                    //
-                    Divider(),
+                  //
+                  Divider(),
 
-                    //
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.10,
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          //
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-              ),
-              child: RbioElevatedButton(
-                onTap: () async {
-                  Atom.to(
-                    PagePaths.SYMPTOM_BODY_LOCATIONS,
-                    queryParameters: {
-                      'selectedGenderId': value.genderIdHolder.toString(),
-                      'yearOfBirth': value.yearOfBirth,
-                      'isFromVoice': false.toString(),
-                    },
-                  );
-                },
-                title: LocaleProvider.of(context).continue_lbl,
+                  //
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.10,
+                  )
+                ],
               ),
             ),
+          ],
+        ),
+
+        //
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+            ),
+            child: RbioElevatedButton(
+              onTap: () async {
+                Atom.to(
+                  PagePaths.SYMPTOM_BODY_LOCATIONS,
+                  queryParameters: {
+                    'selectedGenderId': value.genderIdHolder.toString(),
+                    'yearOfBirth': value.yearOfBirth,
+                    'isFromVoice': false.toString(),
+                  },
+                );
+              },
+              title: LocaleProvider.of(context).continue_lbl,
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
   // #endregion

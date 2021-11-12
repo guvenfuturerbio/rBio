@@ -41,7 +41,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
           jsonDecode(Atom.queryParameters['registerStep1Model']));
       widget.isWithoutTCKN = Atom.queryParameters['isWithoutTCKN'] == 'true';
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return DefaultTabController(

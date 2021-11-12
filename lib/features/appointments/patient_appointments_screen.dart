@@ -31,8 +31,8 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         PatientAppointmentsScreenVm value,
         Widget child,
       ) {
-        return Scaffold(
-          appBar: widget.showAppbar
+        return RbioScaffold(
+          appbar: widget.showAppbar
               ? RbioAppBar(
                   title: RbioAppBar.textTitle(
                       context, LocaleProvider.of(context).my_appointments),
@@ -68,18 +68,15 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         return RbioLoading();
 
       case LoadingProgress.DONE:
-        return Padding(
-          padding: R.sizes.screenPadding(context),
-          child: LoadingOverlay(
-            child: _buildPosts(context, value.patientAppointments, value),
-            isLoading: value.showProgressOverlay,
-            progressIndicator: RbioLoading(),
-            opacity: 0,
-          ),
+        return LoadingOverlay(
+          child: _buildPosts(context, value.patientAppointments, value),
+          isLoading: value.showProgressOverlay,
+          progressIndicator: RbioLoading(),
+          opacity: 0,
         );
 
       case LoadingProgress.ERROR:
-        return SizedBox();
+        return RbioError();
 
       default:
         return SizedBox();

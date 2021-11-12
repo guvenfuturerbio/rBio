@@ -16,10 +16,12 @@ class _EResultScreenState extends State<EResultScreen> {
   Widget build(BuildContext context) {
     return Consumer<EResultScreenVm>(
       builder: (BuildContext context, EResultScreenVm value, Widget child) {
-        return Scaffold(
-          appBar: RbioAppBar(
-            title:
-                RbioAppBar.textTitle(context, LocaleProvider.current.results),
+        return RbioScaffold(
+          appbar: RbioAppBar(
+            title: RbioAppBar.textTitle(
+              context,
+              LocaleProvider.current.results,
+            ),
           ),
           body: _buildBody(value),
         );
@@ -28,41 +30,38 @@ class _EResultScreenState extends State<EResultScreen> {
   }
 
   Widget _buildBody(EResultScreenVm vm) {
-    return Padding(
-      padding: R.sizes.screenPadding(context),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Text(
-            LocaleProvider.current.date_filter,
-            style: context.xHeadline1,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Text(
+          LocaleProvider.current.date_filter,
+          style: context.xHeadline1,
+        ),
+
+        //
+        Container(
+          margin: EdgeInsets.only(left: 8, top: 8, right: 8),
+          child: GuvenDateRange(
+            startCurrentDate: vm.startDate,
+            onStartDateChange: (date) {
+              vm.setStartDate(date);
+            },
+            endCurrentDate: vm.endDate,
+            onEndDateChange: (date) {
+              vm.setEndDate(date);
+            },
           ),
+        ),
 
-          //
-          Container(
-            margin: EdgeInsets.only(left: 8, top: 8, right: 8),
-            child: GuvenDateRange(
-              startCurrentDate: vm.startDate,
-              onStartDateChange: (date) {
-                vm.setStartDate(date);
-              },
-              endCurrentDate: vm.endDate,
-              onEndDateChange: (date) {
-                vm.setEndDate(date);
-              },
-            ),
-          ),
+        //
+        SizedBox(height: 12.0),
 
-          //
-          SizedBox(height: 12.0),
-
-          //
-          Expanded(child: _buildStateToWidget(vm)),
-        ],
-      ),
+        //
+        Expanded(child: _buildStateToWidget(vm)),
+      ],
     );
   }
 
@@ -78,6 +77,9 @@ class _EResultScreenState extends State<EResultScreen> {
 
   Widget _buildStateToWidget(EResultScreenVm vm) {
     switch (vm.progress) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
       case LoadingProgress.DONE:
         {
           return vm.visits.length > 0
@@ -127,9 +129,6 @@ class _EResultScreenState extends State<EResultScreen> {
                   ),
                 );
         }
-
-      case LoadingProgress.LOADING:
-        return RbioLoading();
 
       case LoadingProgress.ERROR:
         return RbioError();

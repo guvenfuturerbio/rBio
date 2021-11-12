@@ -37,7 +37,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       widget.fromOnlineAppo =
           Atom.queryParameters['fromOnlineAppo'] == "true" ? true : false;
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return ChangeNotifierProvider<ResourcesScreenVm>(
@@ -52,8 +52,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ResourcesScreenVm value,
           Widget child,
         ) {
-          return Scaffold(
-            appBar: RbioAppBar(
+          return RbioScaffold(
+            appbar: RbioAppBar(
               title: RbioAppBar.textTitle(
                 context,
                 widget.tenantId == 1
@@ -63,21 +63,30 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                         : LocaleProvider.current.online_hospital,
               ),
             ),
-
-            //
-            body: value.progress == LoadingProgress.DONE
-                ? _webBuildPosts(context, value.filterResources)
-                : value.progress == LoadingProgress.LOADING
-                    ? RbioLoading()
-                    : Container(),
+            body: _buildBody(context, value),
           );
         },
       ),
     );
   }
 
-  Widget _webBuildPosts(
-      BuildContext context, List<FilterResourcesResponse> posts) {
+  Widget _buildBody(BuildContext context, ResourcesScreenVm value) {
+    switch (value.progress) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
+      case LoadingProgress.ERROR:
+        return RbioError();
+
+      case LoadingProgress.DONE:
+        return _buildSuccess(value.filterResources);
+
+      default:
+        return SizedBox();
+    }
+  }
+
+  Widget _buildSuccess(List<FilterResourcesResponse> posts) {
     return Padding(
       padding: kIsWeb
           ? EdgeInsets.only(

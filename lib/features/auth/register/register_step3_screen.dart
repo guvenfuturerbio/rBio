@@ -36,7 +36,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
       widget.userRegistrationStep2Model = UserRegistrationStep2Model.fromJson(
           jsonDecode(Atom.queryParameters['userRegistrationStep2Model']));
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return DefaultTabController(

@@ -26,9 +26,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(
-        title: RbioAppBar.textTitle(context, LocaleProvider.current.profile),
+    return RbioScaffold(
+      appbar: RbioAppBar(
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.current.profile,
+        ),
       ),
 
       //
@@ -42,11 +45,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildBody(ProfileVm vm) {
     switch (vm.state) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
       case LoadingProgress.DONE:
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
-          padding: R.sizes.screenPadding(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -150,9 +155,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         );
-
-      case LoadingProgress.LOADING:
-        return RbioLoading();
 
       case LoadingProgress.ERROR:
         return RbioError();

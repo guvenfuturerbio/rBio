@@ -58,7 +58,7 @@ export "widgets/picker.dart";
 export 'widgets/rbio_appbar.dart';
 export 'widgets/rbio_buttons.dart';
 export 'widgets/rbio_card_appo_card.dart';
-export 'widgets/rbio_error.dart';
+export 'widgets/rbio_errors.dart';
 export 'widgets/rbio_loading.dart';
 export 'widgets/rbio_scaffold.dart';
 export 'widgets/rbio_orientation_builder.dart';
