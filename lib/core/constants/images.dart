@@ -28,6 +28,14 @@ class _Images {
   final video_icon_80 = 'assets/images/new/video_icon_80.svg';
   final video_icon = 'assets/images/new/video_icon.svg';
   final weight_icon = 'assets/images/new/weight_icon.svg';
+  final oops = 'assets/images/new/oopps.svg';
+
+  final homeTopLeft = "assets/images/top_left.png";
+  final homeTopMid = "assets/images/top_mid.png";
+  final homeTopRight = "assets/images/top_right.png";
+  final homeBottomLeft = "assets/images/bottom_left.png";
+  final homeBottomMid = "assets/images/bottom_mid.png";
+  final homeBottomRight = "assets/images/bottom_right.png";
 
   final oneDoseHealthPng = 'assets/images/new/onedose_health.png';
 

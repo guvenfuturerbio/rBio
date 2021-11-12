@@ -56,7 +56,7 @@ class _AppointmentSummaryScreenState extends State<AppointmentSummaryScreen> {
       widget.tenantId = int.parse(Atom.queryParameters['tenantId']);
       widget.forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<AppointmentSummaryScreenVm>(

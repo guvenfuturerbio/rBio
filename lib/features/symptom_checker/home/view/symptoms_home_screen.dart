@@ -38,9 +38,9 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
       create: (context) => SymptomsHomeVm(context: context),
       child: Consumer<SymptomsHomeVm>(
         builder: (context, value, child) {
-          return Scaffold(
+          return RbioScaffold(
             resizeToAvoidBottomInset: false,
-            appBar: _buildAppBar(),
+            appbar: _buildAppBar(),
             body: _buildBody(value),
           );
         },
@@ -67,7 +67,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         return _buildSuccess(context, value);
 
       case LoadingProgress.ERROR:
-        return QueryParametersError();
+        return RbioError();
 
       default:
         return SizedBox();

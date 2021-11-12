@@ -43,7 +43,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
       widget.fromOnlineSelect =
           Atom.queryParameters['fromOnlineSelect'] == "true" ? true : false;
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<DoctorCvScreenVm>(

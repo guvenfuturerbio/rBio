@@ -36,7 +36,7 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
       widget.webConsultAppId = Atom.queryParameters['webConsultAppId'];
       widget.availability = int.parse(Atom.queryParameters['availability']);
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return Scaffold(

@@ -207,7 +207,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
             return handler.reject(
               DioError(
                 requestOptions: options,
-                error: NetworkConnectionException(),
+                error: RbioNetworkException(),
               ),
             );
           }

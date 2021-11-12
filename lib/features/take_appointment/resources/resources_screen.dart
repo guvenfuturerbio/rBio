@@ -37,7 +37,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       widget.fromOnlineAppo =
           Atom.queryParameters['fromOnlineAppo'] == "true" ? true : false;
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<ResourcesScreenVm>(

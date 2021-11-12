@@ -86,7 +86,7 @@ class GreenTheme extends ITheme {
         ),
       );
 
-  double convertFontSize(double value) => value / 2.7777778;
+  double convertFontSize(double value) => value / 3.0;
 
   @override
   Color get cardBackgroundColor => GuvenColors.white;

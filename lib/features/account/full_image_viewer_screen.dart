@@ -23,7 +23,7 @@ class FullImageViewerScreen extends StatelessWidget {
       title = Atom.queryParameters['title'];
       imagePath = Atom.queryParameters['imagePath'];
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return Scaffold(

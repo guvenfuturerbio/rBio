@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -92,18 +91,13 @@ class _HomeSliderState extends State<HomeSlider> {
   }
 
   double getHeight(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    if (width < 576) {
-      // Mobile
-      return height * 0.25;
-    } else if (width >= 576 && width < 850) {
-      // Tablet
-      return height * 0.25;
-    } else {
-      // Desktop
-      return height * 0.25;
-    }
+    return R.sizes.screenHandler<double>(
+      context,
+      mobile: height * 0.23,
+      tablet: height * 0.25,
+      desktop: height * 0.25,
+    );
   }
 
   List<Widget> cardList = [

@@ -26,7 +26,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     try {
       widget.identityNumber = Atom.queryParameters['identityNumber'];
     } catch (_) {
-      return QueryParametersError();
+      return RbioError();
     }
 
     return ChangeNotifierProvider<ForgotPasswordStep2ScreenVm>(

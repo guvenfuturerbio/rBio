@@ -132,7 +132,7 @@ class _EResultScreenState extends State<EResultScreen> {
         return RbioLoading();
 
       case LoadingProgress.ERROR:
-        return Center(child: QueryParametersError());
+        return RbioError();
 
       default:
         return SizedBox();

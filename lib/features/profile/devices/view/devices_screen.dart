@@ -74,7 +74,7 @@ class _DevicesScreenState extends State<DevicesScreen> {
         return RbioLoading();
 
       case LoadingProgress.ERROR:
-        return Center(child: QueryParametersError());
+        return Center(child: RbioError());
 
       default:
         return SizedBox();
