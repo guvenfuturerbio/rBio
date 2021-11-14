@@ -13,16 +13,19 @@ class FollowersScreen extends StatefulWidget {
 class _FollowersScreenState extends State<FollowersScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppbar(),
+    return RbioScaffold(
+      appbar: _buildAppbar(),
       body: _buildBody(),
       floatingActionButton: _buildFab(),
     );
   }
 
-  PreferredSizeWidget _buildAppbar() {
+  RbioAppBar _buildAppbar() {
     return RbioAppBar(
-      title: RbioAppBar.textTitle(context, LocaleProvider.current.followers),
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.followers,
+      ),
     );
   }
 
@@ -30,7 +33,6 @@ class _FollowersScreenState extends State<FollowersScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
-      padding: R.sizes.screenPadding(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

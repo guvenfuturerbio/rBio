@@ -49,7 +49,7 @@ class ProfileImageViewerScreenState extends State<ProfileImageViewerScreen> {
         firstBuild = true;
       }
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return Scaffold(

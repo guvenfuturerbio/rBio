@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../core/widgets/guven_alert.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -39,7 +38,7 @@ class _RateDialogState extends State<RateDialog> {
                     value?.getAvailabilityRateResponse?.suggestion?.length ??
                         0);
 
-            return LoadingOverlay(
+            return RbioLoadingOverlay(
               isLoading: value.showLoadingOverlay,
               progressIndicator: RbioLoading(),
               opacity: 0,

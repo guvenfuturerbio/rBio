@@ -26,9 +26,12 @@ class _DevicesScreenState extends State<DevicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(
-        title: RbioAppBar.textTitle(context, LocaleProvider.current.devices),
+    return RbioScaffold(
+      appbar: RbioAppBar(
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.current.devices,
+        ),
       ),
       body: Consumer<DevicesVm>(
         builder: (context, value, child) {
@@ -41,11 +44,13 @@ class _DevicesScreenState extends State<DevicesScreen> {
 
   Widget _buildBody(DevicesVm vm) {
     switch (vm.state) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
       case LoadingProgress.DONE:
         return ListView.builder(
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
-          padding: R.sizes.screenPadding(context),
           itemCount: vm.devices.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
@@ -70,11 +75,8 @@ class _DevicesScreenState extends State<DevicesScreen> {
           },
         );
 
-      case LoadingProgress.LOADING:
-        return RbioLoading();
-
       case LoadingProgress.ERROR:
-        return Center(child: RbioError());
+        return RbioError();
 
       default:
         return SizedBox();

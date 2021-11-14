@@ -20,9 +20,9 @@ class _TenantsScreenState extends State<TenantsScreen> {
       create: (context) => TenantListPageVm(context: context),
       child: Consumer<TenantListPageVm>(
         builder: (BuildContext context, TenantListPageVm value, Widget child) {
-          return Scaffold(
+          return RbioScaffold(
             //
-            appBar: RbioAppBar(
+            appbar: RbioAppBar(
               title: RbioAppBar.textTitle(
                 context,
                 LocaleProvider.current.title_hospital,
@@ -30,17 +30,29 @@ class _TenantsScreenState extends State<TenantsScreen> {
             ),
 
             //
-            body: value.progress == LoadingProgress.DONE
-                ? kIsWeb
-                    ? _webBuildPosts(context, value.tenantsFilterResponse)
-                    : _buildPosts(context, value.tenantsFilterResponse)
-                : value.progress == LoadingProgress.LOADING
-                    ? RbioLoading()
-                    : Container(),
+            body: _buildBody(value),
           );
         },
       ),
     );
+  }
+
+  Widget _buildBody(TenantListPageVm value) {
+    switch (value.progress) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
+      case LoadingProgress.DONE:
+        return kIsWeb
+            ? _webBuildPosts(context, value.tenantsFilterResponse)
+            : _buildPosts(context, value.tenantsFilterResponse);
+
+      case LoadingProgress.ERROR:
+        return RbioError();
+
+      default:
+        return SizedBox();
+    }
   }
 
   Widget _buildPosts(
@@ -50,7 +62,7 @@ class _TenantsScreenState extends State<TenantsScreen> {
     return ListView.builder(
       itemCount: tenantList.length,
       padding: EdgeInsets.all(8),
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         return InkWell(
           child: _ItemHospitalList(
               title: tenantList[index].id == R.dynamicVar.tenantAyranciId
@@ -119,7 +131,7 @@ class _TenantsScreenState extends State<TenantsScreen> {
           physics: NeverScrollableScrollPhysics(),
           itemCount: tenantList.length,
           padding: EdgeInsets.all(10),
-          itemBuilder: (context, index) {
+          itemBuilder: (BuildContext context, int index) {
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: InkWell(

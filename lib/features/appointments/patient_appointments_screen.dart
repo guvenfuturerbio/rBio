@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -31,8 +30,8 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         PatientAppointmentsScreenVm value,
         Widget child,
       ) {
-        return Scaffold(
-          appBar: widget.showAppbar
+        return RbioScaffold(
+          appbar: widget.showAppbar
               ? RbioAppBar(
                   title: RbioAppBar.textTitle(
                       context, LocaleProvider.of(context).my_appointments),
@@ -68,18 +67,15 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         return RbioLoading();
 
       case LoadingProgress.DONE:
-        return Padding(
-          padding: R.sizes.screenPadding(context),
-          child: LoadingOverlay(
-            child: _buildPosts(context, value.patientAppointments, value),
-            isLoading: value.showProgressOverlay,
-            progressIndicator: RbioLoading(),
-            opacity: 0,
-          ),
+        return RbioLoadingOverlay(
+          child: _buildPosts(context, value.patientAppointments, value),
+          isLoading: value.showProgressOverlay,
+          progressIndicator: RbioLoading(),
+          opacity: 0,
         );
 
       case LoadingProgress.ERROR:
-        return SizedBox();
+        return RbioError();
 
       default:
         return SizedBox();

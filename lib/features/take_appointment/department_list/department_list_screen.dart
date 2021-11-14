@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -30,7 +29,7 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
       widget.fromOnlineSelection =
           Atom.queryParameters['fromOnlineSelection'] == 'true';
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return ChangeNotifierProvider<DepartmentListScreenVm>(
@@ -42,27 +41,38 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
       child: Consumer<DepartmentListScreenVm>(
         builder:
             (BuildContext context, DepartmentListScreenVm value, Widget child) {
-          return Scaffold(
-            appBar: RbioAppBar(
-              title: RbioAppBar.textTitle(context, getTitleBar()),
+          return RbioScaffold(
+            appbar: RbioAppBar(
+              title: RbioAppBar.textTitle(
+                context,
+                getTitleBar(),
+              ),
             ),
-
-            //
-            body: value.progress == LoadingProgress.DONE
-                ? _webBuildPosts(context, value.filterDepartmentResponse)
-                : value.progress == LoadingProgress.LOADING
-                    ? RbioLoading()
-                    : Container(),
+            body: _buildBody(context, value),
           );
         },
       ),
     );
   }
 
+  Widget _buildBody(BuildContext context, DepartmentListScreenVm value) {
+    switch (value.progress) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
+      case LoadingProgress.DONE:
+        return _webBuildPosts(context, value.filterDepartmentResponse);
+
+      case LoadingProgress.ERROR:
+        return RbioError();
+
+      default:
+        return SizedBox();
+    }
+  }
+
   Widget _webBuildPosts(
-    BuildContext context,
-    List<FilterDepartmentsResponse> posts,
-  ) {
+      BuildContext context, List<FilterDepartmentsResponse> posts) {
     return Padding(
       padding: kIsWeb
           ? EdgeInsets.only(
@@ -85,16 +95,18 @@ class _DepartmentListScreenState extends State<DepartmentListScreen> {
                 posts[index].title,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              //subtitle: Text(posts[index].id.toString()),
               onTap: () {
                 AnalyticsManager()
                     .sendEvent(OADepartmentSelectionEvent(posts[index].title));
-                Atom.to(PagePaths.RESOURCES, queryParameters: {
-                  'tenantId': widget.tenantId?.toString(),
-                  'departmentId': posts[index].id?.toString(),
-                  'departmentName': Uri.encodeFull(posts[index].title),
-                  'fromOnlineAppo': widget.fromOnlineSelection.toString(),
-                });
+                Atom.to(
+                  PagePaths.RESOURCES,
+                  queryParameters: {
+                    'tenantId': widget.tenantId?.toString(),
+                    'departmentId': posts[index].id?.toString(),
+                    'departmentName': Uri.encodeFull(posts[index].title),
+                    'fromOnlineAppo': widget.fromOnlineSelection.toString(),
+                  },
+                );
               },
             ),
           );

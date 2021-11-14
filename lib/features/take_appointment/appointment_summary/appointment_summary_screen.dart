@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:vrouter/src/core/extended_context.dart';
 
 import '../../../../core/core.dart';
 import 'appointment_summary_vm.dart';
@@ -56,7 +53,7 @@ class _AppointmentSummaryScreenState extends State<AppointmentSummaryScreen> {
       widget.tenantId = int.parse(Atom.queryParameters['tenantId']);
       widget.forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return ChangeNotifierProvider<AppointmentSummaryScreenVm>(
@@ -71,7 +68,7 @@ class _AppointmentSummaryScreenState extends State<AppointmentSummaryScreen> {
       child: Consumer<AppointmentSummaryScreenVm>(
         builder: (BuildContext context, AppointmentSummaryScreenVm value,
             Widget child) {
-          return LoadingOverlay(
+          return RbioLoadingOverlay(
             isLoading: value.showOverlayLoading,
             opacity: 0,
             progressIndicator: RbioLoading(),

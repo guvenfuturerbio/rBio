@@ -42,7 +42,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       widget.visitId = int.parse(Atom.queryParameters['visitId']);
       widget.patientId = int.parse(Atom.queryParameters['patientId']);
     } catch (_) {
-      return RbioError();
+      return RbioRouteError();
     }
 
     return ChangeNotifierProvider<VisitDetailScreenVm>(
@@ -60,8 +60,8 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
           VisitDetailScreenVm value,
           Widget child,
         ) {
-          return Scaffold(
-            appBar: _buildAppBar(value),
+          return RbioScaffold(
+            appbar: _buildAppBar(value),
             body: _buildBody(value),
           );
         },
@@ -70,7 +70,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   }
 
   // #region _buildAppBar
-  PreferredSize _buildAppBar(VisitDetailScreenVm value) {
+  RbioAppBar _buildAppBar(VisitDetailScreenVm value) {
     return RbioAppBar(
       title: RbioAppBar.textTitle(
         context,
@@ -97,22 +97,19 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
   // #region _buildBody
   Widget _buildBody(VisitDetailScreenVm vm) {
-    return Padding(
-      padding: R.sizes.screenPadding(context),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          _buildTab(vm),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        _buildTab(vm),
 
-          //
-          Expanded(
-            child: _buildStateToWidget(vm),
-          ),
-        ],
-      ),
+        //
+        Expanded(
+          child: _buildStateToWidget(vm),
+        ),
+      ],
     );
   }
   // #endregion

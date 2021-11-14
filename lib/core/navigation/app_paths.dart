@@ -300,7 +300,7 @@ class PagePaths {
   static const FOLLOWERS = '/followers';
   static const DEVICES = '/devices';
   static const CREATE_APPOINTMENT = '/create-appointment';
-  static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-evens';
+  static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
 
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';
