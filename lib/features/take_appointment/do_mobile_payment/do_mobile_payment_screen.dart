@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -53,28 +52,29 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
           DoMobilePaymentScreenVm value,
           Widget child,
         ) {
-          return _buildOverlay(value, context);
+          return _buildScreen(value, context);
         },
       ),
     );
   }
 
-  Widget _buildOverlay(DoMobilePaymentScreenVm value, BuildContext context) {
-    return LoadingOverlay(
+  Widget _buildScreen(DoMobilePaymentScreenVm value, BuildContext context) {
+    return RbioLoadingOverlay(
       opacity: 0,
       isLoading: value.showOverlay,
       progressIndicator: RbioLoading(),
       child: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            appBar: MainAppBar(
-              context: context,
-              title: getTitleBar(context),
-              leading: ButtonBackWhite(context),
-            ),
-            body: _buildBody(context, value),
-          )),
+        length: 2,
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: MainAppBar(
+            context: context,
+            title: getTitleBar(context),
+            leading: ButtonBackWhite(context),
+          ),
+          body: _buildBody(context, value),
+        ),
+      ),
     );
   }
 

@@ -6,7 +6,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -62,7 +61,7 @@ class _ForYouSubCategoriesDetailScreenState
             ),
             body: value.progress == LoadingProgress.LOADING
                 ? RbioLoading()
-                : LoadingOverlay(
+                : RbioLoadingOverlay(
                     isLoading: value.showLoadingOverlay,
                     progressIndicator: RbioLoading(),
                     opacity: 0.26,
