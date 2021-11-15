@@ -1,3 +1,7 @@
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -37,7 +41,6 @@ import '../../features/store/for_you_order_summary/order_summary.dart';
 import '../../features/store/for_you_sub_categories/for_you_sub_categories_screen.dart';
 import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
 import '../../features/store/shopping_cart/shopping_cart_screen.dart';
-import '../../features/symptom_checker/body_location/symptoms_body_locations_screen.dart';
 import '../../features/symptom_checker/home/view/symptoms_home_screen.dart';
 import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_events_screen.dart';
@@ -282,6 +285,20 @@ class VRouterRoutes {
       widget: SymptomsBodyLocationsScreen(),
     ),
 
+    VWidget(
+      path: PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
+      widget: BodySubLocationsPage(),
+    ),
+
+    VWidget(
+      path: PagePaths.SYMPTOM_SELECT_PAGE,
+      widget: BodySymptomsSelectionPage(),
+    ),
+
+    VWidget(
+      path: PagePaths.SYMPTOM_RESULT_PAGE,
+      widget: SymptomsResultPage(),
+    ),
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -344,4 +361,7 @@ class PagePaths {
   // Symptom Checker
   static const SYMPTOM_MAIN_MENU = '/symptom-main';
   static const SYMPTOM_BODY_LOCATIONS = '/symptom-body-locations';
+  static const SYMPTOM_SUB_BODY_LOCATIONS = '/symptom-sub-body-locations';
+  static const SYMPTOM_SELECT_PAGE = '/symptom-selection-page';
+  static const SYMPTOM_RESULT_PAGE = '/symptom-result-page';
 }

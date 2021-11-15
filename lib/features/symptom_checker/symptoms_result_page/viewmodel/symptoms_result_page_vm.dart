@@ -12,6 +12,7 @@ class SymptomsResultPageVm extends ChangeNotifier {
   LoadingProgress _progress;
   List<GetSpecialisationsResponse> _specialisations;
   int _toNavigateDoctorsPageId;
+  List<GetDepartmentIdResponse> _data;
   String specialisationsSentence = "";
   String customPath = "";
 
@@ -42,10 +43,11 @@ class SymptomsResultPageVm extends ChangeNotifier {
   bool get isRecordStart => this._isRecordStart;
 
   LoadingProgress get progress => this._progress;
+  List<GetDepartmentIdResponse> get data => this._data ?? [];
+  int get toNavigateDoctorsPageId => this._toNavigateDoctorsPageId;
 
   List<GetSpecialisationsResponse> get specialisations =>
       this._specialisations ?? [];
-  int get toNavigateDoctorsPageId => this._toNavigateDoctorsPageId;
 
   fetchSpecialisations(List<GetBodySymptomsResponse> symptoms, String gender,
       String year_of_birth) async {
@@ -72,5 +74,34 @@ class SymptomsResultPageVm extends ChangeNotifier {
   loadJsonData() async {
     var jsonText = await rootBundle.loadString('assets/departments.json');
     var responseBody = jsonDecode(jsonText);
+
+    List<GetDepartmentIdResponse> departments = List<GetDepartmentIdResponse>();
+    for (var data in responseBody) {
+      departments.add(GetDepartmentIdResponse.fromJson(data));
+    }
+    this._data = departments;
+    notifyListeners();
+  }
+
+  loadNavigationData(int id) async {
+    this._toNavigateDoctorsPageId =
+        await navigateToDoctorsPage(departments: this._data, id: id);
+    //this._data = json.decode(jsonText);
+    notifyListeners();
+  }
+
+  navigateToDoctorsPage(
+      {List<GetDepartmentIdResponse> departments, int id}) async {
+    int resultId;
+    try {
+      departments.forEach((element) {
+        if (int.parse(element.apimedicId) == id) {
+          resultId = int.parse(element.id);
+        }
+      });
+      return resultId;
+    } catch (e) {
+      print(e);
+    }
   }
 }

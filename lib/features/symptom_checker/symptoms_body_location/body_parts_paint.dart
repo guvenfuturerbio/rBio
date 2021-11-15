@@ -118,7 +118,7 @@ class BodyPartsPainter extends CustomPainter {
       final selected = path.contains(notifier.value);
       if (selected) {
         _paint
-          ..color = R.color.online_appointment.withOpacity(0.7)
+          ..color = getIt<ITheme>().mainColor.withOpacity(0.7)
           ..style = PaintingStyle.fill;
         clickedPathFunc(shape.id);
         if (shape.label == myList[1].label || shape.label == myList[2].label) {

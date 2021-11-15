@@ -1,19 +1,19 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/core.dart';
-import '../../../model/model.dart';
-import '../symptoms_body_symptoms_page/symptoms_body_symptoms_page.dart';
-import 'symptoms_body_sublocations_vm.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
+import '../../symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
 
 class BodySubLocationsPage extends StatefulWidget {
-  final GetBodyLocationResponse selectedBodyLocation;
-  final int selectedGenderId;
-  final String yearOfBirth;
-  final bool isFromVoice;
+  GetBodyLocationResponse selectedBodyLocation;
+  int selectedGenderId;
+  String yearOfBirth;
+  bool isFromVoice;
 
-  const BodySubLocationsPage({
+  BodySubLocationsPage({
     Key key,
     this.selectedGenderId,
     this.yearOfBirth,
@@ -27,7 +27,24 @@ class BodySubLocationsPage extends StatefulWidget {
 
 class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
   @override
+  void dispose() {
+    try {
+      RbioConfig.of(context).bodyLocationRsp = null;
+    } catch (e) {}
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    try {
+      widget.selectedBodyLocation = RbioConfig.of(context).bodyLocationRsp;
+      widget.selectedGenderId =
+          int.parse(Atom.queryParameters['selectedGenderId']);
+      widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
+      widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
+    } catch (_) {
+      return RbioRouteError();
+    }
     return ChangeNotifierProvider(
       create: (context) => BodySublocationsVm(
           context: context,
@@ -81,10 +98,8 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                             : widget.selectedGenderId == 2
                                 ? LocaleProvider.of(context).boy
                                 : LocaleProvider.of(context).girl,
-                    style: TextStyle(
-                        color: R.color.online_appointment,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
+                    style: context.xHeadline3
+                        .copyWith(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -94,10 +109,8 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       widget.selectedBodyLocation.name,
-                      style: TextStyle(
-                          color: R.color.online_appointment,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                      style: context.xHeadline3
+                          .copyWith(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -124,9 +137,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 8),
-                          child: Text('${value.bodySubLocations[index].name}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
+                          child: Text(
+                            '${value.bodySubLocations[index].name}',
+                            style: context.xHeadline3
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                       collapsed: ListTile(
@@ -159,24 +174,25 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                         .width *
                                                     0.70,
                                                 child: Text(
-                                                  value
-                                                      .allBodySymptoms[index]
-                                                          [indx]
-                                                      .name,
-                                                  softWrap: true,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      color: value
-                                                              .selectedSymptoms
-                                                              .contains(value
-                                                                      .allBodySymptoms[
-                                                                  index][indx])
-                                                          ? R.color
-                                                              .online_appointment
-                                                          : R.color.black),
-                                                ),
+                                                    value
+                                                        .allBodySymptoms[index]
+                                                            [indx]
+                                                        .name,
+                                                    softWrap: true,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: context.xHeadline3.copyWith(
+                                                        color: value
+                                                                .selectedSymptoms
+                                                                .contains(
+                                                                    value.allBodySymptoms[
+                                                                            index]
+                                                                        [indx])
+                                                            ? getIt<ITheme>()
+                                                                .mainColor
+                                                            : getIt<ITheme>()
+                                                                .textColorSecondary)),
                                               ),
                                               GestureDetector(
                                                 onTap: () {
@@ -213,38 +229,42 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
-                decoration: BoxDecoration(
-                    color: value.selectedSymptoms.length != 0
-                        ? null
-                        : R.color.online_appointment.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(40)),
-                child: FlatButton(
-                    color: Colors.transparent,
-                    onPressed: () async {
-                      if (value.selectedSymptoms.length != 0) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BodySymptomsSelectionPage(
-                              selectedGenderId: widget.selectedGenderId,
-                              yearOfBirth: widget.yearOfBirth,
-                              selectedBodyLocation: widget.selectedBodyLocation,
-                              selectedBodySymptoms: value.selectedSymptoms,
-                              isFromVoice: widget.isFromVoice,
-                              myPv: value,
-                            ),
-                          ),
-                        );
-                      } else {
-                        null;
-                      }
-                    },
-                    child: Text(
-                      LocaleProvider.of(context).continue_lbl,
-                      style: TextStyle(color: R.color.white),
-                    )),
+                child: RbioElevatedButton(
+                    onTap: value.selectedSymptoms.length != 0
+                        ? () async {
+                            RbioConfig.of(context).bodyLocationRsp =
+                                widget.selectedBodyLocation;
+                            RbioConfig.of(context).listBodySympRsp =
+                                value.selectedSymptoms;
+                            RbioConfig.of(context).sublocationVm = value;
+                            Atom.to(
+                              PagePaths.SYMPTOM_SELECT_PAGE,
+                              queryParameters: {
+                                'selectedGenderId':
+                                    widget.selectedGenderId.toString(),
+                                'yearOfBirth': widget.yearOfBirth,
+                                'isFromVoice': false.toString(),
+                              },
+                            );/*
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BodySymptomsSelectionPage(
+                                  selectedGenderId: widget.selectedGenderId,
+                                  yearOfBirth: widget.yearOfBirth,
+                                  selectedBodyLocation:
+                                      widget.selectedBodyLocation,
+                                  selectedBodySymptoms: value.selectedSymptoms,
+                                  isFromVoice: widget.isFromVoice,
+                                  myPv: value,
+                                ),
+                              ),
+                            );*/
+                          }
+                        : null,
+                    title: LocaleProvider.of(context).continue_lbl),
               ),
             ),
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/model/model.dart';
-import '../symptoms_body_sublocations_page/symptoms_body_sublocations_vm.dart';
+import '../../symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
 
 class BodySymptomSelectionVm extends ChangeNotifier {
   BuildContext mContext;
@@ -16,9 +16,6 @@ class BodySymptomSelectionVm extends ChangeNotifier {
   String propSymp;
   bool _isFromVoice;
 
-  ValueNotifier<Offset> _notifier;
-  int _selectedGenderId;
-  String _yearOfBirth;
   int removeIndexHolder;
 
   BodySymptomSelectionVm(
@@ -33,7 +30,6 @@ class BodySymptomSelectionVm extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       _myPv = myPv;
       _isFromVoice = isFromVoice;
-      _yearOfBirth = year_of_birth;
       await fetchBodySymptoms(symptomList);
       await fetchProposedSymptoms(
           selectedBodySymptoms, genderId, year_of_birth);

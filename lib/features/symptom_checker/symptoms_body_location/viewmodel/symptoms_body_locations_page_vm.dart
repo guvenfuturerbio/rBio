@@ -3,8 +3,6 @@ import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/core/data/repository/symptom_repository.dart';
 import 'package:onedosehealth/model/model.dart';
 import 'package:file/local.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../symptoms_result_page/symptoms_result_page_vm.dart';
 import 'dart:async';
 
 class SymptomsBodyLocationsVm extends ChangeNotifier {

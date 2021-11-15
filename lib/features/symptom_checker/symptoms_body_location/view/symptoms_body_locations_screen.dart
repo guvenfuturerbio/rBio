@@ -3,10 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/core.dart';
-import '../symptoms_body_sublocations_page/symptoms_body_sublocations_page.dart';
-import 'body_parts_paint.dart';
-import 'symptoms_body_locations_page_vm.dart';
+import '../../../../core/core.dart';
+import '../../symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
+import '../body_parts_paint.dart';
+import '../viewmodel/symptoms_body_locations_page_vm.dart';
 
 class SymptomsBodyLocationsScreen extends StatefulWidget {
   int selectedGenderId;
@@ -86,10 +86,9 @@ class _SymptomsBodyLocationsScreenState
                             : widget.selectedGenderId == 2
                                 ? LocaleProvider.of(context).boy
                                 : LocaleProvider.of(context).girl,
-                    style: TextStyle(
-                        color: R.color.online_appointment,
+                    style: context.xHeadline1.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16),
+                        color: getIt<ITheme>().mainColor),
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -97,7 +96,7 @@ class _SymptomsBodyLocationsScreenState
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     LocaleProvider.of(context).complaint_body_part,
-                    style: TextStyle(fontSize: 16),
+                    style: context.xHeadline3,
                     textAlign: TextAlign.center,
                   ),
                 )
@@ -111,11 +110,10 @@ class _SymptomsBodyLocationsScreenState
                 : Container(
                     margin: EdgeInsets.only(top: 20),
                     child: Text(
-                      LocaleProvider.of(context).choice +
-                          value.selectedBodyLocation.name,
-                    ),
+                        LocaleProvider.of(context).choice +
+                            value.selectedBodyLocation.name,
+                        style: context.xHeadline3),
                   ),
-
             Center(
               child: Container(
                 width: MediaQuery.of(context).size.width / 2,
@@ -164,9 +162,19 @@ class _SymptomsBodyLocationsScreenState
                   width: MediaQuery.of(context).size.width / 2,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(40)),
-                  child: FlatButton(
-                    color: Colors.transparent,
-                    onPressed: () async {
+                  child: RbioElevatedButton(
+                    onTap: () async {
+                      RbioConfig.of(context).bodyLocationRsp =
+                          value.selectedBodyLocation;
+                      Atom.to(
+                        PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
+                        queryParameters: {
+                          'selectedGenderId':
+                              widget.selectedGenderId.toString(),
+                          'yearOfBirth': widget.yearOfBirth,
+                          'isFromVoice': false.toString(),
+                        },
+                      ); /*
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -177,14 +185,9 @@ class _SymptomsBodyLocationsScreenState
                             isFromVoice: widget.isFromVoice,
                           ),
                         ),
-                      );
+                      );*/
                     },
-                    child: Text(
-                      LocaleProvider.of(context).continue_lbl,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                    title: LocaleProvider.of(context).continue_lbl,
                   ),
                 ),
               ),

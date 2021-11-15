@@ -1,0 +1,265 @@
+[
+    {
+        "apimedic_id": "1",
+        "department_name_en": "Cardiology",
+        "department_name_tr": "Kardiyoloji",
+        "id": "13"
+    },
+    {
+        "apimedic_id": "4",
+        "department_name_en": "Acupuncture",
+        "department_name_tr": "Akupunktur",
+        "id": "123"
+    },
+    {
+        "apimedic_id": "5",
+        "department_name_en": "Allergology",
+        "department_name_tr": "Alergoloji",
+        "id": "55"
+    },
+    {
+        "apimedic_id": "6",
+        "department_name_en": "Anesthesia",
+        "department_name_tr": "Anestezi",
+        "id": "55"
+    },
+    {
+        "apimedic_id": "7",
+        "department_name_en": "Angiology",
+        "department_name_tr": "Anjiyoloji",
+        "id": "13"
+    },
+    {
+        "apimedic_id": "8",
+        "department_name_en": "Anthroposophical medicine",
+        "department_name_tr": "Antropozofik tıp",
+        "id": "123"
+    },
+    {
+        "apimedic_id": "9",
+        "department_name_en": "Child psychiatry",
+        "department_name_tr": "Çocuk psikiyatrisi",
+        "id": "34"
+    },
+    {
+        "apimedic_id": "10",
+        "department_name_en": "Plastic surgery",
+        "department_name_tr": "Plastik cerrahi",
+        "id": "44"
+    },
+    {
+        "apimedic_id": "11",
+        "department_name_en": "Dermatology",
+        "department_name_tr": "Dermatoloji",
+        "id": "35"
+    },
+    {
+        "apimedic_id": "12",
+        "department_name_en": "Endocrinology",
+        "department_name_tr": "Endokrinoloji",
+        "id": "3"
+    },
+    {
+        "apimedic_id": "13",
+        "department_name_en": "Forensic medicine",
+        "department_name_tr": "Adli tıp",
+        "id": "83"
+    },
+    {
+        "apimedic_id": "14",
+        "department_name_en": "Gastroenterology",
+        "department_name_tr": "Gastroenteroloji",
+        "id": "4"
+    },
+    {
+        "apimedic_id": "15",
+        "department_name_en": "General practice",
+        "department_name_tr": "Aile hekimliği"
+    },
+    {
+        "apimedic_id": "17",
+        "department_name_en": "Geriatric medicine",
+        "department_name_tr": "Geriyatrik tıp",
+        "id": "1"
+    },
+    {
+        "apimedic_id": "18",
+        "department_name_en": "Gynecology",
+        "department_name_tr": "Jinekoloji",
+        "id": "52"
+    },
+    {
+        "apimedic_id": "19",
+        "department_name_en": "Internal medicine",
+        "department_name_tr": "Dahiliye",
+        "id": "1"
+    },
+    {
+        "apimedic_id": "20",
+        "department_name_en": "Hand surgery",
+        "department_name_tr": "El cerrahisi",
+        "id": "46"
+    },
+    {
+        "apimedic_id": "21",
+        "department_name_en": "Hematology",
+        "department_name_tr": "Hematoloji",
+        "id": "9"
+    },
+    {
+        "apimedic_id": "22",
+        "department_name_en": "Homeopathy",
+        "department_name_tr": "Homeopati",
+        "id": "123"
+    },
+    {
+        "apimedic_id": "23",
+        "department_name_en": "Infectiology",
+        "department_name_tr": "Enfeksiyon hastalıkları",
+        "id": "16"
+    },
+    {
+        "apimedic_id": "24",
+        "department_name_en": "Manual medicine",
+        "department_name_tr": "Manuel tıp",
+        "id": "123"
+    },
+    {
+        "apimedic_id": "25",
+        "department_name_en": "Maxillo surgery",
+        "department_name_tr": "Maksiller cerrahi",
+        "id": "44"
+    },
+    {
+        "apimedic_id": "26",
+        "department_name_en": "Nephrology",
+        "department_name_tr": "Nefroloji",
+        "id": "5"
+    },
+    {
+        "apimedic_id": "27",
+        "department_name_en": "Neurology",
+        "department_name_tr": "Nöroloji",
+        "id": "17"
+    },
+    {
+        "apimedic_id": "28",
+        "department_name_en": "Occupational medicine",
+        "department_name_tr": "Meslek hastalıkları hekimliği",
+        "id": "87"
+    },
+    {
+        "apimedic_id": "29",
+        "department_name_en": "Oncology",
+        "department_name_tr": "Onkoloji",
+        "id": "11"
+    },
+    {
+        "apimedic_id": "30",
+        "department_name_en": "Ophthalmology",
+        "department_name_tr": "Oftalmoloji",
+        "id": "51"
+    },
+    {
+        "apimedic_id": "31",
+        "department_name_en": "Orthopedics",
+        "department_name_tr": "Ortopedi",
+        "id": "46"
+    },
+    {
+        "apimedic_id": "32",
+        "department_name_en": "Otolaryngology",
+        "department_name_tr": "Kulak burun boğaz",
+        "id": "50"
+    },
+    {
+        "apimedic_id": "33",
+        "department_name_en": "Pathology",
+        "department_name_tr": "Patoloji",
+        "id": "63"
+    },
+    {
+        "apimedic_id": "34",
+        "department_name_en": "Pediatrics",
+        "department_name_tr": "Çocuk hastalıkları",
+        "id": "19"
+    },
+    {
+        "apimedic_id": "35",
+        "department_name_en": "Pulmonology",
+        "department_name_tr": "Göğüs hastalıkları",
+        "id": "14"
+    },
+    {
+        "apimedic_id": "36",
+        "department_name_en": "Psychiatry",
+        "department_name_tr": "Psikiyatri",
+        "id": "18"
+    },
+    {
+        "apimedic_id": "37",
+        "department_name_en": "Tropical medicine",
+        "department_name_tr": "Tropikal tıp",
+        "id": "123"
+    },
+    {
+        "apimedic_id": "38",
+        "department_name_en": "Sports medicine",
+        "department_name_tr": "Spor hekimliği",
+        "id": "78"
+    },
+    {
+        "apimedic_id": "39",
+        "department_name_en": "Surgery",
+        "department_name_tr": "Cerrahi",
+        "id": "37"
+    },
+    {
+        "apimedic_id": "40",
+        "department_name_en": "Radiology",
+        "department_name_tr": "Radyoloji",
+        "id": "58"
+    },
+    {
+        "apimedic_id": "41",
+        "department_name_en": "Rheumatology",
+        "department_name_tr": "Romatoloji",
+        "id": "113"
+    },
+    {
+        "apimedic_id": "42",
+        "department_name_en": "Urology",
+        "department_name_tr": "Üroloji",
+        "id": "47"
+    },
+    {
+        "apimedic_id": "43",
+        "department_name_en": "Dentistry",
+        "department_name_tr": "Diş hekimliği",
+        "id": "95"
+    },
+    {
+        "apimedic_id": "44",
+        "department_name_en": "Orthodontics",
+        "department_name_tr": "Ortodonti",
+        "id": "95"
+    },
+    {
+        "apimedic_id": "45",
+        "department_name_en": "Oral surgery",
+        "department_name_tr": "Oral Cerrahi",
+        "id": "50"
+    },
+    {
+        "apimedic_id": "46",
+        "department_name_en": "Periodontology",
+        "department_name_tr": "Periodontoloji",
+        "id": "133"
+    },
+    {
+        "apimedic_id": "47",
+        "department_name_en": "Reconstructive dentistry",
+        "department_name_tr": "Rekonstrüktif diş hekimliği",
+        "id": "44"
+    }
+]

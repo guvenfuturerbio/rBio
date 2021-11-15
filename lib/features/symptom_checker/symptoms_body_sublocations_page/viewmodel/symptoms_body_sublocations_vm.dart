@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/model/model.dart';
 
-import '../symptoms_result_page/symptoms_result_page_vm.dart';
+import '../../symptoms_result_page/viewmodel/symptoms_result_page_vm.dart';
 
 enum Mode { PARTSELECTION, SYMPTOMADD, SYMPTOMSUBSTRACT }
 

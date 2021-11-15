@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
+import 'package:onedosehealth/model/model.dart';
 
 class RbioConfig extends InheritedWidget {
   final Widget child;
@@ -11,6 +13,10 @@ class RbioConfig extends InheritedWidget {
   void changeOrientation(Orientation value) {
     orientationController.sink.add(value);
   }
+
+  GetBodyLocationResponse bodyLocationRsp;
+  List<GetBodySymptomsResponse> listBodySympRsp;
+  BodySublocationsVm sublocationVm;
 
   RbioConfig({
     Key key,
