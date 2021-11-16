@@ -349,5 +349,17 @@
   "digitalcheckup" : "Dijital Checkup",
   "info_report" : "Şikayet Bildirimi",
   "symptom_checker_welcome" : "Detaylı Sağlık Kontrolüne hoşgeldiniz, lütfen cinsiyetinizi ve doğum yılınızı sesli bir şekilde söyler misiniz? Örneğin, Erkek, 1980",
-  "voice_nlp" : "Sesli Sağlık Asistanı"
+  "voice_nlp" : "Sesli Sağlık Asistanı",
+  "favorites" : "Favoriler",
+  "appo_for" : "Randevu alınacak kişi :",
+  "pls_select_person" : "Lütfen kişi seçiniz",
+  "hosp_selection" : "Hastane seçimi :",
+  "pls_select_hosp" : "Lütfen hastane seçiniz",
+  "depart_selection" : "Bölüm seçimi :",
+  "pls_select_depart" : "Lütfen departman seçiniz",
+  "doctor_selection" : "Doktor seçimi :",
+  "pls_select_doctor" : "Lütfen doktor seçiniz",
+  "which_depart_i_go" : "Hangi bölüme gideceğimi bilmiyorum",
+  "depart_analyse" : "Bölüm analizi",
+  "pls_select" : "Seçiniz"
 }

@@ -3594,6 +3594,126 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Favorites`
+  String get favorites {
+    return Intl.message(
+      'Favorites',
+      name: 'favorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Person to make an appointment :`
+  String get appo_for {
+    return Intl.message(
+      'Person to make an appointment :',
+      name: 'appo_for',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a person`
+  String get pls_select_person {
+    return Intl.message(
+      'Please select a person',
+      name: 'pls_select_person',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hospital selection :`
+  String get hosp_selection {
+    return Intl.message(
+      'Hospital selection :',
+      name: 'hosp_selection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select hospital`
+  String get pls_select_hosp {
+    return Intl.message(
+      'Please select hospital',
+      name: 'pls_select_hosp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department selection :`
+  String get depart_selection {
+    return Intl.message(
+      'Department selection :',
+      name: 'depart_selection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select department`
+  String get pls_select_depart {
+    return Intl.message(
+      'Please select department',
+      name: 'pls_select_depart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Doctor selection :`
+  String get doctor_selection {
+    return Intl.message(
+      'Doctor selection :',
+      name: 'doctor_selection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select doctor`
+  String get pls_select_doctor {
+    return Intl.message(
+      'Please select doctor',
+      name: 'pls_select_doctor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I don't know which department to go to`
+  String get which_depart_i_go {
+    return Intl.message(
+      'I don\'t know which department to go to',
+      name: 'which_depart_i_go',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department analyze`
+  String get depart_analyse {
+    return Intl.message(
+      'Department analyze',
+      name: 'depart_analyse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose`
+  String get pls_select {
+    return Intl.message(
+      'Choose',
+      name: 'pls_select',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

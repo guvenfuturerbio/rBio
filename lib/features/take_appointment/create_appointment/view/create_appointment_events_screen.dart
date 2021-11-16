@@ -32,12 +32,6 @@ class _CreateAppointmentEventsScreenState
     _selectedDay = _focusedDay;
   }
 
-  @override
-  void dispose() {
-    _selectedEvents.dispose();
-    super.dispose();
-  }
-
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {

@@ -354,5 +354,17 @@
   "digitalcheckup" : "Digital Checkup",
   "info_report" : "Complaint Declaration",
   "symptom_checker_welcome" : "Detaylı Sağlık Kontrolüne hoşgeldiniz, lütfen cinsiyetinizi ve doğum yılınızı sesli bir şekilde söyler misiniz? Örneğin, Erkek, 1980",
-  "voice_nlp" : "Voice Health Assistant"
+  "voice_nlp" : "Voice Health Assistant",
+  "favorites" : "Favorites",
+  "appo_for" : "Person to make an appointment :",
+  "pls_select_person" : "Please select a person",
+  "hosp_selection" : "Hospital selection :",
+  "pls_select_hosp" : "Please select hospital",
+  "depart_selection" : "Department selection :",
+  "pls_select_depart" : "Please select department",
+  "doctor_selection" : "Doctor selection :",
+  "pls_select_doctor" : "Please select doctor",
+  "which_depart_i_go" : "I don't know which department to go to",
+  "depart_analyse" : "Department analyze",
+  "pls_select" : "Choose"
 }

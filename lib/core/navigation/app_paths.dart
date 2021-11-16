@@ -2,6 +2,8 @@ import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/vi
 import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
 import 'package:onedosehealth/features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
 import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
+import 'package:onedosehealth/features/take_appointment/create_online_appointment/view/create_online_appointment_screen.dart';
+import 'package:onedosehealth/features/take_appointment/create_online_appointment/viewmodel/create_online_appointment_screen_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -299,6 +301,14 @@ class VRouterRoutes {
       path: PagePaths.SYMPTOM_RESULT_PAGE,
       widget: SymptomsResultPage(),
     ),
+
+    VWidget(
+      path: PagePaths.CREATE_ONLINE_APPO,
+      widget: ChangeNotifierProvider<CreateOnlineAppointmentVm>(
+        create: (context) => CreateOnlineAppointmentVm(),
+        child: CreateOnlineAppointmentScreen(),
+      ),
+    ),
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -318,6 +328,7 @@ class PagePaths {
   static const DEVICES = '/devices';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
+  static const CREATE_ONLINE_APPO = '/create-online-appointment';
 
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';

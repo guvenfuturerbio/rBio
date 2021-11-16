@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/widgets/history_doctor_image_widget.dart';
+import 'package:onedosehealth/features/take_appointment/create_online_appointment/viewmodel/create_online_appointment_screen_vm.dart';
+import 'package:onedosehealth/features/take_appointment/create_online_appointment/widgets/create_online_appo_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../viewmodel/create_appointment_vm.dart';
-import '../widgets/create_appo_widget.dart';
-import '../widgets/history_doctor_image_widget.dart';
 
-class CreateAppointmentScreen extends StatefulWidget {
-  const CreateAppointmentScreen({Key key}) : super(key: key);
+class CreateOnlineAppointmentScreen extends StatefulWidget {
+  const CreateOnlineAppointmentScreen({Key key}) : super(key: key);
 
   @override
-  _CreateAppointmentScreenState createState() =>
-      _CreateAppointmentScreenState();
+  _CreateOnlineAppointmentScreenState createState() =>
+      _CreateOnlineAppointmentScreenState();
 }
 
-class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
+class _CreateOnlineAppointmentScreenState
+    extends State<CreateOnlineAppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
@@ -24,10 +25,10 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
       ),
 
       //
-      body: Consumer<CreateAppointmentVm>(
+      body: Consumer<CreateOnlineAppointmentVm>(
         builder: (
           BuildContext context,
-          CreateAppointmentVm val,
+          CreateOnlineAppointmentVm val,
           Widget child,
         ) {
           switch (val.progress) {
@@ -42,7 +43,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Favoriler",
+                      LocaleProvider.current.favorites,
                       style: context.xHeadline3,
                     ),
                   ),
@@ -62,28 +63,26 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                   ),
 
                   //
-                  CreateAppoWidget(
-                    context: context,
-                    header: "Randevu alınacak kişi:",
-                    hint: "Please select",
-                    itemList: ["EYC", "Kişi 1", "Kişi 2"],
-                    val: val,
-                    whichField: Fields.BEGIN,
-                    progress: LoadingProgress.DONE,
-                  ),
+                  CreateOnlineAppoWidget(
+                      context: context,
+                      header: LocaleProvider.current.appo_for,
+                      hint: LocaleProvider.current.pls_select_person,
+                      itemList: ["EYC", "Kişi 1", "Kişi 2"],
+                      val: val,
+                      whichField: Fields.BEGIN,
+                      progress: LoadingProgress.DONE,
+                      isOnline: false),
 
                   //
-                  CreateAppoWidget(
-                    context: context,
-                    header: "Hastane seçimi:",
-                    hint: "Please select hospital",
-                    itemList: val.tenantsFilterResponse == null
-                        ? []
-                        : val.tenantsFilterResponse,
-                    val: val,
-                    whichField: Fields.TENANTS,
-                    progress: val.progress,
-                  ),
+                  CreateOnlineAppoWidget(
+                      context: context,
+                      header: LocaleProvider.current.hosp_selection,
+                      hint: LocaleProvider.current.pls_select_hosp,
+                      itemList: [LocaleProvider.current.online_appo],
+                      val: val,
+                      whichField: Fields.TENANTS,
+                      progress: val.progress,
+                      isOnline: true),
 
                   //
                   IgnorePointer(
@@ -94,16 +93,17 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                       opacity: val.hospitalSelected ? 1 : 0,
                       child: val.departmentProgress == LoadingProgress.LOADING
                           ? RbioLoading()
-                          : CreateAppoWidget(
+                          : CreateOnlineAppoWidget(
                               context: context,
-                              header: "Bölüm seçimi:",
-                              hint: "Please select department",
+                              header: LocaleProvider.current.depart_selection,
+                              hint: LocaleProvider.current.pls_select_depart,
                               itemList: val.filterDepartmentResponse == null
                                   ? []
                                   : val.filterDepartmentResponse,
                               val: val,
                               whichField: Fields.DEPARTMENT,
-                              progress: val.departmentProgress),
+                              progress: val.departmentProgress,
+                              isOnline: false),
                     ),
                   ),
 
@@ -118,16 +118,17 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                           : 0,
                       child: val.doctorProgress == LoadingProgress.LOADING
                           ? RbioLoading()
-                          : CreateAppoWidget(
+                          : CreateOnlineAppoWidget(
                               context: context,
-                              header: "Doktor seçimi:",
-                              hint: "Please select doctor",
+                              header: LocaleProvider.current.doctor_selection,
+                              hint: LocaleProvider.current.pls_select_doctor,
                               itemList: val.filterResourcesResponse == null
                                   ? []
                                   : val.filterResourcesResponse,
                               val: val,
                               whichField: Fields.DOCTORS,
-                              progress: val.doctorProgress),
+                              progress: val.doctorProgress,
+                              isOnline: false),
                     ),
                   ),
 

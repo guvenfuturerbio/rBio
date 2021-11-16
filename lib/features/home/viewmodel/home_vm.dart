@@ -251,6 +251,8 @@ class HomeVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(_key3);
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.CREATE_ONLINE_APPO);
               }
             },
             child: VerticalCard(
