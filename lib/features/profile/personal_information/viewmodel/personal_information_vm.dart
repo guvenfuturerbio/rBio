@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
 
 class PersonalInformationScreenVm extends ChangeNotifier {
   BuildContext mContext;

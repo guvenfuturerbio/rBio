@@ -366,6 +366,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "try_again" : MessageLookupByLibrary.simpleMessage("Tekrar Deneyin"),
     "two_week" : MessageLookupByLibrary.simpleMessage("2 Hafta"),
     "unsupported_language" : MessageLookupByLibrary.simpleMessage("Desteklenmeyen Dil"),
+    "update_information" : MessageLookupByLibrary.simpleMessage("Bilgilerini Güncelle"),
     "update_now" : MessageLookupByLibrary.simpleMessage("Şimdi Güncelle"),
     "upload" : MessageLookupByLibrary.simpleMessage("Yükle"),
     "upload_file_question" : MessageLookupByLibrary.simpleMessage("Seçili randevunuza bu dosyayı eklemek istediğinize emin misiniz ?"),

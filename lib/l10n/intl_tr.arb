@@ -361,5 +361,6 @@
   "pls_select_doctor" : "Lütfen doktor seçiniz",
   "which_depart_i_go" : "Hangi bölüme gideceğimi bilmiyorum",
   "depart_analyse" : "Bölüm analizi",
-  "pls_select" : "Seçiniz"
+  "pls_select" : "Seçiniz",
+  "update_information" : "Bilgilerini Güncelle"
 }

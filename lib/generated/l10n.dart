@@ -3714,6 +3714,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Update Information`
+  String get update_information {
+    return Intl.message(
+      'Update Information',
+      name: 'update_information',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

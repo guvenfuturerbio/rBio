@@ -366,5 +366,6 @@
   "pls_select_doctor" : "Please select doctor",
   "which_depart_i_go" : "I don't know which department to go to",
   "depart_analyse" : "Department analyze",
-  "pls_select" : "Choose"
+  "pls_select" : "Choose",
+  "update_information" : "Update Information"
 }

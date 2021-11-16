@@ -371,6 +371,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "try_again" : MessageLookupByLibrary.simpleMessage("Try Again"),
     "two_week" : MessageLookupByLibrary.simpleMessage("2 weeks"),
     "unsupported_language" : MessageLookupByLibrary.simpleMessage("Unsupported Language"),
+    "update_information" : MessageLookupByLibrary.simpleMessage("Update Information"),
     "update_now" : MessageLookupByLibrary.simpleMessage("Update Now"),
     "upload" : MessageLookupByLibrary.simpleMessage("Upload"),
     "upload_file_question" : MessageLookupByLibrary.simpleMessage("Are you sure you want to upload this file for selected appointment ? "),

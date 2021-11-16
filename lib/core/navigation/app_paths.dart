@@ -1,3 +1,5 @@
+import 'package:onedosehealth/features/profile/personal_information/view/personal_information_screen.dart';
+import 'package:onedosehealth/features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
 import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
 import 'package:onedosehealth/features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
@@ -13,7 +15,6 @@ import '../../features/account/all_files/all_files_screen.dart';
 import '../../features/account/change_password/change_password_screen.dart';
 import '../../features/account/followers/view/followers_screen.dart';
 import '../../features/account/full_image_viewer_screen.dart';
-import '../../features/account/personal_information/personal_information_screen.dart';
 import '../../features/account/profile_image_viewer_screen.dart';
 import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
 import '../../features/account/youtube/youtube_viewer_web_screen.dart';
@@ -309,6 +310,12 @@ class VRouterRoutes {
         child: CreateOnlineAppointmentScreen(),
       ),
     ),
+
+    VWidget(
+      path: PagePaths.SUGGEST_REQUEST,
+      widget: RequestSuggestionsScreen(),
+    ),
+
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -365,6 +372,7 @@ class PagePaths {
   static const FULLIMAGEVIEWER = '/full-image-viewer';
   static const FULLPDFVIEWER = '/full-pdf-viewer';
   static const WEBCONFERANCE = '/web-conferance';
+  static const SUGGEST_REQUEST = '/suggest-request';
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';

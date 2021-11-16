@@ -117,7 +117,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //
                     _buildListItem(
                       LocaleProvider.current.lbl_personal_information,
-                      () {},
+                      () {
+                        Atom.to(PagePaths.PERSONAL_INFORMATION);
+                      },
                     ),
 
                     //
@@ -143,7 +145,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //
                     _buildListItem(
                       LocaleProvider.current.request_and_suggestions,
-                      () {},
+                      () {
+                        Atom.to(PagePaths.SUGGEST_REQUEST);
+                      },
                       isDivider: false,
                     ),
                   ],
