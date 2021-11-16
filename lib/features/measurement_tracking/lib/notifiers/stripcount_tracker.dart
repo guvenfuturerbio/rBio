@@ -3,10 +3,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../doctor/utils/progress/progress_dialog.dart';
+import '../core/utils/progress_dialog.dart';
 import '../locator.dart';
 import '../models/notification/strip_detail_model.dart';
-import '../notification_handler.dart';
 import '../widgets/utils/base_provider_repository.dart';
 import 'user_profiles_notifier.dart';
 
@@ -89,8 +88,6 @@ class StripCountTracker with ChangeNotifier {
   static decrementAndSave(int value) async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     SharedPreferences prefs = await _prefs;
-    final int usedStripCount =
-        (prefs.getInt('usedStripCount') ?? prefs.setInt('usedStripCount', 0));
     StripDetailModel stripDetailModel = (await BaseProviderRepository()
             .getUserStrips(UserProfilesNotifier().selection?.id,
                 UserProfilesNotifier().selection?.deviceUUID) ??
@@ -162,14 +159,14 @@ checkAlarmAndSendNotification(StripDetailModel stripDetailModel) async {
     const IOSNotificationDetails iosPlatformChannelSpecificts =
         IOSNotificationDetails();
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iosPlatformChannelSpecificts);
-    await NotificationHandler.showNotification({
-      'id': 0,
-      'title': 'Strip Count is Low',
-      'body': 'You have ' +
-          stripDetailModel.currentCount.toString() +
-          " strips left",
-    });
+      android: androidPlatformChannelSpecifics,
+      iOS: iosPlatformChannelSpecificts,
+    );
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Strip Count is Low',
+      'You have ' + stripDetailModel.currentCount.toString() + " strips left",
+      platformChannelSpecifics,
+    );
   }
 }

@@ -7,19 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 import '../database/datamodels/glucose_data.dart';
 import '../extension/size_extension.dart';
 import '../generated/l10n.dart';
 import '../helper/loading_dialog.dart';
 import '../helper/resources.dart';
-import '../mediminder/ui/medicine_selection/medicine_period_selection.dart';
-import '../models/appointment_models/Appointment.dart';
-import '../models/appointment_models/AppointmentType.dart';
-import '../models/appointment_models/Availability.dart';
-import '../models/appointment_models/doctor.dart';
 import '../models/ble_models/DeviceTypes.dart';
 import '../models/user_profiles/person.dart';
 import '../notifiers/user_profiles_notifier.dart';
@@ -83,286 +76,6 @@ Widget loginOptionButton({String icon, String text, Function onPressed}) {
         onPressed();
       },
     ),
-  );
-}
-
-/* Widget appointmentInfo(
-    {BuildContext context,
-    Doctor doctor,
-    Appointment appointment,
-    Availability availability,
-    AppointmentType department,
-    Function startAppointment,
-    Function openFiles}) {
-  return Container(
-    width: double.infinity,
-    margin: EdgeInsets.only(bottom: 20),
-    padding: EdgeInsets.all(8),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        LocaleProvider.current.hint_doctor,
-                        style: TextStyle(color: R.color.grey, fontSize: 16),
-                      ),
-                    ),
-                    Expanded(
-                        child: Text(
-                      LocaleProvider.current.department,
-                      style: TextStyle(color: R.color.grey, fontSize: 16),
-                    ))
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        doctor?.employee?.user?.name ?? "",
-                        style: TextStyle(
-                            color: R.color.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Expanded(
-                        child: Text(
-                      department?.name ?? "-",
-                      style: TextStyle(
-                          color: R.color.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                    ))
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        LocaleProvider.current.hint_date,
-                        style: TextStyle(color: R.color.grey, fontSize: 16),
-                      ),
-                    ),
-                    Expanded(
-                        child: Text(
-                      LocaleProvider.current.time,
-                      style: TextStyle(color: R.color.grey, fontSize: 16),
-                    ))
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        appointment != null || availability != null
-                            ? DateFormat("dd/MM/yyyy")?.format(DateTime.parse(
-                                appointment != null
-                                    ? appointment?.part?.startDateTime
-                                    : availability?.part?.startDateTime ?? ""))
-                            : " ",
-                        style: TextStyle(
-                            color: R.color.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Expanded(
-                        child: Text(
-                      appointment != null
-                          ? appointment?.startTime?.substring(0, 5)
-                          : availability?.startTime?.substring(0, 5) ?? "",
-                      style: TextStyle(
-                          color: R.color.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                    ))
-                  ],
-                ),
-              ),
-              availability != null
-                  ? SizedBox(
-                      height: 30,
-                    )
-                  : Container()
-            ],
-          ),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            button(
-                onPressed: () {
-                  openFiles();
-                },
-                text: LocaleProvider.current.files.toUpperCase(),
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.2),
-            SizedBox(
-              width: 10,
-            ),
-            button(
-                onPressed: () {
-                  startAppointment();
-                },
-                text: LocaleProvider.current.join.toUpperCase(),
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.2),
-          ],
-        )
-      ],
-    ),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-        gradient: LinearGradient(colors: [
-          Colors.white,
-          Colors.white,
-        ], begin: Alignment.topLeft, end: Alignment.topRight),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withAlpha(50),
-              blurRadius: 15,
-              spreadRadius: 0,
-              offset: Offset(5, 10))
-        ]),
-  );
-} */
-
-Widget appointmentInfo(
-    {BuildContext context,
-    Doctor doctor,
-    Appointment appointment,
-    Availability availability,
-    AppointmentType department,
-    Function startAppointment,
-    Function openFiles}) {
-  final ButtonThemeData buttonTheme =
-      ButtonTheme.of(context).copyWith(padding: const EdgeInsets.all(0.0));
-
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    margin: EdgeInsets.only(bottom: 20),
-    child: SizedBox(
-      height: context.HEIGHT * .3,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  /// Doctor and Date Section
-                  SizedBox(
-                    width: buttonTheme.minWidth +
-                        MediaQuery.of(context).size.width * 0.2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _textItem(LocaleProvider.current.hint_doctor,
-                            doctor?.employee?.user?.name ?? ""),
-                        _textItem(
-                          LocaleProvider.current.hint_date,
-                          appointment != null || availability != null
-                              ? DateFormat("dd/MM/yyyy")?.format(DateTime.parse(
-                                  appointment != null
-                                      ? appointment?.part?.startDateTime
-                                      : availability?.part?.startDateTime ??
-                                          ""))
-                              : " ",
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  /// Department and Time Section
-                  SizedBox(
-                    width: buttonTheme.minWidth +
-                        MediaQuery.of(context).size.width * 0.2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _textItem(LocaleProvider.current.department,
-                            department?.name ?? "-"),
-                        _textItem(
-                          LocaleProvider.current.time,
-                          appointment != null
-                              ? appointment?.startTime?.substring(0, 5)
-                              : availability?.startTime?.substring(0, 5) ?? "",
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: context.HEIGHT * .05,
-          ),
-
-          /// Files and Join Buttons Section
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              button(
-                  onPressed: () {
-                    openFiles();
-                  },
-                  text: LocaleProvider.current.files.toUpperCase(),
-                  height: 10,
-                  width: MediaQuery.of(context).size.width * 0.2),
-              button(
-                  onPressed: () {
-                    startAppointment();
-                  },
-                  text: LocaleProvider.current.join.toUpperCase(),
-                  height: 10,
-                  width: MediaQuery.of(context).size.width * 0.2),
-            ],
-          )
-        ],
-      ),
-    ),
-  );
-}
-
-Column _textItem(String title, String value) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        title,
-        style: TextStyle(color: R.color.grey, fontSize: 16),
-      ),
-      Text(
-        value,
-        style: TextStyle(
-            color: R.color.black, fontSize: 18, fontWeight: FontWeight.w600),
-      ),
-    ],
   );
 }
 
@@ -984,14 +697,6 @@ BoxDecoration ShadowDecorationWhite() => BoxDecoration(
       ],
     );
 
-class AppUtils {
-  static void _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
-}
-
 /// Page Irrelevant operations
 class UtilityManager {
   static final UtilityManager _instance = UtilityManager._internal();
@@ -1042,39 +747,6 @@ class UtilityManager {
       return;
     } else {
       FocusScope.of(context).requestFocus(nextFocus);
-    }
-  }
-
-  String getMedicinePeriodName(BuildContext context, MedicinePeriod period) {
-    switch (period) {
-      case MedicinePeriod.EVERY_DAY:
-        return LocaleProvider.current.every_day;
-      case MedicinePeriod.SPECIFIC_DAYS:
-        return LocaleProvider.current.specific_days;
-      case MedicinePeriod.INTERMITTENT_DAYS:
-        return LocaleProvider.current.intermittent_days;
-    }
-  }
-
-  String getMedicineUsageTypeName(BuildContext context, UsageType usageType) {
-    switch (usageType) {
-      case UsageType.HUNGRY:
-        return LocaleProvider.current.hungry;
-      case UsageType.FULL:
-        return LocaleProvider.current.full;
-      case UsageType.IRRELEVANT:
-        return LocaleProvider.current.irrelevant;
-    }
-  }
-
-  String getHospitalNameById(int id) {
-    switch (id) {
-      case 3:
-        return "Güven Hastanesi Çayyolu";
-      case 4:
-        return "Güven Çayyolu Kampüsü";
-      case 11:
-        return "Online Hospital";
     }
   }
 
@@ -1247,7 +919,7 @@ class UtilityManager {
     return;
   }
 
-  Future hideLoadingDialog(BuildContext context, LoadingDialog loadingDialog) {
+  void hideLoadingDialog(BuildContext context, LoadingDialog loadingDialog) {
     if (loadingDialog != null && loadingDialog.isShowing()) {
       Navigator.of(context).pop();
       loadingDialog = null;
@@ -1284,41 +956,6 @@ class TabToNextFieldTextInputFormatter extends TextInputFormatter {
 
     return newValue;
   }
-}
-
-Widget buttonAppointment({Appointment appointment, Function selected}) {
-  return Center(
-    child: InkWell(
-        child: Container(
-          margin: EdgeInsets.all(8),
-          child: Center(
-            child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                appointment?.startTime?.substring(0, 5) ?? " ",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: Color(0xFFFFFFFF),
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 5,
-                    color: R.color.dark_black.withAlpha(25),
-                    offset: Offset(2, 2))
-              ],
-              gradient: LinearGradient(
-                  colors: [R.btnLightBlue, R.btnDarkBlue],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft)),
-        ),
-        onTap: () {
-          selected(appointment);
-        }),
-  );
 }
 
 Widget closestAppointment(
@@ -1369,6 +1006,8 @@ DeviceType getDeviceType(DiscoveredDevice device) {
   } else if (device.manufacturerData[0] == 103) {
     return DeviceType.CONTOUR_PLUS_ONE;
   }
+
+  throw Exception('Nondefined device');
 }
 
 ListView guidePopUpContextWidget(List<String> currentDeviceInfos) {

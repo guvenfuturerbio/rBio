@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/progress_dialog.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../doctor/utils/progress/progress_dialog.dart';
 import '../../notifiers/user_profiles_notifier.dart';
 import '../SqlitePersistence.dart';
 import '../datamodels/scale_data.dart';

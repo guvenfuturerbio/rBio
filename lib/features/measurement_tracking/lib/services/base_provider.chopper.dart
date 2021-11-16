@@ -127,24 +127,6 @@ class _$BaseProvider extends BaseProvider {
   }
 
   @override
-  Future<Response<dynamic>> getAllPatientAppointment(
-      dynamic entegrationId, int count, BodyPages bodyPages) {
-    final $url = 'appointment/get-all-table-by-patient/$count/$entegrationId';
-    final $body = bodyPages;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> getAllDoctorAppointment(
-      String doctorId, String date, List<Filter> filters) {
-    final $url = '/mobileappointment/get-by-doctor-and-date/$doctorId/$date';
-    final $body = filters;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
   Future<Response<dynamic>> getClosestAppointment(String id) {
     final $url = '/MobileAppointment/get-close-by-doctor-and-date/$id';
     final $request = Request('GET', $url, client.baseUrl);
@@ -177,14 +159,6 @@ class _$BaseProvider extends BaseProvider {
   Future<Response<dynamic>> deleteProfile(dynamic userId) {
     final $url = '/profile/delete/$userId';
     final $request = Request('DELETE', $url, client.baseUrl);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> doPayment(Payment payment) {
-    final $url = '/payment/do-mobile-payment';
-    final $body = payment;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page/home_page_view.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/pages/progress_pages/bg_progress_page/bg_progress_page.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/widgets/charts/bubble/small_bubble/small_glucose_scatter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

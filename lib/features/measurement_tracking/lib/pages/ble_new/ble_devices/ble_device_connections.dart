@@ -11,7 +11,7 @@ import '../../../models/ble_models/DeviceTypes.dart';
 import '../../../models/ble_models/paired_device.dart';
 import '../../../widgets/custom_app_bar/custom_app_bar.dart';
 import '../../../widgets/utils.dart';
-import '../../ble_device_connection/ble_status_screen.dart';
+import '../ble_status_screen.dart';
 import '../ble_scanner/ble_scanner.dart';
 import 'ble_device_connections_vm.dart';
 

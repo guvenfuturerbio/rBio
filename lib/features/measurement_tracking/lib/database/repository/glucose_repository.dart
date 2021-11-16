@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/progress_dialog.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/database/SqlitePersistence.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/database/datamodels/glucose_data.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/progress/progress_dialog.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/blood_glucose_value_detail_model.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/blood_glucose_value_model.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/delete_bg_measurement_request.dart';

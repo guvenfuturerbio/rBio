@@ -2,7 +2,6 @@ import 'package:chopper/chopper.dart';
 import 'package:intl/intl.dart';
 
 import '../helper/build_configurations.dart';
-import '../models/appointment_models/Filter.dart';
 import '../models/bg_measurement/blood_glucose_report_body.dart';
 import '../models/bg_measurement/blood_glucose_value_model.dart';
 import '../models/bg_measurement/delete_bg_measurement_request.dart';
@@ -10,10 +9,8 @@ import '../models/bg_measurement/get_blood_glucose_data_of_person.dart';
 import '../models/bg_measurement/get_hba1c_measurement_list.dart';
 import '../models/bg_measurement/hospital_hba1c_measurement.dart';
 import '../models/bg_measurement/update_bg_measurement_request.dart';
-import '../models/body_pages/body_pages_model.dart';
 import '../models/firebase/add_firebase_body.dart';
 import '../models/notification/strip_detail_model.dart';
-import '../models/payment/payment.dart';
 import '../models/user/additional_info_model.dart';
 import '../models/user_profiles/person.dart';
 import '../models/user_profiles/save_and_retrieve_token_model.dart';
@@ -108,20 +105,6 @@ abstract class BaseProvider extends ChopperService {
   @Get(path: "/filter/get-online-doctor-by-department/{id}")
   Future<Response> getOnlineDoctorByDepartments(@Path('id') String id);
 
-  /// Appointment
-  @Post(
-      path:
-          "appointment/get-all-table-by-patient/{count}/{entegration_id}") // 0 get all 3 get last three
-  Future<Response> getAllPatientAppointment(
-      @Path('entegration_id') entegrationId,
-      @Path('count') int count,
-      @Body() BodyPages bodyPages);
-
-  /// MobileAppointment
-  @Post(path: "/mobileappointment/get-by-doctor-and-date/{doctorId}/{date}")
-  Future<Response> getAllDoctorAppointment(@Path('doctorId') String doctorId,
-      @Path('date') String date, @Body() List<Filter> filters);
-
   @Get(path: "/MobileAppointment/get-close-by-doctor-and-date/{doctorId}")
   Future<Response> getClosestAppointment(@Path('doctorId') String id);
 
@@ -137,10 +120,6 @@ abstract class BaseProvider extends ChopperService {
 
   @Delete(path: "/profile/delete/{entegration_id}")
   Future<Response> deleteProfile(@Path('entegration_id') userId);
-
-  /// Payment
-  @Post(path: "/payment/do-mobile-payment")
-  Future<Response> doPayment(@Body() Payment payment);
 
   /// User
   @Post(path: "/user/add-user-firebaseId")

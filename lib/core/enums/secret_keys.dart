@@ -11,7 +11,8 @@ enum SecretKeys {
   DEV_4_GUVEN,
   SENTRY_DSN,
   SYMPTOM_CHECKER_LOGIN,
-  SYMPTOM_REQUEST_URL
+  SYMPTOM_REQUEST_URL,
+  CHRONIC_TRACKING_BASE_URL,
 }
 
 extension SecretKeysStringExt on String {

@@ -2,25 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/database/repository/scale_repository.dart';
-import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../database/repository/glucose_repository.dart';
 import '../database/repository/profile_repository.dart';
-import '../doctor/notifiers/user_notifiers.dart';
+import '../database/repository/scale_repository.dart';
 import '../generated/l10n.dart';
 import '../helper/workers.dart';
-import '../locator.dart';
-import '../mediminder/common/shared_keys.dart';
 import '../models/firebase/add_firebase_body.dart';
 import '../models/user/additional_info_model.dart';
 import '../models/user/country.dart';
@@ -30,16 +24,12 @@ import '../models/user_profiles/save_and_retrieve_token_model.dart';
 import '../models/user_profiles/token_user_text_body.dart';
 import '../notifiers/shared_preferences_handler.dart';
 import '../notifiers/user_profiles_notifier.dart';
-import '../pages/chat/chat_person.dart';
-import '../pages/chat/patient_id_holder.dart';
-import '../pages/signup&login/email_login_page/doctor_checker.dart';
 import '../pages/signup&login/token_provider.dart';
 import '../widgets/utils/base_provider_repository.dart';
 import 'base_provider.dart';
 import 'repository_services.dart';
 
 class UserService {
-  UserNotifiers userNotifiers = locator<UserNotifiers>();
   String token = TokenProvider().authToken;
   Person person;
   static const String APPLICATION_CONSENT_FORM = "APPLICATION_CONSENT_FORM";
@@ -56,29 +46,6 @@ class UserService {
       }
     } else {
       throw Exception('response code ' + response.statusCode.toString());
-    }
-  }
-
-  Future<List<ChatPerson>> getDoctorData(int entegrationId) async {
-    final response =
-        await BaseProvider.create(token).getDoctorList(entegrationId);
-    if (response.statusCode == 200) {
-      var responseBody = jsonDecode(utf8.decode(response.bodyBytes));
-      if (responseBody['is_successful'] == true) {
-        List<ChatPerson> list = [];
-        var body = responseBody['datum'];
-        for (var data in body) {
-          ChatPerson user = ChatPerson.fromJson(data);
-          list.add(user);
-        }
-        return list;
-      } else {
-        throw Exception('Response is_successfull = ' +
-            responseBody['is_successful'].toString());
-      }
-    } else {
-      print("failed to load doctor list");
-      return null;
     }
   }
 
@@ -262,25 +229,13 @@ class UserService {
     }
   }*/
 
-  //Last selected language code fetcher method
-  selectedLangFetcher() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(SharedKeys.key.languageCodeKey)) {
-      var locale = prefs.getString(SharedKeys.key.languageCodeKey);
-      LocaleProvider lp =
-          await LocaleProvider.delegate.load(Locale(locale.toLowerCase()));
-      LocaleProvider.current = lp;
-    }
-  }
+  //Last selected language code fetcher metho
 
   selectedCountryCode(String locale) async {
     if (LocaleProvider.delegate.isSupported(Locale(locale.toLowerCase()))) {
       LocaleProvider lp =
           await LocaleProvider.delegate.load(Locale(locale.toLowerCase()));
       LocaleProvider.current = lp;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(
-          SharedKeys.key.languageCodeKey, locale.toLowerCase());
     }
   }
 
@@ -300,23 +255,6 @@ class UserService {
           AddFirebaseToken(
               firebaseId: tokenFirebase,
               phoneInfo: await getDeviceInformation()));
-      if (DoctorChecker().doctor) {
-        print("Doktor tokenı güncelleniyor " +
-            userNotifiers.userId +
-            " " +
-            tokenFirebase);
-        await FirebaseFirestore.instance
-            .doc("tokens/" + userNotifiers.userId)
-            .set({"token": tokenFirebase});
-      } else {
-        print("Hasta tokenı güncelleniyor " +
-            PatientIdHolder().patient_id.toString() +
-            " " +
-            tokenFirebase);
-        await FirebaseFirestore.instance
-            .doc("tokens/" + PatientIdHolder().patient_id)
-            .set({"token": tokenFirebase});
-      }
       print("firebase token: " + tokenFirebase);
       print(response.statusCode);
     });
@@ -379,38 +317,22 @@ class UserService {
 
   handleAutoLogin(context) async {
     var userCred = checkFirebaseUser();
-    var userNotifier = Provider.of<UserNotifiers>(context, listen: false);
-    await userNotifier.getUserInfo();
 
     if (userCred != null) {
-      await handleCredential(userCred, userNotifier);
-    } else if (userNotifier.isDoctor == 'true') {
-      await doctorLogin(userNotifier);
+      await handleCredential(userCred);
     } else {
       throw Exception('not-current-user');
     }
   }
 
-  doctorLogin(UserNotifiers userNotifier) async {
-    await userNotifier.login(userNotifier.userId, userNotifier.password);
-    await userNotifier.saveUserInfo(userNotifier.userId, userNotifier.password,
-        userNotifier.jwtToken, 'true');
-    await userNotifier.addFirebaseToken();
-    DoctorChecker().doctor = true;
-  }
-
-  Future handleCredential(User userCred, UserNotifiers userNotifier,
-      {bool isSignUp = false}) async {
+  Future handleCredential(User userCred, {bool isSignUp = false}) async {
     try {
       await saveAndRetrieveToken(userCred, 'handleCred');
       if (isSignUp) {
         //TODO: this section will be refactored !!!
         await ProfileRepository().addProfile(new Person().fromDefault(), true);
       }
-      await handleSuccessfulLogin(userCred, userNotifier: userNotifier);
-
-      await userNotifier.saveUserInfo(userNotifier.userId,
-          userNotifier.password, userNotifier.jwtToken, 'false');
+      await handleSuccessfulLogin(userCred);
 
       return UserModel(
           displayName: userCred.displayName,
@@ -422,8 +344,9 @@ class UserService {
     }
   }
 
-  Future<void> handleSuccessfulLogin(User userCredential,
-      {UserNotifiers userNotifier}) async {
+  Future<void> handleSuccessfulLogin(
+    User userCredential,
+  ) async {
     try {
       var profiles = await getAllProfile();
       if (profiles.isEmpty) {
@@ -434,7 +357,6 @@ class UserService {
       print('hii');
       UserProfilesNotifier().selection = profiles[0];
       saveInformationForAutoLogin(userCredential);
-      PatientIdHolder().patient_id = person.userId.toString();
 
       // token save process
       UserService().addFirebaseToken();
@@ -460,7 +382,7 @@ class UserService {
       print(e);
       print(e.toString().contains('SignUp'));
       if (e.toString().contains('SignUp')) {
-        await handleCredential(userCredential, userNotifier, isSignUp: true);
+        await handleCredential(userCredential, isSignUp: true);
       } else {
         throw Exception('handleSuccessfulLogin');
       }

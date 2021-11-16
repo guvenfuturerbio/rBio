@@ -1,15 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/user_notifiers.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/progress/progress_dialog.dart';
-import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page/home_page_view.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_new/home_page_new.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/pages/signup&login/email_login_page/doctor_checker.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/services/user_service.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/widgets/gradient_dialog.dart';
-import 'package:provider/provider.dart';
+
+import '../../../../../../generated/l10n.dart';
+import '../../../core/utils/progress_dialog.dart';
+import '../../../services/user_service.dart';
+import '../../../widgets/gradient_dialog.dart';
+import '../email_login_page/doctor_checker.dart';
 
 class SignUpPageVm extends ChangeNotifier {
   final BuildContext mContext;
@@ -59,14 +55,12 @@ class SignUpPageVm extends ChangeNotifier {
           .signInWithEmailAndPasswordFirebase(email, password);
       DoctorChecker().doctor = false;
 
-      await UserService().handleCredential(userCredential.user,
-          Provider.of<UserNotifiers>(mContext, listen: false),
-          isSignUp: true);
+      await UserService().handleCredential(userCredential.user, isSignUp: true);
       hideDialog(mContext);
-      Navigator.of(mContext).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (contextTrans) => HomePageNew()),
-        ModalRoute.withName(Routes.HOME_PAGE),
-      );
+      // Navigator.of(mContext).pushAndRemoveUntil(
+      //   MaterialPageRoute(builder: (contextTrans) => HomePageNew()),
+      //   ModalRoute.withName(Routes.HOME_PAGE),
+      // );
     } catch (e) {
       print(e);
       hideDialog(mContext);

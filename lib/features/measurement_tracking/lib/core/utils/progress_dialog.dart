@@ -1,8 +1,10 @@
+import 'package:animated_widgets/widgets/rotation_animated.dart';
+import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/core/constants/constants.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/generated/l10n.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-
-import '../../../generated/l10n.dart';
-import '../widgets.dart';
 
 class ProgressDialog extends StatefulWidget {
   static _ProgressDialogState state;
@@ -45,6 +47,26 @@ class _ProgressDialogState extends State<ProgressDialog> {
       ),
     );
   }
+
+  Widget progress({
+    Key key,
+    double value,
+    Color backgroundColor,
+    Animation valueColor,
+    String semanticsLabel,
+    String semanticsValue,
+  }) =>
+      ShakeAnimatedWidget(
+        enabled: true,
+        duration: Duration(milliseconds: 1500),
+        shakeAngle: Rotation.deg(z: 10),
+        curve: Curves.linear,
+        child: Container(
+          width: 80,
+          height: 80,
+          child: SvgPicture.asset(R.image.guven_logo),
+        ),
+      );
 
   Gradient blueGradient() => LinearGradient(
       colors: [Colors.black12, Colors.black12],

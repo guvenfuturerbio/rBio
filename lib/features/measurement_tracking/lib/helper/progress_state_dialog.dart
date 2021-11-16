@@ -1,8 +1,8 @@
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 
-import '../doctor/utils/widgets.dart';
 import '../generated/l10n.dart';
 import 'resources.dart';
 

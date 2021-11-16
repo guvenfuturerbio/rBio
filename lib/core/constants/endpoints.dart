@@ -135,4 +135,6 @@ extension _EndpointsExtension on String {
       SecretUtils.instance.get(SecretKeys.SYMPTOM_CHECKER_LOGIN) + this;
   String get xSymptomCheckerRequest =>
       SecretUtils.instance.get(SecretKeys.SYMPTOM_REQUEST_URL) + this;
+  String get xCronicTracking =>
+      SecretUtils.instance.get(SecretKeys.CHRONIC_TRACKING_BASE_URL) + this;
 }

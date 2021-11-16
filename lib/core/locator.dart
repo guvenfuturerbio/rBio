@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onedosehealth/core/data/service/symptom_api_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_connector.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_reactor.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_scanner.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'core.dart';
 import 'data/helper/dio_helper.dart';
 import 'data/repository/repository.dart';
 import 'data/repository/symptom_repository.dart';
@@ -46,6 +51,16 @@ Future<void> setupLocator() async {
 
   getIt.registerSingleton<UserInfo>(
       UserInfo(getIt<ISharedPreferencesManager>()));
+
+  if (!Atom.isWeb) {
+    getIt.registerSingleton<FlutterReactiveBle>(FlutterReactiveBle());
+    getIt.registerLazySingleton(
+        () => BleReactorOps(ble: getIt<FlutterReactiveBle>()));
+    getIt.registerLazySingleton(
+        () => BleConnectorOps(ble: getIt<FlutterReactiveBle>()));
+    getIt.registerLazySingleton(
+        () => BleScannerOps(ble: getIt<FlutterReactiveBle>()));
+  }
 }
 
 class GuvenSettings {

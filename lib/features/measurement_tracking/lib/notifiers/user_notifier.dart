@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../doctor/utils/progress/progress_dialog.dart';
+
+import '../core/utils/progress_dialog.dart';
 import '../locator.dart';
 import '../models/user/usermodel.dart';
 import '../services/auth_service/login_view_model.dart';

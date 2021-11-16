@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
+import 'package:onedosehealth/core/locator.dart';
+import 'package:onedosehealth/core/theme/main_theme.dart';
+
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +30,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
     );
 
     return AlertDialog(
-      backgroundColor: R.color.mainColor,
+      backgroundColor: getIt<ITheme>().mainColor,
       title: Text(
         widget.title,
         style: TextStyle(
@@ -67,14 +69,12 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                         child: Theme(
                           data: ThemeData(unselectedWidgetColor: Colors.white),
                           child: Checkbox(
-                            value: value.clickedConsentForm,
-                            checkColor: Colors.white,
-                            onChanged: (newValue) {
-                              value.toggleConsentFormState();
-                            },
-                            activeColor:
-                                R.color.mainColor, //  <-- leading Checkbox
-                          ),
+                              value: value.clickedConsentForm,
+                              checkColor: Colors.white,
+                              onChanged: (newValue) {
+                                value.toggleConsentFormState();
+                              },
+                              activeColor: getIt<ITheme>().mainColor),
                         ),
                       ),
                       Expanded(
@@ -89,7 +89,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 12,
-                              color: R.color.white,
+                              color: getIt<ITheme>().textColor,
                               decoration: TextDecoration.underline,
                             )),
                       ))
@@ -106,7 +106,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
   }
 
   Gradient BlueGradient() => LinearGradient(
-      colors: [R.color.mainColor, R.color.mainColor],
+      colors: [getIt<ITheme>().mainColor, getIt<ITheme>().mainColor],
       begin: Alignment.bottomLeft,
       end: Alignment.centerRight);
 }

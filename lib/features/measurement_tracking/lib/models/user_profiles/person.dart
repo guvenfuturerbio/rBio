@@ -4,7 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../generated/l10n.dart';
 import '../../notifiers/user_notifier.dart';
-import '../../pages/ble_device_connection/ble_reactive_singleton.dart';
 
 part 'person.g.dart';
 
@@ -160,11 +159,11 @@ class Person {
         userId: -1,
         weight: "50",
         height: "170",
-        hypo: BLEHandler.DEFAULT_VERY_LOW,
-        rangeMin: BLEHandler.DEFAULT_LOW,
-        target: BLEHandler.DEFAULT_TARGET,
-        rangeMax: BLEHandler.DEFAULT_HIGH,
-        hyper: BLEHandler.DEFAULT_VERY_HIGH,
+        hypo: DEFAULT_VERY_LOW,
+        rangeMin: DEFAULT_LOW,
+        target: DEFAULT_TARGET,
+        rangeMax: DEFAULT_HIGH,
+        hyper: DEFAULT_VERY_HIGH,
         deviceUUID: "",
         manufacturerId: 0,
         imageURL:
@@ -185,4 +184,10 @@ class Person {
     print(identical(this, rhs));
     return identical(this, rhs);
   }
+
+  static const DEFAULT_VERY_LOW = 36;
+  static const DEFAULT_LOW = 91;
+  static const DEFAULT_TARGET = 131;
+  static const DEFAULT_HIGH = 151;
+  static const DEFAULT_VERY_HIGH = 301;
 }

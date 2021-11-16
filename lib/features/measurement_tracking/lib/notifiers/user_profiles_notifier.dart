@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/database/repository/scale_repository.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_scanner.dart';
 
 import '../database/datamodels/glucose_data.dart';
 import '../database/repository/glucose_repository.dart';
@@ -12,8 +13,6 @@ import '../generated/l10n.dart';
 import '../helper/resources.dart';
 import '../models/user_profiles/person.dart';
 import '../models/user_profiles/user_profiles.dart';
-import '../pages/ble_device_connection/ble_reactive_singleton.dart';
-import '../pages/chat/patient_id_holder.dart';
 import '../pages/root_page.dart';
 import '../pages/signup&login/token_provider.dart';
 import '../services/base_provider.dart';
@@ -86,7 +85,7 @@ class UserProfilesNotifier with ChangeNotifier {
 
   void logout(Person person, BuildContext context) async {
     await UserNotifier().signOut();
-    await BLEHandler().stopScan();
+    await BleScannerOps().stopScan();
     await UserNotifier().deleteInformationForAutoLogin();
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (contextTrans) => RootPage()),
@@ -155,8 +154,6 @@ class UserProfilesNotifier with ChangeNotifier {
               }
               await ProfileRepository().addProfile(personList[i],
                   false); // Data is already in the server do not send it
-              await BLEHandler().saveSerialNumberToSharedPreferencesForPerson(
-                  context, null, personList[i]);
               getGlucoseDataOfProfile(personList[i]);
             }
           } else {
@@ -199,8 +196,7 @@ class UserProfilesNotifier with ChangeNotifier {
       bool statusCode1 = response1.statusCode == HttpStatus.ok;
       if (statusCode1) {
         var profilesBody = jsonDecode(utf8.decode(response1.bodyBytes));
-        List datum = profilesBody["datum"];
-        PatientIdHolder().patient_id = datum[0]['id'].toString();
+        profilesBody["datum"];
       }
 
       ProfileRepository().getProfileDataByUserId(profileDataList[0].id);

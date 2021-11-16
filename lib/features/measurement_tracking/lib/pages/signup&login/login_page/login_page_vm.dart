@@ -1,18 +1,18 @@
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/user_notifiers.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/language_notifiers.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page/home_page_view.dart';
-import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_new/home_page_new.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import '../../../doctor/utils/progress/progress_dialog.dart';
+
+import '../../../core/utils/progress_dialog.dart';
 import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
+import '../../../notifiers/language_notifiers.dart';
 import '../../../services/user_service.dart';
 import '../../../widgets/consent_form_dialog/consent_form_dialog.dart';
 import '../../../widgets/gradient_dialog.dart';
+import '../../home/home_page_new/home_page_new.dart';
 import '../customwebview.dart';
 
 class LoginPageVm extends ChangeNotifier {
@@ -26,7 +26,6 @@ class LoginPageVm extends ChangeNotifier {
     checkAppleSignInVisibility();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchConsentFormState();
-      await fetchLanguageOfApp();
     });
   }
 
@@ -35,11 +34,6 @@ class LoginPageVm extends ChangeNotifier {
   fetchConsentFormState() async {
     this._clickedGeneralForm =
         await UserService().getApplicationConsentFormState();
-    notifyListeners();
-  }
-
-  fetchLanguageOfApp() async {
-    this._localeCode = await UserService().selectedLangFetcher();
     notifyListeners();
   }
 
@@ -153,12 +147,8 @@ class LoginPageVm extends ChangeNotifier {
       await Future.delayed(Duration(milliseconds: 500));
       try {
         AuthCredential credential = await UserService().googleSignInService();
-        print('fdfdf');
-
         UserCredential userCredential =
             await UserService().signInWithCredentialFirebase(credential);
-        UserService().handleCredential(userCredential.user,
-            Provider.of<UserNotifiers>(mContext, listen: false));
         hideDialog(mContext);
         navigateHome();
       } catch (e, stk) {
