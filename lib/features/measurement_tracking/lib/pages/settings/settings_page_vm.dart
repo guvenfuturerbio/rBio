@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/notifiers/language_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/language_notifiers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

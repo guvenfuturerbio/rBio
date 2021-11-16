@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/loading_dialog.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/models/ble_models/DeviceTypes.dart';
-import 'package:onedosehealth/pages/ble_device_connection/ble_reactive_singleton.dart';
-import 'package:onedosehealth/pages/ble_device_connection/mi_scale/measurement_pane.dart';
-import 'package:onedosehealth/pages/home/home_page_view_model.dart';
-import 'package:onedosehealth/widgets/utils.dart';
-import 'package:onedosehealth/widgets/utils/loading_indicator_handler.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/loading_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/ble_reactive_singleton.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/mi_scale/measurement_pane.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils/loading_indicator_handler.dart';
 import 'package:provider/provider.dart';
 
 class BleDeviceScanner extends StatefulWidget {

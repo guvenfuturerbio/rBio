@@ -1,7 +1,7 @@
-import 'package:onedosehealth/models/appointment_models/AppointmentTypeCategory.dart';
-import 'package:onedosehealth/models/appointment_models/Availability.dart';
-import 'package:onedosehealth/models/appointment_models/DoctorHospitalDepartment.dart';
-import 'package:onedosehealth/models/appointment_models/Patient.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/AppointmentTypeCategory.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/Availability.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/DoctorHospitalDepartment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/Patient.dart';
 
 class PatientAppointment {
   AppointmentTypeCategory appointmentTypeCategory;

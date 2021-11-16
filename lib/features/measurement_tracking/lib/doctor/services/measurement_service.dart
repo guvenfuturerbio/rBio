@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/models/bg_measurement.dart';
-import 'package:onedosehealth/doctor/models/blood_glucose.dart';
-import 'package:onedosehealth/doctor/models/get_my_patient_filter.dart';
-import 'package:onedosehealth/doctor/notifiers/patient_notifiers.dart';
-import 'package:onedosehealth/doctor/resources/resources.dart';
-import 'package:onedosehealth/doctor/services/patient_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/bg_measurement.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/blood_glucose.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/get_my_patient_filter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/patient_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/services/patient_service.dart';
 
 class MeasurementService {
   Color fetchMeasurementColor(

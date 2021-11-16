@@ -4,12 +4,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/models/payment/FcmPaymentResponse.dart';
-import 'package:onedosehealth/notification_handler.dart';
-import 'package:onedosehealth/pages/home/home_page/home_page_view.dart';
-import 'package:onedosehealth/pages/home/home_page_new/home_page_new.dart';
-import 'package:onedosehealth/widgets/gradient_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/FcmPaymentResponse.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notification_handler.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page/home_page_view.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_new/home_page_new.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/gradient_dialog.dart';
 
 enum Stage { ERROR, LOADING, DONE }
 

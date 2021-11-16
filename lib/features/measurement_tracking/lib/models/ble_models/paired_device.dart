@@ -1,4 +1,4 @@
-import 'package:onedosehealth/models/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/DeviceTypes.dart';
 
 class PairedDevice {
   String deviceId;

@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/database/SqlitePersistence.dart';
-import 'package:onedosehealth/database/datamodels/glucose_data.dart';
-import 'package:onedosehealth/doctor/utils/progress/progress_dialog.dart';
-import 'package:onedosehealth/models/bg_measurement/blood_glucose_value_detail_model.dart';
-import 'package:onedosehealth/models/bg_measurement/blood_glucose_value_model.dart';
-import 'package:onedosehealth/models/bg_measurement/delete_bg_measurement_request.dart';
-import 'package:onedosehealth/models/bg_measurement/update_bg_measurement_request.dart';
-import 'package:onedosehealth/notifiers/stripcount_tracker.dart';
-import 'package:onedosehealth/notifiers/user_profiles_notifier.dart';
-import 'package:onedosehealth/widgets/utils/base_provider_repository.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/SqlitePersistence.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/datamodels/glucose_data.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/progress/progress_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/blood_glucose_value_detail_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/blood_glucose_value_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/delete_bg_measurement_request.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/update_bg_measurement_request.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/stripcount_tracker.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/user_profiles_notifier.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils/base_provider_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 

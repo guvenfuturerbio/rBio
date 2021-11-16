@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/mediminder/models/hba1c_for_schedule.dart';
-import 'package:onedosehealth/mediminder/ui/homepage/hba1c_page.dart';
-import 'package:onedosehealth/mediminder/ui/homepage/hba1c_reminderlist_page_vm.dart';
-import 'package:onedosehealth/mediminder/ui/homepage/selectedremindable.dart';
-import 'package:onedosehealth/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/models/hba1c_for_schedule.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/homepage/hba1c_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/homepage/hba1c_reminderlist_page_vm.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/homepage/selectedremindable.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 import 'package:provider/provider.dart';
 
 class Hba1cReminderListPage extends StatelessWidget {

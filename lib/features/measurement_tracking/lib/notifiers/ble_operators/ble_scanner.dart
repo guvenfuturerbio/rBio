@@ -3,10 +3,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/locator.dart';
-import 'package:onedosehealth/models/ble_models/paired_device.dart';
-import 'package:onedosehealth/notifiers/ble_operators/ble_connector.dart';
-import 'package:onedosehealth/notifiers/shared_pref_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/locator.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/paired_device.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_connector.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/shared_pref_notifiers.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:system_shortcuts/system_shortcuts.dart';
 

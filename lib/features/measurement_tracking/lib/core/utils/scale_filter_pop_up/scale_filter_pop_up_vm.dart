@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/services/enum/selected_scale_type.dart';
+
+import 'package:onedosehealth/features/measurement_tracking/lib/core/services/enum/selected_scale_type.dart';
 
 class ScaleFilterPopupVm extends ChangeNotifier {
   ScaleFilterPopupVm({SelectedScaleType scaleType}) {

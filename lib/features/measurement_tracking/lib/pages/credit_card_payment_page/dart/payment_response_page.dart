@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/pages/credit_card_payment_page/dart/payment_response_page_view_model.dart';
-import 'package:onedosehealth/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/credit_card_payment_page/dart/payment_response_page_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

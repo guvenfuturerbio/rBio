@@ -4,13 +4,14 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/database/datamodels/scale_data.dart';
-import 'package:onedosehealth/database/repository/scale_repository.dart';
-import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/widgets/utils.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../../../../../../generated/l10n.dart';
+import '../../../../database/datamodels/scale_data.dart';
+import '../../../../database/repository/scale_repository.dart';
+import '../../../../widgets/utils.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
   ScaleModel scaleModel;
@@ -250,13 +251,14 @@ class ScaleTaggerVm extends ChangeNotifier {
         return;
       }
 
-      final XFile pickedFile = await picker.pickImage(source: imageSource);
+      final PickedFile pickedFile = await picker.getImage(source: imageSource);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pop();
       });
       final Directory appDir = await getApplicationDocumentsDirectory();
       final fileName = basename(pickedFile.path);
-      await pickedFile.saveTo(('${appDir.path}/$fileName'));
+      final file = File(fileName);
+      await file.copy('${appDir.path}/$fileName');
       if (pickedFile != null) {
         print(pickedFile.path);
         if (scaleModel.images.isNotEmpty) {

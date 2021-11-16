@@ -30,7 +30,7 @@ class GlucoseData extends MapConvertible {
   String deviceName;
   String deviceUUID;
   String imageURL;
-  XFile imageFile = XFile("");
+  PickedFile imageFile = PickedFile("");
   bool isDeleted;
   int userId;
   // BG

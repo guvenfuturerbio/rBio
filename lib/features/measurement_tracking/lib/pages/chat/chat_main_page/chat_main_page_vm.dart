@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/utils/progress/progress_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/progress/progress_dialog.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/notifiers/user_profiles_notifier.dart';
-import 'package:onedosehealth/pages/additional_info/additional_info_view_model.dart';
-import 'package:onedosehealth/services/user_service.dart';
-import 'package:onedosehealth/widgets/gradient_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/user_profiles_notifier.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/additional_info/additional_info_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/user_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/gradient_dialog.dart';
 
 import '../chat_person.dart';
 

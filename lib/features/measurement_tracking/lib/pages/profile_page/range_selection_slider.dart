@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:onedosehealth/database/repository/profile_repository.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/repository/profile_repository.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
 
 class RangeSelectionSlider extends StatelessWidget {
   RangeSelectionSlider(this.id);

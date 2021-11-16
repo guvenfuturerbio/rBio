@@ -17,12 +17,11 @@ class StackedAreaLineChart extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList,
+    return charts.LineChart(seriesList,
         defaultRenderer:
-        new charts.LineRendererConfig(includeArea: true, stacked: true),
+            new charts.LineRendererConfig(includeArea: true, stacked: true),
         animate: animate);
   }
 

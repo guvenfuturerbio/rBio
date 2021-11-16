@@ -1,7 +1,7 @@
 import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

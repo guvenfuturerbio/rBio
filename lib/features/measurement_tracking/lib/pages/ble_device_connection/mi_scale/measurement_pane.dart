@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/pages/ble_device_connection/ble_reactive_singleton.dart';
-import 'package:onedosehealth/pages/ble_device_connection/mi_scale/model/mi_scale_measurement.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/ble_reactive_singleton.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/mi_scale/model/mi_scale_measurement.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 
 import 'util/permissions.dart';
 

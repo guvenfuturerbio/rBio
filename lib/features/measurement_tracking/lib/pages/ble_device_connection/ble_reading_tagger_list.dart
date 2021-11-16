@@ -10,26 +10,26 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/database/SqlitePersistence.dart';
-import 'package:onedosehealth/database/datamodels/glucose_data.dart';
-import 'package:onedosehealth/database/repository/glucose_repository.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/SqlitePersistence.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/datamodels/glucose_data.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/repository/glucose_repository.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/models/bg_measurement/bg_measurement_view_model.dart';
-import 'package:onedosehealth/notifiers/bg_measurements_notifiers.dart';
-import 'package:onedosehealth/notifiers/stripcount_tracker.dart';
-import 'package:onedosehealth/pages/ble_device_connection/ble_reactive_singleton.dart';
-import 'package:onedosehealth/pages/home/home_page_view_model.dart';
-import 'package:onedosehealth/widgets/bg_measurement_list.dart';
-import 'package:onedosehealth/widgets/main_appbar.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/bg_measurement_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/bg_measurements_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/stripcount_tracker.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/ble_reactive_singleton.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/bg_measurement_list.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/main_appbar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart';
-import 'package:onedosehealth/helper/extensions/string_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/extensions/string_extension.dart';
 
 class BleReadingTaggerList extends StatefulWidget {
   @override
@@ -609,12 +609,13 @@ class _BleReadingTaggerList extends State<BleReadingTaggerList> {
       return;
     }
 
-    final XFile pickedFile = await picker.pickImage(source: imageSource);
+    final PickedFile pickedFile = await picker.getImage(source: imageSource);
     Navigator.of(context).pop();
 
     final Directory appDir = await getApplicationDocumentsDirectory();
     final fileName = basename(pickedFile.path);
-    await pickedFile.saveTo(('${appDir.path}/$fileName'));
+    final file = File(fileName);
+    await file.copy('${appDir.path}/$fileName');
     if (pickedFile != null) {
       setState(() {
         print(pickedFile.path);

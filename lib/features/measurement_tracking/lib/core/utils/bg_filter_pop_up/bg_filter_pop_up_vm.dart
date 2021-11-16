@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/widgets/utils/glucose_margins_filter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils/glucose_margins_filter.dart';
 
 class BgFilterPopUpVm extends ChangeNotifier {
   BgFilterPopUpVm({this.filters});

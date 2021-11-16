@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/database/datamodels/glucose_data.dart';
-import 'package:onedosehealth/models/bg_measurement/bg_measurement.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/datamodels/glucose_data.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/bg_measurement.dart';
 
 class BgMeasurementViewModel {
   final GlucoseData bgMeasurement;

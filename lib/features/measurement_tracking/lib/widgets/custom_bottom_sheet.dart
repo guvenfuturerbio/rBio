@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 
 class CustomBottomSheet extends StatelessWidget {

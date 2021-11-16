@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
-import 'package:onedosehealth/database/datamodels/glucose_data.dart';
-import 'package:onedosehealth/pages/ble_device_connection/ble_reading_tagger.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/datamodels/glucose_data.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/ble_reading_tagger.dart';
 
 class HomePageVm extends ChangeNotifier {
   PageController controller;

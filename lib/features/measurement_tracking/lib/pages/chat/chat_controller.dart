@@ -5,11 +5,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/locator.dart';
-import 'package:onedosehealth/models/chat/message.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/locator.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/chat/message.dart';
 import 'package:http/http.dart' as http;
-import 'package:onedosehealth/notifiers/user_profiles_notifier.dart';
-import 'package:onedosehealth/pages/chat/patient_id_holder.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/user_profiles_notifier.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/chat/patient_id_holder.dart';
 
 class ChatController with ChangeNotifier {
   UserProfilesNotifier userProfilesNotifier = locator<UserProfilesNotifier>();

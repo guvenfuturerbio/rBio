@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/services/user_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/user_service.dart';
 
 class ConsentFormDialogVm extends ChangeNotifier {
   BuildContext mContext;

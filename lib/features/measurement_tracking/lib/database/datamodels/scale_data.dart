@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/painting.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
 
 import '../../core/services/enum/selected_scale_type.dart';
 import '../../generated/l10n.dart';
@@ -91,7 +91,7 @@ class ScaleModel extends MapConvertible {
   List<String> images = [];
 
   /// When image path came we will convert and save to [imageFile]
-  List<XFile> imageFile = [];
+  List<PickedFile> imageFile = [];
 
   /// Data will use calculate BMI Body Mass etc.
   int impedance;

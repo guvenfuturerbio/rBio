@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:onedosehealth/models/payment/payment_cc.dart';
-import 'package:onedosehealth/models/payment/payment_appointment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/payment_cc.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/payment_appointment.dart';
 part 'payment.g.dart';
 
 @JsonSerializable()

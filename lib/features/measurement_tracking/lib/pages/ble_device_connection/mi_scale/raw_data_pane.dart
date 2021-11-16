@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/pages/ble_device_connection/mi_scale/util/permission.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/mi_scale/util/permission.dart';
 
 import 'mi_scale.dart';
 import 'model/mi_scale_data.dart';

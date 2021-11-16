@@ -1,5 +1,5 @@
-import 'package:onedosehealth/mediminder/models/errors.dart';
-import 'package:onedosehealth/mediminder/models/medicine_type.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/models/errors.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/models/medicine_type.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NewEntryBloc {

@@ -1,9 +1,9 @@
 /// Package import
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/doctor/models/chart_data.dart';
-import 'package:onedosehealth/doctor/pages/patient_detail_page/patient_detail_page_view_model.dart';
-import 'package:onedosehealth/doctor/resources/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/chart_data.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/pages/patient_detail_page/patient_detail_page_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 

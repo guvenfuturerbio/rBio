@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/doctor/helper/masked_text_controller.dart';
-import 'package:onedosehealth/doctor/notifiers/patient_notifiers.dart';
-import 'package:onedosehealth/doctor/resources/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/helper/masked_text_controller.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/patient_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'hypo_hyper_edit_view_model.dart';

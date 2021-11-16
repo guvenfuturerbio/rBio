@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:onedosehealth/database/repository/scale_repository.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/repository/scale_repository.dart';
 
 import '../database/datamodels/glucose_data.dart';
 import '../database/repository/glucose_repository.dart';

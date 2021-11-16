@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/utils/bg_filter_pop_up/bg_filter_pop_up_vm.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/bg_filter_pop_up/bg_filter_pop_up_vm.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils/glucose_margins_filter.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
-import 'package:onedosehealth/widgets/utils/glucose_margins_filter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
 import 'package:provider/provider.dart';
 
 class BgFilterPopUp extends StatelessWidget {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/notifiers/user_notifiers.dart';
-import 'package:onedosehealth/doctor/pages/home_page/home_page.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/pages/home/home_page/home_page_view.dart';
-import 'package:onedosehealth/pages/home/home_page_new/home_page_new.dart';
-import 'package:onedosehealth/pages/signup&login/login_page/login_page.dart';
-import 'package:onedosehealth/services/user_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/user_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/pages/home_page/home_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page/home_page_view.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_new/home_page_new.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/signup&login/login_page/login_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/user_service.dart';
 import 'package:provider/provider.dart';
 
 class SplashPageVm extends ChangeNotifier {

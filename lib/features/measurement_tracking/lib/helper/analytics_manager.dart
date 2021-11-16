@@ -1,5 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:onedosehealth/helper/events/base_event.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/events/base_event.dart';
 
 class AnalyticsManager {
   static final AnalyticsManager _instance = AnalyticsManager._internal();

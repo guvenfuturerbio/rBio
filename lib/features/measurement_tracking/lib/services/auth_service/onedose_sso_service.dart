@@ -1,5 +1,5 @@
 import 'package:chopper/chopper.dart';
-import 'package:onedosehealth/helper/build_configurations.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/build_configurations.dart';
 
 part 'onedose_sso_service.chopper.dart';
 

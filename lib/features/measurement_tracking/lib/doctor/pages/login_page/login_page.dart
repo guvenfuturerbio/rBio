@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/doctor/pages/login_page/login_page_view_model.dart';
-import 'package:onedosehealth/doctor/resources/resources.dart';
-import 'package:onedosehealth/doctor/utils/widgets.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/pages/login_page/login_page_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/widgets.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 

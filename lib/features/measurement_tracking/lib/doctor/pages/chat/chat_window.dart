@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/utils/gallery_pop_up/gallery_pop_up.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/gallery_pop_up/gallery_pop_up.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';

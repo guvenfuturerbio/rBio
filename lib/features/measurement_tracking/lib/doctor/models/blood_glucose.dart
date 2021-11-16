@@ -1,4 +1,4 @@
-import 'package:onedosehealth/doctor/models/tag.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/tag.dart';
 
 import 'blood_glucose_measurement.dart';
 import 'detail.dart';

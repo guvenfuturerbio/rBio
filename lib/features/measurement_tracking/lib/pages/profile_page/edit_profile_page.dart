@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/models/user_profiles/user_profiles.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/user_profiles/user_profiles.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 

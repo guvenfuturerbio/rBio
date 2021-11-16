@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
-import 'package:onedosehealth/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget leading;

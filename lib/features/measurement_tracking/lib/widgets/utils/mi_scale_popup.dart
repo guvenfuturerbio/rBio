@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/locator.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/locator.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/utils/loading/progress_circle.dart';

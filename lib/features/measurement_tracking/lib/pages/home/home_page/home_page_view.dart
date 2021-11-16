@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import 'package:onedosehealth/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:onedosehealth/widgets/custom_bar_pie.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_bar_pie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../extension/size_extension.dart';

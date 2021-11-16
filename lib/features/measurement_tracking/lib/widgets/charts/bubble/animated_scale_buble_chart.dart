@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/types/unit.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/types/unit.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

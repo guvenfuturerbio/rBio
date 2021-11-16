@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onedosehealth/mediminder/ui/medicine_selection/scheduled_page/scheduled_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/medicine_selection/scheduled_page/scheduled_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../generated/l10n.dart';

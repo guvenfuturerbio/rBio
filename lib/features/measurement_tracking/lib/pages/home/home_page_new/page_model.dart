@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:onedosehealth/pages/progress_pages/progress_page_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/progress_pages/progress_page_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePageModel<K extends ProgressPage> {

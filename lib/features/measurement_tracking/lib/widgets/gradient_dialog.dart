@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
 
 class GradientDialog extends StatefulWidget {
   GradientDialog(this.title, this.text);

@@ -1,4 +1,4 @@
-import 'package:onedosehealth/models/payment/payment_response_datum.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/payment_response_datum.dart';
 
 class PaymentResponse {
   bool isSuccessful;

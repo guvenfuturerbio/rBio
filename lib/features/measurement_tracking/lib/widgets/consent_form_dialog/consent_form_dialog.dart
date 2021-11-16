@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/resources/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 

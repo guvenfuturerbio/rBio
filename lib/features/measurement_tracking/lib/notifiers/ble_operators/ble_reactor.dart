@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get/get.dart';
-import 'package:onedosehealth/core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
 
 import '../../database/datamodels/glucose_data.dart';
 import '../../database/repository/glucose_repository.dart';

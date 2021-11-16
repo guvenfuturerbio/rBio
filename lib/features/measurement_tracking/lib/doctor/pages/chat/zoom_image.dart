@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/pages/chat/chat_window.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/pages/chat/chat_window.dart';
 
 class ZoomImage extends StatelessWidget {
   final String url;

@@ -7,7 +7,7 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
-import 'package:onedosehealth/pages/home/home_page_new/home_page_new.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_new/home_page_new.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 

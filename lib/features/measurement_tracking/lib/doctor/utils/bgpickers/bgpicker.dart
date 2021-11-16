@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:onedosehealth/doctor/notifiers/patient_notifiers.dart';
-import 'package:onedosehealth/doctor/utils/bgpickers/bgpicker_vm.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/patient_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/bgpickers/bgpicker_vm.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
 import 'package:provider/provider.dart';
 
 class TargetPicker extends StatelessWidget {

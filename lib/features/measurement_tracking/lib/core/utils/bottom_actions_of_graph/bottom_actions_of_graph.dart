@@ -1,9 +1,9 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
 
 class BottomActionsOfGraph extends StatelessWidget {
   const BottomActionsOfGraph({

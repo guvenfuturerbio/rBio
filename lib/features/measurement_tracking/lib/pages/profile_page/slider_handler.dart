@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:onedosehealth/locator.dart';
-import 'package:onedosehealth/models/user_profiles/user_profiles.dart';
-import 'package:onedosehealth/notifiers/user_profiles_notifier.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/locator.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/user_profiles/user_profiles.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/user_profiles_notifier.dart';
 
 class SliderHandler with ChangeNotifier {
   UserProfilesNotifier _userRepository = locator<UserProfilesNotifier>();

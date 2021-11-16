@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:onedosehealth/core/utils/stepper/stepper.dart' as core;
-import 'package:onedosehealth/helper/strings.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/core/utils/stepper/stepper.dart' as core;
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/strings.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';

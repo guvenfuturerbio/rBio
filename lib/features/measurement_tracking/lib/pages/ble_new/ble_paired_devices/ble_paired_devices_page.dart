@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
-import 'package:onedosehealth/models/ble_models/paired_device.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/paired_device.dart';
 import 'package:provider/provider.dart';
 
 import '../../../generated/l10n.dart';

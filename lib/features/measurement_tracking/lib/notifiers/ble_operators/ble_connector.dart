@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/locator.dart';
-import 'package:onedosehealth/models/ble_models/DeviceTypes.dart';
-import 'package:onedosehealth/notifiers/ble_operators/ble_reactor.dart';
-import 'package:onedosehealth/notifiers/ble_operators/ble_scanner.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/locator.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_reactor.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_scanner.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 import 'package:provider/provider.dart';
 
 class BleConnectorOps extends ChangeNotifier {

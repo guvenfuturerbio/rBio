@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/models/appointment_models/Appointment.dart';
-import 'package:onedosehealth/models/appointment_models/doctor.dart';
-import 'package:onedosehealth/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/Appointment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/doctor.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 import 'appointment_page_view_model.dart';
 
@@ -21,7 +20,6 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
-  CalendarController _calendarController = CalendarController();
   Doctor doctor;
   @override
   void initState() {
@@ -88,35 +86,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        child:
-                            /* Stack(
-                          children: <Widget>[
-                            Container(
-                              height: 90,
-                              margin: EdgeInsets.only(bottom: 10),
-                              decoration: BoxDecoration(
-                                  color: R.btnDarkBlue,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      topRight: Radius.circular(12))),
-                            ),
-                            calendarCollapse(
-                                context: context,
-                                calendarController: _calendarController,
-                                selectedDate: DateTime.parse(value.date),
-                                daySelected: (date, events, holidays) {
-                                  value.setDate(date.toString());
-                                })
-                          ],
-                        ), */
-                            calendarCollapse(
-                          context: context,
-                          calendarController: _calendarController,
-                          selectedDate: DateTime.parse(value.date),
-                          daySelected: (date, events, holidays) {
-                            value.setDate(date.toString());
-                          },
-                        ),
+                        child: SizedBox(),
                       ),
                     ),
                     value.stage == Stage.LOADING
@@ -148,15 +118,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                                       .closestAppointments[0]
                                                       .date)),
                                               selected: (date) {
-                                                _calendarController
-                                                    .setSelectedDay(
-                                                        DateTime.parse(value
-                                                            .closestAppointments[
-                                                                0]
-                                                            .date));
-                                                value.setDate(value
-                                                    .closestAppointments[0]
-                                                    .date);
+                                                
                                               }),
                                         ],
                                       )

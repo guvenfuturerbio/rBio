@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/helper/build_configurations.dart';
-import 'package:onedosehealth/services/auth_service/login_response.dart';
-import 'package:onedosehealth/services/auth_service/onedose_sso_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/build_configurations.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/auth_service/login_response.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/auth_service/onedose_sso_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewModel with ChangeNotifier {

@@ -1,8 +1,8 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/pages/progress_pages/scale_progress_page/scale_progress_page.dart';
-import 'package:onedosehealth/widgets/charts/bubble/small_bubble/small_scale_scatter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/progress_pages/scale_progress_page/scale_progress_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/charts/bubble/small_bubble/small_scale_scatter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../core/services/enum/selected_scale_type.dart';

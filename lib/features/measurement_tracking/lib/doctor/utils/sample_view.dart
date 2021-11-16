@@ -1,6 +1,6 @@
 /// Package import
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/utils/sample_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/sample_model.dart';
 
 /// Base class of the sample's stateful widget class
 abstract class SampleView extends StatefulWidget {

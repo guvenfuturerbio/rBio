@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/paired_device.dart';
-import 'package:onedosehealth/locator.dart';
-import 'package:onedosehealth/models/ble_models/paired_device.dart';
-import 'package:onedosehealth/notifiers/ble_operators/ble_connector.dart';
-import 'package:onedosehealth/notifiers/ble_operators/ble_scanner.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/locator.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/paired_device.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_connector.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/ble_operators/ble_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefNotifiers extends ChangeNotifier {

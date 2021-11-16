@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 /// Package import
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/widgets/charts/sample_view.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/charts/sample_view.dart';
 
 /// Chart import
 import 'package:syncfusion_flutter_charts/charts.dart';

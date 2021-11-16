@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:onedosehealth/doctor/helper/jwt_token_parser.dart';
-import 'package:onedosehealth/doctor/models/appointment.dart';
-import 'package:onedosehealth/doctor/models/appointment_filter.dart';
-import 'package:onedosehealth/doctor/notifiers/user_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/helper/jwt_token_parser.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/appointment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/appointment_filter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/user_notifiers.dart';
 
 import 'api_service.dart';
 

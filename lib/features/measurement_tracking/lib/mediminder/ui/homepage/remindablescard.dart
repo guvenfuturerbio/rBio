@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
 
 import '../medicine_selection/scheduled_page/scheduled_page.dart';
 import 'hba1c_reminderlist_page.dart';

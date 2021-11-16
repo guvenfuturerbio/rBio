@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:onedosehealth/types/unit.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/types/unit.dart';
 
 import '../../core/services/enum/selected_scale_type.dart';
 import '../../database/datamodels/scale_data.dart';

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_reactive_ble/src/model/discovered_device.dart';
-import 'package:onedosehealth/models/ble_models/paired_device.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/paired_device.dart';
 
 import '../../database/datamodels/scale_data.dart';
 import '../../types/unit.dart';

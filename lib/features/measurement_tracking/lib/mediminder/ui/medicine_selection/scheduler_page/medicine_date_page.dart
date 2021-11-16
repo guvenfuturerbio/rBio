@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
-import 'package:onedosehealth/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../generated/l10n.dart';

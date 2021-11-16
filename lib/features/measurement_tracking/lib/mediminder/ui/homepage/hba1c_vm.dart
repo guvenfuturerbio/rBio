@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onedosehealth/doctor/utils/progress/progress_dialog.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/mediminder/models/hba1c_for_schedule.dart';
-import 'package:onedosehealth/mediminder/ui/homepage/hba1c_reminderlist_page.dart';
-import 'package:onedosehealth/mediminder/ui/homepage/hba1c_reminderlist_page_vm.dart';
-import 'package:onedosehealth/mediminder/ui/homepage/selectedremindable.dart';
-import 'package:onedosehealth/mediminder/ui/homepage/timezone.dart';
-import 'package:onedosehealth/models/sharedpref.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/progress/progress_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/models/hba1c_for_schedule.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/homepage/hba1c_reminderlist_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/homepage/hba1c_reminderlist_page_vm.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/homepage/selectedremindable.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/ui/homepage/timezone.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/sharedpref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 

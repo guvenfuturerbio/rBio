@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:onedosehealth/models/bg_measurement/blood_glucose_value_detail_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/blood_glucose_value_detail_model.dart';
 part 'blood_glucose_value_model.g.dart';
 
 @JsonSerializable()

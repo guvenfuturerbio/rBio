@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/models/firebase/add_firebase_body.dart';
-import 'package:onedosehealth/models/notification/notification_body_model.dart';
-import 'package:onedosehealth/notification_handler.dart';
-import 'package:onedosehealth/notifiers/user_profiles_notifier.dart';
-import 'package:onedosehealth/widgets/utils/base_provider_repository.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/firebase/add_firebase_body.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/notification/notification_body_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notification_handler.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/user_profiles_notifier.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils/base_provider_repository.dart';
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
   print("myBackgroundMessageHandler " + message.toString());

@@ -12,7 +12,6 @@ class UserNotifier extends ChangeNotifier {
     final widgetsBinding = WidgetsBinding.instance;
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) async {
-        // TODO: Örnek kullanıcı ile giriş yapıyoruz.
         try {
           username = '18620716416';
           password = 'Numlock1234!!';

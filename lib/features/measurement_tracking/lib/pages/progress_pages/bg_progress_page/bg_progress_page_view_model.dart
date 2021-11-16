@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/pages/home/home_page/home_page_view.dart';
-import 'package:onedosehealth/pages/progress_pages/bg_progress_page/bg_progress_page.dart';
-import 'package:onedosehealth/widgets/charts/bubble/small_bubble/small_glucose_scatter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page/home_page_view.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/progress_pages/bg_progress_page/bg_progress_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/charts/bubble/small_bubble/small_glucose_scatter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../core/utils/bg_filter_pop_up/bg_filter_pop_up.dart';

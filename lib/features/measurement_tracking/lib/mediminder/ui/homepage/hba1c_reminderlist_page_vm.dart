@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onedosehealth/mediminder/models/hba1c_for_schedule.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/mediminder/models/hba1c_for_schedule.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Hba1cListPageVm extends ChangeNotifier {

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/loading_dialog.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/models/appointment_models/Appointment.dart';
-import 'package:onedosehealth/models/appointment_models/doctor.dart';
-import 'package:onedosehealth/models/payment/payment.dart';
-import 'package:onedosehealth/models/payment/payment_appointment.dart';
-import 'package:onedosehealth/models/payment/payment_cc.dart';
-import 'package:onedosehealth/models/payment/payment_response.dart';
-import 'package:onedosehealth/notifiers/user_profiles_notifier.dart';
-import 'package:onedosehealth/services/appointment_service.dart';
-import 'package:onedosehealth/widgets/gradient_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/loading_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/Appointment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/appointment_models/doctor.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/payment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/payment_appointment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/payment_cc.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/payment/payment_response.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/user_profiles_notifier.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/appointment_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/gradient_dialog.dart';
 
 enum Stage { ERROR, LOADING, DONE }
 

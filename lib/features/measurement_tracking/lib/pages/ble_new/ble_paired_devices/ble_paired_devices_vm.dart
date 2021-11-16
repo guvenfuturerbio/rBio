@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/models/ble_models/DeviceTypes.dart';
-import 'package:onedosehealth/models/ble_models/paired_device.dart';
-import 'package:onedosehealth/notifiers/shared_pref_notifiers.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/paired_device.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/shared_pref_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 import 'package:path/path.dart';
 
 class PairedDevicesVm extends ChangeNotifier {

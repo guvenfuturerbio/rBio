@@ -1,5 +1,5 @@
-import 'package:onedosehealth/doctor/models/patient_for_appointment.dart';
-import 'package:onedosehealth/doctor/models/zoom.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/patient_for_appointment.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/zoom.dart';
 
 import 'availability.dart';
 import 'doctor_hospital_department.dart';

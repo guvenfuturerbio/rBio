@@ -217,30 +217,34 @@ class _NewEntryState extends State<NewEntry> {
                       if (dosageController.text != "") {
                         dosage = int.parse(dosageController.text);
                       }
-                      for (var medicine in _globalBloc.medicineList$.value) {
+                      for (var medicine
+                          in _globalBloc.medicineList$.valueWrapper.value) {
                         if (medicineName == medicine.medicineName) {
                           _newEntryBloc.submitError(EntryError.NameDuplicate);
                           return;
                         }
                       }
-                      if (_newEntryBloc.selectedInterval$.value == 0) {
+                      if (_newEntryBloc.selectedInterval$.valueWrapper.value ==
+                          0) {
                         _newEntryBloc.submitError(EntryError.Interval);
                         return;
                       }
-                      if (_newEntryBloc.selectedTimeOfDay$.value == "None") {
+                      if (_newEntryBloc.selectedTimeOfDay$.valueWrapper.value ==
+                          "None") {
                         _newEntryBloc.submitError(EntryError.StartTime);
                         return;
                       }
                       //---------------------------------------------------------
                       String medicineType = _newEntryBloc
-                          .selectedMedicineType.value
+                          .selectedMedicineType.valueWrapper.value
                           .toString()
                           .substring(13);
-                      int interval = _newEntryBloc.selectedInterval$.value;
-                      String startTime = _newEntryBloc.selectedTimeOfDay$.value;
+                      int interval =
+                          _newEntryBloc.selectedInterval$.valueWrapper.value;
+                      String startTime = _newEntryBloc.selectedTimeOfDay$.valueWrapper.value;
 
                       List<int> intIDs =
-                          makeIDs(24 / _newEntryBloc.selectedInterval$.value);
+                          makeIDs(24 / _newEntryBloc.selectedInterval$.valueWrapper.value);
                       List<String> notificationIDs = intIDs
                           .map((i) => i.toString())
                           .toList(); //for Shared preference

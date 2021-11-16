@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:onedosehealth/database/repository/glucose_repository.dart';
-import 'package:onedosehealth/models/bg_measurement/bg_measurement_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/database/repository/glucose_repository.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/bg_measurement/bg_measurement_view_model.dart';
 
 class HomePageViewModel extends ChangeNotifier {
   List<BgMeasurementViewModel> bgMeasurements =

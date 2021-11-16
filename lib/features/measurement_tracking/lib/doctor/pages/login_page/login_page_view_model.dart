@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/notifiers/user_notifiers.dart';
-import 'package:onedosehealth/doctor/resources/resources.dart';
-import 'package:onedosehealth/doctor/services/network_connection_checker.dart';
-import 'package:onedosehealth/doctor/services/user_service.dart';
-import 'package:onedosehealth/doctor/utils/gradient_dialog.dart';
-import 'package:onedosehealth/doctor/utils/progress/progress_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/notifiers/user_notifiers.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/resources/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/services/network_connection_checker.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/services/user_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/gradient_dialog.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/utils/progress/progress_dialog.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 

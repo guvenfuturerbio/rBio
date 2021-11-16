@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/widgets/charts/sample_view.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/charts/sample_view.dart';
 
 /// Chart import
 import 'package:syncfusion_flutter_charts/charts.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/doctor/models/get_my_patient_filter.dart';
-import 'package:onedosehealth/doctor/models/patient.dart';
-import 'package:onedosehealth/doctor/models/patientDetail.dart';
-import 'package:onedosehealth/doctor/models/update_my_patient_limit.dart';
-import 'package:onedosehealth/doctor/services/patient_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/get_my_patient_filter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/patient.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/patientDetail.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/models/update_my_patient_limit.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/doctor/services/patient_service.dart';
 
 class PatientNotifiers extends ChangeNotifier {
   PatientDetail _patientDetail;

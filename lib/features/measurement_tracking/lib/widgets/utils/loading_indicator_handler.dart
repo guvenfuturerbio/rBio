@@ -1,7 +1,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/widgets/loading_page.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/loading_page.dart';
 
 enum PageState { LOADING, IDLE }
 

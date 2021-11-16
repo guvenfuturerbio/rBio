@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../extension/size_extension.dart';

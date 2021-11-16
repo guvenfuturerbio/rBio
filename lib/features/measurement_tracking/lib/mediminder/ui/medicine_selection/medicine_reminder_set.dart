@@ -380,7 +380,7 @@ class _NewEntryState extends State<MedicineReminderSet> {
       dosage = widget.doseCount;
     }
 
-    for (var medicine in _globalBloc.medicineList$.value) {
+    for (var medicine in _globalBloc.medicineList$.valueWrapper.value) {
       if (medicineName == medicine.medicineName) {
         _newEntryBloc.submitError(EntryError.NameDuplicate);
         return;

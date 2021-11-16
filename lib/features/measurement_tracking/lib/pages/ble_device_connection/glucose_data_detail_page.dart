@@ -630,12 +630,13 @@ class _GlucoseDataDetailPage extends State<GlucoseDataDetailPage> {
       return;
     }
 
-    final XFile pickedFile = await picker.pickImage(source: imageSource);
+    final PickedFile pickedFile = await picker.getImage(source: imageSource);
     Navigator.of(context).pop();
 
     final Directory appDir = await getApplicationDocumentsDirectory();
     final fileName = basename(pickedFile.path);
-    await pickedFile.saveTo(('${appDir.path}/$fileName'));
+    final file = File(fileName);
+    await file.copy('${appDir.path}/$fileName');
     if (pickedFile != null) {
       setState(() {
         print(pickedFile.path);

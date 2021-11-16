@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/notifiers/notification_handler_new.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/notifiers/notification_handler_new.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';

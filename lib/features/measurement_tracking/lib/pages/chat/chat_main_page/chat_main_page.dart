@@ -1,17 +1,17 @@
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/extension/size_extension.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/extension/size_extension.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/pages/additional_info/additional_info_view_model.dart';
-import 'package:onedosehealth/pages/chat/chat_main_page/chat_main_page_vm.dart';
-import 'package:onedosehealth/pages/chat/chat_person.dart';
-import 'package:onedosehealth/pages/chat/chat_window.dart';
-import 'package:onedosehealth/pages/chat/chat_controller.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/additional_info/additional_info_view_model.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/chat/chat_main_page/chat_main_page_vm.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/chat/chat_person.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/chat/chat_window.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/chat/chat_controller.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:onedosehealth/widgets/utils.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/widgets/utils.dart';
 import 'package:provider/provider.dart';
 
 /// MG15 - Message history of all doctors with patient's post history is shown on this page

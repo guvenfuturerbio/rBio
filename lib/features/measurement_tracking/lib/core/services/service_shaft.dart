@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'model/empty_model.dart';
 
-import 'package:onedosehealth/services/model_converter.dart';
-import 'package:onedosehealth/services/network_connection_service.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/model_converter.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/services/network_connection_service.dart';
 
 part 'service_manager.dart';
 

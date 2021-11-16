@@ -10,7 +10,6 @@ import '../../../pages/signup&login/login_page/login_page.dart';
 import '../../../widgets/custom_app_bar/custom_app_bar.dart';
 import '../../notifiers/user_notifiers.dart';
 import '../../utils/widgets.dart';
-import '../appointment_page/appointment_page.dart';
 import '../patients_page/patient_page.dart';
 import 'home_page_view_model.dart';
 
@@ -97,7 +96,7 @@ class _DoctorHomePage extends State<DoctorHomePage> {
 
   Widget bodyPageView(BuildContext context) => PageView(
         physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[AppointmentPage(), PatientPage()],
+        children: <Widget>[Container(), PatientPage()],
         controller: pageController,
       );
 }

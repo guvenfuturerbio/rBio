@@ -84,13 +84,14 @@ class BgTaggerVm extends ChangeNotifier {
         return;
       }
 
-      final XFile pickedFile = await picker.pickImage(source: imageSource);
+      final PickedFile pickedFile = await picker.getImage(source: imageSource);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         Navigator.of(context).pop();
       });
       final Directory appDir = await getApplicationDocumentsDirectory();
       final fileName = basename(pickedFile.path);
-      await pickedFile.saveTo(('${appDir.path}/$fileName'));
+      final file = File(fileName);
+      await file.copy('${appDir.path}/$fileName');
       if (pickedFile != null) {
         changePic(pickedFile, fileName);
       } else {
@@ -102,7 +103,7 @@ class BgTaggerVm extends ChangeNotifier {
     }
   }
 
-  changePic(XFile file, String fileName) {
+  changePic(PickedFile file, String fileName) {
     data.imageFile = file;
     data.imageURL = fileName;
   }

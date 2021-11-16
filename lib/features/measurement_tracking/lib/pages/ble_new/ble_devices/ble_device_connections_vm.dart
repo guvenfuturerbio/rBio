@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:onedosehealth/generated/l10n.dart';
-import 'package:onedosehealth/helper/resources.dart';
-import 'package:onedosehealth/models/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/helper/resources.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/models/ble_models/DeviceTypes.dart';
 
 class DeviceConnectionsVm extends ChangeNotifier {
   List<DeviceConnectionType> _deviceConnectionTypes;

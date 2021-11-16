@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/pages/home/home_page_new/home_page_new.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/home/home_page_new/home_page_new.dart';
 import 'package:provider/provider.dart';
 
 import '../../../doctor/notifiers/user_notifiers.dart';

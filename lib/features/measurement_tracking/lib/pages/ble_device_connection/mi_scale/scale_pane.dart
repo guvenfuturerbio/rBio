@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/pages/ble_device_connection/mi_scale/raw_data_pane.dart';
-import 'package:onedosehealth/pages/ble_device_connection/mi_scale/scanning_pane.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/mi_scale/raw_data_pane.dart';
+import 'package:onedosehealth/features/measurement_tracking/lib/pages/ble_device_connection/mi_scale/scanning_pane.dart';
 
 import 'measurement_pane.dart';
 
