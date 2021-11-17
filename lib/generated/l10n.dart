@@ -3724,6 +3724,76 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Friday`
+  String get weekdays_friday {
+    return Intl.message(
+      'Friday',
+      name: 'weekdays_friday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monday`
+  String get weekdays_monday {
+    return Intl.message(
+      'Monday',
+      name: 'weekdays_monday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saturday`
+  String get weekdays_saturday {
+    return Intl.message(
+      'Saturday',
+      name: 'weekdays_saturday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sunday`
+  String get weekdays_sunday {
+    return Intl.message(
+      'Sunday',
+      name: 'weekdays_sunday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thursday`
+  String get weekdays_thursday {
+    return Intl.message(
+      'Thursday',
+      name: 'weekdays_thursday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tuesday`
+  String get weekdays_tuesday {
+    return Intl.message(
+      'Tuesday',
+      name: 'weekdays_tuesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wednesday`
+  String get weekdays_wednesday {
+    return Intl.message(
+      'Wednesday',
+      name: 'weekdays_wednesday',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

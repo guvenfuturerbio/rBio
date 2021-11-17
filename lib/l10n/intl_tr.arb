@@ -362,5 +362,12 @@
   "which_depart_i_go" : "Hangi bölüme gideceğimi bilmiyorum",
   "depart_analyse" : "Bölüm analizi",
   "pls_select" : "Seçiniz",
-  "update_information" : "Bilgilerini Güncelle"
+  "update_information" : "Bilgilerini Güncelle",
+  "weekdays_friday": "Cuma",
+	"weekdays_monday": "Pazartesi",
+	"weekdays_saturday": "Cumartesi",
+	"weekdays_sunday": "Pazar",
+	"weekdays_thursday": "Perşembe",
+	"weekdays_tuesday": "Salı",
+	"weekdays_wednesday": "Çarşamba"
 }

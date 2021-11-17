@@ -367,5 +367,12 @@
   "which_depart_i_go" : "I don't know which department to go to",
   "depart_analyse" : "Department analyze",
   "pls_select" : "Choose",
-  "update_information" : "Update Information"
+  "update_information" : "Update Information",
+  "weekdays_friday": "Friday",
+	"weekdays_monday": "Monday",
+	"weekdays_saturday": "Saturday",
+	"weekdays_sunday": "Sunday",
+	"weekdays_thursday": "Thursday",
+	"weekdays_tuesday": "Tuesday",
+	"weekdays_wednesday": "Wednesday"
 }
