@@ -7,7 +7,7 @@ import 'notifiers/ble_operators/ble_scanner.dart';
 import 'notifiers/shared_pref_notifiers.dart';
 import 'notifiers/user_notifier.dart';
 import 'notifiers/user_profiles_notifier.dart';
-import 'services/auth_service/login_view_model.dart';
+import 'notifiers/login_view_model.dart';
 
 GetIt locator = GetIt.I; // GetIt.I -  GetIt.instance - nin kisaltmasidir
 

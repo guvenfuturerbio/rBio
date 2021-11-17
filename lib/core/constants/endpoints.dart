@@ -168,6 +168,8 @@ class _Endpoints {
           .xCronicTracking;
   String ct_getMedicineByFilter(String text) =>
       '/Medicine/get-by-filter/${text}'.xCronicTracking;
+  String ct_login = '/auth/realms/GuvenComplex/protocol/openid-connect/token'
+      .xCronicTrackingSSO;
 }
 
 extension _EndpointsExtension on String {
@@ -181,4 +183,6 @@ extension _EndpointsExtension on String {
       SecretUtils.instance.get(SecretKeys.SYMPTOM_REQUEST_URL) + this;
   String get xCronicTracking =>
       SecretUtils.instance.get(SecretKeys.CHRONIC_TRACKING_BASE_URL) + this;
+  String get xCronicTrackingSSO =>
+      SecretUtils.instance.get(SecretKeys.CHRONIC_SSO_URL) + this;
 }

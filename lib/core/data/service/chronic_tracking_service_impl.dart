@@ -11,6 +11,28 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       });
 
   @override
+  Future<LoginResponse> login(
+      {String clientId,
+      String grantType,
+      String clientSecret,
+      String scope,
+      String username,
+      String password}) async {
+    final response = await helper.dioPost(
+      R.endpoints.ct_login,
+      <String, dynamic>{
+        'client_id': clientId,
+        'grant_type': grantType,
+        'client_secret': clientSecret,
+        'scope': scope,
+        'username': username,
+        'password': password
+      },
+    );
+    return LoginResponse.fromJson(response);
+  }
+
+  @override
   Future<GuvenResponseModel> saveAndRetrieveToken(
       SaveAndRetrieveTokenModel saveAndRetrieveToken) async {
     final response = await helper.postGuven(

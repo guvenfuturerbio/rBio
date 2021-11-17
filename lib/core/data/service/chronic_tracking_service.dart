@@ -4,6 +4,13 @@ abstract class ChronicTrackingApiService {
   final IDioHelper helper;
   ChronicTrackingApiService(this.helper);
 
+  Future<LoginResponse> login(
+      {String clientId,
+      String grantType,
+      String clientSecret,
+      String scope,
+      String username,
+      String password});
   Future<GuvenResponseModel> saveAndRetrieveToken(
       SaveAndRetrieveTokenModel saveAndRetrieveToken);
   Future<StripDetailModel> getUserStrip(entegrationId, deviceUUID);

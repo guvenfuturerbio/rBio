@@ -38,7 +38,7 @@ import 'pages/signup&login/email_login_page/email_login_page.dart';
 import 'pages/signup&login/login_page/login_page.dart';
 import 'pages/signup&login/signup_page/signup_page.dart';
 import 'pages/splash/splash_page.dart';
-import 'services/auth_service/login_view_model.dart';
+import 'notifiers/login_view_model.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,

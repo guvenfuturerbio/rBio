@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../core/utils/progress_dialog.dart';
 import '../locator.dart';
 import '../models/user/usermodel.dart';
-import '../services/auth_service/login_view_model.dart';
+import 'login_view_model.dart';
 import 'shared_preferences_handler.dart';
 
 enum ViewState { Idle, Busy }

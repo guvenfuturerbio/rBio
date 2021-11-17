@@ -13,6 +13,7 @@ enum SecretKeys {
   SYMPTOM_CHECKER_LOGIN,
   SYMPTOM_REQUEST_URL,
   CHRONIC_TRACKING_BASE_URL,
+  CHRONIC_SSO_URL,
 }
 
 extension SecretKeysStringExt on String {
