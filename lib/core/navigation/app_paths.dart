@@ -1,4 +1,3 @@
-import 'package:onedosehealth/features/measurement_tracking/home/view/mt_home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -19,6 +18,7 @@ import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
 import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
+import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/profile/devices/view/devices_screen.dart';
 import '../../features/profile/devices/viewmodel/devices_vm.dart';

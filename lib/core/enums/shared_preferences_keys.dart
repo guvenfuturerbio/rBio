@@ -18,6 +18,7 @@ enum SharedPreferencesKeys {
   DELETED_WIDGETS,
   WIDGET_QUERY,
   SYMPTOM_AUTH_TOKEN,
+  CT_AUTH_TOKEN,
 }
 
 extension SharedPreferencesKeysStringExt on String {
