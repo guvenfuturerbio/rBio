@@ -1,3 +1,11 @@
+import 'package:onedosehealth/features/profile/personal_information/view/personal_information_screen.dart';
+import 'package:onedosehealth/features/profile/request_suggestions/view/request_suggestions_screen.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
+import 'package:onedosehealth/features/take_appointment/create_online_appointment/view/create_online_appointment_screen.dart';
+import 'package:onedosehealth/features/take_appointment/create_online_appointment/viewmodel/create_online_appointment_screen_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -7,7 +15,6 @@ import '../../features/account/all_files/all_files_screen.dart';
 import '../../features/account/change_password/change_password_screen.dart';
 import '../../features/account/followers/view/followers_screen.dart';
 import '../../features/account/full_image_viewer_screen.dart';
-import '../../features/account/personal_information/personal_information_screen.dart';
 import '../../features/account/profile_image_viewer_screen.dart';
 import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
 import '../../features/account/youtube/youtube_viewer_web_screen.dart';
@@ -37,7 +44,6 @@ import '../../features/store/for_you_order_summary/order_summary.dart';
 import '../../features/store/for_you_sub_categories/for_you_sub_categories_screen.dart';
 import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
 import '../../features/store/shopping_cart/shopping_cart_screen.dart';
-import '../../features/symptom_checker/body_location/symptoms_body_locations_screen.dart';
 import '../../features/symptom_checker/home/view/symptoms_home_screen.dart';
 import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_events_screen.dart';
@@ -282,6 +288,34 @@ class VRouterRoutes {
       widget: SymptomsBodyLocationsScreen(),
     ),
 
+    VWidget(
+      path: PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
+      widget: BodySubLocationsPage(),
+    ),
+
+    VWidget(
+      path: PagePaths.SYMPTOM_SELECT_PAGE,
+      widget: BodySymptomsSelectionPage(),
+    ),
+
+    VWidget(
+      path: PagePaths.SYMPTOM_RESULT_PAGE,
+      widget: SymptomsResultPage(),
+    ),
+
+    VWidget(
+      path: PagePaths.CREATE_ONLINE_APPO,
+      widget: ChangeNotifierProvider<CreateOnlineAppointmentVm>(
+        create: (context) => CreateOnlineAppointmentVm(),
+        child: CreateOnlineAppointmentScreen(),
+      ),
+    ),
+
+    VWidget(
+      path: PagePaths.SUGGEST_REQUEST,
+      widget: RequestSuggestionsScreen(),
+    ),
+
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -301,6 +335,7 @@ class PagePaths {
   static const DEVICES = '/devices';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
+  static const CREATE_ONLINE_APPO = '/create-online-appointment';
 
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';
@@ -337,6 +372,7 @@ class PagePaths {
   static const FULLIMAGEVIEWER = '/full-image-viewer';
   static const FULLPDFVIEWER = '/full-pdf-viewer';
   static const WEBCONFERANCE = '/web-conferance';
+  static const SUGGEST_REQUEST = '/suggest-request';
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
@@ -344,4 +380,7 @@ class PagePaths {
   // Symptom Checker
   static const SYMPTOM_MAIN_MENU = '/symptom-main';
   static const SYMPTOM_BODY_LOCATIONS = '/symptom-body-locations';
+  static const SYMPTOM_SUB_BODY_LOCATIONS = '/symptom-sub-body-locations';
+  static const SYMPTOM_SELECT_PAGE = '/symptom-selection-page';
+  static const SYMPTOM_RESULT_PAGE = '/symptom-result-page';
 }

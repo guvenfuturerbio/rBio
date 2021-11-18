@@ -6,6 +6,13 @@ extension BuildContextThemeExtensions on BuildContext {
   MediaQueryData get xMediaQuery => MediaQuery.of(this);
   Color get xAccentColor => Theme.of(this).colorScheme.secondary;
 
+  // #region Size Extension
+  double get HEIGHT => MediaQuery.of(this).size.height;
+  double get WIDTH => MediaQuery.of(this).size.width;
+  double get TEXTSCALE => MediaQuery.of(this).textScaleFactor;
+  double get ASPECTRATIO => MediaQuery.of(this).size.aspectRatio;
+  // #endregion
+
   // #region Text Theme
   TextTheme get xTextTheme => Theme.of(this).textTheme;
   TextStyle get xHeadline1 => Theme.of(this).textTheme.headline1 ?? TextStyle();

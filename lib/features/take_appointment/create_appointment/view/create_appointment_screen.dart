@@ -132,37 +132,50 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                   ),
 
                   //
-                  Spacer(flex: 3),
-
-                  //
-                  Center(
-                    child: Text(
-                      "Hangi bölüme gideceğimiz bilmiyorum",
-                      style: context.xHeadline5,
-                    ),
-                  ),
-
-                  //
                   Expanded(
-                    child: SizedBox(
-                      height: Atom.height * .05,
-                      child: Center(
-                        child: RbioElevatedButton(
-                          onTap: val.departmentSelected &&
-                                  val.hospitalSelected &&
-                                  val.doctorSelected
-                              ? () {
-                                  Atom.to(PagePaths.CREATE_APPOINTMENT_EVENTS);
-                                }
-                              : null,
-                          title: "Bölüm Analizi",
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Visibility(
+                              visible: val.doctorSelected,
+                              child: Center(
+                                  child: RbioElevatedButton(
+                                      title: LocaleProvider.current.create_appo,
+                                      onTap: () {
+                                        Atom.to(PagePaths
+                                            .CREATE_APPOINTMENT_EVENTS);
+                                      }))),
                         ),
-                      ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 5.0),
+                                child: Center(
+                                  child: Text(
+                                    LocaleProvider.current.which_depart_i_go,
+                                    style: context.xHeadline3,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: Atom.height * .05,
+                                child: Center(
+                                  child: RbioElevatedButton(
+                                      onTap: () {
+                                        Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
+                                      },
+                                      title: LocaleProvider
+                                          .current.depart_analyse),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-
-                  //
-                  Spacer(),
                 ],
               );
 

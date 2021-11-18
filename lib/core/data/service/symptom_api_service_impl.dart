@@ -68,7 +68,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
       String language) async {
     try {
       final response = await helper.dioGet(
-        R.endpoints.symptomGetProposed,
+        R.endpoints.symptomGetSpecialisations,
         queryParameters: <String, dynamic>{
           'symptoms': symptoms,
           'gender': gender,

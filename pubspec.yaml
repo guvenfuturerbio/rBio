@@ -120,6 +120,7 @@ flutter:
     - assets/images/new/
     - assets/animations/
     - assets/sound/
+    - assets/departments.json
 
   fonts:
     - family: Ic
