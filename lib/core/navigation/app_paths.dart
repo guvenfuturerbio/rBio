@@ -1,4 +1,3 @@
-import 'package:onedosehealth/features/measurement_tracking/home/view/mt_home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -282,14 +281,7 @@ class VRouterRoutes {
       path: PagePaths.SYMPTOM_BODY_LOCATIONS,
       widget: SymptomsBodyLocationsScreen(),
     ),
-    VWidget(
-      path: PagePaths.MEASUREMENT_TRACKING,
-      widget: MeasurementTrackingHomeScreen(),
-    ),
-    VWidget(
-      path: PagePaths.BLOOD_GLUCOSE_PROGRESS,
-      widget: MeasurementTrackingHomeScreen(),
-    ),
+
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -309,8 +301,6 @@ class PagePaths {
   static const DEVICES = '/devices';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
-  static const MEASUREMENT_TRACKING = '/measurement-tracking';
-  static const BLOOD_GLUCOSE_PROGRESS = '/blood-gluecose-progress';
 
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';
