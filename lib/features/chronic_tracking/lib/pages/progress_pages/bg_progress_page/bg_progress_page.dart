@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,6 @@ import '../../../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../../../core/locator.dart';
 import '../../../core/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../../extension/size_extension.dart';
-import '../../../generated/l10n.dart';
 import '../../../models/bg_measurement/blood_glucose_report_body.dart';
 import '../../../notifiers/user_profiles_notifier.dart';
 import '../../../widgets/bg_measurement_list.dart';
@@ -82,9 +82,6 @@ class _BgProgressPage extends State<BgProgressPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: context.HEIGHT * .17,
-                    ),
                     SizedBox(
                       height: (context.HEIGHT * .38) * context.TEXTSCALE,
                       child: GraphHeader(

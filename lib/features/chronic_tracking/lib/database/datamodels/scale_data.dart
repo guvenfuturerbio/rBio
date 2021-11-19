@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/painting.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
 import '../../core/services/enum/selected_scale_type.dart';
-import '../../generated/l10n.dart';
 import '../../helper/resources.dart';
 import '../../models/ble_models/paired_device.dart';
 import '../../types/unit.dart';

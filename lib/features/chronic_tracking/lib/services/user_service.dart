@@ -75,8 +75,11 @@ class UserService {
   saveAndRetrieveToken(User userCred, String from) async {
     String token = userCred.uid;
     String mailBase = userCred.email;
+
     TokenUserTextBody textBody = new TokenUserTextBody(
-        id: userCred.uid, name: userCred.displayName, email: userCred.email);
+        id: 'gWTiiCR81Ib9a3p2UZWTCvAbRbc2',
+        name: userCred.displayName,
+        email: userCred.email);
 
     List<String> parts = mailBase.split("@");
     String firstPart = parts[0];
@@ -90,7 +93,8 @@ class UserService {
 
     final response = await getIt<ChronicTrackingRepository>()
         .saveAndRetrieveToken(
-            SaveAndRetrieveTokenModel(text: encryptedTextBody, mail: email));
+            SaveAndRetrieveTokenModel(text: encryptedTextBody, mail: email),
+            token);
     await getIt<ISharedPreferencesManager>().setString(
         SharedPreferencesKeys.CT_AUTH_TOKEN, response.datum["access_token"]);
   }
@@ -225,7 +229,8 @@ class UserService {
     var userCred = checkFirebaseUser();
 
     if (userCred != null) {
-      await handleCredential(userCred);
+      FirebaseAuth.instance.signOut();
+      throw Exception('signout');
     } else {
       throw Exception('not-current-user');
     }

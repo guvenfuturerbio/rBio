@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get/get.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
 import '../../core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
 import '../../database/datamodels/glucose_data.dart';
 import '../../database/repository/glucose_repository.dart';
-import '../../generated/l10n.dart';
 import '../../locator.dart';
 import '../../models/ble_models/paired_device.dart';
 import '../../models/device_model/mi_scale_device.dart';
@@ -146,7 +146,8 @@ class BleReactorOps extends ChangeNotifier {
 
   showNotification({String message}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('11', 'New Message', 'New message recieved',
+        AndroidNotificationDetails('11', 'New Message',
+            channelDescription: 'New message recieved',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');

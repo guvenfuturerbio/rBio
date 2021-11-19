@@ -2,3 +2,5 @@ analyzer:
   errors:
     undefined_prefixed_name: ignore
     deprecated_member_use: ignore
+  exclude:
+    - packages/**

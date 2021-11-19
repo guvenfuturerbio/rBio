@@ -152,7 +152,8 @@ var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 checkAlarmAndSendNotification(StripDetailModel stripDetailModel) async {
   if (stripDetailModel.alarmCount >= stripDetailModel.currentCount) {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('12', 'Strip Alert', 'Low Strip Count',
+        AndroidNotificationDetails('12', 'Strip Alert',
+            channelDescription: 'Low Strip Count',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');

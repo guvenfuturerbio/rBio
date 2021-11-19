@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/utils/loading/progress_circle.dart';
 import '../../database/datamodels/scale_data.dart';
 import '../../database/repository/scale_repository.dart';
 import '../../extension/size_extension.dart';
-import '../../generated/l10n.dart';
 import '../../helper/resources.dart';
 import '../../locator.dart';
 import '../../notifiers/ble_operators/ble_reactor.dart';

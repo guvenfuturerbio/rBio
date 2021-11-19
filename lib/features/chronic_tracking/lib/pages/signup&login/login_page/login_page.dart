@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../../extension/size_extension.dart';
-import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
 import 'login_page_vm.dart';
 
@@ -151,7 +151,7 @@ class LoginPage extends StatelessWidget {
             title: LocaleProvider.current.sign_with_facebook,
             onPress: () => value.signInWithFacebook(),
           ),
-    /*      _loginOptionButton(
+          /*      _loginOptionButton(
             context,
             icon: R.image.apple_logo,
             title: LocaleProvider.current.sign_with_apple,

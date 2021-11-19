@@ -127,6 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkout_my_blood_glucose" : MessageLookupByLibrary.simpleMessage("Hey, şeker ölçüm sürecime bak!"),
     "choice" : MessageLookupByLibrary.simpleMessage("Seçiminiz : "),
     "choose" : MessageLookupByLibrary.simpleMessage("Seç"),
+    "chronic_track" : MessageLookupByLibrary.simpleMessage("Kronik Takip"),
     "citizen_of_tc" : MessageLookupByLibrary.simpleMessage("T.C vatandaşıyım"),
     "click_go" : MessageLookupByLibrary.simpleMessage("Tıkla ve Git"),
     "close" : MessageLookupByLibrary.simpleMessage("Kapat"),

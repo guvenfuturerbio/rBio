@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../core/utils/progress_dialog.dart';
-import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
 import '../../../notifiers/language_notifiers.dart';
 import '../../../services/user_service.dart';

@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../core/utils/gallery_pop_up/gallery_pop_up.dart';
@@ -13,7 +14,6 @@ import '../core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
 import '../core/utils/stacked_widget/stacked_widget.dart';
 import '../database/repository/scale_repository.dart';
 import '../extension/size_extension.dart';
-import '../generated/l10n.dart';
 import '../helper/resources.dart';
 import '../models/scale_measurements/scale_measurement_vm.dart';
 import '../pages/progress_pages/scale_progress_page/scale_progress_page_view_model.dart';

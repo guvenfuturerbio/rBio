@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
-import '../generated/l10n.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
 class R {
   static final image = _Images();

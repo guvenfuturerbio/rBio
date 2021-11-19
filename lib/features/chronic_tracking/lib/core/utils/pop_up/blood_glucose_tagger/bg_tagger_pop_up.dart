@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../database/datamodels/glucose_data.dart';
 import '../../../../database/repository/glucose_repository.dart';
 import '../../../../extension/size_extension.dart';
-import '../../../../generated/l10n.dart';
 import '../../../../helper/resources.dart';
 import '../../../../widgets/utils.dart';
 import 'bg_tagger_vm.dart';

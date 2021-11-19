@@ -7,10 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
 import '../database/datamodels/glucose_data.dart';
 import '../extension/size_extension.dart';
-import '../generated/l10n.dart';
 import '../helper/loading_dialog.dart';
 import '../helper/resources.dart';
 import '../models/ble_models/DeviceTypes.dart';

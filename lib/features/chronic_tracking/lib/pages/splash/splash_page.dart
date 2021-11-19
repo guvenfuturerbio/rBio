@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../extension/size_extension.dart';
-import '../../generated/l10n.dart';
 import '../../helper/resources.dart';
 import 'splash_page_vm.dart';
 

@@ -6,13 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../core/utils/pop_up/blood_glucose_tagger/bg_tagger_pop_up.dart';
 import '../database/repository/glucose_repository.dart';
 import '../extension/size_extension.dart';
-import '../generated/l10n.dart';
 import '../helper/resources.dart';
 import '../models/bg_measurement/bg_measurement_view_model.dart';
 import '../pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';

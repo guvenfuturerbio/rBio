@@ -35,7 +35,7 @@ packages:
       name: app_settings
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "4.1.1"
   archive:
     dependency: transitive
     description:
@@ -69,10 +69,10 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "7c3b577ffbaf35924c44eefce7d482fac7d91088"
+      resolved-ref: "0ff39173e1957f70daaef1251e4715708d9596fe"
       url: "https://jsck2wjl54wp5d65hbl32w6qpfxwae75bemnleehnhx23zqdxlra@guvenfuture.visualstudio.com/Atom/_git/Atom"
     source: git
-    version: "0.0.2"
+    version: "0.0.3"
   auto_size_text_pk:
     dependency: "direct main"
     description:
@@ -254,7 +254,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.4"
+    version: "3.1.0"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -328,9 +328,11 @@ packages:
   countup:
     dependency: "direct main"
     description:
-      name: countup
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "6499d960357aa5ab139ebf7d1e8b0e21ea51c70f"
+      url: "https://github.com/alpceylan/flutter-countup.git"
+    source: git
     version: "0.1.3"
   cross_file:
     dependency: transitive
@@ -388,6 +390,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4"
+  dbus:
+    dependency: transitive
+    description:
+      name: dbus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.6"
   device_info:
     dependency: "direct main"
     description:
@@ -508,7 +517,7 @@ packages:
     source: hosted
     version: "3.2.0"
   firebase_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
@@ -534,14 +543,14 @@ packages:
       name: firebase_dynamic_links
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.11"
+    version: "3.0.1"
   firebase_messaging:
     dependency: "direct main"
     description:
       name: firebase_messaging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "10.0.9"
+    version: "11.1.0"
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
@@ -630,7 +639,7 @@ packages:
       name: flutter_calendar_carousel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.1.0"
   flutter_colorpicker:
     dependency: transitive
     description:
@@ -641,9 +650,11 @@ packages:
   flutter_datetime_picker:
     dependency: "direct main"
     description:
-      name: flutter_datetime_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: eb66486c47d50bf550950c196486121ffcea8885
+      url: "https://github.com/tushardubey121/flutter_datetime_picker.git"
+    source: git
     version: "1.5.1"
   flutter_dotenv:
     dependency: "direct main"
@@ -700,14 +711,21 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0+4"
+    version: "9.1.2"
+  flutter_local_notifications_linux:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
       name: flutter_local_notifications_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "5.0.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -765,9 +783,9 @@ packages:
   flutter_reactive_ble:
     dependency: "direct main"
     description:
-      name: flutter_reactive_ble
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/flutter_reactive_ble"
+      relative: true
+    source: path
     version: "5.0.2"
   flutter_secure_storage:
     dependency: "direct main"
@@ -775,7 +793,42 @@ packages:
       name: flutter_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.1"
+    version: "5.0.2"
+  flutter_secure_storage_linux:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
+  flutter_secure_storage_macos:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
+  flutter_secure_storage_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  flutter_secure_storage_web:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
+  flutter_secure_storage_windows:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
   flutter_share:
     dependency: "direct main"
     description:
@@ -803,7 +856,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.22.0"
+    version: "0.23.0+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -953,7 +1006,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.5+4"
+    version: "0.8.4+4"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1048,10 +1101,12 @@ packages:
   keyboard_avoider:
     dependency: "direct main"
     description:
-      name: keyboard_avoider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
+      path: "."
+      ref: "fix/mounted-bug"
+      resolved-ref: "23883dd73a5afe176e9783e3dada0e08badab64f"
+      url: "https://github.com/ryanheise/keyboard_avoider.git"
+    source: git
+    version: "0.1.2-nullsafety.0"
   lints:
     dependency: transitive
     description:
@@ -1226,21 +1281,35 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
+  path_provider_android:
+    dependency: transitive
+    description:
+      name: path_provider_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.7"
+  path_provider_ios:
+    dependency: transitive
+    description:
+      name: path_provider_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.7"
   path_provider_linux:
     dependency: transitive
     description:
       name: path_provider_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   path_provider_macos:
     dependency: transitive
     description:
       name: path_provider_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   path_provider_platform_interface:
     dependency: transitive
     description:
@@ -1303,7 +1372,7 @@ packages:
       name: photo_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.0"
+    version: "0.13.0"
   platform:
     dependency: transitive
     description:
@@ -1396,11 +1465,11 @@ packages:
     source: hosted
     version: "3.0.1+1"
   reactive_ble_mobile:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: reactive_ble_mobile
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/reactive_ble_mobile"
+      relative: true
+    source: path
     version: "5.0.2"
   reactive_ble_platform_interface:
     dependency: transitive
@@ -1429,21 +1498,21 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.26.0"
+    version: "0.27.2"
   sentry:
     dependency: transitive
     description:
       name: sentry
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "6.1.2"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "6.1.2"
   share:
     dependency: "direct main"
     description:
@@ -1637,56 +1706,56 @@ packages:
       name: syncfusion_flutter_charts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53"
+    version: "19.3.54"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53"
+    version: "19.3.54"
   syncfusion_flutter_gauges:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_gauges
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53"
+    version: "19.3.54"
   syncfusion_flutter_pdf:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53-beta"
+    version: "19.3.54-beta"
   syncfusion_flutter_pdfviewer:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_pdfviewer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53-beta"
+    version: "19.3.54-beta"
   syncfusion_flutter_pdfviewer_macos:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdfviewer_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53-beta"
+    version: "19.3.54-beta"
   syncfusion_flutter_pdfviewer_platform_interface:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdfviewer_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53-beta"
+    version: "19.3.54-beta"
   syncfusion_flutter_pdfviewer_web:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdfviewer_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.3.53-beta"
+    version: "19.3.54-beta"
   synchronized:
     dependency: transitive
     description:
@@ -1749,7 +1818,7 @@ packages:
       name: timezone
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0"
+    version: "0.8.0"
   timing:
     dependency: transitive
     description:
@@ -1798,7 +1867,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.12"
+    version: "6.0.13"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1889,7 +1958,7 @@ packages:
       name: webview_flutter_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.3.0"
   webview_flutter_platform_interface:
     dependency: transitive
     description:
@@ -1910,7 +1979,7 @@ packages:
       name: wheel_chooser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "1.0.0"
   win32:
     dependency: transitive
     description:

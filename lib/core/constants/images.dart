@@ -220,4 +220,9 @@ class _Images {
   final girl_child_icon = "assets/images/girl_child_icon.svg";
   final man_icon = "assets/images/man_icon.svg";
   final women_icon = "assets/images/women_icon.svg";
+
+  // Chronic assets
+  final ct_blood_glucose = "assets/images/ct_blood_glucose.svg";
+  final ct_blood_pressure = "assets/images/ct_blood_pressure.svg";
+  final ct_body_scale = "assets/images/ct_body_scale.svg";
 }

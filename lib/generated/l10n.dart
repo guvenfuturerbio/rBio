@@ -135,6 +135,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Chronic Tracking`
+  String get chronic_track {
+    return Intl.message(
+      'Chronic Tracking',
+      name: 'chronic_track',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Done`
   String get done {
     return Intl.message(

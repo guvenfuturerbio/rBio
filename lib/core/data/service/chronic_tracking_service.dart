@@ -12,7 +12,7 @@ abstract class ChronicTrackingApiService {
       String username,
       String password});
   Future<GuvenResponseModel> saveAndRetrieveToken(
-      SaveAndRetrieveTokenModel saveAndRetrieveToken);
+      SaveAndRetrieveTokenModel saveAndRetrieveToken, String token);
   Future<StripDetailModel> getUserStrip(entegrationId, deviceUUID);
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
       BloodGlucoseValue bodyPages);

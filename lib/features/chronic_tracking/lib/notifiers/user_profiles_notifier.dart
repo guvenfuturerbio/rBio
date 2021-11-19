@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
 import '../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../core/locator.dart';
@@ -7,7 +8,6 @@ import '../database/datamodels/glucose_data.dart';
 import '../database/repository/glucose_repository.dart';
 import '../database/repository/profile_repository.dart';
 import '../database/repository/scale_repository.dart';
-import '../generated/l10n.dart';
 import '../helper/resources.dart';
 import '../models/user_profiles/person.dart';
 import '../models/user_profiles/user_profiles.dart';

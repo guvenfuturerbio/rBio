@@ -1,3 +1,5 @@
+import 'package:onedosehealth/features/chronic_tracking/lib/main.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/pages/home/home_page_new/home_page_new.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -288,7 +290,7 @@ class VRouterRoutes {
     ),
     VWidget(
       path: PagePaths.BLOOD_GLUCOSE_PROGRESS,
-      widget: MeasurementTrackingHomeScreen(),
+      widget: HomePageNew(),
     ),
     //
     // :_ is a path parameters named _
@@ -309,8 +311,6 @@ class PagePaths {
   static const DEVICES = '/devices';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
-  static const MEASUREMENT_TRACKING = '/measurement-tracking';
-  static const BLOOD_GLUCOSE_PROGRESS = '/blood-gluecose-progress';
 
   static const LOGIN = '/login';
   static const REGISTER_STEP_1 = '/register-1';
@@ -350,6 +350,11 @@ class PagePaths {
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
+
+  // Chroic Tracking
+  static const SETTINGS = '/ct-settings';
+  static const MEASUREMENT_TRACKING = '/measurement-tracking';
+  static const BLOOD_GLUCOSE_PROGRESS = '/blood-gluecose-progress';
 
   // Symptom Checker
   static const SYMPTOM_MAIN_MENU = '/symptom-main';

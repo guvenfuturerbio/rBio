@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../generated/l10n.dart';
 import '../../helper/resources.dart';
 import '../../pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
 import 'custom_directional_button.dart';

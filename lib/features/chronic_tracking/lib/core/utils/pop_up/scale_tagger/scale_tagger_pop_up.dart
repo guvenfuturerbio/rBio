@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../database/datamodels/scale_data.dart';
 import '../../../../database/repository/scale_repository.dart';
 import '../../../../extension/size_extension.dart';
-import '../../../../generated/l10n.dart';
 import '../../../../helper/resources.dart';
 import '../../../../types/unit.dart';
 import '../../../../widgets/utils.dart';

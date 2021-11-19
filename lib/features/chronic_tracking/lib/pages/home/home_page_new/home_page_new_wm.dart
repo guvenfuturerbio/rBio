@@ -2,6 +2,7 @@ part of 'home_page_new.dart';
 
 class HomePageNewVm extends ChangeNotifier {
   final BuildContext context;
+  bool loading = false;
   HomePageNewVm({this.context}) {
     items = [
       HomePageModel<BgProgressPageViewModel>(

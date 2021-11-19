@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../../extension/size_extension.dart';
-import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
 import '../../../models/ble_models/DeviceTypes.dart';
 import '../../../notifiers/ble_operators/ble_connector.dart';

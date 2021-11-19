@@ -131,6 +131,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkout_my_blood_glucose" : MessageLookupByLibrary.simpleMessage("Hey, checkout my diabetes progess!"),
     "choice" : MessageLookupByLibrary.simpleMessage("Your Choice : "),
     "choose" : MessageLookupByLibrary.simpleMessage("Choose"),
+    "chronic_track" : MessageLookupByLibrary.simpleMessage("Chronic Tracking"),
     "citizen_of_tc" : MessageLookupByLibrary.simpleMessage("Citizen of T.C"),
     "click_go" : MessageLookupByLibrary.simpleMessage("Click and Go"),
     "close" : MessageLookupByLibrary.simpleMessage("Close"),

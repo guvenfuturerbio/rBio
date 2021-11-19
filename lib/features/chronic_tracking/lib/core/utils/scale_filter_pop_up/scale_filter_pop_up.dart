@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../../extension/size_extension.dart';
-import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
 import '../../../pages/progress_pages/scale_progress_page/scale_progress_page_view_model.dart';
 import '../../services/enum/selected_scale_type.dart';

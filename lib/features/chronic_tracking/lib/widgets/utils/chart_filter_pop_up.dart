@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../extension/size_extension.dart';
-import '../../generated/l10n.dart';
 import '../../helper/resources.dart';
 import '../../pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
 import '../utils/glucose_margins_filter.dart';

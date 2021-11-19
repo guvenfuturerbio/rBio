@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
 import '../../../core/utils/progress_dialog.dart';
-import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
 import '../../../services/user_service.dart';
 import '../../../widgets/gradient_dialog.dart';
@@ -47,8 +47,8 @@ class EmailLoginPageVm extends ChangeNotifier {
           .signInWithEmailAndPasswordFirebase(eMail, password);
       await UserService()
           .saveAndRetrieveToken(userCredential.user, 'patientLogin');
-      DoctorChecker().doctor = false;
       await UserService().handleSuccessfulLogin(userCredential.user);
+      DoctorChecker().doctor = false;
       //UserNotifier().handleSuccessfulLogin(mContext, userCredential.user);
       hideDialog(mContext);
       Navigator.of(mContext).pushAndRemoveUntil(

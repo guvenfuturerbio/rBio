@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
-import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
 import '../../../notifiers/user_notifier.dart';
 import 'email_login_page_vm.dart';

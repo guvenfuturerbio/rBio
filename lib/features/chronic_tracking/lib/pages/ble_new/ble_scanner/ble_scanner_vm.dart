@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as dialog;
+import 'package:onedosehealth/generated/l10n.dart';
 
-import '../../../generated/l10n.dart';
 import '../../../helper/progress_state_dialog.dart';
 import '../../../helper/resources.dart';
 import '../../../locator.dart';

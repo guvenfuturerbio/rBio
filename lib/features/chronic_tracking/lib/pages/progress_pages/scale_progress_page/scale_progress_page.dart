@@ -33,9 +33,6 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: context.HEIGHT * .17,
-                    ),
-                    SizedBox(
                       height: (context.HEIGHT * .38) * context.TEXTSCALE,
                       child: GraphHeader(
                         value: value,

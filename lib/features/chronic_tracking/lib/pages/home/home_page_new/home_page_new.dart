@@ -1,10 +1,14 @@
+import 'package:atom/atom.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/services/user_service.dart';
+import 'package:onedosehealth/generated/l10n.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../extension/size_extension.dart';
-import '../../../generated/l10n.dart';
 import '../../../helper/resources.dart';
 import '../../../models/user_profiles/person.dart';
 import '../../../notifiers/user_profiles_notifier.dart';
@@ -12,8 +16,8 @@ import '../../../widgets/custom_app_bar/custom_app_bar.dart';
 import '../../../widgets/utils.dart';
 import '../../progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
 import '../../progress_pages/scale_progress_page/scale_progress_page_view_model.dart';
-import 'components/card_widget.dart';
-import 'page_model.dart';
+import '../../../../home/utils/card_widget.dart';
+import '../../../../home/model/page_model.dart';
 
 part 'home_page_new_wm.dart';
 
@@ -21,57 +25,56 @@ class HomePageNew extends StatelessWidget {
   HomePageNew({Key key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  final menuOptions = [
-    MenuOption(
-        title: LocaleProvider.current.home,
-        navigateRoute: Routes.HOME_PAGE,
-        icon: R.image.dashboard_icon,
-        iconWidth: 62.7995,
-        iconHeight: 74),
-    MenuOption(
-        title: LocaleProvider.current.blood_glucose_progress,
-        navigateRoute: Routes.BG_PROGRESS_PAGE,
-        icon: R.image.bg_icon,
-        iconWidth: 41.67,
-        iconHeight: 70.0),
-    MenuOption(
-        title: LocaleProvider.current.scale_progress,
-        navigateRoute: Routes.SCALE_PROGRESS_PAGE,
-        icon: R.image.scale_icon,
-        iconWidth: 41.67,
-        iconHeight: 70.0),
-    MenuOption(
-        title: LocaleProvider.current.device_connections,
-        navigateRoute: Routes.PAIRED_DEVICES,
-        icon: R.image.connect_device_icon,
-        iconWidth: 70.0,
-        iconHeight: 50.6075),
-    MenuOption(
-        title: LocaleProvider.current.reminders,
-        navigateRoute: Routes.MY_MEDICINES_PAGE,
-        icon: R.image.reminder_icon),
-    MenuOption(
-        title: LocaleProvider.current.consultation,
-        navigateRoute: Routes.CONSULTATION_PAGE,
-        icon: R.image.consultation_icon,
-        iconWidth: 36.3881,
-        iconHeight: 70.0),
-    /*MenuOption(
+  @override
+  Widget build(BuildContext context) {
+    final menuOptions = [
+      MenuOption(
+          title: LocaleProvider.current.home,
+          navigateRoute: Routes.HOME_PAGE,
+          icon: R.image.dashboard_icon,
+          iconWidth: 62.7995,
+          iconHeight: 74),
+      MenuOption(
+          title: LocaleProvider.current.blood_glucose_progress,
+          navigateRoute: Routes.BG_PROGRESS_PAGE,
+          icon: R.image.bg_icon,
+          iconWidth: 41.67,
+          iconHeight: 70.0),
+      MenuOption(
+          title: LocaleProvider.current.scale_progress,
+          navigateRoute: Routes.SCALE_PROGRESS_PAGE,
+          icon: R.image.scale_icon,
+          iconWidth: 41.67,
+          iconHeight: 70.0),
+      MenuOption(
+          title: LocaleProvider.current.device_connections,
+          navigateRoute: Routes.PAIRED_DEVICES,
+          icon: R.image.connect_device_icon,
+          iconWidth: 70.0,
+          iconHeight: 50.6075),
+      MenuOption(
+          title: LocaleProvider.current.reminders,
+          navigateRoute: Routes.MY_MEDICINES_PAGE,
+          icon: R.image.reminder_icon),
+      MenuOption(
+          title: LocaleProvider.current.consultation,
+          navigateRoute: Routes.CONSULTATION_PAGE,
+          icon: R.image.consultation_icon,
+          iconWidth: 36.3881,
+          iconHeight: 70.0),
+      /*MenuOption(
         title: LocaleProvider.current.premium,
         navigateRoute: Routes.PREMIUM_STORE_PAGE,
         icon: R.image.premium_icon,
         iconWidth: 41.794,
         iconHeight: 70.0),*/ //
-    MenuOption(
-        title: LocaleProvider.current.settings,
-        navigateRoute: Routes.SETTINGS_PAGE,
-        icon: R.image.settings_icon,
-        iconWidth: 70.0,
-        iconHeight: 70.0)
-  ];
-
-  @override
-  Widget build(BuildContext context) {
+      MenuOption(
+          title: LocaleProvider.current.settings,
+          navigateRoute: Routes.SETTINGS_PAGE,
+          icon: R.image.settings_icon,
+          iconWidth: 70.0,
+          iconHeight: 70.0)
+    ];
     return ChangeNotifierProvider(
       create: (_) => HomePageNewVm(context: context),
       child: Consumer<HomePageNewVm>(
@@ -85,135 +88,145 @@ class HomePageNew extends StatelessWidget {
               : [
                   DeviceOrientation.portraitUp,
                 ]);
-          return OrientationBuilder(builder: (context, orientation) {
-            if (val.activeItem != null &&
-                orientation == Orientation.landscape) {
-              SystemChrome.setEnabledSystemUIMode(
-                SystemUiMode.immersive,
-              );
-            } else {
-              SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
-                  overlays: SystemUiOverlay.values);
-            }
-            return Scaffold(
-              key: _scaffoldKey,
-              appBar: val.activeItem == null ||
-                      orientation == Orientation.portrait
-                  ? CustomAppBar(
-                      preferredSize: Size.fromHeight(context.HEIGHT * .18),
-                      leading: SvgPicture.asset(
-                        R.image.guven_logo,
+          return val.loading
+              ? Scaffold(
+                  body: Center(
+                    child: CircularPercentIndicator(
+                      radius: 25,
+                    ),
+                  ),
+                )
+              : OrientationBuilder(builder: (context, orientation) {
+                  if (val.activeItem != null &&
+                      orientation == Orientation.landscape) {
+                    SystemChrome.setEnabledSystemUIMode(
+                      SystemUiMode.immersive,
+                    );
+                  } else {
+                    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+                        overlays: SystemUiOverlay.values);
+                  }
+                  return Scaffold(
+                    key: _scaffoldKey,
+                    appBar: val.activeItem == null ||
+                            orientation == Orientation.portrait
+                        ? CustomAppBar(
+                            preferredSize:
+                                Size.fromHeight(context.HEIGHT * .18),
+                            leading: InkWell(
+                                child: SvgPicture.asset(R.image.back_icon),
+                                onTap: () => Atom.historyBack()),
+                            title: val.activeItem != null
+                                ? TitleAppBarWhite(title: val.activeItem.title)
+                                : Consumer<UserProfilesNotifier>(
+                                    builder: (context, value, child) {
+                                      return TitleAppBarWhite(
+                                          title: value?.selection?.name ?? "-");
+                                    },
+                                  ),
+                            actions: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(Routes.CHAT_PAGE);
+                                  },
+                                  child: SvgPicture.asset(
+                                    R.image.dmchat_icon_white,
+                                  ),
+                                )
+                              ])
+                        : null,
+                    floatingActionButton: SizedBox(
+                      width: context.WIDTH * .92,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          val.activeItem != null
+                              ? FloatingActionButton(
+                                  heroTag: 'adder',
+                                  onPressed: () {
+                                    val.activeItem.manuelEntry();
+                                  },
+                                  child: Container(
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        gradient: LinearGradient(
+                                          begin: Alignment.bottomRight,
+                                          end: Alignment.topLeft,
+                                          colors: <Color>[
+                                            R.btnLightBlue,
+                                            R.btnDarkBlue
+                                          ],
+                                        )),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: SvgPicture.asset(
+                                        R.image.add_icon,
+                                        color: R.color.white,
+                                      ),
+                                    ),
+                                  ),
+                                  backgroundColor: R.color.white,
+                                )
+                              : SizedBox(),
+                          orientation == Orientation.portrait
+                              ? FloatingActionButton(
+                                  heroTag: 'menu',
+                                  onPressed: () {
+                                    _scaffoldKey.currentState.openEndDrawer();
+                                  },
+                                  child: Container(
+                                    height: 25,
+                                    width: 25,
+                                    child: SvgPicture.asset(
+                                      R.image.menu_icon,
+                                      color: R.color.black,
+                                    ),
+                                  ),
+                                  backgroundColor: R.color.white,
+                                )
+                              : SizedBox(),
+                        ],
                       ),
-                      title: val.activeItem != null
-                          ? TitleAppBarWhite(title: val.activeItem.title)
-                          : Consumer<UserProfilesNotifier>(
-                              builder: (context, value, child) {
-                                return TitleAppBarWhite(
-                                    title: value?.selection?.name ?? "-");
-                              },
-                            ),
-                      actions: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(Routes.CHAT_PAGE);
-                            },
-                            child: SvgPicture.asset(
-                              R.image.dmchat_icon_white,
-                            ),
-                          )
-                        ])
-                  : null,
-              floatingActionButton: SizedBox(
-                width: context.WIDTH * .92,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    val.activeItem != null
-                        ? FloatingActionButton(
-                            heroTag: 'adder',
-                            onPressed: () {
-                              val.activeItem.manuelEntry();
-                            },
-                            child: Container(
-                              height: double.infinity,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.bottomRight,
-                                    end: Alignment.topLeft,
-                                    colors: <Color>[
-                                      R.btnLightBlue,
-                                      R.btnDarkBlue
-                                    ],
-                                  )),
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: SvgPicture.asset(
-                                  R.image.add_icon,
-                                  color: R.color.white,
-                                ),
+                    ),
+                    endDrawer: _drawer(context, menuOptions),
+                    extendBodyBehindAppBar: true,
+                    body: ListView(
+                      padding: val.activeItem == null
+                          ? EdgeInsets.only(top: context.HEIGHT * .18)
+                          : EdgeInsets.zero,
+                      children: [
+                        ...val.items
+                            .map(
+                              (element) => SectionCard(
+                                isActive: val.activeItem != null &&
+                                    val.activeItem.key == element.key,
+                                isVisible: val.activeItem == null,
+                                color: element.color,
+                                smallChild: element.smallChild,
+                                largeChild: element.largeChild,
                               ),
-                            ),
-                            backgroundColor: R.color.white,
-                          )
-                        : SizedBox(),
-                    orientation == Orientation.portrait
-                        ? FloatingActionButton(
-                            heroTag: 'menu',
-                            onPressed: () {
-                              _scaffoldKey.currentState.openEndDrawer();
-                            },
-                            child: Container(
-                              height: 25,
-                              width: 25,
-                              child: SvgPicture.asset(
-                                R.image.menu_icon,
-                                color: R.color.black,
-                              ),
-                            ),
-                            backgroundColor: R.color.white,
-                          )
-                        : SizedBox(),
-                  ],
-                ),
-              ),
-              endDrawer: _drawer(context),
-              extendBodyBehindAppBar: true,
-              body: ListView(
-                padding: val.activeItem == null
-                    ? EdgeInsets.only(top: context.HEIGHT * .18)
-                    : EdgeInsets.zero,
-                children: [
-                  ...val.items
-                      .map(
-                        (element) => SectionCard(
-                          isActive: val.activeItem != null &&
-                              val.activeItem.key == element.key,
-                          isVisible: val.activeItem == null,
-                          color: element.color,
-                          smallChild: element.smallChild,
-                          largeChild: element.largeChild,
-                        ),
-                      )
-                      .toList(),
-                ],
-              ),
-            );
-          });
+                            )
+                            .toList(),
+                      ],
+                    ),
+                  );
+                });
         },
       ),
     );
   }
 
-  Drawer _drawer(BuildContext context) {
+  Drawer _drawer(BuildContext context, menuOptions) {
     return Drawer(
       child: Container(
           padding: EdgeInsets.only(top: 32),
           color: R.drawerBgLightBlue,
           child: GestureDetector(
               onTap: () async {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               child: ListView(
                 padding: EdgeInsets.only(top: 0),

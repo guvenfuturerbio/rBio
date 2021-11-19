@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
-import '../../generated/l10n.dart';
 import '../../notifiers/user_notifier.dart';
 
 part 'person.g.dart';
@@ -173,8 +173,8 @@ class Person {
                 UserNotifier().firebaseUser.email)
             : "Name Surname",
         birthDate: "01.01.2020",
-        gender: LocaleProvider.current.unspecified,
-        diabetesType: LocaleProvider.current.non_diabetes,
+        gender: 'unsp',
+        diabetesType: 'nondia',
         yearOfDiagnosis: 2021,
         smoker: false,
         isFirstUser: false);

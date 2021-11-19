@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 
-import '../generated/l10n.dart';
 import 'shared_pref_notifiers.dart';
 
 class AppLanguage extends ChangeNotifier {

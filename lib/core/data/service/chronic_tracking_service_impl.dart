@@ -34,10 +34,13 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> saveAndRetrieveToken(
-      SaveAndRetrieveTokenModel saveAndRetrieveToken) async {
+      SaveAndRetrieveTokenModel saveAndRetrieveToken, String token) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_saveAndRetrieveToken, saveAndRetrieveToken,
-        options: authOptions);
+        R.endpoints.ct_saveAndRetrieveToken, saveAndRetrieveToken.toJson(),
+        options: Options(headers: {
+          'Authorization': token,
+          'Lang': Intl.getCurrentLocale()
+        }));
     if (response.isSuccessful) {
       return response;
     } else {

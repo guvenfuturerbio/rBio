@@ -81,7 +81,7 @@ class PushedNotificationHandlerNew with ChangeNotifier {
   }
 
   void showNotification(Map<String, dynamic> message) {
-    print(" dedkekde "+message.toString());
+    print(" dedkekde " + message.toString());
     var messageForData = message;
     if (messageForData['type'] == "3") {
       //showChatNotification(message);
@@ -150,7 +150,8 @@ class PushedNotificationHandlerNew with ChangeNotifier {
 
   showChatNotification(Map<String, dynamic> message) {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('11', 'New Message', 'New message recieved',
+        AndroidNotificationDetails('11', 'New Message',
+            channelDescription: 'New message recieved',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');
