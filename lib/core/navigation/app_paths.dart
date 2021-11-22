@@ -1,3 +1,5 @@
+import 'package:onedosehealth/features/auth/login/login_screen.dart';
+import 'package:onedosehealth/features/auth/register/register_step_1_1.dart';
 import 'package:onedosehealth/features/profile/personal_information/view/personal_information_screen.dart';
 import 'package:onedosehealth/features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
@@ -57,10 +59,10 @@ import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
 
 class VRouterRoutes {
   static var routes = [
-    // VWidget(
-    //   path: PagePaths.LOGIN,
-    //   widget: HomeScreen(), // LoginScreen(),
-    // ),
+    VWidget(
+      path: PagePaths.LOGIN,
+      widget: LoginScreen(), // LoginScreen(),
+    ),
 
     VWidget(
       path: PagePaths.MAIN,
@@ -99,6 +101,11 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.CREATE_APPOINTMENT_EVENTS,
       widget: CreateAppointmentEventsScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.REGISTER_FIRST,
+      widget: RegisterStep1_1Screen(),
     ),
 
     VWidget(
@@ -338,6 +345,7 @@ class PagePaths {
   static const CREATE_ONLINE_APPO = '/create-online-appointment';
 
   static const LOGIN = '/login';
+  static const REGISTER_FIRST = '/register-first';
   static const REGISTER_STEP_1 = '/register-1';
   static const REGISTER_STEP_2 = '/register-2';
   static const REGISTER_STEP_3 = '/register-3';

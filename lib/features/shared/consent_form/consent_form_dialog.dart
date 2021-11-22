@@ -34,7 +34,8 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
             alwaysAsk: widget?.alwaysAsk ?? false,
           ),
           child: Consumer<ConsentFormDialogVm>(
-            builder: (BuildContext context, ConsentFormDialogVm value, Widget child) {
+            builder: (BuildContext context, ConsentFormDialogVm value,
+                Widget child) {
               return Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -61,7 +62,8 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                             onChanged: (newValue) {
                               value.toggleConsentFormState();
                             },
-                            activeColor: R.color.blue, //  <-- leading Checkbox
+                            activeColor: getIt<ITheme>()
+                                .mainColor, //  <-- leading Checkbox
                           ),
                         ),
                         Expanded(
