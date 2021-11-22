@@ -5,10 +5,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
+import 'features/chronic_tracking/lib/database/repository/profile_repository.dart';
+import 'features/chronic_tracking/lib/notifiers/bg_measurements_notifiers.dart';
+import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
+import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
+import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import 'features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
 import 'features/home/viewmodel/home_vm.dart';
 
 Future<void> main() async {
@@ -85,6 +92,24 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<UserNotifier>(
             create: (context) => UserNotifier()..loginExampleUser(),
           ),
+          ChangeNotifierProvider<ct.UserNotifier>(
+            create: (context) => getIt<ct.UserNotifier>(),
+          ),
+          ChangeNotifierProvider<UserProfilesNotifier>(
+            create: (context) => UserProfilesNotifier(),
+          ),
+          ChangeNotifierProvider<ProfileRepository>(
+            create: (context) => getIt<ProfileRepository>(),
+          ),
+          ChangeNotifierProvider<BgProgressPageViewModel>(
+            create: (ctx) => BgProgressPageViewModel(),
+          ),
+          ChangeNotifierProvider<ScaleProgressPageViewModel>(
+            create: (ctx) => ScaleProgressPageViewModel(),
+          ),
+          ChangeNotifierProvider<BgMeasurementsNotifier>(
+            create: (context) => BgMeasurementsNotifier(),
+          ),
         ],
         child: Consumer2<ThemeNotifier, UserNotifier>(
           builder: (
@@ -110,9 +135,7 @@ class _MyAppState extends State<MyApp> {
                 routes: VRouterRoutes.routes,
                 onSystemPop: (data) async {
                   final currentUrl = data.fromUrl;
-                  if (currentUrl.contains('/home') && currentUrl.length > 6) {
-                    data.to(PagePaths.MAIN, isReplacement: true);
-                  } else if (currentUrl.contains('/home')) {
+                  if (currentUrl.contains('/home')) {
                     SystemNavigator.pop();
                   } else if (data.historyCanBack()) {
                     data.historyBack();
@@ -151,8 +174,7 @@ class _MyAppState extends State<MyApp> {
                   fontFamily: themeNotifier.theme.fontFamily,
                   textTheme: themeNotifier.theme.textTheme,
                 ),
-
-                //
+                locale: Locale(intl.Intl.getCurrentLocale()),
                 localizationsDelegates: const [
                   LocaleProvider.delegate,
                   GlobalMaterialLocalizations.delegate,

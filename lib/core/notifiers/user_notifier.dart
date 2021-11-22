@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/services/user_service.dart';
 
 import '../core.dart';
 import '../../model/model.dart';
@@ -12,7 +14,6 @@ class UserNotifier extends ChangeNotifier {
     final widgetsBinding = WidgetsBinding.instance;
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) async {
-        // TODO: Örnek kullanıcı ile giriş yapıyoruz.
         try {
           username = '18620716416';
           password = 'Numlock1234!!';
@@ -23,13 +24,18 @@ class UserNotifier extends ChangeNotifier {
               .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
           patient = await getIt<Repository>().getPatientDetail();
           await getIt<UserManager>().getUserProfile();
+          UserCredential userCredential = await UserService()
+              .signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
+          await UserService()
+              .saveAndRetrieveToken(userCredential.user, 'patientLogin');
+          await UserService().handleSuccessfulLogin(userCredential.user);
           final response = await getIt<Repository>().getProfilePicture();
           if (response != null && response != '') {
             await getIt<ISharedPreferencesManager>()
                 .setString(SharedPreferencesKeys.PROFILE_IMAGE, response);
           }
         } catch (e) {
-          //
+          print(e);
         } finally {
           notifyListeners();
         }

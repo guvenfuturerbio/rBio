@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
-import 'package:onedosehealth/core/data/service/symptom_api_service.dart';
+import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/login_view_model.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../features/chronic_tracking/lib/notifiers/ble_operators/ble_connector.dart';
+import '../features/chronic_tracking/lib/notifiers/ble_operators/ble_reactor.dart';
+import '../features/chronic_tracking/lib/notifiers/ble_operators/ble_scanner.dart';
+import '../features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
+
+import 'core.dart';
 import 'data/helper/dio_helper.dart';
 import 'data/repository/repository.dart';
 import 'data/repository/symptom_repository.dart';
 import 'data/service/api_service.dart';
 import 'data/service/local_cache_service.dart';
+import 'data/service/symptom_api_service.dart';
 import 'manager/shared_preferences_manager.dart';
 import 'manager/user_manager.dart';
 import 'utils/user_info.dart';
@@ -32,6 +42,8 @@ Future<void> setupLocator() async {
 
   getIt.registerSingleton<LocalCacheService>(LocalCacheServiceImpl());
   getIt.registerSingleton<ApiService>(ApiServiceImpl(getIt<IDioHelper>()));
+  getIt.registerSingleton<ChronicTrackingApiService>(
+      ChronicTrackingApiServiceImpl(getIt<IDioHelper>()));
   getIt.registerSingleton<Repository>(Repository(
       apiService: getIt<ApiService>(),
       localCacheService: getIt<LocalCacheService>()));
@@ -46,6 +58,24 @@ Future<void> setupLocator() async {
 
   getIt.registerSingleton<UserInfo>(
       UserInfo(getIt<ISharedPreferencesManager>()));
+
+  getIt.registerLazySingleton(() => ct.UserNotifier());
+  getIt.registerLazySingleton(() => LoginViewModel());
+  getIt.registerLazySingleton(() => UserProfilesNotifier());
+
+  getIt.registerLazySingleton(() => ChronicTrackingRepository(
+      apiService: getIt<ChronicTrackingApiService>(),
+      localCacheService: getIt<LocalCacheService>()));
+
+  if (!Atom.isWeb) {
+    getIt.registerSingleton<FlutterReactiveBle>(FlutterReactiveBle());
+    getIt.registerLazySingleton<BleReactorOps>(
+        () => BleReactorOps(ble: getIt<FlutterReactiveBle>()));
+    getIt.registerLazySingleton<BleConnectorOps>(
+        () => BleConnectorOps(ble: getIt<FlutterReactiveBle>()));
+    getIt.registerLazySingleton<BleScannerOps>(
+        () => BleScannerOps(ble: getIt<FlutterReactiveBle>()));
+  }
 }
 
 class GuvenSettings {

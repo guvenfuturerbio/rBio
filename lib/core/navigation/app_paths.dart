@@ -27,6 +27,7 @@ import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
 import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
+import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/profile/devices/view/devices_screen.dart';
 import '../../features/profile/devices/viewmodel/devices_vm.dart';
@@ -384,6 +385,11 @@ class PagePaths {
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
+
+  // Chroic Tracking
+  static const SETTINGS = '/ct-settings';
+  static const MEASUREMENT_TRACKING = '/measurement-tracking';
+  static const BLOOD_GLUCOSE_PROGRESS = '/blood-gluecose-progress';
 
   // Symptom Checker
   static const SYMPTOM_MAIN_MENU = '/symptom-main';

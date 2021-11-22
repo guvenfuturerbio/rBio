@@ -124,6 +124,52 @@ class _Endpoints {
       '/body/locations/${locationID}'.xSymptomCheckerRequest;
   String symptomGetBodySymptoms(int locationID, int gender) =>
       '/symptoms/${locationID}/${gender}'.xSymptomCheckerRequest;
+
+  String ct_saveAndRetrieveToken =
+      '/UserRegister/save-and-retrive-token'.xCronicTracking;
+  String ct_getUserStrip(var entegrationId, var deviceuuid) =>
+      '/user/get-user-strip/${entegrationId}/${deviceuuid}'.xCronicTracking;
+  String ct_insertNewBloodGlucoseValue =
+      '/Measurement/add-blood-glucose-with-detail'.xCronicTracking;
+  String ct_deleteBloodGlucoseValue =
+      '/Measurement/delete-blood-glucose-with-detail'.xCronicTracking;
+  String ct_updateBloodGlucoseValue =
+      '/Measurement/update-blood-glucose-with-detail'.xCronicTracking;
+  String ct_uploadMeasurementImage(var entegrationId, var measurementId) =>
+      '/Measurement/upload-measurement-image/${entegrationId}/${measurementId}'
+          .xCronicTracking;
+  String ct_getBloodGlucoseReport =
+      '/Measurement/get-my-blood-glucose-report'.xCronicTracking;
+  String ct_getBloodGlucoseDataOfPerson =
+      '/Measurement/get-my-blood-glucose-with-detail-and-limit-value'
+          .xCronicTracking;
+  String ct_getAllProfiles = '/profile/get-all'.xCronicTracking;
+  String ct_addProfile = '/profile/add'.xCronicTracking;
+  String ct_changeProfile(entegration_id) =>
+      '/profile/set-profile/${entegration_id}'.xCronicTracking;
+  String ct_deleteProfile(var userId) =>
+      '/profile/delete/$userId'.xCronicTracking;
+  String ct_addFirebaseToken = '/user/add-user-firebaseId'.xCronicTracking;
+  String ct_updateProfile(var id) =>
+      '/user/user-profile-update/${id}'.xCronicTracking;
+  String ct_setDefaultProfile =
+      '/user/set-user-profile-default-value'.xCronicTracking;
+  String ct_updateUserStrip = '/user/add-update-user-strip'.xCronicTracking;
+  String ct_deleteUserStrip(var id, var entegrationId) =>
+      '/user/delete-user-strip/${id}/${entegrationId}'.xCronicTracking;
+  String ct_isDeviceIdRegisteredForSomeUser(var deviceId, var entegrationId) =>
+      '/SugarDevice/is-device-id-registered-for-some-user/${deviceId}/${entegrationId}'
+          .xCronicTracking;
+  String ct_addHospitalHba1cMeasurement(var entegrationId) =>
+      '/Measurement/add-hospital-hba1c-measurement/${entegrationId}'
+          .xCronicTracking;
+  String ct_getHba1cMeasurementList(var entegrationId) =>
+      '/Measurement/get-list-hospital-hba1c-measurement/${entegrationId}'
+          .xCronicTracking;
+  String ct_getMedicineByFilter(String text) =>
+      '/Medicine/get-by-filter/${text}'.xCronicTracking;
+  String ct_login = '/auth/realms/GuvenComplex/protocol/openid-connect/token'
+      .xCronicTrackingSSO;
 }
 
 extension _EndpointsExtension on String {
@@ -135,4 +181,8 @@ extension _EndpointsExtension on String {
       SecretUtils.instance.get(SecretKeys.SYMPTOM_CHECKER_LOGIN) + this;
   String get xSymptomCheckerRequest =>
       SecretUtils.instance.get(SecretKeys.SYMPTOM_REQUEST_URL) + this;
+  String get xCronicTracking =>
+      SecretUtils.instance.get(SecretKeys.CHRONIC_TRACKING_BASE_URL) + this;
+  String get xCronicTrackingSSO =>
+      SecretUtils.instance.get(SecretKeys.CHRONIC_SSO_URL) + this;
 }

@@ -9,13 +9,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/models/user_profiles/person.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'package:onedosehealth/features/shared/do_not_show_again_dialog.dart';
-
-import '../../generated/i18n.dart';
 import '../../model/model.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';
@@ -25,6 +27,57 @@ import '../manager/analytics_manager.dart';
 import '../navigation/app_paths.dart';
 import '../widgets/warning_dialog.dart';
 import '../widgets/guven_alert.dart';
+
+Gradient BlueGradient() => LinearGradient(
+    colors: [R.color.dark_blue, R.color.defaultBlue],
+    begin: Alignment.bottomLeft,
+    end: Alignment.centerRight);
+
+DeviceType getDeviceType(DiscoveredDevice device) {
+  if (device.name == 'MIBFS' &&
+      device.serviceData.length == 1 &&
+      device.serviceData.values.first.length == 13) {
+    return DeviceType.MI_SCALE;
+  } else if (device.manufacturerData[0] == 112) {
+    return DeviceType.ACCU_CHEK;
+  } else if (device.manufacturerData[0] == 103) {
+    return DeviceType.CONTOUR_PLUS_ONE;
+  }
+
+  throw Exception('Nondefined device');
+}
+
+ListView guidePopUpContextWidget(List<String> currentDeviceInfos) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: currentDeviceInfos.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: SizedBox(
+            width: Atom.width * .8,
+            child: RichText(
+              textScaleFactor: context.xMediaQuery.textScaleFactor,
+              text: TextSpan(
+                text: (index + 1).toString() + ".",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: R.color.dark_blue,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: currentDeviceInfos[index],
+                      style: TextStyle(
+                        color: R.color.black,
+                        fontWeight: FontWeight.normal,
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
 
 InputDecoration inputImageDecoration(
         {image: String,
@@ -562,6 +615,77 @@ class UtilityManager {
     }
 
     return "";
+  }
+
+  String getReadableTimeFromDateTime(DateTime measureDT) {
+    return "${measureDT.hour > 9 ? measureDT.hour : "0" + measureDT.hour.toString()}:${measureDT.minute > 9 ? measureDT.minute : "0" + measureDT.minute.toString()}  ${measureDT.day}.${measureDT.month}.${measureDT.year}";
+  }
+
+  String getReadableHour(DateTime measureDT) {
+    return "${measureDT.hour > 9 ? measureDT.hour : "0" + measureDT.hour.toString()}:${measureDT.minute > 9 ? measureDT.minute : "0" + measureDT.minute.toString()}";
+  }
+
+  String getReadableDate(DateTime measureDT) {
+    return "${measureDT.day}/${measureDT.month}/${measureDT.year}";
+  }
+
+  /// MG14
+  Color getGlucoseMeasurementColor(int result) {
+    Person activeProfile =
+        UserProfilesNotifier().selection ?? Person().fromDefault();
+
+    if (result < activeProfile.hypo) {
+      return R.color.very_low;
+    } else if (result >= activeProfile.hypo &&
+        result < activeProfile.rangeMin) {
+      return R.color.low;
+    } else if (result >= activeProfile.rangeMin &&
+        result < activeProfile.rangeMax) {
+      return R.color.target;
+    } else if (result >= activeProfile.rangeMax &&
+        result < activeProfile.hyper) {
+      return R.color.high;
+    } else {
+      return R.color.very_high;
+    }
+  }
+
+  Widget getDeviceImage(int deviceId) {
+    switch (deviceId) {
+      case 87:
+        return Image.asset(R.image.mi_scale);
+      case 103:
+        return Image.asset(R.image.contour_png);
+      case 112:
+        return Image.asset(R.image.accu_check_png);
+      default:
+        return null;
+    }
+  }
+
+  Widget getDeviceImageFromType(DeviceType device) {
+    print(device);
+    switch (device) {
+      case DeviceType.MI_SCALE:
+        return Image.asset(R.image.mi_scale);
+      case DeviceType.CONTOUR_PLUS_ONE:
+        return Image.asset(R.image.contour_png);
+      case DeviceType.ACCU_CHEK:
+        return Image.asset(R.image.accu_check_png);
+      default:
+        return null;
+    }
+  }
+
+  String getDeviceName(int deviceId) {
+    switch (deviceId) {
+      case 103:
+        return "Contour Plus";
+      case 112:
+        return "ACCU-CHEK";
+      default:
+        return "";
+    }
   }
 }
 

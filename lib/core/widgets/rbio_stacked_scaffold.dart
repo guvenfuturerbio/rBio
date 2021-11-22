@@ -1,0 +1,134 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+
+import '../core.dart';
+
+class RbioStackedScaffold extends StatelessWidget {
+  final RbioAppBar appbar;
+  final Widget body;
+
+  // Optionals
+  final Color backgroundColor;
+  final Widget bottomNavigationBar;
+  final Widget bottomSheet;
+  final Widget drawer;
+  final DragStartBehavior drawerDragStartBehavior;
+  final double drawerEdgeDragWidth;
+  final bool drawerEnableOpenDragGesture;
+  final Color drawerScrimColor;
+  final Widget endDrawer;
+  final bool endDrawerEnableOpenDragGesture;
+  final bool extendBody;
+  final bool extendBodyBehindAppBar;
+  final Widget floatingActionButton;
+  final FloatingActionButtonAnimator floatingActionButtonAnimator;
+  final FloatingActionButtonLocation floatingActionButtonLocation;
+  final void Function(bool) onDrawerChanged;
+  final void Function(bool) onEndDrawerChanged;
+  final List<Widget> persistentFooterButtons;
+  final bool primary;
+  final bool resizeToAvoidBottomInset;
+  final String restorationId;
+
+  RbioStackedScaffold({
+    Key key,
+    @required this.appbar,
+    @required this.body,
+    this.backgroundColor,
+    this.bottomNavigationBar,
+    this.bottomSheet,
+    this.drawer,
+    this.drawerDragStartBehavior,
+    this.drawerEdgeDragWidth,
+    this.drawerEnableOpenDragGesture,
+    this.drawerScrimColor,
+    this.endDrawer,
+    this.endDrawerEnableOpenDragGesture,
+    this.extendBody,
+    this.extendBodyBehindAppBar,
+    this.floatingActionButton,
+    this.floatingActionButtonAnimator,
+    this.floatingActionButtonLocation,
+    this.onDrawerChanged,
+    this.onEndDrawerChanged,
+    this.persistentFooterButtons,
+    this.primary,
+    this.resizeToAvoidBottomInset,
+    this.restorationId,
+  });
+  static double kHeight(BuildContext context) =>
+      (64 + MediaQuery.of(context).viewPadding.top);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          //
+          RbioBody(
+            child: body,
+          ),
+
+          //
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(15),
+            ),
+            child: SizedBox(
+              height: kHeight(context),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  //
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: getIt<ITheme>().mainColor,
+                      ),
+                    ),
+                  ),
+
+                  //
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: 1176,
+                      ),
+                      child: appbar,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+
+      //
+      backgroundColor: backgroundColor,
+      bottomNavigationBar: bottomNavigationBar,
+      bottomSheet: bottomSheet,
+      drawer: drawer,
+      drawerDragStartBehavior:
+          drawerDragStartBehavior ?? DragStartBehavior.start,
+      drawerEdgeDragWidth: drawerEdgeDragWidth,
+      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+      drawerScrimColor: drawerScrimColor,
+      endDrawer: endDrawer,
+      endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+      extendBody: extendBody ?? false,
+      extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonAnimator: floatingActionButtonAnimator,
+      floatingActionButtonLocation: floatingActionButtonLocation,
+      onDrawerChanged: onDrawerChanged,
+      onEndDrawerChanged: onEndDrawerChanged,
+      persistentFooterButtons: persistentFooterButtons,
+      primary: primary ?? true,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+      restorationId: restorationId,
+    );
+  }
+}
