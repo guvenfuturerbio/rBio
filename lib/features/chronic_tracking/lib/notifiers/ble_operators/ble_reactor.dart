@@ -16,7 +16,7 @@ import '../../models/ble_models/paired_device.dart';
 import '../../models/device_model/mi_scale_device.dart';
 import '../../models/device_model/scale_device_model.dart';
 import '../../widgets/utils.dart';
-import '../../widgets/utils/mi_scale_popup.dart';
+import '../../../progress_sections/scale_progress/utils/mi_scale_popup.dart';
 import '../shared_pref_notifiers.dart';
 import '../user_profiles_notifier.dart';
 

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
+import '../../../../core/core.dart';
 import '../../../../generated/l10n.dart';
-import '../helper/resources.dart';
 
 class LoadingPage extends StatefulWidget {
   _ProgressDialogState state;

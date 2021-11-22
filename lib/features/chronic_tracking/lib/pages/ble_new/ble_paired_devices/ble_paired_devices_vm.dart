@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
-import '../../../helper/resources.dart';
 import '../../../models/ble_models/DeviceTypes.dart';
 import '../../../models/ble_models/paired_device.dart';
 import '../../../notifiers/shared_pref_notifiers.dart';
-import '../../../widgets/utils.dart';
 
 class PairedDevicesVm extends ChangeNotifier {
   List<PairedDevice> _pairedDevices;
@@ -49,22 +48,22 @@ class PairedDevicesVm extends ChangeNotifier {
   infoFetcher(PairedDevice device) {
     List<String> currentDeviceInfos = [];
     if (device.deviceType == DeviceType.ACCU_CHEK) {
-      currentDeviceInfos = R.guide.accu_check;
+      currentDeviceInfos = R.deviceGuides.accu_check;
       return guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.CONTOUR_PLUS_ONE) {
-      currentDeviceInfos = R.guide.contour_plus_blood;
+      currentDeviceInfos = R.deviceGuides.contour_plus_blood;
       return guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.OMRON_BLOOD_PRESSURE_ARM) {
-      currentDeviceInfos = R.guide.omron_arm;
+      currentDeviceInfos = R.deviceGuides.omron_arm;
       return guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.OMRON_BLOOD_PRESSURE_WRIST) {
-      currentDeviceInfos = R.guide.omron_wrist;
+      currentDeviceInfos = R.deviceGuides.omron_wrist;
       return guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.OMRON_SCALE) {
-      currentDeviceInfos = R.guide.omron_scale;
+      currentDeviceInfos = R.deviceGuides.omron_scale;
       return guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.MI_SCALE) {
-      currentDeviceInfos = R.guide.mi_scale;
+      currentDeviceInfos = R.deviceGuides.mi_scale;
       return guidePopUpContextWidget(currentDeviceInfos);
     } else {
       Text("There is no device info");

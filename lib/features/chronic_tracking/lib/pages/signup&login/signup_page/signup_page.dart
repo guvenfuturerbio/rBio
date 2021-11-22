@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
-import '../../../helper/resources.dart';
-import '../../../notifiers/user_notifier.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../generated/l10n.dart';
+import '../../../notifiers/user_notifier.dart' as ct;
 import 'signup_page_vm.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Form(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      child: Consumer<UserNotifier>(
+                      child: Consumer<ct.UserNotifier>(
                         builder: (context, valueFromNotifier, child) {
                           return Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -82,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     width: 300,
                                     child: Theme(
                                       data: ThemeData(
-                                          primaryColor: R.btnLightBlue),
+                                          primaryColor: R.color.btnLightBlue),
                                       child: TextFormField(
                                         cursorColor: Colors.black,
                                         controller: nameController,
@@ -101,7 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     width: 300,
                                     child: Theme(
                                       data: ThemeData(
-                                          primaryColor: R.btnLightBlue),
+                                          primaryColor: R.color.btnLightBlue),
                                       child: TextFormField(
                                         focusNode: mailFocusNode,
                                         cursorColor: Colors.black,
@@ -123,7 +123,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     width: 300,
                                     child: Theme(
                                       data: ThemeData(
-                                          primaryColor: R.btnLightBlue),
+                                          primaryColor: R.color.btnLightBlue),
                                       child: TextFormField(
                                         focusNode: passwordFocusNode,
                                         cursorColor: Colors.black,
@@ -152,8 +152,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         begin: Alignment.bottomRight,
                                         end: Alignment.topLeft,
                                         colors: <Color>[
-                                          R.btnLightBlue,
-                                          R.btnDarkBlue
+                                          R.color.ayranci,
+                                          R.color.btnDarkBlue
                                         ],
                                       ),
                                       borderRadius: BorderRadius.all(

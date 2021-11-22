@@ -72,4 +72,33 @@ class _Color {
   final cayyolu_text = Color(0xFFFFFFFF);
   final danisma = Color(0xff65c0b8);
   final danisma_light = Color(0xffafdfdb);
+
+  // from OneDoseRepo
+  final very_high = Color(0xFFf4bb44);
+  final high = Color(0xFFf7ec57);
+  final target = Color(0xFF66c791);
+  final low = Color(0xFFe98884);
+  final very_low = Color(0xFFe2605b);
+  final graph_plot_range = Color(0xFFCBEBD9);
+  final state_color = Color(0xFF7a7a7a);
+  final defaultBlue = Color.fromRGBO(0, 104, 255, 1);
+  final light_dark_blue = Color.fromRGBO(0, 0, 255, 1);
+  final background = Color(0xFFF0F0F0);
+  final green_dashboard = Color(0xFFc2e9d1);
+  final color = Color.fromRGBO(51, 51, 51, 1);
+  final main_color = Color.fromRGBO(37, 48, 133, 1);
+  final border_color = Color.fromRGBO(51, 51, 51, 1);
+  final bg_gray = Color(0xFFF3F3F3);
+  final chart_gray = Color(0xffDDDEDE);
+  final darkBlue = Color.fromRGBO(37, 48, 133, 1);
+  final backgroundColor = Color.fromRGBO(240, 240, 240, 1);
+  final darkYellow = Color.fromRGBO(255, 182, 0, 1);
+  final lightYellow = Color.fromRGBO(255, 220, 133, 1);
+  final circleBlue = Color.fromRGBO(133, 214, 255, 1);
+  final darkRed = Color.fromRGBO(219, 56, 50, 1);
+  final lightRed = Color.fromRGBO(232, 128, 124, 1);
+  final btnDarkBlue = Color.fromRGBO(37, 48, 133, 1);
+  final btnLightBlue = Color.fromRGBO(0, 0, 255, 1);
+  final drawerBgLightBlue = Color.fromRGBO(133, 214, 255, 1);
+  final regularBlue = Color.fromRGBO(0, 104, 255, 1);
 }

@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/core.dart';
+import '../../../../../../generated/l10n.dart';
 import '../../../extension/size_extension.dart';
-import '../../../helper/resources.dart';
 import '../../../models/ble_models/DeviceTypes.dart';
 import '../../../models/ble_models/paired_device.dart';
 import '../../../widgets/custom_app_bar/custom_app_bar.dart';
-import '../../../widgets/utils.dart';
-import '../ble_status_screen.dart';
 import '../ble_scanner/ble_scanner.dart';
+import '../ble_status_screen.dart';
 import 'ble_device_connections_vm.dart';
 
 class DeviceConnections extends StatefulWidget {

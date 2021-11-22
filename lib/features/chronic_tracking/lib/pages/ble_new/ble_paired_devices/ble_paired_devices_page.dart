@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/core.dart';
+import '../../../../../../generated/l10n.dart';
 import '../../../extension/size_extension.dart';
 import '../../../helper/resources.dart';
 import '../../../models/ble_models/paired_device.dart';
-import '../../../widgets/utils.dart';
 import 'ble_paired_devices_vm.dart';
 
 class PairedDevicesPage extends StatefulWidget {
@@ -34,7 +34,7 @@ class _PairedDevicesPage extends State<PairedDevicesPage> {
                 gradient: LinearGradient(
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
-                  colors: <Color>[R.btnLightBlue, R.btnDarkBlue],
+                  colors: <Color>[R.color.btnLightBlue, R.color.btnDarkBlue],
                 ),
               ),
               child: FloatingActionButton(

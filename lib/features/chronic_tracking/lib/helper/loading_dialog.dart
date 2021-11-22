@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'resources.dart';
+import '../../../../core/core.dart';
 
 class LoadingDialog extends StatefulWidget {
   static _LoadingDialogState state;

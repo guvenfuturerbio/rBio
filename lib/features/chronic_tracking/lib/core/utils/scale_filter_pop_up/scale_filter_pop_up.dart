@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/core.dart';
+import '../../../../../../generated/l10n.dart';
+import '../../../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
 import '../../../extension/size_extension.dart';
-import '../../../helper/resources.dart';
-import '../../../pages/progress_pages/scale_progress_page/scale_progress_page_view_model.dart';
 import '../../services/enum/selected_scale_type.dart';
 import 'scale_filter_pop_up_vm.dart';
 
@@ -112,8 +112,8 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                         begin: Alignment.bottomRight,
                                         end: Alignment.topLeft,
                                         colors: <Color>[
-                                          R.btnLightBlue,
-                                          R.btnDarkBlue
+                                          R.color.btnLightBlue,
+                                          R.color.btnDarkBlue
                                         ]),
                                   ),
                                   padding: EdgeInsets.only(

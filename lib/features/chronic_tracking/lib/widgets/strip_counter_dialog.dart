@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../core/core.dart';
 import '../../../../generated/l10n.dart';
-import '../helper/resources.dart';
 
 class StripGradientDialog extends StatefulWidget {
   StripGradientDialog(this.title, this.callback);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/core/core.dart';
 
-import '../../widgets/utils.dart';
 import 'map_convertable.dart';
 
 class GlucoseData extends MapConvertible {

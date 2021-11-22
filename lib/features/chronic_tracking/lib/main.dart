@@ -5,17 +5,16 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
 
+import '../../../core/core.dart';
 import '../../../generated/l10n.dart';
+import '../progress_sections/glucose_progress/view/bg_progress_page.dart';
+import '../progress_sections/scale_progress/view/scale_progress_page.dart';
 import 'helper/resources.dart';
 import 'pages/ble_new/ble_devices/ble_device_connections.dart';
 import 'pages/ble_new/ble_paired_devices/ble_paired_devices_page.dart';
-import 'pages/home/home_page_new/home_page_new.dart';
-import 'pages/progress_pages/bg_progress_page/bg_progress_page.dart';
-import 'pages/progress_pages/scale_progress_page/scale_progress_page.dart';
 import 'pages/signup&login/email_login_page/email_login_page.dart';
 import 'pages/signup&login/login_page/login_page.dart';
 import 'pages/signup&login/signup_page/signup_page.dart';
-import 'pages/splash/splash_page.dart';
 
 /* 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -153,11 +152,9 @@ class ChronicApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Colors.white,
         fontFamily: 'SourceSansPro',
-        canvasColor: R.backgroundColor,
+        canvasColor: R.color.backgroundColor,
       ),
       routes: {
-        Routes.ROOT_PAGE: (context) => SplashPage(),
-        Routes.HOME_PAGE: (context) => HomePageNew(),
         Routes.BG_PROGRESS_PAGE: (context) => BgProgressPage(),
         Routes.SCALE_PROGRESS_PAGE: (context) => ScaleProgressPage(),
         Routes.LOGIN_PAGE: (context) => LoginPage(),

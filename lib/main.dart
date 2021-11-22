@@ -13,8 +13,8 @@ import 'core/core.dart';
 import 'features/chronic_tracking/lib/database/repository/profile_repository.dart';
 import 'features/chronic_tracking/lib/notifiers/bg_measurements_notifiers.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
-import 'features/chronic_tracking/lib/pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
-import 'features/chronic_tracking/lib/pages/progress_pages/scale_progress_page/scale_progress_page_view_model.dart';
+import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
+import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
 import 'features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
 import 'features/home/viewmodel/home_vm.dart';
 

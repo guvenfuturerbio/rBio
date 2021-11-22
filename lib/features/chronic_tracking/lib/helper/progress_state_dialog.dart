@@ -1,9 +1,9 @@
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 
-import '../widgets/utils.dart';
+import '../../../../core/core.dart';
+import '../../../../generated/l10n.dart';
 import 'resources.dart';
 
 // ignore: must_be_immutable

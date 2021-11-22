@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/core.dart';
+import '../../../../../../generated/l10n.dart';
 import '../../../extension/size_extension.dart';
-import '../../../helper/resources.dart';
 import 'login_page_vm.dart';
 
 part '../widgets/login_option_button.dart';
@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
                                       onChanged: (newValue) {
                                         value.showApplicationContestForm();
                                       },
-                                      activeColor: R
+                                      activeColor: R.color
                                           .regularBlue, //// <-- leading Checkbox
                                       // ,
                                     ),

@@ -6,15 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../core/core.dart';
+import '../../../../../../../generated/l10n.dart';
 import '../../../../database/datamodels/glucose_data.dart';
 import '../../../../database/repository/glucose_repository.dart';
 import '../../../../extension/size_extension.dart';
-import '../../../../helper/resources.dart';
-import '../../../../widgets/utils.dart';
 import 'bg_tagger_vm.dart';
 
 class BgTaggerPopUp extends StatelessWidget {
@@ -251,7 +250,7 @@ class BgTaggerPopUp extends StatelessWidget {
 
   Card getTagElement(bool isCurrent, String icon, String title) {
     return Card(
-      color: isCurrent ? R.btnDarkBlue : R.color.white,
+      color: isCurrent ? R.color.btnDarkBlue : R.color.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
@@ -288,7 +287,7 @@ class BgTaggerPopUp extends StatelessWidget {
         begin: Alignment.bottomRight,
         end: Alignment.topLeft,
         colors: isCurrent
-            ? <Color>[R.btnLightBlue, R.btnDarkBlue]
+            ? <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]
             : <Color>[Colors.white, Colors.white],
       ),
     );
@@ -448,7 +447,7 @@ class BgTaggerPopUp extends StatelessWidget {
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
               colors: isSave
-                  ? <Color>[R.btnLightBlue, R.btnDarkBlue]
+                  ? <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]
                   : <Color>[R.color.white, R.color.white]),
         ),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),

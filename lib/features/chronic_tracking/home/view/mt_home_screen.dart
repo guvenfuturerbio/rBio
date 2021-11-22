@@ -4,8 +4,8 @@ import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/core/widgets/rbio_stacked_scaffold.dart';
 import 'package:onedosehealth/features/chronic_tracking/home/model/page_model.dart';
 import 'package:onedosehealth/features/chronic_tracking/home/utils/card_widget.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/pages/progress_pages/bg_progress_page/bg_progress_page_view_model.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/pages/progress_pages/scale_progress_page/scale_progress_page_view_model.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
 import 'package:provider/provider.dart';
 
 part '../vm/mt_home_vm.dart';
@@ -50,18 +50,33 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                ...val.items
-                    .map(
-                      (element) => SectionCard(
-                        isActive: val.activeItem != null &&
-                            val.activeItem.key == element.key,
-                        isVisible: val.activeItem == null,
-                        color: element.color,
-                        smallChild: element.smallChild,
-                        largeChild: element.largeChild,
-                      ),
-                    )
-                    .toList(),
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17)),
+                  color: val.activeItem != null ? Colors.transparent : null,
+                  shadowColor:
+                      val.activeItem != null ? Colors.transparent : null,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(17),
+                    child: Column(
+                      children: val.items
+                          .map(
+                            (parentElement) => SectionCard(
+                                isActive: val.activeItem != null &&
+                                    val.activeItem.key == parentElement.key,
+                                isVisible: val.activeItem == null,
+                                color: parentElement.color,
+                                smallChild: parentElement.smallChild,
+                                largeChild: parentElement.largeChild,
+                                hasDivider: val.activeItem == null &&
+                                    val.items.indexWhere((element) =>
+                                            element.key == parentElement.key) <
+                                        val.items.length - 1),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                )
               ],
             ),
           );

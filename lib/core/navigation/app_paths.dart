@@ -1,5 +1,3 @@
-import 'package:onedosehealth/features/chronic_tracking/lib/main.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/pages/home/home_page_new/home_page_new.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -287,10 +285,6 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.MEASUREMENT_TRACKING,
       widget: MeasurementTrackingHomeScreen(),
-    ),
-    VWidget(
-      path: PagePaths.BLOOD_GLUCOSE_PROGRESS,
-      widget: HomePageNew(),
     ),
     //
     // :_ is a path parameters named _

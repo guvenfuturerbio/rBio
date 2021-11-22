@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/core.dart';
+import '../../../../../../generated/l10n.dart';
 import '../../../extension/size_extension.dart';
-import '../../../helper/resources.dart';
 import '../../../models/ble_models/DeviceTypes.dart';
 import '../../../notifiers/ble_operators/ble_connector.dart';
 import '../../../notifiers/ble_operators/ble_reactor.dart';
 import '../../../notifiers/ble_operators/ble_scanner.dart';
 import '../../../widgets/custom_app_bar/custom_app_bar.dart';
-import '../../../widgets/utils.dart';
 import 'ble_scanner_vm.dart';
 
 class BleScannerPage extends StatefulWidget {
@@ -117,7 +116,7 @@ class _BleScannerPageState extends State<BleScannerPage> {
                                                       .id)
                                                   ?.connectionState ==
                                               DeviceConnectionState.connected
-                                          ? R.regularBlue
+                                          ? R.color.regularBlue
                                           : _bleConnectorOps
                                                       ?.getStatus(_bleScannerOps
                                                           .discoveredDevices[

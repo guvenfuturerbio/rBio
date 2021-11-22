@@ -12,7 +12,6 @@ import '../../../notifiers/language_notifiers.dart';
 import '../../../services/user_service.dart';
 import '../../../widgets/consent_form_dialog/consent_form_dialog.dart';
 import '../../../widgets/gradient_dialog.dart';
-import '../../home/home_page_new/home_page_new.dart';
 import '../customwebview.dart';
 
 class LoginPageVm extends ChangeNotifier {
@@ -223,9 +222,5 @@ class LoginPageVm extends ChangeNotifier {
         });
   }
 
-  navigateHome() {
-    Navigator.of(mContext).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (contextTrans) => HomePageNew()),
-        ModalRoute.withName(Routes.HOME_PAGE));
-  }
+  navigateHome() {}
 }

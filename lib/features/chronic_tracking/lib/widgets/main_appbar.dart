@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../helper/resources.dart';
+import '../../../../core/core.dart';
 
 /*Widget MainAppBar(
     {BuildContext context,

@@ -5,8 +5,8 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/core.dart';
 import '../../../extension/size_extension.dart';
-import '../../../helper/resources.dart';
 import '../../../helper/strings.dart';
 import '../stepper/stepper.dart' as core;
 import 'gallery_pop_up_vm.dart';

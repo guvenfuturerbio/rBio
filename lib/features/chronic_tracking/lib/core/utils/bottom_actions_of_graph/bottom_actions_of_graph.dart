@@ -2,9 +2,9 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
 import '../../../extension/size_extension.dart';
-import '../../../helper/resources.dart';
 
 class BottomActionsOfGraph extends StatelessWidget {
   const BottomActionsOfGraph({

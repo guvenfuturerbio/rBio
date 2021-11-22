@@ -4,6 +4,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,7 +12,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../../../../generated/l10n.dart';
 import '../../../../database/datamodels/scale_data.dart';
 import '../../../../database/repository/scale_repository.dart';
-import '../../../../widgets/utils.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
   ScaleModel scaleModel;

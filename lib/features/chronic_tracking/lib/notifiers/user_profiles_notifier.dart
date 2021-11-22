@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 
 import '../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../core/locator.dart';
+import '../../../../generated/l10n.dart';
 import '../database/datamodels/glucose_data.dart';
 import '../database/repository/glucose_repository.dart';
 import '../database/repository/profile_repository.dart';
 import '../database/repository/scale_repository.dart';
-import '../helper/resources.dart';
 import '../models/user_profiles/person.dart';
 import '../models/user_profiles/user_profiles.dart';
-import '../pages/root_page.dart';
 import '../widgets/utils/base_provider_repository.dart';
 import 'bg_measurements_notifiers.dart';
 import 'ble_operators/ble_scanner.dart';
@@ -84,10 +82,6 @@ class UserProfilesNotifier with ChangeNotifier {
     await UserNotifier().signOut();
     await BleScannerOps().stopScan();
     await UserNotifier().deleteInformationForAutoLogin();
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (contextTrans) => RootPage()),
-      ModalRoute.withName(Routes.ROOT_PAGE),
-    );
     notifyListeners();
   }
 

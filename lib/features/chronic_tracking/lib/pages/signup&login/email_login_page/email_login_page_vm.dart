@@ -7,7 +7,6 @@ import '../../../core/utils/progress_dialog.dart';
 import '../../../helper/resources.dart';
 import '../../../services/user_service.dart';
 import '../../../widgets/gradient_dialog.dart';
-import '../../home/home_page_new/home_page_new.dart';
 import 'doctor_checker.dart';
 
 class EmailLoginPageVm extends ChangeNotifier {
@@ -51,9 +50,6 @@ class EmailLoginPageVm extends ChangeNotifier {
       DoctorChecker().doctor = false;
       //UserNotifier().handleSuccessfulLogin(mContext, userCredential.user);
       hideDialog(mContext);
-      Navigator.of(mContext).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (contextTrans) => HomePageNew()),
-          ModalRoute.withName(Routes.HOME_PAGE));
     } catch (e) {
       print(e);
       hideDialog(mContext);

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helper/resources.dart';
-import '../../../notifiers/user_notifier.dart';
+import '../../../notifiers/user_notifier.dart' as ct;
 import 'email_login_page_vm.dart';
 
 class EmailLoginPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                   Form(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      child: Consumer<UserNotifier>(
+                      child: Consumer<ct.UserNotifier>(
                         builder: (context, valueFromNotifier, child) {
                           return Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +82,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                                     width: 300,
                                     child: Theme(
                                       data: ThemeData(
-                                          primaryColor: R.btnLightBlue),
+                                          primaryColor: R.color.btnLightBlue),
                                       child: TextFormField(
                                         cursorColor: Colors.black,
                                         controller: userIdController,
@@ -103,7 +104,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                                     width: 300,
                                     child: Theme(
                                       data: ThemeData(
-                                          primaryColor: R.btnLightBlue),
+                                          primaryColor: R.color.btnLightBlue),
                                       child: TextFormField(
                                         cursorColor: Colors.black,
                                         keyboardType: TextInputType.text,
@@ -131,8 +132,8 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                                         begin: Alignment.bottomRight,
                                         end: Alignment.topLeft,
                                         colors: <Color>[
-                                          R.btnLightBlue,
-                                          R.btnDarkBlue
+                                          R.color.btnLightBlue,
+                                          R.color.btnDarkBlue
                                         ],
                                       ),
                                       borderRadius: BorderRadius.all(

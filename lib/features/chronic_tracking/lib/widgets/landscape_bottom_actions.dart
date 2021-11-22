@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 
+import '../../../../core/core.dart';
+import '../../../../generated/l10n.dart';
 import '../extension/size_extension.dart';
-import '../helper/resources.dart';
 
 class LandScapeBottomActionsWidget extends StatelessWidget {
   const LandScapeBottomActionsWidget({

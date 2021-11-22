@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/core.dart';
 import '../../../../generated/l10n.dart';
-import '../helper/resources.dart';
 
 class GradientDialog extends StatefulWidget {
   GradientDialog(this.title, this.text);
@@ -25,7 +25,7 @@ class _GradientDialogState extends State<GradientDialog> {
     );
 
     return AlertDialog(
-      backgroundColor: R.btnDarkBlue,
+      backgroundColor: R.color.btnDarkBlue,
       title: Text(
         widget.title,
         style: TextStyle(
@@ -58,7 +58,7 @@ class _GradientDialogState extends State<GradientDialog> {
   }
 
   Gradient BlueGradient() => LinearGradient(
-      colors: [R.btnLightBlue, R.btnDarkBlue],
+      colors: [R.color.btnLightBlue, R.color.btnDarkBlue],
       begin: Alignment.bottomLeft,
       end: Alignment.centerRight);
 }
