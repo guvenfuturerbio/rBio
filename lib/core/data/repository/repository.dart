@@ -63,7 +63,7 @@ class Repository {
     );
   }
 
-  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(int id) =>
+  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(String id) =>
       apiService.getSubCategoryItems(id);
 
   Future<String> doPackagePayment(PackagePaymentRequest packagePayment) =>

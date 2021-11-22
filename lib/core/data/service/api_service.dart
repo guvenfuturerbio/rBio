@@ -19,8 +19,9 @@ abstract class ApiService {
   // for_you_services.dart
   Future<List<ForYouCategoryResponse>> getAllPackage(String path);
   Future<List<ForYouCategoryResponse>> getAllSubCategories(String path);
-  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(String path);
-  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(int id);
+  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
+      String path);
+  Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(String id);
   Future<String> doPackagePayment(PackagePaymentRequest packagePayment);
 
   Future<GuvenResponseModel> registerStep2Ui(
@@ -40,7 +41,7 @@ abstract class ApiService {
 
   //
   Future<List<FilterTenantsResponse>> filterTenants(
-     String path, FilterTenantsRequest filterTenantsRequest);
+      String path, FilterTenantsRequest filterTenantsRequest);
   Future<List<FilterDepartmentsResponse>> filterDepartments(
       FilterDepartmentsRequest filterDepartmentsRequest);
   Future<List<FilterResourcesResponse>> filterResources(
@@ -52,7 +53,8 @@ abstract class ApiService {
   Future<int> saveAppointment(AppointmentRequest appointmentRequest);
 
   //
-  Future<PatientRelativeInfoResponse> getAllRelatives(GetAllRelativesRequest bodyPages);
+  Future<PatientRelativeInfoResponse> getAllRelatives(
+      GetAllRelativesRequest bodyPages);
   Future<GuvenResponseModel> getCountries();
   Future<GuvenResponseModel> forgotPasswordUi(
       UserRegistrationStep1Model userRegistrationStep1);

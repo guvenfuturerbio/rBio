@@ -362,5 +362,7 @@
   "which_depart_i_go" : "Hangi bölüme gideceğimi bilmiyorum",
   "depart_analyse" : "Bölüm analizi",
   "pls_select" : "Seçiniz",
-  "update_information" : "Bilgilerini Güncelle"
+  "update_information" : "Bilgilerini Güncelle",
+  "payment_successful": "Ödemeniz başarıyla gerçekleştirildi",
+  "payment_not_successful":"Ödeme başarısız.\nLütfen 444 25 25 arayınız"
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
-import '../constants/constants.dart';
 import '../core.dart';
 
 class GuvenAlert extends StatelessWidget {
@@ -26,7 +25,7 @@ class GuvenAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: backgroundColor ?? R.color.blue,
+      backgroundColor: backgroundColor ?? getIt<ITheme>().mainColor,
       contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
       title: title,
       shape: shape ??
@@ -54,7 +53,7 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 26,
         fontWeight: FontWeight.w700,
-        color: Colors.black,
+        color: getIt<ITheme>().textColorSecondary,
       ),
     );
   }
@@ -66,7 +65,7 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 20.0,
         fontFamily: 'Roboto',
-        color: color ?? Colors.black,
+        color: color ?? getIt<ITheme>().textColorSecondary,
       ),
     );
   }
@@ -82,7 +81,7 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 16.0,
         fontFamily: 'Roboto',
-        color: Colors.black,
+        color: getIt<ITheme>().textColorSecondary,
         decoration: decoration,
       ),
     );
@@ -101,15 +100,15 @@ class GuvenAlert extends StatelessWidget {
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: TextStyle(color: R.color.blue),
+          style: TextStyle(color: getIt<ITheme>().mainColor),
         ),
         textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         callback: onPressed,
         gradient: LinearGradient(
-            colors: [R.color.white, R.color.white],
+            colors: [getIt<ITheme>().textColor, getIt<ITheme>().textColor],
             begin: Alignment.bottomLeft,
             end: Alignment.centerRight),
-        shadowColor: Colors.black,
+        shadowColor: getIt<ITheme>().textColorSecondary,
       );
 
   static Widget buildBigMaterialAction(
@@ -145,7 +144,7 @@ class GuvenAlert extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 18,
-            color: Colors.white,
+            color: getIt<ITheme>().textColor,
           ),
         ),
         onPressed: onPressed,

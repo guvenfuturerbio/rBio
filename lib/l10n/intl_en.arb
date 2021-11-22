@@ -367,5 +367,7 @@
   "which_depart_i_go" : "I don't know which department to go to",
   "depart_analyse" : "Department analyze",
   "pls_select" : "Choose",
-  "update_information" : "Update Information"
+  "update_information" : "Update Information",
+  "payment_successful": "Your payment is successful ",
+  "payment_not_successful":"Your payment is not successful.\nPlease call 444 25 25"
 }

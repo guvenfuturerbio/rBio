@@ -86,7 +86,7 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(
-      int id) async {
+      String id) async {
     final response = await helper.getGuven(
         R.endpoints.getSubCategoryItemsPath(id),
         options: authOptions);

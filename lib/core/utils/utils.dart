@@ -387,18 +387,17 @@ Widget categoryBox({
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold),
+                          style: context.xHeadline3.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: getIt<ITheme>().textColor),
                         ),
                       ),
                     ],
                   ),
                   decoration: BoxDecoration(
                       gradient: LinearGradient(colors: [
-                        R.color.blue.withOpacity(0.8),
-                        R.color.light_blue.withOpacity(0.5),
+                        getIt<ITheme>().mainColor.withOpacity(0.8),
+                        getIt<ITheme>().mainColor.withOpacity(0.3),
                       ], begin: Alignment.topLeft, end: Alignment.topRight),
                       boxShadow: [
                         BoxShadow(

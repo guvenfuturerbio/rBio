@@ -3724,6 +3724,26 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Your payment is successful `
+  String get payment_successful {
+    return Intl.message(
+      'Your payment is successful ',
+      name: 'payment_successful',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your payment is not successful.\nPlease call 444 25 25`
+  String get payment_not_successful {
+    return Intl.message(
+      'Your payment is not successful.\nPlease call 444 25 25',
+      name: 'payment_not_successful',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

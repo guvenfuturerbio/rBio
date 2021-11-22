@@ -41,7 +41,7 @@ class OrderSummaryScreenVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchSubCategoryItems(var id) async {
+  fetchSubCategoryItems(String id) async {
     try {
       this._progress = LoadingProgress.LOADING;
       notifyListeners();
