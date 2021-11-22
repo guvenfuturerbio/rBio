@@ -76,6 +76,12 @@ InputBorder _borderTextField() => OutlineInputBorder(
           width: 0, style: BorderStyle.solid, color: R.color.dark_white),
     );
 
+InputBorder _borderTextFieldForLogin() => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide(
+          width: 0, style: BorderStyle.solid, color: R.color.dark_white),
+    );
+
 InputBorder _borderTextFieldRed() => OutlineInputBorder(
       borderRadius: BorderRadius.circular(200),
       borderSide: BorderSide(
@@ -133,6 +139,14 @@ InputDecoration inputDecoration({hintText: String}) => InputDecoration(
     focusedBorder: _borderTextField(),
     border: _borderTextField(),
     enabledBorder: _borderTextField(),
+    hintText: hintText,
+    hintStyle: TextStyle(fontSize: 16, color: R.color.gray));
+
+InputDecoration inputDecorationForLogin({hintText: String}) => InputDecoration(
+    contentPadding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+    focusedBorder: _borderTextFieldForLogin(),
+    border: _borderTextFieldForLogin(),
+    enabledBorder: _borderTextFieldForLogin(),
     hintText: hintText,
     hintStyle: TextStyle(fontSize: 16, color: R.color.gray));
 
@@ -746,7 +760,7 @@ String GetEnumValue(e) => e.toString().split('.').last;
 Gradient AppGradient() => LinearGradient(
       colors: [
         getIt<ITheme>().mainColor,
-        getIt<ITheme>().secondaryColor,
+        getIt<ITheme>().mainColor,
       ],
       begin: Alignment.bottomLeft,
       end: Alignment.centerRight,

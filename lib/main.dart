@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
               RbioConfig.of(context).changeOrientation(orientation);
 
               return AtomMaterialApp(
-                initialUrl: PagePaths.MAIN,
+                initialUrl: PagePaths.LOGIN,
                 routes: VRouterRoutes.routes,
                 onSystemPop: (data) async {
                   final currentUrl = data.fromUrl;

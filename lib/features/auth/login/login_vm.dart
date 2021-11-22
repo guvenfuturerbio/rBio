@@ -51,7 +51,7 @@ class LoginScreenVm extends ChangeNotifier {
       await getSavedLoginInfo();
       await fetchConsentFormState();
       await fetchKvkkFormState();
-      await startAppVersionOperation();
+      //await startAppVersionOperation();
       //    packageInfo = await PackageInfo.fromPlatform();
     });
   }
@@ -134,10 +134,10 @@ class LoginScreenVm extends ChangeNotifier {
     notifyListeners();
     try {
       if (!kIsWeb) {
-        await fetchAppVersion();
-        await checkAppVersion();
+        //await fetchAppVersion();
+        //await checkAppVersion();
       } else {
-        autoLogin();
+        //autoLogin();
       }
       this._versionCheckProgress = VersionCheckProgress.DONE;
       notifyListeners();
@@ -150,7 +150,8 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  VersionCheckProgress get versionCheckProgress => this._versionCheckProgress;
+  VersionCheckProgress get versionCheckProgress =>
+      this._versionCheckProgress ?? VersionCheckProgress.DONE;
 
   Future<void> fetchAppVersion() async {
     this._progress = LoadingProgress.LOADING;
@@ -220,7 +221,7 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  bool get needForceUpdate => this._needForceUpdate ?? true;
+  bool get needForceUpdate => this._needForceUpdate ?? false;
 
   Future<void> login(String username, String password) async {
     if (checkFields(username, password)) {

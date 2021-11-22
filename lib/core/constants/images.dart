@@ -220,4 +220,9 @@ class _Images {
   final girl_child_icon = "assets/images/girl_child_icon.svg";
   final man_icon = "assets/images/man_icon.svg";
   final women_icon = "assets/images/women_icon.svg";
+
+  //social media icons
+  final apple = "assets/images/apple.svg";
+  final google = "assets/images/google.svg";
+  final facebook = "assets/images/facebook.svg";
 }

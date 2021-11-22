@@ -2,48 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../core.dart';
-import 'rbio_appbar_login.dart';
 
-class RbioAppBar extends PreferredSize with IRbioAppBar {
+mixin IRbioAppBar on PreferredSize {}
+
+class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
   final Widget title;
-  final Widget leading;
   final List<Widget> actions;
 
-  RbioAppBar({
+  RbioAppBarLogin({
     this.title,
-    this.leading,
     this.actions,
   }) : super(
           preferredSize: Size.fromHeight(64),
           child: AppBar(
             toolbarHeight: 64,
             actions: actions,
-            centerTitle: true,
+            centerTitle: false,
             elevation: 0,
-
-            //
-            leading: leading ??
-                Align(
-                  alignment: Alignment.center,
-                  child: InkWell(
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
-                      child: SvgPicture.asset(
-                        R.image.back_icon,
-                        width: R.sizes.iconSize,
-                      ),
-                    ),
-                    onTap: () {
-                      Atom.historyBack();
-                    },
-                  ),
-                ),
 
             //
             title: title ??
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.bottomLeft,
                   child: SizedBox(
                     height: 50,
                     child: Image.asset(
