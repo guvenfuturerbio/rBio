@@ -19,6 +19,10 @@ enum SharedPreferencesKeys {
   WIDGET_QUERY,
   SYMPTOM_AUTH_TOKEN,
   CT_AUTH_TOKEN,
+
+  hba1cList,
+  medicines,
+  usedStripCount,
 }
 
 extension SharedPreferencesKeysStringExt on String {

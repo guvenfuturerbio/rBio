@@ -622,7 +622,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "symptom_checker_welcome" : MessageLookupByLibrary.simpleMessage("Detaylı Sağlık Kontrolüne hoşgeldiniz, lütfen cinsiyetinizi ve doğum yılınızı sesli bir şekilde söyler misiniz? Örneğin, Erkek, 1980"),
     "take_covid_19" : MessageLookupByLibrary.simpleMessage("COVID-19 PCR Testi yaptır"),
     "target" : MessageLookupByLibrary.simpleMessage("Hedef"),
-    "tawkto_url" : MessageLookupByLibrary.simpleMessage("https://tawk.to/chat/5cb46145c1fe2560f3fee0c1/1ehjtjrpo"),
+    "tawkto_url" : MessageLookupByLibrary.simpleMessage("https://tawk.to/chat/5ec22b4c967ae56c521abb5d/default"),
     "tc_identity_number" : MessageLookupByLibrary.simpleMessage("T.C Kimlik Numaranız"),
     "tc_or_pass_cannot_empty" : MessageLookupByLibrary.simpleMessage("Kullanıcı adı ya da şifre boş bırakılamaz !"),
     "tc_or_passport" : MessageLookupByLibrary.simpleMessage("T.C Kimlik/Pasaport Numaranız"),
