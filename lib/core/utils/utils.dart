@@ -294,14 +294,7 @@ Widget TitleAppBarWhite({String title}) => Container(
       ),
     );
 
-Widget ButtonSkip({BuildContext context, Function onPressed}) => Center(
-      child: IconButton(
-          icon: Text(
-            S.of(context).btn_navigation_skip,
-            style: TextStyle(fontSize: 16, color: R.color.blue),
-          ),
-          onPressed: onPressed),
-    );
+
 
 Widget InputWidget(
         {String hint,

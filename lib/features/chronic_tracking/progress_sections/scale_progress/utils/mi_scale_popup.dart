@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../../lib/core/utils/loading/progress_circle.dart';
 import '../../../lib/database/datamodels/scale_data.dart';
 import '../../../lib/database/repository/scale_repository.dart';
-import '../../../lib/extension/size_extension.dart';
 import '../../../lib/helper/resources.dart';
 import '../../../lib/locator.dart';
 import '../../../lib/notifiers/ble_operators/ble_reactor.dart';

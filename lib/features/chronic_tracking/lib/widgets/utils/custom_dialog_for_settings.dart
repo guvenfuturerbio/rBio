@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../generated/l10n.dart';
-import '../../extension/size_extension.dart';
 
 class CustomDialog extends StatelessWidget {
   final initalItem;

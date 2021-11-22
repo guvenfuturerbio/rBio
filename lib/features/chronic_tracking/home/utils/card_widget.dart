@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/extension/size_extension.dart';
+import 'package:onedosehealth/core/extension/build_context_extension.dart';
 
 class SectionCard extends StatelessWidget {
   const SectionCard(

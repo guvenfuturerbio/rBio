@@ -14,7 +14,6 @@ import '../../../lib/core/utils/gallery_pop_up/gallery_pop_up.dart';
 import '../../../lib/core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
 import '../../../lib/core/utils/stacked_widget/stacked_widget.dart';
 import '../../../lib/database/repository/scale_repository.dart';
-import '../../../lib/extension/size_extension.dart';
 import '../../../lib/models/scale_measurements/scale_measurement_vm.dart';
 import '../../../lib/types/unit.dart';
 import '../view_model/scale_progress_page_view_model.dart';
