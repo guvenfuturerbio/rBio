@@ -170,13 +170,6 @@ class _Endpoints {
       '/Medicine/get-by-filter/${text}'.xCronicTracking;
   String ct_login = '/auth/realms/GuvenComplex/protocol/openid-connect/token'
       .xCronicTrackingSSO;
-  String mediminderGetUserStrip(
-    int entegrationId,
-    String deviceUUID,
-  ) =>
-      '/user/get-user-strip/${entegrationId}/${deviceUUID}'.xCronicTracking;
-  String mediminderUpdateUserStrip() =>
-      '/user/add-update-user-strip'.xCronicTracking;
 }
 
 extension _EndpointsExtension on String {

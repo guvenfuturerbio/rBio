@@ -5,7 +5,6 @@ export "constants/constants.dart";
 export "data/helper/dio_helper.dart";
 export "data/repository/repository.dart";
 export "data/repository/symptom_repository.dart";
-export 'data/repository/mediminder_repository.dart';
 export "data/service/api_service.dart";
 export "data/service/local_cache_service.dart";
 export "domain/base_model.dart";

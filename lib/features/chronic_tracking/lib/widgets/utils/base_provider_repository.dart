@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/mediminder/models/strip_detail_model.dart';
 
 import '../../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../../core/locator.dart';
@@ -15,7 +16,6 @@ import '../../models/bg_measurement/get_blood_glucose_data_of_person.dart';
 import '../../models/bg_measurement/get_hba1c_measurement_list.dart';
 import '../../models/bg_measurement/update_bg_measurement_request.dart';
 import '../../models/firebase/add_firebase_body.dart';
-import '../../models/notification/strip_detail_model.dart';
 import '../../models/user_profiles/person.dart';
 import '../../notifiers/user_profiles_notifier.dart';
 

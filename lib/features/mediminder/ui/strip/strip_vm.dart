@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
 
 import '../../common/mediminder_common.dart';
 
@@ -35,9 +36,9 @@ class StripVm with ChangeNotifier {
       }
 
       if (Mediminder.instance.selection != null) {
-        stripDetailModel = await getIt<MediminderRepository>().getUserStrips(
-                Mediminder.instance.selection?.id,
-                Mediminder.instance.selection?.deviceUUID) ??
+        stripDetailModel = await getIt<ChronicTrackingRepository>()
+                .getUserStrip(Mediminder.instance.selection?.id,
+                    Mediminder.instance.selection?.deviceUUID) ??
             StripDetailModel();
 
         stripDetailModel.deviceUUID = Mediminder.instance.selection?.deviceUUID;
@@ -95,7 +96,7 @@ class StripVm with ChangeNotifier {
     stripDetailModel.deviceUUID = Mediminder.instance.selection?.deviceUUID;
     stripDetailModel.entegrationId = Mediminder.instance.selection?.id;
 
-    await getIt<MediminderRepository>().setUserStrips(stripDetailModel);
+    await getIt<ChronicTrackingRepository>().updateUserStrip(stripDetailModel);
 
     Fluttertoast.showToast(
       msg: "Kaydedildi",
@@ -143,9 +144,9 @@ class StripVm with ChangeNotifier {
     final int usedStripCount =
         (sharedPrefs.getInt(SharedPreferencesKeys.usedStripCount) ??
             sharedPrefs.setInt(SharedPreferencesKeys.usedStripCount, 0));
-    final stripDetailModel = await getIt<MediminderRepository>().getUserStrips(
-            Mediminder.instance.selection?.id,
-            Mediminder.instance.selection?.deviceUUID) ??
+    final stripDetailModel = await getIt<ChronicTrackingRepository>()
+            .getUserStrip(Mediminder.instance.selection?.id,
+                Mediminder.instance.selection?.deviceUUID) ??
         StripDetailModel();
     stripDetailModel.deviceUUID = Mediminder.instance.selection?.deviceUUID;
     stripDetailModel.entegrationId = Mediminder.instance.selection?.id;
@@ -157,6 +158,6 @@ class StripVm with ChangeNotifier {
     checkAlarmAndSendNotification(stripDetailModel);
     await sharedPrefs.setInt(SharedPreferencesKeys.usedStripCount,
         sharedPrefs.getInt(SharedPreferencesKeys.usedStripCount) + value);
-    getIt<MediminderRepository>().setUserStrips(stripDetailModel);
+    getIt<ChronicTrackingRepository>().updateUserStrip(stripDetailModel);
   }
 }
