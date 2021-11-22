@@ -2,13 +2,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/take_appointment/do_mobile_payment/iyzico_response_vm.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import '../../../../core/core.dart';
+import 'package:logging/logging.dart';
 
 class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
   final String html;
-
+  final String uid;
   bool fromDeepLink;
   final String departmentName;
   final String doctorName;
@@ -19,6 +21,7 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
 
   IyzicoResponseSmsPaymentScreen({
     Key key,
+    this.uid,
     this.html,
     this.departmentName,
     this.doctorName,
@@ -34,8 +37,11 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
       _IyzicoResponseSmsPaymentScreenState(html);
 }
 
+@override
 class _IyzicoResponseSmsPaymentScreenState
     extends State<IyzicoResponseSmsPaymentScreen> {
+  bool answer;
+
   final String html;
 
   _IyzicoResponseSmsPaymentScreenState(String formHtml)
@@ -48,73 +54,27 @@ class _IyzicoResponseSmsPaymentScreenState
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
-        var data = message.data;
-
-        try {
-          Navigator.of(context).pop();
-          String code = data['code'];
-          String errorText = data['error_text'];
-          String videoId = data['video_id'];
-          String userName = parseJwtPayLoad(getIt<ISharedPreferencesManager>()
-              .get(SharedPreferencesKeys.JWT_TOKEN))['name'];
-          if (code == "13") {
-            // Payment successful
-            if (widget.fromCovidPcr) {
-              AnalyticsManager().sendEvent(new PcrPaymentSuccessEvent(
-                  widget.hospitalName, widget.appointmentFee));
-            } else {
-              AnalyticsManager().sendEvent(new OAPaymentSuccessEvent(
-                  widget.departmentName,
-                  widget.doctorName,
-                  widget.appointmentType,
-                  widget.hospitalName,
-                  widget.appointmentFee));
-            }
-          }
-          showGradientDialog(context, code, errorText, videoId, userName);
-        } catch (e) {
-          print(e);
-        }
-        return;
-      },
-    );
-
-    return Scaffold(
-      appBar: MainAppBar(context: context, leading: ButtonBackWhite(context)),
-      body: kIsWeb
-          ? HtmlElementView(
-              viewType: "PayPalButtons",
-            )
-          : WebView(
-              initialUrl: Uri.dataFromString(
-                html,
-                mimeType: 'text/html',
-              ).toString(),
-              javascriptMode: JavascriptMode.unrestricted,
-            ),
-    );
-  }
-
-  void showGradientDialog(
-    BuildContext context,
-    String code,
-    String errorText,
-    String videoId,
-    String userName,
-  ) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return GradientDialogForPaymentDialog(
-          errorText,
-          videoId,
-          code,
-          userName,
-        );
-      },
+    return ChangeNotifierProvider<IyzicoResponseVm>(
+      create: (context) => IyzicoResponseVm(widget.uid),
+      child: Consumer<IyzicoResponseVm>(
+        builder: (context, vm, child) {
+          return Scaffold(
+            appBar:
+                MainAppBar(context: context, leading: ButtonBackWhite(context)),
+            body: kIsWeb
+                ? HtmlElementView(
+                    viewType: "PayPalButtons",
+                  )
+                : WebView(
+                    initialUrl: Uri.dataFromString(
+                      html,
+                      mimeType: 'text/html',
+                    ).toString(),
+                    javascriptMode: JavascriptMode.unrestricted,
+                  ),
+          );
+        },
+      ),
     );
   }
 }

@@ -292,6 +292,8 @@ class HomeVm extends ChangeNotifier {
             onTap: () {
               if (isForDelete) {
                 addWidget(_key5);
+              } else {
+                Atom.to(PagePaths.FOR_YOU_CATEGORIES);
               }
             },
             child: HomeSlider(),

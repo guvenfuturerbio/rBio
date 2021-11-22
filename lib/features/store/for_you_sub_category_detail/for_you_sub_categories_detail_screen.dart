@@ -53,11 +53,9 @@ class _ForYouSubCategoriesDetailScreenState
       child: Consumer<ForYouSubCategoriesDetailScreenVm>(
         builder: (BuildContext context, ForYouSubCategoriesDetailScreenVm value,
             Widget child) {
-          return Scaffold(
-            appBar: MainAppBar(
-              context: context,
+          return RbioScaffold(
+            appbar: RbioAppBar(
               title: getTitleBar(context),
-              leading: ButtonBackWhite(context),
             ),
             body: value.progress == LoadingProgress.LOADING
                 ? RbioLoading()
@@ -104,18 +102,6 @@ class _ForYouSubCategoriesDetailScreenState
                                     LocaleProvider.current.buy_package,
                                   ),
                                 ),
-
-                                //
-                                // Expanded(
-                                //   child: _buildBuyPackageButton(
-                                //     context,
-                                //     () async {
-                                //       await value.addToCart(
-                                //           context, widget.itemId.toString());
-                                //     },
-                                //     LocaleProvider.current.add_cart,
-                                //   ),
-                                // ),
                               ],
                             ),
                             Container(
@@ -165,8 +151,10 @@ class _ForYouSubCategoriesDetailScreenState
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: _currentIndex == index
-                                              ? R.color.blue
-                                              : Colors.grey,
+                                              ? getIt<ITheme>().mainColor
+                                              : getIt<ITheme>()
+                                                  .textColorSecondary
+                                                  .withOpacity(0.5),
                                         ),
                                       );
                                     }),
@@ -211,8 +199,8 @@ class _ForYouSubCategoriesDetailScreenState
           child: _ItemTakeCovid(
               title: title, //LocaleProvider.of(context).take_covid_19,
               image: R.image
-                  .ic_test_icon //LocaleProvider.of(context).lbl_number_hospital,
-              ),
+                  .ic_test_icon, //LocaleProvider.of(context).lbl_number_hospital,
+              context: context),
           onTap: onTap,
         ),
       ),
@@ -246,8 +234,8 @@ class mopItem extends StatelessWidget {
               margin: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 8),
               child: Text(
                 title,
-                style: TextStyle(
-                    color: R.color.black,
+                style: context.xHeadline3.copyWith(
+                    color: getIt<ITheme>().textColorSecondary,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
@@ -257,8 +245,9 @@ class mopItem extends StatelessWidget {
               margin: EdgeInsets.only(left: 30, right: 30, top: 8, bottom: 30),
               child: Text(
                 text,
-                style: TextStyle(
-                    color: R.color.black, fontStyle: FontStyle.italic),
+                style: context.xHeadline3.copyWith(
+                    color: getIt<ITheme>().textColorSecondary,
+                    fontStyle: FontStyle.italic),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -274,7 +263,8 @@ Widget _ItemTakeCovid(
         String image,
         String number,
         bool isFocused = false,
-        EdgeInsets margin}) =>
+        EdgeInsets margin,
+        BuildContext context}) =>
     Container(
       margin: margin,
       alignment: Alignment.center,
@@ -290,9 +280,8 @@ Widget _ItemTakeCovid(
                       title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
+                      style: context.xHeadline3.copyWith(
+                          color: getIt<ITheme>().textColor,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
@@ -318,12 +307,12 @@ Widget _ItemTakeCovid(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(16)),
           gradient: LinearGradient(colors: [
-            R.color.blue,
-            R.color.blue,
+            getIt<ITheme>().mainColor,
+            getIt<ITheme>().mainColor,
           ], begin: Alignment.topLeft, end: Alignment.topRight),
           boxShadow: [
             BoxShadow(
-                color: R.color.dark_black.withAlpha(50),
+                color: getIt<ITheme>().textColorSecondary.withAlpha(50),
                 blurRadius: 15,
                 spreadRadius: 0,
                 offset: Offset(5, 10))
