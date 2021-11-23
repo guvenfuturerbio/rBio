@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -122,8 +124,11 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
             scrollDirection: Axis.vertical,
             physics: BouncingScrollPhysics(),
             itemCount: posts.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildCard(context, posts[index]);
+            itemBuilder: (
+              BuildContext context,
+              int index,
+            ) {
+              return _buildCard(context, posts[index], value);
             },
           ),
         ),
@@ -131,7 +136,8 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     );
   }
 
-  Widget _buildCard(BuildContext context, PatientAppointmentsResponse data) {
+  Widget _buildCard(BuildContext context, PatientAppointmentsResponse data,
+      PatientAppointmentsScreenVm value) {
     return Consumer<PatientAppointmentsScreenVm>(
       builder: (
         BuildContext context,
@@ -139,12 +145,88 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         Widget child,
       ) {
         return RbioCardAppoCard.appointment(
+          bannerColor: DateTime.parse(data.from).isAfter(DateTime.now())
+              ? getIt<ITheme>().mainColor
+              : null,
           tenantName: data.tenant,
           doctorName: data.resources[0].resource,
           departmentName: data.resources[0].department,
           date: _getFormattedDate(data.from.substring(0, 10)),
           time: data.from.substring(11, 16),
-          icon: Icon(Icons.cancel),
+          suffix: data.type != R.dynamicVar.onlineAppointmentType &&
+                  DateTime.parse(data.from).isAfter(DateTime.now())
+              ? InkWell(
+                  onTap: () {
+                    value.cancelAppointment();
+                  },
+                  child: Container(
+                    color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        LocaleProvider.current.cancel,
+                        style:
+                            context.xHeadline1.copyWith(color: R.color.white),
+                      ),
+                    ),
+                  ),
+                )
+              : SizedBox(),
+          bottomButtons: data.type == R.dynamicVar.onlineAppointmentType
+              ? DateTime.parse(data.from).isBefore(DateTime.now())
+                  ? [
+                      RbioElevatedButton(
+                          title: "\tRate\t",
+                          onTap: () {
+                            value.showRateDialog(data.id);
+                          })
+                    ]
+                  : [
+                      RbioElevatedButton(
+                        title: "Upload\nFile",
+                        onTap: () async {
+                          Uint8List fileBytes = await value.getSelectedFile();
+
+                          if (fileBytes != null) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (BuildContext context) {
+                                return GuvenAlert(
+                                  backgroundColor: Colors.white,
+                                  title: GuvenAlert.buildTitle(
+                                    LocaleProvider().upload_file_question,
+                                  ),
+                                  actions: [
+                                    GuvenAlert.buildMaterialAction(
+                                      LocaleProvider.of(context).confirm,
+                                      () async {
+                                        await value.uploadFile(fileBytes);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                  content: SizedBox(),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
+                      RbioElevatedButton(
+                        title: "Request\nTranslator",
+                        onTap: () {
+                          value.showTranslatorSelector(data.id.toString());
+                        },
+                      ),
+                      RbioElevatedButton(
+                        title: "Start\nMeeting",
+                        onTap: () {
+                          value.handleAppointment(data);
+                        },
+                      )
+                    ]
+              : [],
         );
       },
     );

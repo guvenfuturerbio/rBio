@@ -310,7 +310,10 @@ class VRouterRoutes {
       path: PagePaths.SYMPTOM_RESULT_PAGE,
       widget: SymptomsResultPage(),
     ),
-
+    VWidget(
+      path: PagePaths.MEASUREMENT_TRACKING,
+      widget: MeasurementTrackingHomeScreen(),
+    ),
     VWidget(
       path: PagePaths.CREATE_ONLINE_APPO,
       widget: ChangeNotifierProvider<CreateOnlineAppointmentVm>(

@@ -19,6 +19,8 @@ class _Endpoints {
   final registerStep3UiPath = '/userregister/add-step3'.xBasePath;
   final registerStep3WithOutTcPath =
       '/userregister/add-step3-without-tckn'.xBasePath;
+  final findResourceAvailableDays =
+      '/Pusula/findResourceAvailableDays'.xBasePath;
   final updateUserSystemNamePath =
       '/Authentication/update-user-system-name-pusula'.xBasePath;
   final getUserProfilePath = '/user/get-user-info'.xBasePath;

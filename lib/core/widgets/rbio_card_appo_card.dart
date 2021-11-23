@@ -10,38 +10,45 @@ class RbioCardAppoCard extends StatelessWidget {
   final String departmentName;
   final String date;
   final String time;
-  final Icon icon;
+  final Widget suffix;
   final RbioCardAppoType widgetype;
   final VoidCallback onTap;
+  Color bannerColor;
+  List<Widget> bottomButtons;
 
-  const RbioCardAppoCard({
-    Key key,
-    this.tenantName,
-    this.doctorName,
-    this.departmentName,
-    this.date,
-    this.time,
-    this.icon,
-    this.widgetype,
-    this.onTap,
-  }) : super(key: key);
+  RbioCardAppoCard(
+      {Key key,
+      this.tenantName,
+      this.doctorName,
+      this.departmentName,
+      this.date,
+      this.time,
+      this.suffix,
+      this.widgetype,
+      this.onTap,
+      this.bannerColor,
+      this.bottomButtons})
+      : super(key: key);
 
-  factory RbioCardAppoCard.appointment({
-    String tenantName,
-    String doctorName,
-    String departmentName,
-    String date,
-    String time,
-    Icon icon,
-  }) {
+  factory RbioCardAppoCard.appointment(
+      {String tenantName,
+      String doctorName,
+      String departmentName,
+      String date,
+      String time,
+      Widget suffix,
+      Color bannerColor,
+      List<Widget> bottomButtons}) {
     return RbioCardAppoCard(
       date: date,
       departmentName: departmentName,
       doctorName: doctorName,
       tenantName: tenantName,
       time: time,
-      icon: icon,
+      suffix: suffix ?? SizedBox(),
+      bannerColor: bannerColor,
       widgetype: RbioCardAppoType.appointment,
+      bottomButtons: bottomButtons ?? [],
     );
   }
 
@@ -72,35 +79,38 @@ class RbioCardAppoCard extends StatelessWidget {
           //
           Expanded(
             flex: 20,
-            child: Container(
-              decoration: BoxDecoration(
-                color: getIt<ITheme>().secondaryColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(15),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    child: Text(
-                      tenantName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.xHeadline3,
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: bannerColor ?? getIt<ITheme>().secondaryColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
                   ),
+                ),
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    Expanded(
+                      child: Text(
+                        tenantName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.xHeadline3,
+                      ),
+                    ),
 
-                  //
-                  if (widgetype == RbioCardAppoType.appointment) ...[
-                    icon,
+                    //
+                    suffix ?? SizedBox(),
                   ],
-                ],
+                ),
               ),
             ),
           ),
@@ -219,6 +229,12 @@ class RbioCardAppoCard extends StatelessWidget {
                       ],
                     ],
                   ),
+                  bottomButtons?.length != 0
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: bottomButtons ?? [],
+                        )
+                      : SizedBox()
                 ],
               ),
             ),

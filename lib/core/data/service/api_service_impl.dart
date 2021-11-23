@@ -1044,4 +1044,19 @@ class ApiServiceImpl extends ApiService {
       throw Exception('/uploadPatientDocuments : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<List<AvailableDate>> findResourceAvailableDays(
+      FindResourceAvailableDaysRequest request) async {
+    final response = await helper.postGuven(
+        R.endpoints.findResourceAvailableDays, request.toJson());
+    if (response.isSuccessful) {
+     return response.datum
+          .map((item) => AvailableDate.fromJson(item))
+          .cast<AvailableDate>()
+          .toList();
+    } else {
+      throw Exception('/addNewPatientRelative : ${response.isSuccessful}');
+    }
+  }
 }

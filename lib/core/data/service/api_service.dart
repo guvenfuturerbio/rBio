@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/available_dates.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 
 import '../../../model/model.dart';
 import '../../core.dart';
@@ -51,7 +53,8 @@ abstract class ApiService {
   Future<List<GetEventsResponse>> findResourceClosestAvailablePlan(
       ResourceForAvailablePlanRequest resourceForAvailablePlanRequest);
   Future<int> saveAppointment(AppointmentRequest appointmentRequest);
-
+  Future<List<AvailableDate>> findResourceAvailableDays(
+      FindResourceAvailableDaysRequest findResourceAvailableDaysRequest);
   //
   Future<PatientRelativeInfoResponse> getAllRelatives(
       GetAllRelativesRequest bodyPages);

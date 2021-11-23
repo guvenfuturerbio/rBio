@@ -31,6 +31,7 @@ class RbioElevatedButton extends StatelessWidget {
         ),
         child: Text(
           title,
+          textAlign: TextAlign.center,
           style: context.xHeadline3.copyWith(
             color: getIt<ITheme>().textColor,
           ),
