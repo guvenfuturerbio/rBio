@@ -125,7 +125,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //
                     _buildListItem(
                       LocaleProvider.current.health_information,
-                      () {},
+                      () {
+                        Atom.to(PagePaths.HEALTH_INFORMATION);
+                      },
                     ),
 
                     //
