@@ -6984,6 +6984,46 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Diagnosis Date`
+  String get diagnosisDate {
+    return Intl.message(
+      'Diagnosis Date',
+      name: 'diagnosisDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High Range`
+  String get high_range {
+    return Intl.message(
+      'High Range',
+      name: 'high_range',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low Range`
+  String get low_range {
+    return Intl.message(
+      'Low Range',
+      name: 'low_range',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you smoke?`
+  String get do_you_smoke {
+    return Intl.message(
+      'Do you smoke?',
+      name: 'do_you_smoke',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
