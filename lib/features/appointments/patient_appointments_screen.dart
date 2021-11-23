@@ -157,7 +157,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                   DateTime.parse(data.from).isAfter(DateTime.now())
               ? InkWell(
                   onTap: () {
-                    value.cancelAppointment();
+                    value.handleAppointment(data);
                   },
                   child: Container(
                     color: Colors.red,
