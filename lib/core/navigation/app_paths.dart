@@ -1,5 +1,7 @@
 import 'package:onedosehealth/features/auth/login/login_screen.dart';
 import 'package:onedosehealth/features/auth/register/register_step_1_1.dart';
+import 'package:onedosehealth/features/profile/health_information/view/health_information.dart';
+import 'package:onedosehealth/features/profile/health_information/viewmodel/health_information_vm.dart';
 import 'package:onedosehealth/features/profile/personal_information/view/personal_information_screen.dart';
 import 'package:onedosehealth/features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
@@ -327,6 +329,12 @@ class VRouterRoutes {
       widget: RequestSuggestionsScreen(),
     ),
 
+    VWidget(
+        path: PagePaths.HEALTH_INFORMATION,
+        widget: ChangeNotifierProvider<HealthInformationVm>(
+            create: (context) => HealthInformationVm(),
+            child: HealthInformation())),
+
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -385,6 +393,7 @@ class PagePaths {
   static const FULLPDFVIEWER = '/full-pdf-viewer';
   static const WEBCONFERANCE = '/web-conferance';
   static const SUGGEST_REQUEST = '/suggest-request';
+  static const HEALTH_INFORMATION = '/health-information';
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';

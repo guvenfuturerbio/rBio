@@ -687,5 +687,9 @@
   "mi_scale_step2": "Kan basıncı ve detaylı yağ ölçümü için yalın ayak şekilde cihazın üzerine çıkın.",
   "mi_scale_step3": "Parmak uçlarınızda veya topuklarınız üzerinde durmadığınızdan emin olun.",
   "mi_scale_step4": "Cihaz üzerinde 4 saniye stabil olarak bekleyin.",
-  "mi_scale_step5": "Ekranda ölçümünüzü görebilirsiniz."
+  "mi_scale_step5": "Ekranda ölçümünüzü görebilirsiniz.",
+  "diagnosisDate" : "Tanı Tarihi",
+  "high_range": "Yüksek Aralık",
+  "low_range": "Düşük Aralık",
+  "do_you_smoke": "Sigara içiyor musunuz?"
 }
