@@ -135,39 +135,7 @@ class GlucoseData extends HiveObject {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is GlucoseData &&
-        other.manual == manual &&
-        other.measurementId == measurementId &&
-        other.level == level &&
-        other.tag == tag &&
-        other.note == note &&
-        other.time == time &&
-        other.device == device &&
-        other.manual == manual &&
-        other.deviceName == deviceName &&
-        other.deviceUUID == deviceUUID &&
-        other.imageURL == imageURL &&
-        other.isDeleted == isDeleted &&
-        other.userId == userId;
-  }
-
-  @override
-  int get hashCode {
-    return manual.hashCode ^
-        measurementId.hashCode ^
-        level.hashCode ^
-        tag.hashCode ^
-        note.hashCode ^
-        time.hashCode ^
-        device.hashCode ^
-        manual.hashCode ^
-        deviceName.hashCode ^
-        deviceUUID.hashCode ^
-        imageURL.hashCode ^
-        isDeleted.hashCode ^
-        userId.hashCode;
+    return other is GlucoseData && other.time == time;
   }
 }
 

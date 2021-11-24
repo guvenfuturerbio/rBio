@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/database/repository/glucose_repository.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import '../../../../../../../generated/l10n.dart';
 import '../../../../notifiers/user_profiles_notifier.dart';
 

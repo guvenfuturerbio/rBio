@@ -37,9 +37,9 @@ class BgTaggerPopUp extends StatelessWidget {
                   : GlucoseData(
                       level: "0",
                       tag: null,
-                      deviceName: "Manual",
+                      deviceName: "",
                       time: (DateTime.now()).millisecondsSinceEpoch,
-                      device: 1,
+                      device: 103,
                       manual: true,
                       note: "")),
           child: Consumer<BgTaggerVm>(

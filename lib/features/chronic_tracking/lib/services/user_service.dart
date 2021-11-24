@@ -242,7 +242,8 @@ class UserService {
       if (isSignUp) {
         //TODO: this section will be refactored !!!
         await getIt<ProfileStorageImpl>().write(
-            new Person().fromDefault(name: FirebaseAuth.instance.currentUser),
+            new Person().fromDefault(
+                name: FirebaseAuth.instance.currentUser.displayName),
             shouldSendToServer: true);
       }
       await handleSuccessfulLogin(userCred);
@@ -277,9 +278,8 @@ class UserService {
       //WARNING: Çoklu profil özelliği şuanlık askıya alındığı için sadece ilk profilden ilerlenecektir.
       var glucoseMeasurements =
           await RepositoryServices().getBloodGlucoseDataOfPerson(profiles[0]);
-      print(jsonEncode(glucoseMeasurements[0].toMap()));
-      print(jsonEncode(glucoseMeasurements[10].toMap()));
 
+      getIt<GlucoseStorageImpl>().checkUserDatas(person.userId);
       //db save process
       if (glucoseMeasurements.isNotEmpty) {
         await getIt<GlucoseStorageImpl>().writeAll(glucoseMeasurements);

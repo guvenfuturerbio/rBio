@@ -1011,7 +1011,8 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   Widget smallWidget(Function() callBack) {
     BgMeasurementViewModel lastMeasurement;
     if (bgMeasurements.isNotEmpty) {
-      lastMeasurement = bgMeasurements[0];
+      lastMeasurement = BgMeasurementViewModel(
+          bgMeasurement: getIt<GlucoseStorageImpl>().getLatestMeasurement());
     }
     return RbioSmallChronicWidget(
       callback: callBack,

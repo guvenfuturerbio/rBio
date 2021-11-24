@@ -76,7 +76,7 @@ class Person extends HiveObject {
 
   Map<String, dynamic> toJson() => _$PersonToJson(this);
 
-  Person fromDefault({name}) {
+  Person fromDefault({String name}) {
     return Person(
         id: DateTime.now().millisecondsSinceEpoch,
         userId: -1,

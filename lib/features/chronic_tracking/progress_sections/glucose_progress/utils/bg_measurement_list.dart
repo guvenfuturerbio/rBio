@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 import '../../../../../core/core.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../lib/core/utils/pop_up/blood_glucose_tagger/bg_tagger_pop_up.dart';
-import '../../../lib/database/repository/glucose_repository.dart';
 import '../../../lib/extension/size_extension.dart';
 import '../../../lib/models/bg_measurement/bg_measurement_view_model.dart';
 import '../view_model/bg_progress_page_view_model.dart';
@@ -34,55 +33,52 @@ class BgMeasurementListWidget extends StatefulWidget {
 class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 1 * (context.HEIGHT * .1) * context.TEXTSCALE,
-      child: GroupedListView<BgMeasurementViewModel, DateTime>(
-        elements: widget.bgMeasurements ?? <BgMeasurementViewModel>[],
-        order: GroupedListOrder.DESC,
-        controller: widget.scrollController,
-        scrollDirection: Axis.vertical,
-        floatingHeader: true,
-        padding: EdgeInsets.zero,
-        useStickyGroupSeparators: widget.useStickyGroupSeparatorsValue ?? false,
-        groupBy: (BgMeasurementViewModel bgMeasurementViewModel) => DateTime(
-            bgMeasurementViewModel.date.year,
-            bgMeasurementViewModel.date.month,
-            bgMeasurementViewModel.date.day),
-        groupHeaderBuilder: (BgMeasurementViewModel bgMeasurementViewModel) {
-          return Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            height: (context.HEIGHT * .1) * context.TEXTSCALE,
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withAlpha(50),
-                      blurRadius: 5,
-                      spreadRadius: 0,
-                      offset: Offset(5, 5))
-                ],
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
-                ),
+    return GroupedListView<BgMeasurementViewModel, DateTime>(
+      elements: widget.bgMeasurements ?? <BgMeasurementViewModel>[],
+      order: GroupedListOrder.DESC,
+      controller: widget.scrollController,
+      scrollDirection: Axis.vertical,
+      floatingHeader: true,
+      padding: EdgeInsets.zero,
+      useStickyGroupSeparators: widget.useStickyGroupSeparatorsValue ?? false,
+      groupBy: (BgMeasurementViewModel bgMeasurementViewModel) => DateTime(
+          bgMeasurementViewModel.date.year,
+          bgMeasurementViewModel.date.month,
+          bgMeasurementViewModel.date.day),
+      groupHeaderBuilder: (BgMeasurementViewModel bgMeasurementViewModel) {
+        return Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          height: (context.HEIGHT * .1) * context.TEXTSCALE,
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withAlpha(50),
+                    blurRadius: 5,
+                    spreadRadius: 0,
+                    offset: Offset(5, 5))
+              ],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
               ),
             ),
-          );
-        },
-        itemBuilder: (_, BgMeasurementViewModel bgMeasurementViewModel) {
-          return measurementList(bgMeasurementViewModel, context);
-        },
-        callback: (BgMeasurementViewModel data) {
-          Provider.of<BgProgressPageViewModel>(context, listen: false)
-              .fetchScrolledData(data.date);
-        },
-      ),
+          ),
+        );
+      },
+      itemBuilder: (_, BgMeasurementViewModel bgMeasurementViewModel) {
+        return measurementList(bgMeasurementViewModel, context);
+      },
+      callback: (BgMeasurementViewModel data) {
+        Provider.of<BgProgressPageViewModel>(context, listen: false)
+            .fetchScrolledData(data.date);
+      },
     );
   }
 }

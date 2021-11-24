@@ -40,9 +40,12 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   List<GlucoseData> getAll() {
     if (box.isOpen && box.isNotEmpty) {
+      for (var item in box.values) {
+        debugPrint(item.toMap().toString());
+      }
       return box.values.toList();
     } else {
-      return null;
+      return [];
     }
   }
 
@@ -63,9 +66,14 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   Future<bool> write(GlucoseData data,
       {bool shouldSendToServer = false}) async {
+    print(data.toMap().toString());
     if (box.isOpen && !doesExist(data)) {
-      box.add(data);
-      if (shouldSendToServer) await sendToServer(data);
+      if (shouldSendToServer) {
+        var id = await sendToServer(data);
+        data.measurementId = id;
+        box.add(data);
+      }
+
       notifyListeners();
       return true;
     } else {
@@ -99,9 +107,9 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   GlucoseData getLatestMeasurement() {
-    List<GlucoseData> list = box.values;
+    List<GlucoseData> list = box.values.toList();
 
-    list.sort((a, b) => a.date.compareTo(b.date));
+    list.sort((a, b) => b.date.compareTo(a.date));
 
     return list[0];
   }
@@ -136,7 +144,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future sendToServer(GlucoseData data) async {
+  Future<int> sendToServer(GlucoseData data) async {
     DateTime dt = DateTime.fromMillisecondsSinceEpoch(data.time);
     int userId = UserProfilesNotifier().selection?.id ?? 0;
     String dtFrmt = dt.toString();
@@ -148,8 +156,9 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         valueNote: data.note,
         detail: new BloodGlucoseValueDetail(time: dtFrmt, tag: data.tag));
     try {
-      await getIt<ChronicTrackingRepository>()
-          .insertNewBloodGlucoseValue(bloodGlucoseValue);
+      return (await getIt<ChronicTrackingRepository>()
+              .insertNewBloodGlucoseValue(bloodGlucoseValue))
+          .datum;
     } catch (_) {
       rethrow;
     }
@@ -223,6 +232,14 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       writeAll(glucoseDataList);
     } catch (e) {
       return [];
+    }
+  }
+
+  checkUserDatas(int uid) {
+    if (box.isOpen && box.isNotEmpty) {
+      if (box.values.first.userId != uid) {
+        box.clear();
+      }
     }
   }
 }
