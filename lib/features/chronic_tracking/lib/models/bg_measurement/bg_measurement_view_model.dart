@@ -34,7 +34,7 @@ class BgMeasurementViewModel {
   }
 
   String get result {
-    return this.bgMeasurement.level;
+    return this.bgMeasurement?.level;
   }
 
   Color get resultColor {
