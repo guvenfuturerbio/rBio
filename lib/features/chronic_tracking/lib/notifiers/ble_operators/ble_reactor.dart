@@ -6,16 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get/get.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+
 import 'package:onedosehealth/generated/l10n.dart';
 
 import '../../core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
-import '../../database/datamodels/glucose_data.dart';
 import '../../database/repository/glucose_repository.dart';
 import '../../locator.dart';
 import '../../models/ble_models/paired_device.dart';
 import '../../models/device_model/mi_scale_device.dart';
 import '../../models/device_model/scale_device_model.dart';
-import '../../widgets/utils.dart';
 import '../../../progress_sections/scale_progress/utils/mi_scale_popup.dart';
 import '../shared_pref_notifiers.dart';
 import '../user_profiles_notifier.dart';
@@ -127,14 +128,14 @@ class BleReactorOps extends ChangeNotifier {
   saveGlucoseDataToDatabase(data, DiscoveredDevice device) async {
     try {
       GlucoseData gData = parseGlucoseDataFromReadingInstance(data, device);
-      bool doesExist = await GlucoseRepository().doesDataExist(gData.time);
+      bool doesExist = getIt<GlucoseStorageImpl>().doesExist(gData);
       if (doesExist) {
         print("$gData exists in DB! " + DateTime.now().toString());
       } else {
         gData.userId = UserProfilesNotifier().selection?.id ?? 0;
-        await GlucoseRepository().addNewGlucoseData(
+        await getIt<GlucoseStorageImpl>().write(
           gData,
-          true,
+          shouldSendToServer: true,
         );
       }
     } catch (_) {

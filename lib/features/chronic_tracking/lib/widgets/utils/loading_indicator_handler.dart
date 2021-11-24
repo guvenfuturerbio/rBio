@@ -1,4 +1,3 @@
-import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,13 +43,5 @@ class LoadingIndicatorHandler with ChangeNotifier {
         Navigator.of(showLoadingContext).pop();
       }
     }
-  }
-
-  Future<Response> handleAsyncWorkShowingLoading(
-      BuildContext context, Future<Response> Function() function) async {
-    showLoading(context);
-    final resp = await function();
-    hideLoading();
-    return resp;
   }
 }

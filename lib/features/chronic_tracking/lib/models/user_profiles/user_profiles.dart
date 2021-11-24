@@ -1,4 +1,4 @@
-import 'person.dart';
+import 'package:onedosehealth/core/core.dart';
 
 class UserProfiles {
   Person active;

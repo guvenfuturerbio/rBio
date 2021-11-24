@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+/* import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -64,7 +64,7 @@ class ProfileRepository with ChangeNotifier {
   Future<bool> deleteAllProfiles() async {
     Database db = await DatabaseHelper.instance.database;
     var queryResult = await db.rawQuery('DELETE FROM ${Person.TABLE}');
-    await GlucoseRepository().deleteAllGlucoseData();
+    // await GlucoseRepository().deleteAllGlucoseData();
     // await ScaleRepository().deleteAllScaleData();
     notifyListeners();
     if (queryResult.isEmpty) {
@@ -382,3 +382,4 @@ class ProfileRepository with ChangeNotifier {
 
   /// END UPDATE FUNCTIONS
 }
+ */

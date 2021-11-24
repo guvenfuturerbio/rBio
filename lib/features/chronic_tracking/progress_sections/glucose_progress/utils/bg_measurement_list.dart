@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
@@ -188,13 +189,14 @@ Widget measurementList(
                           padding: EdgeInsets.all(8),
                           height: 25,
                           width: 25,
-                          child: bgMeasurementViewModel.imageURL == ""
+                          child: bgMeasurementViewModel.imageURL == "" ||
+                                  Atom.isWeb
                               ? SvgPicture.asset(
                                   R.image.addphoto_icon,
                                 )
                               : PhotoView(
                                   imageProvider: FileImage(File(
-                                      GlucoseRepository()
+                                      getIt<GlucoseStorageImpl>()
                                           .getImagePathOfImageURL(
                                               bgMeasurementViewModel
                                                   .imageURL))),
@@ -222,11 +224,12 @@ Widget measurementList(
         caption: LocaleProvider.current.delete,
         color: Colors.red,
         icon: Icons.delete,
-        onTap: () {
+        onTap: () async {
           //_showSnackBar('Delete')
 
           /// MGH1
-          GlucoseRepository().deleteMeasurementById(bgMeasurementViewModel.id);
+          await getIt<GlucoseStorageImpl>()
+              .delete(bgMeasurementViewModel.bgMeasurement.key);
         },
       ),
     ],

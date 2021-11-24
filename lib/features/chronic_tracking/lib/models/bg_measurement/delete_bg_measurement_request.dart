@@ -8,11 +8,13 @@ class DeleteBloodGlucoseMeasurementRequest {
   @JsonKey(name: 'measurement_id')
   int measurementId;
 
-
   DeleteBloodGlucoseMeasurementRequest(
       {this.entegrationId, this.measurementId});
 
-  factory DeleteBloodGlucoseMeasurementRequest.fromJson(Map<String, dynamic> json) => _$DeleteBloodGlucoseMeasurementRequestFromJson(json);
+  factory DeleteBloodGlucoseMeasurementRequest.fromJson(
+          Map<String, dynamic> json) =>
+      _$DeleteBloodGlucoseMeasurementRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DeleteBloodGlucoseMeasurementRequestToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$DeleteBloodGlucoseMeasurementRequestToJson(this);
 }

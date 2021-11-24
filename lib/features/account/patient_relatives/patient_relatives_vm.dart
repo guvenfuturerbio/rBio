@@ -1,4 +1,3 @@
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -17,17 +16,12 @@ class PatientRelativesScreenVm with ChangeNotifier {
     });
   }
 
-  Future<Response> relativesResponse;
   final homeKey = GlobalKey<ScaffoldState>();
-  String _token = "";
   UserAccount userAccount;
   PatientRelativeInfoResponse patientRelativeInfo;
   int selectedGender = 1;
 
   Future _fetchRelatives() async {
-    final token =
-        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.JWT_TOKEN);
-    _token = token;
     try {
       userAccount = await getIt<Repository>().getUserProfile();
     } catch (e, stackTrace) {

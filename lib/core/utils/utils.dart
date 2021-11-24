@@ -14,9 +14,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:onedosehealth/features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/models/user_profiles/person.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'package:onedosehealth/features/shared/do_not_show_again_dialog.dart';
 
 import '../../generated/i18n.dart';
@@ -27,8 +26,8 @@ import '../events/success_events.dart';
 import '../locator.dart';
 import '../manager/analytics_manager.dart';
 import '../navigation/app_paths.dart';
-import '../widgets/warning_dialog.dart';
 import '../widgets/guven_alert.dart';
+import '../widgets/warning_dialog.dart';
 
 Gradient BlueGradient() => LinearGradient(
     colors: [R.color.dark_blue, R.color.defaultBlue],
@@ -620,8 +619,7 @@ class UtilityManager {
 
   /// MG14
   Color getGlucoseMeasurementColor(int result) {
-    Person activeProfile =
-        UserProfilesNotifier().selection ?? Person().fromDefault();
+    Person activeProfile = getIt<ProfileStorageImpl>().getFirst();
 
     if (result < activeProfile.hypo) {
       return R.color.very_low;

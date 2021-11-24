@@ -1,8 +1,7 @@
+import '../../../../core/core.dart';
 import '../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../core/locator.dart';
-import '../database/datamodels/glucose_data.dart';
 import '../models/bg_measurement/get_blood_glucose_data_of_person.dart';
-import '../models/user_profiles/person.dart';
 
 class RepositoryServices {
   Future<List<GlucoseData>> getBloodGlucoseDataOfPerson(Person pd) async {

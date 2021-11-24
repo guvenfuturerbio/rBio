@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:provider/provider.dart';
 
 import '../../../lib/core/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
@@ -27,7 +28,8 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
   Widget build(BuildContext context) {
     return Consumer<ScaleProgressPageViewModel>(
       builder: (context, value, child) {
-        return MediaQuery.of(context).orientation == Orientation.portrait
+        return MediaQuery.of(context).orientation == Orientation.portrait ||
+                Atom.isWeb
             ? SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

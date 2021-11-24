@@ -2,8 +2,7 @@ import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/extension/extension.dart';
-import 'package:path/path.dart';
+import '../../../../core/extension/extension.dart';
 
 class RbioSmallChronicWidget extends StatelessWidget {
   final String imageUrl;
@@ -32,6 +31,7 @@ class RbioSmallChronicWidget extends StatelessWidget {
             padding: EdgeInsets.only(right: 25),
             child: SvgPicture.asset(
               imageUrl,
+              fit: BoxFit.scaleDown,
               height: Atom.height * .1,
             ),
           ),
