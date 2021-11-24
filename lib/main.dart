@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
+import 'package:onedosehealth/core/domain/glucose_model.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/scale_measurement_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
@@ -36,6 +38,7 @@ Future<void> main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
+
   runApp(
     RbioConfig(
       child: MyApp(),
@@ -71,6 +74,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final bgProgressPage = BgProgressPageViewModel();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -98,18 +102,17 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<UserProfilesNotifier>(
             create: (context) => UserProfilesNotifier(),
           ),
-          ChangeNotifierProvider<ProfileRepository>(
-            create: (context) => getIt<ProfileRepository>(),
-          ),
-          ChangeNotifierProvider<BgProgressPageViewModel>(
-            create: (ctx) => BgProgressPageViewModel(),
-          ),
           ChangeNotifierProvider<ScaleProgressPageViewModel>(
             create: (ctx) => ScaleProgressPageViewModel(),
           ),
-          ChangeNotifierProvider<BgMeasurementsNotifier>(
-            create: (context) => BgMeasurementsNotifier(),
+          ChangeNotifierProvider<BgMeasurementsNotifier>.value(
+            value: BgMeasurementsNotifier(),
           ),
+          ChangeNotifierProvider<ScaleMeasurementNotifier>.value(
+            value: ScaleMeasurementNotifier(),
+          ),
+          ChangeNotifierProvider<BgProgressPageViewModel>.value(
+              value: BgProgressPageViewModel()),
         ],
         child: Consumer2<ThemeNotifier, UserNotifier>(
           builder: (

@@ -25,7 +25,7 @@ class ScaleRepository extends ChangeNotifier {
     initialize();
   }
   Future<void> initialize() async {
-    _db = await DatabaseHelper.instance.database;
+    // _db = await DatabaseHelper.instance.database;
 
     _scaleDataList.clear();
     _localDirectoryPath = (await getApplicationDocumentsDirectory()).path;

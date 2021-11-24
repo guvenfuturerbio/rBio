@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:onedosehealth/core/extension/build_context_extension.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -74,69 +75,64 @@ class _BgProgressPage extends State<BgProgressPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BgProgressPageViewModel>(
-      builder: (context, value, child) {
-        return MediaQuery.of(context).orientation == Orientation.portrait
-            ? SingleChildScrollView(
-                physics: ClampingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: (context.HEIGHT * .38) * context.TEXTSCALE,
-                      child: GraphHeader(
-                        value: value,
-                        callBack: widget.callBack,
-                      ),
+    var value = Provider.of<BgProgressPageViewModel>(context);
+    return MediaQuery.of(context).orientation == Orientation.portrait ||
+            Atom.isWeb
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: (context.HEIGHT * .38) * context.TEXTSCALE,
+                child: GraphHeader(
+                  value: value,
+                  callBack: widget.callBack,
+                ),
+              ),
+              BottomActionsOfGraph(
+                value: value,
+              ),
+              LayoutBuilder(builder: (context, constraints) {
+                return Container(
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withAlpha(20),
+                        blurRadius: 5,
+                        spreadRadius: 0,
+                        offset: Offset(5, 5))
+                  ]),
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: CustomBarPie(
+                      width: constraints.maxWidth,
+                      height: (context.HEIGHT * 0.06) * context.TEXTSCALE,
                     ),
-                    BottomActionsOfGraph(
-                      value: value,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withAlpha(20),
-                            blurRadius: 5,
-                            spreadRadius: 0,
-                            offset: Offset(5, 5))
-                      ]),
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: CustomBarPie(
-                          width: MediaQuery.of(context).size.width * 0.88,
-                          height: (context.HEIGHT * 0.06) * context.TEXTSCALE,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: (context.HEIGHT * .35) * context.TEXTSCALE,
-                      margin: EdgeInsets.only(top: 8),
-                      //margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
-                      child: BgMeasurementListWidget(
-                        bgMeasurements: value.bgMeasurements,
-                        scrollController: _controller,
-                        useStickyGroupSeparatorsValue: true,
-                      ),
-                    )
-                  ],
+                  ),
+                );
+              }),
+              Expanded(
+                child: BgMeasurementListWidget(
+                  bgMeasurements: value.bgMeasurements,
+                  scrollController: _controller,
+                  useStickyGroupSeparatorsValue: true,
                 ),
               )
-            : LandScapeGraphWidget(
-                graph: value.currentGraph,
-                value: value,
-                filterAction: () {
-                  showDialog(
-                      context: context,
-                      barrierColor: Colors.black12,
-                      builder: (ctx) => BGChartFilterPopUp(
-                            height: context.HEIGHT * .9,
-                            width: context.WIDTH * .3,
-                          ));
-                },
-                changeGraphAction: () => value.changeGraphType(),
-              );
-      },
-    );
+            ],
+          )
+        : LandScapeGraphWidget(
+            graph: value.currentGraph,
+            value: value,
+            filterAction: () {
+              showDialog(
+                  context: context,
+                  barrierColor: Colors.black12,
+                  builder: (ctx) => BGChartFilterPopUp(
+                        height: context.HEIGHT * .9,
+                        width: context.WIDTH * .3,
+                      ));
+            },
+            changeGraphAction: () => value.changeGraphType(),
+          );
   }
 }

@@ -70,40 +70,42 @@ class DateRangePicker extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => DateRangePickerVm(context: context, items: items),
       child: Consumer<DateRangePickerVm>(
-        builder: (_, value, __) => Container(
-          height: height ??
-              (context.HEIGHT * .05) *
-                  (context.TEXTSCALE > 1 ? (context.TEXTSCALE / 2) : 1),
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: R.color.chart_gray),
-          child: Row(
-            children: [
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                width: value.focusType == _SelectionState.FOCUSED &&
-                        selected != TimePeriodFilter.DAILY
-                    ? (context.xMediaQuery.size.width / items.length)
-                    : context.WIDTH -
-                        (R.sizes.screenPadding(Atom.context).right * 3),
-                child: (value.focusType == _SelectionState.FOCUSED &&
-                        selected != TimePeriodFilter.DAILY)
-                    ? singleSelectedItem(value, context)
-                    : itemList(value, hasOverflow),
-              ),
-              if (value.focusType == _SelectionState.FOCUSED &&
-                  selected != TimePeriodFilter.DAILY)
-                Expanded(
-                    child: Center(
-                  child: ListView(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      children: [getRangeSelector(context)]),
-                ))
-            ],
-          ),
-        ),
+        builder: (_, value, __) =>
+            LayoutBuilder(builder: (context, constraints) {
+          return Container(
+            height: height ??
+                (context.HEIGHT * .05) *
+                    (context.TEXTSCALE > 1 ? (context.TEXTSCALE / 2) : 1),
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: R.color.chart_gray),
+            child: Row(
+              children: [
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  width: value.focusType == _SelectionState.FOCUSED &&
+                          selected != TimePeriodFilter.DAILY
+                      ? (context.xMediaQuery.size.width / items.length)
+                      : constraints.maxWidth,
+                  child: (value.focusType == _SelectionState.FOCUSED &&
+                          selected != TimePeriodFilter.DAILY)
+                      ? singleSelectedItem(value, context)
+                      : itemList(value, hasOverflow, constraints),
+                ),
+                if (value.focusType == _SelectionState.FOCUSED &&
+                    selected != TimePeriodFilter.DAILY)
+                  Expanded(
+                      child: Center(
+                    child: ListView(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        children: [getRangeSelector(context)]),
+                  ))
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
@@ -139,7 +141,8 @@ class DateRangePicker extends StatelessWidget {
         ));
   }
 
-  Widget itemList(DateRangePickerVm value, hasOverflow) {
+  Widget itemList(
+      DateRangePickerVm value, hasOverflow, BoxConstraints constraints) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -156,11 +159,8 @@ class DateRangePicker extends StatelessWidget {
                   }
                 },
                 child: Container(
-                  width: hasOverflow
-                      ? null
-                      : (value.context.WIDTH -
-                              R.sizes.screenPadding(Atom.context).right * 2) /
-                          items.length,
+                  width:
+                      hasOverflow ? null : constraints.maxWidth / items.length,
                   alignment: Alignment.center,
                   padding:
                       hasOverflow ? EdgeInsets.symmetric(horizontal: 10) : null,

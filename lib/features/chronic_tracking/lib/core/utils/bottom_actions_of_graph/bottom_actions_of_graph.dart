@@ -1,6 +1,5 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
@@ -21,7 +20,7 @@ class BottomActionsOfGraph extends StatelessWidget {
         spacing: context.WIDTH * .1,
         runSpacing: context.HEIGHT * .01,
         children: [
-          ElevatedButton.icon(
+          ElevatedButton(
             style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 shadowColor: Colors.black.withAlpha(50),
@@ -29,19 +28,13 @@ class BottomActionsOfGraph extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(context.HEIGHT))),
             onPressed: () => value.showFilter(context),
-            icon: SvgPicture.asset(
-              R.image.filter_graph_icon,
-              color: R.color.blue,
-              height: (context.HEIGHT * .03) * context.TEXTSCALE,
-              width: (context.HEIGHT * .03) * context.TEXTSCALE,
-            ),
-            label: AutoSizeText(
+            child: AutoSizeText(
               '${LocaleProvider.current.filter_graphs}',
               maxLines: 1,
-              style: TextStyle(color: R.color.blue, fontSize: 15),
+              style: TextStyle(color: R.color.black),
             ),
           ),
-          ElevatedButton.icon(
+          ElevatedButton(
             style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 shadowColor: Colors.black.withAlpha(50),
@@ -49,16 +42,12 @@ class BottomActionsOfGraph extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(context.HEIGHT))),
             onPressed: () => value.changeGraphType(),
-            icon: SvgPicture.asset(R.image.changeGraph,
-                color: R.color.blue,
-                height: (context.HEIGHT * .03) * context.TEXTSCALE,
-                width: (context.HEIGHT * .03) * context.TEXTSCALE),
-            label: AutoSizeText(
+            child: AutoSizeText(
               '${LocaleProvider.current.change_graph_type}',
               maxLines: 1,
               softWrap: false,
               style: TextStyle(
-                color: R.color.blue,
+                color: R.color.black,
               ),
             ),
           ),

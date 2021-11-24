@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/painting.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../generated/l10n.dart';
@@ -292,13 +293,14 @@ class ScaleModel extends MapConvertible {
       this.time,
       this.visceralFat,
       this.water}) {
-    gender =
-        ProfileRepository().activeProfile.gender == LocaleProvider.current.male
-            ? 1
-            : 0;
-    height = int.parse(ProfileRepository().activeProfile.height);
+    gender = getIt<ProfileStorageImpl>().getFirst().gender ==
+            LocaleProvider.current.male
+        ? 1
+        : 0;
+    height = int.parse(getIt<ProfileStorageImpl>().getFirst().height);
 
-    List<String> nums = ProfileRepository().activeProfile.birthDate.split(".");
+    List<String> nums =
+        getIt<ProfileStorageImpl>().getFirst().birthDate.split(".");
     var yearOfBirth = int.parse(nums[2]);
 
     age = DateTime.now().year - yearOfBirth < 15
@@ -576,7 +578,7 @@ class ScaleModel extends MapConvertible {
       MUSCLE: muscle,
       WATER: water,
       WEIGHT: weight ?? 0,
-      USER_ID: ProfileRepository().activeProfile.id,
+      USER_ID: getIt<ProfileStorageImpl>().getFirst().id,
       IMAGE_ONE: images.length >= 1 ? images[0] : null,
       IMAGE_TWO: images.length >= 2 ? images[1] : null,
       IMAGE_THREE: images.length >= 3 ? images[2] : null,

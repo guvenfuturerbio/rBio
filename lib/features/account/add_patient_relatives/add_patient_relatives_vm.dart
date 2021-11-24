@@ -1,4 +1,3 @@
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -15,7 +14,6 @@ class AddPatientRelativesScreenVm with ChangeNotifier {
   BuildContext context;
   var selectedCountry = Country(id: 213, name: "Türkiye");
   CountryListResponse countryList;
-  Future<Response> futureResponse;
   final homeKey = GlobalKey<ScaffoldState>();
   UserAccount userAccount;
   PatientRelativeInfoResponse patientRelativeInfo;

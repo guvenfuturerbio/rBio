@@ -27,7 +27,7 @@ class SectionCard extends StatelessWidget {
                 duration: Duration(milliseconds: 1000),
                 curve: Curves.easeInOutBack,
                 height: isActive
-                    ? context.HEIGHT
+                    ? context.HEIGHT * .9
                     : (context.HEIGHT * .12) *
                         (context.TEXTSCALE > 1 ? (context.TEXTSCALE / 2) : 1),
                 width: context.WIDTH,

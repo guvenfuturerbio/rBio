@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/features/mediminder/models/strip_detail_model.dart';
+import 'package:onedosehealth/core/core.dart';
 
 import '../../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../../core/locator.dart';
-import '../../database/datamodels/glucose_data.dart';
 import '../../database/repository/glucose_repository.dart';
 import '../../models/bg_measurement/blood_glucose_report_body.dart';
 import '../../models/bg_measurement/blood_glucose_value_model.dart';
@@ -30,8 +29,6 @@ class BaseProviderRepository with ChangeNotifier {
   static const int TIMEOUT_DURATION = 15;
 
   BaseProviderRepository._internal() {}
-
-  getDatumFromResponse(Response response) {}
 
   /// EXAMPLE USAGE OF THIS REPOSITORY CLASS
   /// This class should act as an interface between base_provider and ui pages
@@ -105,7 +102,7 @@ class BaseProviderRepository with ChangeNotifier {
     }
   }
 
-  Future<bool> insertNewBloodGlucoseValue(
+  /* Future<bool> insertNewBloodGlucoseValue(
       BloodGlucoseValue bloodGlucoseValue, GlucoseData glucoseData) async {
     try {
       final response = await getIt<ChronicTrackingRepository>()
@@ -117,7 +114,7 @@ class BaseProviderRepository with ChangeNotifier {
       await Future.delayed(Duration(seconds: 1));
       return false;
     }
-  }
+  } */
 
   Future<bool> deleteBloodGlucoseValue(
       DeleteBloodGlucoseMeasurementRequest
@@ -156,53 +153,14 @@ class BaseProviderRepository with ChangeNotifier {
     }
   }
 
-  Future<List<GlucoseData>> getBloodGlucoseDataOfPerson(Person pd) async {
-    try {
-      GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson =
-          GetBloodGlucoseDataOfPerson(
-        id: pd.id,
-        start: "01.01.2011",
-        end: "01.01.2025",
-      );
-
-      final response = await getIt<ChronicTrackingRepository>()
-          .getBloodGlucoseDataOfPerson(getBloodGlucoseDataOfPerson);
-      List datum = response.datum["blood_glucose_measurement_details"];
-      List<GlucoseData> glucoseDataList = new List();
-      for (var bgMeasurement in datum) {
-        int time = DateTime.parse(bgMeasurement["detail"]["occurrence_time"])
-            .millisecondsSinceEpoch;
-        String level = bgMeasurement["blood_glucose_measurement"]["value"];
-        String note = bgMeasurement["blood_glucose_measurement"]["value_note"];
-        int tag = bgMeasurement["tag"]["id"];
-        bool manual = bgMeasurement["is_manuel"];
-        int measurementId = bgMeasurement["id"];
-        GlucoseData glucoseData = new GlucoseData(
-          time: time,
-          userId: pd.id,
-          level: level,
-          note: note,
-          tag: tag,
-          manual: manual,
-          measurementId: measurementId,
-          device: 103,
-        );
-        glucoseDataList.add(glucoseData);
-      }
-      return glucoseDataList;
-    } catch (e) {
-      return [];
-    }
-  }
-
-  Future<bool> addProfile(Person person) async {
+  /* Future<bool> addProfile(Person person) async {
     try {
       await getIt<ChronicTrackingRepository>().addProfile(person);
       return true;
     } catch (e) {
       return false;
     }
-  }
+  } */
 
   Future<bool> changeProfile(int id) async {
     try {
@@ -223,7 +181,7 @@ class BaseProviderRepository with ChangeNotifier {
     }
   }
 
-  Future<bool> updateProfile(Person person, int id) async {
+  /*  Future<bool> updateProfile(Person person, int id) async {
     try {
       person.isFirstUser = false;
       person.userId = -1;
@@ -232,7 +190,7 @@ class BaseProviderRepository with ChangeNotifier {
     } catch (e) {
       return false;
     }
-  }
+  } */
 
   Future<bool> deleteBloodGlucose(int timeKey) async {
     try {

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 
-import '../database/repository/glucose_repository.dart';
 import '../models/bg_measurement/bg_measurement_view_model.dart';
 
 enum BgMeasurementState { loading, loaded, error }
@@ -22,7 +23,7 @@ class BgMeasurementsNotifier extends ChangeNotifier {
   List<DateTime> bgMeasurementDates = [];
 
   Future<void> fetchBgMeasurements() async {
-    final result = GlucoseRepository().currentUserData;
+    final result = getIt<GlucoseStorageImpl>().getAll();
     this.bgMeasurements.clear();
     this.bgMeasurements =
         result.map((e) => BgMeasurementViewModel(bgMeasurement: e)).toList();
@@ -33,7 +34,7 @@ class BgMeasurementsNotifier extends ChangeNotifier {
 
   Future<void> fetchBgMeasurementsInDateRange(
       DateTime start, DateTime end) async {
-    final result = GlucoseRepository().currentUserData;
+    final result = getIt<GlucoseStorageImpl>().getAll();
     this.bgMeasurements.clear();
     for (var e in result) {
       DateTime measurementDate = BgMeasurementViewModel(bgMeasurement: e).date;

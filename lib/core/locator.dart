@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/login_view_model.dart';
 import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -55,6 +56,12 @@ Future<void> setupLocator() async {
 
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
+
+  getIt.registerLazySingleton(() => GlucoseStorageImpl());
+  getIt.registerLazySingleton(() => ProfileStorageImpl());
+
+  await getIt<GlucoseStorageImpl>().init();
+  await getIt<ProfileStorageImpl>().init();
 
   getIt.registerSingleton<UserInfo>(
       UserInfo(getIt<ISharedPreferencesManager>()));

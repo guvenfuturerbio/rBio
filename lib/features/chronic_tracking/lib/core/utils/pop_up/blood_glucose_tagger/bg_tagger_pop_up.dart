@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../../generated/l10n.dart';
-import '../../../../database/datamodels/glucose_data.dart';
 import '../../../../database/repository/glucose_repository.dart';
 import 'bg_tagger_vm.dart';
 
@@ -36,9 +36,9 @@ class BgTaggerPopUp extends StatelessWidget {
                   : GlucoseData(
                       level: "0",
                       tag: null,
-                      deviceName: "Manual",
+                      deviceName: "",
                       time: (DateTime.now()).millisecondsSinceEpoch,
-                      device: 1,
+                      device: 103,
                       manual: true,
                       note: "")),
           child: Consumer<BgTaggerVm>(
@@ -314,14 +314,15 @@ class BgTaggerPopUp extends StatelessWidget {
                         padding: EdgeInsets.all(8),
                         height: 25,
                         width: 25,
-                        child: value.data.imageURL == ""
+                        child: value.data.imageURL == "" || Atom.isWeb
                             ? SvgPicture.asset(
                                 R.image.addphoto_icon,
                               )
                             : PhotoView(
                                 imageProvider: FileImage(File(
-                                    GlucoseRepository().getImagePathOfImageURL(
-                                        value.data.imageURL))),
+                                    getIt<GlucoseStorageImpl>()
+                                        .getImagePathOfImageURL(
+                                            value.data.imageURL))),
                               ),
                       ),
                     )),

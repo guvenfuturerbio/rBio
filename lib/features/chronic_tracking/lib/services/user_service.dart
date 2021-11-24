@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +19,6 @@ import '../database/repository/scale_repository.dart';
 import '../helper/workers.dart';
 import '../models/firebase/add_firebase_body.dart';
 import '../models/user/usermodel.dart';
-import '../models/user_profiles/person.dart';
 import '../models/user_profiles/save_and_retrieve_token_model.dart';
 import '../models/user_profiles/token_user_text_body.dart';
 import '../notifiers/shared_preferences_handler.dart';
@@ -241,7 +241,10 @@ class UserService {
       await saveAndRetrieveToken(userCred, 'handleCred');
       if (isSignUp) {
         //TODO: this section will be refactored !!!
-        await ProfileRepository().addProfile(new Person().fromDefault(), true);
+        await getIt<ProfileStorageImpl>().write(
+            new Person().fromDefault(
+                name: FirebaseAuth.instance.currentUser.displayName),
+            shouldSendToServer: true);
       }
       await handleSuccessfulLogin(userCred);
 
@@ -263,28 +266,26 @@ class UserService {
       }
 
       person = profiles[0];
-      await ProfileRepository().addProfile(person, false);
+      await getIt<ProfileStorageImpl>().write(person, shouldSendToServer: true);
       UserProfilesNotifier().selection = profiles[0];
       saveInformationForAutoLogin(userCredential);
 
       // token save process
-      UserService().addFirebaseToken();
+      addFirebaseToken();
       // glucose REpo initialize process
-      await GlucoseRepository().initialize();
-      await ScaleRepository().initialize();
+      //await ScaleRepository().initialize();
 
       //WARNING: Çoklu profil özelliği şuanlık askıya alındığı için sadece ilk profilden ilerlenecektir.
       var glucoseMeasurements =
           await RepositoryServices().getBloodGlucoseDataOfPerson(profiles[0]);
 
+      getIt<GlucoseStorageImpl>().checkUserDatas(person.userId);
       //db save process
       if (glucoseMeasurements.isNotEmpty) {
-        await GlucoseRepository().addNewGlucoseDataList(glucoseMeasurements);
+        await getIt<GlucoseStorageImpl>().writeAll(glucoseMeasurements);
       }
-      await GlucoseRepository().getAllGlucoseData();
-      await GlucoseRepository().getLatestMeasurement();
-      await ScaleRepository().getAllScaleData();
-      await ScaleRepository().getLatestMeasurement();
+      //await ScaleRepository().getAllScaleData();
+      //await ScaleRepository().getLatestMeasurement();
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
       Sentry.captureException(e, stackTrace: stk);

@@ -13,6 +13,14 @@
             "args": [
                 "--web-port=59844",
             ]
+        },
+        {
+            "name": "Flutter For Mobile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "args": []
         }
     ]
 }
