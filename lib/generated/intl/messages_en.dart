@@ -621,6 +621,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "start_zoom_meeting" : MessageLookupByLibrary.simpleMessage("Starting Meeting..."),
     "stop" : MessageLookupByLibrary.simpleMessage("Stop"),
     "store" : MessageLookupByLibrary.simpleMessage("Store"),
+    "strip_count_low" : MessageLookupByLibrary.simpleMessage("Strip count is low"),
     "strip_detected_message" : MessageLookupByLibrary.simpleMessage("We have detected %1\$ readings. Tap to remove %2\$ strips from your strips."),
     "strip_number" : MessageLookupByLibrary.simpleMessage("Number of Strips"),
     "strip_page_info_message" : MessageLookupByLibrary.simpleMessage("Strip number decreases automatically when the blood glucose measurement is added. In cases such as loss or breakage, you need to reduce it manually"),
@@ -629,6 +630,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "strips" : MessageLookupByLibrary.simpleMessage("Strips"),
     "strips_left" : MessageLookupByLibrary.simpleMessage("Strips left."),
     "strips_used" : MessageLookupByLibrary.simpleMessage("You have used %1\$ strips so far"),
+    "strpCnt" : MessageLookupByLibrary.simpleMessage("<stripCount>"),
     "subscriptions" : MessageLookupByLibrary.simpleMessage("Subscriptions"),
     "succefully_created_account" : MessageLookupByLibrary.simpleMessage("Your account has been successfully created"),
     "succefully_created_pass" : MessageLookupByLibrary.simpleMessage("Your new password has been successfully created"),
@@ -718,6 +720,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wrong_username_password" : MessageLookupByLibrary.simpleMessage("Wrong Username or Password!"),
     "year_of_diagnosis" : MessageLookupByLibrary.simpleMessage("Year of Diagnosis"),
     "yes" : MessageLookupByLibrary.simpleMessage("Yes"),
+    "you_have_strip" : MessageLookupByLibrary.simpleMessage("You have <stripCount> strips left"),
     "your_complaints" : MessageLookupByLibrary.simpleMessage("Your complaints:"),
     "youtube_stream" : MessageLookupByLibrary.simpleMessage("Youtube Stream")
   };

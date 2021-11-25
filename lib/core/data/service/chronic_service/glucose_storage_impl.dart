@@ -40,9 +40,6 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   List<GlucoseData> getAll() {
     if (box.isOpen && box.isNotEmpty) {
-      for (var item in box.values) {
-        debugPrint(item.toMap().toString());
-      }
       return box.values.toList();
     } else {
       return [];
@@ -66,7 +63,6 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   Future<bool> write(GlucoseData data,
       {bool shouldSendToServer = false}) async {
-    print(data.toMap().toString());
     if (box.isOpen && !doesExist(data)) {
       if (shouldSendToServer) {
         var id = await sendToServer(data);
@@ -107,11 +103,16 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   GlucoseData getLatestMeasurement() {
-    List<GlucoseData> list = box.values.toList();
+    print(box.isOpen);
+    print(box.isNotEmpty);
+    if (box.isOpen && box.isNotEmpty) {
+      List<GlucoseData> list = box.values.toList();
 
-    list.sort((a, b) => b.date.compareTo(a.date));
+      list.sort((a, b) => b.date.compareTo(a.date));
 
-    return list[0];
+      return list[0];
+    }
+    return null;
   }
 
   updateImage(String path, key) {

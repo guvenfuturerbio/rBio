@@ -1,8 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import '../../common/mediminder_common.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/medicine_period.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/core/enums/usage_type.dart';
+import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
+import 'package:onedosehealth/model/mediminder/medicine_for_schedule_model.dart';
 
 class MedicationVm extends ChangeNotifier {
   BuildContext mContext;

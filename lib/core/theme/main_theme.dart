@@ -13,6 +13,8 @@ abstract class ITheme {
   Color get textColorPassive;
   TextTheme get textTheme;
   Color get cardBackgroundColor;
+  Color get grey;
+  Color get blackForItem;
 }
 
 class GreenTheme extends ITheme {
@@ -39,6 +41,15 @@ class GreenTheme extends ITheme {
 
   @override
   Color get textColorPassive => Color.fromARGB(255, 187, 186, 186);
+
+  @override
+  Color get grey => Colors.grey;
+
+  @override
+  Color get cardBackgroundColor => GuvenColors.white;
+
+  @override
+  Color get blackForItem => Colors.black;
 
   @override
   TextTheme get textTheme => TextTheme(
@@ -87,7 +98,4 @@ class GreenTheme extends ITheme {
       );
 
   double convertFontSize(double value) => value / 3.0;
-
-  @override
-  Color get cardBackgroundColor => GuvenColors.white;
 }

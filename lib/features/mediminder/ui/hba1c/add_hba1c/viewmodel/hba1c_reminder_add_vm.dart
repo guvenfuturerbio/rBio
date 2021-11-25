@@ -1,9 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/core/timezone/timezone.dart';
+import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
+import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../common/mediminder_common.dart';
+import '../../list_hba1c/view/hba1c_reminderlist_screen.dart';
 
 class Hba1cReminderAddVm extends ChangeNotifier {
   BuildContext mContext;
@@ -43,15 +48,7 @@ class Hba1cReminderAddVm extends ChangeNotifier {
       scheduledDateForHba,
     );
     await saveScheduledHba1c(hba1cModel);
-    Navigator.of(mContext).popUntil(
-      ModalRoute.withName(Mediminder.instance.MY_MEDICINES_PAGE),
-    );
-    Navigator.push(
-      mContext,
-      MaterialPageRoute(
-        builder: (_) => Hba1cReminderListScreen(remindable: mRemindable),
-      ),
-    );
+    Atom.historyBack();
   }
 
   var scheduledDateForHba;

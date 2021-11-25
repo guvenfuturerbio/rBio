@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../common/mediminder_common.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
+import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
 
 class Hba1cReminderListVm extends ChangeNotifier {
   BuildContext mContext;

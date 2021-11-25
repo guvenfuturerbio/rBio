@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/model/mediminder/drug_result_model.dart';
+import 'package:onedosehealth/model/mediminder/medicine_for_schedule_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/mediminder_common.dart';
+import '../../medication_period/medication_period_selection_screen.dart';
+import '../viewmodel/medication_vm.dart';
 
 class MedicationScreen extends StatelessWidget {
   Remindable remindable;
@@ -11,6 +18,8 @@ class MedicationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    remindable = Atom.queryParameters['remindable'].toRemindable();
+
     return ChangeNotifierProvider<MedicationVm>(
       create: (context) => MedicationVm(context),
       child: RbioScaffold(
@@ -64,10 +73,7 @@ class MedicationScreen extends StatelessWidget {
             child: Text(
               LocaleProvider.current.there_are_no_reminders,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Mediminder.instance.gray,
-                fontSize: context.TEXTSCALE * 22,
-              ),
+              style: context.xHeadline3.copyWith(color: getIt<ITheme>().grey),
             ),
           );
         }
@@ -78,15 +84,11 @@ class MedicationScreen extends StatelessWidget {
   Widget _buildFab(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MedicationPeriodSelectionScreen(
-              drugResult: DrugResultModel(name: remindable.toShortString()),
-              remindable: remindable,
-            ),
-          ),
-        );
+        Atom.to(PagePaths.MEDICATION_PERIOD, queryParameters: {
+          'drugResult': jsonEncode(
+              DrugResultModel(name: remindable.toShortString()).toJson()),
+          'remindable': remindable.toParseableString()
+        });
       },
       child: Container(
         height: double.infinity,
@@ -97,20 +99,20 @@ class MedicationScreen extends StatelessWidget {
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,
             colors: <Color>[
-              Mediminder.instance.btnLightBlue,
-              Mediminder.instance.btnDarkBlue
+              getIt<ITheme>().secondaryColor,
+              getIt<ITheme>().mainColor
             ],
           ),
         ),
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SvgPicture.asset(
-            Mediminder.instance.add_icon,
-            color: Mediminder.instance.white,
+            R.image.add_icon,
+            color: getIt<ITheme>().cardBackgroundColor,
           ),
         ),
       ),
-      backgroundColor: Mediminder.instance.white,
+      backgroundColor: getIt<ITheme>().cardBackgroundColor,
     );
   }
 }
@@ -148,7 +150,8 @@ class MedicineCard extends StatelessWidget {
                       (medicine.remindable == Remindable.Medication.toString()
                           ? " " + medicine.name
                           : " "),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style:
+                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   medicationVm.getSubTitle(medicine),
@@ -164,11 +167,11 @@ class MedicineCard extends StatelessWidget {
                 LocaleProvider.current.delete_medicine_confirm_message,
                 TextButton(
                   style:
-                      TextButton.styleFrom(primary: Mediminder.instance.white),
+                      TextButton.styleFrom(primary: getIt<ITheme>().textColor),
                   child: Text(LocaleProvider.current.Ok),
                   onPressed: () {
                     medicationVm.removeMedicine(medicine);
-                    Navigator.of(context).pop();
+                    Atom.dismiss();
                   },
                 ),
               ),
@@ -177,13 +180,12 @@ class MedicineCard extends StatelessWidget {
                 width: 32,
                 margin: EdgeInsets.only(right: 5),
                 decoration: new BoxDecoration(
-                  color: Mediminder.instance.btnDarkBlue,
+                  color: getIt<ITheme>().mainColor,
                   shape: BoxShape.circle,
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                      Mediminder.instance.delete_white_garbage),
+                  child: SvgPicture.asset(R.image.delete_white_garbage),
                 ),
               ),
             ),
@@ -204,14 +206,11 @@ class MedicineCard extends StatelessWidget {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Mediminder.instance.defaultBlue,
+          backgroundColor: getIt<ITheme>().mainColor,
           title: Text(
             title,
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
+            style: context.xHeadline1.copyWith(
+                color: getIt<ITheme>().textColor, fontWeight: FontWeight.w700),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
@@ -230,10 +229,8 @@ class MedicineCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   text,
-                  style: new TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
+                  style: context.xHeadline3
+                      .copyWith(color: getIt<ITheme>().textColor),
                 ),
               ],
             ),

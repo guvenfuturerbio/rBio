@@ -279,7 +279,7 @@ class UserService {
       var glucoseMeasurements =
           await RepositoryServices().getBloodGlucoseDataOfPerson(profiles[0]);
 
-      getIt<GlucoseStorageImpl>().checkUserDatas(person.userId);
+      getIt<GlucoseStorageImpl>().checkUserDatas(person.id);
       //db save process
       if (glucoseMeasurements.isNotEmpty) {
         await getIt<GlucoseStorageImpl>().writeAll(glucoseMeasurements);

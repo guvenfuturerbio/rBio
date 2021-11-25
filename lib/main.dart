@@ -7,13 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
-import 'package:onedosehealth/core/domain/glucose_model.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/scale_measurement_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
-import 'features/chronic_tracking/lib/database/repository/profile_repository.dart';
 import 'features/chronic_tracking/lib/notifiers/bg_measurements_notifiers.dart';
+import 'features/chronic_tracking/lib/notifiers/scale_measurement_notifier.dart';
+import 'features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
@@ -118,7 +117,7 @@ class _MyAppState extends State<MyApp> {
               RbioConfig.of(context).changeOrientation(orientation);
 
               return AtomMaterialApp(
-                initialUrl: PagePaths.LOGIN,
+                initialUrl: PagePaths.MAIN,
                 routes: VRouterRoutes.routes,
                 onSystemPop: (data) async {
                   final currentUrl = data.fromUrl;

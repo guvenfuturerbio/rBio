@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/features/mediminder/ui/hba1c/list_hba1c/viewmodel/hba1c_reminderlist_vm.dart';
+import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/mediminder_common.dart';
 
 class Hba1cReminderListScreen extends StatelessWidget {
   Remindable remindable;
@@ -25,11 +27,6 @@ class Hba1cReminderListScreen extends StatelessWidget {
               title: RbioAppBar.textTitle(
                 context,
                 remindable.toShortString(),
-              ),
-              leading: InkWell(
-                child: SvgPicture.asset(Mediminder.instance.back_icon),
-                onTap: () =>
-                    Navigator.of(context, rootNavigator: true).pop(context),
               ),
             ),
             body: _buildBody(context, value),
@@ -67,10 +64,7 @@ class Hba1cReminderListScreen extends StatelessWidget {
             child: Text(
               LocaleProvider.current.there_are_no_reminders,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Mediminder.instance.gray,
-                fontSize: context.TEXTSCALE * 22,
-              ),
+              style: context.xHeadline3.copyWith(color: getIt<ITheme>().grey),
             ),
           );
   }
@@ -78,15 +72,10 @@ class Hba1cReminderListScreen extends StatelessWidget {
   Widget _buildFab(BuildContext context, Hba1cReminderListVm value) {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Hba1cReminderAddScreen(
-              hba1cIdForNotification: value.generatedIdForSchedule.last,
-              remindable: remindable,
-            ),
-          ),
-        );
+        Atom.to(PagePaths.HBA1C_LIST, queryParameters: {
+          'remindable': remindable.toParseableString(),
+          'hba1cIdForNotification': value.generatedIdForSchedule.last.toString()
+        });
       },
       child: Container(
         height: double.infinity,
@@ -97,20 +86,20 @@ class Hba1cReminderListScreen extends StatelessWidget {
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,
             colors: <Color>[
-              Mediminder.instance.btnLightBlue,
-              Mediminder.instance.btnDarkBlue
+              getIt<ITheme>().secondaryColor,
+              getIt<ITheme>().mainColor
             ],
           ),
         ),
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SvgPicture.asset(
-            Mediminder.instance.add_icon,
-            color: Mediminder.instance.white,
+            R.image.add_icon,
+            color: getIt<ITheme>().cardBackgroundColor,
           ),
         ),
       ),
-      backgroundColor: Mediminder.instance.white,
+      backgroundColor: getIt<ITheme>().cardBackgroundColor,
     );
   }
 }
@@ -144,7 +133,8 @@ class HbaCard extends StatelessWidget {
                 children: [
                   Text(
                     hbaReminder.reminderDate.substring(0, 10),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    style: context.xHeadline3
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
                   Text(
                     (DateTime.parse(hbaReminder.reminderDate).hour.toString() +
@@ -152,10 +142,8 @@ class HbaCard extends StatelessWidget {
                         DateTime.parse(hbaReminder.reminderDate)
                             .minute
                             .toString()),
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Mediminder.instance.gray,
-                    ),
+                    style: context.xHeadline4
+                        .copyWith(color: getIt<ITheme>().grey),
                   ),
                 ],
               ),
@@ -166,7 +154,7 @@ class HbaCard extends StatelessWidget {
                     LocaleProvider.current.delete_medicine_confirm_message,
                     TextButton(
                       style: TextButton.styleFrom(
-                          primary: Mediminder.instance.white),
+                          primary: getIt<ITheme>().cardBackgroundColor),
                       child: Text(LocaleProvider.current.Ok),
                       onPressed: () {
                         hbaScheduledVm.removeScheduledHba1c(hbaReminder);
@@ -178,13 +166,12 @@ class HbaCard extends StatelessWidget {
                   width: 32,
                   margin: EdgeInsets.only(right: 5),
                   decoration: new BoxDecoration(
-                    color: Mediminder.instance.btnDarkBlue,
+                    color: getIt<ITheme>().mainColor,
                     shape: BoxShape.circle,
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(5),
-                    child: SvgPicture.asset(
-                        Mediminder.instance.delete_white_garbage),
+                    child: SvgPicture.asset(R.image.delete_white_garbage),
                   ),
                 ),
               )
@@ -204,14 +191,12 @@ class HbaCard extends StatelessWidget {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: Mediminder.instance.defaultBlue,
+            backgroundColor: getIt<ITheme>().mainColor,
             title: Text(
               title,
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
+              style: context.xHeadline3.copyWith(
+                  color: getIt<ITheme>().textColor,
+                  fontWeight: FontWeight.w700),
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
@@ -229,10 +214,8 @@ class HbaCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   new Text(text,
-                      style: new TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                      )),
+                      style: context.xHeadline3
+                          .copyWith(color: getIt<ITheme>().textColor)),
                 ],
               ),
             ),
