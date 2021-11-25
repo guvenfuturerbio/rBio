@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/features/mediminder/ui/hba1c/add_hba1c/viewmodel/hba1c_reminder_add_vm.dart';
+import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/mediminder_common.dart';
 
 class Hba1cReminderAddScreen extends StatelessWidget {
   int hba1cIdForNotification;
@@ -22,6 +24,10 @@ class Hba1cReminderAddScreen extends StatelessWidget {
   Hba1CForScheduleModel currentHbaModel;
 
   Widget build(BuildContext context) {
+    this.remindable = Atom.queryParameters['remindable'].toRemindable();
+    this.hba1cIdForNotification =
+        int.parse(Atom.queryParameters['hba1cIdForNotification']);
+
     return ChangeNotifierProvider<Hba1cReminderAddVm>(
       create: (context) => Hba1cReminderAddVm(context, this.remindable),
       child: Consumer<Hba1cReminderAddVm>(
@@ -31,7 +37,6 @@ class Hba1cReminderAddScreen extends StatelessWidget {
           Widget child,
         ) {
           return RbioScaffold(
-            backgroundColor: Colors.grey[300],
             appbar: RbioAppBar(
               title: RbioAppBar.textTitle(
                 context,
@@ -78,7 +83,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Mediminder.instance.white,
+            primary: getIt<ITheme>().cardBackgroundColor,
             elevation: 10,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
@@ -104,7 +109,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    Atom.historyBack();
                                   },
                                   child: Text(
                                     LocaleProvider.of(context).cancel,
@@ -115,7 +120,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    Atom.historyBack();
                                   },
                                   child: Text(
                                     LocaleProvider.of(context).pick,
@@ -150,12 +155,14 @@ class Hba1cReminderAddScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(LocaleProvider.current.last_test_date,
-                  style: TextStyle(color: Mediminder.instance.grey)),
+                  style:
+                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
               Text(
                 hba1cVM.lastMeasurementDate == ""
                     ? ""
                     : hba1cVM.lastMeasurementDate.substring(0, 10),
-                style: TextStyle(color: Mediminder.instance.black),
+                style: context.xHeadline3
+                    .copyWith(color: getIt<ITheme>().textColorSecondary),
               ),
             ],
           ),
@@ -174,7 +181,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Mediminder.instance.white,
+            primary: getIt<ITheme>().cardBackgroundColor,
             elevation: 10,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
@@ -189,7 +196,8 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                 title: Text('${LocaleProvider.current.test_result}'),
                 content: TextFormField(
                   controller: controller,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  style:
+                      context.xHeadline1.copyWith(fontWeight: FontWeight.bold),
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(
                         RegExp(r'^(\d+)?\.?\d{0,2}'))
@@ -205,8 +213,8 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                         begin: Alignment.bottomRight,
                         end: Alignment.topLeft,
                         colors: <Color>[
-                          Mediminder.instance.btnLightBlue,
-                          Mediminder.instance.btnDarkBlue,
+                          getIt<ITheme>().secondaryColor,
+                          getIt<ITheme>().mainColor,
                         ],
                       ),
                     ),
@@ -220,20 +228,21 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SvgPicture.asset(
-                            Mediminder.instance.done_icon,
+                            R.image.done_icon,
                             height: 30,
                             width: 30,
                             //      height: 300,
                           ),
                           Text(LocaleProvider.current.done,
-                              style: TextStyle(color: Colors.white)),
+                              style: context.xHeadline3
+                                  .copyWith(color: getIt<ITheme>().textColor)),
                         ],
                       ),
                       onPressed: () {
                         if (controller.text.length > 0)
                           hba1cVM
                               .setPreviousResult(double.parse(controller.text));
-                        Navigator.pop(context);
+                        Atom.historyBack();
                       },
                     ),
                   ),
@@ -245,15 +254,15 @@ class Hba1cReminderAddScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(LocaleProvider.current.last_result,
-                  style: TextStyle(color: Mediminder.instance.grey)),
+                  style:
+                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
               Text(
                 (Intl.getCurrentLocale() == "tr"
                         ? "% ${hba1cVM.previousResult.toString()}"
                         : "${hba1cVM.previousResult.toString()} %") ??
                     LocaleProvider.current.unspecified,
-                style: TextStyle(
-                  color: Colors.black,
-                ),
+                style: context.xHeadline3
+                    .copyWith(color: getIt<ITheme>().textColorSecondary),
               ),
             ],
           ),
@@ -283,7 +292,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Mediminder.instance.white,
+            primary: getIt<ITheme>().cardBackgroundColor,
             elevation: 10,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
@@ -293,12 +302,14 @@ class Hba1cReminderAddScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(LocaleProvider.current.reminder_date,
-                  style: TextStyle(color: Mediminder.instance.grey)),
+                  style:
+                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
               Text(
                   (hba1cVM.remindDate == "")
                       ? ""
                       : hba1cVM.remindDate.toString().substring(0, 16),
-                  style: TextStyle(color: Mediminder.instance.black))
+                  style: context.xHeadline3
+                      .copyWith(color: getIt<ITheme>().textColorSecondary))
             ],
           ),
           onPressed: () {
@@ -324,7 +335,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    Atom.historyBack();
                                   },
                                   child: Text(
                                     LocaleProvider.of(context).cancel,
@@ -336,7 +347,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: () {
                                     //print(birthdateselection);
-                                    Navigator.pop(context);
+                                    Atom.historyBack();
                                   },
                                   child: Text(
                                     LocaleProvider.of(context).pick,
@@ -385,8 +396,8 @@ class Hba1cReminderAddScreen extends StatelessWidget {
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
           colors: <Color>[
-            Mediminder.instance.btnLightBlue,
-            Mediminder.instance.btnDarkBlue,
+            getIt<ITheme>().secondaryColor,
+            getIt<ITheme>().mainColor,
           ],
         ),
       ),
@@ -400,13 +411,14 @@ class Hba1cReminderAddScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SvgPicture.asset(
-              Mediminder.instance.done_icon,
+              R.image.done_icon,
               height: 30,
               width: 30,
             ),
             Text(
               LocaleProvider.current.done,
-              style: TextStyle(color: Colors.white),
+              style:
+                  context.xHeadline3.copyWith(color: getIt<ITheme>().textColor),
             ),
           ],
         ),
@@ -425,7 +437,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
               reminderDate: hba1cVM.remindDate.toString(),
             );
             hba1cVM.createNotification(currentHbaModel);
-            Navigator.of(context).pop();
+            Atom.historyBack();
           }
         },
       ),

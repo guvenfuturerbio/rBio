@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:onedosehealth/core/core.dart';
 
-import '../../common/mediminder_common.dart';
 
 class StripGradientDialog extends StatefulWidget {
   final String title;
@@ -35,7 +35,7 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
   Widget build(BuildContext context) {
     Widget okButton = FlatButton(
       child: Text(LocaleProvider.current.Ok),
-      textColor: Mediminder.instance.black,
+      textColor: getIt<ITheme>().textColorSecondary,
       onPressed: () {
         widget.callback(int.parse(stripController.text));
         Navigator.of(context).pop();
@@ -43,18 +43,16 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
     );
 
     return AlertDialog(
-      backgroundColor: Mediminder.instance.bg_gray,
+      backgroundColor: getIt<ITheme>().grey,
       contentPadding: EdgeInsets.all(0.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
       ),
       title: Text(
         widget.title,
-        style: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.w700,
-          color: Mediminder.instance.black,
-        ),
+        style: context.xHeadline1.copyWith(
+            color: getIt<ITheme>().textColorSecondary,
+            fontWeight: FontWeight.w700),
       ),
       content: Container(
         padding: const EdgeInsets.all(16.0),

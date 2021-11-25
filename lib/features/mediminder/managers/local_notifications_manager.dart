@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
 import 'package:timezone/timezone.dart';
-
-import '../common/mediminder_common.dart';
 
 // ignore_for_file: deprecated_member_use
 
@@ -127,7 +127,7 @@ class _NotificationDetails {
       'Rbio_EveryDay',
       channelDescription: 'EveryDay',
       importance: Importance.max,
-      ledColor: Mediminder.instance.defaultBlue,
+      ledColor: getIt<ITheme>().mainColor,
       ledOffMs: 1000,
       ledOnMs: 1000,
       enableLights: true,
@@ -141,7 +141,7 @@ class _NotificationDetails {
       'Rbio_SpecificDays',
       channelDescription: 'SpecificDays',
       importance: Importance.max,
-      ledColor: Mediminder.instance.defaultBlue,
+      ledColor: getIt<ITheme>().mainColor,
       ledOffMs: 1000,
       ledOnMs: 1000,
       enableLights: true,

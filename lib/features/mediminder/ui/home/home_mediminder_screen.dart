@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/features/mediminder/ui/strip/view/strip_screen.dart';
 
-import '../common/mediminder_common.dart';
+import '../hba1c/list_hba1c/view/hba1c_reminderlist_screen.dart';
+import '../medication/medication_screen/view/medication_screen.dart';
 
 class HomeMediminderScreen extends StatelessWidget {
   const HomeMediminderScreen({Key key}) : super(key: key);
@@ -28,22 +32,22 @@ class HomeMediminderScreen extends StatelessWidget {
       children: [
         _buildCard(
           context,
-          Mediminder.instance.blood_icon_black,
+          R.image.blood_icon_black,
           Remindable.BloodGlucose,
         ),
         _buildCard(
           context,
-          Mediminder.instance.strip_icon_black,
+          R.image.strip_icon_black,
           Remindable.Strip,
         ),
         _buildCard(
           context,
-          Mediminder.instance.medicine_icon_black,
+          R.image.medicine_icon_black,
           Remindable.Medication,
         ),
         _buildCard(
           context,
-          Mediminder.instance.hba1c_icon_black,
+          R.image.hba1c_icon_black,
           Remindable.HbA1c,
         ),
       ],
@@ -55,29 +59,29 @@ class HomeMediminderScreen extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                switch (remindable) {
-                  case Remindable.BloodGlucose:
-                    return MedicationScreen(remindable: remindable);
-
-                  case Remindable.Strip:
-                    return StripScreen();
-
-                  case Remindable.Medication:
-                    return MedicationScreen(remindable: remindable);
-
-                  case Remindable.HbA1c:
-                    return Hba1cReminderListScreen(remindable: remindable);
-
-                  default:
-                    return SizedBox();
-                }
-              },
-            ),
-          );
+          switch (remindable) {
+            case Remindable.BloodGlucose:
+              Atom.to(PagePaths.BLOOD_GLUCOSE_PAGE, queryParameters: {
+                'remindable': remindable.toParseableString()
+              });
+              break;
+            case Remindable.Strip:
+              Atom.to(PagePaths.STRIP_PAGE);
+              break;
+            case Remindable.Medication:
+              Atom.to(PagePaths.MEDICATION_SCREEN, queryParameters: {
+                'remindable': remindable.toParseableString()
+              });
+              break;
+            case Remindable.HbA1c:
+              Atom.to(PagePaths.HBA1C_REMINDER_ADD, queryParameters: {
+                'remindable': remindable.toParseableString()
+              });
+              break;
+            default:
+              return SizedBox();
+              break;
+          }
         },
         child: Card(
           shape: RoundedRectangleBorder(
@@ -100,9 +104,8 @@ class HomeMediminderScreen extends StatelessWidget {
                   child: Text(
                     remindable.toShortString(),
                     maxLines: 2,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
+                    style: context.xHeadline3
+                        .copyWith(color: getIt<ITheme>().textColorSecondary),
                   ),
                 ),
               ],

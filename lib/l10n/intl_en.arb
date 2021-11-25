@@ -697,5 +697,8 @@
   "diagnosisDate" : "Diagnosis Date",
   "high_range": "High Range",
   "low_range": "Low Range",
-  "do_you_smoke": "Do you smoke?"
+  "do_you_smoke": "Do you smoke?",
+  "strip_count_low" : "Strip count is low",
+	"you_have_strip": "You have <stripCount> strips left",
+  "strpCnt" : "<stripCount>"
 }

@@ -617,6 +617,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "start_zoom_meeting" : MessageLookupByLibrary.simpleMessage("Görüşme Başlatılıyor..."),
     "stop" : MessageLookupByLibrary.simpleMessage("Dur"),
     "store" : MessageLookupByLibrary.simpleMessage("Mağaza"),
+    "strip_count_low" : MessageLookupByLibrary.simpleMessage("Strip sayısı az"),
     "strip_detected_message" : MessageLookupByLibrary.simpleMessage("%1\$ adet okuma tespit ettik. %2\$ adet stripi silmek için tıklayın."),
     "strip_number" : MessageLookupByLibrary.simpleMessage("Strip Sayısı"),
     "strip_page_info_message" : MessageLookupByLibrary.simpleMessage("Strip sayısı her şeker ölçümünde otomatik olarak azalır. Striplerinizin kaybolması veya bozulması durumunda sayıyı manuel olarak azaltmanız gerekir."),
@@ -625,6 +626,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "strips" : MessageLookupByLibrary.simpleMessage("Strip"),
     "strips_left" : MessageLookupByLibrary.simpleMessage("Strip kaldığında."),
     "strips_used" : MessageLookupByLibrary.simpleMessage("Şimdiye kadar %1\$ adet strip kullandınız"),
+    "strpCnt" : MessageLookupByLibrary.simpleMessage("<stripCount>"),
     "subscriptions" : MessageLookupByLibrary.simpleMessage("Takip Ettiklerim"),
     "succefully_created_pass" : MessageLookupByLibrary.simpleMessage("Yeni şifreniz başarıyla oluşturulmuştur"),
     "success_message_title" : MessageLookupByLibrary.simpleMessage("Bilgi"),
@@ -712,6 +714,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wrong_username_password" : MessageLookupByLibrary.simpleMessage("Hatalı kullanıcı adı ya da Şifre !"),
     "year_of_diagnosis" : MessageLookupByLibrary.simpleMessage("Teşhis Yılı"),
     "yes" : MessageLookupByLibrary.simpleMessage("Evet"),
+    "you_have_strip" : MessageLookupByLibrary.simpleMessage("<stripCount> stripiniz kaldı"),
     "your_complaints" : MessageLookupByLibrary.simpleMessage("Belirttiğiniz şikayetleriniz:"),
     "youtube_stream" : MessageLookupByLibrary.simpleMessage("Youtube Yayını")
   };

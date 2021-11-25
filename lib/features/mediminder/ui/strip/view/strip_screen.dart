@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/unit.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/widgets/strip_counter_dialog.dart';
+import 'package:onedosehealth/features/mediminder/ui/strip/viewmodel/strip_vm.dart';
+import 'package:onedosehealth/features/mediminder/widget/keyboard_dismiss_on_tap.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/mediminder_common.dart';
 
 class StripScreen extends StatefulWidget {
   StripScreen({Key key}) : super(key: key);
@@ -91,7 +94,7 @@ class _StripScreenState extends State<StripScreen> {
           Center(
             child: Text(
               LocaleProvider.current.when_to_be_notified,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
 
@@ -101,7 +104,7 @@ class _StripScreenState extends State<StripScreen> {
           //
           Text(
             LocaleProvider.current.strips_left,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
           ),
 
           //
@@ -127,7 +130,7 @@ class _StripScreenState extends State<StripScreen> {
       child: Column(
         children: <Widget>[
           Card(
-            color: Mediminder.instance.white,
+            color: getIt<ITheme>().cardBackgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             ),
@@ -146,7 +149,7 @@ class _StripScreenState extends State<StripScreen> {
                   Container(
                     height: 20,
                     width: 20,
-                    child: SvgPicture.asset(Mediminder.instance.mark_icon),
+                    child: SvgPicture.asset(R.image.mark_icon),
                   ),
 
                   //
@@ -157,9 +160,8 @@ class _StripScreenState extends State<StripScreen> {
                           : LocaleProvider.current.strips_used.format(
                               []..add(stripCount.usedStripCount.toString())),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: context.xHeadline3
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -183,7 +185,7 @@ class _StripScreenState extends State<StripScreen> {
 
           //
           CircleAvatar(
-            backgroundColor: Mediminder.instance.btnDarkBlue,
+            backgroundColor: getIt<ITheme>().mainColor,
             radius: 85,
             child: CircleAvatar(
               backgroundColor: Colors.white,
@@ -199,10 +201,8 @@ class _StripScreenState extends State<StripScreen> {
                         data: ThemeData(primaryColor: Colors.black),
                         child: TextFormField(
                           controller: stripCountController,
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: context.xHeadline1
+                              .copyWith(fontWeight: FontWeight.bold),
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
                           ],
@@ -234,13 +234,9 @@ class _StripScreenState extends State<StripScreen> {
                     ),
 
                     //
-                    Text(
-                      LocaleProvider.current.strips,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                    ),
+                    Text(LocaleProvider.current.strips,
+                        style: context.xHeadline3.copyWith(
+                            color: getIt<ITheme>().textColorSecondary)),
                   ],
                 ),
               ),
@@ -272,9 +268,12 @@ class _StripScreenState extends State<StripScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
-                        child: Text(LocaleProvider.current.remove_strips,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.black)),
+                        child: Text(
+                          LocaleProvider.current.remove_strips,
+                          textAlign: TextAlign.center,
+                          style: context.xHeadline3.copyWith(
+                              color: getIt<ITheme>().textColorSecondary),
+                        ),
                         onPressed: () {
                           modeOfStrip = StripMode.SUBTRACT;
                           showGradientDialog(
@@ -287,7 +286,7 @@ class _StripScreenState extends State<StripScreen> {
                       Icon(
                         Icons.remove,
                         size: 40,
-                        color: Mediminder.instance.black,
+                        color: getIt<ITheme>().blackForItem,
                       )
                     ],
                   ),
@@ -314,12 +313,13 @@ class _StripScreenState extends State<StripScreen> {
                       Icon(
                         Icons.add,
                         size: 40,
-                        color: Mediminder.instance.black,
+                        color: getIt<ITheme>().blackForItem,
                       ),
                       TextButton(
                         child: Text(LocaleProvider.current.add_strips,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.black)),
+                            style: context.xHeadline3.copyWith(
+                                color: getIt<ITheme>().textColorSecondary)),
                         onPressed: () {
                           modeOfStrip = StripMode.ADD;
                           showGradientDialog(
@@ -346,11 +346,9 @@ class _StripScreenState extends State<StripScreen> {
       child: Center(
         child: Text(
           LocaleProvider.current.strip_page_info_message,
-          style: TextStyle(
-            fontWeight: FontWeight.w100,
-            fontSize: 12,
-            color: Colors.grey,
-          ),
+          style: context.xHeadline4.copyWith(
+              fontWeight: FontWeight.w100,
+              color: getIt<ITheme>().textColorPassive),
           textAlign: TextAlign.center,
         ),
       ),
@@ -388,7 +386,7 @@ class _StripScreenState extends State<StripScreen> {
                 top: 11,
                 right: 15,
               ),
-              hintText: "Strip number",
+              hintText: LocaleProvider.current.strip_number,
             ),
             onChanged: (String value) {
               if (value != '' && value != null) {
@@ -413,8 +411,8 @@ class _StripScreenState extends State<StripScreen> {
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,
             colors: <Color>[
-              Mediminder.instance.btnLightBlue,
-              Mediminder.instance.btnDarkBlue
+              getIt<ITheme>().secondaryColor,
+              getIt<ITheme>().mainColor
             ],
           ),
           borderRadius: BorderRadius.all(Radius.circular(30.0)),
@@ -430,13 +428,14 @@ class _StripScreenState extends State<StripScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                Mediminder.instance.done_icon,
+                R.image.done_icon,
                 height: 30,
                 width: 30,
               ),
               Text(
                 LocaleProvider.current.save,
-                style: TextStyle(color: Colors.white),
+                style: context.xHeadline3
+                    .copyWith(color: getIt<ITheme>().textColor),
               ),
             ],
           ),
