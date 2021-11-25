@@ -24,11 +24,7 @@ class UserNotifier extends ChangeNotifier {
               .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
           patient = await getIt<Repository>().getPatientDetail();
           await getIt<UserManager>().getUserProfile();
-          UserCredential userCredential = await UserService()
-              .signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
-          await UserService()
-              .saveAndRetrieveToken(userCredential.user, 'patientLogin');
-          await UserService().handleSuccessfulLogin(userCredential.user);
+
           final response = await getIt<Repository>().getProfilePicture();
           if (response != null && response != '') {
             await getIt<ISharedPreferencesManager>()

@@ -17,7 +17,6 @@ import 'features/chronic_tracking/lib/notifiers/bg_measurements_notifiers.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
-import 'features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
 import 'features/home/viewmodel/home_vm.dart';
 
 Future<void> main() async {
@@ -93,12 +92,6 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<ThemeNotifier>(
             create: (context) => ThemeNotifier(),
           ),
-          ChangeNotifierProvider<UserNotifier>(
-            create: (context) => UserNotifier()..loginExampleUser(),
-          ),
-          ChangeNotifierProvider<ct.UserNotifier>(
-            create: (context) => getIt<ct.UserNotifier>(),
-          ),
           ChangeNotifierProvider<UserProfilesNotifier>(
             create: (context) => UserProfilesNotifier(),
           ),
@@ -114,21 +107,12 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
               value: BgProgressPageViewModel()),
         ],
-        child: Consumer2<ThemeNotifier, UserNotifier>(
+        child: Consumer<ThemeNotifier>(
           builder: (
             BuildContext context,
             ThemeNotifier themeNotifier,
-            UserNotifier userNotifier,
             Widget child,
           ) {
-            if (userNotifier.username == null)
-              return SizedBox.expand(
-                child: Container(
-                  color: Colors.white,
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-              );
-
             return OrientationBuilder(
                 builder: (BuildContext context, Orientation orientation) {
               RbioConfig.of(context).changeOrientation(orientation);
