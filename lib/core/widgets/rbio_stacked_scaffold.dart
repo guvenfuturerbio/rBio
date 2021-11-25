@@ -71,38 +71,39 @@ class RbioStackedScaffold extends StatelessWidget {
           ),
 
           //
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(15),
-            ),
-            child: SizedBox(
-              height: kHeight(context),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  //
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: getIt<ITheme>().mainColor,
+          if (appbar != null)
+            ClipRRect(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(15),
+              ),
+              child: SizedBox(
+                height: kHeight(context),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    //
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: getIt<ITheme>().mainColor,
+                        ),
                       ),
                     ),
-                  ),
 
-                  //
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 1176,
+                    //
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 1176,
+                        ),
+                        child: appbar,
                       ),
-                      child: appbar,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
 
