@@ -1,4 +1,4 @@
-import '../common//mediminder_common.dart';
+import 'package:onedosehealth/core/core.dart';
 
 enum UsageType {
   HUNGRY,

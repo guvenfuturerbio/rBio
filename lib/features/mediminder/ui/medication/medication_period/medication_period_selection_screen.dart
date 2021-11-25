@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:convert';
 
-import '../../common/mediminder_common.dart';
+import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/medicine_period.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/model/mediminder/drug_result_model.dart';
+
+import '../medication_date/view/medication_date_screen.dart';
 
 class MedicationPeriodSelectionScreen extends StatefulWidget {
   DrugResultModel drugResult;
   Remindable remindable;
-
-  MedicationPeriodSelectionScreen({
-    Key key,
-    this.drugResult,
-    this.remindable,
-  }) : super(key: key);
-
   @override
   _MedicationPeriodSelectionScreenState createState() =>
       _MedicationPeriodSelectionScreenState();
@@ -22,6 +20,10 @@ class _MedicationPeriodSelectionScreenState
     extends State<MedicationPeriodSelectionScreen> {
   @override
   Widget build(BuildContext context) {
+    widget.drugResult = DrugResultModel.fromJson(
+        jsonDecode(Atom.queryParameters['drugResult']));
+    widget.remindable = Atom.queryParameters['remindable'].toRemindable();
+
     return RbioScaffold(
       appbar: RbioAppBar(
         title: RbioAppBar.textTitle(
@@ -43,10 +45,8 @@ class _MedicationPeriodSelectionScreenState
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(top: 15),
-          child: Text(
-            LocaleProvider.current.medicine_how_often_message,
-            style: TextStyle(fontSize: 16),
-          ),
+          child: Text(LocaleProvider.current.medicine_how_often_message,
+              style: context.xHeadline3),
         ),
 
         //
@@ -77,10 +77,16 @@ class _MedicationPeriodSelectionScreenState
             child: ListTile(
               title: Text(
                 periodList[index].toShortString(),
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
               ),
               onTap: () {
-                Navigator.push(
+                Atom.to(PagePaths.MEDICATION_DATE, queryParameters: {
+                  'remindable': widget.remindable.toParseableString(),
+                  'medicinePeriod':
+                      periodList[index].toParseableStringMedicine()
+                });
+
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MedicationDateScreen(
@@ -89,7 +95,7 @@ class _MedicationPeriodSelectionScreenState
                     ),
                     settings: RouteSettings(name: 'NewEntry'),
                   ),
-                );
+                );*/
               },
             ),
           ),

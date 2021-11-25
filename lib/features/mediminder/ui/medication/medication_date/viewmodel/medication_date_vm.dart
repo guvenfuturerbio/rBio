@@ -3,8 +3,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/medicine_period.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/core/enums/usage_type.dart';
+import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
+import 'package:onedosehealth/model/mediminder/medicine_for_schedule_model.dart';
+import 'package:onedosehealth/model/mediminder/selectable_day.dart';
 
-import '../../common/mediminder_common.dart';
+import '../../medication_screen/view/medication_screen.dart';
 
 class MedicationDateVm extends ChangeNotifier {
   BuildContext mContext;
@@ -224,15 +231,7 @@ class MedicationDateVm extends ChangeNotifier {
       );
     }
 
-    Navigator.of(mContext).popUntil(
-      ModalRoute.withName(Mediminder.instance.MY_MEDICINES_PAGE),
-    );
-    Navigator.push(
-      mContext,
-      MaterialPageRoute(
-        builder: (_) => MedicationScreen(remindable: selectedRemindable),
-      ),
-    );
+    Atom.historyBack();
   }
 
   Future<void> _scheduleForSpecific(Remindable selectedRemindable) async {
@@ -274,15 +273,7 @@ class MedicationDateVm extends ChangeNotifier {
       }
     }
 
-    Navigator.of(mContext).popUntil(
-      ModalRoute.withName(Mediminder.instance.MY_MEDICINES_PAGE),
-    );
-    Navigator.push(
-      mContext,
-      MaterialPageRoute(
-        builder: (_) => MedicationScreen(remindable: selectedRemindable),
-      ),
-    );
+    Atom.historyBack();
   }
 
   Future<void> saveScheduledMedicine(MedicineForScheduledModel medicine) async {

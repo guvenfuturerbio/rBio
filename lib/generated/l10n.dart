@@ -7024,6 +7024,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Strip count is low`
+  String get strip_count_low {
+    return Intl.message(
+      'Strip count is low',
+      name: 'strip_count_low',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have <stripCount> strips left`
+  String get you_have_strip {
+    return Intl.message(
+      'You have <stripCount> strips left',
+      name: 'you_have_strip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `<stripCount>`
+  String get strpCnt {
+    return Intl.message(
+      '<stripCount>',
+      name: 'strpCnt',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

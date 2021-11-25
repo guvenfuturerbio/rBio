@@ -1,5 +1,12 @@
 import 'package:onedosehealth/features/auth/login/login_screen.dart';
 import 'package:onedosehealth/features/auth/register/register_step_1_1.dart';
+import 'package:onedosehealth/features/mediminder/ui/hba1c/add_hba1c/view/hba1c_reminder_add_screen.dart';
+import 'package:onedosehealth/features/mediminder/ui/hba1c/list_hba1c/view/hba1c_reminderlist_screen.dart';
+import 'package:onedosehealth/features/mediminder/ui/home/home_mediminder_screen.dart';
+import 'package:onedosehealth/features/mediminder/ui/medication/medication_date/view/medication_date_screen.dart';
+import 'package:onedosehealth/features/mediminder/ui/medication/medication_period/medication_period_selection_screen.dart';
+import 'package:onedosehealth/features/mediminder/ui/medication/medication_screen/view/medication_screen.dart';
+import 'package:onedosehealth/features/mediminder/ui/strip/view/strip_screen.dart';
 import 'package:onedosehealth/features/profile/health_information/view/health_information.dart';
 import 'package:onedosehealth/features/profile/health_information/viewmodel/health_information_vm.dart';
 import 'package:onedosehealth/features/profile/personal_information/view/personal_information_screen.dart';
@@ -330,6 +337,46 @@ class VRouterRoutes {
     ),
 
     VWidget(
+      path: PagePaths.MEDIMINDER_INITIAL,
+      widget: HomeMediminderScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.MEDICATION_SCREEN,
+      widget: MedicationScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.MEDICATION_PERIOD,
+      widget: MedicationPeriodSelectionScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.MEDICATION_DATE,
+      widget: MedicationDateScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.HBA1C_REMINDER_ADD,
+      widget: Hba1cReminderAddScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.HBA1C_LIST,
+      widget: Hba1cReminderListScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.BLOOD_GLUCOSE_PAGE,
+      widget: MedicationScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.STRIP_PAGE,
+      widget: StripScreen(),
+    ),
+
+    VWidget(
         path: PagePaths.HEALTH_INFORMATION,
         widget: ChangeNotifierProvider<HealthInformationVm>(
             create: (context) => HealthInformationVm(),
@@ -397,6 +444,16 @@ class PagePaths {
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
+
+  //Mediminder
+  static const MEDIMINDER_INITIAL = '/mediminder';
+  static const BLOOD_GLUCOSE_PAGE = '/mediminder/blood-glucose';
+  static const MEDICATION_SCREEN = '/mediminder/medication';
+  static const HBA1C_LIST = '/mediminder/hba1c-list';
+  static const HBA1C_REMINDER_ADD = '/mediminder/hba1c-reminder-add';
+  static const STRIP_PAGE = '/mediminder/strips';
+  static const MEDICATION_PERIOD = '/mediminder/medication-period';
+  static const MEDICATION_DATE = '/mediminder/medication-date';
 
   // Chroic Tracking
   static const SETTINGS = '/ct-settings';

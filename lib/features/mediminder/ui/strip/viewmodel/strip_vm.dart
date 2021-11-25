@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
-
-import '../../common/mediminder_common.dart';
+import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
+import 'package:onedosehealth/features/mediminder/widget/keyboard_dismiss_on_tap.dart';
+import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
 
 class StripVm with ChangeNotifier {
   StripDetailModel stripDetailModel = StripDetailModel();
@@ -123,7 +125,7 @@ class StripVm with ChangeNotifier {
 
   void hideDialog(BuildContext context) {
     if (progressDialog != null && progressDialog.isShowing()) {
-      Navigator.of(context).pop();
+      Atom.dismiss();
       progressDialog = null;
     }
   }
@@ -133,10 +135,14 @@ class StripVm with ChangeNotifier {
   ) async {
     if (stripDetailModel.alarmCount >= stripDetailModel.currentCount) {
       await getIt<LocalNotificationsManager>().showNotification(
-        'Strip Count is Low',
-        'You have ${stripDetailModel.currentCount.toString()} strips left',
-      );
+          LocaleProvider.current.strip_count_low,
+          stripLocaleProviderFetcher(stripDetailModel.currentCount.toString()));
     }
+  }
+
+  static String stripLocaleProviderFetcher(String localPvString) {
+    return LocaleProvider.current.you_have_strip
+        .replaceFirst(LocaleProvider.current.strpCnt, localPvString);
   }
 
   static void decrementAndSave(int value) async {

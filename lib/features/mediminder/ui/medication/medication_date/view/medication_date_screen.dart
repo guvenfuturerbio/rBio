@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/enums/medicine_period.dart';
+import 'package:onedosehealth/core/enums/remindable.dart';
+import 'package:onedosehealth/core/enums/usage_type.dart';
+import 'package:onedosehealth/features/mediminder/ui/medication/medication_date/viewmodel/medication_date_vm.dart';
+import 'package:onedosehealth/features/mediminder/widget/keyboard_dismiss_on_tap.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/mediminder_common.dart';
 
 class MedicationDateScreen extends StatefulWidget {
   MedicinePeriod medicinePeriod;
@@ -48,17 +51,25 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
   }
 
   Widget build(BuildContext context) {
+    try {
+      widget.remindable = Atom.queryParameters['remindable'].toRemindable();
+      widget.medicinePeriod =
+          Atom.queryParameters['medicinePeriod'].toMedicinePeriod();
+    } catch (e) {
+      print(e);
+    }
+
     return ChangeNotifierProvider<MedicationDateVm>(
-      create: (context) => MedicationDateVm(
+      create: (_) => MedicationDateVm(
         context: context,
         remindable: widget.remindable,
         medicinePeriod: widget.medicinePeriod,
       ),
       child: Consumer<MedicationDateVm>(
         builder: (
-          BuildContext context,
+          BuildContext _,
           MedicationDateVm value,
-          Widget child,
+          Widget __,
         ) {
           return KeyboardDismissOnTap(
             child: RbioScaffold(
@@ -95,10 +106,8 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
             Center(
               child: Padding(
                 padding: EdgeInsets.only(top: 15),
-                child: Text(
-                  LocaleProvider.current.medicine_usage_type_message,
-                  style: TextStyle(fontSize: 22),
-                ),
+                child: Text(LocaleProvider.current.medicine_usage_type_message,
+                    style: context.xHeadline3),
               ),
             ),
 
@@ -123,20 +132,18 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                             end: Alignment.topLeft,
                             colors: usageType == value.selectedUsageType
                                 ? <Color>[
-                                    Mediminder.instance.btnLightBlue,
-                                    Mediminder.instance.btnDarkBlue
+                                    getIt<ITheme>().secondaryColor,
+                                    getIt<ITheme>().mainColor
                                   ]
                                 : <Color>[Colors.white, Colors.white],
                           ),
                         ),
                         child: Text(
                           usageType.xToString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: usageType == value.selectedUsageType
-                                ? Mediminder.instance.white
-                                : Mediminder.instance.grey,
-                          ),
+                          style: context.xHeadline3.copyWith(
+                              color: usageType == value.selectedUsageType
+                                  ? getIt<ITheme>().textColor
+                                  : getIt<ITheme>().textColorPassive),
                         ),
                       ),
                     ),
@@ -150,7 +157,7 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                 padding: EdgeInsets.only(top: 15),
                 child: Text(
                   LocaleProvider.current.medicine_how_often_daily_message,
-                  style: TextStyle(fontSize: 18),
+                  style: context.xHeadline3,
                 ),
               ),
             ),
@@ -165,10 +172,10 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                   keyboardType: TextInputType.number,
                   obscureText: false,
                   maxLength: 2,
-                  style: Mediminder.instance.inputTextStyle(),
-                  decoration: Mediminder.instance.inputImageDecoration(
+                  style: inputTextStyle(),
+                  decoration: inputImageDecoration(
                     hintText: LocaleProvider.current.medicine_daily_count,
-                    image: Mediminder.instance.ic_user,
+                    image: R.image.ic_user,
                   ),
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
@@ -194,7 +201,7 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                       padding: EdgeInsets.only(top: 15),
                       child: Text(
                         LocaleProvider.current.medicine_name,
-                        style: TextStyle(fontSize: 18),
+                        style: context.xHeadline3,
                       ),
                     ),
                   ),
@@ -209,10 +216,10 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                         keyboardType: TextInputType.text,
                         obscureText: false,
                         maxLength: 10,
-                        style: Mediminder.instance.inputTextStyle(),
-                        decoration: Mediminder.instance.inputImageDecoration(
+                        style: inputTextStyle(),
+                        decoration: inputImageDecoration(
                           hintText: LocaleProvider.current.medicine_name,
-                          image: Mediminder.instance.ic_user,
+                          image: R.image.ic_user,
                         ),
                         inputFormatters: <TextInputFormatter>[],
                         onFieldSubmitted: (term) {},
@@ -263,10 +270,8 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
     return Container(
       child: Padding(
         padding: EdgeInsets.all(16),
-        child: Text(
-          LocaleProvider.current.medicine_daily_count_error_message,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        ),
+        child: Text(LocaleProvider.current.medicine_daily_count_error_message,
+            style: context.xHeadline3.copyWith(fontWeight: FontWeight.w600)),
       ),
     );
   }
@@ -305,18 +310,14 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 color: value.days[index].selected
-                    ? Mediminder.instance.btnLightBlue
-                    : Mediminder.instance.white,
+                    ? getIt<ITheme>().secondaryColor
+                    : getIt<ITheme>().cardBackgroundColor,
                 child: Center(
-                  child: Text(
-                    value.days[index].name,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: value.days[index].selected
-                          ? Mediminder.instance.white
-                          : Mediminder.instance.grey,
-                    ),
-                  ),
+                  child: Text(value.days[index].name,
+                      style: context.xHeadline3.copyWith(
+                          color: value.days[index].selected
+                              ? getIt<ITheme>().textColor
+                              : getIt<ITheme>().textColorPassive)),
                 ),
               ),
             ),
@@ -334,7 +335,7 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
             child: Text(
               LocaleProvider
                   .current.medicine_how_often_intermittent_daily_message,
-              style: TextStyle(fontSize: 18),
+              style: context.xHeadline3,
             ),
           ),
         ),
@@ -348,11 +349,11 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               obscureText: false,
-              style: Mediminder.instance.inputTextStyle(),
-              decoration: Mediminder.instance.inputImageDecoration(
+              style: inputTextStyle(),
+              decoration: inputImageDecoration(
                 hintText:
                     LocaleProvider.current.medicine_intermittent_daily_count,
-                image: Mediminder.instance.ic_user,
+                image: R.image.ic_user,
               ),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
@@ -376,7 +377,7 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
               widget.remindable == Remindable.Medication
                   ? LocaleProvider.current.medicine_time_and_dose_message
                   : LocaleProvider.current.reminder_time_selection,
-              style: TextStyle(fontSize: 18),
+              style: context.xHeadline3,
             ),
           ),
         ),
@@ -392,10 +393,10 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
               keyboardType: TextInputType.number,
               obscureText: false,
               maxLength: 1,
-              style: Mediminder.instance.inputTextStyle(),
-              decoration: Mediminder.instance.inputImageDecoration(
+              style: inputTextStyle(),
+              decoration: inputImageDecoration(
                 hintText: LocaleProvider.current.hint_dosage,
-                image: Mediminder.instance.ic_user,
+                image: R.image.ic_user,
               ),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
@@ -455,14 +456,14 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
             children: <Widget>[
               Text(
                 DateFormat('HH:mm').format(dateTime),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 widget.remindable == Remindable.Medication
                     ? ("${value.dailyDose} " +
                         LocaleProvider.current.hint_dosage)
                     : LocaleProvider.current.hint_hour,
-                style: TextStyle(fontSize: 16),
+                style: context.xHeadline3,
               ),
             ],
           ),

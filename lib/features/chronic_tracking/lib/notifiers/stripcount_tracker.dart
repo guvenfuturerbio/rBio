@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:onedosehealth/features/mediminder/models/strip_detail_model.dart';
+import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/utils/progress_dialog.dart';

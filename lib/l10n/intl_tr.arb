@@ -691,5 +691,8 @@
   "diagnosisDate" : "Tanı Tarihi",
   "high_range": "Yüksek Aralık",
   "low_range": "Düşük Aralık",
-  "do_you_smoke": "Sigara içiyor musunuz?"
+  "do_you_smoke": "Sigara içiyor musunuz?",
+  "strip_count_low" : "Strip sayısı az",
+	"you_have_strip": "<stripCount> stripiniz kaldı",
+  "strpCnt" : "<stripCount>"
 }
