@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../database/datamodels/glucose_data.dart';
+import 'package:onedosehealth/core/core.dart';
 
 class BgMeasurementViewModel {
   final GlucoseData bgMeasurement;
@@ -35,7 +34,7 @@ class BgMeasurementViewModel {
   }
 
   String get result {
-    return this.bgMeasurement.level;
+    return this.bgMeasurement?.level;
   }
 
   Color get resultColor {

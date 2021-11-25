@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/models/user_profiles/save_and_retrieve_token_model.dart';
+import 'package:onedosehealth/core/domain/person_model.dart';
+import 'package:onedosehealth/model/shared/guven_response_model.dart';
 
 import '../../../features/chronic_tracking/lib/models/bg_measurement/blood_glucose_report_body.dart';
 import '../../../features/chronic_tracking/lib/models/bg_measurement/blood_glucose_value_model.dart';
@@ -12,9 +16,7 @@ import '../../../features/chronic_tracking/lib/models/bg_measurement/hospital_hb
 import '../../../features/chronic_tracking/lib/models/bg_measurement/update_bg_measurement_request.dart';
 import '../../../features/chronic_tracking/lib/models/firebase/add_firebase_body.dart';
 import '../../../features/chronic_tracking/lib/models/login_response.dart';
-import '../../../features/chronic_tracking/lib/models/user_profiles/person.dart';
-import '../../../features/chronic_tracking/lib/models/user_profiles/save_and_retrieve_token_model.dart';
-import '../../../model/shared/guven_response_model.dart';
+
 import '../../constants/constants.dart';
 import '../../enums/shared_preferences_keys.dart';
 import '../../locator.dart';

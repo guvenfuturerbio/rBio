@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/constants/constants.dart' as rBio;
 import '../../../../../core/core.dart';
 import '../../../lib/core/utils/bg_filter_pop_up/bg_filter_pop_up.dart';
 import '../../../lib/core/utils/pop_up/blood_glucose_tagger/bg_tagger_pop_up.dart';
-import '../../../lib/database/repository/glucose_repository.dart';
 import '../../../lib/models/bg_measurement/bg_measurement_view_model.dart';
 import '../../../lib/models/chart_data.dart';
 import '../../../lib/notifiers/bg_measurements_notifiers.dart';
@@ -23,12 +23,17 @@ enum GraphType { BUBBLE, LINE }
 class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   BgProgressPageViewModel({BuildContext context}) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      GlucoseRepository().addListener(() async {
+      getIt<GlucoseStorageImpl>().addListener(() {
+        print("Triggered GlucoseRepository Listener");
+
+        setSelectedItem(selected);
+      });
+      /* GlucoseRepository().addListener(() async {
         //await fetchBgMeasurements();
         //fetchScrolledDailyData();
         print("Triggered GlucoseRepository Listener");
         setSelectedItem(selected);
-      });
+      }); */
       UserProfilesNotifier().addListener(() async {
         setSelectedItem(selected);
       });
@@ -286,10 +291,8 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   Future<void> setSelectedItem(TimePeriodFilter s) async {
     resetFilterState();
     this._currentDateIndex = 0;
-    notifyListeners();
     this._selectedItem = s;
     setCurrentGraph();
-    notifyListeners();
     if (s == TimePeriodFilter.SPECIFIC) {
       await fetchBgMeasurements();
       fetchSpesificData();
@@ -319,7 +322,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     } else if (s == TimePeriodFilter.MONTHLY_THREE) {
       setChartAverageDataPerDay();
     }
-    notifyListeners();
   }
 
   DateTime get startDate => _startDate != null
@@ -344,7 +346,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     await BgMeasurementsNotifier().fetchBgMeasurementsInDateRange(
         startDate, endDate.add(Duration(days: 1)));
     this.bgMeasurements = BgMeasurementsNotifier().bgMeasurements;
-    //fetchScrolledDailyData();
     notifyListeners();
   }
 
@@ -361,7 +362,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     await BgMeasurementsNotifier().fetchBgMeasurementsInDateRange(
         startDate, endDate.add(Duration(days: 1)));
     this.bgMeasurements = BgMeasurementsNotifier().bgMeasurements;
-    //fetchScrolledDailyData();
     notifyListeners();
   }
 
@@ -512,7 +512,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     this._chartVeryLowTagged.putIfAbsent(2, () => chartDataTok);
     this._chartVeryLowTagged.putIfAbsent(3, () => chartDataFasting);
     this._chartVeryLowTagged.putIfAbsent(-1, () => chartDataUnTagged);
-    notifyListeners();
   }
 
   List<ChartData> get chartLow => _chartLow;
@@ -548,7 +547,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     this._chartLowTagged.putIfAbsent(2, () => chartDataTok);
     this._chartLowTagged.putIfAbsent(3, () => chartDataFasting);
     this._chartLowTagged.putIfAbsent(-1, () => chartDataUnTagged);
-    notifyListeners();
   }
 
   List<ChartData> get chartTarget => _chartTarget;
@@ -584,7 +582,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     this._chartTargetTagged.putIfAbsent(2, () => chartDataTok);
     this._chartTargetTagged.putIfAbsent(3, () => chartDataFasting);
     this._chartTargetTagged.putIfAbsent(-1, () => chartDataUnTagged);
-    notifyListeners();
   }
 
   List<ChartData> get chartHigh => _chartHigh;
@@ -620,7 +617,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     this._chartHighTagged.putIfAbsent(2, () => chartDataTok);
     this._chartHighTagged.putIfAbsent(3, () => chartDataFasting);
     this._chartHighTagged.putIfAbsent(-1, () => chartDataUnTagged);
-    notifyListeners();
   }
 
   List<ChartData> get chartVeryHigh => _chartVeryHigh;
@@ -656,62 +652,16 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     this._chartVeryHighTagged.putIfAbsent(2, () => chartDataTok);
     this._chartVeryHighTagged.putIfAbsent(3, () => chartDataFasting);
     this._chartVeryHighTagged.putIfAbsent(-1, () => chartDataUnTagged);
-    notifyListeners();
   }
 
   Future<void> fetchBgMeasurements() async {
     await BgMeasurementsNotifier().fetchBgMeasurements();
     this.bgMeasurements = BgMeasurementsNotifier().bgMeasurements;
-    notifyListeners();
   }
 
   void setChartAverageDataPerDay() {
     this.bgMeasurementsDailyData = bgMeasurements;
     setChartDailyData();
-    /*List<ChartData> chartData =  <ChartData>[];
-    List<ChartData> chartVeryLow =  <ChartData>[];
-    List<ChartData> chartLow =  <ChartData>[];
-    List<ChartData> chartTarget =  <ChartData>[];
-    List<ChartData> chartHigh =  <ChartData>[];
-    List<ChartData> chartVeryHigh =  <ChartData>[];
-    DateTime start, end;
-    start = startDate;
-    end = endDate;
-    for(int i = 0 ; i <= end.difference(start).inDays; i++){
-      int totalMeasurementValue = 0;
-      int totalDailyMeasurements = 0;
-      int averageValue = 0;
-      for(var data in this.bgMeasurements){
-        print("running..." + DateTime(data.date.year, data.date.month, data.date.day, 00, 00 ,00).toString() +" - - - "+ DateTime(start.add(Duration(days: i)).year, start.add(Duration(days: i)).month, start.add(Duration(days: i)).day).toString());
-        if(DateTime(data.date.year, data.date.month, data.date.day, 00, 00 ,00)
-            .isAtSameMomentAs(DateTime(start.add(Duration(days: i)).year, start.add(Duration(days: i)).month, start.add(Duration(days: i)).day))){
-          totalMeasurementValue += int.parse(data.result);
-          totalDailyMeasurements ++;
-        }
-      }
-      averageValue = totalDailyMeasurements > 0 ? (totalMeasurementValue ~/ totalDailyMeasurements).toInt() : totalDailyMeasurements ;
-      if(averageValue < 1){
-        chartData.add(ChartData(start.add(Duration(days: i)), averageValue, Colors.transparent));
-      }else if(MeasurementService().fetchMeasurementColor(averageValue) == R.color.very_high){
-        chartVeryHigh.add(ChartData(start.add(Duration(days: i)), averageValue, MeasurementService().fetchMeasurementColor(averageValue)));
-      }else if(MeasurementService().fetchMeasurementColor(averageValue) == R.color.high){
-        chartHigh.add(ChartData(start.add(Duration(days: i)), averageValue, MeasurementService().fetchMeasurementColor(averageValue)));
-      }else if(MeasurementService().fetchMeasurementColor(averageValue) == R.color.target){
-        chartTarget.add(ChartData(start.add(Duration(days: i)), averageValue, MeasurementService().fetchMeasurementColor(averageValue)));
-      }else if(MeasurementService().fetchMeasurementColor(averageValue) == R.color.low){
-        chartLow.add(ChartData(start.add(Duration(days: i)), averageValue, MeasurementService().fetchMeasurementColor(averageValue)));
-      }else if(MeasurementService().fetchMeasurementColor(averageValue) == R.color.very_low){
-        chartVeryLow.add(ChartData(start.add(Duration(days: i)), averageValue, MeasurementService().fetchMeasurementColor(averageValue)));
-      }
-      chartData.add(ChartData(start.add(Duration(days: i)), averageValue, MeasurementService().fetchMeasurementColor(averageValue)));
-      print(start.add(Duration(days: i)).toString() +" -- " + averageValue.toString());
-    }
-    this._chartData = chartData;
-    this._chartVeryHigh = chartVeryHigh;
-    this._chartHigh = chartHigh;
-    this._chartTarget = chartTarget;
-    this._chartLow = chartLow;
-    this._chartVeryLow = chartVeryLow; */
   }
 
   Future<void> nextDate() async {
@@ -724,7 +674,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
       await setEndDate(DateTime(endDate.year, endDate.month + 3, 1));
     }
     setChartAverageDataPerDay();
-    notifyListeners();
   }
 
   Future<void> previousDate() async {
@@ -737,7 +686,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
       await setStartDate(DateTime(startDate.year, startDate.month - 3, 1));
     }
     setChartAverageDataPerDay();
-    notifyListeners();
   }
 
   updateBgMeasurement() async {
@@ -1062,7 +1010,8 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   Widget smallWidget(Function() callBack) {
     BgMeasurementViewModel lastMeasurement;
     if (bgMeasurements.isNotEmpty) {
-      lastMeasurement = bgMeasurements[0];
+      lastMeasurement = BgMeasurementViewModel(
+          bgMeasurement: getIt<GlucoseStorageImpl>().getLatestMeasurement());
     }
     return RbioSmallChronicWidget(
       callback: callBack,

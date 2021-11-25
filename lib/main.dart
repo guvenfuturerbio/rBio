@@ -10,12 +10,12 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
-import 'features/chronic_tracking/lib/database/repository/profile_repository.dart';
 import 'features/chronic_tracking/lib/notifiers/bg_measurements_notifiers.dart';
+import 'features/chronic_tracking/lib/notifiers/scale_measurement_notifier.dart';
+import 'features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
-import 'features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
 import 'features/home/viewmodel/home_vm.dart';
 
 Future<void> main() async {
@@ -36,6 +36,7 @@ Future<void> main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
+
   runApp(
     RbioConfig(
       child: MyApp(),
@@ -71,6 +72,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final bgProgressPage = BgProgressPageViewModel();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -98,18 +100,17 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<UserProfilesNotifier>(
             create: (context) => UserProfilesNotifier(),
           ),
-          ChangeNotifierProvider<ProfileRepository>(
-            create: (context) => getIt<ProfileRepository>(),
-          ),
-          ChangeNotifierProvider<BgProgressPageViewModel>(
-            create: (ctx) => BgProgressPageViewModel(),
-          ),
           ChangeNotifierProvider<ScaleProgressPageViewModel>(
             create: (ctx) => ScaleProgressPageViewModel(),
           ),
-          ChangeNotifierProvider<BgMeasurementsNotifier>(
-            create: (context) => BgMeasurementsNotifier(),
+          ChangeNotifierProvider<BgMeasurementsNotifier>.value(
+            value: BgMeasurementsNotifier(),
           ),
+          ChangeNotifierProvider<ScaleMeasurementNotifier>.value(
+            value: ScaleMeasurementNotifier(),
+          ),
+          ChangeNotifierProvider<BgProgressPageViewModel>.value(
+              value: BgProgressPageViewModel()),
         ],
         child: Consumer2<ThemeNotifier, UserNotifier>(
           builder: (
@@ -131,7 +132,7 @@ class _MyAppState extends State<MyApp> {
               RbioConfig.of(context).changeOrientation(orientation);
 
               return AtomMaterialApp(
-                initialUrl: PagePaths.LOGIN,
+                initialUrl: PagePaths.MAIN,
                 routes: VRouterRoutes.routes,
                 onSystemPop: (data) async {
                   final currentUrl = data.fromUrl;

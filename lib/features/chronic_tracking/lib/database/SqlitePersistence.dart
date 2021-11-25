@@ -1,11 +1,10 @@
 import 'dart:io';
 
+import 'package:onedosehealth/core/core.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../models/user_profiles/person.dart';
-import 'datamodels/glucose_data.dart';
 import 'datamodels/scale_data.dart';
 
 final table = 'userlogininfo';

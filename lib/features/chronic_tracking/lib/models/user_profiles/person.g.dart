@@ -8,7 +8,6 @@ part of 'person.dart';
 
 Person _$PersonFromJson(Map<String, dynamic> json) {
   return Person(
-    userId: json['id'] as int,
     id: json['entegration_id'] as int,
     imageURL: json['image_url'] as String,
     name: json['name'] as String,
@@ -22,6 +21,7 @@ Person _$PersonFromJson(Map<String, dynamic> json) {
     hyper: json['hyper'] as int,
     hypo: json['hypo'] as int,
     target: json['target'] as int,
+    userId: json['id'] as int,
     deviceUUID: json['device_uuid'] as String,
     manufacturerId: json['manufacturer_id'] as int,
     yearOfDiagnosis: json['year_of_diagnosis'] as int,
@@ -31,7 +31,7 @@ Person _$PersonFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
-      'id' : instance.userId,
+      'id': instance.userId,
       'entegration_id': instance.id,
       'image_url': instance.imageURL,
       'name': instance.name,

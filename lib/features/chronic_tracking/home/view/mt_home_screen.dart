@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/core/widgets/rbio_stacked_scaffold.dart';
 import 'package:onedosehealth/features/chronic_tracking/home/model/page_model.dart';
@@ -22,7 +23,32 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
             appbar: RbioAppBar(
               title: RbioAppBar.textTitle(context, "Kronik Takip"),
             ),
+            floatingActionButton: val.activeItem != null
+                ? FloatingActionButton(
+                    heroTag: 'adder',
+                    onPressed: () {
+                      val.activeItem.manuelEntry();
+                    },
+                    child: Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: getIt<ITheme>().mainColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: SvgPicture.asset(
+                          R.image.add_icon,
+                          color: R.color.white,
+                        ),
+                      ),
+                    ),
+                    backgroundColor: R.color.white,
+                  )
+                : null,
             body: ListView(
+              physics: ClampingScrollPhysics(),
               padding:
                   EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
               children: [

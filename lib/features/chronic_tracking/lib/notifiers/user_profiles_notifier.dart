@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../../core/data/imports/cronic_tracking.dart';
+import '../../../../core/core.dart';
+import '../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import '../../../../core/locator.dart';
 import '../../../../generated/l10n.dart';
-import '../database/datamodels/glucose_data.dart';
-import '../database/repository/glucose_repository.dart';
-import '../database/repository/profile_repository.dart';
-import '../database/repository/scale_repository.dart';
-import '../models/user_profiles/person.dart';
 import '../models/user_profiles/user_profiles.dart';
-import '../widgets/utils/base_provider_repository.dart';
-import 'bg_measurements_notifiers.dart';
-import 'ble_operators/ble_scanner.dart';
-import 'shared_preferences_handler.dart';
-import 'user_notifier.dart';
 
 class UserProfilesNotifier with ChangeNotifier {
   UserProfiles profiles = UserProfiles();
   Person selection;
-  void changeProfile(Person profile) async {
+  /* void changeProfile(Person profile) async {
     profiles.active = profile;
     GlucoseRepository().getLatestMeasurement();
     GlucoseRepository().notifyListeners();
@@ -30,7 +21,7 @@ class UserProfilesNotifier with ChangeNotifier {
     notifyListeners();
     await BaseProviderRepository().changeProfile(profile.id);
     notifyListeners();
-  }
+  } */
 
   static final UserProfilesNotifier _instance =
       UserProfilesNotifier._internal();
@@ -44,30 +35,27 @@ class UserProfilesNotifier with ChangeNotifier {
     //TokenProvider().acquireAuthToken();
   }
 
-  void changeActiveProfile(Person person) async {
+  /* void changeActiveProfile(Person person) async {
     selection = person;
     changeProfile(person);
-  }
+  } */
 
   void changeName(String name) {
     selection.name = name;
-    ProfileRepository().updateNameById(selection.id, name);
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   void changeGender(String gender) {
     print("Changing gender type to $gender");
     selection.gender = gender;
-    ProfileRepository().updateGenderById(selection.id, gender);
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
-  void addProfile(Person person) {
+  Future<void> addProfile(Person person) async {
     profiles.person.add(person);
-    ProfileRepository().addProfile(person, true);
-    ProfileRepository().getProfileDataByUserId(person.id);
+    await getIt<ProfileStorageImpl>().write(person, shouldSendToServer: true);
     notifyListeners();
   }
 
@@ -78,14 +66,14 @@ class UserProfilesNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void logout(Person person, BuildContext context) async {
+  /* void logout(Person person, BuildContext context) async {
     await UserNotifier().signOut();
     await BleScannerOps().stopScan();
     await UserNotifier().deleteInformationForAutoLogin();
     notifyListeners();
-  }
+  } */
 
-  Future<bool> loadProfiles(String uid, BuildContext context) async {
+  /*  Future<bool> loadProfiles(String uid, BuildContext context) async {
     final personList =
         await getIt<ChronicTrackingRepository>().getAllProfiles();
 
@@ -105,20 +93,23 @@ class UserProfilesNotifier with ChangeNotifier {
           } else {
             personList[i].isFirstUser = false;
           }
-          await ProfileRepository().updateProfile(personList[
-              i]); // Update existing pd in case if there are updates from doctor app
+          await getIt<ProfileStorageImpl>().update(
+              personList[i],
+              personList[i]
+                  .key); // Update existing pd in case if there are updates from doctor app
         }
       } else {
         // currently logged user is completely new, fetch everything again
         await SharedPreferencesHandler().saveLastLoggedUserUid(uid);
-        await ProfileRepository().deleteAllProfiles();
-        await GlucoseRepository()
-            .deleteAllGlucoseData(); // Remove all previous glucosedata if user has logged with a new account
+        await getIt<ProfileStorageImpl>().box.clear();
+        await getIt<ProfileStorageImpl>()
+            .box
+            .clear(); // Remove all previous glucosedata if user has logged with a new account
       }
     }
 
     // First check database if there are any data to work with
-    List<Person> profileDataList = await ProfileRepository().getAllProfiles();
+    List<Person> profileDataList = getIt<ProfileStorageImpl>().getAll();
     // If db is empty, check remote server for sync data
     if (profileDataList == null || profileDataList.length < 1) {
       if (personList.length > 0) {
@@ -129,8 +120,9 @@ class UserProfilesNotifier with ChangeNotifier {
           } else {
             personList[i].isFirstUser = false;
           }
-          await ProfileRepository().addProfile(personList[i],
-              false); // Data is already in the server do not send it
+          getIt<ProfileStorageImpl>().write(personList[i],
+              shouldSendToServer:
+                  false); // Data is already in the server do not send it
           getGlucoseDataOfProfile(personList[i]);
         }
       } else {
@@ -139,12 +131,15 @@ class UserProfilesNotifier with ChangeNotifier {
         defaultPerson.isFirstUser = true;
         /*final resp = await baseProvider.setDefaultProfile(defaultPerson);
           print(resp);*/
-        await ProfileRepository().addProfile(new Person().fromDefault(), true);
+        await getIt<ProfileStorageImpl>().write(
+            Person().fromDefault(
+                name: FirebaseAuth.instance.currentUser.displayName),
+            shouldSendToServer: true);
       }
     }
 
     // At this point db is not empty, populate profiles with data from db
-    profileDataList = await ProfileRepository().getAllProfiles();
+    profileDataList = getIt<ProfileStorageImpl>().getAll();
     profiles.person.clear();
     for (int i = 0; i < profileDataList.length; i++) {
       // Parse database profiledata to person data to be able to show it to user during runtime
@@ -160,19 +155,16 @@ class UserProfilesNotifier with ChangeNotifier {
     notifyListeners();
     return true;
   }
-
+ */
   void changeBirthdate(String date) {
     selection.birthDate = date;
-    ProfileRepository().updateBirthDateById(selection.id, date);
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   void changeHeight(String selectedheight) {
     selection.height = selectedheight;
-    ProfileRepository()
-        .updateHeightById(selection.id, (int.parse(selectedheight) ?? 0.0));
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
@@ -229,17 +221,14 @@ class UserProfilesNotifier with ChangeNotifier {
 
   void changeWeight(String selectedWeight) {
     selection.weight = selectedWeight;
-    ProfileRepository()
-        .updateWeightById(selection.id, (int.parse(selectedWeight) ?? 0.0));
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   void changeDiabetesType(String selectedType) {
     print("Changing diabetes type to $selectedType");
     selection.diabetesType = selectedType;
-    ProfileRepository().updateDiabetesTypeById(selection.id, selectedType);
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
@@ -250,9 +239,7 @@ class UserProfilesNotifier with ChangeNotifier {
         (newMax >= selection.hyper) ? (selection.hyper - 1) : (newMax);
     selection.rangeMin =
         (newMin <= selection.hypo) ? (selection.hypo + 1) : (newMin);
-    await ProfileRepository().updateMinAndMax(
-        selection.id, values.start.toInt(), values.end.toInt());
-    await updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
@@ -260,8 +247,7 @@ class UserProfilesNotifier with ChangeNotifier {
     selection.hypo = selectedhypo > selection.rangeMin
         ? selection.rangeMin - 1
         : selectedhypo;
-    await ProfileRepository().updateHypo(selection.id, selectedhypo);
-    await updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
@@ -269,31 +255,26 @@ class UserProfilesNotifier with ChangeNotifier {
     selection.hyper = selectedhyper < selection.rangeMax
         ? selection.rangeMax + 1
         : selectedhyper;
-    await ProfileRepository().updateHyper(selection.id, selectedhyper);
-    await updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   void changeBirthDate(selectedBirthDate) {
     selection.birthDate = selectedBirthDate;
-    ProfileRepository().updateBirthDateById(selection.id, selectedBirthDate);
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   void changeDeviceUUID(String deviceUUId) {
     print("changeDeviceUUID ${deviceUUId}");
     selection.deviceUUID = deviceUUId;
-    ProfileRepository().updateDeviceUUIDById(selection.id, deviceUUId);
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   void changeSelectedYear(selectedYear) {
     selection.yearOfDiagnosis = int.parse(selectedYear);
-    ProfileRepository()
-        .updateYearOfDiagnosis(selection.id, int.parse(selectedYear));
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
@@ -301,34 +282,25 @@ class UserProfilesNotifier with ChangeNotifier {
     bool result =
         selectedSmoker == LocaleProvider.current.smoker ? true : false;
     selection.smoker = result;
-    ProfileRepository().updateIsSmoker(selection.id, result);
-    updateProfileOfPerson(selection);
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   void changeDeviceManufacturerId(int manufacturerId) {
     selection.manufacturerId = manufacturerId;
-    ProfileRepository()
-        .updateDeviceManufacturerIdById(selection.id, manufacturerId);
-    updateProfileOfPerson(selection);
+
+    getIt<ProfileStorageImpl>().update(selection, selection.key);
     notifyListeners();
   }
 
   /// REMOTE UPDATE FUNCTIONS
   Future<bool> updateProfileOfPerson(Person person) async {
     person.isFirstUser = false;
-    return await BaseProviderRepository().updateProfile(person, person.id);
+    return await getIt<ProfileStorageImpl>().update(person, person.key);
   }
 
   Future<void> getGlucoseDataOfProfile(Person pd) async {
-    List<GlucoseData> glucoseDataList =
-        await BaseProviderRepository().getBloodGlucoseDataOfPerson(pd);
-    for (GlucoseData glucoseData in glucoseDataList) {
-      GlucoseRepository().addNewGlucoseData(
-        glucoseData,
-        false,
-      ); // Data is already in the server don't send it to server
-    }
+    await getIt<GlucoseStorageImpl>().getBloodGlucoseDataOfPerson(pd);
   }
 
   /// END REMOTE UPDATE FUNCTIONS
