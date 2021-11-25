@@ -7,8 +7,8 @@
   "btn_navigation_skip": "Skip",
   "btn_next": "next",
   "btn_remember_me": "Remember me",
-  "btn_sign_in": "SIGN IN",
-  "btn_sign_up": "SIGN UP",
+  "btn_sign_in": "Sing In",
+  "btn_sign_up": "Sing Up",
   "chronic_track": "Chronic Tracking",
   "done": "Done",
   "create_appointment_events": "Create Appointment",
@@ -700,5 +700,10 @@
   "do_you_smoke": "Do you smoke?",
   "strip_count_low" : "Strip count is low",
 	"you_have_strip": "You have <stripCount> strips left",
-  "strpCnt" : "<stripCount>"
+  "strpCnt" : "<stripCount>",
+  "sign_in_keys": "E-Mail / T.C. no / Passport no",
+  "login" : "Login",
+  "login_page_text": "The future of healthcare!",
+  "sign_up_text":"Let's know you better!",
+  "tr_citizen" : "I am a Turkish citizen"
 }
