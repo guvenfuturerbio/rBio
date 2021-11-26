@@ -6,17 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get/get.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_tagger/scale_tagger_pop_up.dart';
+import 'package:onedosehealth/model/ble_models/paired_device.dart';
+import 'package:onedosehealth/model/device_model/mi_scale_device.dart';
+import 'package:onedosehealth/model/device_model/scale_device_model.dart';
 
-import 'package:onedosehealth/generated/l10n.dart';
-
-import '../../core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
-import '../../database/repository/glucose_repository.dart';
-import '../../locator.dart';
-import '../../models/ble_models/paired_device.dart';
-import '../../models/device_model/mi_scale_device.dart';
-import '../../models/device_model/scale_device_model.dart';
+import '../../../../../core/core.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../progress_sections/scale_progress/utils/mi_scale_popup.dart';
 import '../shared_pref_notifiers.dart';
 import '../user_profiles_notifier.dart';
@@ -247,7 +244,7 @@ class BleReactorOps extends ChangeNotifier {
       print("record access data " + recordAccessData.toString());
       _controlPointResponse = recordAccessData;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        locator<SharedPrefNotifiers>().savePairedDevices(pairedDevice);
+        getIt<SharedPrefNotifiers>().savePairedDevices(pairedDevice);
       });
       this._bleReactorState = BleReactorState.DONE;
       showNotification();
@@ -265,7 +262,7 @@ class BleReactorOps extends ChangeNotifier {
           value: [0x01, 0x01]).then((value) {
         print("deneme");
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-          locator<SharedPrefNotifiers>().savePairedDevices(pairedDevice);
+          getIt<SharedPrefNotifiers>().savePairedDevices(pairedDevice);
         });
       }, onError: (e) {
         this._bleReactorState = BleReactorState.ERROR;
@@ -383,7 +380,7 @@ class BleReactorOps extends ChangeNotifier {
             // Saving paired device Section
             controlPointResponse.add(1);
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              locator<SharedPrefNotifiers>().savePairedDevices(pairedDevice);
+              getIt<SharedPrefNotifiers>().savePairedDevices(pairedDevice);
             });
           }
         }

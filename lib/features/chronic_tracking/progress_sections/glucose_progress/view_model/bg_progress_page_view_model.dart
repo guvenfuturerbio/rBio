@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../core/constants/constants.dart' as rBio;
 import '../../../../../core/core.dart';
-import '../../../lib/core/utils/bg_filter_pop_up/bg_filter_pop_up.dart';
-import '../../../lib/core/utils/pop_up/blood_glucose_tagger/bg_tagger_pop_up.dart';
-import '../../../lib/models/bg_measurement/bg_measurement_view_model.dart';
-import '../../../lib/models/chart_data.dart';
-import '../../../lib/notifiers/bg_measurements_notifiers.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
 import '../../../lib/notifiers/user_profiles_notifier.dart';
-import '../../../lib/pages/progress_pages/progress_page_model.dart';
-import '../../../lib/widgets/utils/glucose_margins_filter.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
+import '../../../utils/bg_filter_pop_up/bg_filter_pop_up.dart';
+import '../../../utils/chart_data.dart';
+import '../../../utils/glucose_margins_filter.dart';
+import '../../utils/progress_page_model.dart';
 import '../../utils/small_widget_card.dart';
+import '../utils/blood_glucose_tagger/bg_tagger_pop_up.dart';
 import '../utils/charts/animated_bubble_chart.dart';
 import '../utils/charts/animated_line_chart.dart';
 import '../view/bg_progress_page.dart';
+import 'bg_measurements_notifiers.dart';
 
 enum GraphType { BUBBLE, LINE }
 
@@ -1020,7 +1018,7 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
       lastMeasurement:
           '${lastMeasurement?.result ?? ''} ${lastMeasurement == null ? '' : 'mg/dl'}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
-      imageUrl: rBio.R.image.ct_blood_glucose,
+      imageUrl: R.image.ct_blood_glucose,
     );
   }
 

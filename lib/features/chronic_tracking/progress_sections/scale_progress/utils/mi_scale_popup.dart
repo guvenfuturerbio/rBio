@@ -3,12 +3,11 @@ import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
-import '../../../lib/core/utils/loading/progress_circle.dart';
 import '../../../lib/database/datamodels/scale_data.dart';
 import '../../../lib/database/repository/scale_repository.dart';
 import '../../../lib/helper/resources.dart';
-import '../../../lib/locator.dart';
 import '../../../lib/notifiers/ble_operators/ble_reactor.dart';
+import 'loading/progress_circle.dart';
 
 class MiScalePopUp extends StatelessWidget {
   final bool hasAlreadyPair;
@@ -181,8 +180,7 @@ class MiScalePopUp extends StatelessWidget {
                           onPressed: () {
                             _bleReactor.scaleDevice.scaleData = null;
                             _bleReactor.scaleDevice.scaleData = null;
-                            locator<BleReactorOps>()
-                                .clearControlPointResponse();
+                            getIt<BleReactorOps>().clearControlPointResponse();
                             Navigator.pop(context, 'dialog');
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 Routes.HOME_PAGE,

@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../../generated/l10n.dart';
-import '../../../../database/repository/glucose_repository.dart';
 import 'bg_tagger_vm.dart';
 
 class BgTaggerPopUp extends StatelessWidget {

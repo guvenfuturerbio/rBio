@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../widgets/utils/glucose_margins_filter.dart';
+import '../glucose_margins_filter.dart';
 
 class BgFilterPopUpVm extends ChangeNotifier {
   BgFilterPopUpVm({this.filters});

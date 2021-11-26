@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../locator.dart';
-import '../models/ble_models/paired_device.dart';
+import '../../../../core/core.dart';
+import '../../../../model/ble_models/paired_device.dart';
 import 'ble_operators/ble_connector.dart';
 import 'ble_operators/ble_scanner.dart';
 
@@ -27,7 +27,7 @@ class SharedPrefNotifiers extends ChangeNotifier {
     String paired = jsonEncode(pairedDevice);
     var response =
         await sharedPreferences.setString(LAST_PAIRED_DEVICE, paired);
-    locator<BleScannerOps>().setDeviceId(pairedDevice.deviceId);
+    getIt<BleScannerOps>().setDeviceId(pairedDevice.deviceId);
     print("savePaired device response " + response.toString());
     notifyListeners();
     return response;
@@ -87,7 +87,7 @@ class SharedPrefNotifiers extends ChangeNotifier {
       var response = await sharedPreferences.setStringList(
           PAIRED_DEVICES, _pairedDeviceOnLocal);
 
-      locator<BleScannerOps>()
+      getIt<BleScannerOps>()
           .addDeviceId(_pairedDevices.map((e) => e.deviceId).toList());
       print("savePaired device response " + response.toString());
       notifyListeners();
@@ -102,9 +102,9 @@ class SharedPrefNotifiers extends ChangeNotifier {
     print(selectedDeviceIndex);
     if (selectedDeviceIndex != -1) {
       response.removeAt(selectedDeviceIndex);
-      locator<BleScannerOps>().pairedDevices =
+      getIt<BleScannerOps>().pairedDevices =
           response.map((e) => e.deviceId).toList();
-      locator<BleConnectorOps>().removePairedDevice();
+      getIt<BleConnectorOps>().removePairedDevice();
 
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();

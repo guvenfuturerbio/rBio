@@ -10,7 +10,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../../../../core/core.dart';
 import '../../../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import '../../../../../../../generated/l10n.dart';
-import '../../../../notifiers/user_profiles_notifier.dart';
 
 class BgTaggerVm extends ChangeNotifier {
   BgTaggerVm({
@@ -129,7 +128,7 @@ class BgTaggerVm extends ChangeNotifier {
   Future<void> rightAction() async {
     if (data.level != "" && data.level != "0") {
       data.note = noteController.text ?? "";
-      data.userId = UserProfilesNotifier().selection?.id ?? 0;
+      data.userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
       data.tag = data.tag ?? 3;
 
       await getIt<GlucoseStorageImpl>().write(data, shouldSendToServer: true);

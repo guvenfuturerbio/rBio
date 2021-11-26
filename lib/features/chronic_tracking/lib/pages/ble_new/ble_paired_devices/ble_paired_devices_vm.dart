@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/model/ble_models/paired_device.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
-import '../../../models/ble_models/DeviceTypes.dart';
-import '../../../models/ble_models/paired_device.dart';
 import '../../../notifiers/shared_pref_notifiers.dart';
 
 class PairedDevicesVm extends ChangeNotifier {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/user_service.dart';
+import '../../../../auth/user_service.dart';
 
 class ConsentFormDialogVm extends ChangeNotifier {
   BuildContext mContext;

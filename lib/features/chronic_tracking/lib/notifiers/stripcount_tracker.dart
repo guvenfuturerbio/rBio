@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../core/utils/progress_dialog.dart';
-import '../locator.dart';
+import '../../../../core/core.dart';
+import '../../../../model/mediminder/strip_detail_model.dart';
 import '../widgets/utils/base_provider_repository.dart';
 import 'user_profiles_notifier.dart';
 
 class StripCountTracker with ChangeNotifier {
-  UserProfilesNotifier notifier = locator<UserProfilesNotifier>();
+  UserProfilesNotifier notifier = getIt<UserProfilesNotifier>();
   StripDetailModel stripDetailModel = new StripDetailModel();
   final BuildContext context;
   int stripCount = 0;

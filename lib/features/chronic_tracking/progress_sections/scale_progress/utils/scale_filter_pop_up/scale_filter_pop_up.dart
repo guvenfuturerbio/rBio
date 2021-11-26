@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
 import '../../../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
-import '../../services/enum/selected_scale_type.dart';
+import '../../../../utils/selected_scale_type.dart';
 import 'scale_filter_pop_up_vm.dart';
 
 class ScaleChartFilterPopup extends StatelessWidget {

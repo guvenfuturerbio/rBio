@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:onedosehealth/core/extension/build_context_extension.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:provider/provider.dart';
 
-import '../../../lib/core/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../../lib/core/utils/scale_filter_pop_up/scale_filter_pop_up.dart';
+import '../../../../../core/core.dart';
+import '../../../../../core/extension/build_context_extension.dart';
+import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../utils/graph_header_widget.dart';
 import '../../utils/landscape_graph_widget.dart';
+import '../utils/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../utils/scale_measurement_list.dart';
 import '../view_model/scale_progress_page_view_model.dart';
 

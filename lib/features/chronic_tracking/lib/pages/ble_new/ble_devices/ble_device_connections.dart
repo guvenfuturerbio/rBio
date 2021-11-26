@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
-import '../../../models/ble_models/DeviceTypes.dart';
-import '../../../models/ble_models/paired_device.dart';
+import '../../../../../../model/ble_models/DeviceTypes.dart';
+import '../../../../../../model/ble_models/paired_device.dart';
 import '../../../widgets/custom_app_bar/custom_app_bar.dart';
 import '../ble_scanner/ble_scanner.dart';
 import '../ble_status_screen.dart';

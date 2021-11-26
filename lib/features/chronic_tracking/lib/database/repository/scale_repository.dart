@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../core/utils/progress_dialog.dart';
 import '../../notifiers/user_profiles_notifier.dart';
-import '../SqlitePersistence.dart';
 import '../datamodels/scale_data.dart';
 
 class ScaleRepository extends ChangeNotifier {
   BuildContext context;
   ScaleModel _lastMeasurement;
-  ProgressDialog progressDialog;
   Database _db;
 
   List<ScaleModel> get currentUserData => _scaleDataList;

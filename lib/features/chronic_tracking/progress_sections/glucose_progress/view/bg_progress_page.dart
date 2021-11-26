@@ -1,27 +1,16 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/extension/build_context_extension.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/generated/l10n.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/data/imports/cronic_tracking.dart';
-import '../../../../../core/locator.dart';
-import '../../../lib/core/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../../lib/models/bg_measurement/blood_glucose_report_body.dart';
-import '../../../lib/notifiers/user_profiles_notifier.dart';
-import '../utils/bg_measurement_list.dart';
-import '../utils/custom_bar_pie.dart';
+import '../../../../../core/core.dart';
+import '../../../../../core/extension/build_context_extension.dart';
+import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
+import '../../utils/chart_filter_pop_up.dart';
 import '../../utils/graph_header_widget.dart';
 import '../../utils/landscape_graph_widget.dart';
-import '../../utils/chart_filter_pop_up.dart';
+import '../utils/bg_measurement_list.dart';
+import '../utils/custom_bar_pie.dart';
 import '../view_model/bg_progress_page_view_model.dart';
-import '../../../lib/pages/progress_pages/bg_progress_page/fullpdfviewerscreen.dart';
 
 /// MG19
 class BgProgressPage extends StatefulWidget {
@@ -37,7 +26,7 @@ class BgProgressPage extends StatefulWidget {
 
 class _BgProgressPage extends State<BgProgressPage> {
   ScrollController _controller = ScrollController();
-  Future<void> goPdfPage(String img64) async {
+  /*  Future<void> goPdfPage(String img64) async {
     BloodGlucoseReportBody bloodGlucoseReportBody = new BloodGlucoseReportBody(
         start: "2010-09-10T00:00:00",
         end: "2022-09-10T00:00:00",
@@ -66,12 +55,12 @@ class _BgProgressPage extends State<BgProgressPage> {
           ),
         ));
   }
-
-  String _getFormattedDate(String date) {
+ */
+  /* String _getFormattedDate(String date) {
     var parsedDate = DateTime.parse(date);
     String textDate = new DateFormat("d MMMM yyyy").format(parsedDate);
     return textDate;
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

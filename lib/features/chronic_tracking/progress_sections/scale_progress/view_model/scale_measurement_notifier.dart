@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../database/repository/scale_repository.dart';
-import '../models/scale_measurements/scale_measurement_vm.dart';
+import '../../../lib/database/repository/scale_repository.dart';
+import '../utils/scale_measurements/scale_measurement_vm.dart';
 
 enum ScaleMesurementState { loading, loaded, error }
 

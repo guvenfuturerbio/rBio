@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/enum/selected_scale_type.dart';
+import '../../../../utils/selected_scale_type.dart';
 
 class ScaleFilterPopupVm extends ChangeNotifier {
   ScaleFilterPopupVm({SelectedScaleType scaleType}) {

@@ -6,15 +6,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import '../../../../../generated/l10n.dart';
-import '../../../lib/core/utils/pop_up/blood_glucose_tagger/bg_tagger_pop_up.dart';
-import '../../../lib/models/bg_measurement/bg_measurement_view_model.dart';
+import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
 import '../view_model/bg_progress_page_view_model.dart';
+import 'blood_glucose_tagger/bg_tagger_pop_up.dart';
 
 class BgMeasurementListWidget extends StatefulWidget {
   final List<BgMeasurementViewModel> bgMeasurements;

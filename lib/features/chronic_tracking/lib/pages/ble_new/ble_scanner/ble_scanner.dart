@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
-import '../../../models/ble_models/DeviceTypes.dart';
+import '../../../../../../model/ble_models/DeviceTypes.dart';
 import '../../../notifiers/ble_operators/ble_connector.dart';
 import '../../../notifiers/ble_operators/ble_reactor.dart';
 import '../../../notifiers/ble_operators/ble_scanner.dart';
@@ -310,7 +310,6 @@ class _BleScannerPageState extends State<BleScannerPage> {
         return '';
       case DeviceType.MI_SCALE:
         return '${LocaleProvider.current.connect_scale}';
-        ;
     }
   }
 }

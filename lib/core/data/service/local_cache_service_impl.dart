@@ -69,7 +69,6 @@ class LocalCacheServiceImpl extends LocalCacheService {
     }
   }
 
-  @override
   Future<bool> removeAll() async {
     try {
       await box.clear();

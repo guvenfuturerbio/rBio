@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
-import '../../locator.dart';
-import '../../models/ble_models/DeviceTypes.dart';
-import '../../widgets/utils.dart';
+import '../../../../../core/core.dart';
+import '../../../../../model/ble_models/DeviceTypes.dart';
 import 'ble_reactor.dart';
 import 'ble_scanner.dart';
 
@@ -48,20 +47,20 @@ class BleConnectorOps extends ChangeNotifier {
         if (event.connectionState == DeviceConnectionState.connected) {
           switch (getDeviceType(device)) {
             case DeviceType.ACCU_CHEK:
-              locator<BleReactorOps>().write(device);
+              getIt<BleReactorOps>().write(device);
               break;
             case DeviceType.CONTOUR_PLUS_ONE:
-              locator<BleReactorOps>().write(device);
+              getIt<BleReactorOps>().write(device);
               break;
             case DeviceType.MI_SCALE:
-              locator<BleReactorOps>().subscribeScaleDevice(device);
+              getIt<BleReactorOps>().subscribeScaleDevice(device);
               break;
             default:
               break;
           }
         } else if (event.connectionState ==
             DeviceConnectionState.disconnected) {
-          locator<BleScannerOps>().refreshDeviceList();
+          getIt<BleScannerOps>().refreshDeviceList();
         }
       }
     });

@@ -6,24 +6,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../core/core.dart';
-import '../../../../core/data/imports/cronic_tracking.dart';
-import '../../../../core/locator.dart';
-import '../database/repository/glucose_repository.dart';
-import '../database/repository/profile_repository.dart';
-import '../database/repository/scale_repository.dart';
-import '../helper/workers.dart';
-import '../models/firebase/add_firebase_body.dart';
-import '../models/user/usermodel.dart';
-import '../models/user_profiles/save_and_retrieve_token_model.dart';
-import '../models/user_profiles/token_user_text_body.dart';
-import '../notifiers/shared_preferences_handler.dart';
-import '../notifiers/user_profiles_notifier.dart';
-import 'repository_services.dart';
+import '../../core/core.dart';
+import '../../core/data/imports/cronic_tracking.dart';
+import '../../core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../core/locator.dart';
+import '../../model/firebase/add_firebase_body.dart';
+import '../../model/user/usermodel.dart';
+import '../../model/user_profiles/save_and_retrieve_token_model.dart';
+import '../../model/user_profiles/token_user_text_body.dart';
+import '../chronic_tracking/lib/helper/workers.dart';
+import '../chronic_tracking/lib/notifiers/shared_preferences_handler.dart';
+import '../chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 
 class UserService {
   String get token => getIt<ISharedPreferencesManager>()
@@ -76,7 +72,7 @@ class UserService {
     String token = userCred.uid;
     String mailBase = userCred.email;
 
-    TokenUserTextBody textBody = new TokenUserTextBody(
+    TokenUserTextBody textBody = TokenUserTextBody(
         id: 'gWTiiCR81Ib9a3p2UZWTCvAbRbc2',
         name: userCred.displayName,
         email: userCred.email);
@@ -276,14 +272,10 @@ class UserService {
       //await ScaleRepository().initialize();
 
       //WARNING: Çoklu profil özelliği şuanlık askıya alındığı için sadece ilk profilden ilerlenecektir.
-      var glucoseMeasurements =
-          await RepositoryServices().getBloodGlucoseDataOfPerson(profiles[0]);
 
-      getIt<GlucoseStorageImpl>().checkUserDatas(person.id);
-      //db save process
-      if (glucoseMeasurements.isNotEmpty) {
-        await getIt<GlucoseStorageImpl>().writeAll(glucoseMeasurements);
-      }
+      await getIt<GlucoseStorageImpl>()
+          .getBloodGlucoseDataOfPerson(profiles[0]);
+
       //await ScaleRepository().getAllScaleData();
       //await ScaleRepository().getLatestMeasurement();
     } catch (e, stk) {

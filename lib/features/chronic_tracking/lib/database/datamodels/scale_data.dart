@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/painting.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+import 'package:onedosehealth/core/enums/unit.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import '../../../../../generated/l10n.dart';
-import '../../core/services/enum/selected_scale_type.dart';
-import '../../models/ble_models/paired_device.dart';
-import '../../types/unit.dart';
-import '../repository/profile_repository.dart';
+import '../../../../../model/ble_models/paired_device.dart';
+import '../../../utils/selected_scale_type.dart';
 import 'map_convertable.dart';
 
 class ScaleModel extends MapConvertible {

@@ -10,11 +10,11 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../../generated/l10n.dart';
-import '../../../../database/datamodels/scale_data.dart';
-import '../../../../database/repository/scale_repository.dart';
-import '../../../../types/unit.dart';
-import '../../../services/enum/selected_scale_type.dart';
-import '../../gallery_pop_up/gallery_pop_up.dart';
+import '../../../../../../core/enums/unit.dart';
+import '../../../../lib/database/datamodels/scale_data.dart';
+import '../../../../lib/database/repository/scale_repository.dart';
+import '../../../../utils/gallery_pop_up/gallery_pop_up.dart';
+import '../../../../utils/selected_scale_type.dart';
 import 'scale_tagger_vm.dart';
 
 class ScaleTagger extends StatelessWidget {
@@ -414,7 +414,8 @@ class ScaleTagger extends StatelessWidget {
           controller: value.boneMassController,
           name: LocaleProvider.current.scale_data_bone_mass,
           color: value.scaleModel.getColor(SelectedScaleType.BONE_MASS),
-          type: '${(value.scaleModel.unit ?? ScaleUnit.KG).toStr}',
+          type:
+              '${((value.scaleModel.unit ?? ScaleUnit.KG) as ScaleUnit).toStr}',
           index: 3,
           crossAxisCount: 2,
           onChanged: value.changeBoneMass),
@@ -481,7 +482,7 @@ class ScaleTagger extends StatelessWidget {
                       return "";
                   }, onChanged: value.changeWeight),
                   Text(
-                    "${value.scaleModel?.unit?.toStr ?? ScaleUnit.KG.toStr}",
+                    "${(value.scaleModel?.unit as ScaleUnit)?.toStr ?? ScaleUnit.KG.toStr}",
                     style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
                 ],

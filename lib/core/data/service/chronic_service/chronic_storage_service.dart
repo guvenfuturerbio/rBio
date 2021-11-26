@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/models/bg_measurement/get_blood_glucose_data_of_person.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../../../features/chronic_tracking/lib/models/bg_measurement/blood_glucose_value_detail_model.dart';
-import '../../../../features/chronic_tracking/lib/models/bg_measurement/blood_glucose_value_model.dart';
-import '../../../../features/chronic_tracking/lib/models/bg_measurement/delete_bg_measurement_request.dart';
-import '../../../../features/chronic_tracking/lib/models/bg_measurement/update_bg_measurement_request.dart';
 import '../../../../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
+import '../../../../model/bg_measurement/blood_glucose_value_detail_model.dart';
+import '../../../../model/bg_measurement/blood_glucose_value_model.dart';
+import '../../../../model/bg_measurement/delete_bg_measurement_request.dart';
+import '../../../../model/bg_measurement/get_blood_glucose_data_of_person.dart';
+import '../../../../model/bg_measurement/update_bg_measurement_request.dart';
 import '../../../core.dart';
 import '../../imports/cronic_tracking.dart';
 

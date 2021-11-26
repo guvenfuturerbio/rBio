@@ -6,15 +6,18 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../helper/strings.dart';
-import '../stepper/stepper.dart' as core;
+import '../../lib/helper/strings.dart';
 import 'gallery_pop_up_vm.dart';
+import 'stepper/stepper.dart' as core;
 
 class GalleryView extends StatelessWidget {
   const GalleryView({Key key, this.images})
       : assert(images != null),
         super(key: key);
   final List<String> images;
+
+  final String urlDetect =
+      r"((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?";
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class GalleryView extends StatelessWidget {
                   ...images.map((e) => PhotoViewGalleryPageOptions(
                       scaleStateController: value.controller,
                       minScale: PhotoViewComputedScale.contained,
-                      imageProvider: e.contains(RegExp(Strings.urlDetect))
+                      imageProvider: e.contains(RegExp(urlDetect))
                           ? NetworkImage(e)
                           : FileImage(File(e))))
                 ],

@@ -155,7 +155,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         id: userId,
         value: data.level,
         valueNote: data.note,
-        detail: new BloodGlucoseValueDetail(time: dtFrmt, tag: data.tag));
+        detail: BloodGlucoseValueDetail(time: dtFrmt, tag: data.tag));
     try {
       return (await getIt<ChronicTrackingRepository>()
               .insertNewBloodGlucoseValue(bloodGlucoseValue))

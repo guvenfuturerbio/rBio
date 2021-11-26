@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../../generated/l10n.dart';
-import '../../lib/widgets/utils/glucose_margins_filter.dart';
+import '../../utils/glucose_margins_filter.dart';
 import '../glucose_progress/view_model/bg_progress_page_view_model.dart';
 
 class BGChartFilterPopUp extends StatelessWidget {

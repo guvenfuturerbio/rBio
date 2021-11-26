@@ -10,8 +10,8 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
-import 'features/chronic_tracking/lib/notifiers/bg_measurements_notifiers.dart';
-import 'features/chronic_tracking/lib/notifiers/scale_measurement_notifier.dart';
+import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_measurements_notifiers.dart';
+import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_measurement_notifier.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';

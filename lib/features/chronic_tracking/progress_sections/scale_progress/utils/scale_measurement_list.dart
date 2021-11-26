@@ -6,17 +6,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/enums/unit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../generated/l10n.dart';
-import '../../../lib/core/utils/gallery_pop_up/gallery_pop_up.dart';
-import '../../../lib/core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
 import '../../../lib/core/utils/stacked_widget/stacked_widget.dart';
 import '../../../lib/database/repository/scale_repository.dart';
-import '../../../lib/models/scale_measurements/scale_measurement_vm.dart';
-import '../../../lib/types/unit.dart';
+import '../../../utils/gallery_pop_up/gallery_pop_up.dart';
 import '../view_model/scale_progress_page_view_model.dart';
+import 'scale_measurements/scale_measurement_vm.dart';
+import 'scale_tagger/scale_tagger_pop_up.dart';
 
 class ScaleMeasurementListWidget extends StatefulWidget {
   final List<ScaleMeasurementViewModel> scaleMeasurements;

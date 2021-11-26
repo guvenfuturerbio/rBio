@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/services/user_service.dart';
+import 'package:onedosehealth/features/auth/user_service.dart';
 
 import '../core.dart';
 import '../../model/model.dart';

@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../../generated/l10n.dart';
+import '../../../../../../model/ble_models/paired_device.dart';
 import '../../../helper/resources.dart';
-import '../../../models/ble_models/paired_device.dart';
 import 'ble_paired_devices_vm.dart';
 
 class PairedDevicesPage extends StatefulWidget {
