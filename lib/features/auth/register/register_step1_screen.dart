@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:onedosehealth/core/widgets/rbio_appbar_login.dart';
 import 'package:provider/provider.dart';
-import 'package:universal_html/html.dart' as htmlK;
 import 'package:vrouter/src/core/extended_context.dart';
 
 import '../../../core/core.dart';
@@ -117,7 +113,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    LocaleProvider.current.btn_sign_in,
+                    LocaleProvider.current.btn_sign_up,
                     style: context.xHeadline1
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
