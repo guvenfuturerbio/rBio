@@ -26,13 +26,7 @@ class HomePageModel<K extends ProgressPage> {
     largeChild = Consumer<K>(
       builder: (ctx, value, __) {
         manuelEntry = () => value.manuelEntry(ctx);
-        return FutureBuilder(
-            future: Future.delayed(Duration(milliseconds: 200), () => true),
-            builder: (context, snapshot) {
-              return snapshot.hasData
-                  ? value.largeWidget(deActivateCallBack)
-                  : SizedBox();
-            });
+        return value.largeWidget(deActivateCallBack);
       },
     );
     smallChild = Consumer<K>(

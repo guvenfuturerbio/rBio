@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/constants/constants.dart' as rBio;
@@ -1013,6 +1014,7 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
       lastMeasurement = BgMeasurementViewModel(
           bgMeasurement: getIt<GlucoseStorageImpl>().getLatestMeasurement());
     }
+
     return RbioSmallChronicWidget(
       callback: callBack,
       lastMeasurement:
