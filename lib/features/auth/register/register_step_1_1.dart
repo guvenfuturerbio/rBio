@@ -277,8 +277,8 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                       child: CountryCodePicker(
                         padding: EdgeInsets.zero,
                         onChanged: print,
-                        initialSelection: 'IT',
-                        favorite: ['+39', 'FR'],
+                        initialSelection: 'TR',
+                        favorite: ['+90', 'TR'],
                         showCountryOnly: false,
                         showOnlyCountryWhenClosed: false,
                         alignLeft: false,

@@ -115,20 +115,20 @@ class LocaleProvider {
     );
   }
 
-  /// `Sing In`
+  /// `Sign In`
   String get btn_sign_in {
     return Intl.message(
-      'Sing In',
+      'Sign In',
       name: 'btn_sign_in',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sing Up`
+  /// `Sign Up`
   String get btn_sign_up {
     return Intl.message(
-      'Sing Up',
+      'Sign Up',
       name: 'btn_sign_up',
       desc: '',
       args: [],

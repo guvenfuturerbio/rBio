@@ -99,9 +99,11 @@ class RegisterStep1ScreenVm with ChangeNotifier {
         builder: (context, child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              primaryColor: R.color.blue,
-              accentColor: R.color.dark_blue,
-              colorScheme: ColorScheme.light(primary: R.color.blue),
+              primaryColor: getIt<ITheme>().secondaryColor,
+              accentColor: getIt<ITheme>().mainColor,
+              colorScheme: ColorScheme.light(
+                primary: getIt<ITheme>().mainColor,
+              ),
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ), // This will change to light theme.
             child: child,

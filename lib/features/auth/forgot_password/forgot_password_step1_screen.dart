@@ -136,8 +136,8 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                         child: CountryCodePicker(
                           padding: EdgeInsets.zero,
                           onChanged: print,
-                          initialSelection: 'IT',
-                          favorite: ['+39', 'FR'],
+                          initialSelection: 'TR',
+                          favorite: ['+90', 'TR'],
                           showCountryOnly: false,
                           showOnlyCountryWhenClosed: false,
                           alignLeft: false,
