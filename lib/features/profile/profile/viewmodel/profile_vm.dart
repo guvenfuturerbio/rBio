@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/core.dart';
 
@@ -19,5 +20,18 @@ class ProfileVm extends ChangeNotifier {
     await Future.delayed(Duration(seconds: 1));
     numbers = ProfileNumbers(relatives: 3, followers: 10, subscriptions: 50);
     state = LoadingProgress.DONE;
+  }
+
+  Future<void> logout(BuildContext context) async {
+    SharedPreferencesKeys.values.forEach(
+      (element) async {
+        await getIt<ISharedPreferencesManager>().remove(element);
+      },
+    );
+
+    getIt<Repository>().localCacheService.removeAll();
+
+    AnalyticsManager().sendEvent(LogoutEvent());
+    Atom.to(PagePaths.LOGIN, isReplacement: true);
   }
 }
