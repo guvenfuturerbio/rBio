@@ -7,8 +7,8 @@
   "btn_navigation_skip": "Skip",
   "btn_next": "İLERİ",
   "btn_remember_me": "Beni hatırla",
-  "btn_sign_in": "GİRİŞ YAP",
-  "btn_sign_up": "KAYIT OL",
+  "btn_sign_in": "Giriş Yap",
+  "btn_sign_up": "Kayıt Ol",
   "chronic_track": "Kronik Takip",
   "done": "Bitti",
   "create_appointment_events": "Randevu Oluştur",
@@ -694,5 +694,10 @@
   "do_you_smoke": "Sigara içiyor musunuz?",
   "strip_count_low" : "Strip sayısı az",
 	"you_have_strip": "<stripCount> stripiniz kaldı",
-  "strpCnt" : "<stripCount>"
+  "strpCnt" : "<stripCount>",
+  "sign_in_keys": "E-Mail / T.C. no / Passport no",
+  "login" : "Giriş",
+  "login_page_text": "Sağlık sektörünün geleceği!",
+  "sign_up_text": "Seni daha iyi tanıyalım!",
+  "tr_citizen" : "Türkiye vatandaşıyım"
 }

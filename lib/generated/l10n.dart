@@ -115,20 +115,20 @@ class LocaleProvider {
     );
   }
 
-  /// `SIGN IN`
+  /// `Sing In`
   String get btn_sign_in {
     return Intl.message(
-      'SIGN IN',
+      'Sing In',
       name: 'btn_sign_in',
       desc: '',
       args: [],
     );
   }
 
-  /// `SIGN UP`
+  /// `Sing Up`
   String get btn_sign_up {
     return Intl.message(
-      'SIGN UP',
+      'Sing Up',
       name: 'btn_sign_up',
       desc: '',
       args: [],
@@ -7050,6 +7050,56 @@ class LocaleProvider {
     return Intl.message(
       '<stripCount>',
       name: 'strpCnt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-Mail / T.C. no / Passport no`
+  String get sign_in_keys {
+    return Intl.message(
+      'E-Mail / T.C. no / Passport no',
+      name: 'sign_in_keys',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message(
+      'Login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The future of healthcare!`
+  String get login_page_text {
+    return Intl.message(
+      'The future of healthcare!',
+      name: 'login_page_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let's know you better!`
+  String get sign_up_text {
+    return Intl.message(
+      'Let\'s know you better!',
+      name: 'sign_up_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I am a Turkish citizen`
+  String get tr_citizen {
+    return Intl.message(
+      'I am a Turkish citizen',
+      name: 'tr_citizen',
       desc: '',
       args: [],
     );

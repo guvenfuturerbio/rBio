@@ -97,15 +97,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
                             child: Text(
-                              "Login",
-                              style: context.xHeadline1
-                                  .copyWith(fontWeight: FontWeight.bold),
+                              LocaleProvider.current.login,
+                              style: context.xHeadline1.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: context.TEXTSCALE * 30),
                             ),
                           ),
                           Text(
-                            "The future of healthcare!",
-                            style: context.xHeadline3
-                                .copyWith(fontWeight: FontWeight.bold),
+                            LocaleProvider.current.login_page_text,
+                            style: context.xHeadline3,
                           ),
                         ],
                       ),
@@ -118,9 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.only(left: 15.0, bottom: 5),
                           child: Text(
-                            "E-Mail / T.C. no / Passport no",
-                            style: context.xHeadline3
-                                .copyWith(fontWeight: FontWeight.bold),
+                            LocaleProvider.current.sign_in_keys,
+                            style: context.xHeadline3,
                           ),
                         ),
                         Container(
@@ -164,9 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                          child: Text("Password",
-                              style: context.xHeadline3
-                                  .copyWith(fontWeight: FontWeight.bold)),
+                          child: Text(LocaleProvider.current.password,
+                              style: context.xHeadline3),
                         ),
                         TextFormField(
                           controller: _password,
@@ -205,229 +203,257 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .fieldFocusChange(context, passwordFNode, null);
                           },
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 5),
-                              child: Row(
-                                children: <Widget>[
-                                  Checkbox(
-                                    value: value.rememberMeChecked,
-                                    onChanged: (newValue) {
-                                      value.toggleRememberMeChecked();
-                                    },
-                                    activeColor: getIt<ITheme>()
-                                        .mainColor, //  <-- leading Checkbox
-                                  ),
-                                  Text(
-                                    LocaleProvider.current.btn_remember_me,
-                                    style: context.xHeadline3.copyWith(
-                                        color:
-                                            getIt<ITheme>().textColorSecondary,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              ),
-                            ),
-                            InkWell(
-                              child: Text(
-                                LocaleProvider.of(context).lbl_forgot_password,
-                                style: context.xHeadline3
-                                    .copyWith(color: getIt<ITheme>().mainColor),
-                              ),
-                              onTap: () {
-                                Atom.to(PagePaths.FORGOT_PASSWORD_STEP_1);
-                              },
-                            )
-                          ],
-                        ),
                       ],
                     ),
 
-                    //
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        //
-                        Container(
-                          alignment: Alignment.bottomLeft,
-                          child: Checkbox(
-                            value: value.clickedGeneralForm,
-                            onChanged: (newValue) {
-                              value.showApplicationContestForm();
-                            },
-                            activeColor: getIt<ITheme>()
-                                .mainColor, //  <-- leading Checkbox
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Row(
+                            children: <Widget>[
+                              Checkbox(
+                                value: value.rememberMeChecked,
+                                onChanged: (newValue) {
+                                  value.toggleRememberMeChecked();
+                                },
+                                activeColor: getIt<ITheme>()
+                                    .mainColor, //  <-- leading Checkbox
+                              ),
+                              Text(
+                                LocaleProvider.current.btn_remember_me,
+                                style: context.xHeadline3.copyWith(
+                                    color: getIt<ITheme>().textColorSecondary),
+                              )
+                            ],
                           ),
                         ),
-
-                        //
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              value.showApplicationContestForm();
-                            },
-                            child: Text(
-                              LocaleProvider.of(context)
-                                  .accept_application_consent_form,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: context.xHeadline4.copyWith(
-                                  decoration: TextDecoration.underline),
-                            ),
+                        InkWell(
+                          child: Text(
+                            LocaleProvider.of(context).lbl_forgot_password,
+                            style: context.xHeadline3
+                                .copyWith(color: getIt<ITheme>().mainColor),
                           ),
-                        ),
+                          onTap: () {
+                            Atom.to(PagePaths.FORGOT_PASSWORD_STEP_1);
+                          },
+                        )
                       ],
                     ),
 
-                    //
-                    Row(
-                      children: [
-                        Container(
-                          alignment: Alignment.bottomLeft,
-                          child: Checkbox(
-                            value: value.checkedKvkkForm,
-                            onChanged: (newValue) {
-                              value.showKvkkInfo();
-                            },
-                            activeColor: getIt<ITheme>()
-                                .mainColor, //  <-- leading Checkbox
-                          ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => {value.showKvkkInfo()},
-                            child: Text(
-                              LocaleProvider.of(context).read_understood_kvkk,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: context.xHeadline4.copyWith(
-                                  decoration: TextDecoration.underline),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    //
-                    kIsWeb
-                        ? Column(
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: context.WIDTH * 0.1),
+                      child: Column(
+                        children: [
+                          //
+                          Row(
                             children: [
+                              //
                               Container(
-                                child: value.versionCheckProgress ==
-                                        VersionCheckProgress.LOADING
-                                    ? Column(
-                                        children: <Widget>[
-                                          LoadingDialog(),
-                                          Text(LocaleProvider.of(context)
-                                              .check_for_updates)
-                                        ],
-                                      )
-                                    : button(
-                                        text: LocaleProvider.of(context)
-                                            .btn_sign_in,
-                                        onPressed: () {
-                                          value.login(
-                                              _username.text, _password.text);
-                                        },
-                                      ),
+                                alignment: Alignment.bottomLeft,
+                                child: Checkbox(
+                                  value: value.clickedGeneralForm,
+                                  onChanged: (newValue) {
+                                    value.showApplicationContestForm();
+                                  },
+                                  activeColor: getIt<ITheme>()
+                                      .mainColor, //  <-- leading Checkbox
+                                ),
                               ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text(
+
+                              //
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    value.showApplicationContestForm();
+                                  },
+                                  child: Text(
                                     LocaleProvider.of(context)
-                                        .lbl_dont_have_account,
-                                    style: context.xHeadline3.copyWith(
-                                        color:
-                                            getIt<ITheme>().textColorSecondary,
-                                        fontWeight: FontWeight.w600),
+                                        .accept_application_consent_form,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.xHeadline4.copyWith(
+                                        decoration: TextDecoration.underline),
                                   ),
-                                  InkWell(
-                                    child: Text(
-                                        LocaleProvider.of(context)
-                                            .btn_sign_up
-                                            .toUpperCase(),
-                                        style: context.xHeadline3.copyWith(
-                                            color: getIt<ITheme>().mainColor)),
-                                    onTap: () {
-                                      context.vRouter
-                                          .to(PagePaths.REGISTER_FIRST);
-                                    },
-                                  ),
-                                ],
+                                ),
                               ),
                             ],
-                          )
-                        : Column(
+                          ),
+
+                          //
+                          Row(
                             children: [
                               Container(
-                                child: value.versionCheckProgress ==
-                                        VersionCheckProgress.LOADING
-                                    ? Column(
-                                        children: <Widget>[
-                                          LoadingDialog(),
-                                          Text(LocaleProvider.of(context)
-                                              .check_for_updates)
-                                        ],
-                                      )
-                                    : value.versionCheckProgress ==
-                                                VersionCheckProgress.DONE &&
-                                            value.needForceUpdate == false
-                                        ? button(
-                                            text: LocaleProvider.of(context)
-                                                .btn_sign_in,
-                                            onPressed: () {
-                                              value.login(_username.text,
-                                                  _password.text);
-                                            })
-                                        : value.needForceUpdate == true &&
-                                                value.versionCheckProgress !=
-                                                    VersionCheckProgress.ERROR
-                                            ? button(
-                                                onPressed: () {
-                                                  value
-                                                      .startAppVersionOperation();
-                                                },
-                                                text: LocaleProvider.of(context)
-                                                    .update_now)
+                                alignment: Alignment.bottomLeft,
+                                child: Checkbox(
+                                  value: value.checkedKvkkForm,
+                                  onChanged: (newValue) {
+                                    value.showKvkkInfo();
+                                  },
+                                  activeColor: getIt<ITheme>()
+                                      .mainColor, //  <-- leading Checkbox
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: InkWell(
+                                    onTap: () => {value.showKvkkInfo()},
+                                    child: Text(
+                                      LocaleProvider.of(context)
+                                          .read_understood_kvkk,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: context.xHeadline4.copyWith(
+                                          decoration: TextDecoration.underline),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          //
+                          kIsWeb
+                              ? SizedBox(
+                                  width: double.infinity,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: value.versionCheckProgress ==
+                                                VersionCheckProgress.LOADING
+                                            ? Column(
+                                                children: <Widget>[
+                                                  LoadingDialog(),
+                                                  Text(
+                                                      LocaleProvider.of(context)
+                                                          .check_for_updates)
+                                                ],
+                                              )
                                             : button(
                                                 text: LocaleProvider.of(context)
-                                                    .try_again,
+                                                    .btn_sign_in,
                                                 onPressed: () {
-                                                  value
-                                                      .startAppVersionOperation();
+                                                  value.login(_username.text,
+                                                      _password.text);
                                                 },
                                               ),
-                                margin: EdgeInsets.only(top: 20, bottom: 20),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text(
-                                    LocaleProvider.of(context)
-                                        .lbl_dont_have_account,
-                                    style: context.xHeadline3.copyWith(
-                                        color:
-                                            getIt<ITheme>().textColorSecondary,
-                                        fontWeight: FontWeight.w600),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            LocaleProvider.of(context)
+                                                .lbl_dont_have_account,
+                                            style: context.xHeadline3.copyWith(
+                                                color: getIt<ITheme>()
+                                                    .textColorSecondary),
+                                          ),
+                                          InkWell(
+                                            child: Text(
+                                                LocaleProvider.of(context)
+                                                    .btn_sign_up,
+                                                style: context.xHeadline3
+                                                    .copyWith(
+                                                        color: getIt<ITheme>()
+                                                            .mainColor)),
+                                            onTap: () {
+                                              context.vRouter
+                                                  .to(PagePaths.REGISTER_FIRST);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  InkWell(
-                                    child: Text(
-                                        LocaleProvider.of(context)
-                                            .btn_sign_up
-                                            .toUpperCase(),
-                                        style: context.xHeadline3.copyWith(
-                                            color: getIt<ITheme>().mainColor)),
-                                    onTap: () {
-                                      context.vRouter.to(PagePaths
-                                          .REGISTER_FIRST); //---> REGISTER_FIRST
-                                    },
+                                )
+                              : SizedBox(
+                                  width: double.infinity,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: value.versionCheckProgress ==
+                                                VersionCheckProgress.LOADING
+                                            ? Column(
+                                                children: <Widget>[
+                                                  LoadingDialog(),
+                                                  Text(
+                                                      LocaleProvider.of(context)
+                                                          .check_for_updates)
+                                                ],
+                                              )
+                                            : value.versionCheckProgress ==
+                                                        VersionCheckProgress
+                                                            .DONE &&
+                                                    value.needForceUpdate ==
+                                                        false
+                                                ? button(
+                                                    text: LocaleProvider.of(
+                                                            context)
+                                                        .btn_sign_in,
+                                                    onPressed: () {
+                                                      value.login(
+                                                          _username.text,
+                                                          _password.text);
+                                                    })
+                                                : value.needForceUpdate ==
+                                                            true &&
+                                                        value.versionCheckProgress !=
+                                                            VersionCheckProgress
+                                                                .ERROR
+                                                    ? button(
+                                                        onPressed: () {
+                                                          value
+                                                              .startAppVersionOperation();
+                                                        },
+                                                        text: LocaleProvider.of(
+                                                                context)
+                                                            .update_now)
+                                                    : button(
+                                                        text: LocaleProvider.of(
+                                                                context)
+                                                            .try_again,
+                                                        onPressed: () {
+                                                          value
+                                                              .startAppVersionOperation();
+                                                        },
+                                                      ),
+                                        margin: EdgeInsets.only(
+                                            top: 20, bottom: 20),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            LocaleProvider.of(context)
+                                                .lbl_dont_have_account,
+                                            style: context.xHeadline3.copyWith(
+                                                color: getIt<ITheme>()
+                                                    .textColorSecondary),
+                                          ),
+                                          InkWell(
+                                            child: Text(
+                                                LocaleProvider.of(context)
+                                                    .btn_sign_up,
+                                                style: context.xHeadline3
+                                                    .copyWith(
+                                                        color: getIt<ITheme>()
+                                                            .mainColor)),
+                                            onTap: () {
+                                              context.vRouter.to(PagePaths
+                                                  .REGISTER_FIRST); //---> REGISTER_FIRST
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                        ],
+                      ),
+                    ),
 
                     //
                     SizedBox(

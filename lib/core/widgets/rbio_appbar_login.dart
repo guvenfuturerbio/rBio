@@ -8,22 +8,48 @@ mixin IRbioAppBar on PreferredSize {}
 class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
   final Widget title;
   final List<Widget> actions;
+  final Widget leading;
 
-  RbioAppBarLogin({
-    this.title,
-    this.actions,
-  }) : super(
+  RbioAppBarLogin({this.title, this.actions, this.leading})
+      : super(
           preferredSize: Size.fromHeight(64),
           child: AppBar(
             toolbarHeight: 64,
-            actions: actions,
+            actions: actions ??
+                [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      R.image.oneDoseHealthPng,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ],
             centerTitle: false,
             elevation: 0,
 
-            //
-            title: title ??
+//
+            leading: leading ??
                 Align(
-                  alignment: Alignment.bottomLeft,
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+                      child: SvgPicture.asset(
+                        R.image.back_icon,
+                        width: R.sizes.iconSize,
+                      ),
+                    ),
+                    onTap: () {
+                      Atom.historyBack();
+                    },
+                  ),
+                ),
+            //
+            /*title: title ??
+                Align(
+                  alignment: Alignment.bottomRight,
                   child: SizedBox(
                     height: 50,
                     child: Image.asset(
@@ -32,6 +58,7 @@ class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
                     ),
                   ),
                 ),
+*/
 
             //
             backgroundColor: getIt<ITheme>().mainColor,

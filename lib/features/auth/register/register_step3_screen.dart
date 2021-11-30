@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:onedosehealth/core/widgets/rbio_appbar_login.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -58,7 +59,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
             ) =>
                 Scaffold(
               resizeToAvoidBottomInset: true,
-              appBar: _buildAppBar(context),
+              appBar: RbioAppBarLogin(),
               body: _buildBody(context, vm),
             ),
           ),
@@ -96,25 +97,49 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
     );
   }
 
-  Container _buildBody(BuildContext context, RegisterStep3ScreenVm vm) {
-    return Container(
-      margin: EdgeInsets.all(30),
+  Widget _buildBody(BuildContext context, RegisterStep3ScreenVm vm) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
       child: KeyboardAvoider(
         autoScroll: true,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5.0, left: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: Text(
+                      "Enter the code",
+                      style: context.xHeadline1
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Text(
+                    "Check your SMS",
+                    style: context.xHeadline3,
+                  ),
+                ],
+              ),
+            ),
+
+            //
             Container(
-              margin: EdgeInsets.only(bottom: 20, top: 40),
+              margin: EdgeInsets.only(right: 15, left: 15, bottom: 20, top: 40),
               child: TextFormField(
                 controller: _smsController,
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.number,
                 style: inputTextStyle(),
-                decoration: inputImageDecoration(
+                decoration: inputDecorationForLogin(
                   hintText: LocaleProvider.of(context).sms_verification_code,
-                  image: R.image.ic_email,
-                ),
+                ).copyWith(
+                    fillColor: getIt<ITheme>().cardBackgroundColor,
+                    filled: true),
                 focusNode: focus,
                 onFieldSubmitted: (term) {
                   UtilityManager().fieldFocusChange(context, focus, null);
