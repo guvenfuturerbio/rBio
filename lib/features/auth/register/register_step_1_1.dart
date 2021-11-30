@@ -91,15 +91,15 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Text(
-                        "Sign in",
-                        style: context.xHeadline1
-                            .copyWith(fontWeight: FontWeight.bold),
+                        LocaleProvider.current.btn_sign_up,
+                        style: context.xHeadline1.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: context.TEXTSCALE * 30),
                       ),
                     ),
                     Text(
                       "Let's know you better!",
-                      style: context.xHeadline3
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: context.xHeadline3,
                     ),
                   ],
                 ),
@@ -116,8 +116,7 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                           padding: const EdgeInsets.only(left: 15.0, bottom: 5),
                           child: Text(
                             "Name",
-                            style: context.xHeadline3
-                                .copyWith(fontWeight: FontWeight.bold),
+                            style: context.xHeadline3,
                           ),
                         ),
                         Container(
@@ -152,8 +151,7 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                               left: 15.0, bottom: 5, top: 15),
                           child: Text(
                             "Surname",
-                            style: context.xHeadline3
-                                .copyWith(fontWeight: FontWeight.bold),
+                            style: context.xHeadline3,
                           ),
                         ),
                         Container(
@@ -190,8 +188,7 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                 padding: const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
                 child: Text(
                   "Gender",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                  style: context.xHeadline3,
                 ),
               ),
               Container(
@@ -216,8 +213,7 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                 padding: const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
                 child: Text(
                   "Date of birth",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                  style: context.xHeadline3,
                 ),
               ),
               InkWell(
@@ -267,9 +263,8 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                   padding:
                       const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
                   child: Text(
-                    "Phone number",
-                    style: context.xHeadline3
-                        .copyWith(fontWeight: FontWeight.bold),
+                    LocaleProvider.current.phone_number,
+                    style: context.xHeadline3,
                   ),
                 ),
                 Row(
@@ -353,13 +348,11 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
             children: <Widget>[
               Text(
                 LocaleProvider.of(context).lbl_dont_have_account,
-                style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                    fontWeight: FontWeight.w600),
+                style: context.xHeadline3
+                    .copyWith(color: getIt<ITheme>().textColorSecondary),
               ),
               InkWell(
-                child: Text(
-                    LocaleProvider.of(context).btn_sign_in.toUpperCase(),
+                child: Text(LocaleProvider.of(context).btn_sign_in,
                     style: context.xHeadline3
                         .copyWith(color: getIt<ITheme>().mainColor)),
                 onTap: () {

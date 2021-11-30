@@ -158,6 +158,7 @@ GradientButton button({
     GradientButton(
       increaseHeightBy: height,
       increaseWidthBy: width,
+      elevation: 0,
       child: Text(
         text,
         textAlign: TextAlign.center,
