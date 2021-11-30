@@ -2,20 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/mediminder/models/strip_detail_model.dart';
+import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
 import 'package:onedosehealth/core/core.dart';
-
 import '../../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../../core/locator.dart';
-import '../../database/repository/glucose_repository.dart';
 import '../../models/bg_measurement/blood_glucose_report_body.dart';
-import '../../models/bg_measurement/blood_glucose_value_model.dart';
 import '../../models/bg_measurement/delete_bg_measurement_request.dart';
-import '../../models/bg_measurement/get_blood_glucose_data_of_person.dart';
 import '../../models/bg_measurement/get_hba1c_measurement_list.dart';
 import '../../models/bg_measurement/update_bg_measurement_request.dart';
 import '../../models/firebase/add_firebase_body.dart';
-import '../../models/user_profiles/person.dart';
 import '../../notifiers/user_profiles_notifier.dart';
 
 class BaseProviderRepository with ChangeNotifier {

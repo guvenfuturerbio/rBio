@@ -6,8 +6,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../features/chronic_tracking/lib/notifiers/ble_operators/ble_connector.dart';
 import '../features/chronic_tracking/lib/notifiers/ble_operators/ble_reactor.dart';
 import '../features/chronic_tracking/lib/notifiers/ble_operators/ble_scanner.dart';
+
 import '../features/chronic_tracking/lib/notifiers/login_view_model.dart';
-import '../features/chronic_tracking/lib/notifiers/user_notifier.dart' as ct;
 import '../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'core.dart';
 import 'data/helper/dio_helper.dart';
@@ -65,7 +65,6 @@ Future<void> setupLocator() async {
   getIt.registerSingleton<UserInfo>(
       UserInfo(getIt<ISharedPreferencesManager>()));
 
-  getIt.registerLazySingleton(() => ct.UserNotifier());
   getIt.registerLazySingleton(() => LoginViewModel());
   getIt.registerLazySingleton(() => UserProfilesNotifier());
 

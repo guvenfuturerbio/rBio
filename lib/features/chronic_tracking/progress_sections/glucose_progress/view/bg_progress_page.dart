@@ -78,47 +78,50 @@ class _BgProgressPage extends State<BgProgressPage> {
     var value = Provider.of<BgProgressPageViewModel>(context);
     return MediaQuery.of(context).orientation == Orientation.portrait ||
             Atom.isWeb
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: (context.HEIGHT * .38) * context.TEXTSCALE,
-                child: GraphHeader(
-                  value: value,
-                  callBack: widget.callBack,
-                ),
-              ),
-              BottomActionsOfGraph(
-                value: value,
-              ),
-              LayoutBuilder(builder: (context, constraints) {
-                return Container(
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withAlpha(20),
-                        blurRadius: 5,
-                        spreadRadius: 0,
-                        offset: Offset(5, 5))
-                  ]),
-                  padding: EdgeInsets.symmetric(vertical: 4),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: CustomBarPie(
-                      width: constraints.maxWidth,
-                      height: (context.HEIGHT * 0.06) * context.TEXTSCALE,
-                    ),
+        ? SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: (context.HEIGHT * .4) * context.TEXTSCALE,
+                  child: GraphHeader(
+                    value: value,
+                    callBack: widget.callBack,
                   ),
-                );
-              }),
-              Expanded(
-                child: BgMeasurementListWidget(
-                  bgMeasurements: value.bgMeasurements,
-                  scrollController: _controller,
-                  useStickyGroupSeparatorsValue: true,
                 ),
-              )
-            ],
+                BottomActionsOfGraph(
+                  value: value,
+                ),
+                LayoutBuilder(builder: (context, constraints) {
+                  return Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withAlpha(20),
+                          blurRadius: 5,
+                          spreadRadius: 0,
+                          offset: Offset(5, 5))
+                    ]),
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: CustomBarPie(
+                        width: constraints.maxWidth,
+                        height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                      ),
+                    ),
+                  );
+                }),
+                SizedBox(
+                  height: context.HEIGHT * .4,
+                  child: BgMeasurementListWidget(
+                    bgMeasurements: value.bgMeasurements,
+                    scrollController: _controller,
+                    useStickyGroupSeparatorsValue: true,
+                  ),
+                )
+              ],
+            ),
           )
         : LandScapeGraphWidget(
             graph: value.currentGraph,

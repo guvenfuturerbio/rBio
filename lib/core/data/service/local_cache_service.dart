@@ -15,4 +15,5 @@ abstract class LocalCacheService {
   Future<String> get(String url);
   Future<bool> write(String url, String data, Duration time);
   Future<bool> remove(String url);
+  Future<bool> removeAll();
 }

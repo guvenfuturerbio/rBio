@@ -53,8 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
               //
@@ -141,7 +141,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //
                     _buildListItem(
                       LocaleProvider.current.reminders,
-                      () {},
+                      () {
+                        Atom.to(PagePaths.MEDIMINDER_INITIAL);
+                      },
                     ),
 
                     //
@@ -158,6 +160,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               //
               _buildVerticalGap(),
+              RbioElevatedButton(
+                title: LocaleProvider.current.log_out,
+                onTap: () {
+                  vm.logout(context);
+                },
+              )
             ],
           ),
         );

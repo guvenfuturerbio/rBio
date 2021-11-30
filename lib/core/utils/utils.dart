@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:animated_widgets/widgets/rotation_animated.dart';
+import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +19,8 @@ import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:onedosehealth/features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
 import 'package:onedosehealth/features/shared/do_not_show_again_dialog.dart';
+import 'package:onedosehealth/model/mediminder/person_model.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import '../../model/model.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';
@@ -154,6 +158,7 @@ GradientButton button({
     GradientButton(
       increaseHeightBy: height,
       increaseWidthBy: width,
+      elevation: 0,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -924,4 +929,239 @@ class Utils {
       throw Exception('getCacheApiCallModel : ${model.runtimeType}');
     }
   }
+}
+
+// MEDIMINDER WIDGETS AND RESOURCES
+class Mediminder {
+  Mediminder._();
+
+  static Mediminder _instance;
+
+  static Mediminder get instance {
+    _instance ??= Mediminder._();
+    return _instance;
+  }
+
+  PersonModel selection = PersonModel(
+    userId: 56265,
+    id: 1627287863112,
+    imageURL:
+        'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png',
+    name: 'Mustafa TÜRKMEN',
+    birthDate: '09.11.1997',
+    gender: 'Male',
+    height: '170',
+    weight: '50',
+    diabetesType: 'Type 1',
+    hypo: 36,
+    rangeMin: 76,
+    target: 120,
+    rangeMax: 151,
+    hyper: 301,
+    deviceUUID: "",
+    manufacturerId: 0,
+    yearOfDiagnosis: 2021,
+    smoker: true,
+    isFirstUser: false,
+  );
+
+  final MY_MEDICINES_PAGE = "my_medicines";
+
+  GradientButton buttonDarkGradient(
+          {text: String,
+          Function onPressed,
+          double height,
+          double width,
+          BuildContext context}) =>
+      GradientButton(
+        increaseHeightBy: height ?? 16,
+        increaseWidthBy: width ?? 200,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+        ),
+        textStyle: context.xHeadline3.copyWith(fontWeight: FontWeight.w600),
+        callback: onPressed,
+        gradient: LinearGradient(
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
+          colors: <Color>[
+            getIt<ITheme>().secondaryColor,
+            getIt<ITheme>().mainColor,
+          ],
+        ),
+        shadowColor: Colors.black,
+      );
+/*
+  TextStyle inputTextStyle(BuildContext context) =>
+      context.xHeadline3.copyWith(color: getIt<ITheme>().mainColor);
+
+  InputDecoration inputImageDecoration(
+          {image: String, hintText: String, context: BuildContext}) =>
+      InputDecoration(
+        contentPadding: EdgeInsets.all(8),
+        prefixIcon: SvgPicture.asset(
+          image,
+          fit: BoxFit.none,
+        ),
+        focusedBorder: borderTextField(),
+        border: borderTextField(),
+        enabledBorder: borderTextField(),
+        hintText: hintText,
+        fillColor: Colors.white,
+        hintStyle: hintStyle(context),
+      );
+*/
+  InputBorder borderTextField() => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(200),
+        borderSide: BorderSide(
+          width: 1,
+          style: BorderStyle.solid,
+          color: getIt<ITheme>().grey,
+        ),
+      );
+
+  TextStyle hintStyle(BuildContext context) =>
+      context.xHeadline3.copyWith(color: getIt<ITheme>().grey);
+}
+
+extension StringExtension on String {
+  String format(List<String> params) => interpolate(this, params);
+}
+
+String interpolate(String string, List<String> params) {
+  String result = string;
+  for (int i = 1; i < params.length + 1; i++) {
+    result = result.replaceAll('%${i}\$', params[i - 1]);
+  }
+
+  return result;
+}
+
+class GradientDialog extends StatefulWidget {
+  final String title;
+  final String text;
+
+  GradientDialog(this.title, this.text);
+
+  @override
+  _GradientDialogState createState() => _GradientDialogState();
+}
+
+class _GradientDialogState extends State<GradientDialog> {
+  @override
+  Widget build(BuildContext context) {
+    Widget okButton = TextButton(
+      style: TextButton.styleFrom(primary: getIt<ITheme>().textColor),
+      child: Text(LocaleProvider.current.ok),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    return AlertDialog(
+      backgroundColor: getIt<ITheme>().mainColor,
+      contentPadding: EdgeInsets.all(0.0),
+      title: Text(
+        widget.title,
+        style: context.xHeadline1.copyWith(
+            fontWeight: FontWeight.w700, color: getIt<ITheme>().textColor),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.0),
+        ),
+      ),
+      actions: [
+        okButton,
+      ],
+      content: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(widget.text,
+                style: context.xHeadline3
+                    .copyWith(color: getIt<ITheme>().textColor)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProgressDialog extends StatefulWidget {
+  static _ProgressDialogState state;
+
+  bool isShowing() {
+    return state != null && state.mounted;
+  }
+
+  @override
+  _ProgressDialogState createState() => state = _ProgressDialogState();
+}
+
+class _ProgressDialogState extends State<ProgressDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      insetPadding: EdgeInsets.all(10),
+      content: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            width: 150,
+            height: 150,
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              gradient: blueGradient(),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                progress(),
+                JumpingText((LocaleProvider.current.loading))
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget progress({
+    Key key,
+    double value,
+    Color backgroundColor,
+    Animation valueColor,
+    String semanticsLabel,
+    String semanticsValue,
+  }) =>
+      ShakeAnimatedWidget(
+        enabled: true,
+        duration: Duration(milliseconds: 1500),
+        shakeAngle: Rotation.deg(z: 10),
+        curve: Curves.linear,
+        child: Container(
+          width: 80,
+          height: 80,
+          child: SvgPicture.asset(R.image.stethoscope),
+        ),
+      );
+
+  Gradient blueGradient() => LinearGradient(
+        colors: [
+          Colors.black12,
+          Colors.black12,
+        ],
+        begin: Alignment.bottomLeft,
+        end: Alignment.centerRight,
+      );
 }

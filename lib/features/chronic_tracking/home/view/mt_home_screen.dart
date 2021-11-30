@@ -19,10 +19,15 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (_) => MeasurementTrackingVm(),
         child: Consumer<MeasurementTrackingVm>(builder: (_, val, __) {
+          bool isLandscape =
+              context.xMediaQuery.orientation == Orientation.landscape &&
+                  !Atom.isWeb;
           return RbioStackedScaffold(
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(context, "Kronik Takip"),
-            ),
+            appbar: isLandscape
+                ? null
+                : RbioAppBar(
+                    title: RbioAppBar.textTitle(context, "Kronik Takip"),
+                  ),
             floatingActionButton: val.activeItem != null
                 ? FloatingActionButton(
                     heroTag: 'adder',
@@ -49,8 +54,9 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
                 : null,
             body: ListView(
               physics: ClampingScrollPhysics(),
-              padding:
-                  EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
+              padding: isLandscape
+                  ? null
+                  : EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
               children: [
                 Card(
                   child: ExpandablePanel(

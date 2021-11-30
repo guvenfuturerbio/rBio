@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:onedosehealth/core/widgets/rbio_appbar_login.dart';
 import 'package:provider/provider.dart';
-import 'package:universal_html/html.dart' as htmlK;
 import 'package:vrouter/src/core/extended_context.dart';
 
 import '../../../core/core.dart';
@@ -117,15 +113,14 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    "Sign in",
+                    LocaleProvider.current.btn_sign_up,
                     style: context.xHeadline1
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
-                  "Let's know you better!",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                  LocaleProvider.current.sign_up_text,
+                  style: context.xHeadline3,
                 ),
               ],
             ),
@@ -145,9 +140,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     },
                   ),
                   Text(
-                    "I am a Turkish citizen",
-                    style: context.xHeadline3
-                        .copyWith(fontWeight: FontWeight.bold),
+                    LocaleProvider.current.tr_citizen,
+                    style: context.xHeadline3,
                   ),
                 ],
               ),
@@ -188,9 +182,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               Padding(
                 padding: const EdgeInsets.only(left: 15.0, bottom: 5),
                 child: Text(
-                  "E-mail",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                  LocaleProvider.current.email,
+                  style: context.xHeadline3,
                 ),
               ),
               Container(
@@ -223,9 +216,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               Padding(
                 padding: const EdgeInsets.only(left: 15.0, bottom: 5),
                 child: Text(
-                  "Password",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                  LocaleProvider.current.password,
+                  style: context.xHeadline3,
                 ),
               ),
               Container(
@@ -262,9 +254,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               Padding(
                 padding: const EdgeInsets.only(left: 15.0, bottom: 5),
                 child: Text(
-                  "Confirm Password",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                  LocaleProvider.current.password_again,
+                  style: context.xHeadline3,
                 ),
               ),
               Container(
@@ -388,17 +379,15 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
             children: <Widget>[
               Text(
                 LocaleProvider.of(context).lbl_dont_have_account,
-                style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                    fontWeight: FontWeight.w600),
+                style: context.xHeadline3
+                    .copyWith(color: getIt<ITheme>().textColorSecondary),
               ),
               InkWell(
-                child: Text(
-                    LocaleProvider.of(context).btn_sign_in.toUpperCase(),
+                child: Text(LocaleProvider.of(context).btn_sign_in,
                     style: context.xHeadline3
                         .copyWith(color: getIt<ITheme>().mainColor)),
                 onTap: () {
-                  context.vRouter.to(PagePaths.LOGIN); //---> REGISTER_FIRST
+                  context.vRouter.to(PagePaths.LOGIN);
                 },
               ),
             ],
@@ -413,7 +402,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
                 child: Text(
                   "or",
                   style: context.xHeadline3.copyWith(
