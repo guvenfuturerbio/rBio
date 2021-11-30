@@ -271,7 +271,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
         );
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

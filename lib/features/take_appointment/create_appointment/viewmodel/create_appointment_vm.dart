@@ -1,24 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/model/home/filter_tenants_response.dart';
-import 'package:onedosehealth/model/home/take_appointment/filter_departments_request.dart';
-import 'package:onedosehealth/model/home/take_appointment/filter_departments_response.dart';
-import 'package:onedosehealth/model/home/take_appointment/filter_tenants_request.dart';
-import 'package:onedosehealth/model/model.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:turkish/turkish.dart';
 
-enum Fields { BEGIN, DEPARTMENT, TENANTS, DOCTORS }
+import '../../../../core/core.dart';
+import '../../../../model/home/filter_tenants_response.dart';
+import '../../../../model/home/take_appointment/filter_departments_request.dart';
+import '../../../../model/home/take_appointment/filter_departments_response.dart';
+import '../../../../model/home/take_appointment/filter_tenants_request.dart';
+import '../../../../model/model.dart';
+
+enum Fields { DEPARTMENT, TENANTS, DOCTORS, RELATIVE }
 
 class CreateAppointmentVm extends ChangeNotifier {
+  BuildContext mContext;
+  bool forOnline;
+
   List<FilterTenantsResponse> _tenantsFilterResponse;
   List<FilterDepartmentsResponse> _filterDepartmentsResponse;
   List<FilterResourcesResponse> _filterResourcesResponse;
-  BuildContext mContext;
+
+  LoadingProgress _relativeProgress = LoadingProgress.LOADING;
   LoadingProgress _progress = LoadingProgress.LOADING;
   LoadingProgress _departmentProgress = LoadingProgress.LOADING;
   LoadingProgress _doctorProgress = LoadingProgress.LOADING;
+
   FilterTenantsResponse _dropdownValueTenant;
   FilterDepartmentsResponse _dropdownValueDepartment;
   FilterResourcesResponse _dropdownValueDoctor;
@@ -27,14 +33,11 @@ class CreateAppointmentVm extends ChangeNotifier {
   bool _departmentSelected = false;
   bool _doctorSelected = false;
 
-  CreateAppointmentVm({BuildContext context}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await fetchTenants();
-    });
-  }
+  PatientRelativeInfoResponse relativeResponse;
+  PatientRelative dropdownValueRelative;
 
-  //Get area
+  // #region Getters
+  LoadingProgress get relativeProgress => this._relativeProgress;
   LoadingProgress get progress => this._progress;
   LoadingProgress get departmentProgress => this._departmentProgress;
   LoadingProgress get doctorProgress => this._doctorProgress;
@@ -54,8 +57,36 @@ class CreateAppointmentVm extends ChangeNotifier {
   bool get hospitalSelected => this._hospitalSelected;
   bool get departmentSelected => this._departmentSelected;
   bool get doctorSelected => this._doctorSelected;
+  // #endregion
 
-  //Tenant fetcher func
+  CreateAppointmentVm({
+    @required BuildContext context,
+    @required bool forOnline,
+  }) {
+    this.mContext = context;
+    this.forOnline = forOnline;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      fetchRelatives();
+      if (forOnline) {
+        _hospitalSelected = true;
+        await fetchOnlineDepartments(
+          FilterOnlineDepartmentsRequest(
+            appointmentType: R.dynamicVar.onlineAppointmentType.toString(),
+            tenantId: R.dynamicVar.tenantAyranciId,
+          ),
+        );
+        _dropdownValueTenant = FilterTenantsResponse(
+          id: R.dynamicVar.onlineAppointmentType,
+          enabled: true,
+          title: LocaleProvider.current.online_appo,
+        );
+      } else {
+        await fetchTenants();
+      }
+    });
+  }
+
+  // #region fetchTenants
   Future<void> fetchTenants() async {
     this._progress = LoadingProgress.LOADING;
     notifyListeners();
@@ -68,16 +99,137 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       this._progress = LoadingProgress.ERROR;
       notifyListeners();
     }
   }
+  // #endregion
 
-  //Department fetcher func
+  // #region fetchRelatives
+  Future<void> fetchRelatives() async {
+    _relativeProgress = LoadingProgress.LOADING;
+    notifyListeners();
+
+    GetAllRelativesRequest bodyPages = GetAllRelativesRequest();
+    bodyPages.draw = 1;
+    bodyPages.start = 0;
+    bodyPages.length = "100";
+
+    SearchObject searchObject = SearchObject();
+    searchObject.value = "";
+    searchObject.regex = false;
+    bodyPages.search = SearchObject();
+    bodyPages.search = searchObject;
+
+    bodyPages.columns = <ColumnsObject>[];
+    ColumnsObject columnsObject = new ColumnsObject();
+    columnsObject.search = searchObject;
+    columnsObject.orderable = true;
+    columnsObject.name = "null";
+    columnsObject.data = "patient.user.name";
+    columnsObject.searchable = true;
+    bodyPages.columns.add(columnsObject);
+
+    bodyPages.order = <OrderObject>[];
+    OrderObject orderObject = new OrderObject();
+    orderObject.column = 0;
+    orderObject.dir = "desc";
+    bodyPages.order.add(orderObject);
+
+    try {
+      relativeResponse = await getIt<Repository>().getAllRelatives(bodyPages);
+      if (relativeResponse == null || relativeResponse.patientRelatives == []) {
+        relativeResponse = PatientRelativeInfoResponse([]);
+      }
+      final currentPatient = PatientSingleton().getPatient();
+      relativeResponse = PatientRelativeInfoResponse(
+        [
+          PatientRelative(
+            currentPatient.firstName,
+            currentPatient.lastName,
+            currentPatient.identityNumber,
+            currentPatient.id.toString(),
+          ),
+          ...relativeResponse.patientRelatives,
+        ],
+      );
+      dropdownValueRelative = relativeResponse.patientRelatives.first;
+      _relativeProgress = LoadingProgress.DONE;
+      notifyListeners();
+    } catch (e, stackTrace) {
+      Sentry.captureException(e, stackTrace: stackTrace);
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
+      _relativeProgress = LoadingProgress.ERROR;
+      notifyListeners();
+    }
+  }
+  // #endregion
+
+  // #region fetchOnlineDepartments
+  Future<void> fetchOnlineDepartments(
+    FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest,
+  ) async {
+    try {
+      this._progress = LoadingProgress.LOADING;
+      this._departmentProgress = LoadingProgress.LOADING;
+      notifyListeners();
+
+      this._filterDepartmentsResponse = await getIt<Repository>()
+          .fetchOnlineDepartments(filterOnlineDepartmentsRequest);
+      List<String> string = [];
+      this._filterDepartmentsResponse.forEach((element) {
+        string.add(element.title);
+      });
+      string = string..sort(turkish.comparator);
+      List<FilterDepartmentsResponse> temp = [];
+      string.forEach((element) {
+        _filterDepartmentsResponse.forEach((element2) {
+          if (element == element2.title && !temp.contains(element2)) {
+            temp.add(element2);
+          }
+        });
+      });
+      temp.insert(
+        0,
+        FilterDepartmentsResponse(
+          enabled: false,
+          id: -2,
+          title: LocaleProvider.current.pls_select,
+          tenants: [],
+        ),
+      );
+      _filterDepartmentsResponse = temp;
+      this._progress = LoadingProgress.DONE;
+      this._departmentProgress = LoadingProgress.DONE;
+      notifyListeners();
+    } catch (e, stackTrace) {
+      Sentry.captureException(e, stackTrace: stackTrace);
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
+
+      this._progress = LoadingProgress.ERROR;
+      this._departmentProgress = LoadingProgress.ERROR;
+      notifyListeners();
+    }
+  }
+  // #endregion
+
+  // #region fetchDepartments
   Future<void> fetchDepartments(
-      FilterDepartmentsRequest filterDepartmentsRequest) async {
+    FilterDepartmentsRequest filterDepartmentsRequest,
+  ) async {
     try {
       this._departmentProgress = LoadingProgress.LOADING;
       notifyListeners();
@@ -106,24 +258,30 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
-      print("fetch Departments error " + e.toString());
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       this._departmentProgress = LoadingProgress.ERROR;
       notifyListeners();
     }
   }
+  // #endregion
 
+  // #region fetchResources
   Future<void> fetchResources(
-      FilterResourcesRequest filterResourcesRequest) async {
+    FilterResourcesRequest filterResourcesRequest,
+  ) async {
     this._doctorProgress = LoadingProgress.LOADING;
     notifyListeners();
+
     try {
       this._filterResourcesResponse =
           await getIt<Repository>().filterResources(filterResourcesRequest);
       this._filterResourcesResponse.insert(
-          0,
-          FilterResourcesResponse(
+            0,
+            FilterResourcesResponse(
               departments: [],
               enabled: false,
               gender: "male",
@@ -133,20 +291,26 @@ class CreateAppointmentVm extends ChangeNotifier {
               isSSIContractor: true,
               isTSSContractor: true,
               tenants: [],
-              title: "Seçiniz"));
+              title: "Seçiniz",
+            ),
+          );
       this._doctorProgress = LoadingProgress.DONE;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
-      print("fetch Resources error " + e.toString());
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       this._doctorProgress = LoadingProgress.ERROR;
       notifyListeners();
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
     }
   }
+  // #endregion
 
-  hospitalSelection(FilterTenantsResponse selectionResponse) {
+  // #region hospitalSelection
+  void hospitalSelection(FilterTenantsResponse selectionResponse) {
     clearFunc(Fields.TENANTS);
     _dropdownValueTenant = selectionResponse;
     if (selectionResponse.id != -2) {
@@ -159,8 +323,10 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
     }
   }
+  // #endregion
 
-  departmentSelection(FilterDepartmentsResponse selectionResponse) {
+  // #region departmentSelection
+  void departmentSelection(FilterDepartmentsResponse selectionResponse) {
     clearFunc(Fields.DEPARTMENT);
     _dropdownValueDepartment = selectionResponse;
     if (selectionResponse.id != -2) {
@@ -178,8 +344,10 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
     }
   }
+  // #endregion
 
-  doctorSelection(FilterResourcesResponse selectionResponse) {
+  // #region doctorSelection
+  void doctorSelection(FilterResourcesResponse selectionResponse) {
     _dropdownValueDoctor = selectionResponse;
     if (selectionResponse.id != -2) {
       _doctorSelected = true;
@@ -189,11 +357,18 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
     }
   }
+  // #endregion
 
-  clearFunc(Fields currentField) {
+  // #region doctorSelection
+  void relativeSelection(PatientRelative value) {
+    dropdownValueRelative = value;
+    notifyListeners();
+  }
+  // #endregion
+
+  // #region clearFunc
+  void clearFunc(Fields currentField) {
     switch (currentField) {
-      case Fields.BEGIN:
-        break;
       case Fields.DEPARTMENT:
         _filterResourcesResponse?.clear();
         _dropdownValueDoctor = null;
@@ -207,23 +382,17 @@ class CreateAppointmentVm extends ChangeNotifier {
         _departmentSelected = false;
         break;
       case Fields.DOCTORS:
+      case Fields.RELATIVE:
         break;
     }
     notifyListeners();
   }
+  // #endregion
 
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
-  }
-
+  // #region removeOtherTenants
   List<FilterTenantsResponse> removeOtherTenants(
-      List<FilterTenantsResponse> tenantsResponse) {
+    List<FilterTenantsResponse> tenantsResponse,
+  ) {
     try {
       //final onlineAppoTenant = FilterTenantsResponse(enabled: true, id: -1);
       var removedTenants = <FilterTenantsResponse>[];
@@ -247,4 +416,17 @@ class CreateAppointmentVm extends ChangeNotifier {
       return null;
     }
   }
+  // #endregion
+
+  // #region showGradientDialog
+  void showGradientDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return WarningDialog(title, text);
+      },
+    );
+  }
+  // #endregion
 }

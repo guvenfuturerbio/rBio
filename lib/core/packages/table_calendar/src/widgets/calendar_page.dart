@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CalendarPage extends StatelessWidget {
-  final Color backgroundColor;
-  final Color foregroundColor;
+  final Color daysBackgroundColor;
+  final Color cellBackgroundColor;
 
   final Widget Function(BuildContext context, DateTime day) dowBuilder;
   final Widget Function(BuildContext context, DateTime day) dayBuilder;
@@ -20,8 +20,8 @@ class CalendarPage extends StatelessWidget {
 
   const CalendarPage({
     Key key,
-    @required this.backgroundColor,
-    @required this.foregroundColor,
+    @required this.daysBackgroundColor,
+    @required this.cellBackgroundColor,
     @required this.visibleDays,
     this.dowBuilder,
     @required this.dayBuilder,
@@ -45,7 +45,7 @@ class CalendarPage extends StatelessWidget {
 
   TableRow _buildDaysOfWeek(BuildContext context) {
     return TableRow(
-      decoration: BoxDecoration(color: backgroundColor),
+      decoration: BoxDecoration(color: daysBackgroundColor),
       children: List.generate(
         7,
         (index) => dowBuilder(context, visibleDays[index]),
@@ -60,13 +60,13 @@ class CalendarPage extends StatelessWidget {
         .map((index) => TableRow(
               decoration: index == 0
                   ? BoxDecoration(
-                      color: foregroundColor,
+                      color: cellBackgroundColor,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(15),
                       ),
                     )
                   : BoxDecoration(
-                      color: foregroundColor,
+                      color: cellBackgroundColor,
                     ),
               children: List.generate(
                 7,

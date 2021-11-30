@@ -38,4 +38,22 @@ class ResourcesRequest {
   String toString() {
     return 'ResourcesRequest(tenantId: $tenantId, departmentId: $departmentId, resourceId: $resourceId, from: $from, to: $to, id: $id)';
   }
+
+  ResourcesRequest copyWith({
+    int tenantId,
+    int departmentId,
+    int resourceId,
+    String from,
+    String to,
+    int id,
+  }) {
+    return ResourcesRequest(
+      tenantId: tenantId ?? this.tenantId,
+      departmentId: departmentId ?? this.departmentId,
+      resourceId: resourceId ?? this.resourceId,
+      from: from ?? this.from,
+      to: to ?? this.to,
+      id: id ?? this.id,
+    );
+  }
 }

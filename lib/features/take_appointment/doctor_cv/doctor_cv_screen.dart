@@ -160,17 +160,24 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       .toUpperCase(),
                   onPressed: () {
                     AnalyticsManager().sendEvent(
-                        new OAMakeAppointmentClickEvent(
-                            widget.departmentName, widget.doctorName));
-                    Atom.to(PagePaths.EVENTS, queryParameters: {
-                      'fromOnlineSelect': widget.fromOnlineSelect.toString(),
-                      'departmentId': widget.departmentId.toString(),
-                      'departmentName': Uri.encodeFull(widget.departmentName),
-                      'doctorName': Uri.encodeFull(widget.doctorName),
-                      'resourceId': widget.resourceId.toString(),
-                      'tenantId': widget.tenantId.toString(),
-                      'imageUrl': value.imageUrl
-                    });
+                      OAMakeAppointmentClickEvent(
+                        widget.departmentName,
+                        widget.doctorName,
+                      ),
+                    );
+                    
+                    Atom.to(
+                      PagePaths.EVENTS,
+                      queryParameters: {
+                        'fromOnlineSelect': widget.fromOnlineSelect.toString(),
+                        'departmentId': widget.departmentId.toString(),
+                        'departmentName': Uri.encodeFull(widget.departmentName),
+                        'doctorName': Uri.encodeFull(widget.doctorName),
+                        'resourceId': widget.resourceId.toString(),
+                        'tenantId': widget.tenantId.toString(),
+                        'imageUrl': value.imageUrl
+                      },
+                    );
                   }),
             ),
             value.progress == LoadingProgress.DONE

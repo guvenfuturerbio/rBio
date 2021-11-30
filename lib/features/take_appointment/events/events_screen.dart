@@ -372,8 +372,8 @@ class _EventsScreenState extends State<EventsScreen> {
                       topRight: Radius.circular(12))),
             ),
             TableCalendar(
-              backgroundColor: getIt<ITheme>().secondaryColor,
-              foregroundColor: getIt<ITheme>().cardBackgroundColor,
+              daysBackgroundColor: getIt<ITheme>().secondaryColor,
+              cellBackgroundColor: getIt<ITheme>().cardBackgroundColor,
 
               //
               focusedDay: value.selectedDate,

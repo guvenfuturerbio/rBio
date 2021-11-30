@@ -1,7 +1,7 @@
 class PatientRelativeInfoResponse {
   List<PatientRelative> patientRelatives = [];
 
-  PatientRelativeInfoResponse();
+  PatientRelativeInfoResponse(this.patientRelatives);
 
   PatientRelativeInfoResponse.fromJson(Map<String, dynamic> json) {
     var data = json['data'];

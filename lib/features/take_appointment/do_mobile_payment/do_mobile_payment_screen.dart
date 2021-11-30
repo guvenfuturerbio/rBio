@@ -65,12 +65,13 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
       progressIndicator: RbioLoading(),
       child: DefaultTabController(
         length: 2,
-        child: Scaffold(
+        child: RbioScaffold(
           resizeToAvoidBottomInset: true,
-          appBar: MainAppBar(
-            context: context,
-            title: getTitleBar(context),
-            leading: ButtonBackWhite(context),
+          appbar: RbioAppBar(
+            title: RbioAppBar.textTitle(
+              context,
+              LocaleProvider.of(context).payment,
+            ),
           ),
           body: _buildBody(context, value),
         ),
@@ -79,216 +80,204 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
   }
 
   Widget _buildBody(BuildContext context, DoMobilePaymentScreenVm value) {
-    return Container(
-      child: Container(
-        margin: EdgeInsets.all(30),
-        child: KeyboardAvoider(
-          autoScroll: true,
-          child: Column(
-            children: <Widget>[
-              //
-              Container(
-                margin: EdgeInsets.only(bottom: 20, top: 40),
-                child: TextFormField(
-                  controller: _cardHolderNameController,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  style: inputTextStyle(),
-                  decoration: inputImageDecoration(
-                    hintText: LocaleProvider.of(context).credit_card_holder,
-                    image: R.image.ic_user,
-                  ),
-                  focusNode: cardHolderNameFNode,
-                  inputFormatters: <TextInputFormatter>[
-                    TabToNextFieldTextInputFormatter(
-                        context, cardHolderNameFNode, cardNumberFNode)
-                  ],
-                  onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(
-                        context, cardHolderNameFNode, cardNumberFNode);
-                  },
+    return Padding(
+      padding: EdgeInsets.all(30),
+      child: KeyboardAvoider(
+        autoScroll: true,
+        child: Column(
+          children: <Widget>[
+            //
+            Container(
+              margin: EdgeInsets.only(bottom: 20, top: 40),
+              child: TextFormField(
+                controller: _cardHolderNameController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.text,
+                style: inputTextStyle(),
+                decoration: inputImageDecoration(
+                  hintText: LocaleProvider.of(context).credit_card_holder,
+                  image: R.image.ic_user,
                 ),
+                focusNode: cardHolderNameFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                      context, cardHolderNameFNode, cardNumberFNode)
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager().fieldFocusChange(
+                      context, cardHolderNameFNode, cardNumberFNode);
+                },
               ),
+            ),
 
-              //
-              Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: TextFormField(
-                  controller: _cardNumberController,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  style: inputTextStyle(),
-                  decoration: inputImageDecoration(
-                    hintText: LocaleProvider.of(context).credit_card_number,
-                    image: R.image.credit_card_number,
-                  ),
-                  focusNode: cardNumberFNode,
-                  inputFormatters: <TextInputFormatter>[
-                    TabToNextFieldTextInputFormatter(
-                        context, cardNumberFNode, cardCcvFNode)
-                  ],
-                  onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(
-                        context, cardNumberFNode, cardCcvFNode);
-                  },
+            //
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: TextFormField(
+                controller: _cardNumberController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                style: inputTextStyle(),
+                decoration: inputImageDecoration(
+                  hintText: LocaleProvider.of(context).credit_card_number,
+                  image: R.image.credit_card_number,
                 ),
+                focusNode: cardNumberFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                      context, cardNumberFNode, cardCcvFNode)
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager()
+                      .fieldFocusChange(context, cardNumberFNode, cardCcvFNode);
+                },
               ),
+            ),
 
-              //
-              Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: TextFormField(
-                  controller: _cvvCodeController,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  style: inputTextStyle(),
-                  decoration: inputImageDecoration(
-                    hintText: LocaleProvider.of(context).credit_card_cvv,
-                    image: R.image.ic_password,
-                  ),
-                  focusNode: cardCcvFNode,
-                  inputFormatters: <TextInputFormatter>[
-                    TabToNextFieldTextInputFormatter(
-                        context, cardCcvFNode, cardExpirityDateFNode)
-                  ],
-                  onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(
-                        context, cardCcvFNode, cardExpirityDateFNode);
-                  },
+            //
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: TextFormField(
+                controller: _cvvCodeController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                style: inputTextStyle(),
+                decoration: inputImageDecoration(
+                  hintText: LocaleProvider.of(context).credit_card_cvv,
+                  image: R.image.ic_password,
                 ),
+                focusNode: cardCcvFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                      context, cardCcvFNode, cardExpirityDateFNode)
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager().fieldFocusChange(
+                      context, cardCcvFNode, cardExpirityDateFNode);
+                },
               ),
+            ),
 
-              //
-              Container(
-                margin: EdgeInsets.only(bottom: 5),
-                child: TextFormField(
-                  controller: _expiryDateController,
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.number,
-                  style: inputTextStyle(),
-                  decoration: inputImageDecoration(
-                    hintText:
-                        LocaleProvider.of(context).credit_card_expired_date,
-                    image: R.image.credit_calendar,
-                  ),
-                  focusNode: cardExpirityDateFNode,
-                  inputFormatters: <TextInputFormatter>[
-                    TabToNextFieldTextInputFormatter(
-                        context, cardExpirityDateFNode, null)
-                  ],
-                  onFieldSubmitted: (term) {
-                    UtilityManager()
-                        .fieldFocusChange(context, cardExpirityDateFNode, null);
-                  },
+            //
+            Container(
+              margin: EdgeInsets.only(bottom: 5),
+              child: TextFormField(
+                controller: _expiryDateController,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.number,
+                style: inputTextStyle(),
+                decoration: inputImageDecoration(
+                  hintText: LocaleProvider.of(context).credit_card_expired_date,
+                  image: R.image.credit_calendar,
                 ),
+                focusNode: cardExpirityDateFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                      context, cardExpirityDateFNode, null)
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager()
+                      .fieldFocusChange(context, cardExpirityDateFNode, null);
+                },
               ),
+            ),
 
-              //
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Checkbox(
-                      value: value.isSalesContractConfirmed,
-                      onChanged: (newValue) {
-                        value.toggleSalesContract();
-                      },
-                      activeColor: R.color.blue, //  <-- leading Checkbox
-                    ),
+            //
+            Row(
+              children: [
+                Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Checkbox(
+                    value: value.isSalesContractConfirmed,
+                    onChanged: (newValue) {
+                      value.toggleSalesContract();
+                    },
+                    activeColor: R.color.blue, //  <-- leading Checkbox
                   ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        value.showDistanceSaleContract(
-                            packageName: LocaleProvider.current.online_appo,
-                            price: widget?.price ?? 0.toString());
-                      },
-                      child: Text(
-                        LocaleProvider.of(context)
-                            .accept_distance_sales_contract,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: R.color.black,
-                          decoration: TextDecoration.underline,
-                        ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      value.showDistanceSaleContract(
+                          packageName: LocaleProvider.current.online_appo,
+                          price: widget?.price ?? 0.toString());
+                    },
+                    child: Text(
+                      LocaleProvider.of(context).accept_distance_sales_contract,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: R.color.black,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
 
-              //
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Checkbox(
-                      value: value.cancellationFormConfirmed,
-                      onChanged: (newValue) {
-                        value.toggleCancellationForm();
-                      },
-                      activeColor: R.color.blue, //  <-- leading Checkbox
-                    ),
+            //
+            Row(
+              children: [
+                Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Checkbox(
+                    value: value.cancellationFormConfirmed,
+                    onChanged: (newValue) {
+                      value.toggleCancellationForm();
+                    },
+                    activeColor: R.color.blue, //  <-- leading Checkbox
                   ),
-                  Expanded(
-                    child: InkWell(
-                        onTap: () => {
-                              value.showCancellationAndRefund(
-                                  packageName:
-                                      LocaleProvider.current.online_appo,
-                                  price: widget.price)
-                            },
-                        child: Text(
-                            LocaleProvider.of(context)
-                                .cancellation_refund_conditions,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: R.color.black,
-                              decoration: TextDecoration.underline,
-                            ))),
-                  )
-                ],
-              ),
-              Container(
-                child: button(
-                    text: LocaleProvider.of(context).confirm.toUpperCase(),
-                    onPressed: () {
-                      if (value.isSalesContractConfirmed) {
-                        if (value.cancellationFormConfirmed) {
-                          value.doMobilePayment(
-                            ERandevuCCResponse(
-                                cardNumber: _cardNumberController.text
-                                    .replaceAll(" ", ""),
-                                cvv: _cvvCodeController.text,
-                                cardHolder: _cardHolderNameController.text,
-                                expirationMonth: _expiryDateController.text,
-                                expirationYear: _expiryDateController.text),
-                            widget.appointmentId,
-                          );
-                        } else {
-                          value.showGradientDialog(
-                              LocaleProvider.current.warning,
-                              LocaleProvider.current.check_cancellation_refund);
-                        }
+                ),
+                Expanded(
+                  child: InkWell(
+                      onTap: () => {
+                            value.showCancellationAndRefund(
+                                packageName: LocaleProvider.current.online_appo,
+                                price: widget.price)
+                          },
+                      child: Text(
+                          LocaleProvider.of(context)
+                              .cancellation_refund_conditions,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: R.color.black,
+                            decoration: TextDecoration.underline,
+                          ))),
+                )
+              ],
+            ),
+            Container(
+              child: button(
+                  text: LocaleProvider.of(context).confirm.toUpperCase(),
+                  onPressed: () {
+                    if (value.isSalesContractConfirmed) {
+                      if (value.cancellationFormConfirmed) {
+                        value.doMobilePayment(
+                          ERandevuCCResponse(
+                              cardNumber: _cardNumberController.text
+                                  .replaceAll(" ", ""),
+                              cvv: _cvvCodeController.text,
+                              cardHolder: _cardHolderNameController.text,
+                              expirationMonth: _expiryDateController.text,
+                              expirationYear: _expiryDateController.text),
+                          widget.appointmentId,
+                        );
                       } else {
-                        value.showGradientDialog(
-                            LocaleProvider.current.warning,
-                            LocaleProvider
-                                .current.check_distance_sales_contract);
+                        value.showGradientDialog(LocaleProvider.current.warning,
+                            LocaleProvider.current.check_cancellation_refund);
                       }
-                    }),
-                margin: EdgeInsets.only(top: 5, bottom: 20),
-              ),
-            ],
-          ),
+                    } else {
+                      value.showGradientDialog(LocaleProvider.current.warning,
+                          LocaleProvider.current.check_distance_sales_contract);
+                    }
+                  }),
+              margin: EdgeInsets.only(top: 5, bottom: 20),
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(title: LocaleProvider.of(context).payment);
   }
 }

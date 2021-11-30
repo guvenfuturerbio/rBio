@@ -5,12 +5,14 @@ import '../core.dart';
 // #region RbioElevatedButton
 class RbioElevatedButton extends StatelessWidget {
   final String title;
+  final FontWeight fontWeight;
   final VoidCallback onTap;
 
   const RbioElevatedButton({
     Key key,
     this.title,
     this.onTap,
+    this.fontWeight,
   }) : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class RbioElevatedButton extends StatelessWidget {
           textAlign: TextAlign.center,
           style: context.xHeadline3.copyWith(
             color: getIt<ITheme>().textColor,
+            fontWeight: fontWeight,
           ),
         ),
       ),

@@ -45,4 +45,9 @@ class SaveAppointmentsRequest {
         'appointmentSource': appointmentSource,
         'videoCallLink': videoCallLink,
       };
+
+  @override
+  String toString() {
+    return 'SaveAppointmentsRequest(tenantId: $tenantId, patientId: $patientId, resourcesRequestList: $resourcesRequestList, type: $type, status: $status, patientType: $patientType, appointmentSource: $appointmentSource, videoCallLink: $videoCallLink)';
+  }
 }

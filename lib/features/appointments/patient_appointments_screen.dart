@@ -72,12 +72,12 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         return RbioLoadingOverlay(
           child: _buildPosts(context, value.patientAppointments, value),
           isLoading: value.showProgressOverlay,
-          progressIndicator: RbioLoading(),
+          progressIndicator: RbioLoading.progressIndicator(),
           opacity: 0,
         );
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();
@@ -136,8 +136,11 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     );
   }
 
-  Widget _buildCard(BuildContext context, PatientAppointmentsResponse data,
-      PatientAppointmentsScreenVm value) {
+  Widget _buildCard(
+    BuildContext context,
+    PatientAppointmentsResponse data,
+    PatientAppointmentsScreenVm value,
+  ) {
     return Consumer<PatientAppointmentsScreenVm>(
       builder: (
         BuildContext context,
@@ -161,13 +164,12 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                   },
                   child: Container(
                     color: Colors.red,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        LocaleProvider.current.cancel,
-                        style:
-                            context.xHeadline1.copyWith(color: R.color.white),
-                      ),
+                    height: double.infinity,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      LocaleProvider.current.cancel,
+                      style: context.xHeadline1.copyWith(color: R.color.white),
                     ),
                   ),
                 )

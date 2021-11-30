@@ -293,8 +293,6 @@ Widget TitleAppBarWhite({String title}) => Container(
       ),
     );
 
-
-
 Widget InputWidget(
         {String hint,
         String text = '',
@@ -323,12 +321,13 @@ Widget InputWidget(
       ),
     );
 
-Widget MainAppBar(
-        {BuildContext context,
-        Widget leading,
-        Widget title,
-        List<Widget> actions,
-        Widget bottom}) =>
+Widget MainAppBar({
+  BuildContext context,
+  Widget leading,
+  Widget title,
+  List<Widget> actions,
+  Widget bottom,
+}) =>
     PreferredSize(
         child: Container(
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -463,17 +462,10 @@ Widget getTitleBar(BuildContext context, String text) {
   return TitleAppBarWhite(title: text);
 }
 
-String getFormattedDate(String date) {
-  var parsedDate = DateTime.parse(date);
-  String textDate = new DateFormat("d MMMM yyyy").format(parsedDate);
-  return textDate;
-}
+String getFormattedDate(String date) => DateTime.parse(date).xFormatTime2();
 
-String getFormattedDateWithTime(String date) {
-  var parsedDate = DateTime.parse(date);
-  String textDate = new DateFormat("d MMMM yyyy HH:MM").format(parsedDate);
-  return textDate;
-}
+String getFormattedDateWithTime(String date) =>
+    DateTime.parse(date).xFormatTime3();
 
 Gradient passiveBlueGradient() => LinearGradient(colors: [
       getIt<ITheme>().mainColor.withAlpha(15),

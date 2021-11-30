@@ -1,29 +1,19 @@
-import 'dart:convert';
-
 class AvailableDate {
   bool available;
-  DateTime date;
+  String day;
+
   AvailableDate({
     this.available,
-    this.date,
+    this.day,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'available': available,
-      'date': date.millisecondsSinceEpoch,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'available': available,
+        'day': day,
+      };
 
-  factory AvailableDate.fromMap(Map<String, dynamic> map) {
-    return AvailableDate(
-      available: map['available'],
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory AvailableDate.fromJson(String source) =>
-      AvailableDate.fromMap(json.decode(source));
+  factory AvailableDate.fromJson(Map<String, dynamic> json) => AvailableDate(
+        available: json['available'],
+        day: json['day'],
+      );
 }

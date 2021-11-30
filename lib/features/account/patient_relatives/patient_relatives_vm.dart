@@ -62,7 +62,7 @@ class PatientRelativesScreenVm with ChangeNotifier {
       setPatientRelativeInfo(response);
       if (patientRelativeInfo == null ||
           patientRelativeInfo.patientRelatives == []) {
-        setPatientRelativeInfo(PatientRelativeInfoResponse());
+        setPatientRelativeInfo(PatientRelativeInfoResponse([]));
       }
     } catch (e) {
       showGradientDialog(

@@ -80,7 +80,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
         );
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

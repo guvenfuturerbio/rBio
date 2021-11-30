@@ -3635,6 +3635,46 @@ class LocaleProvider {
     );
   }
 
+  /// `Patient Name :`
+  String get patient_name {
+    return Intl.message(
+      'Patient Name :',
+      name: 'patient_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hospital Name :`
+  String get tenant_name {
+    return Intl.message(
+      'Hospital Name :',
+      name: 'tenant_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Doctor Name :`
+  String get doctor_name {
+    return Intl.message(
+      'Doctor Name :',
+      name: 'doctor_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department :`
+  String get depart_name {
+    return Intl.message(
+      'Department :',
+      name: 'depart_name',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Hospital selection :`
   String get hosp_selection {
     return Intl.message(

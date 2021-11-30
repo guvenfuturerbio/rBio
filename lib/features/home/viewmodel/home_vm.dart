@@ -231,7 +231,12 @@ class HomeVm extends ChangeNotifier {
               if (isForDelete) {
                 addWidget(_key2);
               } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.CREATE_APPOINTMENT);
+                Atom.to(
+                  PagePaths.CREATE_APPOINTMENT,
+                  queryParameters: {
+                    'forOnline': false.toString(),
+                  },
+                );
               }
             },
             child: VerticalCard(
@@ -252,7 +257,12 @@ class HomeVm extends ChangeNotifier {
               if (isForDelete) {
                 addWidget(_key3);
               } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.CREATE_ONLINE_APPO);
+                Atom.to(
+                  PagePaths.CREATE_APPOINTMENT,
+                  queryParameters: {
+                    'forOnline': true.toString(),
+                  },
+                );
               }
             },
             child: VerticalCard(

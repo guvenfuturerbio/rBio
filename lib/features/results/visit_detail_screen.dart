@@ -200,7 +200,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
         return _buildDone(vm);
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

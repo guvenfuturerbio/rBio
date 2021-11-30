@@ -1,15 +1,3 @@
-import 'package:onedosehealth/features/auth/login/login_screen.dart';
-import 'package:onedosehealth/features/auth/register/register_step_1_1.dart';
-import 'package:onedosehealth/features/profile/health_information/view/health_information.dart';
-import 'package:onedosehealth/features/profile/health_information/viewmodel/health_information_vm.dart';
-import 'package:onedosehealth/features/profile/personal_information/view/personal_information_screen.dart';
-import 'package:onedosehealth/features/profile/request_suggestions/view/request_suggestions_screen.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
-import 'package:onedosehealth/features/take_appointment/create_online_appointment/view/create_online_appointment_screen.dart';
-import 'package:onedosehealth/features/take_appointment/create_online_appointment/viewmodel/create_online_appointment_screen_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -26,17 +14,23 @@ import '../../features/appointments/patient_appointments_screen.dart';
 import '../../features/appointments/web_conferance_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
+import '../../features/auth/login/login_screen.dart';
 import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
+import '../../features/auth/register/register_step_1_1.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/profile/devices/view/devices_screen.dart';
 import '../../features/profile/devices/viewmodel/devices_vm.dart';
+import '../../features/profile/health_information/view/health_information.dart';
+import '../../features/profile/health_information/viewmodel/health_information_vm.dart';
+import '../../features/profile/personal_information/view/personal_information_screen.dart';
 import '../../features/profile/profile/view/profile_screen.dart';
 import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/profile/relatives/view/relatives_screen.dart';
 import '../../features/profile/relatives/viewmodel/relatives_vm.dart';
+import '../../features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import '../../features/results/e_result_screen.dart';
 import '../../features/results/e_result_vm.dart';
 import '../../features/results/visit_detail_screen.dart';
@@ -50,15 +44,14 @@ import '../../features/store/for_you_sub_categories/for_you_sub_categories_scree
 import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
 import '../../features/store/shopping_cart/shopping_cart_screen.dart';
 import '../../features/symptom_checker/home/view/symptoms_home_screen.dart';
-import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
-import '../../features/take_appointment/create_appointment/view/create_appointment_events_screen.dart';
+import '../../features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
+import '../../features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
+import '../../features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
+import '../../features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_screen.dart';
-import '../../features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
-import '../../features/take_appointment/department_list/department_list_screen.dart';
+import '../../features/take_appointment/create_appointment_events/view/create_appointment_events_screen.dart';
+import '../../features/take_appointment/create_appointment_summary/view/create_appointment_summary_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
-import '../../features/take_appointment/events/events_screen.dart';
-import '../../features/take_appointment/resources/resources_screen.dart';
-import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -93,17 +86,22 @@ class VRouterRoutes {
       widget: FollowersScreen(),
     ),
 
+    // Create Appointment
     VWidget(
       path: PagePaths.CREATE_APPOINTMENT,
-      widget: ChangeNotifierProvider<CreateAppointmentVm>(
-        create: (context) => CreateAppointmentVm(),
-        child: CreateAppointmentScreen(),
-      ),
-    ),
-
-    VWidget(
-      path: PagePaths.CREATE_APPOINTMENT_EVENTS,
-      widget: CreateAppointmentEventsScreen(),
+      widget: CreateAppointmentScreen(),
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.CREATE_APPOINTMENT_EVENTS,
+          widget: CreateAppointmentEventsScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.CREATE_APPOINTMENT_SUMMARY,
+              widget: CreateAppointmentSummaryScreen(),
+            ),
+          ],
+        ),
+      ],
     ),
 
     VWidget(
@@ -137,18 +135,8 @@ class VRouterRoutes {
     ),
 
     VWidget(
-      path: PagePaths.APPOINTMENT_SUMMARY,
-      widget: AppointmentSummaryScreen(),
-    ),
-
-    VWidget(
       path: PagePaths.DOCTOR_CV,
       widget: DoctorCvScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.HOSPITALS,
-      widget: TenantsScreen(),
     ),
 
     VWidget(
@@ -210,21 +198,6 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.CHANGE_PASSWORD,
       widget: ChangePasswordScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.DEPARTMENTS,
-      widget: DepartmentListScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.RESOURCES,
-      widget: ResourcesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.EVENTS,
-      widget: EventsScreen(),
     ),
 
     VWidget(
@@ -312,16 +285,10 @@ class VRouterRoutes {
       path: PagePaths.SYMPTOM_RESULT_PAGE,
       widget: SymptomsResultPage(),
     ),
+
     VWidget(
       path: PagePaths.MEASUREMENT_TRACKING,
       widget: MeasurementTrackingHomeScreen(),
-    ),
-    VWidget(
-      path: PagePaths.CREATE_ONLINE_APPO,
-      widget: ChangeNotifierProvider<CreateOnlineAppointmentVm>(
-        create: (context) => CreateOnlineAppointmentVm(),
-        child: CreateOnlineAppointmentScreen(),
-      ),
     ),
 
     VWidget(
@@ -354,6 +321,7 @@ class PagePaths {
   static const DEVICES = '/devices';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
+  static const CREATE_APPOINTMENT_SUMMARY = '/create-appointment-summary';
   static const CREATE_ONLINE_APPO = '/create-online-appointment';
 
   static const LOGIN = '/login';
@@ -365,7 +333,7 @@ class PagePaths {
   static const FORGOT_PASSWORD_STEP_2 = '/change-password-with-old';
   static const APPOINTMENT_SUMMARY = '/appointment-summary';
   static const DOCTOR_CV = '/doctor-cv';
-  static const HOSPITALS = '/hospitals';
+
   static const COVID19 = '/covid19';
   static const ERESULT = '/results';
   static const VISIT_DETAIL = '/visit-detail';

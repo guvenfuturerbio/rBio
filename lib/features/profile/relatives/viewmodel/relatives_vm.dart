@@ -45,7 +45,7 @@ class RelativesVm extends ChangeNotifier {
     try {
       response = await getIt<Repository>().getAllRelatives(bodyPages);
       if (response == null || response.patientRelatives == []) {
-        response = PatientRelativeInfoResponse();
+        response = PatientRelativeInfoResponse([]);
       }
       state = LoadingProgress.DONE;
     } catch (e) {

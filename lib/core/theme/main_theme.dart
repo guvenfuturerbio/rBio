@@ -52,8 +52,6 @@ class GreenTheme extends ITheme {
           fontSize: convertFontSize(55),
           fontWeight: FontWeight.normal,
         ),
-
-        /// Font Size : 50 ĞX
         headline3: TextStyle(
           color: Colors.black,
           fontSize: convertFontSize(50),
@@ -86,7 +84,7 @@ class GreenTheme extends ITheme {
         ),
       );
 
-  double convertFontSize(double value) => value / 3.0;
+  double convertFontSize(double value) => value / 2.8;
 
   @override
   Color get cardBackgroundColor => GuvenColors.white;

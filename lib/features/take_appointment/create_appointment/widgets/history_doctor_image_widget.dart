@@ -1,6 +1,7 @@
 import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/constants/constants.dart';
+
+import '../../../../core/constants/constants.dart';
 
 Column historyDoctorItem(String doctorName, String doctorImageUrl) {
   return Column(
