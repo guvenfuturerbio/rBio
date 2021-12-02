@@ -85,7 +85,7 @@ class BGChartFilterPopUp extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             value.cancelSelections();
-                            Navigator.of(context).pop();
+                            Atom.dismiss();
                           },
                           child: SizedBox(
                             width: context.WIDTH / 4,
@@ -135,7 +135,7 @@ class BGChartFilterPopUp extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             value.updateFilterState();
-                            Navigator.of(context).pop();
+                            Atom.dismiss();
                           },
                           child: SizedBox(
                             width: context.WIDTH / 4,

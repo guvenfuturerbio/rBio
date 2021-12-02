@@ -6,11 +6,6 @@ class LocalCacheServiceImpl extends LocalCacheService {
 
   @override
   Future<void> init() async {
-    if (!kIsWeb) {
-      final appDocumentDirectory = await getApplicationDocumentsDirectory();
-      Hive.init(appDocumentDirectory.path);
-    }
-
     box = await Hive.openBox(_boxKey);
   }
 

@@ -16,7 +16,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:onedosehealth/features/shared/do_not_show_again_dialog.dart';
 import 'package:onedosehealth/model/ble_models/DeviceTypes.dart';
 import 'package:onedosehealth/model/mediminder/person_model.dart';
@@ -665,6 +664,20 @@ class UtilityManager {
         return Image.asset(R.image.contour_png);
       case DeviceType.ACCU_CHEK:
         return Image.asset(R.image.accu_check_png);
+      default:
+        return null;
+    }
+  }
+
+  String getDeviceImageStringFromType(DeviceType device) {
+    print(device);
+    switch (device) {
+      case DeviceType.MI_SCALE:
+        return R.image.mi_scale;
+      case DeviceType.CONTOUR_PLUS_ONE:
+        return R.image.contour_png;
+      case DeviceType.ACCU_CHEK:
+        return R.image.accu_check_png;
       default:
         return null;
     }

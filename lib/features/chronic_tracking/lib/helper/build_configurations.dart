@@ -90,11 +90,11 @@ class _Config {
 
   static Map<String, dynamic> prodBuildConfigurations = {
     SSO_URL: "http://sso.onedosehealth.com:8000",
-    BASE_URL: "http://api.onedosehealth.com/api/v1",
+    BASE_URL: "http://apitest.onedosehealth.com/api/v1",
     CLIENT_ID: "OneDoseLocalExternal",
     CLIENT_SECRET: "8e7fa603-9c5f-408f-b707-b8b3a43cd1ab",
     DOCTOR_SSO_URL: "http://sso.onedosehealth.com:8000",
-    DOCTOR_BASE_URL: "http://api.onedosehealth.com",
+    DOCTOR_BASE_URL: "http://apitest.onedosehealth.com",
     DOCTOR_CLIENT_ID: "OneDoseLocal",
     DOCTOR_CLIENT_SECRET: "514b7ffb-e8bc-40a7-a26b-f0b80fac8b99"
   };

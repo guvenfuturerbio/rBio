@@ -116,13 +116,12 @@ class _BgProgressPage extends State<BgProgressPage> {
             graph: value.currentGraph,
             value: value,
             filterAction: () {
-              showDialog(
-                  context: context,
-                  barrierColor: Colors.black12,
-                  builder: (ctx) => BGChartFilterPopUp(
-                        height: context.HEIGHT * .9,
-                        width: context.WIDTH * .3,
-                      ));
+              Atom.show(
+                  BGChartFilterPopUp(
+                    height: context.HEIGHT * .9,
+                    width: context.WIDTH * .3,
+                  ),
+                  barrierColor: Colors.black12);
             },
             changeGraphAction: () => value.changeGraphType(),
           );

@@ -63,7 +63,7 @@ class ScaleChartFilterPopup extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pop();
+                                Atom.dismiss();
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -97,7 +97,7 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                 Provider.of<ScaleProgressPageViewModel>(context,
                                         listen: false)
                                     .changeScaleType(value.selectedScaleType);
-                                Navigator.of(context).pop('dialog');
+                                Atom.dismiss();
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(

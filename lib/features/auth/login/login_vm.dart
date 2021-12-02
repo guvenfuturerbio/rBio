@@ -252,6 +252,10 @@ class LoginScreenVm extends ChangeNotifier {
           Atom.to(term, isReplacement: true);
         }
         Atom.to(PagePaths.MAIN, isReplacement: true);
+        var devices = await getIt<BleDeviceManager>().getPairedDevices();
+        if (devices.isNotEmpty) {
+          getIt<BleScannerOps>().startScan();
+        }
         // MainNavigation.toHome(mContext);
       } catch (e, stackTrace) {
         Sentry.captureException(e, stackTrace: stackTrace);

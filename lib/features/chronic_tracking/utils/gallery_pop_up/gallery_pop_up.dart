@@ -53,7 +53,7 @@ class GalleryView extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context, 'dialog');
+                      value.close();
                     },
                     child: Icon(
                       Icons.close,

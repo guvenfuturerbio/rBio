@@ -1,22 +1,3 @@
-import 'package:onedosehealth/features/auth/login/login_screen.dart';
-import 'package:onedosehealth/features/auth/register/register_step_1_1.dart';
-import 'package:onedosehealth/features/mediminder/ui/hba1c/add_hba1c/view/hba1c_reminder_add_screen.dart';
-import 'package:onedosehealth/features/mediminder/ui/hba1c/list_hba1c/view/hba1c_reminderlist_screen.dart';
-import 'package:onedosehealth/features/mediminder/ui/home/home_mediminder_screen.dart';
-import 'package:onedosehealth/features/mediminder/ui/medication/medication_date/view/medication_date_screen.dart';
-import 'package:onedosehealth/features/mediminder/ui/medication/medication_period/medication_period_selection_screen.dart';
-import 'package:onedosehealth/features/mediminder/ui/medication/medication_screen/view/medication_screen.dart';
-import 'package:onedosehealth/features/mediminder/ui/strip/view/strip_screen.dart';
-import 'package:onedosehealth/features/profile/health_information/view/health_information.dart';
-import 'package:onedosehealth/features/profile/health_information/viewmodel/health_information_vm.dart';
-import 'package:onedosehealth/features/profile/personal_information/view/personal_information_screen.dart';
-import 'package:onedosehealth/features/profile/request_suggestions/view/request_suggestions_screen.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
-import 'package:onedosehealth/features/take_appointment/create_online_appointment/view/create_online_appointment_screen.dart';
-import 'package:onedosehealth/features/take_appointment/create_online_appointment/viewmodel/create_online_appointment_screen_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -33,17 +14,29 @@ import '../../features/appointments/patient_appointments_screen.dart';
 import '../../features/appointments/web_conferance_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
+import '../../features/auth/login/login_screen.dart';
 import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
+import '../../features/auth/register/register_step_1_1.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
-import '../../features/profile/devices/view/devices_screen.dart';
-import '../../features/profile/devices/viewmodel/devices_vm.dart';
+import '../../features/mediminder/ui/hba1c/add_hba1c/view/hba1c_reminder_add_screen.dart';
+import '../../features/mediminder/ui/hba1c/list_hba1c/view/hba1c_reminderlist_screen.dart';
+import '../../features/mediminder/ui/home/home_mediminder_screen.dart';
+import '../../features/mediminder/ui/medication/medication_date/view/medication_date_screen.dart';
+import '../../features/mediminder/ui/medication/medication_period/medication_period_selection_screen.dart';
+import '../../features/mediminder/ui/medication/medication_screen/view/medication_screen.dart';
+import '../../features/mediminder/ui/strip/view/strip_screen.dart';
+import '../../features/profile/devices/devices.dart';
+import '../../features/profile/health_information/view/health_information.dart';
+import '../../features/profile/health_information/viewmodel/health_information_vm.dart';
+import '../../features/profile/personal_information/view/personal_information_screen.dart';
 import '../../features/profile/profile/view/profile_screen.dart';
 import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/profile/relatives/view/relatives_screen.dart';
 import '../../features/profile/relatives/viewmodel/relatives_vm.dart';
+import '../../features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import '../../features/results/e_result_screen.dart';
 import '../../features/results/e_result_vm.dart';
 import '../../features/results/visit_detail_screen.dart';
@@ -57,10 +50,16 @@ import '../../features/store/for_you_sub_categories/for_you_sub_categories_scree
 import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
 import '../../features/store/shopping_cart/shopping_cart_screen.dart';
 import '../../features/symptom_checker/home/view/symptoms_home_screen.dart';
+import '../../features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
+import '../../features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
+import '../../features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
+import '../../features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
 import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_events_screen.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_screen.dart';
 import '../../features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
+import '../../features/take_appointment/create_online_appointment/view/create_online_appointment_screen.dart';
+import '../../features/take_appointment/create_online_appointment/viewmodel/create_online_appointment_screen_vm.dart';
 import '../../features/take_appointment/department_list/department_list_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../../features/take_appointment/events/events_screen.dart';
@@ -89,10 +88,16 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.DEVICES,
-      widget: ChangeNotifierProvider<DevicesVm>(
-        create: (context) => DevicesVm(),
-        child: DevicesScreen(),
-      ),
+      widget: DevicesScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.ALL_DEVICES,
+      widget: AvailableDevices(),
+    ),
+    VWidget(
+      path: PagePaths.SELECTED_DEVICE,
+      widget: SelectedDevicesScreen(),
     ),
 
     VWidget(
@@ -399,6 +404,8 @@ class PagePaths {
   static const PROFILE = '/profile';
   static const FOLLOWERS = '/followers';
   static const DEVICES = '/devices';
+  static const ALL_DEVICES = '/available_devices';
+  static const SELECTED_DEVICE = '/selected_device/';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
   static const CREATE_ONLINE_APPO = '/create-online-appointment';

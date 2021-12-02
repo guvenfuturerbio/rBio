@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/core/enums/unit.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/database/datamodels/scale_data.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 
 import '../ble_models/paired_device.dart';
 import 'scale_device_model.dart';
@@ -21,11 +21,13 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
   }
 
   @override
-  ScaleModel parseScaleData(PairedDevice device, Uint8List data) {
+  ScaleMeasurementViewModel parseScaleData(
+      PairedDevice device, Uint8List data) {
     return _parseScaleData(device, data);
   }
 
-  ScaleModel _parseScaleData(PairedDevice device, Uint8List data) {
+  ScaleMeasurementViewModel _parseScaleData(
+      PairedDevice device, Uint8List data) {
     if (data.length != 13) return null;
     // Prepare data
     final byteData = data.buffer.asByteData();
@@ -57,15 +59,16 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
     } else if (unit == ScaleUnit.KG) {
       weight /= 200;
     } // Return new scale data
-    super.scaleData = ScaleModel(
-        device: device,
-        measurementComplete: measurementComplete,
-        weightStabilized: weightStabilized,
-        weightRemoved: weightRemoved,
-        unit: unit,
-        dateTime: measurementTime,
-        weight: weight,
-        impedance: impedance);
+    super.scaleData = ScaleMeasurementViewModel(
+        scaleModel: ScaleModel(
+            device: device.toJson(),
+            measurementComplete: measurementComplete,
+            weightStabilized: weightStabilized,
+            weightRemoved: weightRemoved,
+            unit: unit,
+            dateTime: measurementTime,
+            weight: weight,
+            impedance: impedance));
     return scaleData;
   }
 

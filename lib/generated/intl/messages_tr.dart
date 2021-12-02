@@ -498,6 +498,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "package_detail" : MessageLookupByLibrary.simpleMessage("Paket Detayı"),
     "package_distance_sale_contract" : MessageLookupByLibrary.simpleMessage("https://www.guven.com.tr/8-mart/mesafeli-satis-sozlesmesi"),
     "package_information_form" : MessageLookupByLibrary.simpleMessage("https://www.guven.com.tr/8-mart/on-bilgilendirme-formu"),
+    "pair_steps" : MessageLookupByLibrary.simpleMessage("Bağlantı Adımları:"),
     "pair_successful" : MessageLookupByLibrary.simpleMessage("Cihaz başarıyla eşleştirildi"),
     "paired_devices" : MessageLookupByLibrary.simpleMessage("Eşleştirilmiş Cihazlar"),
     "paired_devices_deleted" : MessageLookupByLibrary.simpleMessage("Eşleştirilmiş cihaz bağlantısı başarıyla kaldırıldı."),

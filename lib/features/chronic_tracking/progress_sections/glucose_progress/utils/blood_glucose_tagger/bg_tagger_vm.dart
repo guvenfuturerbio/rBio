@@ -17,10 +17,13 @@ class BgTaggerVm extends ChangeNotifier {
     this.isEdit = false,
     this.data,
     this.isManual,
+    this.key,
   }) {
     controller.text = data.level ?? '';
     noteController.text = data.note ?? '';
   }
+
+  final key;
 
   final BuildContext context;
 
@@ -83,12 +86,11 @@ class BgTaggerVm extends ChangeNotifier {
 
       final PickedFile pickedFile = await picker.getImage(source: imageSource);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        Navigator.of(context).pop();
+        Navigator.pop(context);
       });
-      final Directory appDir = await getApplicationDocumentsDirectory();
       final fileName = basename(pickedFile.path);
       final file = File(fileName);
-      await file.copy('${appDir.path}/$fileName');
+      await file.copy('${getIt<GuvenSettings>().appDocDirectory}/$fileName');
       if (pickedFile != null) {
         changePic(pickedFile, fileName);
       } else {
@@ -122,7 +124,7 @@ class BgTaggerVm extends ChangeNotifier {
   }
 
   void leftAction() {
-    Navigator.pop(context, 'dialog');
+    Atom.dismiss();
   }
 
   Future<void> rightAction() async {
@@ -136,6 +138,17 @@ class BgTaggerVm extends ChangeNotifier {
         await getIt<GlucoseStorageImpl>().updateImage(data.imageURL, data.key);
       }
     }
-    Navigator.pop(context, 'dialog');
+    Atom.dismiss();
+  }
+
+  Future<void> update() async {
+    data.note = noteController.text ?? "";
+    if (data.imageURL != null && data.imageURL != "") {
+      getIt<GlucoseStorageImpl>().updateImage(data.imageURL, key);
+    } else {
+      await getIt<GlucoseStorageImpl>().update(data, key);
+    }
+
+    Atom.dismiss();
   }
 }

@@ -59,13 +59,10 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                 graph: value.currentGraph,
                 value: value,
                 filterAction: () {
-                  showDialog(
-                      context: context,
-                      barrierColor: Colors.black12,
-                      builder: (ctx) => ScaleChartFilterPopup(
-                            height: context.HEIGHT * .9,
-                            width: context.WIDTH * .3,
-                          ));
+                  Atom.show(ScaleChartFilterPopup(
+                    height: context.HEIGHT * .9,
+                    width: context.WIDTH * .3,
+                  ));
                 },
                 changeGraphAction: () => value.changeGraphType(),
               );

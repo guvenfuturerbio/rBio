@@ -5,7 +5,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/constants/constants.dart' as rBio;
 import '../../../../../core/core.dart';
-import '../../../lib/database/repository/scale_repository.dart';
 import '../../../lib/notifiers/user_profiles_notifier.dart';
 import '../../../lib/widgets/utils/scale_margin_filter.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
@@ -26,7 +25,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   ScaleProgressPageViewModel() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       print('here');
-      ScaleRepository().addListener(() async {
+      getIt<ScaleStorageImpl>().addListener(() async {
         print("Triggered ScaleRepository Listener");
         setSelectedItem(selected);
       });
@@ -174,7 +173,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
         }
       }
     }
-    return lowest < targetMin ? targetMin - 10 : lowest - 10;
+    return lowest < targetMin ? targetMin - 15 : lowest - 15;
   }
 
   int get highestValue {
@@ -535,7 +534,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
           dataSource: _chartVeryLow,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.very_high,
+          color: R.color.very_low,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: 15,
@@ -574,7 +573,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
-              color: R.color.very_low,
+              color: R.color.high,
               height: 15,
               width: 15,
               borderColor: R.color.very_high,
@@ -587,7 +586,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
           color: R.color.very_high,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
-              color: R.color.very_low,
+              color: R.color.very_high,
               height: 15,
               width: 15,
               isVisible: true,
@@ -596,15 +595,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   }
 
   showScaleTagger(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      barrierDismissible: false,
-      builder: (context) {
-        // Device 1 means manual entry
-        return ScaleTagger();
-      },
-    );
+    Atom.show(ScaleTagger(),
+        barrierDismissible: false, barrierColor: Colors.transparent);
   }
 
   Future<void> setSelectedItem(TimePeriodFilter s) async {
@@ -658,10 +650,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   }
 
   void showFilter(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black12,
-      builder: (_) => ScaleChartFilterPopup(
+    Atom.show(
+      ScaleChartFilterPopup(
         height: context.HEIGHT * .52,
         width: context.WIDTH * .6,
       ),
@@ -675,14 +665,12 @@ class ScaleProgressPageViewModel extends ChangeNotifier
 
   @override
   Widget smallWidget(Function() callBack) {
-    ScaleMeasurementViewModel lastMeasurement;
-    if (scaleMeasurements.isNotEmpty) {
-      lastMeasurement = scaleMeasurements[0];
-    }
+    ScaleMeasurementViewModel lastMeasurement = ScaleMeasurementViewModel(
+        scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement());
     return RbioSmallChronicWidget(
       callback: callBack,
       lastMeasurement:
-          '${lastMeasurement?.weight ?? ''} ${lastMeasurement?.unit ?? ''}',
+          '${lastMeasurement?.weight ?? ''} ${lastMeasurement?.unit?.toStr ?? ''}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: rBio.R.image.ct_body_scale,
     );

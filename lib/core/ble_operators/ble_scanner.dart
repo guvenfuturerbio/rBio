@@ -1,14 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/model/ble_models/paired_device.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:system_shortcuts/system_shortcuts.dart';
-
-import '../../../../../core/core.dart';
-import '../shared_pref_notifiers.dart';
-import 'ble_connector.dart';
+part of 'ble_operators.dart';
 
 class BleScannerOps extends ChangeNotifier {
   final _devices = <DiscoveredDevice>[];
@@ -24,9 +14,8 @@ class BleScannerOps extends ChangeNotifier {
     this._ble = ble;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       List<PairedDevice> pairedDevice =
-          await getIt<SharedPrefNotifiers>().getPairedDevices();
+          await getIt<BleDeviceManager>().getPairedDevices();
       pairedDevices = pairedDevice?.map((e) => e.deviceId)?.toList() ?? [];
-      startScan();
     });
   }
 
@@ -53,6 +42,7 @@ class BleScannerOps extends ChangeNotifier {
         _subscription = _ble
             .scanForDevices(withServices: _supported)
             .listen((device) async {
+          print(device);
           final knownDeviceIndex =
               _devices.indexWhere((d) => d.id == device.id);
           if (knownDeviceIndex >= 0) {

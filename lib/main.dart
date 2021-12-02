@@ -104,6 +104,12 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
               value: BgProgressPageViewModel()),
+          ChangeNotifierProvider<BleScannerOps>.value(
+              value: getIt<BleScannerOps>()),
+          ChangeNotifierProvider<BleConnectorOps>.value(
+              value: getIt<BleConnectorOps>()),
+          ChangeNotifierProvider<BleReactorOps>.value(
+              value: getIt<BleReactorOps>())
         ],
         child: Consumer<ThemeNotifier>(
           builder: (

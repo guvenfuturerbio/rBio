@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:hive/hive.dart';
@@ -122,29 +123,11 @@ class Person extends HiveObject {
       this.isFirstUser = false});
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  bool operator ==(Object other) =>
+      other is Person && other.userId == userId && other.id == id;
 
-    return other is Person &&
-        other.userId == userId &&
-        other.id == id &&
-        other.imageURL == imageURL &&
-        other.name == name &&
-        other.birthDate == birthDate &&
-        other.gender == gender &&
-        other.height == height &&
-        other.weight == weight &&
-        other.diabetesType == diabetesType &&
-        other.hypo == hypo &&
-        other.rangeMin == rangeMin &&
-        other.target == target &&
-        other.rangeMax == rangeMax &&
-        other.hyper == hyper &&
-        other.deviceUUID == deviceUUID &&
-        other.manufacturerId == manufacturerId &&
-        other.yearOfDiagnosis == yearOfDiagnosis &&
-        other.smoker == smoker &&
-        other.isFirstUser == isFirstUser;
+  bool isEqual(Person other) {
+    return jsonEncode(this.toJson()) == jsonEncode(other.toJson());
   }
 
   @override

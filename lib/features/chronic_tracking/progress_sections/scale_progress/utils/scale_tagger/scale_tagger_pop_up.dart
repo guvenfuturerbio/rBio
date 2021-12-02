@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../../generated/l10n.dart';
-import '../../../../../../core/enums/unit.dart';
-import '../../../../lib/database/datamodels/scale_data.dart';
-import '../../../../lib/database/repository/scale_repository.dart';
 import '../../../../utils/gallery_pop_up/gallery_pop_up.dart';
 import '../../../../utils/selected_scale_type.dart';
 import 'scale_tagger_vm.dart';
@@ -64,7 +62,10 @@ class ScaleTagger extends StatelessWidget {
             child: ChangeNotifierProvider(
               create: (_) => ScaleTaggerVm(
                   context: context,
-                  scaleModel: scaleModel == null ? null : scaleModel.copy(),
+                  scaleModel: scaleModel == null
+                      ? null
+                      : ScaleMeasurementViewModel(
+                          scaleModel: scaleModel.copy()),
                   isManuel: scaleModel == null),
               child: GestureDetector(
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -97,7 +98,8 @@ class ScaleTagger extends StatelessWidget {
                             ),
                           ),
                         ),
-                        _actionSection(context, value)
+                        getAction(
+                            Atom.dismiss, isUpdate ? value.update : value.save)
                       ],
                     ),
                   ),
@@ -111,6 +113,7 @@ class ScaleTagger extends StatelessWidget {
   }
 
   GestureDetector _infoButton(BuildContext context) {
+    // Don't Touch this show dialog this workin fine!!!!
     return GestureDetector(
       onTap: () => showDialog(
           context: context,
@@ -159,46 +162,34 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  Padding _actionSection(BuildContext context, ScaleTaggerVm value) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: height * .01),
-      child: Wrap(
-        spacing: 15 * context.TEXTSCALE,
-        children: [
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(height)),
-                  primary: R.color.white),
-              onPressed: () => Navigator.pop(context, 'dialog'),
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(height),
-                  ),
-                  padding: EdgeInsets.all(10 * context.TEXTSCALE),
-                  child: Text(
-                    LocaleProvider.current.discard,
-                    style: TextStyle(color: R.color.blue),
-                  ))),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(height)),
-                  primary: Colors.transparent),
-              onPressed: () => isUpdate ? value.update() : value.save(),
-              child: Container(
-                  padding: EdgeInsets.all(10 * context.TEXTSCALE),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(height),
-                    gradient: LinearGradient(
-                        colors: [R.color.dark_blue, R.color.blue],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.centerRight),
-                  ),
-                  child: Text(LocaleProvider.current.save))),
-        ],
+  getAction(VoidCallback leftButtonAction, VoidCallback rightButtonAction) {
+    return Wrap(
+      children: [
+        GestureDetector(onTap: leftButtonAction, child: actionButton(false)),
+        GestureDetector(onTap: rightButtonAction, child: actionButton(true)),
+      ],
+    );
+  }
+
+  Widget actionButton(bool isSave) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      elevation: 4,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: isSave
+                ? getIt<ITheme>().mainColor
+                : getIt<ITheme>().cardBackgroundColor),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        child: Text(
+          isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
+          style: TextStyle(
+            color: isSave ? Colors.white : Colors.black,
+          ),
+        ),
       ),
     );
   }
@@ -245,9 +236,10 @@ class ScaleTagger extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: () => _galeryView(context, value),
                                   child: Image(
-                                    image: FileImage(File(ScaleRepository()
-                                        .getImagePathOfImageURL(
-                                            value.scaleModel.images[index]))),
+                                    image: FileImage(File(
+                                        getIt<ScaleStorageImpl>()
+                                            .getImagePathOfImageURL(value
+                                                .scaleModel.images[index]))),
                                   ),
                                 ),
                               ),
@@ -298,7 +290,8 @@ class ScaleTagger extends StatelessWidget {
         barrierDismissible: false,
         builder: (_) => GalleryView(images: [
               ...value.scaleModel.images
-                  .map((e) => ScaleRepository().getImagePathOfImageURL(e))
+                  .map((e) =>
+                      getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
                   .toList()
             ]));
   }
@@ -340,7 +333,7 @@ class ScaleTagger extends StatelessWidget {
         onTap: () {
           showModalBottomSheet(
               context: context,
-              builder: (BuildContext builder) {
+              builder: (context) {
                 return Container(
                     height: 260,
                     child: CupertinoDatePicker(
@@ -414,8 +407,7 @@ class ScaleTagger extends StatelessWidget {
           controller: value.boneMassController,
           name: LocaleProvider.current.scale_data_bone_mass,
           color: value.scaleModel.getColor(SelectedScaleType.BONE_MASS),
-          type:
-              '${((value.scaleModel.unit ?? ScaleUnit.KG) as ScaleUnit).toStr}',
+          type: '${value.scaleModel.unit ?? ScaleUnit.KG.toStr}',
           index: 3,
           crossAxisCount: 2,
           onChanged: value.changeBoneMass),
@@ -482,7 +474,7 @@ class ScaleTagger extends StatelessWidget {
                       return "";
                   }, onChanged: value.changeWeight),
                   Text(
-                    "${(value.scaleModel?.unit as ScaleUnit)?.toStr ?? ScaleUnit.KG.toStr}",
+                    "${value.scaleModel?.unit?.toStr ?? ScaleUnit.KG.toStr}",
                     style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
                 ],

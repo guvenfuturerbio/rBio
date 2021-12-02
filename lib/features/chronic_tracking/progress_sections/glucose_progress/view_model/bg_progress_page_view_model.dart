@@ -973,29 +973,22 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   }
 
   showBleReadingTagger(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        // Device 1 means manual entry
-        return BgTaggerPopUp(
+    Atom.show(
+        BgTaggerPopUp(
           isEdit: false,
-        );
-      },
-    );
+        ),
+        barrierColor: Colors.transparent,
+        barrierDismissible: false);
   }
 
   void showFilter(BuildContext context) {
     filterState.forEach((key, value) {
       _lastFilterStateBeforeEdit.putIfAbsent(key, () => value);
     });
-    showDialog(
-        context: context,
-        barrierColor: Colors.black12,
-        builder: (ctx) => BgFilterPopUp(
-              height: context.HEIGHT * .52,
-              width: context.WIDTH * .6,
-            ));
+    Atom.show(BgFilterPopUp(
+      height: context.HEIGHT * .52,
+      width: context.WIDTH * .6,
+    ));
   }
 
   @override

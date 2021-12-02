@@ -173,8 +173,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
     final bytes = base64.decode(response.datum);
     var file = File("");
 
-    final dir = (await getApplicationDocumentsDirectory()).path;
-    file = new File('$dir/$fileName');
+    file = new File('${getIt<GuvenSettings>().appDocDirectory}/$fileName');
     await file.writeAsBytes(bytes);
 
     List<String> fileNameSplit = fileName.split(".");

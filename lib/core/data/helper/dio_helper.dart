@@ -219,7 +219,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
           return handler.next(response);
         },
         onError: (DioError error, ErrorInterceptorHandler handler) async {
-          if (error.response.statusCode == 401) {
+          if (error.response?.statusCode == 401) {
             if (!Atom.url.contains(PagePaths.LOGIN)) {
               final password = getIt<ISharedPreferencesManager>()
                   .getString(SharedPreferencesKeys.LOGIN_PASSWORD);

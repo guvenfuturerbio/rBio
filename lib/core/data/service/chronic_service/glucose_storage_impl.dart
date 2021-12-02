@@ -6,14 +6,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   Future<void> init() async {
-    if (!Atom.isWeb) {
-      final appDocumentDirectory = await getApplicationDocumentsDirectory();
-
-      _localDirectoryPath = appDocumentDirectory.path;
-      Hive.init(_localDirectoryPath);
-    }
     Hive..registerAdapter(GlucoseDataAdapter());
-
     box = await Hive.openBox<GlucoseData>(boxKey);
   }
 
@@ -49,11 +42,14 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   Future<bool> update(GlucoseData data, key) async {
     if (box.isOpen && box.isNotEmpty) {
-      GlucoseData glusoceDataFromBox = get(key);
-      glusoceDataFromBox = data;
-      glusoceDataFromBox.save();
-      await updateServer(data);
-      notifyListeners();
+      GlucoseData dataFromBox = get(key);
+
+      if (!data.isEqual(dataFromBox)) {
+        await box.put(key, data);
+        await updateServer(data);
+        notifyListeners();
+      }
+
       return true;
     } else {
       return false;
@@ -103,8 +99,6 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   GlucoseData getLatestMeasurement() {
-    print(box.isOpen);
-    print(box.isNotEmpty);
     if (box.isOpen && box.isNotEmpty) {
       List<GlucoseData> list = box.values.toList();
 
@@ -192,9 +186,8 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     }
   }
 
-  String _localDirectoryPath = "";
   String getImagePathOfImageURL(String imageURL) {
-    return "${_localDirectoryPath}/${imageURL}";
+    return "${getIt<GuvenSettings>().appDocDirectory}/${imageURL}";
   }
 
   Future<void> getBloodGlucoseDataOfPerson(Person pd) async {

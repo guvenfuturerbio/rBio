@@ -89,11 +89,13 @@ Widget measurementList(
     actionExtentRatio: 0.25,
     child: GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (_) => BgTaggerPopUp(
-                  data: bgMeasurementViewModel.bgMeasurement,
-                ));
+        Atom.show(
+            BgTaggerPopUp(
+              data: bgMeasurementViewModel.bgMeasurement,
+              isEdit: true,
+            ),
+            barrierColor: Colors.transparent,
+            barrierDismissible: false);
       },
       child: Container(
         margin: const EdgeInsets.only(left: 8, right: 8, top: 8),

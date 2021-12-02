@@ -87,7 +87,7 @@ class BgFilterPopUp extends StatelessWidget {
                                 Provider.of<BgProgressPageViewModel>(context,
                                         listen: false)
                                     .cancelSelections();
-                                Navigator.of(context).pop();
+                                Atom.dismiss();
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -121,7 +121,7 @@ class BgFilterPopUp extends StatelessWidget {
                                 Provider.of<BgProgressPageViewModel>(context,
                                         listen: false)
                                     .updateFilterState();
-                                Navigator.of(context).pop();
+                                Atom.dismiss();
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(

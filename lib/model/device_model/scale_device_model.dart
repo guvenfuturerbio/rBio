@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/database/datamodels/scale_data.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 
 import '../ble_models/paired_device.dart';
 
 abstract class ScaleDevice<T> {
   final DiscoveredDevice device;
-  static ScaleModel _scaleData;
+  static ScaleMeasurementViewModel _scaleData;
 
   ScaleDevice({this.device});
 
@@ -20,11 +20,11 @@ abstract class ScaleDevice<T> {
   /// The signal strength of the device when it was first discovered
   int get rssi => device.rssi;
 
-  ScaleModel get scaleData => _scaleData;
+  ScaleMeasurementViewModel get scaleData => _scaleData;
   set scaleData(data) => _scaleData = data;
 
   /// Parse the raw advertisement data to obtain a [T] instance
-  ScaleModel parseScaleData(PairedDevice device, Uint8List data);
+  ScaleMeasurementViewModel parseScaleData(PairedDevice device, Uint8List data);
 
   bool matchesDeviceType(device);
 

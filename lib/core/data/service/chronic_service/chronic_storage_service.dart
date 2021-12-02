@@ -13,6 +13,7 @@ import '../../imports/cronic_tracking.dart';
 
 part 'glucose_storage_impl.dart';
 part 'profile_storage_impl.dart';
+part 'scale_storage_impl.dart';
 
 abstract class ChronicStorageService<T extends HiveObject>
     extends ChangeNotifier {

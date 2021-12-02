@@ -31,7 +31,7 @@ class BgTaggerPopUp extends StatelessWidget {
               isEdit: isEdit,
               isManual: data == null,
               data: data != null
-                  ? GlucoseData().fromGlucoseData(data)
+                  ? data.copy()
                   : GlucoseData(
                       level: "0",
                       tag: null,
@@ -39,7 +39,8 @@ class BgTaggerPopUp extends StatelessWidget {
                       time: (DateTime.now()).millisecondsSinceEpoch,
                       device: 103,
                       manual: true,
-                      note: "")),
+                      note: ""),
+              key: data?.key),
           child: Consumer<BgTaggerVm>(
             builder: (_, value, __) => Padding(
               padding: const EdgeInsets.all(8.0),
@@ -57,7 +58,8 @@ class BgTaggerPopUp extends StatelessWidget {
                       getTagState(value.data.tag, value.changeTag),
                       getImage(value),
                       getNote(value.noteController),
-                      getAction(value.leftAction, value.rightAction)
+                      getAction(value.leftAction,
+                          isEdit ?? false ? value.update : value.rightAction)
                     ],
                   ),
                 ),
@@ -333,58 +335,53 @@ class BgTaggerPopUp extends StatelessWidget {
   }
 
   takeImage(BuildContext context, BgTaggerVm value) async {
-    await showDialog<String>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        String title = LocaleProvider.current.how_to_get_photo;
-        return Platform.isIOS
-            ? new CupertinoAlertDialog(
-                title: Text(title),
-                content: Text(LocaleProvider.current.pick_a_photo_option),
-                actions: <Widget>[
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.camera,
-                    ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.camera);
-                    },
-                  ),
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.gallery,
-                    ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.gallery);
-                    },
-                  ),
-                ],
-              )
-            : new AlertDialog(
-                title: Text(
-                  title,
-                  style: TextStyle(fontSize: 22),
+    String title = LocaleProvider.current.how_to_get_photo;
+
+    Atom.show(Platform.isIOS
+        ? new CupertinoAlertDialog(
+            title: Text(title),
+            content: Text(LocaleProvider.current.pick_a_photo_option),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text(
+                  LocaleProvider.current.camera,
                 ),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text(LocaleProvider.current.camera),
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.camera);
-                    },
-                  ),
-                  TextButton(
-                    child: Text(LocaleProvider.current.gallery),
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.gallery);
-                    },
-                  )
-                ],
-              );
-      },
-    );
+                isDefaultAction: true,
+                onPressed: () {
+                  value.getPhotoFromSource(ImageSource.camera);
+                },
+              ),
+              CupertinoDialogAction(
+                child: Text(
+                  LocaleProvider.current.gallery,
+                ),
+                isDefaultAction: true,
+                onPressed: () {
+                  value.getPhotoFromSource(ImageSource.gallery);
+                },
+              ),
+            ],
+          )
+        : new AlertDialog(
+            title: Text(
+              title,
+              style: TextStyle(fontSize: 22),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(LocaleProvider.current.camera),
+                onPressed: () {
+                  value.getPhotoFromSource(ImageSource.camera);
+                },
+              ),
+              TextButton(
+                child: Text(LocaleProvider.current.gallery),
+                onPressed: () {
+                  value.getPhotoFromSource(ImageSource.gallery);
+                },
+              )
+            ],
+          ));
   }
 // ImageSection #end
 
@@ -441,14 +438,10 @@ class BgTaggerPopUp extends StatelessWidget {
       elevation: 4,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          gradient: LinearGradient(
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
-              colors: isSave
-                  ? <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]
-                  : <Color>[R.color.white, R.color.white]),
-        ),
+            borderRadius: BorderRadius.circular(25),
+            color: isSave
+                ? getIt<ITheme>().mainColor
+                : getIt<ITheme>().cardBackgroundColor),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,

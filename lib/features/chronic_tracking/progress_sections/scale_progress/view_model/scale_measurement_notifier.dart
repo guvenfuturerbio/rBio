@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/core.dart';
 
-import '../../../lib/database/repository/scale_repository.dart';
 import '../utils/scale_measurements/scale_measurement_vm.dart';
 
 enum ScaleMesurementState { loading, loaded, error }
@@ -22,7 +22,7 @@ class ScaleMeasurementNotifier extends ChangeNotifier {
   List<DateTime> _scaleMeasurementDates = [];
   List<DateTime> get scaleMeasurementDates => _scaleMeasurementDates;
   Future<void> fetchScaleMeasurements() async {
-    final result = ScaleRepository().currentUserData;
+    final result = getIt<ScaleStorageImpl>().getAll();
     this._scaleModels.clear();
     this._scaleModels =
         result.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
@@ -54,7 +54,7 @@ class ScaleMeasurementNotifier extends ChangeNotifier {
 
   Future<void> fetchScaleMeasurementsInDateRange(
       DateTime start, DateTime end) async {
-    final result = ScaleRepository().currentUserData;
+    final result = getIt<ScaleStorageImpl>().getAll();
     this.scaleMeasurements.clear();
     for (var e in result) {
       DateTime measurementDate = ScaleMeasurementViewModel(scaleModel: e).date;

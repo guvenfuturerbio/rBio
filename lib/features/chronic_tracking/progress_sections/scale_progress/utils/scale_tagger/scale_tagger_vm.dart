@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/database/datamodels/scale_data.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/database/repository/scale_repository.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+import 'package:onedosehealth/model/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/model/ble_models/paired_device.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -14,7 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../../../../generated/l10n.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
-  ScaleModel scaleModel;
+  ScaleMeasurementViewModel scaleModel;
   final bool isManuel;
   final BuildContext context;
   TextEditingController weightController;
@@ -34,7 +35,17 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   ScaleTaggerVm({this.context, this.scaleModel, this.isManuel = false}) {
     if (scaleModel == null) {
-      scaleModel = ScaleModel(isManuel: isManuel);
+      scaleModel = ScaleMeasurementViewModel(
+          scaleModel: ScaleModel(
+              isManuel: isManuel,
+              device: PairedDevice(
+                      deviceId: 'manuel',
+                      deviceType: DeviceType.MANUEL,
+                      manufacturerName: 'manuel',
+                      modelName: 'manuel',
+                      serialNumber: 'manuel')
+                  .toJson(),
+              unit: ScaleUnit.KG));
     }
     _fillControllers(isInit: true);
     scrollController = ScrollController();
@@ -142,58 +153,59 @@ class ScaleTaggerVm extends ChangeNotifier {
   }
 
   Future getImage(BuildContext context) async {
+    // Don't Touch this show dialog this workin fine!!!!
+
     await showDialog<String>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        String title = LocaleProvider.current.how_to_get_photo;
-        return Platform.isIOS
-            ? new CupertinoAlertDialog(
-                title: Text(title),
-                content: Text(LocaleProvider.current.pick_a_photo_option),
-                actions: <Widget>[
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.camera,
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          String title = LocaleProvider.current.how_to_get_photo;
+          return Platform.isIOS
+              ? new CupertinoAlertDialog(
+                  title: Text(title),
+                  content: Text(LocaleProvider.current.pick_a_photo_option),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      child: Text(
+                        LocaleProvider.current.camera,
+                      ),
+                      isDefaultAction: true,
+                      onPressed: () {
+                        getPhotoFromSource(context, ImageSource.camera);
+                      },
                     ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.camera);
-                    },
-                  ),
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.gallery,
+                    CupertinoDialogAction(
+                      child: Text(
+                        LocaleProvider.current.gallery,
+                      ),
+                      isDefaultAction: true,
+                      onPressed: () {
+                        getPhotoFromSource(context, ImageSource.gallery);
+                      },
                     ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.gallery);
-                    },
+                  ],
+                )
+              : new AlertDialog(
+                  title: Text(
+                    title,
+                    style: TextStyle(fontSize: 22),
                   ),
-                ],
-              )
-            : new AlertDialog(
-                title: Text(
-                  title,
-                  style: TextStyle(fontSize: 22),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(LocaleProvider.current.camera),
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.camera);
-                    },
-                  ),
-                  FlatButton(
-                    child: Text(LocaleProvider.current.gallery),
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.gallery);
-                    },
-                  )
-                ],
-              );
-      },
-    );
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text(LocaleProvider.current.camera),
+                      onPressed: () {
+                        getPhotoFromSource(context, ImageSource.camera);
+                      },
+                    ),
+                    FlatButton(
+                      child: Text(LocaleProvider.current.gallery),
+                      onPressed: () {
+                        getPhotoFromSource(context, ImageSource.gallery);
+                      },
+                    )
+                  ],
+                );
+        });
   }
 
   void getPhotoFromSource(
@@ -250,26 +262,21 @@ class ScaleTaggerVm extends ChangeNotifier {
             ));
         return;
       }
+      final XFile pickedFile = await picker.pickImage(source: imageSource);
 
-      final PickedFile pickedFile = await picker.getImage(source: imageSource);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pop();
       });
-      final Directory appDir = await getApplicationDocumentsDirectory();
       final fileName = basename(pickedFile.path);
-      final file = File(fileName);
-      await file.copy('${appDir.path}/$fileName');
+      await pickedFile
+          .saveTo(('${getIt<GuvenSettings>().appDocDirectory}/$fileName'));
+
       if (pickedFile != null) {
         print(pickedFile.path);
         if (scaleModel.images.isNotEmpty) {
-          scaleModel.images.add(fileName);
+          scaleModel.images.add(pickedFile.path);
         } else {
-          scaleModel.images = [fileName];
-        }
-        if (scaleModel.imageFile != null) {
-          scaleModel.imageFile.add(pickedFile);
-        } else {
-          scaleModel.imageFile = [pickedFile];
+          scaleModel.images = [pickedFile.path];
         }
         print(pickedFile.path);
       } else {
@@ -289,11 +296,13 @@ class ScaleTaggerVm extends ChangeNotifier {
       if (weightController.text == '') {
         throw Exception('${LocaleProvider.current.required_area}');
       }
+      print(scaleModel.bmi);
       if (scaleModel.dateTime == null) {
         scaleModel.dateTime = DateTime.now();
       }
-      ScaleRepository().addNewScaleData(scaleModel, true);
-      Navigator.pop(context, 'dialog');
+      getIt<ScaleStorageImpl>()
+          .write(scaleModel.scaleModel, shouldSendToServer: false);
+      Atom.dismiss();
     } catch (e) {
       print(e);
     }
@@ -301,8 +310,9 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   update() {
     print(scaleModel);
-    ScaleRepository().updateScaleData(scaleModel, true);
-    Navigator.pop(context, 'dialog');
+    getIt<ScaleStorageImpl>()
+        .update(scaleModel.scaleModel, scaleModel.scaleModel.key);
+    Atom.dismiss();
   }
 
   void deleteImageFromIndex(int index) {

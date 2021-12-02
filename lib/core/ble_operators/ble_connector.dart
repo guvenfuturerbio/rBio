@@ -1,12 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-
-import '../../../../../core/core.dart';
-import '../../../../../model/ble_models/DeviceTypes.dart';
-import 'ble_reactor.dart';
-import 'ble_scanner.dart';
+part of 'ble_operators.dart';
 
 class BleConnectorOps extends ChangeNotifier {
   FlutterReactiveBle _ble;

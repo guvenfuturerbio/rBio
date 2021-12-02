@@ -69,10 +69,10 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "0ff39173e1957f70daaef1251e4715708d9596fe"
+      resolved-ref: d9b8851a28cbc6f69cf67a4cf0ecd31facb6ccd6
       url: "https://jsck2wjl54wp5d65hbl32w6qpfxwae75bemnleehnhx23zqdxlra@guvenfuture.visualstudio.com/Atom/_git/Atom"
     source: git
-    version: "0.0.3"
+    version: "0.0.5"
   auto_size_text_pk:
     dependency: "direct main"
     description:

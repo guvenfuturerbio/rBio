@@ -6,13 +6,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/enums/unit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../lib/core/utils/stacked_widget/stacked_widget.dart';
-import '../../../lib/database/repository/scale_repository.dart';
 import '../../../utils/gallery_pop_up/gallery_pop_up.dart';
 import '../view_model/scale_progress_page_view_model.dart';
 import 'scale_measurements/scale_measurement_vm.dart';
@@ -55,7 +53,6 @@ class _ScaleMeasurementListWidgetState
                   scrollDirection: Axis.vertical,
                   order: GroupedListOrder.DESC,
                   controller: widget.scrollController,
-                  physics: FixedExtentScrollPhysics(),
                   floatingHeader: true,
                   padding: EdgeInsets.only(
                       bottom: 2 * (context.HEIGHT * .1) * context.TEXTSCALE),
@@ -118,14 +115,13 @@ Widget measurementList(
     actionExtentRatio: 0.25,
     child: GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            barrierColor: Colors.transparent,
+        Atom.show(
+            ScaleTagger(
+              scaleModel: scaleMeasurementViewModel.scaleModel,
+              isUpdate: true,
+            ),
             barrierDismissible: false,
-            builder: (_) => ScaleTagger(
-                  scaleModel: scaleMeasurementViewModel.scaleModel,
-                  isUpdate: true,
-                ));
+            barrierColor: Colors.transparent);
       },
       child: Container(
         alignment: Alignment.center,
@@ -168,9 +164,8 @@ Widget measurementList(
 
             print(scaleMeasurementViewModel.id);
 
-            /// MGH1
-            ScaleRepository()
-                .deleteMeasurementById(scaleMeasurementViewModel.id);
+            getIt<ScaleStorageImpl>()
+                .delete(scaleMeasurementViewModel.scaleModel.key);
           } catch (e) {
             print(e);
           }
@@ -222,8 +217,8 @@ Row _timeAndImageSection(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image(
-                            image: FileImage(File(
-                                ScaleRepository().getImagePathOfImageURL(e))),
+                            image: FileImage(File(getIt<ScaleStorageImpl>()
+                                .getImagePathOfImageURL(e))),
                           ),
                         ),
                       ),
@@ -270,16 +265,15 @@ Expanded _textAndScaleSection(
 }
 
 Future<dynamic> _galeryView(BuildContext context, List<String> images) {
-  return showDialog(
-    context: context,
-    barrierColor: Colors.transparent,
-    barrierDismissible: false,
-    builder: (_) => GalleryView(
+  return Atom.show(
+    GalleryView(
       images: [
         ...images
-            .map((e) => ScaleRepository().getImagePathOfImageURL(e))
+            .map((e) => getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
             .toList()
       ],
     ),
+    barrierColor: Colors.transparent,
+    barrierDismissible: false,
   );
 }
