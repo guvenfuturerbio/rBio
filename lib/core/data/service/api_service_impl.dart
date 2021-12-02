@@ -972,6 +972,19 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
+  Future<GuvenResponseModel> doMobilePaymentWithVoucher(
+      DoMobilePaymentWithVoucherRequest doMobilePaymentRequest) async {
+    final response = await helper.postGuven(
+        R.endpoints.doMobilePaymentPath, doMobilePaymentRequest.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/doMobilePaymentWithVoucher : ${response.isSuccessful}');
+    }
+  }
+
+  @override
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
     final response = await helper.postGuven(
@@ -1058,6 +1071,21 @@ class ApiServiceImpl extends ApiService {
           .toList();
     } else {
       throw Exception('/findResourceAvailableDays : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> getResourceVideoCallPriceVoucher(
+      VoucherPriceRequest voucherPriceRequest) async {
+    final response = await helper.postGuven(
+        R.endpoints.getResourceVideoCallPriceWithVoucher,
+        voucherPriceRequest.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception(
+          '/getResourceVideoCallPriceVoucher : ${response.isSuccessful}');
     }
   }
 }

@@ -11,13 +11,15 @@ class DoMobilePaymentScreen extends StatefulWidget {
   final AppointmentRequest appointment;
   final int appointmentId;
   final String price;
+  String voucherCode;
 
-  DoMobilePaymentScreen({
-    Key key,
-    this.appointment,
-    this.appointmentId,
-    this.price,
-  }) : super(key: key);
+  DoMobilePaymentScreen(
+      {Key key,
+      this.appointment,
+      this.appointmentId,
+      this.price,
+      this.voucherCode})
+      : super(key: key);
 
   @override
   _DoMobilePaymentScreenState createState() => _DoMobilePaymentScreenState();
@@ -28,7 +30,6 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
   FocusNode cardNumberFNode;
   FocusNode cardCcvFNode;
   FocusNode cardExpirityDateFNode;
-
   TextEditingController _cardHolderNameController;
   MaskedTextController _cardNumberController;
   TextEditingController _expiryDateController;
@@ -70,6 +71,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
       create: (context) => DoMobilePaymentScreenVm(
         appointmentRequest: widget.appointment,
         context: context,
+        voucherCode: widget.voucherCode,
       ),
       child: Consumer<DoMobilePaymentScreenVm>(
         builder: (

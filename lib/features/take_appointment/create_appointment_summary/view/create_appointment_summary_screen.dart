@@ -324,24 +324,51 @@ class _CreateAppointmentSummaryScreenState
   }
 
   Widget _buildPrice(CreateAppointmentSummaryVm vm) {
+    var _newPrice;
     if (vm.orgVideoCallPriceResponse != null &&
         vm.orgVideoCallPriceResponse.patientPrice != null) {
       String _price = '${vm.orgVideoCallPriceResponse.patientPrice} TL';
 
       if (vm.newVideoCallPriceResponse != null &&
           vm.newVideoCallPriceResponse.patientPrice != null) {
-        _price = '${vm.newVideoCallPriceResponse.patientPrice} TL';
+        _newPrice = '${vm.newVideoCallPriceResponse.patientPrice} TL';
       }
-
-      return Text(
-        _price,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: context.xHeadline1.copyWith(
-          fontWeight: FontWeight.bold,
-          color: getIt<ITheme>().mainColor,
-        ),
-      );
+      return _newPrice != null
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  _price,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.xHeadline1.copyWith(
+                    decoration: TextDecoration.lineThrough,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.normal,
+                    color: getIt<ITheme>().textColorPassive,
+                  ),
+                ),
+                _buildHorizontalGap(),
+                Text(
+                  _newPrice,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.xHeadline1.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: getIt<ITheme>().mainColor,
+                  ),
+                )
+              ],
+            )
+          : Text(
+              _price,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.xHeadline1.copyWith(
+                fontWeight: FontWeight.bold,
+                color: getIt<ITheme>().mainColor,
+              ),
+            );
     } else {
       return RbioLoading();
     }

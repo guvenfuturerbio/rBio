@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
@@ -39,6 +40,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     notifyListeners();
   }
 
+  String voucherCode;
   String _appointmentRange;
   String _textDate;
   String _hospitalName;
@@ -158,6 +160,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
                 saveAppointmentsRequest: saveAppointmentsRequest,
               ),
               appointmentId: appointmentId,
+              voucherCode: voucherCode,
             ),
             settings: RouteSettings(name: PagePaths.DOMOBILEPAYMENT),
           ),
@@ -208,18 +211,24 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   }
 
   Future<void> applyCode(String message) async {
-    // TODO: Api'ye istek atılacak.
     newVideoCallPriceResponse = null;
     showOverlayLoading = true;
-    await Future.delayed(Duration(seconds: 1));
+    var response = await getIt<Repository>()
+        .getResourceVideoCallPriceWithVoucher(VoucherPriceRequest(
+            resourceId: resourceId.toString(),
+            tenantId: tenantId.toString(),
+            departmentId: departmentId.toString(),
+            voucherCode: message));
+    voucherCode = message;
     newVideoCallPriceResponse = orgVideoCallPriceResponse.copyWith(
-      patientPrice: 100,
+      patientPrice: response.datum,
     );
     showOverlayLoading = false;
   }
 
   Future<void> codeCancel() async {
     newVideoCallPriceResponse = null;
+    voucherCode = null;
   }
 
   void showPossibleProblemsDialog(
