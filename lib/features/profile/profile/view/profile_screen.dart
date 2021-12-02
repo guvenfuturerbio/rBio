@@ -171,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

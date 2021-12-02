@@ -10,13 +10,13 @@ class RbioRouteError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RbioAppBar(),
-      body: RbioError(),
+      body: RbioBodyError(),
     );
   }
 }
 
-class RbioError extends StatelessWidget {
-  const RbioError({Key key}) : super(key: key);
+class RbioBodyError extends StatelessWidget {
+  const RbioBodyError({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +28,25 @@ class RbioError extends StatelessWidget {
         _buildGap(),
 
         //
-        Center(
-          child: Container(
-            width: 1176,
-            child: SvgPicture.asset(
-              R.image.oops,
+        if (Atom.isWeb) ...[
+          Center(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 600,
+              ),
+              child: SvgPicture.asset(
+                R.image.oops,
+              ),
             ),
           ),
-        ),
+        ] else ...[
+          Center(
+            child: SvgPicture.asset(
+              R.image.oops,
+              width: Atom.width * 0.6,
+            ),
+          ),
+        ],
 
         //
         _buildGap(),

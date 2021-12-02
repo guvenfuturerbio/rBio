@@ -2,7 +2,7 @@ import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../generated/l10n.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../../../../core/constants/constants.dart';

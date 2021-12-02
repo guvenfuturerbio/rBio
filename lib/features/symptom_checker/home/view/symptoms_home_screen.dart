@@ -69,7 +69,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         return _buildSuccess(context, value);
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

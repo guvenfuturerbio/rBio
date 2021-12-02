@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../../../core/core.dart';
+import '../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 
 import '../models/bg_measurement/bg_measurement_view_model.dart';
 

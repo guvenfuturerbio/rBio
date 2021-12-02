@@ -354,6 +354,10 @@
   "favorites": "Favoriler",
   "appo_for": "Randevu alınacak kişi :",
   "pls_select_person": "Lütfen kişi seçiniz",
+  "patient_name": "Hasta Adı :",
+  "tenant_name": "Hastane Adı :",
+  "doctor_name": "Doktor Adı :",
+  "depart_name": "Bölüm :",
   "hosp_selection": "Hastane seçimi :",
   "pls_select_hosp": "Lütfen hastane seçiniz",
   "depart_selection": "Bölüm seçimi :",
@@ -699,5 +703,14 @@
   "login" : "Giriş",
   "login_page_text": "Sağlık sektörünün geleceği!",
   "sign_up_text": "Seni daha iyi tanıyalım!",
-  "tr_citizen" : "Türkiye vatandaşıyım"
+  "tr_citizen" : "Türkiye vatandaşıyım",
+
+  "no_permission" : "Kamera izni verilmedi.",
+  "discount_code": "İndirim kodu",
+  "price": "Fiyat",
+  "pay": "Ödeme yap",
+  "add_discount_code": "İndirim kodu ekle",
+  "apply_discount": "İndirim uygula",
+  "cancel_discount": "İndirimi iptal et",
+  "not_found": "Bulunamadı"
 }

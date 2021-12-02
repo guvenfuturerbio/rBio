@@ -8,8 +8,9 @@ import '../../../../model/model.dart';
 import 'iyzico_response_sms_payment_page.dart';
 
 class DoMobilePaymentScreenVm extends ChangeNotifier {
-  AppointmentRequest appointmentRequest;
   BuildContext mContext;
+  AppointmentRequest appointmentRequest;
+  
   bool _showOverlay;
   bool _isSalesContractConfirmed;
   bool _cancellationFormConfirmed;

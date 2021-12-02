@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/core/widgets/rbio_appbar_login.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/src/core/extended_context.dart';
 
@@ -151,8 +150,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
                   obscureText: false,
-                  style: inputTextStyle(),
-                  decoration: inputDecorationForLogin(
+                  style: Utils.instance.inputTextStyle(),
+                  decoration: Utils.instance.inputDecorationForLogin(
                     hintText: vm.isTcCitizen
                         ? LocaleProvider.of(context).tc_identity_number
                         : LocaleProvider.of(context).passport_number,
@@ -189,10 +188,10 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               Container(
                 child: TextFormField(
                     controller: _tcEmail,
-                    style: inputTextStyle(),
+                    style: Utils.instance.inputTextStyle(),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: inputDecorationForLogin(
+                    decoration: Utils.instance.inputDecorationForLogin(
                       hintText: LocaleProvider.of(context).email_address,
                     ).copyWith(filled: true, fillColor: R.color.white),
                     focusNode: emailFNode,
@@ -228,8 +227,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   onChanged: (value) {
                     vm.passwordFetcher(value);
                   },
-                  style: inputTextStyle(),
-                  decoration: inputDecorationForLogin(
+                  style: Utils.instance.inputTextStyle(),
+                  decoration: Utils.instance.inputDecorationForLogin(
                     hintText: LocaleProvider.of(context).hint_input_password,
                   ).copyWith(filled: true, fillColor: R.color.white),
                   focusNode: passwordFNode,
@@ -263,8 +262,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   controller: _passwordAgainController,
                   textInputAction: TextInputAction.done,
                   obscureText: true,
-                  style: inputTextStyle(),
-                  decoration: inputDecorationForLogin(
+                  style: Utils.instance.inputTextStyle(),
+                  decoration: Utils.instance.inputDecorationForLogin(
                     hintText: LocaleProvider.of(context).password_again,
                   ).copyWith(filled: true, fillColor: R.color.white),
                   focusNode: passwordAgainFNode,
@@ -321,7 +320,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
           //
           Container(
-            child: button(
+            child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_next.toUpperCase(),
                 onPressed: () {
                   if (checkedValueForTc) {

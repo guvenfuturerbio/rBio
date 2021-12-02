@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../core.dart';
-import 'rbio_appbar_login.dart';
 
 class RbioScaffold extends StatelessWidget {
   final IRbioAppBar appbar;

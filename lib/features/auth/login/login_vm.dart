@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/services/user_service.dart';
+import '../../chronic_tracking/lib/services/user_service.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';

@@ -1,4 +1,4 @@
-import 'package:onedosehealth/core/core.dart';
+import '../core.dart';
 
 enum UsageType {
   HUNGRY,

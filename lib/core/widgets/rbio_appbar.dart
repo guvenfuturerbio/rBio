@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../core.dart';
-import 'rbio_appbar_login.dart';
+
+mixin IRbioAppBar on PreferredSize {}
 
 class RbioAppBar extends PreferredSize with IRbioAppBar {
   final Widget title;
@@ -63,6 +64,23 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
           ),
         );
 
+  static Widget defaultLeading(BuildContext context, void Function() onTap) {
+    return Align(
+      alignment: Alignment.center,
+      child: InkWell(
+        child: Container(
+          color: Colors.transparent,
+          padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+          child: SvgPicture.asset(
+            R.image.back_icon,
+            width: R.sizes.iconSize,
+          ),
+        ),
+        onTap: onTap,
+      ),
+    );
+  }
+
   static Widget textTitle(BuildContext context, String text) {
     return Text(
       text,
@@ -74,4 +92,51 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
       ),
     );
   }
+}
+
+class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
+  final Widget title;
+  final List<Widget> actions;
+  final Widget leading;
+
+  RbioAppBarLogin({
+    this.title,
+    this.actions,
+    this.leading,
+  }) : super(
+          preferredSize: Size.fromHeight(64),
+          child: AppBar(
+            backgroundColor: getIt<ITheme>().mainColor,
+            toolbarHeight: 64,
+            centerTitle: false,
+            elevation: 0,
+            leading: leading ??
+                Align(
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+                      child: SvgPicture.asset(
+                        R.image.back_icon,
+                        width: R.sizes.iconSize,
+                      ),
+                    ),
+                    onTap: () {
+                      Atom.historyBack();
+                    },
+                  ),
+                ),
+            actions: actions ??
+                [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      R.image.oneDoseHealthPng,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ],
+          ),
+        );
 }

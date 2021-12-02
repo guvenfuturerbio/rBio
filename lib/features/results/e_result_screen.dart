@@ -131,7 +131,7 @@ class _EResultScreenState extends State<EResultScreen> {
         }
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

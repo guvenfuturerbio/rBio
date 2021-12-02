@@ -6,13 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/src/client.dart';
 import 'package:logging/logging.dart';
-import 'package:onedosehealth/core/enums/shared_preferences_keys.dart';
-import 'package:onedosehealth/core/locator.dart';
-import 'package:onedosehealth/core/manager/shared_preferences_manager.dart';
-import 'package:onedosehealth/core/navigation/app_paths.dart';
-import 'package:onedosehealth/core/utils/jwt_token_parser.dart';
-import 'package:onedosehealth/core/widgets/gradient_dialog_for_payment_dialog.dart';
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../core/enums/shared_preferences_keys.dart';
+import '../../../core/locator.dart';
+import '../../../core/manager/shared_preferences_manager.dart';
+import '../../../core/navigation/app_paths.dart';
+import '../../../core/utils/jwt_token_parser.dart';
+import '../../../core/widgets/gradient_dialog_for_payment_dialog.dart';
+import '../../../generated/l10n.dart';
 
 class IyzicoResponseVm with ChangeNotifier {
   // Properties

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/repository/symptom_repository.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../../../../core/core.dart';
+import '../../../../core/data/repository/symptom_repository.dart';
+import '../../../../model/model.dart';
 import 'package:file/local.dart';
 import 'dart:async';
 

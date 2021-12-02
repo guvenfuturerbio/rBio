@@ -23,6 +23,7 @@ class _Images {
   final phone_icon = 'assets/images/new/phone_icon.svg';
   final photo_icon = 'assets/images/new/photo_icon.svg';
   final profile_icon = 'assets/images/new/profile_icon.svg';
+  final qr_icon = 'assets/images/new/qr_icon.svg';
   final results_icon = 'assets/images/new/results_icon.svg';
   final send_icon = 'assets/images/new/send_icon.svg';
   final video_icon_80 = 'assets/images/new/video_icon_80.svg';

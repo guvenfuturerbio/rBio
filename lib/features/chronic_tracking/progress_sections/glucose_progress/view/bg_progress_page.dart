@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/extension/build_context_extension.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../core/extension/build_context_extension.dart';
+import '../../../../../core/core.dart';
+import '../../../../../generated/l10n.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 

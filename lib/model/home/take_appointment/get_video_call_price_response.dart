@@ -22,4 +22,16 @@ class GetVideoCallPriceResponse {
     data['service'] = this.service;
     return data;
   }
+
+  GetVideoCallPriceResponse copyWith({
+    double patientPrice,
+    String resource,
+    String service,
+  }) {
+    return GetVideoCallPriceResponse(
+      patientPrice: patientPrice ?? this.patientPrice,
+      resource: resource ?? this.resource,
+      service: service ?? this.service,
+    );
+  }
 }

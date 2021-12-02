@@ -180,7 +180,7 @@ class PatientRelativesScreen extends StatelessWidget {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 10),
-                          child: button(
+                          child: Utils.instance.button(
                             text: LocaleProvider.of(context).select_relative,
                             onPressed: () {
                               showConfirmationAlertDialog(

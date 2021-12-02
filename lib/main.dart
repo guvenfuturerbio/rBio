@@ -35,7 +35,6 @@ Future<void> main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-
   runApp(
     RbioConfig(
       child: MyApp(),
@@ -119,11 +118,18 @@ class _MyAppState extends State<MyApp> {
                 initialUrl: PagePaths.LOGIN,
                 routes: VRouterRoutes.routes,
                 onSystemPop: (data) async {
-                  final currentUrl = data.fromUrl;
-                  if (currentUrl.contains('/home')) {
-                    SystemNavigator.pop();
-                  } else if (data.historyCanBack()) {
-                    data.historyBack();
+                  if (Atom.isDialogShow ?? false) {
+                    try {
+                      Atom.dismiss();
+                      data.stopRedirection();
+                    } catch (e) {}
+                  } else {
+                    final currentUrl = data.fromUrl;
+                    if (currentUrl.contains('/home')) {
+                      SystemNavigator.pop();
+                    } else if (data.historyCanBack()) {
+                      data.historyBack();
+                    }
                   }
                 },
 

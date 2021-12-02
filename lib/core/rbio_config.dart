@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
+import '../model/model.dart';
 
 class RbioConfig extends InheritedWidget {
   final Widget child;

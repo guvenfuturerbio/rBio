@@ -206,8 +206,8 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
             child: TextFormField(
               controller: nameController,
               textInputAction: TextInputAction.next,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText: LocaleProvider.of(context).name,
                 image: R.image.ic_user,
               ),
@@ -227,8 +227,8 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
             child: TextFormField(
               controller: surnameController,
               textInputAction: TextInputAction.next,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText: LocaleProvider.of(context).surname,
                 image: R.image.ic_user,
               ),
@@ -248,8 +248,8 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
             child: TextFormField(
               controller: phoneNumbercontroller,
               textInputAction: TextInputAction.done,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText: LocaleProvider.of(context).phone_number,
                 image: R.image.ic_phone_call_grey,
               ),
@@ -268,7 +268,7 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
           Center(
             child: Container(
               width: double.infinity,
-              child: button(
+              child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_done.toUpperCase(),
                 onPressed: () {
                   completeSurvey(context);

@@ -116,8 +116,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                 onChanged: (value) {
                   vm.checkPasswordCapability(value);
                 },
-                style: inputTextStyle(),
-                decoration: inputImageDecoration(
+                style: Utils.instance.inputTextStyle(),
+                decoration: Utils.instance.inputImageDecoration(
                   hintText: LocaleProvider.of(context).hint_input_password,
                   image: R.image.ic_password,
                 ),
@@ -140,8 +140,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                 controller: _passwordAgainController,
                 textInputAction: TextInputAction.done,
                 obscureText: true,
-                style: inputTextStyle(),
-                decoration: inputImageDecoration(
+                style: Utils.instance.inputTextStyle(),
+                decoration: Utils.instance.inputImageDecoration(
                   hintText: LocaleProvider.of(context).password_again,
                   image: R.image.ic_password,
                 ),
@@ -271,7 +271,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
             //
             Container(
               margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: button(
+              child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_next.toUpperCase(),
                 onPressed: () {
                   UserRegistrationStep2Model userRegisterStep2 =

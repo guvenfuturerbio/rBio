@@ -56,8 +56,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 textInputAction: TextInputAction.next,
                                 obscureText:
                                     value.passwordVisibility ? false : true,
-                                style: inputTextStyle(),
-                                decoration: inputImageDecoration(
+                                style: Utils.instance.inputTextStyle(),
+                                decoration: Utils.instance.inputImageDecoration(
                                     hintText: LocaleProvider.of(context)
                                         .hint_input_old_password,
                                     image: R.image.ic_password_small,
@@ -95,8 +95,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 },
                                 obscureText:
                                     value.passwordVisibility ? false : true,
-                                style: inputTextStyle(),
-                                decoration: inputImageDecoration(
+                                style: Utils.instance.inputTextStyle(),
+                                decoration: Utils.instance.inputImageDecoration(
                                     hintText: LocaleProvider.of(context)
                                         .hint_input_password,
                                     image: R.image.ic_password_again,
@@ -131,8 +131,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 textInputAction: TextInputAction.done,
                                 obscureText:
                                     value.passwordVisibility ? false : true,
-                                style: inputTextStyle(),
-                                decoration: inputImageDecoration(
+                                style: Utils.instance.inputTextStyle(),
+                                decoration: Utils.instance.inputImageDecoration(
                                     hintText: LocaleProvider.of(context)
                                         .password_again,
                                     image: R.image.ic_password_again,
@@ -263,7 +263,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               ],
                             ),
                             Container(
-                              child: button(
+                              child: Utils.instance.button(
                                   text: LocaleProvider.of(context)
                                       .btn_done
                                       .toUpperCase(),

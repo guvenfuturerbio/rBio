@@ -89,11 +89,13 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               controller: _cardHolderNameController,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
-                hintText: LocaleProvider.current.credit_card_holder,
-                image: R.image.ic_user,
-              ).copyWith(fillColor: R.color.white, filled: true),
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance
+                  .inputImageDecoration(
+                    hintText: LocaleProvider.current.credit_card_holder,
+                    image: R.image.ic_user,
+                  )
+                  .copyWith(fillColor: R.color.white, filled: true),
               focusNode: cardHolderNameFNode,
               inputFormatters: <TextInputFormatter>[
                 new TabToNextFieldTextInputFormatter(
@@ -111,11 +113,13 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               controller: _cardNumberController,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
-                hintText: LocaleProvider.current.credit_card_number,
-                image: R.image.credit_card_number,
-              ).copyWith(fillColor: R.color.white, filled: true),
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance
+                  .inputImageDecoration(
+                    hintText: LocaleProvider.current.credit_card_number,
+                    image: R.image.credit_card_number,
+                  )
+                  .copyWith(fillColor: R.color.white, filled: true),
               focusNode: cardNumberFNode,
               inputFormatters: <TextInputFormatter>[
                 new TabToNextFieldTextInputFormatter(
@@ -133,11 +137,13 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               controller: _cvvCodeController,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
-                hintText: LocaleProvider.current.credit_card_cvv,
-                image: R.image.ic_password,
-              ).copyWith(fillColor: R.color.white, filled: true),
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance
+                  .inputImageDecoration(
+                    hintText: LocaleProvider.current.credit_card_cvv,
+                    image: R.image.ic_password,
+                  )
+                  .copyWith(fillColor: R.color.white, filled: true),
               focusNode: cardCcvFNode,
               inputFormatters: <TextInputFormatter>[
                 new TabToNextFieldTextInputFormatter(
@@ -155,11 +161,13 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               controller: _expiryDateController,
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.number,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
-                hintText: LocaleProvider.current.credit_card_expired_date,
-                image: R.image.credit_calendar,
-              ).copyWith(fillColor: R.color.white, filled: true),
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance
+                  .inputImageDecoration(
+                    hintText: LocaleProvider.current.credit_card_expired_date,
+                    image: R.image.credit_calendar,
+                  )
+                  .copyWith(fillColor: R.color.white, filled: true),
               focusNode: cardExpirityDateFNode,
               inputFormatters: <TextInputFormatter>[
                 new TabToNextFieldTextInputFormatter(
@@ -215,28 +223,31 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     value.toggleInformationForm();
                   });
                 },
-                activeColor: getIt<ITheme>().mainColor, //  <-- leading Checkbox
+                activeColor: getIt<ITheme>().mainColor,
               ),
             ),
             Expanded(
-                child: InkWell(
-              onTap: () {
-                value.showCancellationAndRefund(
-                    packageName: widget.packageName, price: widget.price);
-              },
-              child: Text(LocaleProvider.current.information_form,
+              child: InkWell(
+                onTap: () {
+                  value.showCancellationAndRefund(
+                      packageName: widget.packageName, price: widget.price);
+                },
+                child: Text(
+                  LocaleProvider.current.information_form,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline3.copyWith(
                     color: getIt<ITheme>().textColorSecondary,
                     decoration: TextDecoration.underline,
-                  )),
-            ))
+                  ),
+                ),
+              ),
+            )
           ]),
           Container(
             child: value.progress == LoadingProgress.LOADING
                 ? RbioLoading()
-                : button(
+                : Utils.instance.button(
                     text: LocaleProvider.current.confirm.toUpperCase(),
                     onPressed: () {
                       if (value.checkRequiredFields(

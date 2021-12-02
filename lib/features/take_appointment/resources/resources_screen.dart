@@ -75,11 +75,11 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       case LoadingProgress.LOADING:
         return RbioLoading();
 
-      case LoadingProgress.ERROR:
-        return RbioError();
-
       case LoadingProgress.DONE:
         return _buildSuccess(value.filterResources);
+
+      case LoadingProgress.ERROR:
+        return RbioBodyError();
 
       default:
         return SizedBox();

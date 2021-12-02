@@ -2,7 +2,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../generated/l10n.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:system_shortcuts/system_shortcuts.dart';
 

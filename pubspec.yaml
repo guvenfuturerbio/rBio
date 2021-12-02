@@ -54,12 +54,13 @@ dependencies:
     sdk: flutter
   flutter_appavailability: null
   flutter_calendar_carousel: ^2.0.1
-  flutter_datetime_picker: 
+  flutter_datetime_picker:
     git: https://github.com/tushardubey121/flutter_datetime_picker.git
   flutter_dotenv: ^5.0.2
   flutter_facebook_sdk: ^1.0.0
   flutter_full_pdf_viewer: ^1.0.6
   flutter_inner_drawer: ^1.0.0+1
+  flutter_keyboard_visibility: ^5.1.0
   flutter_local_notifications: 9.1.2
   flutter_localizations:
     sdk: flutter
@@ -110,6 +111,7 @@ dependencies:
   progress_indicators: ^1.0.0
   provider: ^6.0.1
   pub_semver: ^2.0.0
+  qr_code_scanner: ^0.6.1
   reorderables: ^0.4.1
   responsive_framework: ^0.1.5
   rxdart: ^0.27.2
@@ -141,12 +143,12 @@ dependencies:
   youtube_player_iframe: null
 
 dev_dependencies:
-  json_annotation: ^4.0.1
-  json_serializable: ^4.1.0
   build_runner: ^1.12.2
   flutter_launcher_icons: ^0.9.0
   flutter_test:
     sdk: flutter
+  json_annotation: ^4.0.1
+  json_serializable: ^4.1.0
 
 flutter:
   uses-material-design: true

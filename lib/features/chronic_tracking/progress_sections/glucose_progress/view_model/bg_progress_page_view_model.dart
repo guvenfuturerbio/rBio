@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 

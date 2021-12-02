@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/enums/remindable.dart';
-import 'package:onedosehealth/core/timezone/timezone.dart';
-import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
-import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../core/enums/remindable.dart';
+import '../../../../../../core/timezone/timezone.dart';
+import '../../../../managers/local_notifications_manager.dart';
+import '../../../../../../model/mediminder/hba1c_for_schedule_model.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../list_hba1c/view/hba1c_reminderlist_screen.dart';

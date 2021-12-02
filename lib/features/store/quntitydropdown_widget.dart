@@ -46,17 +46,21 @@ class _QuantityDropdownWidgetState extends State<QuantityDropdownWidget> {
                 constraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
                 child: TextFormField(
                   controller: quantity,
-                  style: inputTextStyle(),
+                  style: Utils.instance.inputTextStyle(),
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(),
                 ),
                 margin: EdgeInsets.only(bottom: 20),
               ),
+
+              //
               SizedBox(
                 width: 5,
               ),
-              button(text: "Update", width: 30, height: 12)
+
+              //
+              Utils.instance.button(text: "Update", width: 30, height: 12)
             ],
           );
   }

@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
+import '../../../core/core.dart';
+import '../../../model/mediminder/hba1c_for_schedule_model.dart';
 import 'package:timezone/timezone.dart';
 
 // ignore_for_file: deprecated_member_use

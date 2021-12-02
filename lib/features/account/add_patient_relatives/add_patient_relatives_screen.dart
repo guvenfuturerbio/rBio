@@ -128,8 +128,8 @@ class AddPatientRelativesScreen extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 obscureText: false,
-                style: inputTextStyle(),
-                decoration: inputImageDecoration(
+                style: Utils.instance.inputTextStyle(),
+                decoration: Utils.instance.inputImageDecoration(
                   hintText: 'Yakının TC Kimlik Numarası / Pasaport Numarası',
                   image: R.image.ic_user,
                 ),
@@ -149,10 +149,10 @@ class AddPatientRelativesScreen extends StatelessWidget {
             Container(
               child: TextFormField(
                   controller: relativeName,
-                  style: inputTextStyle(),
+                  style: Utils.instance.inputTextStyle(),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.text,
-                  decoration: inputImageDecoration(
+                  decoration: Utils.instance.inputImageDecoration(
                     hintText: LocaleProvider.of(context).name,
                     image: R.image.ic_user,
                   ),
@@ -170,10 +170,10 @@ class AddPatientRelativesScreen extends StatelessWidget {
             Container(
               child: TextFormField(
                   controller: relativeSurname,
-                  style: inputTextStyle(),
+                  style: Utils.instance.inputTextStyle(),
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
-                  decoration: inputImageDecoration(
+                  decoration: Utils.instance.inputImageDecoration(
                     hintText: LocaleProvider.of(context).surname,
                     image: R.image.ic_user,
                   ),
@@ -191,10 +191,10 @@ class AddPatientRelativesScreen extends StatelessWidget {
             Container(
               child: TextFormField(
                 controller: _relativePhoneNumber,
-                style: inputTextStyle(),
+                style: Utils.instance.inputTextStyle(),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.phone,
-                decoration: inputImageDecoration(
+                decoration: Utils.instance.inputImageDecoration(
                   hintText: LocaleProvider.of(context).phone_number,
                   image: R.image.ic_phone_call_grey,
                 ),
@@ -213,10 +213,10 @@ class AddPatientRelativesScreen extends StatelessWidget {
             Container(
               child: TextFormField(
                   controller: _relativeEmail,
-                  style: inputTextStyle(),
+                  style: Utils.instance.inputTextStyle(),
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: inputImageDecoration(
+                  decoration: Utils.instance.inputImageDecoration(
                     hintText: LocaleProvider.of(context).email_address,
                     image: R.image.ic_email,
                   ),
@@ -312,7 +312,7 @@ class AddPatientRelativesScreen extends StatelessWidget {
               ),
             ),
             Container(
-              child: button(
+              child: Utils.instance.button(
                   text: LocaleProvider.of(context).save,
                   onPressed: () {
                     AddPatientRelativeRequest addPatientRelative =

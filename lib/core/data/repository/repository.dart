@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/available_dates.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
+import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
+import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 
 import '../../../model/model.dart';
 import '../../constants/constants.dart';

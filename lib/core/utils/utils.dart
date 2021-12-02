@@ -14,16 +14,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
-import 'package:onedosehealth/features/shared/do_not_show_again_dialog.dart';
-import 'package:onedosehealth/model/mediminder/person_model.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+
+import '../../features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
+import '../../features/shared/do_not_show_again_dialog.dart';
+import '../../model/mediminder/person_model.dart';
 import '../../model/model.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';
+import '../data/service/chronic_service/chronic_storage_service.dart';
 import '../events/success_events.dart';
 import '../locator.dart';
 import '../manager/analytics_manager.dart';
@@ -31,27 +31,83 @@ import '../navigation/app_paths.dart';
 import '../widgets/guven_alert.dart';
 import '../widgets/warning_dialog.dart';
 
-Gradient BlueGradient() => LinearGradient(
-    colors: [R.color.dark_blue, R.color.defaultBlue],
-    begin: Alignment.bottomLeft,
-    end: Alignment.centerRight);
+class Utils {
+  Utils._();
 
-DeviceType getDeviceType(DiscoveredDevice device) {
-  if (device.name == 'MIBFS' &&
-      device.serviceData.length == 1 &&
-      device.serviceData.values.first.length == 13) {
-    return DeviceType.MI_SCALE;
-  } else if (device.manufacturerData[0] == 112) {
-    return DeviceType.ACCU_CHEK;
-  } else if (device.manufacturerData[0] == 103) {
-    return DeviceType.CONTOUR_PLUS_ONE;
+  static Utils _instance;
+
+  static Utils get instance {
+    _instance ??= Utils._();
+    return _instance;
   }
 
-  throw Exception('Nondefined device');
-}
+  void hideKeyboard(BuildContext context) {
+    final currentFocus = FocusScope.of(context);
 
-ListView guidePopUpContextWidget(List<String> currentDeviceInfos) {
-  return ListView.builder(
+    if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
+  }
+
+  Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
+    String url,
+    Future<List<T>> Function() apiCall,
+    Duration cacheDuration,
+    T model,
+    LocalCacheService localCacheService,
+  ) async {
+    final localData = await localCacheService.get(url);
+    if (localData == null) {
+      final apiData = await apiCall();
+      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      return apiData;
+    } else {
+      final localModel = json.decode(localData);
+      if (localModel is List) {
+        return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
+      }
+      return [];
+    }
+  }
+
+  Future<T> getCacheApiCallModel<T extends IBaseModel>(
+    String url,
+    Future<T> Function() apiCall,
+    Duration cacheDuration,
+    T model,
+    LocalCacheService localCacheService,
+  ) async {
+    final localData = await localCacheService.get(url);
+    if (localData == null) {
+      final apiData = await apiCall();
+      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      return apiData;
+    } else {
+      final localModel = json.decode(localData);
+      if (localModel is Map) {
+        return model.fromJson(localModel);
+      }
+
+      throw Exception('getCacheApiCallModel : ${model.runtimeType}');
+    }
+  }
+
+  DeviceType getDeviceType(DiscoveredDevice device) {
+    if (device.name == 'MIBFS' &&
+        device.serviceData.length == 1 &&
+        device.serviceData.values.first.length == 13) {
+      return DeviceType.MI_SCALE;
+    } else if (device.manufacturerData[0] == 112) {
+      return DeviceType.ACCU_CHEK;
+    } else if (device.manufacturerData[0] == 103) {
+      return DeviceType.CONTOUR_PLUS_ONE;
+    }
+
+    throw Exception('Nondefined device');
+  }
+
+  Widget guidePopUpContextWidget(List<String> currentDeviceInfos) {
+    return ListView.builder(
       shrinkWrap: true,
       itemCount: currentDeviceInfos.length,
       itemBuilder: (BuildContext context, int index) {
@@ -69,25 +125,28 @@ ListView guidePopUpContextWidget(List<String> currentDeviceInfos) {
                 ),
                 children: <TextSpan>[
                   TextSpan(
-                      text: currentDeviceInfos[index],
-                      style: TextStyle(
-                        color: R.color.black,
-                        fontWeight: FontWeight.normal,
-                      )),
+                    text: currentDeviceInfos[index],
+                    style: TextStyle(
+                      color: R.color.black,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         );
-      });
-}
+      },
+    );
+  }
 
-InputDecoration inputImageDecoration(
-        {image: String,
-        hintText: String,
-        Function suffixIconClicked,
-        Widget suffixIcon}) =>
-    InputDecoration(
+  InputDecoration inputImageDecoration({
+    String image,
+    String hintText,
+    Function suffixIconClicked,
+    Widget suffixIcon,
+  }) =>
+      InputDecoration(
         contentPadding: EdgeInsets.all(0),
         prefixIcon: SvgPicture.asset(
           image,
@@ -110,10 +169,11 @@ InputDecoration inputImageDecoration(
         ),
         enabledBorder: _borderTextField(),
         hintText: hintText,
-        hintStyle: hintStyle());
+        hintStyle: hintStyle(),
+      );
 
-InputDecoration inputImageDecorationRed({image: String, hintText: String}) =>
-    InputDecoration(
+  InputDecoration inputImageDecorationRed({image: String, hintText: String}) =>
+      InputDecoration(
         contentPadding: EdgeInsets.all(0),
         prefixIcon: SvgPicture.asset(
           image,
@@ -124,7 +184,84 @@ InputDecoration inputImageDecorationRed({image: String, hintText: String}) =>
         border: _borderTextFieldRed(),
         enabledBorder: _borderTextFieldRed(),
         hintText: hintText,
-        hintStyle: hintStyle());
+        hintStyle: hintStyle(),
+      );
+
+  TextStyle inputTextStyle() => TextStyle(
+        fontSize: 16,
+        color: R.color.dark_black,
+      );
+
+  TextStyle hintStyle() => TextStyle(fontSize: 16, color: R.color.gray);
+
+  GradientButton button({
+    text: String,
+    Function onPressed,
+    double height = 16,
+    double width = 200,
+  }) =>
+      GradientButton(
+        increaseHeightBy: height,
+        increaseWidthBy: width,
+        elevation: 0,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
+        ),
+        textStyle: TextStyle(
+            fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
+        callback: onPressed,
+        gradient: AppGradient(),
+        shadowColor: Colors.black,
+      );
+
+  GradientButton passiveButton({
+    text: String,
+    Function onPressed,
+    double height = 16,
+    double width = 200,
+  }) =>
+      GradientButton(
+        increaseHeightBy: height,
+        increaseWidthBy: width,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+        ),
+        textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: R.color.grey,
+        ),
+        callback: onPressed,
+        gradient: passiveBlueGradient(),
+        shadowColor: Colors.black.withAlpha(50),
+      );
+
+  InputDecoration inputDecorationForLogin({
+    String hintText,
+    EdgeInsetsGeometry contentPadding,
+    bool showBorder = true,
+  }) =>
+      InputDecoration(
+        contentPadding: contentPadding ??
+            EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+        focusedBorder:
+            showBorder ? _borderTextFieldForLogin() : InputBorder.none,
+        border: showBorder ? _borderTextFieldForLogin() : InputBorder.none,
+        enabledBorder:
+            showBorder ? _borderTextFieldForLogin() : InputBorder.none,
+        hintText: hintText,
+        hintStyle: TextStyle(
+          fontSize: 16,
+          color: R.color.gray,
+        ),
+      );
+}
+
+// ------------------------------------------------------------------------------------------------
 
 InputBorder _borderTextField() => OutlineInputBorder(
       borderRadius: BorderRadius.circular(200),
@@ -135,133 +272,16 @@ InputBorder _borderTextField() => OutlineInputBorder(
 InputBorder _borderTextFieldForLogin() => OutlineInputBorder(
       borderRadius: BorderRadius.circular(15),
       borderSide: BorderSide(
-          width: 0, style: BorderStyle.solid, color: R.color.dark_white),
+        width: 0,
+        style: BorderStyle.solid,
+        color: R.color.dark_white,
+      ),
     );
 
 InputBorder _borderTextFieldRed() => OutlineInputBorder(
       borderRadius: BorderRadius.circular(200),
       borderSide: BorderSide(
           width: 0, style: BorderStyle.solid, color: R.color.light_blue),
-    );
-
-TextStyle inputTextStyle() =>
-    TextStyle(fontSize: 16, color: R.color.dark_black);
-
-TextStyle hintStyle() => TextStyle(fontSize: 16, color: R.color.gray);
-
-GradientButton button({
-  text: String,
-  Function onPressed,
-  double height = 16,
-  double width = 200,
-}) =>
-    GradientButton(
-      increaseHeightBy: height,
-      increaseWidthBy: width,
-      elevation: 0,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
-      ),
-      textStyle: TextStyle(
-          fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
-      callback: onPressed,
-      gradient: AppGradient(),
-      shadowColor: Colors.black,
-    );
-
-GradientButton passiveButton(
-        {text: String,
-        Function onPressed,
-        double height = 16,
-        double width = 200}) =>
-    GradientButton(
-      increaseHeightBy: height,
-      increaseWidthBy: width,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-      ),
-      textStyle: TextStyle(
-          fontSize: 16, fontWeight: FontWeight.w600, color: R.color.grey),
-      callback: onPressed,
-      gradient: passiveBlueGradient(),
-      shadowColor: Colors.black.withAlpha(50),
-    );
-
-InputDecoration inputDecoration({hintText: String}) => InputDecoration(
-    contentPadding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-    focusedBorder: _borderTextField(),
-    border: _borderTextField(),
-    enabledBorder: _borderTextField(),
-    hintText: hintText,
-    hintStyle: TextStyle(fontSize: 16, color: R.color.gray));
-
-InputDecoration inputDecorationForLogin({hintText: String}) => InputDecoration(
-    contentPadding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-    focusedBorder: _borderTextFieldForLogin(),
-    border: _borderTextFieldForLogin(),
-    enabledBorder: _borderTextFieldForLogin(),
-    hintText: hintText,
-    hintStyle: TextStyle(fontSize: 16, color: R.color.gray));
-
-Widget ButtonBackGrey(BuildContext context) => IconButton(
-    icon: SvgPicture.asset(R.image.ic_back_grey),
-    onPressed: () {
-      Navigator.of(context).pop();
-    });
-
-Widget CallMeWidget({BuildContext context, Function onPressed}) => Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(left: 30, right: 30),
-          child: Text(
-            LocaleProvider.of(context).no_appo_call_us,
-            textAlign: TextAlign.center,
-            textScaleFactor: 1.3,
-          ),
-        ),
-        InkWell(
-          onTap: onPressed,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(200),
-              gradient: LinearGradient(
-                  colors: [R.color.blue, R.color.light_blue],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.centerRight),
-              border: Border.all(
-                width: 1,
-                color: R.color.blue,
-              ),
-            ),
-            margin: EdgeInsets.all(20),
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  R.image.ic_phone_call_grey,
-                  color: R.color.white,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  LocaleProvider.of(context).call_me,
-                  style: TextStyle(color: R.color.white),
-                ),
-              ],
-            ),
-          ),
-        )
-      ],
     );
 
 Widget ButtonBackWhite(BuildContext context) => IconButton(
@@ -298,12 +318,13 @@ Widget TitleAppBarWhite({String title}) => Container(
       ),
     );
 
-Widget InputWidget(
-        {String hint,
-        String text = '',
-        double bottom = 0,
-        double top = 0,
-        Function onTap}) =>
+Widget InputWidget({
+  String hint,
+  String text = '',
+  double bottom = 0,
+  double top = 0,
+  Function onTap,
+}) =>
     Padding(
       padding: EdgeInsets.only(bottom: bottom, top: top),
       child: InkWell(
@@ -312,7 +333,9 @@ Widget InputWidget(
           width: double.infinity,
           child: Text(
             text.isEmpty ? hint : text,
-            style: text.isEmpty ? hintStyle() : inputTextStyle(),
+            style: text.isEmpty
+                ? Utils.instance.hintStyle()
+                : Utils.instance.inputTextStyle(),
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(200),
@@ -326,12 +349,13 @@ Widget InputWidget(
       ),
     );
 
-Widget MainAppBar(
-        {BuildContext context,
-        Widget leading,
-        Widget title,
-        List<Widget> actions,
-        Widget bottom}) =>
+Widget MainAppBar({
+  BuildContext context,
+  Widget leading,
+  Widget title,
+  List<Widget> actions,
+  Widget bottom,
+}) =>
     PreferredSize(
         child: Container(
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -466,17 +490,10 @@ Widget getTitleBar(BuildContext context, String text) {
   return TitleAppBarWhite(title: text);
 }
 
-String getFormattedDate(String date) {
-  var parsedDate = DateTime.parse(date);
-  String textDate = new DateFormat("d MMMM yyyy").format(parsedDate);
-  return textDate;
-}
+String getFormattedDate(String date) => DateTime.parse(date).xFormatTime2();
 
-String getFormattedDateWithTime(String date) {
-  var parsedDate = DateTime.parse(date);
-  String textDate = new DateFormat("d MMMM yyyy HH:MM").format(parsedDate);
-  return textDate;
-}
+String getFormattedDateWithTime(String date) =>
+    DateTime.parse(date).xFormatTime3();
 
 Gradient passiveBlueGradient() => LinearGradient(colors: [
       getIt<ITheme>().mainColor.withAlpha(15),
@@ -882,60 +899,6 @@ Gradient AppGradient() => LinearGradient(
       begin: Alignment.bottomLeft,
       end: Alignment.centerRight,
     );
-
-class Utils {
-  Utils._();
-
-  static Utils _instance;
-
-  static Utils get instance {
-    _instance ??= Utils._();
-    return _instance;
-  }
-
-  Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
-    String url,
-    Future<List<T>> Function() apiCall,
-    Duration cacheDuration,
-    T model,
-    LocalCacheService localCacheService,
-  ) async {
-    final localData = await localCacheService.get(url);
-    if (localData == null) {
-      final apiData = await apiCall();
-      await localCacheService.write(url, json.encode(apiData), cacheDuration);
-      return apiData;
-    } else {
-      final localModel = json.decode(localData);
-      if (localModel is List) {
-        return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
-      }
-      return [];
-    }
-  }
-
-  Future<T> getCacheApiCallModel<T extends IBaseModel>(
-    String url,
-    Future<T> Function() apiCall,
-    Duration cacheDuration,
-    T model,
-    LocalCacheService localCacheService,
-  ) async {
-    final localData = await localCacheService.get(url);
-    if (localData == null) {
-      final apiData = await apiCall();
-      await localCacheService.write(url, json.encode(apiData), cacheDuration);
-      return apiData;
-    } else {
-      final localModel = json.decode(localData);
-      if (localModel is Map) {
-        return model.fromJson(localModel);
-      }
-
-      throw Exception('getCacheApiCallModel : ${model.runtimeType}');
-    }
-  }
-}
 
 // MEDIMINDER WIDGETS AND RESOURCES
 class Mediminder {

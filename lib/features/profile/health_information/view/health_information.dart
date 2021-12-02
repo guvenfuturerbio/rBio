@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/profile/health_information/viewmodel/health_information_vm.dart';
-import 'package:onedosehealth/features/profile/health_information/widget/widgets_in_use.dart';
+import '../../../../core/core.dart';
+import '../viewmodel/health_information_vm.dart';
+import '../widget/widgets_in_use.dart';
 import 'package:provider/provider.dart';
 
 class HealthInformation extends StatefulWidget {

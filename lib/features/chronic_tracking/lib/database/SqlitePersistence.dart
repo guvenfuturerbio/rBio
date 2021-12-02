@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:onedosehealth/core/core.dart';
+import '../../../../core/core.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';

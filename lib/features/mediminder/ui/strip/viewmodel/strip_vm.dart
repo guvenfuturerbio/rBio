@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
-import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
-import 'package:onedosehealth/features/mediminder/widget/keyboard_dismiss_on_tap.dart';
-import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
+
+import '../../../../../core/core.dart';
+import '../../../../../core/data/imports/cronic_tracking.dart';
+import '../../../../../model/mediminder/strip_detail_model.dart';
+import '../../../managers/local_notifications_manager.dart';
 
 class StripVm with ChangeNotifier {
   StripDetailModel stripDetailModel = StripDetailModel();
@@ -110,7 +110,7 @@ class StripVm with ChangeNotifier {
       fontSize: 16.0,
     );
     checkAlarmAndSendNotification(stripDetailModel);
-    KeyboardDismissOnTap.hideKeyboard(mContext);
+    Utils.instance.hideKeyboard(mContext);
     notifyListeners();
   }
 

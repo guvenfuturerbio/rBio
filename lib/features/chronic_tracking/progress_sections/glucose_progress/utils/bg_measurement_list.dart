@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 

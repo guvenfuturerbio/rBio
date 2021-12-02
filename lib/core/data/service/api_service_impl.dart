@@ -1049,14 +1049,15 @@ class ApiServiceImpl extends ApiService {
   Future<List<AvailableDate>> findResourceAvailableDays(
       FindResourceAvailableDaysRequest request) async {
     final response = await helper.postGuven(
-        R.endpoints.findResourceAvailableDays, request.toJson());
+        R.endpoints.findResourceAvailableDays, request.toJson(),
+        options: authOptions);
     if (response.isSuccessful) {
-     return response.datum
+      return response.datum
           .map((item) => AvailableDate.fromJson(item))
           .cast<AvailableDate>()
           .toList();
     } else {
-      throw Exception('/addNewPatientRelative : ${response.isSuccessful}');
+      throw Exception('/findResourceAvailableDays : ${response.isSuccessful}');
     }
   }
 }

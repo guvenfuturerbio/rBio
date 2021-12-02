@@ -81,7 +81,7 @@ class ProfileImageViewerScreenState extends State<ProfileImageViewerScreen> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(10),
-                    child: button(
+                    child: Utils.instance.button(
                       text: LocaleProvider.of(context).delete,
                       onPressed: () {
                         UtilityManager().showConfirmationAlertDialog(
@@ -111,7 +111,7 @@ class ProfileImageViewerScreenState extends State<ProfileImageViewerScreen> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(10),
-                    child: button(
+                    child: Utils.instance.button(
                       text: LocaleProvider.of(context).save,
                       onPressed: () {
                         UtilityManager().showConfirmationAlertDialog(

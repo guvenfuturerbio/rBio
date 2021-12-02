@@ -49,22 +49,22 @@ class PairedDevicesVm extends ChangeNotifier {
     List<String> currentDeviceInfos = [];
     if (device.deviceType == DeviceType.ACCU_CHEK) {
       currentDeviceInfos = R.deviceGuides.accu_check;
-      return guidePopUpContextWidget(currentDeviceInfos);
+      return Utils.instance.guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.CONTOUR_PLUS_ONE) {
       currentDeviceInfos = R.deviceGuides.contour_plus_blood;
-      return guidePopUpContextWidget(currentDeviceInfos);
+      return Utils.instance.guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.OMRON_BLOOD_PRESSURE_ARM) {
       currentDeviceInfos = R.deviceGuides.omron_arm;
-      return guidePopUpContextWidget(currentDeviceInfos);
+      return Utils.instance.guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.OMRON_BLOOD_PRESSURE_WRIST) {
       currentDeviceInfos = R.deviceGuides.omron_wrist;
-      return guidePopUpContextWidget(currentDeviceInfos);
+      return Utils.instance.guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.OMRON_SCALE) {
       currentDeviceInfos = R.deviceGuides.omron_scale;
-      return guidePopUpContextWidget(currentDeviceInfos);
+      return Utils.instance.guidePopUpContextWidget(currentDeviceInfos);
     } else if (device.deviceType == DeviceType.MI_SCALE) {
       currentDeviceInfos = R.deviceGuides.mi_scale;
-      return guidePopUpContextWidget(currentDeviceInfos);
+      return Utils.instance.guidePopUpContextWidget(currentDeviceInfos);
     } else {
       Text("There is no device info");
     }
