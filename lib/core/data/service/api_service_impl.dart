@@ -975,7 +975,7 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> doMobilePaymentWithVoucher(
       DoMobilePaymentWithVoucherRequest doMobilePaymentRequest) async {
     final response = await helper.postGuven(
-        R.endpoints.doMobilePaymentPath, doMobilePaymentRequest.toJson(),
+        R.endpoints.doMobilePaymentWithVoucher, doMobilePaymentRequest.toJson(),
         options: authOptions);
     if (response.isSuccessful) {
       return response;
