@@ -149,7 +149,7 @@ class _RateDialogState extends State<RateDialog> {
                       SizedBox(height: 10),
 
                       //
-                      button(
+                      Utils.instance.button(
                         text: LocaleProvider.current.save,
                         onPressed: () {
                           value.rateAppointment(textEditingController.text);

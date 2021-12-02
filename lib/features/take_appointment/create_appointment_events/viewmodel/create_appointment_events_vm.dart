@@ -1,6 +1,5 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
@@ -118,39 +117,31 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
     this.filterToDate = convertDatetime(filterToDate);
   }
 
-  String convertDatetime(DateTime dateTime) {
-    var dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ss").format(dateTime);
-    return dateFormatted;
-  }
+  String convertDatetime(DateTime dateTime) => dateTime.xFormatTime6();
 
   String getToDateNextMonth(DateTime dateTime) {
-    DateTime dateNextMonth =
+    final dateNextMonth =
         DateTime(dateTime.year, dateTime.month + 1, dateTime.day - 1, 0, 0, 0);
-    var dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ss").format(dateNextMonth);
-    return dateFormatted;
+    return dateNextMonth.xFormatTime6();
   }
 
-  ResourcesRequest getAyranciResource() {
-    return ResourcesRequest(
-      departmentId: departmentId,
-      tenantId: R.dynamicVar.tenantAyranciId,
-      resourceId: resourceId,
-      id: resourceId,
-      to: filterToDate,
-      from: filterFromDate,
-    );
-  }
+  ResourcesRequest getAyranciResource() => ResourcesRequest(
+        departmentId: departmentId,
+        tenantId: R.dynamicVar.tenantAyranciId,
+        resourceId: resourceId,
+        id: resourceId,
+        to: filterToDate,
+        from: filterFromDate,
+      );
 
-  ResourcesRequest getCayyoluResource() {
-    return ResourcesRequest(
-      departmentId: departmentId,
-      tenantId: R.dynamicVar.tenantCayyoluId,
-      resourceId: resourceId,
-      id: resourceId,
-      to: filterToDate,
-      from: filterFromDate,
-    );
-  }
+  ResourcesRequest getCayyoluResource() => ResourcesRequest(
+        departmentId: departmentId,
+        tenantId: R.dynamicVar.tenantCayyoluId,
+        resourceId: resourceId,
+        id: resourceId,
+        to: filterToDate,
+        from: filterFromDate,
+      );
 
   Future<void> fetchEventsForSelected() async {
     this.slotsProgress = LoadingProgress.LOADING;
@@ -290,11 +281,4 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           element.day == dayy.day)
       .toList()
       .isNotEmpty;
-}
-
-extension Iterables<E> on Iterable<E> {
-  Map<K, List<E>> groupBy<K>(K Function(E) keyFunction) => fold(
-      <K, List<E>>{},
-      (Map<K, List<E>> map, E element) =>
-          map..putIfAbsent(keyFunction(element), () => <E>[]).add(element));
 }

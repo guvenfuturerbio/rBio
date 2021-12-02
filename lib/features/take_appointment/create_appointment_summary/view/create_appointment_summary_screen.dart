@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../viewmodel/create_appointment_summary_vm.dart';
+import 'qr_code_scanner_screen.dart';
 
 class CreateAppointmentSummaryScreen extends StatefulWidget {
   String patientId;
@@ -27,6 +29,22 @@ class CreateAppointmentSummaryScreen extends StatefulWidget {
 
 class _CreateAppointmentSummaryScreenState
     extends State<CreateAppointmentSummaryScreen> {
+  TextEditingController codeEditingController;
+
+  @override
+  void initState() {
+    codeEditingController = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    codeEditingController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     try {
@@ -69,14 +87,16 @@ class _CreateAppointmentSummaryScreenState
             isLoading: vm.showOverlayLoading,
             opacity: 0,
             progressIndicator: RbioLoading.progressIndicator(),
-            child: RbioScaffold(
-              appbar: RbioAppBar(
-                title: RbioAppBar.textTitle(
-                  context,
-                  LocaleProvider.current.create_appo,
+            child: KeyboardDismissOnTap(
+              child: RbioScaffold(
+                appbar: RbioAppBar(
+                  title: RbioAppBar.textTitle(
+                    context,
+                    LocaleProvider.current.create_appo,
+                  ),
                 ),
+                body: _buildBody(vm),
               ),
-              body: _buildBody(vm),
             ),
           );
         },
@@ -84,35 +104,305 @@ class _CreateAppointmentSummaryScreenState
     );
   }
 
-  Widget _buildBody(CreateAppointmentSummaryVm vm) => SingleChildScrollView(
-        padding: EdgeInsets.zero,
-        scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
+  Widget _buildBody(CreateAppointmentSummaryVm vm) => SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            Text(
+              LocaleProvider.current.appointment_details,
+              textAlign: TextAlign.start,
+              style: context.xHeadline3.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+
+            //
+            SizedBox(
+              height: 12,
+            ),
+
+            //
+            _buildInfoCard(vm),
+
+            //
+            Expanded(
+              child: _buildKeyboardVisibilityBuilder(vm),
+            ),
+          ],
+        ),
+      );
+
+  Widget _buildKeyboardVisibilityBuilder(CreateAppointmentSummaryVm vm) {
+    return KeyboardVisibilityBuilder(
+      builder: (context, isKeyboardVisible) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.forOnline) ...[
+              if (vm.showCodeField) ...[
+                Container(
+                  height: 55,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: getIt<ITheme>().cardBackgroundColor,
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //
+                      _buildHorizontalGap(),
+
+                      //
+                      Expanded(
+                        child: RbioTextFormField(
+                          hintText: LocaleProvider.current.discount_code,
+                          showBorder: false,
+                          controller: codeEditingController,
+                          textInputAction: TextInputAction.done,
+                          contentPadding: EdgeInsets.only(
+                            left: 0,
+                            right: 20,
+                            top: 10,
+                            bottom: 13,
+                          ),
+                          onChanged: (term) {
+                            if (term != null) {
+                              if (term.length > 6) {
+                                vm.summaryButton = SummaryButtons.ApplyActive;
+                              } else {
+                                vm.summaryButton = SummaryButtons.ApplyPassive;
+                              }
+                            } else {
+                              vm.summaryButton = SummaryButtons.ApplyPassive;
+                            }
+                          },
+                        ),
+                      ),
+
+                      //
+                      if (!Atom.isWeb)
+                        GestureDetector(
+                          onTap: () async {
+                            final code = await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return QRCodeScannerScreen();
+                                },
+                              ),
+                            );
+                            if (code != null) {
+                              codeEditingController.text = code;
+                              vm.summaryButton = SummaryButtons.ApplyActive;
+                            }
+                          },
+                          child: SvgPicture.asset(
+                            R.image.qr_icon,
+                            width: 28,
+                          ),
+                        ),
+
+                      //
+                      _buildHorizontalGap(),
+                    ],
+                  ),
+                ),
+
+                //
+                if (!isKeyboardVisible) ...[
+                  _buildVerticalGap(),
+                  _buildVerticalGap(),
+                ],
+              ],
+
               //
-              Text(
-                LocaleProvider.current.appointment_details,
-                textAlign: TextAlign.start,
-                style: context.xHeadline1,
+              if (!isKeyboardVisible) ...[
+                Container(
+                  height: 55,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: getIt<ITheme>().cardBackgroundColor,
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //
+                      _buildHorizontalGap(),
+
+                      //
+                      Text(
+                        LocaleProvider.current.price,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.xHeadline3.copyWith(
+                          fontWeight: FontWeight.w600,
+                          height: 1.0,
+                        ),
+                      ),
+
+                      //
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: _buildPrice(vm),
+                        ),
+                      ),
+
+                      //
+                      _buildHorizontalGap(),
+                    ],
+                  ),
+                ),
+
+                //
+                if (!isKeyboardVisible) ...[
+                  _buildVerticalGap(),
+                  _buildVerticalGap(),
+                ],
+              ],
+            ],
+
+            //
+            if (!isKeyboardVisible) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  Expanded(
+                    child: _buildSummaryButton(vm),
+                  ),
+
+                  //
+                  SizedBox(width: 8),
+
+                  //
+                  Expanded(
+                    child: RbioElevatedButton(
+                      showElevation: false,
+                      onTap: () {
+                        vm.saveAppointment(
+                          price: vm?.orgVideoCallPriceResponse?.patientPrice
+                              ?.toString(),
+                          forOnline: widget.forOnline,
+                          forFree:
+                              (vm?.orgVideoCallPriceResponse?.patientPrice ??
+                                          0) <
+                                      1
+                                  ? true
+                                  : false,
+                        );
+                      },
+                      title: LocaleProvider.current.pay,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
 
               //
               SizedBox(
-                height: 12,
+                height: Atom.safeBottom,
               ),
-
-              //
-              _buildInfoCard(vm),
             ],
-          ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildPrice(CreateAppointmentSummaryVm vm) {
+    if (vm.orgVideoCallPriceResponse != null &&
+        vm.orgVideoCallPriceResponse.patientPrice != null) {
+      String _price = '${vm.orgVideoCallPriceResponse.patientPrice} TL';
+
+      if (vm.newVideoCallPriceResponse != null &&
+          vm.newVideoCallPriceResponse.patientPrice != null) {
+        _price = '${vm.newVideoCallPriceResponse.patientPrice} TL';
+      }
+
+      return Text(
+        _price,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: context.xHeadline1.copyWith(
+          fontWeight: FontWeight.bold,
+          color: getIt<ITheme>().mainColor,
         ),
       );
+    } else {
+      return RbioLoading();
+    }
+  }
+
+  Widget _buildSummaryButton(CreateAppointmentSummaryVm vm) {
+    String title;
+    VoidCallback onTap;
+
+    switch (vm.summaryButton) {
+      case SummaryButtons.Add:
+        title = LocaleProvider.current.add_discount_code;
+        onTap = () {
+          vm.showCodeField = true;
+          vm.summaryButton = SummaryButtons.ApplyPassive;
+        };
+        break;
+
+      case SummaryButtons.ApplyPassive:
+        title = LocaleProvider.current.apply_discount;
+        onTap = null;
+        break;
+
+      case SummaryButtons.ApplyActive:
+        title = LocaleProvider.current.apply_discount;
+        onTap = () {
+          vm.applyCode(codeEditingController.text.trim());
+          vm.summaryButton = SummaryButtons.Cancel;
+        };
+        break;
+
+      case SummaryButtons.Cancel:
+        title = LocaleProvider.current.cancel_discount;
+        onTap = () {
+          codeEditingController.text = '';
+          vm.codeCancel();
+          vm.summaryButton = SummaryButtons.ApplyPassive;
+        };
+        break;
+
+      case SummaryButtons.None:
+        title = null;
+        onTap = null;
+        break;
+    }
+
+    if (title == null) return SizedBox();
+
+    return RbioElevatedButton(
+      onTap: onTap,
+      title: title,
+      backColor: vm.summaryButton == SummaryButtons.Add
+          ? getIt<ITheme>().cardBackgroundColor
+          : getIt<ITheme>().mainColor,
+      textColor: vm.summaryButton == SummaryButtons.Add
+          ? getIt<ITheme>().textColorSecondary
+          : getIt<ITheme>().textColor,
+      fontWeight: FontWeight.w600,
+      showElevation: false,
+    );
+  }
 
   Widget _buildInfoCard(CreateAppointmentSummaryVm vm) {
     return Container(
@@ -211,55 +501,6 @@ class _CreateAppointmentSummaryScreenState
                 ),
               ),
             ],
-          ),
-
-          //
-          _buildVerticalGap(),
-          _buildVerticalGap(),
-
-          //
-          if (widget.forOnline &&
-              vm.getVideoCallPriceResponse != null &&
-              vm.getVideoCallPriceResponse.patientPrice != null) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  '${vm.getVideoCallPriceResponse.patientPrice} TL',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.xHeadline1.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: getIt<ITheme>().mainColor,
-                  ),
-                ),
-                _buildHorizontalGap(),
-              ],
-            ),
-          ],
-
-          _buildVerticalGap(),
-
-          //
-          SizedBox(
-            width: double.infinity,
-            child: RbioElevatedButton(
-              title: LocaleProvider.current.btn_confirm,
-              onTap: () {
-                vm.saveAppointment(
-                  price:
-                      vm?.getVideoCallPriceResponse?.patientPrice?.toString(),
-                  forOnline: widget.forOnline,
-                  forFree:
-                      (vm?.getVideoCallPriceResponse?.patientPrice ?? 0) < 1
-                          ? true
-                          : false,
-                );
-              },
-              fontWeight: FontWeight.bold,
-            ),
           ),
         ],
       ),

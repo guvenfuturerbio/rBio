@@ -115,7 +115,7 @@ class _AccountScreenState extends State<AccountScreen> {
               Container(
                 child: widget.isDefault
                     ? null
-                    : button(
+                    : Utils.instance.button(
                         text: LocaleProvider.of(context)
                             .switch_back_to_default_account,
                         onPressed: () {

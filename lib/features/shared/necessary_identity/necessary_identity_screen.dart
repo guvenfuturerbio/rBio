@@ -60,8 +60,8 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       controller: _identityController,
                       textInputAction: TextInputAction.next,
                       obscureText: false,
-                      style: inputTextStyle(),
-                      decoration: inputImageDecorationRed(
+                      style: Utils.instance.inputTextStyle(),
+                      decoration: Utils.instance.inputImageDecorationRed(
                         hintText: LocaleProvider.of(context).tc_or_passport,
                         image: R.image.ic_user,
                       ),

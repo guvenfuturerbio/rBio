@@ -35,7 +35,6 @@ Future<void> main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-
   runApp(
     RbioConfig(
       child: MyApp(),

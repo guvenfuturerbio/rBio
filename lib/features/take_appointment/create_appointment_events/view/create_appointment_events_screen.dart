@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/packages/table_calendar/table_calendar.dart';
 import '../../../../model/model.dart';
 import '../viewmodel/create_appointment_events_vm.dart';
 

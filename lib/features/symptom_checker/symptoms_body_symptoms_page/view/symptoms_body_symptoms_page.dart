@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/widgets/rbio_appbar.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../../../../core/core.dart';
+import '../../../../core/widgets/rbio_appbar.dart';
+import '../../../../model/model.dart';
 import 'package:provider/provider.dart';
 
 import '../../symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';

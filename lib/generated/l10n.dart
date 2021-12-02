@@ -7144,6 +7144,86 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Camera permission is not granted`
+  String get no_permission {
+    return Intl.message(
+      'Camera permission is not granted',
+      name: 'no_permission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discount Code`
+  String get discount_code {
+    return Intl.message(
+      'Discount Code',
+      name: 'discount_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fee`
+  String get price {
+    return Intl.message(
+      'Fee',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make Payment`
+  String get pay {
+    return Intl.message(
+      'Make Payment',
+      name: 'pay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add discount code`
+  String get add_discount_code {
+    return Intl.message(
+      'Add discount code',
+      name: 'add_discount_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply discount`
+  String get apply_discount {
+    return Intl.message(
+      'Apply discount',
+      name: 'apply_discount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel discount`
+  String get cancel_discount {
+    return Intl.message(
+      'Cancel discount',
+      name: 'cancel_discount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Found`
+  String get not_found {
+    return Intl.message(
+      'Not Found',
+      name: 'not_found',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

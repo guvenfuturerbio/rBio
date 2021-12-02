@@ -1,12 +1,19 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/take_appointment/do_mobile_payment/do_mobile_payment_screen.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../do_mobile_payment/do_mobile_payment_screen.dart';
+
+enum SummaryButtons {
+  Add,
+  ApplyPassive,
+  ApplyActive,
+  Cancel,
+  None,
+}
 
 class CreateAppointmentSummaryVm extends ChangeNotifier {
   final BuildContext mContext;
@@ -18,18 +25,31 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   final String to;
   final String from;
 
+  SummaryButtons _summaryButton = SummaryButtons.None;
+  SummaryButtons get summaryButton => _summaryButton;
+  set summaryButton(SummaryButtons val) {
+    _summaryButton = val;
+    notifyListeners();
+  }
+
+  bool _showCodeField = false;
+  bool get showCodeField => _showCodeField;
+  set showCodeField(bool val) {
+    _showCodeField = val;
+    notifyListeners();
+  }
+
   String _appointmentRange;
   String _textDate;
   String _hospitalName;
-  GetVideoCallPriceResponse _getVideoCallPriceResponse;
+  GetVideoCallPriceResponse orgVideoCallPriceResponse;
+  GetVideoCallPriceResponse newVideoCallPriceResponse;
   bool _priceLoading;
 
   String get hospitalName => this._hospitalName;
   String get textDate => this._textDate;
   String get appointmentRange => this._appointmentRange;
   bool get priceLoading => this._priceLoading ?? false;
-  GetVideoCallPriceResponse get getVideoCallPriceResponse =>
-      this._getVideoCallPriceResponse;
 
   CreateAppointmentSummaryVm({
     @required this.mContext,
@@ -42,6 +62,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     @required this.from,
   }) {
     if (forOnline) {
+      summaryButton = SummaryButtons.Add;
       this._hospitalName = LocaleProvider.current.online_appo;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
         await getResourceVideoCallPrice();
@@ -51,7 +72,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     } else if (tenantId == 7) {
       this._hospitalName = LocaleProvider.current.guven_cayyolu_campus;
     }
-    this._textDate = DateFormat("d MMMM yyyy").format(DateTime.parse(from));
+    this._textDate = DateTime.parse(from).xFormatTime2();
 
     this._appointmentRange =
         from.substring(11, 16) + " - " + to.substring(11, 16);
@@ -70,7 +91,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     notifyListeners();
 
     try {
-      this._getVideoCallPriceResponse =
+      orgVideoCallPriceResponse =
           await getIt<Repository>().getResourceVideoCallPrice(
         GetVideoCallPriceRequest(
           resourceId: this.resourceId,
@@ -78,7 +99,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           tenantId: this.tenantId,
         ),
       );
-      
+
       this._priceLoading = false;
       this._showOverlayLoading = false;
       notifyListeners();
@@ -87,8 +108,12 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       this._priceLoading = false;
       this._showOverlayLoading = false;
       notifyListeners();
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction, true);
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+        true,
+      );
     }
   }
 
@@ -182,6 +207,21 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     }
   }
 
+  Future<void> applyCode(String message) async {
+    // TODO: Api'ye istek atılacak.
+    newVideoCallPriceResponse = null;
+    showOverlayLoading = true;
+    await Future.delayed(Duration(seconds: 1));
+    newVideoCallPriceResponse = orgVideoCallPriceResponse.copyWith(
+      patientPrice: 100,
+    );
+    showOverlayLoading = false;
+  }
+
+  Future<void> codeCancel() async {
+    newVideoCallPriceResponse = null;
+  }
+
   void showPossibleProblemsDialog(
     BuildContext context,
     String title,
@@ -193,11 +233,13 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return DialogForPossibleErrorDialog(title: title, body: body);
-        }).then((value) async {
-      if (closeAfter) {
-        Atom.to(PagePaths.MAIN, isReplacement: true);
-      }
-    });
+        }).then(
+      (value) async {
+        if (closeAfter) {
+          Atom.to(PagePaths.MAIN, isReplacement: true);
+        }
+      },
+    );
   }
 
   void showGradientDialog(

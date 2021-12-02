@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/core/widgets/rbio_appbar_login.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/src/core/extended_context.dart';
 
@@ -46,40 +45,40 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: ChangeNotifierProvider<RegisterStep1ScreenVm>(
-        create: (_) => RegisterStep1ScreenVm(context),
-        child: Consumer<RegisterStep1ScreenVm>(
-          builder: (
-            BuildContext context,
-            RegisterStep1ScreenVm vm,
-            Widget child,
-          ) =>
-              RbioScaffold(
-            resizeToAvoidBottomInset: true,
-            appbar: RbioAppBarLogin(
+    return ChangeNotifierProvider<RegisterStep1ScreenVm>(
+      create: (_) => RegisterStep1ScreenVm(context),
+      child: Consumer<RegisterStep1ScreenVm>(
+        builder: (
+          BuildContext context,
+          RegisterStep1ScreenVm vm,
+          Widget child,
+        ) {
+          return KeyboardDismissOnTap(
+            child: RbioScaffold(
+              resizeToAvoidBottomInset: true,
+              appbar: RbioAppBarLogin(
                 title: Image.asset(
-              R.image.oneDoseHealthPng,
-              height: 50,
-            )),
-            body: _buildBody(context, vm),
-          ),
-        ),
+                  R.image.oneDoseHealthPng,
+                  height: 50,
+                ),
+              ),
+              body: _buildBody(vm),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, RegisterStep1ScreenVm vm) {
+  Widget _buildBody(RegisterStep1ScreenVm vm) {
     return KeyboardAvoider(
       autoScroll: true,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
+          //
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -93,8 +92,9 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                       child: Text(
                         LocaleProvider.current.btn_sign_up,
                         style: context.xHeadline1.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: context.TEXTSCALE * 30),
+                          fontWeight: FontWeight.bold,
+                          fontSize: context.TEXTSCALE * 30,
+                        ),
                       ),
                     ),
                     Text(
@@ -108,6 +108,7 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
               //
               Row(
                 children: [
+                  //
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,58 +121,65 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                           ),
                         ),
                         Container(
-                          child: TextFormField(
-                            controller: _tcName,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.name,
-                            obscureText: false,
-                            style: inputTextStyle(),
-                            decoration: inputDecorationForLogin(
-                              hintText: LocaleProvider.of(context).name,
-                            ).copyWith(filled: true, fillColor: R.color.white),
+                          child: RbioTextFormField(
                             focusNode: tcNameNode,
+                            controller: _tcName,
+                            obscureText: false,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            hintText: LocaleProvider.of(context).name,
                             onFieldSubmitted: (term) {
                               UtilityManager().fieldFocusChange(
-                                  context, tcNameNode, tcLNameNode);
+                                context,
+                                tcNameNode,
+                                tcLNameNode,
+                              );
                             },
                           ),
                         ),
                       ],
                     ),
                   ),
+
+                  //
                   SizedBox(
                     width: 5,
                   ),
+
+                  //
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 15.0, bottom: 5, top: 15),
+                            left: 15.0,
+                            bottom: 5,
+                            top: 15,
+                          ),
                           child: Text(
                             "Surname",
                             style: context.xHeadline3,
                           ),
                         ),
                         Container(
-                          child: TextFormField(
-                            controller: _tcSurname,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.name,
-                            obscureText: false,
-                            style: inputTextStyle(),
-                            decoration: inputDecorationForLogin(
-                              hintText: LocaleProvider.of(context).surname,
-                            ).copyWith(filled: true, fillColor: R.color.white),
-                            focusNode: tcLNameNode,
-                            onFieldSubmitted: (term) {
-                              UtilityManager().fieldFocusChange(
-                                  context, tcLNameNode, tcFNode);
-                            },
-                          ),
                           margin: EdgeInsets.only(
                             bottom: 10,
+                          ),
+                          child: RbioTextFormField(
+                            focusNode: tcLNameNode,
+                            controller: _tcSurname,
+                            obscureText: false,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            hintText: LocaleProvider.of(context).surname,
+                            onFieldSubmitted: (term) {
+                              UtilityManager().fieldFocusChange(
+                                context,
+                                tcLNameNode,
+                                tcFNode,
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -181,18 +189,29 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
               ),
             ],
           ),
+
+          //
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
+                padding: const EdgeInsets.only(
+                  left: 15.0,
+                  bottom: 5,
+                  top: 15,
+                ),
                 child: Text(
                   "Gender",
                   style: context.xHeadline3,
                 ),
               ),
+
+              //
               Container(
                 color: Colors.transparent,
+                margin: EdgeInsets.only(
+                  bottom: 10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -200,17 +219,20 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                     addRadioButton(1, 'Female'),
                   ],
                 ),
-                margin: EdgeInsets.only(
-                  bottom: 10,
-                ),
               ),
             ],
           ),
+
+          //
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
+                padding: const EdgeInsets.only(
+                  left: 15.0,
+                  bottom: 5,
+                  top: 15,
+                ),
                 child: Text(
                   "Date of birth",
                   style: context.xHeadline3,
@@ -259,6 +281,7 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
@@ -267,13 +290,17 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                     style: context.xHeadline3,
                   ),
                 ),
+
+                //
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //
                     Container(
                       decoration: BoxDecoration(
-                          color: R.color.white,
-                          borderRadius: BorderRadius.circular(15)),
+                        color: R.color.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                       child: CountryCodePicker(
                         padding: EdgeInsets.zero,
                         onChanged: print,
@@ -284,27 +311,34 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
                         alignLeft: false,
                       ),
                     ),
+
+                    //
                     SizedBox(
                       width: 5,
                     ),
+
+                    //
                     Expanded(
                       child: Container(
-                        child: TextFormField(
-                          controller: _tcPhoneNumber,
-                          style: inputTextStyle(),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.phone,
-                          decoration: inputDecorationForLogin(
-                            hintText: LocaleProvider.of(context).phone_number,
-                          ).copyWith(fillColor: R.color.white, filled: true),
+                        child: RbioTextFormField(
                           focusNode: phoneFNode,
+                          controller: _tcPhoneNumber,
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.next,
+                          hintText: LocaleProvider.of(context).phone_number,
                           inputFormatters: <TextInputFormatter>[
-                            new TabToNextFieldTextInputFormatter(
-                                context, phoneFNode, emailFNode)
+                            TabToNextFieldTextInputFormatter(
+                              context,
+                              phoneFNode,
+                              emailFNode,
+                            ),
                           ],
                           onFieldSubmitted: (term) {
                             UtilityManager().fieldFocusChange(
-                                context, phoneFNode, emailFNode);
+                              context,
+                              phoneFNode,
+                              emailFNode,
+                            );
                           },
                         ),
                       ),
@@ -314,49 +348,63 @@ class _RegisterStep1_1ScreenState extends State<RegisterStep1_1Screen> {
               ],
             ),
           ),
-          // email - tc identity
 
+          //
           Container(
-            child: button(
-                text: LocaleProvider.of(context).btn_next.toUpperCase(),
-                onPressed: () {
-                  if (_tcName.text.length > 0 &&
-                      _tcSurname.text.length > 0 &&
-                      _tcPhoneNumber.text.length > 0 &&
-                      vm.selectedDate != null) {
-                    Atom.to(
-                      PagePaths.REGISTER_STEP_1,
-                      queryParameters: {
-                        'registerName': _tcName.text,
-                        'registerSurname': _tcSurname.text,
-                        'registerGender': gender,
-                        'registerDateOfBirth': vm.selectedDate.toString(),
-                        'registerPhoneNumber': _tcPhoneNumber.text
-                      },
-                    );
-                  } else {
-                    vm.showGradientDialog(
-                        context,
-                        LocaleProvider.of(context).warning,
-                        LocaleProvider.of(context).fill_all_field);
-                  }
-                }),
-            margin: EdgeInsets.only(top: 5, bottom: 10),
+            margin: EdgeInsets.only(
+              top: 5,
+              bottom: 10,
+              left: 50,
+              right: 50,
+            ),
+            child: RbioElevatedButton(
+              infinityWidth: true,
+              title: LocaleProvider.of(context).btn_next.toUpperCase(),
+              onTap: () {
+                if (_tcName.text.length > 0 &&
+                    _tcSurname.text.length > 0 &&
+                    _tcPhoneNumber.text.length > 0 &&
+                    vm.selectedDate != null) {
+                  Atom.to(
+                    PagePaths.REGISTER_STEP_1,
+                    queryParameters: {
+                      'registerName': _tcName.text,
+                      'registerSurname': _tcSurname.text,
+                      'registerGender': gender,
+                      'registerDateOfBirth': vm.selectedDate.toString(),
+                      'registerPhoneNumber': _tcPhoneNumber.text
+                    },
+                  );
+                } else {
+                  vm.showGradientDialog(
+                    context,
+                    LocaleProvider.of(context).warning,
+                    LocaleProvider.of(context).fill_all_field,
+                  );
+                }
+              },
+            ),
           ),
+
+          //
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
                 LocaleProvider.of(context).lbl_dont_have_account,
-                style: context.xHeadline3
-                    .copyWith(color: getIt<ITheme>().textColorSecondary),
+                style: context.xHeadline3.copyWith(
+                  color: getIt<ITheme>().textColorSecondary,
+                ),
               ),
               InkWell(
-                child: Text(LocaleProvider.of(context).btn_sign_in,
-                    style: context.xHeadline3
-                        .copyWith(color: getIt<ITheme>().mainColor)),
+                child: Text(
+                  LocaleProvider.of(context).btn_sign_in,
+                  style: context.xHeadline3.copyWith(
+                    color: getIt<ITheme>().mainColor,
+                  ),
+                ),
                 onTap: () {
-                  context.vRouter.to(PagePaths.LOGIN); //---> REGISTER_FIRST
+                  context.vRouter.to(PagePaths.LOGIN);
                 },
               ),
             ],

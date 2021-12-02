@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/enums/remindable.dart';
-import 'package:onedosehealth/features/mediminder/ui/hba1c/add_hba1c/viewmodel/hba1c_reminder_add_vm.dart';
-import 'package:onedosehealth/model/mediminder/hba1c_for_schedule_model.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../core/enums/remindable.dart';
+import '../viewmodel/hba1c_reminder_add_vm.dart';
+import '../../../../../../model/mediminder/hba1c_for_schedule_model.dart';
 import 'package:provider/provider.dart';
 
 class Hba1cReminderAddScreen extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/painting.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../generated/l10n.dart';

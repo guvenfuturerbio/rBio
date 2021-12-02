@@ -524,6 +524,8 @@ PODS:
   - flutter_inappwebview/Core (0.0.1):
     - Flutter
     - OrderedSet (~> 5.0)
+  - flutter_keyboard_visibility (0.0.1):
+    - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_native_image (0.0.1):
@@ -629,6 +631,7 @@ PODS:
   - leveldb-library (1.22.1)
   - move_to_background (0.0.1):
     - Flutter
+  - MTBBarcodeScanner (5.0.11)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -647,6 +650,9 @@ PODS:
     - Flutter
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.1)
+  - qr_code_scanner (0.2.0):
+    - Flutter
+    - MTBBarcodeScanner
   - Reachability (3.2)
   - reactive_ble_mobile (0.0.1):
     - Flutter
@@ -680,7 +686,7 @@ PODS:
   - system_shortcuts (0.0.1):
     - Flutter
   - Toast (4.0.0)
-  - url_launcher (0.0.1):
+  - url_launcher_ios (0.0.1):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
@@ -702,6 +708,7 @@ DEPENDENCIES:
   - flutter_facebook_sdk (from `.symlinks/plugins/flutter_facebook_sdk/ios`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
   - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
@@ -718,6 +725,7 @@ DEPENDENCIES:
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - reactive_ble_mobile (from `.symlinks/plugins/reactive_ble_mobile/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - share (from `.symlinks/plugins/share/ios`)
@@ -727,7 +735,7 @@ DEPENDENCIES:
   - syncfusion_flutter_pdfviewer (from `.symlinks/plugins/syncfusion_flutter_pdfviewer/ios`)
   - system_settings (from `.symlinks/plugins/system_settings/ios`)
   - system_shortcuts (from `.symlinks/plugins/system_shortcuts/ios`)
-  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
@@ -759,6 +767,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - JitsiMeetSDK
     - leveldb-library
+    - MTBBarcodeScanner
     - nanopb
     - OrderedSet
     - PromisesObjC
@@ -803,6 +812,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_full_pdf_viewer/ios"
   flutter_inappwebview:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_image:
@@ -835,6 +846,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  qr_code_scanner:
+    :path: ".symlinks/plugins/qr_code_scanner/ios"
   reactive_ble_mobile:
     :path: ".symlinks/plugins/reactive_ble_mobile/ios"
   sentry_flutter:
@@ -853,8 +866,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/system_settings/ios"
   system_shortcuts:
     :path: ".symlinks/plugins/system_shortcuts/ios"
-  url_launcher:
-    :path: ".symlinks/plugins/url_launcher/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
@@ -891,6 +904,7 @@ SPEC CHECKSUMS:
   flutter_facebook_sdk: 82c8d10c6226b66de5459d6115ab02d1ecd66cd9
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
+  flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_image: 9c0b7451838484458e5b0fae007b86a4c2d4bdfe
   flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
@@ -913,6 +927,7 @@ SPEC CHECKSUMS:
   JitsiMeetSDK: 3b1d3757f2166b28cd03f907b47091db064302b3
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   move_to_background: 39a5b79b26d577b0372cbe8a8c55e7aa9fcd3a2d
+  MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
@@ -922,6 +937,7 @@ SPEC CHECKSUMS:
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
+  qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
@@ -937,7 +953,7 @@ SPEC CHECKSUMS:
   system_settings: 8f5cdbfa72c677fc8d665b863bcc20d393d87e9d
   system_shortcuts: fa91743cc51eed3811f5ea5461e23f972b9de780
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
+  url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
   webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
 
 PODFILE CHECKSUM: 3d1973eca6c63fef98d9715c1eb651f97ac14b63

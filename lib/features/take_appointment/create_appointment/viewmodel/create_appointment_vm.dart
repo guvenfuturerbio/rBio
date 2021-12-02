@@ -249,10 +249,16 @@ class CreateAppointmentVm extends ChangeNotifier {
           }
         });
       });
+
       temp.insert(
-          0,
-          FilterDepartmentsResponse(
-              enabled: false, id: -2, title: "Seçiniz", tenants: []));
+        0,
+        FilterDepartmentsResponse(
+          enabled: false,
+          id: -2,
+          title: LocaleProvider.current.pls_select,
+          tenants: [],
+        ),
+      );
       _filterDepartmentsResponse = temp;
       this._departmentProgress = LoadingProgress.DONE;
       notifyListeners();
@@ -291,7 +297,7 @@ class CreateAppointmentVm extends ChangeNotifier {
               isSSIContractor: true,
               isTSSContractor: true,
               tenants: [],
-              title: "Seçiniz",
+              title: LocaleProvider.current.pls_select,
             ),
           );
       this._doctorProgress = LoadingProgress.DONE;
@@ -404,8 +410,11 @@ class CreateAppointmentVm extends ChangeNotifier {
           removedTenants.add(data);
         }
       }
-      FilterTenantsResponse tmp =
-          FilterTenantsResponse(enabled: false, id: -2, title: "Seçiniz");
+      FilterTenantsResponse tmp = FilterTenantsResponse(
+        enabled: false,
+        id: -2,
+        title: LocaleProvider.current.pls_select,
+      );
       removedTenants.insert(0, tmp);
       _dropdownValueTenant = removedTenants.first;
       notifyListeners();

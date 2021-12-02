@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../core/core.dart';
+import '../../../../../generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../../lib/core/utils/loading/progress_circle.dart';

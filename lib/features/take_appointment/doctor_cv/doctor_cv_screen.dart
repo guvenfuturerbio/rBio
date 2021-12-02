@@ -153,32 +153,33 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
             ),
             Container(
               margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: button(
-                  width: 260,
-                  text: LocaleProvider.of(context)
-                      .make_an_appointment
-                      .toUpperCase(),
-                  onPressed: () {
-                    AnalyticsManager().sendEvent(
-                      OAMakeAppointmentClickEvent(
-                        widget.departmentName,
-                        widget.doctorName,
-                      ),
-                    );
-                    
-                    Atom.to(
-                      PagePaths.EVENTS,
-                      queryParameters: {
-                        'fromOnlineSelect': widget.fromOnlineSelect.toString(),
-                        'departmentId': widget.departmentId.toString(),
-                        'departmentName': Uri.encodeFull(widget.departmentName),
-                        'doctorName': Uri.encodeFull(widget.doctorName),
-                        'resourceId': widget.resourceId.toString(),
-                        'tenantId': widget.tenantId.toString(),
-                        'imageUrl': value.imageUrl
-                      },
-                    );
-                  }),
+              child: Utils.instance.button(
+                width: 260,
+                text: LocaleProvider.of(context)
+                    .make_an_appointment
+                    .toUpperCase(),
+                onPressed: () {
+                  AnalyticsManager().sendEvent(
+                    OAMakeAppointmentClickEvent(
+                      widget.departmentName,
+                      widget.doctorName,
+                    ),
+                  );
+
+                  Atom.to(
+                    PagePaths.EVENTS,
+                    queryParameters: {
+                      'fromOnlineSelect': widget.fromOnlineSelect.toString(),
+                      'departmentId': widget.departmentId.toString(),
+                      'departmentName': Uri.encodeFull(widget.departmentName),
+                      'doctorName': Uri.encodeFull(widget.doctorName),
+                      'resourceId': widget.resourceId.toString(),
+                      'tenantId': widget.tenantId.toString(),
+                      'imageUrl': value.imageUrl
+                    },
+                  );
+                },
+              ),
             ),
             value.progress == LoadingProgress.DONE
                 ? Column(

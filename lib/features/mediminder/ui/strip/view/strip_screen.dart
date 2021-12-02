@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/enums/unit.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/widgets/strip_counter_dialog.dart';
-import 'package:onedosehealth/features/mediminder/ui/strip/viewmodel/strip_vm.dart';
-import 'package:onedosehealth/features/mediminder/widget/keyboard_dismiss_on_tap.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../core/core.dart';
+import '../../../../../core/enums/unit.dart';
+import '../../../../chronic_tracking/lib/widgets/strip_counter_dialog.dart';
+import '../viewmodel/strip_vm.dart';
 
 class StripScreen extends StatefulWidget {
   StripScreen({Key key}) : super(key: key);

@@ -90,10 +90,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                           SizedBox(
                                             width: 8,
                                           ),
-                                          button(
-                                              text: "Delete",
-                                              width: 30,
-                                              height: 12),
+                                          Utils.instance.button(
+                                            text: "Delete",
+                                            width: 30,
+                                            height: 12,
+                                          ),
                                         ],
                                       ),
                                       SizedBox(
@@ -122,10 +123,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 20, bottom: 20),
-                  child: button(
-                      width: 260,
-                      text: LocaleProvider.current.payment,
-                      onPressed: () {}),
+                  child: Utils.instance.button(
+                    width: 260,
+                    text: LocaleProvider.current.payment,
+                    onPressed: () {},
+                  ),
                 ),
                 Text(
                   LocaleProvider.current.called_by_our_hospital,

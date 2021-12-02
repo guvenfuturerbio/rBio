@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/core/widgets/rbio_appbar_login.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -134,8 +133,8 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
                 controller: _smsController,
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.number,
-                style: inputTextStyle(),
-                decoration: inputDecorationForLogin(
+                style: Utils.instance.inputTextStyle(),
+                decoration: Utils.instance.inputDecorationForLogin(
                   hintText: LocaleProvider.of(context).sms_verification_code,
                 ).copyWith(
                     fillColor: getIt<ITheme>().cardBackgroundColor,
@@ -150,7 +149,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
             //
             Container(
               margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: button(
+              child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_done.toUpperCase(),
                 onPressed: () {
                   // tcknsiz giriş için yeni model

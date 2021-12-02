@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get/get.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/service/chronic_service/chronic_storage_service.dart';
+import '../../../../../core/core.dart';
+import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../generated/l10n.dart';
 
 import '../../core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
 import '../../database/repository/glucose_repository.dart';
@@ -175,7 +175,7 @@ class BleReactorOps extends ChangeNotifier {
     PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
 
-    pairedDevice.deviceType = getDeviceType(device);
+    pairedDevice.deviceType = Utils.instance.getDeviceType(device);
     final writeCharacteristic = QualifiedCharacteristic(
         serviceId: Uuid.parse("1808"),
         characteristicId: Uuid.parse("2a52"),
@@ -283,7 +283,7 @@ class BleReactorOps extends ChangeNotifier {
     scaleDevice = MiScaleDevice().from(device);
     PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
-    pairedDevice.deviceType = getDeviceType(device);
+    pairedDevice.deviceType = Utils.instance.getDeviceType(device);
     pairedDevice.modelName = device.name;
     pairedDevice.manufacturerName = device.name;
     _ble.discoverServices(device.id).then((value) => print(value.toString()));
@@ -292,17 +292,6 @@ class BleReactorOps extends ChangeNotifier {
       await _ble.requestConnectionPriority(
           deviceId: device.id, priority: ConnectionPriority.highPerformance);
     }
-    /*  _ble
-        .readCharacteristic(QualifiedCharacteristic(
-            characteristicId: Uuid.parse("2a24"),
-            serviceId: Uuid.parse("180a"),
-            deviceId: device.id))
-        .then((value) {
-      List<int> charCodes = value;
-      print("2a24 model name " + String.fromCharCodes(charCodes));
-      print("2a24" + value.toString());
-      pairedDevice.modelName = String.fromCharCodes(charCodes);
-    }); */
 
     _ble
         .readCharacteristic(QualifiedCharacteristic(
@@ -315,18 +304,6 @@ class BleReactorOps extends ChangeNotifier {
       print("2a25" + value.toString());
       pairedDevice.serialNumber = String.fromCharCodes(charCodes);
     });
-
-    /* _ble
-        .readCharacteristic(QualifiedCharacteristic(
-            characteristicId: Uuid.parse("2a29"),
-            serviceId: Uuid.parse("180a"),
-            deviceId: device.id))
-        .then((value) {
-      List<int> charCodes = value;
-      print("2a29 manufacturer namr " + String.fromCharCodes(charCodes));
-      print("2a29" + value.toString());
-      pairedDevice.manufacturerName = String.fromCharCodes(charCodes);
-    }); */
 
     subscribeScaleCharacteristic(device, pairedDevice);
   }

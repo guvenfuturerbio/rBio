@@ -75,7 +75,7 @@ class _ProgressStateDialogState extends State<ProgressStateDialog> {
                   SizedBox(
                     height: 16,
                   ),
-                  button(
+                  Utils.instance.button(
                       text: LocaleProvider.current.done,
                       onPressed: () {
                         Navigator.of(context).pushNamedAndRemoveUntil(

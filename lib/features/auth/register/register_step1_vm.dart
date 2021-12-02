@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/shared/consent_form/consent_form_dialog.dart';
+import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 
 import '../../../core/core.dart';

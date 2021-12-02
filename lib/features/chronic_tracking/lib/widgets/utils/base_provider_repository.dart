@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
-import 'package:onedosehealth/core/core.dart';
+import '../../../../../model/mediminder/strip_detail_model.dart';
+import '../../../../../core/core.dart';
 import '../../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../../core/locator.dart';
 import '../../models/bg_measurement/blood_glucose_report_body.dart';

@@ -1,7 +1,7 @@
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/service/symptom_api_service.dart';
-import 'package:onedosehealth/core/manager/shared_preferences_manager.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../../core.dart';
+import '../service/symptom_api_service.dart';
+import '../../manager/shared_preferences_manager.dart';
+import '../../../model/model.dart';
 
 class SymptomRepository {
   final SymptomApiService service;

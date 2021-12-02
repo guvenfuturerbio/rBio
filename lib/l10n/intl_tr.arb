@@ -703,5 +703,14 @@
   "login" : "Giriş",
   "login_page_text": "Sağlık sektörünün geleceği!",
   "sign_up_text": "Seni daha iyi tanıyalım!",
-  "tr_citizen" : "Türkiye vatandaşıyım"
+  "tr_citizen" : "Türkiye vatandaşıyım",
+
+  "no_permission" : "Kamera izni verilmedi.",
+  "discount_code": "İndirim kodu",
+  "price": "Fiyat",
+  "pay": "Ödeme yap",
+  "add_discount_code": "İndirim kodu ekle",
+  "apply_discount": "İndirim uygula",
+  "cancel_discount": "İndirimi iptal et",
+  "not_found": "Bulunamadı"
 }

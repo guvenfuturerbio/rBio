@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/core/extension/build_context_extension.dart';
-import 'package:onedosehealth/core/core.dart';
+import '../../../../../core/extension/build_context_extension.dart';
+import '../../../../../core/core.dart';
 import 'package:provider/provider.dart';
 
 import '../../../lib/core/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/profile/health_information/viewmodel/health_information_vm.dart';
+import '../../../../core/core.dart';
+import '../viewmodel/health_information_vm.dart';
 
 Widget _dropDownWidget(BuildContext context, HealthInformationVm vm) {
   return Container(

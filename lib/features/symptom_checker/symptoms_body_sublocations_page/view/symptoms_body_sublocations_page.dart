@@ -1,6 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
+import '../viewmodel/symptoms_body_sublocations_vm.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';

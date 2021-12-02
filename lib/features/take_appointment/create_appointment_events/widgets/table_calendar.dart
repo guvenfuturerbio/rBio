@@ -28,9 +28,8 @@ class _TableCalendarState extends State<_TableCalendar> {
         ),
       );
 
-  TextStyle get textStyle => Theme.of(context).textTheme.bodyText1.copyWith(
+  TextStyle get textStyle => context.xHeadline4.copyWith(
         color: Colors.black,
-        fontSize: 18,
       );
 
   DateTime _focusedDay;

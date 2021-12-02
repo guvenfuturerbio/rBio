@@ -709,5 +709,14 @@
   "login" : "Login",
   "login_page_text": "The future of healthcare!",
   "sign_up_text":"Let's know you better!",
-  "tr_citizen" : "I am a Turkish citizen"
+  "tr_citizen" : "I am a Turkish citizen",
+
+  "no_permission" : "Camera permission is not granted",
+  "discount_code": "Discount Code",
+  "price": "Fee",
+  "pay": "Make Payment",
+  "add_discount_code": "Add discount code",
+  "apply_discount": "Apply discount",
+  "cancel_discount": "Cancel discount",
+  "not_found": "Not Found"
 }

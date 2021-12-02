@@ -50,7 +50,7 @@ class _ListBodyState extends State<ListBody>
           Positioned.fill(
             child: Center(
               child: Text(
-                'Not Found!',
+                LocaleProvider.current.not_found,
                 style: context.xHeadline3,
               ),
             ),
@@ -104,7 +104,7 @@ class _ListBodyState extends State<ListBody>
               },
               child: RbioElevatedButton(
                 onTap: widget.onSubmit,
-                title: "Randevu Oluştur",
+                title: LocaleProvider.current.create_appointment_events,
                 fontWeight: FontWeight.bold,
               ),
             ),

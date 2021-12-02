@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/model/mediminder/person_model.dart';
+import '../../../../core/core.dart';
+import '../../../../model/mediminder/person_model.dart';
 
 class HealthInformationVm extends ChangeNotifier {
   bool _isSmoke = false;

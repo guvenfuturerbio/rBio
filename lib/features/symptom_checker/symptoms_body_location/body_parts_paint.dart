@@ -2,8 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../../../core/core.dart';
+import '../../../model/model.dart';
 import 'package:path_drawing/path_drawing.dart';
 
 class Shape {
