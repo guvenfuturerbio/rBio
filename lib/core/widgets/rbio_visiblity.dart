@@ -17,13 +17,11 @@ class RbioVisibility extends StatelessWidget {
   Widget build(BuildContext context) => isShow ? child : SizedBox();
 }
 
-abstract class AppConfig {
-  ITheme get theme;
-  bool get featureMessage;
-  bool get featureChronicTraking;
-}
-
 /// Toplantıda bahsedilecek konular:
-///  - [Tema] Uygulama'da hangi temalar olacak. Temaya göre uygulama mı çıkacak yoksa uygulama içerisinde diğer temalara geçiş olabilecek mi?
-///  - [Kullanıcı Tipleri] Kaç farklı tipte kullanıcı olacak? Örneğin; Doktor - Default User - Premium User. Hangi kullanıcı hangi sayfaları görüntüleyebilecek.
+///  - [Tema] 
+///     Uygulama'da hangi temalar olacak.
+///     Temaya göre uygulama mı çıkacak yoksa uygulama içerisinde diğer temalara geçiş olabilecek mi?
+///  - [Kullanıcı Tipleri]
+///     Kaç farklı tipte kullanıcı olacak?
+///     Örneğin; Doktor - Default User - Premium User. Hangi kullanıcı hangi sayfaları görüntüleyebilecek.
 ///  -

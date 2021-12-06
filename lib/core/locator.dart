@@ -25,7 +25,9 @@ import 'utils/user_info.dart';
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;
 
-Future<void> setupLocator() async {
+Future<void> setupLocator(AppConfig appConfig) async {
+  getIt.registerSingleton<AppConfig>(appConfig);
+
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   GuvenSettings settings = GuvenSettings(
     appName: packageInfo.appName,

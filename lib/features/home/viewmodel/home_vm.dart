@@ -224,78 +224,81 @@ class HomeVm extends ChangeNotifier {
         ),
 
         //
-        MyReorderableWidget(
-          key: _key2,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key2);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(
-                  PagePaths.CREATE_APPOINTMENT,
-                  queryParameters: {
-                    'forOnline': false.toString(),
-                  },
-                );
-              }
-            },
-            child: VerticalCard(
-              topImage: R.image.homeTopLeft,
-              bottomTitle: Text(
-                "Hastane Randevusu",
-                style: getIt<ITheme>().textTheme.headline2,
+        if (getIt<AppConfig>().takeHospitalAppointment)
+          MyReorderableWidget(
+            key: _key2,
+            body: GestureDetector(
+              onTap: () {
+                if (isForDelete) {
+                  addWidget(_key2);
+                } else if (status == ShakeMod.notShaken) {
+                  Atom.to(
+                    PagePaths.CREATE_APPOINTMENT,
+                    queryParameters: {
+                      'forOnline': false.toString(),
+                    },
+                  );
+                }
+              },
+              child: VerticalCard(
+                topImage: R.image.homeTopLeft,
+                bottomTitle: Text(
+                  "Hastane Randevusu",
+                  style: getIt<ITheme>().textTheme.headline2,
+                ),
               ),
             ),
           ),
-        ),
 
         //
-        MyReorderableWidget(
-          key: _key3,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key3);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(
-                  PagePaths.CREATE_APPOINTMENT,
-                  queryParameters: {
-                    'forOnline': true.toString(),
-                  },
-                );
-              }
-            },
-            child: VerticalCard(
-              topImage: R.image.homeTopMid,
-              bottomTitle: Text(
-                "Görüntülü Görüşme Randevusu",
-                style: getIt<ITheme>().textTheme.headline2,
+        if (getIt<AppConfig>().takeOnlineAppointment)
+          MyReorderableWidget(
+            key: _key3,
+            body: GestureDetector(
+              onTap: () {
+                if (isForDelete) {
+                  addWidget(_key3);
+                } else if (status == ShakeMod.notShaken) {
+                  Atom.to(
+                    PagePaths.CREATE_APPOINTMENT,
+                    queryParameters: {
+                      'forOnline': true.toString(),
+                    },
+                  );
+                }
+              },
+              child: VerticalCard(
+                topImage: R.image.homeTopMid,
+                bottomTitle: Text(
+                  "Görüntülü Görüşme Randevusu",
+                  style: getIt<ITheme>().textTheme.headline2,
+                ),
               ),
             ),
           ),
-        ),
 
         //
-        MyReorderableWidget(
-          key: _key4,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key4);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.MEASUREMENT_TRACKING);
-              }
-            },
-            child: VerticalCard(
-              topImage: R.image.homeTopRight,
-              bottomTitle: Text(
-                "Kronik\nTakip",
-                textAlign: TextAlign.start,
-                style: getIt<ITheme>().textTheme.headline2,
+        if (getIt<AppConfig>().chronicTracking)
+          MyReorderableWidget(
+            key: _key4,
+            body: GestureDetector(
+              onTap: () {
+                if (isForDelete) {
+                  addWidget(_key4);
+                } else if (status == ShakeMod.notShaken) {
+                  Atom.to(PagePaths.MEASUREMENT_TRACKING);
+                }
+              },
+              child: VerticalCard(
+                topImage: R.image.homeTopRight,
+                bottomTitle: Text(
+                  "Kronik\nTakip",
+                  textAlign: TextAlign.start,
+                  style: getIt<ITheme>().textTheme.headline2,
+                ),
               ),
             ),
           ),
-        ),
 
         //
         MyReorderableWidget(
@@ -355,25 +358,26 @@ class HomeVm extends ChangeNotifier {
         ),
 
         //
-        MyReorderableWidget(
-          key: _key8,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key8);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
-              }
-            },
-            child: VerticalCard(
-              topImage: R.image.homeBottomRight,
-              bottomTitle: Text(
-                "Hangi Bölüme Gitmeliyim",
-                style: getIt<ITheme>().textTheme.headline2,
+        if (getIt<AppConfig>().symptomChecker)
+          MyReorderableWidget(
+            key: _key8,
+            body: GestureDetector(
+              onTap: () {
+                if (isForDelete) {
+                  addWidget(_key8);
+                } else if (status == ShakeMod.notShaken) {
+                  Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
+                }
+              },
+              child: VerticalCard(
+                topImage: R.image.homeBottomRight,
+                bottomTitle: Text(
+                  "Hangi Bölüme Gitmeliyim",
+                  style: getIt<ITheme>().textTheme.headline2,
+                ),
               ),
             ),
           ),
-        ),
       ];
 }
 
