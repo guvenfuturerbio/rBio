@@ -1,6 +1,7 @@
 export 'package:atom/atom.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 export 'package:onedosehealth/generated/l10n.dart';
+export 'package:onedosehealth/app_config/app_config.dart';
 
 export "constants/constants.dart";
 export "data/helper/dio_helper.dart";

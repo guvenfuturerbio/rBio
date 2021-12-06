@@ -15,11 +15,11 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
 import '../../features/shared/do_not_show_again_dialog.dart';
-import '../../model/mediminder/person_model.dart';
 import '../../model/model.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';
@@ -1044,4 +1044,5 @@ class _ProgressDialogState extends State<ProgressDialog> {
         begin: Alignment.bottomLeft,
         end: Alignment.centerRight,
       );
+
 }

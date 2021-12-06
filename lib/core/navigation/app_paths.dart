@@ -1,32 +1,20 @@
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
-import '../../features/account/ada/ada_symptom_analyzer.dart';
-import '../../features/account/add_patient_relatives/add_patient_relatives_screen.dart';
-import '../../features/account/all_files/all_files_screen.dart';
-import '../../features/account/change_password/change_password_screen.dart';
-import '../../features/account/followers/view/followers_screen.dart';
-import '../../features/account/full_image_viewer_screen.dart';
-import '../../features/account/profile_image_viewer_screen.dart';
-import '../../features/account/youtube/youtube_viewer_mobile_screen.dart';
-import '../../features/account/youtube/youtube_viewer_web_screen.dart';
-import '../../features/appointments/patient_appointments_screen.dart';
-import '../../features/appointments/web_conferance_screen.dart';
-import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
-import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
-import '../../features/auth/login/login_screen.dart';
-import '../../features/auth/register/register_step2_screen.dart';
-import '../../features/auth/register/register_step3_screen.dart';
-import '../../features/auth/register/register_step1_screen.dart';
+import '../../features/auth/auth.dart';
+import '../../features/auth/view/change_password_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
-import '../../features/mediminder/ui/hba1c/add_hba1c/view/hba1c_reminder_add_screen.dart';
-import '../../features/mediminder/ui/hba1c/list_hba1c/view/hba1c_reminderlist_screen.dart';
-import '../../features/mediminder/ui/home/home_mediminder_screen.dart';
-import '../../features/mediminder/ui/medication/medication_date/view/medication_date_screen.dart';
-import '../../features/mediminder/ui/medication/medication_period/medication_period_selection_screen.dart';
-import '../../features/mediminder/ui/medication/medication_screen/view/medication_screen.dart';
-import '../../features/mediminder/ui/strip/view/strip_screen.dart';
+import '../../features/mediminder/view/hba1c_reminder_add_screen.dart';
+import '../../features/mediminder/view/hba1c_reminderlist_screen.dart';
+import '../../features/mediminder/view/home_mediminder_screen.dart';
+import '../../features/mediminder/view/medication_date_screen.dart';
+import '../../features/mediminder/view/medication_period_selection_screen.dart';
+import '../../features/mediminder/view/medication_screen.dart';
+import '../../features/mediminder/view/strip_screen.dart';
+import '../../features/my_appointments/all_files_screen.dart';
+import '../../features/my_appointments/appointment_list_screen.dart';
+import '../../features/my_appointments/web_conferance_screen.dart';
 import '../../features/profile/devices/view/devices_screen.dart';
 import '../../features/profile/devices/viewmodel/devices_vm.dart';
 import '../../features/profile/health_information/view/health_information.dart';
@@ -34,9 +22,8 @@ import '../../features/profile/health_information/viewmodel/health_information_v
 import '../../features/profile/personal_information/view/personal_information_screen.dart';
 import '../../features/profile/profile/view/profile_screen.dart';
 import '../../features/profile/profile/viewmodel/profile_vm.dart';
-import '../../features/profile/relatives/view/relatives_screen.dart';
-import '../../features/profile/relatives/viewmodel/relatives_vm.dart';
 import '../../features/profile/request_suggestions/view/request_suggestions_screen.dart';
+import '../../features/relatives/relatives.dart';
 import '../../features/results/e_result_screen.dart';
 import '../../features/results/e_result_vm.dart';
 import '../../features/results/visit_detail_screen.dart';
@@ -58,6 +45,7 @@ import '../../features/take_appointment/create_appointment/view/create_appointme
 import '../../features/take_appointment/create_appointment_events/view/create_appointment_events_screen.dart';
 import '../../features/take_appointment/create_appointment_summary/view/create_appointment_summary_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
+import '../core.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -87,23 +75,33 @@ class VRouterRoutes {
       ),
     ),
 
-    VWidget(
-      path: PagePaths.FOLLOWERS,
-      widget: FollowersScreen(),
-    ),
-
     // Create Appointment
-    VWidget(
-      path: PagePaths.CREATE_APPOINTMENT,
-      widget: CreateAppointmentScreen(),
+    VGuard(
+      beforeEnter: (vRedirector) async {
+        if (vRedirector.toUrl.contains('forOnline=true')) {
+          if (!getIt<AppConfig>().takeOnlineAppointment) {
+            vRedirector.to(PagePaths.MAIN);
+          }
+        } else if (vRedirector.toUrl.contains('forOnline=false')) {
+          if (!getIt<AppConfig>().takeHospitalAppointment) {
+            vRedirector.to(PagePaths.MAIN);
+          }
+        }
+      },
       stackedRoutes: [
         VWidget(
-          path: PagePaths.CREATE_APPOINTMENT_EVENTS,
-          widget: CreateAppointmentEventsScreen(),
+          path: PagePaths.CREATE_APPOINTMENT,
+          widget: CreateAppointmentScreen(),
           stackedRoutes: [
             VWidget(
-              path: PagePaths.CREATE_APPOINTMENT_SUMMARY,
-              widget: CreateAppointmentSummaryScreen(),
+              path: PagePaths.CREATE_APPOINTMENT_EVENTS,
+              widget: CreateAppointmentEventsScreen(),
+              stackedRoutes: [
+                VWidget(
+                  path: PagePaths.CREATE_APPOINTMENT_SUMMARY,
+                  widget: CreateAppointmentSummaryScreen(),
+                ),
+              ],
             ),
           ],
         ),
@@ -203,7 +201,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.APPOINTMENTS,
-      widget: PatientAppointmentsScreen(true),
+      widget: AppointmentListScreen(true),
     ),
 
     VWidget(
@@ -217,38 +215,13 @@ class VRouterRoutes {
     ),
 
     VWidget(
-      path: PagePaths.YOUTUBEVIEWERMOBILE,
-      widget: YoutubeViewerMobileScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.YOUTUBEVIEWERWEB,
-      widget: YoutubeViewerWebScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.ADASYMPTOMANALYZER,
-      widget: AdaSymptomAnalyzerScreen(),
-    ),
-
-    VWidget(
       path: PagePaths.WEBVIEW,
       widget: WebViewScreen(),
     ),
 
     VWidget(
-      path: PagePaths.PROFILEIMAGEVIEWER,
-      widget: ProfileImageViewerScreen(),
-    ),
-
-    VWidget(
       path: PagePaths.ADDPATIENTRELATIVES,
       widget: AddPatientRelativesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.FULLIMAGEVIEWER,
-      widget: FullImageViewerScreen(),
     ),
 
     VWidget(
@@ -262,29 +235,34 @@ class VRouterRoutes {
     ),
 
     // Symptom Checker
-    VWidget(
-      path: PagePaths.SYMPTOM_MAIN_MENU,
-      widget: SymptomsHomeScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.SYMPTOM_BODY_LOCATIONS,
-      widget: SymptomsBodyLocationsScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
-      widget: BodySubLocationsPage(),
-    ),
-
-    VWidget(
-      path: PagePaths.SYMPTOM_SELECT_PAGE,
-      widget: BodySymptomsSelectionPage(),
-    ),
-
-    VWidget(
-      path: PagePaths.SYMPTOM_RESULT_PAGE,
-      widget: SymptomsResultPage(),
+    VGuard(
+      beforeEnter: (vRedirector) async {
+        if (!getIt<AppConfig>().symptomChecker) {
+          vRedirector.to(PagePaths.MAIN);
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.SYMPTOM_MAIN_MENU,
+          widget: SymptomsHomeScreen(),
+        ),
+        VWidget(
+          path: PagePaths.SYMPTOM_BODY_LOCATIONS,
+          widget: SymptomsBodyLocationsScreen(),
+        ),
+        VWidget(
+          path: PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
+          widget: BodySubLocationsPage(),
+        ),
+        VWidget(
+          path: PagePaths.SYMPTOM_SELECT_PAGE,
+          widget: BodySymptomsSelectionPage(),
+        ),
+        VWidget(
+          path: PagePaths.SYMPTOM_RESULT_PAGE,
+          widget: SymptomsResultPage(),
+        ),
+      ],
     ),
 
     VWidget(
@@ -297,44 +275,47 @@ class VRouterRoutes {
       widget: RequestSuggestionsScreen(),
     ),
 
-    VWidget(
-      path: PagePaths.MEDIMINDER_INITIAL,
-      widget: HomeMediminderScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.MEDICATION_SCREEN,
-      widget: MedicationScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.MEDICATION_PERIOD,
-      widget: MedicationPeriodSelectionScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.MEDICATION_DATE,
-      widget: MedicationDateScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.HBA1C_REMINDER_ADD,
-      widget: Hba1cReminderAddScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.HBA1C_LIST,
-      widget: Hba1cReminderListScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.BLOOD_GLUCOSE_PAGE,
-      widget: MedicationScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.STRIP_PAGE,
-      widget: StripScreen(),
+    // Mediminder
+    VGuard(
+      beforeEnter: (vRedirector) async {
+        if (!getIt<AppConfig>().mediminder) {
+          vRedirector.to(PagePaths.MAIN);
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.MEDIMINDER_INITIAL,
+          widget: HomeMediminderScreen(),
+        ),
+        VWidget(
+          path: PagePaths.MEDICATION_SCREEN,
+          widget: MedicationScreen(),
+        ),
+        VWidget(
+          path: PagePaths.MEDICATION_PERIOD,
+          widget: MedicationPeriodSelectionScreen(),
+        ),
+        VWidget(
+          path: PagePaths.MEDICATION_DATE,
+          widget: MedicationDateScreen(),
+        ),
+        VWidget(
+          path: PagePaths.HBA1C_REMINDER_ADD,
+          widget: Hba1cReminderAddScreen(),
+        ),
+        VWidget(
+          path: PagePaths.HBA1C_LIST,
+          widget: Hba1cReminderListScreen(),
+        ),
+        VWidget(
+          path: PagePaths.BLOOD_GLUCOSE_PAGE,
+          widget: MedicationScreen(),
+        ),
+        VWidget(
+          path: PagePaths.STRIP_PAGE,
+          widget: StripScreen(),
+        ),
+      ],
     ),
 
     VWidget(
@@ -393,7 +374,6 @@ class PagePaths {
   static const CREDIT_CARD = '/credit-card';
   static const YOUTUBEVIEWERMOBILE = '/stream';
   static const YOUTUBEVIEWERWEB = '/stream';
-  static const ADASYMPTOMANALYZER = '/adasymptom-analyzer';
   static const WEBVIEW = '/webview';
   static const PROFILEIMAGEVIEWER = '/profile-image';
   static const ADDPATIENTRELATIVES = '/add-patient-relatives';

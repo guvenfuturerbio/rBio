@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../../../model/mediminder/strip_detail_model.dart';
+import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import '../../../../../core/core.dart';
 import '../../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../../core/locator.dart';
