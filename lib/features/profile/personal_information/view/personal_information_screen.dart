@@ -32,7 +32,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         builder: (context, value, child) {
           return RbioScaffold(
             appbar: RbioAppBar(
-              title: value.getTitleBar(context),
+              title: RbioAppBar.textTitle(
+                context,
+                LocaleProvider.of(context).lbl_personal_information,
+              ),
             ),
             body: _builBody(context, value),
           );

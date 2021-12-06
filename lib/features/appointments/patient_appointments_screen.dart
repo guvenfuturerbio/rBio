@@ -27,22 +27,24 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PatientAppointmentsScreenVm>(
       create: (context) => PatientAppointmentsScreenVm(context: context),
-      child: Consumer<PatientAppointmentsScreenVm>(builder: (
-        BuildContext context,
-        PatientAppointmentsScreenVm value,
-        Widget child,
-      ) {
-        return RbioScaffold(
-          appbar: widget.showAppbar
-              ? RbioAppBar(
-                  title: RbioAppBar.textTitle(
-                      context, LocaleProvider.of(context).my_appointments),
-                  actions: getActions(context),
-                )
-              : null,
-          body: _buildBody(value),
-        );
-      }),
+      child: Consumer<PatientAppointmentsScreenVm>(
+        builder: (
+          BuildContext context,
+          PatientAppointmentsScreenVm vm,
+          Widget child,
+        ) {
+          return RbioScaffold(
+            appbar: widget.showAppbar
+                ? RbioAppBar(
+                    title: RbioAppBar.textTitle(
+                        context, LocaleProvider.of(context).my_appointments),
+                    actions: getActions(context),
+                  )
+                : null,
+            body: _buildBody(vm),
+          );
+        },
+      ),
     );
   }
 
@@ -63,15 +65,15 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     ];
   }
 
-  Widget _buildBody(PatientAppointmentsScreenVm value) {
-    switch (value.progress) {
+  Widget _buildBody(PatientAppointmentsScreenVm vm) {
+    switch (vm.progress) {
       case LoadingProgress.LOADING:
         return RbioLoading();
 
       case LoadingProgress.DONE:
         return RbioLoadingOverlay(
-          child: _buildPosts(context, value.patientAppointments, value),
-          isLoading: value.showProgressOverlay,
+          child: _buildPosts(vm.patientAppointments, vm),
+          isLoading: vm.showProgressOverlay,
           progressIndicator: RbioLoading.progressIndicator(),
           opacity: 0,
         );
@@ -85,9 +87,8 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   }
 
   Widget _buildPosts(
-    BuildContext context,
     List<PatientAppointmentsResponse> posts,
-    PatientAppointmentsScreenVm value,
+    PatientAppointmentsScreenVm vm,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,13 +105,13 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         Container(
           margin: EdgeInsets.only(left: 8, top: 8, right: 8),
           child: GuvenDateRange(
-            startCurrentDate: value.startDate,
+            startCurrentDate: vm.startDate,
             onStartDateChange: (date) {
-              value.setStartDate(date);
+              vm.setStartDate(date);
             },
-            endCurrentDate: value.endDate,
+            endCurrentDate: vm.endDate,
             onEndDateChange: (date) {
-              value.setEndDate(date);
+              vm.setEndDate(date);
             },
           ),
         ),
@@ -121,14 +122,12 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         //
         Expanded(
           child: ListView.builder(
+            padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
             physics: BouncingScrollPhysics(),
             itemCount: posts.length,
-            itemBuilder: (
-              BuildContext context,
-              int index,
-            ) {
-              return _buildCard(context, posts[index], value);
+            itemBuilder: (BuildContext context, int index) {
+              return _buildCard(vm, posts[index]);
             },
           ),
         ),
@@ -137,100 +136,39 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   }
 
   Widget _buildCard(
-    BuildContext context,
+    PatientAppointmentsScreenVm vm,
     PatientAppointmentsResponse data,
-    PatientAppointmentsScreenVm value,
   ) {
-    return Consumer<PatientAppointmentsScreenVm>(
-      builder: (
-        BuildContext context,
-        PatientAppointmentsScreenVm value,
-        Widget child,
-      ) {
-        return RbioCardAppoCard.appointment(
-          bannerColor: DateTime.parse(data.from).isAfter(DateTime.now())
-              ? getIt<ITheme>().mainColor
-              : null,
-          tenantName: data.tenant,
-          doctorName: data.resources[0].resource,
-          departmentName: data.resources[0].department,
-          date: _getFormattedDate(data.from.substring(0, 10)),
-          time: data.from.substring(11, 16),
-          suffix: data.type != R.dynamicVar.onlineAppointmentType &&
-                  DateTime.parse(data.from).isAfter(DateTime.now())
-              ? InkWell(
-                  onTap: () {
-                    value.handleAppointment(data);
-                  },
-                  child: Container(
-                    color: Colors.red,
-                    height: double.infinity,
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      LocaleProvider.current.cancel,
-                      style: context.xHeadline1.copyWith(color: R.color.white),
-                    ),
+    return RbioCardAppoCard.appointment(
+      isActiveHeader:
+          DateTime.parse(data.from).isAfter(DateTime.now()) ? true : false,
+      tenantName: data.tenant,
+      doctorName: data.resources[0].resource,
+      departmentName: data.resources[0].department,
+      date: _getFormattedDate(data.from.substring(0, 10)),
+      time: data.from.substring(11, 16),
+      suffix: data.type != R.dynamicVar.onlineAppointmentType &&
+              DateTime.parse(data.from).isAfter(DateTime.now())
+          ? InkWell(
+              onTap: () {
+                vm.handleAppointment(data);
+              },
+              child: Container(
+                color: Colors.red,
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  LocaleProvider.current.cancel,
+                  style: context.xHeadline3.copyWith(
+                    color: getIt<ITheme>().textColor,
                   ),
-                )
-              : SizedBox(),
-          bottomButtons: data.type == R.dynamicVar.onlineAppointmentType
-              ? DateTime.parse(data.from).isBefore(DateTime.now())
-                  ? [
-                      RbioElevatedButton(
-                          title: "\tRate\t",
-                          onTap: () {
-                            value.showRateDialog(data.id);
-                          })
-                    ]
-                  : [
-                      RbioElevatedButton(
-                        title: "Upload\nFile",
-                        onTap: () async {
-                          Uint8List fileBytes = await value.getSelectedFile();
+                ),
+              ),
+            )
+          : SizedBox(),
 
-                          if (fileBytes != null) {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (BuildContext context) {
-                                return GuvenAlert(
-                                  backgroundColor: Colors.white,
-                                  title: GuvenAlert.buildTitle(
-                                    LocaleProvider().upload_file_question,
-                                  ),
-                                  actions: [
-                                    GuvenAlert.buildMaterialAction(
-                                      LocaleProvider.of(context).confirm,
-                                      () async {
-                                        await value.uploadFile(fileBytes);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                  content: SizedBox(),
-                                );
-                              },
-                            );
-                          }
-                        },
-                      ),
-                      RbioElevatedButton(
-                        title: "Request\nTranslator",
-                        onTap: () {
-                          value.showTranslatorSelector(data.id.toString());
-                        },
-                      ),
-                      RbioElevatedButton(
-                        title: "Start\nMeeting",
-                        onTap: () {
-                          value.handleAppointment(data);
-                        },
-                      )
-                    ]
-              : [],
-        );
-      },
+      //
+      footer: _buildCardFooter(vm, data),
     );
   }
 
@@ -238,5 +176,100 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     var parsedDate = DateTime.parse(date);
     String textDate = new DateFormat("d MMMM yyyy").format(parsedDate);
     return textDate;
+  }
+
+  Widget _buildCardFooter(
+    PatientAppointmentsScreenVm value,
+    PatientAppointmentsResponse data,
+  ) {
+    if (data.type == R.dynamicVar.onlineAppointmentType) {
+      if (DateTime.parse(data.from).isBefore(DateTime.now())) {
+        return Row(
+          children: [
+            RbioElevatedButton(
+              title: "\tRate\t",
+              onTap: () {
+                value.showRateDialog(data.id);
+              },
+            ),
+          ],
+        );
+      } else {
+        return Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Wrap(
+              spacing: 4,
+              alignment: WrapAlignment.center,
+              runAlignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                RbioElevatedButton(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 2.0,
+                  ),
+                  title: "Upload\nFile",
+                  onTap: () async {
+                    Uint8List fileBytes = await value.getSelectedFile();
+
+                    if (fileBytes != null) {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return GuvenAlert(
+                            backgroundColor: Colors.white,
+                            title: GuvenAlert.buildTitle(
+                              LocaleProvider().upload_file_question,
+                            ),
+                            actions: [
+                              GuvenAlert.buildMaterialAction(
+                                LocaleProvider.of(context).confirm,
+                                () async {
+                                  await value.uploadFile(fileBytes);
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                            content: SizedBox(),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
+
+                //
+                RbioElevatedButton(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 2.0,
+                  ),
+                  title: "Request\nTranslator",
+                  onTap: () {
+                    value.showTranslatorSelector(data.id.toString());
+                  },
+                ),
+
+                //
+                RbioElevatedButton(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 2.0,
+                  ),
+                  title: "Start\nMeeting",
+                  onTap: () {
+                    value.handleAppointment(data);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    } else {
+      return null;
+    }
   }
 }

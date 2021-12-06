@@ -717,5 +717,8 @@
   "add_discount_code": "Add discount code",
   "apply_discount": "Apply discount",
   "cancel_discount": "Cancel discount",
-  "not_found": "Not Found"
+  "not_found": "Not Found",
+  "something_went_wrong" : "Oops. Something went wrong!",
+  "turn_back": "Turn Back",
+  "waiting": "Waiting"
 }

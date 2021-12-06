@@ -18,9 +18,9 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
           preferredSize: Size.fromHeight(64),
           child: AppBar(
             toolbarHeight: 64,
-            actions: actions,
             centerTitle: true,
             elevation: 0,
+            backgroundColor: getIt<ITheme>().mainColor,
 
             //
             leading: leading ??
@@ -55,12 +55,28 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                 ),
 
             //
-            backgroundColor: getIt<ITheme>().mainColor,
-            // shape: RoundedRectangleBorder(
-            //   borderRadius: BorderRadius.vertical(
-            //     bottom: Radius.circular(15),
-            //   ),
-            // ),
+            actions: actions ??
+                [
+                  if (title == null) ...[
+                    Opacity(
+                      opacity: 0,
+                      child: AbsorbPointer(
+                        absorbing: true,
+                        child: InkWell(
+                          child: Container(
+                            color: Colors.transparent,
+                            padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+                            child: SvgPicture.asset(
+                              R.image.back_icon,
+                              width: R.sizes.iconSize,
+                            ),
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
           ),
         );
 

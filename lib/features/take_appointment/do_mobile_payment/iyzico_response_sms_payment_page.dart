@@ -58,9 +58,8 @@ class _IyzicoResponseSmsPaymentScreenState
       create: (context) => IyzicoResponseVm(widget.uid),
       child: Consumer<IyzicoResponseVm>(
         builder: (context, vm, child) {
-          return Scaffold(
-            appBar:
-                MainAppBar(context: context, leading: ButtonBackWhite(context)),
+          return RbioScaffold(
+            appbar: RbioAppBar(),
             body: kIsWeb
                 ? HtmlElementView(
                     viewType: "PayPalButtons",

@@ -153,11 +153,6 @@ class ChangePasswordScreenVm extends ChangeNotifier {
     }
   }
 
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(
-        title: LocaleProvider.of(this.mContext).change_password);
-  }
-
   void showGradientDialog(BuildContext context, String title, String text) {
     showDialog(
       context: this.mContext,

@@ -26,34 +26,25 @@ class FullImageViewerScreen extends StatelessWidget {
       return RbioRouteError();
     }
 
-    return Scaffold(
-      appBar: _buildAppBar(context),
+    return RbioScaffold(
+      appbar: _buildAppBar(context),
       body: PhotoView(imageProvider: FileImage(File(imagePath))),
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Text(
-        title,
-        textAlign: TextAlign.center,
-      ),
-      leading: IconButton(
-        onPressed: () {
-          Atom.historyBack();
-        },
-        icon: SvgPicture.asset(R.image.ic_back_white),
-      ),
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(context, title),
       actions: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: 20),
+          padding: EdgeInsets.only(right: 15),
           child: GestureDetector(
             onTap: () => {shareFile(context, this.imagePath)},
             child: Platform.isIOS
                 ? SvgPicture.asset(R.image.ic_ios_share)
                 : SvgPicture.asset(R.image.ic_android_share),
           ),
-        )
+        ),
       ],
     );
   }

@@ -85,7 +85,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         value.imageUrl,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
-                          return CustomCircleAvatar(
+                          return Utils.instance.CustomCircleAvatar(
                             size: 120,
                             child: SvgPicture.asset(
                               R.image.doctor_avatar,
@@ -96,7 +96,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null)
-                            return CustomCircleAvatar(
+                            return Utils.instance.CustomCircleAvatar(
                                 child: Container(
                                   child: child,
                                 ),
@@ -115,7 +115,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                           ));
                         },
                       )
-                    : CustomCircleAvatar(
+                    : Utils.instance.CustomCircleAvatar(
                         size: 120,
                         child: SvgPicture.asset(
                           R.image.doctor_avatar,

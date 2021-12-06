@@ -29,7 +29,8 @@ class _Images {
   final video_icon_80 = 'assets/images/new/video_icon_80.svg';
   final video_icon = 'assets/images/new/video_icon.svg';
   final weight_icon = 'assets/images/new/weight_icon.svg';
-  final oops = 'assets/images/new/oopps.svg';
+  // final oops = 'assets/images/new/oopps.svg';
+  final error_icon = 'assets/images/new/error_icon.svg';
 
   final homeTopLeft = "assets/images/top_left.png";
   final homeTopMid = "assets/images/top_mid.png";
@@ -296,7 +297,6 @@ class _Images {
   final android_share = "assets/images/android_share.svg";
   final email_app_bar = "assets/images/login_pic.svg";
   final success_icon = "assets/images/success_icon.svg";
-  final error_icon = "assets/images/error_icon.svg";
   final top_bg_blue = "assets/images/blue_signin_topbar.svg";
   final grafik_arkasi = 'assets/images/grafikarkasilogo.svg';
   final login_screen_bg = "assets/images/mavi_bg_login.svg";

@@ -60,7 +60,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                         doNotAskAgain = val;
                       });
                     },
-                    activeColor: R.color.blue,
+                    activeColor: getIt<ITheme>().mainColor,
                   ),
                 ),
 
