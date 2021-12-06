@@ -4,6 +4,7 @@ import '../core.dart';
 
 enum ThemeType {
   Green,
+  Burgundy,
 }
 
 extension ThemeTypeStringExt on String {
@@ -18,6 +19,9 @@ extension ThemeTypeExt on ThemeType {
     switch (this) {
       case ThemeType.Green:
         return GreenTheme();
+
+      case ThemeType.Burgundy:
+        return BurgundyTheme();
 
       default:
         return GreenTheme();

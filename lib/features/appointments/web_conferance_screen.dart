@@ -39,21 +39,14 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
       return RbioRouteError();
     }
 
-    return Scaffold(
-      appBar: _buildAppBar(),
+    return RbioScaffold(
+      appbar: RbioAppBar(),
       body: _buildBody(),
     );
   }
 
-  PreferredSize _buildAppBar() {
-    return MainAppBar(
-      context: context,
-      leading: ButtonBackWhite(context),
-    );
-  }
-
   Widget _buildBody() {
-    return Container(
+    return SizedBox(
       width: Atom.size.width,
       height: Atom.size.height,
       child: Padding(

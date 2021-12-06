@@ -19,10 +19,12 @@ class ThemeNotifier extends ChangeNotifier {
     getIt.registerSingleton<ITheme>(theme);
   }
 
-  Future<void> changeTheme(ITheme theme) async {
-    this.theme = theme;
+  // context.read<ThemeNotifier>().changeTheme(ThemeType.Burgundy);
+  Future<void> changeTheme(ThemeType type) async {
+    theme = type.xGetTheme;
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.THEME, theme.type.xRawValue);
+        .setString(SharedPreferencesKeys.THEME, type.xRawValue);
+    getIt.unregister<ITheme>();
     getIt.registerSingleton<ITheme>(theme);
     notifyListeners();
   }

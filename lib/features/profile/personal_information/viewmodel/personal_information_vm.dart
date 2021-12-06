@@ -14,10 +14,11 @@ class PersonalInformationScreenVm extends ChangeNotifier {
   }
 
   Future<void> showUpdatePhoneNumberDialog(
-      TextEditingController controller) async {
+    TextEditingController controller,
+  ) async {
     Get.defaultDialog(
       title: "Update your phone number",
-      titleStyle: TextStyle(color: R.color.blue),
+      titleStyle: TextStyle(color: getIt<ITheme>().mainColor),
       content: SingleChildScrollView(
           child: TextFormField(
         autovalidateMode: AutovalidateMode.always,
@@ -27,7 +28,12 @@ class PersonalInformationScreenVm extends ChangeNotifier {
       )),
       actions: <Widget>[
         TextButton(
-          child: Text('Update', style: TextStyle(color: R.color.blue)),
+          child: Text(
+            'Update',
+            style: TextStyle(
+              color: getIt<ITheme>().mainColor,
+            ),
+          ),
           onPressed: () async {
             try {
               PatientResponse patient =
@@ -48,16 +54,21 @@ class PersonalInformationScreenVm extends ChangeNotifier {
               changeInfo.passportNumber = patient.passportNumber;
               await getIt<Repository>().updateContactInfo(changeInfo);
             } catch (error) {
-              Future.delayed(const Duration(milliseconds: 500), () {
-                showGradientDialog(
-                  this.mContext,
-                  LocaleProvider.of(this.mContext).warning,
-                  error.toString() == "network"
-                      ? LocaleProvider.of(this.mContext).no_network_connection
-                      : LocaleProvider.of(this.mContext).sorry_dont_transaction,
-                );
-              });
+              Future.delayed(
+                const Duration(milliseconds: 500),
+                () {
+                  showGradientDialog(
+                    this.mContext,
+                    LocaleProvider.of(this.mContext).warning,
+                    error.toString() == "network"
+                        ? LocaleProvider.of(this.mContext).no_network_connection
+                        : LocaleProvider.of(this.mContext)
+                            .sorry_dont_transaction,
+                  );
+                },
+              );
             }
+
             Navigator.of(this.mContext).pop();
           },
         ),
@@ -68,7 +79,7 @@ class PersonalInformationScreenVm extends ChangeNotifier {
   Future<void> showUpdateEmailDialog(TextEditingController controller) async {
     Get.defaultDialog(
       title: "Update your email",
-      titleStyle: TextStyle(color: R.color.blue),
+      titleStyle: TextStyle(color: getIt<ITheme>().mainColor),
       content: SingleChildScrollView(
           child: TextFormField(
         autovalidateMode: AutovalidateMode.always,
@@ -80,7 +91,9 @@ class PersonalInformationScreenVm extends ChangeNotifier {
         TextButton(
           child: Text(
             'Update',
-            style: TextStyle(color: R.color.blue),
+            style: TextStyle(
+              color: getIt<ITheme>().mainColor,
+            ),
           ),
           onPressed: () async {
             try {
@@ -102,16 +115,21 @@ class PersonalInformationScreenVm extends ChangeNotifier {
               changeInfo.passportNumber = patient.passportNumber;
               await getIt<Repository>().updateContactInfo(changeInfo);
             } catch (error) {
-              Future.delayed(const Duration(milliseconds: 500), () {
-                showGradientDialog(
-                  this.mContext,
-                  LocaleProvider.of(this.mContext).warning,
-                  error.toString() == "network"
-                      ? LocaleProvider.of(this.mContext).no_network_connection
-                      : LocaleProvider.of(this.mContext).sorry_dont_transaction,
-                );
-              });
+              Future.delayed(
+                const Duration(milliseconds: 500),
+                () {
+                  showGradientDialog(
+                    this.mContext,
+                    LocaleProvider.of(this.mContext).warning,
+                    error.toString() == "network"
+                        ? LocaleProvider.of(this.mContext).no_network_connection
+                        : LocaleProvider.of(this.mContext)
+                            .sorry_dont_transaction,
+                  );
+                },
+              );
             }
+
             Navigator.of(this.mContext).pop();
           },
         ),
@@ -126,12 +144,6 @@ class PersonalInformationScreenVm extends ChangeNotifier {
       builder: (BuildContext context) {
         return WarningDialog(title, text);
       },
-    );
-  }
-
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(
-      title: LocaleProvider.of(context).lbl_personal_information,
     );
   }
 

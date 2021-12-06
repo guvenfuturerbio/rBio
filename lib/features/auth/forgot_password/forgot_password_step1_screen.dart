@@ -22,12 +22,15 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
     return ChangeNotifierProvider<ForgotPasswordStep1ScreenVm>(
       create: (context) => ForgotPasswordStep1ScreenVm(context: context),
       child: Consumer<ForgotPasswordStep1ScreenVm>(
-        builder: (BuildContext context, ForgotPasswordStep1ScreenVm value,
-            Widget child) {
+        builder: (
+          BuildContext context,
+          ForgotPasswordStep1ScreenVm value,
+          Widget child,
+        ) {
           return KeyboardDismissOnTap(
-            child: Scaffold(
+            child: RbioScaffold(
               resizeToAvoidBottomInset: true,
-              appBar: RbioAppBarLogin(),
+              appbar: RbioAppBarLogin(),
               body: _buildBody(context, value),
             ),
           );
@@ -233,7 +236,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                           ),
                         ),
                         onTap: () {
-                          Atom.to(PagePaths.REGISTER_STEP_1);
+                          Atom.to(PagePaths.REGISTER_STEP_2);
                         },
                       )
                     ],

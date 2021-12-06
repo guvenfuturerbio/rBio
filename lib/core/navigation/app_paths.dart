@@ -15,10 +15,9 @@ import '../../features/appointments/web_conferance_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step1_screen.dart';
 import '../../features/auth/forgot_password/forgot_password_step2_screen.dart';
 import '../../features/auth/login/login_screen.dart';
-import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
-import '../../features/auth/register/register_step_1_1.dart';
+import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/mediminder/ui/hba1c/add_hba1c/view/hba1c_reminder_add_screen.dart';
@@ -113,11 +112,6 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.REGISTER_FIRST,
-      widget: RegisterStep1_1Screen(),
-    ),
-
-    VWidget(
-      path: PagePaths.REGISTER_STEP_1,
       widget: RegisterStep1Screen(),
     ),
 
@@ -373,13 +367,12 @@ class PagePaths {
 
   static const LOGIN = '/login';
   static const REGISTER_FIRST = '/register-first';
-  static const REGISTER_STEP_1 = '/register-1';
   static const REGISTER_STEP_2 = '/register-2';
   static const REGISTER_STEP_3 = '/register-3';
   static const FORGOT_PASSWORD_STEP_1 = '/forgot-password';
   static const FORGOT_PASSWORD_STEP_2 = '/change-password-with-old';
-  static const APPOINTMENT_SUMMARY = '/appointment-summary';
   static const DOCTOR_CV = '/doctor-cv';
+  static const APPOINTMENT_SUMMARY = '/appointment-summary';
 
   static const COVID19 = '/covid19';
   static const ERESULT = '/results';

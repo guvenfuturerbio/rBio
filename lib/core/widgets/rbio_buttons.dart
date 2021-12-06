@@ -11,6 +11,7 @@ class RbioElevatedButton extends StatelessWidget {
   final Color backColor;
   final Color textColor;
   final bool showElevation;
+  final EdgeInsetsGeometry padding;
 
   const RbioElevatedButton({
     Key key,
@@ -21,6 +22,7 @@ class RbioElevatedButton extends StatelessWidget {
     this.backColor,
     this.textColor,
     this.showElevation = true,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -38,10 +40,8 @@ class RbioElevatedButton extends StatelessWidget {
           elevation: showElevation ? null : 0,
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 12.0,
-          ),
+          padding: padding ??
+              defaultPadding(),
           child: Text(
             title,
             textAlign: TextAlign.center,
@@ -54,5 +54,15 @@ class RbioElevatedButton extends StatelessWidget {
       ),
     );
   }
+
+  static EdgeInsets defaultPadding() => const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 12.0,
+      );
+
+  static EdgeInsets minPadding() => const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 5.0,
+      );
 }
 // #endregion

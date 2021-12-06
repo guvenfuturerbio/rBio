@@ -67,7 +67,7 @@ class _RateDialogState extends State<RateDialog> {
                         itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
-                          color: R.color.blue,
+                          color: getIt<ITheme>().mainColor,
                         ),
                         onRatingUpdate: (rating) {
                           value.setVideoQuality(rating.toInt());
@@ -102,7 +102,7 @@ class _RateDialogState extends State<RateDialog> {
                         itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
-                          color: R.color.blue,
+                          color: getIt<ITheme>().mainColor,
                         ),
                         onRatingUpdate: (rating) {
                           value.setDoctorQuality(rating.toInt());

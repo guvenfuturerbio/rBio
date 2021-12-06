@@ -71,6 +71,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final bgProgressPage = BgProgressPageViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,8 +103,11 @@ class _MyAppState extends State<MyApp> {
             value: ScaleMeasurementNotifier(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
-              value: BgProgressPageViewModel()),
+            value: BgProgressPageViewModel(),
+          ),
         ],
+
+        //
         child: Consumer<ThemeNotifier>(
           builder: (
             BuildContext context,

@@ -27,7 +27,6 @@ class YoutubeViewerMobileScreen extends StatefulWidget {
 }
 
 class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   YoutubePlayerController _controller;
   TextEditingController _idController;
   TextEditingController _seekToController;
@@ -35,7 +34,6 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
   PlayerState _playerState;
   YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
-  static const String DID_COMPLETE_SURVEY_KEY = "DID_COMPLETE_SURVEY";
 
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController surnameController = new TextEditingController();
@@ -105,83 +103,105 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
     super.dispose();
   }
 
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(title: LocaleProvider.of(context).youtube_stream);
-  }
-
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerBuilder(
       onExitFullScreen: () {
-        // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
         SystemChrome.setPreferredOrientations(DeviceOrientation.values);
       },
-      player: YoutubePlayer(
-        thumbnail: Image.asset(R.image.guven_hospital_pic),
-        controller: _controller,
-        showVideoProgressIndicator: true,
-        progressIndicatorColor: R.color.blue,
-        topActions: <Widget>[
-          const SizedBox(width: 8.0),
-          Expanded(
+      player: _buildYoutubePlayer(),
+      builder: (context, player) => _buildScreen(context, player),
+    );
+  }
+
+  YoutubePlayer _buildYoutubePlayer() {
+    return YoutubePlayer(
+      thumbnail: Image.asset(R.image.guven_hospital_pic),
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: getIt<ITheme>().mainColor,
+      topActions: <Widget>[
+        const SizedBox(width: 8.0),
+        Expanded(
+          child: Text(
+            _controller.metadata.title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.settings,
+            color: Colors.white,
+            size: 25.0,
+          ),
+          onPressed: () {
+            print('Settings Tapped!');
+          },
+        ),
+      ],
+      onReady: () {
+        _isPlayerReady = true;
+        _controller.addListener(listener);
+      },
+    );
+  }
+
+  Widget _buildScreen(BuildContext context, Widget player) {
+    return RbioScaffold(
+      appbar: RbioAppBar(
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.of(context).youtube_stream,
+        ),
+      ),
+      body: ListView(
+        children: [
+          //
+          player,
+
+          //
+          widget.didCompleteSurvey ? getBody(context) : getSurvey(context),
+
+          //
+          SizedBox(height: 16),
+
+          //
+          Center(
             child: Text(
-              _controller.metadata.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
+              LocaleProvider.of(context).powered_by,
+              style: TextStyle(
+                color: getIt<ITheme>().mainColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
             ),
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 25.0,
+
+          //
+          SizedBox(height: 16),
+
+          //
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(
+                left: 30,
+                right: 30,
+                top: 16,
+              ),
+              child: SvgPicture.asset(
+                R.image.guven_future_logo,
+                height: 100,
+                width: 100,
+              ),
+              margin: EdgeInsets.only(bottom: 30),
             ),
-            onPressed: () {
-              print('Settings Tapped!');
-            },
           ),
         ],
-        onReady: () {
-          _isPlayerReady = true;
-          _controller.addListener(listener);
-        },
-      ),
-      builder: (context, player) => Scaffold(
-        key: _scaffoldKey,
-        appBar: MainAppBar(
-          context: context,
-          title: getTitleBar(context),
-          leading: ButtonBackWhite(context),
-        ),
-        body: ListView(
-          children: [
-            player,
-            widget.didCompleteSurvey ? getBody(context) : getSurvey(context),
-            SizedBox(height: 16),
-            Center(
-              child: Text(
-                LocaleProvider.of(context).powered_by,
-                style: TextStyle(
-                    color: R.color.blue,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20),
-              ),
-            ),
-            SizedBox(height: 16),
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 16),
-                child: SvgPicture.asset(R.image.guven_future_logo,
-                    height: 100, width: 100),
-                margin: EdgeInsets.only(bottom: 30),
-              ),
-            )
-          ],
-        ),
       ),
     );
   }
@@ -192,6 +212,7 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          //
           Container(
             child: Center(
               child: Text(
@@ -202,8 +223,12 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
               ),
             ),
           ),
+
+          //
           Container(
+            margin: EdgeInsets.only(bottom: 20, top: 20),
             child: TextFormField(
+              focusNode: nameFNode,
               controller: nameController,
               textInputAction: TextInputAction.next,
               style: Utils.instance.inputTextStyle(),
@@ -211,20 +236,28 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
                 hintText: LocaleProvider.of(context).name,
                 image: R.image.ic_user,
               ),
-              focusNode: nameFNode,
               inputFormatters: <TextInputFormatter>[
-                new TabToNextFieldTextInputFormatter(
-                    context, nameFNode, surnameFNode)
+                TabToNextFieldTextInputFormatter(
+                  context,
+                  nameFNode,
+                  surnameFNode,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, nameFNode, surnameFNode);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  nameFNode,
+                  surnameFNode,
+                );
               },
             ),
-            margin: EdgeInsets.only(bottom: 20, top: 20),
           ),
+
+          //
           Container(
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
+              focusNode: surnameFNode,
               controller: surnameController,
               textInputAction: TextInputAction.next,
               style: Utils.instance.inputTextStyle(),
@@ -232,20 +265,28 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
                 hintText: LocaleProvider.of(context).surname,
                 image: R.image.ic_user,
               ),
-              focusNode: surnameFNode,
               inputFormatters: <TextInputFormatter>[
-                new TabToNextFieldTextInputFormatter(
-                    context, surnameFNode, phoneNumberFNode)
+                TabToNextFieldTextInputFormatter(
+                  context,
+                  surnameFNode,
+                  phoneNumberFNode,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, surnameFNode, phoneNumberFNode);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  surnameFNode,
+                  phoneNumberFNode,
+                );
               },
             ),
-            margin: EdgeInsets.only(bottom: 20),
           ),
+
+          //
           Container(
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
+              focusNode: phoneNumberFNode,
               controller: phoneNumbercontroller,
               textInputAction: TextInputAction.done,
               style: Utils.instance.inputTextStyle(),
@@ -253,18 +294,24 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
                 hintText: LocaleProvider.of(context).phone_number,
                 image: R.image.ic_phone_call_grey,
               ),
-              focusNode: phoneNumberFNode,
               inputFormatters: <TextInputFormatter>[
-                new TabToNextFieldTextInputFormatter(
-                    context, phoneNumberFNode, null)
+                TabToNextFieldTextInputFormatter(
+                  context,
+                  phoneNumberFNode,
+                  null,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, phoneNumberFNode, null);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  phoneNumberFNode,
+                  null,
+                );
               },
             ),
-            margin: EdgeInsets.only(bottom: 20),
           ),
+
+          //
           Center(
             child: Container(
               width: double.infinity,
@@ -275,7 +322,7 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
                 },
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -292,9 +339,10 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
               child: Text(
                 LocaleProvider.of(context).thank_you_for_survey,
                 style: TextStyle(
-                    fontSize: 24,
-                    color: R.color.online_appointment,
-                    fontWeight: FontWeight.w600),
+                  fontSize: 24,
+                  color: R.color.online_appointment,
+                  fontWeight: FontWeight.w600,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -304,7 +352,7 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
     );
   }
 
-  Future completeSurvey(BuildContext context) async {
+  Future<void> completeSurvey(BuildContext context) async {
     if (nameController.text == "" ||
         surnameController.text == "" ||
         phoneNumbercontroller.text.length != MASK_TEXT.length) {
@@ -329,8 +377,10 @@ class _YoutubeViewerMobileScreenState extends State<YoutubeViewerMobileScreen> {
         id: widget.courseId,
       ),
     );
+
     await getIt<ISharedPreferencesManager>()
         .setBool(SharedPreferencesKeys.DID_COMPLETE_SURVEY, true);
+
     setState(() {
       widget.didCompleteSurvey = true;
     });

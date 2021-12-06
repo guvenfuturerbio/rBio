@@ -25,7 +25,7 @@ class DoctorCvScreenVm extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final doctorId = Slugify(clearDoctorTitle(
+      final doctorId = Slugify(Utils.instance.clearDoctorTitle(
           doctorName.toLowerCase().xTurkishCharacterToEnglish));
       this._doctorCvResponse =
           await getIt<Repository>().getDoctorCvDetails(doctorId);

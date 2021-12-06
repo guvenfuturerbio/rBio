@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+
 import '../../../../core/core.dart';
 import '../../../../core/enums/remindable.dart';
-import '../strip/view/strip_screen.dart';
-
-import '../hba1c/list_hba1c/view/hba1c_reminderlist_screen.dart';
-import '../medication/medication_screen/view/medication_screen.dart';
 
 class HomeMediminderScreen extends StatelessWidget {
   const HomeMediminderScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(
+    return RbioScaffold(
+      appbar: RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.reminders,

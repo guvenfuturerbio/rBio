@@ -31,11 +31,15 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     return ChangeNotifierProvider<ForgotPasswordStep2ScreenVm>(
       create: (context) => ForgotPasswordStep2ScreenVm(context: context),
       child: Consumer<ForgotPasswordStep2ScreenVm>(
-        builder: (context, value, child) {
+        builder: (
+          BuildContext context,
+          ForgotPasswordStep2ScreenVm value,
+          Widget child,
+        ) {
           return KeyboardDismissOnTap(
-            child: Scaffold(
+            child: RbioScaffold(
               resizeToAvoidBottomInset: true,
-              appBar: RbioAppBarLogin(),
+              appbar: RbioAppBarLogin(),
               body: _buildBody(value),
             ),
           );
