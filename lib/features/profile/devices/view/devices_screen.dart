@@ -93,7 +93,7 @@ class _DevicesScreenState extends State<DevicesScreen> {
         );
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

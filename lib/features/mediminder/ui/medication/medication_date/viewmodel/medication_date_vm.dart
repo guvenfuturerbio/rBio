@@ -3,13 +3,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/enums/medicine_period.dart';
-import 'package:onedosehealth/core/enums/remindable.dart';
-import 'package:onedosehealth/core/enums/usage_type.dart';
-import 'package:onedosehealth/features/mediminder/managers/local_notifications_manager.dart';
-import 'package:onedosehealth/model/mediminder/medicine_for_schedule_model.dart';
-import 'package:onedosehealth/model/mediminder/selectable_day.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../core/enums/medicine_period.dart';
+import '../../../../../../core/enums/remindable.dart';
+import '../../../../../../core/enums/usage_type.dart';
+import '../../../../managers/local_notifications_manager.dart';
+import '../../../../../../model/mediminder/medicine_for_schedule_model.dart';
+import '../../../../../../model/mediminder/selectable_day.dart';
 
 import '../../medication_screen/view/medication_screen.dart';
 

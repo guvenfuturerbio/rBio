@@ -26,12 +26,9 @@ class FullPdfViewerScreen extends StatelessWidget {
       return RbioRouteError();
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          title,
-          textAlign: TextAlign.center,
-        ),
+    return RbioScaffold(
+      appbar: RbioAppBar(
+        title: RbioAppBar.textTitle(context, title),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20),
@@ -43,17 +40,12 @@ class FullPdfViewerScreen extends StatelessWidget {
             ),
           )
         ],
-        leading: IconButton(
-          onPressed: () {
-            Atom.historyBack();
-          },
-          icon: SvgPicture.asset(R.image.ic_back_white),
-        ),
       ),
 
       //
-      body: Container(
-        child: SfPdfViewer.file(File(pdfPath), canShowPaginationDialog: false),
+      body: SfPdfViewer.file(
+        File(pdfPath),
+        canShowPaginationDialog: false,
       ),
     );
   }

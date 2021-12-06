@@ -972,6 +972,19 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
+  Future<GuvenResponseModel> doMobilePaymentWithVoucher(
+      DoMobilePaymentWithVoucherRequest doMobilePaymentRequest) async {
+    final response = await helper.postGuven(
+        R.endpoints.doMobilePaymentWithVoucher, doMobilePaymentRequest.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/doMobilePaymentWithVoucher : ${response.isSuccessful}');
+    }
+  }
+
+  @override
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
     final response = await helper.postGuven(
@@ -1049,14 +1062,30 @@ class ApiServiceImpl extends ApiService {
   Future<List<AvailableDate>> findResourceAvailableDays(
       FindResourceAvailableDaysRequest request) async {
     final response = await helper.postGuven(
-        R.endpoints.findResourceAvailableDays, request.toJson());
+        R.endpoints.findResourceAvailableDays, request.toJson(),
+        options: authOptions);
     if (response.isSuccessful) {
-     return response.datum
+      return response.datum
           .map((item) => AvailableDate.fromJson(item))
           .cast<AvailableDate>()
           .toList();
     } else {
-      throw Exception('/addNewPatientRelative : ${response.isSuccessful}');
+      throw Exception('/findResourceAvailableDays : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> getResourceVideoCallPriceVoucher(
+      VoucherPriceRequest voucherPriceRequest) async {
+    final response = await helper.postGuven(
+        R.endpoints.getResourceVideoCallPriceWithVoucher,
+        voucherPriceRequest.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception(
+          '/getResourceVideoCallPriceVoucher : ${response.isSuccessful}');
     }
   }
 }

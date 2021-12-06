@@ -4,15 +4,16 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
-import 'package:onedosehealth/model/ble_models/DeviceTypes.dart';
-import 'package:onedosehealth/model/ble_models/paired_device.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../../../../core/core.dart';
 import '../../../../../../../generated/l10n.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../core/utils/utils.dart';
+import '../../../../../../model/ble_models/DeviceTypes.dart';
+import '../../../../../../model/ble_models/paired_device.dart';
+import '../scale_measurements/scale_measurement_vm.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
   ScaleMeasurementViewModel scaleModel;

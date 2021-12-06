@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
 
 class SymptomsResultPageVm extends ChangeNotifier {
   BuildContext mContext;

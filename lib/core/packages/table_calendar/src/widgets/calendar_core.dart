@@ -10,7 +10,7 @@ typedef _OnCalendarPageChanged = void Function(
     int pageIndex, DateTime focusedDay);
 
 class CalendarCore extends StatelessWidget {
-  final Color backgroundColor;
+  final Color daysBackgroundColor;
   final Color foregroundColor;
 
   final DateTime focusedDay;
@@ -36,7 +36,7 @@ class CalendarCore extends StatelessWidget {
   const CalendarCore({
     Key key,
     this.dowBuilder,
-    @required this.backgroundColor,
+    @required this.daysBackgroundColor,
     @required this.foregroundColor,
     @required this.dayBuilder,
     @required this.onPageChanged,
@@ -77,8 +77,8 @@ class CalendarCore extends StatelessWidget {
             : null;
 
         return CalendarPage(
-          backgroundColor: backgroundColor,
-          foregroundColor: foregroundColor,
+          daysBackgroundColor: daysBackgroundColor,
+          cellBackgroundColor: foregroundColor,
           visibleDays: visibleDays,
           dowVisible: dowVisible,
           dowDecoration: dowDecoration,

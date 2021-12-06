@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/locator.dart';
-import 'package:onedosehealth/core/theme/main_theme.dart';
+import '../../../../../core/locator.dart';
+import '../../../../../core/theme/main_theme.dart';
 
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'consent_form_dialog_vm.dart';

@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/enums/remindable.dart';
-import 'package:onedosehealth/model/mediminder/drug_result_model.dart';
-import 'package:onedosehealth/model/mediminder/medicine_for_schedule_model.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../core/enums/remindable.dart';
+import '../../../../../../model/mediminder/drug_result_model.dart';
+import '../../../../../../model/mediminder/medicine_for_schedule_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../medication_period/medication_period_selection_screen.dart';

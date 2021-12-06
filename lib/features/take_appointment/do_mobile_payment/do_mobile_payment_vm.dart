@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/home/take_appointment/do_mobil_payment_voucher.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
@@ -8,19 +9,21 @@ import '../../../../model/model.dart';
 import 'iyzico_response_sms_payment_page.dart';
 
 class DoMobilePaymentScreenVm extends ChangeNotifier {
-  AppointmentRequest appointmentRequest;
   BuildContext mContext;
+  AppointmentRequest appointmentRequest;
+  String voucherCode;
   bool _showOverlay;
   bool _isSalesContractConfirmed;
   bool _cancellationFormConfirmed;
   GuvenResponseModel _paymentResponse;
 
-  DoMobilePaymentScreenVm({
-    BuildContext context,
-    AppointmentRequest appointmentRequest,
-  }) {
+  DoMobilePaymentScreenVm(
+      {BuildContext context,
+      AppointmentRequest appointmentRequest,
+      String voucherCode}) {
     this.appointmentRequest = appointmentRequest;
     this.mContext = context;
+    this.voucherCode = voucherCode;
   }
 
   bool get showOverlay => this._showOverlay ?? false;
@@ -40,12 +43,14 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
       notifyListeners();
 
       try {
-        this._paymentResponse = await getIt<Repository>().doMobilePayment(
-          DoMobilePaymentRequest(
-            appointmentId: appointmentId,
-            cc: cc,
-            appointmentRequest: this.appointmentRequest.saveAppointmentsRequest,
-          ),
+        this._paymentResponse =
+            await getIt<Repository>().doMobilePaymentWithVoucher(
+          DoMobilePaymentWithVoucherRequest(
+              appointmentId: appointmentId,
+              cc: cc,
+              appointmentRequest:
+                  this.appointmentRequest.saveAppointmentsRequest,
+              voucherCode: voucherCode),
         );
 
         final html = Map.from(this._paymentResponse.datum)['do_result'];

@@ -1,35 +1,20 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/core/widgets/rbio_appbar_login.dart';
 import 'package:provider/provider.dart';
-import 'package:universal_html/html.dart' as htmlK;
 import 'package:vrouter/src/core/extended_context.dart';
 
 import '../../../core/core.dart';
 import '../../../model/model.dart';
-import 'register_step1_vm.dart';
+import 'register_step2_vm.dart';
 
 class RegisterStep1Screen extends StatefulWidget {
-  String registerName;
-  String registerSurname;
-  String registerGender;
-  String registerDateOfBirth;
-  String registerPhoneNumber;
-
-  RegisterStep1Screen(
-      {Key key,
-      this.registerName,
-      this.registerSurname,
-      this.registerDateOfBirth,
-      this.registerGender,
-      this.registerPhoneNumber})
-      : super(key: key);
+  const RegisterStep1Screen({Key key}) : super(key: key);
 
   @override
   _RegisterStep1ScreenState createState() => _RegisterStep1ScreenState();
@@ -41,19 +26,15 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
     "K",
   ];
 
-  final passwordFNode = FocusNode();
-  final passwordAgainFNode = FocusNode();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordAgainController =
-      TextEditingController();
-
   Country country;
   final focus = FocusNode();
-  final TextEditingController _tcIdentity = new TextEditingController();
-  final TextEditingController _tcEmail = new TextEditingController();
 
+  //for this page
+  final TextEditingController _tcName = TextEditingController();
+  final TextEditingController _tcSurname = TextEditingController();
+  final TextEditingController _tcPhoneNumber = TextEditingController();
   bool checkedValueForFn = false;
-  bool checkedValueForTc = true;
+  bool checkedValueForTc = false;
 
   // Turkish Citizen Tab
   final tcFNode = FocusNode();
@@ -65,344 +46,371 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
   @override
   Widget build(BuildContext context) {
-    try {
-      widget.registerName = Atom.queryParameters['registerName'];
-      widget.registerSurname = Atom.queryParameters['registerSurname'];
-      widget.registerPhoneNumber = Atom.queryParameters['registerPhoneNumber'];
-      widget.registerGender = Atom.queryParameters['registerGender'];
-      widget.registerDateOfBirth = Atom.queryParameters['registerDateOfBirth'];
-    } catch (_) {
-      return RbioRouteError();
-    }
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: ChangeNotifierProvider<RegisterStep1ScreenVm>(
-        create: (_) => RegisterStep1ScreenVm(context),
-        child: Consumer<RegisterStep1ScreenVm>(
-          builder: (
-            BuildContext context,
-            RegisterStep1ScreenVm vm,
-            Widget child,
-          ) =>
-              RbioScaffold(
-            resizeToAvoidBottomInset: true,
-            appbar: RbioAppBarLogin(
+    return ChangeNotifierProvider<RegisterStep2ScreenVm>(
+      create: (_) => RegisterStep2ScreenVm(context),
+      child: Consumer<RegisterStep2ScreenVm>(
+        builder: (
+          BuildContext context,
+          RegisterStep2ScreenVm vm,
+          Widget child,
+        ) {
+          return KeyboardDismissOnTap(
+            child: RbioScaffold(
+              resizeToAvoidBottomInset: true,
+              appbar: RbioAppBarLogin(
                 title: Image.asset(
-              R.image.oneDoseHealthPng,
-              height: 50,
-            )),
-            body: _buildBody(context, vm),
-          ),
-        ),
+                  R.image.oneDoseHealthPng,
+                  height: 50,
+                ),
+              ),
+              body: _buildBody(vm),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, RegisterStep1ScreenVm vm) {
+  Widget _buildBody(RegisterStep2ScreenVm vm) {
     return KeyboardAvoider(
       autoScroll: true,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
+          //
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15.0, left: 20, top: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text(
+                        LocaleProvider.current.btn_sign_up,
+                        style: context.xHeadline1.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: context.TEXTSCALE * 30,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "Let's know you better!",
+                      style: context.xHeadline3,
+                    ),
+                  ],
+                ),
+              ),
+
+              //
+              Row(
+                children: [
+                  //
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0, bottom: 5),
+                          child: Text(
+                            "Name",
+                            style: context.xHeadline3,
+                          ),
+                        ),
+                        Container(
+                          child: RbioTextFormField(
+                            focusNode: tcNameNode,
+                            controller: _tcName,
+                            obscureText: false,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            hintText: LocaleProvider.of(context).name,
+                            onFieldSubmitted: (term) {
+                              UtilityManager().fieldFocusChange(
+                                context,
+                                tcNameNode,
+                                tcLNameNode,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //
+                  SizedBox(
+                    width: 5,
+                  ),
+
+                  //
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 15.0,
+                            bottom: 5,
+                            top: 15,
+                          ),
+                          child: Text(
+                            "Surname",
+                            style: context.xHeadline3,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            bottom: 10,
+                          ),
+                          child: RbioTextFormField(
+                            focusNode: tcLNameNode,
+                            controller: _tcSurname,
+                            obscureText: false,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            hintText: LocaleProvider.of(context).surname,
+                            onFieldSubmitted: (term) {
+                              UtilityManager().fieldFocusChange(
+                                context,
+                                tcLNameNode,
+                                tcFNode,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          //
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 15.0,
+                  bottom: 5,
+                  top: 15,
+                ),
+                child: Text(
+                  "Gender",
+                  style: context.xHeadline3,
+                ),
+              ),
+
+              //
+              Container(
+                color: Colors.transparent,
+                margin: EdgeInsets.only(
+                  bottom: 10,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    addRadioButton(0, 'Male'),
+                    addRadioButton(1, 'Female'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          //
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 15.0,
+                  bottom: 5,
+                  top: 15,
+                ),
+                child: Text(
+                  "Date of birth",
+                  style: context.xHeadline3,
+                ),
+              ),
+              InkWell(
+                onTap: () => vm.selectDate(context),
+                child: Container(
+                  padding: EdgeInsets.all(13),
+                  decoration: BoxDecoration(
+                    color: R.color.white,
+                    border: Border.all(
+                      color: R.color.dark_white,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      (vm.selectedDate == null)
+                          ? Text('DD/MM/YYYY',
+                              style: context.xHeadline3.copyWith(
+                                  color: getIt<ITheme>()
+                                      .textColorSecondary
+                                      .withOpacity(0.5)))
+                          : Text(
+                              DateFormat('dd MMMM yyyy')
+                                  .format(vm.selectedDate),
+                              style: TextStyle(
+                                fontSize: 16,
+                              )),
+                      Icon(Icons.calendar_today)
+                    ],
+                  ),
+                  margin: EdgeInsets.only(
+                    bottom: 10,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          //
           Padding(
-            padding: const EdgeInsets.only(bottom: 5.0, left: 20),
+            padding: const EdgeInsets.only(bottom: 15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 5.0),
+                  padding:
+                      const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
                   child: Text(
-                    "Sign in",
-                    style: context.xHeadline1
-                        .copyWith(fontWeight: FontWeight.bold),
+                    LocaleProvider.current.phone_number,
+                    style: context.xHeadline3,
                   ),
                 ),
-                Text(
-                  "Let's know you better!",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+
+                //
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //
+                    Container(
+                      decoration: BoxDecoration(
+                        color: R.color.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: CountryCodePicker(
+                        padding: EdgeInsets.zero,
+                        onChanged: print,
+                        initialSelection: 'TR',
+                        favorite: ['+90', 'TR'],
+                        showCountryOnly: false,
+                        showOnlyCountryWhenClosed: false,
+                        alignLeft: false,
+                      ),
+                    ),
+
+                    //
+                    SizedBox(
+                      width: 5,
+                    ),
+
+                    //
+                    Expanded(
+                      child: Container(
+                        child: RbioTextFormField(
+                          focusNode: phoneFNode,
+                          controller: _tcPhoneNumber,
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.next,
+                          hintText: LocaleProvider.of(context).phone_number,
+                          inputFormatters: <TextInputFormatter>[
+                            TabToNextFieldTextInputFormatter(
+                              context,
+                              phoneFNode,
+                              emailFNode,
+                            ),
+                          ],
+                          onFieldSubmitted: (term) {
+                            UtilityManager().fieldFocusChange(
+                              context,
+                              phoneFNode,
+                              emailFNode,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          // email - tc identity
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Checkbox(
-                    activeColor: getIt<ITheme>().mainColor,
-                    value: vm.isTcCitizen,
-                    onChanged: (val) {
-                      vm.toggleCitizen();
-                    },
-                  ),
-                  Text(
-                    "I am a Turkish citizen",
-                    style: context.xHeadline3
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Container(
-                child: TextFormField(
-                  controller: _tcIdentity,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  obscureText: false,
-                  style: inputTextStyle(),
-                  decoration: inputDecorationForLogin(
-                    hintText: vm.isTcCitizen
-                        ? LocaleProvider.of(context).tc_identity_number
-                        : LocaleProvider.of(context).passport_number,
-                  ).copyWith(filled: true, fillColor: R.color.white),
-                  focusNode: tcFNode,
-                  inputFormatters: <TextInputFormatter>[
-                    new TabToNextFieldTextInputFormatter(
-                        context, tcFNode, phoneFNode),
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
-                  ],
-                  onFieldSubmitted: (term) {
-                    UtilityManager()
-                        .fieldFocusChange(context, tcFNode, phoneFNode);
-                  },
-                ),
-                margin: EdgeInsets.only(
-                  bottom: 10,
-                ),
-              ),
-            ],
-          ),
-
-          //
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                child: Text(
-                  "E-mail",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                child: TextFormField(
-                    controller: _tcEmail,
-                    style: inputTextStyle(),
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: inputDecorationForLogin(
-                      hintText: LocaleProvider.of(context).email_address,
-                    ).copyWith(filled: true, fillColor: R.color.white),
-                    focusNode: emailFNode,
-                    inputFormatters: <TextInputFormatter>[
-                      new TabToNextFieldTextInputFormatter(
-                          context, emailFNode, null)
-                    ],
-                    onFieldSubmitted: (term) {
-                      UtilityManager()
-                          .fieldFocusChange(context, tcFNode, birthdayNode);
-                    }),
-                margin: EdgeInsets.only(bottom: 10),
-              ),
-            ],
-          ),
-
-          //
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                child: Text(
-                  "Password",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                child: TextFormField(
-                  controller: _passwordController,
-                  textInputAction: TextInputAction.next,
-                  obscureText: true,
-                  onChanged: (value) {
-                    vm.passwordFetcher(value);
-                  },
-                  style: inputTextStyle(),
-                  decoration: inputDecorationForLogin(
-                    hintText: LocaleProvider.of(context).hint_input_password,
-                  ).copyWith(filled: true, fillColor: R.color.white),
-                  focusNode: passwordFNode,
-                  inputFormatters: <TextInputFormatter>[
-                    new TabToNextFieldTextInputFormatter(
-                        context, passwordFNode, passwordAgainFNode)
-                  ],
-                  onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(
-                        context, passwordFNode, passwordAgainFNode);
-                  },
-                ),
-                margin: EdgeInsets.only(bottom: 10),
-              ),
-            ],
-          ),
-
-          //
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                child: Text(
-                  "Confirm Password",
-                  style:
-                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                child: TextFormField(
-                  controller: _passwordAgainController,
-                  textInputAction: TextInputAction.done,
-                  obscureText: true,
-                  style: inputTextStyle(),
-                  decoration: inputDecorationForLogin(
-                    hintText: LocaleProvider.of(context).password_again,
-                  ).copyWith(filled: true, fillColor: R.color.white),
-                  focusNode: passwordAgainFNode,
-                  onChanged: (value) {
-                    vm.passwordAgainFetcher(value);
-                  },
-                  inputFormatters: <TextInputFormatter>[
-                    new TabToNextFieldTextInputFormatter(
-                        context, passwordAgainFNode, null)
-                  ],
-                  onFieldSubmitted: (term) {
-                    UtilityManager()
-                        .fieldFocusChange(context, passwordAgainFNode, null);
-                  },
-                ),
-                margin: EdgeInsets.only(bottom: 10),
-              ),
-            ],
-          ),
-
-          //
-          Row(
-            children: [
-              //
-              Container(
-                alignment: Alignment.bottomLeft,
-                child: Checkbox(
-                  value: vm.clickedGeneralForm,
-                  onChanged: (newValue) {
-                    vm.showApplicationContestForm();
-                  },
-                  activeColor:
-                      getIt<ITheme>().mainColor, //  <-- leading Checkbox
-                ),
-              ),
-
-              //
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    vm.showApplicationContestForm();
-                  },
-                  child: Text(
-                    LocaleProvider.of(context).accept_application_consent_form,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.xHeadline4
-                        .copyWith(decoration: TextDecoration.underline),
-                  ),
-                ),
-              ),
-            ],
-          ),
 
           //
           Container(
-            child: button(
-                text: LocaleProvider.of(context).btn_next.toUpperCase(),
-                onPressed: () {
-                  if (checkedValueForTc) {
-                    RegisterStep1PusulaModel userRegisterStep1 =
-                        new RegisterStep1PusulaModel();
-                    userRegisterStep1.firstName = widget.registerName;
-                    userRegisterStep1.lastName = widget.registerSurname;
-                    //TODO : Düzenlenecek
-                    userRegisterStep1.nationalityId = vm.isTcCitizen ? 213 : 38;
-                    userRegisterStep1.identityNumber = _tcIdentity.text;
-                    userRegisterStep1.gender = widget.registerGender;
-                    userRegisterStep1.gsm = widget.registerPhoneNumber;
-                    userRegisterStep1.birthDate = widget.registerDateOfBirth;
-                    userRegisterStep1.email = _tcEmail.text;
-                    //-------------------------------------
-                    UserRegistrationStep1Model userRegisterStep1Model =
-                        new UserRegistrationStep1Model();
-                    userRegisterStep1Model.name = widget.registerName;
-                    userRegisterStep1Model.surname = widget.registerSurname;
-                    userRegisterStep1Model.identificationNumber =
-                        _tcIdentity.text;
-                    userRegisterStep1Model.userNationality =
-                        vm.isTcCitizen ? 'TC' : 'D';
-                    userRegisterStep1Model.phoneNumber =
-                        widget.registerPhoneNumber;
-                    userRegisterStep1Model.electronicMail = _tcEmail.text;
-
-                    if (_tcIdentity.text.length > 0 &&
-                        _tcEmail.text.length > 0) {
-                      vm.registerStep1(
-                          userRegisterStep1, userRegisterStep1Model);
-                    } else if ((_tcIdentity.text == null ||
-                            _tcIdentity.text.length == 0) &&
-                        _tcEmail.text.length > 0) {
-                      vm.registerStep1(
-                          userRegisterStep1, userRegisterStep1Model);
-                    } else {
-                      vm.showGradientDialog(
-                          context,
-                          LocaleProvider.of(context).warning,
-                          LocaleProvider.of(context).fill_all_field);
-                    }
-                  } else {
-                    vm.showGradientDialog(
-                        context,
-                        LocaleProvider.of(context).warning,
-                        LocaleProvider.of(context).check_personal_data);
-                  }
-                }),
-            margin: EdgeInsets.only(top: 5, bottom: 10),
+            margin: EdgeInsets.only(
+              top: 5,
+              bottom: 10,
+              left: 50,
+              right: 50,
+            ),
+            child: RbioElevatedButton(
+              infinityWidth: true,
+              title: LocaleProvider.of(context).btn_next.toUpperCase(),
+              onTap: () {
+                if (_tcName.text.length > 0 &&
+                    _tcSurname.text.length > 0 &&
+                    _tcPhoneNumber.text.length > 0 &&
+                    vm.selectedDate != null) {
+                  Atom.to(
+                    PagePaths.REGISTER_STEP_2,
+                    queryParameters: {
+                      'registerName': _tcName.text,
+                      'registerSurname': _tcSurname.text,
+                      'registerGender': gender,
+                      'registerDateOfBirth': vm.selectedDate.toString(),
+                      'registerPhoneNumber': _tcPhoneNumber.text
+                    },
+                  );
+                } else {
+                  vm.showGradientDialog(
+                    context,
+                    LocaleProvider.of(context).warning,
+                    LocaleProvider.of(context).fill_all_field,
+                  );
+                }
+              },
+            ),
           ),
+
+          //
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
                 LocaleProvider.of(context).lbl_dont_have_account,
                 style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                    fontWeight: FontWeight.w600),
+                  color: getIt<ITheme>().textColorSecondary,
+                ),
               ),
               InkWell(
                 child: Text(
-                    LocaleProvider.of(context).btn_sign_in.toUpperCase(),
-                    style: context.xHeadline3
-                        .copyWith(color: getIt<ITheme>().mainColor)),
+                  LocaleProvider.of(context).btn_sign_in,
+                  style: context.xHeadline3.copyWith(
+                    color: getIt<ITheme>().mainColor,
+                  ),
+                ),
                 onTap: () {
-                  context.vRouter.to(PagePaths.LOGIN); //---> REGISTER_FIRST
+                  context.vRouter.to(PagePaths.LOGIN);
                 },
               ),
             ],
           ),
+
           //
           Row(
             children: [
@@ -430,6 +438,10 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
             ],
           ),
 
+          SizedBox(
+            height: 10,
+          ),
+
           //
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -455,23 +467,29 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
   String gender;
 
-  Row addRadioButton(int btnValue, String title) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Radio(
-          activeColor: Theme.of(context).primaryColor,
-          value: genderList[btnValue],
-          groupValue: gender,
-          onChanged: (value) {
-            setState(() {
-              print(value);
-              gender = value;
-            });
-          },
+  Widget addRadioButton(int btnValue, String title) {
+    return Expanded(
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Radio(
+              activeColor: Theme.of(context).primaryColor,
+              value: genderList[btnValue],
+              groupValue: gender,
+              onChanged: (value) {
+                setState(() {
+                  print(value);
+                  gender = value;
+                });
+              },
+            ),
+            Text(title, style: context.xHeadline3)
+          ],
         ),
-        Text(title, style: context.xHeadline3)
-      ],
+      ),
     );
   }
 }

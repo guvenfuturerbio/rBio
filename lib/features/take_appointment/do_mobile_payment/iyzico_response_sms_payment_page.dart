@@ -2,7 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/take_appointment/do_mobile_payment/iyzico_response_vm.dart';
+import 'iyzico_response_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../core/core.dart';
@@ -58,9 +58,8 @@ class _IyzicoResponseSmsPaymentScreenState
       create: (context) => IyzicoResponseVm(widget.uid),
       child: Consumer<IyzicoResponseVm>(
         builder: (context, vm, child) {
-          return Scaffold(
-            appBar:
-                MainAppBar(context: context, leading: ButtonBackWhite(context)),
+          return RbioScaffold(
+            appbar: RbioAppBar(),
             body: kIsWeb
                 ? HtmlElementView(
                     viewType: "PayPalButtons",

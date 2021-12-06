@@ -1,4 +1,4 @@
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../generated/l10n.dart';
 
 enum TimePeriodFilter { DAILY, WEEKLY, MONTHLY, MONTHLY_THREE, SPECIFIC }
 

@@ -61,11 +61,13 @@ class _EventsScreenState extends State<EventsScreen> {
       ),
       child: Consumer<EventsScreenVm>(
         builder: (BuildContext context, EventsScreenVm value, Widget child) {
-          return Scaffold(
-            appBar: MainAppBar(
-                context: context,
-                title: getTitleBar(context),
-                leading: ButtonBackWhite(context)),
+          return RbioScaffold(
+            appbar: RbioAppBar(
+              title: RbioAppBar.textTitle(
+                context,
+                LocaleProvider.of(context).title_book_appointment,
+              ),
+            ),
             body: _buildBody(value, context),
           );
         },
@@ -155,38 +157,45 @@ class _EventsScreenState extends State<EventsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        //
                         Expanded(
                           child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: List.generate(value.ayranciSlots.length,
-                                  (index) {
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(
+                              value.ayranciSlots.length,
+                              (index) {
                                 return _buttonAppointment(
-                                    text: value.ayranciSlots[index].from,
-                                    color: R.color.ayranci,
-                                    title: "Ayrancı",
-                                    onPressed: () {
-                                      Atom.to(PagePaths.APPOINTMENT_SUMMARY,
-                                          queryParameters: {
-                                            'tenantId': R
-                                                .dynamicVar.tenantAyranciId
-                                                .toString(),
-                                            'departmentId':
-                                                widget.departmentId.toString(),
-                                            'resourceId':
-                                                widget.resourceId.toString(),
-                                            'doctorName': Uri.encodeFull(
-                                                widget.doctorName),
-                                            'departmentName': Uri.encodeFull(
-                                                widget.departmentName),
-                                            'from':
-                                                value.ayranciSlots[index].from,
-                                            'to': value.ayranciSlots[index].to,
-                                            'forOnline': 'false',
-                                            'imageUrl': widget.imageUrl
-                                          });
-                                    });
-                              })),
+                                  text: value.ayranciSlots[index].from,
+                                  color: R.color.ayranci,
+                                  title: "Ayrancı",
+                                  onPressed: () {
+                                    Atom.to(
+                                      PagePaths.APPOINTMENT_SUMMARY,
+                                      queryParameters: {
+                                        'tenantId': R.dynamicVar.tenantAyranciId
+                                            .toString(),
+                                        'departmentId':
+                                            widget.departmentId.toString(),
+                                        'resourceId':
+                                            widget.resourceId.toString(),
+                                        'doctorName':
+                                            Uri.encodeFull(widget.doctorName),
+                                        'departmentName': Uri.encodeFull(
+                                            widget.departmentName),
+                                        'from': value.ayranciSlots[index].from,
+                                        'to': value.ayranciSlots[index].to,
+                                        'forOnline': 'false',
+                                        'imageUrl': widget.imageUrl
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
                         ),
+
+                        //
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -223,6 +232,8 @@ class _EventsScreenState extends State<EventsScreen> {
                             ),
                           ),
                         ),
+
+                        //
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -278,7 +289,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               Text(
                                 LocaleProvider.current.phone_guven,
                                 style: TextStyle(
-                                  color: R.color.blue,
+                                  color: getIt<ITheme>().mainColor,
                                   fontSize: 18,
                                 ),
                               ),
@@ -301,18 +312,23 @@ class _EventsScreenState extends State<EventsScreen> {
     );
   }
 
-  Container _buildSelectionType(BuildContext context, EventsScreenVm value) {
+  Widget _buildSelectionType(BuildContext context, EventsScreenVm value) {
     return Container(
       margin: EdgeInsets.only(top: 10),
       child: Column(
         children: [
+          //
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Text(
               LocaleProvider.of(context).select_appo_type,
-              style: TextStyle(color: R.color.blue),
+              style: TextStyle(
+                color: getIt<ITheme>().mainColor,
+              ),
             ),
           ),
+
+          //
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -353,7 +369,7 @@ class _EventsScreenState extends State<EventsScreen> {
     );
   }
 
-  Container _buildCalendar(EventsScreenVm value, BuildContext context) {
+  Widget _buildCalendar(EventsScreenVm value, BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 12, right: 12),
       child: Card(
@@ -366,14 +382,18 @@ class _EventsScreenState extends State<EventsScreen> {
               height: 90,
               margin: EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
-                  color: R.color.blue,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12))),
+                color: getIt<ITheme>().mainColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+              ),
             ),
+
+            //
             TableCalendar(
-              backgroundColor: getIt<ITheme>().secondaryColor,
-              foregroundColor: getIt<ITheme>().cardBackgroundColor,
+              daysBackgroundColor: getIt<ITheme>().secondaryColor,
+              cellBackgroundColor: getIt<ITheme>().cardBackgroundColor,
 
               //
               focusedDay: value.selectedDate,
@@ -383,33 +403,37 @@ class _EventsScreenState extends State<EventsScreen> {
               calendarStyle: CalendarStyle(
                 holidayTextStyle: TextStyle(color: Colors.white),
                 todayTextStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                    color: R.color.light_blue),
-                /*   todayDecoration: BoxDecoration(
-                                    color: Colors.transparent),*/
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  color: R.color.light_blue,
+                ),
                 weekendTextStyle: TextStyle(color: R.color.black),
                 selectedTextStyle: TextStyle(color: Colors.green),
                 selectedDecoration:
                     BoxDecoration(color: Colors.red, shape: BoxShape.circle),
               ),
               headerStyle: HeaderStyle(
-                rightChevronIcon:
-                    new Icon(Icons.chevron_right, color: R.color.white),
-                leftChevronIcon:
-                    new Icon(Icons.chevron_left, color: R.color.white),
+                rightChevronIcon: Icon(
+                  Icons.chevron_right,
+                  color: R.color.white,
+                ),
+                leftChevronIcon: Icon(
+                  Icons.chevron_left,
+                  color: R.color.white,
+                ),
                 titleTextStyle: TextStyle(color: R.color.white),
                 formatButtonDecoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                formatButtonTextStyle: TextStyle(color: R.color.blue),
+                formatButtonTextStyle: TextStyle(
+                  color: getIt<ITheme>().mainColor,
+                ),
                 formatButtonShowsNext: false,
               ),
               startingDayOfWeek: StartingDayOfWeek.monday,
               onFormatChanged: (format) {
                 if (_calendarFormat != format) {
-                  // Call `setState()` when updating calendar format
                   setState(() {
                     _calendarFormat = format;
                   });
@@ -490,23 +514,26 @@ class _EventsScreenState extends State<EventsScreen> {
     );
   }
 
-  Container _buildDoctorName() {
+  Widget _buildDoctorName() {
     return Container(
       margin: EdgeInsets.only(top: 10),
       child: Text(
         widget?.doctorName ?? "-",
         style: TextStyle(
-            fontSize: 18, fontWeight: FontWeight.w600, color: R.color.black),
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: R.color.black,
+        ),
       ),
     );
   }
 
-  Image _buildCircleImage() {
+  Widget _buildCircleImage() {
     return Image.network(
       widget.imageUrl ?? "",
       fit: BoxFit.contain,
       errorBuilder: (context, error, stackTrace) {
-        return CustomCircleAvatar(
+        return Utils.instance.CustomCircleAvatar(
           size: 120,
           child: SvgPicture.asset(
             R.image.doctor_avatar,
@@ -514,26 +541,33 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
         );
       },
-      loadingBuilder: (BuildContext context, Widget child,
-          ImageChunkEvent loadingProgress) {
+      loadingBuilder: (
+        BuildContext context,
+        Widget child,
+        ImageChunkEvent loadingProgress,
+      ) {
         if (loadingProgress == null)
-          return CustomCircleAvatar(
-              child: Container(
-                child: child,
-              ),
-              size: 120);
+          return Utils.instance.CustomCircleAvatar(
+            child: Container(
+              child: child,
+            ),
+            size: 120,
+          );
+
         return Container(
-            child: Stack(
-          alignment: Alignment.center,
-          children: [
-            RbioLoading(),
-            Center(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              RbioLoading(),
+              Center(
                 child: Container(
-              width: 120,
-              height: 120,
-            ))
-          ],
-        ));
+                  width: 120,
+                  height: 120,
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
@@ -572,9 +606,10 @@ class _EventsScreenState extends State<EventsScreen> {
             color: color,
             boxShadow: [
               BoxShadow(
-                  blurRadius: 5,
-                  color: R.color.dark_black.withAlpha(25),
-                  offset: Offset(2, 2))
+                blurRadius: 5,
+                color: R.color.dark_black.withAlpha(25),
+                offset: Offset(2, 2),
+              ),
             ],
           ),
         ),
@@ -585,13 +620,12 @@ class _EventsScreenState extends State<EventsScreen> {
     );
   }
 
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(
-        title: LocaleProvider.of(context).title_book_appointment);
-  }
-
-  Widget filterButton(
-      {bool selected, Color color, String text, Function onPressed}) {
+  Widget filterButton({
+    bool selected,
+    Color color,
+    String text,
+    Function onPressed,
+  }) {
     return Center(
       child: InkWell(
         child: Container(
@@ -618,14 +652,16 @@ class _EventsScreenState extends State<EventsScreen> {
             ),
           ),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: selected ? color : Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 5,
-                    color: R.color.dark_black.withAlpha(25),
-                    offset: Offset(2, 2))
-              ]),
+            borderRadius: BorderRadius.circular(6),
+            color: selected ? color : Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 5,
+                color: R.color.dark_black.withAlpha(25),
+                offset: Offset(2, 2),
+              ),
+            ],
+          ),
         ),
         onTap: () {
           onPressed();
@@ -646,10 +682,28 @@ class _EventsScreenState extends State<EventsScreen> {
         children: [
           //
           InkWell(
+            onTap: () {
+              onPressed();
+            },
             child: Container(
-              margin: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width * 0.8,
               height: 46,
+              width: MediaQuery.of(context).size.width * 0.8,
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40),
+                color: closestAppointment.hospitalId == 1
+                    ? R.color.ayranci
+                    : closestAppointment.hospitalId == 7
+                        ? R.color.cayyolu
+                        : R.color.online_appointment,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 5,
+                    color: R.color.dark_black.withAlpha(25),
+                    offset: Offset(2, 2),
+                  ),
+                ],
+              ),
               child: Center(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -685,39 +739,10 @@ class _EventsScreenState extends State<EventsScreen> {
                         ),
                       ),
                     ),
-
-                    // FadeAnimatedTextKit(
-                    //   repeatForever: true,
-
-                    //   onTap: () {
-                    //     onPressed();
-                    //   },
-                    //   text: [LocaleProvider.of(context).click_go],
-                    //   textStyle: TextStyle(color: R.color.white),
-                    //   textAlign: TextAlign.start,
-                    // )
                   ],
                 ),
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: closestAppointment.hospitalId == 1
-                    ? R.color.ayranci
-                    : closestAppointment.hospitalId == 7
-                        ? R.color.cayyolu
-                        : R.color.online_appointment,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 5,
-                    color: R.color.dark_black.withAlpha(25),
-                    offset: Offset(2, 2),
-                  ),
-                ],
-              ),
             ),
-            onTap: () {
-              onPressed();
-            },
           ),
         ],
       ),

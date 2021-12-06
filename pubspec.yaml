@@ -60,6 +60,7 @@ dependencies:
   flutter_facebook_sdk: ^1.0.0
   flutter_full_pdf_viewer: ^1.0.6
   flutter_inner_drawer: ^1.0.0+1
+  flutter_keyboard_visibility: ^5.1.0
   flutter_local_notifications: 9.1.2
   flutter_localizations:
     sdk: flutter
@@ -111,6 +112,7 @@ dependencies:
   progress_indicators: ^1.0.0
   provider: ^6.0.1
   pub_semver: ^2.0.0
+  qr_code_scanner: ^0.6.1
   reorderables: ^0.4.1
   responsive_framework: ^0.1.5
   rxdart: ^0.27.2
@@ -162,12 +164,9 @@ flutter:
     - assets/pdf/
 
   fonts:
-    - family: Ic
-      fonts:
-        - asset: assets/fonts/ic/ic_medicine.ttf
     - family: SourceSans
       fonts:
-        - asset: assets/fonts/SourceSansVariable_Roman.otf
+        - asset: assets/fonts/SourceSansPro_Regular.ttf
 
 flutter_icons:
   android: true

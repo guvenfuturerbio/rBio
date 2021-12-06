@@ -4,16 +4,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/auth/user_service.dart';
-import '../../shared/consent_form/consent_form_dialog.dart';
-import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/ble_operators/ble_operators.dart';
 import '../../../core/core.dart';
+import '../../../core/navigation/app_paths.dart';
+import '../../../core/utils/utils.dart';
 import '../../../model/model.dart';
+import '../../shared/consent_form/consent_form_dialog.dart';
+import '../../shared/kvkk_form/kvkk_form_screen.dart';
+import '../user_service.dart';
 
 enum VersionCheckProgress { DONE, LOADING, ERROR }
 

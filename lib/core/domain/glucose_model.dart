@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:onedosehealth/core/core.dart';
+import '../core.dart';
 
 @HiveType(typeId: 0)
 class GlucoseData extends HiveObject {

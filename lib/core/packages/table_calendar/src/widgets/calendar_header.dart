@@ -41,47 +41,52 @@ class CalendarHeader extends StatelessWidget {
     final text = headerStyle.titleTextFormatter?.call(focusedMonth, locale) ??
         DateFormat.yMMMM(locale).format(focusedMonth);
 
-    return Container(
-      decoration: headerStyle.decoration,
-      margin: headerStyle.headerMargin,
-      padding: headerStyle.headerPadding,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          if (headerStyle.leftChevronVisible) ...[
-            CustomIconButton(
-              icon: headerStyle.leftChevronIcon,
-              onTap: onLeftChevronTap,
-              margin: headerStyle.leftChevronMargin,
-              padding: headerStyle.leftChevronPadding,
-            ),
-          ],
+    return ClipRRect(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(15),
+      ),
+      child: Container(
+        decoration: headerStyle.decoration,
+        margin: headerStyle.headerMargin,
+        padding: headerStyle.headerPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            if (headerStyle.leftChevronVisible) ...[
+              CustomIconButton(
+                icon: headerStyle.leftChevronIcon,
+                onTap: onLeftChevronTap,
+                margin: headerStyle.leftChevronMargin,
+                padding: headerStyle.leftChevronPadding,
+              ),
+            ],
 
-          //
-          Expanded(
-            child: headerTitleBuilder?.call(context, focusedMonth) ??
-                GestureDetector(
-                  onTap: onHeaderTap,
-                  onLongPress: onHeaderLongPress,
-                  child: Text(
-                    text,
-                    style: headerStyle.titleTextStyle,
-                    textAlign: headerStyle.titleCentered
-                        ? TextAlign.center
-                        : TextAlign.start,
+            //
+            Expanded(
+              child: headerTitleBuilder?.call(context, focusedMonth) ??
+                  GestureDetector(
+                    onTap: onHeaderTap,
+                    onLongPress: onHeaderLongPress,
+                    child: Text(
+                      text,
+                      style: headerStyle.titleTextStyle,
+                      textAlign: headerStyle.titleCentered
+                          ? TextAlign.center
+                          : TextAlign.start,
+                    ),
                   ),
-                ),
-          ),
-
-          //
-          if (headerStyle.rightChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.rightChevronIcon,
-              onTap: onRightChevronTap,
-              margin: headerStyle.rightChevronMargin,
-              padding: headerStyle.rightChevronPadding,
             ),
-        ],
+
+            //
+            if (headerStyle.rightChevronVisible)
+              CustomIconButton(
+                icon: headerStyle.rightChevronIcon,
+                onTap: onRightChevronTap,
+                margin: headerStyle.rightChevronMargin,
+                padding: headerStyle.rightChevronPadding,
+              ),
+          ],
+        ),
       ),
     );
   }

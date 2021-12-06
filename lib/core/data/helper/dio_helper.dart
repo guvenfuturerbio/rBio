@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
+import 'package:onedosehealth/core/navigation/app_paths.dart';
 
 import 'package:onedosehealth/core/platform/mobil_interface.dart'
     if (dart.library.html) 'package:onedosehealth/core/platform/web_interface.dart';
@@ -219,52 +220,55 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
           return handler.next(response);
         },
         onError: (DioError error, ErrorInterceptorHandler handler) async {
-          if (error.response?.statusCode == 401) {
-            if (!Atom.url.contains(PagePaths.LOGIN)) {
-              final password = getIt<ISharedPreferencesManager>()
-                  .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
-              final userName = getIt<ISharedPreferencesManager>()
-                  .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+          final statusCode = error.response?.statusCode;
+          if (statusCode != null) {
+            if (statusCode == 401) {
+              if (!Atom.url.contains(PagePaths.LOGIN)) {
+                final password = getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
+                final userName = getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.LOGIN_USERNAME);
 
-              if (password != null) {
-                if (R.endpoints.loginPath
-                    .contains(error.response.requestOptions.uri.path)) {
-                  Atom.to(PagePaths.LOGIN, isReplacement: true);
-                } else {
-                  try {
-                    await getIt<UserManager>().login(userName, password);
+                if (password != null) {
+                  if (R.endpoints.loginPath
+                      .contains(error.response.requestOptions.uri.path)) {
+                    Atom.to(PagePaths.LOGIN, isReplacement: true);
+                  } else {
+                    try {
+                      await getIt<UserManager>().login(userName, password);
 
-                    final requestModel = error.requestOptions;
-                    final response = await request(
-                      requestModel.path,
-                      data: requestModel.data,
-                      queryParameters: requestModel.queryParameters,
-                      cancelToken: requestModel.cancelToken,
-                      onReceiveProgress: requestModel.onReceiveProgress,
-                      onSendProgress: requestModel.onSendProgress,
-                      options: Options(
-                          method: requestModel.method,
-                          headers: requestModel.headers
-                            ..addAll(
-                              {
-                                'Authorization':
-                                    getIt<ISharedPreferencesManager>()
-                                        .get(SharedPreferencesKeys.JWT_TOKEN),
-                              },
-                            )),
-                    );
-                    return handler.resolve(response);
-                  } catch (_) {
-                    return handler.reject(
-                      DioError(
-                        requestOptions: error.response.requestOptions,
-                        error: Exception('401'),
-                      ),
-                    );
+                      final requestModel = error.requestOptions;
+                      final response = await request(
+                        requestModel.path,
+                        data: requestModel.data,
+                        queryParameters: requestModel.queryParameters,
+                        cancelToken: requestModel.cancelToken,
+                        onReceiveProgress: requestModel.onReceiveProgress,
+                        onSendProgress: requestModel.onSendProgress,
+                        options: Options(
+                            method: requestModel.method,
+                            headers: requestModel.headers
+                              ..addAll(
+                                {
+                                  'Authorization':
+                                      getIt<ISharedPreferencesManager>()
+                                          .get(SharedPreferencesKeys.JWT_TOKEN),
+                                },
+                              )),
+                      );
+                      return handler.resolve(response);
+                    } catch (_) {
+                      return handler.reject(
+                        DioError(
+                          requestOptions: error.response.requestOptions,
+                          error: Exception('401'),
+                        ),
+                      );
+                    }
                   }
+                } else {
+                  Atom.to(PagePaths.LOGIN, isReplacement: true);
                 }
-              } else {
-                Atom.to(PagePaths.LOGIN, isReplacement: true);
               }
             }
           }

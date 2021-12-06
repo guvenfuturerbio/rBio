@@ -199,7 +199,7 @@ class _SymptomsBodyLocationsScreenState
         );
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();

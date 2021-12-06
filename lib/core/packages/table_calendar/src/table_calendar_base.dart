@@ -8,8 +8,8 @@ import 'shared/utils.dart';
 import 'widgets/calendar_core.dart';
 
 class TableCalendarBase extends StatefulWidget {
-  final Color backgroundColor;
-  final Color foregroundColor;
+  final Color daysBackgroundColor;
+  final Color cellBackgroundColor;
 
   final DateTime firstDay;
   final DateTime lastDay;
@@ -39,8 +39,8 @@ class TableCalendarBase extends StatefulWidget {
 
   TableCalendarBase({
     Key key,
-    @required this.backgroundColor,
-    @required this.foregroundColor,
+    @required this.daysBackgroundColor,
+    @required this.cellBackgroundColor,
     @required this.firstDay,
     @required this.lastDay,
     @required this.focusedDay,
@@ -207,8 +207,8 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
               );
             },
             child: CalendarCore(
-              backgroundColor: widget.backgroundColor,
-              foregroundColor: widget.foregroundColor,
+              daysBackgroundColor: widget.daysBackgroundColor,
+              foregroundColor: widget.cellBackgroundColor,
               constraints: constraints,
               pageController: _pageController,
               scrollPhysics: _canScrollHorizontally

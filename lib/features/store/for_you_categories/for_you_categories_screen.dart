@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,28 +19,30 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
     return ChangeNotifierProvider<ForYouCategoriesPageVm>(
       create: (context) => ForYouCategoriesPageVm(context),
       child: Consumer<ForYouCategoriesPageVm>(
-        builder: (context, value, child) {
+        builder: (
+          BuildContext context,
+          ForYouCategoriesPageVm vm,
+          Widget child,
+        ) {
           return RbioScaffold(
-              appbar: RbioAppBar(
-                title: TitleAppBarWhite(
-                  title: LocaleProvider.of(context).for_you,
-                ),
+            appbar: RbioAppBar(
+              title: RbioAppBar.textTitle(
+                context,
+                LocaleProvider.of(context).for_you,
               ),
-
-              //
-              body: value.progress == LoadingProgress.LOADING
-                  ? RbioLoading()
-                  : _buildBody(context, value));
+            ),
+            body: _buildBody(vm),
+          );
         },
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, ForYouCategoriesPageVm value) {
-    switch (value.progress) {
+  Widget _buildBody(ForYouCategoriesPageVm vm) {
+    switch (vm.progress) {
       case LoadingProgress.LOADING:
         return RbioLoading();
-        break;
+
       case LoadingProgress.DONE:
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -52,25 +53,23 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
             crossAxisSpacing: 20,
             mainAxisSpacing: 25,
           ),
-          itemCount: value.categories.length,
-          itemBuilder: (BuildContext ctx, index) {
-            return categoryBox(
+          itemCount: vm.categories.length,
+          itemBuilder: (BuildContext ctx, int index) {
+            return Utils.instance.ForYouCategoryCard(
               context: context,
-              title: value.categories[index].text,
-              id: value.categories[index].id,
-              icon: value.categories[index].icon != null
-                  ? Image.memory(base64Decode(value.categories[index].icon))
+              title: vm.categories[index].text,
+              id: vm.categories[index].id,
+              icon: vm.categories[index].icon != null
+                  ? Image.memory(base64Decode(vm.categories[index].icon))
                   : Image.asset(R.image.covid_cat_icon),
               isSubCat: false,
             );
           },
         );
-        break;
+
       case LoadingProgress.ERROR:
-        return Center(
-          child: Text("Error!"),
-        );
-        break;
+        return RbioBodyError();
+
       default:
         return SizedBox();
     }

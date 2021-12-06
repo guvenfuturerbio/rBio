@@ -8,15 +8,15 @@ class RbioRouteError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(),
-      body: RbioError(),
+    return RbioScaffold(
+      appbar: RbioAppBar(),
+      body: RbioBodyError(),
     );
   }
 }
 
-class RbioError extends StatelessWidget {
-  const RbioError({Key key}) : super(key: key);
+class RbioBodyError extends StatelessWidget {
+  const RbioBodyError({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +28,33 @@ class RbioError extends StatelessWidget {
         _buildGap(),
 
         //
-        Center(
-          child: Container(
-            width: 1176,
-            child: SvgPicture.asset(
-              R.image.oops,
+        if (Atom.isWeb) ...[
+          Center(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 600,
+              ),
+              child: SvgPicture.asset(
+                R.image.error_icon,
+              ),
             ),
           ),
-        ),
+          _buildGap(),
+        ] else ...[
+          Center(
+            child: SvgPicture.asset(
+              R.image.error_icon,
+              width: Atom.width * 0.3,
+            ),
+          ),
+        ],
 
         //
         _buildGap(),
 
         //
         Text(
-          'Bir şeyler ters gitti',
+          LocaleProvider.current.something_went_wrong,
           style: context.xHeadline1,
         ),
 
@@ -51,8 +63,10 @@ class RbioError extends StatelessWidget {
 
         //
         RbioElevatedButton(
-          onTap: () {},
-          title: 'Geriye Dön',
+          onTap: () {
+            Atom.historyBack();
+          },
+          title: LocaleProvider.current.turn_back,
         ),
       ],
     );

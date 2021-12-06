@@ -85,7 +85,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         value.imageUrl,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
-                          return CustomCircleAvatar(
+                          return Utils.instance.CustomCircleAvatar(
                             size: 120,
                             child: SvgPicture.asset(
                               R.image.doctor_avatar,
@@ -96,7 +96,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null)
-                            return CustomCircleAvatar(
+                            return Utils.instance.CustomCircleAvatar(
                                 child: Container(
                                   child: child,
                                 ),
@@ -115,7 +115,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                           ));
                         },
                       )
-                    : CustomCircleAvatar(
+                    : Utils.instance.CustomCircleAvatar(
                         size: 120,
                         child: SvgPicture.asset(
                           R.image.doctor_avatar,
@@ -153,16 +153,22 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
             ),
             Container(
               margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: button(
-                  width: 260,
-                  text: LocaleProvider.of(context)
-                      .make_an_appointment
-                      .toUpperCase(),
-                  onPressed: () {
-                    AnalyticsManager().sendEvent(
-                        new OAMakeAppointmentClickEvent(
-                            widget.departmentName, widget.doctorName));
-                    Atom.to(PagePaths.EVENTS, queryParameters: {
+              child: Utils.instance.button(
+                width: 260,
+                text: LocaleProvider.of(context)
+                    .make_an_appointment
+                    .toUpperCase(),
+                onPressed: () {
+                  AnalyticsManager().sendEvent(
+                    OAMakeAppointmentClickEvent(
+                      widget.departmentName,
+                      widget.doctorName,
+                    ),
+                  );
+
+                  Atom.to(
+                    PagePaths.EVENTS,
+                    queryParameters: {
                       'fromOnlineSelect': widget.fromOnlineSelect.toString(),
                       'departmentId': widget.departmentId.toString(),
                       'departmentName': Uri.encodeFull(widget.departmentName),
@@ -170,8 +176,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       'resourceId': widget.resourceId.toString(),
                       'tenantId': widget.tenantId.toString(),
                       'imageUrl': value.imageUrl
-                    });
-                  }),
+                    },
+                  );
+                },
+              ),
             ),
             value.progress == LoadingProgress.DONE
                 ? Column(

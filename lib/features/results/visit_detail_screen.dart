@@ -200,7 +200,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
         return _buildDone(vm);
 
       case LoadingProgress.ERROR:
-        return RbioError();
+        return RbioBodyError();
 
       default:
         return SizedBox();
@@ -465,8 +465,8 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        getFormattedDate(
-                            vm.radiologyResult[index]?.takenAt ?? ""),
+                        DateTime.parse(vm.radiologyResult[index]?.takenAt ?? "")
+                            .xFormatTime2(),
                         style: context.xHeadline4.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -566,14 +566,14 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(top: 8, right: 8),
                         child: vm.radiologyResult[index].reportState == 6
-                            ? button(
+                            ? Utils.instance.button(
                                 text: LocaleProvider.current.show_result,
                                 onPressed: () {
                                   vm.showResult(vm.radiologyResult[index].name,
                                       vm.radiologyResult[index].reportLink);
                                 },
                               )
-                            : passiveButton(
+                            : Utils.instance.passiveButton(
                                 text: LocaleProvider.current.show_result,
                                 onPressed: () {},
                               ),
@@ -586,14 +586,14 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                         padding: EdgeInsets.only(top: 8),
                         child: vm.radiologyResult[index].report != null &&
                                 vm.radiologyResult[index].reportState == 6
-                            ? button(
+                            ? Utils.instance.button(
                                 text: LocaleProvider.current.show_report,
                                 onPressed: () {
                                   vm.getRadiologyResultsAsPdf(
                                       vm.radiologyResult[index].id);
                                 },
                               )
-                            : passiveButton(
+                            : Utils.instance.passiveButton(
                                 text: LocaleProvider.current.show_report,
                                 onPressed: () {},
                               ),

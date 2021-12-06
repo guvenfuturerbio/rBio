@@ -1,6 +1,3 @@
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/generated/l10n.dart';
-
 class DeviceConnectionType {
   String name;
   String imagePath;

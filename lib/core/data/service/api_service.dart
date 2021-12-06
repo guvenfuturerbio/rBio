@@ -3,8 +3,10 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/available_dates.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
+import 'package:onedosehealth/model/home/take_appointment/do_mobil_payment_voucher.dart';
+import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
+import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 
 import '../../../model/model.dart';
 import '../../core.dart';
@@ -123,6 +125,8 @@ abstract class ApiService {
       GetVideoCallPriceRequest getVideoCallPriceRequest);
   Future<GuvenResponseModel> doMobilePayment(
       DoMobilePaymentRequest doMobilePaymentRequest);
+  Future<GuvenResponseModel> doMobilePaymentWithVoucher(
+      DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest);
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest);
   Future<GuvenResponseModel> checkOnlineAppointmentPayment(
@@ -133,4 +137,7 @@ abstract class ApiService {
       AddPatientRelativeRequest addPatientRelative);
   Future<GuvenResponseModel> uploadPatientDocuments(
       String webAppoId, Uint8List file);
+
+  Future<GuvenResponseModel> getResourceVideoCallPriceVoucher(
+      VoucherPriceRequest voucherPriceRequest);
 }

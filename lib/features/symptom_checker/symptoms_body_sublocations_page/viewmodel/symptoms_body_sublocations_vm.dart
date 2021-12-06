@@ -1,7 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
 
 import '../../symptoms_result_page/viewmodel/symptoms_result_page_vm.dart';
 

@@ -11,7 +11,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../../core/core.dart';
-import '../../generated/l10n.dart';
 
 class ProfileImageViewerScreen extends StatefulWidget {
   String title;
@@ -52,107 +51,98 @@ class ProfileImageViewerScreenState extends State<ProfileImageViewerScreen> {
       return RbioRouteError();
     }
 
-    return Scaffold(
-      appBar: MainAppBar(
-        context: context,
-        title: TitleAppBarWhite(
-          title: widget.title,
-        ),
-        leading: IconButton(
-          onPressed: () => Atom.historyBack(),
-          icon: SvgPicture.asset(R.image.ic_back_white),
-        ),
+    return RbioScaffold(
+      appbar: RbioAppBar(
+        title: RbioAppBar.textTitle(context, widget.title),
       ),
 
       //
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 300,
-              width: 300,
-              child: getNoImageAvatar(context),
-            ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: 300,
+            width: 300,
+            child: getNoImageAvatar(context),
+          ),
 
-            //
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: button(
-                      text: LocaleProvider.of(context).delete,
-                      onPressed: () {
-                        UtilityManager().showConfirmationAlertDialog(
-                          context,
-                          LocaleProvider.of(context).warning,
-                          LocaleProvider.of(context).profile_picture_delete,
-                          FlatButton(
-                            child: Text(LocaleProvider.of(context).Ok),
-                            textColor: Colors.white,
-                            onPressed: () async {
-                              AnalyticsManager()
-                                  .sendEvent(new ProfilePictureDeleteEvent());
-                              await getIt<Repository>().deleteProfilePicture();
+          //
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Utils.instance.button(
+                    text: LocaleProvider.of(context).delete,
+                    onPressed: () {
+                      UtilityManager().showConfirmationAlertDialog(
+                        context,
+                        LocaleProvider.of(context).warning,
+                        LocaleProvider.of(context).profile_picture_delete,
+                        FlatButton(
+                          child: Text(LocaleProvider.of(context).Ok),
+                          textColor: Colors.white,
+                          onPressed: () async {
+                            AnalyticsManager()
+                                .sendEvent(new ProfilePictureDeleteEvent());
+                            await getIt<Repository>().deleteProfilePicture();
+                            Navigator.of(context).pop();
+                            setState(() {
+                              _image = new File("");
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+
+              //
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Utils.instance.button(
+                    text: LocaleProvider.of(context).save,
+                    onPressed: () {
+                      UtilityManager().showConfirmationAlertDialog(
+                        context,
+                        LocaleProvider.of(context).warning,
+                        LocaleProvider.of(context).profile_picture_change,
+                        FlatButton(
+                          child: Text(LocaleProvider.of(context).Ok),
+                          textColor: Colors.white,
+                          onPressed: () async {
+                            showLoadingDialog(context);
+                            if (_image.path == "") {
+                              hideDialog(context);
                               Navigator.of(context).pop();
-                              setState(() {
-                                _image = new File("");
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                            } else {
+                              await getIt<Repository>()
+                                  .uploadProfilePicture(_image);
+                              hideDialog(context);
+                              AnalyticsManager()
+                                  .sendEvent(new ProfilePictureUploadEvent());
+                              Navigator.of(context).pop();
+                              Atom.historyBack();
+                            }
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ),
-
-                //
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: button(
-                      text: LocaleProvider.of(context).save,
-                      onPressed: () {
-                        UtilityManager().showConfirmationAlertDialog(
-                          context,
-                          LocaleProvider.of(context).warning,
-                          LocaleProvider.of(context).profile_picture_change,
-                          FlatButton(
-                            child: Text(LocaleProvider.of(context).Ok),
-                            textColor: Colors.white,
-                            onPressed: () async {
-                              showLoadingDialog(context);
-                              if (_image.path == "") {
-                                hideDialog(context);
-                                Navigator.of(context).pop();
-                              } else {
-                                await getIt<Repository>()
-                                    .uploadProfilePicture(_image);
-                                hideDialog(context);
-                                AnalyticsManager()
-                                    .sendEvent(new ProfilePictureUploadEvent());
-                                Navigator.of(context).pop();
-                                Atom.historyBack();
-                              }
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 
   Widget getNoImageAvatar(BuildContext context) {
     return Center(
-      child: CustomCircleAvatar(
+      child: Utils.instance.CustomCircleAvatar(
         child: GestureDetector(
           onTap: () {
             getImage(context);

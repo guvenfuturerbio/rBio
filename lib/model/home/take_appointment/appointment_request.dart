@@ -17,4 +17,7 @@ class AppointmentRequest {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'appointment': saveAppointmentsRequest,
       };
+
+  @override
+  String toString() => 'AppointmentRequest(saveAppointmentsRequest: $saveAppointmentsRequest)';
 }

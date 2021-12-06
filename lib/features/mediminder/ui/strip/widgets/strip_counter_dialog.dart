@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/core/core.dart';
+import '../../../../../core/core.dart';
 
 
 class StripGradientDialog extends StatefulWidget {

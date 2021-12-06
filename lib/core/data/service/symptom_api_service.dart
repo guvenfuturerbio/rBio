@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-import 'package:onedosehealth/core/data/helper/dio_helper.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../helper/dio_helper.dart';
+import '../../../model/model.dart';
 import '../../core.dart';
 
 part 'symptom_api_service_impl.dart';

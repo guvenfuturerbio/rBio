@@ -62,4 +62,9 @@ class PatientResponse {
     data['passportNumber'] = this.passportNumber;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'PatientResponse(birthDate: $birthDate, email: $email, firstName: $firstName, gender: $gender, gsm: $gsm, hasETKApproval: $hasETKApproval, hasKVKKApproval: $hasKVKKApproval, id: $id, identityNumber: $identityNumber, lastName: $lastName, nationalityCode: $nationalityCode, nationalityId: $nationalityId, passportNumber: $passportNumber)';
+  }
 }

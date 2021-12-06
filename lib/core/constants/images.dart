@@ -23,12 +23,14 @@ class _Images {
   final phone_icon = 'assets/images/new/phone_icon.svg';
   final photo_icon = 'assets/images/new/photo_icon.svg';
   final profile_icon = 'assets/images/new/profile_icon.svg';
+  final qr_icon = 'assets/images/new/qr_icon.svg';
   final results_icon = 'assets/images/new/results_icon.svg';
   final send_icon = 'assets/images/new/send_icon.svg';
   final video_icon_80 = 'assets/images/new/video_icon_80.svg';
   final video_icon = 'assets/images/new/video_icon.svg';
   final weight_icon = 'assets/images/new/weight_icon.svg';
-  final oops = 'assets/images/new/oopps.svg';
+  // final oops = 'assets/images/new/oopps.svg';
+  final error_icon = 'assets/images/new/error_icon.svg';
 
   final homeTopLeft = "assets/images/top_left.png";
   final homeTopMid = "assets/images/top_mid.png";
@@ -295,7 +297,6 @@ class _Images {
   final android_share = "assets/images/android_share.svg";
   final email_app_bar = "assets/images/login_pic.svg";
   final success_icon = "assets/images/success_icon.svg";
-  final error_icon = "assets/images/error_icon.svg";
   final top_bg_blue = "assets/images/blue_signin_topbar.svg";
   final grafik_arkasi = 'assets/images/grafikarkasilogo.svg';
   final login_screen_bg = "assets/images/mavi_bg_login.svg";

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/extension/build_context_extension.dart';
+import '../../../../core/extension/build_context_extension.dart';
 
 import '../../../../generated/l10n.dart';
 

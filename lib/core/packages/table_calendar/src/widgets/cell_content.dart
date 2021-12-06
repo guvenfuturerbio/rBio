@@ -3,6 +3,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/extension/datetime_extension.dart';
 
 import '../customization/calendar_builders.dart';
 import '../customization/calendar_style.dart';
@@ -45,8 +46,8 @@ class CellContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dowLabel = DateFormat.EEEE(locale).format(day);
-    final dayLabel = DateFormat.yMMMMd(locale).format(day);
+    final dowLabel = day.xFormatTime4(locale);
+    final dayLabel = day.xFormatTime5(locale);
     final semanticsLabel = '$dowLabel, $dayLabel';
 
     Widget cell =

@@ -107,7 +107,12 @@ class _Endpoints {
   final cancelAppointmentPath = '/Pusula/cancelAppointment'.xBasePath;
   final getResourceVideoCallPricePath =
       '/Pusula/getResourceVideoCallPrice'.xBasePath;
+
+  final getResourceVideoCallPriceWithVoucher =
+      '/Pusula/getResourceVideoCallPriceWithVoucher'.xBasePath;
   final doMobilePaymentPath = '/Pusula/do-mobile-payment'.xBasePath;
+  final doMobilePaymentWithVoucher =
+      "/Pusula/do-mobile-payment-with-voucher".xBasePath;
   final fetchOnlineDepartmentsPath = '/Pusula/getOnlineDepartments'.xBasePath;
   final checkOnlineAppointmentPaymentPath =
       '/pusula/checkOnlineAppointmentPayment'.xBasePath;

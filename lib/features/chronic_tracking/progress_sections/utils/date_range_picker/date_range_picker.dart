@@ -2,7 +2,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:onedosehealth/core/core.dart';
+import '../../../../../core/core.dart';
 import 'package:provider/provider.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
 

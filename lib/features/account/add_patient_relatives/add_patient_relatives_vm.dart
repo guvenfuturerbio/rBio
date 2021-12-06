@@ -123,9 +123,9 @@ class AddPatientRelativesScreenVm with ChangeNotifier {
       builder: (BuildContext context, Widget child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: R.color.blue,
+            primaryColor: getIt<ITheme>().mainColor,
             accentColor: R.color.dark_blue,
-            colorScheme: ColorScheme.light(primary: R.color.blue),
+            colorScheme: ColorScheme.light(primary: getIt<ITheme>().mainColor),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child,

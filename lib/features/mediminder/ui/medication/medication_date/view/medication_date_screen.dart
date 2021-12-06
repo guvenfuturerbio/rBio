@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/enums/medicine_period.dart';
-import 'package:onedosehealth/core/enums/remindable.dart';
-import 'package:onedosehealth/core/enums/usage_type.dart';
-import 'package:onedosehealth/features/mediminder/ui/medication/medication_date/viewmodel/medication_date_vm.dart';
-import 'package:onedosehealth/features/mediminder/widget/keyboard_dismiss_on_tap.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../core/enums/medicine_period.dart';
+import '../../../../../../core/enums/remindable.dart';
+import '../../../../../../core/enums/usage_type.dart';
+import '../viewmodel/medication_date_vm.dart';
 import 'package:provider/provider.dart';
 
 class MedicationDateScreen extends StatefulWidget {
@@ -172,8 +172,8 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                   keyboardType: TextInputType.number,
                   obscureText: false,
                   maxLength: 2,
-                  style: inputTextStyle(),
-                  decoration: inputImageDecoration(
+                  style: Utils.instance.inputTextStyle(),
+                  decoration: Utils.instance.inputImageDecoration(
                     hintText: LocaleProvider.current.medicine_daily_count,
                     image: R.image.ic_user,
                   ),
@@ -216,8 +216,8 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                         keyboardType: TextInputType.text,
                         obscureText: false,
                         maxLength: 10,
-                        style: inputTextStyle(),
-                        decoration: inputImageDecoration(
+                        style: Utils.instance.inputTextStyle(),
+                        decoration: Utils.instance.inputImageDecoration(
                           hintText: LocaleProvider.current.medicine_name,
                           image: R.image.ic_user,
                         ),
@@ -349,8 +349,8 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               obscureText: false,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText:
                     LocaleProvider.current.medicine_intermittent_daily_count,
                 image: R.image.ic_user,
@@ -393,8 +393,8 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
               keyboardType: TextInputType.number,
               obscureText: false,
               maxLength: 1,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText: LocaleProvider.current.hint_dosage,
                 image: R.image.ic_user,
               ),

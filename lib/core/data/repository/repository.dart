@@ -3,8 +3,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/available_dates.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
+import 'package:onedosehealth/model/home/take_appointment/do_mobil_payment_voucher.dart';
+import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
+import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 
 import '../../../model/model.dart';
 import '../../constants/constants.dart';
@@ -91,6 +93,10 @@ class Repository {
       apiService.updateUserSystemName(identityNumber);
 
   Future<UserAccount> getUserProfile() => apiService.getUserProfile();
+
+  Future<GuvenResponseModel> getResourceVideoCallPriceWithVoucher(
+          VoucherPriceRequest voucherPriceRequest) =>
+      apiService.getResourceVideoCallPriceVoucher(voucherPriceRequest);
 
   Future<Map<String, dynamic>> getActiveStream() =>
       apiService.getActiveStream();
@@ -330,6 +336,10 @@ class Repository {
           DoMobilePaymentRequest doMobilePaymentRequest) =>
       apiService.doMobilePayment(doMobilePaymentRequest);
 
+  Future<GuvenResponseModel> doMobilePaymentWithVoucher(
+          DoMobilePaymentWithVoucherRequest
+              doMobilePaymentWithVoucherRequest) =>
+      apiService.doMobilePaymentWithVoucher(doMobilePaymentWithVoucherRequest);
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
     final url = R.endpoints.fetchOnlineDepartmentsPath;

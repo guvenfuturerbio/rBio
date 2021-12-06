@@ -26,7 +26,6 @@ class YoutubeViewerWebScreen extends StatefulWidget {
 }
 
 class _YoutubeViewerWebScreenState extends State<YoutubeViewerWebScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   YoutubePlayerController _controller;
   TextEditingController _idController;
   TextEditingController _seekToController;
@@ -34,7 +33,6 @@ class _YoutubeViewerWebScreenState extends State<YoutubeViewerWebScreen> {
   PlayerState _playerState;
   YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
-  static const String DID_COMPLETE_SURVEY_KEY = "DID_COMPLETE_SURVEY";
 
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController surnameController = new TextEditingController();
@@ -103,51 +101,67 @@ class _YoutubeViewerWebScreenState extends State<YoutubeViewerWebScreen> {
     super.dispose();
   }
 
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(title: LocaleProvider.of(context).youtube_stream);
-  }
-
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerControllerProvider(
       controller: _controller,
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: MainAppBar(
-          context: context,
-          title: getTitleBar(context),
-          leading: ButtonBackWhite(context),
+      child: _buildScreen(),
+    );
+  }
+
+  Widget _buildScreen() {
+    return Scaffold(
+      appBar: RbioAppBar(
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.of(context).youtube_stream,
         ),
-        body: ListView(
-          children: [
-            YoutubePlayerIFrame(
-              controller: _controller,
-            ),
-            widget.didCompleteSurvey ? getBody(context) : getSurvey(context),
-            SizedBox(height: 16),
-            Center(
-              child: Text(
-                LocaleProvider.of(context).powered_by,
-                style: TextStyle(
-                    color: R.color.blue,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20),
+      ),
+      body: ListView(
+        children: [
+          //
+          YoutubePlayerIFrame(
+            controller: _controller,
+          ),
+
+          //
+          widget.didCompleteSurvey ? getBody(context) : getSurvey(context),
+
+          //
+          SizedBox(height: 16),
+
+          //
+          Center(
+            child: Text(
+              LocaleProvider.of(context).powered_by,
+              style: TextStyle(
+                color: getIt<ITheme>().mainColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
               ),
             ),
-            SizedBox(height: 16),
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 16),
-                child: SvgPicture.asset(
-                  R.image.guven_future_logo,
-                  height: 100,
-                  width: 100,
-                ),
-                margin: EdgeInsets.only(bottom: 30),
+          ),
+
+          //
+          SizedBox(height: 16),
+
+          //
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(
+                left: 30,
+                right: 30,
+                top: 16,
               ),
-            )
-          ],
-        ),
+              child: SvgPicture.asset(
+                R.image.guven_future_logo,
+                height: 100,
+                width: 100,
+              ),
+              margin: EdgeInsets.only(bottom: 30),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -158,6 +172,7 @@ class _YoutubeViewerWebScreenState extends State<YoutubeViewerWebScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          //
           Container(
             child: Center(
               child: Text(
@@ -168,79 +183,106 @@ class _YoutubeViewerWebScreenState extends State<YoutubeViewerWebScreen> {
               ),
             ),
           ),
+
+          //
           Container(
+            margin: EdgeInsets.only(bottom: 20, top: 20),
             child: TextFormField(
               controller: nameController,
               textInputAction: TextInputAction.next,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText: LocaleProvider.of(context).name,
                 image: R.image.ic_user,
               ),
               focusNode: nameFNode,
               inputFormatters: <TextInputFormatter>[
-                new TabToNextFieldTextInputFormatter(
-                    context, nameFNode, surnameFNode)
+                TabToNextFieldTextInputFormatter(
+                  context,
+                  nameFNode,
+                  surnameFNode,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, nameFNode, surnameFNode);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  nameFNode,
+                  surnameFNode,
+                );
               },
             ),
-            margin: EdgeInsets.only(bottom: 20, top: 20),
           ),
+
+          //
           Container(
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
+              focusNode: surnameFNode,
               controller: surnameController,
               textInputAction: TextInputAction.next,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText: LocaleProvider.of(context).surname,
                 image: R.image.ic_user,
               ),
-              focusNode: surnameFNode,
               inputFormatters: <TextInputFormatter>[
-                new TabToNextFieldTextInputFormatter(
-                    context, surnameFNode, phoneNumberFNode)
+                TabToNextFieldTextInputFormatter(
+                  context,
+                  surnameFNode,
+                  phoneNumberFNode,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, surnameFNode, phoneNumberFNode);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  surnameFNode,
+                  phoneNumberFNode,
+                );
               },
             ),
-            margin: EdgeInsets.only(bottom: 20),
           ),
+
+          //
           Container(
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
+              focusNode: phoneNumberFNode,
               controller: phoneNumbercontroller,
               textInputAction: TextInputAction.done,
-              style: inputTextStyle(),
-              decoration: inputImageDecoration(
+              style: Utils.instance.inputTextStyle(),
+              decoration: Utils.instance.inputImageDecoration(
                 hintText: LocaleProvider.of(context).phone_number,
                 image: R.image.ic_phone_call_grey,
               ),
-              focusNode: phoneNumberFNode,
               inputFormatters: <TextInputFormatter>[
-                new TabToNextFieldTextInputFormatter(
-                    context, phoneNumberFNode, null)
+                TabToNextFieldTextInputFormatter(
+                  context,
+                  phoneNumberFNode,
+                  null,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, phoneNumberFNode, null);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  phoneNumberFNode,
+                  null,
+                );
               },
             ),
-            margin: EdgeInsets.only(bottom: 20),
           ),
+
+          //
           Center(
             child: Container(
               width: double.infinity,
-              child: button(
-                  text: LocaleProvider.of(context).btn_done.toUpperCase(),
-                  onPressed: () {
-                    completeSurvey(context);
-                  }),
+              child: Utils.instance.button(
+                text: LocaleProvider.of(context).btn_done.toUpperCase(),
+                onPressed: () {
+                  completeSurvey(context);
+                },
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -269,7 +311,7 @@ class _YoutubeViewerWebScreenState extends State<YoutubeViewerWebScreen> {
     );
   }
 
-  Future completeSurvey(BuildContext context) async {
+  Future<void> completeSurvey(BuildContext context) async {
     if (nameController.text == "" ||
         surnameController.text == "" ||
         phoneNumbercontroller.text.length != MASK_TEXT.length) {
@@ -300,6 +342,7 @@ class _YoutubeViewerWebScreenState extends State<YoutubeViewerWebScreen> {
 
     await getIt<ISharedPreferencesManager>()
         .setBool(SharedPreferencesKeys.DID_COMPLETE_SURVEY, true);
+
     setState(() {
       widget.didCompleteSurvey = true;
     });

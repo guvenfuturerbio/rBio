@@ -18,7 +18,6 @@ import '../../features/auth/login/login_screen.dart';
 import '../../features/auth/register/register_step1_screen.dart';
 import '../../features/auth/register/register_step2_screen.dart';
 import '../../features/auth/register/register_step3_screen.dart';
-import '../../features/auth/register/register_step_1_1.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/mediminder/ui/hba1c/add_hba1c/view/hba1c_reminder_add_screen.dart';
@@ -54,17 +53,10 @@ import '../../features/symptom_checker/symptoms_body_location/view/symptoms_body
 import '../../features/symptom_checker/symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
 import '../../features/symptom_checker/symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
 import '../../features/symptom_checker/symptoms_result_page/view/symptoms_result_page.dart';
-import '../../features/take_appointment/appointment_summary/appointment_summary_screen.dart';
-import '../../features/take_appointment/create_appointment/view/create_appointment_events_screen.dart';
 import '../../features/take_appointment/create_appointment/view/create_appointment_screen.dart';
-import '../../features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
-import '../../features/take_appointment/create_online_appointment/view/create_online_appointment_screen.dart';
-import '../../features/take_appointment/create_online_appointment/viewmodel/create_online_appointment_screen_vm.dart';
-import '../../features/take_appointment/department_list/department_list_screen.dart';
+import '../../features/take_appointment/create_appointment_events/view/create_appointment_events_screen.dart';
+import '../../features/take_appointment/create_appointment_summary/view/create_appointment_summary_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
-import '../../features/take_appointment/events/events_screen.dart';
-import '../../features/take_appointment/resources/resources_screen.dart';
-import '../../features/take_appointment/tenant_list/tenant_list_screen.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -105,26 +97,26 @@ class VRouterRoutes {
       widget: FollowersScreen(),
     ),
 
+    // Create Appointment
     VWidget(
       path: PagePaths.CREATE_APPOINTMENT,
-      widget: ChangeNotifierProvider<CreateAppointmentVm>(
-        create: (context) => CreateAppointmentVm(),
-        child: CreateAppointmentScreen(),
-      ),
-    ),
-
-    VWidget(
-      path: PagePaths.CREATE_APPOINTMENT_EVENTS,
-      widget: CreateAppointmentEventsScreen(),
+      widget: CreateAppointmentScreen(),
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.CREATE_APPOINTMENT_EVENTS,
+          widget: CreateAppointmentEventsScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.CREATE_APPOINTMENT_SUMMARY,
+              widget: CreateAppointmentSummaryScreen(),
+            ),
+          ],
+        ),
+      ],
     ),
 
     VWidget(
       path: PagePaths.REGISTER_FIRST,
-      widget: RegisterStep1_1Screen(),
-    ),
-
-    VWidget(
-      path: PagePaths.REGISTER_STEP_1,
       widget: RegisterStep1Screen(),
     ),
 
@@ -149,18 +141,8 @@ class VRouterRoutes {
     ),
 
     VWidget(
-      path: PagePaths.APPOINTMENT_SUMMARY,
-      widget: AppointmentSummaryScreen(),
-    ),
-
-    VWidget(
       path: PagePaths.DOCTOR_CV,
       widget: DoctorCvScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.HOSPITALS,
-      widget: TenantsScreen(),
     ),
 
     VWidget(
@@ -222,21 +204,6 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.CHANGE_PASSWORD,
       widget: ChangePasswordScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.DEPARTMENTS,
-      widget: DepartmentListScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.RESOURCES,
-      widget: ResourcesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.EVENTS,
-      widget: EventsScreen(),
     ),
 
     VWidget(
@@ -324,16 +291,10 @@ class VRouterRoutes {
       path: PagePaths.SYMPTOM_RESULT_PAGE,
       widget: SymptomsResultPage(),
     ),
+
     VWidget(
       path: PagePaths.MEASUREMENT_TRACKING,
       widget: MeasurementTrackingHomeScreen(),
-    ),
-    VWidget(
-      path: PagePaths.CREATE_ONLINE_APPO,
-      widget: ChangeNotifierProvider<CreateOnlineAppointmentVm>(
-        create: (context) => CreateOnlineAppointmentVm(),
-        child: CreateOnlineAppointmentScreen(),
-      ),
     ),
 
     VWidget(
@@ -408,18 +369,18 @@ class PagePaths {
   static const SELECTED_DEVICE = '/selected_device/';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
+  static const CREATE_APPOINTMENT_SUMMARY = '/create-appointment-summary';
   static const CREATE_ONLINE_APPO = '/create-online-appointment';
 
   static const LOGIN = '/login';
   static const REGISTER_FIRST = '/register-first';
-  static const REGISTER_STEP_1 = '/register-1';
   static const REGISTER_STEP_2 = '/register-2';
   static const REGISTER_STEP_3 = '/register-3';
   static const FORGOT_PASSWORD_STEP_1 = '/forgot-password';
   static const FORGOT_PASSWORD_STEP_2 = '/change-password-with-old';
-  static const APPOINTMENT_SUMMARY = '/appointment-summary';
   static const DOCTOR_CV = '/doctor-cv';
-  static const HOSPITALS = '/hospitals';
+  static const APPOINTMENT_SUMMARY = '/appointment-summary';
+
   static const COVID19 = '/covid19';
   static const ERESULT = '/results';
   static const VISIT_DETAIL = '/visit-detail';

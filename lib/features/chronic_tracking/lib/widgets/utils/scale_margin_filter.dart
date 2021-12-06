@@ -1,4 +1,4 @@
-import 'package:onedosehealth/generated/l10n.dart';
+import '../../../../../generated/l10n.dart';
 
 enum ScaleMarginsFilter { VERY_LOW, LOW, TARGET, HIGH, VERY_HIGH, OTHER }
 
