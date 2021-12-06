@@ -273,9 +273,6 @@ class UserService {
 
       //WARNING: Çoklu profil özelliği şuanlık askıya alındığı için sadece ilk profilden ilerlenecektir.
 
-      await getIt<GlucoseStorageImpl>()
-          .getBloodGlucoseDataOfPerson(profiles[0]);
-
       //await ScaleRepository().getAllScaleData();
       //await ScaleRepository().getLatestMeasurement();
     } catch (e, stk) {

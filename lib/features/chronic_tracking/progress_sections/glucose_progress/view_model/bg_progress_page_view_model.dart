@@ -185,13 +185,13 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   Map<int, List<ChartData>> get chartVeryHighTagged =>
       this._chartVeryHighTagged;
 
-  int get targetMin => UserProfilesNotifier().selection.rangeMin;
+  int get targetMin => getIt<ProfileStorageImpl>().getFirst().rangeMin;
 
-  int get targetMax => UserProfilesNotifier().selection.rangeMax;
+  int get targetMax => getIt<ProfileStorageImpl>().getFirst().rangeMax;
 
-  int get criticMin => UserProfilesNotifier().selection.hypo;
+  int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo;
 
-  int get criticMax => UserProfilesNotifier().selection.hyper;
+  int get criticMax => getIt<ProfileStorageImpl>().getFirst().hyper;
 
   int get dailyHighestValue {
     int highest = bgMeasurementsDailyData.isNotEmpty

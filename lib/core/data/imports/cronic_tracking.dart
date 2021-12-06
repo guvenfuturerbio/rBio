@@ -13,6 +13,10 @@ import 'package:onedosehealth/model/login_response.dart';
 
 import 'package:onedosehealth/model/mediminder/strip_detail_model.dart';
 import 'package:onedosehealth/core/domain/person_model.dart';
+import 'package:onedosehealth/model/scale_measurement/add_scale_measurement.dart';
+import 'package:onedosehealth/model/scale_measurement/delete_scale_measurement.dart';
+import 'package:onedosehealth/model/scale_measurement/get_scale_measurement.dart';
+import 'package:onedosehealth/model/scale_measurement/update_scale_measurement.dart';
 import 'package:onedosehealth/model/shared/guven_response_model.dart';
 import 'package:onedosehealth/model/user_profiles/save_and_retrieve_token_model.dart';
 

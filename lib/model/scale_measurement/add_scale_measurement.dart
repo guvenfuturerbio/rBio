@@ -21,14 +21,14 @@ class AddScaleMasurementBody {
 
   int entegrationId;
   DateTime occurrenceTime;
-  int weight;
-  int bmi;
-  int water;
-  int bodyFat;
-  int visceralFat;
-  int boneMass;
-  int muscle;
-  int bmh;
+  double weight;
+  double bmi;
+  double water;
+  double bodyFat;
+  double visceralFat;
+  double boneMass;
+  double muscle;
+  double bmh;
   int scaleUnit;
   String note;
 

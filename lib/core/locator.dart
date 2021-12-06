@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
@@ -25,11 +27,29 @@ GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
   String directory;
+
   if (!Atom.isWeb) {
+    WidgetsFlutterBinding.ensureInitialized();
     final appDocumentDirectory = await getApplicationDocumentsDirectory();
 
     directory = appDocumentDirectory.path;
     Hive.init(directory);
+  }
+
+  getIt.registerLazySingleton(() => ProfileStorageImpl());
+  getIt.registerLazySingleton(() => GlucoseStorageImpl());
+  getIt.registerLazySingleton(() => ScaleStorageImpl());
+
+  try {
+    Hive.registerAdapter<Person>(PersonAdapter());
+    Hive.registerAdapter<GlucoseData>(GlucoseDataAdapter());
+    Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());
+    await getIt<ProfileStorageImpl>().init();
+    await getIt<GlucoseStorageImpl>().init();
+    await getIt<ScaleStorageImpl>().init();
+  } catch (e, stk) {
+    log(e.toString());
+    debugPrintStack(stackTrace: stk);
   }
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   GuvenSettings settings = GuvenSettings(
@@ -61,14 +81,6 @@ Future<void> setupLocator() async {
 
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
-
-  getIt.registerLazySingleton(() => GlucoseStorageImpl());
-  getIt.registerLazySingleton(() => ScaleStorageImpl());
-  getIt.registerLazySingleton(() => ProfileStorageImpl());
-
-  await getIt<ProfileStorageImpl>().init();
-  await getIt<GlucoseStorageImpl>().init();
-  await getIt<ScaleStorageImpl>().init();
 
   getIt.registerSingleton<UserInfo>(
       UserInfo(getIt<ISharedPreferencesManager>()));

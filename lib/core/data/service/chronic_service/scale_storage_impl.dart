@@ -9,7 +9,6 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
   @override
   Future<void> init() async {
-    Hive..registerAdapter(ScaleModelAdapter());
     box = await Hive.openBox<ScaleModel>(boxKey);
   }
 
@@ -18,11 +17,17 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     try {
       if (checkBox(true) && box.containsKey(key)) {
         ScaleModel data = box.get(key);
-        //await deleteFromServer(data.time,{});
+        await deleteFromServer(
+            data.time,
+            DeleteScaleMasurementBody(
+                    entegrationId: UserProfilesNotifier().selection.id,
+                    measurementId: data.measurementId)
+                .toJson());
         box.delete(key);
         notifyListeners();
         return true;
-      }
+      } else
+        return false;
     } catch (e) {
       rethrow;
     }
@@ -30,9 +35,13 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
   @override
   Future deleteFromServer(
-      int timeKey, Map<String, dynamic> deleteMeasurementRequest) {
-    // TODO: implement deleteFromServer
-    throw UnimplementedError();
+      int timeKey, Map<String, dynamic> deleteMeasurementRequest) async {
+    try {
+      await getIt<ChronicTrackingRepository>().deleteScaleMeasurement(
+          DeleteScaleMasurementBody.fromJson(deleteMeasurementRequest));
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
@@ -77,16 +86,43 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   }
 
   @override
-  Future sendToServer(ScaleModel data) {}
+  Future sendToServer(ScaleModel data) async {
+    int userId = UserProfilesNotifier().selection?.id ?? 0;
+
+    AddScaleMasurementBody addScaleMasurementBody = new AddScaleMasurementBody(
+      bmh: data.bmh,
+      bodyFat: data.bodyFat,
+      bmi: data.bmi,
+      boneMass: data.boneMass,
+      entegrationId: userId,
+      muscle: data.muscle,
+      note: data.note,
+      occurrenceTime: data.dateTime,
+      scaleUnit: data.unit != null || data.unit != ScaleUnit.KG ? 1 : 0,
+      visceralFat: data.visceralFat,
+      water: data.water,
+      weight: data.weight,
+    );
+    try {
+      return (await getIt<ChronicTrackingRepository>()
+              .insertNewScaleValue(addScaleMasurementBody))
+          .datum;
+    } catch (_) {
+      rethrow;
+    }
+  }
 
   @override
   Future<bool> update(ScaleModel data, key) async {
     try {
       if (checkBox(true)) {
         ScaleModel scaleModelFromBox = get(key);
+        print(scaleModelFromBox.key);
+
         if (!scaleModelFromBox.isEqual(data)) {
+          await updateServer(data);
           box.put(key, data);
-          //await updateServer(data);
+
           notifyListeners();
         }
         return true;
@@ -99,9 +135,33 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   }
 
   @override
-  Future updateServer(ScaleModel data) {
-    // TODO: implement updateServer
-    throw UnimplementedError();
+  Future updateServer(ScaleModel data) async {
+    int userId = UserProfilesNotifier().selection?.id ?? 0;
+
+    UpdateScaleMasurementBody updateScaleMasurementBody =
+        UpdateScaleMasurementBody(
+            id: data.measurementId,
+            bmh: data.bmh,
+            bodyFat: data.bodyFat,
+            bmi: data.bmi,
+            boneMass: data.boneMass,
+            entegrationId: userId,
+            muscle: data.muscle,
+            note: data.note,
+            occurrenceTime: data.dateTime,
+            scaleUnit: data.unit != null || data.unit != ScaleUnit.KG ? 1 : 0,
+            visceralFat: data.visceralFat,
+            water: data.water,
+            weight: data.weight,
+            kioskMeasurementId: 0);
+    print(updateScaleMasurementBody.toJson());
+    try {
+      return (await getIt<ChronicTrackingRepository>()
+              .updateScaleMeasurement(updateScaleMasurementBody))
+          .datum;
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
@@ -121,6 +181,51 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
       }
     } catch (_) {
       rethrow;
+    }
+  }
+
+  Future<List<ScaleModel>> getScaleDatas(
+      {DateTime beginDate, DateTime endDate, int count}) async {
+    try {
+      GetScaleMasurementBody getScaleMasurementBody = GetScaleMasurementBody(
+          entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+          beginDate: beginDate,
+          endDate: endDate,
+          count: count);
+
+      final response = await getIt<ChronicTrackingRepository>()
+          .getScaleDataOfPerson(getScaleMasurementBody);
+
+      List datum = response.datum;
+      List<ScaleModel> scaleDataList = <ScaleModel>[];
+      for (var scaleMeasurement in datum) {
+        scaleDataList.add(ScaleModel.fromMap(scaleMeasurement));
+      }
+      return scaleDataList;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> getAndWriteScaleData(
+      {DateTime beginDate, DateTime endDate, int count = 20}) async {
+    var list = await getScaleDatas(
+        beginDate: beginDate, endDate: endDate, count: count);
+    if (list.isNotEmpty) {
+      writeAll(list);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  checkLastScale() async {
+    var lastData = (await getScaleDatas(count: 1))[0];
+
+    if (getLatestMeasurement() == null ||
+        !lastData.isEqual(getLatestMeasurement())) {
+      box.clear();
+      getAndWriteScaleData();
     }
   }
 

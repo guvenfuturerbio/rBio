@@ -28,12 +28,14 @@ class ScaleTaggerVm extends ChangeNotifier {
   TextEditingController noteController;
 
   ScrollController scrollController;
+  var key;
 
   String errorMessage = '';
 
   final picker = ImagePicker();
 
-  ScaleTaggerVm({this.context, this.scaleModel, this.isManuel = false}) {
+  ScaleTaggerVm(
+      {this.context, this.scaleModel, this.isManuel = false, this.key}) {
     if (scaleModel == null) {
       scaleModel = ScaleMeasurementViewModel(
           scaleModel: ScaleModel(
@@ -301,7 +303,7 @@ class ScaleTaggerVm extends ChangeNotifier {
         scaleModel.dateTime = DateTime.now();
       }
       getIt<ScaleStorageImpl>()
-          .write(scaleModel.scaleModel, shouldSendToServer: false);
+          .write(scaleModel.scaleModel, shouldSendToServer: true);
       Atom.dismiss();
     } catch (e) {
       print(e);
@@ -310,8 +312,7 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   update() {
     print(scaleModel);
-    getIt<ScaleStorageImpl>()
-        .update(scaleModel.scaleModel, scaleModel.scaleModel.key);
+    getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
     Atom.dismiss();
   }
 

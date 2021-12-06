@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hive/hive.dart';
-import 'package:onedosehealth/model/ble_models/paired_device.dart';
 
 import '../core.dart';
 
@@ -174,21 +174,23 @@ class ScaleModel extends HiveObject {
   @override
   factory ScaleModel.fromMap(Map map) {
     return ScaleModel(
-        device: jsonDecode(map[DEVICE]),
-        time: map[TIME],
+        device: map[DEVICE] == null ? null : jsonDecode(map[DEVICE]),
+        time: map[TIME] ??
+            DateTime.parse(map['occurrence_time']).millisecondsSinceEpoch,
         weight: map[WEIGHT],
         unit: (map[SCALE_UNIT] as String).fromStr,
         isManuel: map[MANUEL] == 0 ? false : true,
-        images: (map[IMAGES] as List).cast<String>(),
+        images: map[IMAGES] == null ? [] : (map[IMAGES] as List).cast<String>(),
         note: map[NOTE],
         water: map[WATER],
         bmi: map[BMI],
         bodyFat: map[BODY_FAT],
         boneMass: map[BONE_MASS],
         muscle: map[MUSCLE],
+        measurementId: map[MEASUREMENT_ID],
         visceralFat: map[VISCERAL_FAT],
         isDeleted: map[IS_DELETED] == 0 ? false : true,
-        dateTime: DateTime.parse(map[DATE_TIME]));
+        dateTime: DateTime.parse(map[DATE_TIME] ?? map['occurrence_time']));
   }
 
   @override
@@ -235,9 +237,11 @@ class ScaleModel extends HiveObject {
       note: map[NOTE],
       water: map[WATER],
       bmi: map[BMI],
+      bmh: map['bmh'],
       bodyFat: map[BODY_FAT],
       boneMass: map[BONE_MASS],
       muscle: map[MUSCLE],
+      measurementId: map[MEASUREMENT_ID],
       visceralFat: map[VISCERAL_FAT],
       isDeleted: map[IS_DELETED] == 0 ? false : true,
       dateTime: DateTime.parse(map[DATE_TIME]));
@@ -257,7 +261,7 @@ class ScaleModel extends HiveObject {
       BONE_MASS: boneMass,
       MUSCLE: muscle,
       HEIGHT: height,
-      MEASUREMENT_ID: time,
+      MEASUREMENT_ID: measurementId,
       VISCERAL_FAT: visceralFat,
       IS_DELETED: isDeleted ? 1 : 0,
       USER_ID: 0,
@@ -310,6 +314,7 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
+    log(fields.toString());
     return ScaleModel(
       device: jsonDecode(fields[0] as String),
       weight: fields[1] as double,

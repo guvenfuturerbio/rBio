@@ -22,7 +22,6 @@ class ScaleProgressPage extends StatefulWidget {
 }
 
 class _ScaleProgressPage extends State<ScaleProgressPage> {
-  ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Consumer<ScaleProgressPageViewModel>(
@@ -34,7 +33,7 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: (context.HEIGHT * .38) * context.TEXTSCALE,
+                      height: (context.HEIGHT * .4) * context.TEXTSCALE,
                       child: GraphHeader(
                         value: value,
                         callBack: widget.callBack,
@@ -44,11 +43,11 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                       value: value,
                     ),
                     Container(
-                      height: (context.HEIGHT * .35) * context.TEXTSCALE,
+                      height: (context.HEIGHT * .5) * context.TEXTSCALE,
                       margin: EdgeInsets.only(top: 8),
                       child: ScaleMeasurementListWidget(
                         scaleMeasurements: value.scaleMeasurements,
-                        scrollController: _controller,
+                        scrollController: value.controller,
                         useStickyGroupSeparatorsValue: true,
                       ),
                     )

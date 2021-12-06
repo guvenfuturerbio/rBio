@@ -66,43 +66,48 @@ class ScaleTagger extends StatelessWidget {
                       ? null
                       : ScaleMeasurementViewModel(
                           scaleModel: scaleModel.copy()),
-                  isManuel: scaleModel == null),
+                  isManuel: scaleModel == null,
+                  key: scaleModel?.key),
               child: GestureDetector(
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Consumer<ScaleTaggerVm>(
-                  builder: (_, value, __) => Card(
-                    color: R.color.background,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: height * .03,
-                              right: width * .02,
-                              left: width * .02,
-                            ),
-                            child: SingleChildScrollView(
-                              controller: value.scrollController,
-                              child: Column(
-                                children: [
-                                  weightInputSection(value, context),
-                                  _dateTimeSection(context, value),
-                                  otherBodyParameterMeasurementSection(value),
-                                  _imageSection(value, context),
-                                  _noteSection(value, context),
-                                ],
+                  builder: (_, value, __) {
+                    print(value.key);
+                    print(value.scaleModel.scaleModel.key);
+                    return Card(
+                      color: R.color.background,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: height * .03,
+                                right: width * .02,
+                                left: width * .02,
+                              ),
+                              child: SingleChildScrollView(
+                                controller: value.scrollController,
+                                child: Column(
+                                  children: [
+                                    weightInputSection(value, context),
+                                    _dateTimeSection(context, value),
+                                    otherBodyParameterMeasurementSection(value),
+                                    _imageSection(value, context),
+                                    _noteSection(value, context),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        getAction(
-                            Atom.dismiss, isUpdate ? value.update : value.save)
-                      ],
-                    ),
-                  ),
+                          getAction(Atom.dismiss,
+                              isUpdate ? value.update : value.save)
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

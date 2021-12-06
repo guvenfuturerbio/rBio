@@ -74,7 +74,6 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
 
   @override
   Future<void> init() async {
-    Hive..registerAdapter(PersonAdapter());
     box = await Hive.openBox<Person>(boxKey);
   }
 

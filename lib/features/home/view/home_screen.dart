@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:atom/atom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: R.sizes.iconSize,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                print(getIt<ProfileStorageImpl>().getFirst().id);
+                log(getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.CT_AUTH_TOKEN));
+              },
             ),
           ),
         ),

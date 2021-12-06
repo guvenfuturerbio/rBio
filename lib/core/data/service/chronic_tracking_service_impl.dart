@@ -335,4 +335,60 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       throw Exception('/getMedicineByFilter : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<GuvenResponseModel> insertNewScaleValue(
+      AddScaleMasurementBody addScaleMasurementBody) async {
+    final response = await helper.postGuven(
+      R.endpoints.ct_insertNewScaleValue,
+      addScaleMasurementBody.toJson(),
+      options: authOptions,
+    );
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/insertNewScaleValue : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> deleteScaleMeasurement(
+      DeleteScaleMasurementBody deleteScaleMasurementBody) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_deleteScaleMeasurement,
+        deleteScaleMasurementBody.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/deleteScaleMeasurement : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> getScaleMasurement(
+      GetScaleMasurementBody getScaleMasurementBody) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_getScaleMeasurement, getScaleMasurementBody.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/getScaleMasurement : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> updateScaleMeasurement(
+      UpdateScaleMasurementBody updateScaleMasurementBody) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_updateScaleMeasurement,
+        updateScaleMasurementBody.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
+    }
+  }
 }

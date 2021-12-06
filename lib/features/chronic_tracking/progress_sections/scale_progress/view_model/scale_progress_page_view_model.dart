@@ -22,6 +22,8 @@ enum GraphType { BUBBLE, LINE }
 
 class ScaleProgressPageViewModel extends ChangeNotifier
     implements ProgressPage {
+  final controller = ScrollController();
+  bool hasReachEnd = false;
   ScaleProgressPageViewModel() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       print('here');
@@ -34,6 +36,11 @@ class ScaleProgressPageViewModel extends ChangeNotifier
       });
       fetchScaleMeasurements();
       fetchScrolledDailyData();
+      controller.addListener(() {
+        if (controller.position.atEdge && controller.position.pixels != 0) {
+          getNewItems();
+        }
+      });
     });
   }
 
@@ -679,5 +686,17 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   @override
   void manuelEntry(BuildContext context) {
     showScaleTagger(context);
+  }
+
+  getNewItems() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if ((selected == TimePeriodFilter.DAILY) && !hasReachEnd) {
+        scaleMeasurements.sort((a, b) => b.date.compareTo(a.date));
+
+        getIt<ScaleStorageImpl>()
+            .getAndWriteScaleData(endDate: scaleMeasurements.last.date)
+            .then((value) => hasReachEnd = value);
+      }
+    });
   }
 }

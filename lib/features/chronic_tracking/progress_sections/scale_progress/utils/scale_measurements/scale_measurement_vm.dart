@@ -15,9 +15,9 @@ class ScaleMeasurementViewModel {
 
   int get measurementId => scaleModel.measurementId;
 
-  DateTime get date => scaleModel.dateTime;
+  DateTime get date => scaleModel?.dateTime;
 
-  double get weight => scaleModel.weight;
+  double get weight => scaleModel?.weight;
 
   set weight(rhs) => scaleModel.weight = rhs;
 
@@ -77,7 +77,7 @@ class ScaleMeasurementViewModel {
 
   List<String> get imageUrl => scaleModel.images;
 
-  ScaleUnit get unit => scaleModel.unit;
+  ScaleUnit get unit => scaleModel?.unit;
 
   int minRange(SelectedScaleType selected) => getTargetMin(selected);
   int maxRange(SelectedScaleType selected) => getTargetMax(selected);

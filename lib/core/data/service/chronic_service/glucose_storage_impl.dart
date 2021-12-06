@@ -6,7 +6,6 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   Future<void> init() async {
-    Hive..registerAdapter(GlucoseDataAdapter());
     box = await Hive.openBox<GlucoseData>(boxKey);
   }
 
@@ -141,7 +140,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   Future<int> sendToServer(GlucoseData data) async {
     DateTime dt = DateTime.fromMillisecondsSinceEpoch(data.time);
-    int userId = UserProfilesNotifier().selection?.id ?? 0;
+    int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
     String dtFrmt = dt.toString();
     BloodGlucoseValue bloodGlucoseValue = new BloodGlucoseValue(
         deviceUUID: data.deviceUUID,
@@ -201,6 +200,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
       final response = await getIt<ChronicTrackingRepository>()
           .getBloodGlucoseDataOfPerson(getBloodGlucoseDataOfPerson);
+
       List datum = response.datum["blood_glucose_measurement_details"];
       List<GlucoseData> glucoseDataList = new List();
       for (var bgMeasurement in datum) {

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:onedosehealth/model/scale_measurement/add_scale_measurement.dart';
+import 'package:onedosehealth/model/scale_measurement/delete_scale_measurement.dart';
+import 'package:onedosehealth/model/scale_measurement/get_scale_measurement.dart';
+import 'package:onedosehealth/model/scale_measurement/update_scale_measurement.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
