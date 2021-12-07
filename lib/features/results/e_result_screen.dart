@@ -84,16 +84,18 @@ class _EResultScreenState extends State<EResultScreen> {
         {
           return vm.visits.length > 0
               ? ListView.builder(
+                  padding: EdgeInsets.zero,
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),
                   itemCount: vm.visits.length,
                   itemBuilder: (BuildContext context, int index) {
                     return RbioCardAppoCard.result(
-                      date: getFormattedDate(vm.visits[index].openingDate),
+                      date: DateTime.parse(vm.visits[index].openingDate)
+                          .xFormatTime2(),
                       departmentName: vm.visits[index].department ?? '',
                       doctorName: vm.visits[index].physician ?? '',
                       tenantName: getTenantName(vm.visits[index].tenantId),
-                      onTap: vm.visits[index].hasLaboratoryResults ||
+                      openDetailTap: vm.visits[index].hasLaboratoryResults ||
                               vm.visits[index].hasRadiologyResults ||
                               vm.visits[index].hasPathologyResults
                           ? () {

@@ -163,12 +163,9 @@ flutter:
     - assets/pdf/
 
   fonts:
-    - family: Ic
-      fonts:
-        - asset: assets/fonts/ic/ic_medicine.ttf
     - family: SourceSans
       fonts:
-        - asset: assets/fonts/SourceSansVariable_Roman.otf
+        - asset: assets/fonts/SourceSansPro_Regular.ttf
 
 flutter_icons:
   android: true

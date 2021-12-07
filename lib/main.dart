@@ -19,9 +19,10 @@ import 'features/home/viewmodel/home_vm.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final appConfig = DefaultConfig();
   await SecretUtils.instance.setup(Environment.PROD);
   await Firebase.initializeApp();
-  await setupLocator();
+  await setupLocator(appConfig);
   _setupLogging();
   _initFirebaseMessaging();
   RegisterViews.instance.init();
@@ -71,6 +72,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final bgProgressPage = BgProgressPageViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,8 +104,11 @@ class _MyAppState extends State<MyApp> {
             value: ScaleMeasurementNotifier(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
-              value: BgProgressPageViewModel()),
+            value: BgProgressPageViewModel(),
+          ),
         ],
+
+        //
         child: Consumer<ThemeNotifier>(
           builder: (
             BuildContext context,

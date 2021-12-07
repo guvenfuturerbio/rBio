@@ -8,6 +8,8 @@ class GuvenColors {
   static const Color green = Color.fromARGB(255, 0, 158, 71);
   static const Color green2 = Color.fromARGB(255, 202, 234, 216);
   static const Color grey = Color.fromARGB(255, 238, 238, 238);
+  static const Color burgundy = Color.fromARGB(255, 134, 39, 52);
+  static const Color burgundy2 = Color(0xffaa6871);
 }
 
 class _Sizes {
@@ -57,7 +59,7 @@ class _Color {
   final black = Color(0xFF131313);
   final white = Color(0xFFFFFFFF);
   final dark_black = Color(0xFF000000);
-  final blue = Color(0xFFC74852);
+  final blue = getIt<ITheme>().mainColor; // Color(0xFFC74852);
   final light_blue = Color(0xFFE18B94);
   final dark_blue = Color(0xFF862634);
   final dark_white = Color(0xFFE5E5E5);

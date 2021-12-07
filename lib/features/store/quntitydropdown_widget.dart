@@ -24,7 +24,7 @@ class _QuantityDropdownWidgetState extends State<QuantityDropdownWidget> {
             style: TextStyle(color: Colors.black),
             underline: Container(
               height: 2,
-              color: R.color.blue,
+              color: getIt<ITheme>().mainColor,
             ),
             onChanged: (String newValue) {
               setState(() {
@@ -32,12 +32,14 @@ class _QuantityDropdownWidgetState extends State<QuantityDropdownWidget> {
               });
             },
             items: <String>['1', '2', '3', '4', '5', '6', '7', '8', '9', '10+']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+                .map<DropdownMenuItem<String>>(
+              (String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              },
+            ).toList(),
           )
         : Row(
             children: [

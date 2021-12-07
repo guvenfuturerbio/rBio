@@ -171,7 +171,8 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                                     Atom.to(
                                       PagePaths.CREATE_APPOINTMENT_EVENTS,
                                       queryParameters: {
-                                        'patientId': Uri.encodeFull(val.dropdownValueRelative.id),
+                                        'patientId': Uri.encodeFull(
+                                            val.dropdownValueRelative.id),
                                         'patientName': Uri.encodeFull(
                                             '${val.dropdownValueRelative.name} ${val.dropdownValueRelative.surname}'),
                                         'tenantId': val.dropdownValueTenant.id

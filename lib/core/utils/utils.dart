@@ -15,11 +15,11 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
 import '../../features/shared/do_not_show_again_dialog.dart';
-import '../../model/mediminder/person_model.dart';
 import '../../model/model.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';
@@ -41,6 +41,7 @@ class Utils {
     return _instance;
   }
 
+  // #region hideKeyboard
   void hideKeyboard(BuildContext context) {
     final currentFocus = FocusScope.of(context);
 
@@ -48,7 +49,9 @@ class Utils {
       FocusManager.instance.primaryFocus?.unfocus();
     }
   }
+  // #endregion
 
+  // #region getCacheApiCallList
   Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
     String url,
     Future<List<T>> Function() apiCall,
@@ -69,7 +72,9 @@ class Utils {
       return [];
     }
   }
+  // #endregion
 
+  // #region getCacheApiCallModel
   Future<T> getCacheApiCallModel<T extends IBaseModel>(
     String url,
     Future<T> Function() apiCall,
@@ -91,7 +96,9 @@ class Utils {
       throw Exception('getCacheApiCallModel : ${model.runtimeType}');
     }
   }
+  // #endregion
 
+  // chronic_tracking
   DeviceType getDeviceType(DiscoveredDevice device) {
     if (device.name == 'MIBFS' &&
         device.serviceData.length == 1 &&
@@ -154,7 +161,7 @@ class Utils {
         ),
         focusedBorder: _borderTextField(),
         border: _borderTextField(),
-        focusColor: R.color.blue,
+        focusColor: getIt<ITheme>().mainColor,
         suffixIcon: Visibility(
           visible: suffixIcon != null ? true : false,
           child: InkWell(
@@ -224,8 +231,10 @@ class Utils {
     double width = 200,
   }) =>
       GradientButton(
-        increaseHeightBy: height,
+        callback: onPressed,
         increaseWidthBy: width,
+        increaseHeightBy: height,
+        shadowColor: Colors.black.withAlpha(50),
         child: Text(
           text,
           textAlign: TextAlign.center,
@@ -235,9 +244,14 @@ class Utils {
           fontWeight: FontWeight.w600,
           color: R.color.grey,
         ),
-        callback: onPressed,
-        gradient: passiveBlueGradient(),
-        shadowColor: Colors.black.withAlpha(50),
+        gradient: LinearGradient(
+          colors: [
+            getIt<ITheme>().mainColor.withAlpha(15),
+            getIt<ITheme>().mainColor.withAlpha(15)
+          ],
+          begin: Alignment.bottomLeft,
+          end: Alignment.centerRight,
+        ),
       );
 
   InputDecoration inputDecorationForLogin({
@@ -259,6 +273,130 @@ class Utils {
           color: R.color.gray,
         ),
       );
+
+  Widget CustomCircleAvatar({
+    double size = 50,
+    Widget child,
+    BoxDecoration decoration,
+  }) =>
+      Container(
+        width: size,
+        height: size,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(size),
+          child: child,
+        ),
+        decoration: decoration,
+      );
+
+  Widget ForYouCategoryCard({
+    BuildContext context,
+    final int id,
+    final String title,
+    final Image icon,
+    final bool isSubCat,
+  }) =>
+      GestureDetector(
+        onTap: () {
+          id == -1
+              ? Atom.to(PagePaths.COVID19)
+              : isSubCat
+                  ? Atom.to(
+                      PagePaths.FOR_YOU_SUB_CATEGORIES_DETAIL,
+                      queryParameters: {
+                        'title': Uri.encodeFull(title),
+                        'subCategoryId': id.toString()
+                      },
+                    )
+                  : Atom.to(
+                      PagePaths.FOR_YOU_SUB_CATEGORIES,
+                      queryParameters: {
+                        'title': Uri.encodeFull(title),
+                        'categoryId': id.toString(),
+                      },
+                    );
+
+          isSubCat
+              ? AnalyticsManager()
+                  .sendEvent(SubCategoryClicked(subCategoryName: title))
+              : AnalyticsManager()
+                  .sendEvent(CategoryClicked(categoryName: title));
+        },
+        child: Material(
+          clipBehavior: Clip.antiAlias,
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: Container(
+            height: 300,
+            width: 300,
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                //
+                FittedBox(
+                  fit: BoxFit.fill,
+                  child: icon,
+                ),
+
+                //
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          getIt<ITheme>().mainColor.withOpacity(0.8),
+                          getIt<ITheme>().mainColor.withOpacity(0.3),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: R.color.dark_black.withAlpha(50),
+                          blurRadius: 15,
+                          spreadRadius: 0,
+                          offset: Offset(5, 10),
+                        ),
+                      ],
+                    ),
+                    child: Wrap(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            title,
+                            textAlign: TextAlign.left,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.xHeadline3.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: getIt<ITheme>().textColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+  String clearDoctorTitle(String text) {
+    if (text.contains('dr.')) {
+      return text.split('dr.')[1];
+    } else {
+      return text;
+    }
+  }
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -284,25 +422,6 @@ InputBorder _borderTextFieldRed() => OutlineInputBorder(
           width: 0, style: BorderStyle.solid, color: R.color.light_blue),
     );
 
-Widget ButtonBackWhite(BuildContext context) => IconButton(
-      icon: SvgPicture.asset(R.image.ic_back_white),
-      padding: EdgeInsets.only(
-        top: Atom.isWeb ? 8 : 4,
-      ),
-      onPressed: () {
-        Atom.historyBack();
-      },
-    );
-
-Widget TitleAppBarBlack({String title}) => Text(
-      title,
-      style: TextStyle(
-        fontSize: 18,
-        color: R.color.black,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-
 Widget TitleAppBarWhite({String title}) => Container(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Text(
@@ -315,37 +434,6 @@ Widget TitleAppBarWhite({String title}) => Container(
           fontWeight: FontWeight.w600,
         ),
         textAlign: TextAlign.center,
-      ),
-    );
-
-Widget InputWidget({
-  String hint,
-  String text = '',
-  double bottom = 0,
-  double top = 0,
-  Function onTap,
-}) =>
-    Padding(
-      padding: EdgeInsets.only(bottom: bottom, top: top),
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          child: Text(
-            text.isEmpty ? hint : text,
-            style: text.isEmpty
-                ? Utils.instance.hintStyle()
-                : Utils.instance.inputTextStyle(),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(200),
-            border: Border.all(
-              width: 1,
-              color: R.color.dark_white,
-            ),
-          ),
-          padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-        ),
       ),
     );
 
@@ -386,130 +474,8 @@ Widget MainAppBar({
         ),
         preferredSize: Size(MediaQuery.of(context).size.width, 50.0));
 
-Widget CustomCircleAvatar(
-        {double size = 50, Widget child, BoxDecoration decoration}) =>
-    Container(
-      width: size,
-      height: size,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(size),
-        child: child,
-      ),
-      decoration: decoration,
-    );
-
-Widget categoryBox({
-  BuildContext context,
-  final int id,
-  final String title,
-  final Image icon,
-  final bool isSubCat,
-}) =>
-    GestureDetector(
-      onTap: () {
-        id == -1
-            ? Atom.to(PagePaths.COVID19)
-            : isSubCat
-                ? Atom.to(
-                    PagePaths.FOR_YOU_SUB_CATEGORIES_DETAIL,
-                    queryParameters: {
-                      'title': Uri.encodeFull(title),
-                      'subCategoryId': id.toString()
-                    },
-                  )
-                : Atom.to(
-                    PagePaths.FOR_YOU_SUB_CATEGORIES,
-                    queryParameters: {
-                      'title': Uri.encodeFull(title),
-                      'categoryId': id.toString(),
-                    },
-                  );
-
-        isSubCat
-            ? AnalyticsManager()
-                .sendEvent(new SubCategoryClicked(subCategoryName: title))
-            : AnalyticsManager()
-                .sendEvent(new CategoryClicked(categoryName: title));
-      },
-      child: Material(
-        clipBehavior: Clip.antiAlias,
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Container(
-          height: 300,
-          width: 300,
-          child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              FittedBox(fit: BoxFit.fill, child: icon),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: double.infinity,
-                  alignment: Alignment.centerLeft,
-                  child: Wrap(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.xHeadline3.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: getIt<ITheme>().textColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        getIt<ITheme>().mainColor.withOpacity(0.8),
-                        getIt<ITheme>().mainColor.withOpacity(0.3),
-                      ], begin: Alignment.topLeft, end: Alignment.topRight),
-                      boxShadow: [
-                        BoxShadow(
-                            color: R.color.dark_black.withAlpha(50),
-                            blurRadius: 15,
-                            spreadRadius: 0,
-                            offset: Offset(5, 10))
-                      ]),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-
-Widget getTitleBar(BuildContext context, String text) {
-  return TitleAppBarWhite(title: text);
-}
-
-String getFormattedDate(String date) => DateTime.parse(date).xFormatTime2();
-
 String getFormattedDateWithTime(String date) =>
     DateTime.parse(date).xFormatTime3();
-
-Gradient passiveBlueGradient() => LinearGradient(colors: [
-      getIt<ITheme>().mainColor.withAlpha(15),
-      getIt<ITheme>().mainColor.withAlpha(15)
-    ], begin: Alignment.bottomLeft, end: Alignment.centerRight);
-
-BoxDecoration ShadowDecorationWhite() => BoxDecoration(
-      color: R.color.white,
-      borderRadius: BorderRadius.circular(8),
-      boxShadow: [
-        BoxShadow(
-            color: Color(0xFF000000).withOpacity(0.1),
-            blurRadius: 8,
-            offset: Offset(0, 1))
-      ],
-    );
 
 /// Page Irrelevant operations
 class UtilityManager {
@@ -845,14 +811,6 @@ Future<void> showOptionalUpdateDialog({
   );
 }
 
-String clearDoctorTitle(String text) {
-  if (text.contains('dr.')) {
-    return text.split('dr.')[1];
-  } else {
-    return text;
-  }
-}
-
 String fillAllFields(String formContext, String userName, String email,
     String phoneNumber, String currentDate, String packageName) {
   List<String> formTmpList = formContext.split(' ').toList();
@@ -896,8 +854,6 @@ Gradient AppGradient() => LinearGradient(
         getIt<ITheme>().mainColor,
         getIt<ITheme>().mainColor,
       ],
-      begin: Alignment.bottomLeft,
-      end: Alignment.centerRight,
     );
 
 // MEDIMINDER WIDGETS AND RESOURCES
@@ -934,14 +890,13 @@ class Mediminder {
     isFirstUser: false,
   );
 
-  final MY_MEDICINES_PAGE = "my_medicines";
-
-  GradientButton buttonDarkGradient(
-          {text: String,
-          Function onPressed,
-          double height,
-          double width,
-          BuildContext context}) =>
+  GradientButton buttonDarkGradient({
+    BuildContext context,
+    String text,
+    Function onPressed,
+    double height,
+    double width,
+  }) =>
       GradientButton(
         increaseHeightBy: height ?? 16,
         increaseWidthBy: width ?? 200,
@@ -961,50 +916,6 @@ class Mediminder {
         ),
         shadowColor: Colors.black,
       );
-/*
-  TextStyle inputTextStyle(BuildContext context) =>
-      context.xHeadline3.copyWith(color: getIt<ITheme>().mainColor);
-
-  InputDecoration inputImageDecoration(
-          {image: String, hintText: String, context: BuildContext}) =>
-      InputDecoration(
-        contentPadding: EdgeInsets.all(8),
-        prefixIcon: SvgPicture.asset(
-          image,
-          fit: BoxFit.none,
-        ),
-        focusedBorder: borderTextField(),
-        border: borderTextField(),
-        enabledBorder: borderTextField(),
-        hintText: hintText,
-        fillColor: Colors.white,
-        hintStyle: hintStyle(context),
-      );
-*/
-  InputBorder borderTextField() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(200),
-        borderSide: BorderSide(
-          width: 1,
-          style: BorderStyle.solid,
-          color: getIt<ITheme>().grey,
-        ),
-      );
-
-  TextStyle hintStyle(BuildContext context) =>
-      context.xHeadline3.copyWith(color: getIt<ITheme>().grey);
-}
-
-extension StringExtension on String {
-  String format(List<String> params) => interpolate(this, params);
-}
-
-String interpolate(String string, List<String> params) {
-  String result = string;
-  for (int i = 1; i < params.length + 1; i++) {
-    result = result.replaceAll('%${i}\$', params[i - 1]);
-  }
-
-  return result;
 }
 
 class GradientDialog extends StatefulWidget {
@@ -1133,4 +1044,5 @@ class _ProgressDialogState extends State<ProgressDialog> {
         begin: Alignment.bottomLeft,
         end: Alignment.centerRight,
       );
+
 }

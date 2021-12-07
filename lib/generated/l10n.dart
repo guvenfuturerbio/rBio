@@ -7224,6 +7224,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Oops. Something went wrong!`
+  String get something_went_wrong {
+    return Intl.message(
+      'Oops. Something went wrong!',
+      name: 'something_went_wrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Turn Back`
+  String get turn_back {
+    return Intl.message(
+      'Turn Back',
+      name: 'turn_back',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting`
+  String get waiting {
+    return Intl.message(
+      'Waiting',
+      name: 'waiting',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

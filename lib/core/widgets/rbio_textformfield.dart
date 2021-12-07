@@ -47,14 +47,16 @@ class RbioTextFormField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
-      decoration: Utils.instance.inputDecorationForLogin(
-        hintText: hintText,
-        contentPadding: contentPadding,
-        showBorder: showBorder,
-      ).copyWith(
-        filled: true,
-        fillColor: getIt<ITheme>().cardBackgroundColor,
-      ),
+      decoration: Utils.instance
+          .inputDecorationForLogin(
+            hintText: hintText,
+            contentPadding: contentPadding,
+            showBorder: showBorder,
+          )
+          .copyWith(
+            filled: true,
+            fillColor: getIt<ITheme>().cardBackgroundColor,
+          ),
       onChanged: onChanged,
       inputFormatters: inputFormatters,
       onFieldSubmitted: onFieldSubmitted,

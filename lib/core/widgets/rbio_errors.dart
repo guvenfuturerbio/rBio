@@ -8,8 +8,8 @@ class RbioRouteError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(),
+    return RbioScaffold(
+      appbar: RbioAppBar(),
       body: RbioBodyError(),
     );
   }
@@ -35,15 +35,16 @@ class RbioBodyError extends StatelessWidget {
                 maxWidth: 600,
               ),
               child: SvgPicture.asset(
-                R.image.oops,
+                R.image.error_icon,
               ),
             ),
           ),
+          _buildGap(),
         ] else ...[
           Center(
             child: SvgPicture.asset(
-              R.image.oops,
-              width: Atom.width * 0.6,
+              R.image.error_icon,
+              width: Atom.width * 0.3,
             ),
           ),
         ],
@@ -53,7 +54,7 @@ class RbioBodyError extends StatelessWidget {
 
         //
         Text(
-          'Bir şeyler ters gitti',
+          LocaleProvider.current.something_went_wrong,
           style: context.xHeadline1,
         ),
 
@@ -62,8 +63,10 @@ class RbioBodyError extends StatelessWidget {
 
         //
         RbioElevatedButton(
-          onTap: () {},
-          title: 'Geriye Dön',
+          onTap: () {
+            Atom.historyBack();
+          },
+          title: LocaleProvider.current.turn_back,
         ),
       ],
     );
