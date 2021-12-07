@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 
-import '../auth.dart';
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../auth.dart';
 import '../viewmodel/register_step3_vm.dart';
 
 class RegisterStep3Screen extends StatefulWidget {

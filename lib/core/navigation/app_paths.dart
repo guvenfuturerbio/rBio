@@ -15,8 +15,7 @@ import '../../features/mediminder/view/strip_screen.dart';
 import '../../features/my_appointments/all_files_screen.dart';
 import '../../features/my_appointments/appointment_list_screen.dart';
 import '../../features/my_appointments/web_conferance_screen.dart';
-import '../../features/profile/devices/view/devices_screen.dart';
-import '../../features/profile/devices/viewmodel/devices_vm.dart';
+import '../../features/profile/devices/devices.dart';
 import '../../features/profile/health_information/view/health_information.dart';
 import '../../features/profile/health_information/viewmodel/health_information_vm.dart';
 import '../../features/profile/personal_information/view/personal_information_screen.dart';
@@ -69,10 +68,16 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.DEVICES,
-      widget: ChangeNotifierProvider<DevicesVm>(
-        create: (context) => DevicesVm(),
-        child: DevicesScreen(),
-      ),
+      widget: DevicesScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.ALL_DEVICES,
+      widget: AvailableDevices(),
+    ),
+    VWidget(
+      path: PagePaths.SELECTED_DEVICE,
+      widget: SelectedDevicesScreen(),
     ),
 
     // Create Appointment
@@ -341,6 +346,8 @@ class PagePaths {
   static const PROFILE = '/profile';
   static const FOLLOWERS = '/followers';
   static const DEVICES = '/devices';
+  static const ALL_DEVICES = '/available_devices';
+  static const SELECTED_DEVICE = '/selected_device/';
   static const CREATE_APPOINTMENT = '/create-appointment';
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
   static const CREATE_APPOINTMENT_SUMMARY = '/create-appointment-summary';

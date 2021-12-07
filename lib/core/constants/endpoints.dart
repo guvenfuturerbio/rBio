@@ -179,6 +179,14 @@ class _Endpoints {
       '/Medicine/get-by-filter/${text}'.xCronicTracking;
   String ct_login = '/auth/realms/GuvenComplex/protocol/openid-connect/token'
       .xCronicTrackingSSO;
+  String ct_insertNewScaleValue =
+      '/Measurement/add-bmi-with-detail'.xCronicTracking;
+  String ct_deleteScaleMeasurement =
+      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
+  String ct_getScaleMeasurement =
+      '/Measurement/get-bmi-measurements'.xCronicTracking;
+  String ct_updateScaleMeasurement =
+      '/Measurement/update-bmi-measurement'.xCronicTracking;
 }
 
 extension _EndpointsExtension on String {

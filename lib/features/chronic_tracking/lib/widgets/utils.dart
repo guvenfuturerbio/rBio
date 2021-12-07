@@ -1,29 +1,11 @@
-import 'dart:math';
-
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 
 import '../../../../core/core.dart';
-import '../models/ble_models/DeviceTypes.dart';
-
-GradientButton button(
-        {text: String, Function onPressed, double height, double width}) =>
-    GradientButton(
-      increaseHeightBy: height ?? 16,
-      increaseWidthBy: width ?? 200,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-      ),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-      callback: onPressed,
-      gradient: BlueGradient(),
-      shadowColor: Colors.black,
-    );
+import '../../../../model/ble_models/DeviceTypes.dart';
 
 Widget TitleAppBarWhite({String title}) => Container(
       padding: EdgeInsets.only(left: 20, right: 20),

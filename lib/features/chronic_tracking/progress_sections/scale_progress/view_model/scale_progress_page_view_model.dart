@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+import 'package:onedosehealth/features/chronic_tracking/utils/chart_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/constants/constants.dart' as rBio;
 import '../../../../../core/core.dart';
-import '../../../lib/core/services/enum/selected_scale_type.dart';
-import '../../../lib/core/utils/pop_up/scale_tagger/scale_tagger_pop_up.dart';
-import '../../../lib/core/utils/scale_filter_pop_up/scale_filter_pop_up.dart';
-import '../../../lib/database/repository/scale_repository.dart';
-import '../../../lib/models/chart_data.dart';
-import '../../../lib/models/scale_measurements/scale_measurement_vm.dart';
-import '../../../lib/notifiers/scale_measurement_notifier.dart';
 import '../../../lib/notifiers/user_profiles_notifier.dart';
-import '../../../lib/pages/progress_pages/progress_page_model.dart';
 import '../../../lib/widgets/utils/scale_margin_filter.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
+import '../../../utils/selected_scale_type.dart';
+import '../../utils/progress_page_model.dart';
 import '../../utils/small_widget_card.dart';
 import '../utils/charts/animated_scale_buble_chart.dart';
 import '../utils/charts/animated_scale_line_chart.dart';
+import '../utils/scale_filter_pop_up/scale_filter_pop_up.dart';
+import '../utils/scale_tagger/scale_tagger_pop_up.dart';
 import '../view/scale_progress_page.dart';
+import 'scale_measurement_notifier.dart';
 
 enum GraphType { BUBBLE, LINE }
 
 class ScaleProgressPageViewModel extends ChangeNotifier
     implements ProgressPage {
+  final controller = ScrollController();
+  bool hasReachEnd = false;
   ScaleProgressPageViewModel() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       print('here');
-      ScaleRepository().addListener(() async {
+      getIt<ScaleStorageImpl>().addListener(() async {
         print("Triggered ScaleRepository Listener");
         setSelectedItem(selected);
       });
@@ -35,6 +36,11 @@ class ScaleProgressPageViewModel extends ChangeNotifier
       });
       fetchScaleMeasurements();
       fetchScrolledDailyData();
+      controller.addListener(() {
+        if (controller.position.atEdge && controller.position.pixels != 0) {
+          getNewItems();
+        }
+      });
     });
   }
 
@@ -174,7 +180,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
         }
       }
     }
-    return lowest < targetMin ? targetMin - 10 : lowest - 10;
+    return lowest < targetMin ? targetMin - 15 : lowest - 15;
   }
 
   int get highestValue {
@@ -535,7 +541,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
           dataSource: _chartVeryLow,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.very_high,
+          color: R.color.very_low,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: 15,
@@ -574,7 +580,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
-              color: R.color.very_low,
+              color: R.color.high,
               height: 15,
               width: 15,
               borderColor: R.color.very_high,
@@ -587,7 +593,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
           color: R.color.very_high,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
-              color: R.color.very_low,
+              color: R.color.very_high,
               height: 15,
               width: 15,
               isVisible: true,
@@ -596,15 +602,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   }
 
   showScaleTagger(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      barrierDismissible: false,
-      builder: (context) {
-        // Device 1 means manual entry
-        return ScaleTagger();
-      },
-    );
+    Atom.show(ScaleTagger(),
+        barrierDismissible: false, barrierColor: Colors.transparent);
   }
 
   Future<void> setSelectedItem(TimePeriodFilter s) async {
@@ -658,10 +657,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   }
 
   void showFilter(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black12,
-      builder: (_) => ScaleChartFilterPopup(
+    Atom.show(
+      ScaleChartFilterPopup(
         height: context.HEIGHT * .52,
         width: context.WIDTH * .6,
       ),
@@ -675,14 +672,12 @@ class ScaleProgressPageViewModel extends ChangeNotifier
 
   @override
   Widget smallWidget(Function() callBack) {
-    ScaleMeasurementViewModel lastMeasurement;
-    if (scaleMeasurements.isNotEmpty) {
-      lastMeasurement = scaleMeasurements[0];
-    }
+    ScaleMeasurementViewModel lastMeasurement = ScaleMeasurementViewModel(
+        scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement());
     return RbioSmallChronicWidget(
       callback: callBack,
       lastMeasurement:
-          '${lastMeasurement?.weight ?? ''} ${lastMeasurement?.unit ?? ''}',
+          '${lastMeasurement?.weight ?? ''} ${lastMeasurement?.unit?.toStr ?? ''}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: rBio.R.image.ct_body_scale,
     );
@@ -691,5 +686,17 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   @override
   void manuelEntry(BuildContext context) {
     showScaleTagger(context);
+  }
+
+  getNewItems() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if ((selected == TimePeriodFilter.DAILY) && !hasReachEnd) {
+        scaleMeasurements.sort((a, b) => b.date.compareTo(a.date));
+
+        getIt<ScaleStorageImpl>()
+            .getAndWriteScaleData(endDate: scaleMeasurements.last.date)
+            .then((value) => hasReachEnd = value);
+      }
+    });
   }
 }

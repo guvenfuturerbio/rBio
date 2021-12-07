@@ -44,7 +44,7 @@ abstract class ApiService {
   Future<String> getProfilePicture();
   Future<ApplicationVersionResponse> getCurrentApplicationVersion();
   Future<PatientResponse> getPatientDetail(String url);
-  Future<List<BannerTabsModel>>getBannerTab(
+  Future<List<BannerTabsModel>> getBannerTab(
       String applicationName, String groupName);
   //
   Future<List<FilterTenantsResponse>> filterTenants(

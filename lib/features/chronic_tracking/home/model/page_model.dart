@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../lib/pages/progress_pages/progress_page_model.dart';
+import '../../progress_sections/utils/progress_page_model.dart';
 
 class HomePageModel<K extends ProgressPage> {
   final String title;

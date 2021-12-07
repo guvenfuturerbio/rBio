@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -18,8 +16,9 @@ import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-import '../../features/chronic_tracking/lib/models/ble_models/DeviceTypes.dart';
+import '../../features/mediminder/mediminder.dart';
 import '../../features/shared/do_not_show_again_dialog.dart';
+import '../../model/ble_models/DeviceTypes.dart';
 import '../../model/model.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';
@@ -654,6 +653,20 @@ class UtilityManager {
     }
   }
 
+  String getDeviceImageStringFromType(DeviceType device) {
+    print(device);
+    switch (device) {
+      case DeviceType.MI_SCALE:
+        return R.image.mi_scale;
+      case DeviceType.CONTOUR_PLUS_ONE:
+        return R.image.contour_png;
+      case DeviceType.ACCU_CHEK:
+        return R.image.accu_check_png;
+      default:
+        return null;
+    }
+  }
+
   String getDeviceName(int deviceId) {
     switch (deviceId) {
       case 103:
@@ -1044,5 +1057,4 @@ class _ProgressDialogState extends State<ProgressDialog> {
         begin: Alignment.bottomLeft,
         end: Alignment.centerRight,
       );
-
 }

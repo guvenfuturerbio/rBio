@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 
-import '../auth.dart';
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../auth.dart';
 import '../viewmodel/forgot_password_step2_vm.dart';
 
 class ForgotPasswordStep2Screen extends StatefulWidget {
