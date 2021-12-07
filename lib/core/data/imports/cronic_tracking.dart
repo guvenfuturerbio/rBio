@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../features/mediminder/mediminder.dart';
 import '../../../model/bg_measurement/blood_glucose_report_body.dart';
 import '../../../model/bg_measurement/blood_glucose_value_model.dart';
 import '../../../model/bg_measurement/delete_bg_measurement_request.dart';
@@ -11,7 +12,6 @@ import '../../../model/bg_measurement/hospital_hba1c_measurement.dart';
 import '../../../model/bg_measurement/update_bg_measurement_request.dart';
 import '../../../model/firebase/add_firebase_body.dart';
 import '../../../model/login_response.dart';
-import '../../../model/mediminder/strip_detail_model.dart';
 import '../../../model/scale_measurement/add_scale_measurement.dart';
 import '../../../model/scale_measurement/delete_scale_measurement.dart';
 import '../../../model/scale_measurement/get_scale_measurement.dart';

@@ -314,7 +314,6 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    log(fields.toString());
     return ScaleModel(
       device: jsonDecode(fields[0] as String),
       weight: fields[1] as double,

@@ -25,7 +25,7 @@ Map<String, dynamic> _$BloodGlucoseValueToJson(BloodGlucoseValue instance) =>
       'value': instance.value,
       'value_type': instance.valueType,
       'value_note': instance.valueNote,
-      'detail': instance.detail,
+      'detail': instance.detail.toJson(),
       'is_manual': instance.isManual,
       'device_uuid': instance.deviceUUID,
     };

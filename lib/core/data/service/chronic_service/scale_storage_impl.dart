@@ -20,7 +20,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
         await deleteFromServer(
             data.time,
             DeleteScaleMasurementBody(
-                    entegrationId: UserProfilesNotifier().selection.id,
+                    entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
                     measurementId: data.measurementId)
                 .toJson());
         box.delete(key);

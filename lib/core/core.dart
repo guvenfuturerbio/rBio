@@ -1,5 +1,6 @@
 export 'package:atom/atom.dart';
 export 'package:onedosehealth/generated/l10n.dart';
+export 'package:onedosehealth/app_config/app_config.dart';
 
 export 'ble_operators/ble_operators.dart';
 export "constants/constants.dart";

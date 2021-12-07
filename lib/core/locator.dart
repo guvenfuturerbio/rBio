@@ -25,7 +25,8 @@ import 'utils/user_info.dart';
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;
 
-Future<void> setupLocator() async {
+Future<void> setupLocator(AppConfig appConfig) async {
+  getIt.registerSingleton<AppConfig>(appConfig);
   String directory;
 
   if (!Atom.isWeb) {

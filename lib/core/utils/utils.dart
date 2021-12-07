@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,13 +13,11 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:onedosehealth/features/shared/do_not_show_again_dialog.dart';
-import 'package:onedosehealth/model/ble_models/DeviceTypes.dart';
-import 'package:onedosehealth/model/mediminder/person_model.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
+import '../../features/mediminder/mediminder.dart';
 import '../../features/shared/do_not_show_again_dialog.dart';
-import '../../model/mediminder/person_model.dart';
+import '../../model/ble_models/DeviceTypes.dart';
 import '../../model/model.dart';
 import '../core.dart';
 import '../data/repository/repository.dart';

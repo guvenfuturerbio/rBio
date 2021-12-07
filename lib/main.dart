@@ -19,9 +19,10 @@ import 'features/home/viewmodel/home_vm.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final appConfig = DefaultConfig();
   await SecretUtils.instance.setup(Environment.PROD);
   await Firebase.initializeApp();
-  await setupLocator();
+  await setupLocator(appConfig);
   _setupLogging();
   _initFirebaseMessaging();
   RegisterViews.instance.init();
