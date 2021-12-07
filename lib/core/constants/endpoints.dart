@@ -82,6 +82,8 @@ class _Endpoints {
   String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBasePath;
   String filterSocialPostsPath(String search) =>
       '/socialpost/getPostWithTagsByText/$search'.xBasePath;
+  String getBannerTab(String applicationName, String groupName) =>
+      '/Banner/get-banner-tabs/$applicationName/$groupName'.xBasePath;
   final socialResourcePath = '/socialpost/getAllPosts'.xBasePath;
   final getAppointmentTypeViaWebConsultantIdPath =
       '/videoCall/get-stream-type-mobile'.xBasePath;

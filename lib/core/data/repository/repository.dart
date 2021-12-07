@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/home/model/banner_model.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
 import 'package:onedosehealth/model/home/take_appointment/do_mobil_payment_voucher.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
@@ -176,7 +177,9 @@ class Repository {
   Future<PatientRelativeInfoResponse> getAllRelatives(
           GetAllRelativesRequest bodyPages) =>
       apiService.getAllRelatives(bodyPages);
-
+  Future<List<BannerTabsModel>> getBannerTab(
+          String applicationName, String groupName) =>
+      apiService.getBannerTab(applicationName, groupName);
   Future<GuvenResponseModel> getCountries() => apiService.getCountries();
 
   Future<GuvenResponseModel> forgotPasswordUi(
