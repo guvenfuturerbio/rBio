@@ -1,6 +1,7 @@
 import 'package:atom/atom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/home/model/banner_model.dart';
 import '../../../core/core.dart';
 import '../widgets/home_slider.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,8 @@ class HomeVm extends ChangeNotifier {
 
   //Widgetların içerisinde bulunan onTap methodu için kullanılan bool değerimiz.
   bool isForDelete = false;
-
+  //Slider widgetları
+  List<BannerTabsModel> bannerTabsModel = [];
   SpringController springController;
 
   HomeVm({this.mContext}) {
@@ -39,6 +41,8 @@ class HomeVm extends ChangeNotifier {
       springController = SpringController(initialAnim: Motion.mirror);
       widgetsInUse = await widgets();
       await fetchWidgets();
+      bannerTabsModel =
+          await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
       notifyListeners();
       try {
         print("BURDAYIM");
@@ -193,7 +197,7 @@ class HomeVm extends ChangeNotifier {
   final _key2 = const Key('2');
   final _key3 = const Key('3');
   final _key4 = const Key('4');
-  final _key5 = const Key('5');
+  final key5 = const Key('5');
   final _key6 = const Key('6');
   final _key7 = const Key('7');
   final _key8 = const Key('8');
@@ -302,17 +306,8 @@ class HomeVm extends ChangeNotifier {
 
         //
         MyReorderableWidget(
-          key: _key5,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key5);
-              } else {
-                Atom.to(PagePaths.FOR_YOU_CATEGORIES);
-              }
-            },
-            child: HomeSlider(),
-          ),
+          key: key5,
+          body: HomeSlider(),
         ),
 
         //

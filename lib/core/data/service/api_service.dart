@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/home/model/banner_model.dart';
 import 'package:onedosehealth/features/auth/auth.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
 import 'package:onedosehealth/model/home/take_appointment/do_mobil_payment_voucher.dart';
@@ -43,7 +44,8 @@ abstract class ApiService {
   Future<String> getProfilePicture();
   Future<ApplicationVersionResponse> getCurrentApplicationVersion();
   Future<PatientResponse> getPatientDetail(String url);
-
+  Future<List<BannerTabsModel>> getBannerTab(
+      String applicationName, String groupName);
   //
   Future<List<FilterTenantsResponse>> filterTenants(
       String path, FilterTenantsRequest filterTenantsRequest);

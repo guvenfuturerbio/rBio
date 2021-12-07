@@ -9,9 +9,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/ble_operators/ble_operators.dart';
 import '../../../core/core.dart';
-import '../../../core/navigation/app_paths.dart';
 import '../../../core/utils/utils.dart';
 import '../../../model/model.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';

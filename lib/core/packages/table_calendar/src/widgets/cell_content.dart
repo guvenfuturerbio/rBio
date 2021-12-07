@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:onedosehealth/core/extension/datetime_extension.dart';
 
 import '../customization/calendar_builders.dart';

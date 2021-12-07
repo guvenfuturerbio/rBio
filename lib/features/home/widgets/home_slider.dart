@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/home/model/banner_model.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
 import '../viewmodel/home_vm.dart';
@@ -31,9 +33,40 @@ class _HomeSliderState extends State<HomeSlider> {
           children: [
             //
             Positioned.fill(
-              child: CarouselSlider(
-                items: cardList,
-                carouselController: _controller,
+              child: CarouselSlider.builder(
+                itemCount: vm.bannerTabsModel.length,
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) {
+                  return GestureDetector(
+                    onTap: () {
+                      if (vm.isForDelete) {
+                        vm.addWidget(vm.key5);
+                      } else {
+                        if (vm.bannerTabsModel[itemIndex].destinationUrl
+                            .contains('http')) {
+                          launch(vm.bannerTabsModel[itemIndex].destinationUrl);
+                        } else {
+                          Atom.to(vm.bannerTabsModel[itemIndex].destinationUrl);
+                        }
+                      }
+                    },
+                    child: SizedBox(
+                      width: Atom.width,
+                      child: Card(
+                        margin: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: R.sizes.borderRadiusCircular),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            vm.bannerTabsModel[itemIndex].imageUrl,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 options: CarouselOptions(
                   autoPlay: !vm.isForDelete,
                   enlargeCenterPage: true,
@@ -58,10 +91,12 @@ class _HomeSliderState extends State<HomeSlider> {
                 visible: !vm.isForDelete,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: cardList.asMap().entries.map(
+                  children: vm.bannerTabsModel.asMap().entries.map(
                     (entry) {
                       return GestureDetector(
-                        onTap: () => _controller.animateToPage(entry.key),
+                        onTap: () {
+                          _controller.animateToPage(entry.key);
+                        },
                         child: Container(
                           width: 12.0,
                           height: 12.0,
@@ -98,6 +133,10 @@ class _HomeSliderState extends State<HomeSlider> {
       tablet: height * 0.25,
       desktop: height * 0.25,
     );
+  }
+
+  void _launchURL(String url) async {
+    if (!await launch(url)) throw 'Could not launch $url';
   }
 
   List<Widget> cardList = [

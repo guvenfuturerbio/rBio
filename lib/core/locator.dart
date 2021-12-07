@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:onedosehealth/core/manager/ble_manager.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/notifiers/notification_handler_new.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../features/chronic_tracking/lib/notifiers/notification_handler_new.dart';
 import '../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'core.dart';
 import 'data/helper/dio_helper.dart';

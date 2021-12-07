@@ -6,7 +6,6 @@ import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../../model/model.dart';
 import '../auth.dart';
 import '../viewmodel/forgot_password_step1_vm.dart';
 

@@ -711,6 +711,24 @@ class ApiServiceImpl extends ApiService {
     }
   }
 
+  Future<List<BannerTabsModel>> getBannerTab(
+      String applicationName, String groupName) async {
+    final response = await helper.getGuven(
+        R.endpoints.getBannerTab(applicationName, groupName),
+        options: authOptions);
+    if (response.isSuccessful) {
+      var bannerTabs = <BannerTabsModel>[];
+      var datum = response.datum;
+      for (var data in datum) {
+        bannerTabs.add(BannerTabsModel.fromJson(data));
+      }
+      return bannerTabs;
+    } else {
+      throw Exception(
+          '/getBannerTab/$applicationName/$groupName : ${response.isSuccessful}');
+    }
+  }
+
   @override
   Future<GuvenResponseModel> socialResource() async {
     final response = await helper.getGuven(R.endpoints.socialResourcePath,

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../core/core.dart';
 import '../../../../model/ble_models/paired_device.dart';
 
 class SharedPrefNotifiers extends ChangeNotifier {
