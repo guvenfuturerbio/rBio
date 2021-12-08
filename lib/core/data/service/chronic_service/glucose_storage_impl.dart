@@ -62,7 +62,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       if (shouldSendToServer) {
         var id = await sendToServer(data);
         data.measurementId = id;
-        box.add(data);
+        await box.add(data);
       }
 
       notifyListeners();
@@ -73,17 +73,24 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  bool writeAll(List<GlucoseData> dataList) {
-    if (box.isOpen) {
-      for (var data in dataList) {
-        if (!doesExist(data)) {
-          box.add(data);
+  Future<bool> writeAll(List<GlucoseData> dataList) async {
+    try {
+      if (box.isOpen) {
+        List<GlucoseData> _glucoseDataList = <GlucoseData>[];
+        for (var data in dataList) {
+          if (!doesExist(data)) {
+            _glucoseDataList.add(data);
+          }
         }
+        await box.addAll(_glucoseDataList);
+        return true;
+      } else {
+        return false;
       }
-      notifyListeners();
-      return true;
-    } else {
-      return false;
+    } catch (e, stk) {
+      debugPrintStack(stackTrace: stk);
+      print(e);
+      rethrow;
     }
   }
 
@@ -117,6 +124,37 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       notifyListeners();
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<bool> getAndWriteGlucoseData(
+      {DateTime beginDate, DateTime endDate, int count}) async {
+    var glucoseDataList = await getBloodGlucoseDataOfPerson(
+        start: beginDate, end: endDate, count: count);
+    if (glucoseDataList.isNotEmpty) {
+      var _dubItem = 0;
+      print('===============================>${glucoseDataList.length}');
+      for (var glucose in glucoseDataList) {
+        if (doesExist(glucose)) _dubItem++;
+      }
+      if (_dubItem != glucoseDataList.length) {
+        await writeAll(glucoseDataList);
+        notifyListeners();
+        return false;
+      } else
+        return false;
+    } else {
+      return true;
+    }
+  }
+
+  checkLastGlucoseData() async {
+    var lastData = (await getBloodGlucoseDataOfPerson(count: 1))[0];
+    print(getLatestMeasurement());
+    if (getLatestMeasurement() == null ||
+        !lastData.isEqual(getLatestMeasurement())) {
+      box.clear();
+      getAndWriteGlucoseData();
     }
   }
 
@@ -189,14 +227,16 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     return "${getIt<GuvenSettings>().appDocDirectory}/${imageURL}";
   }
 
-  Future<void> getBloodGlucoseDataOfPerson(Person pd) async {
+  Future<List<GlucoseData>> getBloodGlucoseDataOfPerson(
+      {DateTime start, DateTime end, int count = 20}) async {
     try {
+      var entegrationId = getIt<ProfileStorageImpl>().getFirst().id;
       GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson =
           GetBloodGlucoseDataOfPerson(
-        id: pd.id,
-        start: "01.01.2011",
-        end: "01.01.2025",
-      );
+              id: entegrationId,
+              start: start == null ? null : start.toIso8601String(),
+              end: end == null ? null : end.toIso8601String(),
+              count: count);
 
       final response = await getIt<ChronicTrackingRepository>()
           .getBloodGlucoseDataOfPerson(getBloodGlucoseDataOfPerson);
@@ -208,23 +248,27 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
             .millisecondsSinceEpoch;
         String level = bgMeasurement["blood_glucose_measurement"]["value"];
         String note = bgMeasurement["blood_glucose_measurement"]["value_note"];
+
         int tag = bgMeasurement["tag"]["id"];
         bool manual = bgMeasurement["is_manuel"];
+        String deviceId = bgMeasurement['device_id'];
         int measurementId = bgMeasurement["id"];
         GlucoseData glucoseData = new GlucoseData(
-          time: time,
-          userId: pd.id,
-          level: level,
-          note: note,
-          tag: tag,
-          manual: manual,
-          measurementId: measurementId,
-          device: 103,
-        );
+            time: time,
+            userId: entegrationId,
+            level: level,
+            note: note,
+            tag: tag,
+            manual: manual,
+            measurementId: measurementId,
+            device: 103,
+            deviceUUID: deviceId);
         glucoseDataList.add(glucoseData);
       }
-      writeAll(glucoseDataList);
-    } catch (e) {
+      return glucoseDataList;
+    } catch (e, stk) {
+      debugPrintStack(stackTrace: stk);
+      print(e);
       return [];
     }
   }

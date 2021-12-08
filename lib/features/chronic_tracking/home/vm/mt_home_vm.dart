@@ -25,8 +25,7 @@ class MeasurementTrackingVm with ChangeNotifier {
       notifyListeners();
 
       if (!(state == LoadingProgress.DONE)) {
-        await getIt<GlucoseStorageImpl>().getBloodGlucoseDataOfPerson(
-            getIt<ProfileStorageImpl>().getFirst());
+        await getIt<GlucoseStorageImpl>().checkLastGlucoseData();
         await getIt<ScaleStorageImpl>().checkLastScale();
         items = [
           HomePageModel<BgProgressPageViewModel>(

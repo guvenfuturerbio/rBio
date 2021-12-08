@@ -15,7 +15,6 @@ import '../utils/blood_glucose_tagger/bg_tagger_pop_up.dart';
 import '../utils/charts/animated_bubble_chart.dart';
 import '../utils/charts/animated_line_chart.dart';
 import '../view/bg_progress_page.dart';
-import 'bg_measurements_notifiers.dart';
 
 enum GraphType { BUBBLE, LINE }
 
@@ -26,6 +25,8 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
         print("Triggered GlucoseRepository Listener");
 
         setSelectedItem(selected);
+        print('data');
+        print(selected);
       });
       /* GlucoseRepository().addListener(() async {
         //await fetchBgMeasurements();
@@ -36,11 +37,19 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
       UserProfilesNotifier().addListener(() async {
         setSelectedItem(selected);
       });
-      fetchBgMeasurements();
+      fetchBgMeasurement();
       fetchScrolledDailyData();
+
+      controller.addListener(() {
+        if (controller.position.atEdge && controller.position.pixels != 0) {
+          getNewItems();
+        }
+      });
     });
   }
 
+  ScrollController controller = ScrollController();
+  bool hasReachEnd = false;
   List<int> _tags = [1, 2, 3];
 
   Widget _currentGraph;
@@ -293,10 +302,10 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     this._selectedItem = s;
     setCurrentGraph();
     if (s == TimePeriodFilter.SPECIFIC) {
-      await fetchBgMeasurements();
+      fetchBgMeasurement();
       fetchSpesificData();
     } else if (s == TimePeriodFilter.DAILY) {
-      await fetchBgMeasurements();
+      fetchBgMeasurement();
       fetchScrolledDailyData();
     } else {
       DateTime currentDateEnd = DateTime(DateTime.now().year,
@@ -313,12 +322,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
                       currentDateStart.year, currentDateStart.month - 3, 1))
                   : await setStartDate(currentDateStart);
       await setEndDate(currentDateEnd);
-    }
-    if (s == TimePeriodFilter.WEEKLY) {
-      setChartAverageDataPerDay();
-    } else if (s == TimePeriodFilter.MONTHLY) {
-      setChartAverageDataPerDay();
-    } else if (s == TimePeriodFilter.MONTHLY_THREE) {
       setChartAverageDataPerDay();
     }
   }
@@ -327,24 +330,13 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
       ? DateTime(_startDate.year, _startDate.month, _startDate.day)
       : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
-  changeStartDate(DateTime date) {
-    print(date);
-    print(selected);
-    _startDate = date;
-    setSelectedItem(selected);
-  }
-
-  changeEndDate(DateTime date) {
-    _endDate = date;
-    setSelectedItem(selected);
-  }
-
   Future<void> setStartDate(DateTime d) async {
     this._startDate = d;
     this._currentDateIndex = 0;
-    await BgMeasurementsNotifier().fetchBgMeasurementsInDateRange(
-        startDate, endDate.add(Duration(days: 1)));
-    this.bgMeasurements = BgMeasurementsNotifier().bgMeasurements;
+    await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
+        beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
+    fetchBgMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
+
     notifyListeners();
   }
 
@@ -358,9 +350,10 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   Future<void> setEndDate(DateTime d) async {
     this._endDate = d;
     this._currentDateIndex = 0;
-    await BgMeasurementsNotifier().fetchBgMeasurementsInDateRange(
-        startDate, endDate.add(Duration(days: 1)));
-    this.bgMeasurements = BgMeasurementsNotifier().bgMeasurements;
+    await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
+        beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
+    fetchBgMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
+
     notifyListeners();
   }
 
@@ -424,7 +417,7 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
 
   void fetchScrolledDailyData() {
     this.bgMeasurementsDailyData.clear();
-    List<DateTime> dateList = BgMeasurementsNotifier().bgMeasurementDates;
+    List<DateTime> dateList = fetchBgMeasurementDates();
     //print(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
@@ -653,11 +646,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     this._chartVeryHighTagged.putIfAbsent(-1, () => chartDataUnTagged);
   }
 
-  Future<void> fetchBgMeasurements() async {
-    await BgMeasurementsNotifier().fetchBgMeasurements();
-    this.bgMeasurements = BgMeasurementsNotifier().bgMeasurements;
-  }
-
   void setChartAverageDataPerDay() {
     this.bgMeasurementsDailyData = bgMeasurements;
     setChartDailyData();
@@ -688,14 +676,12 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   }
 
   updateBgMeasurement() async {
-    if (selected == TimePeriodFilter.DAILY ||
-        selected == TimePeriodFilter.SPECIFIC) {
-      await BgMeasurementsNotifier().fetchBgMeasurements();
+    if (selected == TimePeriodFilter.DAILY) {
+      fetchBgMeasurement();
     } else {
-      await BgMeasurementsNotifier().fetchBgMeasurementsInDateRange(
-          startDate, endDate.add(Duration(days: 1)));
+      fetchBgMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
     }
-    this.bgMeasurements = BgMeasurementsNotifier().bgMeasurements;
+
     this.bgMeasurements.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
             element.resultColor == R.color.very_high) ||
@@ -712,7 +698,6 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
         (!isFilterSelected(GlucoseMarginsFilter.OTHER) &&
             element.tag != 1 &&
             element.tag != 2));
-    BgMeasurementsNotifier().fetchBgMeasurementsDateList(bgMeasurements);
     this.bgMeasurementsDailyData.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
             element.resultColor == R.color.very_high) ||
@@ -1015,8 +1000,68 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     );
   }
 
+  fetchBgMeasurement() {
+    var _bgMeasurement = getIt<GlucoseStorageImpl>().getAll();
+    bgMeasurements = _bgMeasurement
+        .map((e) => BgMeasurementViewModel(bgMeasurement: e))
+        .toList();
+    bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
+  }
+
+  List<DateTime> fetchBgMeasurementDates() {
+    List<DateTime> _bgMeasurementDates = <DateTime>[];
+    bool isInclude = false;
+    for (var data in bgMeasurements) {
+      for (var data2 in _bgMeasurementDates) {
+        if (DateTime(data.date.year, data.date.month, data.date.day)
+            .isAtSameMomentAs(DateTime(data2.year, data2.month, data2.day))) {
+          isInclude = true;
+        }
+      }
+      if (!isInclude) {
+        _bgMeasurementDates
+            .add(DateTime(data.date.year, data.date.month, data.date.day));
+      }
+      isInclude = false;
+      _bgMeasurementDates.sort((a, b) => a.compareTo(b));
+    }
+    return _bgMeasurementDates;
+  }
+
+  Future<void> fetchBgMeasurementsInDateRange(
+      DateTime start, DateTime end) async {
+    final result = getIt<GlucoseStorageImpl>().getAll();
+    this.bgMeasurements.clear();
+    for (var e in result) {
+      DateTime measurementDate = BgMeasurementViewModel(bgMeasurement: e).date;
+
+      if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
+        bgMeasurements.add(BgMeasurementViewModel(bgMeasurement: e));
+      }
+    }
+    this.bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
+  }
+
   @override
   void manuelEntry(BuildContext ctx) {
     showBleReadingTagger(ctx);
+  }
+
+  getNewItems() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
+        if ((selected == TimePeriodFilter.DAILY) && !hasReachEnd) {
+          getIt<GlucoseStorageImpl>()
+              .getAndWriteGlucoseData(endDate: bgMeasurements.first.date)
+              .then((value) {
+            print(value);
+            hasReachEnd = value;
+          });
+        }
+      } catch (e, stk) {
+        print(e);
+        debugPrintStack(stackTrace: stk);
+      }
+    });
   }
 }

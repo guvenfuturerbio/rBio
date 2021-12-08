@@ -29,8 +29,8 @@ class GraphHeader extends StatelessWidget {
               previousDate: value.previousDate,
               selected: value.selected,
               setSelectedItem: value.setSelectedItem,
-              setEndDate: value.changeEndDate,
-              setStartDate: value.changeStartDate,
+              setEndDate: value.setEndDate,
+              setStartDate: value.setStartDate,
             )
             // _dateTimePicker(context),
             ),

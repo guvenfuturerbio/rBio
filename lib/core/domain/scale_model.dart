@@ -193,7 +193,17 @@ class ScaleModel extends HiveObject {
   }
 
   @override
-  bool operator ==(Object other) => other is ScaleModel && time == other.time;
+  bool operator ==(Object other) {
+    if (other is ScaleModel) {
+      if (measurementId == null || other.measurementId == null) {
+        return time == other.time;
+      } else {
+        return measurementId == other.measurementId;
+      }
+    } else {
+      return false;
+    }
+  }
 
   @override
   int get hashCode =>
