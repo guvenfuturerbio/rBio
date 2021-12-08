@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:hive/hive.dart';
@@ -121,30 +122,20 @@ class Person extends HiveObject {
       this.smoker = false,
       this.isFirstUser = false});
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  Person copy() {
+    final _json = toJson();
+    final _jsonEncode = jsonEncode(_json);
+    final _jsonDecode = jsonDecode(_jsonEncode);
+    final person = Person.fromJson(_jsonDecode);
+    return person;
+  }
 
-    return other is Person &&
-        other.userId == userId &&
-        other.id == id &&
-        other.imageURL == imageURL &&
-        other.name == name &&
-        other.birthDate == birthDate &&
-        other.gender == gender &&
-        other.height == height &&
-        other.weight == weight &&
-        other.diabetesType == diabetesType &&
-        other.hypo == hypo &&
-        other.rangeMin == rangeMin &&
-        other.target == target &&
-        other.rangeMax == rangeMax &&
-        other.hyper == hyper &&
-        other.deviceUUID == deviceUUID &&
-        other.manufacturerId == manufacturerId &&
-        other.yearOfDiagnosis == yearOfDiagnosis &&
-        other.smoker == smoker &&
-        other.isFirstUser == isFirstUser;
+  @override
+  bool operator ==(Object other) =>
+      other is Person && other.userId == userId && other.id == id;
+
+  bool isEqual(Person other) {
+    return jsonEncode(this.toJson()) == jsonEncode(other.toJson());
   }
 
   @override
@@ -208,8 +199,8 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'name': instance.name,
       'birth_day': instance.birthDate,
       'gender': instance.gender,
-      'height': int.parse(instance.height),
-      'weight': int.parse(instance.weight),
+      'height': instance.height,
+      'weight': instance.weight,
       'diabetes_type': instance.diabetesType,
       'hypo': instance.hypo,
       'range_min': instance.rangeMin,
@@ -218,7 +209,7 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'hyper': instance.hyper,
       'device_uuid': instance.deviceUUID,
       'manufacturer_id': instance.manufacturerId,
-      'year_of_diagnosis': instance.yearOfDiagnosis.toString(),
+      'year_of_diagnosis': instance.yearOfDiagnosis,
       'smoker': instance.smoker,
       'is_first_user': instance.isFirstUser,
     };

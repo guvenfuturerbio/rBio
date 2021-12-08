@@ -41,6 +41,8 @@ extension TurkishStringExtension on String {
 
 extension StringExtension on String {
   String format(List<String> params) => interpolate(this, params);
+
+  bool get xIsTCNationality => this == "TC";
 }
 
 String interpolate(String string, List<String> params) {

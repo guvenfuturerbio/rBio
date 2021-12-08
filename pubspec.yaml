@@ -85,6 +85,7 @@ dependencies:
   grouped_list:
     path: ./packages/grouped_list
   hive: ^2.0.4
+  hive_flutter: ^1.1.0
   http: ^0.13.4
   image_picker: ^0.8.4+4
   in_app_update: ^2.0.0

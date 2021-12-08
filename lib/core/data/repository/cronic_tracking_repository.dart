@@ -81,4 +81,17 @@ class ChronicTrackingRepository {
           var entegrationId) =>
       apiService.getHba1cMeasurementList(
           getHba1cMeasurementListModel, entegrationId);
+
+  Future<GuvenResponseModel> insertNewScaleValue(
+          AddScaleMasurementBody addScaleMasurementBody) =>
+      apiService.insertNewScaleValue(addScaleMasurementBody);
+  Future<GuvenResponseModel> deleteScaleMeasurement(
+          DeleteScaleMasurementBody deleteScaleMasurementBody) =>
+      apiService.deleteScaleMeasurement(deleteScaleMasurementBody);
+  Future<GuvenResponseModel> getScaleDataOfPerson(
+          GetScaleMasurementBody getScaleMasurementBody) =>
+      apiService.getScaleMasurement(getScaleMasurementBody);
+  Future<GuvenResponseModel> updateScaleMeasurement(
+          UpdateScaleMasurementBody updateScaleMasurementBody) =>
+      apiService.updateScaleMeasurement(updateScaleMasurementBody);
 }

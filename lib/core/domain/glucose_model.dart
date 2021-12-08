@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
@@ -81,6 +83,10 @@ class GlucoseData extends HiveObject {
         measurementId: glucoseData.measurementId);
   }
 
+  GlucoseData copy() {
+    return GlucoseData.fromMap(jsonDecode(jsonEncode(this.toMap())));
+  }
+
   factory GlucoseData.fromMap(Map map) => GlucoseData(
       level: map[LEVEL],
       tag: map[TAG],
@@ -137,11 +143,15 @@ class GlucoseData extends HiveObject {
   bool operator ==(Object other) {
     return other is GlucoseData && other.time == time;
   }
+
+  bool isEqual(GlucoseData other) {
+    return jsonEncode(this.toMap()) == jsonEncode(other.toMap());
+  }
 }
 
 class GlucoseDataAdapter extends TypeAdapter<GlucoseData> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   GlucoseData read(BinaryReader reader) {

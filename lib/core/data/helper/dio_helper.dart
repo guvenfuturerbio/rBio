@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
+import 'package:onedosehealth/core/navigation/app_paths.dart';
 
 import 'package:onedosehealth/core/platform/mobil_interface.dart'
     if (dart.library.html) 'package:onedosehealth/core/platform/web_interface.dart';

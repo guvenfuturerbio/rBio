@@ -78,11 +78,11 @@ class UserManagerImpl extends UserManager {
     UserLoginInfo userLoginInfo = UserLoginInfo();
     String username = getIt<ISharedPreferencesManager>()
             .getString(SharedPreferencesKeys.LOGIN_USERNAME) ??
-        "";
+        "18620716416";
     userLoginInfo.username = username;
     String password = getIt<ISharedPreferencesManager>()
             .getString(SharedPreferencesKeys.LOGIN_PASSWORD) ??
-        "";
+        "Numlock1234!!";
     userLoginInfo.password = password;
     return userLoginInfo;
   }

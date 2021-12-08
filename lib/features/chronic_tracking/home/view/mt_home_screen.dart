@@ -1,13 +1,14 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
 import '../../../../core/core.dart';
 import '../../../../core/widgets/rbio_stacked_scaffold.dart';
-import '../model/page_model.dart';
-import '../utils/card_widget.dart';
 import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import '../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
-import 'package:provider/provider.dart';
+import '../model/page_model.dart';
+import '../utils/card_widget.dart';
 
 part '../vm/mt_home_vm.dart';
 
@@ -52,65 +53,77 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
                     backgroundColor: R.color.white,
                   )
                 : null,
-            body: ListView(
-              physics: ClampingScrollPhysics(),
-              padding: isLandscape
-                  ? null
-                  : EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
-              children: [
-                Card(
-                  child: ExpandablePanel(
-                    header: RbioUserTile(
-                        width: Atom.width,
-                        name: "Ayşe Yıldırım",
-                        onTap: () {},
-                        leadingImage: UserLeadingImage.Circle),
-                    collapsed: SizedBox(),
-                    expanded: Column(
-                      children: [
-                        RbioUserTile(
-                            width: Atom.width,
-                            name: "Murat Yıldırım",
-                            onTap: () {},
-                            leadingImage: UserLeadingImage.Circle),
-                        RbioUserTile(
-                            width: Atom.width,
-                            name: "Aziz Yıldırım",
-                            onTap: () {},
-                            leadingImage: UserLeadingImage.Circle)
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17)),
-                  color: val.activeItem != null ? Colors.transparent : null,
-                  shadowColor:
-                      val.activeItem != null ? Colors.transparent : null,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(17),
-                    child: Column(
-                      children: val.items
-                          .map(
-                            (parentElement) => SectionCard(
-                                isActive: val.activeItem != null &&
-                                    val.activeItem.key == parentElement.key,
-                                isVisible: val.activeItem == null,
-                                color: parentElement.color,
-                                smallChild: parentElement.smallChild,
-                                largeChild: parentElement.largeChild,
-                                hasDivider: val.activeItem == null &&
-                                    val.items.indexWhere((element) =>
-                                            element.key == parentElement.key) <
-                                        val.items.length - 1),
+            body: val.state == LoadingProgress.LOADING
+                ? Center(child: CircularProgressIndicator())
+                : val.state == LoadingProgress.ERROR
+                    ? Center(
+                        child: Text('Error'),
+                      )
+                    : ListView(
+                        physics: ClampingScrollPhysics(),
+                        padding: isLandscape
+                            ? null
+                            : EdgeInsets.only(
+                                top: RbioStackedScaffold.kHeight(context)),
+                        children: [
+                          Card(
+                            child: ExpandablePanel(
+                              header: RbioUserTile(
+                                  width: Atom.width,
+                                  name: "Ayşe Yıldırım",
+                                  onTap: () {},
+                                  leadingImage: UserLeadingImage.Circle),
+                              collapsed: SizedBox(),
+                              expanded: Column(
+                                children: [
+                                  RbioUserTile(
+                                      width: Atom.width,
+                                      name: "Murat Yıldırım",
+                                      onTap: () {},
+                                      leadingImage: UserLeadingImage.Circle),
+                                  RbioUserTile(
+                                      width: Atom.width,
+                                      name: "Aziz Yıldırım",
+                                      onTap: () {},
+                                      leadingImage: UserLeadingImage.Circle)
+                                ],
+                              ),
+                            ),
+                          ),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(17)),
+                            color: val.activeItem != null
+                                ? Colors.transparent
+                                : null,
+                            shadowColor: val.activeItem != null
+                                ? Colors.transparent
+                                : null,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(17),
+                              child: Column(
+                                children: val.items
+                                    .map(
+                                      (parentElement) => SectionCard(
+                                          isActive: val.activeItem != null &&
+                                              val.activeItem.key ==
+                                                  parentElement.key,
+                                          isVisible: val.activeItem == null,
+                                          color: parentElement.color,
+                                          smallChild: parentElement.smallChild,
+                                          largeChild: parentElement.largeChild,
+                                          hasDivider: val.activeItem == null &&
+                                              val.items.indexWhere((element) =>
+                                                      element.key ==
+                                                      parentElement.key) <
+                                                  val.items.length - 1),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
                           )
-                          .toList(),
-                    ),
-                  ),
-                )
-              ],
-            ),
+                        ],
+                      ),
           );
         }));
   }

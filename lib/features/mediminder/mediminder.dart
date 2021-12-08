@@ -11,7 +11,6 @@ export 'view/strip_screen.dart';
 export 'model/drug_result_model.dart';
 export 'model/hba1c_for_schedule_model.dart';
 export 'model/medicine_for_schedule_model.dart';
-export 'model/person_model.dart';
 export 'model/selectable_day.dart';
 export 'model/strip_detail_model.dart';
 

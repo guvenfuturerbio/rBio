@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../auth.dart';
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../auth.dart';
 
 class ForgotPasswordStep2ScreenVm extends ChangeNotifier {
   BuildContext mContext;

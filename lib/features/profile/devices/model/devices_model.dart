@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of '../devices.dart';
 
 class DevicesModel {
   final String id;

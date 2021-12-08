@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../core.dart';
-
 /// Herhangi bir widget'ın görünürlüğü temadan temaya değişiyorsa, widget'ı 'RbioVisibility' ile sar.
 class RbioVisibility extends StatelessWidget {
   final Widget child;

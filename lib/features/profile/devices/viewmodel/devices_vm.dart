@@ -1,25 +1,36 @@
-import 'package:flutter/material.dart';
-
-import '../../../../core/core.dart';
-import '../model/devices_model.dart';
+part of '../devices.dart';
 
 class DevicesVm extends ChangeNotifier {
   LoadingProgress _state = LoadingProgress.LOADING;
   LoadingProgress get state => _state;
+  List<PairedDevice> devices;
   set state(LoadingProgress value) {
     _state = value;
     notifyListeners();
   }
 
-  List<DevicesModel> devices;
+  DevicesVm() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getAll();
+    });
+  }
 
   Future<void> getAll() async {
     state = LoadingProgress.LOADING;
-    await Future.delayed(Duration(seconds: 1));
-    devices = [
-      DevicesModel(id: '1', title: 'Accu-Check Instant', image: 'https://www.diyabetevi.com/sites/g/files/iut911/f/styles/image_205x255/public/accu-chek_instant.png?itok=5MQow0iS'),
-      DevicesModel(id: '2', title: 'Contour Plus One', image: 'https://www.tr.contourplusone.com/siteassets/img-tr/slide1-meter.png'),
-    ];
+    devices = await getIt<BleDeviceManager>().getPairedDevices();
     state = LoadingProgress.DONE;
+  }
+
+  deletePairedDevice(String id) {
+    print('here: $id');
+
+    getIt<BleDeviceManager>().deletePairedDevice(id);
+    devices.removeWhere((element) => element.deviceId == id);
+
+    notifyListeners();
+
+    Atom.dismiss();
+    ScaffoldMessenger.of(Atom.context).showSnackBar(SnackBar(
+        content: Text('${LocaleProvider.current.paired_devices_deleted}')));
   }
 }

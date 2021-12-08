@@ -570,6 +570,8 @@
   "one_glucometer_one_profile_message": "Tek profil için sadece 1 tane glukometre bağlayabilirsiniz.",
   "oth": "Diğ.",
   "other": "Diğer",
+  "pair_steps":"Bağlantı Adımları:",
+
   "pair_successful": "Cihaz başarıyla eşleştirildi",
   "paired_devices": "Eşleştirilmiş Cihazlar",
   "paired_devices_deleted": "Eşleştirilmiş cihaz bağlantısı başarıyla kaldırıldı.",

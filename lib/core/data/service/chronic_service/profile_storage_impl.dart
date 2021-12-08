@@ -74,14 +74,6 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
 
   @override
   Future<void> init() async {
-    if (!Atom.isWeb) {
-      final appDocumentDirectory = await getApplicationDocumentsDirectory();
-
-      var _localDirectoryPath = appDocumentDirectory.path;
-      Hive.init(_localDirectoryPath);
-    }
-    Hive..registerAdapter(PersonAdapter());
-
     box = await Hive.openBox<Person>(boxKey);
   }
 
@@ -94,12 +86,13 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
   Future<bool> update(Person data, key) async {
     try {
       checkBox();
-      if (box.isOpen && box.isNotEmpty) {
+      if (box.isNotEmpty) {
         var person = get(key);
-        person = data;
-        await updateServer(data);
-        person.save();
-        notifyListeners();
+        if (!person.isEqual(data)) {
+          await updateServer(data);
+          box.put(key, data);
+        }
+
         return true;
       } else {
         return false;

@@ -69,10 +69,10 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: fc1fb4a3064948f2310e93553fd0ad07073bc632
+      resolved-ref: d9b8851a28cbc6f69cf67a4cf0ecd31facb6ccd6
       url: "https://jsck2wjl54wp5d65hbl32w6qpfxwae75bemnleehnhx23zqdxlra@guvenfuture.visualstudio.com/Atom/_git/Atom"
     source: git
-    version: "0.0.4"
+    version: "0.0.5"
   auto_size_text_pk:
     dependency: "direct main"
     description:
@@ -965,6 +965,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  hive_flutter:
+    dependency: "direct main"
+    description:
+      name: hive_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   html:
     dependency: transitive
     description:

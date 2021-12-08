@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../shared/consent_form/consent_form_dialog.dart';
-import '../../shared/kvkk_form/kvkk_form_screen.dart';
 
-import '../auth.dart';
 import '../../../core/core.dart';
 import '../../../model/model.dart';
+import '../../shared/consent_form/consent_form_dialog.dart';
+import '../auth.dart';
 
 class RegisterStep2ScreenVm with ChangeNotifier {
   BuildContext context;

@@ -47,4 +47,12 @@ abstract class ChronicTrackingApiService {
       GetHba1cMeasurementListModel getHba1cMeasurementListModel,
       var entegrationId);
   Future<GuvenResponseModel> getMedicineByFilter(String text);
+  Future<GuvenResponseModel> insertNewScaleValue(
+      AddScaleMasurementBody addScaleMasurementBody);
+  Future<GuvenResponseModel> deleteScaleMeasurement(
+      DeleteScaleMasurementBody deleteScaleMasurementBody);
+  Future<GuvenResponseModel> getScaleMasurement(
+      GetScaleMasurementBody getScaleMasurementBody);
+  Future<GuvenResponseModel> updateScaleMeasurement(
+      UpdateScaleMasurementBody updateScaleMasurementBody);
 }

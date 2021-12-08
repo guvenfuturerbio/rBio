@@ -130,13 +130,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
 
-                    //
-                    _buildListItem(
-                      LocaleProvider.current.devices,
-                      () {
-                        Atom.to(PagePaths.DEVICES);
-                      },
-                    ),
+                    if (!Atom.isWeb)
+                      _buildListItem(
+                        LocaleProvider.current.devices,
+                        () {
+                          Atom.to(PagePaths.DEVICES);
+                        },
+                      ),
 
                     //
                     if (getIt<AppConfig>().mediminder)

@@ -10,11 +10,12 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
+import '../../../core/utils/utils.dart';
 import '../../../model/model.dart';
-import '../../chronic_tracking/lib/services/user_service.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import '../auth.dart';
+import '../user_service.dart';
 
 enum VersionCheckProgress { DONE, LOADING, ERROR }
 
@@ -253,6 +254,10 @@ class LoginScreenVm extends ChangeNotifier {
           Atom.to(term, isReplacement: true);
         }
         Atom.to(PagePaths.MAIN, isReplacement: true);
+        var devices = await getIt<BleDeviceManager>().getPairedDevices();
+        if (devices.isNotEmpty) {
+          getIt<BleScannerOps>().startScan();
+        }
         // MainNavigation.toHome(mContext);
       } catch (e, stackTrace) {
         Sentry.captureException(e, stackTrace: stackTrace);

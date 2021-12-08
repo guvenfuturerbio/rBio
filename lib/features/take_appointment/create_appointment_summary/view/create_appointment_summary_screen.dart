@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -165,7 +166,7 @@ class _CreateAppointmentSummaryScreenState
                       Expanded(
                         child: RbioTextFormField(
                           hintText: LocaleProvider.current.discount_code,
-                          showBorder: false,
+                          border: RbioTextFormField.noneBorder(),
                           controller: codeEditingController,
                           textInputAction: TextInputAction.done,
                           contentPadding: EdgeInsets.only(

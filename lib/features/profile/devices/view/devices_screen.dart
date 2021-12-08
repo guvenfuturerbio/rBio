@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../core/core.dart';
-import '../viewmodel/devices_vm.dart';
+part of '../devices.dart';
 
 class DevicesScreen extends StatefulWidget {
   DevicesScreen({Key key}) : super(key: key);
@@ -14,17 +9,6 @@ class DevicesScreen extends StatefulWidget {
 
 class _DevicesScreenState extends State<DevicesScreen> {
   @override
-  void initState() {
-    super.initState();
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) {
-        Provider.of<DevicesVm>(context, listen: false).getAll();
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
@@ -33,10 +17,13 @@ class _DevicesScreenState extends State<DevicesScreen> {
           LocaleProvider.current.devices,
         ),
       ),
-      body: Consumer<DevicesVm>(
-        builder: (context, value, child) {
-          return _buildBody(value);
-        },
+      body: ChangeNotifierProvider(
+        create: (_) => DevicesVm(),
+        child: Consumer<DevicesVm>(
+          builder: (context, value, child) {
+            return _buildBody(value);
+          },
+        ),
       ),
       floatingActionButton: _buildFab(),
     );
@@ -48,31 +35,61 @@ class _DevicesScreenState extends State<DevicesScreen> {
         return RbioLoading();
 
       case LoadingProgress.DONE:
-        return ListView.builder(
-          scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
-          itemCount: vm.devices.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //
-                RbioUserTile(
-                  name: '${vm.devices[index].title}',
-                  onTap: () {},
-                  imageUrl: vm.devices[index].image,
-                  leadingImage: UserLeadingImage.Rectangle,
-                  trailingIcon: UserTrailingIcons.Cancel,
-                  width: Atom.width,
-                ),
-
-                //
-                _buildVerticalGap(),
-              ],
-            );
-          },
+        return ListView(
+          shrinkWrap: true,
+          children: [
+            ...vm.devices
+                .map((device) => Column(
+                      children: [
+                        DeviceCard(
+                          background: getIt<ITheme>().cardBackgroundColor,
+                          image: UtilityManager()
+                              .getDeviceImageFromType(device.deviceType),
+                          name:
+                              '${device.manufacturerName}\n${device.serialNumber ?? ''}',
+                          trailing: Row(
+                            children: [
+                              InkWell(
+                                  onTap: () {},
+                                  child: Icon(
+                                    Icons.info,
+                                    size: R.sizes.iconSize,
+                                  )),
+                              InkWell(
+                                  onTap: () {
+                                    Atom.show(GuvenAlert(
+                                        backgroundColor:
+                                            getIt<ITheme>().cardBackgroundColor,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 25, vertical: 25),
+                                        title: GuvenAlert.buildTitle(
+                                          LocaleProvider.current.warning,
+                                        ),
+                                        content: GuvenAlert.buildDescription(
+                                            '${LocaleProvider.current.ble_delete_paired_device_approv}'),
+                                        actions: [
+                                          GuvenAlert.buildBigMaterialAction(
+                                              '${LocaleProvider.current.cancel}',
+                                              () => Atom.dismiss()),
+                                          GuvenAlert.buildBigMaterialAction(
+                                              '${LocaleProvider.current.yes}',
+                                              () => vm.deletePairedDevice(
+                                                  device.deviceId))
+                                        ]));
+                                  },
+                                  child: Icon(
+                                    Icons.cancel,
+                                    color: R.color.darkRed,
+                                    size: R.sizes.iconSize,
+                                  )),
+                            ],
+                          ),
+                        ),
+                        _buildVerticalGap()
+                      ],
+                    ))
+                .toList()
+          ],
         );
 
       case LoadingProgress.ERROR:
@@ -86,7 +103,9 @@ class _DevicesScreenState extends State<DevicesScreen> {
   Widget _buildFab() {
     return FloatingActionButton(
       backgroundColor: getIt<ITheme>().mainColor,
-      onPressed: () {},
+      onPressed: () {
+        Atom.to(PagePaths.ALL_DEVICES);
+      },
       child: Center(
         child: SvgPicture.asset(
           R.image.add,

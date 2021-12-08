@@ -93,5 +93,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.google.firebase:firebase-messaging:20.1.0"
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+    implementation "com.polidea.rxandroidble2:rxandroidble:1.11.1"
+
     // implementation(name: 'omronconnectivitylibrary', ext: 'aar')
 }

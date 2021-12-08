@@ -56,9 +56,6 @@ class Strings {
   static const String covid_url_tr = "https://www.guven.com.tr/koronavirus";
   static const String covid_country_count_url =
       "https://www.arcgis.com/apps/opsdashboard/index.html#/85320e2ea5424dfaaa75ae62e5c06e61";
-
-  static const String urlDetect =
-      r"((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?";
 }
 
 enum Environment { DEV, STAGING, PROD }

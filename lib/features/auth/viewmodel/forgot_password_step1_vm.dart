@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 
-import '../auth.dart';
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../auth.dart';
 
 class ForgotPasswordStep1ScreenVm extends ChangeNotifier {
   BuildContext mContext;

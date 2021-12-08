@@ -5775,6 +5775,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Pair Steps:`
+  String get pair_steps {
+    return Intl.message(
+      'Pair Steps:',
+      name: 'pair_steps',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `The device has been successfully paired`
   String get pair_successful {
     return Intl.message(

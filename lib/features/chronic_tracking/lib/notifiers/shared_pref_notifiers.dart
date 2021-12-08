@@ -3,10 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../locator.dart';
-import '../models/ble_models/paired_device.dart';
-import 'ble_operators/ble_connector.dart';
-import 'ble_operators/ble_scanner.dart';
+import '../../../../model/ble_models/paired_device.dart';
 
 class SharedPrefNotifiers extends ChangeNotifier {
   static final SharedPrefNotifiers _sharedPrefNotifiers =
@@ -21,17 +18,6 @@ class SharedPrefNotifiers extends ChangeNotifier {
   static const LAST_PAIRED_DEVICE = "LAST_PAIRED_DEVICE";
   static const PAIRED_DEVICES = 'PAIRED_DEVICES';
   static const PREFERED_LANG = 'PREFERED_LANG';
-
-  savePairedDevice(PairedDevice pairedDevice) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String paired = jsonEncode(pairedDevice);
-    var response =
-        await sharedPreferences.setString(LAST_PAIRED_DEVICE, paired);
-    locator<BleScannerOps>().setDeviceId(pairedDevice.deviceId);
-    print("savePaired device response " + response.toString());
-    notifyListeners();
-    return response;
-  }
 
   Future<PairedDevice> getPairedDevice() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -70,59 +56,5 @@ class SharedPrefNotifiers extends ChangeNotifier {
     } else {
       return null;
     }
-  }
-
-  /// First of all fetching all saved paired device on localStorage.
-  /// Then checking sending value it's exist.
-  /// If sending value is not exist new value saving the localStorage
-  /// or else do nothing.
-  savePairedDevices(PairedDevice pairedDevice) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if (!await hasDeviceAlreadyPaired(pairedDevice)) {
-      var _pairedDevices = await getPairedDevices() ?? [];
-      _pairedDevices.add(pairedDevice);
-      List<String> _pairedDeviceOnLocal =
-          _pairedDevices.map((device) => jsonEncode(device.toJson())).toList();
-
-      var response = await sharedPreferences.setStringList(
-          PAIRED_DEVICES, _pairedDeviceOnLocal);
-
-      locator<BleScannerOps>()
-          .addDeviceId(_pairedDevices.map((e) => e.deviceId).toList());
-      print("savePaired device response " + response.toString());
-      notifyListeners();
-      return response;
-    }
-  }
-
-  deletePairedDevice(String id) async {
-    var response = await getPairedDevices() ?? [];
-    var selectedDeviceIndex =
-        response.indexWhere((element) => element.deviceId == id);
-    print(selectedDeviceIndex);
-    if (selectedDeviceIndex != -1) {
-      response.removeAt(selectedDeviceIndex);
-      locator<BleScannerOps>().pairedDevices =
-          response.map((e) => e.deviceId).toList();
-      locator<BleConnectorOps>().removePairedDevice();
-
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-
-      List<String> _pairedDeviceOnLocal =
-          response.map((device) => jsonEncode(device.toJson())).toList();
-
-      await sharedPreferences.setStringList(
-          PAIRED_DEVICES, _pairedDeviceOnLocal);
-    }
-
-    notifyListeners();
-  }
-
-  Future<bool> hasDeviceAlreadyPaired(PairedDevice device) async {
-    var _pairedDevices = await getPairedDevices() ?? [];
-    var pairedDeviceIndex = _pairedDevices
-        .indexWhere((element) => element.deviceId == device.deviceId);
-    return pairedDeviceIndex != -1;
   }
 }

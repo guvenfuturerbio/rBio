@@ -573,6 +573,7 @@
   "one_time_a_day": "One time a day",
   "oth": "Oth.",
   "other": "Other",
+  "pair_steps":"Pair Steps:",
   "pair_successful": "The device has been successfully paired",
   "paired_devices": "Paired Devices",
   "paired_devices_deleted": "Paired Devices successfully deleted",
