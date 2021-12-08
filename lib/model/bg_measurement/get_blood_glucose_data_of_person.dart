@@ -10,8 +10,9 @@ class GetBloodGlucoseDataOfPerson {
   String start;
   @JsonKey(name: 'end')
   String end;
+  int count;
 
-  GetBloodGlucoseDataOfPerson({this.id, this.start, this.end});
+  GetBloodGlucoseDataOfPerson({this.id, this.start, this.end, this.count});
 
   factory GetBloodGlucoseDataOfPerson.fromJson(Map<String, dynamic> json) =>
       _$GetBloodGlucoseDataOfPersonFromJson(json);

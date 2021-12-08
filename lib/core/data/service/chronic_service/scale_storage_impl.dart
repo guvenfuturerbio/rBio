@@ -172,7 +172,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
           var id = await sendToServer(data);
           data.measurementId = id;
         }
-        box.add(data);
+        await box.add(data);
         print("here");
         notifyListeners();
         return true;
@@ -212,8 +212,16 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     var list = await getScaleDatas(
         beginDate: beginDate, endDate: endDate, count: count);
     if (list.isNotEmpty) {
-      writeAll(list);
-      return false;
+      var _dubItem = 0;
+      for (var glucose in list) {
+        if (doesExist(glucose)) _dubItem++;
+      }
+      if (_dubItem != list.length) {
+        await writeAll(list);
+        notifyListeners();
+        return false;
+      } else
+        return false;
     } else {
       return true;
     }
@@ -230,15 +238,14 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   }
 
   @override
-  bool writeAll(List<ScaleModel> dataList) {
+  Future<bool> writeAll(List<ScaleModel> dataList) async {
     try {
       if (box.isOpen) {
         for (var data in dataList) {
           if (!doesExist(data)) {
-            box.add(data);
+            await box.add(data);
           }
         }
-        notifyListeners();
         return true;
       } else {
         return false;

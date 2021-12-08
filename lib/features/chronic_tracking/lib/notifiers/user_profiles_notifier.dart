@@ -189,8 +189,8 @@ class UserProfilesNotifier with ChangeNotifier {
     return await getIt<ProfileStorageImpl>().update(person, person.key);
   }
 
-  Future<void> getGlucoseDataOfProfile(Person pd) async {
-    await getIt<GlucoseStorageImpl>().getBloodGlucoseDataOfPerson(pd);
+  Future<void> getGlucoseDataOfProfile() async {
+    await getIt<GlucoseStorageImpl>().getBloodGlucoseDataOfPerson();
   }
 
   /// END REMOTE UPDATE FUNCTIONS

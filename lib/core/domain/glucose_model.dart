@@ -141,7 +141,15 @@ class GlucoseData extends HiveObject {
 
   @override
   bool operator ==(Object other) {
-    return other is GlucoseData && other.time == time;
+    if (other is GlucoseData) {
+      if (measurementId == null || other.measurementId == null) {
+        return time == other.time;
+      } else {
+        return measurementId == other.measurementId;
+      }
+    } else {
+      return false;
+    }
   }
 
   bool isEqual(GlucoseData other) {

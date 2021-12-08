@@ -32,6 +32,7 @@ class BgMeasurementListWidget extends StatefulWidget {
 class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
   @override
   Widget build(BuildContext context) {
+    print('------------------------>Length:${widget.bgMeasurements.length}');
     return GroupedListView<BgMeasurementViewModel, DateTime>(
       elements: widget.bgMeasurements ?? <BgMeasurementViewModel>[],
       order: GroupedListOrder.DESC,

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io' as platform;
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,6 +87,8 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   fetchKvkkFormState() async {
+    log(getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.CT_AUTH_TOKEN));
     this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
     notifyListeners();
   }
