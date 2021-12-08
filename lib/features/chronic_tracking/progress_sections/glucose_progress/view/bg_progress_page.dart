@@ -105,7 +105,7 @@ class _BgProgressPage extends State<BgProgressPage> {
                   height: context.HEIGHT * .4,
                   child: BgMeasurementListWidget(
                     bgMeasurements: value.bgMeasurements,
-                    scrollController: _controller,
+                    scrollController: value.controller,
                     useStickyGroupSeparatorsValue: true,
                   ),
                 )

@@ -16,7 +16,6 @@ import '../utils/charts/animated_scale_line_chart.dart';
 import '../utils/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../utils/scale_tagger/scale_tagger_pop_up.dart';
 import '../view/scale_progress_page.dart';
-import 'scale_measurement_notifier.dart';
 
 enum GraphType { BUBBLE, LINE }
 
@@ -269,9 +268,10 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   Future<void> setStartDate(DateTime d) async {
     this._startDate = d;
     this._currentDateIndex = 0;
-    await ScaleMeasurementNotifier().fetchScaleMeasurementsInDateRange(
+    await getIt<ScaleStorageImpl>().getAndWriteScaleData(
+        beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
+    fetchScaleMeasurementsInDateRange(
         startDate, endDate.add(Duration(days: 1)));
-    this.scaleMeasurements = ScaleMeasurementNotifier().scaleMeasurements;
     //fetchScrolledDailyData();
     notifyListeners();
   }
@@ -286,9 +286,11 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   Future<void> setEndDate(DateTime d) async {
     this._endDate = d;
     this._currentDateIndex = 0;
-    await ScaleMeasurementNotifier().fetchScaleMeasurementsInDateRange(
+    await getIt<ScaleStorageImpl>().getAndWriteScaleData(
+        beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
+    fetchScaleMeasurementsInDateRange(
         startDate, endDate.add(Duration(days: 1)));
-    this.scaleMeasurements = ScaleMeasurementNotifier().scaleMeasurements;
+
     //fetchScrolledDailyData();
     notifyListeners();
   }
@@ -346,7 +348,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
 
   void fetchScrolledDailyData() {
     this.scaleMeasurementsDailyData.clear();
-    List<DateTime> dateList = ScaleMeasurementNotifier().scaleMeasurementDates;
+    List<DateTime> dateList = fetchScaleMeasurementsDateList();
     //print(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
@@ -473,12 +475,6 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     notifyListeners();
   }
 
-  Future<void> fetchScaleMeasurements() async {
-    await ScaleMeasurementNotifier().fetchScaleMeasurements();
-    this.scaleMeasurements = ScaleMeasurementNotifier().scaleMeasurements;
-    notifyListeners();
-  }
-
   void setChartAverageDataPerDay() {
     this.scaleMeasurementsDailyData = scaleMeasurements;
     setChartDailyData();
@@ -511,16 +507,12 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   }
 
   updateScaleMeasurement() async {
-    if (selected == TimePeriodFilter.DAILY ||
-        selected == TimePeriodFilter.SPECIFIC) {
-      await ScaleMeasurementNotifier().fetchScaleMeasurements();
+    if (selected == TimePeriodFilter.DAILY) {
+      fetchScaleMeasurements();
     } else {
-      await ScaleMeasurementNotifier().fetchScaleMeasurementsInDateRange(
+      fetchScaleMeasurementsInDateRange(
           startDate, endDate.add(Duration(days: 1)));
     }
-    this.scaleMeasurements = ScaleMeasurementNotifier().scaleMeasurements;
-
-    ScaleMeasurementNotifier().fetchScaleMeasurementsDateList();
 
     if (selected == TimePeriodFilter.DAILY ||
         selected == TimePeriodFilter.SPECIFIC) {
@@ -614,10 +606,10 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     setCurrentGraph();
     notifyListeners();
     if (s == TimePeriodFilter.SPECIFIC) {
-      await fetchScaleMeasurements();
+      fetchScaleMeasurements();
       fetchSpesificData();
     } else if (s == TimePeriodFilter.DAILY) {
-      await fetchScaleMeasurements();
+      fetchScaleMeasurements();
       fetchScrolledDailyData();
     } else {
       DateTime currentDateEnd = DateTime(DateTime.now().year,
@@ -654,6 +646,46 @@ class ScaleProgressPageViewModel extends ChangeNotifier
       }
     }
     setChartDailyData();
+  }
+
+  void fetchScaleMeasurements() {
+    final result = getIt<ScaleStorageImpl>().getAll();
+    this.scaleMeasurements.clear();
+    this.scaleMeasurements =
+        result.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
+    this.scaleMeasurements.sort((a, b) => a.date.compareTo(b.date));
+  }
+
+  List<DateTime> fetchScaleMeasurementsDateList() {
+    bool isInclude = false;
+    List<DateTime> scaleMeasurementDates = <DateTime>[];
+    for (var data in scaleMeasurements) {
+      for (var data2 in scaleMeasurementDates) {
+        if (DateTime(data.date.year, data.date.month, data.date.day)
+            .isAtSameMomentAs(DateTime(data2.year, data2.month, data2.day))) {
+          isInclude = true;
+        }
+      }
+      if (!isInclude) {
+        scaleMeasurementDates
+            .add(DateTime(data.date.year, data.date.month, data.date.day));
+      }
+      isInclude = false;
+      scaleMeasurementDates.sort((a, b) => a.compareTo(b));
+    }
+    return scaleMeasurementDates;
+  }
+
+  void fetchScaleMeasurementsInDateRange(DateTime start, DateTime end) {
+    final result = getIt<ScaleStorageImpl>().getAll();
+    this.scaleMeasurements.clear();
+    for (var e in result) {
+      DateTime measurementDate = ScaleMeasurementViewModel(scaleModel: e).date;
+      if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
+        scaleMeasurements.add(ScaleMeasurementViewModel(scaleModel: e));
+      }
+    }
+    this.scaleMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
 
   void showFilter(BuildContext context) {

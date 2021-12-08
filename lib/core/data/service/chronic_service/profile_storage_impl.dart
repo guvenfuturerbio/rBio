@@ -119,7 +119,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
       checkBox();
       if (!doesExist(data)) {
         if (box.isEmpty) {
-          box.add(data);
+          await box.add(data);
         } else {
           box.putAt(0, data);
         }
@@ -132,7 +132,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
   }
 
   @override
-  bool writeAll(List<Person> data) {
+  Future<bool> writeAll(List<Person> data) {
     throw UnimplementedError();
   }
 

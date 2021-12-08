@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
 
 import '../../../../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
@@ -33,7 +36,7 @@ abstract class ChronicStorageService<T extends HiveObject>
 
   Future<bool> write(T data, {bool shouldSendToServer = false});
 
-  bool writeAll(List<T> data);
+  Future<bool> writeAll(List<T> data);
 
   Future<bool> update(T data, key);
 
