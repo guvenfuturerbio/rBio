@@ -256,16 +256,14 @@ class Utils {
   InputDecoration inputDecorationForLogin({
     String hintText,
     EdgeInsetsGeometry contentPadding,
-    bool showBorder = true,
+    InputBorder inputBorder,
   }) =>
       InputDecoration(
         contentPadding: contentPadding ??
             EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-        focusedBorder:
-            showBorder ? _borderTextFieldForLogin() : InputBorder.none,
-        border: showBorder ? _borderTextFieldForLogin() : InputBorder.none,
-        enabledBorder:
-            showBorder ? _borderTextFieldForLogin() : InputBorder.none,
+        focusedBorder: inputBorder,
+        border: inputBorder,
+        enabledBorder: inputBorder,
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: 16,
@@ -880,7 +878,7 @@ class Mediminder {
     return _instance;
   }
 
-  PersonModel selection = PersonModel(
+  Person selection = Person(
     userId: 56265,
     id: 1627287863112,
     imageURL:

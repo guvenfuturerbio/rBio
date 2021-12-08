@@ -86,12 +86,11 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
   Future<bool> update(Person data, key) async {
     try {
       checkBox();
-      if (box.isOpen && box.isNotEmpty) {
+      if (box.isNotEmpty) {
         var person = get(key);
         if (!person.isEqual(data)) {
           await updateServer(data);
-          box.put(data, key);
-          notifyListeners();
+          box.put(key, data);
         }
 
         return true;

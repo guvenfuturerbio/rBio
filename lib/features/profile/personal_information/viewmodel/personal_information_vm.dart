@@ -8,9 +8,68 @@ import '../../../../model/model.dart';
 class PersonalInformationScreenVm extends ChangeNotifier {
   BuildContext mContext;
 
-  PersonalInformationScreenVm({BuildContext context}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {});
+  String phoneNumber;
+  String email;
+
+  bool _showLoadingOverlay = false;
+  bool get showLoadingOverlay => _showLoadingOverlay;
+  set showLoadingOverlay(bool val) {
+    _showLoadingOverlay = val;
+    notifyListeners();
+  }
+
+  PersonalInformationScreenVm({
+    @required this.mContext,
+    @required this.phoneNumber,
+    @required this.email,
+  });
+
+  // serkan.ozturk@guvenfuture.com
+  Future<void> updateValues({
+    @required String newPhoneNumber,
+    @required String newEmail,
+  }) async {
+    phoneNumber = newPhoneNumber;
+    email = newEmail;
+    showLoadingOverlay = true;
+
+    try {
+      PatientResponse patient = await getIt<Repository>().getPatientDetail();
+      ChangeContactInfoRequest changeInfo = ChangeContactInfoRequest();
+      changeInfo.patientId = patient.id;
+      changeInfo.patientType = int.parse(patient.patientType);
+      changeInfo.nationalityId = patient.nationalityId;
+      changeInfo.firstName = patient.firstName;
+      changeInfo.lastName = patient.lastName;
+      changeInfo.gender = patient.gender;
+      changeInfo.identityNumber = patient.identityNumber;
+      changeInfo.gsm = newPhoneNumber;
+      changeInfo.gsmCountryCode = null;
+      changeInfo.email = newEmail;
+      changeInfo.hasETKApproval = patient.hasETKApproval;
+      changeInfo.hasKVKKApproval = patient.hasKVKKApproval;
+      changeInfo.passportNumber = patient.passportNumber;
+      await getIt<Repository>().updateContactInfo(changeInfo);
+      var sharedUserAccount = getIt<UserInfo>().getUserAccount();
+      sharedUserAccount = sharedUserAccount.copyWith(
+        phoneNumber: newPhoneNumber,
+        electronicMail: newEmail,
+      );
+      await getIt<UserInfo>().setUserAccount(sharedUserAccount);
+    } catch (error) {
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () {
+          showGradientDialog(
+            this.mContext,
+            LocaleProvider.of(this.mContext).warning,
+            LocaleProvider.of(this.mContext).sorry_dont_transaction,
+          );
+        },
+      );
+    }
+
+    showLoadingOverlay = false;
   }
 
   Future<void> showUpdatePhoneNumberDialog(
@@ -54,22 +113,22 @@ class PersonalInformationScreenVm extends ChangeNotifier {
               changeInfo.passportNumber = patient.passportNumber;
               await getIt<Repository>().updateContactInfo(changeInfo);
             } catch (error) {
-              Future.delayed(
-                const Duration(milliseconds: 500),
-                () {
-                  showGradientDialog(
-                    this.mContext,
-                    LocaleProvider.of(this.mContext).warning,
-                    error.toString() == "network"
-                        ? LocaleProvider.of(this.mContext).no_network_connection
-                        : LocaleProvider.of(this.mContext)
-                            .sorry_dont_transaction,
-                  );
-                },
-              );
+              // Future.delayed(
+              //   const Duration(milliseconds: 500),
+              //   () {
+              //     showGradientDialog(
+              //       this.mContext,
+              //       LocaleProvider.of(this.mContext).warning,
+              //       error.toString() == "network"
+              //           ? LocaleProvider.of(this.mContext).no_network_connection
+              //           : LocaleProvider.of(this.mContext)
+              //               .sorry_dont_transaction,
+              //     );
+              //   },
+              // );
             }
 
-            Navigator.of(this.mContext).pop();
+            // Navigator.of(this.mContext).pop();
           },
         ),
       ],
@@ -115,22 +174,22 @@ class PersonalInformationScreenVm extends ChangeNotifier {
               changeInfo.passportNumber = patient.passportNumber;
               await getIt<Repository>().updateContactInfo(changeInfo);
             } catch (error) {
-              Future.delayed(
-                const Duration(milliseconds: 500),
-                () {
-                  showGradientDialog(
-                    this.mContext,
-                    LocaleProvider.of(this.mContext).warning,
-                    error.toString() == "network"
-                        ? LocaleProvider.of(this.mContext).no_network_connection
-                        : LocaleProvider.of(this.mContext)
-                            .sorry_dont_transaction,
-                  );
-                },
-              );
+              // Future.delayed(
+              //   const Duration(milliseconds: 500),
+              //   () {
+              //     showGradientDialog(
+              //       this.mContext,
+              //       LocaleProvider.of(this.mContext).warning,
+              //       error.toString() == "network"
+              //           ? LocaleProvider.of(this.mContext).no_network_connection
+              //           : LocaleProvider.of(this.mContext)
+              //               .sorry_dont_transaction,
+              //     );
+              //   },
+              // );
             }
 
-            Navigator.of(this.mContext).pop();
+            // Navigator.of(this.mContext).pop();
           },
         ),
       ],
