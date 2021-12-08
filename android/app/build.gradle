@@ -30,6 +30,10 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 31
 
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -44,7 +48,7 @@ android {
         minSdkVersion 23 //Required for Jitsi
         targetSdkVersion 31
         versionCode 1
-        versionName "1.0.0"
+        versionName "0.0.1"
     }
 
     compileOptions {
