@@ -26,15 +26,21 @@ class LoggerUtils {
 
   // ************************** **************************
 
-  void d(dynamic message) => kDebugMode ? logger.d(message) : null; // Debug (Mavi)
+  void d(dynamic message) =>
+      kDebugMode ? logger.d(message) : null; // Debug (Mavi)
 
-  void v(dynamic message) => kDebugMode ? logger.v(message) : null; // Verbose (Gri)
+  void v(dynamic message) =>
+      kDebugMode ? logger.v(message) : null; // Verbose (Gri)
 
-  void w(dynamic message) => kDebugMode ? logger.w(message) : null; // Warning (Turuncu)
+  void w(dynamic message) =>
+      kDebugMode ? logger.w(message) : null; // Warning (Turuncu)
 
-  void e(dynamic message) => kDebugMode ? logger.e(message) : null; // Error (Kırmızı)
+  void e(dynamic message) =>
+      kDebugMode ? logger.e(message) : null; // Error (Kırmızı)
 
-  void i(dynamic message) => kDebugMode ? logger.i(message) : null; // Info (Mavi)
+  void i(dynamic message) =>
+      kDebugMode ? logger.i(message) : null; // Info (Mavi)
 
-  void wtf(dynamic message) => kDebugMode ? logger.wtf(message) : null; // Wtf (Pembe)
+  void wtf(dynamic message) =>
+      kDebugMode ? logger.wtf(message) : null; // Wtf (Pembe)
 }

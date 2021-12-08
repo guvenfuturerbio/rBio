@@ -192,5 +192,5 @@ class BurgundyTheme extends ITheme {
         ),
       );
 
-  double convertFontSize(double value) => value / 2.5;
+  double convertFontSize(double value) => value / 3;
 }

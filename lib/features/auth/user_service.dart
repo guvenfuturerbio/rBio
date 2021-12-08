@@ -262,7 +262,7 @@ class UserService {
         throw Exception('SignUp');
       }
 
-      person = profiles[0];
+      person = profiles.last;
       await getIt<ProfileStorageImpl>().write(person, shouldSendToServer: true);
       UserProfilesNotifier().selection = profiles[0];
       saveInformationForAutoLogin(userCredential);
