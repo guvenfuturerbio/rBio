@@ -166,7 +166,7 @@ class _CreateAppointmentSummaryScreenState
                       Expanded(
                         child: RbioTextFormField(
                           hintText: LocaleProvider.current.discount_code,
-                          showBorder: false,
+                          border: RbioTextFormField.noneBorder(),
                           controller: codeEditingController,
                           textInputAction: TextInputAction.done,
                           contentPadding: EdgeInsets.only(

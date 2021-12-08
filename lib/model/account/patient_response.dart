@@ -1,4 +1,5 @@
 class PatientResponse {
+  String patientType;
   String birthDate;
   String email;
   String firstName;
@@ -14,6 +15,7 @@ class PatientResponse {
   String passportNumber;
 
   PatientResponse({
+    this.patientType,
     this.birthDate,
     this.email,
     this.firstName,
@@ -30,6 +32,7 @@ class PatientResponse {
   });
 
   PatientResponse.fromJson(Map<String, dynamic> json) {
+    patientType = json['patientType'];
     birthDate = json['birthDate'];
     email = json['email'];
     firstName = json['firstName'];
@@ -47,6 +50,7 @@ class PatientResponse {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['patientType'] = this.patientType;
     data['birthDate'] = this.birthDate;
     data['email'] = this.email;
     data['firstName'] = this.firstName;
@@ -65,6 +69,6 @@ class PatientResponse {
 
   @override
   String toString() {
-    return 'PatientResponse(birthDate: $birthDate, email: $email, firstName: $firstName, gender: $gender, gsm: $gsm, hasETKApproval: $hasETKApproval, hasKVKKApproval: $hasKVKKApproval, id: $id, identityNumber: $identityNumber, lastName: $lastName, nationalityCode: $nationalityCode, nationalityId: $nationalityId, passportNumber: $passportNumber)';
+    return 'PatientResponse(patientType: $patientType, birthDate: $birthDate, email: $email, firstName: $firstName, gender: $gender, gsm: $gsm, hasETKApproval: $hasETKApproval, hasKVKKApproval: $hasKVKKApproval, id: $id, identityNumber: $identityNumber, lastName: $lastName, nationalityCode: $nationalityCode, nationalityId: $nationalityId, passportNumber: $passportNumber)';
   }
 }

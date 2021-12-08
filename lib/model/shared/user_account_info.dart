@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class UserAccount {
   String identificationNumber;
   String passaportNumber;
@@ -60,6 +62,25 @@ class UserAccount {
       data['patients'] = this.patients.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  UserAccount copyWith({
+    @required String phoneNumber,
+    @required String electronicMail,
+  }) {
+    return UserAccount(
+      phoneNumber: phoneNumber,
+      electronicMail: electronicMail,
+      identificationNumber: this.identificationNumber,
+      passaportNumber: this.passaportNumber,
+      nationality: this.nationality,
+      name: this.name,
+      surname: this.surname,
+      isSmsCodeValidated: this.isSmsCodeValidated,
+      isActiveEmail: this.isActiveEmail,
+      smsCodeExpireDate: this.smsCodeExpireDate,
+      patients: this.patients,
+    );
   }
 }
 

@@ -76,5 +76,6 @@ export 'widgets/rbio_switcher.dart';
 export 'widgets/rbio_textformfield.dart';
 export 'widgets/rbio_user_tile.dart';
 export 'widgets/warning_dialog.dart';
+export 'widgets/rbio_select_bottom_sheet.dart';
 export 'navigation/app_paths.dart';
 export 'ble_operators/ble_operators.dart';

@@ -15,11 +15,13 @@ class RbioTextFormField extends StatelessWidget {
   final bool obscureText;
   final bool enableSuggestions;
   final void Function(String) onChanged;
-  final bool showBorder;
   final EdgeInsetsGeometry contentPadding;
+  final InputBorder border;
+  final String initialValue;
 
   const RbioTextFormField({
     Key key,
+    this.initialValue,
     this.focusNode,
     this.controller,
     this.keyboardType,
@@ -29,16 +31,17 @@ class RbioTextFormField extends StatelessWidget {
     this.onChanged,
     this.contentPadding =
         const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-    this.showBorder = true,
     this.enableSuggestions = true,
     this.obscureText = false,
     this.autocorrect = true,
     this.textInputAction = TextInputAction.next,
+    this.border,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       style: Utils.instance.inputTextStyle(),
       focusNode: focusNode,
       controller: controller,
@@ -51,7 +54,7 @@ class RbioTextFormField extends StatelessWidget {
           .inputDecorationForLogin(
             hintText: hintText,
             contentPadding: contentPadding,
-            showBorder: showBorder,
+            inputBorder: border ?? defaultBorder(),
           )
           .copyWith(
             filled: true,
@@ -62,4 +65,24 @@ class RbioTextFormField extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
     );
   }
+
+  static InputBorder noneBorder() => InputBorder.none;
+
+  static InputBorder defaultBorder() => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(
+          width: 0,
+          style: BorderStyle.solid,
+          color: R.color.dark_white,
+        ),
+      );
+
+  static InputBorder activeBorder() => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(
+          width: 0,
+          style: BorderStyle.solid,
+          color: getIt<ITheme>().mainColor,
+        ),
+      );
 }

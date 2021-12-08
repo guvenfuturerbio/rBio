@@ -122,6 +122,14 @@ class Person extends HiveObject {
       this.smoker = false,
       this.isFirstUser = false});
 
+  Person copy() {
+    final _json = toJson();
+    final _jsonEncode = jsonEncode(_json);
+    final _jsonDecode = jsonDecode(_jsonEncode);
+    final person = Person.fromJson(_jsonDecode);
+    return person;
+  }
+
   @override
   bool operator ==(Object other) =>
       other is Person && other.userId == userId && other.id == id;
@@ -191,8 +199,8 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'name': instance.name,
       'birth_day': instance.birthDate,
       'gender': instance.gender,
-      'height': int.parse(instance.height),
-      'weight': int.parse(instance.weight),
+      'height': instance.height,
+      'weight': instance.weight,
       'diabetes_type': instance.diabetesType,
       'hypo': instance.hypo,
       'range_min': instance.rangeMin,
@@ -201,7 +209,7 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'hyper': instance.hyper,
       'device_uuid': instance.deviceUUID,
       'manufacturer_id': instance.manufacturerId,
-      'year_of_diagnosis': instance.yearOfDiagnosis.toString(),
+      'year_of_diagnosis': instance.yearOfDiagnosis,
       'smoker': instance.smoker,
       'is_first_user': instance.isFirstUser,
     };
