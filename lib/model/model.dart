@@ -63,3 +63,5 @@ export 'symptom_checker/symptoms_requests/get_bodysublocation_response.dart';
 export 'symptom_checker/symptoms_requests/get_specialisations.response.dart';
 export 'symptom_checker/symptoms_requests/get_symptoms_response.dart';
 export 'department_response/department_response.dart';
+
+export 'doctor/doctor.dart';

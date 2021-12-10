@@ -10,16 +10,9 @@ import 'package:path_provider/path_provider.dart';
 import '../features/chronic_tracking/lib/notifiers/notification_handler_new.dart';
 import '../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'core.dart';
-import 'data/helper/dio_helper.dart';
 import 'data/imports/cronic_tracking.dart';
-import 'data/repository/repository.dart';
-import 'data/repository/symptom_repository.dart';
-import 'data/service/api_service.dart';
-import 'data/service/local_cache_service.dart';
+import 'data/repository/doctor_repository.dart';
 import 'data/service/symptom_api_service.dart';
-import 'manager/shared_preferences_manager.dart';
-import 'manager/user_manager.dart';
-import 'utils/user_info.dart';
 
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;
@@ -73,6 +66,15 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerSingleton<Repository>(Repository(
       apiService: getIt<ApiService>(),
       localCacheService: getIt<LocalCacheService>()));
+
+  getIt.registerSingleton<DoctorApiService>(
+      DoctorApiServiceImpl(getIt<IDioHelper>()));
+  getIt.registerSingleton<DoctorRepository>(
+    DoctorRepository(
+      apiService: getIt<DoctorApiService>(),
+      localCacheService: getIt<LocalCacheService>(),
+    ),
+  );
 
   getIt.registerSingleton<SymptomApiService>(
       SymptomApiServiceImpl(getIt<IDioHelper>()));

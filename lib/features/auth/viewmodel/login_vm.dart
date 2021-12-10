@@ -11,6 +11,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
+import '../../../core/data/repository/doctor_repository.dart';
 import '../../../core/utils/utils.dart';
 import '../../../model/model.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
@@ -236,6 +237,7 @@ class LoginScreenVm extends ChangeNotifier {
       await Future.delayed(Duration(milliseconds: 500));
       this._progress = LoadingProgress.LOADING;
       notifyListeners();
+
       try {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
         await saveLoginInfo(username, password, guvenLogin.access_token);
@@ -249,6 +251,10 @@ class LoginScreenVm extends ChangeNotifier {
         await UserService()
             .saveAndRetrieveToken(userCredential.user, 'patientLogin');
         await UserService().handleSuccessfulLogin(userCredential.user);
+        final doctorResponse =
+            await getIt<DoctorRepository>().login('dr.alev.eken', '12345');
+        await getIt<ISharedPreferencesManager>().setString(
+            SharedPreferencesKeys.DOCTOR_TOKEN, doctorResponse.accessToken);
         hideDialog(mContext);
         notifyListeners();
         AnalyticsManager().sendEvent(new LoginSuccessEvent());
