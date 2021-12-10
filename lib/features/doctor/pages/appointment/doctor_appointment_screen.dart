@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../generated/l10n.dart';
+import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../resources/resources.dart';
 import '../../utils/hypo_hyper_edit/hypo_hyper_edit_view_model.dart';
 import '../../utils/widgets.dart';
 import 'doctor_appointment_vm.dart';
@@ -110,6 +110,18 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
     );
   }
 
+  LinearProgressIndicator linearProgress({
+    Key key,
+    double value,
+    Color backgroundColor,
+    Animation valueColor,
+    String semanticsLabel,
+    String semanticsValue,
+  }) =>
+      LinearProgressIndicator(
+        backgroundColor: backgroundColor,
+      );
+
   Widget _buildPosts(BuildContext context, List<Appointment> appointments) {
     return ListView.builder(
       shrinkWrap: true,
@@ -135,4 +147,204 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
       },
     );
   }
+}
+
+GradientButton button({
+  text: String,
+  Function onPressed,
+  double height,
+  double width,
+}) =>
+    GradientButton(
+      increaseHeightBy: height ?? 16,
+      increaseWidthBy: width ?? 200,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+      ),
+      textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+      callback: onPressed,
+      gradient: LinearGradient(
+        colors: [
+          R.color.mainColor,
+          R.color.mainColor,
+        ],
+        begin: Alignment.bottomLeft,
+        end: Alignment.centerRight,
+      ),
+      shadowColor: Colors.black,
+    );
+
+Widget appointmentInfo(
+    {BuildContext context,
+    Appointment appointment,
+    Function startAppointment}) {
+  return Container(
+    width: double.infinity,
+    margin: EdgeInsets.only(bottom: 20),
+    child: Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                //width: double.infinity,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              LocaleProvider.current.name_surname,
+                              style:
+                                  TextStyle(color: R.color.title, fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                              child: Text(
+                            LocaleProvider.current.identity_passport,
+                            style:
+                                TextStyle(color: R.color.title, fontSize: 16),
+                          ))
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.zero,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              appointment?.patient?.user?.name ?? "-",
+                              style: TextStyle(
+                                  color: R.color.text,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              appointment
+                                      ?.patient?.user?.identificationNumber ??
+                                  "-",
+                              style: TextStyle(
+                                  color: R.color.text,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              LocaleProvider.current.phone_number,
+                              style:
+                                  TextStyle(color: R.color.title, fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                              child: Text(
+                            LocaleProvider.current.time,
+                            style:
+                                TextStyle(color: R.color.title, fontSize: 16),
+                          ))
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.zero,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              appointment?.patient?.user?.phoneNumber ?? "-",
+                              style: TextStyle(
+                                  color: R.color.text,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          Expanded(
+                              child: Text(
+                            appointment?.availability?.startTime
+                                    ?.substring(0, 5) ??
+                                "-",
+                            style: TextStyle(
+                                color: R.color.text,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.zero,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: button(
+                                text:
+                                    LocaleProvider.current.files.toUpperCase(),
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.015),
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
+                              child: button(
+                                  onPressed: () {
+                                    startAppointment(
+                                        appointment.webConsultAppId);
+                                  },
+                                  text: LocaleProvider.current.start
+                                      .toUpperCase(),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.015))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Icon(Icons.navigate_next)
+      ],
+    ),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+      gradient: LinearGradient(
+        colors: [
+          Colors.white,
+          Colors.white,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.topRight,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withAlpha(50),
+          blurRadius: 15,
+          spreadRadius: 0,
+          offset: Offset(5, 10),
+        ),
+      ],
+    ),
+  );
 }

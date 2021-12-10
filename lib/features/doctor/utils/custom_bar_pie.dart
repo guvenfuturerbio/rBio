@@ -1,31 +1,36 @@
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/doctor/resources/resources.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/core.dart';
 import '../pages/patient_detail_page/patient_detail_page_view_model.dart';
 
 class CustomBarPie extends StatelessWidget {
   final double width;
   final double height;
-  CustomBarPie({@required this.width, @required this.height});
+
+  CustomBarPie({
+    @required this.width,
+    @required this.height,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PatientDetailPageViewModel>(
-        builder: (context, value, child) {
-      return Container(
-        width: width,
-        child: value.totalValuableCount == 0
-            ? SizedBox(
-                height: height,
-                child: Center(
-                  child: Text(LocaleProvider.current.no_measurement),
-                ),
-              )
-            : Row(
-                children: [
-                  AnimatedContainer(
+      builder: (context, value, child) {
+        return Container(
+          width: width,
+          child: value.totalValuableCount == 0
+              ? SizedBox(
+                  height: height,
+                  child: Center(
+                    child: Text(LocaleProvider.current.no_measurement),
+                  ),
+                )
+              : Row(
+                  children: [
+                    //
+                    AnimatedContainer(
                       duration: Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
@@ -43,8 +48,11 @@ class CustomBarPie extends StatelessWidget {
                           ? 0
                           : (value.chartVeryLow.length /
                                   value.totalValuableCount) *
-                              100)),
-                  AnimatedContainer(
+                              100),
+                    ),
+
+                    //
+                    AnimatedContainer(
                       duration: Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
@@ -61,8 +69,11 @@ class CustomBarPie extends StatelessWidget {
                       child: animatedCount(value.totalValuableCount == 0
                           ? 0
                           : (value.chartLow.length / value.totalValuableCount) *
-                              100)),
-                  AnimatedContainer(
+                              100),
+                    ),
+
+                    //
+                    AnimatedContainer(
                       duration: Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
@@ -80,8 +91,11 @@ class CustomBarPie extends StatelessWidget {
                           ? 0
                           : (value.chartTarget.length /
                                   value.totalValuableCount) *
-                              100)),
-                  AnimatedContainer(
+                              100),
+                    ),
+
+                    //
+                    AnimatedContainer(
                       duration: Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
@@ -99,8 +113,11 @@ class CustomBarPie extends StatelessWidget {
                           ? 0
                           : (value.chartHigh.length /
                                   value.totalValuableCount) *
-                              100)),
-                  AnimatedContainer(
+                              100),
+                    ),
+
+                    //
+                    AnimatedContainer(
                       duration: Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
@@ -118,11 +135,13 @@ class CustomBarPie extends StatelessWidget {
                           ? 0
                           : (value.chartVeryHigh.length /
                                   value.totalValuableCount) *
-                              100)),
-                ],
-              ),
-      );
-    });
+                              100),
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
   }
 }
 
@@ -142,9 +161,10 @@ Widget animatedCount(double count) {
                     precision: 1,
                     duration: Duration(seconds: 1),
                     style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 12,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),

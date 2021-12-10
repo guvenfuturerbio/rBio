@@ -1,12 +1,9 @@
-import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/extension/build_context_extension.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../core/core.dart';
 import '../../../chronic_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
-import '../../resources/resources.dart';
 import '../../utils/widgets.dart';
 import '../appointment/doctor_appointment_screen.dart';
 import '../patients_page/patient_page.dart';
@@ -133,4 +130,60 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
           PatientPage(),
         ],
       );
+
+  Widget tabButton({BuildContext context, String text, bool isSelected}) =>
+      Container(
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.height * 0.05,
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: tabTextSize,
+            color: isSelected ? R.color.white : R.color.mainColor,
+          ),
+        ),
+        decoration: isSelected ? activeDecoration() : decoration(),
+      );
+
+  BoxDecoration activeDecoration() {
+    return BoxDecoration(
+      color: R.color.regularBlue,
+      gradient: LinearGradient(
+        colors: [R.color.mainColor, R.color.mainColor],
+        begin: Alignment.bottomLeft,
+        end: Alignment.centerRight,
+      ),
+      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withAlpha(50),
+          blurRadius: 15,
+          spreadRadius: 0,
+          offset: Offset(5, 10),
+        )
+      ],
+    );
+  }
+
+  BoxDecoration decoration() {
+    return BoxDecoration(
+      color: R.color.regularBlue,
+      gradient: LinearGradient(
+        colors: [Colors.white, Colors.white],
+        begin: Alignment.bottomLeft,
+        end: Alignment.centerRight,
+      ),
+      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withAlpha(50),
+          blurRadius: 15,
+          spreadRadius: 0,
+          offset: Offset(5, 10),
+        ),
+      ],
+    );
+  }
 }

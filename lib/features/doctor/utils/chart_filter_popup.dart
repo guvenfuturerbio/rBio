@@ -1,12 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/extension/build_context_extension.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/glucose_margins_filter.dart';
-import 'package:onedosehealth/features/doctor/pages/patient_detail_page/patient_detail_page_view_model.dart';
-import 'package:onedosehealth/features/doctor/resources/resources.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/core.dart';
+import '../../chronic_tracking/utils/glucose_margins_filter.dart';
+import '../pages/patient_detail_page/patient_detail_page_view_model.dart';
 
 class ChartFilterPopUp extends StatelessWidget {
   final double width;

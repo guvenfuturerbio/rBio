@@ -1,8 +1,9 @@
+import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-import '../../../../generated/l10n.dart';
-import '../widgets.dart';
+import '../../../../core/core.dart';
 
 class ProgressDialog extends StatefulWidget {
   static _ProgressDialogState state;
@@ -47,6 +48,26 @@ class _ProgressDialogState extends State<ProgressDialog> {
       ),
     );
   }
+
+  Widget progress({
+    Key key,
+    double value,
+    Color backgroundColor,
+    Animation valueColor,
+    String semanticsLabel,
+    String semanticsValue,
+  }) =>
+      ShakeAnimatedWidget(
+        enabled: true,
+        duration: Duration(milliseconds: 1500),
+        shakeAngle: Rotation.deg(z: 10),
+        curve: Curves.linear,
+        child: Container(
+          width: 80,
+          height: 80,
+          child: SvgPicture.asset(R.image.stethoscope),
+        ),
+      );
 
   Gradient blueGradient() => LinearGradient(
         colors: [

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../generated/l10n.dart';
+import '../../../../core/core.dart';
 import '../../../chronic_tracking/lib/notifiers/notification_handler_new.dart';
-import '../../resources/resources.dart';
 import '../../utils/critic_measurement_info.dart';
 
 class DoctorHomeVm extends ChangeNotifier {

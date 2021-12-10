@@ -5,21 +5,23 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/extension/build_context_extension.dart';
+import '../../../core/core.dart';
 import '../../../model/model.dart';
 import '../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
 import '../pages/patient_detail_page/patient_detail_page_view_model.dart';
-import '../resources/resources.dart';
 import 'popup/bg_popup.dart';
 
 class BgMeasurementListWidget extends StatefulWidget {
   final List<BgMeasurementViewModel> bgMeasurements;
   final ScrollController scrollController;
   final bool useStickyGroupSeparatorsValue;
-  BgMeasurementListWidget(
-      {this.bgMeasurements,
-      this.scrollController,
-      this.useStickyGroupSeparatorsValue});
+
+  BgMeasurementListWidget({
+    this.bgMeasurements,
+    this.scrollController,
+    this.useStickyGroupSeparatorsValue,
+  });
+
   @override
   _BgMeasurementListWidgetState createState() =>
       _BgMeasurementListWidgetState();
@@ -83,14 +85,16 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
 }
 
 Widget measurementList(
-    BgMeasurementViewModel bgMeasurementViewModel, BuildContext context) {
+  BgMeasurementViewModel bgMeasurementViewModel,
+  BuildContext context,
+) {
   return GestureDetector(
     onTap: () => showDialog(
-        context: context,
-        builder: (_) {
-          print(bgMeasurementViewModel.note);
-          return DoctorBgTaggerPopUp(data: bgMeasurementViewModel);
-        }),
+      context: context,
+      builder: (_) {
+        return DoctorBgTaggerPopUp(data: bgMeasurementViewModel);
+      },
+    ),
     child: Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
       decoration: BoxDecoration(

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../generated/l10n.dart';
+import '../../../../core/core.dart';
 import '../../notifiers/patient_notifiers.dart';
-import '../../resources/resources.dart';
 import 'bgpicker_vm.dart';
 
 class TargetPicker extends StatelessWidget {

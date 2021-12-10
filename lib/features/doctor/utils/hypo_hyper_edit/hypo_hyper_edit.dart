@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/widgets/masked_text_controller.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../core/core.dart';
 import '../../notifiers/patient_notifiers.dart';
-import '../../resources/resources.dart';
 import 'hypo_hyper_edit_view_model.dart';
 
 class HypoHyperEdit extends StatefulWidget {
@@ -37,14 +35,14 @@ class _HypoHyperEditState extends State<HypoHyperEdit> {
                       children: [
                         Text(
                           LocaleProvider.current.hypo,
-                          style: TextStyle(color: R.color.veryLow),
+                          style: TextStyle(color: R.color.very_low),
                         ),
                         Container(
                           alignment: Alignment.center,
                           width: MediaQuery.of(context).size.height * 0.1,
                           height: MediaQuery.of(context).size.height * 0.1,
                           decoration: BoxDecoration(
-                            color: R.color.veryLow,
+                            color: R.color.very_low,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(16),
                                 topRight: Radius.circular(16),
@@ -74,14 +72,14 @@ class _HypoHyperEditState extends State<HypoHyperEdit> {
                       children: [
                         Text(
                           LocaleProvider.current.hyper,
-                          style: TextStyle(color: R.color.veryHigh),
+                          style: TextStyle(color: R.color.very_high),
                         ),
                         Container(
                           alignment: Alignment.center,
                           width: MediaQuery.of(context).size.height * 0.1,
                           height: MediaQuery.of(context).size.height * 0.1,
                           decoration: BoxDecoration(
-                            color: R.color.veryHigh,
+                            color: R.color.very_high,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(16),
                                 bottomLeft: Radius.circular(16),

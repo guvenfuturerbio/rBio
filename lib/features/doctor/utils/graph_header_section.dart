@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/extension/build_context_extension.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import 'package:onedosehealth/features/doctor/resources/resources.dart';
+
+import '../../../core/core.dart';
+import '../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
+import '../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
+import '../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../pages/patient_detail_page/patient_detail_page_view_model.dart';
 import 'custom_bar_pie.dart';
 

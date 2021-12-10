@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 
-import '../resources/resources.dart';
+import '../../../core/core.dart';
 
 class CriticMeasurement extends StatefulWidget {
   CriticMeasurement(this.title, this.text, this.color);

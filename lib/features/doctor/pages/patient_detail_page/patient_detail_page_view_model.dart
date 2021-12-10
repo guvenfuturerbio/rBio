@@ -1,19 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/extension/build_context_extension.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../../../chronic_tracking/utils/glucose_margins_filter.dart';
 import '../../notifiers/bg_measurements_notifiers.dart';
 import '../../notifiers/patient_notifiers.dart';
-import '../../resources/resources.dart';
 import '../../utils/bgpickers/bgpicker.dart';
 import '../../utils/chart_filter_popup.dart';
 import '../../utils/charts/line/animated_line_chart.dart';
 import '../../utils/charts/scatter/animated_bubble_chart.dart';
-import '../../utils/gradient_dialog.dart';
 import '../../utils/hypo_hyper_edit/hypo_hyper_edit.dart';
 import '../../utils/hypo_hyper_edit/hypo_hyper_edit_view_model.dart';
 import '../../utils/sliders/range_setter_slider.dart';
@@ -197,12 +193,12 @@ class PatientDetailPageViewModel with ChangeNotifier {
 
   Map<Color, GlucoseMarginsFilter> get colorInfo {
     _colorInfo.putIfAbsent(
-        R.color.veryLow, () => GlucoseMarginsFilter.VERY_LOW);
+        R.color.very_low, () => GlucoseMarginsFilter.VERY_LOW);
     _colorInfo.putIfAbsent(R.color.low, () => GlucoseMarginsFilter.LOW);
     _colorInfo.putIfAbsent(R.color.target, () => GlucoseMarginsFilter.TARGET);
     _colorInfo.putIfAbsent(R.color.high, () => GlucoseMarginsFilter.HIGH);
     _colorInfo.putIfAbsent(
-        R.color.veryHigh, () => GlucoseMarginsFilter.VERY_HIGH);
+        R.color.very_high, () => GlucoseMarginsFilter.VERY_HIGH);
     return this._colorInfo;
   }
 
@@ -546,7 +542,7 @@ class PatientDetailPageViewModel with ChangeNotifier {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in this.bgMeasurementsDailyData) {
-      if (data.resultColor == R.color.veryLow) {
+      if (data.resultColor == R.color.very_low) {
         chartData.add(
             ChartData(data.date, int.parse(data.result), data.resultColor));
         if (data.tag == 1) {
@@ -670,7 +666,7 @@ class PatientDetailPageViewModel with ChangeNotifier {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in this.bgMeasurementsDailyData) {
-      if (data.resultColor == R.color.veryHigh) {
+      if (data.resultColor == R.color.very_high) {
         chartData.add(
             ChartData(data.date, int.parse(data.result), data.resultColor));
         if (data.tag == 1) {
@@ -752,7 +748,7 @@ class PatientDetailPageViewModel with ChangeNotifier {
             .bgMeasurements;
     this.bgMeasurements.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
-            element.resultColor == R.color.veryHigh) ||
+            element.resultColor == R.color.very_high) ||
         (!isFilterSelected(GlucoseMarginsFilter.HIGH) &&
             element.resultColor == R.color.high) ||
         (!isFilterSelected(GlucoseMarginsFilter.TARGET) &&
@@ -760,7 +756,7 @@ class PatientDetailPageViewModel with ChangeNotifier {
         (!isFilterSelected(GlucoseMarginsFilter.LOW) &&
             element.resultColor == R.color.low) ||
         (!isFilterSelected(GlucoseMarginsFilter.VERY_LOW) &&
-            element.resultColor == R.color.veryLow) ||
+            element.resultColor == R.color.very_low) ||
         (!isFilterSelected(GlucoseMarginsFilter.HUNGRY) && element.tag == 1) ||
         (!isFilterSelected(GlucoseMarginsFilter.FULL) && element.tag == 2) ||
         (!isFilterSelected(GlucoseMarginsFilter.OTHER) &&
@@ -770,7 +766,7 @@ class PatientDetailPageViewModel with ChangeNotifier {
         .fetchBgMeasurementsDateList(bgMeasurements);
     this.bgMeasurementsDailyData.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
-            element.resultColor == R.color.veryHigh) ||
+            element.resultColor == R.color.very_high) ||
         (!isFilterSelected(GlucoseMarginsFilter.HIGH) &&
             element.resultColor == R.color.high) ||
         (!isFilterSelected(GlucoseMarginsFilter.TARGET) &&
@@ -778,7 +774,7 @@ class PatientDetailPageViewModel with ChangeNotifier {
         (!isFilterSelected(GlucoseMarginsFilter.LOW) &&
             element.resultColor == R.color.low) ||
         (!isFilterSelected(GlucoseMarginsFilter.VERY_LOW) &&
-            element.resultColor == R.color.veryLow) ||
+            element.resultColor == R.color.very_low) ||
         (!isFilterSelected(GlucoseMarginsFilter.HUNGRY) && element.tag == 1) ||
         (!isFilterSelected(GlucoseMarginsFilter.FULL) && element.tag == 2) ||
         (!isFilterSelected(GlucoseMarginsFilter.OTHER) &&

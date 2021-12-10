@@ -3,11 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/extension/build_context_extension.dart';
-import '../../../../core/utils/utils.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../resources/resources.dart';
 
 class DoctorBgTaggerPopUp extends StatelessWidget {
   DoctorBgTaggerPopUp({Key key, this.data}) : super(key: key);
@@ -174,7 +171,7 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
 
   Card getTagElement(bool isCurrent, String icon, String title) {
     return Card(
-      color: isCurrent ? R.btnDarkBlue : R.color.white,
+      color: isCurrent ? R.color.btnDarkBlue : R.color.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
@@ -211,7 +208,7 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
         begin: Alignment.bottomRight,
         end: Alignment.topLeft,
         colors: isCurrent
-            ? <Color>[R.btnLightBlue, R.btnDarkBlue]
+            ? <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]
             : <Color>[Colors.white, Colors.white],
       ),
     );
@@ -257,7 +254,7 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
           gradient: LinearGradient(
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
-              colors: <Color>[R.btnLightBlue, R.btnDarkBlue]),
+              colors: <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]),
         ),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/data/repository/doctor_repository.dart';
-import '../../../core/locator.dart';
+import '../../../core/core.dart';
 import '../../../model/model.dart';
-import '../services/measurement_service.dart';
 import 'patient_notifiers.dart';
 
 enum BgMeasurementState { loading, loaded, error }
@@ -27,7 +26,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
         .map((e) => BgMeasurement(
             notes: e.bloodGlucoseMeasurement.valueNote,
             id: e.id,
-            color: MeasurementService().fetchMeasurementColor(
+            color: Utils.instance.fetchMeasurementColor(
                 measurement: int.parse(e.bloodGlucoseMeasurement.value),
                 criticMin: PatientNotifiers().patientDetail.hypo,
                 criticMax: PatientNotifiers().patientDetail.hyper,
@@ -53,10 +52,11 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
       DateTime start, DateTime end) async {
     //final result = await MeasurementService().fetchBgMeasurements();
     List<BgMeasurement> bgMeasure = bloodGlucoseList
-        .map((e) => BgMeasurement(
+        .map(
+          (e) => BgMeasurement(
             notes: e.bloodGlucoseMeasurement.valueNote,
             id: e.id,
-            color: MeasurementService().fetchMeasurementColor(
+            color: Utils.instance.fetchMeasurementColor(
                 measurement: int.parse(e.bloodGlucoseMeasurement.value),
                 criticMin: PatientNotifiers().patientDetail.hypo,
                 criticMax: PatientNotifiers().patientDetail.hyper,
@@ -65,7 +65,9 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
             date: e.detail.occurrenceTime,
             tag: e.tag.id,
             result: e.bloodGlucoseMeasurement.value,
-            isManual: e.isManuel))
+            isManual: e.isManuel,
+          ),
+        )
         .toList();
     this.bgMeasurements.clear();
     for (var e in bgMeasure) {

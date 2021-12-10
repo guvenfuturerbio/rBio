@@ -8,11 +8,9 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../core/extension/build_context_extension.dart';
+import '../../../../core/core.dart';
 import '../../../chronic_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
 import '../../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
-import '../../resources/loading_page.dart';
-import '../../resources/resources.dart';
 import '../../utils/widgets.dart';
 import 'chat_controller.dart';
 import 'message.dart';
@@ -63,7 +61,7 @@ class DoctorChatWindow extends StatelessWidget {
             stream: chatController.getMessages(chatController.username, uuid),
             builder: (context, streamMessages) {
               if (!streamMessages.hasData) {
-                return LoadingPage();
+                return RbioLoading();
               } else {
                 return ListView.builder(
                     controller: _scrollController,

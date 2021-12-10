@@ -3,10 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../generated/l10n.dart';
 import '../../../../../model/model.dart';
 import '../../../pages/patient_detail_page/patient_detail_page_view_model.dart';
-import '../../../resources/resources.dart';
+import '../../../../../core/core.dart';
 import '../../sample_view.dart';
 
 /// Renders the line sample with dynamically updated data points.

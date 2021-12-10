@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:onedosehealth/features/doctor/resources/resources.dart';
-import 'package:onedosehealth/features/doctor/notifiers/patient_notifiers.dart';
-import 'package:onedosehealth/features/doctor/utils/sliders/range_setter_slider_view_model.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/core.dart';
+import '../../notifiers/patient_notifiers.dart';
+import 'range_setter_slider_view_model.dart';
 
 class RangeSetterSlider extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class RangeSetterSlider extends StatefulWidget {
 class _RangeSetterSliderState extends State<RangeSetterSlider> {
   double _lowerValue = 50;
   double _upperValue = 180;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -43,7 +43,7 @@ class _RangeSetterSliderState extends State<RangeSetterSlider> {
                     tooltip: FlutterSliderTooltip(
                         boxStyle: FlutterSliderTooltipBox(
                             decoration: BoxDecoration(
-                                color: R.color.veryLow,
+                                color: R.color.very_low,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)))),
                         alwaysShowTooltip: true,
@@ -56,11 +56,11 @@ class _RangeSetterSliderState extends State<RangeSetterSlider> {
                       inactiveTrackBar: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
-                        border: Border.all(width: 3, color: R.color.veryLow),
+                        border: Border.all(width: 3, color: R.color.very_low),
                       ),
                       activeTrackBar: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          color: R.color.veryLow),
+                          color: R.color.very_low),
                     ),
                     onDragging: (handlerIndex, lowerValue, upperValue) {
                       _lowerValue = lowerValue;
@@ -126,7 +126,7 @@ class _RangeSetterSliderState extends State<RangeSetterSlider> {
                     tooltip: FlutterSliderTooltip(
                         boxStyle: FlutterSliderTooltipBox(
                             decoration: BoxDecoration(
-                                color: R.color.veryHigh,
+                                color: R.color.very_high,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)))),
                         alwaysShowTooltip: true,
@@ -138,11 +138,11 @@ class _RangeSetterSliderState extends State<RangeSetterSlider> {
                       activeTrackBarHeight: 10,
                       inactiveTrackBar: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: R.color.veryHigh),
+                          color: R.color.very_high),
                       activeTrackBar: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
-                        border: Border.all(width: 1, color: R.color.veryHigh),
+                        border: Border.all(width: 1, color: R.color.very_high),
                       ),
                     ),
                     onDragging: (handlerIndex, lowerValue, upperValue) {

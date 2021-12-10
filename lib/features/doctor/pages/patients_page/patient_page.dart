@@ -1,20 +1,18 @@
 import 'package:animated_widgets/animated_widgets.dart';
-import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../generated/l10n.dart';
-import '../../resources/resources.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
 import '../../utils/hypo_hyper_edit/hypo_hyper_edit_view_model.dart';
-import '../../utils/widgets.dart';
 import '../patient_detail_page/patient_detail_page.dart';
 import '../patient_detail_page/patient_detail_page_view_model.dart';
 import 'patient_page_view_model.dart';
 
-/// MG7
 class PatientPage extends StatefulWidget {
   @override
   _PatientPageState createState() => _PatientPageState();
@@ -208,5 +206,342 @@ class _PatientPageState extends State<PatientPage>
         );
       },
     );
+  }
+
+  Widget patientInfo({
+    BuildContext context,
+    DoctorPatientModel patient,
+    Function onPressed,
+  }) {
+    return InkWell(
+      onTap: () {
+        onPressed(patient.id);
+      },
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(bottom: 20),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          LocaleProvider.current.name_surname,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: R.color.title,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          LocaleProvider.current.diabet_type,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: R.color.title,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          patient?.name ?? "",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: R.color.text,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          patient?.diabetType?.name ?? "",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: R.color.text,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              LocaleProvider.current.last_bg,
+                              style: TextStyle(
+                                  color: R.color.text,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            measurementBox(context: context, patient: patient)
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              LocaleProvider.current.hypo,
+                              style: TextStyle(
+                                  color: R.color.text,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            hypo(context: context, patient: patient)
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              LocaleProvider.current.hyper,
+                              style: TextStyle(
+                                  color: R.color.text,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            hyper(context: context, patient: patient)
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      hungaryState(
+                          context: context,
+                          image: R.image.beforeMeal,
+                          count: patient?.type1Count ?? 0),
+                      hungaryState(
+                          context: context,
+                          image: R.image.afterMeal,
+                          count: patient?.type2Count ?? 0),
+                      hungaryState(
+                          context: context,
+                          image: R.image.other,
+                          count: patient?.type3Count ?? 0),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  )
+                ],
+              ),
+            ),
+            Icon(Icons.navigate_next)
+          ],
+        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            gradient: LinearGradient(colors: [
+              Colors.white,
+              Colors.white,
+            ], begin: Alignment.topLeft, end: Alignment.topRight),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withAlpha(50),
+                  blurRadius: 15,
+                  spreadRadius: 0,
+                  offset: Offset(5, 10))
+            ]),
+      ),
+    );
+  }
+
+  Widget hungaryState({BuildContext context, String image, int count}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SvgPicture.asset(image,
+            width: MediaQuery.of(context).size.width * 0.05,
+            height: MediaQuery.of(context).size.width * 0.05),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+        Text(count?.toString() ?? "", style: TextStyle(color: R.color.text))
+      ],
+    );
+  }
+
+  Widget hypo({
+    BuildContext context,
+    int width,
+    int height,
+    DoctorPatientModel patient,
+  }) {
+    return Container(
+      alignment: Alignment.center,
+      width: width ?? MediaQuery.of(context).size.width * 0.15,
+      height: height ?? MediaQuery.of(context).size.width * 0.15,
+      child: Text(
+        (((patient?.hypo ?? "-") == "-" || (patient?.hypo ?? "") == "")
+                ? "-"
+                : patient.hypo) +
+            "\nmg/dL",
+        style: TextStyle(color: R.color.text, fontWeight: FontWeight.w600),
+        textAlign: TextAlign.center,
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+              bottomRight: Radius.circular(16)),
+          gradient: LinearGradient(colors: [
+            ((patient?.hypo ?? "-") == "-" || (patient?.hypo ?? "") == "")
+                ? Colors.white
+                : Utils.instance.fetchMeasurementColor(
+                    measurement: toIntFunc(patient?.hypo ?? ""),
+                    criticMin: patient?.alertMin ?? 0,
+                    criticMax: patient?.alertMax ?? 0,
+                    targetMax: patient?.normalMax ?? 0,
+                    targetMin: patient?.normalMin ?? 0),
+            ((patient?.hypo ?? "-") == "-" || (patient?.hypo ?? "") == "")
+                ? Colors.white
+                : Utils.instance.fetchMeasurementColor(
+                    measurement: toIntFunc(patient?.hypo ?? ""),
+                    criticMin: patient?.alertMin ?? 0,
+                    criticMax: patient?.alertMax ?? 0,
+                    targetMax: patient?.normalMax ?? 0,
+                    targetMin: patient?.normalMin ?? 0),
+          ], begin: Alignment.topLeft, end: Alignment.topRight),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withAlpha(50),
+                blurRadius: 15,
+                spreadRadius: 0,
+                offset: Offset(5, 10))
+          ]),
+    );
+  }
+
+  Widget hyper({
+    BuildContext context,
+    int width,
+    int height,
+    DoctorPatientModel patient,
+  }) {
+    return Container(
+      alignment: Alignment.center,
+      width: width ?? MediaQuery.of(context).size.width * 0.15,
+      height: height ?? MediaQuery.of(context).size.width * 0.15,
+      child: Text(
+        (((patient?.hyper ?? "-") == "-" || (patient?.hyper ?? "") == "")
+                ? "-"
+                : patient.hyper) +
+            "\nmg/dL",
+        style: TextStyle(color: R.color.text, fontWeight: FontWeight.w600),
+        textAlign: TextAlign.center,
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16)),
+          gradient: LinearGradient(colors: [
+            ((patient?.hyper ?? "-") == "-" || (patient?.hyper ?? "") == "")
+                ? Colors.white
+                : Utils.instance.fetchMeasurementColor(
+                    measurement: toIntFunc(patient?.hyper ?? ""),
+                    criticMin: patient?.alertMin ?? 0,
+                    criticMax: patient?.alertMax ?? 0,
+                    targetMax: patient?.normalMax ?? 0,
+                    targetMin: patient?.normalMin ?? 0),
+            ((patient?.hyper ?? "-") == "-" || (patient?.hyper ?? "") == "")
+                ? Colors.white
+                : Utils.instance.fetchMeasurementColor(
+                    measurement: toIntFunc(patient?.hyper ?? ""),
+                    criticMin: patient?.alertMin ?? 0,
+                    criticMax: patient?.alertMax ?? 0,
+                    targetMax: patient?.normalMax ?? 0,
+                    targetMin: patient?.normalMin ?? 0),
+          ], begin: Alignment.topLeft, end: Alignment.topRight),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withAlpha(50),
+                blurRadius: 15,
+                spreadRadius: 0,
+                offset: Offset(5, 10))
+          ]),
+    );
+  }
+
+  Widget measurementBox({
+    BuildContext context,
+    int width,
+    int height,
+    DoctorPatientModel patient,
+  }) {
+    return Container(
+      alignment: Alignment.center,
+      width: width ?? MediaQuery.of(context).size.width * 0.15,
+      height: height ?? MediaQuery.of(context).size.width * 0.15,
+      child: Text(
+        (((patient?.lastBg ?? "-") == "-" || (patient?.lastBg ?? "") == "")
+                ? "-"
+                : patient.lastBg) +
+            "\nmg/dL",
+        style: TextStyle(color: R.color.text, fontWeight: FontWeight.w600),
+        textAlign: TextAlign.center,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        gradient: LinearGradient(
+          colors: [
+            ((patient?.lastBg ?? "-") == "-" || (patient?.lastBg ?? "") == "")
+                ? Colors.white
+                : Utils.instance.fetchMeasurementColor(
+                    measurement: toIntFunc(patient?.lastBg ?? ""),
+                    criticMin: patient?.alertMin ?? 0,
+                    criticMax: patient?.alertMax ?? 0,
+                    targetMax: patient?.normalMax ?? 0,
+                    targetMin: patient?.normalMin ?? 0),
+            ((patient?.lastBg ?? "-") == "-" || (patient?.lastBg ?? "") == "")
+                ? Colors.white
+                : Utils.instance.fetchMeasurementColor(
+                    measurement: toIntFunc(patient?.lastBg ?? ""),
+                    criticMin: patient?.alertMin ?? 0,
+                    criticMax: patient?.alertMax ?? 0,
+                    targetMax: patient?.normalMax ?? 0,
+                    targetMin: patient?.normalMin ?? 0),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.topRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(50),
+            blurRadius: 15,
+            spreadRadius: 0,
+            offset: Offset(5, 10),
+          ),
+        ],
+      ),
+    );
+  }
+
+  int toIntFunc(String text) {
+    if (text == null) {
+      return 0;
+    } else if (text.length > 0) {
+      return int.parse(text);
+    } else {
+      return 0;
+    }
   }
 }

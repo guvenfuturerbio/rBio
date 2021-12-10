@@ -1,13 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../generated/l10n.dart';
+import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
 import '../../../pages/patient_detail_page/patient_detail_page_view_model.dart';
-import '../../../resources/resources.dart';
 import '../../sample_view.dart';
 
 /// Renders the Scatter chart sample with dynamically updated data points.
@@ -148,13 +146,13 @@ class _AnimationScatterDefaultState extends SampleViewState {
               height: markerSize,
               width: markerSize,
               borderWidth: 5,
-              borderColor: R.color.veryHigh,
+              borderColor: R.color.very_high,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
           dataSource: _chartVeryHighTagged[2],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.veryHigh,
+          color: R.color.very_high,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
@@ -162,13 +160,13 @@ class _AnimationScatterDefaultState extends SampleViewState {
           dataSource: _chartVeryHighTagged[3],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.veryHigh,
+          color: R.color.very_high,
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize,
               width: markerSize,
-              borderColor: R.color.veryHigh,
+              borderColor: R.color.very_high,
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
@@ -284,13 +282,13 @@ class _AnimationScatterDefaultState extends SampleViewState {
               height: markerSize,
               width: markerSize,
               borderWidth: 2,
-              borderColor: R.color.veryLow,
+              borderColor: R.color.very_low,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
           dataSource: _chartVeryLowTagged[2],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.veryLow,
+          color: R.color.very_low,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
@@ -298,13 +296,13 @@ class _AnimationScatterDefaultState extends SampleViewState {
           dataSource: _chartVeryLowTagged[3],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.veryLow,
+          color: R.color.very_low,
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize,
               width: markerSize,
-              borderColor: R.color.veryLow,
+              borderColor: R.color.very_low,
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       _selected == LocaleProvider.current.daily ||
