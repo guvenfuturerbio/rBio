@@ -4,6 +4,7 @@ import 'package:vrouter/vrouter.dart';
 import '../../features/auth/auth.dart';
 import '../../features/auth/view/change_password_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
+import '../../features/doctor/pages/home/doctor_home_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/mediminder/view/hba1c_reminder_add_screen.dart';
 import '../../features/mediminder/view/hba1c_reminderlist_screen.dart';
@@ -17,7 +18,6 @@ import '../../features/my_appointments/appointment_list_screen.dart';
 import '../../features/my_appointments/web_conferance_screen.dart';
 import '../../features/profile/devices/devices.dart';
 import '../../features/profile/health_information/view/health_information_screen.dart';
-import '../../features/profile/health_information/viewmodel/health_information_vm.dart';
 import '../../features/profile/personal_information/view/personal_information_screen.dart';
 import '../../features/profile/profile/view/profile_screen.dart';
 import '../../features/profile/profile/viewmodel/profile_vm.dart';
@@ -323,6 +323,12 @@ class VRouterRoutes {
       ],
     ),
 
+    // Doctor
+    VWidget(
+      path: PagePaths.DOCTOR_HOME,
+      widget: DoctorHomeScreen(),
+    ),
+
     VWidget(
       path: PagePaths.HEALTH_INFORMATION,
       widget: HealthInformationScreen(),
@@ -413,4 +419,7 @@ class PagePaths {
   static const SYMPTOM_SUB_BODY_LOCATIONS = '/symptom-sub-body-locations';
   static const SYMPTOM_SELECT_PAGE = '/symptom-selection-page';
   static const SYMPTOM_RESULT_PAGE = '/symptom-result-page';
+
+  // Doctor
+  static const DOCTOR_HOME = '/doctor';
 }

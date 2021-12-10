@@ -11,13 +11,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       });
 
   @override
-  Future<LoginResponse> login(
-      {String clientId,
-      String grantType,
-      String clientSecret,
-      String scope,
-      String username,
-      String password}) async {
+  Future<LoginResponse> login({
+    String clientId,
+    String grantType,
+    String clientSecret,
+    String scope,
+    String username,
+    String password,
+  }) async {
     final response = await helper.dioPost(
       R.endpoints.ct_login,
       <String, dynamic>{
