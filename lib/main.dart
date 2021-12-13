@@ -13,6 +13,8 @@ import 'core/core.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import 'features/doctor/notifiers/bg_measurements_notifiers.dart';
+import 'features/doctor/notifiers/patient_notifiers.dart';
 import 'features/home/viewmodel/home_vm.dart';
 
 Future<void> main() async {
@@ -77,6 +79,9 @@ class _MyAppState extends State<MyApp> {
       color: Colors.white,
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (context) => PatientNotifiers()),
+          ChangeNotifierProvider(
+              create: (context) => BgMeasurementsNotifierDoc()),
           Provider<FirebaseAnalytics>.value(
             value: MyApp.analytics,
           ),

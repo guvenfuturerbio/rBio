@@ -187,6 +187,22 @@ class _Endpoints {
       '/Measurement/get-bmi-measurements'.xCronicTracking;
   String ct_updateScaleMeasurement =
       '/Measurement/update-bmi-measurement'.xCronicTracking;
+
+  String dc_Login =
+      '/auth/realms/GuvenComplex/protocol/openid-connect/token'.xDoctorSsoUrl;
+  String dc_getAllAppointment =
+      '/mobileapi/v1/MobileDoctor/all-appointment'.xDoctorBaseUrl;
+  String dc_getMyPatients =
+      '/api/v1/doctorpatient/get-my-patient'.xDoctorBaseUrl;
+  String dc_getMyPatientDetail(int patientId) =>
+      '/api/v1/doctorpatient/get-my-patient-profile-detail/${patientId}'
+          .xDoctorBaseUrl;
+  String dc_updateMyPatientLimit(int patientId) =>
+      '/api/v1/doctorpatient/update-my-patient-limit-detail/$patientId'
+          .xDoctorBaseUrl;
+  String dc_getMyPatientBloodGlucose(int patientId) =>
+      '/api/v1/doctorpatient/get-my-patient-blood-glucose-with-detail/$patientId'
+          .xDoctorBaseUrl;
 }
 
 extension _EndpointsExtension on String {
@@ -202,4 +218,9 @@ extension _EndpointsExtension on String {
       SecretUtils.instance.get(SecretKeys.CHRONIC_TRACKING_BASE_URL) + this;
   String get xCronicTrackingSSO =>
       SecretUtils.instance.get(SecretKeys.CHRONIC_SSO_URL) + this;
+
+  String get xDoctorSsoUrl =>
+      SecretUtils.instance.get(SecretKeys.CHRONIC_SSO_URL) + this;
+  String get xDoctorBaseUrl =>
+      SecretUtils.instance.get(SecretKeys.DOCTOR_BASE_URL) + this;
 }

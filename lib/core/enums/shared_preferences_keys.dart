@@ -20,6 +20,7 @@ enum SharedPreferencesKeys {
   SYMPTOM_AUTH_TOKEN,
   CT_AUTH_TOKEN,
   PAIRED_DEVICES,
+  DOCTOR_TOKEN,
 
   hba1cList,
   medicines,

@@ -1,13 +1,13 @@
 import 'package:atom/atom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/model/banner_model.dart';
-import '../../../core/core.dart';
-import '../widgets/home_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
+import '../../../core/core.dart';
+import '../model/banner_model.dart';
 import '../view/home_screen.dart';
+import '../widgets/home_slider.dart';
 import '../widgets/reorderable_widget.dart';
 import '../widgets/vertical_card_widget.dart';
 
@@ -201,6 +201,7 @@ class HomeVm extends ChangeNotifier {
   final _key6 = const Key('6');
   final _key7 = const Key('7');
   final _key8 = const Key('8');
+  final _key9 = const Key('9');
 
   // Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
@@ -221,6 +222,29 @@ class HomeVm extends ChangeNotifier {
               trailingIcon: UserTrailingIcons.RightArrow,
               onTap: () {
                 Atom.to(PagePaths.PROFILE);
+              },
+              width: Atom.width,
+            ),
+          ),
+        ),
+
+        //
+        MyReorderableWidget(
+          key: _key9,
+          body: GestureDetector(
+            onTap: () {
+              if (isForDelete) {
+                addWidget(_key9);
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.DOCTOR_HOME);
+              }
+            },
+            child: RbioUserTile(
+              name: 'Doctor Home',
+              leadingImage: UserLeadingImage.Circle,
+              trailingIcon: UserTrailingIcons.RightArrow,
+              onTap: () {
+                Atom.to(PagePaths.DOCTOR_HOME);
               },
               width: Atom.width,
             ),

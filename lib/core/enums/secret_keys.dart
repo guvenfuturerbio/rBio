@@ -14,6 +14,9 @@ enum SecretKeys {
   SYMPTOM_REQUEST_URL,
   CHRONIC_TRACKING_BASE_URL,
   CHRONIC_SSO_URL,
+  DOCTOR_BASE_URL,
+  DOCTOR_CLIENT_ID,
+  DOCTOR_CLIENT_SECRET,
 }
 
 extension SecretKeysStringExt on String {
