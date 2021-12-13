@@ -244,12 +244,12 @@ class LoginScreenVm extends ChangeNotifier {
         await UtilityManager().setTokenToServer(_guvenLogin.access_token);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
         this._progress = LoadingProgress.DONE;
-        UserCredential userCredential = await UserService()
+        /* UserCredential userCredential = await UserService()
             .signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
         await UserService()
             .saveAndRetrieveToken(userCredential.user, 'patientLogin');
         await UserService().handleSuccessfulLogin(userCredential.user);
-        hideDialog(mContext);
+        hideDialog(mContext);*/
         notifyListeners();
         AnalyticsManager().sendEvent(new LoginSuccessEvent());
         final term = Atom.queryParameters['then'];
