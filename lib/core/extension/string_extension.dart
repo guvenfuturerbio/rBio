@@ -30,12 +30,19 @@ const List<String> _englishChars = [
 
 extension TurkishStringExtension on String {
   String get xTurkishCharacterToEnglish {
-    String result = '';
-    for (int i = 0; i < _turkishChars.length; i++) {
-      result = this.replaceAll(_turkishChars[i], _englishChars[i]);
-    }
-
-    return result;
+    return this
+        .replaceAll("ı", "i")
+        .replaceAll("ğ", "g")
+        .replaceAll("İ", "I")
+        .replaceAll("Ğ", "G")
+        .replaceAll("ç", "c")
+        .replaceAll("Ç", "C")
+        .replaceAll("ş", "s")
+        .replaceAll("Ş", "s")
+        .replaceAll("Ö", "O")
+        .replaceAll("ö", "o")
+        .replaceAll("ü", "u")
+        .replaceAll("Ü", "U");
   }
 }
 

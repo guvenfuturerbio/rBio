@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:slugify/slugify.dart';
 import 'package:turkish/turkish.dart';
 
 import '../../../../core/core.dart';
@@ -36,6 +37,13 @@ class CreateAppointmentVm extends ChangeNotifier {
   PatientRelativeInfoResponse relativeResponse;
   PatientRelative dropdownValueRelative;
 
+  //For favorites
+  DateTime _startDate, _endDate;
+  int _patientId;
+  List<PatientAppointmentsResponse> _patientAppointments;
+  List<PatientAppointmentsResponse> _holderForFavorites = [];
+  List<String> _doctorsImageUrls = [];
+
   // #region Getters
   LoadingProgress get relativeProgress => this._relativeProgress;
   LoadingProgress get progress => this._progress;
@@ -48,6 +56,9 @@ class CreateAppointmentVm extends ChangeNotifier {
       this._filterDepartmentsResponse;
   List<FilterResourcesResponse> get filterResourcesResponse =>
       this._filterResourcesResponse;
+  List<PatientAppointmentsResponse> get holderForFavorites =>
+      _holderForFavorites;
+  List<String> get doctorsImageUrls => _doctorsImageUrls;
 
   FilterTenantsResponse get dropdownValueTenant => this._dropdownValueTenant;
   FilterDepartmentsResponse get dropdownValueDepartment =>
@@ -57,6 +68,19 @@ class CreateAppointmentVm extends ChangeNotifier {
   bool get hospitalSelected => this._hospitalSelected;
   bool get departmentSelected => this._departmentSelected;
   bool get doctorSelected => this._doctorSelected;
+
+  DateTime get startDate => _startDate != null
+      ? DateTime(_startDate.year, _startDate.month, _startDate.day)
+      : DateTime(
+          DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+
+  DateTime get endDate => _endDate != null
+      ? DateTime(_endDate.year, _endDate.month, _endDate.day, 23, 59, 59)
+      : DateTime(
+          DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+
+  List<PatientAppointmentsResponse> get patientAppointments =>
+      this._patientAppointments;
   // #endregion
 
   CreateAppointmentVm({
@@ -65,6 +89,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   }) {
     this.mContext = context;
     this.forOnline = forOnline;
+    this._patientId = PatientSingleton().getPatient().id;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
       if (forOnline) {
@@ -83,7 +108,36 @@ class CreateAppointmentVm extends ChangeNotifier {
       } else {
         await fetchTenants();
       }
+
+      if (getIt<UserInfo>().canAccessHospital()) {
+        fetchPatientAppointments(context);
+      }
     });
+  }
+
+  fillFromFavorites(int index) async {
+    try {
+      for (var tenant in tenantsFilterResponse) {
+        if (tenant.id == _holderForFavorites[index].tenantId) {
+          await hospitalSelection(tenant);
+        }
+      }
+      for (var department in filterDepartmentResponse) {
+        if (department.id ==
+            _holderForFavorites[index].resources.first.departmentId) {
+          await departmentSelection(department);
+        }
+      }
+      for (var doctor in filterResourcesResponse) {
+        if (doctor.id ==
+            _holderForFavorites[index].resources.first.resourceId) {
+          await doctorSelection(doctor);
+        }
+      }
+    } catch (e) {
+      print("fillFromFavorites: $e");
+    }
+    notifyListeners();
   }
 
   // #region fetchTenants
@@ -438,4 +492,69 @@ class CreateAppointmentVm extends ChangeNotifier {
     );
   }
   // #endregion
+
+  Future<void> fetchPatientAppointments(BuildContext context) async {
+    this._progress = LoadingProgress.LOADING;
+    notifyListeners();
+    try {
+      this._patientAppointments =
+          await getIt<Repository>().getPatientAppointments(
+        PatientAppointmentRequest(
+          patientId: _patientId,
+          to: endDate.toString(),
+          from: startDate.toString(),
+        ),
+      );
+
+      await holderListFillFunc();
+      for (var element in _holderForFavorites) {
+        print(Slugify(Utils.instance.clearDoctorTitle(element
+            .resources.first.resource
+            .toLowerCase()
+            .xTurkishCharacterToEnglish)));
+
+        final doctorId = Slugify(Utils.instance.clearDoctorTitle(element
+            .resources.first.resource
+            .toLowerCase()
+            .xTurkishCharacterToEnglish));
+        try {
+          DoctorCvResponse tmpResp =
+              await getIt<Repository>().getDoctorCvDetails(doctorId);
+          _doctorsImageUrls.add(
+              SecretUtils.instance.get(SecretKeys.DEV_4_GUVEN) +
+                  "/storage/app/media/" +
+                  tmpResp.image1);
+        } catch (e) {
+          _doctorsImageUrls.add(R.image.mockAvatar);
+        }
+      }
+      ;
+      this._progress = LoadingProgress.DONE;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      this._progress = LoadingProgress.ERROR;
+      notifyListeners();
+      showGradientDialog(context, LocaleProvider.current.warning,
+          LocaleProvider.current.sorry_dont_transaction);
+    }
+  }
+
+  holderListFillFunc() async {
+    _holderForFavorites = [];
+    if (_patientAppointments.length >= 4) {
+      for (var item = 0; item < 4; item++) {
+        if (!(_holderForFavorites.contains(_patientAppointments[item]))) {
+          _holderForFavorites.add(_patientAppointments[item]);
+        }
+      }
+    } else {
+      for (var element in _patientAppointments) {
+        if (!(_holderForFavorites.contains(element))) {
+          _holderForFavorites.add(element);
+        }
+      }
+    }
+    notifyListeners();
+  }
 }

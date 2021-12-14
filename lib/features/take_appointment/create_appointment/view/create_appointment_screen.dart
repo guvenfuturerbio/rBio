@@ -66,14 +66,14 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Row(
-                        children: [
-                          historyDoctorItem("Bengi Yılmaz", "deneme"),
-                          SizedBox(
-                            width: Atom.width * .03,
-                          ),
-                          historyDoctorItem("Cüneyt Akın", "deneme"),
-                        ],
-                      ),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: val.holderForFavorites
+                              .map((item) => historyDoctorItem(
+                                  context,
+                                  item.resources.first.resource,
+                                  val,
+                                  val.holderForFavorites.indexOf(item)))
+                              .toList()),
                     ),
 
                     //
@@ -158,52 +158,41 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
 
                     //
                     Expanded(
-                      child: Column(
-                        children: [
-                          //
-                          Expanded(
-                            child: Visibility(
-                              visible: val.doctorSelected,
-                              child: Center(
-                                child: RbioElevatedButton(
-                                  title: LocaleProvider.current.create_appo,
-                                  onTap: () {
-                                    Atom.to(
-                                      PagePaths.CREATE_APPOINTMENT_EVENTS,
-                                      queryParameters: {
-                                        'patientId': Uri.encodeFull(
-                                            val.dropdownValueRelative.id),
-                                        'patientName': Uri.encodeFull(
-                                            '${val.dropdownValueRelative.name} ${val.dropdownValueRelative.surname}'),
-                                        'tenantId': val.dropdownValueTenant.id
-                                            .toString(),
-                                        'tenantName': Uri.encodeFull(val
-                                            .dropdownValueTenant.title
-                                            .toString()),
-                                        'departmentId': val
-                                            .dropdownValueDepartment.id
-                                            .toString(),
-                                        'departmentName': Uri.encodeFull(val
-                                            .dropdownValueDepartment.title
-                                            .toString()),
-                                        'resourceId': val.dropdownValueDoctor.id
-                                            .toString(),
-                                        'resourceName': Uri.encodeFull(val
-                                            .dropdownValueDoctor.title
-                                            .toString()),
-                                        'forOnline':
-                                            widget.forOnline.toString(),
-                                      },
-                                    );
-                                  },
-                                ),
+                      child: val.doctorSelected
+                          ? Center(
+                              child: RbioElevatedButton(
+                                title: LocaleProvider.current.create_appo,
+                                onTap: () {
+                                  Atom.to(
+                                    PagePaths.CREATE_APPOINTMENT_EVENTS,
+                                    queryParameters: {
+                                      'patientId': Uri.encodeFull(
+                                          val.dropdownValueRelative.id),
+                                      'patientName': Uri.encodeFull(
+                                          '${val.dropdownValueRelative.name} ${val.dropdownValueRelative.surname}'),
+                                      'tenantId':
+                                          val.dropdownValueTenant.id.toString(),
+                                      'tenantName': Uri.encodeFull(val
+                                          .dropdownValueTenant.title
+                                          .toString()),
+                                      'departmentId': val
+                                          .dropdownValueDepartment.id
+                                          .toString(),
+                                      'departmentName': Uri.encodeFull(val
+                                          .dropdownValueDepartment.title
+                                          .toString()),
+                                      'resourceId':
+                                          val.dropdownValueDoctor.id.toString(),
+                                      'resourceName': Uri.encodeFull(val
+                                          .dropdownValueDoctor.title
+                                          .toString()),
+                                      'forOnline': widget.forOnline.toString(),
+                                    },
+                                  );
+                                },
                               ),
-                            ),
-                          ),
-
-                          //
-                          Expanded(
-                            child: Column(
+                            )
+                          : Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
@@ -216,7 +205,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: Atom.height * .05,
+                                  //height: Atom.height * .05,
                                   child: Center(
                                     child: RbioElevatedButton(
                                       onTap: () {
@@ -229,9 +218,6 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 );

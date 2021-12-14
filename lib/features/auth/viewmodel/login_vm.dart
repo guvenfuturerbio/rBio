@@ -246,11 +246,12 @@ class LoginScreenVm extends ChangeNotifier {
         await UtilityManager().setTokenToServer(_guvenLogin.access_token);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
         this._progress = LoadingProgress.DONE;
-        UserCredential userCredential = await UserService()
+        /* UserCredential userCredential = await UserService()
             .signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
         await UserService()
             .saveAndRetrieveToken(userCredential.user, 'patientLogin');
         await UserService().handleSuccessfulLogin(userCredential.user);
+        hideDialog(mContext);*/
         final doctorResponse =
             await getIt<DoctorRepository>().login('dr.alev.eken', '12345');
         await getIt<ISharedPreferencesManager>().setString(
