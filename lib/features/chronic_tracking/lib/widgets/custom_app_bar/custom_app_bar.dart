@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget title;
   final List<Widget> actions;
   final Widget bottom;
+
   const CustomAppBar({
     Key key,
     this.leading,

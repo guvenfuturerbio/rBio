@@ -1,9 +1,7 @@
-import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/viewmodel/create_appointment_vm.dart';
 
-import '../../../../core/constants/constants.dart';
+import '../../../../core/core.dart';
+import '../viewmodel/create_appointment_vm.dart';
 
 Widget historyDoctorItem(BuildContext context, String doctorName,
     CreateAppointmentVm vm, int index) {

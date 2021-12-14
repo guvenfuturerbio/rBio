@@ -3015,6 +3015,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Treatment`
+  String get treatment {
+    return Intl.message(
+      'Treatment',
+      name: 'treatment',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Specialities`
   String get specialities {
     return Intl.message(
@@ -4305,10 +4315,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Date of Birth`
+  /// `Date of birth`
   String get date_of_birth {
     return Intl.message(
-      'Date of Birth',
+      'Date of birth',
       name: 'date_of_birth',
       desc: '',
       args: [],
@@ -4475,10 +4485,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Diabet Type`
+  /// `Diabet type`
   String get diabet_type {
     return Intl.message(
-      'Diabet Type',
+      'Diabet type',
       name: 'diabet_type',
       desc: '',
       args: [],
@@ -4925,10 +4935,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Identity/Passport Number`
+  /// `TC / Passport no`
   String get identity_passport {
     return Intl.message(
-      'Identity/Passport Number',
+      'TC / Passport no',
       name: 'identity_passport',
       desc: '',
       args: [],
@@ -5655,10 +5665,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Normal Range`
+  /// `Normal range`
   String get normal_range {
     return Intl.message(
-      'Normal Range',
+      'Normal range',
       name: 'normal_range',
       desc: '',
       args: [],
@@ -6315,6 +6325,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Strip number`
+  String get strip_number_2 {
+    return Intl.message(
+      'Strip number',
+      name: 'strip_number_2',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Strip number decreases automatically when the blood glucose measurement is added. In cases such as loss or breakage, you need to reduce it manually`
   String get strip_page_info_message {
     return Intl.message(
@@ -6745,10 +6765,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Year of Diagnosis`
+  /// `Year of diagnosis`
   String get year_of_diagnosis {
     return Intl.message(
-      'Year of Diagnosis',
+      'Year of diagnosis',
       name: 'year_of_diagnosis',
       desc: '',
       args: [],
@@ -7260,6 +7280,86 @@ class LocaleProvider {
     return Intl.message(
       'Waiting',
       name: 'waiting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Blood Glucose Tracking`
+  String get bg_measurement_tracking {
+    return Intl.message(
+      'Blood Glucose Tracking',
+      name: 'bg_measurement_tracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weight Tracking`
+  String get weight_tracking {
+    return Intl.message(
+      'Weight Tracking',
+      name: 'weight_tracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Blood Pressure Tracking`
+  String get blood_pressure_tracking {
+    return Intl.message(
+      'Blood Pressure Tracking',
+      name: 'blood_pressure_tracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Treatment Process`
+  String get treatment_process {
+    return Intl.message(
+      'Treatment Process',
+      name: 'treatment_process',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Critical metrics`
+  String get critical_metrics {
+    return Intl.message(
+      'Critical metrics',
+      name: 'critical_metrics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From newest`
+  String get from_newest {
+    return Intl.message(
+      'From newest',
+      name: 'from_newest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From oldest`
+  String get from_oldest {
+    return Intl.message(
+      'From oldest',
+      name: 'from_oldest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort by`
+  String get sort_by {
+    return Intl.message(
+      'Sort by',
+      name: 'sort_by',
       desc: '',
       args: [],
     );

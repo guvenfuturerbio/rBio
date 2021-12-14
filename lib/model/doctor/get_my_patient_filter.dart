@@ -1,8 +1,8 @@
 class GetMyPatientFilter {
   String start;
   String end;
-  String skip;
-  String take;
+  int skip;
+  int take;
 
   GetMyPatientFilter({
     this.start,
@@ -15,8 +15,8 @@ class GetMyPatientFilter {
       GetMyPatientFilter(
         start: json['start'] as String,
         end: json['end'] as String,
-        skip: json['skip'] as String,
-        take: json['take'] as String,
+        skip: json['skip'] as int,
+        take: json['take'] as int,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

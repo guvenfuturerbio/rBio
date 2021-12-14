@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
+import 'package:onedosehealth/model/model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
@@ -18,7 +20,9 @@ import '../view/bg_progress_page.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
+class BgProgressPageViewModel
+    with ChangeNotifier, IBaseBottomActionsOfGraph
+    implements ProgressPage {
   BgProgressPageViewModel({BuildContext context}) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getIt<GlucoseStorageImpl>().addListener(() {
@@ -56,11 +60,11 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
 
   GraphType _currentGraphType;
 
-  List<BgMeasurementViewModel> bgMeasurementsDailyData =
-      new List<BgMeasurementViewModel>();
+  List<BgMeasurementGlucoseViewModel> bgMeasurementsDailyData =
+      new List<BgMeasurementGlucoseViewModel>();
 
-  List<BgMeasurementViewModel> bgMeasurements =
-      new List<BgMeasurementViewModel>();
+  List<BgMeasurementGlucoseViewModel> bgMeasurements =
+      new List<BgMeasurementGlucoseViewModel>();
 
   List<ChartData> _chartData;
 
@@ -985,9 +989,9 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
 
   @override
   Widget smallWidget(Function() callBack) {
-    BgMeasurementViewModel lastMeasurement;
+    BgMeasurementGlucoseViewModel lastMeasurement;
     if (bgMeasurements.isNotEmpty) {
-      lastMeasurement = BgMeasurementViewModel(
+      lastMeasurement = BgMeasurementGlucoseViewModel(
           bgMeasurement: getIt<GlucoseStorageImpl>().getLatestMeasurement());
     }
 
@@ -1003,7 +1007,7 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
   fetchBgMeasurement() {
     var _bgMeasurement = getIt<GlucoseStorageImpl>().getAll();
     bgMeasurements = _bgMeasurement
-        .map((e) => BgMeasurementViewModel(bgMeasurement: e))
+        .map((e) => BgMeasurementGlucoseViewModel(bgMeasurement: e))
         .toList();
     bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
@@ -1033,10 +1037,11 @@ class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
     final result = getIt<GlucoseStorageImpl>().getAll();
     this.bgMeasurements.clear();
     for (var e in result) {
-      DateTime measurementDate = BgMeasurementViewModel(bgMeasurement: e).date;
+      DateTime measurementDate =
+          BgMeasurementGlucoseViewModel(bgMeasurement: e).date;
 
       if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
-        bgMeasurements.add(BgMeasurementViewModel(bgMeasurement: e));
+        bgMeasurements.add(BgMeasurementGlucoseViewModel(bgMeasurement: e));
       }
     }
     this.bgMeasurements.sort((a, b) => a.date.compareTo(b.date));

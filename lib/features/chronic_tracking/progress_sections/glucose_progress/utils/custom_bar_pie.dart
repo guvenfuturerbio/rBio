@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../generated/l10n.dart';
 import '../view_model/bg_progress_page_view_model.dart';
 
-// ignore: must_be_immutable
 class CustomBarPie extends StatelessWidget {
   var width = 10.0;
   var height = 10.0;
-  CustomBarPie({@required this.width, @required this.height});
+
+  CustomBarPie({
+    @required this.width,
+    @required this.height,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BgProgressPageViewModel>(builder: (context, value, child) {

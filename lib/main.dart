@@ -34,7 +34,6 @@ Future<void> main() async {
   _setupLogging();
   _initFirebaseMessaging();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(

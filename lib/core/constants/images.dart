@@ -2,8 +2,11 @@ part of 'constants.dart';
 
 class _Images {
   // New
-  final mockAvatar =
-      'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
+  final grayBackground =
+      'https://ak.picdn.net/shutterstock/videos/24223855/thumb/1.jpg';
+
+  final circlevatar =
+      'https://www.pinclipart.com/picdir/middle/148-1486972_mystery-man-avatar-circle-clipart.png';
 
   final add = 'assets/images/new/add_icon.svg';
   final appointment_icon = 'assets/images/new/appointment_icon.svg';
@@ -31,6 +34,21 @@ class _Images {
   final weight_icon = 'assets/images/new/weight_icon.svg';
   // final oops = 'assets/images/new/oopps.svg';
   final error_icon = 'assets/images/new/error_icon.svg';
+  final clock_green_icon = 'assets/images/new/clock_green_icon.svg';
+  final clock_icon = 'assets/images/new/clock_icon.svg';
+
+  // Doctor
+  final appbar = "assets/images/usttab.svg";
+  final beforeMeal = "assets/images/before_meal_black.svg";
+  final afterMeal = "assets/images/after_meal_black.svg";
+  final other = "assets/images/other_black.svg";
+  final back = "assets/images/back_icon.svg";
+  final stethoscope = "assets/images/stethoscope.svg";
+  final logout_icon = 'assets/images/logout_icon.svg';
+  final aftermeal_icon_black = 'assets/images/aftermeal_icon_black.svg';
+  final beforemeal_icon_black = 'assets/images/beforemeal_icon_black.svg';
+  final grafik_arkasi = 'assets/images/grafikarkasilogo.svg';
+  final attentionSvg = 'assets/images/new/attention_icon.svg';
 
   final homeTopLeft = "assets/images/top_left.png";
   final homeTopMid = "assets/images/top_mid.png";
@@ -216,7 +234,6 @@ class _Images {
   final website_icon = "assets/images/websitesiicon.svg";
   final uygulama_icon = "assets/images/uygulamaicon.svg";
   final danisma_icon = "assets/images/ic_danisma.svg";
-  final stethoscope = "assets/images/stethoscope.svg";
 
   //
   final boy_child_icon = "assets/images/boy_child_icon.svg";
@@ -245,7 +262,6 @@ class _Images {
   final profil_mavi_alan = 'assets/images/usttab.svg';
   final delete_icon = 'assets/images/delete_icon.svg';
   final edit_icon = 'assets/images/edit_icon.svg';
-  final logout_icon = 'assets/images/logout_icon.svg';
   final power_icon = 'assets/images/power_icon.svg';
   final accu_check_png = "assets/images/accu_check.png";
   final contour_png = "assets/images/contour.png";
@@ -253,10 +269,8 @@ class _Images {
   final menu_icon = "assets/images/menu_icon.svg";
   final green_banner = "assets/images/usttab.svg";
   final done_icon = 'assets/images/done_icon.svg';
-  final aftermeal_icon_black = 'assets/images/aftermeal_icon_black.svg';
   final aftermeal_icon_white = 'assets/images/aftermeal_icon_white.svg';
   final beforemeal_icon_white = 'assets/images/beforemeal_icon_white.svg';
-  final beforemeal_icon_black = 'assets/images/beforemeal_icon_black.svg';
   final fasting_icon_black = 'assets/images/fasting_icon_black.svg';
   final fasting_icon_white = 'assets/images/fasting_icon_white.svg';
   final export_icon = 'assets/images/export_icon.svg';
@@ -298,7 +312,6 @@ class _Images {
   final email_app_bar = "assets/images/login_pic.svg";
   final success_icon = "assets/images/success_icon.svg";
   final top_bg_blue = "assets/images/blue_signin_topbar.svg";
-  final grafik_arkasi = 'assets/images/grafikarkasilogo.svg';
   final login_screen_bg = "assets/images/mavi_bg_login.svg";
   final topTab = "assets/images/mavi_bg_toptab.svg";
   final scale_icon = "assets/images/body_weight_icon.svg";

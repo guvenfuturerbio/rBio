@@ -1,11 +1,9 @@
-import 'package:atom/atom.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
 import '../../../core/core.dart';
+import '../../../core/notifiers/user_notifier.dart';
 import '../model/banner_model.dart';
 import '../view/home_screen.dart';
 import '../widgets/home_slider.dart';
@@ -37,21 +35,26 @@ class HomeVm extends ChangeNotifier {
   List<BannerTabsModel> bannerTabsModel = [];
   SpringController springController;
 
-  HomeVm({this.mContext}) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      springController = SpringController(initialAnim: Motion.mirror);
-      widgetsInUse = await widgets();
-      await fetchWidgets();
-      bannerTabsModel =
-          await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
-      notifyListeners();
-      try {
-        print("BURDAYIM");
-        getIt<SymptomRepository>().getSymtptomsApiToken();
-      } catch (e) {
-        print(e);
-      }
-    });
+  HomeVm({this.mContext});
+
+  Future<void> init() async {
+    final widgetsBinding = WidgetsBinding.instance;
+    if (widgetsBinding != null) {
+      widgetsBinding.addPostFrameCallback((_) async {
+        springController = SpringController(initialAnim: Motion.mirror);
+        widgetsInUse = await widgets();
+        await fetchWidgets();
+        bannerTabsModel =
+            await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
+        notifyListeners();
+        try {
+          print("BURDAYIM");
+          getIt<SymptomRepository>().getSymtptomsApiToken();
+        } catch (e) {
+          print(e);
+        }
+      });
+    }
   }
 
   // Uygulama ilk açıldığında, silinmiş widgetların keylerini tutan veriyi shared preferences içinden çekip kullanılan widget listesini dolduran method.

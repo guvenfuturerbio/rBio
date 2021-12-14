@@ -24,13 +24,6 @@ class PatientNotifiers extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchPatientList(
-      {@required GetMyPatientFilter myPatientFilter}) async {
-    this._patientList =
-        await getIt<DoctorRepository>().getMyPatients(myPatientFilter);
-    notifyListeners();
-  }
-
   Future<void> updatePatientLimit({
     @required int patientId,
     @required UpdateMyPatientLimit updateMyPatientLimit,

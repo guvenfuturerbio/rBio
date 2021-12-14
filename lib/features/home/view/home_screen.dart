@@ -1,10 +1,7 @@
 import 'dart:developer';
 
-import 'package:atom/atom.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -103,28 +100,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            child2: getIt<UserNotifier>().isCronic
-                ? InkWell(
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.all(8),
-                      child: SvgPicture.asset(
-                        R.image.chat_icon,
-                        color: Colors.white,
-                        width: R.sizes.iconSize,
-                      ),
-                    ),
-                    onTap: () {
-                      print(getIt<ProfileStorageImpl>().getFirst().id);
-                      log(getIt<ISharedPreferencesManager>()
-                          .getString(SharedPreferencesKeys.CT_AUTH_TOKEN));
-                    },
-                  )
-                : SvgPicture.asset(
-                    R.image.chat_icon,
-                    color: Colors.transparent,
-                    width: R.sizes.iconSize,
-                  ),
+            child2: InkWell(
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(8),
+                child: SvgPicture.asset(
+                  R.image.chat_icon,
+                  color: Colors.white,
+                  width: R.sizes.iconSize,
+                ),
+              ),
+              onTap: () {
+                print(getIt<ProfileStorageImpl>().getFirst().id);
+                log(getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.JWT_TOKEN));
+              },
+            ),
           ),
         ),
 

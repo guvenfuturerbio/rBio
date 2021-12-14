@@ -15,6 +15,8 @@ abstract class ITheme {
   Color get cardBackgroundColor;
   Color get grey;
   Color get blackForItem;
+  Color get iconColor;
+  Color get iconSecondaryColor;
 }
 
 class GreenTheme extends ITheme {
@@ -50,6 +52,12 @@ class GreenTheme extends ITheme {
 
   @override
   Color get blackForItem => Colors.black;
+
+  @override
+  Color get iconColor => Colors.black;
+
+  @override
+  Color get iconSecondaryColor => Colors.white;
 
   @override
   TextTheme get textTheme => TextTheme(
@@ -139,6 +147,12 @@ class BurgundyTheme extends ITheme {
 
   @override
   Color get blackForItem => Colors.black;
+
+  @override
+  Color get iconColor => Colors.black;
+
+  @override
+  Color get iconSecondaryColor => Colors.white;
 
   @override
   TextTheme get textTheme => TextTheme(

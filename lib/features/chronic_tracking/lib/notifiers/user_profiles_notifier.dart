@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/service/chronic_service/chronic_storage_service.dart';
-import '../../../../core/locator.dart';
-import '../../../../generated/l10n.dart';
 import '../../../../model/user_profiles/user_profiles.dart';
 
 class UserProfilesNotifier with ChangeNotifier {

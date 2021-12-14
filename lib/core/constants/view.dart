@@ -75,6 +75,13 @@ class _Color {
   final danisma = Color(0xff65c0b8);
   final danisma_light = Color(0xffafdfdb);
 
+  final text = Color(0xFF333333);
+  final title = Color(0xFFa5a5a5);
+  final mainColor = Color.fromRGBO(37, 48, 133, 1);
+  final graphRangeColor = Color(0xFFCBEBD9);
+  final btnDarkBlue = Color.fromRGBO(37, 48, 133, 1);
+  final btnLightBlue = Color.fromRGBO(0, 0, 255, 1);
+
   // from OneDoseRepo
   final very_high = Color(0xFFf4bb44);
   final high = Color(0xFFf7ec57);
@@ -99,8 +106,8 @@ class _Color {
   final circleBlue = Color.fromRGBO(133, 214, 255, 1);
   final darkRed = Color.fromRGBO(219, 56, 50, 1);
   final lightRed = Color.fromRGBO(232, 128, 124, 1);
-  final btnDarkBlue = Color.fromRGBO(37, 48, 133, 1);
-  final btnLightBlue = Color.fromRGBO(0, 0, 255, 1);
   final drawerBgLightBlue = Color.fromRGBO(133, 214, 255, 1);
   final regularBlue = Color.fromRGBO(0, 104, 255, 1);
+
+  final darkGreen = Color.fromRGBO(255, 102, 198, 143);
 }

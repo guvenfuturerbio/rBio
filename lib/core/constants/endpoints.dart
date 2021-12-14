@@ -136,7 +136,7 @@ class _Endpoints {
       '/symptoms/${locationID}/${gender}'.xSymptomCheckerRequest;
 
   String ct_saveAndRetrieveToken =
-      '/UserRegister/save-and-retrive-token'.xCronicTracking;
+      '/AccessToken/validate-remote-token'.xBasePath;
   String ct_getUserStrip(var entegrationId, var deviceuuid) =>
       '/user/get-user-strip/${entegrationId}/${deviceuuid}'.xCronicTracking;
   String ct_insertNewBloodGlucoseValue =
@@ -189,12 +189,13 @@ class _Endpoints {
   String ct_updateScaleMeasurement =
       '/Measurement/update-bmi-measurement'.xCronicTracking;
 
-  String dc_Login =
-      '/auth/realms/GuvenComplex/protocol/openid-connect/token'.xDoctorSsoUrl;
+  String dc_Login(String userName, String password) =>
+      '/AccessToken/get-token-for-rbio?userName=$userName&password=$password'
+          .xBasePath;
   String dc_getAllAppointment =
       '/mobileapi/v1/MobileDoctor/all-appointment'.xDoctorBaseUrl;
-  String dc_getMyPatients =
-      '/api/v1/doctorpatient/get-my-patient'.xDoctorBaseUrl;
+  String dc_getMySugarPatient =
+      '/api/v1/DoctorPatient/get-my-sugar-patient'.xDoctorBaseUrl;
   String dc_getMyPatientDetail(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-profile-detail/${patientId}'
           .xDoctorBaseUrl;

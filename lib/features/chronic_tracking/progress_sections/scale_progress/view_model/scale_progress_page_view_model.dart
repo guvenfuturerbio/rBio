@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import 'package:onedosehealth/features/chronic_tracking/utils/chart_data.dart';
+import 'package:onedosehealth/model/model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/constants/constants.dart' as rBio;
@@ -19,7 +21,7 @@ import '../view/scale_progress_page.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class ScaleProgressPageViewModel extends ChangeNotifier
+class ScaleProgressPageViewModel extends ChangeNotifier with IBaseBottomActionsOfGraph
     implements ProgressPage {
   final controller = ScrollController();
   bool hasReachEnd = false;
@@ -706,6 +708,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   Widget smallWidget(Function() callBack) {
     ScaleMeasurementViewModel lastMeasurement = ScaleMeasurementViewModel(
         scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement());
+
     return RbioSmallChronicWidget(
       callback: callBack,
       lastMeasurement:

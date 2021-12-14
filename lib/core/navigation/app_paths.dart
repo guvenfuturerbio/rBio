@@ -2,9 +2,12 @@ import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../features/auth/auth.dart';
-import '../../features/auth/view/change_password_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
-import '../../features/doctor/pages/home/doctor_home_screen.dart';
+import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
+import '../../features/doctor/blood_glucose_patient_list/view/blood_glucose_patient_list_screen.dart';
+import '../../features/doctor/blood_glucose_patient_list/viewmodel/blood_glucose_patient_list_vm.dart';
+import '../../features/doctor/home/view/doctor_home_screen.dart';
+import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../features/home/view/home_screen.dart';
 import '../../features/mediminder/view/hba1c_reminder_add_screen.dart';
 import '../../features/mediminder/view/hba1c_reminderlist_screen.dart';
@@ -327,6 +330,27 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.DOCTOR_HOME,
       widget: DoctorHomeScreen(),
+      stackedRoutes: [
+        // Blood Glucose
+        VWidget(
+          path: PagePaths.BLOOD_GLUCOSE_PATIENT_LIST,
+          widget: ChangeNotifierProvider<BloodGlucosePatientListVm>(
+            create: (context) => BloodGlucosePatientListVm(context),
+            child: BloodGlucosePatientListScreen(),
+          ),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
+              widget: BloodGlucosePatientDetailScreen(),
+            ),
+          ],
+        ),
+      ],
+    ),
+
+    VWidget(
+      path: PagePaths.DOCTOR_TREATMENT_PROCESS,
+      widget: DoctorTreatmentProcessScreen(),
     ),
 
     VWidget(
@@ -422,4 +446,7 @@ class PagePaths {
 
   // Doctor
   static const DOCTOR_HOME = '/doctor';
+  static const BLOOD_GLUCOSE_PATIENT_LIST = '/blood-glucose-patient-list';
+  static const BLOOD_GLUCOSE_PATIENT_DETAIL = '/blood-glucose-patient-detail';
+  static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
 }

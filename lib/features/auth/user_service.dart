@@ -6,13 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/core.dart';
 import '../../core/data/imports/cronic_tracking.dart';
-
 import '../../core/locator.dart';
 import '../../model/firebase/add_firebase_body.dart';
 import '../../model/user/usermodel.dart';
@@ -24,7 +22,7 @@ import '../chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 
 class UserService {
   String get token => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.CT_AUTH_TOKEN);
+      .getString(SharedPreferencesKeys.JWT_TOKEN);
   Person person;
   static const String APPLICATION_CONSENT_FORM = "APPLICATION_CONSENT_FORM";
 
@@ -69,14 +67,15 @@ class UserService {
     }
   }
 
-  saveAndRetrieveToken(User userCred, String from) async {
+  Future<void> saveAndRetrieveToken(User userCred, String from) async {
     String token = userCred.uid;
     String mailBase = userCred.email;
 
     TokenUserTextBody textBody = TokenUserTextBody(
-        id: 'gWTiiCR81Ib9a3p2UZWTCvAbRbc2',
-        name: userCred.displayName,
-        email: userCred.email);
+      id: 'gWTiiCR81Ib9a3p2UZWTCvAbRbc2',
+      name: userCred.displayName,
+      email: userCred.email,
+    );
 
     List<String> parts = mailBase.split("@");
     String firstPart = parts[0];
@@ -84,16 +83,22 @@ class UserService {
     while (firstPart.length < 8) {
       firstPart = firstPart + "0";
     }
+
     String email = firstPart + "@" + secondPart;
     String encryptedTextBody = encryptWithSalsa20(jsonEncode(textBody.toJson()),
         firstPart.substring(0, 8)); // first 8 letters of the email
 
-    final response = await getIt<ChronicTrackingRepository>()
-        .saveAndRetrieveToken(
-            SaveAndRetrieveTokenModel(text: encryptedTextBody, mail: email),
-            token);
+    final response =
+        await getIt<ChronicTrackingRepository>().saveAndRetrieveToken(
+      SaveAndRetrieveTokenModel(
+        token: encryptedTextBody,
+        accession: email,
+      ),
+      token,
+    );
+
     await getIt<ISharedPreferencesManager>().setString(
-        SharedPreferencesKeys.CT_AUTH_TOKEN, response.datum["access_token"]);
+        SharedPreferencesKeys.JWT_TOKEN, response.datum["access_token"]);
   }
 
   Future<AuthCredential> googleSignInService() async {
