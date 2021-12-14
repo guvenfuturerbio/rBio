@@ -1,8 +1,9 @@
 part of 'constants.dart';
 
 class _Endpoints {
-  final loginPath =
-      '/auth/realms/GuvenComplex/protocol/openid-connect/token'.xSSOPath;
+  /*final loginPath =
+      '/auth/realms/GuvenComplex/protocol/openid-connect/token'.xSSOPath;*/
+  final loginPath = '/AccessToken/get-token-for-rbio'.xBasePath;
 
   final getAllPackagePath = '/Package/get-all'.xBasePath;
   String getAllSubCategoriesPath(int id) =>

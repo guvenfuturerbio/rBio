@@ -32,7 +32,7 @@ class LoginScreenVm extends ChangeNotifier {
 
   bool _rememberMeChecked;
 
-  GuvenLogin _guvenLogin;
+  RbioLoginResponse _guvenLogin;
 
   bool _needForceUpdate;
 
@@ -240,18 +240,17 @@ class LoginScreenVm extends ChangeNotifier {
 
       try {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
-        await saveLoginInfo(username, password, guvenLogin.access_token);
+        await saveLoginInfo(username, password, guvenLogin.token.accessToken);
         await getIt<Repository>().getPatientDetail();
         await getIt<UserManager>().getUserProfile();
-        await UtilityManager().setTokenToServer(_guvenLogin.access_token);
+        await UtilityManager().setTokenToServer(_guvenLogin.token.accessToken);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
         this._progress = LoadingProgress.DONE;
-        /* UserCredential userCredential = await UserService()
+        /*UserCredential userCredential = await UserService()
             .signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
         await UserService()
             .saveAndRetrieveToken(userCredential.user, 'patientLogin');
-        await UserService().handleSuccessfulLogin(userCredential.user);
-        hideDialog(mContext);*/
+        await UserService().handleSuccessfulLogin(userCredential.user);*/
         final doctorResponse =
             await getIt<DoctorRepository>().login('dr.alev.eken', '12345');
         await getIt<ISharedPreferencesManager>().setString(
@@ -309,7 +308,7 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  GuvenLogin get guvenLogin => this._guvenLogin;
+  RbioLoginResponse get guvenLogin => this._guvenLogin;
 
   Future<void> saveLoginInfo(
       String userName, String password, String token) async {

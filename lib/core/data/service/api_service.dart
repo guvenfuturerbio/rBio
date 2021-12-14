@@ -19,8 +19,7 @@ abstract class ApiService {
   final IDioHelper helper;
   ApiService(this.helper);
 
-  Future<GuvenLogin> login(String clientId, String grantType,
-      String clientSecret, String scope, String username, String password);
+  Future<RbioLoginResponse> login(String username, String password);
 
   // for_you_services.dart
   Future<List<ForYouCategoryResponse>> getAllPackage(String path);
