@@ -16,12 +16,6 @@ import 'package:onedosehealth/core/core.dart';
 /// call.
 ///
 /// To verify things are working, check out the native platform logs.
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
-  LoggerUtils.instance.i('Handling a background message ${message.messageId}');
-}
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -71,16 +65,14 @@ class FirebaseMessagingManager {
               ));
         }
       }
-
-      if (message.data['route'] != null)
-        Atom.to(message.data['route'],
-            queryParameters: message.data['parameters']);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      if (message.data['route'] != null)
+      if (message.data['route'] != null) if (message.data['parameters'] != null)
         Atom.to(message.data['route'],
             queryParameters: message.data['parameters']);
+      else
+        Atom.to(message.data['route']);
     });
   }
 
