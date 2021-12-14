@@ -1,9 +1,9 @@
-import 'package:onedosehealth/features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../features/auth/auth.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
+import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
 import '../../features/doctor/blood_glucose_patient_list/view/blood_glucose_patient_list_screen.dart';
 import '../../features/doctor/blood_glucose_patient_list/viewmodel/blood_glucose_patient_list_vm.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
@@ -330,18 +330,24 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.DOCTOR_HOME,
       widget: DoctorHomeScreen(),
+      stackedRoutes: [
+        // Blood Glucose
+        VWidget(
+          path: PagePaths.BLOOD_GLUCOSE_PATIENT_LIST,
+          widget: ChangeNotifierProvider<BloodGlucosePatientListVm>(
+            create: (context) => BloodGlucosePatientListVm(context),
+            child: BloodGlucosePatientListScreen(),
+          ),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
+              widget: BloodGlucosePatientDetailScreen(),
+            ),
+          ],
+        ),
+      ],
     ),
-    VWidget(
-      path: PagePaths.BLOOD_GLUCOSE_PATIENT_LIST,
-      widget: ChangeNotifierProvider<BloodGlucosePatientListVm>(
-        create: (context) => BloodGlucosePatientListVm(context),
-        child: BloodGlucosePatientListScreen(),
-      ),
-    ),
-    VWidget(
-      path: PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
-      widget: BloodGlucosePatientDetailScreen(),
-    ),
+
     VWidget(
       path: PagePaths.DOCTOR_TREATMENT_PROCESS,
       widget: DoctorTreatmentProcessScreen(),

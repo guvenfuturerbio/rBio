@@ -8,6 +8,7 @@ class RbioBadge extends StatelessWidget {
   final int count;
   final bool isDark;
   final bool isBigSize;
+  final String path;
 
   const RbioBadge({
     Key key,
@@ -15,6 +16,7 @@ class RbioBadge extends StatelessWidget {
     this.count,
     this.isDark = true,
     this.isBigSize = true,
+    this.path,
   }) : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class RbioBadge extends StatelessWidget {
             top: 4,
             right: 4,
             child: SvgPicture.asset(
-              image,
+              path ?? image,
               color: isDark
                   ? getIt<ITheme>().iconColor
                   : getIt<ITheme>().iconSecondaryColor,

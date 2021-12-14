@@ -1,27 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:onedosehealth/model/model.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../core/core.dart';
-import '../../../chronic_tracking/utils/glucose_margins_filter.dart';
-import '../../notifiers/bg_measurements_notifiers.dart';
-import '../../notifiers/patient_notifiers.dart';
-import '../../utils/bgpickers/bgpicker.dart';
-import '../../utils/chart_filter_popup.dart';
-import '../../utils/charts/line/animated_line_chart.dart';
-import '../../utils/charts/scatter/animated_bubble_chart.dart';
-import '../../utils/hypo_hyper_edit/hypo_hyper_edit.dart';
-import '../../utils/hypo_hyper_edit/hypo_hyper_edit_view_model.dart';
-import '../../utils/sliders/range_setter_slider.dart';
+part of '../view/blood_glucose_patient_detail_screen.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
+class BloodGlucosePatientDetailVm extends ChangeNotifier
+    with RbioVm, IBaseBottomActionsOfGraph {
   @override
   BuildContext mContext;
 
-  StateProcess _stateProcessPatientDetail;
-  StateProcess _stateProcessPatientMeasurements;
+  LoadingProgress _stateProcessPatientDetail;
+  LoadingProgress _stateProcessPatientMeasurements;
   DoctorPatientDetailModel _patientDetail;
   int _patientId;
   get patientid => _patientId;
@@ -68,13 +55,12 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
     // });
   }
 
-  update() async {
+  Future<void> update() async {
     isDataLoading = true;
     notifyListeners();
+
     await fetchPatientDetail();
-    print('1');
     await fetchBgMeasurements();
-    print('2');
     fetchScrolledDailyData();
 
     isDataLoading = false;
@@ -116,25 +102,26 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
     }
   }
 
-  StateProcess get stateProcessPatientDetail => this._stateProcessPatientDetail;
+  LoadingProgress get stateProcessPatientDetail =>
+      this._stateProcessPatientDetail;
 
-  StateProcess get stateProcessPatientMeasurements =>
+  LoadingProgress get stateProcessPatientMeasurements =>
       this._stateProcessPatientMeasurements;
 
-  fetchPatientDetail() async {
-    _stateProcessPatientDetail = StateProcess.LOADING;
+  Future<void> fetchPatientDetail() async {
+    _stateProcessPatientDetail = LoadingProgress.LOADING;
     notifyListeners();
     try {
       await Provider.of<PatientNotifiers>(mContext, listen: false)
           .fetchPatientDetail(patientId: _patientId);
       this._patientDetail =
           Provider.of<PatientNotifiers>(mContext, listen: false).patientDetail;
-      _stateProcessPatientDetail = StateProcess.DONE;
+      _stateProcessPatientDetail = LoadingProgress.DONE;
       notifyListeners();
     } catch (e) {
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
       dispose(); //Dispose if patient detail is not available.
-      _stateProcessPatientDetail = StateProcess.ERROR;
+      _stateProcessPatientDetail = LoadingProgress.ERROR;
       notifyListeners();
     }
   }
@@ -356,13 +343,13 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
     return totalCount;
   }
 
-  Widget get currentGraph => _currentGraph ?? AnimationScatterDefault();
+  Widget get currentGraph => _currentGraph ?? BloodGlucosePatientScatter();
 
   void setCurrentGraph() {
     if (currentGlucoseGraphType == GraphType.BUBBLE) {
-      this._currentGraph = AnimationScatterDefault();
+      this._currentGraph = BloodGlucosePatientScatter();
     } else {
-      this._currentGraph = AnimationLineDefault();
+      this._currentGraph = BloodGlucosePatientLine();
     }
     notifyListeners();
   }
@@ -739,7 +726,7 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
     notifyListeners();
   }
 
-  updateBgMeasurement() async {
+  Future<void> updateBgMeasurement() async {
     if (selected == LocaleProvider.current.daily ||
         selected == LocaleProvider.current.specific) {
       await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
@@ -799,48 +786,11 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
     notifyListeners();
   }
 
-  void showHypoHyperSetting() {
-    showDialog(
-      context: mContext,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return HypoHyperEdit();
-      },
-    ).then((value) => value != null && value ? update() : null);
-  }
-
-  showHypoEdit() {
-    showDialog(
-        context: mContext,
-        builder: (BuildContext context) {
-          return HypoPicker();
-        }).then((value) => value != null && value ? update() : null);
-  }
-
-  void showHyperEdit() {
+  void showEditAlert(Widget child) {
     showDialog(
       context: mContext,
       builder: (BuildContext context) {
-        return HyperPicker();
-      },
-    ).then((value) => value != null && value ? update() : null);
-  }
-
-  void showNormalRangeEdit() {
-    showDialog(
-      context: mContext,
-      builder: (BuildContext context) {
-        return RangeSelectionSlider();
-      },
-    ).then((value) => value != null && value ? update() : null);
-  }
-
-  void showRangeSetting() {
-    showDialog(
-      context: mContext,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return RangeSetterSlider();
+        return child;
       },
     ).then((value) => value != null && value ? update() : null);
   }
@@ -850,19 +800,22 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
       context: mContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return GradientDialog(LocaleProvider.current.warning, text);
+        return GradientDialog(
+          LocaleProvider.current.warning,
+          text,
+        );
       },
     ).then((value) => Navigator.pop(mContext));
   }
 
-  showFilter(BuildContext tcontext) {
+  void showFilter(BuildContext tcontext) {
     showDialog(
       context: tcontext,
       barrierColor: Colors.black12,
       builder: (ctx) =>
           ChangeNotifierProvider<BloodGlucosePatientDetailVm>.value(
         value: this,
-        child: ChartFilterPopUp(
+        child: _ChartFilter(
           height: ctx.HEIGHT * .52,
           width: ctx.WIDTH * .6,
         ),

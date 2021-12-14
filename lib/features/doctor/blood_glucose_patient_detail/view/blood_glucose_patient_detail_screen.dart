@@ -1,21 +1,48 @@
+import 'dart:convert';
+import 'dart:ui';
+
+import 'package:countup/countup.dart';
 import 'package:dropdown_banner/dropdown_banner.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../utils//widgets.dart';
-import '../widget/graph_header_section.dart';
-import '../../utils/hypo_hyper_edit/hypo_hyper_edit_view_model.dart';
-import '../viewmodel/blood_glucose_patient_detail_vm.dart';
-import '../widget/measurement_list.dart';
+import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
+import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
+import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
+import '../../../chronic_tracking/utils/glucose_margins_filter.dart';
+import '../../notifiers/bg_measurements_notifiers.dart';
+import '../../notifiers/patient_notifiers.dart';
 
+part '../viewmodel/blood_glucose_patient_detail_vm.dart';
+part '../viewmodel/blood_glucose_patient_picker_vm.dart';
+part '../widget/custom_bar_pie.dart';
+part '../widget/chart_filter.dart';
+part '../widget/charts/line_chart.dart';
+part '../widget/charts/sample_model.dart';
+part '../widget/charts/sample_view.dart';
+part '../widget/charts/scatter_chart.dart';
+part '../widget/graph_header_section.dart';
+part '../widget/hyper_picker.dart';
+part '../widget/hypo_picker.dart';
+part '../widget/measurement_list.dart';
+part '../widget/normal_range_selection_slider.dart';
+part '../widget/tagger_popup.dart';
 part '../widget/user_detail_card.dart';
 
 class BloodGlucosePatientDetailScreen extends StatefulWidget {
   int patientId;
+  String patientName;
 
   BloodGlucosePatientDetailScreen({Key key}) : super(key: key);
 
@@ -58,6 +85,7 @@ class _BloodGlucosePatientDetailScreenState
   @override
   Widget build(BuildContext context) {
     try {
+      widget.patientName = Atom.queryParameters['patientName'];
       widget.patientId = int.parse(Atom.queryParameters['patientId']);
     } catch (_) {
       return RbioRouteError();
@@ -114,12 +142,15 @@ class _BloodGlucosePatientDetailScreenState
             //
             _buildExpandedUser(),
 
-            if (vm.stateProcessPatientDetail == StateProcess.LOADING) ...[
+            //
+            if (vm.stateProcessPatientDetail == LoadingProgress.LOADING) ...[
               Shimmer.fromColors(
-                child: patientDetail(
-                    context: context,
-                    targetRangePresses: () {},
-                    hyperEdit: () {}),
+                child: _UserDetailCard(
+                  patientDetail: DoctorPatientDetailModel(),
+                  targetRangePresses: () {},
+                  hypoEdit: () {},
+                  hyperEdit: () {},
+                ),
                 baseColor: Colors.grey[300],
                 highlightColor: Colors.grey[100],
               ),
@@ -131,13 +162,13 @@ class _BloodGlucosePatientDetailScreenState
                   child: _UserDetailCard(
                     patientDetail: vm.patientDetail,
                     targetRangePresses: () {
-                      vm.showNormalRangeEdit();
+                      vm.showEditAlert(_NormalRangeSelectionSlider());
                     },
                     hypoEdit: () {
-                      vm.showHypoEdit();
+                      vm.showEditAlert(_HypoPicker());
                     },
                     hyperEdit: () {
-                      vm.showHyperEdit();
+                      vm.showEditAlert(_HyperPicker());
                     },
                   ),
                 ),
@@ -145,8 +176,11 @@ class _BloodGlucosePatientDetailScreenState
             ],
 
             //
+            SizedBox(height: 12),
+
+            //
             if (!vm.isDataLoading) ...[
-              BgGraphHeaderSection(
+              _GraphHeaderSection(
                 value: vm,
                 controller: _controller,
               ),
@@ -154,7 +188,7 @@ class _BloodGlucosePatientDetailScreenState
               //
               SizedBox(
                 height: context.HEIGHT * .3,
-                child: MeasurementList(
+                child: _MeasurementList(
                   bgMeasurements: vm.bgMeasurements,
                   scrollController: _controller,
                   useStickyGroupSeparatorsValue:
@@ -166,10 +200,12 @@ class _BloodGlucosePatientDetailScreenState
               ),
             ] else ...[
               Shimmer.fromColors(
-                child: patientDetail(
-                    context: context,
-                    targetRangePresses: () {},
-                    hyperEdit: () {}),
+                child: _UserDetailCard(
+                  patientDetail: DoctorPatientDetailModel(),
+                  targetRangePresses: () {},
+                  hypoEdit: () {},
+                  hyperEdit: () {},
+                ),
                 baseColor: Colors.grey[300],
                 highlightColor: Colors.grey[100],
               ),
@@ -206,9 +242,10 @@ class _BloodGlucosePatientDetailScreenState
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
-                      foregroundImage: NetworkImage(R.image.mockWomanAvatar),
+                      foregroundImage: NetworkImage(R.image.circlevatar),
                       backgroundColor: getIt<ITheme>().cardBackgroundColor,
                     ),
 
@@ -217,7 +254,7 @@ class _BloodGlucosePatientDetailScreenState
                       child: Padding(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          'Ayşe Yıldırım',
+                          widget.patientName ?? '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(
@@ -244,7 +281,7 @@ class _BloodGlucosePatientDetailScreenState
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.DOCTOR_TREATMENT_PROCESS);
+              // Atom.to(PagePaths.DOCTOR_TREATMENT_PROCESS);
             },
             child: Container(
               height: double.infinity,
@@ -255,7 +292,7 @@ class _BloodGlucosePatientDetailScreenState
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Text(
-                'Tedavi',
+                LocaleProvider.current.treatment,
                 style: context.xHeadline5.copyWith(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,

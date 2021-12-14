@@ -8,7 +8,7 @@ Column historyDoctorItem(String doctorName, String doctorImageUrl) {
     children: [
       Container(
         width: Atom.width * 0.12,
-        child: Image.network(R.image.mockAvatar),
+        child: Image.network(R.image.circlevatar),
       ),
       Container(
         width: Atom.width * .1,

@@ -20,6 +20,8 @@ extension TimePeriodFilterExtension on TimePeriodFilter {
       case TimePeriodFilter.SPECIFIC:
         return LocaleProvider.current.specific;
         break;
+      default:
+        return '';
     }
   }
 }

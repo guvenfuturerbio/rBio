@@ -4,7 +4,7 @@ abstract class DoctorApiService {
   final IDioHelper helper;
   DoctorApiService(this.helper);
 
-  Future<DoctorLoginResponse> login(String userId, String password);
+  Future<RbioLoginResponse> login(String userId, String password);
   Future<List<Appointment>> getAllAppointment(
       AppointmentFilter appointmentFilter);
   Future<List<DoctorPatientModel>> getMySugarPatient(GetMyPatientFilter getMyPatientFilter);

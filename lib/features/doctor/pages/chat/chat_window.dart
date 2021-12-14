@@ -11,14 +11,15 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../core/core.dart';
 import '../../../chronic_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
 import '../../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
-import '../../utils/widgets.dart';
 import 'chat_controller.dart';
 import 'message.dart';
 
 class DoctorChatWindow extends StatelessWidget {
   final String uuid;
   final String patientName;
+
   DoctorChatWindow(this.uuid, this.patientName);
+
   static Widget widgetFullPhoto(BuildContext context, String url) {
     return Container(child: PhotoView(imageProvider: NetworkImage(url)));
   }
@@ -47,164 +48,174 @@ class DoctorChatWindow extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(
-          preferredSize: Size.fromHeight(context.HEIGHT * .18),
-          title: titleAppBarWhite(title: patientName),
-          leading: InkWell(
-              child: SvgPicture.asset(R.image.back_icon),
-              onTap: () => Navigator.of(context).pop())),
       extendBodyBehindAppBar: true,
+      appBar: CustomAppBar(
+        preferredSize: Size.fromHeight(context.HEIGHT * .18),
+        title: Text(patientName),
+        leading: InkWell(
+          child: SvgPicture.asset(R.image.back_icon),
+          onTap: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Column(
         children: [
+          //
           Expanded(
-              child: StreamBuilder<List<Message>>(
-            stream: chatController.getMessages(chatController.username, uuid),
-            builder: (context, streamMessages) {
-              if (!streamMessages.hasData) {
-                return RbioLoading();
-              } else {
-                return ListView.builder(
-                    controller: _scrollController,
-                    reverse: true,
-                    itemBuilder: (context, index) {
-                      var time = DateTime.now();
-                      try {
-                        time = streamMessages.data[index].date.toDate() ??
-                            DateTime.now();
-                      } catch (e) {
-                        print("hata var" + e.toString());
-                      }
-                      if (streamMessages.data.last ==
-                          streamMessages.data[index])
-                        return Column(
-                          children: [
-                            Container(
-                              height: 50,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: R.color.dark_black,
-                                    gradient: LinearGradient(
-                                        colors: [Colors.white, Colors.white],
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.centerRight),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withAlpha(50),
-                                          blurRadius: 15,
-                                          spreadRadius: 0,
-                                          offset: Offset(5, 10))
-                                    ],
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20.0)),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time)}',
-                                      textAlign: TextAlign.center,
+            child: StreamBuilder<List<Message>>(
+              stream: chatController.getMessages(chatController.username, uuid),
+              builder: (context, streamMessages) {
+                if (!streamMessages.hasData) {
+                  return RbioLoading();
+                } else {
+                  return ListView.builder(
+                      controller: _scrollController,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        var time = DateTime.now();
+                        try {
+                          time = streamMessages.data[index].date.toDate() ??
+                              DateTime.now();
+                        } catch (e) {
+                          print("hata var" + e.toString());
+                        }
+                        if (streamMessages.data.last ==
+                            streamMessages.data[index])
+                          return Column(
+                            children: [
+                              Container(
+                                height: 50,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: R.color.dark_black,
+                                      gradient: LinearGradient(
+                                          colors: [Colors.white, Colors.white],
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.centerRight),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.black.withAlpha(50),
+                                            blurRadius: 15,
+                                            spreadRadius: 0,
+                                            offset: Offset(5, 10))
+                                      ],
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20.0)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time)}',
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            streamMessages.data[index].type == 0
-                                ? _chatIconDesign(streamMessages.data[index],
-                                    chatController.username.toString())
-                                : chatImage(context, streamMessages.data[index],
-                                    chatController.username)
-                          ],
-                        );
-                      if (time.isSameDay(
-                              streamMessages.data[index + 1].date.toDate()) ==
-                          false)
-                        return Column(
-                          children: [
-                            Container(
-                              height: 50,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: R.color.dark_blue,
-                                    gradient: LinearGradient(
-                                        colors: [Colors.white, Colors.white],
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.centerRight),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withAlpha(50),
-                                          blurRadius: 15,
-                                          spreadRadius: 0,
-                                          offset: Offset(5, 10))
-                                    ],
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20.0)),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SelectableText(
-                                      '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time)}',
-                                      textAlign: TextAlign.center,
+                              streamMessages.data[index].type == 0
+                                  ? _chatIconDesign(streamMessages.data[index],
+                                      chatController.username.toString())
+                                  : chatImage(
+                                      context,
+                                      streamMessages.data[index],
+                                      chatController.username)
+                            ],
+                          );
+                        if (time.isSameDay(
+                                streamMessages.data[index + 1].date.toDate()) ==
+                            false)
+                          return Column(
+                            children: [
+                              Container(
+                                height: 50,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: R.color.dark_blue,
+                                      gradient: LinearGradient(
+                                          colors: [Colors.white, Colors.white],
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.centerRight),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.black.withAlpha(50),
+                                            blurRadius: 15,
+                                            spreadRadius: 0,
+                                            offset: Offset(5, 10))
+                                      ],
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20.0)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SelectableText(
+                                        '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time)}',
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            streamMessages.data[index].type == 0
-                                ? _chatIconDesign(streamMessages.data[index],
-                                    chatController.username)
-                                : chatImage(context, streamMessages.data[index],
-                                    chatController.username)
-                          ],
-                        );
-                      else
-                        return streamMessages.data[index].type == 0
-                            ? _chatIconDesign(streamMessages.data[index],
-                                chatController.username)
-                            : chatImage(context, streamMessages.data[index],
-                                chatController.username);
-                    },
-                    itemCount: streamMessages.data.length);
-              }
-            },
-          )),
-          IconTheme(
-              data: IconThemeData(color: Theme.of(context).accentColor),
-              child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.add_a_photo, color: R.color.main_color),
-                      onPressed: () {
-                        chatController.getImage(
-                            0, chatController.username, uuid);
+                              streamMessages.data[index].type == 0
+                                  ? _chatIconDesign(streamMessages.data[index],
+                                      chatController.username)
+                                  : chatImage(
+                                      context,
+                                      streamMessages.data[index],
+                                      chatController.username)
+                            ],
+                          );
+                        else
+                          return streamMessages.data[index].type == 0
+                              ? _chatIconDesign(streamMessages.data[index],
+                                  chatController.username)
+                              : chatImage(context, streamMessages.data[index],
+                                  chatController.username);
                       },
-                    ),
-                    SizedBox(width: 10),
-                    Flexible(
-                        child: TextField(
-                            controller: _textController,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.go,
-                            onSubmitted: (value) {
-                              _sendMessage();
-                            },
-                            decoration: InputDecoration.collapsed(
-                                hintText: "Mesaj gönder"))),
-                    Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4.0),
-                        child: IconButton(
-                            color: R.color.main_color,
-                            icon: Icon(Icons.send),
-                            onPressed: _sendMessage))
-                  ]),
-                  decoration: Theme.of(context).platform == TargetPlatform.iOS
-                      ? BoxDecoration(
-                          border:
-                              Border(top: BorderSide(color: Colors.grey[200])))
-                      : null))
+                      itemCount: streamMessages.data.length);
+                }
+              },
+            ),
+          ),
+
+          //
+          IconTheme(
+            data: IconThemeData(color: Theme.of(context).accentColor),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.add_a_photo, color: R.color.main_color),
+                  onPressed: () {
+                    chatController.getImage(0, chatController.username, uuid);
+                  },
+                ),
+                SizedBox(width: 10),
+                Flexible(
+                    child: TextField(
+                        controller: _textController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.go,
+                        onSubmitted: (value) {
+                          _sendMessage();
+                        },
+                        decoration: InputDecoration.collapsed(
+                            hintText: "Mesaj gönder"))),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4.0),
+                    child: IconButton(
+                        color: R.color.main_color,
+                        icon: Icon(Icons.send),
+                        onPressed: _sendMessage))
+              ]),
+              decoration: Theme.of(context).platform == TargetPlatform.iOS
+                  ? BoxDecoration(
+                      border: Border(top: BorderSide(color: Colors.grey[200])))
+                  : null,
+            ),
+          )
         ],
       ),
     );
@@ -217,12 +228,13 @@ Widget widgetShowImages(String imageUrl, double imageSize) {
     height: imageSize,
     width: imageSize,
     placeholder: (context, url) => Shimmer.fromColors(
-        child: SizedBox(
-          height: imageSize,
-          width: imageSize,
-        ),
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100]),
+      child: SizedBox(
+        height: imageSize,
+        width: imageSize,
+      ),
+      baseColor: Colors.grey[300],
+      highlightColor: Colors.grey[100],
+    ),
     errorWidget: (context, url, error) => Icon(Icons.error),
   );
 }
@@ -234,6 +246,7 @@ Widget chatImage(BuildContext context, Message message, String uid) {
   } catch (e) {
     print("hata var" + e.toString());
   }
+
   if (message.sentFrom == uid) {
     return Padding(
         padding: EdgeInsets.fromLTRB(50, 8, 8, 8),

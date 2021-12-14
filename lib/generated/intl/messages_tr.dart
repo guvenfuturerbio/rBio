@@ -693,6 +693,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "total" : MessageLookupByLibrary.simpleMessage("Toplam"),
     "tr_citizen" : MessageLookupByLibrary.simpleMessage("Türkiye vatandaşıyım"),
     "trainings" : MessageLookupByLibrary.simpleMessage("Çalışmalar"),
+    "treatment" : MessageLookupByLibrary.simpleMessage("Tedavi"),
     "treatment_process" : MessageLookupByLibrary.simpleMessage("Tedavi Süreci"),
     "treatments" : MessageLookupByLibrary.simpleMessage("Tedaviler"),
     "try_again" : MessageLookupByLibrary.simpleMessage("Tekrar Deneyin"),

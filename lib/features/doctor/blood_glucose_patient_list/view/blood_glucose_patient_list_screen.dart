@@ -95,18 +95,11 @@ class _BloodGlucosePatientListScreenState
           Center(
             child: RbioBadge(
               image: R.image.chat_icon,
-              count: 3,
               isDark: false,
             ),
           ),
           SizedBox(
             width: 12,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search,
-            ),
           ),
         ],
       );
@@ -184,7 +177,7 @@ class _BloodGlucosePatientListScreenState
                     onPressed: () {},
                     icon: Center(
                       child: SvgPicture.asset(
-                        R.image.chat_icon,
+                        R.image.search_grey,
                         color: getIt<ITheme>().iconColor,
                         height: 20,
                         width: 20,
@@ -275,6 +268,7 @@ class _BloodGlucosePatientListScreenState
           PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
           queryParameters: {
             'patientId': model.id.toString(),
+            'patientName': model.name,
           },
         );
       },
@@ -283,140 +277,154 @@ class _BloodGlucosePatientListScreenState
         color: getIt<ITheme>().cardBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: [
               //
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    flex: bigFlex,
-                    child: _buildBigSmallCardText(
-                      'Hasta Adı',
-                      getIt<ITheme>().textColorPassive,
-                    ),
-                  ),
-
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildSmallCardText('07-12-21'),
-                  ),
-
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildSmallCardText('08-12-21'),
-                  ),
-
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildSmallCardText('09-12-21'),
-                  ),
-                ],
-              ),
-
-              //
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    flex: bigFlex,
-                    child: _buildBigSmallCardText(
-                      model.name,
-                      getIt<ITheme>().textColorSecondary,
-                    ),
-                  ),
-
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildSmallCardText('09:00'),
-                  ),
-
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildSmallCardText('15:00'),
-                  ),
-
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildSmallCardText('10:00'),
-                  ),
-                ],
-              ),
-
-              //
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    flex: bigFlex,
-                    child: Row(
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         //
                         Expanded(
-                          child: RbioBadge(
-                            isBigSize: false,
-                            image: R.image.chat_icon,
-                            count: 1,
+                          flex: bigFlex,
+                          child: _buildBigSmallCardText(
+                            'Hasta Adı',
+                            getIt<ITheme>().textColorPassive,
                           ),
                         ),
-
-                        //
-                        Spacer(),
 
                         //
                         Expanded(
-                          child: RbioBadge(
-                            isBigSize: false,
-                            image: R.image.chat_icon,
-                            count: 1,
+                          flex: smallFlex,
+                          child: _buildSmallCardText('07-12-21'),
+                        ),
+
+                        //
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildSmallCardText('08-12-21'),
+                        ),
+
+                        //
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildSmallCardText('09-12-21'),
+                        ),
+                      ],
+                    ),
+
+                    //
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        //
+                        Expanded(
+                          flex: bigFlex,
+                          child: _buildBigSmallCardText(
+                            model.name,
+                            getIt<ITheme>().textColorSecondary,
                           ),
                         ),
 
                         //
-                        Spacer(),
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildSmallCardText('09:00'),
+                        ),
+
+                        //
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildSmallCardText('15:00'),
+                        ),
+
+                        //
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildSmallCardText('10:00'),
+                        ),
                       ],
                     ),
-                  ),
 
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildColorfulText('250', R.color.darkYellow),
-                  ),
+                    //
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        //
+                        Expanded(
+                          flex: bigFlex,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              //
+                              Expanded(
+                                child: RbioBadge(
+                                  isBigSize: false,
+                                  image: R.image.attentionSvg,
+                                ),
+                              ),
 
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildColorfulText('100', R.color.target),
-                  ),
+                              //
+                              Spacer(),
 
-                  //
-                  Expanded(
-                    flex: smallFlex,
-                    child: _buildColorfulText('50', R.color.darkRed),
-                  ),
-                ],
+                              //
+                              Expanded(
+                                child: RbioBadge(
+                                  isBigSize: false,
+                                  image: R.image.chat_icon,
+                                ),
+                              ),
+
+                              //
+                              Spacer(),
+                            ],
+                          ),
+                        ),
+
+                        //
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildColorfulText('250', R.color.darkYellow),
+                        ),
+
+                        //
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildColorfulText('100', R.color.target),
+                        ),
+
+                        //
+                        Expanded(
+                          flex: smallFlex,
+                          child: _buildColorfulText('50', R.color.darkRed),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              //
+              SvgPicture.asset(
+                R.image.right_arrow,
+                width: 8,
               ),
             ],
           ),

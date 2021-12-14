@@ -2,11 +2,11 @@ part of 'constants.dart';
 
 class _Images {
   // New
-  final mockAvatar =
-      'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
+  final grayBackground =
+      'https://ak.picdn.net/shutterstock/videos/24223855/thumb/1.jpg';
 
-  final mockWomanAvatar =
-      'https://www.pngitem.com/pimgs/m/137-1370168_professional-clipart-female-avatar-circle-hd-png-download.png';
+  final circlevatar =
+      'https://www.pinclipart.com/picdir/middle/148-1486972_mystery-man-avatar-circle-clipart.png';
 
   final add = 'assets/images/new/add_icon.svg';
   final appointment_icon = 'assets/images/new/appointment_icon.svg';
@@ -46,6 +46,7 @@ class _Images {
   final aftermeal_icon_black = 'assets/images/aftermeal_icon_black.svg';
   final beforemeal_icon_black = 'assets/images/beforemeal_icon_black.svg';
   final grafik_arkasi = 'assets/images/grafikarkasilogo.svg';
+  final attentionSvg = 'assets/images/new/attention_icon.svg';
 
   final homeTopLeft = "assets/images/top_left.png";
   final homeTopMid = "assets/images/top_mid.png";

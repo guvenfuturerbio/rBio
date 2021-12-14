@@ -3015,6 +3015,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Treatment`
+  String get treatment {
+    return Intl.message(
+      'Treatment',
+      name: 'treatment',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Specialities`
   String get specialities {
     return Intl.message(

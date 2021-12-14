@@ -253,7 +253,8 @@ class LoginScreenVm extends ChangeNotifier {
         final doctorResponse =
             await getIt<DoctorRepository>().login('dr.alev.eken', '12345');
         await getIt<ISharedPreferencesManager>().setString(
-            SharedPreferencesKeys.DOCTOR_TOKEN, doctorResponse.accessToken);
+            SharedPreferencesKeys.DOCTOR_TOKEN,
+            doctorResponse.token.accessToken);
         hideDialog(mContext);
         notifyListeners();
         AnalyticsManager().sendEvent(LoginSuccessEvent());

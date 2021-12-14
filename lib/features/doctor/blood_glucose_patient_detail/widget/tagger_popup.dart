@@ -1,18 +1,15 @@
-import 'dart:ui';
+part of '../view/blood_glucose_patient_detail_screen.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../../core/core.dart';
-import '../../../../model/model.dart';
-
-class DoctorBgTaggerPopUp extends StatelessWidget {
-  DoctorBgTaggerPopUp({Key key, this.data}) : super(key: key);
+class _TaggerPopUp extends StatelessWidget {
   final BgMeasurementViewModel data;
+
+  _TaggerPopUp({
+    Key key,
+    @required this.data,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(data.toString());
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Dialog(
@@ -45,19 +42,19 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
   Widget getSquareBg(BuildContext context) {
     var level = int.parse(data.result == '' ? '0' : data.result);
     return Container(
-        height: 130 * context.TEXTSCALE,
-        width: 130 * context.TEXTSCALE,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
+      height: 130 * context.TEXTSCALE,
+      width: 130 * context.TEXTSCALE,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        color: UtilityManager().getGlucoseMeasurementColor(level),
+        border: Border.all(
           color: UtilityManager().getGlucoseMeasurementColor(level),
-          border: Border.all(
-            color: UtilityManager().getGlucoseMeasurementColor(
-                level), //                   <--- border color
-            width: 5.0,
-          ),
-        ), //             <--- BoxDecoration here
-        child: boxInsideSection(context, true));
+          width: 5.0,
+        ),
+      ),
+      child: boxInsideSection(context, true),
+    );
   }
 
   Widget getCircleBg(BuildContext context) {
@@ -73,8 +70,7 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
             ? UtilityManager().getGlucoseMeasurementColor(level)
             : Colors.white,
         border: Border.all(
-          color: UtilityManager().getGlucoseMeasurementColor(
-              level), //                   <--- border color
+          color: UtilityManager().getGlucoseMeasurementColor(level),
           width: 10.0,
         ),
       ),
@@ -89,9 +85,11 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: getBgInputWidget(isFill))),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: getBgInputWidget(isFill),
+            ),
+          ),
           SizedBox(
             height: 12,
           ),
@@ -111,7 +109,8 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: isFill ? Colors.white : Colors.black),
     );
-  } // InputSection #end
+  }
+  // InputSection #end
 
   // DateTimePickerSection #start
   Widget getDateTimePicker(BuildContext context, DateTime date) {
@@ -124,8 +123,14 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
         ),
         elevation: 4,
         child: Container(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
-            child: readableDateTime(date)),
+          padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 10,
+            bottom: 10,
+          ),
+          child: readableDateTime(date),
+        ),
       ),
     );
   }
@@ -143,7 +148,8 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
         )
       ],
     );
-  } // DateTimePickerSection #end
+  }
+  // DateTimePickerSection #end
 
   // TagSection #begin
   Wrap getTagState(int currentTag) {
@@ -212,11 +218,9 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
             : <Color>[Colors.white, Colors.white],
       ),
     );
-  } // TagSection #end
+  }
+  // TagSection #end
 
-  // ImageSection #begin
-
-  // NoteSection #begin
   Container getNote(String note) {
     return Container(
       padding: EdgeInsets.only(top: 16),
@@ -231,10 +235,9 @@ class DoctorBgTaggerPopUp extends StatelessWidget {
         child: Center(child: Text(note)),
       ),
     );
-  } // NoteSection #end
+  }
 
-  // GetAction #begin
-  getAction(VoidCallback action) {
+  Widget getAction(VoidCallback action) {
     return Wrap(
       children: [
         GestureDetector(onTap: action, child: actionButton()),

@@ -108,8 +108,7 @@ class DoctorHomeScreen extends StatelessWidget {
 
                 //
                 RbioBadge(
-                  image: R.image.chat_icon,
-                  count: 2,
+                  image: R.image.attentionSvg,
                 ),
 
                 //
@@ -118,7 +117,6 @@ class DoctorHomeScreen extends StatelessWidget {
                 //
                 RbioBadge(
                   image: R.image.chat_icon,
-                  count: 3,
                 ),
 
                 //

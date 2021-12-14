@@ -64,4 +64,5 @@ export 'symptom_checker/symptoms_requests/get_specialisations.response.dart';
 export 'symptom_checker/symptoms_requests/get_symptoms_response.dart';
 export 'department_response/department_response.dart';
 
+export 'shared/rbio_login_reponse.dart';
 export 'doctor/doctor.dart';

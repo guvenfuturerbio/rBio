@@ -13,11 +13,11 @@ class DoctorApiServiceImpl extends DoctorApiService {
       });
 
   @override
-  Future<DoctorLoginResponse> login(String userName, String password) async {
+  Future<RbioLoginResponse> login(String userName, String password) async {
     final response =
         await helper.postGuven(R.endpoints.dc_Login(userName, password), {});
     if (response.isSuccessful == true) {
-      return DoctorLoginResponse.fromJson(response.datum);
+      return RbioLoginResponse.fromJson(response.datum);
     } else {
       throw Exception('/login : ${response.isSuccessful}');
     }
@@ -70,8 +70,9 @@ class DoctorApiServiceImpl extends DoctorApiService {
   @override
   Future<bool> updateMyPatientLimit(
       int patientId, UpdateMyPatientLimit updateMyPatientLimit) async {
-    final response = await helper.getGuven(
+    final response = await helper.patchGuven(
         R.endpoints.dc_updateMyPatientLimit(patientId),
+        data: updateMyPatientLimit.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum;

@@ -699,6 +699,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "total" : MessageLookupByLibrary.simpleMessage("Total"),
     "tr_citizen" : MessageLookupByLibrary.simpleMessage("I am a Turkish citizen"),
     "trainings" : MessageLookupByLibrary.simpleMessage("Trainings"),
+    "treatment" : MessageLookupByLibrary.simpleMessage("Treatment"),
     "treatment_process" : MessageLookupByLibrary.simpleMessage("Treatment Process"),
     "treatments" : MessageLookupByLibrary.simpleMessage("Treatments"),
     "try_again" : MessageLookupByLibrary.simpleMessage("Try Again"),

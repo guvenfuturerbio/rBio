@@ -1,24 +1,23 @@
-/// Package import
-import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/doctor/utils/sample_model.dart';
+part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// Base class of the sample's stateful widget class
-abstract class SampleView extends StatefulWidget {
+abstract class BloodGlucoseSampleView extends StatefulWidget {
   /// base class constructor of sample's stateful widget class
-  const SampleView({Key key}) : super(key: key);
+  const BloodGlucoseSampleView({Key key}) : super(key: key);
 }
 
 /// Base class of the sample's state class
-abstract class SampleViewState extends State<SampleView> {
+abstract class BloodGlucoseSampleViewState
+    extends State<BloodGlucoseSampleView> {
   /// Holds the SampleModel information
-  SampleModel model;
+  BloodGlucoseSampleModel model;
 
   /// Holds the information of current page is card view or not
   bool isCardView;
 
   @override
   void initState() {
-    model = SampleModel.instance;
+    model = BloodGlucoseSampleModel.instance;
     isCardView = model.isCardView && !model.isWeb;
     super.initState();
   }

@@ -1,13 +1,4 @@
-/// Dart import
-import 'dart:convert';
-
-/// Package imports
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
-
-/// Local import
-import 'sample_view.dart';
+part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// WidgetCategory of the each control as Data Visualization, Editors,etc.,
 class WidgetCategory {
@@ -92,17 +83,17 @@ class SubItem {
   /// It holds the type, title, key, description etc., of the sample
   SubItem(
       [this.type,
-        this.displayType,
-        this.title,
-        this.key,
-        this.codeLink,
-        this.description,
-        this.status,
-        this.subItems,
-        this.showInWeb,
-        this.sourceLink,
-        this.sourceText,
-        this.needsPropertyPanel]);
+      this.displayType,
+      this.title,
+      this.key,
+      this.codeLink,
+      this.description,
+      this.status,
+      this.subItems,
+      this.showInWeb,
+      this.sourceLink,
+      this.sourceText,
+      this.needsPropertyPanel]);
 
   /// Getting the SubItem details from the json file
   factory SubItem.fromJson(Map<String, dynamic> json) {
@@ -191,16 +182,16 @@ class SubItem {
 
 /// SampleModel class is the base of the Sample browser
 /// It contains the category, control, theme information
-class SampleModel extends Listenable {
+class BloodGlucoseSampleModel extends Listenable {
   /// Contains the category, control, theme information
-  SampleModel() {
+  BloodGlucoseSampleModel() {
     searchControlItems = <Control>[];
     sampleList = <SubItem>[];
     searchResults = <SubItem>[];
     searchSampleItems = <SubItem>[];
-    categoryList = SampleModel._categoryList;
-    controlList = SampleModel._controlList;
-    routes = SampleModel._routes;
+    categoryList = BloodGlucoseSampleModel._categoryList;
+    controlList = BloodGlucoseSampleModel._controlList;
+    routes = BloodGlucoseSampleModel._routes;
     searchControlItems.addAll(controlList);
     for (int index = 0; index < controlList.length; index++) {
       if (controlList[index].sampleList != null) {
@@ -210,15 +201,15 @@ class SampleModel extends Listenable {
       } else if (controlList[index].childList != null) {
         for (int i = 0; i < controlList[index].childList.length; i++) {
           for (int j = 0;
-          j < controlList[index].childList[i].subItems.length;
-          j++) {
+              j < controlList[index].childList[i].subItems.length;
+              j++) {
             if (controlList[index].childList[i].subItems[j].type != 'child') {
               searchSampleItems
                   .add(controlList[index].childList[i].subItems[j]);
             } else {
               //ignore: prefer_foreach
               for (final SubItem sample
-              in controlList[index].childList[i].subItems[j].subItems) {
+                  in controlList[index].childList[i].subItems[j].subItems) {
                 searchSampleItems.add(sample);
               }
             }
@@ -227,11 +218,11 @@ class SampleModel extends Listenable {
       } else {
         for (int i = 0; i < controlList[index].subItems.length; i++) {
           for (int j = 0;
-          j < controlList[index].subItems[i].subItems.length;
-          j++) {
+              j < controlList[index].subItems[i].subItems.length;
+              j++) {
             for (int k = 0;
-            k < controlList[index].subItems[i].subItems[j].subItems.length;
-            k++) {
+                k < controlList[index].subItems[i].subItems[j].subItems.length;
+                k++) {
               searchSampleItems
                   .add(controlList[index].subItems[i].subItems[j].subItems[k]);
             }
@@ -242,7 +233,7 @@ class SampleModel extends Listenable {
   }
 
   /// Used to create the instance of [SampleModel]
-  static SampleModel instance = SampleModel();
+  static BloodGlucoseSampleModel instance = BloodGlucoseSampleModel();
 
   /// Contains the output widget of sample
   /// appropriate key and output widget mapped
@@ -317,7 +308,7 @@ class SampleModel extends Listenable {
   List<SampleRoute> routes;
 
   /// Holds the current visible sample, only for web
-  SampleView currentRenderSample;
+  BloodGlucoseSampleView currentRenderSample;
 
   /// Holds the current rendered sample's key, only for web
   String currentSampleKey;
@@ -420,37 +411,39 @@ Future<void> updateControlItems() async {
   bool _isChild = false;
   const bool _isWeb = kIsWeb;
   final String _jsonText =
-  await rootBundle.loadString('lib/sample_details.json');
+      await rootBundle.loadString('lib/sample_details.json');
   final List<dynamic> _controlList = json.decode(_jsonText);
   List<SubItem> _firstLevelSubItems = <SubItem>[];
   List<SubItem> _secondLevelSubItems = <SubItem>[];
   List<SubItem> _thirdLevelSubItems = <SubItem>[];
   final List<SampleRoute> sampleRoutes = <SampleRoute>[];
   for (int i = 0; i < _controlList.length; i++) {
-    SampleModel._controlList.add(Control.fromJson(_controlList[i]));
-    if (!_isWeb || SampleModel._controlList[i].showInWeb != false) {
-      for (int j = 0; j < SampleModel._controlList[i].subItems.length; j++) {
-        _firstLevelSubItems
-            .add(SubItem.fromJson(SampleModel._controlList[i].subItems[j]));
+    BloodGlucoseSampleModel._controlList.add(Control.fromJson(_controlList[i]));
+    if (!_isWeb || BloodGlucoseSampleModel._controlList[i].showInWeb != false) {
+      for (int j = 0;
+          j < BloodGlucoseSampleModel._controlList[i].subItems.length;
+          j++) {
+        _firstLevelSubItems.add(SubItem.fromJson(
+            BloodGlucoseSampleModel._controlList[i].subItems[j]));
         if (_firstLevelSubItems[j].type == 'parent') {
           for (int k = 0; k < _firstLevelSubItems[j].subItems.length; k++) {
             if (!_isWeb ||
                 SubItem.fromJson(_firstLevelSubItems[j].subItems[k])
-                    .showInWeb !=
+                        .showInWeb !=
                     false) {
               _secondLevelSubItems
                   .add(SubItem.fromJson(_firstLevelSubItems[j].subItems[k]));
               for (int l = 0;
-              l <
-                  _secondLevelSubItems[_secondLevelSubItems.length - 1]
-                      .subItems
-                      .length;
-              l++) {
+                  l <
+                      _secondLevelSubItems[_secondLevelSubItems.length - 1]
+                          .subItems
+                          .length;
+                  l++) {
                 if (!_isWeb ||
                     SubItem.fromJson(_secondLevelSubItems[
-                    _secondLevelSubItems.length - 1]
-                        .subItems[l])
-                        .showInWeb !=
+                                    _secondLevelSubItems.length - 1]
+                                .subItems[l])
+                            .showInWeb !=
                         false) {
                   _thirdLevelSubItems.add(SubItem.fromJson(
                       _secondLevelSubItems[_secondLevelSubItems.length - 1]
@@ -463,27 +456,28 @@ Future<void> updateControlItems() async {
                 _thirdLevelSubItems[_thirdLevelSubItems.length - 1]
                     .sampleIndex ??= _thirdLevelSubItems.length - 1;
                 _thirdLevelSubItems[_thirdLevelSubItems.length - 1].control =
-                SampleModel._controlList[i];
+                    BloodGlucoseSampleModel._controlList[i];
                 final String _breadCrumbText = ('/' +
-                    SampleModel._controlList[i].title +
-                    '/' +
-                    _firstLevelSubItems[j].title +
-                    '/' +
-                    _secondLevelSubItems[_secondLevelSubItems.length - 1]
-                        .title +
-                    '/' +
-                    _thirdLevelSubItems[_thirdLevelSubItems.length - 1]
-                        .title)
+                        BloodGlucoseSampleModel._controlList[i].title +
+                        '/' +
+                        _firstLevelSubItems[j].title +
+                        '/' +
+                        _secondLevelSubItems[_secondLevelSubItems.length - 1]
+                            .title +
+                        '/' +
+                        _thirdLevelSubItems[_thirdLevelSubItems.length - 1]
+                            .title)
                     .replaceAll(' ', '-')
                     .toLowerCase();
                 _thirdLevelSubItems[_thirdLevelSubItems.length - 1]
                     .breadCrumbText = _breadCrumbText;
                 _thirdLevelSubItems[_thirdLevelSubItems.length - 1]
-                    .categoryName = SampleModel._controlList[i].category;
+                        .categoryName =
+                    BloodGlucoseSampleModel._controlList[i].category;
                 sampleRoutes.add(SampleRoute(
                     routeName: _breadCrumbText,
                     subItem:
-                    _thirdLevelSubItems[_thirdLevelSubItems.length - 1]));
+                        _thirdLevelSubItems[_thirdLevelSubItems.length - 1]));
               }
               _secondLevelSubItems[_secondLevelSubItems.length - 1].subItems =
                   _thirdLevelSubItems;
@@ -498,7 +492,7 @@ Future<void> updateControlItems() async {
             for (int k = 0; k < _firstLevelSubItems[j].subItems.length; k++) {
               if (!_isWeb ||
                   SubItem.fromJson(_firstLevelSubItems[j].subItems[k])
-                      .showInWeb !=
+                          .showInWeb !=
                       false) {
                 _secondLevelSubItems
                     .add(SubItem.fromJson(_firstLevelSubItems[j].subItems[k]));
@@ -507,31 +501,32 @@ Future<void> updateControlItems() async {
                 _secondLevelSubItems[_secondLevelSubItems.length - 1]
                     .sampleIndex ??= k;
                 _secondLevelSubItems[_secondLevelSubItems.length - 1].control =
-                SampleModel._controlList[i];
+                    BloodGlucoseSampleModel._controlList[i];
                 final String _breadCrumbText = ('/' +
-                    SampleModel._controlList[i].title +
-                    '/' +
-                    _firstLevelSubItems[j].title +
-                    '/' +
-                    _secondLevelSubItems[_secondLevelSubItems.length - 1]
-                        .title)
+                        BloodGlucoseSampleModel._controlList[i].title +
+                        '/' +
+                        _firstLevelSubItems[j].title +
+                        '/' +
+                        _secondLevelSubItems[_secondLevelSubItems.length - 1]
+                            .title)
                     .replaceAll(' ', '-')
                     .toLowerCase();
                 _secondLevelSubItems[_secondLevelSubItems.length - 1]
                     .breadCrumbText = _breadCrumbText;
                 _secondLevelSubItems[_secondLevelSubItems.length - 1]
-                    .categoryName = SampleModel._controlList[i].category;
+                        .categoryName =
+                    BloodGlucoseSampleModel._controlList[i].category;
                 sampleRoutes.add(SampleRoute(
                     routeName: _breadCrumbText,
                     subItem:
-                    _secondLevelSubItems[_secondLevelSubItems.length - 1]));
+                        _secondLevelSubItems[_secondLevelSubItems.length - 1]));
               }
             }
             _firstLevelSubItems[j].subItems = _secondLevelSubItems;
             _secondLevelSubItems = <SubItem>[];
           } else {
             _firstLevelSubItems.removeAt(j);
-            SampleModel._controlList[i].subItems.removeAt(j);
+            BloodGlucoseSampleModel._controlList[i].subItems.removeAt(j);
             j--;
           }
         } else {
@@ -539,15 +534,16 @@ Future<void> updateControlItems() async {
           _firstLevelSubItems[j].sampleIndex ??= j;
           if (!_isWeb || _firstLevelSubItems[j].showInWeb != false) {
             final String _breadCrumbText = ('/' +
-                SampleModel._controlList[i].title +
-                '/' +
-                _firstLevelSubItems[j].title)
+                    BloodGlucoseSampleModel._controlList[i].title +
+                    '/' +
+                    _firstLevelSubItems[j].title)
                 .replaceAll(' ', '-')
                 .toLowerCase();
             _firstLevelSubItems[j].breadCrumbText = _breadCrumbText;
-            _firstLevelSubItems[j].control = SampleModel._controlList[i];
+            _firstLevelSubItems[j].control =
+                BloodGlucoseSampleModel._controlList[i];
             _firstLevelSubItems[j].categoryName =
-                SampleModel._controlList[i].category;
+                BloodGlucoseSampleModel._controlList[i].category;
             sampleRoutes.add(SampleRoute(
                 routeName: _breadCrumbText, subItem: _firstLevelSubItems[j]));
             _secondLevelSubItems.add(_firstLevelSubItems[j]);
@@ -555,50 +551,54 @@ Future<void> updateControlItems() async {
         }
       }
       if (_isSample) {
-        SampleModel._controlList[i].sampleList = _secondLevelSubItems;
-        SampleModel._controlList[i].subItems = _secondLevelSubItems;
+        BloodGlucoseSampleModel._controlList[i].sampleList =
+            _secondLevelSubItems;
+        BloodGlucoseSampleModel._controlList[i].subItems = _secondLevelSubItems;
         _secondLevelSubItems = <SubItem>[];
       } else if (_isChild) {
-        SampleModel._controlList[i].childList = _firstLevelSubItems;
+        BloodGlucoseSampleModel._controlList[i].childList = _firstLevelSubItems;
         _secondLevelSubItems = <SubItem>[];
         _isChild = false;
       }
       (!_isSample)
-          ? SampleModel._controlList[i].subItems = _firstLevelSubItems
+          ? BloodGlucoseSampleModel._controlList[i].subItems =
+              _firstLevelSubItems
           : _isSample = false;
 
       _firstLevelSubItems = <SubItem>[];
     } else {
-      SampleModel._controlList.removeAt(i);
+      BloodGlucoseSampleModel._controlList.removeAt(i);
       _controlList.removeAt(i);
       i--;
     }
   }
 
-  SampleModel._routes = sampleRoutes;
+  BloodGlucoseSampleModel._routes = sampleRoutes;
 
   /// Sorting the controls based on control id.
-  SampleModel._controlList
+  BloodGlucoseSampleModel._controlList
       .sort((Control a, Control b) => a.controlId.compareTo(b.controlId));
 
   /// Setting control's category.
   final List<String> _categoryNames = <String>[];
   String _controlCategory;
-  for (int i = 0; i < SampleModel._controlList.length; i++) {
-    _controlCategory = SampleModel._controlList[i].category.toUpperCase();
+  for (int i = 0; i < BloodGlucoseSampleModel._controlList.length; i++) {
+    _controlCategory =
+        BloodGlucoseSampleModel._controlList[i].category.toUpperCase();
     if (!_categoryNames.contains(_controlCategory)) {
       _categoryNames.add(_controlCategory);
-      SampleModel._categoryList.add(WidgetCategory());
-      SampleModel._categoryList[SampleModel._categoryList.length - 1]
+      BloodGlucoseSampleModel._categoryList.add(WidgetCategory());
+      BloodGlucoseSampleModel
+          ._categoryList[BloodGlucoseSampleModel._categoryList.length - 1]
           .categoryName = _controlCategory;
     }
   }
   WidgetCategory _category;
-  for (int j = 0; j < SampleModel._categoryList.length; j++) {
-    _category = SampleModel._categoryList[j];
+  for (int j = 0; j < BloodGlucoseSampleModel._categoryList.length; j++) {
+    _category = BloodGlucoseSampleModel._categoryList[j];
     _category.controlList = <Control>[];
-    for (int i = 0; i < SampleModel._controlList.length; i++) {
-      final Control control = SampleModel._controlList[i];
+    for (int i = 0; i < BloodGlucoseSampleModel._controlList.length; i++) {
+      final Control control = BloodGlucoseSampleModel._controlList[i];
       if (control.category.toUpperCase() == _category.categoryName) {
         _category.controlList.add(control);
       }

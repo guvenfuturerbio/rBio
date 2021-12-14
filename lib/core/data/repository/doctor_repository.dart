@@ -4,11 +4,9 @@ import 'package:intl/intl.dart';
 
 import '../../../model/model.dart';
 import '../../constants/constants.dart';
-import '../../enums/secret_keys.dart';
 import '../../enums/shared_preferences_keys.dart';
 import '../../locator.dart';
 import '../../manager/shared_preferences_manager.dart';
-import '../../utils/secret_utils.dart';
 import '../helper/dio_helper.dart';
 import '../service/local_cache_service.dart';
 
@@ -24,7 +22,7 @@ class DoctorRepository {
     @required this.localCacheService,
   });
 
-  Future<DoctorLoginResponse> login(String userId, String password) =>
+  Future<RbioLoginResponse> login(String userId, String password) =>
       apiService.login(userId, password);
   Future<List<Appointment>> getAllAppointment(
           AppointmentFilter appointmentFilter) =>

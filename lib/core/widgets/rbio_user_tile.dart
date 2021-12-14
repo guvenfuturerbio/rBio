@@ -73,7 +73,7 @@ class RbioUserTile extends StatelessWidget {
           backgroundImage: imageBytes != null
               ? MemoryImage(base64.decode(imageBytes))
               : imageUrl == null
-                  ? NetworkImage(R.image.mockAvatar)
+                  ? NetworkImage(R.image.circlevatar)
                   : NetworkImage(imageUrl),
           radius: Atom.width * 0.06,
         );
@@ -85,7 +85,7 @@ class RbioUserTile extends StatelessWidget {
               image: imageBytes != null
                   ? MemoryImage(base64.decode(imageBytes))
                   : imageUrl == null
-                      ? NetworkImage(R.image.mockAvatar)
+                      ? NetworkImage(R.image.circlevatar)
                       : NetworkImage(imageUrl),
             ),
           ),

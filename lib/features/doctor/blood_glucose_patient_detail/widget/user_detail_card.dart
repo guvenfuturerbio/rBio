@@ -38,7 +38,7 @@ class _UserDetailCard extends StatelessWidget {
             ),
             _buildValueRow(
               context,
-              leftValue: '1234678909',
+              leftValue: "-",
               rightValue: patientDetail?.birthDay ?? "-",
             ),
 

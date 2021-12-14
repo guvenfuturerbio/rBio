@@ -1,17 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+part of '../view/blood_glucose_patient_detail_screen.dart';
 
-import '../../../../generated/l10n.dart';
-import '../../../../model/model.dart';
-import '../../notifiers/patient_notifiers.dart';
-import '../gradient_dialog.dart';
-import '../hypo_hyper_edit/hypo_hyper_edit_view_model.dart';
-import '../progress/progress_dialog.dart';
-
-class BloodGlucosePickerVM extends ChangeNotifier {
+class BloodGlucosePatientPickerVm extends ChangeNotifier {
   BuildContext context;
   int _startValue, _endValue;
-  StateProcess _stateProcess;
+  LoadingProgress _stateProcess;
   ProgressDialog progressDialog;
   var _lowerValue, _higherValue, _hypoValue, _hyperValue;
 
@@ -21,10 +13,10 @@ class BloodGlucosePickerVM extends ChangeNotifier {
   List<int> hypoRange = [];
   List<Text> minWidget = [];
   List<Text> maxWidget = [];
-  List<Text> hyperRangeWidget = [];
-  List<Text> hypoRangeWidget = [];
+  List<Widget> hyperRangeWidget = [];
+  List<Widget> hypoRangeWidget = [];
 
-  BloodGlucosePickerVM(this.context) {
+  BloodGlucosePatientPickerVm(this.context) {
     buildHyperRange();
     buildHypoRange();
     buildNormalRange();
@@ -37,7 +29,7 @@ class BloodGlucosePickerVM extends ChangeNotifier {
 
   int get thumbStartValue => this._startValue;
 
-  StateProcess get stateProcess => _stateProcess;
+  LoadingProgress get stateProcess => _stateProcess;
 
   setThumbEndValue(int endValue) {
     this._endValue = _endValue;
@@ -91,7 +83,7 @@ class BloodGlucosePickerVM extends ChangeNotifier {
       hypoRange.add(i);
     }
     hypoRange.forEach((number) {
-      hypoRangeWidget.add(Text(number.toString()));
+      hypoRangeWidget.add(Center(child: Text(number.toString())));
     });
     return hypoRange;
   }
@@ -103,7 +95,7 @@ class BloodGlucosePickerVM extends ChangeNotifier {
       hyperRange.add(i);
     }
     hyperRange.forEach((number) {
-      hyperRangeWidget.add(Text(number.toString()));
+      hyperRangeWidget.add(Center(child: Text(number.toString())));
     });
     return hyperRange;
   }
@@ -129,7 +121,7 @@ class BloodGlucosePickerVM extends ChangeNotifier {
   }
 
   updatePatientLimit({@required int id}) async {
-    this._stateProcess = StateProcess.LOADING;
+    this._stateProcess = LoadingProgress.LOADING;
     showLoadingDialog();
     await Future.delayed(Duration(milliseconds: 300));
     try {
@@ -146,7 +138,7 @@ class BloodGlucosePickerVM extends ChangeNotifier {
                   ));
       await Provider.of<PatientNotifiers>(context, listen: false)
           .fetchPatientDetail(patientId: id);
-      this._stateProcess = StateProcess.DONE;
+      this._stateProcess = LoadingProgress.DONE;
       hideDialog(context);
       await Future.delayed(Duration(milliseconds: 300));
       Navigator.pop(context, true);
@@ -154,32 +146,33 @@ class BloodGlucosePickerVM extends ChangeNotifier {
       print(e);
       hideDialog(context);
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
-      this._stateProcess = StateProcess.ERROR;
+      this._stateProcess = LoadingProgress.ERROR;
     }
   }
 
-  showLoadingDialog() {
+  void showLoadingDialog() {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            progressDialog = progressDialog ?? ProgressDialog());
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          progressDialog = progressDialog ?? ProgressDialog(),
+    );
   }
 
-  hideDialog(BuildContext context) {
+  void hideDialog(BuildContext context) {
     if (progressDialog != null && progressDialog.isShowing()) {
       Navigator.of(context).pop();
       progressDialog = null;
     }
   }
 
-  showInformationDialog(String text) {
-    print(text);
+  void showInformationDialog(String text) {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return GradientDialog(LocaleProvider.current.warning, text);
-        }).then((value) => Navigator.pop(context));
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return GradientDialog(LocaleProvider.current.warning, text);
+      },
+    ).then((value) => Navigator.pop(context));
   }
 }

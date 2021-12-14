@@ -1,30 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+part of '../view/blood_glucose_patient_detail_screen.dart';
 
-import '../../../../core/core.dart';
-import '../../../../model/doctor/bg_measurements_view_model.dart';
-import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import '../../utils/popup/bg_popup.dart';
-import '../viewmodel/blood_glucose_patient_detail_vm.dart';
-
-class MeasurementList extends StatefulWidget {
+class _MeasurementList extends StatefulWidget {
   final List<BgMeasurementViewModel> bgMeasurements;
   final ScrollController scrollController;
   final bool useStickyGroupSeparatorsValue;
-  MeasurementList(
-      {this.bgMeasurements,
-      this.scrollController,
-      this.useStickyGroupSeparatorsValue});
+
+  _MeasurementList({
+    this.bgMeasurements,
+    this.scrollController,
+    this.useStickyGroupSeparatorsValue,
+  });
+
   @override
-  _BgMeasurementListWidgetState createState() =>
-      _BgMeasurementListWidgetState();
+  __MeasurementListState createState() => __MeasurementListState();
 }
 
-class _BgMeasurementListWidgetState extends State<MeasurementList> {
+class __MeasurementListState extends State<_MeasurementList> {
   @override
   Widget build(BuildContext context) {
     return GroupedListView<BgMeasurementViewModel, DateTime>(
@@ -36,44 +27,42 @@ class _BgMeasurementListWidgetState extends State<MeasurementList> {
       padding: EdgeInsets.zero,
       useStickyGroupSeparators: widget.useStickyGroupSeparatorsValue ?? false,
       groupBy: (BgMeasurementViewModel bgMeasurementViewModel) => DateTime(
-          bgMeasurementViewModel.date.year,
-          bgMeasurementViewModel.date.month,
-          bgMeasurementViewModel.date.day),
+        bgMeasurementViewModel.date.year,
+        bgMeasurementViewModel.date.month,
+        bgMeasurementViewModel.date.day,
+      ),
       groupHeaderBuilder: (BgMeasurementViewModel bgMeasurementViewModel) {
         return Container(
-          alignment: Alignment.center,
           width: double.infinity,
+          alignment: Alignment.center,
           height: (context.HEIGHT * .1) * context.TEXTSCALE,
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 8),
+            margin: EdgeInsets.symmetric(vertical: 2),
             decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withAlpha(50),
-                    blurRadius: 5,
-                    spreadRadius: 0,
-                    offset: Offset(5, 5))
-              ],
-              borderRadius: BorderRadius.circular(20),
+              color: getIt<ITheme>().cardBackgroundColor,
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
+                style: context.xBodyText1.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
         );
       },
-      itemBuilder: (_, BgMeasurementViewModel bgMeasurementViewModel) {
-        return measurementList(bgMeasurementViewModel, context);
+      itemBuilder: (BuildContext context,
+          BgMeasurementViewModel bgMeasurementViewModel) {
+        return _buildCard(bgMeasurementViewModel, context);
       },
       callback: (BgMeasurementViewModel data) {
         var prov =
             Provider.of<BloodGlucosePatientDetailVm>(context, listen: false);
 
-        if (prov.selected == TimePeriodFilter.DAILY) {
+        if (prov.selected == TimePeriodFilter.DAILY.toShortString()) {
           prov.fetchScrolledData(data.date);
         }
       },
@@ -81,105 +70,149 @@ class _BgMeasurementListWidgetState extends State<MeasurementList> {
   }
 }
 
-Widget measurementList(
-    BgMeasurementViewModel bgMeasurementViewModel, BuildContext context) {
+Widget _buildCard(
+  BgMeasurementViewModel bgMeasurementViewModel,
+  BuildContext context,
+) {
   return GestureDetector(
     onTap: () => showDialog(
-        context: context,
-        builder: (_) {
-          print(bgMeasurementViewModel.note);
-          return DoctorBgTaggerPopUp(data: bgMeasurementViewModel);
-        }),
-    child: Container(
-      margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-      decoration: BoxDecoration(
-        color: Colors.green,
-        gradient: LinearGradient(
-            colors: [Colors.white, Colors.white],
-            begin: Alignment.bottomLeft,
-            end: Alignment.centerRight),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withAlpha(50),
-              blurRadius: 5,
-              spreadRadius: 0,
-              offset: Offset(5, 5))
-        ],
-        borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-      ),
-      padding: const EdgeInsets.all(10),
-      height: (context.HEIGHT * .1) * context.TEXTSCALE,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
+      context: context,
+      builder: (BuildContext context) {
+        return _TaggerPopUp(
+          data: bgMeasurementViewModel,
+        );
+      },
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Text(
+          DateFormat("kk : mm").format(bgMeasurementViewModel.date),
+          style: context.xBodyText1.copyWith(
+            color: getIt<ITheme>().textColorPassive,
+          ),
+        ),
+
+        //
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            height: (context.HEIGHT * .08) * context.TEXTSCALE,
+            margin: const EdgeInsets.only(left: 4, right: 8, top: 8),
+            decoration: BoxDecoration(
+              color: getIt<ITheme>().cardBackgroundColor,
+              borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+            ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  width: (context.HEIGHT * .07) * context.TEXTSCALE,
-                  height: (context.HEIGHT * .07) * context.TEXTSCALE,
-                  decoration: measurementListBoxDecoration(
-                      bgMeasurementViewModel), //             <--- BoxDecoration here
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(bgMeasurementViewModel.result),
-                      Text(
-                        "mg/dL",
-                        style: TextStyle(fontSize: 8),
-                      ),
-                    ],
-                  ),
-                ),
+                //
                 Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
+                      //
                       Container(
-                        margin: EdgeInsets.only(left: 8, right: 16),
-                        width: (context.HEIGHT * .03) * context.TEXTSCALE,
-                        height: (context.HEIGHT * .03) * context.TEXTSCALE,
-                        child: SvgPicture.asset(bgMeasurementViewModel.tag == 1
-                            ? R.image.beforeMeal
-                            : bgMeasurementViewModel.tag == 2
-                                ? R.image.afterMeal
-                                : R.image.other),
+                        alignment: Alignment.center,
+                        width: (context.HEIGHT * .05) * context.TEXTSCALE,
+                        height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                        decoration: measurementListBoxDecoration(
+                            bgMeasurementViewModel),
+                        child: Text(
+                          bgMeasurementViewModel.result,
+                          maxLines: 2,
+                          style: context.xHeadline5,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
+
+                      //
+                      SizedBox(
+                        width: 12,
+                      ),
+
+                      //
+                      SizedBox(
+                        width: (context.HEIGHT * .02),
+                        height: (context.HEIGHT * .02),
+                        child: SvgPicture.asset(
+                          bgMeasurementViewModel.tag == 1
+                              ? R.image.beforeMeal
+                              : bgMeasurementViewModel.tag == 2
+                                  ? R.image.afterMeal
+                                  : R.image.other,
+                        ),
+                      ),
+
+                      //
                       Expanded(
-                        child: Text(bgMeasurementViewModel.note == null
-                            ? ""
-                            : (bgMeasurementViewModel.note.length > 10
-                                ? "${bgMeasurementViewModel.note.substring(0, 10)}..."
-                                : bgMeasurementViewModel.note)),
-                      )
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            //
+                            Expanded(
+                              child: Text(
+                                bgMeasurementViewModel.note == null
+                                    ? ""
+                                    : (bgMeasurementViewModel.note.length > 10
+                                        ? "${bgMeasurementViewModel.note.substring(0, 10)}..."
+                                        : bgMeasurementViewModel.note),
+                                style: context.xHeadline5,
+                              ),
+                            ),
+
+                            //
+                            Expanded(
+                              child: Text(
+                                bgMeasurementViewModel.isManual
+                                    ? 'Manual'
+                                    : 'Otomatic',
+                                style: context.xHeadline5,
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      //
+                      SizedBox(width: 8),
+
+                      //
+                      if (bgMeasurementViewModel.imageURL != null &&
+                          bgMeasurementViewModel.imageURL != '') ...[
+                        Image.network(bgMeasurementViewModel.imageURL),
+                      ] else ...[
+                        Container(
+                          width: 50,
+                          height: 50,
+                          color: Colors.black.withOpacity(0.1),
+                        ),
+                      ],
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                /*Icon(Icons.timer),*/
-                Text(DateFormat("kk : mm").format(bgMeasurementViewModel.date)),
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }
 
 BoxDecoration measurementListBoxDecoration(
-    BgMeasurementViewModel bgMeasurementViewModel) {
+  BgMeasurementViewModel bgMeasurementViewModel,
+) {
   return BoxDecoration(
     shape: bgMeasurementViewModel.tag == 1 || bgMeasurementViewModel.tag == 2
         ? BoxShape.circle
@@ -188,8 +221,7 @@ BoxDecoration measurementListBoxDecoration(
         ? Colors.transparent
         : bgMeasurementViewModel.resultColor,
     border: Border.all(
-      color: bgMeasurementViewModel
-          .resultColor, //                   <--- border color
+      color: bgMeasurementViewModel.resultColor,
       width: 5.0,
     ),
   );

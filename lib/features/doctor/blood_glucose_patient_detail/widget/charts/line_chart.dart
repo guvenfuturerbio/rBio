@@ -1,21 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/doctor/blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
-import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
-import '../../../../../model/model.dart';
-import '../../../../../core/core.dart';
-import '../../sample_view.dart';
+part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// Renders the line sample with dynamically updated data points.
-class AnimationLineDefault extends SampleView {
+class BloodGlucosePatientLine extends BloodGlucoseSampleView {
   /// Renders the line chart sample with dynamically upd
   @override
-  _AnimationLineDefaultState createState() => _AnimationLineDefaultState();
+  BloodGlucosePatientLineState createState() => BloodGlucosePatientLineState();
 }
 
-class _AnimationLineDefaultState extends SampleViewState {
+class BloodGlucosePatientLineState extends BloodGlucoseSampleViewState {
   List<ChartData> _chartData;
 
   int _targetMin, _targetMax, _maxValue, _minValue;

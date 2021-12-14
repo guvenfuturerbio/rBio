@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import 'package:onedosehealth/model/model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -19,7 +20,9 @@ import '../view/bg_progress_page.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class BgProgressPageViewModel with ChangeNotifier implements ProgressPage {
+class BgProgressPageViewModel
+    with ChangeNotifier, IBaseBottomActionsOfGraph
+    implements ProgressPage {
   BgProgressPageViewModel({BuildContext context}) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getIt<GlucoseStorageImpl>().addListener(() {

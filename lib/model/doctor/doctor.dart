@@ -19,7 +19,6 @@ export 'bg_measurement.dart';
 export 'bg_measurements_view_model.dart';
 export 'chart_data.dart';
 export 'diabet_type.dart';
-export 'doctor_login_response.dart';
 export 'doctor_patient_detail_model.dart';
 export 'doctor_patient_model.dart';
 export 'get_my_patient_filter.dart';

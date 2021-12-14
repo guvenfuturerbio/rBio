@@ -1,22 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
-import '../../../../../core/core.dart';
-import '../../../../../model/model.dart';
-import '../../../blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
-import '../../sample_view.dart';
+part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// Renders the Scatter chart sample with dynamically updated data points.
-class AnimationScatterDefault extends SampleView {
+class BloodGlucosePatientScatter extends BloodGlucoseSampleView {
   /// Creates the Scatter chart sample with dynamically updated data points.
   @override
-  _AnimationScatterDefaultState createState() =>
-      _AnimationScatterDefaultState();
+  BloodGlucosePatientScatterState createState() =>
+      BloodGlucosePatientScatterState();
 }
 
-class _AnimationScatterDefaultState extends SampleViewState {
+class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
   List<ChartData> _chartData;
 
   int _minimum, _maximum, _targetMin, _targetMax;
@@ -41,14 +33,17 @@ class _AnimationScatterDefaultState extends SampleViewState {
 
   ZoomPanBehavior _zoomingBehavior;
 
-  _AnimationScatterDefaultState();
+  BloodGlucosePatientScatterState();
+
   @override
   Widget build(BuildContext context) {
     _zoomingBehavior = ZoomPanBehavior(
-        enablePinching: true,
-        zoomMode: _zoomModeType,
-        enablePanning: true,
-        enableMouseWheelZooming: model.isWeb ? true : false);
+      enablePinching: true,
+      zoomMode: _zoomModeType,
+      enablePanning: true,
+      enableMouseWheelZooming: model.isWeb ? true : false,
+    );
+
     return Consumer<BloodGlucosePatientDetailVm>(
         builder: (context, value, child) {
       _selected = value.selected;
@@ -64,8 +59,6 @@ class _AnimationScatterDefaultState extends SampleViewState {
       _maximum = value.dailyHighestValue;
       _targetMin = value.targetMin;
       _targetMax = value.targetMax;
-      print("dataaaaaa->>>>>>>>>>>$_endDate");
-      print("dataaaaaa->>>>>>>>>>>$_startDate");
       return _getAnimationScatterChart();
     });
   }
