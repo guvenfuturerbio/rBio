@@ -1,13 +1,8 @@
 import 'dart:developer';
 import 'dart:io' as platform;
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
-import 'package:onedosehealth/features/home/viewmodel/home_vm.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/src/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -15,13 +10,13 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
-import '../../../core/data/repository/doctor_repository.dart';
-import '../../../core/utils/utils.dart';
+import '../../../core/data/imports/cronic_tracking.dart';
+import '../../../core/notifiers/user_notifier.dart';
 import '../../../model/model.dart';
+import '../../home/viewmodel/home_vm.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import '../auth.dart';
-import '../user_service.dart';
 
 enum VersionCheckProgress { DONE, LOADING, ERROR }
 
