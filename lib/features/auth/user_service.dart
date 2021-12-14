@@ -69,14 +69,15 @@ class UserService {
     }
   }
 
-  saveAndRetrieveToken(User userCred, String from) async {
+  Future<void> saveAndRetrieveToken(User userCred, String from) async {
     String token = userCred.uid;
     String mailBase = userCred.email;
 
     TokenUserTextBody textBody = TokenUserTextBody(
-        id: 'gWTiiCR81Ib9a3p2UZWTCvAbRbc2',
-        name: userCred.displayName,
-        email: userCred.email);
+      id: 'gWTiiCR81Ib9a3p2UZWTCvAbRbc2',
+      name: userCred.displayName,
+      email: userCred.email,
+    );
 
     List<String> parts = mailBase.split("@");
     String firstPart = parts[0];
@@ -84,14 +85,20 @@ class UserService {
     while (firstPart.length < 8) {
       firstPart = firstPart + "0";
     }
+
     String email = firstPart + "@" + secondPart;
     String encryptedTextBody = encryptWithSalsa20(jsonEncode(textBody.toJson()),
         firstPart.substring(0, 8)); // first 8 letters of the email
 
-    final response = await getIt<ChronicTrackingRepository>()
-        .saveAndRetrieveToken(
-            SaveAndRetrieveTokenModel(text: encryptedTextBody, mail: email),
-            token);
+    final response =
+        await getIt<ChronicTrackingRepository>().saveAndRetrieveToken(
+      SaveAndRetrieveTokenModel(
+        token: encryptedTextBody,
+        accession: email,
+      ),
+      token,
+    );
+
     await getIt<ISharedPreferencesManager>().setString(
         SharedPreferencesKeys.CT_AUTH_TOKEN, response.datum["access_token"]);
   }

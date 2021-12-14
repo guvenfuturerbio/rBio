@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/doctor/blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../model/model.dart';
-import '../../../pages/patient_detail_page/patient_detail_page_view_model.dart';
 import '../../../../../core/core.dart';
 import '../../sample_view.dart';
 
@@ -39,7 +39,7 @@ class _AnimationLineDefaultState extends SampleViewState {
         zoomMode: _zoomModeType,
         enablePanning: true,
         enableMouseWheelZooming: model.isWeb ? true : false);
-    return Consumer<PatientDetailPageViewModel>(
+    return Consumer<BloodGlucosePatientDetailVm>(
         builder: (context, value, child) {
       _selected = value.selected;
       _startDate = value.startDate;

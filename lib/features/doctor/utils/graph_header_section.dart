@@ -5,7 +5,7 @@ import '../../../core/core.dart';
 import '../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
 import '../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
 import '../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../pages/patient_detail_page/patient_detail_page_view_model.dart';
+import '../blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
 import 'custom_bar_pie.dart';
 
 class BgGraphHeaderSection extends StatelessWidget {
@@ -14,7 +14,7 @@ class BgGraphHeaderSection extends StatelessWidget {
     this.value,
     this.controller,
   }) : super(key: key);
-  final PatientDetailPageViewModel value;
+  final BloodGlucosePatientDetailVm value;
   final ScrollController controller;
 
   @override

@@ -108,4 +108,6 @@ class _Color {
   final lightRed = Color.fromRGBO(232, 128, 124, 1);
   final drawerBgLightBlue = Color.fromRGBO(133, 214, 255, 1);
   final regularBlue = Color.fromRGBO(0, 104, 255, 1);
+
+  final darkGreen = Color.fromRGBO(255, 102, 198, 143);
 }

@@ -5,6 +5,9 @@ class _Images {
   final mockAvatar =
       'https://www.ied.org.tr/wp-content/uploads/2019/10/erkek-icon.png';
 
+  final mockWomanAvatar =
+      'https://www.pngitem.com/pimgs/m/137-1370168_professional-clipart-female-avatar-circle-hd-png-download.png';
+
   final add = 'assets/images/new/add_icon.svg';
   final appointment_icon = 'assets/images/new/appointment_icon.svg';
   final arrow_down_icon = 'assets/images/new/arrow_down_icon.svg';

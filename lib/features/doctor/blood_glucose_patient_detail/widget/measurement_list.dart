@@ -3,31 +3,28 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/doctor/blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
-import 'package:onedosehealth/model/doctor/bg_measurements_view_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/core.dart';
-import '../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import 'popup/bg_popup.dart';
+import '../../../../core/core.dart';
+import '../../../../model/doctor/bg_measurements_view_model.dart';
+import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
+import '../../utils/popup/bg_popup.dart';
+import '../viewmodel/blood_glucose_patient_detail_vm.dart';
 
-class BgMeasurementListWidget extends StatefulWidget {
+class MeasurementList extends StatefulWidget {
   final List<BgMeasurementViewModel> bgMeasurements;
   final ScrollController scrollController;
   final bool useStickyGroupSeparatorsValue;
-
-  BgMeasurementListWidget({
-    this.bgMeasurements,
-    this.scrollController,
-    this.useStickyGroupSeparatorsValue,
-  });
-
+  MeasurementList(
+      {this.bgMeasurements,
+      this.scrollController,
+      this.useStickyGroupSeparatorsValue});
   @override
   _BgMeasurementListWidgetState createState() =>
       _BgMeasurementListWidgetState();
 }
 
-class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
+class _BgMeasurementListWidgetState extends State<MeasurementList> {
   @override
   Widget build(BuildContext context) {
     return GroupedListView<BgMeasurementViewModel, DateTime>(
@@ -75,6 +72,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
       callback: (BgMeasurementViewModel data) {
         var prov =
             Provider.of<BloodGlucosePatientDetailVm>(context, listen: false);
+
         if (prov.selected == TimePeriodFilter.DAILY) {
           prov.fetchScrolledData(data.date);
         }
@@ -84,16 +82,14 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
 }
 
 Widget measurementList(
-  BgMeasurementViewModel bgMeasurementViewModel,
-  BuildContext context,
-) {
+    BgMeasurementViewModel bgMeasurementViewModel, BuildContext context) {
   return GestureDetector(
     onTap: () => showDialog(
-      context: context,
-      builder: (_) {
-        return DoctorBgTaggerPopUp(data: bgMeasurementViewModel);
-      },
-    ),
+        context: context,
+        builder: (_) {
+          print(bgMeasurementViewModel.note);
+          return DoctorBgTaggerPopUp(data: bgMeasurementViewModel);
+        }),
     child: Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
       decoration: BoxDecoration(

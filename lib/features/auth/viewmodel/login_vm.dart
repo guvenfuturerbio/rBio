@@ -89,7 +89,8 @@ class LoginScreenVm extends ChangeNotifier {
 
   fetchKvkkFormState() async {
     log(getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.CT_AUTH_TOKEN));
+            .getString(SharedPreferencesKeys.CT_AUTH_TOKEN) ??
+        '');
     this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
     notifyListeners();
   }
@@ -246,18 +247,16 @@ class LoginScreenVm extends ChangeNotifier {
         await UtilityManager().setTokenToServer(_guvenLogin.access_token);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
         this._progress = LoadingProgress.DONE;
-        UserCredential userCredential = await UserService()
-            .signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
-        await UserService()
-            .saveAndRetrieveToken(userCredential.user, 'patientLogin');
-        await UserService().handleSuccessfulLogin(userCredential.user);
+        // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
+        // await UserService().saveAndRetrieveToken(userCredential.user, 'patientLogin');
+        // await UserService().handleSuccessfulLogin(userCredential.user);
         final doctorResponse =
             await getIt<DoctorRepository>().login('dr.alev.eken', '12345');
         await getIt<ISharedPreferencesManager>().setString(
             SharedPreferencesKeys.DOCTOR_TOKEN, doctorResponse.accessToken);
         hideDialog(mContext);
         notifyListeners();
-        AnalyticsManager().sendEvent(new LoginSuccessEvent());
+        AnalyticsManager().sendEvent(LoginSuccessEvent());
         final term = Atom.queryParameters['then'];
         if (term != null && term != '') {
           Atom.to(term, isReplacement: true);

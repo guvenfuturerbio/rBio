@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
 import '../../../chronic_tracking/utils/glucose_margins_filter.dart';
 import '../../notifiers/bg_measurements_notifiers.dart';
 import '../../notifiers/patient_notifiers.dart';
@@ -16,7 +16,10 @@ import '../../utils/sliders/range_setter_slider.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class PatientDetailPageViewModel with ChangeNotifier {
+class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
+  @override
+  BuildContext mContext;
+
   BuildContext context;
   StateProcess _stateProcessPatientDetail;
   StateProcess _stateProcessPatientMeasurements;
@@ -27,12 +30,13 @@ class PatientDetailPageViewModel with ChangeNotifier {
   bool isDataLoading = false;
   DateTime _scrolledDate;
 
-  PatientDetailPageViewModel({BuildContext context, int patientId}) {
+  BloodGlucosePatientDetailVm({BuildContext context, int patientId}) {
     this.context = context;
     this._patientId = patientId;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await update();
     });
+
     // NotificationHandler().addListener(() async {
     //   if (!_disposed) {
     //     var message = NotificationHandler().message;
@@ -849,7 +853,7 @@ class PatientDetailPageViewModel with ChangeNotifier {
       context: tcontext,
       barrierColor: Colors.black12,
       builder: (ctx) =>
-          ChangeNotifierProvider<PatientDetailPageViewModel>.value(
+          ChangeNotifierProvider<BloodGlucosePatientDetailVm>.value(
         value: this,
         child: ChartFilterPopUp(
           height: ctx.HEIGHT * .52,

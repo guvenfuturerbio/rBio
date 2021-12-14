@@ -7,7 +7,7 @@ abstract class DoctorApiService {
   Future<DoctorLoginResponse> login(String userId, String password);
   Future<List<Appointment>> getAllAppointment(
       AppointmentFilter appointmentFilter);
-  Future<List<DoctorPatientModel>> getMyPatients(GetMyPatientFilter getMyPatientFilter);
+  Future<List<DoctorPatientModel>> getMySugarPatient(GetMyPatientFilter getMyPatientFilter);
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId);
   Future<bool> updateMyPatientLimit(
       int patientId, UpdateMyPatientLimit updateMyPatientLimit);

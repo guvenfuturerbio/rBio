@@ -10,20 +10,21 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
-import '../../../../../generated/l10n.dart';
 import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
 import '../view_model/bg_progress_page_view_model.dart';
 import 'blood_glucose_tagger/bg_tagger_pop_up.dart';
 
 class BgMeasurementListWidget extends StatefulWidget {
-  final List<BgMeasurementViewModel> bgMeasurements;
+  final List<BgMeasurementGlucoseViewModel> bgMeasurements;
   final ScrollController scrollController;
   final bool useStickyGroupSeparatorsValue;
-  BgMeasurementListWidget(
-      {this.bgMeasurements,
-      this.scrollController,
-      this.useStickyGroupSeparatorsValue});
+
+  BgMeasurementListWidget({
+    this.bgMeasurements,
+    this.scrollController,
+    this.useStickyGroupSeparatorsValue,
+  });
+
   @override
   _BgMeasurementListWidgetState createState() =>
       _BgMeasurementListWidgetState();
@@ -33,19 +34,21 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
   @override
   Widget build(BuildContext context) {
     print('------------------------>Length:${widget.bgMeasurements.length}');
-    return GroupedListView<BgMeasurementViewModel, DateTime>(
-      elements: widget.bgMeasurements ?? <BgMeasurementViewModel>[],
+    return GroupedListView<BgMeasurementGlucoseViewModel, DateTime>(
+      elements: widget.bgMeasurements ?? <BgMeasurementGlucoseViewModel>[],
       order: GroupedListOrder.DESC,
       controller: widget.scrollController,
       scrollDirection: Axis.vertical,
       floatingHeader: true,
       padding: EdgeInsets.zero,
       useStickyGroupSeparators: widget.useStickyGroupSeparatorsValue ?? false,
-      groupBy: (BgMeasurementViewModel bgMeasurementViewModel) => DateTime(
-          bgMeasurementViewModel.date.year,
-          bgMeasurementViewModel.date.month,
-          bgMeasurementViewModel.date.day),
-      groupHeaderBuilder: (BgMeasurementViewModel bgMeasurementViewModel) {
+      groupBy: (BgMeasurementGlucoseViewModel bgMeasurementViewModel) =>
+          DateTime(
+              bgMeasurementViewModel.date.year,
+              bgMeasurementViewModel.date.month,
+              bgMeasurementViewModel.date.day),
+      groupHeaderBuilder:
+          (BgMeasurementGlucoseViewModel bgMeasurementViewModel) {
         return Container(
           alignment: Alignment.center,
           width: double.infinity,
@@ -72,10 +75,10 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
           ),
         );
       },
-      itemBuilder: (_, BgMeasurementViewModel bgMeasurementViewModel) {
+      itemBuilder: (_, BgMeasurementGlucoseViewModel bgMeasurementViewModel) {
         return measurementList(bgMeasurementViewModel, context);
       },
-      callback: (BgMeasurementViewModel data) {
+      callback: (BgMeasurementGlucoseViewModel data) {
         Provider.of<BgProgressPageViewModel>(context, listen: false)
             .fetchScrolledData(data.date);
       },
@@ -83,8 +86,8 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
   }
 }
 
-Widget measurementList(
-    BgMeasurementViewModel bgMeasurementViewModel, BuildContext context) {
+Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
+    BuildContext context) {
   return Slidable(
     actionPane: SlidableDrawerActionPane(),
     actionExtentRatio: 0.25,
@@ -235,7 +238,7 @@ Widget measurementList(
 }
 
 BoxDecoration measurementListBoxDecoration(
-    BgMeasurementViewModel bgMeasurementViewModel) {
+    BgMeasurementGlucoseViewModel bgMeasurementViewModel) {
   return BoxDecoration(
     shape: bgMeasurementViewModel.tag == 1 || bgMeasurementViewModel.tag == 2
         ? BoxShape.circle

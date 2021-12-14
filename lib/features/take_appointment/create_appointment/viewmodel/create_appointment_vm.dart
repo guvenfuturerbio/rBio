@@ -1,13 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:turkish/turkish.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/home/filter_tenants_response.dart';
-import '../../../../model/home/take_appointment/filter_departments_request.dart';
-import '../../../../model/home/take_appointment/filter_departments_response.dart';
-import '../../../../model/home/take_appointment/filter_tenants_request.dart';
 import '../../../../model/model.dart';
 
 enum Fields { DEPARTMENT, TENANTS, DOCTORS, RELATIVE }

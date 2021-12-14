@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../../chronic_tracking/utils/glucose_margins_filter.dart';
-import '../pages/patient_detail_page/patient_detail_page_view_model.dart';
+import '../blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
 
 class ChartFilterPopUp extends StatelessWidget {
   final double width;
@@ -21,7 +21,7 @@ class ChartFilterPopUp extends StatelessWidget {
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.all(10),
         elevation: 0,
-        child: Consumer<PatientDetailPageViewModel>(builder: (_, value, __) {
+        child: Consumer<BloodGlucosePatientDetailVm>(builder: (_, value, __) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: context.WIDTH * .03),
             child: SizedBox(

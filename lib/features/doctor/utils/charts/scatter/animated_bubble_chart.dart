@@ -5,7 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
-import '../../../pages/patient_detail_page/patient_detail_page_view_model.dart';
+import '../../../blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
 import '../../sample_view.dart';
 
 /// Renders the Scatter chart sample with dynamically updated data points.
@@ -49,7 +49,7 @@ class _AnimationScatterDefaultState extends SampleViewState {
         zoomMode: _zoomModeType,
         enablePanning: true,
         enableMouseWheelZooming: model.isWeb ? true : false);
-    return Consumer<PatientDetailPageViewModel>(
+    return Consumer<BloodGlucosePatientDetailVm>(
         builder: (context, value, child) {
       _selected = value.selected;
       _startDate = value.startDate;

@@ -625,6 +625,7 @@
   "stop": "Dur",
   "strip_detected_message": "%1$ adet okuma tespit ettik. %2$ adet stripi silmek için tıklayın.",
   "strip_number": "Strip Sayısı",
+  "strip_number_2": "Strip sayısı",
   "strip_page_info_message": "Strip sayısı her şeker ölçümünde otomatik olarak azalır. Striplerinizin kaybolması veya bozulması durumunda sayıyı manuel olarak azaltmanız gerekir.",
   "strip_tracker": "Strip Takibi",
   "strip_tracking": "Strip Takibi",
@@ -717,5 +718,14 @@
   "not_found": "Bulunamadı",
   "something_went_wrong" : "Bir şeyler ters gitti",
   "turn_back": "Geriye Dön",
-  "waiting": "Bekleniyor"
+  "waiting": "Bekleniyor",
+
+  "bg_measurement_tracking": "Kan Şekeri Takibi",
+  "weight_tracking": "Kilo Takibi",
+  "blood_pressure_tracking": "Tansiyon Takibi",
+  "treatment_process": "Tedavi Süreci",
+  "critical_metrics": "Kritik ölçümler",
+  "from_newest" : "En yeniden",
+  "from_oldest" : "En eskiden",
+  "sort_by": "Sırala"
 }

@@ -1,21 +1,20 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'save_and_retrieve_token_model.g.dart';
-
-@JsonSerializable()
 class SaveAndRetrieveTokenModel {
-  static const TEXT = "text";
-  static const MAIL = "mail";
+  String token;
+  String accession;
 
-  @JsonKey(name: TEXT)
-  String text;
-  @JsonKey(name: MAIL)
-  String mail;
+  SaveAndRetrieveTokenModel({
+    this.token,
+    this.accession,
+  });
 
-  factory SaveAndRetrieveTokenModel.fromJson(Map<String, dynamic> json) => _$SaveAndRetrieveTokenModelFromJson(json);
+  factory SaveAndRetrieveTokenModel.fromJson(Map<String, dynamic> json) =>
+      SaveAndRetrieveTokenModel(
+        token: json['token'] as String,
+        accession: json['accession'] as String,
+      );
 
-  Map<String, dynamic> toJson() => _$SaveAndRetrieveTokenModelToJson(this);
-
-  SaveAndRetrieveTokenModel(
-      {this.text, this.mail});
-
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'token': token,
+        'accession': accession,
+      };
 }

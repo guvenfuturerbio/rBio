@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/core.dart';
 
-class BgMeasurementViewModel {
+class BgMeasurementGlucoseViewModel {
   final GlucoseData bgMeasurement;
 
-  BgMeasurementViewModel({this.bgMeasurement});
+  BgMeasurementGlucoseViewModel({this.bgMeasurement});
 
   DateTime get date {
     DateTime dateTime = new DateTime(

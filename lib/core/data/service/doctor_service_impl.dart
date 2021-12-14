@@ -13,22 +13,14 @@ class DoctorApiServiceImpl extends DoctorApiService {
       });
 
   @override
-  Future<DoctorLoginResponse> login(String userId, String password) async {
-    final $headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    final response = await helper.dioPost(
-      R.endpoints.dc_Login,
-      <String, dynamic>{
-        'client_id': SecretUtils.instance.get(SecretKeys.DOCTOR_CLIENT_ID),
-        'grant_type': "password",
-        'client_secret':
-            SecretUtils.instance.get(SecretKeys.DOCTOR_CLIENT_SECRET),
-        'scope': "openid",
-        'username': userId,
-        'password': password
-      },
-      options: emptyOptions..headers.addAll($headers),
-    );
-    return DoctorLoginResponse.fromJson(response);
+  Future<DoctorLoginResponse> login(String userName, String password) async {
+    final response =
+        await helper.postGuven(R.endpoints.dc_Login(userName, password), {});
+    if (response.isSuccessful == true) {
+      return DoctorLoginResponse.fromJson(response.datum);
+    } else {
+      throw Exception('/login : ${response.isSuccessful}');
+    }
   }
 
   @override
@@ -48,10 +40,10 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<DoctorPatientModel>> getMyPatients(
+  Future<List<DoctorPatientModel>> getMySugarPatient(
       GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
-        R.endpoints.dc_getMyPatients, getMyPatientFilter.toJson(),
+        R.endpoints.dc_getMySugarPatient, getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum

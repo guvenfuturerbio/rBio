@@ -29,8 +29,9 @@ class DoctorRepository {
   Future<List<Appointment>> getAllAppointment(
           AppointmentFilter appointmentFilter) =>
       apiService.getAllAppointment(appointmentFilter);
-  Future<List<DoctorPatientModel>> getMyPatients(GetMyPatientFilter getMyPatientFilter) =>
-      apiService.getMyPatients(getMyPatientFilter);
+  Future<List<DoctorPatientModel>> getMySugarPatient(
+          GetMyPatientFilter getMyPatientFilter) =>
+      apiService.getMySugarPatient(getMyPatientFilter);
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId) =>
       apiService.getMyPatientDetail(patientId);
   Future<bool> updateMyPatientLimit(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../pages/patient_detail_page/patient_detail_page_view_model.dart';
+import '../blood_glucose_patient_detail/viewmodel/blood_glucose_patient_detail_vm.dart';
 
 class CustomBarPie extends StatelessWidget {
   final double width;
@@ -16,7 +16,7 @@ class CustomBarPie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PatientDetailPageViewModel>(
+    return Consumer<BloodGlucosePatientDetailVm>(
       builder: (context, value, child) {
         return Container(
           width: width,
