@@ -1,23 +1,35 @@
-import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/constants.dart';
+import '../../../../core/core.dart';
+import '../viewmodel/create_appointment_vm.dart';
 
-Column historyDoctorItem(String doctorName, String doctorImageUrl) {
-  return Column(
-    children: [
-      Container(
-        width: Atom.width * 0.12,
-        child: Image.network(R.image.circlevatar),
-      ),
-      Container(
-        width: Atom.width * .1,
-        child: Text(
-          doctorName,
-          style: TextStyle(color: Colors.grey, overflow: TextOverflow.ellipsis),
-          maxLines: 1,
+Widget historyDoctorItem(BuildContext context, String doctorName,
+    CreateAppointmentVm vm, int index) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    child: GestureDetector(
+      onTap: () {
+        vm.fillFromFavorites(index);
+      },
+      child: SizedBox(
+        width: Atom.width * .15,
+        child: Column(
+          children: [
+            ClipOval(
+              child: Image.network(vm.doctorsImageUrls[index],
+                  fit: BoxFit.cover,
+                  width: Atom.width * .14,
+                  height: Atom.width * .14),
+            ),
+            Text(
+              doctorName,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              style: context.xHeadline5.copyWith(color: getIt<ITheme>().grey),
+            )
+          ],
         ),
-      )
-    ],
+      ),
+    ),
   );
 }

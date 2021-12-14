@@ -22,7 +22,7 @@ import '../chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 
 class UserService {
   String get token => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.CT_AUTH_TOKEN);
+      .getString(SharedPreferencesKeys.JWT_TOKEN);
   Person person;
   static const String APPLICATION_CONSENT_FORM = "APPLICATION_CONSENT_FORM";
 
@@ -98,7 +98,7 @@ class UserService {
     );
 
     await getIt<ISharedPreferencesManager>().setString(
-        SharedPreferencesKeys.CT_AUTH_TOKEN, response.datum["access_token"]);
+        SharedPreferencesKeys.JWT_TOKEN, response.datum["access_token"]);
   }
 
   Future<AuthCredential> googleSignInService() async {

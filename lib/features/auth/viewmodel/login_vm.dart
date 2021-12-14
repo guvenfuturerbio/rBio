@@ -5,7 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/notifiers/user_notifier.dart';
+import 'package:onedosehealth/features/home/viewmodel/home_vm.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/src/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,7 +35,7 @@ class LoginScreenVm extends ChangeNotifier {
 
   bool _rememberMeChecked;
 
-  GuvenLogin _guvenLogin;
+  RbioLoginResponse _guvenLogin;
 
   bool _needForceUpdate;
 
@@ -89,7 +92,7 @@ class LoginScreenVm extends ChangeNotifier {
 
   fetchKvkkFormState() async {
     log(getIt<ISharedPreferencesManager>()
-            .getString(SharedPreferencesKeys.CT_AUTH_TOKEN) ??
+            .getString(SharedPreferencesKeys.JWT_TOKEN) ??
         '');
     this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
     notifyListeners();
@@ -241,20 +244,16 @@ class LoginScreenVm extends ChangeNotifier {
 
       try {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
-        await saveLoginInfo(username, password, guvenLogin.access_token);
+        getIt<UserNotifier>().userTypeFetcher(_guvenLogin);
+        await saveLoginInfo(username, password, guvenLogin.token.accessToken);
         await getIt<Repository>().getPatientDetail();
         await getIt<UserManager>().getUserProfile();
-        await UtilityManager().setTokenToServer(_guvenLogin.access_token);
+        await UtilityManager().setTokenToServer(_guvenLogin.token.accessToken);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
         this._progress = LoadingProgress.DONE;
         // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
         // await UserService().saveAndRetrieveToken(userCredential.user, 'patientLogin');
         // await UserService().handleSuccessfulLogin(userCredential.user);
-        final doctorResponse =
-            await getIt<DoctorRepository>().login('dr.alev.eken', '12345');
-        await getIt<ISharedPreferencesManager>().setString(
-            SharedPreferencesKeys.DOCTOR_TOKEN,
-            doctorResponse.token.accessToken);
         hideDialog(mContext);
         notifyListeners();
         AnalyticsManager().sendEvent(LoginSuccessEvent());
@@ -262,6 +261,7 @@ class LoginScreenVm extends ChangeNotifier {
         if (term != null && term != '') {
           Atom.to(term, isReplacement: true);
         }
+        mContext.read<HomeVm>().init();
         Atom.to(PagePaths.MAIN, isReplacement: true);
         var devices = await getIt<BleDeviceManager>().getPairedDevices();
         if (devices.isNotEmpty) {
@@ -308,7 +308,7 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  GuvenLogin get guvenLogin => this._guvenLogin;
+  RbioLoginResponse get guvenLogin => this._guvenLogin;
 
   Future<void> saveLoginInfo(
       String userName, String password, String token) async {

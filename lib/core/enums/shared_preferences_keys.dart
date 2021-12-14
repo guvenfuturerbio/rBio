@@ -18,9 +18,7 @@ enum SharedPreferencesKeys {
   DELETED_WIDGETS,
   WIDGET_QUERY,
   SYMPTOM_AUTH_TOKEN,
-  CT_AUTH_TOKEN,
   PAIRED_DEVICES,
-  DOCTOR_TOKEN,
 
   hba1cList,
   medicines,

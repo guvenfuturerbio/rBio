@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
 import '../../../core/core.dart';
+import '../../../core/notifiers/user_notifier.dart';
 import '../model/banner_model.dart';
 import '../view/home_screen.dart';
 import '../widgets/home_slider.dart';
@@ -34,21 +35,26 @@ class HomeVm extends ChangeNotifier {
   List<BannerTabsModel> bannerTabsModel = [];
   SpringController springController;
 
-  HomeVm({this.mContext}) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      springController = SpringController(initialAnim: Motion.mirror);
-      widgetsInUse = await widgets();
-      await fetchWidgets();
-      bannerTabsModel =
-          await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
-      notifyListeners();
-      try {
-        print("BURDAYIM");
-        getIt<SymptomRepository>().getSymtptomsApiToken();
-      } catch (e) {
-        print(e);
-      }
-    });
+  HomeVm({this.mContext});
+
+  Future<void> init() async {
+    final widgetsBinding = WidgetsBinding.instance;
+    if (widgetsBinding != null) {
+      widgetsBinding.addPostFrameCallback((_) async {
+        springController = SpringController(initialAnim: Motion.mirror);
+        widgetsInUse = await widgets();
+        await fetchWidgets();
+        bannerTabsModel =
+            await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
+        notifyListeners();
+        try {
+          print("BURDAYIM");
+          getIt<SymptomRepository>().getSymtptomsApiToken();
+        } catch (e) {
+          print(e);
+        }
+      });
+    }
   }
 
   // Uygulama ilk açıldığında, silinmiş widgetların keylerini tutan veriyi shared preferences içinden çekip kullanılan widget listesini dolduran method.
@@ -227,24 +233,27 @@ class HomeVm extends ChangeNotifier {
         ),
 
         //
-        MyReorderableWidget(
-          key: _key9,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key9);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.DOCTOR_HOME);
-              }
-            },
-            child: RbioUserTile(
-              name: 'Doctor Home',
-              leadingImage: UserLeadingImage.Circle,
-              trailingIcon: UserTrailingIcons.RightArrow,
+        Visibility(
+          visible: getIt<UserNotifier>().isDoctor,
+          child: MyReorderableWidget(
+            key: _key9,
+            body: GestureDetector(
               onTap: () {
-                Atom.to(PagePaths.DOCTOR_HOME);
+                if (isForDelete) {
+                  addWidget(_key9);
+                } else if (status == ShakeMod.notShaken) {
+                  Atom.to(PagePaths.DOCTOR_HOME);
+                }
               },
-              width: Atom.width,
+              child: RbioUserTile(
+                name: 'Doctor Home',
+                leadingImage: UserLeadingImage.Circle,
+                trailingIcon: UserTrailingIcons.RightArrow,
+                onTap: () {
+                  Atom.to(PagePaths.DOCTOR_HOME);
+                },
+                width: Atom.width,
+              ),
             ),
           ),
         ),
@@ -312,7 +321,19 @@ class HomeVm extends ChangeNotifier {
                 if (isForDelete) {
                   addWidget(_key4);
                 } else if (status == ShakeMod.notShaken) {
-                  Atom.to(PagePaths.MEASUREMENT_TRACKING);
+                  getIt<UserNotifier>().isCronic
+                      ? Atom.to(PagePaths.MEASUREMENT_TRACKING)
+                      : Atom.show(GuvenAlert(
+                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                          title: GuvenAlert.buildTitle(
+                              "Kronik takip özelliğini kullanmak için lütfen ${LocaleProvider.current.phone_guven} numarasını arayınız"),
+                          actions: [
+                            GuvenAlert.buildMaterialAction(
+                                LocaleProvider.current.ok, () {
+                              Atom.dismiss();
+                            })
+                          ],
+                        ));
                 }
               },
               child: VerticalCard(

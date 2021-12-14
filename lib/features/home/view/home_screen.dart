@@ -19,6 +19,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    if (!Atom.isWeb) {
+      DeepLinkHandler().initDynamicLinks(context);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<HomeVm>(
       builder: (
@@ -105,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 print(getIt<ProfileStorageImpl>().getFirst().id);
                 log(getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.DOCTOR_TOKEN));
+                    .getString(SharedPreferencesKeys.JWT_TOKEN));
               },
             ),
           ),

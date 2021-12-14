@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../features/chronic_tracking/lib/notifiers/notification_handler_new.dart';
 import '../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'core.dart';
 import 'data/imports/cronic_tracking.dart';
@@ -58,6 +58,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt
       .registerSingleton<ISharedPreferencesManager>(SharedPreferencesManager());
   getIt.registerSingleton<UserManager>(UserManagerImpl());
+  getIt.registerSingleton<UserNotifier>(UserNotifier());
 
   getIt.registerSingleton<LocalCacheService>(LocalCacheServiceImpl());
   getIt.registerSingleton<ApiService>(ApiServiceImpl(getIt<IDioHelper>()));
@@ -93,8 +94,8 @@ Future<void> setupLocator(AppConfig appConfig) async {
       apiService: getIt<ChronicTrackingApiService>(),
       localCacheService: getIt<LocalCacheService>()));
 
-  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
-  getIt<PushedNotificationHandlerNew>().initializeGCM();
+//  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
+  // getIt<PushedNotificationHandlerNew>().initializeGCM();
 
   if (!Atom.isWeb) {
     getIt.registerSingleton<FlutterReactiveBle>(FlutterReactiveBle());

@@ -4,7 +4,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   ChronicTrackingApiServiceImpl(IDioHelper helper) : super(helper);
 
   String get getChronicTrackingToken => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.CT_AUTH_TOKEN);
+      .getString(SharedPreferencesKeys.JWT_TOKEN);
   Options get authOptions => Options(headers: {
         'Authorization': getChronicTrackingToken,
         'Lang': Intl.getCurrentLocale()

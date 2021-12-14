@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,13 @@ import 'features/doctor/notifiers/bg_measurements_notifiers.dart';
 import 'features/doctor/notifiers/patient_notifiers.dart';
 import 'features/home/viewmodel/home_vm.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+  LoggerUtils.instance.i('Handling a background message ${message.messageId}');
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appConfig = DefaultConfig();
@@ -25,6 +33,7 @@ Future<void> main() async {
   await setupLocator(appConfig);
   _setupLogging();
   _initFirebaseMessaging();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(

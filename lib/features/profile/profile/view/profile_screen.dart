@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -69,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
 
               //
-              Container(
+              /*Container(
                 height: Atom.height * 0.25,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -97,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-              ),
+              ),*/
 
               //
               _buildVerticalGap(),
@@ -130,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
 
-                    if (!Atom.isWeb)
+                    if (!Atom.isWeb && getIt<UserNotifier>().isCronic)
                       _buildListItem(
                         LocaleProvider.current.devices,
                         () {

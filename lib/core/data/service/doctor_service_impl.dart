@@ -4,7 +4,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   DoctorApiServiceImpl(IDioHelper helper) : super(helper);
 
   String get getToken => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.DOCTOR_TOKEN);
+      .getString(SharedPreferencesKeys.JWT_TOKEN);
   Options get emptyOptions => Options(headers: {});
   Options get authOptions => Options(headers: {
         'Authorization': getToken,

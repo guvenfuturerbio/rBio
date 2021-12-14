@@ -8,7 +8,7 @@ import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserManager {
-  Future<GuvenLogin> login(String userName, String password);
+  Future<RbioLoginResponse> login(String userName, String password);
   Future<void> saveLoginInfo(
       String userName, String password, bool rememberMeChecked, String token);
   Future<UserLoginInfo> getSavedLoginInfo();
@@ -38,17 +38,13 @@ abstract class UserManager {
 
 class UserManagerImpl extends UserManager {
   @override
-  Future<GuvenLogin> login(String userName, String password) async {
+  Future<RbioLoginResponse> login(String userName, String password) async {
     final response = await getIt<Repository>().login(
-      SecretUtils.instance.get(SecretKeys.CLIENT_ID),
-      R.strings.grantType,
-      SecretUtils.instance.get(SecretKeys.CLIENT_SECRET),
-      R.strings.scope,
       userName,
       password,
     );
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.JWT_TOKEN, response.access_token);
+        .setString(SharedPreferencesKeys.JWT_TOKEN, response.token.accessToken);
     return response;
   }
 

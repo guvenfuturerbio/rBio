@@ -377,7 +377,7 @@ class _BloodGlucosePatientListScreenState
                               Expanded(
                                 child: RbioBadge(
                                   isBigSize: false,
-                                  image: R.image.attentionSvg,
+                                  image: R.image.clock_icon,
                                 ),
                               ),
 

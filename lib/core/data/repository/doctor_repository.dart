@@ -22,8 +22,6 @@ class DoctorRepository {
     @required this.localCacheService,
   });
 
-  Future<RbioLoginResponse> login(String userId, String password) =>
-      apiService.login(userId, password);
   Future<List<Appointment>> getAllAppointment(
           AppointmentFilter appointmentFilter) =>
       apiService.getAllAppointment(appointmentFilter);
