@@ -1,20 +1,22 @@
+import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/features/doctor/blood_glucose_patient_detail/widget/measurement_list.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../../chronic_tracking/progress_sections/glucose_progress/utils/bg_measurement_list.dart';
 import '../../utils//widgets.dart';
-import '../../utils/graph_header_section.dart';
+import '../widget/graph_header_section.dart';
 import '../../utils/hypo_hyper_edit/hypo_hyper_edit_view_model.dart';
 import '../viewmodel/blood_glucose_patient_detail_vm.dart';
+import '../widget/measurement_list.dart';
 
 part '../widget/user_detail_card.dart';
 
 class BloodGlucosePatientDetailScreen extends StatefulWidget {
+  int patientId;
+
   BloodGlucosePatientDetailScreen({Key key}) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class _BloodGlucosePatientDetailScreenState
   Animation<double> sizeAnimation;
 
   final _controller = ScrollController();
-  final _navigatorKey = GlobalKey<NavigatorState>();
+  final _dropdownBannerKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -55,17 +57,27 @@ class _BloodGlucosePatientDetailScreenState
 
   @override
   Widget build(BuildContext context) {
+    try {
+      widget.patientId = int.parse(Atom.queryParameters['patientId']);
+    } catch (_) {
+      return RbioRouteError();
+    }
+
     return ChangeNotifierProvider<BloodGlucosePatientDetailVm>(
-      create: (context) => BloodGlucosePatientDetailVm(),
+      create: (context) => BloodGlucosePatientDetailVm(
+          context: context, patientId: widget.patientId),
       child: Consumer<BloodGlucosePatientDetailVm>(
         builder: (
           BuildContext context,
           BloodGlucosePatientDetailVm vm,
           Widget child,
         ) {
-          return RbioScaffold(
-            appbar: _buildAppBar(),
-            body: _buildBody(vm),
+          return DropdownBanner(
+            navigatorKey: _dropdownBannerKey,
+            child: RbioScaffold(
+              appbar: _buildAppBar(),
+              body: _buildBody(vm),
+            ),
           );
         },
       ),
@@ -102,31 +114,21 @@ class _BloodGlucosePatientDetailScreenState
             //
             _buildExpandedUser(),
 
-            //
-            ClipRRect(
-              borderRadius: R.sizes.borderRadiusCircular,
-              child: SizeTransition(
-                sizeFactor: sizeAnimation,
-                child: _UserDetailCard(
-                  patientDetail: DoctorPatientDetailModel(),
-                  targetRangePresses: () {},
-                  hypoEdit: () {},
-                  hyperEdit: () {},
-                ),
-              ),
-            ),
-
-            //
-            vm.stateProcessPatientDetail == StateProcess.LOADING
-                ? Shimmer.fromColors(
-                    child: patientDetail(
-                        context: context,
-                        targetRangePresses: () {},
-                        hyperEdit: () {}),
-                    baseColor: Colors.grey[300],
-                    highlightColor: Colors.grey[100])
-                : patientDetail(
+            if (vm.stateProcessPatientDetail == StateProcess.LOADING) ...[
+              Shimmer.fromColors(
+                child: patientDetail(
                     context: context,
+                    targetRangePresses: () {},
+                    hyperEdit: () {}),
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[100],
+              ),
+            ] else ...[
+              ClipRRect(
+                borderRadius: R.sizes.borderRadiusCircular,
+                child: SizeTransition(
+                  sizeFactor: sizeAnimation,
+                  child: _UserDetailCard(
                     patientDetail: vm.patientDetail,
                     targetRangePresses: () {
                       vm.showNormalRangeEdit();
@@ -138,10 +140,18 @@ class _BloodGlucosePatientDetailScreenState
                       vm.showHyperEdit();
                     },
                   ),
+                ),
+              ),
+            ],
 
             //
-            if (!vm.isDataLoading) ...{
-              BgGraphHeaderSection(value: vm, controller: _controller),
+            if (!vm.isDataLoading) ...[
+              BgGraphHeaderSection(
+                value: vm,
+                controller: _controller,
+              ),
+
+              //
               SizedBox(
                 height: context.HEIGHT * .3,
                 child: MeasurementList(
@@ -154,15 +164,16 @@ class _BloodGlucosePatientDetailScreenState
                           : false,
                 ),
               ),
-            } else ...{
+            ] else ...[
               Shimmer.fromColors(
-                  child: patientDetail(
-                      context: context,
-                      targetRangePresses: () {},
-                      hyperEdit: () {}),
-                  baseColor: Colors.grey[300],
-                  highlightColor: Colors.grey[100])
-            }
+                child: patientDetail(
+                    context: context,
+                    targetRangePresses: () {},
+                    hyperEdit: () {}),
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[100],
+              ),
+            ],
           ],
         ),
       );

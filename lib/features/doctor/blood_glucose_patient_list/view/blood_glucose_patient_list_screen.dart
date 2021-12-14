@@ -271,7 +271,12 @@ class _BloodGlucosePatientListScreenState
   Widget _buildCard(DoctorPatientModel model) {
     return InkWell(
       onTap: () {
-        Atom.to(PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL);
+        Atom.to(
+          PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
+          queryParameters: {
+            'patientId': model.id.toString(),
+          },
+        );
       },
       child: Card(
         elevation: 0,

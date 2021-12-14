@@ -20,7 +20,6 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
   @override
   BuildContext mContext;
 
-  BuildContext context;
   StateProcess _stateProcessPatientDetail;
   StateProcess _stateProcessPatientMeasurements;
   DoctorPatientDetailModel _patientDetail;
@@ -30,8 +29,11 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
   bool isDataLoading = false;
   DateTime _scrolledDate;
 
-  BloodGlucosePatientDetailVm({BuildContext context, int patientId}) {
-    this.context = context;
+  BloodGlucosePatientDetailVm({
+    @required BuildContext context,
+    @required int patientId,
+  }) {
+    this.mContext = context;
     this._patientId = patientId;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await update();
@@ -123,10 +125,10 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
     _stateProcessPatientDetail = StateProcess.LOADING;
     notifyListeners();
     try {
-      await Provider.of<PatientNotifiers>(context, listen: false)
+      await Provider.of<PatientNotifiers>(mContext, listen: false)
           .fetchPatientDetail(patientId: _patientId);
       this._patientDetail =
-          Provider.of<PatientNotifiers>(context, listen: false).patientDetail;
+          Provider.of<PatientNotifiers>(mContext, listen: false).patientDetail;
       _stateProcessPatientDetail = StateProcess.DONE;
       notifyListeners();
     } catch (e) {
@@ -427,11 +429,11 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
   Future<void> setStartDate(DateTime d) async {
     this._startDate = d;
     this._currentDateIndex = 0;
-    await Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+    await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsInDateRange(
             startDate, endDate.add(Duration(days: 1)));
     this.bgMeasurements =
-        Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+        Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
     print(bgMeasurements.length);
     //fetchScrolledDailyData();
@@ -448,11 +450,11 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
   Future<void> setEndDate(DateTime d) async {
     this._endDate = d;
     this._currentDateIndex = 0;
-    await Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+    await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsInDateRange(
             startDate, endDate.add(Duration(days: 1)));
     this.bgMeasurements =
-        Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+        Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
     //fetchScrolledDailyData();
     notifyListeners();
@@ -493,7 +495,7 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
   void fetchScrolledDailyData() {
     this.bgMeasurementsDailyData.clear();
     List<DateTime> dateList =
-        Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+        Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurementDates;
     //print(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
@@ -693,10 +695,10 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
   }
 
   Future<void> fetchBgMeasurements() async {
-    await Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+    await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurements(patientId: _patientId);
     this.bgMeasurements =
-        Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+        Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
     notifyListeners();
   }
@@ -740,15 +742,15 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
   updateBgMeasurement() async {
     if (selected == LocaleProvider.current.daily ||
         selected == LocaleProvider.current.specific) {
-      await Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+      await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
           .fetchBgMeasurements(patientId: _patientId);
     } else {
-      await Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+      await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
           .fetchBgMeasurementsInDateRange(
               startDate, endDate.add(Duration(days: 1)));
     }
     this.bgMeasurements =
-        Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+        Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
     this.bgMeasurements.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
@@ -766,7 +768,7 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
         (!isFilterSelected(GlucoseMarginsFilter.OTHER) &&
             element.tag != 1 &&
             element.tag != 2));
-    Provider.of<BgMeasurementsNotifierDoc>(context, listen: false)
+    Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsDateList(bgMeasurements);
     this.bgMeasurementsDailyData.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
@@ -792,60 +794,65 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier with RbioVm {
     }
   }
 
-  resetFilterState() {
+  void resetFilterState() {
     _filterState = <GlucoseMarginsFilter, bool>{};
     notifyListeners();
   }
 
-  showHypoHyperSetting() {
+  void showHypoHyperSetting() {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return HypoHyperEdit();
-        }).then((value) => value != null && value ? update() : null);
+      context: mContext,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return HypoHyperEdit();
+      },
+    ).then((value) => value != null && value ? update() : null);
   }
 
   showHypoEdit() {
     showDialog(
-        context: context,
+        context: mContext,
         builder: (BuildContext context) {
           return HypoPicker();
         }).then((value) => value != null && value ? update() : null);
   }
 
-  showHyperEdit() {
+  void showHyperEdit() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return HyperPicker();
-        }).then((value) => value != null && value ? update() : null);
+      context: mContext,
+      builder: (BuildContext context) {
+        return HyperPicker();
+      },
+    ).then((value) => value != null && value ? update() : null);
   }
 
-  showNormalRangeEdit() {
+  void showNormalRangeEdit() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return RangeSelectionSlider();
-        }).then((value) => value != null && value ? update() : null);
+      context: mContext,
+      builder: (BuildContext context) {
+        return RangeSelectionSlider();
+      },
+    ).then((value) => value != null && value ? update() : null);
   }
 
-  showRangeSetting() {
+  void showRangeSetting() {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return RangeSetterSlider();
-        }).then((value) => value != null && value ? update() : null);
+      context: mContext,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return RangeSetterSlider();
+      },
+    ).then((value) => value != null && value ? update() : null);
   }
 
-  showInformationDialog(String text) {
+  void showInformationDialog(String text) {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return GradientDialog(LocaleProvider.current.warning, text);
-        }).then((value) => Navigator.pop(context));
+      context: mContext,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return GradientDialog(LocaleProvider.current.warning, text);
+      },
+    ).then((value) => Navigator.pop(mContext));
   }
 
   showFilter(BuildContext tcontext) {
