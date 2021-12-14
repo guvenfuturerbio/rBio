@@ -25,15 +25,8 @@ class Repository {
     @required this.localCacheService,
   });
 
-  Future<GuvenLogin> login(
-          String clientId,
-          String grantType,
-          String clientSecret,
-          String scope,
-          String username,
-          String password) =>
-      apiService.login(
-          clientId, grantType, clientSecret, scope, username, password);
+  Future<RbioLoginResponse> login(String username, String password) =>
+      apiService.login(username, password);
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = R.endpoints.getAllPackagePath;

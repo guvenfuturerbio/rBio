@@ -16,29 +16,15 @@ class ApiServiceImpl extends ApiService {
       };
 
   @override
-  Future<GuvenLogin> login(
-      String clientId,
-      String grantType,
-      String clientSecret,
-      String scope,
-      String username,
-      String password) async {
-    final response = await helper.dioPost(
-      R.endpoints.loginPath,
-      <String, dynamic>{
-        'client_id': clientId,
-        'grant_type': grantType,
-        'client_secret': clientSecret,
-        'scope': scope,
-        'username': username,
-        'password': password
-      },
-      options: Options(
-        responseType: ResponseType.plain,
-        contentType: 'application/x-www-form-urlencoded',
-      ),
-    );
-    return GuvenLogin.fromJson(response);
+  Future<RbioLoginResponse> login(String username, String password) async {
+    final response = await helper.postGuven(
+        R.endpoints.loginPath, <String, dynamic>{},
+        queryParameters: {'userName': username, 'password': password});
+    if (response.isSuccessful) {
+      return RbioLoginResponse.fromJson(response.datum);
+    } else {
+      throw Exception('/login : ${response.isSuccessful}');
+    }
   }
 
   @override
