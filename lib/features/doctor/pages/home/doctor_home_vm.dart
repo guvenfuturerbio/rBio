@@ -16,7 +16,7 @@ class DoctorHomeVm extends ChangeNotifier {
     this._appointmentSelected = true;
     this._pageController = pageController;
 
-    PushedNotificationHandlerNew().addListener(
+   /* PushedNotificationHandlerNew().addListener(
       () async {
         var message = PushedNotificationHandlerNew().message;
         showCriticalMeasurement(
@@ -26,7 +26,7 @@ class DoctorHomeVm extends ChangeNotifier {
                 " mg/dL",
             message['type'] == "4" ? R.color.very_low : R.color.very_high);
       },
-    );
+    );*/
   }
 
   setSelectedPatient() {

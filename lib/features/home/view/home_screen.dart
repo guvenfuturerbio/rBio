@@ -21,6 +21,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    if (!Atom.isWeb) {
+      DeepLinkHandler().initDynamicLinks(context);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<HomeVm>(
       builder: (

@@ -93,8 +93,8 @@ Future<void> setupLocator(AppConfig appConfig) async {
       apiService: getIt<ChronicTrackingApiService>(),
       localCacheService: getIt<LocalCacheService>()));
 
-  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
-  getIt<PushedNotificationHandlerNew>().initializeGCM();
+//  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
+ // getIt<PushedNotificationHandlerNew>().initializeGCM();
 
   if (!Atom.isWeb) {
     getIt.registerSingleton<FlutterReactiveBle>(FlutterReactiveBle());
