@@ -1,39 +1,28 @@
 import 'package:flutter/material.dart';
 
 import '../../model/model.dart';
-import '../core.dart';
+
+enum UserType { doctor, chronic_user, basic_user }
 
 class UserNotifier extends ChangeNotifier {
   String username;
   String password;
   PatientResponse patient;
+  List<UserType> _userType = [];
 
-  Future<void> loginExampleUser() async {
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) async {
-        try {
-          username = '18620716416';
-          password = 'Numlock1234!!';
-          await getIt<UserManager>().login(username, password);
-          await getIt<ISharedPreferencesManager>()
-              .setString(SharedPreferencesKeys.LOGIN_USERNAME, username);
-          await getIt<ISharedPreferencesManager>()
-              .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
-          patient = await getIt<Repository>().getPatientDetail();
-          await getIt<UserManager>().getUserProfile();
+  bool get isDoctor => _userType.contains(UserType.doctor);
+  bool get isCronic => _userType.contains(UserType.chronic_user);
+  bool get isPatient => _userType.contains(UserType.basic_user);
 
-          final response = await getIt<Repository>().getProfilePicture();
-          if (response != null && response != '') {
-            await getIt<ISharedPreferencesManager>()
-                .setString(SharedPreferencesKeys.PROFILE_IMAGE, response);
-          }
-        } catch (e) {
-          print(e);
-        } finally {
-          notifyListeners();
-        }
-      });
+  userTypeFetcher(RbioLoginResponse rsp) {
+    if (rsp.roles.contains("Doctor")) {
+      _userType.add(UserType.doctor);
+    }
+    if (rsp.roles.contains("cronicPatient")) {
+      _userType.add(UserType.chronic_user);
+    }
+    if (rsp.roles.contains("AllMain")) {
+      _userType.add(UserType.basic_user);
     }
   }
 }

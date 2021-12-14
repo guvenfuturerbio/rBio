@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -240,6 +241,7 @@ class LoginScreenVm extends ChangeNotifier {
 
       try {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
+        getIt<UserNotifier>().userTypeFetcher(_guvenLogin);
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
         await getIt<Repository>().getPatientDetail();
         await getIt<UserManager>().getUserProfile();
