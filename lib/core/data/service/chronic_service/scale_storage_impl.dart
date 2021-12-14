@@ -227,13 +227,15 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     }
   }
 
-  checkLastScale() async {
-    var lastData = (await getScaleDatas(count: 1))[0];
-
-    if (getLatestMeasurement() == null ||
-        !lastData.isEqual(getLatestMeasurement())) {
-      box.clear();
-      getAndWriteScaleData();
+  Future<void> checkLastScale() async {
+    var list = (await getScaleDatas(count: 1));
+    if (list.isNotEmpty) {
+      final lastData = list.last;
+      if (getLatestMeasurement() == null ||
+          !lastData.isEqual(getLatestMeasurement())) {
+        box.clear();
+        getAndWriteScaleData();
+      }
     }
   }
 

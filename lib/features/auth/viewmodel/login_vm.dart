@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
 import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:onedosehealth/features/home/viewmodel/home_vm.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -246,10 +247,32 @@ class LoginScreenVm extends ChangeNotifier {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
         getIt<UserNotifier>().userTypeFetcher(_guvenLogin);
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
-        await getIt<Repository>().getPatientDetail();
+        final patientDetail = await getIt<Repository>().getPatientDetail();
         await getIt<UserManager>().getUserProfile();
         await UtilityManager().setTokenToServer(_guvenLogin.token.accessToken);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
+
+        if (getIt<UserNotifier>().isCronic) {
+          var profiles =
+              await getIt<ChronicTrackingRepository>().getAllProfiles();
+          if (profiles.isNotEmpty) {
+            await getIt<ProfileStorageImpl>().write(
+              profiles.last,
+              shouldSendToServer: false,
+            );
+          } else {
+            await getIt<ProfileStorageImpl>().write(
+              Person().fromDefault(
+                name: patientDetail?.firstName ?? 'Name',
+                lastName: patientDetail?.lastName ?? 'LastName',
+                birthDate: patientDetail?.birthDate ?? '01.01.2000',
+                gender: patientDetail?.gender ?? 'unsp',
+              ),
+              shouldSendToServer: true,
+            );
+          }
+        }
+
         this._progress = LoadingProgress.DONE;
         // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
         // await UserService().saveAndRetrieveToken(userCredential.user, 'patientLogin');

@@ -5,8 +5,6 @@ import '../../model/model.dart';
 enum UserType { doctor, chronic_user, basic_user }
 
 class UserNotifier extends ChangeNotifier {
-  String username;
-  String password;
   PatientResponse patient;
   List<UserType> _userType = [];
 
@@ -24,5 +22,10 @@ class UserNotifier extends ChangeNotifier {
     if (rsp.roles.contains("AllMain")) {
       _userType.add(UserType.basic_user);
     }
+  }
+
+  void clear() {
+    patient = null;
+    _userType = [];
   }
 }

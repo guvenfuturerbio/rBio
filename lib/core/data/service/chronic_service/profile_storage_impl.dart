@@ -52,7 +52,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
     checkBox();
 
     if (box.isNotEmpty) {
-      return box.values;
+      return box.values.toList();
     } else {
       return null;
     }

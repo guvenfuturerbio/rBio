@@ -148,13 +148,15 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     }
   }
 
-  checkLastGlucoseData() async {
-    var lastData = (await getBloodGlucoseDataOfPerson(count: 1))[0];
-    print(getLatestMeasurement());
-    if (getLatestMeasurement() == null ||
-        !lastData.isEqual(getLatestMeasurement())) {
-      box.clear();
-      getAndWriteGlucoseData();
+  Future<void> checkLastGlucoseData() async {
+    var list = (await getBloodGlucoseDataOfPerson(count: 1));
+    if (list.isNotEmpty) {
+      final lastData = list.last;
+      if (getLatestMeasurement() == null ||
+          !lastData.isEqual(getLatestMeasurement())) {
+        box.clear();
+        getAndWriteGlucoseData();
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/notifiers/user_notifier.dart';
 
 part '../model/profile_numbers.dart';
 
@@ -25,6 +26,7 @@ class ProfileVm extends ChangeNotifier {
     await getIt<ISharedPreferencesManager>().clear();
     await getIt<ISharedPreferencesManager>().reload();
     await getIt<Repository>().localCacheService.removeAll();
+    getIt<UserNotifier>().clear();
 
     AnalyticsManager().sendEvent(LogoutEvent());
     Atom.to(PagePaths.LOGIN, isReplacement: true);

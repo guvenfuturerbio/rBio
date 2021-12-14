@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 @HiveType(typeId: 2)
@@ -77,7 +78,12 @@ class Person extends HiveObject {
 
   Map<String, dynamic> toJson() => _$PersonToJson(this);
 
-  Person fromDefault({String name}) {
+  Person fromDefault({
+    @required String name,
+    @required String lastName,
+    @required String birthDate,
+    @required String gender,
+  }) {
     return Person(
         id: DateTime.now().millisecondsSinceEpoch,
         userId: -1,
@@ -92,9 +98,9 @@ class Person extends HiveObject {
         manufacturerId: 0,
         imageURL:
             "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
-        name: name ?? 'Name Surname',
-        birthDate: "01.01.2020",
-        gender: 'unsp',
+        name: '${name} ${lastName}',
+        birthDate: birthDate,
+        gender: gender,
         diabetesType: 'nondia',
         yearOfDiagnosis: 2021,
         smoker: false,

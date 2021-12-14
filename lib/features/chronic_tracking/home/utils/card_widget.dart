@@ -6,14 +6,12 @@ class SectionCard extends StatelessWidget {
       {Key key,
       this.isVisible = true,
       this.isActive = false,
-      this.color,
       this.smallChild,
       this.largeChild,
       this.hasDivider})
       : super(key: key);
   final bool isVisible;
   final bool isActive;
-  final Color color;
   final Widget smallChild;
   final Widget largeChild;
   final bool hasDivider;

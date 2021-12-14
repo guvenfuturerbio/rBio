@@ -66,39 +66,62 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
                             : EdgeInsets.only(
                                 top: RbioStackedScaffold.kHeight(context)),
                         children: [
+                          //
                           Card(
-                            child: ExpandablePanel(
-                              header: RbioUserTile(
-                                  width: Atom.width,
-                                  name: "Ayşe Yıldırım",
-                                  onTap: () {},
-                                  leadingImage: UserLeadingImage.Circle),
-                              collapsed: SizedBox(),
-                              expanded: Column(
-                                children: [
-                                  RbioUserTile(
+                            child: getIt<ProfileStorageImpl>().getAll().length >
+                                    1
+                                ? ExpandablePanel(
+                                    header: RbioUserTile(
                                       width: Atom.width,
-                                      name: "Murat Yıldırım",
+                                      name: getIt<ProfileStorageImpl>()
+                                          .getFirst()
+                                          .name,
                                       onTap: () {},
-                                      leadingImage: UserLeadingImage.Circle),
-                                  RbioUserTile(
-                                      width: Atom.width,
-                                      name: "Aziz Yıldırım",
-                                      onTap: () {},
-                                      leadingImage: UserLeadingImage.Circle)
-                                ],
-                              ),
-                            ),
+                                      leadingImage: UserLeadingImage.Circle,
+                                    ),
+                                    collapsed: SizedBox(),
+                                    expanded: getIt<ProfileStorageImpl>()
+                                                .getAll()
+                                                .length >
+                                            1
+                                        ? Column(
+                                            children:
+                                                getIt<ProfileStorageImpl>()
+                                                    .getAll()
+                                                    .map((e) => RbioUserTile(
+                                                          width: Atom.width,
+                                                          name: e.name,
+                                                          onTap: () {},
+                                                          leadingImage:
+                                                              UserLeadingImage
+                                                                  .Circle,
+                                                        ))
+                                                    .cast<Widget>()
+                                                    .toList(),
+                                          )
+                                        : SizedBox(),
+                                  )
+                                : RbioUserTile(
+                                    width: Atom.width,
+                                    name: getIt<ProfileStorageImpl>()
+                                        .getFirst()
+                                        .name,
+                                    onTap: () {},
+                                    leadingImage: UserLeadingImage.Circle,
+                                  ),
                           ),
-                          Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(17)),
-                            color: val.activeItem != null
-                                ? Colors.transparent
-                                : null,
-                            shadowColor: val.activeItem != null
-                                ? Colors.transparent
-                                : null,
+
+                          //
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(17),
+                              color: val.activeItem != null
+                                  ? Colors.transparent
+                                  : Colors.white,
+                              boxShadow: val.activeItem != null
+                                  ? [BoxShadow(color: Colors.transparent)]
+                                  : null,
+                            ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(17),
                               child: Column(
@@ -109,7 +132,6 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
                                               val.activeItem.key ==
                                                   parentElement.key,
                                           isVisible: val.activeItem == null,
-                                          color: parentElement.color,
                                           smallChild: parentElement.smallChild,
                                           largeChild: parentElement.largeChild,
                                           hasDivider: val.activeItem == null &&

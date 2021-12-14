@@ -2,6 +2,7 @@ import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/core.dart';
 import '../../../../core/extension/extension.dart';
 
 class RbioSmallChronicWidget extends StatelessWidget {
@@ -27,6 +28,7 @@ class RbioSmallChronicWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          //
           Padding(
             padding: EdgeInsets.only(right: 25),
             child: SvgPicture.asset(
@@ -35,6 +37,8 @@ class RbioSmallChronicWidget extends StatelessWidget {
               height: Atom.height * .1,
             ),
           ),
+
+          //
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -46,7 +50,7 @@ class RbioSmallChronicWidget extends StatelessWidget {
                     style: context.xHeadline3,
                   ),
                   Text(
-                    '${lastMeasurement.length == 1 ? 'NoLastMeasurement' : lastMeasurement}',
+                    '${lastMeasurement.length == 1 ? LocaleProvider.current.no_measurement : lastMeasurement}',
                     style: context.xHeadline4,
                   )
                 ],
