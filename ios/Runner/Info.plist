@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -36,6 +30,12 @@
 	<string>This app uses calendar to pick dates for Medical Services</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs photo library to live chat with medical support</string>
 	<key>UIBackgroundModes</key>
