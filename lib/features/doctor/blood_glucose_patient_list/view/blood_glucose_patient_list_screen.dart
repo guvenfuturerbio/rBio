@@ -305,22 +305,20 @@ class _BloodGlucosePatientListScreenState
                         ),
 
                         //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildSmallCardText('07-12-21'),
-                        ),
-
-                        //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildSmallCardText('08-12-21'),
-                        ),
-
-                        //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildSmallCardText('09-12-21'),
-                        ),
+                        ...model.measurements
+                            .map(
+                              (item) => Expanded(
+                                flex: smallFlex,
+                                child: _buildSmallCardText(
+                                  item.measurementTime != null
+                                      ? DateTime.parse(
+                                              item.measurementTime ?? '')
+                                          .xFormatTime7()
+                                      : '',
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ],
                     ),
 
@@ -340,22 +338,20 @@ class _BloodGlucosePatientListScreenState
                         ),
 
                         //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildSmallCardText('09:00'),
-                        ),
-
-                        //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildSmallCardText('15:00'),
-                        ),
-
-                        //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildSmallCardText('10:00'),
-                        ),
+                        ...model.measurements
+                            .map(
+                              (item) => Expanded(
+                                flex: smallFlex,
+                                child: _buildSmallCardText(
+                                  item.measurementTime != null
+                                      ? DateTime.parse(
+                                              item.measurementTime ?? '')
+                                          .xFormatTime8()
+                                      : '',
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ],
                     ),
 
@@ -399,22 +395,20 @@ class _BloodGlucosePatientListScreenState
                         ),
 
                         //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildColorfulText('250', R.color.darkYellow),
-                        ),
-
-                        //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildColorfulText('100', R.color.target),
-                        ),
-
-                        //
-                        Expanded(
-                          flex: smallFlex,
-                          child: _buildColorfulText('50', R.color.darkRed),
-                        ),
+                        ...model.measurements
+                            .map(
+                              (item) => Expanded(
+                                flex: smallFlex,
+                                child: _buildColorfulText(
+                                  item.measurement,
+                                  _getMeasurementBackcolor(
+                                    text: item.measurement,
+                                    item: model,
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ],
                     ),
                   ],
@@ -431,6 +425,31 @@ class _BloodGlucosePatientListScreenState
         ),
       ),
     );
+  }
+
+  Color _getMeasurementBackcolor({
+    String text,
+    DoctorPatientModel item,
+  }) {
+    return text == '' || text == null
+        ? getIt<ITheme>().cardBackgroundColor
+        : Utils.instance.fetchMeasurementColor(
+            measurement: _textToInt(text ?? ""),
+            criticMin: item?.alertMin?.toInt() ?? 0,
+            criticMax: item?.alertMax?.toInt() ?? 0,
+            targetMax: item?.normalMax?.toInt() ?? 0,
+            targetMin: item?.normalMin?.toInt() ?? 0,
+          );
+  }
+
+  int _textToInt(String text) {
+    if (text == null) {
+      return 0;
+    } else if (text.length > 0) {
+      return int.parse(text);
+    } else {
+      return 0;
+    }
   }
 
   Widget _buildBigSmallCardText(String text, Color color) {
