@@ -93,7 +93,9 @@ class _RelativesScreenState extends State<RelativesScreen> {
   Widget _buildFab() {
     return FloatingActionButton(
       backgroundColor: getIt<ITheme>().mainColor,
-      onPressed: () {},
+      onPressed: () {
+        Atom.to(PagePaths.ADDPATIENTRELATIVES);
+      },
       child: Center(
         child: SvgPicture.asset(
           R.image.add,

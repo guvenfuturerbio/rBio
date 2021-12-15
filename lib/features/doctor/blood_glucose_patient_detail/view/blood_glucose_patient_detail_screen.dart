@@ -26,12 +26,12 @@ import '../../notifiers/patient_notifiers.dart';
 
 part '../viewmodel/blood_glucose_patient_detail_vm.dart';
 part '../viewmodel/blood_glucose_patient_picker_vm.dart';
-part '../widget/custom_bar_pie.dart';
 part '../widget/chart_filter.dart';
 part '../widget/charts/line_chart.dart';
 part '../widget/charts/sample_model.dart';
 part '../widget/charts/sample_view.dart';
 part '../widget/charts/scatter_chart.dart';
+part '../widget/custom_bar_pie.dart';
 part '../widget/graph_header_section.dart';
 part '../widget/hyper_picker.dart';
 part '../widget/hypo_picker.dart';
@@ -144,6 +144,7 @@ class _BloodGlucosePatientDetailScreenState
 
             //
             if (vm.stateProcessPatientDetail == LoadingProgress.LOADING) ...[
+              SizedBox(height: 12),
               Shimmer.fromColors(
                 child: _UserDetailCard(
                   patientDetail: DoctorPatientDetailModel(),
@@ -281,7 +282,7 @@ class _BloodGlucosePatientDetailScreenState
           //
           GestureDetector(
             onTap: () {
-              // Atom.to(PagePaths.DOCTOR_TREATMENT_PROCESS);
+              Atom.to(PagePaths.DOCTOR_TREATMENT_PROCESS);
             },
             child: Container(
               height: double.infinity,

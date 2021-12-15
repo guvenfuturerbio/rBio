@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 import '../viewmodel/add_patient_relatives_vm.dart';
+
 class AddPatientRelativesScreen extends StatefulWidget {
   @override
   State<AddPatientRelativesScreen> createState() =>
@@ -17,33 +13,23 @@ class AddPatientRelativesScreen extends StatefulWidget {
 }
 
 class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
-  final tcFNode = FocusNode();
-  final nameFNode = FocusNode();
-  final surnameFNode = FocusNode();
-  final phoneFNode = FocusNode();
-  final emailFNode = FocusNode();
+  List genderList = [
+    "E",
+    "K",
+  ];
+  String gender;
 
   final TextEditingController relativeTcNo = TextEditingController();
   final TextEditingController relativeName = TextEditingController();
   final TextEditingController relativeSurname = TextEditingController();
   final TextEditingController relativeEmail = TextEditingController();
-  final masked.MaskedTextController relativePhoneNumber =
-      masked.MaskedTextController(mask: '(000) 000-0000');
 
   @override
   void dispose() {
-    tcFNode.dispose();
-    nameFNode.dispose();
-    surnameFNode.dispose();
-    phoneFNode.dispose();
-    emailFNode.dispose();
-
     relativeTcNo.dispose();
     relativeName.dispose();
     relativeSurname.dispose();
     relativeEmail.dispose();
-    relativePhoneNumber.dispose();
-
     super.dispose();
   }
 
@@ -94,282 +80,243 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
             SizedBox(
               height: 40,
             ),
-
-            //
-            InkWell(
-              onTap: () {
-                return Get.defaultDialog(
-                  title: "Countries",
-                  titleStyle: TextStyle(
-                    color: getIt<ITheme>().mainColor,
-                  ),
-                  content: Container(
-                    height: 300.0, // Change as per your requirement
-                    width: 300.0, // Change as per your requirement
-                    child: ListView.builder(
-                      itemCount: vm.countryList.countries.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          onTap: () {
-                            vm.setSelectedCountry(
-                                vm.countryList.countries[index]);
-
-                            Navigator.pop(context);
-                          },
-                          title: Text(
-                            vm.countryList.countries[index].name,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                margin: EdgeInsets.only(
-                  bottom: 20,
-                ),
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: R.color.dark_white,
-                  ),
-                  borderRadius: BorderRadius.circular(200),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      R.image.ic_user,
-                      fit: BoxFit.none,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      vm.selectedCountry.name.toString(),
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                focusNode: tcFNode,
-                controller: relativeTcNo,
-                obscureText: false,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                hintText: 'Yakının TC Kimlik Numarası / Pasaport Numarası',
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    tcFNode,
-                    nameFNode,
-                  ),
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    tcFNode,
-                    nameFNode,
-                  );
-                },
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                focusNode: nameFNode,
-                controller: relativeName,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                hintText: LocaleProvider.of(context).name,
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    nameFNode,
-                    surnameFNode,
-                  ),
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    nameFNode,
-                    surnameFNode,
-                  );
-                },
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                focusNode: surnameFNode,
-                controller: relativeSurname,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                hintText: LocaleProvider.of(context).surname,
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    surnameFNode,
-                    null,
-                  ),
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    surnameFNode,
-                    null,
-                  );
-                },
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                focusNode: phoneFNode,
-                controller: relativePhoneNumber,
-                keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.next,
-                hintText: LocaleProvider.of(context).phone_number,
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    phoneFNode,
-                    emailFNode,
-                  ),
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    phoneFNode,
-                    emailFNode,
-                  );
-                },
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                focusNode: emailFNode,
-                controller: relativeEmail,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.emailAddress,
-                hintText: LocaleProvider.of(context).email_address,
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    emailFNode,
-                    null,
-                  ),
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    emailFNode,
-                    null,
-                  );
-                },
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20, left: 15),
-              child: Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SvgPicture.asset(R.image.ic_calendar_black),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25),
-                      child: GestureDetector(
-                        onTap: () {
-                          vm.selectDate(context);
-                        },
+            Row(
+              children: [
+                //
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0, bottom: 5),
                         child: Text(
-                          vm.selectedDate == null
-                              ? LocaleProvider.of(context).birth_date
-                              : DateFormat('dd MMMM yyyy')
-                                  .format(vm.selectedDate),
+                          LocaleProvider.current.name,
+                          style: context.xHeadline3
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        child: RbioTextFormField(
+                          controller: relativeName,
+                          obscureText: false,
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                          hintText: LocaleProvider.of(context).name,
+                          onFieldSubmitted: (term) {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                //
+                SizedBox(
+                  width: 5,
+                ),
+
+                //
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          bottom: 5,
+                          top: 15,
+                        ),
+                        child: Text(
+                          LocaleProvider.current.surname,
+                          style: context.xHeadline3
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          bottom: 10,
+                        ),
+                        child: RbioTextFormField(
+                          controller: relativeSurname,
+                          obscureText: false,
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                          hintText: LocaleProvider.of(context).surname,
+                          onFieldSubmitted: (term) {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            //
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15.0,
+                    bottom: 5,
+                    top: 15,
+                  ),
+                  child: Text(
+                    LocaleProvider.current.gender,
+                    style: context.xHeadline3
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+                //
+                Container(
+                  color: Colors.transparent,
+                  margin: EdgeInsets.only(
+                    bottom: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      addRadioButton(0, 'Male'),
+                      addRadioButton(1, 'Female'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            //
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15.0,
+                        bottom: 5,
+                        top: 15,
+                      ),
+                      child: Text(
+                        LocaleProvider.current.birth_date,
+                        style: context.xHeadline3
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => vm.selectDate(context),
+                      child: Container(
+                        padding: EdgeInsets.all(13),
+                        decoration: BoxDecoration(
+                          color: R.color.white,
+                          border: Border.all(
+                            color: R.color.dark_white,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            (vm.selectedDate == null)
+                                ? Text('DD/MM/YYYY',
+                                    style: context.xHeadline3.copyWith(
+                                        color: getIt<ITheme>()
+                                            .textColorSecondary
+                                            .withOpacity(0.5)))
+                                : Text(
+                                    DateFormat('dd MMMM yyyy')
+                                        .format(vm.selectedDate),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    )),
+                            Icon(Icons.calendar_today)
+                          ],
+                        ),
+                        margin: EdgeInsets.only(
+                          bottom: 10,
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
+                //
+                SizedBox(
+                  width: 5,
+                ),
 
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20, left: 15),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SvgPicture.asset(
-                    R.image.ic_gender_selection_grey,
-                  ),
+                //
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        LocaleProvider.current.country,
+                        style: context.xHeadline3
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          return Atom.show(GuvenAlert(
+                            title: GuvenAlert.buildTitle(
+                                LocaleProvider.current.country),
+                            backgroundColor:
+                                getIt<ITheme>().cardBackgroundColor,
+                            content: Container(
+                              height: 300.0, // Change as per your requirement
+                              width: 300.0, // Change as per your requirement
+                              child: ListView.builder(
+                                itemCount: vm.countryList.countries.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ListTile(
+                                    onTap: () {
+                                      vm.setSelectedCountry(
+                                          vm.countryList.countries[index]);
 
-                  //
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: DropdownButton(
-                      value: vm.selectedGender,
-                      onChanged: (value) {
-                        vm.changeGender(value);
-                      },
-                      items: [
-                        //
-                        DropdownMenuItem(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(LocaleProvider.of(context).gender_male),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: SvgPicture.asset(R.image.ic_male_grey),
+                                      Atom.dismiss();
+                                    },
+                                    title: Text(
+                                      vm.countryList.countries[index].name,
+                                    ),
+                                  );
+                                },
                               ),
+                            ),
+                          ));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            left: 13.0,
+                            bottom: 15,
+                            top: 13,
+                          ),
+                          decoration: BoxDecoration(
+                            color: R.color.white,
+                            border: Border.all(
+                              color: R.color.dark_white,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            children: [
+                              SizedBox(width: 8),
+                              Text(
+                                vm.selectedCountry.name.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Transform.rotate(
+                                  angle: -190,
+                                  child: Icon(
+                                    Icons.arrow_back_ios_new,
+                                    size: context.TEXTSCALE * 20,
+                                  ))
                             ],
                           ),
-                          value: 1,
                         ),
-
-                        //
-                        DropdownMenuItem(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(LocaleProvider.of(context).gender_female),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: SvgPicture.asset(R.image.ic_female_grey),
-                              ),
-                            ],
-                          ),
-                          value: 2,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
             //
@@ -400,7 +347,6 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                   addPatientRelative.gender =
                       vm.selectedGender == 1 ? 'E' : 'K';
                   addPatientRelative.patientType = 1;
-                  addPatientRelative.gsm = relativePhoneNumber.text;
                   addPatientRelative.email = relativeEmail.text;
                   addPatientRelative.nationalityId = vm.selectedCountry.id;
                   addPatientRelative.nationalityId == 213
@@ -411,7 +357,6 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                       relativeName.text.length > 0 &&
                       relativeSurname.text.length > 0 &&
                       relativeEmail.text.length > 0 &&
-                      relativePhoneNumber.text.length > 0 &&
                       vm.selectedDate != null) {
                     vm.savePatientRelative(addPatientRelative, context);
                   } else {
@@ -423,6 +368,32 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                 },
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget addRadioButton(int btnValue, String title) {
+    return Expanded(
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Radio(
+              activeColor: Theme.of(context).primaryColor,
+              value: genderList[btnValue],
+              groupValue: gender,
+              onChanged: (value) {
+                setState(() {
+                  print(value);
+                  gender = value;
+                });
+              },
+            ),
+            Text(title, style: context.xHeadline3)
           ],
         ),
       ),

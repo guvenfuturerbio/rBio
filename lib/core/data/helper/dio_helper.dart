@@ -13,6 +13,7 @@ import '../../../model/model.dart';
 
 const String getMethod = 'GET';
 const String postMethod = 'POST';
+const String patchMethod = 'PATCH';
 
 abstract class IDioHelper {
   Future<GuvenResponseModel> getGuven(
@@ -160,7 +161,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
           LoggerUtils.instance.v(options.uri);
           LoggerUtils.instance.d(options.headers);
 
-          if (options.method == postMethod) {
+          if (options.method == postMethod || options.method == patchMethod) {
             final data = options.data;
             if (data is Map) {
               LoggerUtils.instance.d(data);

@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/data/imports/cronic_tracking.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/data/imports/cronic_tracking.dart';
 
 enum HealthInformationType {
   DiabetType,
@@ -15,7 +15,8 @@ enum HealthInformationType {
   YearofDiagnosis,
 }
 
-class HealthInformationVm extends ChangeNotifier {
+class HealthInformationVm extends ChangeNotifier with RbioVm {
+  @override
   BuildContext mContext;
 
   var key;
@@ -33,10 +34,13 @@ class HealthInformationVm extends ChangeNotifier {
     try {
       person.isFirstUser = false;
       person.userId = -1;
-      await getIt<ChronicTrackingRepository>().updateProfile(person, person.id);
-      getIt<ProfileStorageImpl>().update(_selection, key);
-    } catch (e) {
-      //
+      final response = await getIt<ChronicTrackingRepository>()
+          .updateProfile(person, person.id);
+      if (response.isSuccessful) {
+        getIt<ProfileStorageImpl>().update(_selection, key);
+      }
+    } catch (e, stackTrace) {
+      showDefaultErrorDialog(e, stackTrace);
     }
   }
 
