@@ -1,4 +1,6 @@
 import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -356,9 +358,19 @@ class VRouterRoutes {
       ],
     ),
 
+    // 
     VWidget(
       path: PagePaths.DOCTOR_TREATMENT_PROCESS,
-      widget: DoctorTreatmentProcessScreen(),
+      widget: ChangeNotifierProvider<TreatmentProcessVm>(
+        create: (context) => TreatmentProcessVm(context: context),
+        child: DoctorTreatmentProcessScreen(),
+      ),
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.DOCTOR_VIDEO_CALL_EDIT,
+          widget: DoctorVideoCallEditScreen(),
+        ),
+      ],
     ),
     VGuard(
         beforeEnter: (vRedirector) async {
@@ -464,4 +476,5 @@ class PagePaths {
   static const BLOOD_GLUCOSE_PATIENT_LIST = '/blood-glucose-patient-list';
   static const BLOOD_GLUCOSE_PATIENT_DETAIL = '/blood-glucose-patient-detail';
   static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
+  static const DOCTOR_VIDEO_CALL_EDIT = '/doctor-video-call-edit';
 }

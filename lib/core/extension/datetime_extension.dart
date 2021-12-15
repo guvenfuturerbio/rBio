@@ -27,4 +27,12 @@ extension BuildContextExtensions on DateTime {
   /// Format : yyyy-MM-ddTHH:mm:ss
   String xFormatTime6([dynamic locale]) =>
       DateFormat("yyyy-MM-ddTHH:mm:ss", locale).format(this);
+
+  /// Format : dd/MM/yy
+  String xFormatTime7([dynamic locale]) =>
+      DateFormat("dd/MM/yy", locale).format(this);
+
+  /// Format : HH:MM
+  String xFormatTime8([dynamic locale]) =>
+      DateFormat("HH:MM", locale).format(this);
 }

@@ -34,7 +34,7 @@ abstract class ChronicTrackingApiService {
   Future<GuvenResponseModel> deleteProfile(var userId);
   Future<GuvenResponseModel> addFirebaseToken(
       AddFirebaseToken addFirebaseToken);
-  Future<GuvenResponseModel> updateProfile(Person person, var id);
+  Future<GuvenResponseModel> updateProfile(Person person, int id);
   Future<GuvenResponseModel> setDefaultProfile(Person person);
   Future<GuvenResponseModel> updateUserStrip(StripDetailModel stripDetailModel);
   Future<GuvenResponseModel> deleteUserStrip(var id, var entegrationId);
