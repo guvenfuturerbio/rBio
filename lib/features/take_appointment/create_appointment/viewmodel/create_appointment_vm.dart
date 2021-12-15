@@ -381,6 +381,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   // #endregion
 
   // #region departmentSelection
+  // try
   void departmentSelection(FilterDepartmentsResponse selectionResponse) {
     clearFunc(Fields.DEPARTMENT);
     _dropdownValueDepartment = selectionResponse;
