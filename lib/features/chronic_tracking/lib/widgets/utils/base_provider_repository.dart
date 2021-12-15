@@ -61,7 +61,7 @@ class BaseProviderRepository with ChangeNotifier {
         start: "2010-09-10T00:00:00",
         end: "2022-09-10T00:00:00",
         reportType: type,
-        userId: UserProfilesNotifier().selection?.id ?? 0,
+        userId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
       ); // Report Type 1 -> Excel
       final response = await getIt<ChronicTrackingRepository>()
           .getBloodGlucoseReport(bloodGlucoseReportBody);
@@ -140,8 +140,8 @@ class BaseProviderRepository with ChangeNotifier {
   Future<bool> uploadMeasurementImage(
       String imagePath, int i, int measurementId) async {
     try {
-      await getIt<ChronicTrackingRepository>().uploadMeasurementImage(
-          imagePath, UserProfilesNotifier().selection.id ?? 0, measurementId);
+      await getIt<ChronicTrackingRepository>().uploadMeasurementImage(imagePath,
+          getIt<ProfileStorageImpl>().getFirst().id ?? 0, measurementId);
       return true;
     } catch (e) {
       return false;

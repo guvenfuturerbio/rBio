@@ -21,7 +21,8 @@ import '../view/scale_progress_page.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class ScaleProgressPageViewModel extends ChangeNotifier with IBaseBottomActionsOfGraph
+class ScaleProgressPageViewModel extends ChangeNotifier
+    with IBaseBottomActionsOfGraph
     implements ProgressPage {
   final controller = ScrollController();
   bool hasReachEnd = false;
@@ -143,9 +144,9 @@ class ScaleProgressPageViewModel extends ChangeNotifier with IBaseBottomActionsO
       ? 0
       : scaleMeasurements[0].maxRange(currentScaleType);
 
-  int get criticMin => UserProfilesNotifier().selection.hypo;
+  int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo;
 
-  int get criticMax => UserProfilesNotifier().selection.hyper;
+  int get criticMax => getIt<ProfileStorageImpl>().getFirst().hyper;
 
   int get dailyHighestValue {
     int highest = scaleMeasurementsDailyData.isNotEmpty &&

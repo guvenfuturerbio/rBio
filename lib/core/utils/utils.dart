@@ -5,7 +5,6 @@ import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,22 +12,12 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-import '../../features/mediminder/mediminder.dart';
 import '../../features/shared/do_not_show_again_dialog.dart';
 import '../../model/ble_models/DeviceTypes.dart';
 import '../../model/model.dart';
 import '../core.dart';
-import '../data/repository/repository.dart';
-import '../data/service/chronic_service/chronic_storage_service.dart';
-import '../events/success_events.dart';
-import '../locator.dart';
-import '../manager/analytics_manager.dart';
-import '../navigation/app_paths.dart';
-import '../widgets/guven_alert.dart';
-import '../widgets/warning_dialog.dart';
 
 class Utils {
   Utils._();
@@ -752,7 +741,6 @@ class UtilityManager {
   }
 
   Widget getDeviceImageFromType(DeviceType device) {
-    print(device);
     switch (device) {
       case DeviceType.MI_SCALE:
         return Image.asset(R.image.mi_scale);

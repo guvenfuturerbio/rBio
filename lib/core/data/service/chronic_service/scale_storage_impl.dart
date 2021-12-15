@@ -87,7 +87,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
   @override
   Future sendToServer(ScaleModel data) async {
-    int userId = UserProfilesNotifier().selection?.id ?? 0;
+    int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
 
     AddScaleMasurementBody addScaleMasurementBody = new AddScaleMasurementBody(
       bmh: data.bmh,
@@ -102,6 +102,8 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
       visceralFat: data.visceralFat,
       water: data.water,
       weight: data.weight,
+      isManuel: data.isManuel,
+      deviceUUID: data.device["deviceId"],
     );
     try {
       return (await getIt<ChronicTrackingRepository>()
@@ -136,7 +138,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
   @override
   Future updateServer(ScaleModel data) async {
-    int userId = UserProfilesNotifier().selection?.id ?? 0;
+    int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
 
     UpdateScaleMasurementBody updateScaleMasurementBody =
         UpdateScaleMasurementBody(
@@ -232,6 +234,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     if (list.isNotEmpty) {
       final lastData = list.last;
       if (getLatestMeasurement() == null ||
+          box.values.length < 5 ||
           !lastData.isEqual(getLatestMeasurement())) {
         box.clear();
         getAndWriteScaleData();
