@@ -112,9 +112,11 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   fillFromFavorites(int index) async {
     try {
-      for (var tenant in tenantsFilterResponse) {
-        if (tenant.id == _holderForFavorites[index].tenantId) {
-          await hospitalSelection(tenant);
+      if (!forOnline) {
+        for (var tenant in tenantsFilterResponse) {
+          if (tenant.id == _holderForFavorites[index].tenantId) {
+            await hospitalSelection(tenant);
+          }
         }
       }
       for (var department in filterDepartmentResponse) {
@@ -126,7 +128,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       for (var doctor in filterResourcesResponse) {
         if (doctor.id ==
             _holderForFavorites[index].resources.first.resourceId) {
-          await doctorSelection(doctor);
+          doctorSelection(doctor);
         }
       }
     } catch (e) {
@@ -365,11 +367,12 @@ class CreateAppointmentVm extends ChangeNotifier {
   // #endregion
 
   // #region hospitalSelection
-  void hospitalSelection(FilterTenantsResponse selectionResponse) {
+  Future<void> hospitalSelection(
+      FilterTenantsResponse selectionResponse) async {
     clearFunc(Fields.TENANTS);
     _dropdownValueTenant = selectionResponse;
     if (selectionResponse.id != -2) {
-      fetchDepartments(FilterDepartmentsRequest(
+      await fetchDepartments(FilterDepartmentsRequest(
           search: null, tenantId: selectionResponse.id));
       _hospitalSelected = true;
       notifyListeners();
@@ -382,11 +385,12 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   // #region departmentSelection
   // try
-  void departmentSelection(FilterDepartmentsResponse selectionResponse) {
+  Future<void> departmentSelection(
+      FilterDepartmentsResponse selectionResponse) async {
     clearFunc(Fields.DEPARTMENT);
     _dropdownValueDepartment = selectionResponse;
     if (selectionResponse.id != -2) {
-      fetchResources(
+      await fetchResources(
         FilterResourcesRequest(
           tenantId: _dropdownValueTenant.id,
           departmentId: selectionResponse.id,
