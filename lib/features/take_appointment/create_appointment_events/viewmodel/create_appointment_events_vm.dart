@@ -14,7 +14,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   int departmentId;
   bool forOnline;
 
-  int patientId = PatientSingleton().getPatient().id;
+  int patientId = getIt<UserNotifier>().getPatient().id;
 
   DateTime selectedDate = DateTime.now();
   String filterFromDate;

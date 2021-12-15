@@ -1,3 +1,4 @@
+import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -272,11 +273,18 @@ class VRouterRoutes {
         ),
       ],
     ),
-
-    VWidget(
-      path: PagePaths.MEASUREMENT_TRACKING,
-      widget: MeasurementTrackingHomeScreen(),
-    ),
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+              path: PagePaths.MEASUREMENT_TRACKING,
+              widget: MeasurementTrackingHomeScreen())
+        ]),
 
     VWidget(
       path: PagePaths.SUGGEST_REQUEST,
@@ -352,12 +360,19 @@ class VRouterRoutes {
       path: PagePaths.DOCTOR_TREATMENT_PROCESS,
       widget: DoctorTreatmentProcessScreen(),
     ),
-
-    VWidget(
-      path: PagePaths.HEALTH_INFORMATION,
-      widget: HealthInformationScreen(),
-    ),
-
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+            path: PagePaths.HEALTH_INFORMATION,
+            widget: HealthInformationScreen(),
+          ),
+        ]),
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path

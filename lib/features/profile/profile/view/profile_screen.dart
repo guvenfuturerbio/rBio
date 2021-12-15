@@ -61,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //
               RbioUserTile(
                 name:
-                    '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
+                    '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.PROFILE_IMAGE),
                 leadingImage: UserLeadingImage.Circle,

@@ -113,7 +113,7 @@ class LoginScreenVm extends ChangeNotifier {
   getSavedLoginInfo() async {
     var userLoginInfo = await getIt<UserManager>().getSavedLoginInfo();
     this._userLoginInfo = userLoginInfo;
-    if (userLoginInfo.password.length > 0) {
+    if (userLoginInfo.password != null && userLoginInfo.password.length > 0) {
       this._rememberMeChecked = true;
     }
     setUserIdText(userLoginInfo.username);
@@ -234,16 +234,22 @@ class LoginScreenVm extends ChangeNotifier {
   Future<void> login(String username, String password) async {
     if (checkFields(username, password)) {
       showLoadingDialog(mContext);
-      await Future.delayed(Duration(milliseconds: 500));
       this._progress = LoadingProgress.LOADING;
       notifyListeners();
 
       try {
+        // Roles and token
         this._guvenLogin = await getIt<UserManager>().login(username, password);
-        getIt<UserNotifier>().userTypeFetcher(_guvenLogin);
+
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
+
+        //One dose hasta bilgileri
+
         final patientDetail = await getIt<Repository>().getPatientDetail();
+
+        // Güven online kullanıcı bilgileri
         await getIt<UserManager>().getUserProfile();
+
         await UtilityManager().setTokenToServer(_guvenLogin.token.accessToken);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
 

@@ -213,7 +213,7 @@ class ApiServiceImpl extends ApiService {
       if (patient.id == 0) {
         patient.id = null;
       }
-      await PatientSingleton().setPatient(patient);
+      await getIt<UserNotifier>().setPatient(patient);
       return patient;
     } else {
       throw Exception('/getPatientDetail : ${response.isSuccessful}');

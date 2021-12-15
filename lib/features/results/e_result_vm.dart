@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import '../shared/necessary_identity/necessary_identity_screen.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -18,7 +19,7 @@ class EResultScreenVm extends ChangeNotifier {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       try {
-        if (getIt<UserInfo>().canAccessHospital()) {
+        if (getIt<UserNotifier>().canAccessHospital()) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
             await fetchVisits();
           });
@@ -101,13 +102,15 @@ class EResultScreenVm extends ChangeNotifier {
       VisitRequest(
           from: startDate.toString(),
           to: endDate.toString(),
-          isForeignPatient: PatientSingleton().getPatient().nationalityId == 213
-              ? 0
-              : 1, // 213 - Türk
+          isForeignPatient:
+              getIt<UserNotifier>().getPatient().nationalityId == 213
+                  ? 0
+                  : 1, // 213 - Türk
           hasResults: hasResult == false ? 0 : 1,
-          identityNumber: PatientSingleton().getPatient().nationalityId == 213
-              ? PatientSingleton().getPatient().identityNumber
-              : PatientSingleton().getPatient().passportNumber);
+          identityNumber:
+              getIt<UserNotifier>().getPatient().nationalityId == 213
+                  ? getIt<UserNotifier>().getPatient().identityNumber
+                  : getIt<UserNotifier>().getPatient().passportNumber);
 
   LoadingProgress get progress => this._progress ?? LoadingProgress.LOADING;
 

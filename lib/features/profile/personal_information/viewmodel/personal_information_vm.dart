@@ -50,12 +50,12 @@ class PersonalInformationScreenVm extends ChangeNotifier {
       changeInfo.hasKVKKApproval = patient.hasKVKKApproval;
       changeInfo.passportNumber = patient.passportNumber;
       await getIt<Repository>().updateContactInfo(changeInfo);
-      var sharedUserAccount = getIt<UserInfo>().getUserAccount();
+      var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
       sharedUserAccount = sharedUserAccount.copyWith(
         phoneNumber: newPhoneNumber,
         electronicMail: newEmail,
       );
-      await getIt<UserInfo>().setUserAccount(sharedUserAccount);
+      await getIt<UserNotifier>().setUserAccount(sharedUserAccount);
     } catch (error) {
       Future.delayed(
         const Duration(milliseconds: 500),

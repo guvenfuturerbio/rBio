@@ -11,6 +11,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
+import 'core/notifiers/user_notifier.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
@@ -103,6 +104,8 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<ThemeNotifier>(
             create: (context) => ThemeNotifier(),
           ),
+          ChangeNotifierProvider<UserNotifier>
+          (create:(context)=> getIt<UserNotifier>()),
           ChangeNotifierProvider<UserProfilesNotifier>(
             create: (context) => UserProfilesNotifier(),
           ),
