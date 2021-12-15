@@ -19,7 +19,7 @@ class BleScannerOps extends ChangeNotifier {
     });
   }
 
-  List<Uuid> _supported = [
+  final List<Uuid> _supported = [
     Uuid.parse("1808"),
     Uuid([0x18, 0x1B])
   ];
@@ -39,10 +39,8 @@ class BleScannerOps extends ChangeNotifier {
       if (bleStatus == BleStatus.ready) {
         _devices?.clear();
         _subscription?.cancel();
-        _subscription = _ble
-            .scanForDevices(withServices: _supported)
-            .listen((device) async {
-          print(device);
+        _subscription = _ble.scanForDevices(withServices: _supported).listen(
+            (device) async {
           final knownDeviceIndex =
               _devices.indexWhere((d) => d.id == device.id);
           if (knownDeviceIndex >= 0) {
@@ -59,7 +57,7 @@ class BleScannerOps extends ChangeNotifier {
             } */
             notifyListeners();
           }
-        });
+        }, onError: (e) => log(e.toString()));
       } else if (bleStatus == BleStatus.unauthorized) {
         await Future.delayed(Duration(seconds: 1));
         await Permission.location.request();

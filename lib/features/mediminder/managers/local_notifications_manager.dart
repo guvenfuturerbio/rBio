@@ -38,6 +38,34 @@ class LocalNotificationsManagerImpl extends LocalNotificationsManager {
   final plugin = FlutterLocalNotificationsPlugin();
   final notificationDetails = _NotificationDetails();
 
+  final String TAG = 'NOTIFICATION';
+
+  LocalNotificationsManagerImpl() {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
+            requestAlertPermission: true,
+            requestBadgePermission: true,
+            requestSoundPermission: true,
+            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS);
+    plugin.initialize(initializationSettings,
+        onSelectNotification: onSelectNotification);
+  }
+
+  Future<void> onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    print(TAG + " onDidReceiveLocalNotification " + payload.toString());
+  }
+
+  Future onSelectNotification(String payload) async {
+    print(TAG + " onSelectNotification " + payload.toString());
+  }
+
   @override
   Future<void> cancel(int id, {String tag}) => plugin.cancel(id, tag: tag);
 
