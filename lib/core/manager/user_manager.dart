@@ -71,12 +71,10 @@ class UserManagerImpl extends UserManager {
   Future<UserLoginInfo> getSavedLoginInfo() async {
     UserLoginInfo userLoginInfo = UserLoginInfo();
     String username = getIt<ISharedPreferencesManager>()
-            .getString(SharedPreferencesKeys.LOGIN_USERNAME) ??
-        "18620716416";
+        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
     userLoginInfo.username = username;
     String password = getIt<ISharedPreferencesManager>()
-            .getString(SharedPreferencesKeys.LOGIN_PASSWORD) ??
-        "Numlock1234!!";
+        .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
     userLoginInfo.password = password;
     return userLoginInfo;
   }
