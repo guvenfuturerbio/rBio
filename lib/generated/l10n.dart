@@ -195,6 +195,26 @@ class LocaleProvider {
     );
   }
 
+  /// `Health\nTracker`
+  String get chronic_track_home {
+    return Intl.message(
+      'Health\nTracker',
+      name: 'chronic_track_home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video Call Appointment`
+  String get take_video_appointment {
+    return Intl.message(
+      'Video Call Appointment',
+      name: 'take_video_appointment',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Devices`
   String get devices {
     return Intl.message(
@@ -3745,10 +3765,10 @@ class LocaleProvider {
     );
   }
 
-  /// `I don't know which department to go to`
+  /// `Department finder`
   String get which_depart_i_go {
     return Intl.message(
-      'I don\'t know which department to go to',
+      'Department finder',
       name: 'which_depart_i_go',
       desc: '',
       args: [],
