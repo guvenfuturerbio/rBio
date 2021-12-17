@@ -181,12 +181,21 @@ class _Endpoints {
   String ct_login = '/auth/realms/GuvenComplex/protocol/openid-connect/token'
       .xCronicTrackingSSO;
   String ct_insertNewScaleValue =
-      '/Measurement/add-bmi-with-detail'.xCronicTracking;
+      '/Measurement/add-bp-with-detail'.xCronicTracking;
   String ct_deleteScaleMeasurement =
-      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
+      '/Measurement/delete-bp-with-detail'.xCronicTracking;
   String ct_getScaleMeasurement =
-      '/Measurement/get-bmi-measurements'.xCronicTracking;
+      '/Measurement/get-bp-measurements'.xCronicTracking;
   String ct_updateScaleMeasurement =
+      '/Measurement/update-bp-measurement'.xCronicTracking;
+
+  String ct_insertNewBpValue =
+      '/Measurement/add-bmi-with-detail'.xCronicTracking;
+  String ct_deleteBpMeasurement =
+      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
+  String ct_getBpMeasurement =
+      '/Measurement/get-bmi-measurements'.xCronicTracking;
+  String ct_updateBpMeasurement =
       '/Measurement/update-bmi-measurement'.xCronicTracking;
 
   String dc_Login(String userName, String password) =>
@@ -196,6 +205,12 @@ class _Endpoints {
       '/mobileapi/v1/MobileDoctor/all-appointment'.xDoctorBaseUrl;
   String dc_getMySugarPatient =
       '/api/v1/DoctorPatient/get-my-sugar-patient'.xDoctorBaseUrl;
+  String dc_getMyScalePatient =
+      '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
+  String dc_getMyBpPatient =
+      '/api/v1/DoctorPatient/get-my-bp-patient'.xDoctorBaseUrl;
+  String dc_getMyBMIPatient =
+      '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
   String dc_getMyPatientDetail(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-profile-detail/${patientId}'
           .xDoctorBaseUrl;
@@ -205,6 +220,10 @@ class _Endpoints {
   String dc_getMyPatientBloodGlucose(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-blood-glucose-with-detail/$patientId'
           .xDoctorBaseUrl;
+  String dc_getMyPatientScale(int patientId) =>
+      '/api/v1/doctorpatient/get-my-patient-bmi/$patientId'.xDoctorBaseUrl;
+  String dc_getMyPatientPressure(int patientId) =>
+      '/api/v1/doctorpatient/get-my-patient-bp/$patientId'.xDoctorBaseUrl;
 }
 
 extension _EndpointsExtension on String {

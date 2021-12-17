@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/core.dart';
@@ -12,19 +13,48 @@ class DoctorVideoCallEditScreen extends StatefulWidget {
 }
 
 class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
+  TextEditingController textEditingController;
+
+  @override
+  void initState() {
+    textEditingController = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-      appbar: _buildAppBar(),
-      body: _buildBody(),
+    return KeyboardDismissOnTap(
+      child: RbioScaffold(
+        appbar: _buildAppBar(),
+        body: _buildBody(),
+      ),
     );
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
-          'Tedavi Süreci',
+          LocaleProvider.current.treatment_process,
         ),
+        actions: [
+          Center(
+            child: RbioBadge(
+              image: R.image.chat_icon,
+              isDark: false,
+            ),
+          ),
+          SizedBox(
+            width: 12,
+          ),
+        ],
       );
 
   Widget _buildBody() => Column(
@@ -47,7 +77,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
               bottom: 8,
             ),
             child: Text(
-              'Notlar',
+              LocaleProvider.current.notes,
               textAlign: TextAlign.start,
               style: context.xHeadline4.copyWith(
                 fontWeight: FontWeight.bold,
@@ -63,11 +93,36 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
                 color: getIt<ITheme>().cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
+              child: RbioTextFormField(
+                controller: textEditingController,
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.done,
+                border: RbioTextFormField.noneBorder(),
+              ),
             ),
           ),
 
           //
-          Row(
+          SizedBox(
+            height: 16,
+          ),
+
+          //
+          _buildButtons(),
+
+          //
+          SizedBox(
+            height: Atom.safeBottom + 12,
+          ),
+        ],
+      );
+
+  Widget _buildButtons() {
+    return KeyboardVisibilityBuilder(
+      builder: (context, isKeyboardVisible) {
+        if (!isKeyboardVisible) {
+          return Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
@@ -75,20 +130,35 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
               //
               Expanded(
                 child: RbioElevatedButton(
-                  title: 'Geri',
+                  title: LocaleProvider.current.back,
+                  backColor: getIt<ITheme>().cardBackgroundColor,
+                  textColor: getIt<ITheme>().textColorSecondary,
+                  onTap: () {},
+                  showElevation: false,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+
+              //
+              SizedBox(width: 16),
 
               //
               Expanded(
                 child: RbioElevatedButton(
                   title: 'Kaydet',
+                  onTap: () {},
+                  showElevation: false,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
-          ),
-        ],
-      );
+          );
+        } else {
+          return SizedBox();
+        }
+      },
+    );
+  }
 
   Widget _buildUserCard() {
     return Container(
@@ -143,7 +213,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
           //
           Expanded(
             child: Text(
-              'Görüntülü Görüşme',
+              LocaleProvider.current.video_call,
               textAlign: TextAlign.start,
               style: context.xHeadline4.copyWith(
                 fontWeight: FontWeight.bold,

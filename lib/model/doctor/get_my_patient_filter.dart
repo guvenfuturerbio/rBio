@@ -19,10 +19,20 @@ class GetMyPatientFilter {
         take: json['take'] as int,
       );
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'start': start,
-        'end': end,
-        'skip': skip,
-        'take': take,
-      };
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (start != null) {
+      map['start'] = start;
+    }
+    if (end != null) {
+      map['end'] = end;
+    }
+    if (skip != null) {
+      map['skip'] = skip;
+    }
+    if (take != null) {
+      map['take'] = take;
+    }
+    return map;
+  }
 }

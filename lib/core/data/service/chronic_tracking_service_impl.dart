@@ -392,4 +392,38 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<GuvenResponseModel> deleteBpMeasurement(
+      DeleteBpMeasurements deleteBpMeasurements) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_insertNewBloodGlucoseValue,
+        deleteBpMeasurements.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> getBpMasurement(
+      GetBpMeasurements getBpMeasurements) {
+    // TODO: implement getBpMasurement
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<GuvenResponseModel> insertNewBpValue(AddBpWithDetail addBpWithDetail) {
+    // TODO: implement insertNewBpValue
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<GuvenResponseModel> updateBpMeasurement(
+      UpdateBpMeasurements updateBpMeasurements) {
+    // TODO: implement updateBpMeasurement
+    throw UnimplementedError();
+  }
 }
