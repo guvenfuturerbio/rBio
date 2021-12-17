@@ -55,4 +55,12 @@ abstract class ChronicTrackingApiService {
       GetScaleMasurementBody getScaleMasurementBody);
   Future<GuvenResponseModel> updateScaleMeasurement(
       UpdateScaleMasurementBody updateScaleMasurementBody);
+
+  insertNewBpValue(AddBpWithDetail addBpWithDetail);
+
+  deleteBpMeasurement(DeleteBpMeasurements deleteBpMeasurements);
+
+  getBpMasurement(GetBpMeasurements getBpMeasurements);
+
+  updateBpMeasurement(UpdateBpMeasurements updateBpMeasurements);
 }

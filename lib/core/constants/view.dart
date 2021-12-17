@@ -33,12 +33,31 @@ class _Sizes {
     }
   }
 
+  Widget textScaleBuilder(
+    BuildContext context, {
+    @required Widget smallWidget,
+    @required Widget largeWidget,
+  }) =>
+      context.xTextScaleType == TextScaleType.Small ? smallWidget : largeWidget;
+
   EdgeInsets screenPadding(BuildContext context) {
     return screenHandler<EdgeInsets>(
       context,
-      mobile: EdgeInsets.symmetric(horizontal: _mobilePadding, vertical: 12),
-      tablet: EdgeInsets.symmetric(horizontal: _tabletPadding, vertical: 12),
-      desktop: EdgeInsets.symmetric(horizontal: _desktopPadding, vertical: 12),
+      mobile: EdgeInsets.only(
+        left: _mobilePadding,
+        right: _mobilePadding,
+        top: 12,
+      ),
+      tablet: EdgeInsets.only(
+        left: _tabletPadding,
+        right: _tabletPadding,
+        top: 12,
+      ),
+      desktop: EdgeInsets.only(
+        left: _desktopPadding,
+        right: _desktopPadding,
+        top: 12,
+      ),
     );
   }
 

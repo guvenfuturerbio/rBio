@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../core.dart';
-import 'main_theme.dart';
 
 class ThemeNotifier extends ChangeNotifier {
   ITheme theme;
+  TextScaleType textScale;
 
   ThemeNotifier() {
     final sharedTheme = getIt<ISharedPreferencesManager>()
@@ -16,14 +16,30 @@ class ThemeNotifier extends ChangeNotifier {
       theme = GreenTheme();
     }
 
+    final sharedTextScale = getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.TEXT_SCALE);
+    if (sharedTextScale != null) {
+      textScale = sharedTextScale.xTextScaleKeys;
+    } else {
+      textScale = TextScaleType.Small;
+    }
+
     getIt.registerSingleton<ITheme>(theme);
   }
 
-  // context.read<ThemeNotifier>().changeTheme(ThemeType.Burgundy);
   Future<void> changeTheme(ThemeType type) async {
     theme = type.xGetTheme;
     await getIt<ISharedPreferencesManager>()
         .setString(SharedPreferencesKeys.THEME, type.xRawValue);
+    getIt.unregister<ITheme>();
+    getIt.registerSingleton<ITheme>(theme);
+    notifyListeners();
+  }
+
+  Future<void> changeTextScale() async {
+    textScale = textScale.getNextType();
+    await getIt<ISharedPreferencesManager>()
+        .setString(SharedPreferencesKeys.TEXT_SCALE, textScale.xRawValue);
     getIt.unregister<ITheme>();
     getIt.registerSingleton<ITheme>(theme);
     notifyListeners();

@@ -726,11 +726,14 @@
   "something_went_wrong": "Oops. Something went wrong!",
   "turn_back": "Turn Back",
   "waiting": "Waiting",
+  "back": "Back",
+
   "bg_measurement_tracking": "Blood Glucose Tracking",
   "weight_tracking": "Weight Tracking",
   "blood_pressure_tracking": "Blood Pressure Tracking",
   "treatment_process": "Treatment Process",
   "critical_metrics": "Critical metrics",
+  "video_call": "Video Call",
   "from_newest": "From newest",
   "from_oldest": "From oldest",
   "sort_by": "Sort by"

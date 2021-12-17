@@ -77,7 +77,7 @@ class VerticalCard extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return R.sizes.screenHandler<double>(
       context,
-      mobile: height * 0.25,
+      mobile: height * 0.28,
       tablet: height * 0.25,
       desktop: height * 0.25,
     );

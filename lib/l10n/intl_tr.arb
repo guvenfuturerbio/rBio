@@ -720,11 +720,14 @@
   "something_went_wrong": "Bir şeyler ters gitti",
   "turn_back": "Geriye Dön",
   "waiting": "Bekleniyor",
+  "back": "Geri",
+
   "bg_measurement_tracking": "Kan Şekeri Takibi",
   "weight_tracking": "Kilo Takibi",
   "blood_pressure_tracking": "Tansiyon Takibi",
   "treatment_process": "Tedavi Süreci",
   "critical_metrics": "Kritik ölçümler",
+  "video_call": "Görüntülü Görüşme",
   "from_newest": "En yeniden",
   "from_oldest": "En eskiden",
   "sort_by": "Sırala"

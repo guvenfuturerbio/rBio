@@ -18,29 +18,32 @@ class RbioTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry contentPadding;
   final InputBorder border;
   final String initialValue;
+  final int maxLines;
 
-  const RbioTextFormField({
-    Key key,
-    this.initialValue,
-    this.focusNode,
-    this.controller,
-    this.keyboardType,
-    this.hintText,
-    this.inputFormatters,
-    this.onFieldSubmitted,
-    this.onChanged,
-    this.contentPadding =
-        const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-    this.enableSuggestions = true,
-    this.obscureText = false,
-    this.autocorrect = true,
-    this.textInputAction = TextInputAction.next,
-    this.border,
-  }) : super(key: key);
+  const RbioTextFormField(
+      {Key key,
+      this.initialValue,
+      this.focusNode,
+      this.controller,
+      this.keyboardType,
+      this.hintText,
+      this.inputFormatters,
+      this.onFieldSubmitted,
+      this.onChanged,
+      this.contentPadding =
+          const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+      this.enableSuggestions = true,
+      this.obscureText = false,
+      this.autocorrect = true,
+      this.textInputAction = TextInputAction.next,
+      this.border,
+      this.maxLines = 1})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
       initialValue: initialValue,
       style: Utils.instance.inputTextStyle(),
       focusNode: focusNode,
@@ -53,13 +56,16 @@ class RbioTextFormField extends StatelessWidget {
       decoration: Utils.instance
           .inputDecorationForLogin(
             hintText: hintText,
-            contentPadding: contentPadding,
+            contentPadding: context.xTextScaleType == TextScaleType.Small
+                ? contentPadding
+                : EdgeInsets.only(left: 8),
             inputBorder: border ?? defaultBorder(),
           )
           .copyWith(
             filled: true,
             fillColor: getIt<ITheme>().cardBackgroundColor,
           ),
+      cursorColor: getIt<ITheme>().mainColor,
       onChanged: onChanged,
       inputFormatters: inputFormatters,
       onFieldSubmitted: onFieldSubmitted,

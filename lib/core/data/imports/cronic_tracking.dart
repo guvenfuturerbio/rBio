@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/model/scale_measurement/add_scale_measurement.dart';
-import 'package:onedosehealth/model/scale_measurement/delete_scale_measurement.dart';
-import 'package:onedosehealth/model/scale_measurement/get_scale_measurement.dart';
-import 'package:onedosehealth/model/scale_measurement/update_scale_measurement.dart';
+import 'package:onedosehealth/model/model.dart';
+
 
 import '../../../features/mediminder/mediminder.dart';
 import '../../../model/bg_measurement/blood_glucose_report_body.dart';

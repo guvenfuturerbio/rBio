@@ -7305,6 +7305,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Back`
+  String get back {
+    return Intl.message(
+      'Back',
+      name: 'back',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Blood Glucose Tracking`
   String get bg_measurement_tracking {
     return Intl.message(
@@ -7350,6 +7360,16 @@ class LocaleProvider {
     return Intl.message(
       'Critical metrics',
       name: 'critical_metrics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video Call`
+  String get video_call {
+    return Intl.message(
+      'Video Call',
+      name: 'video_call',
       desc: '',
       args: [],
     );
