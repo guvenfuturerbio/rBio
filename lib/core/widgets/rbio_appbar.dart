@@ -152,6 +152,7 @@ class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
                       fit: BoxFit.fitHeight,
                     ),
                   ),
+                  SizedBox(width: 15,),
                 ],
           ),
         );

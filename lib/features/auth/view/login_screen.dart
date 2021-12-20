@@ -55,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RbioScaffold(
         resizeToAvoidBottomInset: true,
         appbar: RbioAppBarLogin(
+          leading: SizedBox(),
           title: Image.asset(
             R.image.oneDoseHealthPng,
             height: 50,
@@ -106,10 +107,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
 
           //
-          _buildSeperator(),
+          //   _buildSeperator(),
 
           //
-          _buildSocialLogin(),
+          //    _buildSocialLogin(),
 
           //
           _buildVersion(),

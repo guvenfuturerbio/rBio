@@ -424,53 +424,60 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
           ),
 
           //
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 1,
-                  color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
-                child: Text(
-                  "or",
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 1,
-                  color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-                ),
-              ),
-            ],
-          ),
+          //buildSeperator(),
 
           //
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SvgPicture.asset(
-                R.image.facebook,
-                width: 50,
-              ),
-              SvgPicture.asset(
-                R.image.apple,
-                width: 50,
-              ),
-              SvgPicture.asset(
-                R.image.google,
-                width: 50,
-              ),
-            ],
-          ),
+          //buildSocialLogin(),
         ],
       ),
+    );
+  }
+
+  Row buildSocialLogin() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SvgPicture.asset(
+          R.image.facebook,
+          width: 50,
+        ),
+        SvgPicture.asset(
+          R.image.apple,
+          width: 50,
+        ),
+        SvgPicture.asset(
+          R.image.google,
+          width: 50,
+        ),
+      ],
+    );
+  }
+
+  Row buildSeperator() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 1,
+            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+          child: Text(
+            "or",
+            style: context.xHeadline3.copyWith(
+              color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: 1,
+            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+          ),
+        ),
+      ],
     );
   }
 
