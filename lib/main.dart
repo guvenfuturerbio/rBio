@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
+import 'package:onedosehealth/core/notifiers/locale_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
@@ -90,6 +91,8 @@ class _MyAppState extends State<MyApp> {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => PatientNotifiers()),
+          ChangeNotifierProvider<LocaleNotifier>.value(
+              value: getIt<LocaleNotifier>()),
           ChangeNotifierProvider(
               create: (context) => BgMeasurementsNotifierDoc()),
           Provider<FirebaseAnalytics>.value(
@@ -104,8 +107,8 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<ThemeNotifier>(
             create: (context) => ThemeNotifier(),
           ),
-          ChangeNotifierProvider<UserNotifier>
-          (create:(context)=> getIt<UserNotifier>()),
+          ChangeNotifierProvider<UserNotifier>(
+              create: (context) => getIt<UserNotifier>()),
           ChangeNotifierProvider<UserProfilesNotifier>(
             create: (context) => UserProfilesNotifier(),
           ),
@@ -174,7 +177,6 @@ class _MyAppState extends State<MyApp> {
                     ),
                   );
                 },
-
                 //
                 theme: ThemeData(
                   primaryColor: themeNotifier.theme.mainColor,
@@ -183,7 +185,7 @@ class _MyAppState extends State<MyApp> {
                   fontFamily: themeNotifier.theme.fontFamily,
                   textTheme: themeNotifier.theme.textTheme,
                 ),
-                locale: Locale(intl.Intl.getCurrentLocale()),
+                locale: Locale(context.watch<LocaleNotifier>().current),
                 localizationsDelegates: const [
                   LocaleProvider.delegate,
                   GlobalMaterialLocalizations.delegate,

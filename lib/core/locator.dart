@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:onedosehealth/core/notifiers/locale_notifier.dart';
 import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -60,6 +61,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
       .registerSingleton<ISharedPreferencesManager>(SharedPreferencesManager());
   getIt.registerSingleton<UserManager>(UserManagerImpl());
   getIt.registerSingleton<UserNotifier>(UserNotifier());
+  getIt.registerSingleton<LocaleNotifier>(LocaleNotifier());
 
   getIt.registerSingleton<LocalCacheService>(LocalCacheServiceImpl());
   getIt.registerSingleton<ApiService>(ApiServiceImpl(getIt<IDioHelper>()));
@@ -85,7 +87,6 @@ Future<void> setupLocator(AppConfig appConfig) async {
 
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
-
 
   getIt.registerLazySingleton(() => UserProfilesNotifier());
 
