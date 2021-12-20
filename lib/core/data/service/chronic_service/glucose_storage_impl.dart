@@ -18,7 +18,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       await deleteFromServer(
           data.time,
           DeleteBloodGlucoseMeasurementRequest(
-                  entegrationId: UserProfilesNotifier().selection.id,
+                  entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
                   measurementId: data.measurementId)
               .toJson());
       box.delete(key);
@@ -203,7 +203,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     try {
       await getIt<ChronicTrackingRepository>().updateBloodGlucoseValue(
           UpdateBloodGlucoseMeasurementRequest(
-              entegrationId: UserProfilesNotifier().selection.id,
+              entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
               measurementId: glucoseData.measurementId,
               tag: glucoseData.tag,
               value: int.parse(glucoseData.level),
@@ -217,8 +217,8 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   Future<void> sendImageToServer(String imagePath, int measurementId) async {
     try {
-      await getIt<ChronicTrackingRepository>().uploadMeasurementImage(
-          imagePath, UserProfilesNotifier().selection.id ?? 0, measurementId);
+      await getIt<ChronicTrackingRepository>().uploadMeasurementImage(imagePath,
+          getIt<ProfileStorageImpl>().getFirst().id ?? 0, measurementId);
       notifyListeners();
     } catch (_) {
       rethrow;

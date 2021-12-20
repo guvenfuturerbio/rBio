@@ -273,6 +273,10 @@ class LoginScreenVm extends ChangeNotifier {
             );
           }
         }
+        var devices = await getIt<BleDeviceManager>().getPairedDevices();
+        if (devices.isNotEmpty) {
+          getIt<BleScannerOps>().startScan();
+        }
 
         this._progress = LoadingProgress.DONE;
         // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
@@ -287,10 +291,7 @@ class LoginScreenVm extends ChangeNotifier {
         }
         mContext.read<HomeVm>().init();
         Atom.to(PagePaths.MAIN, isReplacement: true);
-        var devices = await getIt<BleDeviceManager>().getPairedDevices();
-        if (devices.isNotEmpty) {
-          getIt<BleScannerOps>().startScan();
-        }
+
         // MainNavigation.toHome(mContext);
       } catch (e, stackTrace) {
         Sentry.captureException(e, stackTrace: stackTrace);

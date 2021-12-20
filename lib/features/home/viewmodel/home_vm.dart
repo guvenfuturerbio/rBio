@@ -247,7 +247,7 @@ class HomeVm extends ChangeNotifier {
                 }
               },
               child: RbioUserTile(
-                name: 'Doctor Home',
+                name: LocaleProvider.current.doctor,
                 leadingImage: UserLeadingImage.Circle,
                 trailingIcon: UserTrailingIcons.RightArrow,
                 onTap: () {
@@ -279,7 +279,7 @@ class HomeVm extends ChangeNotifier {
               child: VerticalCard(
                 topImage: R.image.homeTopLeft,
                 bottomTitle: Text(
-                  "Hastane Randevusu",
+                  LocaleProvider.current.lbl_find_hospital,
                   style: getIt<ITheme>().textTheme.headline2,
                 ),
               ),
@@ -306,7 +306,7 @@ class HomeVm extends ChangeNotifier {
               child: VerticalCard(
                 topImage: R.image.homeTopMid,
                 bottomTitle: Text(
-                  "Görüntülü Görüşme Randevusu",
+                  LocaleProvider.current.take_video_appointment,
                   style: getIt<ITheme>().textTheme.headline2,
                 ),
               ),
@@ -328,7 +328,7 @@ class HomeVm extends ChangeNotifier {
               child: VerticalCard(
                 topImage: R.image.homeTopRight,
                 bottomTitle: Text(
-                  "Kronik\nTakip",
+                  LocaleProvider.current.chronic_track_home,
                   textAlign: TextAlign.start,
                   style: getIt<ITheme>().textTheme.headline2,
                 ),
@@ -356,7 +356,7 @@ class HomeVm extends ChangeNotifier {
             child: VerticalCard(
               topImage: R.image.homeBottomLeft,
               bottomTitle: Text(
-                "Randevular",
+                LocaleProvider.current.appointments,
                 style: getIt<ITheme>().textTheme.headline2,
               ),
             ),
@@ -377,7 +377,7 @@ class HomeVm extends ChangeNotifier {
             child: VerticalCard(
               topImage: R.image.homeBottomMid,
               bottomTitle: Text(
-                "Sonuçlar",
+                LocaleProvider.current.results,
                 style: getIt<ITheme>().textTheme.headline2,
               ),
             ),
@@ -399,7 +399,7 @@ class HomeVm extends ChangeNotifier {
               child: VerticalCard(
                 topImage: R.image.homeBottomRight,
                 bottomTitle: Text(
-                  "Hangi Bölüme Gitmeliyim",
+                  LocaleProvider.current.symptom_checker,
                   style: getIt<ITheme>().textTheme.headline2,
                 ),
               ),

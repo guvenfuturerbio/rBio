@@ -131,7 +131,6 @@ class _LoginScreenState extends State<LoginScreen> {
               LocaleProvider.current.login,
               style: context.xHeadline1.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: context.TEXTSCALE * 30,
               ),
             ),
           ),

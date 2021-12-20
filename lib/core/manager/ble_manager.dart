@@ -11,7 +11,7 @@ class BleDeviceManager extends ChangeNotifier {
   /// Then checking sending value it's exist.
   /// If sending value is not exist new value saving the localStorage
   /// or else do nothing.
-  Future<void> savePairedDevices(PairedDevice pairedDevice) async {
+  Future<bool> savePairedDevices(PairedDevice pairedDevice) async {
     if (!await hasDeviceAlreadyPaired(pairedDevice)) {
       var _pairedDevices = await getPairedDevices() ?? [];
       _pairedDevices.add(pairedDevice);
@@ -23,7 +23,8 @@ class BleDeviceManager extends ChangeNotifier {
           .addDeviceId(_pairedDevices.map((e) => e.deviceId).toList());
       notifyListeners();
       return response;
-    }
+    } else
+      return false;
   }
 
   Future<bool> hasDeviceAlreadyPaired(PairedDevice device) async {

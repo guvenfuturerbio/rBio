@@ -25,9 +25,18 @@ class DoctorRepository {
   Future<List<Appointment>> getAllAppointment(
           AppointmentFilter appointmentFilter) =>
       apiService.getAllAppointment(appointmentFilter);
-  Future<List<DoctorPatientModel>> getMySugarPatient(
+  Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
           GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMySugarPatient(getMyPatientFilter);
+  Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
+          GetMyPatientFilter getMyPatientFilter) =>
+      apiService.getMySugarPatient(getMyPatientFilter);
+  Future<List<DoctorGlucosePatientModel>> getMyBpPatient(
+          GetMyPatientFilter getMyPatientFilter) =>
+      apiService.getMySugarPatient(getMyPatientFilter);
+  Future<List<DoctorBMIPatientModel>> getMyBMIPatient(
+          GetMyPatientFilter getMyPatientFilter) =>
+      apiService.getMyBMIPatient(getMyPatientFilter);
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId) =>
       apiService.getMyPatientDetail(patientId);
   Future<bool> updateMyPatientLimit(
@@ -36,4 +45,10 @@ class DoctorRepository {
   Future<List<BloodGlucose>> getMyPatientBloodGlucose(
           int patientId, GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMyPatientBloodGlucose(patientId, getMyPatientFilter);
+  Future<List<BloodGlucose>> getMyPatientScale(
+          int patientId, GetMyPatientFilter getMyPatientFilter) =>
+      apiService.getMyPatientScale(patientId, getMyPatientFilter);
+  Future<List<BloodGlucose>> getMyPatientBloodPressure(
+          int patientId, GetMyPatientFilter getMyPatientFilter) =>
+      apiService.getMyPatientBloodPressure(patientId, getMyPatientFilter);
 }

@@ -168,10 +168,7 @@ class _MyAppState extends State<MyApp> {
                     textDirection: TextDirection.ltr,
                     child: MediaQuery(
                       data: MediaQuery.of(context).copyWith(
-                        textScaleFactor:
-                            MediaQuery.of(context).size.width <= 400
-                                ? 0.8
-                                : 1.0,
+                        textScaleFactor: themeNotifier.textScale.getValue(),
                       ),
                       child: child,
                     ),

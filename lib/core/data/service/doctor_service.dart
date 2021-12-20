@@ -7,10 +7,21 @@ abstract class DoctorApiService {
   Future<RbioLoginResponse> login(String userId, String password);
   Future<List<Appointment>> getAllAppointment(
       AppointmentFilter appointmentFilter);
-  Future<List<DoctorPatientModel>> getMySugarPatient(GetMyPatientFilter getMyPatientFilter);
+  Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
+      GetMyPatientFilter getMyPatientFilter);
+  Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
+      GetMyPatientFilter getMyPatientFilter);
+  Future<List<DoctorGlucosePatientModel>> getMyBpPatient(
+      GetMyPatientFilter getMyPatientFilter);
+  Future<List<DoctorBMIPatientModel>> getMyBMIPatient(
+      GetMyPatientFilter getMyPatientFilter);
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId);
   Future<bool> updateMyPatientLimit(
       int patientId, UpdateMyPatientLimit updateMyPatientLimit);
   Future<List<BloodGlucose>> getMyPatientBloodGlucose(
+      int patientId, GetMyPatientFilter getMyPatientFilter);
+  Future<List<BloodGlucose>> getMyPatientScale(
+      int patientId, GetMyPatientFilter getMyPatientFilter);
+  Future<List<BloodGlucose>> getMyPatientBloodPressure(
       int patientId, GetMyPatientFilter getMyPatientFilter);
 }

@@ -82,6 +82,7 @@ class ChronicTrackingRepository {
       apiService.getHba1cMeasurementList(
           getHba1cMeasurementListModel, entegrationId);
 
+  // Scale Definations
   Future<GuvenResponseModel> insertNewScaleValue(
           AddScaleMasurementBody addScaleMasurementBody) =>
       apiService.insertNewScaleValue(addScaleMasurementBody);
@@ -94,4 +95,18 @@ class ChronicTrackingRepository {
   Future<GuvenResponseModel> updateScaleMeasurement(
           UpdateScaleMasurementBody updateScaleMasurementBody) =>
       apiService.updateScaleMeasurement(updateScaleMasurementBody);
+
+  // Bp Definitions
+  Future<GuvenResponseModel> insertNewBpValue(
+          AddBpWithDetail addBpWithDetail) =>
+      apiService.insertNewBpValue(addBpWithDetail);
+  Future<GuvenResponseModel> deleteBpMeasurement(
+          DeleteBpMeasurements deleteBpMeasurements) =>
+      apiService.deleteBpMeasurement(deleteBpMeasurements);
+  Future<GuvenResponseModel> getBpDataOfPerson(
+          GetBpMeasurements getBpMeasurements) =>
+      apiService.getBpMasurement(getBpMeasurements);
+  Future<GuvenResponseModel> updateBpMeasurement(
+          UpdateBpMeasurements updateBpMeasurements) =>
+      apiService.updateBpMeasurement(updateBpMeasurements);
 }

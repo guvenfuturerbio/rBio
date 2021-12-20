@@ -4,20 +4,21 @@ String addScaleMasurementBodyToJson(AddScaleMasurementBody data) =>
     json.encode(data.toJson());
 
 class AddScaleMasurementBody {
-  AddScaleMasurementBody({
-    this.entegrationId,
-    this.occurrenceTime,
-    this.weight,
-    this.bmi,
-    this.water,
-    this.bodyFat,
-    this.visceralFat,
-    this.boneMass,
-    this.muscle,
-    this.bmh,
-    this.scaleUnit,
-    this.note,
-  });
+  AddScaleMasurementBody(
+      {this.entegrationId,
+      this.occurrenceTime,
+      this.weight,
+      this.bmi,
+      this.water,
+      this.bodyFat,
+      this.visceralFat,
+      this.boneMass,
+      this.muscle,
+      this.bmh,
+      this.scaleUnit,
+      this.note,
+      this.isManuel,
+      this.deviceUUID});
 
   int entegrationId;
   DateTime occurrenceTime;
@@ -31,6 +32,8 @@ class AddScaleMasurementBody {
   double bmh;
   int scaleUnit;
   String note;
+  bool isManuel;
+  String deviceUUID;
 
   Map<String, dynamic> toJson() => {
         "entegration_id": entegrationId,
@@ -44,6 +47,8 @@ class AddScaleMasurementBody {
         "muscle": muscle,
         "bmh": bmh,
         "scale_unit": scaleUnit,
+        "device_uuid": deviceUUID,
+        "is_manual": isManuel,
         "note": note,
       };
 }

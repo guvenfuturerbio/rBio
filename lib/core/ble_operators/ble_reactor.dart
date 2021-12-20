@@ -119,7 +119,6 @@ class BleReactorOps extends ChangeNotifier {
         bool doesExist = await getIt<GlucoseStorageImpl>().doesExist(item);
         if (!doesExist) {
           getIt<GlucoseStorageImpl>().write(item, shouldSendToServer: true);
-          showNotification();
         } else {
           print("$item exists in DB! " + DateTime.now().toString());
         }
@@ -133,30 +132,12 @@ class BleReactorOps extends ChangeNotifier {
           barrierColor: Colors.transparent,
           barrierDismissible: false);
     }
+    getIt<LocalNotificationsManager>().showNotification(
+        LocaleProvider.current.blood_glucose_measurement,
+        LocaleProvider.current.blood_glucose_imported);
   }
 
   var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  showNotification({String message}) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('11', 'New Message',
-            channelDescription: 'New message recieved',
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker');
-    const IOSNotificationDetails iosPlatformChannelSpecifics =
-        IOSNotificationDetails();
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iosPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0,
-        LocaleProvider.current.blood_glucose_measurement,
-        message == null
-            ? LocaleProvider.current.blood_glucose_imported
-            : LocaleProvider.current.we_have_an_error,
-        platformChannelSpecifics);
-  }
 
   /// MG2
   Future<void> write(DiscoveredDevice device) async {
@@ -238,9 +219,14 @@ class BleReactorOps extends ChangeNotifier {
     _ble.subscribeToCharacteristic(writeCharacteristic).listen(
         (recordAccessData) async {
       print("record access data " + recordAccessData.toString());
-      _controlPointResponse = recordAccessData;
+
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+        getIt<BleDeviceManager>().savePairedDevices(pairedDevice).then((value) {
+          log("$value");
+          value
+              ? _controlPointResponse = recordAccessData
+              : _controlPointResponse.clear();
+        });
       });
       this._bleReactorState = BleReactorState.DONE;
       await saveGlucoseDatas();
@@ -313,7 +299,6 @@ class BleReactorOps extends ChangeNotifier {
         deviceId: device.id);
     try {
       _ble.subscribeToCharacteristic(_characteristic).listen((event) async {
-        print('------------------------------------->$event');
         if (!(Atom.isDialogShow ?? false)) {
           Atom.show(
             MiScalePopUp(
@@ -326,7 +311,6 @@ class BleReactorOps extends ChangeNotifier {
           Uint8List data = Uint8List.fromList(event);
 
           scaleDevice.parseScaleData(pairedDevice, data);
-          print(scaleDevice.scaleData.date);
           if (scaleDevice.scaleData.scaleModel.measurementComplete &&
               deviceAlreadyPaired) {
             scaleDevice.scaleData.calculateVariables();

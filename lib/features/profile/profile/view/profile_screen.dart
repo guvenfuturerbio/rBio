@@ -33,6 +33,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           context,
           LocaleProvider.current.profile,
         ),
+        actions: [
+          //
+          IconButton(
+            onPressed: () {
+              context.read<ThemeNotifier>().changeTextScale();
+            },
+            icon: SvgPicture.asset(
+              R.image.change_size_icon,
+              color: getIt<ITheme>().iconSecondaryColor,
+            ),
+          ),
+        ],
       ),
 
       //

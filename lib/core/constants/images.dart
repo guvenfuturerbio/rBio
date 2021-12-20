@@ -36,6 +36,7 @@ class _Images {
   final error_icon = 'assets/images/new/error_icon.svg';
   final clock_green_icon = 'assets/images/new/clock_green_icon.svg';
   final clock_icon = 'assets/images/new/clock_icon.svg';
+  final change_size_icon = 'assets/images/new/change_size_icon.svg';
 
   // Doctor
   final appbar = "assets/images/usttab.svg";

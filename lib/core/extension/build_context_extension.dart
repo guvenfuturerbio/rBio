@@ -1,8 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+
+import '../core.dart';
 
 extension BuildContextThemeExtensions on BuildContext {
+  TextScaleType get xTextScaleType => this.read<ThemeNotifier>().textScale;
+
   MediaQueryData get xMediaQuery => MediaQuery.of(this);
   Color get xAccentColor => Theme.of(this).colorScheme.secondary;
 

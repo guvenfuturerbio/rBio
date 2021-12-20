@@ -40,18 +40,66 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<DoctorPatientModel>> getMySugarPatient(
+  Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
       GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMySugarPatient, getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum
-          .map((item) => DoctorPatientModel.fromJson(item))
-          .cast<DoctorPatientModel>()
+          .map((item) => DoctorGlucosePatientModel.fromJson(item))
+          .cast<DoctorGlucosePatientModel>()
           .toList();
     } else {
       throw Exception('/getMyPatients : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
+      GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyScalePatient, getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => DoctorGlucosePatientModel.fromJson(item))
+          .cast<DoctorGlucosePatientModel>()
+          .toList();
+    } else {
+      throw Exception('/getMyScalePatient : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<DoctorGlucosePatientModel>> getMyBpPatient(
+      GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyBpPatient, getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => DoctorGlucosePatientModel.fromJson(item))
+          .cast<DoctorGlucosePatientModel>()
+          .toList();
+    } else {
+      throw Exception('/getMyBpPatient : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<DoctorBMIPatientModel>> getMyBMIPatient(
+      GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyBMIPatient, getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => DoctorBMIPatientModel.fromJson(item))
+          .cast<DoctorBMIPatientModel>()
+          .toList();
+    } else {
+      throw Exception('/getMyBpPatient : ${response.isSuccessful}');
     }
   }
 
@@ -86,6 +134,40 @@ class DoctorApiServiceImpl extends DoctorApiService {
       int patientId, GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMyPatientBloodGlucose(patientId),
+        getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => BloodGlucose.fromJson(item))
+          .cast<BloodGlucose>()
+          .toList();
+    } else {
+      throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<BloodGlucose>> getMyPatientScale(
+      int patientId, GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyPatientScale(patientId),
+        getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => BloodGlucose.fromJson(item))
+          .cast<BloodGlucose>()
+          .toList();
+    } else {
+      throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<BloodGlucose>> getMyPatientBloodPressure(
+      int patientId, GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyPatientPressure(patientId),
         getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {

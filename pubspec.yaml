@@ -138,7 +138,7 @@ dependencies:
   universal_html: ^2.0.8
   url_launcher: ^6.0.13
   url_strategy: ^0.2.0
-  vrouter: ^1.2.0+14
+  # vrouter: ^1.2.0+14
   webview_flutter: ^2.3.1
   wheel_chooser: ^1.0.0
   youtube_player_flutter: null
@@ -172,7 +172,7 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: 'assets/images/guven_app_logo.png'
+  image_path: 'assets/icon/appicon-01.png'
 
 flutter_intl:
   enabled: true

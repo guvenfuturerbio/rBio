@@ -22,9 +22,7 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier
   }) {
     this.mContext = context;
     this._patientId = patientId;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await update();
-    });
+    update();
 
     // NotificationHandler().addListener(() async {
     //   if (!_disposed) {

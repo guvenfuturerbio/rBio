@@ -1,15 +1,16 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:system_shortcuts/system_shortcuts.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../generated/l10n.dart';
 import '../../../../../model/ble_models/DeviceTypes.dart';
 import '../../features/chronic_tracking/lib/widgets/utils.dart';
 import '../../features/chronic_tracking/progress_sections/glucose_progress/utils/blood_glucose_tagger/bg_tagger_pop_up.dart';
