@@ -72,15 +72,15 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<DoctorGlucosePatientModel>> getMyBpPatient(
+  Future<List<DoctorBloodPressurePatientModel>> getMyBpPatient(
       GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMyBpPatient, getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum
-          .map((item) => DoctorGlucosePatientModel.fromJson(item))
-          .cast<DoctorGlucosePatientModel>()
+          .map((item) => DoctorBloodPressurePatientModel.fromJson(item))
+          .cast<DoctorBloodPressurePatientModel>()
           .toList();
     } else {
       throw Exception('/getMyBpPatient : ${response.isSuccessful}');

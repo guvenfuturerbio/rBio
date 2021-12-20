@@ -62,19 +62,23 @@ class HomeMediminderScreen extends StatelessWidget {
                 'remindable': remindable.toParseableString()
               });
               break;
+
             case Remindable.Strip:
               Atom.to(PagePaths.STRIP_PAGE);
               break;
+
             case Remindable.Medication:
               Atom.to(PagePaths.MEDICATION_SCREEN, queryParameters: {
                 'remindable': remindable.toParseableString()
               });
               break;
+
             case Remindable.HbA1c:
               Atom.to(PagePaths.HBA1C_REMINDER_ADD, queryParameters: {
                 'remindable': remindable.toParseableString()
               });
               break;
+
             default:
               return SizedBox();
               break;

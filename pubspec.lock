@@ -1981,7 +1981,7 @@ packages:
     source: hosted
     version: "2.1.1"
   vrouter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: vrouter
       url: "https://pub.dartlang.org"

@@ -533,6 +533,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password_security" : MessageLookupByLibrary.simpleMessage("According to our security policies, your password must comply with the security criteria."),
     "pathology_result" : MessageLookupByLibrary.simpleMessage("Pathology\nResults"),
     "patient_name" : MessageLookupByLibrary.simpleMessage("Patient Name :"),
+    "patient_name_2" : MessageLookupByLibrary.simpleMessage("Patient Name"),
     "patients" : MessageLookupByLibrary.simpleMessage("Patients"),
     "pay" : MessageLookupByLibrary.simpleMessage("Make Payment"),
     "payment" : MessageLookupByLibrary.simpleMessage("Payment"),

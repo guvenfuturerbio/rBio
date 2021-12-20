@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/features/doctor/patient_list/model/patient_list_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -164,7 +165,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: RbioOverlayMenu(
-                      tiles: [...vm.getFilterPopupList(vm, context)],
+                      tiles: vm.getPopupWidgets(),
                       margin: EdgeInsets.only(top: 50),
                       color: getIt<ITheme>().cardBackgroundColor,
                       borderRadius: R.sizes.borderRadiusCircular,
@@ -187,92 +188,58 @@ class DoctorPatientListScreen extends StatelessWidget {
 
   // #region _buildListView
   Widget _buildListView(DoctorPatientListVm vm) {
+    final list = vm.getList;
+
     return ListView.builder(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
-      itemCount: vm.filterList.length,
+      itemCount: vm.getitemCount,
       itemBuilder: (BuildContext context, int index) {
-        return _buildTypeCard(context, vm.filterList[index]);
+        return R.sizes.textScaleBuilder(
+          context,
+          smallWidget: _buildCard(context, vm, list[index], isLarge: false),
+          largeWidget: _buildCard(context, vm, list[index], isLarge: true),
+        );
       },
     );
   }
   // #endregion
 
-  // #region _buildTypeCard
-  Widget _buildTypeCard(BuildContext context, dynamic model) {
-    switch (type) {
-      case PatientType.BloodGlucose:
-        return R.sizes.textScaleBuilder(
-          context,
-          smallWidget: _buildGlucoseCard(context, model, false),
-          largeWidget: _buildGlucoseCard(context, model, true),
-        );
-
-      case PatientType.Weight:
-        return R.sizes.textScaleBuilder(
-          context,
-          smallWidget: _buildBMICard(context, model, false),
-          largeWidget: _buildBMICard(context, model, true),
-        );
-
-      case PatientType.BloodPressure:
-        return SizedBox();
-
-      default:
-        return SizedBox();
-    }
-  }
-  // #endregion
-
-  // #region _buildGlucoseCard
-  Widget _buildGlucoseCard(
+  // #region _buildCard
+  Widget _buildCard(
     BuildContext context,
-    DoctorGlucosePatientModel model,
-    bool isLarge,
-  ) {
+    DoctorPatientListVm vm,
+    PatientListItemModel model, {
+    @required bool isLarge,
+  }) {
     if (isLarge) {
       return _buildLargeCard(
         context,
-        onTap: () => _bloodGlucoseOnTap(model),
-        name: model.name,
-        dates: model.measurements
+        onTap: () => vm.itemOnTap(model.data),
+        name: model.patientName,
+        dates: model.dates
             .map(
-              (item) => Expanded(
-                child: _buildSmallCardText(
-                  context,
-                  item.measurementTime != null
-                      ? DateTime.parse(item.measurementTime ?? '')
-                          .xFormatTime7()
-                      : '',
-                ),
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        times: model.measurements
+        times: model.times
             .map(
-              (item) => Expanded(
-                child: _buildSmallCardText(
-                  context,
-                  item.measurementTime != null
-                      ? DateTime.parse(item.measurementTime ?? '')
-                          .xFormatTime8()
-                      : '',
-                ),
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        values: model.measurements
+        values: model.values
             .map(
-              (item) => Expanded(
+              (e) => _buildSmallExpanded(
                 child: _buildColorfulText(
                   true,
                   context,
-                  '${item.measurement}',
-                  _getMeasurementBackcolor(
-                    text: item.measurement,
-                    item: model,
-                  ),
+                  e,
+                  vm.getBackColor(e, model.data),
                 ),
               ),
             )
@@ -281,157 +248,30 @@ class DoctorPatientListScreen extends StatelessWidget {
     } else {
       return _buildSmallCard(
         context,
-        onTap: () => _bloodGlucoseOnTap(model),
-        name: model.name,
-        dates: model.measurements
+        onTap: () => vm.itemOnTap(model.data),
+        name: model.patientName,
+        dates: model.dates
             .map(
-              (item) => Expanded(
-                flex: smallFlex,
-                child: _buildSmallCardText(
-                  context,
-                  item.measurementTime != null
-                      ? DateTime.parse(item.measurementTime ?? '')
-                          .xFormatTime7()
-                      : '',
-                ),
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        times: model.measurements
+        times: model.times
             .map(
-              (item) => Expanded(
-                flex: smallFlex,
-                child: _buildSmallCardText(
-                  context,
-                  item.measurementTime != null
-                      ? DateTime.parse(item.measurementTime ?? '')
-                          .xFormatTime8()
-                      : '',
-                ),
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        values: model.measurements
+        values: model.values
             .map(
-              (item) => Expanded(
-                flex: smallFlex,
-                child: _buildColorfulText(
-                  false,
-                  context,
-                  '${item.measurement}',
-                  _getMeasurementBackcolor(
-                    text: item.measurement,
-                    item: model,
-                  ),
-                ),
-              ),
-            )
-            .toList(),
-      );
-    }
-  }
-  // #endregion
-
-  // #region _bloodGlucoseOnTap
-  void _bloodGlucoseOnTap(DoctorGlucosePatientModel model) {
-    Atom.to(
-      PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
-      queryParameters: {
-        'patientId': model.id.toString(),
-        'patientName': model.name,
-      },
-    );
-  }
-  // #endregion
-
-  // #region _buildBMICard
-  Widget _buildBMICard(
-    BuildContext context,
-    DoctorBMIPatientModel model,
-    bool isLarge,
-  ) {
-    if (isLarge) {
-      return _buildLargeCard(
-        context,
-        onTap: () {},
-        name: model.name,
-        dates: model.bmiMeasurements
-            .map(
-              (item) => Expanded(
-                child: _buildSmallCardText(
-                  context,
-                  item.occurrenceTime != null
-                      ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
-                      : '',
-                ),
-              ),
-            )
-            .toList(),
-        times: model.bmiMeasurements
-            .map(
-              (item) => Expanded(
-                child: _buildSmallCardText(
-                  context,
-                  item.occurrenceTime != null
-                      ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
-                      : '',
-                ),
-              ),
-            )
-            .toList(),
-        values: model.bmiMeasurements
-            .map(
-              (item) => Expanded(
+              (e) => _buildSmallExpanded(
                 child: _buildColorfulText(
                   true,
                   context,
-                  '${item.weight}',
-                  Colors.red,
-                ),
-              ),
-            )
-            .toList(),
-      );
-    } else {
-      return _buildSmallCard(
-        context,
-        onTap: () {},
-        name: model.name,
-        dates: model.bmiMeasurements
-            .map(
-              (item) => Expanded(
-                flex: smallFlex,
-                child: _buildSmallCardText(
-                  context,
-                  item.occurrenceTime != null
-                      ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
-                      : '',
-                ),
-              ),
-            )
-            .toList(),
-        times: model.bmiMeasurements
-            .map(
-              (item) => Expanded(
-                flex: smallFlex,
-                child: _buildSmallCardText(
-                  context,
-                  item.occurrenceTime != null
-                      ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
-                      : '',
-                ),
-              ),
-            )
-            .toList(),
-        values: model.bmiMeasurements
-            .map(
-              (item) => Expanded(
-                flex: smallFlex,
-                child: _buildColorfulText(
-                  false,
-                  context,
-                  '${item.weight}',
-                  Colors.red,
+                  e,
+                  vm.getBackColor(e, model.data),
                 ),
               ),
             )
@@ -439,6 +279,11 @@ class DoctorPatientListScreen extends StatelessWidget {
       );
     }
   }
+  // #endregion
+
+  // #region _buildSmallExpanded
+  Widget _buildSmallExpanded({@required Widget child}) =>
+      Expanded(flex: smallFlex, child: child);
   // #endregion
 
   // #region _buildLargeCard
@@ -475,7 +320,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                       children: [
                         _buildBigSmallCardText(
                           context,
-                          'Hasta Adı',
+                          LocaleProvider.current.patient_name_2,
                           getIt<ITheme>().textColorPassive,
                         ),
 
@@ -578,7 +423,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                           flex: bigFlex,
                           child: _buildBigSmallCardText(
                             context,
-                            'Hasta Adı',
+                            LocaleProvider.current.patient_name_2,
                             getIt<ITheme>().textColorPassive,
                           ),
                         ),
@@ -666,35 +511,6 @@ class DoctorPatientListScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-  // #endregion
-
-  // #region _getMeasurementBackcolor
-  Color _getMeasurementBackcolor({
-    String text,
-    DoctorGlucosePatientModel item,
-  }) {
-    return text == '' || text == null
-        ? getIt<ITheme>().cardBackgroundColor
-        : Utils.instance.fetchMeasurementColor(
-            measurement: _textToInt(text ?? ""),
-            criticMin: item?.alertMin?.toInt() ?? 0,
-            criticMax: item?.alertMax?.toInt() ?? 0,
-            targetMax: item?.normalMax?.toInt() ?? 0,
-            targetMin: item?.normalMin?.toInt() ?? 0,
-          );
-  }
-  // #endregion
-
-  // #region _textToInt
-  int _textToInt(String text) {
-    if (text == null) {
-      return 0;
-    } else if (text.length > 0) {
-      return int.parse(text);
-    } else {
-      return 0;
-    }
   }
   // #endregion
 

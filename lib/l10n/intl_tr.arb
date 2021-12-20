@@ -358,6 +358,7 @@
   "appo_for": "Randevu alınacak kişi :",
   "pls_select_person": "Lütfen kişi seçiniz",
   "patient_name": "Hasta Adı :",
+  "patient_name_2": "Hasta Adı",
   "tenant_name": "Hastane Adı :",
   "doctor_name": "Doktor Adı :",
   "depart_name": "Bölüm :",

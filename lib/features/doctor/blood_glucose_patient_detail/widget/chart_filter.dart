@@ -38,44 +38,48 @@ class _ChartFilter extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.WIDTH * .03),
       child: SizedBox(
-        height: height,
         width: width,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Column(
-                  children: value.colorInfo.keys
-                      .map(
-                        (color) => _colorFilterItem(
-                            context: context,
-                            text: value.colorInfo[color].toShortString(),
-                            status:
-                                value.isFilterSelected(value.colorInfo[color]),
-                            color: color,
-                            size: 15,
-                            statCallback: (_) =>
-                                value.setFilterState(value.colorInfo[color]),
-                            isHungry: false),
-                      )
-                      .toList(),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Column(
+                    children: value.colorInfo.keys
+                        .map(
+                          (color) => _colorFilterItem(
+                              context: context,
+                              text: value.colorInfo[color].toShortString(),
+                              status: value
+                                  .isFilterSelected(value.colorInfo[color]),
+                              color: color,
+                              size: 15,
+                              statCallback: (_) =>
+                                  value.setFilterState(value.colorInfo[color]),
+                              isHungry: false),
+                        )
+                        .toList(),
+                  ),
                 ),
-              ),
 
-              //
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Column(
-                  children: value.states
-                      .map(
-                        (state) => _colorFilterItem(
+                //
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Column(
+                    children: value.states
+                        .map(
+                          (state) => _colorFilterItem(
                             context: context,
                             text: state.toShortString(),
                             status: value.isFilterSelected(state),
@@ -86,95 +90,53 @@ class _ChartFilter extends StatelessWidget {
                                 ? BoxShape.circle
                                 : BoxShape.rectangle,
                             statCallback: (_) => value.setFilterState(state),
-                            isHungry: state == LocaleProvider.current.hungry),
-                      )
-                      .toList(),
+                            isHungry: state == LocaleProvider.current.hungry,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
-              ),
 
-              //
-              // Wrap(
-              //   crossAxisAlignment: WrapCrossAlignment.center,
-              //   children: [
-              //     //
-              //     GestureDetector(
-              //       onTap: () {
-              //         //
-              //       },
-              //       child: Card(
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(25),
-              //         ),
-              //         elevation: 4,
-              //         child: Container(
-              //           decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(25),
-              //             gradient: LinearGradient(
-              //                 begin: Alignment.bottomRight,
-              //                 end: Alignment.topLeft,
-              //                 colors: <Color>[R.color.white, R.color.white]),
-              //           ),
-              //           padding:
-              //               EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              //           child: Text(
-              //             LocaleProvider.current.cancel,
-              //             softWrap: false,
-              //             style: TextStyle(color: Colors.black, fontSize: 17),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
+                //
+                Center(
+                  child: Wrap(
+                    spacing: 8.0,
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      //
+                      RbioElevatedButton(
+                        title: '${LocaleProvider.current.cancel}',
+                        onTap: () {
+                          Atom.dismiss();
+                        },
+                        backColor: getIt<ITheme>().cardBackgroundColor,
+                        textColor: getIt<ITheme>().textColorSecondary,
+                      ),
 
-              //     //
-              //     GestureDetector(
-              //       onTap: () {
-              //         //
-              //       },
-              //       child: RbioElevatedButton(
-              //         title: '${LocaleProvider.current.save}',
-              //       ),
-
-              //       child: Card(
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(25),
-              //         ),
-              //         elevation: 4,
-              //         child: Container(
-              //           decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(25),
-              //             gradient: LinearGradient(
-              //               begin: Alignment.bottomRight,
-              //               end: Alignment.topLeft,
-              //               colors: <Color>[
-              //                 R.btnLightBlue,
-              //                 R.btnDarkBlue,
-              //               ],
-              //             ),
-              //           ),
-              //           padding:
-              //               EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              //           child: Text(
-              //             '${LocaleProvider.current.save}',
-              //             maxLines: 1,
-              //             textAlign: TextAlign.center,
-              //             softWrap: false,
-              //             style: TextStyle(color: Colors.white, fontSize: 17),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              //
-              TextButton(
-                onPressed: () => value.resetFilterValues(),
-                child: Text(
-                  '${LocaleProvider.current.reset_filter_value}',
-                  style: TextStyle(decoration: TextDecoration.underline),
+                      //
+                      RbioElevatedButton(
+                        title: '${LocaleProvider.current.save}',
+                        onTap: () {
+                          Atom.dismiss();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+
+                //
+                Center(
+                  child: TextButton(
+                    onPressed: () => value.resetFilterValues(),
+                    child: Text(
+                      '${LocaleProvider.current.reset_filter_value}',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
