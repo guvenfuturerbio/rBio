@@ -4,6 +4,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../../../core/core.dart';
 import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
+import '../model/patient_list_model.dart';
 
 enum DoctorPatientListSortType {
   //
@@ -19,8 +20,7 @@ class DoctorPatientListVm extends ChangeNotifier with RbioVm {
   BuildContext mContext;
   PatientType type;
 
-  List _patientList = [];
-  List filterList = [];
+  PatientListModel listModel;
 
   DoctorPatientListVm(this.mContext, this.type) {
     fetchAll();
@@ -36,38 +36,7 @@ class DoctorPatientListVm extends ChangeNotifier with RbioVm {
   Future<void> fetchAll() async {
     try {
       progress = LoadingProgress.LOADING;
-      switch (type) {
-        case PatientType.BloodGlucose:
-          {
-            _patientList = await getIt<DoctorRepository>().getMySugarPatient(
-              GetMyPatientFilter(
-                skip: 0,
-                take: 500,
-              ),
-            );
-
-            break;
-          }
-
-        case PatientType.Weight:
-          {
-            _patientList = await getIt<DoctorRepository>().getMyBMIPatient(
-              GetMyPatientFilter(
-                skip: 0,
-                take: 500,
-              ),
-            );
-
-            break;
-          }
-
-        case PatientType.BloodPressure:
-          {
-            break;
-          }
-      }
-
-      filterList = _patientList;
+      listModel = await _getAllByType();
       progress = LoadingProgress.DONE;
     } catch (e, stackTrace) {
       progress = LoadingProgress.ERROR;
@@ -80,176 +49,77 @@ class DoctorPatientListVm extends ChangeNotifier with RbioVm {
     }
   }
 
-  void textOnChanged(String text) {
-    if (text == null || text == '') {
-      filterList = _patientList;
-      notifyListeners();
-    } else {
-      filterList = _patientList
-          .where((item) => item.name.toLowerCase().contains(text.toLowerCase()))
-          .toList();
-      notifyListeners();
+  // #region _getAllByType
+  Future<PatientListModel<dynamic>> _getAllByType() async {
+    switch (type) {
+      case PatientType.Sugar:
+        {
+          return PatientBloodGlucoseListModel(
+            mContext,
+            await getIt<DoctorRepository>().getMySugarPatient(
+              GetMyPatientFilter(
+                skip: 0,
+                take: 500,
+              ),
+            ),
+          );
+        }
+
+      case PatientType.BMI:
+        {
+          return PatientBMIListModel(
+            mContext,
+            await getIt<DoctorRepository>().getMyBMIPatient(
+              GetMyPatientFilter(
+                skip: 0,
+                take: 500,
+              ),
+            ),
+          );
+        }
+
+      case PatientType.Bp:
+        {
+          return PatientBloodPressureListModel(
+            mContext,
+            await getIt<DoctorRepository>().getMyBpPatient(
+              GetMyPatientFilter(
+                skip: 0,
+                take: 500,
+              ),
+            ),
+          );
+        }
+
+      default:
+        return Future.error(Exception('Undefined Type'));
     }
   }
+  // #endregion
 
-  void sortList(DoctorPatientListSortType sortType) {
-    switch (type) {
-      case PatientType.BloodGlucose:
-        {
-          switch (sortType) {
-            case DoctorPatientListSortType.criticalMetrics:
-              filterList = _patientList
-                  .sortedBy((it) => (it as DoctorGlucosePatientModel).name);
-              break;
+  List<PatientListItemModel> get getList => listModel.getList;
+  int get getitemCount => listModel.getitemCount;
 
-            case DoctorPatientListSortType.fromNewest:
-              filterList = _patientList.sortedBy(
-                  (it) => (it as DoctorGlucosePatientModel).normalMin);
-              break;
-
-            case DoctorPatientListSortType.fromOldest:
-              filterList = _patientList.sortedBy(
-                  (it) => (it as DoctorGlucosePatientModel).normalMax);
-              break;
-          }
-
-          break;
-        }
-
-      case PatientType.Weight:
-        {
-          switch (sortType) {
-            case DoctorPatientListSortType.fromNewest:
-              filterList = _patientList.sortedBy((it) =>
-                  (it as DoctorBMIPatientModel)
-                      .bmiMeasurements
-                      .first
-                      .occurrenceTime);
-              break;
-
-            case DoctorPatientListSortType.fromOldest:
-              filterList = _patientList.sortedBy((it) =>
-                  (it as DoctorBMIPatientModel).bmiMeasurements.first.weight);
-              break;
-
-            default:
-              break;
-          }
-
-          break;
-        }
-
-      case PatientType.BloodPressure:
-        // TODO: Handle this case.
-        break;
-    }
-
+  void textOnChanged(String text) {
+    listModel.textOnChanged(text);
     notifyListeners();
   }
 
-  List<Widget> getFilterPopupList(
-    DoctorPatientListVm vm,
-    BuildContext _context,
-  ) {
-    switch (vm.type) {
-      case PatientType.BloodGlucose:
-        return [
-          GestureDetector(
-            child: Container(
-              color: getIt<ITheme>().scaffoldBackgroundColor,
-              padding: EdgeInsets.all(12),
-              child: Text(
-                LocaleProvider.of(_context).critical_metrics,
-                style: _context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.of(_context).pop();
-              vm.sortList(DoctorPatientListSortType.criticalMetrics);
-            },
-          ),
-          GestureDetector(
-            child: Container(
-              color: getIt<ITheme>().scaffoldBackgroundColor,
-              padding: EdgeInsets.all(12),
-              child: Text(
-                LocaleProvider.of(_context).from_newest,
-                style: _context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.of(_context).pop();
-              vm.sortList(DoctorPatientListSortType.fromNewest);
-            },
-          ),
-          GestureDetector(
-            child: Container(
-              color: getIt<ITheme>().scaffoldBackgroundColor,
-              padding: EdgeInsets.all(12),
-              child: Text(
-                LocaleProvider.of(_context).from_oldest,
-                style: _context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.of(_context).pop();
-              vm.sortList(DoctorPatientListSortType.fromOldest);
-            },
-          ),
-        ];
-
-      case PatientType.Weight:
-        return [
-          GestureDetector(
-            child: Container(
-              color: getIt<ITheme>().scaffoldBackgroundColor,
-              padding: EdgeInsets.all(12),
-              child: Text(
-                LocaleProvider.of(_context).from_newest,
-                style: _context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.of(_context).pop();
-              vm.sortList(DoctorPatientListSortType.fromNewest);
-            },
-          ),
-          GestureDetector(
-            child: Container(
-              color: getIt<ITheme>().scaffoldBackgroundColor,
-              padding: EdgeInsets.all(12),
-              child: Text(
-                LocaleProvider.of(_context).from_oldest,
-                style: _context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.of(_context).pop();
-              vm.sortList(DoctorPatientListSortType.fromOldest);
-            },
-          ),
-        ];
-
-      case PatientType.BloodPressure:
-        return [];
-
-      default:
-        return [];
-    }
+  List<Widget> getPopupWidgets() {
+    return listModel.getPopupWidgets(
+      onSelect: (sortType) {
+        sortList(sortType);
+      },
+    );
   }
-}
 
-extension MyIterable<E> on Iterable<E> {
-  Iterable<E> sortedBy(Comparable key(E e)) =>
-      toList()..sort((a, b) => key(a).compareTo(key(b)));
+  void sortList(DoctorPatientListSortType sortType) {
+    listModel.filterList(sortType);
+    notifyListeners();
+  }
+
+  Color getBackColor(String text, dynamic model) =>
+      listModel.getBackColor(text, model);
+
+  void itemOnTap(dynamic model) => listModel.itemOnTap(model);
 }

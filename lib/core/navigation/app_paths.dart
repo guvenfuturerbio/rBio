@@ -1,5 +1,6 @@
 import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
 import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
+import 'package:onedosehealth/features/doctor/consultation/view/consultation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 import '../../features/auth/auth.dart';
@@ -360,6 +361,10 @@ class VRouterRoutes {
                 ),
               ],
             ),
+            VWidget(
+              path: PagePaths.DOCTOR_CONSULTATION,
+              widget: DoctorConsultationScreen(),
+            ),
           ],
         ),
 
@@ -471,4 +476,5 @@ class PagePaths {
   static const BLOOD_GLUCOSE_PATIENT_DETAIL = '/blood-glucose-patient-detail';
   static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
   static const DOCTOR_VIDEO_CALL_EDIT = '/doctor-video-call-edit';
+  static const DOCTOR_CONSULTATION = '/doctor-consultation';
 }

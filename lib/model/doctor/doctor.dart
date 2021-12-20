@@ -22,3 +22,4 @@ export 'doctor_patient_detail_model.dart';
 export 'get_my_patient_filter.dart';
 export 'update_my_patient_limit.dart';
 export 'doctor_bmi_patient_model.dart';
+export 'doctor_blood_pressure_patient_model.dart';

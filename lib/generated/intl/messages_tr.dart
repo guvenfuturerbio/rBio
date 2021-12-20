@@ -529,6 +529,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password_security" : MessageLookupByLibrary.simpleMessage("Güvenlik politikalarımız gereği şifrenizin güvenlik kriterlerine uyması gerekmektedir."),
     "pathology_result" : MessageLookupByLibrary.simpleMessage("Patoloji\nSonuçları"),
     "patient_name" : MessageLookupByLibrary.simpleMessage("Hasta Adı :"),
+    "patient_name_2" : MessageLookupByLibrary.simpleMessage("Hasta Adı"),
     "patients" : MessageLookupByLibrary.simpleMessage("Hastalar"),
     "pay" : MessageLookupByLibrary.simpleMessage("Ödeme yap"),
     "payment" : MessageLookupByLibrary.simpleMessage("Ödeme"),

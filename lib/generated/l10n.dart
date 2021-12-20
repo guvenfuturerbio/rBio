@@ -3675,6 +3675,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Patient Name`
+  String get patient_name_2 {
+    return Intl.message(
+      'Patient Name',
+      name: 'patient_name_2',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Hospital Name :`
   String get tenant_name {
     return Intl.message(
