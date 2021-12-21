@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/doctor/patient_list/model/patient_list_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/patient_list_model.dart';
 import '../viewmodel/patient_list_vm.dart';
 
 // ignore: must_be_immutable

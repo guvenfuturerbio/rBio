@@ -56,6 +56,7 @@ class LoginScreenVm extends ChangeNotifier {
       await getSavedLoginInfo();
       await fetchConsentFormState();
       await fetchKvkkFormState();
+      await autoLogin();
       //await startAppVersionOperation();
       //    packageInfo = await PackageInfo.fromPlatform();
     });

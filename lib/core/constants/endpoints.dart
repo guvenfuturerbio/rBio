@@ -89,7 +89,7 @@ class _Endpoints {
   final getAppointmentTypeViaWebConsultantIdPath =
       '/videoCall/get-stream-type-mobile'.xBasePath;
   String requestTranslatorPath(String appoId) =>
-      '/appointmentinterpreter/add-update-appointment-interpreter/$appoId'
+      '/appointmentinterpreter/add-update-appointment-interpreter-pusula/$appoId'
           .xBasePath;
   String uploadFileToAppoPath(String webAppoId) =>
       '/file/upload-patient-document-for-appoinment/$webAppoId'.xBasePath;

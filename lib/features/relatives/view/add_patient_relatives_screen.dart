@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
+
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 import '../viewmodel/add_patient_relatives_vm.dart';
@@ -13,16 +14,23 @@ class AddPatientRelativesScreen extends StatefulWidget {
 }
 
 class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
-  List genderList = [
-    "E",
-    "K",
-  ];
   String gender;
+  List genderList = ["E", "K"];
 
-  final TextEditingController relativeTcNo = TextEditingController();
-  final TextEditingController relativeName = TextEditingController();
-  final TextEditingController relativeSurname = TextEditingController();
-  final TextEditingController relativeEmail = TextEditingController();
+  TextEditingController relativeTcNo;
+  TextEditingController relativeName;
+  TextEditingController relativeSurname;
+  TextEditingController relativeEmail;
+
+  @override
+  void initState() {
+    relativeTcNo = TextEditingController();
+    relativeName = TextEditingController();
+    relativeSurname = TextEditingController();
+    relativeEmail = TextEditingController();
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -50,18 +58,26 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                 LocaleProvider.of(context).add_new_relative,
               ),
             ),
-            body: _builBody(context, vm),
+            body: _buildBody(context, vm),
           );
         },
       ),
     );
   }
 
-  Widget _builBody(BuildContext context, AddPatientRelativesScreenVm vm) {
-    if (vm.status == LoadingStatus.loading) {
-      return RbioLoading();
-    } else {
-      return _buildWithUserAcc(context, vm.userAccount, vm);
+  Widget _buildBody(BuildContext context, AddPatientRelativesScreenVm vm) {
+    switch (vm.status) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
+      case LoadingProgress.DONE:
+        return _buildWithUserAcc(context, vm.userAccount, vm);
+
+      case LoadingProgress.ERROR:
+        return RbioBodyError();
+
+      default:
+        return SizedBox();
     }
   }
 
@@ -78,33 +94,33 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
           SizedBox(
             height: 40,
           ),
+
+          //
           Wrap(
             children: [
               //
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                      child: Text(
-                        LocaleProvider.current.name,
-                        style: context.xHeadline3
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 5),
+                    child: Text(
+                      LocaleProvider.current.name,
+                      style: context.xHeadline3
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      child: RbioTextFormField(
-                        controller: relativeName,
-                        obscureText: false,
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.next,
-                        hintText: LocaleProvider.of(context).name,
-                        onFieldSubmitted: (term) {},
-                      ),
+                  ),
+                  Container(
+                    child: RbioTextFormField(
+                      controller: relativeName,
+                      obscureText: false,
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      hintText: LocaleProvider.of(context).name,
+                      onFieldSubmitted: (term) {},
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
 
               //
@@ -113,40 +129,39 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
               ),
 
               //
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        bottom: 5,
-                        top: 15,
-                      ),
-                      child: Text(
-                        LocaleProvider.current.surname,
-                        style: context.xHeadline3
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      bottom: 5,
+                      top: 15,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        bottom: 10,
-                      ),
-                      child: RbioTextFormField(
-                        controller: relativeSurname,
-                        obscureText: false,
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.next,
-                        hintText: LocaleProvider.of(context).surname,
-                        onFieldSubmitted: (term) {},
-                      ),
+                    child: Text(
+                      LocaleProvider.current.surname,
+                      style: context.xHeadline3
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    child: RbioTextFormField(
+                      controller: relativeSurname,
+                      obscureText: false,
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      hintText: LocaleProvider.of(context).surname,
+                      onFieldSubmitted: (term) {},
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
+
           //
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,6 +198,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
           //
           Wrap(
             children: [
+              //
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -234,24 +250,25 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                   ),
                 ],
               ),
+
               //
               SizedBox(
                 width: 5,
               ),
 
               //
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LocaleProvider.current.country,
-                      style: context.xHeadline3
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        return Atom.show(GuvenAlert(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    LocaleProvider.current.country,
+                    style: context.xHeadline3
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      return Atom.show(
+                        GuvenAlert(
                           title: GuvenAlert.buildTitle(
                               LocaleProvider.current.country),
                           backgroundColor: getIt<ITheme>().cardBackgroundColor,
@@ -264,54 +281,63 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                                 return ListTile(
                                   onTap: () {
                                     vm.setSelectedCountry(
-                                        vm.countryList.countries[index]);
-
+                                      vm.countryList.countries[index],
+                                    );
                                     Atom.dismiss();
                                   },
                                   title: Text(
                                     vm.countryList.countries[index].name,
+                                    style: context.xHeadline4,
                                   ),
                                 );
                               },
                             ),
                           ),
-                        ));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          left: 13.0,
-                          bottom: 15,
-                          top: 13,
                         ),
-                        decoration: BoxDecoration(
-                          color: R.color.white,
-                          border: Border.all(
-                            color: R.color.dark_white,
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: 13.0,
+                        bottom: 15,
+                        top: 13,
+                      ),
+                      decoration: BoxDecoration(
+                        color: R.color.white,
+                        border: Border.all(
+                          color: R.color.dark_white,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          //
+                          SizedBox(
+                            width: 8,
                           ),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text(
-                              vm.selectedCountry.name.toString(),
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
+
+                          //
+                          Text(
+                            vm.selectedCountry.name.toString(),
+                            style: context.xHeadline4,
+                          ),
+
+                          //
+                          SizedBox(width: 10),
+
+                          //
+                          Transform.rotate(
+                            angle: -190,
+                            child: Icon(
+                              Icons.arrow_back_ios_new,
+                              size: context.TEXTSCALE * 20,
                             ),
-                            SizedBox(width: 10),
-                            Transform.rotate(
-                                angle: -190,
-                                child: Icon(
-                                  Icons.arrow_back_ios_new,
-                                  size: context.TEXTSCALE * 20,
-                                ))
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -357,9 +383,10 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                   vm.savePatientRelative(addPatientRelative, context);
                 } else {
                   vm.showGradientDialog(
-                      context,
-                      LocaleProvider.of(context).warning,
-                      LocaleProvider.of(context).fill_all_field);
+                    context,
+                    LocaleProvider.of(context).warning,
+                    LocaleProvider.of(context).fill_all_field,
+                  );
                 }
               },
             ),
@@ -369,29 +396,34 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
     );
   }
 
+  // #region addRadioButton
   Widget addRadioButton(int btnValue, String title) {
-    return Expanded(
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Radio(
-              activeColor: Theme.of(context).primaryColor,
-              value: genderList[btnValue],
-              groupValue: gender,
-              onChanged: (value) {
-                setState(() {
-                  print(value);
-                  gender = value;
-                });
-              },
-            ),
-            Text(title, style: context.xHeadline3)
-          ],
-        ),
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          //
+          Radio(
+            activeColor: Theme.of(context).primaryColor,
+            value: genderList[btnValue],
+            groupValue: gender,
+            onChanged: (value) {
+              setState(() {
+                gender = value;
+              });
+            },
+          ),
+
+          //
+          Text(
+            title,
+            style: context.xHeadline3,
+          ),
+        ],
       ),
     );
   }
+  // #endregion
 }

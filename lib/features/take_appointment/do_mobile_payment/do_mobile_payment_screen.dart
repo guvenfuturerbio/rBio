@@ -11,36 +11,37 @@ class DoMobilePaymentScreen extends StatefulWidget {
   final AppointmentRequest appointment;
   final int appointmentId;
   final String price;
-  String voucherCode;
+  final String voucherCode;
 
-  DoMobilePaymentScreen(
-      {Key key,
-      this.appointment,
-      this.appointmentId,
-      this.price,
-      this.voucherCode})
-      : super(key: key);
+  DoMobilePaymentScreen({
+    Key key,
+    this.appointment,
+    this.appointmentId,
+    this.price,
+    this.voucherCode,
+  }) : super(key: key);
 
   @override
   _DoMobilePaymentScreenState createState() => _DoMobilePaymentScreenState();
 }
 
 class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
-  FocusNode cardHolderNameFNode;
-  FocusNode cardNumberFNode;
-  FocusNode cardCcvFNode;
-  FocusNode cardExpirityDateFNode;
   TextEditingController _cardHolderNameController;
   MaskedTextController _cardNumberController;
   TextEditingController _expiryDateController;
   TextEditingController _cvvCodeController;
 
+  FocusNode _cardHolderNameFNode;
+  FocusNode _cardNumberFNode;
+  FocusNode _cardCcvFNode;
+  FocusNode _cardExpirityDateFNode;
+
   @override
   void initState() {
-    cardHolderNameFNode = FocusNode();
-    cardNumberFNode = FocusNode();
-    cardCcvFNode = FocusNode();
-    cardExpirityDateFNode = FocusNode();
+    _cardHolderNameFNode = FocusNode();
+    _cardNumberFNode = FocusNode();
+    _cardCcvFNode = FocusNode();
+    _cardExpirityDateFNode = FocusNode();
 
     _cardHolderNameController = TextEditingController();
     _cardNumberController = MaskedTextController(mask: '0000 0000 0000 0000');
@@ -52,10 +53,10 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
 
   @override
   void dispose() {
-    cardHolderNameFNode.dispose();
-    cardNumberFNode.dispose();
-    cardCcvFNode.dispose();
-    cardExpirityDateFNode.dispose();
+    _cardHolderNameFNode.dispose();
+    _cardNumberFNode.dispose();
+    _cardCcvFNode.dispose();
+    _cardExpirityDateFNode.dispose();
 
     _cardHolderNameController.dispose();
     _cardNumberController.dispose();
@@ -122,11 +123,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
         children: <Widget>[
           //
           Padding(
-            padding: EdgeInsets.only(
-              top: 20,
-              right: 25,
-              left: 25,
-            ),
+            padding: EdgeInsets.only(top: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -135,22 +132,22 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                 RbioTextFormField(
                   autocorrect: false,
                   enableSuggestions: false,
-                  focusNode: cardHolderNameFNode,
+                  focusNode: _cardHolderNameFNode,
                   controller: _cardHolderNameController,
                   textInputAction: TextInputAction.next,
                   hintText: LocaleProvider.of(context).credit_card_holder,
                   inputFormatters: <TextInputFormatter>[
                     TabToNextFieldTextInputFormatter(
                       context,
-                      cardHolderNameFNode,
-                      cardNumberFNode,
+                      _cardHolderNameFNode,
+                      _cardNumberFNode,
                     ),
                   ],
                   onFieldSubmitted: (term) {
                     UtilityManager().fieldFocusChange(
                       context,
-                      cardHolderNameFNode,
-                      cardNumberFNode,
+                      _cardHolderNameFNode,
+                      _cardNumberFNode,
                     );
                   },
                 ),
@@ -160,7 +157,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
 
                 //
                 RbioTextFormField(
-                  focusNode: cardNumberFNode,
+                  focusNode: _cardNumberFNode,
                   controller: _cardNumberController,
                   enableSuggestions: false,
                   keyboardType: TextInputType.number,
@@ -168,15 +165,15 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                   inputFormatters: <TextInputFormatter>[
                     TabToNextFieldTextInputFormatter(
                       context,
-                      cardNumberFNode,
-                      cardCcvFNode,
+                      _cardNumberFNode,
+                      _cardCcvFNode,
                     )
                   ],
                   onFieldSubmitted: (term) {
                     UtilityManager().fieldFocusChange(
                       context,
-                      cardNumberFNode,
-                      cardCcvFNode,
+                      _cardNumberFNode,
+                      _cardCcvFNode,
                     );
                   },
                 ),
@@ -186,7 +183,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
 
                 //
                 RbioTextFormField(
-                  focusNode: cardCcvFNode,
+                  focusNode: _cardCcvFNode,
                   controller: _cvvCodeController,
                   enableSuggestions: false,
                   keyboardType: TextInputType.number,
@@ -195,15 +192,15 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                   inputFormatters: <TextInputFormatter>[
                     TabToNextFieldTextInputFormatter(
                       context,
-                      cardCcvFNode,
-                      cardExpirityDateFNode,
+                      _cardCcvFNode,
+                      _cardExpirityDateFNode,
                     ),
                   ],
                   onFieldSubmitted: (term) {
                     UtilityManager().fieldFocusChange(
                       context,
-                      cardCcvFNode,
-                      cardExpirityDateFNode,
+                      _cardCcvFNode,
+                      _cardExpirityDateFNode,
                     );
                   },
                 ),
@@ -213,7 +210,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
 
                 //
                 RbioTextFormField(
-                  focusNode: cardExpirityDateFNode,
+                  focusNode: _cardExpirityDateFNode,
                   controller: _expiryDateController,
                   enableSuggestions: false,
                   keyboardType: TextInputType.number,
@@ -222,14 +219,14 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                   inputFormatters: <TextInputFormatter>[
                     TabToNextFieldTextInputFormatter(
                       context,
-                      cardExpirityDateFNode,
+                      _cardExpirityDateFNode,
                       null,
                     ),
                   ],
                   onFieldSubmitted: (term) {
                     UtilityManager().fieldFocusChange(
                       context,
-                      cardExpirityDateFNode,
+                      _cardExpirityDateFNode,
                       null,
                     );
                   },

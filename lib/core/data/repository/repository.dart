@@ -126,6 +126,7 @@ class Repository {
       Duration(days: 1),
       FilterDepartmentsResponse(),
       localCacheService,
+      localeHandle: true,
     );
   }
 
@@ -334,26 +335,18 @@ class Repository {
           DoMobilePaymentWithVoucherRequest
               doMobilePaymentWithVoucherRequest) =>
       apiService.doMobilePaymentWithVoucher(doMobilePaymentWithVoucherRequest);
+
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
     final url = R.endpoints.fetchOnlineDepartmentsPath;
-    final localData = await localCacheService.get(url);
-    if (localData == null) {
-      final apiData = await apiService
-          .fetchOnlineDepartments(filterOnlineDepartmentsRequest);
-      await localCacheService.write(
-          url, json.encode(apiData), Duration(days: 1));
-      return apiData;
-    } else {
-      final localModel = json.decode(localData);
-      if (localModel is List) {
-        return localModel
-            .map((e) => FilterDepartmentsResponse.fromJson(e))
-            .cast<FilterDepartmentsResponse>()
-            .toList();
-      }
-      return [];
-    }
+    return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
+      url,
+      () => apiService.fetchOnlineDepartments(filterOnlineDepartmentsRequest),
+      Duration(days: 1),
+      FilterDepartmentsResponse(),
+      localCacheService,
+      localeHandle: true,
+    );
   }
 
   Future<GuvenResponseModel> checkOnlineAppointmentPayment(

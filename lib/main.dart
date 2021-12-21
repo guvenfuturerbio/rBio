@@ -116,15 +116,21 @@ class _MyAppState extends State<MyApp> {
             create: (ctx) => ScaleProgressPageViewModel(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
-              value: BgProgressPageViewModel()),
+            value: BgProgressPageViewModel(),
+          ),
+
+          //
           if (!Atom.isWeb) ...[
             ChangeNotifierProvider<BleScannerOps>.value(
-                value: getIt<BleScannerOps>()),
+              value: getIt<BleScannerOps>(),
+            ),
             ChangeNotifierProvider<BleConnectorOps>.value(
-                value: getIt<BleConnectorOps>()),
+              value: getIt<BleConnectorOps>(),
+            ),
             ChangeNotifierProvider<BleReactorOps>.value(
-                value: getIt<BleReactorOps>())
-          ]
+              value: getIt<BleReactorOps>(),
+            ),
+          ],
         ],
 
         //

@@ -749,7 +749,13 @@ class ApiServiceImpl extends ApiService {
     if (response.isSuccessful) {
       return response;
     } else {
-      throw Exception('/requestTranslator/$appoId : ${response.isSuccessful}');
+      if (response.message == "1") {
+        throw RbioDisplayException(
+          LocaleProvider.current.expired_interpreter_request,
+        );
+      }
+
+      throw Exception('/requestTranslator : ${response.isSuccessful}');
     }
   }
 

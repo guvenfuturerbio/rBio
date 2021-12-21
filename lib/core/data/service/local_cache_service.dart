@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 import '../../core.dart';
-import '../../domain/network_cache_model.dart';
 
 part 'local_cache_service_impl.dart';
 

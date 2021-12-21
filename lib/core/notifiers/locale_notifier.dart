@@ -5,16 +5,15 @@ import '../core.dart';
 
 class LocaleNotifier with ChangeNotifier {
   String current;
+
   LocaleNotifier() {
     current = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.SELECTED_LOCALE);
-    if (current != null) {
-      LoggerUtils.instance.i('Current locale = $current.');
-      changeLocale(current);
-    } else {
+    if (current == null) {
       current = Intl.getCurrentLocale().toLowerCase();
-      changeLocale(current);
     }
+
+    changeLocale(current);
   }
 
   Future<void> changeLocale(String locale) async {
@@ -26,6 +25,7 @@ class LocaleNotifier with ChangeNotifier {
     } else {
       throw Exception("Unsupported Language !!");
     }
+
     notifyListeners();
   }
 }
