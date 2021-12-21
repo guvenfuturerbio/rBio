@@ -84,7 +84,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   }) {
     this.mContext = context;
     this.forOnline = forOnline;
-    this._patientId = PatientSingleton().getPatient().id;
+    this._patientId = getIt<UserNotifier>().getPatient().id;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
       if (forOnline) {
@@ -104,7 +104,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         await fetchTenants();
       }
 
-      if (getIt<UserInfo>().canAccessHospital()) {
+      if (getIt<UserNotifier>().canAccessHospital()) {
         fetchPatientAppointments(context);
       }
     });
@@ -197,7 +197,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       if (relativeResponse == null || relativeResponse.patientRelatives == []) {
         relativeResponse = PatientRelativeInfoResponse([]);
       }
-      final currentPatient = PatientSingleton().getPatient();
+      final currentPatient = getIt<UserNotifier>().getPatient();
       relativeResponse = PatientRelativeInfoResponse(
         [
           PatientRelative(

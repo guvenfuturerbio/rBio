@@ -3,9 +3,9 @@ import 'package:collection/collection.dart';
 import '../core.dart';
 
 enum PatientType {
-  BloodGlucose,
-  Weight,
-  BloodPressure,
+  Sugar,
+  BMI,
+  Bp,
 }
 
 extension PatientTypeStringExt on String {

@@ -113,7 +113,7 @@ class CreditCardScreenVm extends ChangeNotifier {
 
   Future<void> showDistanceSaleContract(
       {String packageName, String price}) async {
-    UserAccount userAccount = getIt<UserInfo>().getUserAccount();
+    UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.distance_sales_contract_context,
       (userAccount.name + ' ' + userAccount.surname),
@@ -127,7 +127,7 @@ class CreditCardScreenVm extends ChangeNotifier {
 
   Future<void> showCancellationAndRefund(
       {String packageName, String price}) async {
-    UserAccount userAccount = getIt<UserInfo>().getUserAccount();
+    UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.preinformation_form_context,
       (userAccount.name + ' ' + userAccount.surname),

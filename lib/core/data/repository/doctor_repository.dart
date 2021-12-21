@@ -31,9 +31,9 @@ class DoctorRepository {
   Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
           GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMySugarPatient(getMyPatientFilter);
-  Future<List<DoctorGlucosePatientModel>> getMyBpPatient(
+  Future<List<DoctorBloodPressurePatientModel>> getMyBpPatient(
           GetMyPatientFilter getMyPatientFilter) =>
-      apiService.getMySugarPatient(getMyPatientFilter);
+      apiService.getMyBpPatient(getMyPatientFilter);
   Future<List<DoctorBMIPatientModel>> getMyBMIPatient(
           GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMyBMIPatient(getMyPatientFilter);

@@ -23,11 +23,11 @@ class AppointmentListVm extends ChangeNotifier {
 
   AppointmentListVm({BuildContext context, String jitsiRoomId}) {
     this.mContext = context;
-    this._patientId = PatientSingleton().getPatient().id;
+    this._patientId = getIt<UserNotifier>().getPatient().id;
     this._showProgressOverlay = false;
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (getIt<UserInfo>().canAccessHospital()) {
+      if (getIt<UserNotifier>().canAccessHospital()) {
         await fetchAllTranslator();
         await fetchPatientAppointments();
       } else {

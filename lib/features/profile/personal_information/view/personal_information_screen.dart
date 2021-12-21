@@ -5,9 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../generated/l10n.dart';
 import '../../../../model/shared/user_account_info.dart';
-import '../../../../core/utils/user_info.dart';
 import '../viewmodel/personal_information_vm.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
@@ -61,7 +59,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.userAccount = getIt<UserInfo>().getUserAccount();
+      widget.userAccount = getIt<UserNotifier>().getUserAccount();
     } catch (e) {
       return RbioRouteError();
     }
@@ -116,17 +114,22 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   Widget _builBody(BuildContext context, PersonalInformationScreenVm vm) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        //
-        _buildCard(context, vm),
+    return SingleChildScrollView(
+      padding: EdgeInsets.zero,
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          //
+          _buildCard(context, vm),
 
-        //
-        _buildSubmitButton(vm),
-      ],
+          //
+          _buildSubmitButton(vm),
+        ],
+      ),
     );
   }
 

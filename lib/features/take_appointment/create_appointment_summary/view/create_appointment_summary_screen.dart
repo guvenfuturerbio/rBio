@@ -70,7 +70,7 @@ class _CreateAppointmentSummaryScreenState
     return ChangeNotifierProvider<CreateAppointmentSummaryVm>(
       create: (context) => CreateAppointmentSummaryVm(
         mContext: context,
-        patientId: PatientSingleton().getPatient().id,
+        patientId: getIt<UserNotifier>().getPatient().id,
         tenantId: widget.tenantId,
         departmentId: widget.departmentId,
         resourceId: widget.resourceId,

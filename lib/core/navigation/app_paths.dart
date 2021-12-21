@@ -1,12 +1,13 @@
+import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
+import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
+import 'package:onedosehealth/features/doctor/consultation/view/consultation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
-
 import '../../features/auth/auth.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
-import '../../features/doctor/patient_list/viewmodel/patient_list_vm.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../features/doctor/video_call_edit/view/video_call_edit_screen.dart';
 import '../../features/home/view/home_screen.dart';
@@ -273,11 +274,18 @@ class VRouterRoutes {
         ),
       ],
     ),
-
-    VWidget(
-      path: PagePaths.MEASUREMENT_TRACKING,
-      widget: MeasurementTrackingHomeScreen(),
-    ),
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+              path: PagePaths.MEASUREMENT_TRACKING,
+              widget: MeasurementTrackingHomeScreen())
+        ]),
 
     VWidget(
       path: PagePaths.SUGGEST_REQUEST,
@@ -353,18 +361,29 @@ class VRouterRoutes {
                 ),
               ],
             ),
+            VWidget(
+              path: PagePaths.DOCTOR_CONSULTATION,
+              widget: DoctorConsultationScreen(),
+            ),
           ],
         ),
 
         //
       ],
     ),
-
-    VWidget(
-      path: PagePaths.HEALTH_INFORMATION,
-      widget: HealthInformationScreen(),
-    ),
-
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+            path: PagePaths.HEALTH_INFORMATION,
+            widget: HealthInformationScreen(),
+          ),
+        ]),
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -457,4 +476,5 @@ class PagePaths {
   static const BLOOD_GLUCOSE_PATIENT_DETAIL = '/blood-glucose-patient-detail';
   static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
   static const DOCTOR_VIDEO_CALL_EDIT = '/doctor-video-call-edit';
+  static const DOCTOR_CONSULTATION = '/doctor-consultation';
 }

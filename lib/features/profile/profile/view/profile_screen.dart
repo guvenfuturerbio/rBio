@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
+import 'package:onedosehealth/core/notifiers/locale_notifier.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/core.dart';
 import '../viewmodel/profile_vm.dart';
 
@@ -70,10 +69,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
+              DropdownButton<Locale>(
+                hint: Text(LocaleProvider.of(context).select_language +
+                        ": " +
+                        getIt<LocaleNotifier>().current.toUpperCase() ??
+                    ""),
+                items: LocaleProvider.delegate.supportedLocales
+                    .map((Locale localeValue) {
+                  return new DropdownMenuItem<Locale>(
+                    value: localeValue,
+                    child: new Text(localeValue.languageCode.toUpperCase()),
+                  );
+                }).toList(),
+                onChanged: (valueLocale) {
+                  getIt<LocaleNotifier>()
+                      .changeLocale(valueLocale.languageCode);
+                },
+              ),
               //
               RbioUserTile(
                 name:
-                    '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
+                    '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.PROFILE_IMAGE),
                 leadingImage: UserLeadingImage.Circle,

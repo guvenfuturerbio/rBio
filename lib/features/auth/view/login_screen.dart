@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:onedosehealth/core/notifiers/locale_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/src/core/extended_context.dart';
 import 'package:vrouter/vrouter.dart';
@@ -55,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RbioScaffold(
         resizeToAvoidBottomInset: true,
         appbar: RbioAppBarLogin(
+          leading: SizedBox(),
           title: Image.asset(
             R.image.oneDoseHealthPng,
             height: 50,
@@ -72,6 +74,24 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Center(
+            child: DropdownButton<Locale>(
+              hint: Text(LocaleProvider.of(context).select_language +
+                      ": " +
+                      getIt<LocaleNotifier>().current.toUpperCase() ??
+                  ""),
+              items: LocaleProvider.delegate.supportedLocales
+                  .map((Locale localeValue) {
+                return new DropdownMenuItem<Locale>(
+                  value: localeValue,
+                  child: new Text(localeValue.languageCode.toUpperCase()),
+                );
+              }).toList(),
+              onChanged: (valueLocale) {
+                getIt<LocaleNotifier>().changeLocale(valueLocale.languageCode);
+              },
+            ),
+          ),
           _buildHeader(),
 
           //
@@ -106,10 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
 
           //
-          _buildSeperator(),
+          //   _buildSeperator(),
 
           //
-          _buildSocialLogin(),
+          //    _buildSocialLogin(),
 
           //
           _buildVersion(),

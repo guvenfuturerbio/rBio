@@ -807,17 +807,15 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier
   }
 
   void showFilter(BuildContext tcontext) {
-    showDialog(
-      context: tcontext,
-      barrierColor: Colors.black12,
-      builder: (ctx) =>
-          ChangeNotifierProvider<BloodGlucosePatientDetailVm>.value(
+    Atom.show(
+      ChangeNotifierProvider<BloodGlucosePatientDetailVm>.value(
         value: this,
         child: _ChartFilter(
-          height: ctx.HEIGHT * .52,
-          width: ctx.WIDTH * .6,
+          height: tcontext.HEIGHT * .52,
+          width: tcontext.WIDTH * .6,
         ),
       ),
+      barrierColor: Colors.black12,
     );
   }
 }

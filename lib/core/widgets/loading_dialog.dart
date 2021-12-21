@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constants/constants.dart';
+import 'package:onedosehealth/core/core.dart';
 
 class LoadingDialog extends StatefulWidget {
   LoadingDialogState state;
@@ -18,9 +17,7 @@ class LoadingDialogState extends State<LoadingDialog> {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation<Color>(R.color.dark_blue),
-      ),
+      child: RbioLoading(),
     );
   }
 }

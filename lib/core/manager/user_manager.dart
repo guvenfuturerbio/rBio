@@ -45,6 +45,10 @@ class UserManagerImpl extends UserManager {
     );
     await getIt<ISharedPreferencesManager>()
         .setString(SharedPreferencesKeys.JWT_TOKEN, response.token.accessToken);
+
+    //Update user notifier depending on roles
+
+    getIt<UserNotifier>().userTypeFetcher(response);
     return response;
   }
 
@@ -142,7 +146,7 @@ class UserManagerImpl extends UserManager {
   @override
   Future getUserProfile() async {
     final response = await getIt<Repository>().getUserProfile();
-    await getIt<UserInfo>().setUserAccount(response);
+    await getIt<UserNotifier>().setUserAccount(response);
   }
 
   @override

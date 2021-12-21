@@ -40,7 +40,7 @@ class DoctorHomeScreen extends StatelessWidget {
             Atom.to(
               PagePaths.DOCTOR_PATIENT_LIST,
               queryParameters: {
-                'type': PatientType.BloodGlucose.xRawValue,
+                'type': PatientType.Sugar.xRawValue,
               },
             );
           },
@@ -55,7 +55,7 @@ class DoctorHomeScreen extends StatelessWidget {
             Atom.to(
               PagePaths.DOCTOR_PATIENT_LIST,
               queryParameters: {
-                'type': PatientType.Weight.xRawValue,
+                'type': PatientType.BMI.xRawValue,
               },
             );
           },
@@ -70,7 +70,7 @@ class DoctorHomeScreen extends StatelessWidget {
             Atom.to(
               PagePaths.DOCTOR_PATIENT_LIST,
               queryParameters: {
-                'type': PatientType.BloodPressure.xRawValue,
+                'type': PatientType.Bp.xRawValue,
               },
             );
           },

@@ -190,11 +190,14 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
         //
         Align(
           alignment: Alignment.bottomCenter,
-          child: RbioElevatedButton(
-            title: LocaleProvider.current.update_information,
-            onTap: () {
-              vm.updateInformation(vm.selection);
-            },
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 12),
+            child: RbioElevatedButton(
+              title: LocaleProvider.current.update_information,
+              onTap: () {
+                vm.updateInformation(vm.selection);
+              },
+            ),
           ),
         )
       ],

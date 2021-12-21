@@ -11,7 +11,7 @@ abstract class DoctorApiService {
       GetMyPatientFilter getMyPatientFilter);
   Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
       GetMyPatientFilter getMyPatientFilter);
-  Future<List<DoctorGlucosePatientModel>> getMyBpPatient(
+  Future<List<DoctorBloodPressurePatientModel>> getMyBpPatient(
       GetMyPatientFilter getMyPatientFilter);
   Future<List<DoctorBMIPatientModel>> getMyBMIPatient(
       GetMyPatientFilter getMyPatientFilter);

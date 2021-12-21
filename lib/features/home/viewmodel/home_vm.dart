@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
@@ -221,7 +222,7 @@ class HomeVm extends ChangeNotifier {
             },
             child: RbioUserTile(
               name:
-                  '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
+                  '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
               leadingImage: UserLeadingImage.Circle,
               trailingIcon: UserTrailingIcons.RightArrow,
               onTap: () {
@@ -321,19 +322,7 @@ class HomeVm extends ChangeNotifier {
                 if (isForDelete) {
                   addWidget(_key4);
                 } else if (status == ShakeMod.notShaken) {
-                  getIt<UserNotifier>().isCronic
-                      ? Atom.to(PagePaths.MEASUREMENT_TRACKING)
-                      : Atom.show(GuvenAlert(
-                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                          title: GuvenAlert.buildTitle(
-                              "Kronik takip özelliğini kullanmak için lütfen ${LocaleProvider.current.phone_guven} numarasını arayınız"),
-                          actions: [
-                            GuvenAlert.buildMaterialAction(
-                                LocaleProvider.current.ok, () {
-                              Atom.dismiss();
-                            })
-                          ],
-                        ));
+                  Atom.to(PagePaths.MEASUREMENT_TRACKING);
                 }
               },
               child: VerticalCard(
