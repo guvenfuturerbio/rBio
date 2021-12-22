@@ -89,7 +89,7 @@ class _Endpoints {
   final getAppointmentTypeViaWebConsultantIdPath =
       '/videoCall/get-stream-type-mobile'.xBasePath;
   String requestTranslatorPath(String appoId) =>
-      '/appointmentinterpreter/add-update-appointment-interpreter/$appoId'
+      '/appointmentinterpreter/add-update-appointment-interpreter-pusula/$appoId'
           .xBasePath;
   String uploadFileToAppoPath(String webAppoId) =>
       '/file/upload-patient-document-for-appoinment/$webAppoId'.xBasePath;
@@ -181,13 +181,13 @@ class _Endpoints {
   String ct_login = '/auth/realms/GuvenComplex/protocol/openid-connect/token'
       .xCronicTrackingSSO;
   String ct_insertNewScaleValue =
-      '/Measurement/add-bmi-with-detail'.xCronicTracking;
+      '/Measurement/add-bp-with-detail'.xCronicTracking;
   String ct_deleteScaleMeasurement =
-      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
+      '/Measurement/delete-bp-with-detail'.xCronicTracking;
   String ct_getScaleMeasurement =
-      '/Measurement/get-bmi-measurements'.xCronicTracking;
+      '/Measurement/get-bp-measurements'.xCronicTracking;
   String ct_updateScaleMeasurement =
-      '/Measurement/update-bmi-measurement'.xCronicTracking;
+      '/Measurement/update-bp-measurement'.xCronicTracking;
 
   String ct_insertNewBpValue =
       '/Measurement/add-bp-with-detail'.xCronicTracking;
@@ -209,6 +209,8 @@ class _Endpoints {
       '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
   String dc_getMyBpPatient =
       '/api/v1/DoctorPatient/get-my-bp-patient'.xDoctorBaseUrl;
+  String dc_getMyBMIPatient =
+      '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
   String dc_getMyPatientDetail(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-profile-detail/${patientId}'
           .xDoctorBaseUrl;

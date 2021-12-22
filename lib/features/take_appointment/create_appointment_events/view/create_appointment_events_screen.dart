@@ -60,96 +60,92 @@ class _CreateAppointmentEventsScreenState
         resourceId: widget.resourceId,
         forOnline: widget.forOnline,
       ),
-      child: Consumer<CreateAppointmentEventsVm>(builder: (
-        BuildContext context,
-        CreateAppointmentEventsVm val,
-        Widget child,
-      ) {
-        return RbioScaffold(
-          appbar: RbioAppBar(
-            title: RbioAppBar.textTitle(
-              context,
-              LocaleProvider.of(context).create_appointment_events,
+      child: Consumer<CreateAppointmentEventsVm>(
+        builder: (
+          BuildContext context,
+          CreateAppointmentEventsVm val,
+          Widget child,
+        ) {
+          return RbioScaffold(
+            appbar: RbioAppBar(
+              title: RbioAppBar.textTitle(
+                context,
+                LocaleProvider.of(context).create_appointment_events,
+              ),
+            ),
+
+            //
+            body: _buildBody(val, context),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildBody(CreateAppointmentEventsVm val, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        _buildHeaderInfo(),
+
+        //
+        if (val.availableDatesProgress == LoadingProgress.LOADING) ...[
+          SizedBox(
+            height: Atom.height * 0.35,
+            child: RbioLoading(),
+          ),
+        ] else if (val.availableDatesProgress == LoadingProgress.DONE) ...[
+          _TableCalendar(
+            val: val,
+            completeNotifier: completeNotifier,
+            focusedDay: val.initDate,
+          ),
+        ] else if (val.availableDatesProgress == LoadingProgress.ERROR) ...[
+          Expanded(
+            child: RbioBodyError(),
+          ),
+        ],
+
+        //
+        const SizedBox(height: 8.0),
+
+        //
+        if (val.slotsProgress == LoadingProgress.LOADING) ...[
+          Expanded(child: RbioLoading()),
+        ] else if (val.slotsProgress == LoadingProgress.DONE) ...[
+          Expanded(
+            child: ListBody(
+              completeNotifier: completeNotifier,
+              vm: val,
+              onSubmit: () {
+                Atom.to(
+                  PagePaths.CREATE_APPOINTMENT_SUMMARY,
+                  queryParameters: {
+                    'patientId': Uri.encodeFull(widget.patientId),
+                    'patientName': Uri.encodeFull(widget.patientName),
+                    'tenantId':
+                        completeNotifier.value.selected.tenantId.toString(),
+                    'tenantName': Uri.encodeFull(widget.tenantName.toString()),
+                    'departmentId': widget.departmentId.toString(),
+                    'departmentName':
+                        Uri.encodeFull(widget.departmentName.toString()),
+                    'resourceId': widget.resourceId.toString(),
+                    'resourceName':
+                        Uri.encodeFull(widget.resourceName.toString()),
+                    'date': val.selectedDate.toIso8601String(),
+                    'from': completeNotifier.value.selected.from.toString(),
+                    'to': completeNotifier.value.selected.to.toString(),
+                    'forOnline': widget.forOnline.toString(),
+                  },
+                );
+              },
             ),
           ),
-
-          //
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //
-              _buildHeaderInfo(),
-
-              //
-              if (val.availableDatesProgress == LoadingProgress.LOADING) ...[
-                SizedBox(
-                  height: Atom.height * 0.35,
-                  child: RbioLoading(),
-                ),
-              ] else if (val.availableDatesProgress ==
-                  LoadingProgress.DONE) ...[
-                _TableCalendar(
-                  val: val,
-                  completeNotifier: completeNotifier,
-                  focusedDay: val.initDate,
-                ),
-              ],
-
-              //
-              const SizedBox(height: 8.0),
-
-              //
-              if (val.slotsProgress == LoadingProgress.LOADING) ...[
-                Expanded(child: RbioLoading()),
-              ] else if (val.slotsProgress == LoadingProgress.DONE) ...[
-                Expanded(
-                  child: ListBody(
-                    completeNotifier: completeNotifier,
-                    vm: val,
-                    onSubmit: () {
-                      Atom.to(
-                        PagePaths.CREATE_APPOINTMENT_SUMMARY,
-                        queryParameters: {
-                          'patientId': Uri.encodeFull(widget.patientId),
-                          'patientName': Uri.encodeFull(widget.patientName),
-                          'tenantId': completeNotifier.value.selected.tenantId
-                              .toString(),
-                          'tenantName':
-                              Uri.encodeFull(widget.tenantName.toString()),
-                          'departmentId': widget.departmentId.toString(),
-                          'departmentName':
-                              Uri.encodeFull(widget.departmentName.toString()),
-                          'resourceId': widget.resourceId.toString(),
-                          'resourceName':
-                              Uri.encodeFull(widget.resourceName.toString()),
-                          'date': val.selectedDate.toIso8601String(),
-                          'from':
-                              completeNotifier.value.selected.from.toString(),
-                          'to': completeNotifier.value.selected.to.toString(),
-                          'forOnline': widget.forOnline.toString(),
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ] else if (val.slotsProgress == LoadingProgress.ERROR) ...[
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      LocaleProvider.current.error,
-                      style: context.xHeadline1.copyWith(),
-                    ),
-                  ),
-                ),
-              ] else ...[
-                SizedBox(),
-              ],
-            ],
-          ),
-        );
-      }),
+        ],
+      ],
     );
   }
 

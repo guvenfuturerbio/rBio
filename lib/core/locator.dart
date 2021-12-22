@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:onedosehealth/core/domain/blood_pressure_model.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
-import 'package:onedosehealth/features/mediminder/mediminder.dart';
-import 'package:onedosehealth/model/doctor/doctor.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
+import '../features/mediminder/mediminder.dart';
 import 'core.dart';
 import 'data/imports/cronic_tracking.dart';
 import 'data/repository/doctor_repository.dart';
 import 'data/service/symptom_api_service.dart';
+import 'domain/blood_pressure_model.dart';
 
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;
@@ -59,6 +57,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
       .registerSingleton<ISharedPreferencesManager>(SharedPreferencesManager());
   getIt.registerSingleton<UserManager>(UserManagerImpl());
   getIt.registerSingleton<UserNotifier>(UserNotifier());
+  getIt.registerSingleton<LocaleNotifier>(LocaleNotifier());
 
   getIt.registerSingleton<LocalCacheService>(LocalCacheServiceImpl());
   getIt.registerSingleton<ApiService>(ApiServiceImpl(getIt<IDioHelper>()));
@@ -84,9 +83,6 @@ Future<void> setupLocator(AppConfig appConfig) async {
 
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
-
-  getIt.registerSingleton<UserInfo>(
-      UserInfo(getIt<ISharedPreferencesManager>()));
 
   getIt.registerLazySingleton(() => UserProfilesNotifier());
 

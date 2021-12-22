@@ -38,63 +38,105 @@ class _ChartFilter extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.WIDTH * .03),
       child: SizedBox(
-        height: height,
         width: width,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: context.HEIGHT * .01),
-                child: Column(
-                  children: value.colorInfo.keys
-                      .map((color) => _colorFilterItem(
-                          text: value.colorInfo[color].toShortString(),
-                          status:
-                              value.isFilterSelected(value.colorInfo[color]),
-                          color: color,
-                          size: 15,
-                          statCallback: (_) =>
-                              value.setFilterState(value.colorInfo[color]),
-                          isHungry: false))
-                      .toList(),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Column(
+                    children: value.colorInfo.keys
+                        .map(
+                          (color) => _colorFilterItem(
+                              context: context,
+                              text: value.colorInfo[color].toShortString(),
+                              status: value
+                                  .isFilterSelected(value.colorInfo[color]),
+                              color: color,
+                              size: 15,
+                              statCallback: (_) =>
+                                  value.setFilterState(value.colorInfo[color]),
+                              isHungry: false),
+                        )
+                        .toList(),
+                  ),
                 ),
-              ),
 
-              //
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: context.HEIGHT * .01),
-                child: Column(
-                  children: value.states
-                      .map((state) => _colorFilterItem(
-                          text: state.toShortString(),
-                          status: value.isFilterSelected(state),
-                          color: R.color.state_color,
-                          size: 15,
-                          style: state == LocaleProvider.current.full ||
-                                  state == LocaleProvider.current.hungry
-                              ? BoxShape.circle
-                              : BoxShape.rectangle,
-                          statCallback: (_) => value.setFilterState(state),
-                          isHungry: state == LocaleProvider.current.hungry))
-                      .toList(),
+                //
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Column(
+                    children: value.states
+                        .map(
+                          (state) => _colorFilterItem(
+                            context: context,
+                            text: state.toShortString(),
+                            status: value.isFilterSelected(state),
+                            color: R.color.state_color,
+                            size: 15,
+                            style: state == LocaleProvider.current.full ||
+                                    state == LocaleProvider.current.hungry
+                                ? BoxShape.circle
+                                : BoxShape.rectangle,
+                            statCallback: (_) => value.setFilterState(state),
+                            isHungry: state == LocaleProvider.current.hungry,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
-              ),
 
-              //
-              TextButton(
-                onPressed: () => value.resetFilterValues(),
-                child: Text(
-                  '${LocaleProvider.current.reset_filter_value}',
-                  style: TextStyle(decoration: TextDecoration.underline),
+                //
+                Center(
+                  child: Wrap(
+                    spacing: 8.0,
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      //
+                      RbioElevatedButton(
+                        title: '${LocaleProvider.current.cancel}',
+                        onTap: () {
+                          Atom.dismiss();
+                        },
+                        backColor: getIt<ITheme>().cardBackgroundColor,
+                        textColor: getIt<ITheme>().textColorSecondary,
+                      ),
+
+                      //
+                      RbioElevatedButton(
+                        title: '${LocaleProvider.current.save}',
+                        onTap: () {
+                          Atom.dismiss();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+
+                //
+                Center(
+                  child: TextButton(
+                    onPressed: () => value.resetFilterValues(),
+                    child: Text(
+                      '${LocaleProvider.current.reset_filter_value}',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -102,26 +144,27 @@ class _ChartFilter extends StatelessWidget {
   }
 
   Widget _colorFilterItem({
-    double size,
-    String text,
-    Color color,
-    bool status,
+    @required BuildContext context,
+    @required double size,
+    @required String text,
+    @required Color color,
+    @required bool status,
     BoxShape style,
-    Function(bool) statCallback,
-    bool isHungry,
+    @required Function(bool) statCallback,
+    @required bool isHungry,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           //
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 25),
             height: size,
             width: size,
+            margin: EdgeInsets.symmetric(horizontal: 25),
             decoration: BoxDecoration(
               shape: style ?? BoxShape.circle,
               color: isHungry ? Colors.transparent : color,
@@ -133,14 +176,26 @@ class _ChartFilter extends StatelessWidget {
           ),
 
           //
-          Expanded(flex: 2, child: Text('$text')),
+          Expanded(
+            flex: 2,
+            child: Text(
+              '$text',
+              style: context.xHeadline4.copyWith(),
+            ),
+          ),
 
           //
           Expanded(
-              child: SizedBox(
-                  height: size,
-                  width: size,
-                  child: Checkbox(value: status, onChanged: statCallback)))
+            child: SizedBox(
+              height: size,
+              width: size,
+              child: Checkbox(
+                value: status,
+                onChanged: statCallback,
+                activeColor: getIt<ITheme>().mainColor,
+              ),
+            ),
+          ),
         ],
       ),
     );

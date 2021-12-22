@@ -43,6 +43,9 @@ class _DoctorTreatmentProcessScreenState
             child: RbioBadge(
               image: R.image.chat_icon,
               isDark: false,
+              onTap: () {
+                Atom.to(PagePaths.DOCTOR_CONSULTATION);
+              },
             ),
           ),
           SizedBox(

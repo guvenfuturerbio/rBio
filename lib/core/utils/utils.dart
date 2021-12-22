@@ -45,12 +45,18 @@ class Utils {
     Future<List<T>> Function() apiCall,
     Duration cacheDuration,
     T model,
-    LocalCacheService localCacheService,
-  ) async {
-    final localData = await localCacheService.get(url);
+    LocalCacheService localCacheService, {
+    bool localeHandle = false,
+  }) async {
+    final cacheUrl = url +
+        (localeHandle
+            ? '/${getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.SELECTED_LOCALE)}'
+            : '');
+    final localData = await localCacheService.get(cacheUrl);
     if (localData == null) {
       final apiData = await apiCall();
-      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      await localCacheService.write(
+          cacheUrl, json.encode(apiData), cacheDuration);
       return apiData;
     } else {
       final localModel = json.decode(localData);
@@ -68,12 +74,18 @@ class Utils {
     Future<T> Function() apiCall,
     Duration cacheDuration,
     T model,
-    LocalCacheService localCacheService,
-  ) async {
-    final localData = await localCacheService.get(url);
+    LocalCacheService localCacheService, {
+    bool localeHandle = false,
+  }) async {
+    final cacheUrl = url +
+        (localeHandle
+            ? '/${getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.SELECTED_LOCALE)}'
+            : '');
+    final localData = await localCacheService.get(cacheUrl);
     if (localData == null) {
       final apiData = await apiCall();
-      await localCacheService.write(url, json.encode(apiData), cacheDuration);
+      await localCacheService.write(
+          cacheUrl, json.encode(apiData), cacheDuration);
       return apiData;
     } else {
       final localModel = json.decode(localData);

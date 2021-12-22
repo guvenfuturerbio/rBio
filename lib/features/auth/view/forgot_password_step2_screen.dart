@@ -8,12 +8,7 @@ import '../auth.dart';
 import '../viewmodel/forgot_password_step2_vm.dart';
 
 class ForgotPasswordStep2Screen extends StatefulWidget {
-  String identityNumber;
-
-  ForgotPasswordStep2Screen({
-    Key key,
-    this.identityNumber,
-  }) : super(key: key);
+  ForgotPasswordStep2Screen({Key key}) : super(key: key);
 
   @override
   _ForgotPasswordStep2ScreenState createState() =>
@@ -21,10 +16,34 @@ class ForgotPasswordStep2Screen extends StatefulWidget {
 }
 
 class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
+  String identityNumber;
+
+  TextEditingController _temporaryController;
+  TextEditingController _passwordController;
+  TextEditingController _passwordAgainController;
+
+  @override
+  void initState() {
+    _temporaryController = TextEditingController();
+    _passwordController = TextEditingController();
+    _passwordAgainController = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _temporaryController.dispose();
+    _passwordController.dispose();
+    _passwordAgainController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     try {
-      widget.identityNumber = Atom.queryParameters['identityNumber'];
+      identityNumber = Atom.queryParameters['identityNumber'];
     } catch (_) {
       return RbioRouteError();
     }
@@ -63,7 +82,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
             Container(
               margin: EdgeInsets.only(bottom: 20, top: 40),
               child: RbioTextFormField(
-                controller: value.temporaryController,
+                controller: _temporaryController,
                 textInputAction: TextInputAction.next,
                 obscureText: value.passwordVisibility ? false : true,
                 hintText: LocaleProvider.of(context).temporary_pass,
@@ -75,7 +94,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
             Container(
               margin: EdgeInsets.only(bottom: 20),
               child: RbioTextFormField(
-                controller: value.passwordController,
+                controller: _passwordController,
                 textInputAction: TextInputAction.next,
                 obscureText: value.passwordVisibility ? false : true,
                 hintText: LocaleProvider.of(context).new_password,
@@ -90,7 +109,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
             Container(
               margin: EdgeInsets.only(bottom: 20),
               child: RbioTextFormField(
-                controller: value.passwordAgainController,
+                controller: _passwordAgainController,
                 textInputAction: TextInputAction.done,
                 obscureText: value.passwordVisibility ? false : true,
                 hintText: LocaleProvider.of(context).new_password_again,
@@ -99,150 +118,117 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
             ),
 
             //
-            Row(
-              children: [
-                Container(
-                  alignment: Alignment.bottomLeft,
-                  child: Checkbox(
-                    value: value.checkNumeric,
-                    onChanged: (value) {},
-                    activeColor:
-                        getIt<ITheme>().mainColor, //// <-- leading Checkbox
-                  ),
-                ),
-                Text(
-                  LocaleProvider.of(context).must_contain_digit,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                  ),
-                ),
-              ],
+            _buildRow(
+              value.checkNumeric,
+              LocaleProvider.of(context).must_contain_digit,
             ),
 
             //
-            Row(
-              children: [
-                Container(
-                  alignment: Alignment.bottomLeft,
-                  child: Checkbox(
-                    value: value.checkUpperCase,
-                    onChanged: (value) {},
-                    activeColor: getIt<ITheme>().mainColor,
-                  ),
-                ),
-                Text(
-                  LocaleProvider.of(context).must_contain_uppercase,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                  ),
-                ),
-              ],
+            _buildRow(
+              value.checkUpperCase,
+              LocaleProvider.of(context).must_contain_uppercase,
             ),
 
             //
-            Row(
-              children: [
-                Container(
-                  alignment: Alignment.bottomLeft,
-                  child: Checkbox(
-                    value: value.checkLowerCase,
-                    onChanged: (value) {},
-                    activeColor: getIt<ITheme>().mainColor,
-                  ),
-                ),
-                Text(
-                  LocaleProvider.of(context).must_contain_lowercase,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                  ),
-                ),
-              ],
+            _buildRow(
+              value.checkLowerCase,
+              LocaleProvider.of(context).must_contain_lowercase,
             ),
 
             //
-            Row(
-              children: [
-                Container(
-                  alignment: Alignment.bottomLeft,
-                  child: Checkbox(
-                    value: value.checkSpecial,
-                    onChanged: (value) {},
-                    activeColor: getIt<ITheme>().mainColor,
-                  ),
-                ),
-                Text(
-                  LocaleProvider.of(context).must_contain_special,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                  ),
-                ),
-              ],
+            _buildRow(
+              value.checkSpecial,
+              LocaleProvider.of(context).must_contain_special,
             ),
 
             //
-            Row(
-              children: [
-                Container(
-                  alignment: Alignment.bottomLeft,
-                  child: Checkbox(
-                    value: value.checkLength,
-                    onChanged: (value) {},
-                    activeColor: getIt<ITheme>().mainColor,
-                  ),
-                ),
-                Text(
-                  LocaleProvider.of(context).password_must_8_char,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                  ),
-                ),
-              ],
+            _buildRow(
+              value.checkLength,
+              LocaleProvider.of(context).password_must_8_char,
             ),
 
             //
-            Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: RbioElevatedButton(
-                title: LocaleProvider.of(context).btn_done.toUpperCase(),
-                onTap: () {
-                  ChangePasswordModel changePasswordModel =
-                      ChangePasswordModel();
-                  changePasswordModel.identificationNumber =
-                      widget.identityNumber;
-                  changePasswordModel.newPasswordConfirmation =
-                      value.passwordAgainController.text;
-                  changePasswordModel.newPassword =
-                      value.passwordController.text;
-                  changePasswordModel.oldPassword =
-                      value.temporaryController.text;
+            Center(
+              child: Container(
+                margin: EdgeInsets.only(top: 20, bottom: 20),
+                child: RbioElevatedButton(
+                  title: LocaleProvider.of(context).btn_done.toUpperCase(),
+                  onTap: () {
+                    if (_passwordController.text.trim() !=
+                        _passwordAgainController.text.trim()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            LocaleProvider.current.passwords_not_match,
+                          ),
+                        ),
+                      );
+                      return;
+                    }
 
-                  if (value.temporaryController.text.length > 0 &&
-                      value.passwordController.text.length > 0 &&
-                      value.passwordAgainController.text.length > 0) {
-                    value.forgotPassStep2(changePasswordModel);
-                  } else {
-                    value.showGradientDialog(
-                      context,
-                      LocaleProvider.of(context).warning,
-                      LocaleProvider.of(context).fill_all_field,
-                    );
-                  }
-                },
+                    ChangePasswordModel changePasswordModel =
+                        ChangePasswordModel();
+                    changePasswordModel.identificationNumber = identityNumber;
+                    changePasswordModel.newPasswordConfirmation =
+                        _passwordAgainController.text;
+                    changePasswordModel.newPassword = _passwordController.text;
+                    changePasswordModel.oldPassword = _temporaryController.text;
+
+                    if (_temporaryController.text.length > 0 &&
+                        _passwordController.text.length > 0 &&
+                        _passwordAgainController.text.length > 0) {
+                      value.forgotPassStep2(changePasswordModel);
+                    } else {
+                      value.showGradientDialog(
+                        context,
+                        LocaleProvider.of(context).warning,
+                        LocaleProvider.of(context).fill_all_field,
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildRow(
+    bool checkboxValue,
+    String text,
+  ) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Container(
+          child: Checkbox(
+            value: checkboxValue,
+            onChanged: (value) {},
+            activeColor: getIt<ITheme>().mainColor,
+            side: BorderSide(
+              color: Colors.grey,
+            ),
+            shape: CircleBorder(), //// <-- leading Checkbox
+          ),
+        ),
+
+        //
+        Expanded(
+          child: Text(
+            text,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+            style: context.xHeadline3.copyWith(
+              color: getIt<ITheme>().textColorSecondary,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

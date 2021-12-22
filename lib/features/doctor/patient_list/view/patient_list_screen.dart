@@ -4,89 +4,49 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
-import '../viewmodel/blood_glucose_patient_list_vm.dart';
+import '../model/patient_list_model.dart';
+import '../viewmodel/patient_list_vm.dart';
 
-class BloodGlucosePatientListScreen extends StatefulWidget {
-  BloodGlucosePatientListScreen({Key key}) : super(key: key);
+// ignore: must_be_immutable
+class DoctorPatientListScreen extends StatelessWidget {
+  DoctorPatientListScreen({Key key}) : super(key: key);
 
-  @override
-  _BloodGlucosePatientListScreenState createState() =>
-      _BloodGlucosePatientListScreenState();
-}
+  // #region AtomParams
+  PatientType type;
+  // #endregion
 
-class _BloodGlucosePatientListScreenState
-    extends State<BloodGlucosePatientListScreen> {
-  List items(BloodGlucosePatientListVm vm, BuildContext _context) => [
-        GestureDetector(
-          child: Container(
-            color: getIt<ITheme>().scaffoldBackgroundColor,
-            padding: EdgeInsets.all(12),
-            child: Text(
-              LocaleProvider.of(_context).critical_metrics,
-              style: _context.xHeadline4.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          onTap: () {
-            Navigator.of(_context).pop();
-            vm.sortList(DoctorPatientListSortType.criticalMetrics);
-          },
-        ),
-        GestureDetector(
-          child: Container(
-            color: getIt<ITheme>().scaffoldBackgroundColor,
-            padding: EdgeInsets.all(12),
-            child: Text(
-              LocaleProvider.of(_context).from_newest,
-              style: _context.xHeadline4.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          onTap: () {
-            Navigator.of(_context).pop();
-            vm.sortList(DoctorPatientListSortType.fromNewest);
-          },
-        ),
-        GestureDetector(
-          child: Container(
-            color: getIt<ITheme>().scaffoldBackgroundColor,
-            padding: EdgeInsets.all(12),
-            child: Text(
-              LocaleProvider.of(_context).from_oldest,
-              style: _context.xHeadline4.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          onTap: () {
-            Navigator.of(_context).pop();
-            vm.sortList(DoctorPatientListSortType.fromOldest);
-          },
-        ),
-      ];
+  final bigFlex = 40;
+  final smallFlex = 25;
 
   @override
   Widget build(BuildContext context) {
+    try {
+      type = Atom.queryParameters['type'].xPatientType;
+    } catch (_) {
+      return RbioRouteError();
+    }
+
     return KeyboardDismissOnTap(
-      child: RbioScaffold(
-        appbar: _buildAppBar(),
-        body: Consumer<BloodGlucosePatientListVm>(
-          builder: (
-            BuildContext context,
-            BloodGlucosePatientListVm vm,
-            Widget child,
-          ) {
-            return _buildBody(vm);
-          },
+      child: ChangeNotifierProvider<DoctorPatientListVm>(
+        create: (context) => DoctorPatientListVm(context, type),
+        child: RbioScaffold(
+          appbar: _buildAppBar(context),
+          body: Consumer<DoctorPatientListVm>(
+            builder: (
+              BuildContext context,
+              DoctorPatientListVm vm,
+              Widget child,
+            ) {
+              return _buildBody(context, vm);
+            },
+          ),
         ),
       ),
     );
   }
 
-  RbioAppBar _buildAppBar() => RbioAppBar(
+  // #region _buildAppBar
+  RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.bg_measurement_tracking,
@@ -103,14 +63,16 @@ class _BloodGlucosePatientListScreenState
           ),
         ],
       );
+  // #endregion
 
-  Widget _buildBody(BloodGlucosePatientListVm vm) {
+  // #region _buildBody
+  Widget _buildBody(BuildContext context, DoctorPatientListVm vm) {
     switch (vm.progress) {
       case LoadingProgress.LOADING:
         return RbioLoading();
 
       case LoadingProgress.DONE:
-        return _buildPatients(vm);
+        return _buildPatients(context, vm);
 
       case LoadingProgress.ERROR:
         return RbioBodyError();
@@ -119,26 +81,30 @@ class _BloodGlucosePatientListScreenState
         return SizedBox();
     }
   }
+  // #endregion
 
-  Widget _buildPatients(BloodGlucosePatientListVm vm) => Column(
+  // #region _buildPatients
+  Widget _buildPatients(BuildContext context, DoctorPatientListVm vm) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          _buildSearchFilterBar(vm),
+          _buildSearchFilterBar(context, vm),
 
           //
           SizedBox(height: 8),
 
           //
           Expanded(
-            child: _buildList(vm),
+            child: _buildListView(vm),
           ),
         ],
       );
+  // #endregion
 
-  Widget _buildSearchFilterBar(BloodGlucosePatientListVm vm) {
+  // #region _buildSearchFilterBar
+  Widget _buildSearchFilterBar(BuildContext context, DoctorPatientListVm vm) {
     return Container(
       height: 50,
       width: double.infinity,
@@ -154,37 +120,8 @@ class _BloodGlucosePatientListScreenState
                 borderRadius: R.sizes.borderRadiusCircular,
                 color: getIt<ITheme>().cardBackgroundColor,
               ),
-              child: TextFormField(
-                cursorColor: getIt<ITheme>().mainColor,
-                style: context.xHeadline5.copyWith(
-                  color: getIt<ITheme>().textColorSecondary,
-                  fontWeight: FontWeight.bold,
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  hintText: '${LocaleProvider.current.search}...',
-                  hintStyle: context.xHeadline5.copyWith(
-                    color: getIt<ITheme>().textColorPassive,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  contentPadding: EdgeInsets.fromLTRB(10, 13, 8, 0),
-                  suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: Center(
-                      child: SvgPicture.asset(
-                        R.image.search_grey,
-                        color: getIt<ITheme>().iconColor,
-                        height: 20,
-                        width: 20,
-                      ),
-                    ),
-                  ),
-                ),
+              child: RbioTextFormField(
+                hintText: '${LocaleProvider.current.search}...',
                 onChanged: (text) {
                   vm.textOnChanged(text);
                 },
@@ -227,7 +164,7 @@ class _BloodGlucosePatientListScreenState
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: RbioOverlayMenu(
-                      tiles: [...items(vm, context)],
+                      tiles: vm.getPopupWidgets(),
                       margin: EdgeInsets.only(top: 50),
                       color: getIt<ITheme>().cardBackgroundColor,
                       borderRadius: R.sizes.borderRadiusCircular,
@@ -246,32 +183,217 @@ class _BloodGlucosePatientListScreenState
       ),
     );
   }
+  // #endregion
 
-  Widget _buildList(BloodGlucosePatientListVm vm) {
+  // #region _buildListView
+  Widget _buildListView(DoctorPatientListVm vm) {
+    final list = vm.getList;
+
     return ListView.builder(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
-      itemCount: vm.filterList.length,
+      itemCount: vm.getitemCount,
       itemBuilder: (BuildContext context, int index) {
-        return _buildCard(vm.filterList[index]);
+        return R.sizes.textScaleBuilder(
+          context,
+          smallWidget: _buildCard(context, vm, list[index], isLarge: false),
+          largeWidget: _buildCard(context, vm, list[index], isLarge: true),
+        );
       },
     );
   }
+  // #endregion
 
-  final bigFlex = 40;
-  final smallFlex = 25;
-  Widget _buildCard(DoctorPatientModel model) {
+  // #region _buildCard
+  Widget _buildCard(
+    BuildContext context,
+    DoctorPatientListVm vm,
+    PatientListItemModel model, {
+    @required bool isLarge,
+  }) {
+    if (isLarge) {
+      return _buildLargeCard(
+        context,
+        onTap: () => vm.itemOnTap(model.data),
+        name: model.patientName,
+        dates: model.dates
+            .map(
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
+              ),
+            )
+            .toList(),
+        times: model.times
+            .map(
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
+              ),
+            )
+            .toList(),
+        values: model.values
+            .map(
+              (e) => _buildSmallExpanded(
+                child: _buildColorfulText(
+                  true,
+                  context,
+                  e,
+                  vm.getBackColor(e, model.data),
+                ),
+              ),
+            )
+            .toList(),
+      );
+    } else {
+      return _buildSmallCard(
+        context,
+        onTap: () => vm.itemOnTap(model.data),
+        name: model.patientName,
+        dates: model.dates
+            .map(
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
+              ),
+            )
+            .toList(),
+        times: model.times
+            .map(
+              (e) => _buildSmallExpanded(
+                child: _buildSmallCardText(context, e),
+              ),
+            )
+            .toList(),
+        values: model.values
+            .map(
+              (e) => _buildSmallExpanded(
+                child: _buildColorfulText(
+                  true,
+                  context,
+                  e,
+                  vm.getBackColor(e, model.data),
+                ),
+              ),
+            )
+            .toList(),
+      );
+    }
+  }
+  // #endregion
+
+  // #region _buildSmallExpanded
+  Widget _buildSmallExpanded({@required Widget child}) =>
+      Expanded(flex: smallFlex, child: child);
+  // #endregion
+
+  // #region _buildLargeCard
+  Widget _buildLargeCard(
+    BuildContext context, {
+    @required void Function() onTap,
+    @required String name,
+    @required List<Widget> dates,
+    @required List<Widget> times,
+    @required List<Widget> values,
+  }) {
     return InkWell(
-      onTap: () {
-        Atom.to(
-          PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
-          queryParameters: {
-            'patientId': model.id.toString(),
-            'patientName': model.name,
-          },
-        );
-      },
+      onTap: onTap,
+      child: Card(
+        elevation: 0,
+        color: getIt<ITheme>().cardBackgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildBigSmallCardText(
+                          context,
+                          LocaleProvider.current.patient_name_2,
+                          getIt<ITheme>().textColorPassive,
+                        ),
+
+                        //
+                        _buildBigSmallCardText(
+                          context,
+                          name,
+                          getIt<ITheme>().textColorSecondary,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //
+                      RbioBadge(
+                        isBigSize: false,
+                        image: R.image.clock_icon,
+                      ),
+
+                      //
+                      SizedBox(width: 8),
+
+                      //
+                      RbioBadge(
+                        isBigSize: false,
+                        image: R.image.chat_icon,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              //
+              SizedBox(height: 8),
+
+              //
+              Row(
+                children: dates,
+              ),
+
+              //
+              Row(
+                children: times,
+              ),
+
+              //
+              Row(
+                children: values,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  // #endregion
+
+  // #region _buildSmallCard
+  Widget _buildSmallCard(
+    BuildContext context, {
+    @required void Function() onTap,
+    @required String name,
+    @required List<Widget> dates,
+    @required List<Widget> times,
+    @required List<Widget> values,
+  }) {
+    return InkWell(
+      onTap: onTap,
       child: Card(
         elevation: 0,
         color: getIt<ITheme>().cardBackgroundColor,
@@ -299,26 +421,14 @@ class _BloodGlucosePatientListScreenState
                         Expanded(
                           flex: bigFlex,
                           child: _buildBigSmallCardText(
-                            'Hasta Adı',
+                            context,
+                            LocaleProvider.current.patient_name_2,
                             getIt<ITheme>().textColorPassive,
                           ),
                         ),
 
                         //
-                        ...model.measurements
-                            .map(
-                              (item) => Expanded(
-                                flex: smallFlex,
-                                child: _buildSmallCardText(
-                                  item.measurementTime != null
-                                      ? DateTime.parse(
-                                              item.measurementTime ?? '')
-                                          .xFormatTime7()
-                                      : '',
-                                ),
-                              ),
-                            )
-                            .toList(),
+                        ...dates,
                       ],
                     ),
 
@@ -332,26 +442,14 @@ class _BloodGlucosePatientListScreenState
                         Expanded(
                           flex: bigFlex,
                           child: _buildBigSmallCardText(
-                            model.name,
+                            context,
+                            name,
                             getIt<ITheme>().textColorSecondary,
                           ),
                         ),
 
                         //
-                        ...model.measurements
-                            .map(
-                              (item) => Expanded(
-                                flex: smallFlex,
-                                child: _buildSmallCardText(
-                                  item.measurementTime != null
-                                      ? DateTime.parse(
-                                              item.measurementTime ?? '')
-                                          .xFormatTime8()
-                                      : '',
-                                ),
-                              ),
-                            )
-                            .toList(),
+                        ...times,
                       ],
                     ),
 
@@ -395,20 +493,7 @@ class _BloodGlucosePatientListScreenState
                         ),
 
                         //
-                        ...model.measurements
-                            .map(
-                              (item) => Expanded(
-                                flex: smallFlex,
-                                child: _buildColorfulText(
-                                  item.measurement,
-                                  _getMeasurementBackcolor(
-                                    text: item.measurement,
-                                    item: model,
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
+                        ...values,
                       ],
                     ),
                   ],
@@ -426,33 +511,11 @@ class _BloodGlucosePatientListScreenState
       ),
     );
   }
+  // #endregion
 
-  Color _getMeasurementBackcolor({
-    String text,
-    DoctorPatientModel item,
-  }) {
-    return text == '' || text == null
-        ? getIt<ITheme>().cardBackgroundColor
-        : Utils.instance.fetchMeasurementColor(
-            measurement: _textToInt(text ?? ""),
-            criticMin: item?.alertMin?.toInt() ?? 0,
-            criticMax: item?.alertMax?.toInt() ?? 0,
-            targetMax: item?.normalMax?.toInt() ?? 0,
-            targetMin: item?.normalMin?.toInt() ?? 0,
-          );
-  }
-
-  int _textToInt(String text) {
-    if (text == null) {
-      return 0;
-    } else if (text.length > 0) {
-      return int.parse(text);
-    } else {
-      return 0;
-    }
-  }
-
-  Widget _buildBigSmallCardText(String text, Color color) {
+  // #region _buildBigSmallCardText
+  Widget _buildBigSmallCardText(
+      BuildContext context, String text, Color color) {
     return Text(
       text,
       maxLines: 1,
@@ -463,8 +526,10 @@ class _BloodGlucosePatientListScreenState
       ),
     );
   }
+  // #endregion
 
-  Widget _buildSmallCardText(String text) {
+  // #region _buildSmallCardText
+  Widget _buildSmallCardText(BuildContext context, String text) {
     return Center(
       child: Text(
         text,
@@ -474,8 +539,15 @@ class _BloodGlucosePatientListScreenState
       ),
     );
   }
+  // #endregion
 
-  Widget _buildColorfulText(String text, Color color) {
+  // #region _buildColorfulText
+  Widget _buildColorfulText(
+    bool isLarge,
+    BuildContext context,
+    String text,
+    Color color,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -483,7 +555,7 @@ class _BloodGlucosePatientListScreenState
       children: [
         //
         Spacer(
-          flex: 10,
+          flex: isLarge ? 1 : 10,
         ),
 
         //
@@ -502,8 +574,11 @@ class _BloodGlucosePatientListScreenState
         ),
 
         //
-        Spacer(flex: 10),
+        Spacer(
+          flex: isLarge ? 1 : 10,
+        ),
       ],
     );
   }
+  // #endregion
 }

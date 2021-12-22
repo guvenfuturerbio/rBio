@@ -40,15 +40,15 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<DoctorPatientModel>> getMySugarPatient(
+  Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
       GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMySugarPatient, getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum
-          .map((item) => DoctorPatientModel.fromJson(item))
-          .cast<DoctorPatientModel>()
+          .map((item) => DoctorGlucosePatientModel.fromJson(item))
+          .cast<DoctorGlucosePatientModel>()
           .toList();
     } else {
       throw Exception('/getMyPatients : ${response.isSuccessful}');
@@ -56,15 +56,15 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<DoctorPatientModel>> getMyScalePatient(
+  Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
       GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMyScalePatient, getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum
-          .map((item) => DoctorPatientModel.fromJson(item))
-          .cast<DoctorPatientModel>()
+          .map((item) => DoctorGlucosePatientModel.fromJson(item))
+          .cast<DoctorGlucosePatientModel>()
           .toList();
     } else {
       throw Exception('/getMyScalePatient : ${response.isSuccessful}');
@@ -72,15 +72,31 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<DoctorPatientModel>> getMyBpPatient(
+  Future<List<DoctorBloodPressurePatientModel>> getMyBpPatient(
       GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMyBpPatient, getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum
-          .map((item) => DoctorPatientModel.fromJson(item))
-          .cast<DoctorPatientModel>()
+          .map((item) => DoctorBloodPressurePatientModel.fromJson(item))
+          .cast<DoctorBloodPressurePatientModel>()
+          .toList();
+    } else {
+      throw Exception('/getMyBpPatient : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<DoctorBMIPatientModel>> getMyBMIPatient(
+      GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyBMIPatient, getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => DoctorBMIPatientModel.fromJson(item))
+          .cast<DoctorBMIPatientModel>()
           .toList();
     } else {
       throw Exception('/getMyBpPatient : ${response.isSuccessful}');

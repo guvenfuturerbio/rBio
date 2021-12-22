@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -35,7 +37,12 @@ class DoctorHomeScreen extends StatelessWidget {
           R.image.ct_blood_glucose,
           LocaleProvider.current.bg_measurement_tracking,
           () {
-            Atom.to(PagePaths.BLOOD_GLUCOSE_PATIENT_LIST);
+            Atom.to(
+              PagePaths.DOCTOR_PATIENT_LIST,
+              queryParameters: {
+                'type': PatientType.Sugar.xRawValue,
+              },
+            );
           },
         ),
 
@@ -44,7 +51,14 @@ class DoctorHomeScreen extends StatelessWidget {
           context,
           R.image.ct_body_scale,
           LocaleProvider.current.weight_tracking,
-          () {},
+          () {
+            Atom.to(
+              PagePaths.DOCTOR_PATIENT_LIST,
+              queryParameters: {
+                'type': PatientType.BMI.xRawValue,
+              },
+            );
+          },
         ),
 
         //
@@ -52,7 +66,14 @@ class DoctorHomeScreen extends StatelessWidget {
           context,
           R.image.ct_blood_pressure,
           LocaleProvider.current.blood_pressure_tracking,
-          () {},
+          () {
+            Atom.to(
+              PagePaths.DOCTOR_PATIENT_LIST,
+              queryParameters: {
+                'type': PatientType.Bp.xRawValue,
+              },
+            );
+          },
         ),
       ],
     );

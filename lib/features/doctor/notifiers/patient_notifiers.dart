@@ -7,7 +7,7 @@ import '../../../model/model.dart';
 class PatientNotifiers extends ChangeNotifier {
   DoctorPatientDetailModel _patientDetail;
 
-  List<DoctorPatientModel> _patientList;
+  List<DoctorGlucosePatientModel> _patientList;
 
   static final PatientNotifiers _patientNotifiers =
       PatientNotifiers._internal();
@@ -35,5 +35,5 @@ class PatientNotifiers extends ChangeNotifier {
 
   DoctorPatientDetailModel get patientDetail => this._patientDetail;
 
-  List<DoctorPatientModel> get patientList => this._patientList;
+  List<DoctorGlucosePatientModel> get patientList => this._patientList;
 }

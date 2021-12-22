@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -50,17 +49,15 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
       changeInfo.hasKVKKApproval = patient.hasKVKKApproval;
       changeInfo.passportNumber = patient.passportNumber;
       await getIt<Repository>().updateContactInfo(changeInfo);
-      var sharedUserAccount = getIt<UserInfo>().getUserAccount();
+      var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
       sharedUserAccount = sharedUserAccount.copyWith(
         phoneNumber: newPhoneNumber,
         electronicMail: newEmail,
       );
-      await getIt<UserInfo>().setUserAccount(sharedUserAccount);
+      await getIt<UserNotifier>().setUserAccount(sharedUserAccount);
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
     }
-
-    showLoadingOverlay = false;
   }
 
   String getFormattedDate(String date) => date.replaceAll('.', '/');

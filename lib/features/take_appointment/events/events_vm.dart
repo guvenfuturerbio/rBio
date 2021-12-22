@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
 class EventsScreenVm extends ChangeNotifier {
-  int patientId = PatientSingleton().getPatient().id;
+  int patientId = getIt<UserNotifier>().getPatient().id;
   BuildContext mContext;
   bool _ayranciSelected, _cayyoluSelected, _onlineSelected;
   DateTime _selectedDate;

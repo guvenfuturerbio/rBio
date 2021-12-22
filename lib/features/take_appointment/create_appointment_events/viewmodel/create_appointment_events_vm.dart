@@ -14,7 +14,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   int departmentId;
   bool forOnline;
 
-  int patientId = PatientSingleton().getPatient().id;
+  int patientId = getIt<UserNotifier>().getPatient().id;
 
   DateTime selectedDate = DateTime.now();
   String filterFromDate;
@@ -40,11 +40,14 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       initDate = DateTime.now();
       setFilterRangeDate(DateTime.now());
-      if (tenantId == 1) {
-        this.resourceRequestList.add(getAyranciResource());
-      } else if (tenantId == 7) {
-        this.resourceRequestList.add(getCayyoluResource());
-      } else if (tenantId == 256) {
+
+      if (!forOnline) {
+        if (tenantId == 1) {
+          this.resourceRequestList.add(getAyranciResource());
+        } else if (tenantId == 7) {
+          this.resourceRequestList.add(getCayyoluResource());
+        }
+      } else {
         this.resourceRequestList.add(getAyranciResource());
         this.resourceRequestList.add(getCayyoluResource());
       }
@@ -81,7 +84,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       DateTime date, bool isOnline, int tenantId) async {
     return (await getIt<Repository>().findResourceAvailableDays(
       FindResourceAvailableDaysRequest(
-        appointmentType: isOnline ? 256 : tenantId,
+        appointmentType: isOnline ? 256 : 1,
         resourceRequest: ResourceRequest(
           tenantId: tenantId,
           departmentId: departmentId,
@@ -144,6 +147,10 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       );
 
   Future<void> fetchEventsForSelected() async {
+    if (availableDatesProgress == LoadingProgress.ERROR) {
+      return;
+    }
+
     this.slotsProgress = LoadingProgress.LOADING;
     notifyListeners();
 

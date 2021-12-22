@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RbioScaffold(
         resizeToAvoidBottomInset: true,
         appbar: RbioAppBarLogin(
+          leading: SizedBox(),
           title: Image.asset(
             R.image.oneDoseHealthPng,
             height: 50,
@@ -72,6 +72,10 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          //
+          RbioLocaleDropdown(),
+
+          //
           _buildHeader(),
 
           //
@@ -106,10 +110,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
 
           //
-          _buildSeperator(),
+          //   _buildSeperator(),
 
           //
-          _buildSocialLogin(),
+          //    _buildSocialLogin(),
 
           //
           _buildVersion(),
@@ -120,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15.0, left: 20),
+      padding: const EdgeInsets.only(bottom: 15.0, left: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -130,7 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
               LocaleProvider.current.login,
               style: context.xHeadline1.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: context.TEXTSCALE * 30,
               ),
             ),
           ),

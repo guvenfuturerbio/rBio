@@ -1,9 +1,9 @@
 import 'diabet_type.dart';
 
-class DoctorPatientModel {
+class DoctorGlucosePatientModel {
   String name;
   DiabetType diabetType;
-  List<DoctorPatientMeasurementModel> measurements;
+  List<DoctorGlucosePatientMeasurementModel> measurements;
   int entegrationId;
   double normalMin;
   double normalMax;
@@ -12,7 +12,7 @@ class DoctorPatientModel {
   double target;
   int id;
 
-  DoctorPatientModel({
+  DoctorGlucosePatientModel({
     this.name,
     this.diabetType,
     this.entegrationId,
@@ -24,15 +24,15 @@ class DoctorPatientModel {
     this.id,
   });
 
-  DoctorPatientModel.fromJson(Map<String, dynamic> json) {
+  DoctorGlucosePatientModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     diabetType = json['diabet_type'] != null
         ? new DiabetType.fromJson(json['diabet_type'])
         : null;
     if (json['measurements'] != null) {
-      measurements = new List<DoctorPatientMeasurementModel>();
+      measurements = new List<DoctorGlucosePatientMeasurementModel>();
       json['measurements'].forEach((v) {
-        measurements.add(new DoctorPatientMeasurementModel.fromJson(v));
+        measurements.add(new DoctorGlucosePatientMeasurementModel.fromJson(v));
       });
     }
     entegrationId = json['entegration_id'];
@@ -63,13 +63,14 @@ class DoctorPatientModel {
   }
 }
 
-class DoctorPatientMeasurementModel {
+class DoctorGlucosePatientMeasurementModel {
   String measurement;
   String measurementTime;
 
-  DoctorPatientMeasurementModel({this.measurement, this.measurementTime});
+  DoctorGlucosePatientMeasurementModel(
+      {this.measurement, this.measurementTime});
 
-  DoctorPatientMeasurementModel.fromJson(Map<String, dynamic> json) {
+  DoctorGlucosePatientMeasurementModel.fromJson(Map<String, dynamic> json) {
     measurement = json['measurement'];
     measurementTime = json['measurement_time'];
   }

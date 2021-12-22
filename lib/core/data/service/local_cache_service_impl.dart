@@ -18,7 +18,6 @@ class LocalCacheServiceImpl extends LocalCacheService {
       final cacheModel = NetworkCacheModel.fromJson(jsonModel);
       final now = DateTime.now();
 
-      // Eski Versiyon yüklü cihazlarda hata oluşmaması için kontrol ediyoruz.
       if (jsonModel['appVersion'] == null) {
         await remove(url);
       } else {

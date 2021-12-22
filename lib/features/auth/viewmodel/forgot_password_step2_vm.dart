@@ -7,23 +7,12 @@ class ForgotPasswordStep2ScreenVm extends ChangeNotifier {
   BuildContext mContext;
   final focus = FocusNode();
   LoadingDialog loadingDialog;
-  final TextEditingController _temporaryController =
-      new TextEditingController();
-  final TextEditingController _passwordController = new TextEditingController();
-  final TextEditingController _passwordAgainController =
-      new TextEditingController();
 
   bool _checkLowerCase;
   bool _checkNumeric;
   bool _checkSpecial;
   bool _checkUpperCase;
   bool _checkLength;
-  TextEditingController get temporaryController => this._temporaryController;
-
-  TextEditingController get passwordController => this._passwordController;
-
-  TextEditingController get passwordAgainController =>
-      this._passwordAgainController;
 
   bool _passwordVisibility;
 
@@ -76,25 +65,30 @@ class ForgotPasswordStep2ScreenVm extends ChangeNotifier {
         hideDialog(this.mContext);
         if (response.isSuccessful == true) {
           showGradientDialog(
-              this.mContext,
-              LocaleProvider.of(this.mContext).success_message_title,
-              LocaleProvider.of(this.mContext).succefully_created_pass);
+            this.mContext,
+            LocaleProvider.of(this.mContext).success_message_title,
+            LocaleProvider.of(this.mContext).succefully_created_pass,
+          );
+          Atom.to(PagePaths.LOGIN, isReplacement: true);
         } else {
           if (response.datum == 1) {
             showGradientDialog(
-                this.mContext,
-                LocaleProvider.of(this.mContext).warning,
-                LocaleProvider.of(this.mContext).wrong_temporary_pass);
+              this.mContext,
+              LocaleProvider.of(this.mContext).warning,
+              LocaleProvider.of(this.mContext).wrong_temporary_pass,
+            );
           } else if (response.datum == 2) {
             showGradientDialog(
-                this.mContext,
-                LocaleProvider.of(this.mContext).warning,
-                LocaleProvider.of(this.mContext).pass_must_same);
+              this.mContext,
+              LocaleProvider.of(this.mContext).warning,
+              LocaleProvider.of(this.mContext).pass_must_same,
+            );
           } else if (response.datum == 4) {
             showGradientDialog(
-                this.mContext,
-                LocaleProvider.of(this.mContext).warning,
-                LocaleProvider.of(this.mContext).sorry_dont_transaction);
+              this.mContext,
+              LocaleProvider.of(this.mContext).warning,
+              LocaleProvider.of(this.mContext).sorry_dont_transaction,
+            );
           }
         }
 
@@ -126,14 +120,14 @@ class ForgotPasswordStep2ScreenVm extends ChangeNotifier {
   }
 
   void showLoadingDialog(BuildContext context) async {
-    await new Future.delayed(new Duration(milliseconds: 30));
+    await Future.delayed(new Duration(milliseconds: 30));
     await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
     notifyListeners();
-    //builder: (BuildContext context) => WillPopScope(child:loadingDialog = LoadingDialog() , onWillPop:  () async => false,));
   }
 
   void hideDialog(BuildContext context) {

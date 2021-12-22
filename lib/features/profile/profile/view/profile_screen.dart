@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/notifiers/locale_notifier.dart';
 import '../viewmodel/profile_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -33,6 +33,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           context,
           LocaleProvider.current.profile,
         ),
+        actions: [
+          //
+          IconButton(
+            onPressed: () {
+              context.read<ThemeNotifier>().changeTextScale();
+            },
+            icon: SvgPicture.asset(
+              R.image.change_size_icon,
+              color: getIt<ITheme>().iconSecondaryColor,
+            ),
+          ),
+        ],
       ),
 
       //
@@ -59,9 +71,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisSize: MainAxisSize.max,
             children: [
               //
+              RbioLocaleDropdown(),
+
+              //
               RbioUserTile(
                 name:
-                    '${PatientSingleton().getPatient().firstName} ${PatientSingleton().getPatient().lastName}',
+                    '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.PROFILE_IMAGE),
                 leadingImage: UserLeadingImage.Circle,
