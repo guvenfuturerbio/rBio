@@ -1,31 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../core.dart';
 
 class LocaleNotifier with ChangeNotifier {
-  String current;
-  LocaleNotifier() {
-    current = getIt<ISharedPreferencesManager>()
+  Locale current;
+
+  Future<void> init() async {
+    final sharedValue = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.SELECTED_LOCALE);
-    if (current != null) {
-      LoggerUtils.instance.i('Current locale = $current.');
-      changeLocale(current);
+    if (sharedValue == null) {
+      current = supportedLocales.first;
     } else {
-      current = Intl.getCurrentLocale().toLowerCase();
-      changeLocale(current);
+      current = getLocaleByLanguageCode(sharedValue);
     }
+
+    changeLocale(current);
   }
 
-  Future<void> changeLocale(String locale) async {
-    if (LocaleProvider.delegate.isSupported(Locale(locale.toLowerCase()))) {
-      LocaleProvider.delegate.load(Locale(locale.toLowerCase()));
-      await getIt<ISharedPreferencesManager>().setString(
-          SharedPreferencesKeys.SELECTED_LOCALE, locale.toLowerCase());
-      current = locale.toLowerCase();
-    } else {
-      throw Exception("Unsupported Language !!");
-    }
+  Future<void> changeLocale(Locale locale) async {
+    await LocaleProvider.delegate.load(locale);
+    await getIt<ISharedPreferencesManager>()
+        .setString(SharedPreferencesKeys.SELECTED_LOCALE, locale.languageCode);
+    current = locale;
     notifyListeners();
+  }
+
+  // -------- -------- -------- --------
+
+  static const _trLocal = const Locale('tr', 'TR');
+  static const _enLocal = const Locale('en', 'US');
+  final List<Locale> supportedLocales = [_trLocal, _enLocal];
+  Locale getLocaleByLanguageCode(String value) {
+    if (value == _trLocal.languageCode) {
+      return _trLocal;
+    } else if (value == _enLocal.languageCode) {
+      return _enLocal;
+    }
+
+    return _enLocal;
   }
 }

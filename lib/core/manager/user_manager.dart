@@ -12,8 +12,6 @@ abstract class UserManager {
   Future<void> saveLoginInfo(
       String userName, String password, bool rememberMeChecked, String token);
   Future<UserLoginInfo> getSavedLoginInfo();
-  Future<String> loadLocaleIfStored();
-  Future<void> changeLocale(String locale);
   Future updateIdentityNumber(String identityNumber);
   Future changeLoginUserParameter(String identityNumber);
   Future refreshToken();
@@ -81,31 +79,6 @@ class UserManagerImpl extends UserManager {
         .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
     userLoginInfo.password = password;
     return userLoginInfo;
-  }
-
-  @override
-  Future<String> loadLocaleIfStored() async {
-    String current = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.SELECTED_LOCALE);
-    if (current != null) {
-      LoggerUtils.instance.i('Current locale = $current.');
-      changeLocale(current);
-    } else {
-      current = Intl.getCurrentLocale().toLowerCase();
-      changeLocale(current);
-    }
-    return current;
-  }
-
-  @override
-  Future<void> changeLocale(String locale) async {
-    if (LocaleProvider.delegate.isSupported(Locale(locale.toLowerCase()))) {
-      LocaleProvider.delegate.load(Locale(locale.toLowerCase()));
-      await getIt<ISharedPreferencesManager>().setString(
-          SharedPreferencesKeys.SELECTED_LOCALE, locale.toLowerCase());
-    } else {
-      throw Exception("Unsupported Language !!");
-    }
   }
 
   @override

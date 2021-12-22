@@ -8,6 +8,15 @@ import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
 
 class CreateAppointmentSummaryScreen extends StatefulWidget {
+  CreateAppointmentSummaryScreen({Key key}) : super(key: key);
+
+  @override
+  _CreateAppointmentSummaryScreenState createState() =>
+      _CreateAppointmentSummaryScreenState();
+}
+
+class _CreateAppointmentSummaryScreenState
+    extends State<CreateAppointmentSummaryScreen> {
   String patientId;
   String patientName;
   int tenantId;
@@ -21,15 +30,6 @@ class CreateAppointmentSummaryScreen extends StatefulWidget {
   String to;
   bool forOnline;
 
-  CreateAppointmentSummaryScreen({Key key}) : super(key: key);
-
-  @override
-  _CreateAppointmentSummaryScreenState createState() =>
-      _CreateAppointmentSummaryScreenState();
-}
-
-class _CreateAppointmentSummaryScreenState
-    extends State<CreateAppointmentSummaryScreen> {
   TextEditingController codeEditingController;
 
   @override
@@ -49,20 +49,18 @@ class _CreateAppointmentSummaryScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      widget.patientId = Uri.decodeFull(Atom.queryParameters['patientId']);
-      widget.patientName = Uri.decodeFull(Atom.queryParameters['patientName']);
-      widget.tenantId = int.parse(Atom.queryParameters['tenantId']);
-      widget.tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']);
-      widget.departmentId = int.parse(Atom.queryParameters['departmentId']);
-      widget.departmentName =
-          Uri.decodeFull(Atom.queryParameters['departmentName']);
-      widget.resourceId = int.parse(Atom.queryParameters['resourceId']);
-      widget.resourceName =
-          Uri.decodeFull(Atom.queryParameters['resourceName']);
-      widget.date = Atom.queryParameters['date'];
-      widget.from = Atom.queryParameters['from'];
-      widget.to = Atom.queryParameters['to'];
-      widget.forOnline = Atom.queryParameters['forOnline'] == 'true';
+      patientId = Uri.decodeFull(Atom.queryParameters['patientId']);
+      patientName = Uri.decodeFull(Atom.queryParameters['patientName']);
+      tenantId = int.parse(Atom.queryParameters['tenantId']);
+      tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']);
+      departmentId = int.parse(Atom.queryParameters['departmentId']);
+      departmentName = Uri.decodeFull(Atom.queryParameters['departmentName']);
+      resourceId = int.parse(Atom.queryParameters['resourceId']);
+      resourceName = Uri.decodeFull(Atom.queryParameters['resourceName']);
+      date = Atom.queryParameters['date'];
+      from = Atom.queryParameters['from'];
+      to = Atom.queryParameters['to'];
+      forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (_) {
       return RbioRouteError();
     }
@@ -71,12 +69,12 @@ class _CreateAppointmentSummaryScreenState
       create: (context) => CreateAppointmentSummaryVm(
         mContext: context,
         patientId: getIt<UserNotifier>().getPatient().id,
-        tenantId: widget.tenantId,
-        departmentId: widget.departmentId,
-        resourceId: widget.resourceId,
-        forOnline: widget.forOnline,
-        from: widget.from,
-        to: widget.to,
+        tenantId: tenantId,
+        departmentId: departmentId,
+        resourceId: resourceId,
+        forOnline: forOnline,
+        from: from,
+        to: to,
       ),
       child: Consumer(
         builder: (
@@ -145,7 +143,7 @@ class _CreateAppointmentSummaryScreenState
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (widget.forOnline) ...[
+            if (forOnline) ...[
               if (vm.showCodeField) ...[
                 Container(
                   height: 55,
@@ -297,7 +295,7 @@ class _CreateAppointmentSummaryScreenState
                         vm.saveAppointment(
                           price: vm?.orgVideoCallPriceResponse?.patientPrice
                               ?.toString(),
-                          forOnline: widget.forOnline,
+                          forOnline: forOnline,
                           forFree:
                               (vm?.orgVideoCallPriceResponse?.patientPrice ??
                                           0) <
@@ -306,7 +304,9 @@ class _CreateAppointmentSummaryScreenState
                                   : false,
                         );
                       },
-                      title: LocaleProvider.current.pay,
+                      title: forOnline
+                          ? LocaleProvider.current.pay
+                          : LocaleProvider.current.done,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -446,12 +446,12 @@ class _CreateAppointmentSummaryScreenState
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildPassiveText(LocaleProvider.current.patient_name),
-          _buildActiveText(widget.patientName),
+          _buildActiveText(patientName),
           _buildVerticalGap(),
 
           //
           _buildPassiveText(LocaleProvider.current.tenant_name),
-          _buildActiveText(widget.tenantName),
+          _buildActiveText(tenantName),
           _buildVerticalGap(),
 
           //
@@ -469,7 +469,7 @@ class _CreateAppointmentSummaryScreenState
                   children: [
                     //
                     _buildPassiveText(LocaleProvider.current.doctor_name),
-                    _buildActiveText(widget.resourceName),
+                    _buildActiveText(resourceName),
                   ],
                 ),
               ),
@@ -483,7 +483,7 @@ class _CreateAppointmentSummaryScreenState
                   children: [
                     //
                     _buildPassiveText(LocaleProvider.current.depart_name),
-                    _buildActiveText(widget.departmentName),
+                    _buildActiveText(departmentName),
                   ],
                 ),
               ),
@@ -508,8 +508,7 @@ class _CreateAppointmentSummaryScreenState
                   children: [
                     //
                     _buildPassiveText(LocaleProvider.current.hint_date),
-                    _buildActiveText(
-                        DateTime.parse(widget.date).xFormatTime1()),
+                    _buildActiveText(DateTime.parse(date).xFormatTime1()),
                   ],
                 ),
               ),
@@ -524,7 +523,7 @@ class _CreateAppointmentSummaryScreenState
                     //
                     _buildPassiveText(LocaleProvider.current.time),
                     _buildActiveText(
-                        '${widget.from.substring(11, 16)} - ${widget.to.substring(11, 16)}'),
+                        '${from.substring(11, 16)} - ${to.substring(11, 16)}'),
                   ],
                 ),
               ),

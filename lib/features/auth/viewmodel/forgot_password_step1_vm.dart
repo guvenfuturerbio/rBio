@@ -39,9 +39,12 @@ class ForgotPasswordStep1ScreenVm extends ChangeNotifier {
       await getIt<Repository>().forgotPasswordUi(userRegistrationStep1);
       await Future.delayed(Duration(milliseconds: 500));
       hideDialog(this.mContext);
-      Atom.to(PagePaths.FORGOT_PASSWORD_STEP_2, queryParameters: {
-        'identityNumber': userRegistrationStep1.identificationNumber,
-      });
+      Atom.to(
+        PagePaths.FORGOT_PASSWORD_STEP_2,
+        queryParameters: {
+          'identityNumber': userRegistrationStep1.identificationNumber,
+        },
+      );
 
       notifyListeners();
     } catch (error) {

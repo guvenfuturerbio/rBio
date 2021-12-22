@@ -5,11 +5,9 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 
-enum LoadingStatus { loading, done }
-
 class AddPatientRelativesScreenVm with ChangeNotifier {
   LoadingDialog loadingDialog;
-  LoadingStatus status = LoadingStatus.loading;
+  LoadingProgress status = LoadingProgress.LOADING;
   DateTime selectedDate;
   BuildContext context;
   var selectedCountry = Country(id: 213, name: "Türkiye");
@@ -55,11 +53,12 @@ class AddPatientRelativesScreenVm with ChangeNotifier {
     try {
       final response = await getIt<Repository>().getCountries();
       countryList = CountryListResponse.fromMap(response.toJson());
-      status = LoadingStatus.done;
+      status = LoadingProgress.DONE;
       notifyListeners();
     } catch (error, stackTrace) {
       Sentry.captureException(error, stackTrace: stackTrace);
       print("exception: " + error.toString());
+      status = LoadingProgress.ERROR;
     }
   }
 

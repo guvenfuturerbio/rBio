@@ -85,14 +85,24 @@ class AppointmentListVm extends ChangeNotifier {
   }
 
   Future<void> requestTranslator(
-      String appointmentId, TranslatorRequest translatorPost) async {
+    String appointmentId,
+    TranslatorRequest translatorPost,
+  ) async {
     try {
-      await getIt<UserManager>()
-          .requestTranslator(appointmentId, translatorPost);
+      await getIt<UserManager>().requestTranslator(
+        appointmentId,
+        translatorPost,
+      );
+    } on RbioDisplayException catch (e) {
+      showGradientDialog(
+        LocaleProvider.current.warning,
+        e.message,
+      );
     } catch (e) {
-      print("requestTranslator error " + e.toString());
-      showGradientDialog(LocaleProvider.current.warning,
-          e.toString().replaceAll("Exception: ", ""));
+      showGradientDialog(
+        LocaleProvider.current.warning,
+        e.toString().replaceAll("Exception: ", ""),
+      );
     }
   }
 

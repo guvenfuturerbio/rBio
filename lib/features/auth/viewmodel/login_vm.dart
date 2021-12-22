@@ -52,10 +52,10 @@ class LoginScreenVm extends ChangeNotifier {
   LoginScreenVm({BuildContext context}) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await getCurrentLocale();
       await getSavedLoginInfo();
       await fetchConsentFormState();
       await fetchKvkkFormState();
+      await autoLogin();
       //await startAppVersionOperation();
       //    packageInfo = await PackageInfo.fromPlatform();
     });
@@ -98,16 +98,6 @@ class LoginScreenVm extends ChangeNotifier {
     this._clickedGeneralForm = !clickedGeneralForm;
     if (clickedGeneralForm) {}
     notifyListeners();
-  }
-
-  getCurrentLocale() async {
-    this._locale = await getIt<UserManager>().loadLocaleIfStored();
-    notifyListeners();
-  }
-
-  setCurrentLocale(String locale) async {
-    await getIt<UserManager>().changeLocale(locale);
-    getCurrentLocale();
   }
 
   getSavedLoginInfo() async {
@@ -273,10 +263,15 @@ class LoginScreenVm extends ChangeNotifier {
             );
           }
         }
-        var devices = await getIt<BleDeviceManager>().getPairedDevices();
-        if (devices.isNotEmpty) {
-          getIt<BleScannerOps>().startScan();
+
+        if (!Atom.isWeb) {
+          var devices = await getIt<BleDeviceManager>().getPairedDevices();
+          if (devices.isNotEmpty) {
+            getIt<BleScannerOps>().startScan();
+          }
         }
+
+        await getIt<SymptomRepository>().getSymtptomsApiToken();
 
         this._progress = LoadingProgress.DONE;
         // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
