@@ -111,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                print(getIt<ProfileStorageImpl>().getFirst().id);
-                log(getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.JWT_TOKEN));
+                Atom.to(PagePaths.PATIENT_CONSULTATION);
               },
             ),
           ),

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Message {
@@ -8,14 +7,14 @@ class Message {
   final Timestamp date;
   final int type; //0 text //1 image
 
-  Message({this.sentTo, this.sentFrom, this.message,this.type, this.date});
+  Message({this.sentTo, this.sentFrom, this.message, this.type, this.date});
   Map<String, dynamic> toMap() {
     return {
       'sentTo': sentTo,
       'sentFrom': sentFrom,
       'message': message,
       'date': date ?? FieldValue.serverTimestamp(),
-      'type' : type,
+      'type': type,
     };
   }
 
@@ -23,6 +22,6 @@ class Message {
       : this.sentTo = map['sentTo'],
         this.sentFrom = map['sentFrom'],
         this.message = map['message'],
-        this.date = map['date'] ,
+        this.date = map['date'],
         this.type = map['type'];
- }
+}

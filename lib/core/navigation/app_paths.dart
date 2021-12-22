@@ -1,4 +1,5 @@
 import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
+import 'package:onedosehealth/features/chat/patient_consultation_screen.dart';
 import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
 import 'package:onedosehealth/features/doctor/consultation/view/consultation_screen.dart';
 import 'package:provider/provider.dart';
@@ -243,7 +244,10 @@ class VRouterRoutes {
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
     ),
-
+    VWidget(
+      path: PagePaths.PATIENT_CONSULTATION,
+      widget: PatientConsultationScreen()
+    ),
     // Symptom Checker
     VGuard(
       beforeEnter: (vRedirector) async {
@@ -407,6 +411,7 @@ class PagePaths {
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
   static const CREATE_APPOINTMENT_SUMMARY = '/create-appointment-summary';
   static const CREATE_ONLINE_APPO = '/create-online-appointment';
+  static const PATIENT_CONSULTATION = '/patient-consultation';
 
   static const LOGIN = '/login';
   static const REGISTER_FIRST = '/register-first';

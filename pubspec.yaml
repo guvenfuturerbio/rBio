@@ -172,7 +172,8 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: 'assets/logo/onedose_demo_2.png'
+  image_path: 'assets/logo/onedose_app_logo.png'
+  remove_alpha_ios: true
 
 flutter_intl:
   enabled: true
@@ -180,5 +181,5 @@ flutter_intl:
   default_locale: en
 
 flutter_native_splash:
-  color: '#FFFFFF'
-  image: 'assets/images/guven_logo.png'
+  color: '#00A147'
+  image: 'assets/logo/onedose_app_logo.png'

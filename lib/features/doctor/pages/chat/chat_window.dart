@@ -12,7 +12,7 @@ import '../../../../core/core.dart';
 import '../../../chronic_tracking/lib/widgets/custom_app_bar/custom_app_bar.dart';
 import '../../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
 import 'chat_controller.dart';
-import 'message.dart';
+import '../../../chat/model/message.dart';
 
 class DoctorChatWindow extends StatelessWidget {
   final String uuid;

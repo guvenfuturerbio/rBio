@@ -7,7 +7,7 @@ import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-import 'message.dart';
+import '../../../chat/model/message.dart';
 
 class DoctorChatController with ChangeNotifier {
   DoctorChatController();
