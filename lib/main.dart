@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
@@ -111,6 +112,8 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
               value: BgProgressPageViewModel()),
+          ChangeNotifierProvider<BpProgressPageVm>.value(
+              value: BpProgressPageVm()),
           if (!Atom.isWeb) ...[
             ChangeNotifierProvider<BleScannerOps>.value(
                 value: getIt<BleScannerOps>()),

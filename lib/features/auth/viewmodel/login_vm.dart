@@ -289,6 +289,8 @@ class LoginScreenVm extends ChangeNotifier {
         // MainNavigation.toHome(mContext);
       } catch (e, stackTrace) {
         Sentry.captureException(e, stackTrace: stackTrace);
+        print(e);
+        debugPrintStack(stackTrace: stackTrace);
         hideDialog(mContext);
         this._progress = LoadingProgress.ERROR;
         notifyListeners();

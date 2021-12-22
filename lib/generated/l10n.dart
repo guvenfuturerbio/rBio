@@ -7364,6 +7364,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Diastolic`
+  String get dia {
+    return Intl.message(
+      'Diastolic',
+      name: 'dia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Systolic`
+  String get sys {
+    return Intl.message(
+      'Systolic',
+      name: 'sys',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pulse`
+  String get pulse {
+    return Intl.message(
+      'Pulse',
+      name: 'pulse',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

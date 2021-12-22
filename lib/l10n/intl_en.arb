@@ -732,5 +732,9 @@
   "critical_metrics": "Critical metrics",
   "from_newest" : "From newest",
   "from_oldest" : "From oldest",
-  "sort_by": "Sort by"
+  "sort_by": "Sort by",
+
+  "dia":"Diastolic",
+  "sys":"Systolic",
+  "pulse":"Pulse"
 }

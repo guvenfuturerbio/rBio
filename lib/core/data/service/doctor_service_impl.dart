@@ -56,6 +56,38 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
+  Future<List<DoctorPatientModel>> getMyScalePatient(
+      GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyScalePatient, getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => DoctorPatientModel.fromJson(item))
+          .cast<DoctorPatientModel>()
+          .toList();
+    } else {
+      throw Exception('/getMyScalePatient : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<DoctorPatientModel>> getMyBpPatient(
+      GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyBpPatient, getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => DoctorPatientModel.fromJson(item))
+          .cast<DoctorPatientModel>()
+          .toList();
+    } else {
+      throw Exception('/getMyBpPatient : ${response.isSuccessful}');
+    }
+  }
+
+  @override
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId) async {
     final response = await helper.getGuven(
         R.endpoints.dc_getMyPatientDetail(patientId),
@@ -86,6 +118,40 @@ class DoctorApiServiceImpl extends DoctorApiService {
       int patientId, GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMyPatientBloodGlucose(patientId),
+        getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => BloodGlucose.fromJson(item))
+          .cast<BloodGlucose>()
+          .toList();
+    } else {
+      throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<BloodGlucose>> getMyPatientScale(
+      int patientId, GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyPatientScale(patientId),
+        getMyPatientFilter.toJson(),
+        options: authOptions);
+    if (response.isSuccessful == true) {
+      return response.datum
+          .map((item) => BloodGlucose.fromJson(item))
+          .cast<BloodGlucose>()
+          .toList();
+    } else {
+      throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<List<BloodGlucose>> getMyPatientBloodPressure(
+      int patientId, GetMyPatientFilter getMyPatientFilter) async {
+    final response = await helper.postGuven(
+        R.endpoints.dc_getMyPatientPressure(patientId),
         getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {

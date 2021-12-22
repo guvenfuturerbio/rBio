@@ -189,6 +189,15 @@ class _Endpoints {
   String ct_updateScaleMeasurement =
       '/Measurement/update-bmi-measurement'.xCronicTracking;
 
+  String ct_insertNewBpValue =
+      '/Measurement/add-bp-with-detail'.xCronicTracking;
+  String ct_deleteBpMeasurement =
+      '/Measurement/delete-bp-with-detail'.xCronicTracking;
+  String ct_getBpMeasurement =
+      '/Measurement/get-bp-measurements'.xCronicTracking;
+  String ct_updateBpMeasurement =
+      '/Measurement/update-bp-measurement'.xCronicTracking;
+
   String dc_Login(String userName, String password) =>
       '/AccessToken/get-token-for-rbio?userName=$userName&password=$password'
           .xBasePath;
@@ -196,6 +205,10 @@ class _Endpoints {
       '/mobileapi/v1/MobileDoctor/all-appointment'.xDoctorBaseUrl;
   String dc_getMySugarPatient =
       '/api/v1/DoctorPatient/get-my-sugar-patient'.xDoctorBaseUrl;
+  String dc_getMyScalePatient =
+      '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
+  String dc_getMyBpPatient =
+      '/api/v1/DoctorPatient/get-my-bp-patient'.xDoctorBaseUrl;
   String dc_getMyPatientDetail(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-profile-detail/${patientId}'
           .xDoctorBaseUrl;
@@ -205,6 +218,10 @@ class _Endpoints {
   String dc_getMyPatientBloodGlucose(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-blood-glucose-with-detail/$patientId'
           .xDoctorBaseUrl;
+  String dc_getMyPatientScale(int patientId) =>
+      '/api/v1/doctorpatient/get-my-patient-bmi/$patientId'.xDoctorBaseUrl;
+  String dc_getMyPatientPressure(int patientId) =>
+      '/api/v1/doctorpatient/get-my-patient-bp/$patientId'.xDoctorBaseUrl;
 }
 
 extension _EndpointsExtension on String {

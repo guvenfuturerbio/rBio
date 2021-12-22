@@ -27,6 +27,7 @@ class MeasurementTrackingVm with ChangeNotifier {
       if (!(state == LoadingProgress.DONE)) {
         await getIt<GlucoseStorageImpl>().checkLastGlucoseData();
         await getIt<ScaleStorageImpl>().checkLastScale();
+        await getIt<BloodPressureStorageImpl>().checkLastBp();
         items = [
           HomePageModel<BgProgressPageViewModel>(
               title: '${LocaleProvider.current.blood_glucose_progress}',
@@ -36,6 +37,11 @@ class MeasurementTrackingVm with ChangeNotifier {
           HomePageModel<ScaleProgressPageViewModel>(
               title: '${LocaleProvider.current.scale_progress}',
               key: Key('Scale'),
+              activateCallBack: (key) => setActiveItem(key),
+              deActivateCallBack: deActivateItem),
+          HomePageModel<BpProgressPageVm>(
+              title: '${LocaleProvider.current.scale_progress}',
+              key: Key('Pressure'),
               activateCallBack: (key) => setActiveItem(key),
               deActivateCallBack: deActivateItem),
         ];
@@ -51,6 +57,7 @@ class MeasurementTrackingVm with ChangeNotifier {
   }
 
   setActiveItem(Key key) {
+    print(key);
     activeItem = items.firstWhere((element) => element.key == key);
     notifyListeners();
   }

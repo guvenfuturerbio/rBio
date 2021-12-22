@@ -33,25 +33,25 @@ class BloodPressureModel extends HiveObject {
 
   factory BloodPressureModel.fromJson(Map<String, dynamic> map) =>
       BloodPressureModel(
-        dateTime: DateTime.parse(map['date_time']),
-        deviceUUID: map['device_uuid'],
-        dia: map['dia'],
-        isManual: map['is_manual'],
-        measurementId: map['id'],
-        note: map['note'],
-        pulse: map['pulse'],
-        sys: map['sys'],
+        dateTime: DateTime.parse(map['occurrence_time']),
+        deviceUUID: map['device_uuid'] ?? "",
+        dia: map['dia_value'],
+        isManual: map['is_manual'] ?? false,
+        measurementId: map['measurement_id'] ?? 0,
+        note: map['note'] ?? "",
+        pulse: map['pulse_value'],
+        sys: map['sys_value'],
       );
 
   Map<String, dynamic> toJson() => {
-        'date_time': dateTime.toIso8601String(),
+        'occurrence_time': dateTime.toIso8601String(),
         'device_uuid': deviceUUID,
-        'dia': dia,
+        'dia_value': dia,
         'is_manual': isManual,
-        'id': measurementId,
         'note': note,
-        'pulse': pulse,
-        'sys': sys
+        'pulse_value': pulse,
+        'sys_value': sys,
+        'measurement_id': measurementId
       };
 
   @override
@@ -75,6 +75,10 @@ class BloodPressureModel extends HiveObject {
 
   bool isEqual(BloodPressureModel other) {
     return jsonEncode(this.toJson()) == jsonEncode(other.toJson());
+  }
+
+  BloodPressureModel copy() {
+    return BloodPressureModel.fromJson(jsonDecode(jsonEncode(this.toJson())));
   }
 }
 

@@ -52,7 +52,11 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   @override
   ScaleModel get(key) {
     try {
-      return box.get(key);
+      if (checkBox(true)) {
+        box.get(key);
+      } else {
+        return null;
+      }
     } catch (_) {
       rethrow;
     }

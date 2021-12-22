@@ -392,4 +392,56 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<GuvenResponseModel> deleteBpMeasurement(
+      DeleteBpMeasurements deleteBpMeasurements) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_deleteBpMeasurement, deleteBpMeasurements.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/deleteBpMeasurement : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> getBpMasurement(
+      GetBpMeasurements getBpMeasurements) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_getBpMeasurement, getBpMeasurements.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/getBpMasurement : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> insertNewBpValue(
+      AddBpWithDetail addBpWithDetail) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_insertNewBpValue, addBpWithDetail.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/insertNewBpValue : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> updateBpMeasurement(
+      UpdateBpMeasurements updateBpMeasurements) async {
+    final response = await helper.postGuven(
+        R.endpoints.ct_updateBpMeasurement, updateBpMeasurements.toJson(),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/updateBpMeasurement : ${response.isSuccessful}');
+    }
+  }
 }

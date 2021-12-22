@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:onedosehealth/core/domain/blood_pressure_model.dart';
 import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:onedosehealth/features/mediminder/mediminder.dart';
+import 'package:onedosehealth/model/doctor/doctor.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -33,17 +35,14 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerLazySingleton(() => ProfileStorageImpl());
   getIt.registerLazySingleton(() => GlucoseStorageImpl());
   getIt.registerLazySingleton(() => ScaleStorageImpl());
+  getIt.registerLazySingleton(() => BloodPressureStorageImpl());
 
   try {
-    Hive.registerAdapter<Person>(PersonAdapter());
-    Hive.registerAdapter<GlucoseData>(GlucoseDataAdapter());
-    Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());
-    await getIt<ProfileStorageImpl>().init();
-    await getIt<GlucoseStorageImpl>().init();
-    await getIt<ScaleStorageImpl>().init();
-  } catch (e, stk) {
-    log(e.toString());
-    debugPrintStack(stackTrace: stk);
+    await registerStorage();
+  } catch (_) {
+    log('Error occured');
+    clearStorage();
+    await registerStorage();
   }
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   GuvenSettings settings = GuvenSettings(
@@ -125,4 +124,24 @@ class GuvenSettings {
       @required this.version,
       @required this.buildNumber,
       @required this.appDocDirectory});
+}
+
+Future<void> registerStorage() async {
+  Hive.registerAdapter<Person>(PersonAdapter());
+  Hive.registerAdapter<GlucoseData>(GlucoseDataAdapter());
+  Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());
+  Hive.registerAdapter<BloodPressureModel>(BloodPressureModelAdapter());
+
+  await getIt<ProfileStorageImpl>().init();
+  await getIt<GlucoseStorageImpl>().init();
+  await getIt<ScaleStorageImpl>().init();
+  await getIt<BloodPressureStorageImpl>().init();
+}
+
+Future<void> clearStorage() async {
+  Hive.deleteBoxFromDisk(getIt<ProfileStorageImpl>().boxKey);
+  Hive.deleteBoxFromDisk(getIt<GlucoseStorageImpl>().boxKey);
+  Hive.deleteBoxFromDisk(getIt<BloodPressureStorageImpl>().boxKey);
+  Hive.deleteBoxFromDisk(getIt<ProfileStorageImpl>().boxKey);
+  Hive.deleteFromDisk();
 }
