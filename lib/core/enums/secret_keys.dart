@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 import '../core.dart';
 
 enum SecretKeys {
-  SSO_URL,
   BASE_URL,
   CLIENT_ID,
   CLIENT_SECRET,
@@ -13,7 +12,6 @@ enum SecretKeys {
   SYMPTOM_CHECKER_LOGIN,
   SYMPTOM_REQUEST_URL,
   CHRONIC_TRACKING_BASE_URL,
-  CHRONIC_SSO_URL,
   DOCTOR_BASE_URL,
   DOCTOR_CLIENT_ID,
   DOCTOR_CLIENT_SECRET,

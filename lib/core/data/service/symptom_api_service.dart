@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-import '../helper/dio_helper.dart';
 import '../../../model/model.dart';
 import '../../core.dart';
 

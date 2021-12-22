@@ -178,8 +178,6 @@ class _Endpoints {
           .xCronicTracking;
   String ct_getMedicineByFilter(String text) =>
       '/Medicine/get-by-filter/${text}'.xCronicTracking;
-  String ct_login = '/auth/realms/GuvenComplex/protocol/openid-connect/token'
-      .xCronicTrackingSSO;
   String ct_insertNewScaleValue =
       '/Measurement/add-bp-with-detail'.xCronicTracking;
   String ct_deleteScaleMeasurement =
@@ -230,18 +228,12 @@ extension _EndpointsExtension on String {
   String get xBasePath => SecretUtils.instance.get(SecretKeys.BASE_URL) + this;
   String get xGuvenPath =>
       SecretUtils.instance.get(SecretKeys.DEV_4_GUVEN) + this;
-  String get xSSOPath => SecretUtils.instance.get(SecretKeys.SSO_URL) + this;
   String get xSymptomCheckerLogin =>
       SecretUtils.instance.get(SecretKeys.SYMPTOM_CHECKER_LOGIN) + this;
   String get xSymptomCheckerRequest =>
       SecretUtils.instance.get(SecretKeys.SYMPTOM_REQUEST_URL) + this;
   String get xCronicTracking =>
       SecretUtils.instance.get(SecretKeys.CHRONIC_TRACKING_BASE_URL) + this;
-  String get xCronicTrackingSSO =>
-      SecretUtils.instance.get(SecretKeys.CHRONIC_SSO_URL) + this;
-
-  String get xDoctorSsoUrl =>
-      SecretUtils.instance.get(SecretKeys.CHRONIC_SSO_URL) + this;
   String get xDoctorBaseUrl =>
       SecretUtils.instance.get(SecretKeys.DOCTOR_BASE_URL) + this;
 }
