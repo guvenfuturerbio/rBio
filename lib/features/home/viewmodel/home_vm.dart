@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
+import 'package:onedosehealth/features/home/widgets/user_card_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
 import '../../../core/core.dart';
-import '../../../core/notifiers/user_notifier.dart';
 import '../model/banner_model.dart';
 import '../view/home_screen.dart';
 import '../widgets/home_slider.dart';
@@ -43,23 +42,16 @@ class HomeVm extends ChangeNotifier {
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) async {
         springController = SpringController(initialAnim: Motion.mirror);
-        widgetsInUse = await widgets();
         await fetchWidgets();
         bannerTabsModel =
             await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
         notifyListeners();
-        try {
-          print("BURDAYIM");
-          getIt<SymptomRepository>().getSymtptomsApiToken();
-        } catch (e) {
-          print(e);
-        }
       });
     }
   }
 
   // Uygulama ilk açıldığında, silinmiş widgetların keylerini tutan veriyi shared preferences içinden çekip kullanılan widget listesini dolduran method.
-  fetchWidgets() {
+  void fetchWidgets() {
     if (getIt<ISharedPreferencesManager>()
         .containsKey(SharedPreferencesKeys.DELETED_WIDGETS)) {
       deletedKeysHolder = getIt<ISharedPreferencesManager>()
@@ -72,17 +64,32 @@ class HomeVm extends ChangeNotifier {
           return false;
         }
       });
-      if (getIt<ISharedPreferencesManager>()
-          .containsKey(SharedPreferencesKeys.WIDGET_QUERY)) {
-        queryOfWidgetsInUse = getIt<ISharedPreferencesManager>()
-            .getStringList(SharedPreferencesKeys.WIDGET_QUERY);
-        Map<String, Widget> myMap = widgetMap();
-        widgetsInUse.clear();
-        queryOfWidgetsInUse.forEach((element) {
-          widgetsInUse.add(myMap[element]);
-        });
-      }
     }
+
+    // Local'de kayıtlı liste varsa ona göre liste oluşturulur.
+    if (getIt<ISharedPreferencesManager>()
+        .containsKey(SharedPreferencesKeys.WIDGET_QUERY)) {
+      queryOfWidgetsInUse = getIt<ISharedPreferencesManager>()
+          .getStringList(SharedPreferencesKeys.WIDGET_QUERY);
+      Map<String, Widget> myMap = widgetMap();
+      widgetsInUse.clear();
+      queryOfWidgetsInUse.forEach((element) {
+        widgetsInUse.add(myMap[element]);
+      });
+    } else {
+      widgetsInUse = widgets();
+    }
+  }
+
+  List<Widget> getDeletedList() {
+    Map<String, Widget> myMap = widgetMap();
+    final deletedItems = getIt<ISharedPreferencesManager>()
+        .getStringList(SharedPreferencesKeys.DELETED_WIDGETS);
+    if (deletedItems != null) {
+      return deletedItems.map((e) => myMap[e]).toList();
+    }
+
+    return [];
   }
 
   // Kullanıcı widget sildiğinde çalışan fonks.
@@ -93,6 +100,7 @@ class HomeVm extends ChangeNotifier {
         deletedKeysHolder.add(element.key.toString());
       }
     }
+
     widgetsInUse.removeWhere((element) => widgetsDeleted.contains(element));
     getIt<ISharedPreferencesManager>().setStringList(
         SharedPreferencesKeys.DELETED_WIDGETS, deletedKeysHolder);
@@ -120,9 +128,13 @@ class HomeVm extends ChangeNotifier {
 
   // Kullanıcı widgetların sırasını değiştirdiğinde çalışan fonks.
   void onReorder(int oldIndex, int newIndex) async {
-    Widget row = widgetsInUse.removeAt(oldIndex);
-    await widgetsInUse.insert(newIndex, row);
-    await querySaver();
+    try {
+      Widget row = widgetsInUse.removeAt(oldIndex);
+      await widgetsInUse.insert(newIndex, row);
+      await querySaver();
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+    }
   }
 
   // Yeri değişmiş, silinmiş veya eklenmiş widgetlardan sonra çalışan sıra kaydedici fonks.
@@ -164,8 +176,10 @@ class HomeVm extends ChangeNotifier {
                   Wrap(
                     spacing: 10,
                     runSpacing: 0,
-                    children: widgetsDeleted,
+                    children: getDeletedList(),
                   ),
+
+                  //
                   RbioElevatedButton(
                     onTap: () {
                       isForDelete = false;
@@ -220,44 +234,36 @@ class HomeVm extends ChangeNotifier {
                 Atom.to(PagePaths.PROFILE);
               }
             },
-            child: RbioUserTile(
-              name:
-                  '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
-              leadingImage: UserLeadingImage.Circle,
-              trailingIcon: UserTrailingIcons.RightArrow,
-              onTap: () {
-                Atom.to(PagePaths.PROFILE);
-              },
-              width: Atom.width,
-            ),
+            child: UserCardTile(),
           ),
         ),
 
         //
-        Visibility(
-          visible: getIt<UserNotifier>().isDoctor,
-          child: MyReorderableWidget(
-            key: _key9,
-            body: GestureDetector(
-              onTap: () {
-                if (isForDelete) {
-                  addWidget(_key9);
-                } else if (status == ShakeMod.notShaken) {
-                  Atom.to(PagePaths.DOCTOR_HOME);
-                }
-              },
-              child: RbioUserTile(
-                name: LocaleProvider.current.doctor,
-                leadingImage: UserLeadingImage.Circle,
-                trailingIcon: UserTrailingIcons.RightArrow,
-                onTap: () {
-                  Atom.to(PagePaths.DOCTOR_HOME);
-                },
-                width: Atom.width,
-              ),
-            ),
-          ),
-        ),
+        // Visibility(
+        //   key: _key9,
+        //   visible: getIt<UserNotifier>().isDoctor,
+        //   child: MyReorderableWidget(
+        //     key: _key9,
+        //     body: GestureDetector(
+        //       onTap: () {
+        //         if (isForDelete) {
+        //           addWidget(_key9);
+        //         } else if (status == ShakeMod.notShaken) {
+        //           Atom.to(PagePaths.DOCTOR_HOME);
+        //         }
+        //       },
+        //       child: RbioUserTile(
+        //         name: LocaleProvider.current.doctor,
+        //         leadingImage: UserLeadingImage.Circle,
+        //         trailingIcon: UserTrailingIcons.RightArrow,
+        //         onTap: () {
+        //           Atom.to(PagePaths.DOCTOR_HOME);
+        //         },
+        //         width: Atom.width,
+        //       ),
+        //     ),
+        //   ),
+        // ),
 
         //
         if (getIt<AppConfig>().takeHospitalAppointment)

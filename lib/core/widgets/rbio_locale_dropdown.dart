@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 import '../core.dart';
 
@@ -33,7 +34,7 @@ class RbioLocaleDropdown extends StatelessWidget {
                 },
               ).toList(),
               onChanged: (valueLocale) {
-                getIt<LocaleNotifier>().changeLocale(valueLocale.languageCode);
+                getIt<LocaleNotifier>().changeLocale(valueLocale);
               },
             ),
           ),
@@ -43,16 +44,15 @@ class RbioLocaleDropdown extends StatelessWidget {
   }
 
   String getHint(BuildContext context) =>
-      "${LocaleProvider.of(context).select_language} : ${getLocaleText()}";
+      "${LocaleProvider.of(context).select_language} : ${getLocaleText(context)}";
 
-  String getLocaleText() {
-    final text = getIt<LocaleNotifier>().current.toUpperCase();
-    if (text == 'EN_US' || text == 'EN') {
-      return 'EN';
-    } else if (text == 'TR') {
+  String getLocaleText(BuildContext context) {
+    final supportedList = context.read<LocaleNotifier>().supportedLocales;
+    final locale = getIt<LocaleNotifier>().current;
+    if (locale.languageCode == supportedList.first.languageCode) {
       return 'TR';
     } else {
-      return '';
+      return 'EN';
     }
   }
 }

@@ -87,6 +87,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
 
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
+  await getIt<LocaleNotifier>().init();
 
   getIt.registerLazySingleton(() => UserProfilesNotifier());
 
