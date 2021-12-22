@@ -9,21 +9,6 @@ class ChronicTrackingRepository {
     @required this.localCacheService,
   });
 
-  Future<LoginResponse> login(
-          {String clientId,
-          String grantType,
-          String clientSecret,
-          String scope,
-          String username,
-          String password}) =>
-      apiService.login(
-        clientId: clientId,
-        grantType: grantType,
-        clientSecret: clientSecret,
-        scope: scope,
-        username: username,
-        password: password,
-      );
   Future<GuvenResponseModel> saveAndRetrieveToken(
           SaveAndRetrieveTokenModel saveAndRetrieveToken, String token) =>
       apiService.saveAndRetrieveToken(saveAndRetrieveToken, token);

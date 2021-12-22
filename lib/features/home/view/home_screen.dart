@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -126,7 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(HomeVm val) {
-    return Center(
+    return Align(
+      alignment: Alignment.topCenter,
       child: ReorderableWrap(
         alignment: WrapAlignment.center,
         buildDraggableFeedback: (_, __, children) {

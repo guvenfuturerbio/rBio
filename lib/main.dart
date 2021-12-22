@@ -188,7 +188,7 @@ class _MyAppState extends State<MyApp> {
                   fontFamily: themeNotifier.theme.fontFamily,
                   textTheme: themeNotifier.theme.textTheme,
                 ),
-                locale: Locale(context.watch<LocaleNotifier>().current),
+                locale: context.watch<LocaleNotifier>().current,
                 localizationsDelegates: const [
                   LocaleProvider.delegate,
                   GlobalMaterialLocalizations.delegate,
@@ -196,7 +196,8 @@ class _MyAppState extends State<MyApp> {
                   GlobalCupertinoLocalizations.delegate,
                   DefaultCupertinoLocalizations.delegate
                 ],
-                supportedLocales: LocaleProvider.delegate.supportedLocales,
+                supportedLocales:
+                    context.read<LocaleNotifier>().supportedLocales,
               );
             });
           },
