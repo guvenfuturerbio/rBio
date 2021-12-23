@@ -127,30 +127,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(HomeVm val) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: ReorderableWrap(
-        alignment: WrapAlignment.center,
-        buildDraggableFeedback: (_, __, children) {
-          return children;
-        },
-        spacing: R.sizes.screenHandler<double>(
-          context,
-          mobile: Atom.width * 0.01,
-          tablet: Atom.width * .025,
-          desktop: Atom.width * .031,
+    return Column(
+      children: [
+        Expanded(
+          child: ReorderableWrap(
+            alignment: WrapAlignment.center,
+            buildDraggableFeedback: (_, __, children) {
+              return children;
+            },
+            spacing: HomeSizer.instance.getRunSpacing(),
+            runSpacing: HomeSizer.instance.getBodyGapHeight(),
+            needsLongPressDraggable: true,
+            children: val.widgetsInUse,
+            onReorder: val.onReorder,
+            scrollDirection: Axis.vertical,
+            maxMainAxisCount: 3,
+          ),
         ),
-        runSpacing: R.sizes.screenHandler<double>(
-          context,
-          mobile: Atom.width * .020,
-          tablet: Atom.width * .025,
-          desktop: Atom.width * .02,
-        ),
-        needsLongPressDraggable: true,
-        children: val.widgetsInUse,
-        onReorder: val.onReorder,
-        scrollDirection: Axis.vertical,
-      ),
+
+        //
+        SizedBox(height: Atom.safeBottom),
+      ],
     );
   }
 }

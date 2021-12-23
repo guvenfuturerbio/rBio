@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/widgets/user_card_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
@@ -8,6 +7,7 @@ import '../model/banner_model.dart';
 import '../view/home_screen.dart';
 import '../widgets/home_slider.dart';
 import '../widgets/reorderable_widget.dart';
+import '../widgets/user_card_tile.dart';
 import '../widgets/vertical_card_widget.dart';
 
 class HomeVm extends ChangeNotifier {
@@ -220,7 +220,6 @@ class HomeVm extends ChangeNotifier {
   final _key6 = const Key('6');
   final _key7 = const Key('7');
   final _key8 = const Key('8');
-  final _key9 = const Key('9');
 
   // Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
@@ -237,33 +236,6 @@ class HomeVm extends ChangeNotifier {
             child: UserCardTile(),
           ),
         ),
-
-        //
-        // Visibility(
-        //   key: _key9,
-        //   visible: getIt<UserNotifier>().isDoctor,
-        //   child: MyReorderableWidget(
-        //     key: _key9,
-        //     body: GestureDetector(
-        //       onTap: () {
-        //         if (isForDelete) {
-        //           addWidget(_key9);
-        //         } else if (status == ShakeMod.notShaken) {
-        //           Atom.to(PagePaths.DOCTOR_HOME);
-        //         }
-        //       },
-        //       child: RbioUserTile(
-        //         name: LocaleProvider.current.doctor,
-        //         leadingImage: UserLeadingImage.Circle,
-        //         trailingIcon: UserTrailingIcons.RightArrow,
-        //         onTap: () {
-        //           Atom.to(PagePaths.DOCTOR_HOME);
-        //         },
-        //         width: Atom.width,
-        //       ),
-        //     ),
-        //   ),
-        // ),
 
         //
         if (getIt<AppConfig>().takeHospitalAppointment)
@@ -284,10 +256,7 @@ class HomeVm extends ChangeNotifier {
               },
               child: VerticalCard(
                 topImage: R.image.homeTopLeft,
-                bottomTitle: Text(
-                  LocaleProvider.current.lbl_find_hospital,
-                  style: getIt<ITheme>().textTheme.headline2,
-                ),
+                title: LocaleProvider.current.lbl_find_hospital,
               ),
             ),
           ),
@@ -311,10 +280,7 @@ class HomeVm extends ChangeNotifier {
               },
               child: VerticalCard(
                 topImage: R.image.homeTopMid,
-                bottomTitle: Text(
-                  LocaleProvider.current.take_video_appointment,
-                  style: getIt<ITheme>().textTheme.headline2,
-                ),
+                title: LocaleProvider.current.take_video_appointment,
               ),
             ),
           ),
@@ -333,11 +299,7 @@ class HomeVm extends ChangeNotifier {
               },
               child: VerticalCard(
                 topImage: R.image.homeTopRight,
-                bottomTitle: Text(
-                  LocaleProvider.current.chronic_track_home,
-                  textAlign: TextAlign.start,
-                  style: getIt<ITheme>().textTheme.headline2,
-                ),
+                title: LocaleProvider.current.chronic_track_home,
               ),
             ),
           ),
@@ -361,10 +323,7 @@ class HomeVm extends ChangeNotifier {
             },
             child: VerticalCard(
               topImage: R.image.homeBottomLeft,
-              bottomTitle: Text(
-                LocaleProvider.current.appointments,
-                style: getIt<ITheme>().textTheme.headline2,
-              ),
+              title: LocaleProvider.current.appointments,
             ),
           ),
         ),
@@ -382,10 +341,7 @@ class HomeVm extends ChangeNotifier {
             },
             child: VerticalCard(
               topImage: R.image.homeBottomMid,
-              bottomTitle: Text(
-                LocaleProvider.current.results,
-                style: getIt<ITheme>().textTheme.headline2,
-              ),
+              title: LocaleProvider.current.results,
             ),
           ),
         ),
@@ -404,10 +360,7 @@ class HomeVm extends ChangeNotifier {
               },
               child: VerticalCard(
                 topImage: R.image.homeBottomRight,
-                bottomTitle: Text(
-                  LocaleProvider.current.symptom_checker,
-                  style: getIt<ITheme>().textTheme.headline2,
-                ),
+                title: LocaleProvider.current.symptom_checker,
               ),
             ),
           ),

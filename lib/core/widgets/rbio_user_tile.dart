@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 
 import '../core.dart';
 
@@ -31,11 +32,13 @@ class RbioUserTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: trailingIcon != null ? Colors.white : Colors.transparent,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: ListTile(
+          dense: true,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
@@ -43,6 +46,7 @@ class RbioUserTile extends StatelessWidget {
             horizontal: 16.0,
             vertical: 6.0,
           ),
+
           leading: _getLeadingImage(leadingImage),
           title: Text(
             name ?? '',

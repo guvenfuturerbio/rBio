@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 
 import '../../../core/core.dart';
+import '../utils/home_sizer.dart';
 
 class VerticalCard extends StatelessWidget {
   final String topImage;
-  final Widget bottomTitle;
+  final String title;
 
-  const VerticalCard({
+  const  VerticalCard({
     Key key,
-    this.topImage,
-    this.bottomTitle,
+    @required this.topImage,
+    @required this.title,
   }) : super(key: key);
 
   @override
@@ -26,8 +26,7 @@ class VerticalCard extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Stack(
                 children: [
                   Align(
                     alignment: Alignment.topRight,
@@ -43,7 +42,12 @@ class VerticalCard extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: bottomTitle,
+                      child: Text(
+                        title,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: getIt<ITheme>().textTheme.headline2,
+                      ),
                     ),
                   ),
                 ],
@@ -58,6 +62,8 @@ class VerticalCard extends StatelessWidget {
   }
 
   double getHeight(BuildContext context) {
+    return HomeSizer.instance.getBodyCardHeight();
+
     final height = MediaQuery.of(context).size.height;
     return R.sizes.screenHandler<double>(
       context,

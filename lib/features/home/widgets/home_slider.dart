@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/features/home/model/banner_model.dart';
+import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,111 +22,116 @@ class _HomeSliderState extends State<HomeSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeVm>(builder: (
-      BuildContext context,
-      HomeVm vm,
-      Widget child,
-    ) {
-      return SizedBox(
-        height: getHeight(context),
-        width: Atom.width,
-        child: Stack(
-          children: [
-            //
-            Positioned.fill(
-              child: CarouselSlider.builder(
-                itemCount: vm.bannerTabsModel.length,
-                itemBuilder:
-                    (BuildContext context, int itemIndex, int pageViewIndex) {
-                  return GestureDetector(
-                    onTap: () {
-                      if (vm.isForDelete) {
-                        vm.addWidget(vm.key5);
-                      } else {
-                        if (vm.bannerTabsModel[itemIndex].destinationUrl
-                            .contains('http')) {
-                          launch(vm.bannerTabsModel[itemIndex].destinationUrl);
+    return Consumer<HomeVm>(
+      builder: (
+        BuildContext context,
+        HomeVm vm,
+        Widget child,
+      ) {
+        return SizedBox(
+          height: getHeight(context),
+          width: Atom.width,
+          child: Stack(
+            children: [
+              //
+              Positioned.fill(
+                child: CarouselSlider.builder(
+                  itemCount: vm.bannerTabsModel.length,
+                  itemBuilder:
+                      (BuildContext context, int itemIndex, int pageViewIndex) {
+                    return GestureDetector(
+                      onTap: () {
+                        if (vm.isForDelete) {
+                          vm.addWidget(vm.key5);
                         } else {
-                          Atom.to(vm.bannerTabsModel[itemIndex].destinationUrl);
+                          if (vm.bannerTabsModel[itemIndex].destinationUrl
+                              .contains('http')) {
+                            launch(
+                                vm.bannerTabsModel[itemIndex].destinationUrl);
+                          } else {
+                            Atom.to(
+                                vm.bannerTabsModel[itemIndex].destinationUrl);
+                          }
                         }
-                      }
-                    },
-                    child: SizedBox(
-                      width: Atom.width,
+                      },
                       child: Card(
                         margin: EdgeInsets.zero,
                         shape: RoundedRectangleBorder(
-                            borderRadius: R.sizes.borderRadiusCircular),
+                          borderRadius: R.sizes.borderRadiusCircular,
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.network(
                             vm.bannerTabsModel[itemIndex].imageUrl,
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  autoPlay: !vm.isForDelete,
-                  enlargeCenterPage: true,
-                  //aspectRatio: 1.0,
-                  viewportFraction: 1,
-                  // scrollPhysics: vm.isForDelete
-                  //     ? NeverScrollableScrollPhysics()
-                  //     : ClampingScrollPhysics(),
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _current = index;
-                    });
+                    );
                   },
+                  options: CarouselOptions(
+                    height: HomeSizer.instance.getBodySliderHeight(),
+                    autoPlay: !vm.isForDelete,
+                    // enlargeCenterPage: true,
+                    //aspectRatio: 1.0,
+                    viewportFraction: 1,
+                    // scrollPhysics: vm.isForDelete
+                    //     ? NeverScrollableScrollPhysics()
+                    //     : ClampingScrollPhysics(),
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _current = index;
+                      });
+                    },
+                  ),
                 ),
               ),
-            ),
 
-            //
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Visibility(
-                visible: !vm.isForDelete,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: vm.bannerTabsModel.asMap().entries.map(
-                    (entry) {
-                      return GestureDetector(
-                        onTap: () {
-                          _controller.animateToPage(entry.key);
-                        },
-                        child: Container(
-                          width: 12.0,
-                          height: 12.0,
-                          margin: EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 4.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                                (Theme.of(context).brightness == Brightness.dark
-                                        ? Colors.white
-                                        : getIt<ITheme>().mainColor)
-                                    .withOpacity(
-                              _current == entry.key ? 0.9 : 0.4,
+              //
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Visibility(
+                  visible: !vm.isForDelete,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: vm.bannerTabsModel.asMap().entries.map(
+                      (entry) {
+                        return GestureDetector(
+                          onTap: () {
+                            _controller.animateToPage(entry.key);
+                          },
+                          child: Container(
+                            width: 12.0,
+                            height: 12.0,
+                            margin: EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 4.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: (Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : getIt<ITheme>().mainColor)
+                                  .withOpacity(
+                                _current == entry.key ? 0.9 : 0.4,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ).toList(),
+                        );
+                      },
+                    ).toList(),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+    );
   }
 
   double getHeight(BuildContext context) {
+    return HomeSizer.instance.getBodySliderHeight();
+
     final height = MediaQuery.of(context).size.height;
     return R.sizes.screenHandler<double>(
       context,
