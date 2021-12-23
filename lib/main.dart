@@ -87,11 +87,15 @@ class _MyAppState extends State<MyApp> {
       color: Colors.white,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => PatientNotifiers()),
-          ChangeNotifierProvider<LocaleNotifier>.value(
-              value: getIt<LocaleNotifier>()),
           ChangeNotifierProvider(
-              create: (context) => BgMeasurementsNotifierDoc()),
+            create: (context) => PatientNotifiers(),
+          ),
+          ChangeNotifierProvider<LocaleNotifier>.value(
+            value: getIt<LocaleNotifier>(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => BgMeasurementsNotifierDoc(),
+          ),
           Provider<FirebaseAnalytics>.value(
             value: MyApp.analytics,
           ),
@@ -180,6 +184,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                   );
                 },
+
                 //
                 theme: ThemeData(
                   primaryColor: themeNotifier.theme.mainColor,

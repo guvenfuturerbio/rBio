@@ -14,8 +14,10 @@ class UserNotifier extends ChangeNotifier {
   bool get isDoctor => _userType.contains(UserType.doctor);
   bool get isCronic => _userType.contains(UserType.chronic_user);
   bool get isPatient => _userType.contains(UserType.basic_user);
+
   SharedPreferencesManager sharedPreferencesManager =
       getIt<ISharedPreferencesManager>();
+
   Future<void> setPatient(PatientResponse patient) async {
     final stringData = jsonEncode(patient.toJson());
     await getIt<ISharedPreferencesManager>()

@@ -62,128 +62,142 @@ class CreateAppointmentScreen extends StatelessWidget {
   }
 
   Widget _buildSuccess(BuildContext context, CreateAppointmentVm vm) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            LocaleProvider.current.favorites,
-            style: context.xHeadline3,
+    return SingleChildScrollView(
+      padding: EdgeInsets.zero,
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              LocaleProvider.current.favorites,
+              style: context.xHeadline3,
+            ),
           ),
-        ),
 
-        //
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: vm.holderForFavorites
-                .map(
-                  (item) => historyDoctorItem(
-                    context,
-                    item.resources.first.resource,
-                    vm,
-                    vm.holderForFavorites.indexOf(item),
-                  ),
-                )
-                .toList(),
+          //
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: vm.holderForFavorites
+                  .map(
+                    (item) => historyDoctorItem(
+                      context,
+                      item.resources.first.resource,
+                      vm,
+                      vm.holderForFavorites.indexOf(item),
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
-        ),
 
-        //
-        vm.relativeProgress == LoadingProgress.LOADING
-            ? RbioLoading()
-            : CreateAppoWidget(
-                context: context,
-                header: LocaleProvider.current.appo_for,
-                hint: LocaleProvider.current.pls_select_person,
-                itemList: vm.relativeResponse == null
-                    ? []
-                    : vm.relativeResponse.patientRelatives,
-                val: vm,
-                whichField: Fields.RELATIVE,
-                progress: vm.relativeProgress,
-              ),
+          //
+          vm.relativeProgress == LoadingProgress.LOADING
+              ? RbioLoading()
+              : CreateAppoWidget(
+                  context: context,
+                  header: LocaleProvider.current.appo_for,
+                  hint: LocaleProvider.current.pls_select_person,
+                  itemList: vm.relativeResponse == null
+                      ? []
+                      : vm.relativeResponse.patientRelatives,
+                  val: vm,
+                  whichField: Fields.RELATIVE,
+                  progress: vm.relativeProgress,
+                ),
 
-        //
-        CreateAppoWidget(
-          context: context,
-          header: LocaleProvider.current.hosp_selection,
-          hint: forOnline
-              ? LocaleProvider.current.get_online_appointment
-              : LocaleProvider.current.pls_select_hosp,
-          itemList:
-              vm.tenantsFilterResponse == null ? [] : vm.tenantsFilterResponse,
-          val: vm,
-          whichField: Fields.TENANTS,
-          progress: vm.progress,
-          isOnline: forOnline,
-        ),
-
-        //
-        IgnorePointer(
-          ignoring: !vm.hospitalSelected,
-          child: AnimatedOpacity(
-            duration: Duration(milliseconds: 1300),
-            curve: Curves.ease,
-            opacity: vm.hospitalSelected ? 1 : 0,
-            child: vm.departmentProgress == LoadingProgress.LOADING
-                ? RbioLoading()
-                : CreateAppoWidget(
-                    context: context,
-                    header: LocaleProvider.current.depart_selection,
-                    hint: LocaleProvider.current.pls_select_depart,
-                    itemList: vm.filterDepartmentResponse == null
-                        ? []
-                        : vm.filterDepartmentResponse,
-                    val: vm,
-                    whichField: Fields.DEPARTMENT,
-                    progress: vm.departmentProgress,
-                  ),
+          //
+          CreateAppoWidget(
+            context: context,
+            header: LocaleProvider.current.hosp_selection,
+            hint: forOnline
+                ? LocaleProvider.current.get_online_appointment
+                : LocaleProvider.current.pls_select_hosp,
+            itemList: vm.tenantsFilterResponse == null
+                ? []
+                : vm.tenantsFilterResponse,
+            val: vm,
+            whichField: Fields.TENANTS,
+            progress: vm.progress,
+            isOnline: forOnline,
           ),
-        ),
 
-        //
-        IgnorePointer(
-          ignoring: !vm.departmentSelected || !vm.hospitalSelected,
-          child: AnimatedOpacity(
-            duration: Duration(milliseconds: 1300),
-            curve: Curves.ease,
-            opacity: vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
-            child: vm.doctorProgress == LoadingProgress.LOADING
-                ? RbioLoading()
-                : CreateAppoWidget(
-                    context: context,
-                    header: LocaleProvider.current.doctor_selection,
-                    hint: LocaleProvider.current.pls_select_doctor,
-                    itemList: vm.filterResourcesResponse == null
-                        ? []
-                        : vm.filterResourcesResponse,
-                    val: vm,
-                    whichField: Fields.DOCTORS,
-                    progress: vm.doctorProgress,
-                  ),
+          //
+          IgnorePointer(
+            ignoring: !vm.hospitalSelected,
+            child: AnimatedOpacity(
+              duration: Duration(milliseconds: 1300),
+              curve: Curves.ease,
+              opacity: vm.hospitalSelected ? 1 : 0,
+              child: vm.departmentProgress == LoadingProgress.LOADING
+                  ? RbioLoading()
+                  : CreateAppoWidget(
+                      context: context,
+                      header: LocaleProvider.current.depart_selection,
+                      hint: LocaleProvider.current.pls_select_depart,
+                      itemList: vm.filterDepartmentResponse == null
+                          ? []
+                          : vm.filterDepartmentResponse,
+                      val: vm,
+                      whichField: Fields.DEPARTMENT,
+                      progress: vm.departmentProgress,
+                    ),
+            ),
           ),
-        ),
 
-        //
-        Expanded(
-          child: vm.doctorSelected
-              ? Center(
-                  child: RbioElevatedButton(
-                    title: LocaleProvider.current.create_appo,
-                    onTap: () {
-                      _openCreateAppointmentsEvents(vm);
-                    },
-                  ),
+          //
+          IgnorePointer(
+            ignoring: !vm.departmentSelected || !vm.hospitalSelected,
+            child: AnimatedOpacity(
+              duration: Duration(milliseconds: 1300),
+              curve: Curves.ease,
+              opacity: vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
+              child: vm.doctorProgress == LoadingProgress.LOADING
+                  ? RbioLoading()
+                  : CreateAppoWidget(
+                      context: context,
+                      header: LocaleProvider.current.doctor_selection,
+                      hint: LocaleProvider.current.pls_select_doctor,
+                      itemList: vm.filterResourcesResponse == null
+                          ? []
+                          : vm.filterResourcesResponse,
+                      val: vm,
+                      whichField: Fields.DOCTORS,
+                      progress: vm.doctorProgress,
+                    ),
+            ),
+          ),
+
+          //
+          vm.doctorSelected
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: RbioElevatedButton(
+                        title: LocaleProvider.current.create_appo,
+                        onTap: () {
+                          _openCreateAppointmentsEvents(vm);
+                        },
+                      ),
+                    )
+                  ],
                 )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: 20,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Center(
@@ -206,8 +220,8 @@ class CreateAppointmentScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

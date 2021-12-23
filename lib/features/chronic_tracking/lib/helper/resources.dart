@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../../generated/l10n.dart';
 
 class Res {
-  static final image = _Images();
   static final color = _Color();
   static final guide = _DeviceGuides();
   static final darkBlue = Color.fromRGBO(37, 48, 133, 1);
@@ -19,103 +18,6 @@ class Res {
   static final btnLightBlue = Color.fromRGBO(0, 0, 255, 1);
   static final drawerBgLightBlue = Color.fromRGBO(133, 214, 255, 1);
   static final regularBlue = Color.fromRGBO(0, 104, 255, 1);
-}
-
-class _Images {
-  final google_icon = "assets/images/google-icon.svg";
-  final facebook_logo = "assets/images/fbicon.svg";
-  final apple_logo = "assets/images/Apple_logo_black.svg";
-  final one_dose_logo_green = "assets/images/one_dose_logo_green.svg";
-  final one_dose_logo_green_png = "assets/images/one_dose_logo_green.png";
-  final one_dose_logo_green__png_5 = "assets/images/one_dose_logo_green_5.png";
-  final add_icon = 'assets/images/add_icon.svg';
-  final add_icon_grey = 'assets/images/add_icon_grey.svg';
-  final profil_mavi_alan = 'assets/images/usttab.svg';
-  final back_icon = 'assets/images/back_icon.svg';
-  final delete_icon = 'assets/images/delete_icon.svg';
-  final edit_icon = 'assets/images/edit_icon.svg';
-  final logout_icon = 'assets/images/logout_icon.svg';
-  final power_icon = 'assets/images/power_icon.svg';
-  final accu_check_png = "assets/images/accu_check.png";
-  final contour_png = "assets/images/contour.png";
-  final connect_icon = "assets/images/connect_icon.svg";
-  final menu_icon = "assets/images/menu_icon.svg";
-  final green_banner = "assets/images/usttab.svg";
-  final ic_back_white = 'assets/images/ic_back_white.svg';
-  final ic_phone_call_grey = 'assets/images/ic_phone_call_grey.svg';
-  final ic_back_grey = 'assets/images/ic_back_grey.svg';
-  final ic_user = 'assets/images/ic_user.svg';
-  final delete_white_garbage = "assets/images/delete_white_garbage.svg";
-  final done_icon = 'assets/images/done_icon.svg';
-  final aftermeal_icon_black = 'assets/images/aftermeal_icon_black.svg';
-  final aftermeal_icon_white = 'assets/images/aftermeal_icon_white.svg';
-  final beforemeal_icon_white = 'assets/images/beforemeal_icon_white.svg';
-  final beforemeal_icon_black = 'assets/images/beforemeal_icon_black.svg';
-  final fasting_icon_black = 'assets/images/fasting_icon_black.svg';
-  final fasting_icon_white = 'assets/images/fasting_icon_white.svg';
-  final other_icon = 'assets/images/other_icon.svg';
-  final export_icon = 'assets/images/export_icon.svg';
-  final bg_icon = "assets/images/bg_icon.svg";
-  final close_icon = "assets/images/close_icon.svg";
-  final dashboard_icon = "assets/images/dashboardbutton.svg";
-  final connect_device_icon = "assets/images/devicecon_icon.svg";
-  final dmchat_icon = "assets/images/dmchat_icon.svg";
-  final next_icon = "assets/images/next_icon.svg";
-  final premium_icon = "assets/images/premium_icon.svg";
-  final reminder_icon = "assets/images/reminder_icon.svg";
-  final settings_icon = "assets/images/settings_icon.svg";
-  final medicine_icon_white = "assets/images/medicine_icon_white.svg";
-  final strip_icon_white = "assets/images/strip_icon_white.svg";
-  final medicine_icon_black = "assets/images/medicine_icon_black.svg";
-  final strip_icon_black = "assets/images/strip_icon_black.svg";
-  final blood_icon_black = "assets/images/blood_icon_black.svg";
-  final hba1c_icon_black = "assets/images/hba1c_icon_black.svg";
-  final hba1c_icon_white = "assets/images/hba1c_icon_white.svg";
-  final addphoto_icon = "assets/images/addphoto_icon.svg";
-  final green_dalga = "assets/images/green_top_banner.svg";
-  final doctor_avatar = "assets/images/doctor_avatar.svg";
-  final dalga = "assets/images/usttab.svg";
-  final consultation_icon = "assets/images/consultation_icon.svg";
-  final credit_cvv = "assets/images/cvv.svg";
-  final credit_calendar = "assets/images/expiration_date.svg";
-  final credit_card_number = "assets/images/credit_card.svg";
-  final ic_password = 'assets/images/ic_password.svg';
-  final mavi_alan = 'assets/images/usttab.svg';
-  final mail_icon = 'assets/images/mail_icon.svg';
-  final mark_icon = 'assets/images/mark_icon.svg';
-  final logo = 'assets/images/ods_logo.svg';
-  final right_arrow = "assets/images/right_arrow.svg";
-  final shoppingcart_icon = "assets/images/shoppingcart_icon.svg";
-  final banner_steteskoplu = "assets/images/banner_steteskoplu.svg";
-  final banner_menu = "assets/images/banner_menu.svg";
-  final dmchat_icon_white = "assets/images/dmchat_icon_white.svg";
-  final changeGraph = "assets/images/change_graph.svg";
-  final globe = "assets/images/globe_icon.svg";
-  final stethoscope_icon = "assets/images/stethoscope.svg";
-  final profile_avatar = "assets/images/profile_avatar.svg";
-  final dashboard_steteskop = "assets/images/dashboard_steteskop.svg";
-  final ios_share = "assets/images/ios_share.svg";
-  final android_share = "assets/images/android_share.svg";
-  final email_app_bar = "assets/images/login_pic.svg";
-  final success_icon = "assets/images/success_icon.svg";
-  final error_icon = "assets/images/error_icon.svg";
-  final top_bg_blue = "assets/images/blue_signin_topbar.svg";
-  final guven_logo = "assets/images/logo.svg";
-  final grafik_arkasi = 'assets/images/grafikarkasilogo.svg';
-  final login_screen_bg = "assets/images/mavi_bg_login.svg";
-  final topTab = "assets/images/mavi_bg_toptab.svg";
-  final scale_icon = "assets/images/body_weight_icon.svg";
-
-  final filter_graph_icon = "assets/images/filtergraph_icon.svg";
-
-  // PNGS
-  final omron_blood_pressure_arm = "assets/images/omron_blood_pressure_arm.png";
-  final omron_blood_pressure_wrist =
-      "assets/images/omron_blood_pressure_wrist.png";
-  final omron_scale = "assets/images/omron_scale.png";
-
-  // JPGS
-  final mi_scale = "assets/images/mi_scale.png";
 }
 
 class _Color {
