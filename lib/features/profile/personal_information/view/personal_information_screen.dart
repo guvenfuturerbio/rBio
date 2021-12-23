@@ -9,8 +9,6 @@ import '../../../../model/shared/user_account_info.dart';
 import '../viewmodel/personal_information_vm.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  UserAccount userAccount;
-
   PersonalInformationScreen({Key key}) : super(key: key);
 
   @override
@@ -19,6 +17,8 @@ class PersonalInformationScreen extends StatefulWidget {
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
+  UserAccount userAccount;
+
   TextEditingController identityController;
   TextEditingController nameController;
   TextEditingController birthdayController;
@@ -59,28 +59,27 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.userAccount = getIt<UserNotifier>().getUserAccount();
+      userAccount = getIt<UserNotifier>().getUserAccount();
     } catch (e) {
       return RbioRouteError();
     }
 
-    identityController.text = widget.userAccount.nationality.xIsTCNationality
-        ? widget.userAccount.identificationNumber
-        : widget.userAccount.passaportNumber;
-    nameController.text =
-        widget.userAccount.name + " " + widget.userAccount.surname;
+    identityController.text = userAccount.nationality.xIsTCNationality
+        ? userAccount.identificationNumber
+        : userAccount.passaportNumber;
+    nameController.text = userAccount.name + " " + userAccount.surname;
 
-    birthdayController.text = widget.userAccount.patients.length > 0
-        ? widget.userAccount.patients.first.birthDate.replaceAll('.', '/')
+    birthdayController.text = userAccount.patients.length > 0
+        ? userAccount.patients.first.birthDate.replaceAll('.', '/')
         : "-";
 
     return ChangeNotifierProvider<PersonalInformationScreenVm>(
       create: (context) => PersonalInformationScreenVm(
         mContext: context,
-        email: widget.userAccount.electronicMail.contains("@mailyok.com")
+        email: userAccount.electronicMail.contains("@mailyok.com")
             ? "-"
-            : widget.userAccount.electronicMail,
-        phoneNumber: widget.userAccount.phoneNumber,
+            : userAccount.electronicMail,
+        phoneNumber: userAccount.phoneNumber,
       ),
       child: Consumer<PersonalInformationScreenVm>(
         builder: (
@@ -145,7 +144,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         children: <Widget>[
           // Identity Number
           _buildTitle(
-            widget.userAccount.nationality.xIsTCNationality
+            userAccount.nationality.xIsTCNationality
                 ? LocaleProvider.of(context).tc_identity_number
                 : LocaleProvider.of(context).passport_number,
           ),
