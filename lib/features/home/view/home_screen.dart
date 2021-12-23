@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                Atom.to(PagePaths.PATIENT_CONSULTATION);
+                Atom.to(PagePaths.CONSULTATION);
               },
             ),
           ),

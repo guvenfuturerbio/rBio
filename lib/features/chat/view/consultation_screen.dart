@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/features/chat/controller/patient_consultation_vm.dart';
+import 'package:onedosehealth/features/chat/model/chat_person.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
+import '../../../core/core.dart';
+import '../controller/consultation_vm.dart';
 
-class PatientConsultationScreen extends StatelessWidget {
-  PatientConsultationScreen({Key key}) : super(key: key);
+class ConsultationScreen extends StatelessWidget {
+  ConsultationScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<PatientConsultationVm>(
-      create: (context) => PatientConsultationVm(context),
-      child: Consumer<PatientConsultationVm>(builder: (
+    return ChangeNotifierProvider<DoctorConsultationVm>(
+      create: (context) => DoctorConsultationVm(context),
+      child: Consumer<DoctorConsultationVm>(builder: (
         BuildContext context,
-        PatientConsultationVm vm,
+        DoctorConsultationVm vm,
         Widget child,
       ) {
         return RbioScaffold(
           appbar: _buildAppBar(context),
           body: _buildBody(context, vm),
-          floatingActionButton: _buildFAB(),
+          //  floatingActionButton: _buildFAB(),
         );
       }),
     );
@@ -34,7 +35,7 @@ class PatientConsultationScreen extends StatelessWidget {
       );
 
   // #region _buildBody
-  Widget _buildBody(BuildContext context, PatientConsultationVm vm) {
+  Widget _buildBody(BuildContext context, DoctorConsultationVm vm) {
     switch (vm.progress) {
       case LoadingProgress.LOADING:
         return RbioLoading();
@@ -52,7 +53,7 @@ class PatientConsultationScreen extends StatelessWidget {
   // #endregions
 
   // #region _buildList
-  Widget _buildList(BuildContext context, PatientConsultationVm vm) {
+  Widget _buildList(BuildContext context, DoctorConsultationVm vm) {
     return ListView.builder(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
@@ -66,7 +67,7 @@ class PatientConsultationScreen extends StatelessWidget {
   // #endregion
 
   // #region _buildCard
-  Widget _buildCard(BuildContext context, PatientConsultationUserModel item) {
+  Widget _buildCard(BuildContext context, ChatPerson item) {
     return Padding(
       padding: EdgeInsets.only(
         top: 10,
@@ -79,7 +80,7 @@ class PatientConsultationScreen extends StatelessWidget {
           //
           CircleAvatar(
             backgroundColor: getIt<ITheme>().cardBackgroundColor,
-            backgroundImage: NetworkImage(item.photoUrl),
+            backgroundImage: NetworkImage(item.url),
             radius: 35,
           ),
 
@@ -94,11 +95,17 @@ class PatientConsultationScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 //
-                Text(
-                  item.name ?? '',
-                  style: context.xHeadline5.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      item.name ?? '',
+                      style: context.xHeadline5.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Spacer(),
+                    Text(item.messageTime)
+                  ],
                 ),
 
                 //
@@ -109,11 +116,25 @@ class PatientConsultationScreen extends StatelessWidget {
                   item.lastMessage ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: context.xBodyText1,
+                  style: item.hasRead? context.xBodyText1: context.xBodyText1.copyWith(fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ),
+          //
+          item.hasRead?SizedBox():
+          Padding(
+            padding: const EdgeInsets.only(top:12,right:0),
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: getIt<ITheme>().mainColor),
+              child: SizedBox(
+                height: 10,
+                width: 10,
+              ),
+            ),
+          )
+          //
         ],
       ),
     );

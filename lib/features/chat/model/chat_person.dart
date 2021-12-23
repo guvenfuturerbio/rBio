@@ -1,23 +1,45 @@
+import 'dart:convert';
+
 class ChatPerson {
   String name;
   String id;
-  int doctorId;
+  String lastMessage;
+  String messageTime;
+  bool hasRead;
   String url;
+  ChatPerson({
+    this.name,
+    this.id,
+    this.lastMessage,
+    this.messageTime,
+    this.hasRead,
+    this.url,
+  });
 
-  ChatPerson({this.name, this.id, this.doctorId, this.url});
-
-  ChatPerson.fromJson(Map<String, dynamic> json) {
-    name = json['doctor_name'];
-    id = json['doctor_system_name'];
-    doctorId = json['doctor_id'];
-    url = "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png";
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'id': id,
+      'lastMessage': lastMessage,
+      'messageTime': messageTime,
+      'hasRead': hasRead,
+      'url': url,
+    };
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['doctor_name'] = this.name;
-    data['doctor_system_name'] = this.id;
-    data['doctor_id'] = this.doctorId;
-    return data;
+  factory ChatPerson.fromMap(Map<String, dynamic> map) {
+    return ChatPerson(
+        name: map['name'] ?? '',
+        id: map['id'] ?? '',
+        lastMessage: map['lastMessage'] ?? '',
+        messageTime: map['messageTime'] ?? '',
+        hasRead: map['hasRead'] ?? false,
+        url: map['url'] ??
+            "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png");
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory ChatPerson.fromJson(String source) =>
+      ChatPerson.fromMap(json.decode(source));
 }

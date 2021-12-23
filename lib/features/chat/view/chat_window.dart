@@ -22,8 +22,8 @@ import '../model/chat_person.dart';
 
 /// MG15 - this page includes all chat history (Past and Present)
 class ChatWindow extends StatefulWidget {
-  final ChatPerson person;
-  ChatWindow(this.person);
+  ChatWindow();
+  ChatPerson otherPerson;
 
   static Widget widgetFullPhoto(BuildContext context, String url) {
     return Container(child: PhotoView(imageProvider: NetworkImage(url)));
@@ -34,10 +34,9 @@ class ChatWindow extends StatefulWidget {
 }
 
 class _ChatWindowState extends State<ChatWindow> {
-  String sender = "deneme123";
   @override
   void initState() {
-    CurrentWindowTracker().currentwindow = widget.person.id;
+    CurrentWindowTracker().currentwindow = widget.otherPerson.id;
     super.initState();
   }
 
@@ -48,6 +47,9 @@ class _ChatWindowState extends State<ChatWindow> {
   }
 
   Widget build(BuildContext context) {
+    widget.otherPerson =
+        ChatPerson.fromJson(Atom.queryParameters['otherPerson']);
+    String sender;
     final chatController = Provider.of<ChatController>(context);
     final _textController = TextEditingController();
     final _scrollController = ScrollController();
@@ -57,7 +59,7 @@ class _ChatWindowState extends State<ChatWindow> {
         if (_textController.text.trim().length > 0) {
           Message _messageSent = Message(
               sentFrom: sender,
-              sentTo: widget.person.id,
+              sentTo: widget.otherPerson.id,
               message: _textController.text,
               type: 0);
           _textController.clear();
@@ -77,7 +79,7 @@ class _ChatWindowState extends State<ChatWindow> {
     return Scaffold(
       appBar: CustomAppBar(
           preferredSize: Size.fromHeight(context.HEIGHT * .18),
-          title: TitleAppBarWhite(title: widget.person.name),
+          title: TitleAppBarWhite(title: widget.otherPerson.name),
           leading: InkWell(
               child: SvgPicture.asset(R.image.back_icon),
               onTap: () => Navigator.of(context).pop())),
@@ -86,7 +88,7 @@ class _ChatWindowState extends State<ChatWindow> {
         children: [
           Expanded(
               child: StreamBuilder<List<Message>>(
-            stream: chatController.getMessages(sender, widget.person.id),
+            stream: chatController.getMessages(sender, widget.otherPerson.id),
             builder: (context, streamMessages) {
               if (!streamMessages.hasData) {
                 return LoadingPage("");
@@ -153,12 +155,12 @@ class _ChatWindowState extends State<ChatWindow> {
                                       ? _chatIconDesign(
                                           streamMessages.data[index],
                                           sender,
-                                          widget.person.url)
+                                          widget.otherPerson.url)
                                       : chatImage(
                                           context,
                                           streamMessages.data[index],
                                           sender,
-                                          widget.person.url)
+                                          widget.otherPerson.url)
                                 ],
                               );
                             if (time.isSameDay(streamMessages
@@ -206,23 +208,23 @@ class _ChatWindowState extends State<ChatWindow> {
                                       ? _chatIconDesign(
                                           streamMessages.data[index],
                                           sender,
-                                          widget.person.url)
+                                          widget.otherPerson.url)
                                       : chatImage(
                                           context,
                                           streamMessages.data[index],
                                           sender,
-                                          widget.person.url)
+                                          widget.otherPerson.url)
                                 ],
                               );
                             else
                               return streamMessages.data[index].type == 0
                                   ? _chatIconDesign(streamMessages.data[index],
-                                      sender, widget.person.url)
+                                      sender, widget.otherPerson.url)
                                   : chatImage(
                                       context,
                                       streamMessages.data[index],
                                       sender,
-                                      widget.person.url);
+                                      widget.otherPerson.url);
                           },
                           itemCount: streamMessages.data.length),
                     ),
@@ -239,7 +241,8 @@ class _ChatWindowState extends State<ChatWindow> {
                     IconButton(
                       icon: Icon(Icons.add_a_photo, color: R.color.main_color),
                       onPressed: () {
-                        chatController.getImage(0, sender, widget.person.id);
+                        chatController.getImage(
+                            0, sender, widget.otherPerson.id);
                       },
                     ),
                     SizedBox(width: 10),
