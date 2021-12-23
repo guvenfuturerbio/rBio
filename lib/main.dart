@@ -184,6 +184,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                   );
                 },
+                
                 //
                 theme: ThemeData(
                   primaryColor: themeNotifier.theme.mainColor,

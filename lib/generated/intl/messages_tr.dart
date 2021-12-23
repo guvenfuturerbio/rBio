@@ -606,6 +606,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "select_appo_type" : MessageLookupByLibrary.simpleMessage("İşlem yapmak istediğiniz randevu tipini seçiniz"),
     "select_birth_date" : MessageLookupByLibrary.simpleMessage("DOĞUM TARİHİ SEÇİNİZ"),
     "select_birth_year" : MessageLookupByLibrary.simpleMessage("Doğum yılınızı seçin:"),
+    "select_day_from" : MessageLookupByLibrary.simpleMessage("Gün seçiniz"),
+    "select_day_to" : MessageLookupByLibrary.simpleMessage("Diğer günü seçiniz"),
     "select_interval" : MessageLookupByLibrary.simpleMessage("Bir aralık seç"),
     "select_language" : MessageLookupByLibrary.simpleMessage("Uygulama dili"),
     "select_package" : MessageLookupByLibrary.simpleMessage("Paket Seçinizi"),

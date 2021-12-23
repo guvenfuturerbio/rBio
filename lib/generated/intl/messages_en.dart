@@ -610,6 +610,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "select_appo_type" : MessageLookupByLibrary.simpleMessage("Select the type of appointment you want to process"),
     "select_birth_date" : MessageLookupByLibrary.simpleMessage("SELECT BIRTH DATE"),
     "select_birth_year" : MessageLookupByLibrary.simpleMessage("Choose your birth year:"),
+    "select_day_from" : MessageLookupByLibrary.simpleMessage("Select day"),
+    "select_day_to" : MessageLookupByLibrary.simpleMessage("Select another day"),
     "select_interval" : MessageLookupByLibrary.simpleMessage("Select an Interval"),
     "select_language" : MessageLookupByLibrary.simpleMessage("App Language"),
     "select_package" : MessageLookupByLibrary.simpleMessage("Select Package"),

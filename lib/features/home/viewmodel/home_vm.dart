@@ -110,13 +110,14 @@ class HomeVm extends ChangeNotifier {
 
   // Kullanıcı widget eklediğinde çalışan fonks.
   Future<void> addWidget(Key widgetKey) async {
-    for (var elementO in widgetsDeleted) {
-      if (elementO.key == widgetKey) {
-        widgetsInUse.add(elementO);
-        deletedKeysHolder
-            .removeWhere((element) => element == elementO.key.toString());
+    Map<String, Widget> myMap = widgetMap();
+    myMap.forEach((key, value) {
+      if (key == widgetKey.toString()) {
+        widgetsInUse.add(value);
+        deletedKeysHolder.removeWhere((element) => element == key.toString());
       }
-    }
+    });
+
     getIt<ISharedPreferencesManager>().setStringList(
         SharedPreferencesKeys.DELETED_WIDGETS, deletedKeysHolder);
     await querySaver();
