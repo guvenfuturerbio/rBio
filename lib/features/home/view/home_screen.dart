@@ -53,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
       leading: Center(
         child: RbioSwitcher(
           showFirstChild: val.status.isShaken,
-          child1: InkWell(
-            onTap: () {
+          child1: IconButton(
+            onPressed: () {
               val.changeStatus();
               val.showRemovedWidgets();
             },
-            child: Icon(
+            icon: Icon(
               Icons.add,
               size: R.sizes.iconSize,
               color: Colors.white,
@@ -88,11 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: RbioSwitcher(
             showFirstChild: val.status.isShaken,
             child1: SizedBox(
-              child: InkWell(
-                onTap: () {
+              child: IconButton(
+                onPressed: () {
                   val.changeStatus();
                 },
-                child: Text(
+                icon: Text(
                   LocaleProvider.current.done,
                   style: context.xHeadline3.copyWith(
                     color: Colors.white,
@@ -101,17 +101,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            child2: InkWell(
-              child: Container(
+            child2: IconButton(
+              icon: Container(
                 color: Colors.transparent,
-                padding: const EdgeInsets.all(8),
                 child: SvgPicture.asset(
                   R.image.chat_icon,
                   color: Colors.white,
                   width: R.sizes.iconSize,
                 ),
               ),
-              onTap: () {
+              onPressed: () {
                 print(getIt<ProfileStorageImpl>().getFirst().id);
                 log(getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.JWT_TOKEN));
@@ -119,9 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        //
-        SizedBox(width: Atom.isWeb ? Atom.width * 0.01 : Atom.width * 0.04),
+        SizedBox(width: 8),
       ],
     );
   }

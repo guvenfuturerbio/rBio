@@ -735,5 +735,6 @@
   "expired_interpreter_request": "Randevu Süresi Dolmuştur. Çevirmen Talep Edilemez!",
   "passwords_not_match": "Girilen şifreler eşleşmiyor.",
   "select_day_from": "Gün seçiniz",
-  "select_day_to": "Diğer günü seçiniz"
+  "select_day_to": "Diğer günü seçiniz",
+  "healthcare_employee": "Sağlık Çalışanı"
 }

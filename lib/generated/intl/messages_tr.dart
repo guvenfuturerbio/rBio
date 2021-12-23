@@ -310,6 +310,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "has_result" : MessageLookupByLibrary.simpleMessage("Sonuçlananlar"),
     "hbA1c_measurement" : MessageLookupByLibrary.simpleMessage("hbA1c Ölçümü"),
     "health_information" : MessageLookupByLibrary.simpleMessage("Sağlık Bilgilerim"),
+    "healthcare_employee" : MessageLookupByLibrary.simpleMessage("Sağlık Çalışanı"),
     "height" : MessageLookupByLibrary.simpleMessage("Boy"),
     "high" : MessageLookupByLibrary.simpleMessage("Yüksek"),
     "high_range" : MessageLookupByLibrary.simpleMessage("Yüksek Aralık"),

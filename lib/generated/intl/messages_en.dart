@@ -314,6 +314,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "has_result" : MessageLookupByLibrary.simpleMessage("Has Result"),
     "hbA1c_measurement" : MessageLookupByLibrary.simpleMessage("hbA1c Measurement"),
     "health_information" : MessageLookupByLibrary.simpleMessage("Health Information"),
+    "healthcare_employee" : MessageLookupByLibrary.simpleMessage("Healthcare Employee"),
     "height" : MessageLookupByLibrary.simpleMessage("Height"),
     "high" : MessageLookupByLibrary.simpleMessage("High"),
     "high_range" : MessageLookupByLibrary.simpleMessage("High Range"),

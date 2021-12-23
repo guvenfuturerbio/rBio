@@ -7454,6 +7454,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Healthcare Employee`
+  String get healthcare_employee {
+    return Intl.message(
+      'Healthcare Employee',
+      name: 'healthcare_employee',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

@@ -741,5 +741,6 @@
   "expired_interpreter_request": "Appointment has expired. No Translator Can Be Requested!",
   "passwords_not_match": "The passwords entered do not match.",
   "select_day_from": "Select day",
-  "select_day_to": "Select another day"
+  "select_day_to": "Select another day",
+  "healthcare_employee": "Healthcare Employee"
 }
