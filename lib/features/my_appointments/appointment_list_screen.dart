@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +10,9 @@ import '../../../model/model.dart';
 import 'appointment_list_vm.dart';
 
 class AppointmentListScreen extends StatefulWidget {
-  final bool showAppbar;
   String roomId;
 
-  AppointmentListScreen(this.showAppbar);
+  AppointmentListScreen();
 
   @override
   _AppointmentListScreenState createState() => _AppointmentListScreenState();
@@ -33,17 +30,21 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           Widget child,
         ) {
           return RbioScaffold(
-            appbar: widget.showAppbar
-                ? RbioAppBar(
-                    title: RbioAppBar.textTitle(
-                        context, LocaleProvider.of(context).my_appointments),
-                    actions: getActions(context),
-                  )
-                : null,
+            appbar: _buildAppBar(context),
             body: _buildBody(vm),
           );
         },
       ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).my_appointments,
+      ),
+      actions: getActions(context),
     );
   }
 
@@ -57,6 +58,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         onTap: () {
           Atom.to(PagePaths.ALL_FILES);
         },
+      ),
+      SizedBox(
+        width: 12,
       ),
     ];
   }
