@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/home/utils/results_painter.dart';
+import 'package:onedosehealth/features/home/utils/symptom_checker_painter.dart';
+import '../utils/appointments_painter.dart';
+import '../utils/chronic_tracking_painter.dart';
+import '../utils/hospital_appointment_painter.dart';
+import '../utils/online_appointment_painter.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
@@ -213,7 +219,7 @@ class HomeVm extends ChangeNotifier {
     };
   }
 
-  final _key1 = const Key('1');
+  final key1 = const Key('1');
   final _key2 = const Key('2');
   final _key3 = const Key('3');
   final _key4 = const Key('4');
@@ -225,17 +231,8 @@ class HomeVm extends ChangeNotifier {
   // Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
         MyReorderableWidget(
-          key: _key1,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key1);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.PROFILE);
-              }
-            },
-            child: UserCardTile(),
-          ),
+          key: key1,
+          body: UserCardTile(homeVm: this),
         ),
 
         //
@@ -256,8 +253,8 @@ class HomeVm extends ChangeNotifier {
                 }
               },
               child: VerticalCard(
-                topImage: R.image.homeTopLeft,
                 title: LocaleProvider.current.lbl_find_hospital,
+                painter: HomeHospitalAppointmentCustomPainter(),
               ),
             ),
           ),
@@ -280,8 +277,8 @@ class HomeVm extends ChangeNotifier {
                 }
               },
               child: VerticalCard(
-                topImage: R.image.homeTopMid,
                 title: LocaleProvider.current.take_video_appointment,
+                painter: HomeOnlineAppointmentCustomPainter(),
               ),
             ),
           ),
@@ -299,8 +296,8 @@ class HomeVm extends ChangeNotifier {
                 }
               },
               child: VerticalCard(
-                topImage: R.image.homeTopRight,
                 title: LocaleProvider.current.chronic_track_home,
+                painter: HomeChronicTrackingCustomPainter(),
               ),
             ),
           ),
@@ -323,8 +320,8 @@ class HomeVm extends ChangeNotifier {
               }
             },
             child: VerticalCard(
-              topImage: R.image.homeBottomLeft,
               title: LocaleProvider.current.appointments,
+              painter: HomeAppointmentsCustomPainter(),
             ),
           ),
         ),
@@ -341,8 +338,8 @@ class HomeVm extends ChangeNotifier {
               }
             },
             child: VerticalCard(
-              topImage: R.image.homeBottomMid,
               title: LocaleProvider.current.results,
+              painter: HomeResultsCustomPainter(),
             ),
           ),
         ),
@@ -360,8 +357,8 @@ class HomeVm extends ChangeNotifier {
                 }
               },
               child: VerticalCard(
-                topImage: R.image.homeBottomRight,
                 title: LocaleProvider.current.symptom_checker,
+                painter: HomeSymptomCheckerCustomPainter(),
               ),
             ),
           ),

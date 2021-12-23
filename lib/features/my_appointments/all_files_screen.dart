@@ -138,9 +138,11 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
                   EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: Row(
                 children: <Widget>[
-                  SvgPicture.asset(fileType.toLowerCase() == "pdf"
-                      ? R.image.ic_file_icon
-                      : R.image.ic_image_icon),
+                  SvgPicture.asset(
+                    fileType.toLowerCase() == "pdf"
+                        ? R.image.ic_file_icon
+                        : R.image.ic_image_icon,
+                  ),
                   Container(
                     margin: EdgeInsets.only(left: 10, right: 10),
                     width: 1,

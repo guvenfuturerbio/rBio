@@ -4,13 +4,13 @@ import '../../../core/core.dart';
 import '../utils/home_sizer.dart';
 
 class VerticalCard extends StatelessWidget {
-  final String topImage;
   final String title;
+  final CustomPainter painter;
 
-  const  VerticalCard({
+  const VerticalCard({
     Key key,
-    @required this.topImage,
     @required this.title,
+    @required this.painter,
   }) : super(key: key);
 
   @override
@@ -28,14 +28,24 @@ class VerticalCard extends StatelessWidget {
               ),
               child: Stack(
                 children: [
+                  //
                   Align(
                     alignment: Alignment.topRight,
-                    child: Image.asset(
-                      topImage,
-                      width: Atom.height * 0.10,
-                      height: Atom.height * 0.10,
+                    child: CustomPaint(
+                      size: Size(Atom.height * 0.10, Atom.height * 0.10),
+                      painter: painter,
                     ),
                   ),
+
+                  //
+                  // Align(
+                  //   alignment: Alignment.topRight,
+                  //   child: Image.asset(
+                  //     topImage,
+                  //     width: Atom.height * 0.10,
+                  //     height: Atom.height * 0.10,
+                  //   ),
+                  // ),
 
                   //
                   Align(
@@ -61,15 +71,6 @@ class VerticalCard extends StatelessWidget {
     );
   }
 
-  double getHeight(BuildContext context) {
-    return HomeSizer.instance.getBodyCardHeight();
-
-    final height = MediaQuery.of(context).size.height;
-    return R.sizes.screenHandler<double>(
-      context,
-      mobile: height * 0.28,
-      tablet: height * 0.25,
-      desktop: height * 0.25,
-    );
-  }
+  double getHeight(BuildContext context) =>
+      HomeSizer.instance.getBodyCardHeight();
 }

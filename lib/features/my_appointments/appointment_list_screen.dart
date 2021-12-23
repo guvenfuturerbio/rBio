@@ -113,6 +113,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             onEndDateChange: (date) {
               vm.setEndDate(date);
             },
+            startMinDate: DateTime(1900),
+            startMaxDate: DateTime.now(),
+            endMinDate: DateTime.now(),
           ),
         ),
 

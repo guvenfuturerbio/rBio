@@ -157,7 +157,6 @@ flutter:
   assets:
     - env/
     - assets/images/
-    - assets/images/new/
     - assets/animations/
     - assets/sound/
     - assets/departments.json

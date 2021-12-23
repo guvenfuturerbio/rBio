@@ -38,6 +38,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
     relativeName.dispose();
     relativeSurname.dispose();
     relativeEmail.dispose();
+    
     super.dispose();
   }
 
