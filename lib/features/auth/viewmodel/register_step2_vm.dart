@@ -95,7 +95,7 @@ class RegisterStep2ScreenVm with ChangeNotifier {
             .select_birth_date, // Can be used as title
         cancelText: LocaleProvider.of(context).btn_cancel,
         confirmText: LocaleProvider.of(context).btn_confirm,
-        locale: new Locale(Intl.getCurrentLocale().toLowerCase()),
+        // locale: new Locale(Intl.getCurrentLocale().toLowerCase()),
         builder: (context, child) {
           return Theme(
             data: ThemeData.light().copyWith(

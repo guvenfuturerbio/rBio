@@ -1,52 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 
 class AddPatientRelativesScreenVm with ChangeNotifier {
+  BuildContext context;
+
   LoadingDialog loadingDialog;
   LoadingProgress status = LoadingProgress.LOADING;
+
   DateTime selectedDate;
-  BuildContext context;
-  var selectedCountry = Country(id: 213, name: "Türkiye");
   CountryListResponse countryList;
-  final homeKey = GlobalKey<ScaffoldState>();
   UserAccount userAccount;
-  PatientRelativeInfoResponse patientRelativeInfo;
   int selectedGender = 1;
+  Country selectedCountry = Country(id: 213, name: "Türkiye");
+
+  List<String> genderList = ["E", "K"];
+  String gender;
+  void setGender(String value) {
+    gender = value;
+    notifyListeners();
+  }
+
   AddPatientRelativesScreenVm(this.context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await getCountries();
     });
-  }
-
-  /*Future<void> _fetch() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final token = sharedPreferences.get(UserService.JWT_TOKEN_KEY);
-    _token = token;
-    baseProvider = BaseProviderForPusula.create(_token);
-    try {
-      var response = await baseProvider.getUserProfile();
-      if (response.statusCode == HttpStatus.ok) {
-        var responseBody = jsonDecode(utf8.decode(response.bodyBytes));
-
-        var datum = responseBody['datum'];
-        userAccount = UserAccount.fromJson(datum);
-      }
-      status = LoadingStatus.done;
-      notifyListeners();
-    } catch (e) {
-      print(e.toString());
-      showGradientDialog(
-          context, "Error", LocaleProvider.of(context).no_network_connection);
-    }
-  }*/
-
-  void changeGender(int gender) {
-    selectedGender = gender;
-    notifyListeners();
   }
 
   Future<void> getCountries() async {
@@ -57,9 +37,13 @@ class AddPatientRelativesScreenVm with ChangeNotifier {
       notifyListeners();
     } catch (error, stackTrace) {
       Sentry.captureException(error, stackTrace: stackTrace);
-      print("exception: " + error.toString());
       status = LoadingProgress.ERROR;
     }
+  }
+
+  void changeGender(int gender) {
+    selectedGender = gender;
+    notifyListeners();
   }
 
   Future savePatientRelative(
@@ -118,7 +102,7 @@ class AddPatientRelativesScreenVm with ChangeNotifier {
       helpText: LocaleProvider.of(context).select_birth_date,
       cancelText: LocaleProvider.of(context).btn_cancel,
       confirmText: LocaleProvider.of(context).btn_confirm,
-      locale: Locale(Intl.getCurrentLocale().toLowerCase()),
+      // locale: Locale(Intl.getCurrentLocale().toLowerCase()),
       builder: (BuildContext context, Widget child) {
         return Theme(
           data: ThemeData.light().copyWith(

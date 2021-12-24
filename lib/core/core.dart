@@ -86,3 +86,4 @@ export 'widgets/rbio_textformfield.dart';
 export 'widgets/rbio_user_tile.dart';
 export 'widgets/warning_dialog.dart';
 export 'widgets/rbio_locale_dropdown.dart';
+export 'widgets/rbio_keyboard_actions.dart';
