@@ -12,7 +12,6 @@ String addBpWithDetailToJson(AddBpWithDetail data) =>
 
 class AddBpWithDetail {
   AddBpWithDetail({
-    this.id,
     this.entegrationId,
     this.occurrenceTime,
     this.sys,
@@ -21,7 +20,6 @@ class AddBpWithDetail {
     this.note,
     this.deviceUuid,
     this.isManual,
-    this.measurementId,
   });
 
   int id;
@@ -37,28 +35,24 @@ class AddBpWithDetail {
 
   factory AddBpWithDetail.fromJson(Map<String, dynamic> json) =>
       AddBpWithDetail(
-        id: json["id"],
         entegrationId: json["entegration_id"],
         occurrenceTime: DateTime.parse(json["occurrence_time"]),
-        sys: json["sys"],
-        dia: json["dia"],
-        pulse: json["pulse"],
+        sys: json["sys_value"],
+        dia: json["dia_value"],
+        pulse: json["pulse_value"],
         note: json["note"],
         deviceUuid: json["device_uuid"],
-        isManual: json["is_manual"],
-        measurementId: json["measurement_id"],
+        isManual: json["is_manuel"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "entegration_id": entegrationId,
         "occurrence_time": occurrenceTime.toIso8601String(),
-        "sys": sys,
-        "dia": dia,
-        "pulse": pulse,
+        "sys_value": sys,
+        "dia_value": dia,
+        "pulse_value": pulse,
         "note": note,
         "device_uuid": deviceUuid,
-        "is_manual": isManual,
-        "measurement_id": measurementId,
+        "is_manuel": isManual,
       };
 }

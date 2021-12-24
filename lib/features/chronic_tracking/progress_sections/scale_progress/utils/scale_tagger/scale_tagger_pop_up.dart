@@ -3,16 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../../../generated/l10n.dart';
 import '../../../../utils/gallery_pop_up/gallery_pop_up.dart';
 import '../../../../utils/selected_scale_type.dart';
+import '../scale_measurements/scale_measurement_vm.dart';
 import 'scale_tagger_vm.dart';
 
 class ScaleTagger extends StatelessWidget {

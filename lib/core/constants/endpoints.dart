@@ -188,13 +188,13 @@ class _Endpoints {
       '/Measurement/update-bp-measurement'.xCronicTracking;
 
   String ct_insertNewBpValue =
-      '/Measurement/add-bmi-with-detail'.xCronicTracking;
+      '/Measurement/add-bp-with-detail'.xCronicTracking;
   String ct_deleteBpMeasurement =
-      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
+      '/Measurement/delete-bp-with-detail'.xCronicTracking;
   String ct_getBpMeasurement =
-      '/Measurement/get-bmi-measurements'.xCronicTracking;
+      '/Measurement/get-bp-measurements'.xCronicTracking;
   String ct_updateBpMeasurement =
-      '/Measurement/update-bmi-measurement'.xCronicTracking;
+      '/Measurement/update-bp-measurement'.xCronicTracking;
 
   String dc_Login(String userName, String password) =>
       '/AccessToken/get-token-for-rbio?userName=$userName&password=$password'
