@@ -19,12 +19,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _username = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+  TextEditingController _userNameEditingController;
+  TextEditingController _passwordEditingController;
+  FocusNode _usernameFocusNode;
+  FocusNode _passwordFocusNode;
 
-  final usernameFNode = FocusNode();
-  final passwordFNode = FocusNode();
-  final focus = FocusNode();
+  @override
+  void initState() {
+    _userNameEditingController = TextEditingController();
+    _passwordEditingController = TextEditingController();
+    _usernameFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _userNameEditingController.dispose();
+    _passwordEditingController.dispose();
+    _usernameFocusNode.dispose();
+    _passwordFocusNode.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +54,11 @@ class _LoginScreenState extends State<LoginScreen> {
           LoginScreenVm value,
           Widget child,
         ) {
-          _username.text = value.userId;
-          _username.selection =
+          _userNameEditingController.text = value.userId;
+          _userNameEditingController.selection =
               TextSelection.collapsed(offset: value?.userId?.length ?? 0);
-          _password.text = value.password;
-          _password.selection =
+          _passwordEditingController.text = value.password;
+          _passwordEditingController.selection =
               TextSelection.collapsed(offset: value?.password?.length ?? 0);
 
           return _buildScreen(value);
@@ -68,56 +86,62 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildBody(LoginScreenVm value) {
     return KeyboardAvoider(
       autoScroll: true,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          //
-          RbioLocaleDropdown(),
-
-          //
-          _buildHeader(),
-
-          //
-          _buildEmail(value),
-
-          //
-          _buildPassword(value),
-
-          //
-          _buildRememberMe(value),
-
-          //
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.WIDTH * 0.1),
-            child: Column(
-              children: [
-                //
-                _buildApplicationContest(value),
-
-                //
-                _buildKVKK(value),
-
-                //
-                _buildSignIn(value),
-              ],
-            ),
-          ),
-
-          //
-          SizedBox(
-            height: 5,
-          ),
-
-          //
-          //   _buildSeperator(),
-
-          //
-          //    _buildSocialLogin(),
-
-          //
-          _buildVersion(),
+      child: RbioKeyboardActions(
+        focusList: [
+          _usernameFocusNode,
+          _passwordFocusNode,
         ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            //
+            RbioLocaleDropdown(),
+
+            //
+            _buildHeader(),
+
+            //
+            _buildEmail(value),
+
+            //
+            _buildPassword(value),
+
+            //
+            _buildRememberMe(value),
+
+            //
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.WIDTH * 0.1),
+              child: Column(
+                children: [
+                  //
+                  _buildApplicationContest(value),
+
+                  //
+                  _buildKVKK(value),
+
+                  //
+                  _buildSignIn(value),
+                ],
+              ),
+            ),
+
+            //
+            SizedBox(
+              height: 5,
+            ),
+
+            //
+            //   _buildSeperator(),
+
+            //
+            //    _buildSocialLogin(),
+
+            //
+            _buildVersion(),
+          ],
+        ),
       ),
     );
   }
@@ -161,15 +185,15 @@ class _LoginScreenState extends State<LoginScreen> {
           margin: EdgeInsets.only(bottom: 20),
           child: RbioTextFormField(
             obscureText: false,
-            controller: _username,
-            focusNode: usernameFNode,
+            controller: _userNameEditingController,
+            focusNode: _usernameFocusNode,
             textInputAction: TextInputAction.next,
             hintText: LocaleProvider.of(context).email_or_identity,
             inputFormatters: <TextInputFormatter>[
               TabToNextFieldTextInputFormatter(
                 context,
-                usernameFNode,
-                passwordFNode,
+                _usernameFocusNode,
+                _passwordFocusNode,
               ),
             ],
             onChanged: (valueText) {
@@ -178,8 +202,8 @@ class _LoginScreenState extends State<LoginScreen> {
             onFieldSubmitted: (term) {
               UtilityManager().fieldFocusChange(
                 context,
-                usernameFNode,
-                passwordFNode,
+                _usernameFocusNode,
+                _passwordFocusNode,
               );
             },
           ),
@@ -201,14 +225,18 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         RbioTextFormField(
           autocorrect: false,
-          controller: _password,
-          focusNode: passwordFNode,
+          controller: _passwordEditingController,
+          focusNode: _passwordFocusNode,
           enableSuggestions: false,
           textInputAction: TextInputAction.done,
           obscureText: value.passwordVisibility ? false : true,
           hintText: LocaleProvider.of(context).hint_input_password,
           inputFormatters: <TextInputFormatter>[
-            TabToNextFieldTextInputFormatter(context, passwordFNode, null)
+            TabToNextFieldTextInputFormatter(
+              context,
+              _passwordFocusNode,
+              null,
+            ),
           ],
           onChanged: (valueText) {
             value.setPasswordText(valueText);
@@ -216,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
           onFieldSubmitted: (term) {
             UtilityManager().fieldFocusChange(
               context,
-              passwordFNode,
+              _passwordFocusNode,
               null,
             );
           },
@@ -353,8 +381,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: LocaleProvider.of(context).btn_sign_in,
                               onPressed: () {
                                 value.login(
-                                  _username.text,
-                                  _password.text,
+                                  _userNameEditingController.text,
+                                  _passwordEditingController.text,
                                 );
                               },
                             ),
@@ -406,7 +434,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ? Utils.instance.button(
                               text: LocaleProvider.of(context).btn_sign_in,
                               onPressed: () {
-                                value.login(_username.text, _password.text);
+                                value.login(
+                                  _userNameEditingController.text,
+                                  _passwordEditingController.text,
+                                );
                               },
                             )
                           : value.needForceUpdate == true &&

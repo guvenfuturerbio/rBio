@@ -266,9 +266,8 @@ class Utils {
         border: inputBorder,
         enabledBorder: inputBorder,
         hintText: hintText,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: R.color.gray,
+        hintStyle: Atom.context.xHeadline4.copyWith(
+          color: getIt<ITheme>().textColorPassive,
         ),
       );
 

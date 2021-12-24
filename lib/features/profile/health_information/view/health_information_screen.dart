@@ -85,7 +85,12 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     LocaleProvider.current.health_information,
                   ),
                 ),
-                body: _buildBody(vm),
+                body: RbioLoadingOverlay(
+                  isLoading: vm.showProgressOverlay,
+                  progressIndicator: RbioLoading.progressIndicator(),
+                  opacity: 0,
+                  child: _buildBody(vm),
+                ),
               ),
             ),
           );
@@ -191,7 +196,9 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.only(bottom: 12),
+            padding: EdgeInsets.only(
+              bottom: Atom.safeBottom + Atom.height * 0.05,
+            ),
             child: RbioElevatedButton(
               title: LocaleProvider.current.update_information,
               onTap: () {
