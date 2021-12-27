@@ -31,10 +31,12 @@ class _CreateAppointmentSummaryScreenState
   bool forOnline;
 
   TextEditingController codeEditingController;
+  FocusNode codeFocusNode;
 
   @override
   void initState() {
     codeEditingController = TextEditingController();
+    codeFocusNode = FocusNode();
 
     super.initState();
   }
@@ -42,6 +44,7 @@ class _CreateAppointmentSummaryScreenState
   @override
   void dispose() {
     codeEditingController.dispose();
+    codeFocusNode.dispose();
 
     super.dispose();
   }
@@ -138,187 +141,195 @@ class _CreateAppointmentSummaryScreenState
   Widget _buildKeyboardVisibilityBuilder(CreateAppointmentSummaryVm vm) {
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (forOnline) ...[
-              if (vm.showCodeField) ...[
-                Container(
-                  height: 55,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: getIt<ITheme>().cardBackgroundColor,
-                    borderRadius: R.sizes.borderRadiusCircular,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //
-                      _buildHorizontalGap(),
+        return RbioKeyboardActions(
+          focusList: [
+            codeFocusNode,
+          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (forOnline) ...[
+                if (vm.showCodeField) ...[
+                  Container(
+                    height: 55,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: isKeyboardVisible ? 5 : 0),
+                    decoration: BoxDecoration(
+                      color: getIt<ITheme>().cardBackgroundColor,
+                      borderRadius: R.sizes.borderRadiusCircular,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        //
+                        _buildHorizontalGap(),
 
-                      //
-                      Expanded(
-                        child: RbioTextFormField(
-                          hintText: LocaleProvider.current.discount_code,
-                          border: RbioTextFormField.noneBorder(),
-                          controller: codeEditingController,
-                          textInputAction: TextInputAction.done,
-                          contentPadding: EdgeInsets.only(
-                            left: 0,
-                            right: 20,
-                            top: 10,
-                            bottom: 13,
-                          ),
-                          onChanged: (term) {
-                            if (term != null) {
-                              if (term.length > 6) {
-                                vm.summaryButton = SummaryButtons.ApplyActive;
+                        //
+                        Expanded(
+                          child: RbioTextFormField(
+                            focusNode: codeFocusNode,
+                            controller: codeEditingController,
+                            hintText: LocaleProvider.current.discount_code,
+                            border: RbioTextFormField.noneBorder(),
+                            textInputAction: TextInputAction.done,
+                            contentPadding: EdgeInsets.only(
+                              left: 0,
+                              right: 20,
+                              top: 10,
+                              bottom: 13,
+                            ),
+                            onChanged: (term) {
+                              if (term != null) {
+                                if (term.length > 6) {
+                                  vm.summaryButton = SummaryButtons.ApplyActive;
+                                } else {
+                                  vm.summaryButton =
+                                      SummaryButtons.ApplyPassive;
+                                }
                               } else {
                                 vm.summaryButton = SummaryButtons.ApplyPassive;
                               }
-                            } else {
-                              vm.summaryButton = SummaryButtons.ApplyPassive;
-                            }
-                          },
-                        ),
-                      ),
-
-                      //
-                      if (!Atom.isWeb)
-                        GestureDetector(
-                          onTap: () async {
-                            final code = await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return QRCodeScannerScreen();
-                                },
-                              ),
-                            );
-                            if (code != null) {
-                              codeEditingController.text = code;
-                              vm.summaryButton = SummaryButtons.ApplyActive;
-                            }
-                          },
-                          child: SvgPicture.asset(
-                            R.image.qr_icon,
-                            width: 28,
+                            },
                           ),
                         ),
 
-                      //
-                      _buildHorizontalGap(),
-                    ],
+                        //
+                        if (!Atom.isWeb)
+                          GestureDetector(
+                            onTap: () async {
+                              final code = await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return QRCodeScannerScreen();
+                                  },
+                                ),
+                              );
+                              if (code != null) {
+                                codeEditingController.text = code;
+                                vm.summaryButton = SummaryButtons.ApplyActive;
+                              }
+                            },
+                            child: SvgPicture.asset(
+                              R.image.qr_icon,
+                              width: 28,
+                            ),
+                          ),
+
+                        //
+                        _buildHorizontalGap(),
+                      ],
+                    ),
                   ),
-                ),
+
+                  //
+                  if (!isKeyboardVisible) ...[
+                    _buildVerticalGap(),
+                    _buildVerticalGap(),
+                  ],
+                ],
 
                 //
                 if (!isKeyboardVisible) ...[
-                  _buildVerticalGap(),
-                  _buildVerticalGap(),
+                  Container(
+                    height: 55,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: getIt<ITheme>().cardBackgroundColor,
+                      borderRadius: R.sizes.borderRadiusCircular,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        //
+                        _buildHorizontalGap(),
+
+                        //
+                        Text(
+                          LocaleProvider.current.price,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: context.xHeadline3.copyWith(
+                            fontWeight: FontWeight.w600,
+                            height: 1.0,
+                          ),
+                        ),
+
+                        //
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: _buildPrice(vm),
+                          ),
+                        ),
+
+                        //
+                        _buildHorizontalGap(),
+                      ],
+                    ),
+                  ),
+
+                  //
+                  if (!isKeyboardVisible) ...[
+                    _buildVerticalGap(),
+                    _buildVerticalGap(),
+                  ],
                 ],
               ],
 
               //
               if (!isKeyboardVisible) ...[
-                Container(
-                  height: 55,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: getIt<ITheme>().cardBackgroundColor,
-                    borderRadius: R.sizes.borderRadiusCircular,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //
-                      _buildHorizontalGap(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    Expanded(
+                      child: _buildSummaryButton(vm),
+                    ),
 
-                      //
-                      Text(
-                        LocaleProvider.current.price,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.xHeadline3.copyWith(
-                          fontWeight: FontWeight.w600,
-                          height: 1.0,
-                        ),
+                    //
+                    SizedBox(width: 8),
+
+                    //
+                    Expanded(
+                      child: RbioElevatedButton(
+                        showElevation: false,
+                        onTap: () {
+                          vm.saveAppointment(
+                            price: vm?.orgVideoCallPriceResponse?.patientPrice
+                                ?.toString(),
+                            forOnline: forOnline,
+                            forFree:
+                                (vm?.orgVideoCallPriceResponse?.patientPrice ??
+                                            0) <
+                                        1
+                                    ? true
+                                    : false,
+                          );
+                        },
+                        title: forOnline
+                            ? LocaleProvider.current.pay
+                            : LocaleProvider.current.done,
+                        fontWeight: FontWeight.w600,
                       ),
-
-                      //
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: _buildPrice(vm),
-                        ),
-                      ),
-
-                      //
-                      _buildHorizontalGap(),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
 
                 //
-                if (!isKeyboardVisible) ...[
-                  _buildVerticalGap(),
-                  _buildVerticalGap(),
-                ],
+                SizedBox(
+                  height: Atom.safeBottom,
+                ),
               ],
             ],
-
-            //
-            if (!isKeyboardVisible) ...[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    child: _buildSummaryButton(vm),
-                  ),
-
-                  //
-                  SizedBox(width: 8),
-
-                  //
-                  Expanded(
-                    child: RbioElevatedButton(
-                      showElevation: false,
-                      onTap: () {
-                        vm.saveAppointment(
-                          price: vm?.orgVideoCallPriceResponse?.patientPrice
-                              ?.toString(),
-                          forOnline: forOnline,
-                          forFree:
-                              (vm?.orgVideoCallPriceResponse?.patientPrice ??
-                                          0) <
-                                      1
-                                  ? true
-                                  : false,
-                        );
-                      },
-                      title: forOnline
-                          ? LocaleProvider.current.pay
-                          : LocaleProvider.current.done,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-
-              //
-              SizedBox(
-                height: Atom.safeBottom,
-              ),
-            ],
-          ],
+          ),
         );
       },
     );

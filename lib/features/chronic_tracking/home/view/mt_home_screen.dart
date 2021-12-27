@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -45,7 +46,7 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.all(15),
                         child: SvgPicture.asset(
-                          R.image.add_icon,
+                          R.image.add,
                           color: R.color.white,
                         ),
                       ),

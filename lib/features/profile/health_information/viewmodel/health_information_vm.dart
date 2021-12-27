@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../core/data/imports/cronic_tracking.dart';
@@ -19,6 +18,13 @@ class HealthInformationVm extends ChangeNotifier with RbioVm {
   @override
   BuildContext mContext;
 
+  bool _showProgressOverlay = false;
+  bool get showProgressOverlay => _showProgressOverlay;
+  set showProgressOverlay(bool value) {
+    _showProgressOverlay = value;
+    notifyListeners();
+  }
+
   var key;
   Person _selection;
   Person get selection => _selection;
@@ -31,6 +37,7 @@ class HealthInformationVm extends ChangeNotifier with RbioVm {
   }
 
   Future<void> updateInformation(Person person) async {
+    showProgressOverlay = true;
     try {
       person.isFirstUser = false;
       person.userId = -1;
@@ -41,6 +48,8 @@ class HealthInformationVm extends ChangeNotifier with RbioVm {
       }
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
+    } finally {
+      showProgressOverlay = false;
     }
   }
 

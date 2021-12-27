@@ -18,6 +18,8 @@ class DoctorPatientListScreen extends StatelessWidget {
   final bigFlex = 40;
   final smallFlex = 25;
 
+  final FocusNode _searchfocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     try {
@@ -84,22 +86,28 @@ class DoctorPatientListScreen extends StatelessWidget {
   // #endregion
 
   // #region _buildPatients
-  Widget _buildPatients(BuildContext context, DoctorPatientListVm vm) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          _buildSearchFilterBar(context, vm),
-
-          //
-          SizedBox(height: 8),
-
-          //
-          Expanded(
-            child: _buildListView(vm),
-          ),
+  Widget _buildPatients(BuildContext context, DoctorPatientListVm vm) =>
+      RbioKeyboardActions(
+        focusList: [
+          _searchfocusNode,
         ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            _buildSearchFilterBar(context, vm),
+
+            //
+            SizedBox(height: 8),
+
+            //
+            Expanded(
+              child: _buildListView(vm),
+            ),
+          ],
+        ),
       );
   // #endregion
 
@@ -121,6 +129,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                 color: getIt<ITheme>().cardBackgroundColor,
               ),
               child: RbioTextFormField(
+                focusNode: _searchfocusNode,
                 hintText: '${LocaleProvider.current.search}...',
                 onChanged: (text) {
                   vm.textOnChanged(text);

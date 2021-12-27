@@ -4,12 +4,10 @@ import 'package:onedosehealth/model/model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
 import '../../../lib/notifiers/user_profiles_notifier.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
 import '../../../utils/bg_filter_pop_up/bg_filter_pop_up.dart';
-import '../../../utils/chart_data.dart';
 import '../../../utils/glucose_margins_filter.dart';
 import '../../utils/progress_page_model.dart';
 import '../../utils/small_widget_card.dart';

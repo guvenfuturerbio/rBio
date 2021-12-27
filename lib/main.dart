@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'core/core.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
+import 'features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
 import 'features/doctor/notifiers/bg_measurements_notifiers.dart';
 import 'features/doctor/notifiers/patient_notifiers.dart';
@@ -87,11 +88,15 @@ class _MyAppState extends State<MyApp> {
       color: Colors.white,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => PatientNotifiers()),
-          ChangeNotifierProvider<LocaleNotifier>.value(
-              value: getIt<LocaleNotifier>()),
           ChangeNotifierProvider(
-              create: (context) => BgMeasurementsNotifierDoc()),
+            create: (context) => PatientNotifiers(),
+          ),
+          ChangeNotifierProvider<LocaleNotifier>.value(
+            value: getIt<LocaleNotifier>(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => BgMeasurementsNotifierDoc(),
+          ),
           Provider<FirebaseAnalytics>.value(
             value: MyApp.analytics,
           ),
@@ -113,10 +118,9 @@ class _MyAppState extends State<MyApp> {
             create: (ctx) => ScaleProgressPageViewModel(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
-            value: BgProgressPageViewModel(),
-          ),
-
-          //
+              value: BgProgressPageViewModel()),
+          ChangeNotifierProvider<BpProgressPageVm>.value(
+              value: BpProgressPageVm()),
           if (!Atom.isWeb) ...[
             ChangeNotifierProvider<BleScannerOps>.value(
               value: getIt<BleScannerOps>(),
@@ -180,6 +184,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                   );
                 },
+
                 //
                 theme: ThemeData(
                   primaryColor: themeNotifier.theme.mainColor,

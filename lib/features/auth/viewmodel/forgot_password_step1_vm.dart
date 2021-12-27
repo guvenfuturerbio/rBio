@@ -1,33 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 
 import '../../../core/core.dart';
 import '../auth.dart';
 
 class ForgotPasswordStep1ScreenVm extends ChangeNotifier {
   BuildContext mContext;
-
-  final focus = FocusNode();
   LoadingDialog loadingDialog;
-  final TextEditingController _tcIdentity = new TextEditingController();
-  final masked.MaskedTextController _tcPhoneNumber =
-      masked.MaskedTextController(mask: '(000) 000-0000');
-  final TextEditingController _fnPassport = new TextEditingController();
-  final TextEditingController _fnPhone = new TextEditingController();
 
-  final tcNoFNode = FocusNode();
-  final phoneNumberFNode = FocusNode();
-  final ftcNoFNode = FocusNode();
-  final fphoneNumberFNode = FocusNode();
-
-  TextEditingController get tcIdentity => this._tcIdentity;
-  TextEditingController get fnPassport => this._fnPassport;
-  TextEditingController get fnPhone => this._fnPhone;
-  masked.MaskedTextController get tcPhoneNumber => this._tcPhoneNumber;
-
-  ForgotPasswordStep1ScreenVm({
-    BuildContext context,
-  }) {
+  ForgotPasswordStep1ScreenVm({BuildContext context}) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {});
   }

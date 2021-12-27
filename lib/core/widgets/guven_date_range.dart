@@ -42,6 +42,7 @@ class GuvenDateRange extends StatelessWidget {
               startMinDate ?? DateTime(2000, 1, 1),
               startMaxDate ?? now,
               startCurrentDate,
+              LocaleProvider.of(context).select_day_from,
             );
 
             if (result != null) {
@@ -86,6 +87,7 @@ class GuvenDateRange extends StatelessWidget {
               endMinDate ?? now,
               endMaxDate ?? DateTime(now.year + 1, now.month, now.day),
               endCurrentDate,
+              LocaleProvider.of(context).select_day_to,
             );
 
             if (result != null) {

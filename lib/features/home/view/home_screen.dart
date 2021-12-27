@@ -53,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
       leading: Center(
         child: RbioSwitcher(
           showFirstChild: val.status.isShaken,
-          child1: InkWell(
-            onTap: () {
+          child1: IconButton(
+            onPressed: () {
               val.changeStatus();
               val.showRemovedWidgets();
             },
-            child: Icon(
+            icon: Icon(
               Icons.add,
               size: R.sizes.iconSize,
               color: Colors.white,
@@ -88,11 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: RbioSwitcher(
             showFirstChild: val.status.isShaken,
             child1: SizedBox(
-              child: InkWell(
-                onTap: () {
+              child: IconButton(
+                onPressed: () {
                   val.changeStatus();
                 },
-                child: Text(
+                icon: Text(
                   LocaleProvider.current.done,
                   style: context.xHeadline3.copyWith(
                     color: Colors.white,
@@ -101,54 +101,55 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            child2: InkWell(
-              child: Container(
+            child2: IconButton(
+              icon: Container(
                 color: Colors.transparent,
-                padding: const EdgeInsets.all(8),
                 child: SvgPicture.asset(
                   R.image.chat_icon,
                   color: Colors.white,
                   width: R.sizes.iconSize,
                 ),
               ),
+<<<<<<< HEAD
               onTap: () {
                 Atom.to(PagePaths.CONSULTATION);
+=======
+              onPressed: () {
+                print(getIt<ProfileStorageImpl>().getFirst().id);
+                log(getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.JWT_TOKEN));
+>>>>>>> master
               },
             ),
           ),
         ),
-
-        //
-        SizedBox(width: Atom.isWeb ? Atom.width * 0.01 : Atom.width * 0.04),
+        SizedBox(width: 8),
       ],
     );
   }
 
   Widget _buildBody(HomeVm val) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: ReorderableWrap(
-        alignment: WrapAlignment.center,
-        buildDraggableFeedback: (_, __, children) {
-          return children;
-        },
-        spacing: R.sizes.screenHandler<double>(
-          context,
-          mobile: Atom.width * 0.01,
-          tablet: Atom.width * .025,
-          desktop: Atom.width * .031,
+    return Column(
+      children: [
+        Expanded(
+          child: ReorderableWrap(
+            alignment: WrapAlignment.center,
+            buildDraggableFeedback: (_, __, children) {
+              return children;
+            },
+            spacing: HomeSizer.instance.getRunSpacing(),
+            runSpacing: HomeSizer.instance.getBodyGapHeight(),
+            needsLongPressDraggable: true,
+            children: val.widgetsInUse,
+            onReorder: val.onReorder,
+            scrollDirection: Axis.vertical,
+            maxMainAxisCount: 3,
+          ),
         ),
-        runSpacing: R.sizes.screenHandler<double>(
-          context,
-          mobile: Atom.width * .020,
-          tablet: Atom.width * .025,
-          desktop: Atom.width * .02,
-        ),
-        needsLongPressDraggable: true,
-        children: val.widgetsInUse,
-        onReorder: val.onReorder,
-        scrollDirection: Axis.vertical,
-      ),
+
+        //
+        SizedBox(height: Atom.safeBottom),
+      ],
     );
   }
 }

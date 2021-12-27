@@ -7375,6 +7375,36 @@ class LocaleProvider {
     );
   }
 
+  /// `Diastolic`
+  String get dia {
+    return Intl.message(
+      'Diastolic',
+      name: 'dia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Systolic`
+  String get sys {
+    return Intl.message(
+      'Systolic',
+      name: 'sys',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pulse`
+  String get pulse {
+    return Intl.message(
+      'Pulse',
+      name: 'pulse',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Video Call`
   String get video_call {
     return Intl.message(
@@ -7430,6 +7460,36 @@ class LocaleProvider {
     return Intl.message(
       'The passwords entered do not match.',
       name: 'passwords_not_match',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select day`
+  String get select_day_from {
+    return Intl.message(
+      'Select day',
+      name: 'select_day_from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select another day`
+  String get select_day_to {
+    return Intl.message(
+      'Select another day',
+      name: 'select_day_to',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healthcare Employee`
+  String get healthcare_employee {
+    return Intl.message(
+      'Healthcare Employee',
+      name: 'healthcare_employee',
       desc: '',
       args: [],
     );

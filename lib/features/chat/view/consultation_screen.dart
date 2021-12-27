@@ -156,7 +156,7 @@ class ConsultationScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SvgPicture.asset(
-            R.image.add_icon,
+            R.image.add,
             color: R.color.white,
           ),
         ),

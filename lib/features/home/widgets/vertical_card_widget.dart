@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 
 import '../../../core/core.dart';
+import '../utils/home_sizer.dart';
 
 class VerticalCard extends StatelessWidget {
-  final String topImage;
-  final Widget bottomTitle;
+  final String title;
+  final CustomPainter painter;
 
   const VerticalCard({
     Key key,
-    this.topImage,
-    this.bottomTitle,
+    @required this.title,
+    @required this.painter,
   }) : super(key: key);
 
   @override
@@ -26,24 +26,38 @@ class VerticalCard extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Stack(
                 children: [
+                  //
                   Align(
                     alignment: Alignment.topRight,
-                    child: Image.asset(
-                      topImage,
-                      width: Atom.height * 0.10,
-                      height: Atom.height * 0.10,
+                    child: CustomPaint(
+                      size: Size(Atom.height * 0.10, Atom.height * 0.10),
+                      painter: painter,
                     ),
                   ),
+
+                  //
+                  // Align(
+                  //   alignment: Alignment.topRight,
+                  //   child: Image.asset(
+                  //     topImage,
+                  //     width: Atom.height * 0.10,
+                  //     height: Atom.height * 0.10,
+                  //   ),
+                  // ),
 
                   //
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: bottomTitle,
+                      child: Text(
+                        title,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: getIt<ITheme>().textTheme.headline2,
+                      ),
                     ),
                   ),
                 ],
@@ -57,13 +71,6 @@ class VerticalCard extends StatelessWidget {
     );
   }
 
-  double getHeight(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    return R.sizes.screenHandler<double>(
-      context,
-      mobile: height * 0.28,
-      tablet: height * 0.25,
-      desktop: height * 0.25,
-    );
-  }
+  double getHeight(BuildContext context) =>
+      HomeSizer.instance.getBodyCardHeight();
 }

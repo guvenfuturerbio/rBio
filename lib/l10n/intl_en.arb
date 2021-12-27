@@ -734,10 +734,17 @@
   "blood_pressure_tracking": "Blood Pressure Tracking",
   "treatment_process": "Treatment Process",
   "critical_metrics": "Critical metrics",
+
+  "dia":"Diastolic",
+  "sys":"Systolic",
+  "pulse":"Pulse",
   "video_call": "Video Call",
   "from_newest": "From newest",
   "from_oldest": "From oldest",
   "sort_by": "Sort by",
   "expired_interpreter_request": "Appointment has expired. No Translator Can Be Requested!",
-  "passwords_not_match": "The passwords entered do not match."
+  "passwords_not_match": "The passwords entered do not match.",
+  "select_day_from": "Select day",
+  "select_day_to": "Select another day",
+  "healthcare_employee": "Healthcare Employee"
 }

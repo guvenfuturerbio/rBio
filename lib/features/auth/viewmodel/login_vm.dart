@@ -234,7 +234,6 @@ class LoginScreenVm extends ChangeNotifier {
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
 
         //One dose hasta bilgileri
-
         final patientDetail = await getIt<Repository>().getPatientDetail();
 
         // Güven online kullanıcı bilgileri
@@ -271,7 +270,7 @@ class LoginScreenVm extends ChangeNotifier {
           }
         }
 
-        await getIt<SymptomRepository>().getSymtptomsApiToken();
+        // await getIt<SymptomRepository>().getSymtptomsApiToken();
 
         this._progress = LoadingProgress.DONE;
         // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
@@ -290,6 +289,8 @@ class LoginScreenVm extends ChangeNotifier {
         // MainNavigation.toHome(mContext);
       } catch (e, stackTrace) {
         Sentry.captureException(e, stackTrace: stackTrace);
+        print(e);
+        debugPrintStack(stackTrace: stackTrace);
         hideDialog(mContext);
         this._progress = LoadingProgress.ERROR;
         notifyListeners();
