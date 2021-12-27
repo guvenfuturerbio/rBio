@@ -4,13 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-<<<<<<< HEAD
 import 'package:onedosehealth/core/data/service/firebase_service.dart';
-import 'package:onedosehealth/core/notifiers/locale_notifier.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
 import 'package:onedosehealth/features/mediminder/mediminder.dart';
-=======
->>>>>>> master
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 

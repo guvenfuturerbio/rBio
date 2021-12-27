@@ -110,15 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: R.sizes.iconSize,
                 ),
               ),
-<<<<<<< HEAD
-              onTap: () {
-                Atom.to(PagePaths.CONSULTATION);
-=======
               onPressed: () {
-                print(getIt<ProfileStorageImpl>().getFirst().id);
-                log(getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.JWT_TOKEN));
->>>>>>> master
+                Atom.to(PagePaths.CONSULTATION);
               },
             ),
           ),
