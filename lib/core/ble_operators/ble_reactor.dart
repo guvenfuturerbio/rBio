@@ -222,7 +222,6 @@ class BleReactorOps extends ChangeNotifier {
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         getIt<BleDeviceManager>().savePairedDevices(pairedDevice).then((value) {
-          log("$value");
           value
               ? _controlPointResponse = recordAccessData
               : _controlPointResponse.clear();

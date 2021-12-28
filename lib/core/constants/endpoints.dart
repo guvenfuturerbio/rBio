@@ -179,13 +179,13 @@ class _Endpoints {
   String ct_getMedicineByFilter(String text) =>
       '/Medicine/get-by-filter/${text}'.xCronicTracking;
   String ct_insertNewScaleValue =
-      '/Measurement/add-bp-with-detail'.xCronicTracking;
+      '/Measurement/add-bmi-with-detail'.xCronicTracking;
   String ct_deleteScaleMeasurement =
-      '/Measurement/delete-bp-with-detail'.xCronicTracking;
+      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
   String ct_getScaleMeasurement =
-      '/Measurement/get-bp-measurements'.xCronicTracking;
+      '/Measurement/get-bmi-measurements'.xCronicTracking;
   String ct_updateScaleMeasurement =
-      '/Measurement/update-bp-measurement'.xCronicTracking;
+      '/Measurement/update-bmi-measurement'.xCronicTracking;
 
   String ct_insertNewBpValue =
       '/Measurement/add-bp-with-detail'.xCronicTracking;

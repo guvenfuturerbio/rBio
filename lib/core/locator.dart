@@ -38,7 +38,6 @@ Future<void> setupLocator(AppConfig appConfig) async {
   try {
     await registerStorage();
   } catch (_) {
-    log('Error occured');
     clearStorage();
     await registerStorage();
   }

@@ -28,6 +28,12 @@ class ProfileVm extends ChangeNotifier {
     await getIt<Repository>().localCacheService.removeAll();
     getIt<UserNotifier>().clear();
 
+    // Clear all boxes
+    getIt<GlucoseStorageImpl>().clear();
+    getIt<ScaleStorageImpl>().clear();
+    getIt<BloodPressureStorageImpl>().clear();
+    getIt<ProfileStorageImpl>().clear();
+
     AnalyticsManager().sendEvent(LogoutEvent());
     Atom.to(PagePaths.LOGIN, isReplacement: true);
   }

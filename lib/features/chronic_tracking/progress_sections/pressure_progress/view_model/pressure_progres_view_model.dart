@@ -262,8 +262,9 @@ class BpProgressPageVm
 
     return RbioSmallChronicWidget(
       callback: callBack,
-      lastMeasurement:
-          'Sys: ${lastMeasurement?.sys ?? ''}, Dia: ${lastMeasurement?.dia ?? ''}, Pulse: ${lastMeasurement?.pulse ?? ''}',
+      lastMeasurement: lastMeasurement == null
+          ? '${LocaleProvider.current.no_measurement}'
+          : 'Sys: ${lastMeasurement?.sys ?? ''}, Dia: ${lastMeasurement?.dia ?? ''}, Pulse: ${lastMeasurement?.pulse ?? ''}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: R.image.ct_blood_pressure,
     );

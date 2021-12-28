@@ -7,20 +7,20 @@ class BpMeasurementViewModel {
 
   BpMeasurementViewModel({this.bpModel});
 
-  DateTime get date => bpModel.dateTime;
+  DateTime get date => bpModel?.dateTime;
   set date(DateTime rhs) => bpModel.dateTime = rhs;
 
   int get id => this.bpModel.dateTime.millisecondsSinceEpoch;
 
-  int get sys => bpModel.sys;
+  int get sys => bpModel?.sys;
 
   set sys(int rhs) => bpModel.sys = rhs;
 
-  int get dia => bpModel.dia;
+  int get dia => bpModel?.dia;
 
   set dia(int rhs) => bpModel.dia = rhs;
 
-  int get pulse => bpModel.pulse;
+  int get pulse => bpModel?.pulse;
 
   set pulse(int rhs) => bpModel.pulse = rhs;
 
@@ -38,7 +38,7 @@ class BpMeasurementViewModel {
 
   set note(String rhs) => bpModel.note = rhs;
 
-  Map<String, int> get pulseRange {
+  /* Map<String, int> get pulseRange {
     List<String> nums =
         getIt<ProfileStorageImpl>().getFirst().birthDate.split(".");
     var yearOfBirth = int.parse(nums[2]);
@@ -69,9 +69,9 @@ class BpMeasurementViewModel {
       map = {'min': 78, 'max': 132};
     } else if (age >= 70) {
       map = {'min': 75, 'max': 128};
-    }
+    } 
     return map;
-  }
+  } */
 
   Color get systolicColor {
     if (sys == null) {
@@ -108,17 +108,16 @@ class BpMeasurementViewModel {
   }
 
   Color get pulseColor {
-    var range = pulseRange;
     if (pulse == null) {
       return Colors.grey[300];
     }
-    if (range['min'] <= pulse && range['max'] >= pulse) {
+    if (pulse > 59 && pulse < 101) {
       return R.color.target;
-    } else if (range['max'] < pulse) {
+    } else if (pulse > 100 && pulse < 121) {
       return R.color.high;
-    } else if (range['min'] > pulse) {
-      return R.color.low;
-    } else if (range['min'] > pulse) {
+    } else if (pulse > 120) {
+      return R.color.very_high;
+    } else if (pulse < 60) {
       return R.color.low;
     } else {
       return Colors.grey[300];

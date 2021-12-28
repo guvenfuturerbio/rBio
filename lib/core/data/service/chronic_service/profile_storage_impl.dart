@@ -140,4 +140,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
     if (!box.isOpen)
       throw Exception('Box can\'t open please check your box!!!');
   }
+
+  @override
+  void clear() => box.clear();
 }

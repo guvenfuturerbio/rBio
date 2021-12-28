@@ -282,4 +282,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       }
     }
   }
+
+  @override
+  void clear() => box.clear();
 }
