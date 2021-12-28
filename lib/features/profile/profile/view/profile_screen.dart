@@ -130,6 +130,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (context.read<UserNotifier>().isDoctor) ...[
+                      _buildListItem(
+                        LocaleProvider.current.healthcare_employee,
+                        () {
+                          Atom.to(PagePaths.DOCTOR_HOME);
+                        },
+                      ),
+                    ],
+
                     //
                     _buildListItem(
                       LocaleProvider.current.lbl_personal_information,

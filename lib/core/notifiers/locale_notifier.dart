@@ -39,4 +39,14 @@ class LocaleNotifier with ChangeNotifier {
 
     return _enLocal;
   }
+
+  String get getLocaleStr {
+    if (current.languageCode == _trLocal.languageCode) {
+      return 'tr_TR';
+    } else if (current.languageCode == _enLocal.languageCode) {
+      return 'en_US';
+    }
+
+    return 'tr_TR';
+  }
 }

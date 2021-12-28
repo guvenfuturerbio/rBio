@@ -1,5 +1,4 @@
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -21,28 +20,42 @@ class RegisterStep1Screen extends StatefulWidget {
 }
 
 class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
-  List genderList = [
-    "E",
-    "K",
-  ];
-
+  List genderList = ["E", "K"];
   Country country;
-  final focus = FocusNode();
 
-  //for this page
-  final TextEditingController _tcName = TextEditingController();
-  final TextEditingController _tcSurname = TextEditingController();
-  final TextEditingController _tcPhoneNumber = TextEditingController();
-  bool checkedValueForFn = false;
-  bool checkedValueForTc = false;
+  TextEditingController _nameEditingController;
+  TextEditingController _surnameEditingController;
+  TextEditingController _phoneNumberEditingController;
 
-  // Turkish Citizen Tab
-  final tcFNode = FocusNode();
-  final tcNameNode = FocusNode();
-  final tcLNameNode = FocusNode();
-  final phoneFNode = FocusNode();
-  final emailFNode = FocusNode();
-  final birthdayNode = FocusNode();
+  FocusNode _nameFocusNode;
+  FocusNode _surnameFocusNode;
+  FocusNode _phoneNumberFocusNode;
+
+  @override
+  void initState() {
+    _nameEditingController = TextEditingController();
+    _surnameEditingController = TextEditingController();
+    _phoneNumberEditingController = TextEditingController();
+
+    _nameFocusNode = FocusNode();
+    _surnameFocusNode = FocusNode();
+    _phoneNumberFocusNode = FocusNode();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameEditingController.dispose();
+    _surnameEditingController.dispose();
+    _phoneNumberEditingController.dispose();
+
+    _nameFocusNode.dispose();
+    _surnameFocusNode.dispose();
+    _phoneNumberFocusNode.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,242 +87,79 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
   Widget _buildBody(RegisterStep2ScreenVm vm) {
     return KeyboardAvoider(
       autoScroll: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          //
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15.0, left: 20, top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Text(
-                        LocaleProvider.current.btn_sign_up,
-                        style: context.xHeadline1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: context.TEXTSCALE * 30,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      "Let's know you better!",
-                      style: context.xHeadline3,
-                    ),
-                  ],
-                ),
-              ),
-
-              //
-              Row(
-                children: [
-                  //
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                          child: Text(
-                            "Name",
-                            style: context.xHeadline3,
-                          ),
-                        ),
-                        Container(
-                          child: RbioTextFormField(
-                            focusNode: tcNameNode,
-                            controller: _tcName,
-                            obscureText: false,
-                            keyboardType: TextInputType.name,
-                            textInputAction: TextInputAction.next,
-                            hintText: LocaleProvider.of(context).name,
-                            onFieldSubmitted: (term) {
-                              UtilityManager().fieldFocusChange(
-                                context,
-                                tcNameNode,
-                                tcLNameNode,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  //
-                  SizedBox(
-                    width: 5,
-                  ),
-
-                  //
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 15.0,
-                            bottom: 5,
-                            top: 15,
-                          ),
-                          child: Text(
-                            "Surname",
-                            style: context.xHeadline3,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            bottom: 10,
-                          ),
-                          child: RbioTextFormField(
-                            focusNode: tcLNameNode,
-                            controller: _tcSurname,
-                            obscureText: false,
-                            keyboardType: TextInputType.name,
-                            textInputAction: TextInputAction.next,
-                            hintText: LocaleProvider.of(context).surname,
-                            onFieldSubmitted: (term) {
-                              UtilityManager().fieldFocusChange(
-                                context,
-                                tcLNameNode,
-                                tcFNode,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          //
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                  bottom: 5,
-                  top: 15,
-                ),
-                child: Text(
-                  "Gender",
-                  style: context.xHeadline3,
-                ),
-              ),
-
-              //
-              Container(
-                color: Colors.transparent,
-                margin: EdgeInsets.only(
-                  bottom: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    addRadioButton(0, 'Male'),
-                    addRadioButton(1, 'Female'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          //
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                  bottom: 5,
-                  top: 15,
-                ),
-                child: Text(
-                  "Date of birth",
-                  style: context.xHeadline3,
-                ),
-              ),
-              InkWell(
-                onTap: () => vm.selectDate(context),
-                child: Container(
-                  padding: EdgeInsets.all(13),
-                  decoration: BoxDecoration(
-                    color: R.color.white,
-                    border: Border.all(
-                      color: R.color.dark_white,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      (vm.selectedDate == null)
-                          ? Text('DD/MM/YYYY',
-                              style: context.xHeadline3.copyWith(
-                                  color: getIt<ITheme>()
-                                      .textColorSecondary
-                                      .withOpacity(0.5)))
-                          : Text(
-                              DateFormat('dd MMMM yyyy')
-                                  .format(vm.selectedDate),
-                              style: TextStyle(
-                                fontSize: 16,
-                              )),
-                      Icon(Icons.calendar_today)
-                    ],
-                  ),
-                  margin: EdgeInsets.only(
-                    bottom: 10,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          //
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15.0),
-            child: Column(
+      child: RbioKeyboardActions(
+        focusList: [
+          _nameFocusNode,
+          _surnameFocusNode,
+          _phoneNumberFocusNode,
+        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            //
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //
                 Padding(
                   padding:
-                      const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
-                  child: Text(
-                    LocaleProvider.current.phone_number,
-                    style: context.xHeadline3,
+                      const EdgeInsets.only(bottom: 15.0, left: 20, top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: Text(
+                          LocaleProvider.current.btn_sign_up,
+                          style: context.xHeadline1.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: context.TEXTSCALE * 30,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Let's know you better!",
+                        style: context.xHeadline3,
+                      ),
+                    ],
                   ),
                 ),
 
                 //
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //
-                    Container(
-                      decoration: BoxDecoration(
-                        color: R.color.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: CountryCodePicker(
-                        padding: EdgeInsets.zero,
-                        onChanged: print,
-                        initialSelection: 'TR',
-                        favorite: ['+90', 'TR'],
-                        showCountryOnly: false,
-                        showOnlyCountryWhenClosed: false,
-                        alignLeft: false,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 15.0, bottom: 5),
+                            child: Text(
+                              "Name",
+                              style: context.xHeadline3,
+                            ),
+                          ),
+                          Container(
+                            child: RbioTextFormField(
+                              focusNode: _nameFocusNode,
+                              controller: _nameEditingController,
+                              obscureText: false,
+                              keyboardType: TextInputType.name,
+                              textInputAction: TextInputAction.next,
+                              hintText: LocaleProvider.of(context).name,
+                              onFieldSubmitted: (term) {
+                                UtilityManager().fieldFocusChange(
+                                  context,
+                                  _nameFocusNode,
+                                  _surnameFocusNode,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -320,157 +170,330 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
                     //
                     Expanded(
-                      child: Container(
-                        child: RbioTextFormField(
-                          focusNode: phoneFNode,
-                          controller: _tcPhoneNumber,
-                          keyboardType: TextInputType.phone,
-                          textInputAction: TextInputAction.next,
-                          hintText: LocaleProvider.of(context).phone_number,
-                          inputFormatters: <TextInputFormatter>[
-                            TabToNextFieldTextInputFormatter(
-                              context,
-                              phoneFNode,
-                              emailFNode,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              bottom: 5,
+                              top: 15,
                             ),
-                          ],
-                          onFieldSubmitted: (term) {
-                            UtilityManager().fieldFocusChange(
-                              context,
-                              phoneFNode,
-                              emailFNode,
-                            );
-                          },
-                        ),
+                            child: Text(
+                              "Surname",
+                              style: context.xHeadline3,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              bottom: 10,
+                            ),
+                            child: RbioTextFormField(
+                              focusNode: _surnameFocusNode,
+                              controller: _surnameEditingController,
+                              obscureText: false,
+                              keyboardType: TextInputType.name,
+                              textInputAction: TextInputAction.next,
+                              hintText: LocaleProvider.of(context).surname,
+                              onFieldSubmitted: (term) {
+                                UtilityManager().fieldFocusChange(
+                                  context,
+                                  _surnameFocusNode,
+                                  null,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ],
             ),
-          ),
 
-          //
-          Container(
-            margin: EdgeInsets.only(
-              top: 5,
-              bottom: 10,
-              left: 50,
-              right: 50,
-            ),
-            child: RbioElevatedButton(
-              infinityWidth: true,
-              title: LocaleProvider.of(context).btn_next.toUpperCase(),
-              onTap: () {
-                if (_tcName.text.length > 0 &&
-                    _tcSurname.text.length > 0 &&
-                    _tcPhoneNumber.text.length > 0 &&
-                    vm.selectedDate != null) {
-                  Atom.to(
-                    PagePaths.REGISTER_STEP_2,
-                    queryParameters: {
-                      'registerName': _tcName.text,
-                      'registerSurname': _tcSurname.text,
-                      'registerGender': gender,
-                      'registerDateOfBirth': vm.selectedDate.toString(),
-                      'registerPhoneNumber': _tcPhoneNumber.text
-                    },
-                  );
-                } else {
-                  vm.showGradientDialog(
-                    context,
-                    LocaleProvider.of(context).warning,
-                    LocaleProvider.of(context).fill_all_field,
-                  );
-                }
-              },
-            ),
-          ),
-
-          //
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                LocaleProvider.of(context).lbl_dont_have_account,
-                style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColorSecondary,
-                ),
-              ),
-              InkWell(
-                child: Text(
-                  LocaleProvider.of(context).btn_sign_in,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().mainColor,
+            //
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15.0,
+                    bottom: 5,
+                    top: 15,
+                  ),
+                  child: Text(
+                    "Gender",
+                    style: context.xHeadline3,
                   ),
                 ),
+
+                //
+                Container(
+                  color: Colors.transparent,
+                  margin: EdgeInsets.only(
+                    bottom: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      addRadioButton(0, 'Male'),
+                      addRadioButton(1, 'Female'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            //
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15.0,
+                    bottom: 5,
+                    top: 15,
+                  ),
+                  child: Text(
+                    "Date of birth",
+                    style: context.xHeadline3,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => vm.selectDate(context),
+                  child: Container(
+                    padding: EdgeInsets.all(13),
+                    decoration: BoxDecoration(
+                      color: R.color.white,
+                      border: Border.all(
+                        color: R.color.dark_white,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        (vm.selectedDate == null)
+                            ? Text('DD/MM/YYYY',
+                                style: context.xHeadline3.copyWith(
+                                    color: getIt<ITheme>()
+                                        .textColorSecondary
+                                        .withOpacity(0.5)))
+                            : Text(
+                                DateFormat('dd MMMM yyyy')
+                                    .format(vm.selectedDate),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                )),
+                        Icon(Icons.calendar_today)
+                      ],
+                    ),
+                    margin: EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            //
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
+                    child: Text(
+                      LocaleProvider.current.phone_number,
+                      style: context.xHeadline3,
+                    ),
+                  ),
+
+                  //
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //
+                      Container(
+                        decoration: BoxDecoration(
+                          color: R.color.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: CountryCodePicker(
+                          padding: EdgeInsets.zero,
+                          onChanged: print,
+                          initialSelection: 'TR',
+                          favorite: ['+90', 'TR'],
+                          showCountryOnly: false,
+                          showOnlyCountryWhenClosed: false,
+                          alignLeft: false,
+                        ),
+                      ),
+
+                      //
+                      SizedBox(
+                        width: 5,
+                      ),
+
+                      //
+                      Expanded(
+                        child: Container(
+                          child: RbioTextFormField(
+                            focusNode: _phoneNumberFocusNode,
+                            controller: _phoneNumberEditingController,
+                            keyboardType: TextInputType.phone,
+                            textInputAction: TextInputAction.next,
+                            hintText: LocaleProvider.of(context).phone_number,
+                            inputFormatters: <TextInputFormatter>[
+                              TabToNextFieldTextInputFormatter(
+                                context,
+                                _phoneNumberFocusNode,
+                                null,
+                              ),
+                            ],
+                            onFieldSubmitted: (term) {
+                              UtilityManager().fieldFocusChange(
+                                context,
+                                _phoneNumberFocusNode,
+                                null,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            //
+            Container(
+              margin: EdgeInsets.only(
+                top: 5,
+                bottom: 10,
+                left: 50,
+                right: 50,
+              ),
+              child: RbioElevatedButton(
+                infinityWidth: true,
+                title: LocaleProvider.of(context).btn_next.toUpperCase(),
                 onTap: () {
-                  context.vRouter.to(PagePaths.LOGIN);
+                  if (_nameEditingController.text.length > 0 &&
+                      _surnameEditingController.text.length > 0 &&
+                      _phoneNumberEditingController.text.length > 0 &&
+                      vm.selectedDate != null) {
+                    Atom.to(
+                      PagePaths.REGISTER_STEP_2,
+                      queryParameters: {
+                        'registerName': _nameEditingController.text,
+                        'registerSurname': _surnameEditingController.text,
+                        'registerGender': gender,
+                        'registerDateOfBirth': vm.selectedDate.toString(),
+                        'registerPhoneNumber':
+                            _phoneNumberEditingController.text
+                      },
+                    );
+                  } else {
+                    vm.showGradientDialog(
+                      context,
+                      LocaleProvider.of(context).warning,
+                      LocaleProvider.of(context).fill_all_field,
+                    );
+                  }
                 },
               ),
-            ],
-          ),
+            ),
 
-          //
-       //   buildSeperator(),
+            //
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  LocaleProvider.of(context).lbl_dont_have_account,
+                  style: context.xHeadline3.copyWith(
+                    color: getIt<ITheme>().textColorSecondary,
+                  ),
+                ),
+                InkWell(
+                  child: Text(
+                    LocaleProvider.of(context).btn_sign_in,
+                    style: context.xHeadline3.copyWith(
+                      color: getIt<ITheme>().mainColor,
+                    ),
+                  ),
+                  onTap: () {
+                    context.vRouter.to(PagePaths.LOGIN);
+                  },
+                ),
+              ],
+            ),
 
-          SizedBox(
-            height: 10,
-          ),
+            //
+            //   buildSeperator(),
 
-          //
-     //     buildSocialLogin(),
-        ],
+            SizedBox(
+              height: 10,
+            ),
+
+            //
+            //     buildSocialLogin(),
+          ],
+        ),
       ),
     );
   }
 
   Row buildSeperator() {
     return Row(
-          children: [
-            Expanded(
-              child: Container(
-                height: 1,
-                color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-              ),
+      children: [
+        Expanded(
+          child: Container(
+            height: 1,
+            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            "or",
+            style: context.xHeadline3.copyWith(
+              color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                "or",
-                style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: 1,
-                color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-              ),
-            ),
-          ],
-        );
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: 1,
+            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+          ),
+        ),
+      ],
+    );
   }
 
   Row buildSocialLogin() {
     return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SvgPicture.asset(
-              R.image.facebook,
-              width: 50,
-            ),
-            SvgPicture.asset(
-              R.image.apple,
-              width: 50,
-            ),
-            SvgPicture.asset(
-              R.image.google,
-              width: 50,
-            ),
-          ],
-        );
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SvgPicture.asset(
+          R.image.facebook,
+          width: 50,
+        ),
+        SvgPicture.asset(
+          R.image.apple,
+          width: 50,
+        ),
+        SvgPicture.asset(
+          R.image.google,
+          width: 50,
+        ),
+      ],
+    );
   }
 
   String gender;

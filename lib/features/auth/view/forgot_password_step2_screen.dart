@@ -22,8 +22,16 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
   TextEditingController _passwordController;
   TextEditingController _passwordAgainController;
 
+  FocusNode _temporaryFocusNode;
+  FocusNode _passwordFocusNode;
+  FocusNode _passwordAgainFocusNode;
+
   @override
   void initState() {
+    _temporaryFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
+    _passwordAgainFocusNode = FocusNode();
+
     _temporaryController = TextEditingController();
     _passwordController = TextEditingController();
     _passwordAgainController = TextEditingController();
@@ -33,6 +41,10 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
 
   @override
   void dispose() {
+    _temporaryFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    _passwordAgainFocusNode.dispose();
+
     _temporaryController.dispose();
     _passwordController.dispose();
     _passwordAgainController.dispose();
@@ -73,123 +85,135 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
       margin: EdgeInsets.only(top: 20),
       child: KeyboardAvoider(
         autoScroll: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20, top: 40),
-              child: RbioTextFormField(
-                controller: _temporaryController,
-                textInputAction: TextInputAction.next,
-                obscureText: value.passwordVisibility ? false : true,
-                hintText: LocaleProvider.of(context).temporary_pass,
-                onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                controller: _passwordController,
-                textInputAction: TextInputAction.next,
-                obscureText: value.passwordVisibility ? false : true,
-                hintText: LocaleProvider.of(context).new_password,
-                onChanged: (text) {
-                  value.checkPasswordCapability(text);
-                },
-                onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              ),
-            ),
-
-            //
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                controller: _passwordAgainController,
-                textInputAction: TextInputAction.done,
-                obscureText: value.passwordVisibility ? false : true,
-                hintText: LocaleProvider.of(context).new_password_again,
-                onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              ),
-            ),
-
-            //
-            _buildRow(
-              value.checkNumeric,
-              LocaleProvider.of(context).must_contain_digit,
-            ),
-
-            //
-            _buildRow(
-              value.checkUpperCase,
-              LocaleProvider.of(context).must_contain_uppercase,
-            ),
-
-            //
-            _buildRow(
-              value.checkLowerCase,
-              LocaleProvider.of(context).must_contain_lowercase,
-            ),
-
-            //
-            _buildRow(
-              value.checkSpecial,
-              LocaleProvider.of(context).must_contain_special,
-            ),
-
-            //
-            _buildRow(
-              value.checkLength,
-              LocaleProvider.of(context).password_must_8_char,
-            ),
-
-            //
-            Center(
-              child: Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20),
-                child: RbioElevatedButton(
-                  title: LocaleProvider.of(context).btn_done.toUpperCase(),
-                  onTap: () {
-                    if (_passwordController.text.trim() !=
-                        _passwordAgainController.text.trim()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            LocaleProvider.current.passwords_not_match,
-                          ),
-                        ),
-                      );
-                      return;
-                    }
-
-                    ChangePasswordModel changePasswordModel =
-                        ChangePasswordModel();
-                    changePasswordModel.identificationNumber = identityNumber;
-                    changePasswordModel.newPasswordConfirmation =
-                        _passwordAgainController.text;
-                    changePasswordModel.newPassword = _passwordController.text;
-                    changePasswordModel.oldPassword = _temporaryController.text;
-
-                    if (_temporaryController.text.length > 0 &&
-                        _passwordController.text.length > 0 &&
-                        _passwordAgainController.text.length > 0) {
-                      value.forgotPassStep2(changePasswordModel);
-                    } else {
-                      value.showGradientDialog(
-                        context,
-                        LocaleProvider.of(context).warning,
-                        LocaleProvider.of(context).fill_all_field,
-                      );
-                    }
-                  },
+        child: RbioKeyboardActions(
+          focusList: [
+            _temporaryFocusNode,
+            _passwordFocusNode,
+            _passwordAgainFocusNode,
+          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              //
+              Container(
+                margin: EdgeInsets.only(bottom: 20, top: 40),
+                child: RbioTextFormField(
+                  focusNode: _temporaryFocusNode,
+                  controller: _temporaryController,
+                  textInputAction: TextInputAction.next,
+                  obscureText: value.passwordVisibility ? false : true,
+                  hintText: LocaleProvider.of(context).temporary_pass,
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                 ),
               ),
-            ),
-          ],
+
+              //
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: RbioTextFormField(
+                  focusNode: _passwordFocusNode,
+                  controller: _passwordController,
+                  textInputAction: TextInputAction.next,
+                  obscureText: value.passwordVisibility ? false : true,
+                  hintText: LocaleProvider.of(context).new_password,
+                  onChanged: (text) {
+                    value.checkPasswordCapability(text);
+                  },
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                ),
+              ),
+
+              //
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: RbioTextFormField(
+                  focusNode: _passwordAgainFocusNode,
+                  controller: _passwordAgainController,
+                  textInputAction: TextInputAction.done,
+                  obscureText: value.passwordVisibility ? false : true,
+                  hintText: LocaleProvider.of(context).new_password_again,
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                ),
+              ),
+
+              //
+              _buildRow(
+                value.checkNumeric,
+                LocaleProvider.of(context).must_contain_digit,
+              ),
+
+              //
+              _buildRow(
+                value.checkUpperCase,
+                LocaleProvider.of(context).must_contain_uppercase,
+              ),
+
+              //
+              _buildRow(
+                value.checkLowerCase,
+                LocaleProvider.of(context).must_contain_lowercase,
+              ),
+
+              //
+              _buildRow(
+                value.checkSpecial,
+                LocaleProvider.of(context).must_contain_special,
+              ),
+
+              //
+              _buildRow(
+                value.checkLength,
+                LocaleProvider.of(context).password_must_8_char,
+              ),
+
+              //
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  child: RbioElevatedButton(
+                    title: LocaleProvider.of(context).btn_done.toUpperCase(),
+                    onTap: () {
+                      if (_passwordController.text.trim() !=
+                          _passwordAgainController.text.trim()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              LocaleProvider.current.passwords_not_match,
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+
+                      ChangePasswordModel changePasswordModel =
+                          ChangePasswordModel();
+                      changePasswordModel.identificationNumber = identityNumber;
+                      changePasswordModel.newPasswordConfirmation =
+                          _passwordAgainController.text;
+                      changePasswordModel.newPassword =
+                          _passwordController.text;
+                      changePasswordModel.oldPassword =
+                          _temporaryController.text;
+
+                      if (_temporaryController.text.length > 0 &&
+                          _passwordController.text.length > 0 &&
+                          _passwordAgainController.text.length > 0) {
+                        value.forgotPassStep2(changePasswordModel);
+                      } else {
+                        value.showGradientDialog(
+                          context,
+                          LocaleProvider.of(context).warning,
+                          LocaleProvider.of(context).fill_all_field,
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

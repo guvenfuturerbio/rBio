@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 
 import '../../../../core/core.dart';
 import '../../../../model/shared/user_account_info.dart';
 import '../viewmodel/personal_information_vm.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  UserAccount userAccount;
-
   PersonalInformationScreen({Key key}) : super(key: key);
 
   @override
@@ -19,22 +18,25 @@ class PersonalInformationScreen extends StatefulWidget {
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
-  TextEditingController identityController;
-  TextEditingController nameController;
-  TextEditingController birthdayController;
-  TextEditingController phoneNumberController;
-  TextEditingController emailController;
+  UserAccount userAccount;
+
+  TextEditingController _identityEditingController;
+  TextEditingController _nameEditingController;
+  TextEditingController _birthdayEditingController;
+  TextEditingController _phoneNumberEditingController;
+  TextEditingController _emailEditingController;
 
   FocusNode phoneNumberFocus;
   FocusNode emailFocus;
 
   @override
   void initState() {
-    identityController = TextEditingController();
-    nameController = TextEditingController();
-    birthdayController = TextEditingController();
-    phoneNumberController = TextEditingController();
-    emailController = TextEditingController();
+    _identityEditingController = TextEditingController();
+    _nameEditingController = TextEditingController();
+    _birthdayEditingController = TextEditingController();
+    _phoneNumberEditingController =
+        masked.MaskedTextController(mask: '(000) 000-0000');
+    _emailEditingController = TextEditingController();
 
     phoneNumberFocus = FocusNode();
     emailFocus = FocusNode();
@@ -44,11 +46,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   @override
   void dispose() {
-    identityController.dispose();
-    nameController.dispose();
-    birthdayController.dispose();
-    phoneNumberController.dispose();
-    emailController.dispose();
+    _identityEditingController.dispose();
+    _nameEditingController.dispose();
+    _birthdayEditingController.dispose();
+    _phoneNumberEditingController.dispose();
+    _emailEditingController.dispose();
 
     phoneNumberFocus.dispose();
     emailFocus.dispose();
@@ -59,28 +61,27 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.userAccount = getIt<UserNotifier>().getUserAccount();
+      userAccount = getIt<UserNotifier>().getUserAccount();
     } catch (e) {
       return RbioRouteError();
     }
 
-    identityController.text = widget.userAccount.nationality.xIsTCNationality
-        ? widget.userAccount.identificationNumber
-        : widget.userAccount.passaportNumber;
-    nameController.text =
-        widget.userAccount.name + " " + widget.userAccount.surname;
+    _identityEditingController.text = userAccount.nationality.xIsTCNationality
+        ? userAccount.identificationNumber
+        : userAccount.passaportNumber;
+    _nameEditingController.text = userAccount.name + " " + userAccount.surname;
 
-    birthdayController.text = widget.userAccount.patients.length > 0
-        ? widget.userAccount.patients.first.birthDate.replaceAll('.', '/')
+    _birthdayEditingController.text = userAccount.patients.length > 0
+        ? userAccount.patients.first.birthDate.replaceAll('.', '/')
         : "-";
 
     return ChangeNotifierProvider<PersonalInformationScreenVm>(
       create: (context) => PersonalInformationScreenVm(
         mContext: context,
-        email: widget.userAccount.electronicMail.contains("@mailyok.com")
+        email: userAccount.electronicMail.contains("@mailyok.com")
             ? "-"
-            : widget.userAccount.electronicMail,
-        phoneNumber: widget.userAccount.phoneNumber,
+            : userAccount.electronicMail,
+        phoneNumber: userAccount.phoneNumber,
       ),
       child: Consumer<PersonalInformationScreenVm>(
         builder: (
@@ -88,8 +89,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           PersonalInformationScreenVm vm,
           Widget child,
         ) {
-          phoneNumberController.text = vm.phoneNumber;
-          emailController.text = vm.email;
+          _phoneNumberEditingController.text = vm.phoneNumber;
+          _emailEditingController.text = vm.email;
 
           return KeyboardDismissOnTap(
             child: RbioLoadingOverlay(
@@ -145,12 +146,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         children: <Widget>[
           // Identity Number
           _buildTitle(
-            widget.userAccount.nationality.xIsTCNationality
+            userAccount.nationality.xIsTCNationality
                 ? LocaleProvider.of(context).tc_identity_number
                 : LocaleProvider.of(context).passport_number,
           ),
           _buildDisabledTextField(
-            identityController,
+            _identityEditingController,
           ),
 
           // Name
@@ -159,7 +160,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             LocaleProvider.of(context).name,
           ),
           _buildDisabledTextField(
-            nameController,
+            _nameEditingController,
           ),
 
           // Birthday
@@ -168,7 +169,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             LocaleProvider.of(context).birth_date,
           ),
           _buildDisabledTextField(
-            birthdayController,
+            _birthdayEditingController,
           ),
 
           // Phone Number
@@ -178,7 +179,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           ),
           RbioTextFormField(
             focusNode: phoneNumberFocus,
-            controller: phoneNumberController,
+            controller: _phoneNumberEditingController,
             keyboardType: TextInputType.phone,
             border: RbioTextFormField.activeBorder(),
             textInputAction: TextInputAction.done,
@@ -199,7 +200,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           ),
           RbioTextFormField(
             focusNode: emailFocus,
-            controller: emailController,
+            controller: _emailEditingController,
             border: RbioTextFormField.activeBorder(),
             textInputAction: TextInputAction.done,
             hintText: LocaleProvider.of(context).hint_input_password,
@@ -251,8 +252,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               title: LocaleProvider.current.update_information,
               onTap: () {
                 vm.updateValues(
-                  newPhoneNumber: phoneNumberController.text.trim(),
-                  newEmail: emailController.text.trim(),
+                  newPhoneNumber: _phoneNumberEditingController.text.trim(),
+                  newEmail: _emailEditingController.text.trim(),
                 );
               },
             ),

@@ -57,6 +57,8 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
       await getIt<UserNotifier>().setUserAccount(sharedUserAccount);
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
+    } finally {
+      showLoadingOverlay = false;
     }
   }
 

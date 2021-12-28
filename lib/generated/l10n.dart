@@ -7484,6 +7484,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Select day`
+  String get select_day_from {
+    return Intl.message(
+      'Select day',
+      name: 'select_day_from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select another day`
+  String get select_day_to {
+    return Intl.message(
+      'Select another day',
+      name: 'select_day_to',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healthcare Employee`
+  String get healthcare_employee {
+    return Intl.message(
+      'Healthcare Employee',
+      name: 'healthcare_employee',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

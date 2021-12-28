@@ -71,6 +71,8 @@ Widget progress({
       child: Container(
         width: 80,
         height: 80,
-        child: SvgPicture.asset(R.image.stethoscope_icon),
+        child: SvgPicture.asset(
+          R.image.stethoscope,
+        ),
       ),
     );

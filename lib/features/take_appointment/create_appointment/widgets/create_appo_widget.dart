@@ -48,47 +48,50 @@ Widget _buildDropdown(
   List<dynamic> itemList,
   String hint,
 ) {
-  return DropdownButton<dynamic>(
-    icon: isOnline ? Icon(Icons.close, size: 0) : null,
-    isExpanded: true,
-    underline: SizedBox(),
-    focusColor: Colors.white,
-    value: whichField == Fields.DEPARTMENT
-        ? val.dropdownValueDepartment
-        : whichField == Fields.TENANTS
-            ? val.dropdownValueTenant
-            : whichField == Fields.RELATIVE
-                ? val.dropdownValueRelative
-                : val.dropdownValueDoctor,
-    style: context.xHeadline5,
-    iconEnabledColor: Colors.black,
-    items: itemList.map<DropdownMenuItem<dynamic>>(
-      (dynamic value) {
-        return DropdownMenuItem<dynamic>(
-          value: value,
-          child: Text(
-            whichField == Fields.RELATIVE
-                ? '${value.name} ${value.surname}'
-                : value.title,
-            style: context.xHeadline5,
-          ),
-        );
-      },
-    ).toList(),
-    hint: Text(
-      hint,
+  return Center(
+    child: DropdownButton<dynamic>(
+      icon: isOnline ? Icon(Icons.close, size: 0) : null,
+      isExpanded: true,
+      underline: SizedBox(),
+      focusColor: Colors.white,
+      value: whichField == Fields.DEPARTMENT
+          ? val.dropdownValueDepartment
+          : whichField == Fields.TENANTS
+              ? val.dropdownValueTenant
+              : whichField == Fields.RELATIVE
+                  ? val.dropdownValueRelative
+                  : val.dropdownValueDoctor,
       style: context.xHeadline5,
+      iconEnabledColor: Colors.black,
+      items: itemList.map<DropdownMenuItem<dynamic>>(
+        (dynamic value) {
+          return DropdownMenuItem<dynamic>(
+            value: value,
+            child: Text(
+              whichField == Fields.RELATIVE
+                  ? '${value.name} ${value.surname}'
+                  : value.title,
+              style: context.xHeadline5,
+            ),
+          );
+        },
+      ).toList(),
+      hint: Text(
+        hint,
+        style: context.xHeadline5,
+      ),
+      onChanged: (dynamic value) {
+        if (whichField == Fields.DEPARTMENT) {
+          val.departmentSelection(value);
+        } else if (whichField == Fields.TENANTS) {
+          val.hospitalSelection(value);
+        } else if (whichField == Fields.DOCTORS) {
+          val.doctorSelection(value);
+        } else if (whichField == Fields.RELATIVE) {
+          val.relativeSelection(value);
+        }
+      },
+      itemHeight: context.xTextScaleType == TextScaleType.Small ? 50 : 70,
     ),
-    onChanged: (dynamic value) {
-      if (whichField == Fields.DEPARTMENT) {
-        val.departmentSelection(value);
-      } else if (whichField == Fields.TENANTS) {
-        val.hospitalSelection(value);
-      } else if (whichField == Fields.DOCTORS) {
-        val.doctorSelection(value);
-      } else if (whichField == Fields.RELATIVE) {
-        val.relativeSelection(value);
-      }
-    },
   );
 }

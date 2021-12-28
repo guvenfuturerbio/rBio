@@ -211,7 +211,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.APPOINTMENTS,
-      widget: AppointmentListScreen(true),
+      widget: AppointmentListScreen(),
     ),
 
     VWidget(

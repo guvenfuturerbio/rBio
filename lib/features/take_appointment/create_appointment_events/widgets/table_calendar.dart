@@ -73,6 +73,7 @@ class _TableCalendarState extends State<_TableCalendar> {
 
         //
         TableCalendar<Event>(
+          locale: context.watch<LocaleNotifier>().getLocaleStr,
           daysBackgroundColor: getIt<ITheme>().secondaryColor,
           cellBackgroundColor: getIt<ITheme>().cardBackgroundColor,
 
@@ -136,19 +137,6 @@ class _TableCalendarState extends State<_TableCalendar> {
 
           //
           calendarBuilders: CalendarBuilders(
-            // #region headerTitleBuilder
-            headerTitleBuilder: (context, day) {
-              return GestureDetector(
-                onTap: () {},
-                child: Text(
-                  DateFormat.yMMMM('en_US').format(day),
-                  style: context.xHeadline3,
-                  textAlign: TextAlign.center,
-                ),
-              );
-            },
-            // #endregion
-
             // #region defaultBuilder
             // Aktif günler, bugün hariç
             defaultBuilder: (context, day, focusedDay) {
