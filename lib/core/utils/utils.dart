@@ -39,6 +39,12 @@ class Utils {
   }
   // #endregion
 
+  // #region hideKeyboardWithoutContext
+  void hideKeyboardWithoutContext() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
+  // #endregion
+
   // #region getCacheApiCallList
   Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
     String url,

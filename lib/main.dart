@@ -1,5 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,22 +63,22 @@ void _initFirebaseMessaging() {
   FirebaseMessagingManager();
 }
 
-// TOP-LEVEL or STATIC function to handle background message
-final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-
-// ignore: must_be_immutable
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final bgProgressPage = BgProgressPageViewModel();
+  @override
+  void initState() {
+    super.initState();
+    final widgetsBinding = WidgetsBinding.instance;
+    if (widgetsBinding != null) {
+      widgetsBinding.addPostFrameCallback((_) {
+        Utils.instance.hideKeyboardWithoutContext();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,12 +94,6 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (context) => BgMeasurementsNotifierDoc(),
-          ),
-          Provider<FirebaseAnalytics>.value(
-            value: MyApp.analytics,
-          ),
-          Provider<FirebaseAnalyticsObserver>.value(
-            value: MyApp.observer,
           ),
           ChangeNotifierProvider<HomeVm>(
             create: (context) => HomeVm(),
@@ -167,10 +159,7 @@ class _MyAppState extends State<MyApp> {
                 //
                 title: 'Güven Online',
                 debugShowCheckedModeBanner: false,
-                navigatorObservers: [
-                  FirebaseAnalyticsObserver(analytics: MyApp.analytics),
-                  routeObserver
-                ],
+                navigatorObservers: [],
 
                 //
                 builder: (BuildContext context, Widget child) {
@@ -192,6 +181,14 @@ class _MyAppState extends State<MyApp> {
                       themeNotifier.theme.scaffoldBackgroundColor,
                   fontFamily: themeNotifier.theme.fontFamily,
                   textTheme: themeNotifier.theme.textTheme,
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: getIt<ITheme>().mainColor,
+                    selectionColor: getIt<ITheme>().mainColor,
+                    selectionHandleColor: getIt<ITheme>().mainColor,
+                  ),
+                  cupertinoOverrideTheme: CupertinoThemeData(
+                    primaryColor: getIt<ITheme>().mainColor,
+                  ),
                 ),
                 locale: context.watch<LocaleNotifier>().current,
                 localizationsDelegates: const [
