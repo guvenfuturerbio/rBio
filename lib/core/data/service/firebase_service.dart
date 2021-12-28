@@ -1,34 +1,63 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
 import 'package:onedosehealth/features/chat/model/message.dart';
+
+import '../../core.dart';
 
 class FirestoreManager {
   final FirebaseFirestore _firebaseDB = FirebaseFirestore.instance;
   PickedFile imageFile;
-  
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> streamSubscription;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  Future<void> loginFirebase() async {
+    final User user = (await _auth.signInWithEmailAndPassword(
+            email: getIt<UserNotifier>().firebaseEmail,
+            password: getIt<UserNotifier>().firebasePassword))
+        .user;
+    getIt<UserNotifier>().firebaseID = user.uid;
+  }
 
+  sortUid(Message message) {
+    return message.sentFrom.compareTo(message.sentTo);
+  }
+
+  Future<bool> writeMessageToFirebase(
+      String first, String second, Message message) async {
+    try {
+      await _firebaseDB
+          .collection("conversations/")
+          .doc(first + " - " + second)
+          .update({
+        'messages': FieldValue.arrayUnion([message.toMap()])
+      });
+    } on FirebaseException catch (e) {
+      if (e.code == "not-found") {
+        await _firebaseDB
+            .collection("conversations/")
+            .doc(first + " - " + second)
+            .set({
+          'messages': FieldValue.arrayUnion([message.toMap()])
+        });
+      }
+      LoggerUtils.instance.e(e.code);
+      LoggerUtils.instance.e(e);
+    }
+  }
   
   Future<bool> sendMessage(Message message) async {
     var _kaydedilecekMesajMapYapisi = message.toMap();
-    await _firebaseDB
-        .collection("conversations")
-        .doc(message.sentFrom)
-        .collection(message.sentTo)
-        .doc()
-        .set(_kaydedilecekMesajMapYapisi);
-    print(message.sentTo);
-    print(message.sentFrom);
-
-    await _firebaseDB
-        .collection("conversations")
-        .doc(message.sentTo)
-        .collection(message.sentFrom)
-        .doc()
-        .set(_kaydedilecekMesajMapYapisi);
+    if (sortUid(message) == -1) {
+      writeMessageToFirebase(message.sentFrom, message.sentTo, message);
+    } else {
+      writeMessageToFirebase(message.sentTo, message.sentFrom, message);
+    }
     //sendNotification(message);
     return true;
   }
@@ -61,19 +90,32 @@ class FirestoreManager {
     }
   }*/
 
-  Stream<List<Message>> getMessages(
-      String currentUserID, String sohbetEdilenUserID) {
-    print(sohbetEdilenUserID);
-    var snapShot = _firebaseDB
-        .collection("conversations")
-        .doc(currentUserID)
-        .collection(sohbetEdilenUserID)
-        .orderBy("date", descending: true)
+  Stream<DocumentSnapshot<Map<String, dynamic>>> readMessagesFromFirebase(
+      String first, String second) {
+    return _firebaseDB
+        .collection("conversations/")
+        .doc(first + " - " + second)
         .snapshots();
-    return snapShot.map((mesajListesi) => mesajListesi.docs.map((mesaj) {
-          print(mesaj.data());
-          return Message.fromMap(mesaj.data());
-        }).toList());
+  }
+
+  void cancelStreamSub() {
+    streamSubscription.cancel();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getMessages(
+      String currentUserID, String sohbetEdilenUserID) {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> snapShots;
+    if (sortUid(Message(sentFrom: currentUserID, sentTo: sohbetEdilenUserID)) ==
+        -1) {
+      snapShots = readMessagesFromFirebase(currentUserID, sohbetEdilenUserID);
+    } else {
+      snapShots = readMessagesFromFirebase(sohbetEdilenUserID, currentUserID);
+    }
+    streamSubscription = snapShots.listen((event) {
+      event.toString();
+    });
+
+    return snapShots;
   }
 
   Future<void> getImage(int index, String sender, String reciever) async {

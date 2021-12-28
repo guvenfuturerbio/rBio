@@ -231,7 +231,7 @@ class ApiServiceImpl extends ApiService {
           .cast<FilterTenantsResponse>()
           .toList();
       return result;
-    } else {
+    } else { 
       throw Exception('/filterTenants : ${response.isSuccessful}');
     }
   }
@@ -1096,6 +1096,18 @@ class ApiServiceImpl extends ApiService {
     } else {
       throw Exception(
           '/getResourceVideoCallPriceVoucher : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> getChatContacts() async {
+    final response = await helper.postGuven(
+        R.endpoints.getChatContacts, {'isActiveChats': 'true'},
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/getChatContacts : ${response.isSuccessful}');
     }
   }
 }

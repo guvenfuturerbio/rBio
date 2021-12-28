@@ -12,7 +12,7 @@ class ChatPerson {
     this.id,
     this.lastMessage,
     this.messageTime,
-    this.hasRead,
+    this.hasRead = true,
     this.url,
   });
 

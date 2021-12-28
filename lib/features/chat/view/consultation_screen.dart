@@ -30,7 +30,7 @@ class ConsultationScreen extends StatelessWidget {
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
-          'Danışma',
+          LocaleProvider.current.consultation,
         ),
       );
 
@@ -68,74 +68,85 @@ class ConsultationScreen extends StatelessWidget {
 
   // #region _buildCard
   Widget _buildCard(BuildContext context, ChatPerson item) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 10,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          CircleAvatar(
-            backgroundColor: getIt<ITheme>().cardBackgroundColor,
-            backgroundImage: NetworkImage(item.url),
-            radius: 35,
-          ),
-
-          //
-          SizedBox(width: 12),
-
-          //
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //
-                Row(
-                  children: [
-                    Text(
-                      item.name ?? '',
-                      style: context.xHeadline5.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(item.messageTime)
-                  ],
-                ),
-
-                //
-                SizedBox(height: 6),
-
-                //
-                Text(
-                  item.lastMessage ?? '',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: item.hasRead? context.xBodyText1: context.xBodyText1.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        Atom.to(PagePaths.CHAT,
+            queryParameters: {'otherPerson': item.toJson()});
+      },
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            CircleAvatar(
+              backgroundColor: getIt<ITheme>().cardBackgroundColor,
+              backgroundImage: NetworkImage(item.url),
+              radius: 35,
             ),
-          ),
-          //
-          item.hasRead?SizedBox():
-          Padding(
-            padding: const EdgeInsets.only(top:12,right:0),
-            child: Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: getIt<ITheme>().mainColor),
-              child: SizedBox(
-                height: 10,
-                width: 10,
+
+            //
+            SizedBox(width: 12),
+
+            //
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //
+                  Row(
+                    children: [
+                      Text(
+                        item.name ?? '',
+                        style: context.xHeadline5.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(item.messageTime ?? "")
+                    ],
+                  ),
+
+                  //
+                  SizedBox(height: 6),
+
+                  //
+                  Text(
+                    item.lastMessage ?? '',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: item.hasRead
+                        ? context.xBodyText1
+                        : context.xBodyText1
+                            .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
-          )
-          //
-        ],
+            //
+            item.hasRead
+                ? SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.only(top: 12, right: 0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: getIt<ITheme>().mainColor),
+                      child: SizedBox(
+                        height: 10,
+                        width: 10,
+                      ),
+                    ),
+                  )
+            //
+          ],
+        ),
       ),
     );
   }

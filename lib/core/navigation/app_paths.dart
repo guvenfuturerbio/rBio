@@ -1,4 +1,5 @@
 import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
+import 'package:onedosehealth/features/chat/controller/chat_controller.dart';
 import 'package:onedosehealth/features/chat/view/chat_window.dart';
 import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
 import 'package:onedosehealth/features/chat/view/consultation_screen.dart';
@@ -153,10 +154,12 @@ class VRouterRoutes {
       path: PagePaths.COVID19,
       widget: Covid19Screen(),
     ),
-  VWidget(
-      path: PagePaths.CHAT,
-      widget: ChatWindow(),
-    ),
+    VWidget(
+        path: PagePaths.CHAT,
+        widget: ChangeNotifierProvider<ChatController>(
+          create: (context) => ChatController(),
+          child: ChatWindow(),
+        )),
     VWidget(
       path: PagePaths.ERESULT,
       widget: ChangeNotifierProvider<EResultScreenVm>(

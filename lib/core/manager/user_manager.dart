@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:onedosehealth/core/data/service/firebase_service.dart';
 
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/rate_dialog.dart';
@@ -43,7 +44,9 @@ class UserManagerImpl extends UserManager {
     );
     await getIt<ISharedPreferencesManager>()
         .setString(SharedPreferencesKeys.JWT_TOKEN, response.token.accessToken);
-
+    getIt<UserNotifier>().firebaseEmail = response.firebase_user_email;
+    getIt<UserNotifier>().firebasePassword = response.firebase_user_salt;
+    getIt<FirestoreManager>().loginFirebase();
     //Update user notifier depending on roles
 
     getIt<UserNotifier>().userTypeFetcher(response);

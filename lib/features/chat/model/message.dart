@@ -4,7 +4,7 @@ class Message {
   final String sentTo;
   final String sentFrom;
   final String message;
-  final Timestamp date;
+  final int date;
   final int type; //0 text //1 image
 
   Message({this.sentTo, this.sentFrom, this.message, this.type, this.date});
@@ -13,7 +13,7 @@ class Message {
       'sentTo': sentTo,
       'sentFrom': sentFrom,
       'message': message,
-      'date': date ?? FieldValue.serverTimestamp(),
+      'date': date,
       'type': type,
     };
   }

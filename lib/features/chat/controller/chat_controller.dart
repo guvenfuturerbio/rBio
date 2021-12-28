@@ -1,11 +1,7 @@
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/core/data/service/firebase_service.dart';
 import 'package:onedosehealth/features/chat/model/message.dart';
@@ -22,7 +18,17 @@ class ChatController with ChangeNotifier {
     return manager.sendMessage(message);
   }
 
-  Stream<List<Message>> getMessages(String uuid, uuidOther) {
+  @override
+  void dispose() {
+    cancelStreamSub();
+    super.dispose();
+  }
+
+  void cancelStreamSub() {
+    manager.cancelStreamSub();
+  }
+
+   Stream<DocumentSnapshot<Map<String, dynamic>>> getMessages(String uuid, uuidOther) {
     return manager.getMessages(uuid, uuidOther);
   }
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chat/model/get_chat_contacts_response.dart';
 
 import '../../../features/auth/auth.dart';
 import '../../../features/home/model/banner_model.dart';
@@ -45,6 +46,15 @@ class Repository {
       ForYouCategoryResponse(),
       localCacheService,
     );
+  }
+
+  Future<List<GetChatContactsResponse>> getChatContacts() async {
+    final url = R.endpoints.getChatContacts;
+    final response = await apiService.getChatContacts();
+    return response.datum
+        .map((item) => GetChatContactsResponse.fromJson(item))
+        .cast<GetChatContactsResponse>()
+        .toList();
   }
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(

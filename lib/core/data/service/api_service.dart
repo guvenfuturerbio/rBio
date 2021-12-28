@@ -91,6 +91,8 @@ abstract class ApiService {
   Future<GuvenResponseModel> downloadAppointmentSingleFile(
       String folder, String path);
   Future<GuvenResponseModel> getAllFiles();
+  Future<GuvenResponseModel> getChatContacts();
+
   Future<GuvenResponseModel> downloadAppointmentFile(String id, String name);
   Future<GuvenResponseModel> removePatientRelative(String id);
   Future<GuvenResponseModel> getRelativeRelationships();
