@@ -10,6 +10,10 @@ class PressureTaggerVm extends ChangeNotifier {
   BpMeasurementViewModel bpModel;
   final bool isManuel;
   final key;
+
+  double height = 0;
+  double width = 0;
+
   ScrollController scrollController;
   TextEditingController noteController,
       sysController,

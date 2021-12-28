@@ -69,7 +69,7 @@ class _ScaleMeasurementListWidgetState
                     return Container(
                       alignment: Alignment.center,
                       width: double.infinity,
-                      height: (context.HEIGHT * .1) * context.TEXTSCALE,
+                      height: (context.HEIGHT * .05) * context.TEXTSCALE,
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
@@ -125,7 +125,7 @@ Widget measurementList(
       },
       child: Container(
         alignment: Alignment.center,
-        height: (context.HEIGHT * .1) * context.TEXTSCALE,
+        height: (context.HEIGHT * .07) * context.TEXTSCALE,
         margin: EdgeInsets.only(left: 8, right: 8, top: 8),
         decoration: BoxDecoration(
           color: Colors.green,
@@ -180,7 +180,8 @@ Row _timeAndImageSection(
   return Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
     Container(
       margin: EdgeInsets.only(right: 20),
-      child: Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date)),
+      child: Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
+          style: context.xBodyText1),
     ),
     (scaleMeasurementViewModel.imageUrl == null ||
             scaleMeasurementViewModel.imageUrl.isEmpty)
@@ -243,15 +244,15 @@ Expanded _textAndScaleSection(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(scaleMeasurementViewModel
-                  .getMeasurement(
-                      Provider.of<ScaleProgressPageViewModel>(context)
-                          .currentScaleType)
-                  .toStringAsFixed(2)),
               Text(
-                '${(scaleMeasurementViewModel.unit ?? ScaleUnit.KG).toStr}',
-                style: TextStyle(fontSize: 12),
-              ),
+                  scaleMeasurementViewModel
+                      .getMeasurement(
+                          Provider.of<ScaleProgressPageViewModel>(context)
+                              .currentScaleType)
+                      .toStringAsFixed(2),
+                  style: context.xHeadline1),
+              Text('${(scaleMeasurementViewModel.unit ?? ScaleUnit.KG).toStr}',
+                  style: context.xBodyText1),
             ],
           ),
         ),

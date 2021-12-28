@@ -22,25 +22,29 @@ class _AnimatedPulseChartState extends SampleViewState {
   List<ChartData> dia;
   List<ChartData> pulse;
 
-  Color sysColor = Colors.red;
-  Color diaColor = Colors.blue[900];
-  Color pulseColor = Colors.green;
+  Color sysColor = Colors.red[900];
+  Color diaColor = Colors.amber;
+  Color pulseColor = Colors.lime[800];
+
   double markerSize = 10;
+
+  Map<String, bool> map;
   @override
   Widget build(BuildContext context) {
     return Consumer<BpProgressPageVm>(builder: (_, val, __) {
       sys = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.sys, Colors.red))
+          .map((item) => ChartData(item.date, item.sys, sysColor))
           .toList();
       dia = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.dia, Colors.blue[900]))
+          .map((item) => ChartData(item.date, item.dia, diaColor))
           .toList();
       pulse = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.pulse, Colors.green))
+          .map((item) => ChartData(item.date, item.pulse, pulseColor))
           .toList();
-      return Column(
-        children: [Expanded(child: _buildChartBody(val)), _infoWidget()],
-      );
+
+      map = val.measurements;
+
+      return _buildChartBody(val);
     });
   }
 
@@ -66,51 +70,55 @@ class _AnimatedPulseChartState extends SampleViewState {
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   majorGridLines: MajorGridLines(color: Colors.black12),
                 ),
+      enableAxisAnimation: false,
       series: <LineSeries>[
         //Sys Line
-        LineSeries<ChartData, DateTime>(
-          dataSource: sys,
-          xValueMapper: (ChartData model, _) => (model).x,
-          yValueMapper: (ChartData model, _) => (model).y,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 10,
-              width: 10,
-              borderColor: sysColor,
-              isVisible: sys.length == 1 ? true : false,
-              color: sysColor),
-          color: sysColor,
-        ),
+        if (map[LocaleProvider.current.sys])
+          LineSeries<ChartData, DateTime>(
+            dataSource: sys,
+            xValueMapper: (ChartData model, _) => (model).x,
+            yValueMapper: (ChartData model, _) => (model).y,
+            xAxisName: "Time",
+            markerSettings: MarkerSettings(
+                height: 5,
+                width: 5,
+                borderColor: sysColor,
+                isVisible: true,
+                color: sysColor),
+            color: sysColor,
+          ),
 
         //Dia Line
-        LineSeries<ChartData, DateTime>(
-          dataSource: dia,
-          xValueMapper: (ChartData model, _) => (model).x,
-          yValueMapper: (ChartData model, _) => (model).y,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 10,
-              width: 10,
-              borderColor: diaColor,
-              isVisible: dia.length == 1 ? true : false,
-              color: diaColor),
-          color: diaColor,
-        ),
+        if (map[LocaleProvider.current.dia])
+          LineSeries<ChartData, DateTime>(
+            dataSource: dia,
+            xValueMapper: (ChartData model, _) => (model).x,
+            yValueMapper: (ChartData model, _) => (model).y,
+            xAxisName: "Time",
+            markerSettings: MarkerSettings(
+                height: 5,
+                width: 5,
+                borderColor: diaColor,
+                isVisible: true,
+                color: diaColor),
+            color: diaColor,
+          ),
         //Pulse Line
-        LineSeries<ChartData, DateTime>(
-          dataSource: pulse,
-          xValueMapper: (ChartData model, _) => (model).x,
-          yValueMapper: (ChartData model, _) => (model).y,
-          xAxisName: "Time",
-          dashArray: [5, 5],
-          markerSettings: MarkerSettings(
-              height: 10,
-              width: 10,
-              borderColor: pulseColor,
-              isVisible: pulse.length == 1 ? true : false,
-              color: pulseColor),
-          color: pulseColor,
-        ),
+        if (map[LocaleProvider.current.pulse])
+          LineSeries<ChartData, DateTime>(
+            dataSource: pulse,
+            xValueMapper: (ChartData model, _) => (model).x,
+            yValueMapper: (ChartData model, _) => (model).y,
+            xAxisName: "Time",
+            dashArray: [5, 5],
+            markerSettings: MarkerSettings(
+                height: 5,
+                width: 5,
+                borderColor: pulseColor,
+                isVisible: true,
+                color: pulseColor),
+            color: pulseColor,
+          ),
 
         val.selected == TimePeriodFilter.DAILY ||
                 val.selected == TimePeriodFilter.SPECIFIC
