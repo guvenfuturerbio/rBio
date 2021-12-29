@@ -35,18 +35,21 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
     try {
       list = [];
       progress = LoadingProgress.LOADING;
+
       List<GetChatContactsResponse> firebaseIdList =
           await getChatContactsFirebaseId();
 
-      firebaseIdList.forEach((restApiElement) {
-        streamList.forEach((element) {
-          element.docs.forEach((element2) {
+      await firebaseIdList.forEach((restApiElement) async {
+        await streamList.forEach((element) async {
+          await element.docs.forEach((element2) {
             if ((element2.data()['users'] as Map)
                 .containsKey(restApiElement.firebaseUserId)) {
               ChatPerson newPerson = ChatPerson(
                 name: restApiElement.contactNameSurname,
                 lastMessage: element2.data()['messages'].last['message'],
-                messageTime: element2.data()['messages'].last['messageTime'],
+                messageTime: DateTime.fromMillisecondsSinceEpoch(
+                        element2.data()['messages'].last['date'])
+                    .xFormatTime1(),
                 hasRead: (element2.data()['users']
                         as Map)[getIt<UserNotifier>().firebaseID] ??
                     false,
@@ -59,8 +62,9 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
           });
         });
       });
-
-      progress = LoadingProgress.DONE;
+      Future.delayed(Duration(milliseconds: 250), () {
+        progress = LoadingProgress.DONE;
+      });
     } catch (e, stackTrace) {
       print(e);
       print(stackTrace);
