@@ -76,12 +76,10 @@ class UserManagerImpl extends UserManager {
     UserLoginInfo userLoginInfo = UserLoginInfo();
     String username = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.LOGIN_USERNAME);
-    // userLoginInfo.username = username;
-    userLoginInfo.username = 'dr.alev.eken';
+    userLoginInfo.username = username;
     String password = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
-    // userLoginInfo.password = password;
-    userLoginInfo.password = '12345';
+    userLoginInfo.password = password;
     return userLoginInfo;
   }
 

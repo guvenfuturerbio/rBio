@@ -174,6 +174,7 @@ class FirestoreManager {
         Message(
             sentFrom: sender,
             message: await reference.getDownloadURL(),
+            date: DateTime.now().millisecondsSinceEpoch,
             type: 1),
         reciever);
   }
