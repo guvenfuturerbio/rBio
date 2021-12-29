@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'core/core.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
@@ -33,6 +34,7 @@ Future<void> main() async {
   await setupLocator(appConfig);
   _setupLogging();
   _initFirebaseMessaging();
+  timeago.setLocaleMessages('tr', timeago.TrMessages());
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(

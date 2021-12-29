@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/features/chat/model/message.dart';
+
+import '../../../features/chat/model/message.dart';
 import '../../core.dart';
 
 class FirestoreManager {
-  final FirebaseFirestore _firebaseDB = FirebaseFirestore.instance;
-  PickedFile imageFile;
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> streamSubscription;
+  final FirebaseFirestore _firebaseDB = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
+  PickedFile imageFile;
+
   Future<void> loginFirebase() async {
     final User user = (await _auth.signInWithEmailAndPassword(
             email: getIt<UserNotifier>().firebaseEmail,
@@ -30,25 +33,38 @@ class FirestoreManager {
         .collection("conversations/")
         .where('users.' + _auth.currentUser.uid, isNull: false)
         .snapshots();
-
   }
 
-  Future<bool> writeMessageToFirebase(
-      String first, String second, Message message) async {
+  Future<void> writeMessageToFirebase(
+    String first,
+    String second,
+    Message message,
+  ) async {
+    Map<String, dynamic> usersMap = {};
+    if (message.sentFrom != second) {
+      usersMap = {first: true, second: false};
+    } else {
+      usersMap = {first: false, second: true};
+    }
+
     try {
       await _firebaseDB
           .collection("conversations/")
           .doc(first + " - " + second)
-          .update({
-        'messages': FieldValue.arrayUnion([message.toMap()])
-      });
+          .update(
+        {
+          'messages': FieldValue.arrayUnion([message.toMap()]),
+          'users': usersMap,
+        },
+      );
     } on FirebaseException catch (e) {
       if (e.code == "not-found") {
         await _firebaseDB
             .collection("conversations/")
             .doc(first + " - " + second)
             .set({
-          'messages': FieldValue.arrayUnion([message.toMap()])
+          'messages': FieldValue.arrayUnion([message.toMap()]),
+          'users': usersMap,
         });
       }
       LoggerUtils.instance.e(e.code);
@@ -56,8 +72,13 @@ class FirestoreManager {
     }
   }
 
+  Future<void> setHasSeen(String chatId, Map<String, dynamic> users) async {
+    await _firebaseDB.collection("conversations/").doc(chatId).set(
+      {'users': users},
+    );
+  }
+
   Future<bool> sendMessage(Message message, String sendTo) async {
-    var _kaydedilecekMesajMapYapisi = message.toMap();
     if (sortUid(message, sendTo) == -1) {
       await writeMessageToFirebase(message.sentFrom, sendTo, message);
     } else {

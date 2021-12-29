@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/features/chat/model/chat_person.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../controller/consultation_vm.dart';
+import '../model/chat_person.dart';
 
 class ConsultationScreen extends StatelessWidget {
   ConsultationScreen({Key key}) : super(key: key);
@@ -54,13 +55,30 @@ class ConsultationScreen extends StatelessWidget {
 
   // #region _buildList
   Widget _buildList(BuildContext context, DoctorConsultationVm vm) {
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
-      itemCount: vm.list.length,
-      itemBuilder: (BuildContext context, int index) {
-        return _buildCard(context, vm.list[index]);
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: vm.stream,
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamList,
+      ) {
+        if (streamList.hasData) {
+          final list = vm.getChatPersonWithStream(streamList);
+          return ListView.builder(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            itemCount: vm.list.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildCard(context, list[index]);
+            },
+          );
+        }
+
+        if (streamList.hasError) {
+          return RbioBodyError();
+        }
+
+        return RbioLoading();
       },
     );
   }
@@ -70,8 +88,10 @@ class ConsultationScreen extends StatelessWidget {
   Widget _buildCard(BuildContext context, ChatPerson item) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.CHAT,
-            queryParameters: {'otherPerson': item.toJson()});
+        Atom.to(
+          PagePaths.CHAT,
+          queryParameters: {'otherPerson': item.toJson()},
+        );
       },
       child: Padding(
         padding: EdgeInsets.only(
@@ -126,9 +146,17 @@ class ConsultationScreen extends StatelessWidget {
                         : context.xBodyText1
                             .copyWith(fontWeight: FontWeight.bold),
                   ),
+
+                  //
+                  item.otherHasRead
+                      ? Text(
+                          'görüldü',
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
+
             //
             item.hasRead
                 ? SizedBox()
@@ -143,7 +171,8 @@ class ConsultationScreen extends StatelessWidget {
                         width: 10,
                       ),
                     ),
-                  )
+                  ),
+
             //
           ],
         ),
