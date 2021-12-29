@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChatPerson {
   String name;
   String id;
@@ -7,6 +9,7 @@ class ChatPerson {
   String messageTime;
   bool hasRead;
   String url;
+  Stream<QuerySnapshot<Map<String, dynamic>>> stream;
   ChatPerson({
     this.name,
     this.id,
@@ -14,6 +17,7 @@ class ChatPerson {
     this.messageTime,
     this.hasRead = true,
     this.url,
+    this.stream
   });
 
   Map<String, dynamic> toMap() {

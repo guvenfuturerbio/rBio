@@ -14,8 +14,8 @@ class ChatController with ChangeNotifier {
   bool isShowSticker;
   String imageUrl;
   List<Message> messages;
-  Future<bool> sendMessage(Message message) async {
-    return manager.sendMessage(message);
+  Future<bool> sendMessage(Message message,String sendTo) async {
+    return await manager.sendMessage(message,sendTo);
   }
 
   @override

@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/data/service/firebase_service.dart';
 import 'package:onedosehealth/features/chat/model/chat_person.dart';
 import 'package:onedosehealth/features/chat/model/get_chat_contacts_response.dart';
+import 'package:onedosehealth/generated/intl/messages_tr.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/core.dart';
@@ -26,18 +29,35 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
   }
 
   Future<void> fetchAll() async {
+    Stream<QuerySnapshot<Map<String, dynamic>>> streamList =
+        getIt<FirestoreManager>().getContactsAndMessages();
+
     try {
       list = [];
       progress = LoadingProgress.LOADING;
       List<GetChatContactsResponse> firebaseIdList =
           await getChatContactsFirebaseId();
-      firebaseIdList.forEach((element) {
-        ChatPerson newPerson = ChatPerson(
-            name: element.contactNameSurname,
-            url:
-                "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
-            id: element.firebaseUserId);
-        list.add(newPerson);
+
+      firebaseIdList.forEach((restApiElement) {
+        streamList.forEach((element) {
+          element.docs.forEach((element2) {
+            if ((element2.data()['users'] as Map)
+                .containsKey(restApiElement.firebaseUserId)) {
+              ChatPerson newPerson = ChatPerson(
+                name: restApiElement.contactNameSurname,
+                lastMessage: element2.data()['messages'].last['message'],
+                messageTime: element2.data()['messages'].last['messageTime'],
+                hasRead: (element2.data()['users']
+                        as Map)[getIt<UserNotifier>().firebaseID] ??
+                    false,
+                url:
+                    "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
+                id: restApiElement.firebaseUserId,
+              );
+              list.add(newPerson);
+            }
+          });
+        });
       });
 
       progress = LoadingProgress.DONE;

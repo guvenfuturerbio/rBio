@@ -56,13 +56,13 @@ class _ChatWindowState extends State<ChatWindow> {
         if (_textController.text.trim().length > 0) {
           Message _messageSent = Message(
               sentFrom: sender,
-              sentTo: widget.otherPerson.id,
               message: _textController.text,
               date: DateTime.now().millisecondsSinceEpoch,
               type: 0);
           _textController.clear();
 
-          var result = await chatController.sendMessage(_messageSent);
+          var result = await chatController.sendMessage(
+              _messageSent, widget.otherPerson.id);
           if (result) {
             _scrollController.animateTo(
                 _scrollController.position.maxScrollExtent,

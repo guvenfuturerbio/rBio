@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:logger/logger.dart';
 import 'package:onedosehealth/features/chat/model/message.dart';
-
 import '../../core.dart';
 
 class FirestoreManager {
@@ -24,8 +21,16 @@ class FirestoreManager {
     getIt<UserNotifier>().firebaseID = user.uid;
   }
 
-  sortUid(Message message) {
-    return message.sentFrom.compareTo(message.sentTo);
+  sortUid(Message message, String sendTo) {
+    return message.sentFrom.compareTo(sendTo);
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getContactsAndMessages() {
+    return _firebaseDB
+        .collection("conversations/")
+        .where('users.' + _auth.currentUser.uid, isNull: false)
+        .snapshots();
+
   }
 
   Future<bool> writeMessageToFirebase(
@@ -50,13 +55,13 @@ class FirestoreManager {
       LoggerUtils.instance.e(e);
     }
   }
-  
-  Future<bool> sendMessage(Message message) async {
+
+  Future<bool> sendMessage(Message message, String sendTo) async {
     var _kaydedilecekMesajMapYapisi = message.toMap();
-    if (sortUid(message) == -1) {
-      writeMessageToFirebase(message.sentFrom, message.sentTo, message);
+    if (sortUid(message, sendTo) == -1) {
+      await writeMessageToFirebase(message.sentFrom, sendTo, message);
     } else {
-      writeMessageToFirebase(message.sentTo, message.sentFrom, message);
+      await writeMessageToFirebase(sendTo, message.sentFrom, message);
     }
     //sendNotification(message);
     return true;
@@ -105,7 +110,11 @@ class FirestoreManager {
   Stream<DocumentSnapshot<Map<String, dynamic>>> getMessages(
       String currentUserID, String sohbetEdilenUserID) {
     Stream<DocumentSnapshot<Map<String, dynamic>>> snapShots;
-    if (sortUid(Message(sentFrom: currentUserID, sentTo: sohbetEdilenUserID)) ==
+    if (sortUid(
+            Message(
+              sentFrom: currentUserID,
+            ),
+            sohbetEdilenUserID) ==
         -1) {
       snapShots = readMessagesFromFirebase(currentUserID, sohbetEdilenUserID);
     } else {
@@ -135,10 +144,11 @@ class FirestoreManager {
     await FlutterNativeImage.compressImage(imageFile.path,
         quality: 80, percentage: 90);
     await reference.putFile(File(imageFile.path));
-    sendMessage(Message(
-        sentFrom: sender,
-        sentTo: reciever,
-        message: await reference.getDownloadURL(),
-        type: 1));
+    sendMessage(
+        Message(
+            sentFrom: sender,
+            message: await reference.getDownloadURL(),
+            type: 1),
+        reciever);
   }
 }
