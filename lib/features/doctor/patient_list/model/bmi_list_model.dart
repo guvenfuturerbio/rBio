@@ -75,5 +75,14 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
   @override
   void itemOnTap(DoctorBMIPatientModel model) {
     LoggerUtils.instance.i('OnTap : ${model.id}');
+    LoggerUtils.instance.i('$model');
+
+    Atom.to(
+      PagePaths.BMI_PATIENT_DETAIL,
+      queryParameters: {
+        'patientId': model.id.toString(),
+        'patientName': model.name,
+      },
+    );
   }
 }

@@ -50,7 +50,7 @@ class DoctorHomeScreen extends StatelessWidget {
         _buildCard(
           context,
           R.image.ct_body_scale,
-          LocaleProvider.current.weight_tracking,
+          LocaleProvider.current.bmi_tracking,
           () {
             Atom.to(
               PagePaths.DOCTOR_PATIENT_LIST,

@@ -1,4 +1,5 @@
 import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
+import 'package:onedosehealth/features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
 import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
 import 'package:onedosehealth/features/doctor/consultation/view/consultation_screen.dart';
 import 'package:provider/provider.dart';
@@ -345,6 +346,10 @@ class VRouterRoutes {
           widget: DoctorPatientListScreen(),
           stackedRoutes: [
             VWidget(
+              path: PagePaths.BMI_PATIENT_DETAIL,
+              widget: BmiPatientDetailScreen(),
+            ),
+            VWidget(
               path: PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
               widget: BloodGlucosePatientDetailScreen(),
             ),
@@ -474,6 +479,7 @@ class PagePaths {
   static const DOCTOR_HOME = '/doctor';
   static const DOCTOR_PATIENT_LIST = '/doctor-patient-list';
   static const BLOOD_GLUCOSE_PATIENT_DETAIL = '/blood-glucose-patient-detail';
+  static const BMI_PATIENT_DETAIL = '/bmi-patient-detail';
   static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
   static const DOCTOR_VIDEO_CALL_EDIT = '/doctor-video-call-edit';
   static const DOCTOR_CONSULTATION = '/doctor-consultation';

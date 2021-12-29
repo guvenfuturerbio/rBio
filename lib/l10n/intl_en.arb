@@ -732,7 +732,7 @@
   "back": "Back",
 
   "bg_measurement_tracking": "Blood Glucose Tracking",
-  "weight_tracking": "Weight Tracking",
+  "bmi_tracking": "Body Scale Tracking",
   "blood_pressure_tracking": "Blood Pressure Tracking",
   "treatment_process": "Treatment Process",
   "critical_metrics": "Critical metrics",
