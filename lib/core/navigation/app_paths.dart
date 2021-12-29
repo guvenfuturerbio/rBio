@@ -1,6 +1,8 @@
 import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
+import 'package:onedosehealth/features/chat/controller/chat_controller.dart';
+import 'package:onedosehealth/features/chat/view/chat_window.dart';
 import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
-import 'package:onedosehealth/features/doctor/consultation/view/consultation_screen.dart';
+import 'package:onedosehealth/features/chat/view/consultation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 import '../../features/auth/auth.dart';
@@ -152,7 +154,12 @@ class VRouterRoutes {
       path: PagePaths.COVID19,
       widget: Covid19Screen(),
     ),
-
+    VWidget(
+        path: PagePaths.CHAT,
+        widget: ChangeNotifierProvider<ChatController>(
+          create: (context) => ChatController(),
+          child: ChatWindow(),
+        )),
     VWidget(
       path: PagePaths.ERESULT,
       widget: ChangeNotifierProvider<EResultScreenVm>(
@@ -243,7 +250,7 @@ class VRouterRoutes {
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
     ),
-
+    VWidget(path: PagePaths.CONSULTATION, widget: ConsultationScreen()),
     // Symptom Checker
     VGuard(
       beforeEnter: (vRedirector) async {
@@ -363,7 +370,7 @@ class VRouterRoutes {
             ),
             VWidget(
               path: PagePaths.DOCTOR_CONSULTATION,
-              widget: DoctorConsultationScreen(),
+              widget: ConsultationScreen(),
             ),
           ],
         ),
@@ -407,7 +414,8 @@ class PagePaths {
   static const CREATE_APPOINTMENT_EVENTS = '/create-appointment-events';
   static const CREATE_APPOINTMENT_SUMMARY = '/create-appointment-summary';
   static const CREATE_ONLINE_APPO = '/create-online-appointment';
-
+  static const CONSULTATION = '/e-consultation';
+  static const CHAT = '/chat';
   static const LOGIN = '/login';
   static const REGISTER_FIRST = '/register-first';
   static const REGISTER_STEP_2 = '/register-2';

@@ -33,6 +33,7 @@ class _Images {
   final ct_body_scale = "assets/images/ct_body_scale.svg";
   final default_icon = "assets/images/defaulticon.svg";
   final delete_white_garbage = "assets/images/delete_white_garbage.svg";
+  final eyeseen_icon = "assets/images/eyeseen_icon.svg";
   final doctor_avatar = "assets/images/doctor_avatar.svg";
   final done_icon = 'assets/images/done_icon.svg';
   final credit_calendar = "assets/images/expiration_date.svg";

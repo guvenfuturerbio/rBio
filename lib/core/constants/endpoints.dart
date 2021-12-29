@@ -69,6 +69,8 @@ class _Endpoints {
           .xBasePath;
   final deleteProfilePicturePath = '/file/delete-profile-photo'.xBasePath;
   final uploadProfilePicturePath = '/file/profil-image-upload'.xBasePath;
+  final getChatContacts =
+      '/User/get-chat-contacts'.xBasePath;
   String downloadAppointmentSingleFilePath(String folder, String path) =>
       '/file/download-patient-appointment-single-file/$folder/$path'.xBasePath;
   final getAllFilesPath =
