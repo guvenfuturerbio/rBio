@@ -48,6 +48,8 @@ abstract class ChronicStorageService<T extends HiveObject>
 
   bool doesExist(T data);
 
+  void clear();
+
   /// Remote definition
   Future deleteFromServer(
       int timeKey, Map<String, dynamic> deleteMeasurementRequest);

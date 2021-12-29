@@ -276,4 +276,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     } else
       return true;
   }
+
+  @override
+  void clear() => box.clear();
 }

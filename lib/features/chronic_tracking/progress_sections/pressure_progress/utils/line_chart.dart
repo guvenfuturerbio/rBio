@@ -22,26 +22,29 @@ class _AnimatedPulseChartState extends SampleViewState {
   List<ChartData> dia;
   List<ChartData> pulse;
 
-  Color sysColor = Colors.red;
-  Color diaColor = Colors.blue[900];
-  Color pulseColor = Colors.green;
+  Color sysColor = Colors.red[900];
+  Color diaColor = Colors.amber;
+  Color pulseColor = Colors.lime[800];
+
   double markerSize = 10;
+
+  Map<String, bool> map;
   @override
   Widget build(BuildContext context) {
     return Consumer<BpProgressPageVm>(builder: (_, val, __) {
       sys = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.sys, Colors.red))
+          .map((item) => ChartData(item.date, item.sys, sysColor))
           .toList();
       dia = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.dia, Colors.blue[900]))
+          .map((item) => ChartData(item.date, item.dia, diaColor))
           .toList();
       pulse = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.pulse, Colors.green))
+          .map((item) => ChartData(item.date, item.pulse, pulseColor))
           .toList();
-      log(val.selected.toString());
-      return Column(
-        children: [Expanded(child: _buildChartBody(val)), _infoWidget()],
-      );
+
+      map = val.measurements;
+
+      return _buildChartBody(val);
     });
   }
 
@@ -67,20 +70,55 @@ class _AnimatedPulseChartState extends SampleViewState {
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   majorGridLines: MajorGridLines(color: Colors.black12),
                 ),
+      enableAxisAnimation: false,
       series: <LineSeries>[
+        //Sys Line
+        if (map[LocaleProvider.current.sys])
+          LineSeries<ChartData, DateTime>(
+            dataSource: sys,
+            xValueMapper: (ChartData model, _) => (model).x,
+            yValueMapper: (ChartData model, _) => (model).y,
+            xAxisName: "Time",
+            markerSettings: MarkerSettings(
+                height: 5,
+                width: 5,
+                borderColor: sysColor,
+                isVisible: true,
+                color: sysColor),
+            color: sysColor,
+          ),
+
         //Dia Line
-        LineSeries<ChartData, DateTime>(
-          dataSource: sys,
-          xValueMapper: (ChartData model, _) => (model).x,
-          yValueMapper: (ChartData model, _) => (model).y,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 10,
-              width: 10,
-              borderColor: sysColor,
-              isVisible: dia.length == 1 ? true : false,
-              color: sysColor),
-        ),
+        if (map[LocaleProvider.current.dia])
+          LineSeries<ChartData, DateTime>(
+            dataSource: dia,
+            xValueMapper: (ChartData model, _) => (model).x,
+            yValueMapper: (ChartData model, _) => (model).y,
+            xAxisName: "Time",
+            markerSettings: MarkerSettings(
+                height: 5,
+                width: 5,
+                borderColor: diaColor,
+                isVisible: true,
+                color: diaColor),
+            color: diaColor,
+          ),
+        //Pulse Line
+        if (map[LocaleProvider.current.pulse])
+          LineSeries<ChartData, DateTime>(
+            dataSource: pulse,
+            xValueMapper: (ChartData model, _) => (model).x,
+            yValueMapper: (ChartData model, _) => (model).y,
+            xAxisName: "Time",
+            dashArray: [5, 5],
+            markerSettings: MarkerSettings(
+                height: 5,
+                width: 5,
+                borderColor: pulseColor,
+                isVisible: true,
+                color: pulseColor),
+            color: pulseColor,
+          ),
 
         val.selected == TimePeriodFilter.DAILY ||
                 val.selected == TimePeriodFilter.SPECIFIC
@@ -90,34 +128,34 @@ class _AnimatedPulseChartState extends SampleViewState {
                         ChartData(
                             DateTime(sys[0].x.year, sys[0].x.month,
                                 sys[0].x.day, 24, 00),
-                            -50,
+                            0,
                             Colors.transparent),
                         ChartData(
                             DateTime(sys[0].x.year, sys[0].x.month,
                                 sys[0].x.day, 00, 00),
-                            -50,
+                            0,
                             Colors.transparent),
                       ]
                     : [
-                        ChartData(DateTime(1997, 11, 09, 24, 00), -50,
+                        ChartData(DateTime(1997, 11, 09, 24, 00), 0,
                             Colors.transparent),
-                        ChartData(DateTime(1997, 11, 09, 00, 00), -50,
+                        ChartData(DateTime(1997, 11, 09, 00, 00), 0,
                             Colors.transparent),
                       ],
                 xValueMapper: (ChartData sales, _) => sales.x,
                 yValueMapper: (ChartData sales, _) => sales.y,
-                color: Colors.transparent,
                 xAxisName: "Time",
+                color: Colors.transparent,
                 markerSettings:
                     MarkerSettings(height: 10, width: 10, isVisible: false))
             : LineSeries<ChartData, DateTime>(
                 dataSource: [
-                    ChartData(val.startDate, -50, Colors.transparent),
-                    ChartData(val.endDate, -50, Colors.transparent),
+                    ChartData(val.startDate, 0, Colors.transparent),
+                    ChartData(val.endDate, 0, Colors.transparent),
                   ],
                 xValueMapper: (ChartData sales, _) => sales.x,
                 yValueMapper: (ChartData sales, _) => sales.y,
-                color: Colors.red,
+                color: Colors.transparent,
                 xAxisName: "Time",
                 markerSettings: MarkerSettings(
                     height: markerSize, width: markerSize, isVisible: false))
@@ -130,11 +168,11 @@ class _AnimatedPulseChartState extends SampleViewState {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Spacer(),
-        _infoItem('${LocaleProvider.current.pulse}', Colors.green),
+        _infoItem('${LocaleProvider.current.sys}', sysColor),
         Spacer(),
-        _infoItem('${LocaleProvider.current.sys}', Colors.red),
+        _infoItem('${LocaleProvider.current.dia}', diaColor),
         Spacer(),
-        _infoItem('${LocaleProvider.current.dia}', Colors.blue[900]),
+        _infoItem('${LocaleProvider.current.pulse}', pulseColor),
         Spacer(),
       ],
     );

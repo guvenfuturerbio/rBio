@@ -2325,6 +2325,26 @@ class LocaleProvider {
     );
   }
 
+  /// `Ölçüm başarıyla silindi...`
+  String get delete_measurement_succesfull {
+    return Intl.message(
+      'Ölçüm başarıyla silindi...',
+      name: 'delete_measurement_succesfull',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ölçüm silinemedi...`
+  String get delete_measurement_un_succesfull {
+    return Intl.message(
+      'Ölçüm silinemedi...',
+      name: 'delete_measurement_un_succesfull',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Your profile picture will be updated with the selected one. Do you confirm?`
   String get profile_picture_change {
     return Intl.message(
@@ -7375,20 +7395,20 @@ class LocaleProvider {
     );
   }
 
-  /// `Diastolic`
+  /// `Diastolic Blood Pressure`
   String get dia {
     return Intl.message(
-      'Diastolic',
+      'Diastolic Blood Pressure',
       name: 'dia',
       desc: '',
       args: [],
     );
   }
 
-  /// `Systolic`
+  /// `Systolic Blood Pressure`
   String get sys {
     return Intl.message(
-      'Systolic',
+      'Systolic Blood Pressure',
       name: 'sys',
       desc: '',
       args: [],

@@ -195,7 +195,6 @@ class BloodPressureStorageImpl
       if (checkBox())
       // return map.map((e) => BloodPressureModel.fromJson(e)).toList();
       {
-        log(box.values.length.toString());
         return box.values.toList();
       } else
         return [];
@@ -207,14 +206,14 @@ class BloodPressureStorageImpl
   @override
   BloodPressureModel getLatestMeasurement() {
     try {
-      if (checkBox()) {
+      if (checkBox(true)) {
         List<BloodPressureModel> list = getAll();
         list.sort((a, b) => b.dateTime.compareTo(a.dateTime));
         print('hereeeeeeee');
         print(list.length);
         return list[0];
       } else {
-        throw Exception('unhandled exception on box:$boxKey');
+        return null;
       }
     } catch (e) {
       rethrow;
@@ -373,4 +372,7 @@ class BloodPressureStorageImpl
       return true;
     }
   }
+
+  @override
+  void clear() => box.clear();
 }

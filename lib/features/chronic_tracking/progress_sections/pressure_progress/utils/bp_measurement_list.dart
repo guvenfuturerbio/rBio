@@ -27,7 +27,9 @@ class BpMeasurementList extends StatelessWidget {
             controller: scrollController,
             scrollDirection: Axis.vertical,
             floatingHeader: true,
-            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            padding: EdgeInsets.only(
+                bottom: context.HEIGHT * .28 * context.TEXTSCALE),
             useStickyGroupSeparators: true,
             groupBy: (BpMeasurementViewModel bgMeasurementViewModel) =>
                 DateTime(
@@ -39,7 +41,7 @@ class BpMeasurementList extends StatelessWidget {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: (context.HEIGHT * .1) * context.TEXTSCALE,
+                height: (context.HEIGHT * .05) * context.TEXTSCALE,
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
@@ -75,7 +77,7 @@ class BpMeasurementList extends StatelessWidget {
   Widget measurementList(BpMeasurementViewModel item, BuildContext context) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
-      actionExtentRatio: 0.25,
+      actionExtentRatio: 0.40,
       child: GestureDetector(
         onTap: () {
           Atom.show(
@@ -87,109 +89,16 @@ class BpMeasurementList extends StatelessWidget {
             barrierDismissible: false,
           );
         },
-        child: Container(
-          margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-          decoration: BoxDecoration(
-            color: Colors.green,
-            gradient: LinearGradient(
-                colors: [Colors.white, Colors.white],
-                begin: Alignment.bottomLeft,
-                end: Alignment.centerRight),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withAlpha(50),
-                  blurRadius: 5,
-                  spreadRadius: 0,
-                  offset: Offset(5, 5))
-            ],
-            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-          ),
-          padding: const EdgeInsets.all(10),
-          height: (context.HEIGHT * .1) * context.TEXTSCALE,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Container(
-                      alignment: Alignment.topCenter,
-                      width: (context.HEIGHT * .07) * context.TEXTSCALE,
-                      height: (context.HEIGHT * .07) * context.TEXTSCALE,
-                      /* decoration: measurementListBoxDecoration(
-                          bgMeasurementViewModel),  */ //             <--- BoxDecoration here
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(LocaleProvider.current.sys),
-                          Text(item.sys.toString()),
-                          Text(
-                            "mm/Hg",
-                            style: TextStyle(fontSize: 8),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.topCenter,
-                      width: (context.HEIGHT * .07) * context.TEXTSCALE,
-                      height: (context.HEIGHT * .07) * context.TEXTSCALE,
-                      /* decoration: measurementListBoxDecoration(
-                          bgMeasurementViewModel),  */ //             <--- BoxDecoration here
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(LocaleProvider.current.dia),
-                          Text(item.dia.toString()),
-                          Text(
-                            "mm/Hg",
-                            style: TextStyle(fontSize: 8),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.topCenter,
-                      width: (context.HEIGHT * .07) * context.TEXTSCALE,
-                      height: (context.HEIGHT * .07) * context.TEXTSCALE,
-                      /* decoration: measurementListBoxDecoration(
-                          bgMeasurementViewModel),  */ //             <--- BoxDecoration here
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(LocaleProvider.current.pulse),
-                          Text(item.pulse.toString()),
-                          Text('')
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(item.note == null
-                          ? ""
-                          : (item.note.length > 10
-                              ? "${item.note.substring(0, 10)}..."
-                              : item.note)),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    /*Icon(Icons.timer),*/
-
-                    Text(DateFormat("kk : mm").format(item.date)),
-                  ],
-                ),
-              )
-            ],
-          ),
+        child: Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: Text(DateFormat("kk : mm").format(item.date)),
+            ),
+            Expanded(
+              child: _listItem(context, item),
+            ),
+          ],
         ),
       ),
       secondaryActions: <Widget>[
@@ -198,11 +107,82 @@ class BpMeasurementList extends StatelessWidget {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () async {
-            //_showSnackBar('Delete')
-
-            /// MGH1
-            await getIt<BloodPressureStorageImpl>().delete(item.bpModel.key);
+            try {
+              await getIt<BloodPressureStorageImpl>().delete(item.bpModel.key);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                      '${LocaleProvider.current.delete_measurement_succesfull}')));
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                    '${LocaleProvider.current.delete_measurement_un_succesfull}'),
+                backgroundColor: Colors.red,
+              ));
+            }
           },
+        ),
+      ],
+    );
+  }
+
+  Container _listItem(BuildContext context, BpMeasurementViewModel item) {
+    return Container(
+      margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
+      height: context.HEIGHT * .07 * context.TEXTSCALE,
+      decoration: BoxDecoration(
+        color: Colors.green,
+        gradient: LinearGradient(
+            colors: [Colors.white, Colors.white],
+            begin: Alignment.bottomLeft,
+            end: Alignment.centerRight),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withAlpha(50),
+              blurRadius: 5,
+              spreadRadius: 0,
+              offset: Offset(5, 5))
+        ],
+        borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          Expanded(
+            child: _listItemChild(context, LocaleProvider.current.sys,
+                item.sys.toString(), 'mm/Hg'),
+          ),
+          VerticalDivider(),
+          Expanded(
+            child: _listItemChild(context, LocaleProvider.current.dia,
+                item.dia.toString(), 'mm/Hg'),
+          ),
+          VerticalDivider(),
+          Expanded(
+            child: _listItemChild(context, LocaleProvider.current.pulse,
+                item.pulse.toString(), 'bpm'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Column _listItemChild(
+      BuildContext context, String parameter, String measurement, String unit) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          parameter,
+          style: context.xHeadline5,
+        ),
+        Text(
+          measurement,
+          style: context.xHeadline3,
+        ),
+        Text(
+          unit,
+          style: context.xBodyText2,
         ),
       ],
     );
