@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../../core/widgets/guven_alert.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../../generated/l10n.dart';
 import 'rate_dialog_vm.dart';
 
 class RateDialog extends StatefulWidget {

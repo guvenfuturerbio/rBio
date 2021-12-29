@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/notifiers/locale_notifier.dart';
 import '../viewmodel/profile_vm.dart';
 
 class ProfileScreen extends StatefulWidget {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:vrouter/src/core/extended_context.dart';
 
 import '../core.dart';
-import 'logger_helper.dart';
 
 class DeepLinkHandler {
   static const String DID_COMPLETE_SURVEY_KEY = "DID_COMPLETE_SURVEY";

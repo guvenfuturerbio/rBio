@@ -11,7 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
 import '../../../core/data/imports/cronic_tracking.dart';
-import '../../../core/notifiers/user_notifier.dart';
 import '../../../model/model.dart';
 import '../../home/viewmodel/home_vm.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
@@ -100,7 +99,7 @@ class LoginScreenVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  getSavedLoginInfo() async {
+  Future<void> getSavedLoginInfo() async {
     var userLoginInfo = await getIt<UserManager>().getSavedLoginInfo();
     this._userLoginInfo = userLoginInfo;
     if (userLoginInfo.password != null && userLoginInfo.password.length > 0) {

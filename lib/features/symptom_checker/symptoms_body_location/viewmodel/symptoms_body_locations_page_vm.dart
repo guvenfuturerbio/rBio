@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import '../../../../core/core.dart';
-import '../../../../core/data/repository/symptom_repository.dart';
-import '../../../../model/model.dart';
-import 'package:file/local.dart';
 import 'dart:async';
+
+import 'package:file/local.dart';
+import 'package:flutter/material.dart';
+
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
 
 class SymptomsBodyLocationsVm extends ChangeNotifier {
   BuildContext mContext;

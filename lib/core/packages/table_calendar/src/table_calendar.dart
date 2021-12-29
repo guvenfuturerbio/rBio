@@ -8,12 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
-import 'customization/calendar_builders.dart';
-import 'customization/calendar_style.dart';
-import 'customization/days_of_week_style.dart';
-import 'customization/header_style.dart';
-import 'shared/utils.dart';
-import 'table_calendar_base.dart';
 import 'widgets/calendar_header.dart';
 import 'widgets/cell_content.dart';
 

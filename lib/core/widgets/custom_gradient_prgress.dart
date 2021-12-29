@@ -3,9 +3,7 @@
 // found in the LICENSE file.
 // modified by https://bluemix.github.io
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
 const double _kLinearProgressIndicatorHeight = 6.0;

@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../../../generated/l10n.dart';
 import 'bg_tagger_vm.dart';
 
 class BgTaggerPopUp extends StatelessWidget {

@@ -4,9 +4,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/constants/constants.dart';
 import '../../../core/core.dart';
-import '../../../generated/l10n.dart';
 import '../viewmodel/change_password_vm.dart';
 
 class ChangePasswordScreen extends StatefulWidget {

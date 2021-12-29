@@ -190,13 +190,14 @@ class mopItem extends StatelessWidget {
   }
 }
 
-Widget _ItemTakeCovid(
-        {String title,
-        String image,
-        String number,
-        bool isFocused = false,
-        EdgeInsets margin,
-        BuildContext context}) =>
+Widget _ItemTakeCovid({
+  String title,
+  String image,
+  String number,
+  bool isFocused = false,
+  EdgeInsets margin,
+  BuildContext context,
+}) =>
     Container(
       margin: margin,
       alignment: Alignment.center,

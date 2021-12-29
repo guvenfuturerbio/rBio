@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../core/core.dart';
-import '../../../../generated/l10n.dart';
 
 class StripGradientDialog extends StatefulWidget {
-  StripGradientDialog(this.title, this.callback);
   final String title;
   final Function(int) callback;
+
+  StripGradientDialog(this.title, this.callback);
+
   @override
-  State<StatefulWidget> createState() {
-    return new _StripGradientDialogState();
-  }
+  _StripGradientDialogState createState() => _StripGradientDialogState();
 }
 
 class _StripGradientDialogState extends State<StripGradientDialog> {

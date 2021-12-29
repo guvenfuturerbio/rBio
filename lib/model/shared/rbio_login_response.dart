@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 class RbioLoginResponse {
+  Token token;
+  List<String> roles;
+
   RbioLoginResponse({
     this.token,
     this.roles,
   });
-
-  Token token;
-  List<String> roles;
 
   factory RbioLoginResponse.fromJson(Map<String, dynamic> json) =>
       RbioLoginResponse(
@@ -22,6 +20,14 @@ class RbioLoginResponse {
 }
 
 class Token {
+  String accessToken;
+  int expiresIn;
+  int refreshExpiresIn;
+  String refreshToken;
+  String tokenType;
+  String sessionState;
+  String scope;
+
   Token({
     this.accessToken,
     this.expiresIn,
@@ -31,14 +37,6 @@ class Token {
     this.sessionState,
     this.scope,
   });
-
-  String accessToken;
-  int expiresIn;
-  int refreshExpiresIn;
-  String refreshToken;
-  String tokenType;
-  String sessionState;
-  String scope;
 
   factory Token.fromJson(Map<String, dynamic> json) => Token(
         accessToken: json["access_token"],

@@ -1,8 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../core.dart';
-import '../enums/environment.dart';
-import '../enums/secret_keys.dart';
 
 class SecretUtils {
   SecretUtils._();

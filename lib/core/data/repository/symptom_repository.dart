@@ -1,6 +1,5 @@
 import '../../core.dart';
 import '../service/symptom_api_service.dart';
-import '../../manager/shared_preferences_manager.dart';
 import '../../../model/model.dart';
 
 class SymptomRepository {

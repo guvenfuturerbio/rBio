@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'resource_request.dart';
 
 class FindResourceAvailableDaysRequest {

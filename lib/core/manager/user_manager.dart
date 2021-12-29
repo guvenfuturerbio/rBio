@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 
 import '../../features/shared/consent_form/consent_form_dialog.dart';

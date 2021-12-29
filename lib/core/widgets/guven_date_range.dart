@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../core.dart';
 import 'guven_date_picker.dart';
 
+// ignore: must_be_immutable
 class GuvenDateRange extends StatelessWidget {
   DateTime startCurrentDate;
   DateTime startMinDate;

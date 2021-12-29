@@ -524,15 +524,6 @@ InputBorder _borderTextField() => OutlineInputBorder(
           width: 0, style: BorderStyle.solid, color: R.color.dark_white),
     );
 
-InputBorder _borderTextFieldForLogin() => OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
-      borderSide: BorderSide(
-        width: 0,
-        style: BorderStyle.solid,
-        color: R.color.dark_white,
-      ),
-    );
-
 InputBorder _borderTextFieldRed() => OutlineInputBorder(
       borderRadius: BorderRadius.circular(200),
       borderSide: BorderSide(

@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../model/model.dart';
 import '../core.dart';
-import 'arrow_clipper.dart';
 
 class CustomDropDown extends StatefulWidget {
   final List<Icon> icons;

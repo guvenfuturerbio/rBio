@@ -1,12 +1,10 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'iyzico_response_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 import '../../../../core/core.dart';
-import 'package:logging/logging.dart';
+import 'iyzico_response_vm.dart';
 
 class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
   final String html;
