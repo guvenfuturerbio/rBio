@@ -55,6 +55,7 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
       final newPerson = ChatPerson(
         name: apiItem.contactNameSurname,
         lastMessage: '',
+        lastMessageSender: '',
         messageTime: '',
         hasRead: true,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
@@ -68,9 +69,16 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
         final firebaseUserData = firebaseItem.data();
         final firebaseUserUsers = firebaseUserData['users'] as Map;
         if (firebaseUserUsers.containsKey(chatPerson.id)) {
-          chatPerson.lastMessage = firebaseUserData['messages'].last['message'];
+          chatPerson.lastMessage = (firebaseUserData['messages'] == null)
+              ? ''
+              : firebaseUserData['messages'].last['message'];
+          chatPerson.lastMessageSender = (firebaseUserData['messages'] == null)
+              ? ''
+              : firebaseUserData['messages'].last['sentFrom'];
           chatPerson.messageTime = _getMessageTime(firebaseUserData);
           chatPerson.hasRead = _getHasRead(firebaseUserData);
+          chatPerson.otherHasRead =
+              _getOtherHasRead(firebaseUserData, chatPerson.id);
         }
       });
     });
@@ -92,5 +100,11 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
     final users = firebaseUserData['users'] as Map;
     if (users == null) return true;
     return users[getIt<UserNotifier>().firebaseID] ?? true;
+  }
+
+  bool _getOtherHasRead(Map<String, dynamic> firebaseUserData, String to) {
+    final users = firebaseUserData['users'] as Map;
+    if (users == null) return true;
+    return users[to] ?? true;
   }
 }

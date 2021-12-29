@@ -4,6 +4,7 @@ class ChatPerson {
   String name;
   String id;
   String lastMessage;
+  String lastMessageSender;
   String messageTime;
   bool hasRead;
   bool otherHasRead;
@@ -13,6 +14,7 @@ class ChatPerson {
     this.name,
     this.id,
     this.lastMessage,
+    this.lastMessageSender,
     this.messageTime,
     this.hasRead = true,
     this.otherHasRead = false,

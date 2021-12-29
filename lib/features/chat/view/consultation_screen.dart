@@ -93,7 +93,8 @@ class ConsultationScreen extends StatelessWidget {
           queryParameters: {'otherPerson': item.toJson()},
         );
       },
-      child: Padding(
+      child: Container(
+        color: Colors.transparent,
         padding: EdgeInsets.only(
           top: 10,
         ),
@@ -148,9 +149,13 @@ class ConsultationScreen extends StatelessWidget {
                   ),
 
                   //
-                  item.otherHasRead
+                  item.otherHasRead &&
+                          item.hasRead &&
+                          item.lastMessageSender ==
+                              getIt<UserNotifier>().firebaseID
                       ? Text(
                           'görüldü',
+                          style: context.xBodyText1,
                         )
                       : SizedBox(),
                 ],

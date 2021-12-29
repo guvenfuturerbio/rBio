@@ -48,17 +48,21 @@ class ChatController with ChangeNotifier {
     stream = manager.getMessages(uuid, uuidOther);
     streamSubscription = stream.listen((event) {
       final data = event.data();
-      if (data != null) {
+      if (data != null && data['messages'] != null) {
         if (data['messages'].last['sentFrom'] == uuidOther &&
             data['users'][uuid] == false) {
           manager.setHasSeen(
             chatId,
-            (data['users'] as Map)
-              ..addAll(
-                {
-                  firstUser: true,
-                },
-              ),
+            firstUser == uuid
+                ? {
+                    uuid: true,
+                    uuidOther: data['users'][uuidOther],
+                  }
+                : {
+                    uuidOther: data['users'][uuidOther],
+                    uuid: true,
+                  },
+            data['messages'],
           );
         }
       }

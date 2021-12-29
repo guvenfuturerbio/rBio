@@ -230,9 +230,9 @@ class _ChatWindowState extends State<ChatWindow> {
     String sender,
   ) {
     if (streamMessages.data.data() == null) return SizedBox();
-    final messageData = (streamMessages.data.data()['messages'] as List)
-        .map((item) => Message.fromMap(item))
-        .toList();
+    final messages = streamMessages.data.data()['messages'];
+    if (messages == null) return SizedBox();
+    final messageData = messages.map((item) => Message.fromMap(item)).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
