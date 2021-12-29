@@ -1,19 +1,16 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../core/core.dart';
-import '../../../../../../generated/l10n.dart';
-import '../../../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
-import '../../../../utils/selected_scale_type.dart';
-import 'scale_filter_pop_up_vm.dart';
+import 'bp_chart_filter_pop_up_vm.dart';
 
-class ScaleChartFilterPopup extends StatelessWidget {
+class BpChartFilterPopUp extends StatelessWidget {
   final double width;
   final double height;
-  const ScaleChartFilterPopup(
-      {Key key, @required this.width, @required this.height})
+  const BpChartFilterPopUp({Key key, this.width, this.height})
       : super(key: key);
 
   @override
@@ -33,11 +30,11 @@ class ScaleChartFilterPopup extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
               child: ChangeNotifierProvider(
-                create: (_) => ScaleFilterPopupVm(
-                    scaleType: Provider.of<ScaleProgressPageViewModel>(context,
-                            listen: false)
-                        .currentScaleType),
-                child: Consumer<ScaleFilterPopupVm>(
+                create: (_) => BpChartFilterPopUpVm(
+                    measurements:
+                        Provider.of<BpProgressPageVm>(context, listen: false)
+                            .measurements),
+                child: Consumer<BpChartFilterPopUpVm>(
                   builder: (_, value, __) => Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: Column(
@@ -48,15 +45,15 @@ class ScaleChartFilterPopup extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               vertical: context.HEIGHT * .01),
                           child: ListView(shrinkWrap: true, children: [
-                            ...value.filterList
-                                .map((e) => RadioListTile<SelectedScaleType>(
-                                      title: Text(e.toStr),
-                                      value: e,
-                                      groupValue: value.selectedScaleType,
-                                      onChanged: (SelectedScaleType type) =>
-                                          value.changeScaleType(type),
-                                      dense: true,
-                                    ))
+                            ...value.measurements.keys
+                                .map((key) => CheckboxListTile(
+                                    value: value.measurements[key],
+                                    activeColor: getIt<ITheme>().mainColor,
+                                    title: Text(
+                                      key,
+                                      style: context.xHeadline2,
+                                    ),
+                                    onChanged: (_) => value.changeFilter(key)))
                           ]),
                         ),
                         Wrap(
@@ -72,31 +69,23 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                 elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    gradient: LinearGradient(
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.topLeft,
-                                        colors: <Color>[
-                                          R.color.white,
-                                          R.color.white
-                                        ]),
-                                  ),
+                                      borderRadius: BorderRadius.circular(25),
+                                      color:
+                                          getIt<ITheme>().cardBackgroundColor),
                                   padding: EdgeInsets.only(
                                       left: 16, right: 16, top: 10, bottom: 10),
                                   child: Text(
                                     LocaleProvider.current.cancel,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
+                                    style: context.xHeadline3,
                                   ),
                                 ),
                               ),
                             ),
                             GestureDetector(
                               onTap: () {
-                                Provider.of<ScaleProgressPageViewModel>(context,
+                                Provider.of<BpProgressPageVm>(context,
                                         listen: false)
-                                    .changeScaleType(value.selectedScaleType);
+                                    .changeFilterType(value.measurements);
                                 Atom.dismiss();
                               },
                               child: Card(
@@ -106,20 +95,16 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                 elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
+                                    color: getIt<ITheme>().mainColor,
                                     borderRadius: BorderRadius.circular(25),
-                                    gradient: LinearGradient(
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.topLeft,
-                                        colors: <Color>[
-                                          R.color.btnLightBlue,
-                                          R.color.btnDarkBlue
-                                        ]),
                                   ),
                                   padding: EdgeInsets.only(
                                       left: 16, right: 16, top: 10, bottom: 10),
                                   child: Text(
                                     LocaleProvider.current.save,
-                                    style: TextStyle(color: R.color.white),
+                                    style: context.xHeadline3.copyWith(
+                                        color: getIt<ITheme>()
+                                            .cardBackgroundColor),
                                   ),
                                 ),
                               ),

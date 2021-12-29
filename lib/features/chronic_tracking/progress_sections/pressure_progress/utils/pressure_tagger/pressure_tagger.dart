@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/domain/blood_pressure_model.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger_vm.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../../../../../core/domain/blood_pressure_model.dart';
+import '../../view_model/pressure_measurement_view_model.dart';
+import 'pressure_tagger_vm.dart';
 
 class PressureTagger extends StatelessWidget {
   final BloodPressureModel bpModel;
@@ -17,20 +17,10 @@ class PressureTagger extends StatelessWidget {
       {Key key, this.bpModel, this.isUpdate = false, this.isEdit = false})
       : super(key: key);
 
-  static double height = 0;
-  static double width = 0;
-
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (_, orientation) {
-        if (orientation == Orientation.landscape) {
-          height = context.WIDTH;
-          width = context.HEIGHT;
-        } else {
-          height = context.HEIGHT;
-          width = context.WIDTH;
-        }
         return GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: BackdropFilter(
@@ -47,6 +37,13 @@ class PressureTagger extends StatelessWidget {
                     key: bpModel?.key),
                 child: Consumer<PressureTaggerVm>(
                   builder: (_, value, __) {
+                    if (orientation == Orientation.landscape) {
+                      value.height = context.WIDTH;
+                      value.width = context.HEIGHT;
+                    } else {
+                      value.height = context.HEIGHT;
+                      value.width = context.WIDTH;
+                    }
                     return Card(
                       color: R.color.background,
                       shape: RoundedRectangleBorder(
@@ -59,9 +56,9 @@ class PressureTagger extends StatelessWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                top: height * .03,
-                                right: width * .02,
-                                left: width * .02,
+                                top: value.height * .03,
+                                right: value.width * .02,
+                                left: value.width * .02,
                               ),
                               child: SingleChildScrollView(
                                 controller: value.scrollController,
@@ -208,32 +205,40 @@ class PressureTagger extends StatelessWidget {
             value.changeSys,
             value.context.xHeadline1,
             value.bpModel.systolicColor,
-            value.sysController),
+            value.sysController,
+            value.context.TEXTSCALE * (value.height * .1)),
         _inputInsideSection(
             LocaleProvider.current.dia,
             value.changeDia,
             value.context.xHeadline1,
             value.bpModel.diastolicColor,
-            value.diaController),
+            value.diaController,
+            value.context.TEXTSCALE * (value.height * .1)),
         _inputInsideSection(
             LocaleProvider.current.pulse,
             value.changePulse,
             value.context.xHeadline1,
             value.bpModel.pulseColor,
-            value.pulseController)
+            value.pulseController,
+            value.context.TEXTSCALE * (value.height * .1))
       ],
     );
   }
 
-  Widget _inputInsideSection(String title, Function(String) onChanged,
-      TextStyle style, Color color, TextEditingController controller) {
+  Widget _inputInsideSection(
+      String title,
+      Function(String) onChanged,
+      TextStyle style,
+      Color color,
+      TextEditingController controller,
+      double height) {
     return Expanded(
         child: Card(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
                 side: BorderSide(width: 7, color: color)),
             child: SizedBox(
-              height: height * .1,
+              height: height,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(

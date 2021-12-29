@@ -31,6 +31,16 @@ class BpProgressPageVm
   TimePeriodFilter _selected;
   TimePeriodFilter get selected => _selected ?? TimePeriodFilter.DAILY;
 
+  Map<String, bool> _measurementFilters;
+
+  Map<String, bool> get measurements =>
+      _measurementFilters ??
+      {
+        '${LocaleProvider.current.sys}': true,
+        '${LocaleProvider.current.dia}': true,
+        '${LocaleProvider.current.pulse}': true,
+      };
+
   fetchBpMeasurement() {
     var _bpMeasurements = getIt<BloodPressureStorageImpl>().getAll();
 
@@ -262,8 +272,9 @@ class BpProgressPageVm
 
     return RbioSmallChronicWidget(
       callback: callBack,
-      lastMeasurement:
-          'Sys: ${lastMeasurement?.sys ?? ''}, Dia: ${lastMeasurement?.dia ?? ''}, Pulse: ${lastMeasurement?.pulse ?? ''}',
+      lastMeasurement: lastMeasurement == null
+          ? '${LocaleProvider.current.no_measurement}'
+          : 'Sys: ${lastMeasurement?.sys ?? ''}, Dia: ${lastMeasurement?.dia ?? ''}, Pulse: ${lastMeasurement?.pulse ?? ''}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: R.image.ct_blood_pressure,
     );
@@ -273,5 +284,13 @@ class BpProgressPageVm
   void changeGraphType() => null;
 
   @override
-  void showFilter(_) => null;
+  void showFilter(context) => Atom.show(BpChartFilterPopUp(
+        height: context.HEIGHT * .52,
+        width: context.WIDTH * .6,
+      ));
+
+  void changeFilterType(Map<String, bool> selectedMeasurement) {
+    _measurementFilters = selectedMeasurement;
+    notifyListeners();
+  }
 }

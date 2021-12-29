@@ -52,7 +52,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
         return Container(
           alignment: Alignment.center,
           width: double.infinity,
-          height: (context.HEIGHT * .1) * context.TEXTSCALE,
+          height: (context.HEIGHT * .05) * context.TEXTSCALE,
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
@@ -119,7 +119,7 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
           borderRadius: const BorderRadius.all(Radius.circular(30.0)),
         ),
         padding: const EdgeInsets.all(10),
-        height: (context.HEIGHT * .1) * context.TEXTSCALE,
+        height: context.HEIGHT * .07 * context.TEXTSCALE,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,10 +137,13 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(bgMeasurementViewModel.result),
+                        Text(
+                          bgMeasurementViewModel.result,
+                          style: context.xHeadline1,
+                        ),
                         Text(
                           "mg/dL",
-                          style: TextStyle(fontSize: 8),
+                          style: context.xBodyText1,
                         ),
                       ],
                     ),
@@ -210,8 +213,10 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     /*Icon(Icons.timer),*/
-                    Text(DateFormat("kk : mm")
-                        .format(bgMeasurementViewModel.date)),
+                    Text(
+                        DateFormat("kk : mm")
+                            .format(bgMeasurementViewModel.date),
+                        style: context.xBodyText1),
                   ],
                 ),
               ),

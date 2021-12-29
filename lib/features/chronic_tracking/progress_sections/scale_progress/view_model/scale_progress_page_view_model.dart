@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
@@ -709,11 +711,12 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   Widget smallWidget(Function() callBack) {
     ScaleMeasurementViewModel lastMeasurement = ScaleMeasurementViewModel(
         scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement());
-
+    log(lastMeasurement.scaleModel.toString());
     return RbioSmallChronicWidget(
       callback: callBack,
-      lastMeasurement:
-          '${lastMeasurement?.weight ?? ''} ${lastMeasurement?.unit?.toStr ?? ''}',
+      lastMeasurement: lastMeasurement == null
+          ? '${LocaleProvider.current.no_measurement}'
+          : '${lastMeasurement?.weight ?? ''} ${lastMeasurement?.unit?.toStr ?? ''}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: rBio.R.image.ct_body_scale,
     );

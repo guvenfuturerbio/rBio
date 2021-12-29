@@ -995,8 +995,9 @@ class BgProgressPageViewModel
 
     return RbioSmallChronicWidget(
       callback: callBack,
-      lastMeasurement:
-          '${lastMeasurement?.result ?? ''} ${lastMeasurement == null ? '' : 'mg/dl'}',
+      lastMeasurement: lastMeasurement == null
+          ? '${LocaleProvider.current.no_measurement}'
+          : '${lastMeasurement?.result ?? ''} ${lastMeasurement == null ? '' : 'mg/dl'}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: R.image.ct_blood_glucose,
     );
