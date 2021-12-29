@@ -23,12 +23,19 @@ class ChatController with ChangeNotifier {
   String chatId;
   String firstUser;
   String otherUser;
-
+  bool hasOtherSeen;
+  int otherLastSeen;
   @override
   void dispose() {
     cancelStreamSub();
     streamSubscription.cancel();
     super.dispose();
+  }
+
+  bool _getOtherHasRead(Map<String, dynamic> firebaseUserData, String to) {
+    final users = firebaseUserData['users'] as Map;
+    if (users == null) return true;
+    return users[to] ?? true;
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> init(
@@ -52,19 +59,27 @@ class ChatController with ChangeNotifier {
         if (data['messages'].last['sentFrom'] == uuidOther &&
             data['users'][uuid] == false) {
           manager.setHasSeen(
-            chatId,
-            firstUser == uuid
-                ? {
-                    uuid: true,
-                    uuidOther: data['users'][uuidOther],
-                  }
-                : {
-                    uuidOther: data['users'][uuidOther],
-                    uuid: true,
-                  },
-            data['messages'],
-          );
+              chatId,
+              firstUser == uuid
+                  ? {
+                      uuid: true,
+                      uuidOther: data['users'][uuidOther],
+                    }
+                  : {
+                      uuidOther: data['users'][uuidOther],
+                      uuid: true,
+                    },
+              data['messages'],
+              {
+                uuid: DateTime.now().millisecondsSinceEpoch,
+                uuidOther: data['users_lastSeenDate'] == null
+                    ? 0
+                    : data['users_lastSeenDate'][uuidOther]
+              });
         }
+        otherLastSeen = data['users_lastSeenDate'] == null
+            ? 0
+            : data['users_lastSeenDate'][uuidOther];
       }
 
       LoggerUtils.instance.i(event.data());

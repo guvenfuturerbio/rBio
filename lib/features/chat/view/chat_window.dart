@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -123,12 +124,8 @@ class _ChatWindowState extends State<ChatWindow> {
                   );
                 }
 
-                return _buildSuccess(
-                  context,
-                  _scrollController,
-                  streamMessages,
-                  sender,
-                );
+                return _buildSuccess(context, _scrollController, streamMessages,
+                    sender, chatController);
               }
             },
           ),
@@ -224,11 +221,11 @@ class _ChatWindowState extends State<ChatWindow> {
   }
 
   Widget _buildSuccess(
-    BuildContext context,
-    ScrollController _scrollController,
-    AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> streamMessages,
-    String sender,
-  ) {
+      BuildContext context,
+      ScrollController _scrollController,
+      AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> streamMessages,
+      String sender,
+      ChatController chatController) {
     if (streamMessages.data.data() == null) return SizedBox();
     final messages = streamMessages.data.data()['messages'];
     if (messages == null) return SizedBox();
@@ -292,10 +289,10 @@ class _ChatWindowState extends State<ChatWindow> {
                       ),
                     ),
                     messageData[index].type == 0
-                        ? _chatIconDesign(
-                            messageData[index], sender, otherPerson.url)
+                        ? _chatIconDesign(messageData[index], sender,
+                            otherPerson.url, chatController)
                         : chatImage(context, messageData[index], sender,
-                            otherPerson.url)
+                            otherPerson.url, chatController)
                   ],
                 );
               if (time.isSameDay(DateTime.fromMillisecondsSinceEpoch(
@@ -335,25 +332,18 @@ class _ChatWindowState extends State<ChatWindow> {
                       ),
                     ),
                     messageData[index].type == 0
-                        ? _chatIconDesign(
-                            messageData[index], sender, otherPerson.url)
+                        ? _chatIconDesign(messageData[index], sender,
+                            otherPerson.url, chatController)
                         : chatImage(context, messageData[index], sender,
-                            otherPerson.url)
+                            otherPerson.url, chatController)
                   ],
                 );
               else
                 return messageData[index].type == 0
-                    ? _chatIconDesign(
-                        messageData[index],
-                        sender,
-                        otherPerson.url,
-                      )
-                    : chatImage(
-                        context,
-                        messageData[index],
-                        sender,
-                        otherPerson.url,
-                      );
+                    ? _chatIconDesign(messageData[index], sender,
+                        otherPerson.url, chatController)
+                    : chatImage(context, messageData[index], sender,
+                        otherPerson.url, chatController);
             },
           ),
         ),
@@ -378,8 +368,8 @@ Widget widgetShowImages(String imageUrl, double imageSize) {
   );
 }
 
-Widget chatImage(
-    BuildContext context, Message message, String uid, String url) {
+Widget chatImage(BuildContext context, Message message, String uid, String url,
+    ChatController chatController) {
   var time = "";
   try {
     time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date));
@@ -409,7 +399,14 @@ Widget chatImage(
               },
               padding: EdgeInsets.all(0),
             )),
-            Text(time),
+            Column(
+              children: [
+                Text(time),
+                if (chatController.otherLastSeen > message.date) ...{
+                  SvgPicture.asset(R.image.eyeseen_icon, height: 10)
+                }
+              ],
+            ),
           ])
         ]));
   } else {
@@ -445,7 +442,8 @@ Widget chatImage(
   }
 }
 
-Widget _chatIconDesign(Message message, uid, String url) {
+Widget _chatIconDesign(
+    Message message, uid, String url, ChatController chatController) {
   Color recievedMessageColor = Colors.grey[350];
   Color sentMessageColor = getIt<ITheme>().mainColor;
   var time = "";
@@ -471,7 +469,14 @@ Widget _chatIconDesign(Message message, uid, String url) {
                   style: TextStyle(color: Colors.white)),
             ),
           ),
-          Text(time),
+          Column(
+            children: [
+              Text(time),
+              if (chatController.otherLastSeen > message.date) ...{
+                SvgPicture.asset(R.image.eyeseen_icon, height: 10)
+              }
+            ],
+          ),
         ],
       ),
     );

@@ -72,15 +72,13 @@ class FirestoreManager {
     }
   }
 
-  Future<void> setHasSeen(
-    String chatId,
-    Map<String, dynamic> users,
-    List messages,
-  ) async {
+  Future<void> setHasSeen(String chatId, Map<String, dynamic> users,
+      List messages, Map<String, dynamic> lastSeenDate) async {
     await _firebaseDB.collection("conversations/").doc(chatId).set(
       {
         'messages': messages,
         'users': users,
+        'users_lastSeenDate': lastSeenDate
       },
     );
   }

@@ -130,7 +130,22 @@ class ConsultationScreen extends StatelessWidget {
                         ),
                       ),
                       Spacer(),
-                      Text(item.messageTime ?? "")
+                      Column(
+                        children: [
+                          Text(item.messageTime ?? ""),
+                          //
+                          SizedBox(
+                            height: 8,
+                          ),
+                          item.otherHasRead &&
+                                  item.hasRead &&
+                                  item.lastMessageSender ==
+                                      getIt<UserNotifier>().firebaseID
+                              ? SvgPicture.asset(R.image.eyeseen_icon,
+                                  height: 10)
+                              : SizedBox(),
+                        ],
+                      )
                     ],
                   ),
 
@@ -147,17 +162,6 @@ class ConsultationScreen extends StatelessWidget {
                         : context.xBodyText1
                             .copyWith(fontWeight: FontWeight.bold),
                   ),
-
-                  //
-                  item.otherHasRead &&
-                          item.hasRead &&
-                          item.lastMessageSender ==
-                              getIt<UserNotifier>().firebaseID
-                      ? Text(
-                          'görüldü',
-                          style: context.xBodyText1,
-                        )
-                      : SizedBox(),
                 ],
               ),
             ),
