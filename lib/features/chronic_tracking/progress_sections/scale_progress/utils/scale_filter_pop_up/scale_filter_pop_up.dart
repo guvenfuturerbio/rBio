@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../../../generated/l10n.dart';
 import '../../../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
 import '../../../../utils/selected_scale_type.dart';
 import 'scale_filter_pop_up_vm.dart';
@@ -12,8 +11,16 @@ import 'scale_filter_pop_up_vm.dart';
 class ScaleChartFilterPopup extends StatelessWidget {
   final double width;
   final double height;
+  final bool isDoctor;
+  final SelectedScaleType selected;
+  final Function(SelectedScaleType) changeScaleType;
   const ScaleChartFilterPopup(
-      {Key key, @required this.width, @required this.height})
+      {Key key,
+      @required this.width,
+      @required this.height,
+      this.isDoctor = false,
+      this.selected,
+      this.changeScaleType})
       : super(key: key);
 
   @override
@@ -34,9 +41,11 @@ class ScaleChartFilterPopup extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15)),
               child: ChangeNotifierProvider(
                 create: (_) => ScaleFilterPopupVm(
-                    scaleType: Provider.of<ScaleProgressPageViewModel>(context,
-                            listen: false)
-                        .currentScaleType),
+                    scaleType: isDoctor
+                        ? selected
+                        : Provider.of<ScaleProgressPageViewModel>(context,
+                                listen: false)
+                            .currentScaleType),
                 child: Consumer<ScaleFilterPopupVm>(
                   builder: (_, value, __) => Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
@@ -94,9 +103,14 @@ class ScaleChartFilterPopup extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Provider.of<ScaleProgressPageViewModel>(context,
-                                        listen: false)
-                                    .changeScaleType(value.selectedScaleType);
+                                if (isDoctor) {
+                                  changeScaleType(value.selectedScaleType);
+                                } else {
+                                  Provider.of<ScaleProgressPageViewModel>(
+                                          context,
+                                          listen: false)
+                                      .changeScaleType(value.selectedScaleType);
+                                }
                                 Atom.dismiss();
                               },
                               child: Card(

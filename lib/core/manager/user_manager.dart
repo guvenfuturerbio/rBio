@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:onedosehealth/core/data/service/firebase_service.dart';
 
@@ -77,12 +76,12 @@ class UserManagerImpl extends UserManager {
     UserLoginInfo userLoginInfo = UserLoginInfo();
     String username = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.LOGIN_USERNAME);
-    userLoginInfo.username = username;
-    // userLoginInfo.username = '18620716416';
+    // userLoginInfo.username = username;
+    userLoginInfo.username = 'dr.alev.eken';
     String password = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
-    userLoginInfo.password = password;
-    // userLoginInfo.password = 'Numlock1234!!';
+    // userLoginInfo.password = password;
+    userLoginInfo.password = '12345';
     return userLoginInfo;
   }
 

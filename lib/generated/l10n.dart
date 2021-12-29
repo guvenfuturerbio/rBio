@@ -7355,11 +7355,11 @@ class LocaleProvider {
     );
   }
 
-  /// `Weight Tracking`
-  String get weight_tracking {
+  /// `Body Scale Tracking`
+  String get bmi_tracking {
     return Intl.message(
-      'Weight Tracking',
-      name: 'weight_tracking',
+      'Body Scale Tracking',
+      name: 'bmi_tracking',
       desc: '',
       args: [],
     );

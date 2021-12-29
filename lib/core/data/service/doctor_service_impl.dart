@@ -94,6 +94,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
         R.endpoints.dc_getMyBMIPatient, getMyPatientFilter.toJson(),
         options: authOptions);
     if (response.isSuccessful == true) {
+      LoggerUtils.instance.i(response.datum);
       return response.datum
           .map((item) => DoctorBMIPatientModel.fromJson(item))
           .cast<DoctorBMIPatientModel>()
@@ -147,7 +148,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<BloodGlucose>> getMyPatientScale(
+  Future<List<ScaleModel>> getMyPatientScale(
       int patientId, GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMyPatientScale(patientId),
