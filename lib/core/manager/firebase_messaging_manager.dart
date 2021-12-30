@@ -55,6 +55,7 @@ class FirebaseMessagingManager {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      LoggerUtils.instance.i(message);
       RemoteNotification notification = message.notification;
       if (!kIsWeb) {
         if (notification != null) {
@@ -74,13 +75,41 @@ class FirebaseMessagingManager {
         }
       }
     });
+    setupInteractedMessage();
+  }
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    LoggerUtils.instance.w(initialMessage);
 
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null && initialMessage.data['type'] == 'chat') {
+      Atom.to(
+        PagePaths.CONSULTATION,
+      );
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      if (message.data['route'] != null) if (message.data['parameters'] != null)
+      LoggerUtils.instance.e(message);
+
+      if (message.data['type'] == 'route') if (message.data['parameters'] !=
+          null)
         Atom.to(message.data['route'],
             queryParameters: message.data['parameters']);
       else
         Atom.to(message.data['route']);
+      else {
+        if (message != null && initialMessage.data['type'] == 'chat') {
+          Atom.to(
+            PagePaths.CONSULTATION,
+          );
+        }
+      }
     });
   }
 
