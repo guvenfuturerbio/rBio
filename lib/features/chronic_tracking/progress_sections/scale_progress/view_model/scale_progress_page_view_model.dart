@@ -200,8 +200,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
         }
       }
     }
-    return 300;
-    //return targetMax + targetMin;
+    return highest;
   }
 
   int get lowestValue {
@@ -217,8 +216,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
         }
       }
     }
-    return 0;
-    //return 0;
+    return lowest;
   }
 
   int get totalValuableCount {

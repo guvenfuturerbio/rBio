@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
-import 'package:onedosehealth/features/doctor/pages/chat/chat_window.dart';
+/*import 'package:flutter/material.dart';
+import 'package:one_dose_sugar/pages/chat/chat_window.dart';
 
 class ZoomImage extends StatelessWidget {
   final String url;
@@ -40,6 +39,6 @@ class ZoomImageScreenState extends State<ZoomImageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DoctorChatWindow.widgetFullPhoto(context, url);
+    return ChatWindow.widgetFullPhoto(context, url);
   }
-}
+}*/

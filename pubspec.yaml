@@ -135,6 +135,7 @@ dependencies:
   system_shortcuts: ^1.0.0
   table_calendar: ^3.0.3
   time: ^2.0.0
+  timeago: ^3.1.0
   turkish: ^0.2.0
   universal_html: ^2.0.8
   url_launcher: ^6.0.13
@@ -171,7 +172,8 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: 'assets/logo/onedose_demo_2.png'
+  image_path: 'assets/logo/onedose_app_logo.png'
+  remove_alpha_ios: true
 
 flutter_intl:
   enabled: true
@@ -179,5 +181,5 @@ flutter_intl:
   default_locale: en
 
 flutter_native_splash:
-  color: '#FFFFFF'
-  image: 'assets/images/guven_logo.png'
+  color: '#00A147'
+  image: 'assets/logo/onedose_app_logo.png'

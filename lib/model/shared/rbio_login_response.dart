@@ -1,16 +1,22 @@
 class RbioLoginResponse {
-  Token token;
-  List<String> roles;
-
   RbioLoginResponse({
     this.token,
     this.roles,
+    this.firebase_user_email,
+    this.firebase_user_salt,
   });
+
+  String firebase_user_email;
+  String firebase_user_salt;
+  Token token;
+  List<String> roles;
 
   factory RbioLoginResponse.fromJson(Map<String, dynamic> json) =>
       RbioLoginResponse(
         token: Token.fromJson(json["token"]),
         roles: List<String>.from(json["roles"].map((x) => x)),
+        firebase_user_email: json['firebase_user_email'],
+        firebase_user_salt: json['firebase_user_salt'],
       );
 
   Map<String, dynamic> toJson() => {

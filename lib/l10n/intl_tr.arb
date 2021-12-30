@@ -729,7 +729,7 @@
   "back": "Geri",
 
   "bg_measurement_tracking": "Kan Şekeri Takibi",
-  "weight_tracking": "Kilo Takibi",
+  "bmi_tracking": "Vücut Ölçüm Takibi",
   "blood_pressure_tracking": "Tansiyon Takibi",
   "treatment_process": "Tedavi Süreci",
   "critical_metrics": "Kritik ölçümler",

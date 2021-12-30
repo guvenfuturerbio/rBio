@@ -10,7 +10,11 @@ enum UserType { doctor, chronic_user, basic_user }
 class UserNotifier extends ChangeNotifier {
   PatientResponse patient;
   List<UserType> _userType = [];
-
+  //
+  String firebaseID;
+  String firebaseEmail;
+  String firebasePassword;
+  //
   bool get isDoctor => _userType.contains(UserType.doctor);
   bool get isCronic => _userType.contains(UserType.chronic_user);
   bool get isPatient => _userType.contains(UserType.basic_user);
@@ -46,6 +50,7 @@ class UserNotifier extends ChangeNotifier {
       _userType.add(UserType.basic_user);
     }
   }
+
 // Guven online user account set
   Future<void> setUserAccount(UserAccount userAccount) async {
     bool _canAccessHospitalOps;
@@ -67,6 +72,7 @@ class UserNotifier extends ChangeNotifier {
     await sharedPreferencesManager.setBool(
         SharedPreferencesKeys.CANACCESSHOSPITALOPS, _canAccessHospitalOps);
   }
+
 // Güven online user account get
   UserAccount getUserAccount() {
     final userAccountStr =

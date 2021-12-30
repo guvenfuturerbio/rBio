@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../model/model.dart';
 import '../../constants/constants.dart';
+import '../../core.dart';
 import '../../enums/shared_preferences_keys.dart';
 import '../../locator.dart';
 import '../../manager/shared_preferences_manager.dart';
@@ -45,7 +46,7 @@ class DoctorRepository {
   Future<List<BloodGlucose>> getMyPatientBloodGlucose(
           int patientId, GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMyPatientBloodGlucose(patientId, getMyPatientFilter);
-  Future<List<BloodGlucose>> getMyPatientScale(
+  Future<List<ScaleModel>> getMyPatientScale(
           int patientId, GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMyPatientScale(patientId, getMyPatientFilter);
   Future<List<BloodGlucose>> getMyPatientBloodPressure(
