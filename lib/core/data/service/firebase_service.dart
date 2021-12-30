@@ -11,27 +11,32 @@ import '../../../features/chat/model/message.dart';
 import '../../core.dart';
 
 class FirestoreManager {
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> streamSubscription;
-  final FirebaseFirestore _firebaseDB = FirebaseFirestore.instance;
-  FirebaseAuth _auth = FirebaseAuth.instance;
   PickedFile imageFile;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseDB = FirebaseFirestore.instance;
+
+  final keyConversations = 'conversations/';
+  final keyUsers = 'users';
+  final keyUsersDot = 'users.';
+  final keyMessages = 'messages';
+  final keyUsersLastSeenDate = 'users_lastSeenDate';
+
+  final firestoreNotFoundException = "not-found";
+  String getChatId(String first, String second) => first + " - " + second;
 
   Future<void> loginFirebase() async {
-    final User user = (await _auth.signInWithEmailAndPassword(
-            email: getIt<UserNotifier>().firebaseEmail,
-            password: getIt<UserNotifier>().firebasePassword))
-        .user;
+    final userCredential = await _auth.signInWithEmailAndPassword(
+      email: getIt<UserNotifier>().firebaseEmail,
+      password: getIt<UserNotifier>().firebasePassword,
+    );
+    final User user = userCredential.user;
     getIt<UserNotifier>().firebaseID = user.uid;
-  }
-
-  sortUid(Message message, String sendTo) {
-    return message.sentFrom.compareTo(sendTo);
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getContactsAndMessages() {
     return _firebaseDB
-        .collection("conversations/")
-        .where('users.' + _auth.currentUser.uid, isNull: false)
+        .collection(keyConversations)
+        .where(keyUsersDot + _auth.currentUser.uid, isNull: false)
         .snapshots();
   }
 
@@ -49,36 +54,38 @@ class FirestoreManager {
 
     try {
       await _firebaseDB
-          .collection("conversations/")
-          .doc(first + " - " + second)
+          .collection(keyConversations)
+          .doc(getChatId(first, second))
           .update(
         {
-          'messages': FieldValue.arrayUnion([message.toMap()]),
-          'users': usersMap,
+          keyMessages: FieldValue.arrayUnion([message.toMap()]),
+          keyUsers: usersMap,
         },
       );
     } on FirebaseException catch (e) {
-      if (e.code == "not-found") {
+      if (e.code == firestoreNotFoundException) {
         await _firebaseDB
-            .collection("conversations/")
-            .doc(first + " - " + second)
+            .collection(keyConversations)
+            .doc(getChatId(first, second))
             .set({
-          'messages': FieldValue.arrayUnion([message.toMap()]),
-          'users': usersMap,
+          keyMessages: FieldValue.arrayUnion([message.toMap()]),
+          keyUsers: usersMap,
         });
       }
-      LoggerUtils.instance.e(e.code);
-      LoggerUtils.instance.e(e);
     }
   }
 
-  Future<void> setHasSeen(String chatId, Map<String, dynamic> users,
-      List messages, Map<String, dynamic> lastSeenDate) async {
-    await _firebaseDB.collection("conversations/").doc(chatId).set(
+  Future<void> setHasSeen(
+    String chatId,
+    Map<String, dynamic> users,
+    List messages,
+    Map<String, dynamic> lastSeenDate,
+  ) async {
+    await _firebaseDB.collection(keyConversations).doc(chatId).set(
       {
-        'messages': messages,
-        'users': users,
-        'users_lastSeenDate': lastSeenDate
+        keyMessages: messages,
+        keyUsers: users,
+        keyUsersLastSeenDate: lastSeenDate
       },
     );
   }
@@ -89,8 +96,64 @@ class FirestoreManager {
     } else {
       await writeMessageToFirebase(sendTo, message.sentFrom, message);
     }
-    //sendNotification(message);
     return true;
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getCurrentUserSnapShots(
+    String currentUserId,
+    String otherUserId,
+  ) {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> snapShots;
+    if (sortUid(Message(sentFrom: currentUserId), otherUserId) == -1) {
+      snapShots = readMessagesFromFirebase(currentUserId, otherUserId);
+    } else {
+      snapShots = readMessagesFromFirebase(otherUserId, currentUserId);
+    }
+    return snapShots;
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> readMessagesFromFirebase(
+    String first,
+    String second,
+  ) {
+    return _firebaseDB
+        .collection(keyConversations)
+        .doc(getChatId(first, second))
+        .snapshots();
+  }
+
+  int sortUid(Message message, String sendTo) =>
+      message.sentFrom.compareTo(sendTo);
+
+  Future<void> getImage(int index, String sender, String reciever) async {
+    ImagePicker imagePicker = new ImagePicker();
+    imageFile = index == 0
+        ? await imagePicker.getImage(source: ImageSource.gallery)
+        : await imagePicker.getImage(source: ImageSource.camera);
+
+    if (imageFile != null) {
+      uploadFile(sender, reciever);
+    }
+  }
+
+  Future<void> uploadFile(String sender, String reciever) async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference reference = FirebaseStorage.instance.ref().child(fileName);
+    await FlutterNativeImage.compressImage(
+      imageFile.path,
+      quality: 80,
+      percentage: 90,
+    );
+    await reference.putFile(File(imageFile.path));
+    sendMessage(
+      Message(
+        sentFrom: sender,
+        message: await reference.getDownloadURL(),
+        date: DateTime.now().millisecondsSinceEpoch,
+        type: 1,
+      ),
+      reciever,
+    );
   }
 
   /*Future<bool> sendNotification(Message message) async {
@@ -121,61 +184,4 @@ class FirestoreManager {
     }
   }*/
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> readMessagesFromFirebase(
-      String first, String second) {
-    return _firebaseDB
-        .collection("conversations/")
-        .doc(first + " - " + second)
-        .snapshots();
-  }
-
-  void cancelStreamSub() {
-    streamSubscription.cancel();
-  }
-
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getMessages(
-      String currentUserID, String sohbetEdilenUserID) {
-    Stream<DocumentSnapshot<Map<String, dynamic>>> snapShots;
-    if (sortUid(
-            Message(
-              sentFrom: currentUserID,
-            ),
-            sohbetEdilenUserID) ==
-        -1) {
-      snapShots = readMessagesFromFirebase(currentUserID, sohbetEdilenUserID);
-    } else {
-      snapShots = readMessagesFromFirebase(sohbetEdilenUserID, currentUserID);
-    }
-    streamSubscription = snapShots.listen((event) {
-      event.toString();
-    });
-
-    return snapShots;
-  }
-
-  Future<void> getImage(int index, String sender, String reciever) async {
-    ImagePicker imagePicker = new ImagePicker();
-    imageFile = index == 0
-        ? await imagePicker.getImage(source: ImageSource.gallery)
-        : await imagePicker.getImage(source: ImageSource.camera);
-
-    if (imageFile != null) {
-      uploadFile(sender, reciever);
-    }
-  }
-
-  Future<void> uploadFile(String sender, String reciever) async {
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    Reference reference = FirebaseStorage.instance.ref().child(fileName);
-    await FlutterNativeImage.compressImage(imageFile.path,
-        quality: 80, percentage: 90);
-    await reference.putFile(File(imageFile.path));
-    sendMessage(
-        Message(
-            sentFrom: sender,
-            message: await reference.getDownloadURL(),
-            date: DateTime.now().millisecondsSinceEpoch,
-            type: 1),
-        reciever);
-  }
 }

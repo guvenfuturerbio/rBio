@@ -482,7 +482,6 @@ class KeyboardActionstate extends State<KeyboardActions>
       crossFadeState:
           _isShowing ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       firstChild: Container(
-        height: _kBarSize,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           border: Border(

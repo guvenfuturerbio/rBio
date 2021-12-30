@@ -1,0 +1,614 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_date/dart_date.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../../../core/core.dart';
+import '../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
+import '../controller/chat_vm.dart';
+import '../model/chat_person.dart';
+import '../model/message.dart';
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key key}) : super(key: key);
+
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  ChatPerson otherPerson;
+  bool hasFirstDataArrived = false;
+
+  FocusNode _focusNode;
+  ScrollController _scrollController;
+  TextEditingController _textEditingController;
+
+  String get getCurrentUserId => getIt<UserNotifier>().firebaseID;
+  final topPadding = 64 + Atom.safeTop;
+
+  @override
+  void initState() {
+    _focusNode = FocusNode();
+    _textEditingController = TextEditingController();
+    _scrollController = ScrollController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _textEditingController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    try {
+      otherPerson = ChatPerson.fromJson(Atom.queryParameters['otherPerson']);
+    } catch (e) {
+      return RbioRouteError();
+    }
+
+    final chatVm = Provider.of<ChatVm>(context)
+      ..init(getCurrentUserId, otherPerson.id, _scrollAnimateToEnd);
+
+    return KeyboardDismissOnTap(
+      child: RbioStackedScaffold(
+        appbar: _buildAppBar(context),
+        body: _buildBody(chatVm),
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(context, otherPerson.name ?? ''),
+    );
+  }
+
+  Widget _buildBody(ChatVm chatVm) {
+    return RbioKeyboardActions(
+      focusList: [
+        _focusNode,
+      ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+              stream: chatVm.stream,
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
+              ) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return RbioLoading();
+                } else if (snapshot.connectionState == ConnectionState.active ||
+                    snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return RbioBodyError();
+                  } else if (snapshot.hasData) {
+                    if (!hasFirstDataArrived && snapshot.data.data() != null) {
+                      hasFirstDataArrived = true;
+                      Future.delayed(
+                        Duration(milliseconds: 500),
+                        () {
+                          _scrollAnimateToEnd();
+                        },
+                      );
+                    }
+
+                    return _buildSuccess(snapshot.data, chatVm);
+                  } else {
+                    return SizedBox();
+                  }
+                } else {
+                  return SizedBox();
+                }
+              },
+            ),
+          ),
+
+          //
+          _buildInputArea(chatVm),
+
+          //
+          KeyboardVisibilityBuilder(
+            builder: (BuildContext context, bool isKeyboardVisible) {
+              return SizedBox(
+                height: isKeyboardVisible ? 12 : Atom.safeBottom + 12,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _scrollAnimateToEnd() {
+    Future.delayed(Duration(milliseconds: 60), () {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent + topPadding + 200,
+          curve: Curves.easeOut,
+          duration: Duration(milliseconds: 1),
+        );
+      }
+    });
+  }
+
+  Widget _buildInputArea(ChatVm chatVm) {
+    return IconTheme(
+      data: IconThemeData(color: Theme.of(context).accentColor),
+      child: Container(
+        padding: EdgeInsets.only(top: 6),
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            IconButton(
+              icon: SvgPicture.asset(
+                R.image.photo_icon,
+                color: getIt<ITheme>().mainColor,
+                width: 25,
+              ),
+              onPressed: () {
+                chatVm.getImage(0, getCurrentUserId, otherPerson.id);
+              },
+            ),
+
+            //
+            SizedBox(width: 6),
+
+            //
+            Expanded(
+              child: Stack(
+                fit: StackFit.loose,
+                children: [
+                  //
+                  RbioTextFormField(
+                    focusNode: _focusNode,
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.go,
+                    hintText: LocaleProvider.current.send_message,
+                    onFieldSubmitted: (value) {
+                      _sendMessage(chatVm);
+                    },
+                  ),
+
+                  //
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      color: getIt<ITheme>().mainColor,
+                      icon: SvgPicture.asset(R.image.send_icon, width: 25),
+                      onPressed: () => _sendMessage(chatVm),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            //
+            SizedBox(width: 6),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSuccess(
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot,
+    ChatVm chatVm,
+  ) {
+    final documentData = documentSnapshot.data();
+    if (documentData == null) return SizedBox();
+    final messages = documentData['messages'] as List;
+    if (messages == null) return SizedBox();
+    final messageData =
+        messages.map((item) => Message.fromMap(item)).cast<Message>().toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Expanded(
+          child: Scrollbar(
+            thickness: 3,
+            isAlwaysShown: true,
+            radius: Radius.circular(5),
+            controller: _scrollController,
+            child: ListView.builder(
+              reverse: false,
+              shrinkWrap: true,
+              controller: _scrollController,
+              itemCount: messageData.length,
+              padding: EdgeInsets.only(top: topPadding),
+              itemBuilder: (BuildContext context, int index) {
+                var time = DateTime.now();
+
+                try {
+                  time = DateTime.fromMillisecondsSinceEpoch(
+                    messageData[index].date,
+                    isUtc: true,
+                  );
+                } catch (e) {
+                  LoggerUtils.instance.e(e);
+                }
+
+                if (messageData.first == messageData[index]) {
+                  return _buildFirstCard(
+                    time,
+                    messageData[index],
+                    chatVm,
+                  );
+                }
+
+                //
+                if (time.isSameDay(DateTime.fromMillisecondsSinceEpoch(
+                        messageData[index - 1].date)) ==
+                    false) {
+                  return Column(
+                    children: [
+                      _buildDateTitle(time),
+                      _buildChatBubble(messageData[index], chatVm),
+                    ],
+                  );
+                } else {
+                  return _buildChatBubble(messageData[index], chatVm);
+                }
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildFirstCard(
+    DateTime time,
+    Message message,
+    ChatVm chatVm,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        //
+        _buildDateTitle(time),
+
+        //
+        _buildChatBubble(message, chatVm),
+      ],
+    );
+  }
+
+  Widget _buildChatBubble(
+    Message message,
+    ChatVm chatVm,
+  ) =>
+      message.type == 0
+          ? _buildTextBubble(
+              message,
+              otherPerson.url,
+              chatVm,
+            )
+          : _buildImageBubble(
+              context,
+              message,
+              otherPerson.url,
+              chatVm,
+            );
+
+  Align _buildDateTitle(DateTime time) {
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: getIt<ITheme>().cardBackgroundColor,
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(50),
+              blurRadius: 15,
+              spreadRadius: 0,
+              offset: Offset(5, 10),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time)}',
+            textAlign: TextAlign.center,
+            style: context.xHeadline5,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageBubble(
+    BuildContext context,
+    Message message,
+    String url,
+    ChatVm chatVm,
+  ) {
+    var time = "";
+    try {
+      time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date));
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+    }
+
+    if (message.sentFrom == getCurrentUserId) {
+      return Padding(
+        padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            FlatButton(
+              padding: EdgeInsets.all(0),
+              child: Material(
+                child: widgetShowImages(message.message),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                clipBehavior: Clip.hardEdge,
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => GalleryView(
+                    images: [message.message],
+                  ),
+                );
+              },
+            ),
+
+            //
+            SizedBox(width: 6),
+
+            //
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                _buildTimeText(time),
+                if (chatVm.otherLastSeen > message.date) ...{
+                  _buildEyesIcon(),
+                },
+              ],
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Padding(
+        padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            FlatButton(
+              padding: EdgeInsets.all(0),
+              child: Material(
+                child: widgetShowImages(message.message),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                clipBehavior: Clip.hardEdge,
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => GalleryView(
+                    images: [message.message],
+                  ),
+                );
+              },
+            ),
+
+            //
+            _buildTimeText(time, true),
+          ],
+        ),
+      );
+    }
+  }
+
+  Widget _buildTextBubble(
+    Message message,
+    String url,
+    ChatVm chatVm,
+  ) {
+    var time = "";
+    try {
+      time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date));
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+    }
+
+    if (message.sentFrom == getCurrentUserId) {
+      return Padding(
+        padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Flexible(
+              child: _buildSelectableText(
+                message.message,
+                getIt<ITheme>().textColorSecondary,
+                getIt<ITheme>().secondaryColor,
+              ),
+            ),
+
+            //
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                _buildTimeText(time),
+                if (chatVm.otherLastSeen > message.date) ...{
+                  _buildEyesIcon(),
+                },
+              ],
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Padding(
+        padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Flexible(
+              child: _buildSelectableText(
+                message.message,
+                getIt<ITheme>().textColorSecondary,
+                getIt<ITheme>().cardBackgroundColor,
+              ),
+            ),
+
+            //
+            _buildTimeText(time, true),
+          ],
+        ),
+      );
+    }
+  }
+
+  Widget _buildSelectableText(
+    String message,
+    Color textColor,
+    Color backColor,
+  ) {
+    return Container(
+      padding: EdgeInsets.all(15),
+      margin: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: backColor,
+        borderRadius: R.sizes.borderRadiusCircular,
+      ),
+      child: SelectableText(
+        message ?? '',
+        style: context.xHeadline5.copyWith(
+          color: textColor,
+          fontWeight: FontWeight.w600,
+        ),
+        enableInteractiveSelection: true,
+        autofocus: true,
+      ),
+    );
+  }
+
+  Widget _buildTimeText(String time, [bool bottomPadding = false]) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 4,
+        bottom: bottomPadding ? 7 : 0,
+      ),
+      child: Text(
+        time,
+        style: context.xHeadline5.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEyesIcon() {
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: 7,
+      ),
+      child: SvgPicture.asset(
+        R.image.eyeseen_icon,
+        height: 12,
+      ),
+    );
+  }
+
+  void _sendMessage(ChatVm chatVm) async {
+    try {
+      if (_textEditingController.text.trim().length > 0) {
+        final _messageSent = Message(
+          sentFrom: getCurrentUserId,
+          message: _textEditingController.text,
+          date: DateTime.now().millisecondsSinceEpoch,
+          type: 0,
+        );
+
+        var result = await chatVm.sendMessage(
+          _messageSent,
+          otherPerson.id,
+        );
+        if (result) {
+          _focusNode.unfocus();
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            curve: Curves.easeOut,
+            duration: Duration(microseconds: 10),
+          );
+          Future.delayed(Duration(milliseconds: 10), () {
+            _textEditingController.clear();
+          });
+        }
+      }
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+      rethrow;
+    }
+  }
+
+  Widget widgetShowImages(String imageUrl) {
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: Atom.width * 0.25,
+      placeholder: (context, url) => Shimmer.fromColors(
+        child: SizedBox(
+          height: Atom.width * 0.25,
+          width: Atom.width * 0.25,
+        ),
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[100],
+      ),
+      errorWidget: (context, url, error) => Icon(Icons.error),
+    );
+  }
+
+  String _showTime(DateTime date) {
+    var _formatter = DateFormat.Hm();
+    var _formattedTime = _formatter.format(date);
+    return _formattedTime;
+  }
+}

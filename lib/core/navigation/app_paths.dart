@@ -1,14 +1,13 @@
-import 'package:onedosehealth/core/widgets/chronic_error_alert.dart';
-import 'package:onedosehealth/features/chat/controller/chat_controller.dart';
-import 'package:onedosehealth/features/chat/view/chat_window.dart';
-import 'package:onedosehealth/features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
-import 'package:onedosehealth/features/doctor/video_call_edit/view/video_call_edit_screen.dart';
-import 'package:onedosehealth/features/chat/view/consultation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
+
 import '../../features/auth/auth.dart';
+import '../../features/chat/controller/chat_vm.dart';
+import '../../features/chat/view/chat_screen.dart';
+import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
+import '../../features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
@@ -53,6 +52,7 @@ import '../../features/take_appointment/create_appointment_events/view/create_ap
 import '../../features/take_appointment/create_appointment_summary/view/create_appointment_summary_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../core.dart';
+import '../widgets/chronic_error_alert.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -155,12 +155,7 @@ class VRouterRoutes {
       path: PagePaths.COVID19,
       widget: Covid19Screen(),
     ),
-    VWidget(
-        path: PagePaths.CHAT,
-        widget: ChangeNotifierProvider<ChatController>(
-          create: (context) => ChatController(),
-          child: ChatWindow(),
-        )),
+
     VWidget(
       path: PagePaths.ERESULT,
       widget: ChangeNotifierProvider<EResultScreenVm>(
@@ -251,7 +246,21 @@ class VRouterRoutes {
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
     ),
-    VWidget(path: PagePaths.CONSULTATION, widget: ConsultationScreen()),
+
+    VWidget(
+      path: PagePaths.CONSULTATION,
+      widget: ConsultationScreen(),
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.CHAT,
+          widget: ChangeNotifierProvider<ChatVm>(
+            create: (context) => ChatVm(),
+            child: ChatScreen(),
+          ),
+        ),
+      ],
+    ),
+
     // Symptom Checker
     VGuard(
       beforeEnter: (vRedirector) async {

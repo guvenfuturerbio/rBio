@@ -12,7 +12,7 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
   @override
   BuildContext mContext;
 
-  List<GetChatContactsResponse> list;
+  List<GetChatContactsResponse> apiUserList;
   Stream<QuerySnapshot<Map<String, dynamic>>> stream;
 
   DoctorConsultationVm(this.mContext) {
@@ -32,9 +32,9 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
 
   Future<void> fetchAll() async {
     try {
-      list = [];
+      apiUserList = [];
       progress = LoadingProgress.LOADING;
-      list = await getChatContactsFirebaseId();
+      apiUserList = await getChatContactsFirebaseId();
       stream = getIt<FirestoreManager>().getContactsAndMessages();
       progress = LoadingProgress.DONE;
     } catch (e, stackTrace) {
@@ -48,62 +48,86 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
     }
   }
 
-  List<ChatPerson> getChatPersonWithStream(
-      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamList) {
-    List<ChatPerson> chatPersonList = <ChatPerson>[];
-    list.forEach((apiItem) {
+  List<ChatPerson> getChatPersonListWithStream(
+    QuerySnapshot<Map<String, dynamic>> streamList,
+  ) {
+    List<ChatPerson> result = <ChatPerson>[];
+
+    // İlk önce api'den gelen tüm kullanıcıları listeye ekliyoruz.
+    apiUserList.forEach((apiItem) {
       final newPerson = ChatPerson(
         name: apiItem.contactNameSurname,
         lastMessage: '',
+        lastMessageType: 0,
         lastMessageSender: '',
         messageTime: '',
         hasRead: true,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
         id: apiItem.firebaseUserId,
       );
-      chatPersonList.add(newPerson);
+      result.add(newPerson);
     });
 
-    chatPersonList.forEach((chatPerson) {
-      streamList.data.docs.forEach((firebaseItem) {
-        final firebaseUserData = firebaseItem.data();
-        final firebaseUserUsers = firebaseUserData['users'] as Map;
-        if (firebaseUserUsers.containsKey(chatPerson.id)) {
-          chatPerson.lastMessage = (firebaseUserData['messages'] == null)
-              ? ''
-              : firebaseUserData['messages'].last['message'];
-          chatPerson.lastMessageSender = (firebaseUserData['messages'] == null)
-              ? ''
-              : firebaseUserData['messages'].last['sentFrom'];
-          chatPerson.messageTime = _getMessageTime(firebaseUserData);
-          chatPerson.hasRead = _getHasRead(firebaseUserData);
-          chatPerson.otherHasRead =
-              _getOtherHasRead(firebaseUserData, chatPerson.id);
+    // Daha sonra api list içerisindeki tüm itemlardan firebase içerisinde olanları güncelliyoruz.
+    result.forEach((chatPerson) {
+      streamList.docs.forEach((firebaseItem) {
+        final fbData = firebaseItem.data();
+        final fbUsers = fbData['users'] as Map;
+        if (fbUsers != null && fbUsers.containsKey(chatPerson.id)) {
+          chatPerson.lastMessage = _getLastMessage(fbData);
+          chatPerson.lastMessageType = _getLastMessageType(fbData);
+          chatPerson.lastMessageSender = _getLastMessageSender(fbData);
+          chatPerson.messageTime = _getMessageTime(fbData);
+          chatPerson.hasRead = _getHasRead(fbData);
+          chatPerson.otherHasRead = _getOtherHasRead(fbData, chatPerson.id);
         }
       });
     });
 
-    return chatPersonList;
+    return result;
   }
 
-  String _getMessageTime(Map<String, dynamic> firebaseUserData) {
-    final messages = firebaseUserData['messages'] as List;
+  int _getLastMessageType(Map<String, dynamic> userData) {
+    final messages = userData['messages'] as List;
+    if (messages == null) return 0;
+    if (messages.isEmpty) return 0;
+    return messages.last['type'] ?? 0;
+  }
+
+  String _getLastMessage(Map<String, dynamic> userData) {
+    final messages = userData['messages'] as List;
     if (messages == null) return '';
     if (messages.isEmpty) return '';
-    return timeago.format(
-      DateTime.fromMillisecondsSinceEpoch(messages.last['date']),
-      locale: getIt<LocaleNotifier>().current.languageCode,
-    );
+    return messages.last['message'] ?? '';
   }
 
-  bool _getHasRead(Map<String, dynamic> firebaseUserData) {
-    final users = firebaseUserData['users'] as Map;
+  String _getLastMessageSender(Map<String, dynamic> userData) {
+    final messages = userData['messages'] as List;
+    if (messages == null) return '';
+    if (messages.isEmpty) return '';
+    return messages.last['sentFrom'] ?? '';
+  }
+
+  String _getMessageTime(Map<String, dynamic> userData) {
+    final messages = userData['messages'] as List;
+    if (messages == null) return '';
+    if (messages.isEmpty) return '';
+    // return timeago.format(
+    //   DateTime.fromMillisecondsSinceEpoch(messages.last['date']),
+    //   locale: getIt<LocaleNotifier>().current.languageCode,
+    // );
+    return DateTime.fromMillisecondsSinceEpoch(messages.last['date'])
+        .xFormatTime8(getIt<LocaleNotifier>().current.languageCode);
+  }
+
+  bool _getHasRead(Map<String, dynamic> userData) {
+    final users = userData['users'] as Map;
     if (users == null) return true;
     return users[getIt<UserNotifier>().firebaseID] ?? true;
   }
 
-  bool _getOtherHasRead(Map<String, dynamic> firebaseUserData, String to) {
-    final users = firebaseUserData['users'] as Map;
+  bool _getOtherHasRead(Map<String, dynamic> userData, String to) {
+    final users = userData['users'] as Map;
     if (users == null) return true;
     return users[to] ?? true;
   }

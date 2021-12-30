@@ -5,6 +5,7 @@ class ChatPerson {
   String id;
   String lastMessage;
   String lastMessageSender;
+  int lastMessageType; // 0 : Text, 1 : Image
   String messageTime;
   bool hasRead;
   bool otherHasRead;
@@ -15,6 +16,7 @@ class ChatPerson {
     this.id,
     this.lastMessage,
     this.lastMessageSender,
+    this.lastMessageType,
     this.messageTime,
     this.hasRead = true,
     this.otherHasRead = false,

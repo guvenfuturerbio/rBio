@@ -187,6 +187,7 @@ class _MyAppState extends State<MyApp> {
                     cursorColor: getIt<ITheme>().mainColor,
                     selectionColor: getIt<ITheme>().mainColor,
                     selectionHandleColor: getIt<ITheme>().mainColor,
+                    
                   ),
                   cupertinoOverrideTheme: CupertinoThemeData(
                     primaryColor: getIt<ITheme>().mainColor,
