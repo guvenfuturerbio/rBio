@@ -36,11 +36,19 @@ class FirebaseMessagingManager {
   factory FirebaseMessagingManager() {
     return _instance;
   }
+  void getPermission() async {
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
+      announcement: true,
+      carPlay: true,
+      criticalAlert: true,
+    );
+  }
 
   FirebaseMessagingManager._init() {
     setForegroundSettings();
     getToken();
-
+    getPermission();
     if (!kIsWeb) {
       flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
       setLocalNotificationChannel();
