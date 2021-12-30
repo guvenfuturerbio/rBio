@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/widgets/guven_alert.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';

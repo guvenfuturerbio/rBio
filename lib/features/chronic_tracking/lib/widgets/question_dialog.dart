@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../generated/l10n.dart';
 
 class QuestionDialog extends StatefulWidget {
-  QuestionDialog(this.title, this.text);
   final String title;
   final String text;
+
+  QuestionDialog(this.title, this.text);
+
   @override
-  State<StatefulWidget> createState() {
-    return new _QuestionDialogState();
-  }
+  _QuestionDialogState createState() => _QuestionDialogState();
 }
 
 class _QuestionDialogState extends State<QuestionDialog> {

@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/src/client.dart';
 import 'package:logging/logging.dart';
+
 import '../../../core/enums/shared_preferences_keys.dart';
 import '../../../core/locator.dart';
 import '../../../core/manager/shared_preferences_manager.dart';
@@ -25,9 +26,11 @@ class IyzicoResponseVm with ChangeNotifier {
   String uid;
   Logger _logger;
   StreamSubscription<LogRecord> _logMessagesSub;
+  
   IyzicoResponseVm(this.uid) {
     listenFirestore();
   }
+
   void _handleLogMessage(LogRecord msg) {
     print(msg.message);
   }

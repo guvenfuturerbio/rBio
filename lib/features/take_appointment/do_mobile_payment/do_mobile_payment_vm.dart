@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/model/home/take_appointment/do_mobil_payment_voucher.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../../model/home/take_appointment/do_mobil_payment_voucher.dart';
 import 'iyzico_response_sms_payment_page.dart';
 
 class DoMobilePaymentScreenVm extends ChangeNotifier {

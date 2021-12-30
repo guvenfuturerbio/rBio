@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
 import '../body_parts_paint.dart';
 import '../viewmodel/symptoms_body_locations_page_vm.dart';
 
 class SymptomsBodyLocationsScreen extends StatefulWidget {
-  int selectedGenderId;
-  String yearOfBirth;
-  bool isFromVoice;
-
   SymptomsBodyLocationsScreen({Key key}) : super(key: key);
 
   @override
@@ -22,6 +16,10 @@ class SymptomsBodyLocationsScreen extends StatefulWidget {
 
 class _SymptomsBodyLocationsScreenState
     extends State<SymptomsBodyLocationsScreen> {
+  int selectedGenderId;
+  String yearOfBirth;
+  bool isFromVoice;
+
   State state;
   final notifier = ValueNotifier(Offset.zero);
   String bodyPart = '';
@@ -29,21 +27,21 @@ class _SymptomsBodyLocationsScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      widget.selectedGenderId =
-          int.parse(Atom.queryParameters['selectedGenderId']);
-      widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
-      widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
+      selectedGenderId = int.parse(Atom.queryParameters['selectedGenderId']);
+      yearOfBirth = Atom.queryParameters['yearOfBirth'];
+      isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
       return RbioRouteError();
     }
 
     return ChangeNotifierProvider<SymptomsBodyLocationsVm>(
       create: (context) => SymptomsBodyLocationsVm(
-          context: context,
-          isFromVoice: widget.isFromVoice,
-          notifierFromPage: notifier,
-          selectedGenderIdFromPage: widget.selectedGenderId,
-          yearOfBirth: widget.yearOfBirth),
+        context: context,
+        isFromVoice: isFromVoice,
+        notifierFromPage: notifier,
+        selectedGenderIdFromPage: selectedGenderId,
+        yearOfBirth: yearOfBirth,
+      ),
       child: Consumer<SymptomsBodyLocationsVm>(
         builder: (
           BuildContext context,
@@ -79,11 +77,11 @@ class _SymptomsBodyLocationsScreenState
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(left: 25, top: 25),
                   child: Text(
-                    widget.selectedGenderId == 0
+                    selectedGenderId == 0
                         ? LocaleProvider.of(context).gender_male
-                        : widget.selectedGenderId == 1
+                        : selectedGenderId == 1
                             ? LocaleProvider.of(context).gender_female
-                            : widget.selectedGenderId == 2
+                            : selectedGenderId == 2
                                 ? LocaleProvider.of(context).boy
                                 : LocaleProvider.of(context).girl,
                     style: context.xHeadline1.copyWith(
@@ -125,10 +123,10 @@ class _SymptomsBodyLocationsScreenState
                   },
                   child: CustomPaint(
                     painter: BodyPartsPainter(
-                      isGenderMale: widget.selectedGenderId == 0 ||
-                              widget.selectedGenderId == 2
-                          ? true
-                          : false,
+                      isGenderMale:
+                          selectedGenderId == 0 || selectedGenderId == 2
+                              ? true
+                              : false,
                       clickedPathFunc: (myValue) {
                         //print(myValue);
                         WidgetsBinding.instance
@@ -169,9 +167,8 @@ class _SymptomsBodyLocationsScreenState
                       Atom.to(
                         PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
                         queryParameters: {
-                          'selectedGenderId':
-                              widget.selectedGenderId.toString(),
-                          'yearOfBirth': widget.yearOfBirth,
+                          'selectedGenderId': selectedGenderId.toString(),
+                          'yearOfBirth': yearOfBirth,
                           'isFromVoice': false.toString(),
                         },
                       ); /*

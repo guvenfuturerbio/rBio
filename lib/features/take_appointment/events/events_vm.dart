@@ -217,15 +217,16 @@ class EventsScreenVm extends ChangeNotifier {
     try {
       for (var data in getEventsResponse) {
         //DateTime startDate = DateTime.parse(filterFromDate);
-        var firstType5 = data.events.firstWhere((element) => element.type == 5);
-        DateTime startDate = DateTime(
-          DateTime.parse(filterFromDate).year,
-          DateTime.parse(filterFromDate).month,
-          DateTime.parse(filterFromDate).day,
-          int.parse(firstType5.to.substring(0, 2)),
-          int.parse(firstType5.to.substring(3, 5)),
-          int.parse(firstType5.to.substring(6, 8)),
-        );
+        // var firstType5 = data.events.firstWhere((element) => element.type == 5);
+        // DateTime startDate = DateTime(
+        //   DateTime.parse(filterFromDate).year,
+        //   DateTime.parse(filterFromDate).month,
+        //   DateTime.parse(filterFromDate).day,
+        //   int.parse(firstType5.to.substring(0, 2)),
+        //   int.parse(firstType5.to.substring(3, 5)),
+        //   int.parse(firstType5.to.substring(6, 8)),
+        // );
+
         DateTime dayStart = DateTime.parse(filterFromDate);
         DateTime dayEnd = DateTime.parse(filterToDate);
         List<DateTime> availableSlotsList = [];
@@ -345,6 +346,7 @@ class EventsScreenVm extends ChangeNotifier {
       return isEmpty;
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
+      return false;
     }
   }
 

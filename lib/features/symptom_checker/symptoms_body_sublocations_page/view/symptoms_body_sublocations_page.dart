@@ -1,11 +1,10 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import '../viewmodel/symptoms_body_sublocations_vm.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../symptoms_body_symptoms_page/view/symptoms_body_symptoms_page.dart';
+import '../viewmodel/symptoms_body_sublocations_vm.dart';
 
 class BodySubLocationsPage extends StatefulWidget {
   GetBodyLocationResponse selectedBodyLocation;
@@ -247,7 +246,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                 'yearOfBirth': widget.yearOfBirth,
                                 'isFromVoice': false.toString(),
                               },
-                            );/*
+                            ); /*
                             Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -1,12 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Message {
   final String sentFrom;
   final String message;
   final int date;
   final int type; //0 text //1 image
 
-  Message({ this.sentFrom, this.message, this.type, this.date});
+  Message({
+    this.sentFrom,
+    this.message,
+    this.type,
+    this.date,
+  });
+
   Map<String, dynamic> toMap() {
     return {
       'sentFrom': sentFrom,
@@ -16,8 +20,8 @@ class Message {
     };
   }
 
-  Message.fromMap(Map<String, dynamic> map):
-        this.sentFrom = map['sentFrom'],
+  Message.fromMap(Map<String, dynamic> map)
+      : this.sentFrom = map['sentFrom'],
         this.message = map['message'],
         this.date = map['date'],
         this.type = map['type'];

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:onedosehealth/core/data/service/firebase_service.dart';
+import 'package:onedosehealth/core/data/service/firestore_manager.dart';
 
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/rate_dialog.dart';
@@ -37,17 +37,13 @@ abstract class UserManager {
 class UserManagerImpl extends UserManager {
   @override
   Future<RbioLoginResponse> login(String userName, String password) async {
-    final response = await getIt<Repository>().login(
-      userName,
-      password,
-    );
+    final response = await getIt<Repository>().login(userName, password);
     await getIt<ISharedPreferencesManager>()
         .setString(SharedPreferencesKeys.JWT_TOKEN, response.token.accessToken);
     getIt<UserNotifier>().firebaseEmail = response.firebase_user_email;
     getIt<UserNotifier>().firebasePassword = response.firebase_user_salt;
     getIt<FirestoreManager>().loginFirebase();
     //Update user notifier depending on roles
-
     getIt<UserNotifier>().userTypeFetcher(response);
     return response;
   }

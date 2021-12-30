@@ -4,18 +4,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../../../core/core.dart';
-import '../../../../generated/l10n.dart';
 
 class LoadingPage extends StatefulWidget {
   _ProgressDialogState state;
-  LoadingPage(this.title);
   String title;
+
+  LoadingPage(this.title);
+
   bool isShowing() {
     return state != null && state.mounted;
   }
 
   @override
-  createState() => state = _ProgressDialogState();
+  _ProgressDialogState createState() => state = _ProgressDialogState();
 }
 
 class _ProgressDialogState extends State<LoadingPage> {

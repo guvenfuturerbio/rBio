@@ -4,6 +4,7 @@ class GetChatContactsResponse {
   String imageUrl;
   bool isActive;
   String firebaseUserId;
+  String firebaseToken;
   int contactUserId;
   int id;
 
@@ -22,6 +23,7 @@ class GetChatContactsResponse {
     imageUrl = json['image_url'];
     isActive = json['is_active'];
     firebaseUserId = json['firebase_user_id'];
+    firebaseToken = json['firebase_token'];
     contactUserId = json['contactUserId'];
     id = json['id'];
   }
@@ -33,6 +35,7 @@ class GetChatContactsResponse {
     data['image_url'] = this.imageUrl;
     data['is_active'] = this.isActive;
     data['firebase_user_id'] = this.firebaseUserId;
+    data['firebase_token'] = this.firebaseToken;
     data['contactUserId'] = this.contactUserId;
     data['id'] = this.id;
     return data;

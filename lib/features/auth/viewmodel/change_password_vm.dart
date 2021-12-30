@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/core.dart';
-import '../../../core/locator.dart';
-import '../../../generated/l10n.dart';
 import '../../../model/shared/user_login_info.dart';
 
 class ChangePasswordScreenVm extends ChangeNotifier {

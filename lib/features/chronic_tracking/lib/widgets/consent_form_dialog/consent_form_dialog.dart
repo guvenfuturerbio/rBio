@@ -8,27 +8,24 @@ import 'package:provider/provider.dart';
 import 'consent_form_dialog_vm.dart';
 
 class ConsentFormDialog extends StatefulWidget {
-  ConsentFormDialog({this.title, this.text, this.alwaysAsk});
   final String title;
   final String text;
   final alwaysAsk;
+
+  ConsentFormDialog({
+    Key key,
+    this.title,
+    this.text,
+    this.alwaysAsk,
+  }) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() {
-    return new _ConsentFormDialogState();
-  }
+  _ConsentFormDialogState createState() => _ConsentFormDialogState();
 }
 
 class _ConsentFormDialogState extends State<ConsentFormDialog> {
   @override
   Widget build(BuildContext context) {
-    Widget okButton = FlatButton(
-      child: Text(LocaleProvider.current.Ok),
-      textColor: Colors.white,
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
     return AlertDialog(
       backgroundColor: getIt<ITheme>().mainColor,
       title: Text(

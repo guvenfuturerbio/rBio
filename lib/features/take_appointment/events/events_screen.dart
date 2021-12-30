@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -6,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../../core/packages/table_calendar/table_calendar.dart';
 import 'events_vm.dart';
 
 class EventsScreen extends StatefulWidget {

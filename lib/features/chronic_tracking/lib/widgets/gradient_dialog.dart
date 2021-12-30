@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../generated/l10n.dart';
 
 class GradientDialog extends StatefulWidget {
-  GradientDialog(this.title, this.text);
   final String title;
   final String text;
+
+  GradientDialog(this.title, this.text);
+
   @override
-  State<StatefulWidget> createState() {
-    return new _GradientDialogState();
-  }
+  _GradientDialogState createState() => _GradientDialogState();
 }
 
 class _GradientDialogState extends State<GradientDialog> {

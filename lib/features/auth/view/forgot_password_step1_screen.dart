@@ -1,4 +1,3 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -153,6 +152,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  //
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0, left: 10),
                     child: Text(
@@ -160,26 +160,24 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                       style: context.xHeadline3,
                     ),
                   ),
+
+                  //
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: R.color.white,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: CountryCodePicker(
-                          padding: EdgeInsets.zero,
-                          onChanged: print,
-                          initialSelection: 'TR',
-                          favorite: ['+90', 'TR'],
-                          showCountryOnly: false,
-                          showOnlyCountryWhenClosed: false,
-                          alignLeft: false,
-                        ),
+                      //
+                      RbioCountryCodePicker(
+                        onChanged: (countryCode) {
+                          LoggerUtils.instance.i(countryCode);
+                        },
                       ),
+
+                      //
                       SizedBox(
                         width: 5,
                       ),
+
+                      //
                       Expanded(
                         child: RbioTextFormField(
                           focusNode: phoneNumberFNode,
@@ -218,6 +216,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  //
                   Center(
                     child: Container(
                       margin: EdgeInsets.only(
@@ -258,12 +257,15 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        //
                         Text(
                           LocaleProvider.of(context).lbl_dont_have_account,
                           style: context.xHeadline3.copyWith(
                             color: getIt<ITheme>().grey,
                           ),
                         ),
+
+                        //
                         InkWell(
                           child: Text(
                             LocaleProvider.of(context).btn_sign_up,

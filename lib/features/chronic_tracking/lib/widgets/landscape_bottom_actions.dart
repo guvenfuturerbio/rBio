@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/core.dart';
-import '../../../../generated/l10n.dart';
 
 class LandScapeBottomActionsWidget extends StatelessWidget {
+  final Function() filterAction;
+  final Function() changeGrapahAction;
+
   const LandScapeBottomActionsWidget({
     Key key,
     this.filterAction,
     this.changeGrapahAction,
   }) : super(key: key);
-  final Function() filterAction;
-  final Function() changeGrapahAction;
+
   @override
   Widget build(BuildContext context) {
     return Row(

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class RbioLoginResponse {
   RbioLoginResponse({
     this.token,
@@ -7,6 +5,7 @@ class RbioLoginResponse {
     this.firebase_user_email,
     this.firebase_user_salt,
   });
+
   String firebase_user_email;
   String firebase_user_salt;
   Token token;
@@ -27,6 +26,14 @@ class RbioLoginResponse {
 }
 
 class Token {
+  String accessToken;
+  int expiresIn;
+  int refreshExpiresIn;
+  String refreshToken;
+  String tokenType;
+  String sessionState;
+  String scope;
+
   Token({
     this.accessToken,
     this.expiresIn,
@@ -36,14 +43,6 @@ class Token {
     this.sessionState,
     this.scope,
   });
-
-  String accessToken;
-  int expiresIn;
-  int refreshExpiresIn;
-  String refreshToken;
-  String tokenType;
-  String sessionState;
-  String scope;
 
   factory Token.fromJson(Map<String, dynamic> json) => Token(
         accessToken: json["access_token"],

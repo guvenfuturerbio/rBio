@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../../generated/l10n.dart';
 import 'consent_form_dialog_vm.dart';
 
 class ConsentFormDialog extends StatefulWidget {

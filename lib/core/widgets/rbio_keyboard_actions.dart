@@ -39,7 +39,7 @@ class RbioKeyboardActions extends StatelessWidget {
             Utils.instance.hideKeyboard(context);
           },
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+            padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 12.0),
             child: Text(
               LocaleProvider.current.close_lbl,
               style: context.xHeadline4.copyWith(

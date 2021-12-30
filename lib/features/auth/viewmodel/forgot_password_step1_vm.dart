@@ -25,7 +25,6 @@ class ForgotPasswordStep1ScreenVm extends ChangeNotifier {
           'identityNumber': userRegistrationStep1.identificationNumber,
         },
       );
-
       notifyListeners();
     } catch (error) {
       Future.delayed(const Duration(milliseconds: 500), () {
@@ -53,14 +52,14 @@ class ForgotPasswordStep1ScreenVm extends ChangeNotifier {
   }
 
   void showLoadingDialog(BuildContext context) async {
-    await new Future.delayed(new Duration(milliseconds: 30));
+    await Future.delayed(new Duration(milliseconds: 30));
     await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
     notifyListeners();
-    //builder: (BuildContext context) => WillPopScope(child:loadingDialog = LoadingDialog() , onWillPop:  () async => false,));
   }
 
   void hideDialog(BuildContext context) {

@@ -22,7 +22,6 @@ class ConsultationScreen extends StatelessWidget {
         return RbioScaffold(
           appbar: _buildAppBar(context),
           body: _buildBody(context, vm),
-          //  floatingActionButton: _buildFAB(),
         );
       }),
     );
@@ -62,12 +61,12 @@ class ConsultationScreen extends StatelessWidget {
         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamList,
       ) {
         if (streamList.hasData) {
-          final list = vm.getChatPersonWithStream(streamList);
+          final list = vm.getChatPersonListWithStream(streamList.data);
           return ListView.builder(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
             physics: BouncingScrollPhysics(),
-            itemCount: vm.list.length,
+            itemCount: list.length,
             itemBuilder: (BuildContext context, int index) {
               return _buildCard(context, list[index]);
             },
@@ -90,127 +89,143 @@ class ConsultationScreen extends StatelessWidget {
       onTap: () {
         Atom.to(
           PagePaths.CHAT,
-          queryParameters: {'otherPerson': item.toJson()},
+          queryParameters: {
+            'otherPerson': item.toJson(),
+          },
         );
       },
       child: Container(
         color: Colors.transparent,
-        padding: EdgeInsets.only(
-          top: 10,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
             //
-            CircleAvatar(
-              backgroundColor: getIt<ITheme>().cardBackgroundColor,
-              backgroundImage: NetworkImage(item.url),
-              radius: 35,
-            ),
+            SizedBox(height: 4),
 
             //
-            SizedBox(width: 12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                CircleAvatar(
+                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  backgroundImage: NetworkImage(item.url),
+                  radius: 25,
+                ),
 
-            //
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  //
-                  Row(
+                //
+                SizedBox(width: 12),
+
+                //
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        item.name ?? '',
-                        style: context.xHeadline5.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Spacer(),
-                      Column(
+                      //
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text(item.messageTime ?? ""),
                           //
-                          SizedBox(
-                            height: 8,
+                          Expanded(
+                            child: Text(
+                              item.name ?? '',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.xHeadline4.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
+
+                          //
+                          item.hasRead
+                              ? SizedBox()
+                              : Container(
+                                  margin: EdgeInsets.only(right: 4),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: getIt<ITheme>().mainColor,
+                                  ),
+                                  child: SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                  ),
+                                ),
+                        ],
+                      ),
+
+                      //
+                      SizedBox(height: 4),
+
+                      //
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          //
+                          if (item.lastMessageType == 0) ...[
+                            Expanded(
+                              child: Text(
+                                item.lastMessage ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: item.hasRead
+                                    ? context.xHeadline5
+                                    : context.xHeadline5
+                                        .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ] else ...[
+                            Image.network(
+                              item.lastMessage,
+                              height: 20,
+                            ),
+                          ],
+
+                          //
                           item.otherHasRead &&
                                   item.hasRead &&
                                   item.lastMessageSender ==
                                       getIt<UserNotifier>().firebaseID
-                              ? SvgPicture.asset(R.image.eyeseen_icon,
-                                  height: 10)
+                              ? SvgPicture.asset(
+                                  R.image.eyeseen_icon,
+                                  height: 12,
+                                )
                               : SizedBox(),
                         ],
-                      )
+                      ),
                     ],
                   ),
+                ),
+              ],
+            ),
 
-                  //
-                  SizedBox(height: 6),
-
-                  //
-                  Text(
-                    item.lastMessage ?? '',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: item.hasRead
-                        ? context.xBodyText1
-                        : context.xBodyText1
-                            .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
+            //
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                item.messageTime ?? "",
+                style: context.xBodyText1,
               ),
             ),
 
             //
-            item.hasRead
-                ? SizedBox()
-                : Padding(
-                    padding: const EdgeInsets.only(top: 12, right: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: getIt<ITheme>().mainColor),
-                      child: SizedBox(
-                        height: 10,
-                        width: 10,
-                      ),
-                    ),
-                  ),
+            SizedBox(height: 4),
 
             //
+            Divider(),
           ],
         ),
       ),
-    );
-  }
-  // #endregion
-
-  // #region _buildFAB
-  Widget _buildFAB() {
-    return FloatingActionButton(
-      heroTag: 'adder',
-      onPressed: () {},
-      child: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: getIt<ITheme>().mainColor,
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: SvgPicture.asset(
-            R.image.add,
-            color: R.color.white,
-          ),
-        ),
-      ),
-      backgroundColor: R.color.white,
     );
   }
   // #endregion

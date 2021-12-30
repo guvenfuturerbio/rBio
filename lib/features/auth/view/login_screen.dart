@@ -257,6 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        //
         Padding(
           padding: EdgeInsets.only(top: 5),
           child: Row(
@@ -277,6 +278,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
+
+        //
         InkWell(
           child: Text(
             LocaleProvider.of(context).lbl_forgot_password,
@@ -287,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
           onTap: () {
             Atom.to(PagePaths.FORGOT_PASSWORD_STEP_1);
           },
-        )
+        ),
       ],
     );
   }

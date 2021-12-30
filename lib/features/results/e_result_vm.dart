@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/notifiers/user_notifier.dart';
-import '../shared/necessary_identity/necessary_identity_screen.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../shared/necessary_identity/necessary_identity_screen.dart';
 
 class EResultScreenVm extends ChangeNotifier {
   LoadingProgress _progress;

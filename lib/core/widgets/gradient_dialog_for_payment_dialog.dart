@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../core.dart';
-import 'guven_alert.dart';
 
 class GradientDialogForPaymentDialog extends StatefulWidget {
   final String errorText;

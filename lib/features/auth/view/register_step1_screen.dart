@@ -1,4 +1,3 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -318,21 +317,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //
-                      Container(
-                        decoration: BoxDecoration(
-                          color: R.color.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: CountryCodePicker(
-                          padding: EdgeInsets.zero,
-                          onChanged: print,
-                          initialSelection: 'TR',
-                          favorite: ['+90', 'TR'],
-                          showCountryOnly: false,
-                          showOnlyCountryWhenClosed: false,
-                          alignLeft: false,
-                        ),
-                      ),
+                      RbioCountryCodePicker(),
 
                       //
                       SizedBox(
@@ -341,28 +326,26 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
                       //
                       Expanded(
-                        child: Container(
-                          child: RbioTextFormField(
-                            focusNode: _phoneNumberFocusNode,
-                            controller: _phoneNumberEditingController,
-                            keyboardType: TextInputType.phone,
-                            textInputAction: TextInputAction.next,
-                            hintText: LocaleProvider.of(context).phone_number,
-                            inputFormatters: <TextInputFormatter>[
-                              TabToNextFieldTextInputFormatter(
-                                context,
-                                _phoneNumberFocusNode,
-                                null,
-                              ),
-                            ],
-                            onFieldSubmitted: (term) {
-                              UtilityManager().fieldFocusChange(
-                                context,
-                                _phoneNumberFocusNode,
-                                null,
-                              );
-                            },
-                          ),
+                        child: RbioTextFormField(
+                          focusNode: _phoneNumberFocusNode,
+                          controller: _phoneNumberEditingController,
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.next,
+                          hintText: LocaleProvider.of(context).phone_number,
+                          inputFormatters: <TextInputFormatter>[
+                            TabToNextFieldTextInputFormatter(
+                              context,
+                              _phoneNumberFocusNode,
+                              null,
+                            ),
+                          ],
+                          onFieldSubmitted: (term) {
+                            UtilityManager().fieldFocusChange(
+                              context,
+                              _phoneNumberFocusNode,
+                              null,
+                            );
+                          },
                         ),
                       ),
                     ],

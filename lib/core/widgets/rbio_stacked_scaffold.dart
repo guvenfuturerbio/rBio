@@ -56,6 +56,7 @@ class RbioStackedScaffold extends StatelessWidget {
     this.resizeToAvoidBottomInset,
     this.restorationId,
   });
+  
   static double kHeight(BuildContext context) =>
       (64 + MediaQuery.of(context).viewPadding.top);
 

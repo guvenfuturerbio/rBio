@@ -1,9 +1,8 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-
-import '../../symptoms_result_page/viewmodel/symptoms_result_page_vm.dart';
 
 enum Mode { PARTSELECTION, SYMPTOMADD, SYMPTOMSUBSTRACT }
 

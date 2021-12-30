@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/core.dart';
 import '../../core/data/imports/cronic_tracking.dart';
-import '../../core/locator.dart';
 import '../../model/firebase/add_firebase_body.dart';
 import '../../model/user/usermodel.dart';
 import '../../model/user_profiles/save_and_retrieve_token_model.dart';

@@ -12,7 +12,7 @@ class PasswordAdvisor {
   RegExp numberInclude = RegExp("(?=.*?[0-9])");
   RegExp lowerCase = RegExp("(?=.*?[a-z])");
   RegExp upperCase = RegExp("(?=.*?[A-Z])");
-  RegExp specialCharacter = RegExp("(?=.*?[!@#\$&*~])");
+  RegExp specialCharacter = RegExp(r"[$&+,:;=?@#|'<>.^*()%!-]");
 
   bool validateStructure(String value) {
     String pattern =
@@ -50,23 +50,23 @@ class PasswordAdvisor {
     }
   }
 
-  checkNumberInclude(String password) {
+  bool checkNumberInclude(String password) {
     return numberInclude.hasMatch(password);
   }
 
-  checkLowercase(String password) {
+  bool checkLowercase(String password) {
     return lowerCase.hasMatch(password);
   }
 
-  checkUpperCase(String password) {
+  bool checkUpperCase(String password) {
     return upperCase.hasMatch(password);
   }
 
-  checkSpecialCharacter(String password) {
+  bool checkSpecialCharacter(String password) {
     return specialCharacter.hasMatch(password);
   }
 
-  checkRequiredPasswordLength(String password) {
+  bool checkRequiredPasswordLength(String password) {
     return password.length < REQUIRED_PASSWORD_LENGTH ? false : true;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vrouter/src/core/extended_context.dart';
 
 import '../../../../core/core.dart';
 

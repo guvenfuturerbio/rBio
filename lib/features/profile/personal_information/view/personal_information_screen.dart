@@ -116,7 +116,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   Widget _builBody(BuildContext context, PersonalInformationScreenVm vm) {
     return SingleChildScrollView(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.all(15),
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -125,25 +125,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           //
-          _buildCard(context, vm),
-
-          //
-          _buildSubmitButton(vm),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCard(BuildContext context, PersonalInformationScreenVm vm) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
           // Identity Number
           _buildTitle(
             userAccount.nationality.xIsTCNationality
@@ -177,18 +158,36 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           _buildTitle(
             LocaleProvider.of(context).phone_number,
           ),
-          RbioTextFormField(
-            focusNode: phoneNumberFocus,
-            controller: _phoneNumberEditingController,
-            keyboardType: TextInputType.phone,
-            border: RbioTextFormField.activeBorder(),
-            textInputAction: TextInputAction.done,
-            hintText: LocaleProvider.of(context).hint_input_password,
-            inputFormatters: <TextInputFormatter>[
-              TabToNextFieldTextInputFormatter(
-                context,
-                phoneNumberFocus,
-                emailFocus,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //
+              RbioCountryCodePicker(),
+
+              //
+              SizedBox(
+                width: 5,
+              ),
+
+              //
+              Expanded(
+                child: RbioTextFormField(
+                  focusNode: phoneNumberFocus,
+                  controller: _phoneNumberEditingController,
+                  keyboardType: TextInputType.phone,
+                  border: RbioTextFormField.activeBorder(),
+                  textInputAction: TextInputAction.done,
+                  hintText: LocaleProvider.of(context).hint_input_password,
+                  inputFormatters: <TextInputFormatter>[
+                    TabToNextFieldTextInputFormatter(
+                      context,
+                      phoneNumberFocus,
+                      emailFocus,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -212,6 +211,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               ),
             ],
           ),
+
+          //
+          _buildSubmitButton(vm),
         ],
       ),
     );

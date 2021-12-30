@@ -21,17 +21,10 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
   TextEditingController _nameEditingController;
   TextEditingController _surnameEditingController;
 
-  TextEditingController relativeTcNo;
-  TextEditingController relativeEmail;
-
   @override
   void initState() {
     _nameEditingController = TextEditingController();
     _surnameEditingController = TextEditingController();
-
-    relativeTcNo = TextEditingController();
-    relativeEmail = TextEditingController();
-
     super.initState();
   }
 
@@ -39,10 +32,6 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
   void dispose() {
     _nameEditingController.dispose();
     _surnameEditingController.dispose();
-
-    relativeTcNo.dispose();
-    relativeEmail.dispose();
-
     super.dispose();
   }
 
@@ -297,20 +286,18 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
 
     addPatientRelative.firstName = _nameEditingController.text;
     addPatientRelative.lastName = _surnameEditingController.text;
-    addPatientRelative.identityNumber = relativeTcNo.text;
+    addPatientRelative.identityNumber = '';
     addPatientRelative.birthDate = formattedDate;
     addPatientRelative.gender = vm.selectedGender == 1 ? 'E' : 'K';
     addPatientRelative.patientType = 1;
-    addPatientRelative.email = relativeEmail.text;
+    addPatientRelative.email = '';
     addPatientRelative.nationalityId = vm.selectedCountry.id;
     addPatientRelative.nationalityId == 213
         ? addPatientRelative.patientType = 1
         : addPatientRelative.patientType = 3;
 
-    if (relativeTcNo.text.length > 0 &&
-        _nameEditingController.text.length > 0 &&
+    if (_nameEditingController.text.length > 0 &&
         _surnameEditingController.text.length > 0 &&
-        relativeEmail.text.length > 0 &&
         vm.selectedDate != null) {
       vm.savePatientRelative(addPatientRelative, context);
     } else {

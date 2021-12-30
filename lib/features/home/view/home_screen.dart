@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 import '../../../core/core.dart';
+import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 
 enum ShakeMod { shaken, notShaken }
@@ -23,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     if (!Atom.isWeb) {
       DeepLinkHandler().initDynamicLinks(context);
+      FirebaseMessagingManager.instance;
     }
     super.initState();
   }

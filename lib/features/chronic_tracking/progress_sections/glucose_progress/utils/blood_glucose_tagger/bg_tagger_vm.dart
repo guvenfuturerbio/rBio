@@ -4,12 +4,9 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../../../core/data/service/chronic_service/chronic_storage_service.dart';
-import '../../../../../../../generated/l10n.dart';
 
 class BgTaggerVm extends ChangeNotifier {
   BgTaggerVm({
@@ -24,17 +21,12 @@ class BgTaggerVm extends ChangeNotifier {
   }
 
   final key;
-
   final BuildContext context;
-
   final GlucoseData data;
-
   final bool isEdit;
   final bool isManual;
-
   final TextEditingController controller = TextEditingController();
   final TextEditingController noteController = TextEditingController();
-
   DateTime get date => data.time == null
       ? DateTime.now()
       : DateTime.fromMillisecondsSinceEpoch(data.time);
