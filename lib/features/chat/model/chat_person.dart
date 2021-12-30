@@ -10,6 +10,7 @@ class ChatPerson {
   bool hasRead;
   bool otherHasRead;
   String url;
+  String firebaseToken;
 
   ChatPerson({
     this.name,
@@ -21,28 +22,38 @@ class ChatPerson {
     this.hasRead = true,
     this.otherHasRead = false,
     this.url,
+    this.firebaseToken,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
       'id': id,
+      'name': name,
       'lastMessage': lastMessage,
+      'lastMessageSender': lastMessageSender,
+      'lastMessageType': lastMessageType,
       'messageTime': messageTime,
+      'otherHasRead': otherHasRead,
       'hasRead': hasRead,
       'url': url,
+      'firebaseToken': firebaseToken,
     };
   }
 
   factory ChatPerson.fromMap(Map<String, dynamic> map) {
     return ChatPerson(
-        name: map['name'] ?? '',
-        id: map['id'] ?? '',
-        lastMessage: map['lastMessage'] ?? '',
-        messageTime: map['messageTime'] ?? '',
-        hasRead: map['hasRead'] ?? false,
-        url: map['url'] ??
-            "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png");
+      name: map['name'] ?? '',
+      id: map['id'] ?? '',
+      lastMessage: map['lastMessage'] ?? '',
+      lastMessageSender: map['lastMessageSender'] ?? '',
+      lastMessageType: map['lastMessageType'] ?? '',
+      messageTime: map['messageTime'] ?? '',
+      otherHasRead: map['otherHasRead'] ?? false,
+      hasRead: map['hasRead'] ?? false,
+      url: map['url'] ??
+          "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
+      firebaseToken: map['firebaseToken'] ?? '',
+    );
   }
 
   String toJson() => json.encode(toMap());

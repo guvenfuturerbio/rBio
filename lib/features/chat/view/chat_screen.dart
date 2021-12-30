@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -32,6 +30,13 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController _textEditingController;
 
   String get getCurrentUserId => getIt<UserNotifier>().firebaseID;
+  ChatPerson get getCurrentPerson => ChatPerson(
+        id: getIt<UserNotifier>().firebaseID,
+        name:
+            '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
+        url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
+        firebaseToken: FirebaseMessagingManager.instance.token,
+      );
   final topPadding = 64 + Atom.safeTop;
 
   @override
@@ -168,7 +173,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 width: 25,
               ),
               onPressed: () {
-                chatVm.getImage(0, getCurrentUserId, otherPerson.id);
+                chatVm.getImage(
+                  0,
+                  getCurrentUserId,
+                  otherPerson.id,
+                  getCurrentPerson,
+                );
               },
             ),
 
@@ -571,6 +581,7 @@ class _ChatScreenState extends State<ChatScreen> {
         var result = await chatVm.sendMessage(
           _messageSent,
           otherPerson.id,
+          getCurrentPerson,
         );
         if (result) {
           _focusNode.unfocus();

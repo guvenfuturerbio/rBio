@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/features/chat/model/chat_person.dart';
 
 import '../../../features/chat/model/message.dart';
 import '../../core.dart';
@@ -90,7 +93,8 @@ class FirestoreManager {
     );
   }
 
-  Future<bool> sendMessage(Message message, String sendTo) async {
+  Future<bool> sendMessage(
+      Message message, String sendTo, ChatPerson currentPerson) async {
     if (sortUid(message, sendTo) == -1) {
       await writeMessageToFirebase(message.sentFrom, sendTo, message);
     } else {
@@ -125,18 +129,20 @@ class FirestoreManager {
   int sortUid(Message message, String sendTo) =>
       message.sentFrom.compareTo(sendTo);
 
-  Future<void> getImage(int index, String sender, String reciever) async {
+  Future<void> getImage(int index, String sender, String reciever,
+      ChatPerson currentPerson) async {
     ImagePicker imagePicker = new ImagePicker();
     imageFile = index == 0
         ? await imagePicker.getImage(source: ImageSource.gallery)
         : await imagePicker.getImage(source: ImageSource.camera);
 
     if (imageFile != null) {
-      uploadFile(sender, reciever);
+      uploadFile(sender, reciever, currentPerson);
     }
   }
 
-  Future<void> uploadFile(String sender, String reciever) async {
+  Future<void> uploadFile(
+      String sender, String reciever, ChatPerson currentPerson) async {
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
     Reference reference = FirebaseStorage.instance.ref().child(fileName);
     await FlutterNativeImage.compressImage(
@@ -153,35 +159,44 @@ class FirestoreManager {
         type: 1,
       ),
       reciever,
+      currentPerson,
     );
   }
 
-  /*Future<bool> sendNotification(Message message) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.doc("tokens/" + message.sentTo).get();
-    String token = snapshot.data()['token'];
+  Future<void> sendNotification(
+    ChatPerson currentUser,
+    String toToken,
+    Message message,
+  ) async {
     String endURL = "https://fcm.googleapis.com/fcm/send";
     String firebaseKey =
-        "AAAAfciWego:APA91bEH2_uwKP5pCFqtl9IOaIT_T7vlUtCxCPbL3uNnG0rl_JDkk6jYd4XCNWy1DI_aGiujqeUIz3ND_RnTp07o3LNymihr_7_kF0Nn3vM2aB_jWYS9JhkowWEDnLSscwK7iRtvUlCE";
+        "AAAAPdkryvk:APA91bHk4qe_nsEly9N1IihDx85GG5k_nw3tKlcBVyBPLrzsQ9Ytyih9BPbI2m3VSOiaHb0cPGMOSAtnqwxYJlCB8Puz4CJqWDuTDdEjtw_PrhQOcyQEOoVBqCnJrKZvpNFBKK-IdsfW";
     Map<String, String> headers = {
       "Content-type": "application/json",
       "Authorization": "key=$firebaseKey"
     };
 
-    String json =
-        '{ "to" : "$token", "notification" :{ "title" : "${userProfilesNotifier.selection.name}", "body" : "${message.message}" }, "data" : {"type":"3", "message" : "${message.message}", "title": "${userProfilesNotifier.selection.name} ","id": "${PatientIdHolder().patient_id}" } }';
+    final jsonBody = <String, dynamic>{
+      "to": "$toToken",
+      "notification": {
+        "title":
+            "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
+        "body": message.message,
+      },
+      "data": {
+        "type": 'chat',
+        "chatPerson": currentUser.toMap(),
+      }
+    };
 
-    http.Response response =
-        await http.post(Uri.parse(endURL), headers: headers, body: json);
-
-    if (response.statusCode == 200) {
-      print(response.body);
-      print("işlem basarılı");
-      print("yollanan json: " + json);
-    } else {
-      print("işlem basarısız:" + response.statusCode.toString());
-      print("jsonumuz:" + json);
+    try {
+      await http.post(
+        Uri.parse(endURL),
+        headers: headers,
+        body: jsonEncode(jsonBody),
+      );
+    } catch (e) {
+      LoggerUtils.instance.e(message);
     }
-  }*/
-
+  }
 }

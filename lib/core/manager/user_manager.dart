@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:onedosehealth/core/data/service/firebase_service.dart';
+import 'package:onedosehealth/core/data/service/firestore_manager.dart';
 
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/rate_dialog.dart';

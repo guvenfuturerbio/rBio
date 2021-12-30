@@ -4,7 +4,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../core/core.dart';
-import '../../../core/data/service/firebase_service.dart';
+import '../../../core/data/service/firestore_manager.dart';
 import '../model/chat_person.dart';
 import '../model/get_chat_contacts_response.dart';
 
@@ -64,6 +64,7 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
         hasRead: true,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
         id: apiItem.firebaseUserId,
+        firebaseToken: apiItem.firebaseToken,
       );
       result.add(newPerson);
     });

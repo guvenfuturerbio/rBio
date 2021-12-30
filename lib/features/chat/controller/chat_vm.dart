@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:onedosehealth/features/chat/model/chat_person.dart';
 
 import '../../../core/core.dart';
-import '../../../core/data/service/firebase_service.dart';
+import '../../../core/data/service/firestore_manager.dart';
 import '../model/message.dart';
 
 class ChatVm with ChangeNotifier {
@@ -82,11 +83,13 @@ class ChatVm with ChangeNotifier {
     return stream;
   }
 
-  Future<bool> sendMessage(Message message, String sendTo) async {
-    return await firestoreManager.sendMessage(message, sendTo);
+  Future<bool> sendMessage(
+      Message message, String sendTo, ChatPerson currentPerson) async {
+    return await firestoreManager.sendMessage(message, sendTo, currentPerson);
   }
 
-  Future<void> getImage(int index, String uuid, String uuidOther) async {
-    firestoreManager.getImage(index, uuid, uuidOther);
+  Future<void> getImage(int index, String uuid, String uuidOther,
+      ChatPerson currentPerson) async {
+    firestoreManager.getImage(index, uuid, uuidOther, currentPerson);
   }
 }
