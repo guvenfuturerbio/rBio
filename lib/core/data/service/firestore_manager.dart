@@ -8,7 +8,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onedosehealth/features/chat/model/chat_notification.dart';
 import 'package:onedosehealth/features/chat/model/chat_person.dart';
+import 'package:onedosehealth/features/chat/model/notification_data.dart';
+import 'package:onedosehealth/features/chat/model/notification_model.dart';
 
 import '../../../features/chat/model/message.dart';
 import '../../core.dart';
@@ -93,13 +96,14 @@ class FirestoreManager {
     );
   }
 
-  Future<bool> sendMessage(
-      Message message, String sendTo, ChatPerson currentPerson) async {
+  Future<bool> sendMessage(Message message, String sendTo,
+      ChatPerson currentPerson, String otherNotiToken) async {
     if (sortUid(message, sendTo) == -1) {
       await writeMessageToFirebase(message.sentFrom, sendTo, message);
     } else {
       await writeMessageToFirebase(sendTo, message.sentFrom, message);
     }
+    sendNotification(currentPerson, otherNotiToken, message);
     return true;
   }
 
@@ -126,23 +130,26 @@ class FirestoreManager {
         .snapshots();
   }
 
-  int sortUid(Message message, String sendTo) =>
+  int sortUid(
+    Message message,
+    String sendTo,
+  ) =>
       message.sentFrom.compareTo(sendTo);
 
   Future<void> getImage(int index, String sender, String reciever,
-      ChatPerson currentPerson) async {
+      ChatPerson currentPerson, String otherNotiToken) async {
     ImagePicker imagePicker = new ImagePicker();
     imageFile = index == 0
         ? await imagePicker.getImage(source: ImageSource.gallery)
         : await imagePicker.getImage(source: ImageSource.camera);
 
     if (imageFile != null) {
-      uploadFile(sender, reciever, currentPerson);
+      uploadFile(sender, reciever, currentPerson, otherNotiToken);
     }
   }
 
-  Future<void> uploadFile(
-      String sender, String reciever, ChatPerson currentPerson) async {
+  Future<void> uploadFile(String sender, String reciever,
+      ChatPerson currentPerson, String otherNotiToken) async {
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
     Reference reference = FirebaseStorage.instance.ref().child(fileName);
     await FlutterNativeImage.compressImage(
@@ -152,15 +159,15 @@ class FirestoreManager {
     );
     await reference.putFile(File(imageFile.path));
     sendMessage(
-      Message(
-        sentFrom: sender,
-        message: await reference.getDownloadURL(),
-        date: DateTime.now().millisecondsSinceEpoch,
-        type: 1,
-      ),
-      reciever,
-      currentPerson,
-    );
+        Message(
+          sentFrom: sender,
+          message: await reference.getDownloadURL(),
+          date: DateTime.now().millisecondsSinceEpoch,
+          type: 1,
+        ),
+        reciever,
+        currentPerson,
+        otherNotiToken);
   }
 
   Future<void> sendNotification(
@@ -168,35 +175,12 @@ class FirestoreManager {
     String toToken,
     Message message,
   ) async {
-    String endURL = "https://fcm.googleapis.com/fcm/send";
-    String firebaseKey =
-        "AAAAPdkryvk:APA91bHk4qe_nsEly9N1IihDx85GG5k_nw3tKlcBVyBPLrzsQ9Ytyih9BPbI2m3VSOiaHb0cPGMOSAtnqwxYJlCB8Puz4CJqWDuTDdEjtw_PrhQOcyQEOoVBqCnJrKZvpNFBKK-IdsfW";
-    Map<String, String> headers = {
-      "Content-type": "application/json",
-      "Authorization": "key=$firebaseKey"
-    };
-
-    final jsonBody = <String, dynamic>{
-      "to": "$toToken",
-      "notification": {
-        "title":
-            "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
-        "body": message.message,
-      },
-      "data": {
-        "type": 'chat',
-        "chatPerson": currentUser.toMap(),
-      }
-    };
-
-    try {
-      await http.post(
-        Uri.parse(endURL),
-        headers: headers,
-        body: jsonEncode(jsonBody),
-      );
-    } catch (e) {
-      LoggerUtils.instance.e(message);
-    }
+    getIt<Repository>().sendNotification(ChatNotificationModel(
+        to: toToken,
+        notification: Notification(
+            body: message.type == 0 ? message.message : "Media",
+            title:
+                "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}"),
+        data: NotificationData(chatPerson: currentUser, type: 'chat')));
   }
 }

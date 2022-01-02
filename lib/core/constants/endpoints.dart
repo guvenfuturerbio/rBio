@@ -13,7 +13,7 @@ class _Endpoints {
   String getSubCategoryItemsPath(id) =>
       '/Package/get-all-sub-category-items/$id'.xBasePath;
   final doPackagePaymentPath = '/Package/do-mobile-payment'.xBasePath;
-
+  final sendNotification = '/User/send-message'.xBasePath;
   final registerStep2UiPath = '/userregister/add-step2'.xBasePath;
   final registerStep2WithOutTcPath =
       '/userregister/add-step2-without-tckn'.xBasePath;

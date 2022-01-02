@@ -84,12 +84,12 @@ class ChatVm with ChangeNotifier {
   }
 
   Future<bool> sendMessage(
-      Message message, String sendTo, ChatPerson currentPerson) async {
-    return await firestoreManager.sendMessage(message, sendTo, currentPerson);
+      Message message, String sendTo, ChatPerson currentPerson,String otherNotiToken) async {
+    return await firestoreManager.sendMessage(message, sendTo, currentPerson,otherNotiToken);
   }
 
   Future<void> getImage(int index, String uuid, String uuidOther,
-      ChatPerson currentPerson) async {
-    firestoreManager.getImage(index, uuid, uuidOther, currentPerson);
+      ChatPerson currentPerson,String otherNotiToken) async {
+    firestoreManager.getImage(index, uuid, uuidOther, currentPerson,otherNotiToken);
   }
 }

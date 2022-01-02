@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:onedosehealth/features/chat/model/chat_person.dart';
+import 'package:onedosehealth/model/model.dart';
 
 import '../core.dart';
 
@@ -33,6 +37,10 @@ class FirebaseMessagingManager {
   static FirebaseMessagingManager get instance {
     _instance ??= FirebaseMessagingManager._()..init();
     return _instance;
+  }
+
+  static handleLogout() {
+    _instance = null;
   }
 
   static void mainInit() {
@@ -148,7 +156,11 @@ class FirebaseMessagingManager {
     switch (notificationType) {
       case NotificationType.chat:
         {
-          if (!Atom.url.contains(PagePaths.CHAT)) {
+          ChatPerson otherPerson =
+              ChatPerson.fromMap(json.decode(message.data['chatPerson']));
+
+          if (!Atom.url.contains(PagePaths.CHAT) &&
+              !Atom.url.contains(otherPerson.id)) {
             flutterLocalNotificationsShow(
               message.hashCode,
               message.notification.title,
@@ -204,7 +216,10 @@ class FirebaseMessagingManager {
     switch (notificationType) {
       case NotificationType.chat:
         {
-          Atom.to(PagePaths.CONSULTATION);
+          ChatPerson otherPerson =
+              ChatPerson.fromMap(json.decode(data['chatPerson']));
+          Atom.to(PagePaths.CHAT,
+              queryParameters: {'otherPerson': (otherPerson.toJson())});
           break;
         }
 
@@ -225,7 +240,78 @@ class FirebaseMessagingManager {
 
   Future<void> getToken() async {
     token = await FirebaseMessaging.instance.getToken();
+
+    setTokenToServer(token);
     LoggerUtils.instance.i('FirebaseToken :: ' + token);
+  }
+
+  Future<void> setTokenToServer(String token) async {
+    AddFirebaseTokenRequest addFirebaseToken = AddFirebaseTokenRequest();
+    addFirebaseToken.firebaseId = token;
+    if (!kIsWeb) addFirebaseToken.phoneInfo = await getDeviceInformation();
+    await getIt<Repository>().addFirebaseTokenUi(addFirebaseToken);
+  }
+
+  Future<String> getDeviceInformation() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.toJsonString();
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.toJsonString();
+    }
+
+    return "";
+  }
+}
+
+extension on AndroidDeviceInfo {
+  String toJsonString() {
+    Map<String, dynamic> jsonMap = new Map();
+    jsonMap.addAll({
+      "android_id": androidId,
+      "is_physical_device": isPhysicalDevice,
+      "product": product,
+      "model": model,
+      "id": id,
+      "host": host,
+      "hardware": hardware,
+      "fingerprint": fingerprint,
+      "display": display,
+      "device": device,
+      "brand": brand,
+      "bootloader": bootloader,
+      "board": board,
+      "base_os": version.baseOS,
+      "release": version.release,
+      "sdk_int": version.sdkInt
+    });
+
+    return jsonEncode(jsonMap);
+  }
+}
+
+extension on IosDeviceInfo {
+  String toJsonString() {
+    Map<String, dynamic> jsonMap = new Map();
+    jsonMap.addAll({
+      "name": name,
+      "systemName": systemName,
+      "systemVersion": systemVersion,
+      "model": model,
+      "localizedModel": localizedModel,
+      "identifierForVendor": identifierForVendor,
+      "isPhysicalDevice": isPhysicalDevice,
+      "sysname": utsname.sysname,
+      "nodename": utsname.nodename,
+      "release": utsname.release,
+      "version": utsname.version,
+      "machine": utsname.machine
+    });
+
+    return jsonEncode(jsonMap);
   }
 }
 

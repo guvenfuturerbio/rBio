@@ -238,7 +238,6 @@ class LoginScreenVm extends ChangeNotifier {
         // Güven online kullanıcı bilgileri
         await getIt<UserManager>().getUserProfile();
 
-        await UtilityManager().setTokenToServer(_guvenLogin.token.accessToken);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
 
         if (getIt<UserNotifier>().isCronic) {

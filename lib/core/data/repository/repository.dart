@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chat/model/chat_notification.dart';
 import 'package:onedosehealth/features/chat/model/get_chat_contacts_response.dart';
 
 import '../../../features/auth/auth.dart';
@@ -111,6 +112,13 @@ class Repository {
   Future<PatientResponse> getPatientDetail() async {
     final url = R.endpoints.getPatientDetailPath;
     final response = await apiService.getPatientDetail(url);
+    return response;
+  }
+
+  Future<GuvenResponseModel> sendNotification(
+      ChatNotificationModel model) async {
+    final url = R.endpoints.sendNotification;
+    final response = await apiService.sendNotification(model);
     return response;
   }
 

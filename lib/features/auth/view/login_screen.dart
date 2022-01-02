@@ -187,6 +187,8 @@ class _LoginScreenState extends State<LoginScreen> {
             obscureText: false,
             controller: _userNameEditingController,
             focusNode: _usernameFocusNode,
+            autocorrect: false,
+            
             textInputAction: TextInputAction.next,
             hintText: LocaleProvider.of(context).email_or_identity,
             inputFormatters: <TextInputFormatter>[

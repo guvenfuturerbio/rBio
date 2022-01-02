@@ -46,7 +46,7 @@ class ChatPerson {
       id: map['id'] ?? '',
       lastMessage: map['lastMessage'] ?? '',
       lastMessageSender: map['lastMessageSender'] ?? '',
-      lastMessageType: map['lastMessageType'] ?? '',
+      lastMessageType: map['lastMessageType'] ?? 0,
       messageTime: map['messageTime'] ?? '',
       otherHasRead: map['otherHasRead'] ?? false,
       hasRead: map['hasRead'] ?? false,

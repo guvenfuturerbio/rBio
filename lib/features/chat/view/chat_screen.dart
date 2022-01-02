@@ -60,7 +60,9 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     try {
       otherPerson = ChatPerson.fromJson(Atom.queryParameters['otherPerson']);
-    } catch (e) {
+    } catch (e, stk) {
+      LoggerUtils.instance.e(e);
+      LoggerUtils.instance.e(stk);
       return RbioRouteError();
     }
 
@@ -173,12 +175,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 width: 25,
               ),
               onPressed: () {
-                chatVm.getImage(
-                  0,
-                  getCurrentUserId,
-                  otherPerson.id,
-                  getCurrentPerson,
-                );
+                chatVm.getImage(0, getCurrentUserId, otherPerson.id,
+                    getCurrentPerson, otherPerson.firebaseToken);
               },
             ),
 
@@ -578,11 +576,8 @@ class _ChatScreenState extends State<ChatScreen> {
           type: 0,
         );
 
-        var result = await chatVm.sendMessage(
-          _messageSent,
-          otherPerson.id,
-          getCurrentPerson,
-        );
+        var result = await chatVm.sendMessage(_messageSent, otherPerson.id,
+            getCurrentPerson, otherPerson.firebaseToken);
         if (result) {
           _focusNode.unfocus();
           _scrollController.animateTo(
