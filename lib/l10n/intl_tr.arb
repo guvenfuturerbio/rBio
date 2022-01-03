@@ -190,7 +190,7 @@
   "covid_text_7": "Hastalığın erken evre belirtileri; öksürük, göğüste sıkışma, ateş ve nefes darlığı olarak sıralanabilir. İlerleyen evrelerde öksürük ve nefes darlığı artabilir, solunum sıkıntılarının yanı sıra pnömaniye benzer bulgular görülebilir.",
   "take_covid_19": "COVID-19 PCR Testi yaptır",
   "check_for_updates": "Yeni versiyon kontrol ediliyor...",
-  "select_language": "Uygulama dili",
+  "select_language": "assets/images/language_tr-01.png",
   "select_birth_date": "DOĞUM TARİHİ SEÇİNİZ",
   "existing_relative_add": "Var Olan Kullanıcı Profilinize Eklenmiştir.",
   "relative_change_message": "Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?",

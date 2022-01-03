@@ -679,7 +679,6 @@ class UtilityManager {
     );
   }
 
-
   String getReadableTimeFromDateTime(DateTime measureDT) {
     return "${measureDT.hour > 9 ? measureDT.hour : "0" + measureDT.hour.toString()}:${measureDT.minute > 9 ? measureDT.minute : "0" + measureDT.minute.toString()}  ${measureDT.day}.${measureDT.month}.${measureDT.year}";
   }
@@ -763,7 +762,6 @@ class UtilityManager {
     }
   }
 }
-
 
 String getHospitalName(BuildContext context, PatientAppointmentsResponse data) {
   if (data.type == R.dynamicVar.onlineAppointmentType) {
@@ -941,31 +939,17 @@ class Mediminder {
     isFirstUser: false,
   );
 
-  GradientButton buttonDarkGradient({
+  Widget buttonDarkGradient({
     BuildContext context,
     String text,
     Function onPressed,
     double height,
     double width,
   }) =>
-      GradientButton(
-        increaseHeightBy: height ?? 16,
-        increaseWidthBy: width ?? 200,
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-        ),
-        textStyle: context.xHeadline3.copyWith(fontWeight: FontWeight.w600),
-        callback: onPressed,
-        gradient: LinearGradient(
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-          colors: <Color>[
-            getIt<ITheme>().secondaryColor,
-            getIt<ITheme>().mainColor,
-          ],
-        ),
-        shadowColor: Colors.black,
+      RbioElevatedButton(
+        title: text,
+        onTap: onPressed,
+        infinityWidth: true,
       );
 }
 

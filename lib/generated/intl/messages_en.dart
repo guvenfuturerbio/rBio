@@ -619,7 +619,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "select_day_from" : MessageLookupByLibrary.simpleMessage("Select day"),
     "select_day_to" : MessageLookupByLibrary.simpleMessage("Select another day"),
     "select_interval" : MessageLookupByLibrary.simpleMessage("Select an Interval"),
-    "select_language" : MessageLookupByLibrary.simpleMessage("App Language"),
+    "select_language" : MessageLookupByLibrary.simpleMessage("assets/images/language_eng-01.png"),
     "select_package" : MessageLookupByLibrary.simpleMessage("Select Package"),
     "select_relative" : MessageLookupByLibrary.simpleMessage("Switch"),
     "send" : MessageLookupByLibrary.simpleMessage("Send"),

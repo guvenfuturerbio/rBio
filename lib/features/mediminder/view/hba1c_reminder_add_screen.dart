@@ -24,9 +24,13 @@ class Hba1cReminderAddScreen extends StatelessWidget {
   Hba1CForScheduleModel currentHbaModel;
 
   Widget build(BuildContext context) {
-    this.remindable = Atom.queryParameters['remindable'].toRemindable();
-    this.hba1cIdForNotification =
-        int.parse(Atom.queryParameters['hba1cIdForNotification']);
+    try {
+      this.remindable = Atom.queryParameters['remindable'].toRemindable();
+      this.hba1cIdForNotification =
+          int.parse(Atom.queryParameters['hba1cIdForNotification']);
+    } catch (e) {
+      return RbioRouteError();
+    }
 
     return ChangeNotifierProvider<Hba1cReminderAddVm>(
       create: (context) => Hba1cReminderAddVm(context, this.remindable),
@@ -109,7 +113,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Atom.historyBack();
+                                    Navigator.of(context).pop();
                                   },
                                   child: Text(
                                     LocaleProvider.of(context).cancel,
@@ -120,7 +124,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Atom.historyBack();
+                                    Navigator.of(context).pop();
                                   },
                                   child: Text(
                                     LocaleProvider.of(context).pick,
@@ -208,16 +212,8 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                 actions: [
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.0),
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomRight,
-                        end: Alignment.topLeft,
-                        colors: <Color>[
-                          getIt<ITheme>().secondaryColor,
-                          getIt<ITheme>().mainColor,
-                        ],
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(25.0),
+                        color: getIt<ITheme>().mainColor),
                     child: TextButton(
                       style: TextButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -242,7 +238,7 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                         if (controller.text.length > 0)
                           hba1cVM
                               .setPreviousResult(double.parse(controller.text));
-                        Atom.historyBack();
+                        Navigator.of(context).pop();
                       },
                     ),
                   ),
@@ -335,19 +331,17 @@ class Hba1cReminderAddScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Atom.historyBack();
+                                    Navigator.of(context).pop();
                                   },
-                                  child: Text(
-                                    LocaleProvider.of(context).cancel,
-                                  ),
+                                  child: Text(LocaleProvider.of(context).cancel,
+                                      style: context.xHeadline5),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    //print(birthdateselection);
-                                    Atom.historyBack();
+                                    Navigator.of(context).pop();
                                   },
                                   child: Text(
                                     LocaleProvider.of(context).pick,
@@ -391,16 +385,8 @@ class Hba1cReminderAddScreen extends StatelessWidget {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25.0),
-        gradient: LinearGradient(
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-          colors: <Color>[
-            getIt<ITheme>().secondaryColor,
-            getIt<ITheme>().mainColor,
-          ],
-        ),
-      ),
+          borderRadius: BorderRadius.circular(25.0),
+          color: getIt<ITheme>().mainColor),
       child: TextButton(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(
@@ -437,7 +423,6 @@ class Hba1cReminderAddScreen extends StatelessWidget {
               reminderDate: hba1cVM.remindDate.toString(),
             );
             hba1cVM.createNotification(currentHbaModel);
-            Atom.historyBack();
           }
         },
       ),

@@ -325,7 +325,7 @@ class _CreateAppointmentSummaryScreenState
 
                 //
                 SizedBox(
-                  height: Atom.safeBottom,
+                  height: Atom.safeBottom + 10,
                 ),
               ],
             ],

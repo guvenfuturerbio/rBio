@@ -236,6 +236,7 @@ class HomeVm extends ChangeNotifier {
         ),
 
         //
+
         if (getIt<AppConfig>().takeHospitalAppointment)
           MyReorderableWidget(
             key: _key2,
@@ -252,14 +253,19 @@ class HomeVm extends ChangeNotifier {
                   );
                 }
               },
-              child: VerticalCard(
-                title: LocaleProvider.current.lbl_find_hospital,
-                painter: HomeHospitalAppointmentCustomPainter(),
+              child: Consumer<LocaleNotifier>(
+                builder: (context, vm, child) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.lbl_find_hospital,
+                    painter: HomeHospitalAppointmentCustomPainter(),
+                  );
+                },
               ),
             ),
           ),
 
         //
+
         if (getIt<AppConfig>().takeOnlineAppointment)
           MyReorderableWidget(
             key: _key3,
@@ -276,14 +282,19 @@ class HomeVm extends ChangeNotifier {
                   );
                 }
               },
-              child: VerticalCard(
-                title: LocaleProvider.current.take_video_appointment,
-                painter: HomeOnlineAppointmentCustomPainter(),
+              child: Consumer<LocaleNotifier>(
+                builder: (context, vm, child) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.take_video_appointment,
+                    painter: HomeOnlineAppointmentCustomPainter(),
+                  );
+                },
               ),
             ),
           ),
 
         //
+
         if (getIt<AppConfig>().chronicTracking)
           MyReorderableWidget(
             key: _key4,
@@ -295,20 +306,26 @@ class HomeVm extends ChangeNotifier {
                   Atom.to(PagePaths.MEASUREMENT_TRACKING);
                 }
               },
-              child: VerticalCard(
-                title: LocaleProvider.current.chronic_track_home,
-                painter: HomeChronicTrackingCustomPainter(),
+              child: Consumer<LocaleNotifier>(
+                builder: (context, vm, child) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.chronic_track_home,
+                    painter: HomeChronicTrackingCustomPainter(),
+                  );
+                },
               ),
             ),
           ),
 
         //
+
         MyReorderableWidget(
           key: key5,
           body: HomeSlider(),
         ),
 
         //
+
         MyReorderableWidget(
           key: _key6,
           body: GestureDetector(
@@ -319,14 +336,19 @@ class HomeVm extends ChangeNotifier {
                 Atom.to(PagePaths.APPOINTMENTS);
               }
             },
-            child: VerticalCard(
-              title: LocaleProvider.current.appointments,
-              painter: HomeAppointmentsCustomPainter(),
+            child: Consumer<LocaleNotifier>(
+              builder: (context, vm, child) {
+                return VerticalCard(
+                  title: LocaleProvider.current.appointments,
+                  painter: HomeAppointmentsCustomPainter(),
+                );
+              },
             ),
           ),
         ),
 
         //
+
         MyReorderableWidget(
           key: _key7,
           body: GestureDetector(
@@ -337,14 +359,19 @@ class HomeVm extends ChangeNotifier {
                 Atom.to(PagePaths.ERESULT);
               }
             },
-            child: VerticalCard(
-              title: LocaleProvider.current.results,
-              painter: HomeResultsCustomPainter(),
+            child: Consumer<LocaleNotifier>(
+              builder: (context, vm, child) {
+                return VerticalCard(
+                  title: LocaleProvider.current.results,
+                  painter: HomeResultsCustomPainter(),
+                );
+              },
             ),
           ),
         ),
 
         //
+
         if (getIt<AppConfig>().symptomChecker)
           MyReorderableWidget(
             key: _key8,
@@ -356,9 +383,13 @@ class HomeVm extends ChangeNotifier {
                   Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
                 }
               },
-              child: VerticalCard(
-                title: LocaleProvider.current.symptom_checker,
-                painter: HomeSymptomCheckerCustomPainter(),
+              child: Consumer<LocaleNotifier>(
+                builder: (context, vm, child) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.symptom_checker,
+                    painter: HomeSymptomCheckerCustomPainter(),
+                  );
+                },
               ),
             ),
           ),

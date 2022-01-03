@@ -126,18 +126,10 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                       child: Container(
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomRight,
-                            end: Alignment.topLeft,
-                            colors: usageType == value.selectedUsageType
-                                ? <Color>[
-                                    getIt<ITheme>().secondaryColor,
-                                    getIt<ITheme>().mainColor
-                                  ]
-                                : <Color>[Colors.white, Colors.white],
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(50),
+                            color: usageType == value.selectedUsageType
+                                ? getIt<ITheme>().mainColor
+                                : Colors.white),
                         child: Text(
                           usageType.xToString(),
                           style: context.xHeadline3.copyWith(
@@ -252,6 +244,7 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 20, bottom: 20),
                         child: Mediminder.instance.buttonDarkGradient(
+                          context: context,
                           text: LocaleProvider.current.confirm,
                           onPressed: () {
                             value.createReminderPlan(widget.remindable);

@@ -16,8 +16,12 @@ import '../core.dart';
 // #region Top Level Variabled and Functions
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  print("bbbbb");
+  FirebaseMessagingManager.showNotification(message);
 }
 
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 const AndroidNotificationChannel androidNotificationChannel =
     AndroidNotificationChannel(
   'high_importance_channel',
@@ -27,7 +31,6 @@ const AndroidNotificationChannel androidNotificationChannel =
 );
 
 class FirebaseMessagingManager {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String token;
 
   FirebaseMessagingManager._();
@@ -62,15 +65,18 @@ class FirebaseMessagingManager {
         android: initializationSettingsAndroid,
         iOS: initializationSettingsIOS,
       );
-      flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-      flutterLocalNotificationsPlugin.initialize(
+      await flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
         onSelectNotification: (payload) {
-          _clickDataHandler(jsonDecode(payload));
+          clickDataHandler(jsonDecode(payload));
         },
       );
     }
-
+    final initialPayload =
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    if (initialPayload?.payload != null) {
+      clickDataHandler(json.decode(initialPayload.payload));
+    }
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
@@ -109,7 +115,12 @@ class FirebaseMessagingManager {
           FirebaseMessaging.onMessage.listen((RemoteMessage message) {
             if (!kIsWeb) {
               if (message != null) {
-                _showNotification(message);
+                ChatPerson otherPerson =
+                    ChatPerson.fromMap(json.decode(message.data['chatPerson']));
+
+                if (!Atom.url.contains(PagePaths.CHAT) &&
+                    !Atom.url.contains(otherPerson.id))
+                  showNotification(message);
               }
             }
           });
@@ -117,7 +128,7 @@ class FirebaseMessagingManager {
           // Uygulama Arkaplanda Açıkken
           FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
             if (message != null) {
-              _clickDataHandler(message.data);
+              clickDataHandler(message.data);
             }
           });
 
@@ -126,7 +137,7 @@ class FirebaseMessagingManager {
               .getInitialMessage()
               .then((RemoteMessage message) {
             if (message != null) {
-              _clickDataHandler(message.data);
+              clickDataHandler(message.data);
             }
           });
 
@@ -149,22 +160,18 @@ class FirebaseMessagingManager {
     // setupInteractedMessage();
   }
 
-  void _showNotification(RemoteMessage message) {
+  static void showNotification(RemoteMessage message) {
     final notificationType = getNotificationType(message.data);
     if (notificationType == null) return;
 
     switch (notificationType) {
       case NotificationType.chat:
         {
-          ChatPerson otherPerson =
-              ChatPerson.fromMap(json.decode(message.data['chatPerson']));
-
-          if (!Atom.url.contains(PagePaths.CHAT) &&
-              !Atom.url.contains(otherPerson.id)) {
+          {
             flutterLocalNotificationsShow(
               message.hashCode,
-              message.notification.title,
-              message.notification.body,
+              message.data['title'],
+              message.data['body'],
               jsonEncode(message.data),
             );
           }
@@ -179,7 +186,7 @@ class FirebaseMessagingManager {
     }
   }
 
-  void flutterLocalNotificationsShow(
+  static void flutterLocalNotificationsShow(
     int id,
     String title,
     String body,
@@ -202,14 +209,14 @@ class FirebaseMessagingManager {
     );
   }
 
-  NotificationType getNotificationType(Map<String, dynamic> data) {
+  static NotificationType getNotificationType(Map<String, dynamic> data) {
     if (data == null) return null;
     final type = data['type'] as String;
     if (type == null) return null;
     return type.xNotificationTypeKeys;
   }
 
-  Future<void> _clickDataHandler(Map<String, dynamic> data) async {
+  Future<void> clickDataHandler(Map<String, dynamic> data) async {
     final notificationType = getNotificationType(data);
     if (notificationType == null) return;
 

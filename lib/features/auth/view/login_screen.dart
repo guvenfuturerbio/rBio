@@ -575,10 +575,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildVersion() {
-    return Text(
-      "v" + getIt<GuvenSettings>().version,
-      textAlign: TextAlign.center,
-      style: context.xSubtitle1,
+    return Center(
+      child: Text(
+        "v" + getIt<GuvenSettings>().version,
+        textAlign: TextAlign.center,
+        style: context.xSubtitle1,
+      ),
     );
   }
 }

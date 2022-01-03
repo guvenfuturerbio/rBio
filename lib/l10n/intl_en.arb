@@ -187,7 +187,7 @@
   "covid_text_7": "Early stage symptoms of the disease; Cough, chest tightness, fever and shortness of breath. In advanced stages, cough and shortness of breath may increase, as well as respiratory distress, findings similar to pneumonia can be seen.",
   "take_covid_19": "Take a COVID-19 Test",
   "check_for_updates": "Checking for updates...",
-  "select_language": "App Language",
+  "select_language": "assets/images/language_eng-01.png",
   "select_birth_date": "SELECT BIRTH DATE",
   "existing_relative_add": "Existing User Saved Into Relatives.",
   "relative_change_message": "Further operations will be completed by the selected user, do you confirm?",

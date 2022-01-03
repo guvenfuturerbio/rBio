@@ -70,7 +70,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       } else {
         availableDates = await getAvailableLists(date, false, tenantId);
       }
-
+      await setSelectedDate(initDate, true);
       availableDatesProgress = LoadingProgress.DONE;
       notifyListeners();
     } catch (e, stackTrace) {

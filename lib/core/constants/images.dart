@@ -6,6 +6,8 @@ class _Images {
   final circlevatar =
       'https://www.pinclipart.com/picdir/middle/148-1486972_mystery-man-avatar-circle-clipart.png';
 
+  final tr_flag = 'assets/images/language_tr-01.png';
+  final eng_flag = 'assets/images/language_eng-01.png';
   final accu_check_png = "assets/images/accu_check.png";
   final addphoto_icon = "assets/images/addphoto_icon.svg";
   final afterMeal = "assets/images/after_meal_black.svg";

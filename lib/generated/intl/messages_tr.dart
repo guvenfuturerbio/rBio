@@ -615,7 +615,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "select_day_from" : MessageLookupByLibrary.simpleMessage("Gün seçiniz"),
     "select_day_to" : MessageLookupByLibrary.simpleMessage("Diğer günü seçiniz"),
     "select_interval" : MessageLookupByLibrary.simpleMessage("Bir aralık seç"),
-    "select_language" : MessageLookupByLibrary.simpleMessage("Uygulama dili"),
+    "select_language" : MessageLookupByLibrary.simpleMessage("assets/images/language_tr-01.png"),
     "select_package" : MessageLookupByLibrary.simpleMessage("Paket Seçinizi"),
     "select_relative" : MessageLookupByLibrary.simpleMessage("Geçiş Yap"),
     "send" : MessageLookupByLibrary.simpleMessage("Gönder"),

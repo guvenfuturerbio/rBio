@@ -1915,10 +1915,10 @@ class LocaleProvider {
     );
   }
 
-  /// `App Language`
+  /// `assets/images/language_eng-01.png`
   String get select_language {
     return Intl.message(
-      'App Language',
+      'assets/images/language_eng-01.png',
       name: 'select_language',
       desc: '',
       args: [],

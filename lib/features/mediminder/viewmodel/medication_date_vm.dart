@@ -228,8 +228,11 @@ class MedicationDateVm extends ChangeNotifier {
         ),
       );
     }
-
     Atom.historyBack();
+
+    Atom.to(PagePaths.MEDICATION_SCREEN,
+        queryParameters: {'remindable': mRemindable.toParseableString()},
+        isReplacement: true);
   }
 
   Future<void> _scheduleForSpecific(Remindable selectedRemindable) async {
@@ -270,8 +273,10 @@ class MedicationDateVm extends ChangeNotifier {
         }
       }
     }
-
     Atom.historyBack();
+    Atom.to(PagePaths.MEDICATION_SCREEN,
+        queryParameters: {'remindable': mRemindable.toParseableString()},
+        isReplacement: true);
   }
 
   Future<void> saveScheduledMedicine(MedicineForScheduledModel medicine) async {

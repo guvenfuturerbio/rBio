@@ -14,6 +14,12 @@ class Hba1cReminderListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    try {
+      this.remindable = Atom.queryParameters['remindable'].toRemindable();
+    } catch (e) {
+      return RbioRouteError();
+    }
+
     return ChangeNotifierProvider<Hba1cReminderListVm>(
       create: (context) => Hba1cReminderListVm(context),
       child: Consumer<Hba1cReminderListVm>(
@@ -73,7 +79,7 @@ class Hba1cReminderListScreen extends StatelessWidget {
   Widget _buildFab(BuildContext context, Hba1cReminderListVm value) {
     return FloatingActionButton(
       onPressed: () {
-        Atom.to(PagePaths.HBA1C_LIST, queryParameters: {
+        Atom.to(PagePaths.HBA1C_REMINDER_ADD, queryParameters: {
           'remindable': remindable.toParseableString(),
           'hba1cIdForNotification': value.generatedIdForSchedule.last.toString()
         });
@@ -82,16 +88,7 @@ class Hba1cReminderListScreen extends StatelessWidget {
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            begin: Alignment.bottomRight,
-            end: Alignment.topLeft,
-            colors: <Color>[
-              getIt<ITheme>().secondaryColor,
-              getIt<ITheme>().mainColor
-            ],
-          ),
-        ),
+            shape: BoxShape.circle, color: getIt<ITheme>().mainColor),
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SvgPicture.asset(
