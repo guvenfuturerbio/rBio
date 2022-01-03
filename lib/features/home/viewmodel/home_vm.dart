@@ -173,7 +173,7 @@ class HomeVm extends ChangeNotifier {
 
     Atom.show(
       Container(
-        color: Colors.black12.withOpacity(0.8),
+        color: Colors.black12,
         child: Consumer<HomeVm>(
           builder: (BuildContext context, HomeVm val, Widget child) {
             return SizedBox.expand(
@@ -182,7 +182,7 @@ class HomeVm extends ChangeNotifier {
                 children: [
                   Wrap(
                     spacing: 10,
-                    runSpacing: 0,
+                    runSpacing: 10,
                     children: getDeletedList(),
                   ),
 
@@ -193,7 +193,7 @@ class HomeVm extends ChangeNotifier {
                       notifyListeners();
                       Atom.dismiss();
                     },
-                    title: 'Dismiss',
+                    title: LocaleProvider.current.close_lbl,
                   ),
                 ],
               ),
@@ -363,6 +363,10 @@ class HomeVm extends ChangeNotifier {
             ),
           ),
       ];
+
+  void openConsultation() {
+    Atom.to(PagePaths.CONSULTATION);
+  }
 }
 
 extension ShakeModExt on ShakeMod {

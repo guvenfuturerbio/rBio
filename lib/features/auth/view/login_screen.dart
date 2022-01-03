@@ -71,14 +71,18 @@ class _LoginScreenState extends State<LoginScreen> {
     return KeyboardDismissOnTap(
       child: RbioScaffold(
         resizeToAvoidBottomInset: true,
-        appbar: RbioAppBarLogin(
-          leading: SizedBox(),
-          title: Image.asset(
-            R.image.oneDoseHealthPng,
-            height: 50,
-          ),
-        ),
+        appbar: _buildAppBar(),
         body: _buildBody(value),
+      ),
+    );
+  }
+
+  RbioAppBarLogin _buildAppBar() {
+    return RbioAppBarLogin(
+      leading: SizedBox(),
+      title: Image.asset(
+        R.image.oneDoseHealthPng,
+        height: 50,
       ),
     );
   }
@@ -140,6 +144,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
             //
             _buildVersion(),
+
+            //
+            SizedBox(height: Atom.safeBottom),
           ],
         ),
       ),
@@ -152,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //
           Padding(
             padding: const EdgeInsets.only(bottom: 5.0),
             child: Text(
@@ -161,6 +169,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+
+          //
           Text(
             LocaleProvider.current.login_page_text,
             style: context.xHeadline3,
@@ -174,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        //
         Padding(
           padding: const EdgeInsets.only(left: 15.0, bottom: 5),
           child: Text(
@@ -181,14 +192,15 @@ class _LoginScreenState extends State<LoginScreen> {
             style: context.xHeadline3,
           ),
         ),
+
+        //
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: RbioTextFormField(
             obscureText: false,
-            controller: _userNameEditingController,
-            focusNode: _usernameFocusNode,
             autocorrect: false,
-            
+            focusNode: _usernameFocusNode,
+            controller: _userNameEditingController,
             textInputAction: TextInputAction.next,
             hintText: LocaleProvider.of(context).email_or_identity,
             inputFormatters: <TextInputFormatter>[
@@ -218,6 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        //
         Padding(
           padding: const EdgeInsets.only(left: 15.0, bottom: 5),
           child: Text(
@@ -225,11 +238,13 @@ class _LoginScreenState extends State<LoginScreen> {
             style: context.xHeadline3,
           ),
         ),
+
+        //
         RbioTextFormField(
           autocorrect: false,
-          controller: _passwordEditingController,
-          focusNode: _passwordFocusNode,
           enableSuggestions: false,
+          focusNode: _passwordFocusNode,
+          controller: _passwordEditingController,
           textInputAction: TextInputAction.done,
           obscureText: value.passwordVisibility ? false : true,
           hintText: LocaleProvider.of(context).hint_input_password,
@@ -257,39 +272,43 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildRememberMe(LoginScreenVm value) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Padding(
-          padding: EdgeInsets.only(top: 5),
-          child: Row(
-            children: <Widget>[
-              Checkbox(
-                value: value.rememberMeChecked,
-                onChanged: (newValue) {
-                  value.toggleRememberMeChecked();
-                },
-                activeColor: getIt<ITheme>().mainColor,
-              ),
-              Text(
-                LocaleProvider.current.btn_remember_me,
-                style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColorSecondary,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(top: 5),
+            child: Row(
+              children: <Widget>[
+                Checkbox(
+                  value: value.rememberMeChecked,
+                  onChanged: (newValue) {
+                    value.toggleRememberMeChecked();
+                  },
+                  activeColor: getIt<ITheme>().mainColor,
                 ),
-              )
-            ],
+                Text(
+                  LocaleProvider.current.btn_remember_me,
+                  style: context.xHeadline3.copyWith(
+                    color: getIt<ITheme>().textColorSecondary,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
 
         //
-        InkWell(
+        TextButton(
           child: Text(
             LocaleProvider.of(context).lbl_forgot_password,
             style: context.xHeadline3.copyWith(
               color: getIt<ITheme>().mainColor,
             ),
           ),
-          onTap: () {
+          onPressed: () {
             Atom.to(PagePaths.FORGOT_PASSWORD_STEP_1);
           },
         ),
@@ -299,6 +318,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildApplicationContest(LoginScreenVm value) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
         //
         Container(
@@ -314,10 +336,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         //
         Expanded(
-          child: InkWell(
-            onTap: () {
-              value.showApplicationContestForm();
-            },
+          child: TextButton(
+            onPressed: () => value.showApplicationContestForm(),
             child: Text(
               LocaleProvider.of(context).accept_application_consent_form,
               maxLines: 3,
@@ -334,7 +354,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildKVKK(LoginScreenVm value) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
+        //
         Container(
           alignment: Alignment.bottomLeft,
           child: Checkbox(
@@ -345,11 +369,13 @@ class _LoginScreenState extends State<LoginScreen> {
             activeColor: getIt<ITheme>().mainColor,
           ),
         ),
+
+        //
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(3.0),
-            child: InkWell(
-              onTap: () => {value.showKvkkInfo()},
+            child: TextButton(
+              onPressed: () => {value.showKvkkInfo()},
               child: Text(
                 LocaleProvider.of(context).read_understood_kvkk,
                 maxLines: 3,
@@ -493,12 +519,15 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildSeperator() {
     return Row(
       children: [
+        //
         Expanded(
           child: Container(
             height: 1,
             color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
           ),
         ),
+
+        //
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
@@ -508,6 +537,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+
+        //
         Expanded(
           child: Container(
             height: 1,
@@ -522,14 +553,19 @@ class _LoginScreenState extends State<LoginScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        //
         SvgPicture.asset(
           R.image.facebook,
           width: 50,
         ),
+
+        //
         SvgPicture.asset(
           R.image.apple,
           width: 50,
         ),
+
+        //
         SvgPicture.asset(
           R.image.google,
           width: 50,
@@ -542,9 +578,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Text(
       "v" + getIt<GuvenSettings>().version,
       textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 12,
-      ),
+      style: context.xSubtitle1,
     );
   }
 }

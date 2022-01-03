@@ -47,15 +47,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  RbioAppBar _buildAppBar(HomeVm val) {
+  RbioAppBar _buildAppBar(HomeVm vm) {
     return RbioAppBar(
       leading: Center(
         child: RbioSwitcher(
-          showFirstChild: val.status.isShaken,
+          showFirstChild: vm.status.isShaken,
           child1: IconButton(
             onPressed: () {
-              val.changeStatus();
-              val.showRemovedWidgets();
+              vm.changeStatus();
+              vm.showRemovedWidgets();
             },
             icon: Icon(
               Icons.add,
@@ -85,11 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
         //
         Center(
           child: RbioSwitcher(
-            showFirstChild: val.status.isShaken,
+            showFirstChild: vm.status.isShaken,
             child1: SizedBox(
               child: IconButton(
                 onPressed: () {
-                  val.changeStatus();
+                  vm.changeStatus();
                 },
                 icon: Text(
                   LocaleProvider.current.done,
@@ -110,19 +110,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onPressed: () {
-                Atom.to(PagePaths.CONSULTATION);
+                vm.openConsultation();
               },
             ),
           ),
         ),
-        SizedBox(width: 8),
+
+        //
+        R.sizes.wSizer8,
       ],
     );
   }
 
   Widget _buildBody(HomeVm val) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
+        //
         Expanded(
           child: ReorderableWrap(
             alignment: WrapAlignment.center,

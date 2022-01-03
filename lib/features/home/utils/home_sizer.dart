@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
+
+import '../../../core/core.dart';
 
 class HomeSizer {
   HomeSizer._();

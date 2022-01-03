@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../core/core.dart';
-import '../../../core/data/service/firestore_manager.dart';
 import '../model/chat_person.dart';
 import '../model/get_chat_contacts_response.dart';
 
