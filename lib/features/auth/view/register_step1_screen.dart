@@ -118,7 +118,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                         ),
                       ),
                       Text(
-                        "Let's know you better!",
+                        LocaleProvider.current.lets_know_you_better,
                         style: context.xHeadline3,
                       ),
                     ],
@@ -137,7 +137,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                             padding:
                                 const EdgeInsets.only(left: 15.0, bottom: 5),
                             child: Text(
-                              "Name",
+                              LocaleProvider.current.name,
                               style: context.xHeadline3,
                             ),
                           ),
@@ -179,7 +179,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                               top: 15,
                             ),
                             child: Text(
-                              "Surname",
+                              LocaleProvider.current.surname,
                               style: context.xHeadline3,
                             ),
                           ),
@@ -222,7 +222,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     top: 15,
                   ),
                   child: Text(
-                    "Gender",
+                    LocaleProvider.current.gender,
                     style: context.xHeadline3,
                   ),
                 ),
@@ -236,8 +236,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      addRadioButton(0, 'Male'),
-                      addRadioButton(1, 'Female'),
+                      addRadioButton(0, LocaleProvider.current.gender_male),
+                      addRadioButton(1, LocaleProvider.current.gender_female),
                     ],
                   ),
                 ),
@@ -255,7 +255,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     top: 15,
                   ),
                   child: Text(
-                    "Date of birth",
+                    LocaleProvider.of(context).birth_date,
                     style: context.xHeadline3,
                   ),
                 ),
