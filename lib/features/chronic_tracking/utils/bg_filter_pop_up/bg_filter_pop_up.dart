@@ -1,11 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../../../generated/l10n.dart';
+import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import '../glucose_margins_filter.dart';
 import 'bg_filter_pop_up_vm.dart';
 

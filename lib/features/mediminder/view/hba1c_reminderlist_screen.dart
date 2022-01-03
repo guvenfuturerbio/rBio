@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../../core/core.dart';
 import '../../../core/enums/remindable.dart';
 import '../mediminder.dart';
-import '../viewmodel/hba1c_reminderlist_vm.dart';
 
 class Hba1cReminderListScreen extends StatelessWidget {
   Remindable remindable;

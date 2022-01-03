@@ -1,5 +1,3 @@
-import 'package:onedosehealth/core/core.dart';
-
 class DoctorBMIPatientModel {
   String name;
   List<DoctorBMIMeasurements> bmiMeasurements;

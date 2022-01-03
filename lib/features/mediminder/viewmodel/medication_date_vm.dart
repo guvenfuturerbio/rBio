@@ -8,7 +8,6 @@ import '../../../core/core.dart';
 import '../../../core/enums/medicine_period.dart';
 import '../../../core/enums/remindable.dart';
 import '../../../core/enums/usage_type.dart';
-import '../managers/local_notifications_manager.dart';
 import '../mediminder.dart';
 
 class MedicationDateVm extends ChangeNotifier {

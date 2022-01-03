@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import '../../../../core/core.dart';
-import '../../../../core/widgets/rbio_appbar.dart';
-import '../../../../model/model.dart';
 import 'package:provider/provider.dart';
 
-import '../../symptoms_body_sublocations_page/view/symptoms_body_sublocations_page.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
 import '../../symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
-import '../../symptoms_result_page/view/symptoms_result_page.dart';
 import '../viewmodel/symptoms_body_symptoms_page_vm.dart';
 
 class BodySymptomsSelectionPage extends StatefulWidget {

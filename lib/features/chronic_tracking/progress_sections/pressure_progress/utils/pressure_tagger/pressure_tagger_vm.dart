@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/domain/blood_pressure_model.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+
+import '../../../../../../core/core.dart';
+import '../../../../../../core/domain/blood_pressure_model.dart';
+import '../../view_model/pressure_measurement_view_model.dart';
 
 class PressureTaggerVm extends ChangeNotifier {
   final BuildContext context;

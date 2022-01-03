@@ -1,19 +1,17 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/features/chat/model/chat_notification.dart';
-import 'package:onedosehealth/features/chat/model/chat_person.dart';
-import 'package:onedosehealth/features/chat/model/notification_data.dart';
-import 'package:onedosehealth/features/chat/model/notification_model.dart';
 
+import '../../../features/chat/model/chat_notification.dart';
+import '../../../features/chat/model/chat_person.dart';
 import '../../../features/chat/model/message.dart';
+import '../../../features/chat/model/notification_data.dart';
+import '../../../features/chat/model/notification_model.dart';
 import '../../core.dart';
 
 class FirestoreManager {

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../viewmodel/create_appointment_events_vm.dart';
 
-part '../model/event_selected_model.dart';
 part '../model/event.dart';
+part '../model/event_selected_model.dart';
 part '../widgets/list_body.dart';
 part '../widgets/table_calendar.dart';
 

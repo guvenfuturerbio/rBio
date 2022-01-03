@@ -1,12 +1,10 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/model/banner_model.dart';
-import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
+import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 
 class HomeSlider extends StatefulWidget {
@@ -131,14 +129,6 @@ class _HomeSliderState extends State<HomeSlider> {
 
   double getHeight(BuildContext context) {
     return HomeSizer.instance.getBodySliderHeight();
-
-    final height = MediaQuery.of(context).size.height;
-    return R.sizes.screenHandler<double>(
-      context,
-      mobile: height * 0.23,
-      tablet: height * 0.25,
-      desktop: height * 0.25,
-    );
   }
 
   void _launchURL(String url) async {

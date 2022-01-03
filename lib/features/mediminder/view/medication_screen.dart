@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../../../core/core.dart';
 import '../../../core/enums/remindable.dart';
 import '../mediminder.dart';
-import '../viewmodel/medication_vm.dart';
 
 class MedicationScreen extends StatelessWidget {
   Remindable remindable;

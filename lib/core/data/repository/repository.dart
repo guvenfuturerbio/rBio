@@ -50,7 +50,6 @@ class Repository {
   }
 
   Future<List<GetChatContactsResponse>> getChatContacts() async {
-    final url = R.endpoints.getChatContacts;
     final response = await apiService.getChatContacts();
     return response.datum
         .map((item) => GetChatContactsResponse.fromJson(item))
@@ -117,7 +116,6 @@ class Repository {
 
   Future<GuvenResponseModel> sendNotification(
       ChatNotificationModel model) async {
-    final url = R.endpoints.sendNotification;
     final response = await apiService.sendNotification(model);
     return response;
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/notifiers/user_notifier.dart';
 
 part '../model/profile_numbers.dart';
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/model/model.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../utils/chart_data.dart';
+import '../../../../../../model/model.dart';
 import '../../../../lib/widgets/utils/time_period_filters.dart';
 import '../../../utils/charts/sample_view.dart';
 import '../../view_model/bg_progress_page_view_model.dart';
