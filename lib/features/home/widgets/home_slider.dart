@@ -30,6 +30,7 @@ class _HomeSliderState extends State<HomeSlider> {
           height: getHeight(context),
           width: Atom.width,
           child: Stack(
+            fit: StackFit.expand,
             children: [
               //
               Positioned.fill(
@@ -37,32 +38,26 @@ class _HomeSliderState extends State<HomeSlider> {
                   itemCount: vm.bannerTabsModel.length,
                   itemBuilder:
                       (BuildContext context, int itemIndex, int pageViewIndex) {
-                    return GestureDetector(
-                      onTap: () {
-                        if (vm.isForDelete) {
-                          vm.addWidget(vm.key5);
-                        } else {
-                          if (vm.bannerTabsModel[itemIndex].destinationUrl
-                              .contains('http')) {
-                            launch(
-                                vm.bannerTabsModel[itemIndex].destinationUrl);
+                    return Container(
+                      width: double.infinity,
+                      child: GestureDetector(
+                        onTap: () {
+                          if (vm.isForDelete) {
+                            vm.addWidget(vm.key5);
                           } else {
-                            Atom.to(
-                                vm.bannerTabsModel[itemIndex].destinationUrl);
+                            if (vm.bannerTabsModel[itemIndex].destinationUrl
+                                .contains('http')) {
+                              launch(
+                                  vm.bannerTabsModel[itemIndex].destinationUrl);
+                            } else {
+                              Atom.to(
+                                  vm.bannerTabsModel[itemIndex].destinationUrl);
+                            }
                           }
-                        }
-                      },
-                      child: Card(
-                        margin: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            vm.bannerTabsModel[itemIndex].imageUrl,
-                            fit: BoxFit.fill,
-                          ),
+                        },
+                        child: Image.network(
+                          vm.bannerTabsModel[itemIndex].imageUrl,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     );
