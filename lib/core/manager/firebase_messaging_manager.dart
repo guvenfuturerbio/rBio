@@ -225,6 +225,10 @@ class FirebaseMessagingManager {
         {
           ChatPerson otherPerson =
               ChatPerson.fromMap(json.decode(data['chatPerson']));
+          if (Atom.url.contains(PagePaths.CHAT)) {
+            Atom.historyBack();
+            await Future.delayed(Duration(milliseconds: 100));
+          }
           Atom.to(PagePaths.CHAT,
               queryParameters: {'otherPerson': (otherPerson.toJson())});
           break;
