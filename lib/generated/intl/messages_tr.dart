@@ -137,7 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "choice" : MessageLookupByLibrary.simpleMessage("Seçiminiz : "),
     "choose" : MessageLookupByLibrary.simpleMessage("Seç"),
     "chronic_track" : MessageLookupByLibrary.simpleMessage("Kronik Takip"),
-    "chronic_track_home" : MessageLookupByLibrary.simpleMessage("Sağlık\nTakibi"),
+    "chronic_track_home" : MessageLookupByLibrary.simpleMessage("Sağlık Takibi"),
     "citizen_of_tc" : MessageLookupByLibrary.simpleMessage("T.C vatandaşıyım"),
     "click_go" : MessageLookupByLibrary.simpleMessage("Tıkla ve Git"),
     "close" : MessageLookupByLibrary.simpleMessage("Kapat"),

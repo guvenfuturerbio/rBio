@@ -195,10 +195,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Health\nTracker`
+  /// `Health Tracker`
   String get chronic_track_home {
     return Intl.message(
-      'Health\nTracker',
+      'Health Tracker',
       name: 'chronic_track_home',
       desc: '',
       args: [],
