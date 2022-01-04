@@ -16,7 +16,6 @@ import '../core.dart';
 // #region Top Level Variabled and Functions
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  FirebaseMessagingManager.showNotification(message);
 }
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
