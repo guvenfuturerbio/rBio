@@ -733,6 +733,7 @@
 
   "bg_measurement_tracking": "Blood Glucose Tracking",
   "bmi_tracking": "Body Scale Tracking",
+  "bp_tracking": "Blood Pressure Tracking",
   "blood_pressure_tracking": "Blood Pressure Tracking",
   "treatment_process": "Treatment Process",
   "critical_metrics": "Critical metrics",

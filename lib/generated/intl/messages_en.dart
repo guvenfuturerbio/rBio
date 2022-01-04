@@ -99,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "blood_pressure_tracking" : MessageLookupByLibrary.simpleMessage("Blood Pressure Tracking"),
     "bmi_tracking" : MessageLookupByLibrary.simpleMessage("Body Scale Tracking"),
     "boy" : MessageLookupByLibrary.simpleMessage("BOY"),
+    "bp_tracking" : MessageLookupByLibrary.simpleMessage("Blood Pressure Tracking"),
     "btn_cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "btn_confirm" : MessageLookupByLibrary.simpleMessage("Confirm"),
     "btn_delete" : MessageLookupByLibrary.simpleMessage("Delete"),

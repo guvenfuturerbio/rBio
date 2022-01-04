@@ -7366,6 +7366,16 @@ class LocaleProvider {
   }
 
   /// `Blood Pressure Tracking`
+  String get bp_tracking {
+    return Intl.message(
+      'Blood Pressure Tracking',
+      name: 'bp_tracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Blood Pressure Tracking`
   String get blood_pressure_tracking {
     return Intl.message(
       'Blood Pressure Tracking',

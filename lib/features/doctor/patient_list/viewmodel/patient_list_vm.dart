@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -39,6 +41,8 @@ class DoctorPatientListVm extends ChangeNotifier with RbioVm {
       listModel = await _getAllByType();
       progress = LoadingProgress.DONE;
     } catch (e, stackTrace) {
+      log(e.toString());
+      debugPrintStack(stackTrace: stackTrace);
       progress = LoadingProgress.ERROR;
       Sentry.captureException(e, stackTrace: stackTrace);
       showGradientDialog(

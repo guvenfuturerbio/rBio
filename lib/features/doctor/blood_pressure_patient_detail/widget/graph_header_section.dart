@@ -1,7 +1,7 @@
-part of '../view/bmi_patient_detail_screen.dart';
+part of '../view/blood_pressure_detail_screen.dart';
 
 class _GraphHeaderSection extends StatelessWidget {
-  final BmiPatientDetailVm value;
+  final BloodPressurePatientDetailVm value;
   final ScrollController controller;
 
   const _GraphHeaderSection({
@@ -65,10 +65,62 @@ class _GraphHeaderSection extends StatelessWidget {
         ),
 
         //
-        BottomActionsOfGraph(
-          value: value,
-        ),
+        _infoSection(context)
       ],
+    );
+  }
+
+  SizedBox _infoSection(BuildContext context) {
+    return SizedBox(
+      width: context.WIDTH * .3 * context.TEXTSCALE,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: context.WIDTH * .06,
+                child: Divider(
+                  thickness: 3,
+                  color: Colors.red[900],
+                ),
+              ),
+              SizedBox(width: context.WIDTH * .02),
+              Text(LocaleProvider.current.sys)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: context.WIDTH * .06,
+                child: Divider(
+                  thickness: 3,
+                  color: Colors.amber,
+                ),
+              ),
+              SizedBox(width: context.WIDTH * .02),
+              Text(LocaleProvider.current.dia)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: context.WIDTH * .06,
+                child: Divider(
+                  thickness: 3,
+                  color: Colors.lime[800],
+                ),
+              ),
+              SizedBox(width: context.WIDTH * .02),
+              Text(LocaleProvider.current.pulse)
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

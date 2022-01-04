@@ -1,8 +1,15 @@
-part of '../view/pressure_progres_page.dart';
+import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/core/data/repository/doctor_repository.dart';
+import 'package:onedosehealth/core/enums/loading_progress.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import 'package:onedosehealth/features/doctor/blood_pressure_patient_detail/widget/charts/line_charts.dart';
+import 'package:onedosehealth/model/model.dart';
 
-class BpProgressPageVm
-    with ChangeNotifier, IBaseBottomActionsOfGraph
-    implements ProgressPage {
+class BloodPressurePatientDetailVm extends ChangeNotifier {
   List<BpMeasurementViewModel> bpMeasurements = [];
   List<BpMeasurementViewModel> bpMeasurementsDailyData = [];
 
@@ -11,10 +18,10 @@ class BpProgressPageVm
 
   bool hasReachEnd = false;
 
-  BpProgressPageVm() {
-    getIt<BloodPressureStorageImpl>().addListener(() {
-      setSelectedItem(selected);
-    });
+  final BuildContext context;
+  final int patientId;
+
+  BloodPressurePatientDetailVm({this.context, this.patientId}) {
     fetchBpMeasurement();
     fetchScrolledDailyData();
 
@@ -25,7 +32,7 @@ class BpProgressPageVm
     });
   }
 
-  Widget get currentGraph => AnimatedPulseChart();
+  Widget get currentGraph => AnimatedPatientPulseChart();
 
   ScrollController controller = ScrollController();
   TimePeriodFilter _selected;
@@ -41,12 +48,17 @@ class BpProgressPageVm
         '${LocaleProvider.current.pulse}': true,
       };
 
-  fetchBpMeasurement() {
-    var _bpMeasurements = getIt<BloodPressureStorageImpl>().getAll();
+  bool _isDataLoading;
+  bool get isDataLoading => _isDataLoading ?? false;
 
-    bpMeasurements = _bpMeasurements
-        .map((model) => BpMeasurementViewModel(bpModel: model))
-        .toList();
+  fetchBpMeasurement() async {
+    final result = await getIt<DoctorRepository>().getMyPatientBloodPressure(
+      patientId,
+      GetMyPatientFilter(end: null, start: null),
+    );
+
+    bpMeasurements = result.map((e) => BpMeasurementViewModel(bpModel: e));
+
     bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
 
@@ -258,36 +270,6 @@ class BpProgressPageVm
   showPressureTagger(_) {
     Atom.show(PressureTagger(),
         barrierDismissible: false, barrierColor: Colors.transparent);
-  }
-
-  @override
-  Widget largeWidget(Function() callBack) {
-    return BpProgressPage(
-      callback: callBack,
-    );
-  }
-
-  @override
-  manuelEntry(BuildContext ctx) {
-    showPressureTagger(ctx);
-  }
-
-  @override
-  Widget smallWidget(Function() callBack) {
-    BpMeasurementViewModel lastMeasurement;
-    if (bpMeasurements.isNotEmpty) {
-      lastMeasurement = BpMeasurementViewModel(
-          bpModel: getIt<BloodPressureStorageImpl>().getLatestMeasurement());
-    }
-
-    return RbioSmallChronicWidget(
-      callback: callBack,
-      lastMeasurement: lastMeasurement == null
-          ? '${LocaleProvider.current.no_measurement}'
-          : 'Sys: ${lastMeasurement?.sys ?? ''}, Dia: ${lastMeasurement?.dia ?? ''}, Pulse: ${lastMeasurement?.pulse ?? ''}',
-      lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
-      imageUrl: R.image.ct_blood_pressure,
-    );
   }
 
   @override

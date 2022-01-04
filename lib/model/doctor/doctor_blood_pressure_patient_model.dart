@@ -39,8 +39,8 @@ class DoctorBloodPressureMeasurements {
   int sysValue;
   int diaValue;
   int pulseValue;
-  Null note;
-  Null deviceId;
+  String note;
+  String deviceId;
   bool isManuel;
   int measurementId;
 

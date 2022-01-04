@@ -71,7 +71,7 @@ class ScaleTagger extends StatelessWidget {
                               children: [
                                 weightInputSection(context),
                                 _dateTimeSection(context),
-                                otherBodyParameterMeasurementSection(),
+                                otherBodyParameterMeasurementSection(context),
                                 // _imageSection( context),
                                 _noteSection(context),
                               ],
@@ -79,7 +79,7 @@ class ScaleTagger extends StatelessWidget {
                           ),
                         ),
                       ),
-                      getAction(Atom.dismiss)
+                      getAction(Atom.dismiss, context)
                     ],
                   ),
                 )),
@@ -139,15 +139,16 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  getAction(VoidCallback leftButtonAction) {
+  getAction(VoidCallback leftButtonAction, BuildContext context) {
     return Wrap(
       children: [
-        GestureDetector(onTap: leftButtonAction, child: actionButton(false)),
+        GestureDetector(
+            onTap: leftButtonAction, child: actionButton(false, context)),
       ],
     );
   }
 
-  Widget actionButton(bool isSave) {
+  Widget actionButton(bool isSave, BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
@@ -160,9 +161,7 @@ class ScaleTagger extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           LocaleProvider.current.done,
-          style: TextStyle(
-            color: Colors.white,
-          ),
+          style: context.xButton.copyWith(color: Colors.white),
         ),
       ),
     );
@@ -279,7 +278,11 @@ class ScaleTagger extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
           elevation: 4,
-          child: Text(scaleModel.note ?? '')),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+                width: double.infinity, child: Text(scaleModel.note ?? '')),
+          )),
     );
   }
 
@@ -308,67 +311,68 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  GridView otherBodyParameterMeasurementSection() {
+  GridView otherBodyParameterMeasurementSection(BuildContext context) {
     return GridView.count(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       childAspectRatio: 5 / 4,
       padding: EdgeInsets.all(15),
-      children: _sectionItems(),
+      children: _sectionItems(context),
     );
   }
 
-  List<Widget> _sectionItems() {
+  List<Widget> _sectionItems(BuildContext context) {
     return [
       scaleSection(
-        measurement: scaleModel.bmi,
-        name: LocaleProvider.current.scale_data_bmi,
-        color: scaleModel.getColor(SelectedScaleType.BMI),
-        type: '',
-        index: 1,
-        crossAxisCount: 1,
-      ),
+          measurement: scaleModel.bmi,
+          name: LocaleProvider.current.scale_data_bmi,
+          color: scaleModel.getColor(SelectedScaleType.BMI),
+          type: '',
+          index: 1,
+          crossAxisCount: 1,
+          context: context),
       scaleSection(
-        measurement: scaleModel.bodyFat,
-        name: LocaleProvider.current.scale_data_body_fat,
-        color: scaleModel.getColor(SelectedScaleType.BODY_FAT),
-        type: '%',
-        index: 2,
-        crossAxisCount: 1,
-      ),
+          measurement: scaleModel.bodyFat,
+          name: LocaleProvider.current.scale_data_body_fat,
+          color: scaleModel.getColor(SelectedScaleType.BODY_FAT),
+          type: '%',
+          index: 2,
+          crossAxisCount: 1,
+          context: context),
       scaleSection(
-        measurement: scaleModel.boneMass,
-        name: LocaleProvider.current.scale_data_bone_mass,
-        color: scaleModel.getColor(SelectedScaleType.BONE_MASS),
-        type: '${scaleModel.scaleModel.unit ?? ScaleUnit.KG.toStr}',
-        index: 3,
-        crossAxisCount: 2,
-      ),
+          measurement: scaleModel.boneMass,
+          name: LocaleProvider.current.scale_data_bone_mass,
+          color: scaleModel.getColor(SelectedScaleType.BONE_MASS),
+          type:
+              '${scaleModel.scaleModel.unit == null ? ScaleUnit.KG.toStr : scaleModel.scaleModel.unit}',
+          index: 3,
+          crossAxisCount: 2,
+          context: context),
       scaleSection(
-        name: LocaleProvider.current.scale_data_muscle,
-        measurement: scaleModel.boneMass,
-        color: scaleModel.getColor(SelectedScaleType.MUSCLE),
-        type: '%',
-        index: 4,
-        crossAxisCount: 2,
-      ),
+          name: LocaleProvider.current.scale_data_muscle,
+          measurement: scaleModel.boneMass,
+          color: scaleModel.getColor(SelectedScaleType.MUSCLE),
+          type: '%',
+          index: 4,
+          crossAxisCount: 2,
+          context: context),
       scaleSection(
-        measurement: scaleModel.boneMass,
-        name: LocaleProvider.current.scale_data_visceral_fat,
-        color: scaleModel.getColor(SelectedScaleType.VISCERAL_FAT),
-        type: '',
-        index: 5,
-        crossAxisCount: 3,
-      ),
+          measurement: scaleModel.boneMass,
+          name: LocaleProvider.current.scale_data_visceral_fat,
+          color: scaleModel.getColor(SelectedScaleType.VISCERAL_FAT),
+          type: '',
+          index: 5,
+          crossAxisCount: 3,
+          context: context),
       scaleSection(
-        measurement: scaleModel.boneMass,
-        name: LocaleProvider.current.scale_data_water,
-        color: scaleModel.getColor(SelectedScaleType.WATER),
-        type: '%',
-        index: 6,
-        crossAxisCount: 3,
-      ),
+          measurement: scaleModel.boneMass,
+          name: LocaleProvider.current.scale_data_water,
+          color: scaleModel.getColor(SelectedScaleType.WATER),
+          type: '%',
+          index: 6,
+          crossAxisCount: 3,
+          context: context),
     ];
   }
 
@@ -398,7 +402,8 @@ class ScaleTagger extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _inputSection(measurement: scaleModel.weight),
+                  _inputSection(
+                      measurement: scaleModel.weight, context: context),
                   Text(
                     "${scaleModel.unit?.toStr ?? ScaleUnit.KG.toStr}",
                     style: TextStyle(color: Colors.black, fontSize: 14),
@@ -413,13 +418,17 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  Theme _inputSection({double measurement}) {
+  Theme _inputSection({double measurement, @required BuildContext context}) {
     return Theme(
         data: ThemeData(primaryColor: Colors.black),
-        child: Text('$measurement'));
+        child: Text(
+          '${measurement ?? ''}',
+          style: context.xHeadline2,
+        ));
   }
 
   scaleSection({
+    @required BuildContext context,
     double measurement,
     String name,
     Color color,
@@ -452,6 +461,7 @@ class ScaleTagger extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: _inputSection(
+                    context: context,
                     measurement: measurement,
                   )),
             ),

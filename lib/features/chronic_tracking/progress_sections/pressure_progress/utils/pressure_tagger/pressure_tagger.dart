@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
@@ -54,20 +55,22 @@ class PressureTagger extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: value.height * .03,
-                                right: value.width * .02,
-                                left: value.width * .02,
-                              ),
-                              child: SingleChildScrollView(
-                                controller: value.scrollController,
-                                child: Column(
-                                  children: [
-                                    _inputSection(value),
-                                    _dateTimeSection(context, value),
-                                    _noteSection(value, context),
-                                  ],
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: value.height * .03,
+                                  right: value.width * .02,
+                                  left: value.width * .02,
+                                ),
+                                child: SingleChildScrollView(
+                                  controller: value.scrollController,
+                                  child: Column(
+                                    children: [
+                                      _inputSection(value),
+                                      _dateTimeSection(context, value),
+                                      _noteSection(value, context),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -198,7 +201,8 @@ class PressureTagger extends StatelessWidget {
   }
 
   Widget _inputSection(PressureTaggerVm value) {
-    return Row(
+    return Wrap(
+      alignment: WrapAlignment.center,
       children: [
         _inputInsideSection(
             LocaleProvider.current.sys,
@@ -206,21 +210,24 @@ class PressureTagger extends StatelessWidget {
             value.context.xHeadline1,
             value.bpModel.systolicColor,
             value.sysController,
-            value.context.TEXTSCALE * (value.height * .1)),
+            value.context.TEXTSCALE * (value.height * .1),
+            value.context),
         _inputInsideSection(
             LocaleProvider.current.dia,
             value.changeDia,
             value.context.xHeadline1,
             value.bpModel.diastolicColor,
             value.diaController,
-            value.context.TEXTSCALE * (value.height * .1)),
+            value.context.TEXTSCALE * (value.height * .1),
+            value.context),
         _inputInsideSection(
             LocaleProvider.current.pulse,
             value.changePulse,
             value.context.xHeadline1,
             value.bpModel.pulseColor,
             value.pulseController,
-            value.context.TEXTSCALE * (value.height * .1))
+            value.context.TEXTSCALE * (value.height * .1),
+            value.context)
       ],
     );
   }
@@ -231,41 +238,42 @@ class PressureTagger extends StatelessWidget {
       TextStyle style,
       Color color,
       TextEditingController controller,
-      double height) {
-    return Expanded(
-        child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-                side: BorderSide(width: 7, color: color)),
-            child: SizedBox(
-              height: height,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '$title',
-                      style: style,
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: TextField(
-                          controller: controller,
-                          onChanged: onChanged,
-                          maxLength: 3,
-                          keyboardType: TextInputType.number,
-                          style: style,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none)),
-                        ),
-                      ),
-                    ),
-                  ],
+      double height,
+      BuildContext context) {
+    return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+            side: BorderSide(width: 7, color: color)),
+        child: SizedBox(
+          height: context.HEIGHT * .2 * context.TEXTSCALE,
+          width: context.WIDTH * .30 * context.TEXTSCALE,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '$title',
+                  style: style,
                 ),
-              ),
-            )));
+                Expanded(
+                  child: Center(
+                    child: TextField(
+                      controller: controller,
+                      onChanged: onChanged,
+                      maxLength: 3,
+                      keyboardType: TextInputType.number,
+                      style: style,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide.none)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }

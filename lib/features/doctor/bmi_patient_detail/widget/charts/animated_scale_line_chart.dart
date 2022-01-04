@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
@@ -10,14 +12,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../../core/core.dart';
 
 /// Renders the line sample with dynamically updated data points.
-class AnimationScaleLineDefault extends SampleView {
+class AnimationPatientScaleLineDefaultState extends SampleView {
   /// Renders the line chart sample with dynamically upd
   @override
-  _AnimationScaleLineDefaultState createState() =>
-      _AnimationScaleLineDefaultState();
+  _AnimationPatientScaleLineDefaultState createState() =>
+      _AnimationPatientScaleLineDefaultState();
 }
 
-class _AnimationScaleLineDefaultState extends SampleViewState {
+class _AnimationPatientScaleLineDefaultState extends SampleViewState {
   List<ChartData> _chartData;
 
   int _targetMin, _targetMax, _maxValue, _minValue;
@@ -42,6 +44,7 @@ class _AnimationScaleLineDefaultState extends SampleViewState {
         enablePanning: true,
         enableMouseWheelZooming: model.isWeb ? true : false);
     return Consumer<BmiPatientDetailVm>(builder: (context, value, child) {
+      log('here');
       _selected = value.selected;
       _startDate = value.startDate;
       _endDate = value.endDate;

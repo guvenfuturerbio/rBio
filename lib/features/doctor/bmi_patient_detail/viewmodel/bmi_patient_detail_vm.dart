@@ -1,17 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/charts/animated_scale_buble_chart.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/charts/animated_scale_line_chart.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_filter_pop_up/scale_filter_pop_up.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import 'package:onedosehealth/features/doctor/bmi_patient_detail/widget/charts/animated_scale_buble_chart.dart';
+import 'package:onedosehealth/features/doctor/bmi_patient_detail/widget/charts/animated_scale_line_chart.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/core.dart';
 import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
-import '../../../chronic_tracking/lib/widgets/utils/scale_margin_filter.dart';
+
 import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_filter_pop_up/scale_filter_pop_up.dart';
-import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../../chronic_tracking/utils/selected_scale_type.dart';
 import '../../notifiers/patient_notifiers.dart';
@@ -232,18 +234,22 @@ class BmiPatientDetailVm extends ChangeNotifier
   }
 
   void setChartDailyData() {
-    List<ChartData> tempChartData = <ChartData>[];
-    for (var data in this.bmiMeasurementsDailyData) {
-      if (data.getMeasurement(currentScaleType) != null) {
-        tempChartData.add(ChartData(
-            data.date,
-            data.getMeasurement(currentScaleType).toInt(),
-            data.getColor(currentScaleType)));
+    try {
+      List<ChartData> tempChartData = <ChartData>[];
+      for (var data in this.bmiMeasurementsDailyData) {
+        if (data.getMeasurement(currentScaleType) != null) {
+          tempChartData.add(ChartData(
+              data.date,
+              data.getMeasurement(currentScaleType).toInt(),
+              data.getColor(currentScaleType)));
+        }
       }
+      this._chartData = tempChartData;
+      setChartGroupData();
+      notifyListeners();
+    } catch (e) {
+      log(e);
     }
-    this._chartData = tempChartData;
-    setChartGroupData();
-    notifyListeners();
   }
 
   void setChartGroupData() {
@@ -358,7 +364,8 @@ class BmiPatientDetailVm extends ChangeNotifier
   }
 
   void fetchScrolledData(DateTime date) {
-    if (date != null && selected == LocaleProvider.current.daily) {
+    print(date);
+    if (date != null && selected == TimePeriodFilter.DAILY) {
       var _temp = DateTime(_scrolledDate?.year ?? 2000,
           _scrolledDate?.month ?? 01, _scrolledDate?.day ?? 01);
       var _cross = DateTime(date.year, date.month, date.day);
@@ -397,46 +404,46 @@ class BmiPatientDetailVm extends ChangeNotifier
 
   Future<void> setSelectedItem(TimePeriodFilter s) async {
     print('data-----------> $s');
-    if (s != _selected) {
-      this._currentDateIndex = 0;
-      notifyListeners();
-      this._selected = s;
-      notifyListeners();
-      if (s == TimePeriodFilter.SPECIFIC) {
-        await fetchBmiMeasurements();
-        fetchScrolledDailyData();
-      } else if (s == TimePeriodFilter.DAILY) {
-        await fetchBmiMeasurements();
-        fetchScrolledDailyData();
-      } else {
-        DateTime currentDateEnd = DateTime(DateTime.now().year,
-            DateTime.now().month, DateTime.now().day, 23, 59, 00);
-        DateTime currentDateStart = DateTime(DateTime.now().year,
-            DateTime.now().month, DateTime.now().day, 00, 00);
-        s == TimePeriodFilter.WEEKLY
-            ? await setStartDate(currentDateStart.subtract(Duration(days: 7)))
-            : s == TimePeriodFilter.MONTHLY
-                ? await setStartDate(currentDateStart
-                    .subtract(Duration(days: currentDateStart.day - 1)))
-                : s == TimePeriodFilter.MONTHLY_THREE
-                    ? await setStartDate(DateTime(
-                        currentDateStart.year, currentDateStart.month - 3, 1))
-                    : await setStartDate(currentDateStart);
-        await setEndDate(currentDateEnd);
-      }
-      if (s == LocaleProvider.current.weekly) {
-        setChartAverageDataPerDay();
-      } else if (s == LocaleProvider.current.monthly) {
-        setChartAverageDataPerDay();
-      } else if (s == LocaleProvider.current.three_months) {
-        setChartAverageDataPerDay();
-      }
-      notifyListeners();
+
+    this._currentDateIndex = 0;
+    notifyListeners();
+    this._selected = s;
+    notifyListeners();
+    if (s == TimePeriodFilter.SPECIFIC) {
+      await fetchBmiMeasurements();
+      fetchScrolledDailyData();
+    } else if (s == TimePeriodFilter.DAILY) {
+      await fetchBmiMeasurements();
+      fetchScrolledDailyData();
+    } else {
+      DateTime currentDateEnd = DateTime(DateTime.now().year,
+          DateTime.now().month, DateTime.now().day, 23, 59, 00);
+      DateTime currentDateStart = DateTime(DateTime.now().year,
+          DateTime.now().month, DateTime.now().day, 00, 00);
+      s == TimePeriodFilter.WEEKLY
+          ? await setStartDate(currentDateStart.subtract(Duration(days: 7)))
+          : s == TimePeriodFilter.MONTHLY
+              ? await setStartDate(currentDateStart
+                  .subtract(Duration(days: currentDateStart.day - 1)))
+              : s == TimePeriodFilter.MONTHLY_THREE
+                  ? await setStartDate(DateTime(
+                      currentDateStart.year, currentDateStart.month - 3, 1))
+                  : await setStartDate(currentDateStart);
+      await setEndDate(currentDateEnd);
     }
+    if (s == LocaleProvider.current.weekly) {
+      setChartAverageDataPerDay();
+    } else if (s == LocaleProvider.current.monthly) {
+      setChartAverageDataPerDay();
+    } else if (s == LocaleProvider.current.three_months) {
+      setChartAverageDataPerDay();
+    }
+    notifyListeners();
   }
 
   Widget _currentGraph;
-  Widget get currentGraph => _currentGraph ?? AnimationScaleScatterDefault();
+  Widget get currentGraph =>
+      _currentGraph ?? AnimationPatientScaleScatterDefault();
 
   GraphType _currentGraphType;
 
@@ -455,8 +462,8 @@ class BmiPatientDetailVm extends ChangeNotifier
 
   setCurrentGraph() {
     currentGraphType == GraphType.BUBBLE
-        ? this._currentGraph = AnimationScaleScatterDefault()
-        : this._currentGraph = AnimationScaleLineDefault();
+        ? this._currentGraph = AnimationPatientScaleScatterDefault()
+        : this._currentGraph = AnimationPatientScaleLineDefaultState();
   }
 
   @override
@@ -503,10 +510,14 @@ class BmiPatientDetailVm extends ChangeNotifier
       ChangeNotifierProvider<BmiPatientDetailVm>.value(
         value: this,
         child: ScaleChartFilterPopup(
+          selected: _selectedItem,
           height: tcontext.HEIGHT * .52,
           width: tcontext.WIDTH * .6,
           isDoctor: true,
-          changeScaleType: (p0) {},
+          changeScaleType: (p0) {
+            _selectedItem = p0;
+            setSelectedItem(selected);
+          },
         ),
       ),
       barrierColor: Colors.black12,
@@ -525,6 +536,12 @@ class BmiPatientDetailVm extends ChangeNotifier
 
     this.scaleMeasurement =
         scaleData.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
+    scaleMeasurement.removeWhere(
+        (element) => element.getMeasurement(currentScaleType) == null);
+    var year = int.parse(_patientDetail.birthDay.split('.')[2]);
+    for (var item in scaleMeasurement) {
+      item.age = year < 10 ? 15 : year;
+    }
     this.scaleMeasurement.sort((a, b) => a.date.compareTo(b.date));
 
     fetchBmiMeasurementsDateList();
