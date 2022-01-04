@@ -10,7 +10,9 @@ class ChatNotificationModel {
   ChatNotificationModel.fromJson(Map<String, dynamic> json) {
     to = json['to'];
     contentAvailable = json['content_available'];
-    data = json['data'] != null ? new NotificationData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? new NotificationData.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {

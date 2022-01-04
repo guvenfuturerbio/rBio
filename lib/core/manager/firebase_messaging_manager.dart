@@ -118,8 +118,8 @@ class FirebaseMessagingManager {
                 ChatPerson otherPerson =
                     ChatPerson.fromMap(json.decode(message.data['chatPerson']));
 
-                if (!Atom.url.contains(PagePaths.CHAT) &&
-                    !Atom.url.contains(otherPerson.id))
+                if (!(Atom.url.contains(PagePaths.CHAT) &&
+                    Atom.url.contains(otherPerson.id)))
                   showNotification(message);
               }
             }

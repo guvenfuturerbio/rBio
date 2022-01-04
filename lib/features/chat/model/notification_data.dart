@@ -13,7 +13,7 @@ class NotificationData {
     title = json['title'];
     body = json['body'];
     chatPerson = json['chatPerson'] != null
-        ? new ChatPerson.fromJson(json['chatPerson'])
+        ? new ChatPerson.fromMap(json['chatPerson'])
         : null;
   }
 
@@ -23,7 +23,7 @@ class NotificationData {
     data['title'] = this.title;
     data['body'] = this.body;
     if (this.chatPerson != null) {
-      data['chatPerson'] = this.chatPerson.toJson();
+      data['chatPerson'] = this.chatPerson.toMap();
     }
     return data;
   }
