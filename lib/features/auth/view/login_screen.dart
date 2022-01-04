@@ -286,10 +286,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   activeColor: getIt<ITheme>().mainColor,
                 ),
               ),
-              Text(
-                LocaleProvider.current.btn_remember_me,
-                style: context.xHeadline5.copyWith(
-                  color: getIt<ITheme>().textColorSecondary,
+              Expanded(
+                child: Text(
+                  LocaleProvider.current.btn_remember_me,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.xHeadline5.copyWith(
+                    color: getIt<ITheme>().textColorSecondary,
+                  ),
                 ),
               )
             ],
@@ -327,7 +331,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Checkbox(
               value: value.clickedGeneralForm,
               onChanged: (newValue) {
-                value.showApplicationContestForm();
+                value.clickedGeneralForm = newValue;
               },
               activeColor: getIt<ITheme>().mainColor,
             ),
@@ -340,7 +344,7 @@ class _LoginScreenState extends State<LoginScreen> {
             onPressed: () => value.showApplicationContestForm(),
             child: Text(
               LocaleProvider.of(context).accept_application_consent_form,
-              maxLines: 3,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
                 decoration: TextDecoration.underline,
@@ -367,7 +371,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Checkbox(
               value: value.checkedKvkkForm,
               onChanged: (newValue) {
-                value.showKvkkInfo();
+                value.checkedKvkkForm = newValue;
               },
               activeColor: getIt<ITheme>().mainColor,
             ),
@@ -496,10 +500,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(
-                      LocaleProvider.of(context).lbl_dont_have_account,
-                      style: context.xHeadline5.copyWith(
-                        color: getIt<ITheme>().textColorSecondary,
+                    Flexible(
+                      child: Text(
+                        LocaleProvider.of(context).lbl_dont_have_account,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.xHeadline5.copyWith(
+                          color: getIt<ITheme>().textColorSecondary,
+                        ),
                       ),
                     ),
                     InkWell(

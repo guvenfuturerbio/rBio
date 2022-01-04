@@ -19,14 +19,15 @@ class RbioLocaleDropdown extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: DropdownButtonHideUnderline(
             child: DropdownButton<Locale>(
-              value: null,
+              value: context.read<LocaleNotifier>().current,
               hint: getLocaleWidget(
                   context.read<LocaleNotifier>().current, context),
-              items: LocaleProvider.delegate.supportedLocales.map(
+              items: context.read<LocaleNotifier>().supportedLocales.map(
                 (Locale localeValue) {
                   return DropdownMenuItem<Locale>(
-                      value: localeValue,
-                      child: getLocaleWidget(localeValue, context));
+                    value: localeValue,
+                    child: getLocaleWidget(localeValue, context),
+                  );
                 },
               ).toList(),
               onChanged: (valueLocale) {

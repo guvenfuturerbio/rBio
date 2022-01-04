@@ -26,7 +26,16 @@ class GuvenAlert extends StatelessWidget {
     return AlertDialog(
       backgroundColor: backgroundColor ?? getIt<ITheme>().mainColor,
       contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
-      title: title,
+      title: context.xTextScaleType == TextScaleType.Large
+          ? Container(
+              constraints: BoxConstraints(
+                maxHeight: Atom.height * 0.4,
+              ),
+              child: SingleChildScrollView(
+                child: title,
+              ),
+            )
+          : title,
       shape: shape ??
           RoundedRectangleBorder(
             borderRadius: BorderRadius.all(

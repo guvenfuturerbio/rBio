@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class PatientAppointmentsResponse {
   String appointmentCancellationReason;
   String appointmentSelectionReason;
@@ -97,6 +99,57 @@ class PatientAppointmentsResponse {
     data['video_guid'] = this.videoGuid;
     return data;
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PatientAppointmentsResponse &&
+        other.appointmentCancellationReason == appointmentCancellationReason &&
+        other.appointmentSelectionReason == appointmentSelectionReason &&
+        other.appointmentSource == appointmentSource &&
+        other.createdAt == createdAt &&
+        other.description == description &&
+        other.from == from &&
+        other.id == id &&
+        other.patient == patient &&
+        other.patientId == patientId &&
+        other.patientType == patientType &&
+        listEquals(other.resources, resources) &&
+        other.service == service &&
+        other.serviceId == serviceId &&
+        other.status == status &&
+        other.tenant == tenant &&
+        other.tenantId == tenantId &&
+        other.to == to &&
+        other.type == type &&
+        other.videoCallLink == videoCallLink &&
+        other.videoGuid == videoGuid;
+  }
+
+  @override
+  int get hashCode {
+    return appointmentCancellationReason.hashCode ^
+        appointmentSelectionReason.hashCode ^
+        appointmentSource.hashCode ^
+        createdAt.hashCode ^
+        description.hashCode ^
+        from.hashCode ^
+        id.hashCode ^
+        patient.hashCode ^
+        patientId.hashCode ^
+        patientType.hashCode ^
+        resources.hashCode ^
+        service.hashCode ^
+        serviceId.hashCode ^
+        status.hashCode ^
+        tenant.hashCode ^
+        tenantId.hashCode ^
+        to.hashCode ^
+        type.hashCode ^
+        videoCallLink.hashCode ^
+        videoGuid.hashCode;
+  }
 }
 
 class Resources {
@@ -138,5 +191,30 @@ class Resources {
     data['resourceType'] = this.resourceType;
     data['to'] = this.to;
     return data;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Resources &&
+        other.department == department &&
+        other.departmentId == departmentId &&
+        other.from == from &&
+        other.resource == resource &&
+        other.resourceId == resourceId &&
+        other.resourceType == resourceType &&
+        other.to == to;
+  }
+
+  @override
+  int get hashCode {
+    return department.hashCode ^
+        departmentId.hashCode ^
+        from.hashCode ^
+        resource.hashCode ^
+        resourceId.hashCode ^
+        resourceType.hashCode ^
+        to.hashCode;
   }
 }

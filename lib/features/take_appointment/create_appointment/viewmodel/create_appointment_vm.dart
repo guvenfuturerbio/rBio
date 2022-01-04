@@ -110,7 +110,7 @@ class CreateAppointmentVm extends ChangeNotifier {
     });
   }
 
-  fillFromFavorites(int index) async {
+  Future<void> fillFromFavorites(int index) async {
     try {
       if (!forOnline) {
         for (var tenant in tenantsFilterResponse) {
@@ -119,12 +119,14 @@ class CreateAppointmentVm extends ChangeNotifier {
           }
         }
       }
+
       for (var department in filterDepartmentResponse) {
         if (department.id ==
             _holderForFavorites[index].resources.first.departmentId) {
           await departmentSelection(department);
         }
       }
+
       for (var doctor in filterResourcesResponse) {
         if (doctor.id ==
             _holderForFavorites[index].resources.first.resourceId) {
@@ -132,8 +134,9 @@ class CreateAppointmentVm extends ChangeNotifier {
         }
       }
     } catch (e) {
-      print("fillFromFavorites: $e");
+      LoggerUtils.instance.e("fillFromFavorites: $e");
     }
+
     notifyListeners();
   }
 
@@ -540,8 +543,9 @@ class CreateAppointmentVm extends ChangeNotifier {
     }
   }
 
-  holderListFillFunc() async {
+  Future<void> holderListFillFunc() async {
     _holderForFavorites = [];
+
     if (_patientAppointments.length >= 4) {
       for (var item = 0; item < 4; item++) {
         if (!(_holderForFavorites.contains(_patientAppointments[item]))) {
