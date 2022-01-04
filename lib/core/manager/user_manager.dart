@@ -41,7 +41,7 @@ class UserManagerImpl extends UserManager {
         .setString(SharedPreferencesKeys.JWT_TOKEN, response.token.accessToken);
     getIt<UserNotifier>().firebaseEmail = response.firebase_user_email;
     getIt<UserNotifier>().firebasePassword = response.firebase_user_salt;
-    getIt<FirestoreManager>().loginFirebase();
+    await getIt<FirestoreManager>().loginFirebase();
     //Update user notifier depending on roles
     getIt<UserNotifier>().userTypeFetcher(response);
     return response;
