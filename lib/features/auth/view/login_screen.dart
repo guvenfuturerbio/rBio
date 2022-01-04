@@ -132,11 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             //
-            SizedBox(
-              height: 5,
-            ),
-
-            //
             //   _buildSeperator(),
 
             //
@@ -202,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
             focusNode: _usernameFocusNode,
             controller: _userNameEditingController,
             textInputAction: TextInputAction.next,
-            hintText: LocaleProvider.of(context).email_or_identity,
+            hintText: '', // LocaleProvider.of(context).email_or_identity,
             inputFormatters: <TextInputFormatter>[
               TabToNextFieldTextInputFormatter(
                 context,
@@ -247,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
           controller: _passwordEditingController,
           textInputAction: TextInputAction.done,
           obscureText: value.passwordVisibility ? false : true,
-          hintText: LocaleProvider.of(context).hint_input_password,
+          hintText: '', // LocaleProvider.of(context).hint_input_password,
           inputFormatters: <TextInputFormatter>[
             TabToNextFieldTextInputFormatter(
               context,
@@ -278,25 +273,26 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         //
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 5),
-            child: Row(
-              children: <Widget>[
-                Checkbox(
+          child: Row(
+            children: <Widget>[
+              SizedBox(
+                width: 35,
+                height: 35,
+                child: Checkbox(
                   value: value.rememberMeChecked,
                   onChanged: (newValue) {
                     value.toggleRememberMeChecked();
                   },
                   activeColor: getIt<ITheme>().mainColor,
                 ),
-                Text(
-                  LocaleProvider.current.btn_remember_me,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                  ),
-                )
-              ],
-            ),
+              ),
+              Text(
+                LocaleProvider.current.btn_remember_me,
+                style: context.xHeadline5.copyWith(
+                  color: getIt<ITheme>().textColorSecondary,
+                ),
+              )
+            ],
           ),
         ),
 
@@ -304,7 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
         TextButton(
           child: Text(
             LocaleProvider.of(context).lbl_forgot_password,
-            style: context.xHeadline3.copyWith(
+            style: context.xHeadline5.copyWith(
               color: getIt<ITheme>().mainColor,
             ),
           ),
@@ -325,12 +321,16 @@ class _LoginScreenState extends State<LoginScreen> {
         //
         Container(
           alignment: Alignment.bottomLeft,
-          child: Checkbox(
-            value: value.clickedGeneralForm,
-            onChanged: (newValue) {
-              value.showApplicationContestForm();
-            },
-            activeColor: getIt<ITheme>().mainColor,
+          child: SizedBox(
+            width: 35,
+            height: 35,
+            child: Checkbox(
+              value: value.clickedGeneralForm,
+              onChanged: (newValue) {
+                value.showApplicationContestForm();
+              },
+              activeColor: getIt<ITheme>().mainColor,
+            ),
           ),
         ),
 
@@ -342,7 +342,7 @@ class _LoginScreenState extends State<LoginScreen> {
               LocaleProvider.of(context).accept_application_consent_form,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: context.xHeadline4.copyWith(
+              style: context.xHeadline5.copyWith(
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -361,12 +361,16 @@ class _LoginScreenState extends State<LoginScreen> {
         //
         Container(
           alignment: Alignment.bottomLeft,
-          child: Checkbox(
-            value: value.checkedKvkkForm,
-            onChanged: (newValue) {
-              value.showKvkkInfo();
-            },
-            activeColor: getIt<ITheme>().mainColor,
+          child: SizedBox(
+            width: 35,
+            height: 35,
+            child: Checkbox(
+              value: value.checkedKvkkForm,
+              onChanged: (newValue) {
+                value.showKvkkInfo();
+              },
+              activeColor: getIt<ITheme>().mainColor,
+            ),
           ),
         ),
 
@@ -380,7 +384,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 LocaleProvider.of(context).read_understood_kvkk,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: context.xHeadline4.copyWith(
+                style: context.xHeadline5.copyWith(
                   decoration: TextDecoration.underline,
                 ),
               ),
@@ -448,7 +452,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  margin: EdgeInsets.only(top: 5, bottom: 10),
                   child: value.versionCheckProgress ==
                           VersionCheckProgress.LOADING
                       ? Column(
@@ -494,14 +498,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: <Widget>[
                     Text(
                       LocaleProvider.of(context).lbl_dont_have_account,
-                      style: context.xHeadline3.copyWith(
+                      style: context.xHeadline5.copyWith(
                         color: getIt<ITheme>().textColorSecondary,
                       ),
                     ),
                     InkWell(
                       child: Text(
                         LocaleProvider.of(context).btn_sign_up,
-                        style: context.xHeadline3.copyWith(
+                        style: context.xHeadline5.copyWith(
                           color: getIt<ITheme>().mainColor,
                         ),
                       ),
@@ -579,7 +583,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Text(
         "v" + getIt<GuvenSettings>().version,
         textAlign: TextAlign.center,
-        style: context.xSubtitle1,
+        style: context.xCaption,
       ),
     );
   }
