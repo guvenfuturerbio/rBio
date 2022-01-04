@@ -16,7 +16,6 @@ import '../core.dart';
 // #region Top Level Variabled and Functions
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("bbbbb");
   FirebaseMessagingManager.showNotification(message);
 }
 
@@ -116,7 +115,7 @@ class FirebaseMessagingManager {
           // Uygulama Ekranda Açıkken
           FirebaseMessaging.onMessage.listen((RemoteMessage message) {
             if (!kIsWeb) {
-              if (message != null) {
+              if (Atom.isAndroid && message != null) {
                 ChatPerson otherPerson =
                     ChatPerson.fromMap(json.decode(message.data['chatPerson']));
 
@@ -163,28 +162,30 @@ class FirebaseMessagingManager {
   }
 
   static void showNotification(RemoteMessage message) {
-    final notificationType = getNotificationType(message.data);
-    if (notificationType == null) return;
+    if (Atom.isAndroid) {
+      final notificationType = getNotificationType(message.data);
+      if (notificationType == null) return;
 
-    switch (notificationType) {
-      case NotificationType.chat:
-        {
+      switch (notificationType) {
+        case NotificationType.chat:
           {
-            flutterLocalNotificationsShow(
-              message.hashCode,
-              message.data['title'],
-              message.data['body'],
-              jsonEncode(message.data),
-            );
+            {
+              flutterLocalNotificationsShow(
+                message.hashCode,
+                message.notification?.title ?? '',
+                message.notification?.body ?? '',
+                jsonEncode(message.data),
+              );
+            }
+
+            break;
           }
 
-          break;
-        }
-
-      case NotificationType.route:
-        {
-          break;
-        }
+        case NotificationType.route:
+          {
+            break;
+          }
+      }
     }
   }
 

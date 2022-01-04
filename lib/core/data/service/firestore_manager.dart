@@ -101,7 +101,11 @@ class FirestoreManager {
     } else {
       await writeMessageToFirebase(sendTo, message.sentFrom, message);
     }
-    sendNotification(currentPerson, otherNotiToken, message);
+    sendNotification(
+      currentPerson,
+      otherNotiToken,
+      message,
+    );
     return true;
   }
 
@@ -173,14 +177,23 @@ class FirestoreManager {
     String toToken,
     Message message,
   ) async {
-    getIt<Repository>().sendNotification(ChatNotificationModel(
+    getIt<Repository>().sendNotification(
+      ChatNotificationModel(
         to: toToken,
         contentAvailable: true,
+        notification: NotificationModel(
+          body: message.type == 0 ? message.message : "Media",
+          title:
+              "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
+        ),
         data: NotificationData(
-            body: message.type == 0 ? message.message : "Media",
-            title:
-                "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
-            chatPerson: currentUser,
-            type: 'chat')));
+          body: message.type == 0 ? message.message : "Media",
+          title:
+              "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
+          chatPerson: currentUser,
+          type: 'chat',
+        ),
+      ),
+    );
   }
 }

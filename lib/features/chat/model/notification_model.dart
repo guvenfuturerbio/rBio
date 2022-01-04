@@ -1,10 +1,10 @@
-class Notification {
+class NotificationModel {
   String title;
   String body;
 
-  Notification({this.title, this.body});
+  NotificationModel({this.title, this.body});
 
-  Notification.fromJson(Map<String, dynamic> json) {
+  NotificationModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     body = json['body'];
   }
