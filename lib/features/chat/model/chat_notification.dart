@@ -1,28 +1,22 @@
-import 'notification_data.dart';
-import 'notification_model.dart';
+import 'package:onedosehealth/features/chat/model/notification_data.dart';
 
 class ChatNotificationModel {
   String to;
-  Notification notification;
+  bool contentAvailable;
   NotificationData data;
 
-  ChatNotificationModel({this.to, this.notification, this.data});
+  ChatNotificationModel({this.to, this.contentAvailable, this.data});
 
   ChatNotificationModel.fromJson(Map<String, dynamic> json) {
     to = json['to'];
-    notification = json['notification'] != null
-        ? new Notification.fromJson(json['notification'])
-        : null;
-    data = json['data'] != null
-        ? new NotificationData.fromJson(json['data'])
-        : null;
+    contentAvailable = json['content_available'];
+    data = json['data'] != null ? new NotificationData.fromJson(json['data']) : null;
   }
-    Map<String, dynamic> toJson() {
+
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['to'] = this.to;
-    if (this.notification != null) {
-      data['notification'] = this.notification.toJson();
-    }
+    data['content_available'] = this.contentAvailable;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }

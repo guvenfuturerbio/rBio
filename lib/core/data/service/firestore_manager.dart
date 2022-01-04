@@ -175,10 +175,12 @@ class FirestoreManager {
   ) async {
     getIt<Repository>().sendNotification(ChatNotificationModel(
         to: toToken,
-        notification: Notification(
+        contentAvailable: true,
+        data: NotificationData(
             body: message.type == 0 ? message.message : "Media",
             title:
-                "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}"),
-        data: NotificationData(chatPerson: currentUser, type: 'chat')));
+                "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
+            chatPerson: currentUser,
+            type: 'chat')));
   }
 }
