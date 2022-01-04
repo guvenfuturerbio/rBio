@@ -28,6 +28,8 @@ const AndroidNotificationChannel androidNotificationChannel =
   'High Importance Notifications',
   description: 'This channel is used for important notifications.',
   importance: Importance.high,
+  sound: RawResourceAndroidNotificationSound('chat_bildirim'),
+  playSound: true,
 );
 
 class FirebaseMessagingManager {
