@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import '../../../../core/core.dart';
 import '../viewmodel/create_appointment_vm.dart';
 import '../widgets/create_appo_widget.dart';
-import '../widgets/history_doctor_image_widget.dart';
+
+part '../widgets/history_doctor_card.dart';
 
 // ignore: must_be_immutable
 class CreateAppointmentScreen extends StatelessWidget {
@@ -32,12 +33,7 @@ class CreateAppointmentScreen extends StatelessWidget {
           Widget child,
         ) {
           return RbioScaffold(
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                LocaleProvider.current.title_appointment,
-              ),
-            ),
+            appbar: _buildAppBar(context),
             body: _buildBody(context, vm),
           );
         },
@@ -45,6 +41,18 @@ class CreateAppointmentScreen extends StatelessWidget {
     );
   }
 
+  // #region _buildAppBar
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.title_appointment,
+      ),
+    );
+  }
+  // #endregion
+
+  // #region _buildBody
   Widget _buildBody(BuildContext context, CreateAppointmentVm vm) {
     switch (vm.progress) {
       case LoadingProgress.LOADING:
@@ -60,6 +68,7 @@ class CreateAppointmentScreen extends StatelessWidget {
         return SizedBox();
     }
   }
+  // #endregion
 
   Widget _buildSuccess(BuildContext context, CreateAppointmentVm vm) {
     return SingleChildScrollView(
@@ -87,7 +96,7 @@ class CreateAppointmentScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: vm.holderForFavorites
                   .map(
-                    (item) => historyDoctorItem(
+                    (item) => _buildHistoryDoctorCard(
                       context,
                       item.resources.first.resource,
                       vm,

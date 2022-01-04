@@ -265,7 +265,6 @@ class HomeVm extends ChangeNotifier {
           ),
 
         //
-
         if (getIt<AppConfig>().takeOnlineAppointment)
           MyReorderableWidget(
             key: _key3,
@@ -294,7 +293,6 @@ class HomeVm extends ChangeNotifier {
           ),
 
         //
-
         if (getIt<AppConfig>().chronicTracking)
           MyReorderableWidget(
             key: _key4,
@@ -325,7 +323,6 @@ class HomeVm extends ChangeNotifier {
         ),
 
         //
-
         MyReorderableWidget(
           key: _key6,
           body: GestureDetector(
@@ -348,7 +345,6 @@ class HomeVm extends ChangeNotifier {
         ),
 
         //
-
         MyReorderableWidget(
           key: _key7,
           body: GestureDetector(
@@ -371,7 +367,6 @@ class HomeVm extends ChangeNotifier {
         ),
 
         //
-
         if (getIt<AppConfig>().symptomChecker)
           MyReorderableWidget(
             key: _key8,

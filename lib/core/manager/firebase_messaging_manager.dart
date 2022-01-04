@@ -8,9 +8,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onedosehealth/features/chat/model/chat_person.dart';
-import 'package:onedosehealth/model/model.dart';
 
+import '../../features/chat/model/chat_person.dart';
+import '../../model/model.dart';
 import '../core.dart';
 
 // #region Top Level Variabled and Functions
