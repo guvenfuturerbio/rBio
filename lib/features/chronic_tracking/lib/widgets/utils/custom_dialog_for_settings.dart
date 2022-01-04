@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../generated/l10n.dart';
 
 class CustomDialog extends StatelessWidget {
   final initalItem;

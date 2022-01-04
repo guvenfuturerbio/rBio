@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../generated/l10n.dart';
 import '../../../lib/core/utils/stacked_widget/stacked_widget.dart';
 import '../../../utils/gallery_pop_up/gallery_pop_up.dart';
 import '../view_model/scale_progress_page_view_model.dart';

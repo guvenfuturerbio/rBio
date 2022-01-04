@@ -187,15 +187,14 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
   ) {
     if (data.type == R.dynamicVar.onlineAppointmentType) {
       if (DateTime.parse(data.from).isBefore(DateTime.now())) {
-        return Row(
-          children: [
-            RbioElevatedButton(
-              title: "\tRate\t",
-              onTap: () {
-                value.showRateDialog(data.id);
-              },
-            ),
-          ],
+        return Center(
+          child: RbioElevatedButton(
+            title: LocaleProvider.current.rate,
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            onTap: () {
+              value.showRateDialog(data.id);
+            },
+          ),
         );
       } else {
         return Center(

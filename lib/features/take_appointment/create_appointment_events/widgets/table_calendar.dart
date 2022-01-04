@@ -82,7 +82,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           lastDay: kLastDay,
           focusedDay: _focusedDay,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-          calendarFormat: CalendarFormat.month,
+          calendarFormat: CalendarFormat.twoWeeks,
           rangeSelectionMode: RangeSelectionMode.toggledOff,
           startingDayOfWeek: StartingDayOfWeek.monday,
           calendarStyle: CalendarStyle(
@@ -249,6 +249,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           onPageChanged: (focusedDay) {
             LoggerUtils.instance.i('Month Change : $focusedDay');
             widget.val.getAvailableDates(focusedDay);
+            
             _focusedDay = focusedDay;
           },
         ),

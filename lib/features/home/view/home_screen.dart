@@ -17,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     if (!Atom.isWeb) {
@@ -31,31 +33,34 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<HomeVm>(
       builder: (
         BuildContext context,
-        HomeVm val,
+        HomeVm vm,
         Widget child,
       ) {
         return GestureDetector(
           onLongPress: () {
-            val.changeStatus();
+            vm.changeStatus();
           },
           child: RbioScaffold(
-            appbar: _buildAppBar(val),
-            body: _buildBody(val),
+            scaffoldKey: scaffoldKey,
+            drawerEnableOpenDragGesture: true,
+            drawer: _buildDrawer(vm),
+            appbar: _buildAppBar(vm),
+            body: _buildBody(vm),
           ),
         );
       },
     );
   }
 
-  RbioAppBar _buildAppBar(HomeVm val) {
+  RbioAppBar _buildAppBar(HomeVm vm) {
     return RbioAppBar(
       leading: Center(
         child: RbioSwitcher(
-          showFirstChild: val.status.isShaken,
+          showFirstChild: vm.status.isShaken,
           child1: IconButton(
             onPressed: () {
-              val.changeStatus();
-              val.showRemovedWidgets();
+              vm.changeStatus();
+              vm.showRemovedWidgets();
             },
             icon: Icon(
               Icons.add,
@@ -69,13 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.transparent,
                 padding: const EdgeInsets.all(8),
                 child: SvgPicture.asset(
-                  R.image.ic_relatives,
+                  R.image.menu_icon,
                   color: Colors.white,
-                  width: R.sizes.iconSize,
+                  width: R.sizes.iconSize2,
                 ),
               ),
               onTap: () {
-                Atom.to(PagePaths.RELATIVES);
+                scaffoldKey.currentState.openDrawer();
               },
             ),
           ),
@@ -85,11 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
         //
         Center(
           child: RbioSwitcher(
-            showFirstChild: val.status.isShaken,
+            showFirstChild: vm.status.isShaken,
             child1: SizedBox(
               child: IconButton(
                 onPressed: () {
-                  val.changeStatus();
+                  vm.changeStatus();
                 },
                 icon: Text(
                   LocaleProvider.current.done,
@@ -110,19 +115,165 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onPressed: () {
-                Atom.to(PagePaths.CONSULTATION);
+                vm.openConsultation();
               },
             ),
           ),
         ),
-        SizedBox(width: 8),
+
+        //
+        R.sizes.wSizer8,
       ],
+    );
+  }
+
+  Drawer _buildDrawer(HomeVm vm) {
+    return Drawer(
+      backgroundColor: getIt<ITheme>().mainColor,
+      child: SafeArea(
+        top: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            R.sizes.hSizer8,
+
+            //
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 6,
+                      horizontal: 4,
+                    ),
+                    margin: EdgeInsets.only(
+                      left: 15,
+                      right: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: getIt<ITheme>().secondaryColor,
+                      borderRadius: R.sizes.borderRadiusCircular,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        //
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage: NetworkImage(R.image.circlevatar),
+                        ),
+
+                        //
+                        R.sizes.wSizer12,
+
+                        //
+                        Expanded(
+                          child: Text(
+                            '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.xHeadline4,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                //
+                IconButton(
+                  icon: Container(
+                    color: Colors.transparent,
+                    child: SvgPicture.asset(
+                      R.image.cancel_icon,
+                      color: Colors.white,
+                      width: R.sizes.iconSize2,
+                    ),
+                  ),
+                  onPressed: () {
+                    if (scaffoldKey.currentState.isDrawerOpen) {
+                      scaffoldKey.currentState.openEndDrawer();
+                    }
+                  },
+                ),
+
+                //
+                R.sizes.wSizer4,
+              ],
+            ),
+
+            //
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.only(left: 15, top: 12),
+                scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
+                itemCount: vm.drawerList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      scaffoldKey.currentState.openDrawer();
+                      vm.drawerList[index].values.first();
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          //
+                          R.sizes.hSizer4,
+
+                          //
+                          Text(
+                            vm.drawerList[index].keys.first,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.xHeadline4.copyWith(
+                              color: getIt<ITheme>().textColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          //
+                          R.sizes.hSizer4,
+
+                          //
+                          Divider(
+                            color: getIt<ITheme>().textColor,
+                            endIndent: 15,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildBody(HomeVm val) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
+        //
         Expanded(
           child: ReorderableWrap(
             alignment: WrapAlignment.center,
@@ -135,7 +286,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: val.widgetsInUse,
             onReorder: val.onReorder,
             scrollDirection: Axis.vertical,
-            maxMainAxisCount: 3,
+            maxMainAxisCount: 2,
+            minMainAxisCount: 1,
           ),
         ),
 

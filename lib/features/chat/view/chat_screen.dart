@@ -23,11 +23,11 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   ChatPerson otherPerson;
-  bool hasFirstDataArrived = false;
 
   FocusNode _focusNode;
   ScrollController _scrollController;
   TextEditingController _textEditingController;
+  ValueNotifier<bool> firstLoadNotifier;
 
   String get getCurrentUserId => getIt<UserNotifier>().firebaseID;
   ChatPerson get getCurrentPerson => ChatPerson(
@@ -44,6 +44,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _focusNode = FocusNode();
     _textEditingController = TextEditingController();
     _scrollController = ScrollController();
+    firstLoadNotifier = ValueNotifier(false);
 
     super.initState();
   }
@@ -53,6 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _focusNode.dispose();
     _textEditingController.dispose();
     _scrollController.dispose();
+    firstLoadNotifier.dispose();
     super.dispose();
   }
 
@@ -60,12 +62,15 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     try {
       otherPerson = ChatPerson.fromJson(Atom.queryParameters['otherPerson']);
-    } catch (e) {
+    } catch (e, stk) {
+      LoggerUtils.instance.e(e);
+      LoggerUtils.instance.e(stk);
       return RbioRouteError();
     }
 
     final chatVm = Provider.of<ChatVm>(context)
-      ..init(getCurrentUserId, otherPerson.id, _scrollAnimateToEnd);
+      ..init(getCurrentUserId, otherPerson.id, _scrollAnimateToEnd,
+          firstLoadNotifier);
 
     return KeyboardDismissOnTap(
       child: RbioStackedScaffold(
@@ -93,37 +98,50 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           //
           Expanded(
-            child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-              stream: chatVm.stream,
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
-              ) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return RbioLoading();
-                } else if (snapshot.connectionState == ConnectionState.active ||
-                    snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return RbioBodyError();
-                  } else if (snapshot.hasData) {
-                    if (!hasFirstDataArrived && snapshot.data.data() != null) {
-                      hasFirstDataArrived = true;
-                      Future.delayed(
-                        Duration(milliseconds: 500),
-                        () {
-                          _scrollAnimateToEnd();
-                        },
-                      );
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                //
+                StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                  stream: chatVm.stream,
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                        snapshot,
+                  ) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return RbioLoading();
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.active ||
+                        snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasError) {
+                        return RbioBodyError();
+                      } else if (snapshot.hasData) {
+                        return _buildSuccess(snapshot.data, chatVm);
+                      } else {
+                        return SizedBox();
+                      }
+                    } else {
+                      return SizedBox();
                     }
+                  },
+                ),
 
-                    return _buildSuccess(snapshot.data, chatVm);
-                  } else {
-                    return SizedBox();
-                  }
-                } else {
-                  return SizedBox();
-                }
-              },
+                //
+                ValueListenableBuilder(
+                  valueListenable: firstLoadNotifier,
+                  builder: (BuildContext context, bool value, Widget child) {
+                    return !value
+                        ? Positioned.fill(
+                            child: Container(
+                              color: context.scaffoldBackgroundColor,
+                              child: RbioLoading(),
+                            ),
+                          )
+                        : SizedBox();
+                  },
+                ),
+              ],
             ),
           ),
 
@@ -144,15 +162,18 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _scrollAnimateToEnd() {
-    Future.delayed(Duration(milliseconds: 60), () {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent + topPadding + 200,
-          curve: Curves.easeOut,
-          duration: Duration(milliseconds: 1),
+    final widgetsBinding = WidgetsBinding.instance;
+    if (widgetsBinding != null) {
+      widgetsBinding.addPostFrameCallback((_) {
+        Future.delayed(
+          Duration(milliseconds: 50),
+          () {
+            _scrollController.jumpTo(
+                _scrollController.position.maxScrollExtent + topPadding + 200);
+          },
         );
-      }
-    });
+      });
+    }
   }
 
   Widget _buildInputArea(ChatVm chatVm) {
@@ -173,12 +194,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 width: 25,
               ),
               onPressed: () {
-                chatVm.getImage(
-                  0,
-                  getCurrentUserId,
-                  otherPerson.id,
-                  getCurrentPerson,
-                );
+                chatVm.getImage(0, getCurrentUserId, otherPerson.id,
+                    getCurrentPerson, otherPerson.firebaseToken);
               },
             ),
 
@@ -250,8 +267,9 @@ class _ChatScreenState extends State<ChatScreen> {
               reverse: false,
               shrinkWrap: true,
               controller: _scrollController,
-              itemCount: messageData.length,
               padding: EdgeInsets.only(top: topPadding),
+              physics: const ClampingScrollPhysics(),
+              itemCount: messageData.length,
               itemBuilder: (BuildContext context, int index) {
                 var time = DateTime.now();
 
@@ -578,11 +596,8 @@ class _ChatScreenState extends State<ChatScreen> {
           type: 0,
         );
 
-        var result = await chatVm.sendMessage(
-          _messageSent,
-          otherPerson.id,
-          getCurrentPerson,
-        );
+        var result = await chatVm.sendMessage(_messageSent, otherPerson.id,
+            getCurrentPerson, otherPerson.firebaseToken);
         if (result) {
           _focusNode.unfocus();
           _scrollController.animateTo(

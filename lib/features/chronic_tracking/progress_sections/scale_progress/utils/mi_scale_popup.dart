@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/ble_operators/ble_operators.dart';
 import '../../../../../core/core.dart';
-import '../../../../../core/navigation/app_paths.dart';
-import '../../../../../generated/l10n.dart';
 import 'loading/progress_circle.dart';
 import 'scale_measurements/scale_measurement_vm.dart';
 

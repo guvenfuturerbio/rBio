@@ -195,10 +195,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Health\nTracker`
+  /// `Health Tracker`
   String get chronic_track_home {
     return Intl.message(
-      'Health\nTracker',
+      'Health Tracker',
       name: 'chronic_track_home',
       desc: '',
       args: [],
@@ -1905,6 +1905,26 @@ class LocaleProvider {
     );
   }
 
+  /// `Enter the code`
+  String get enter_the_code {
+    return Intl.message(
+      'Enter the code',
+      name: 'enter_the_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check your SMS/Email`
+  String get check_sms {
+    return Intl.message(
+      'Please check your SMS/Email',
+      name: 'check_sms',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Checking for updates...`
   String get check_for_updates {
     return Intl.message(
@@ -1915,11 +1935,21 @@ class LocaleProvider {
     );
   }
 
-  /// `App Language`
+  /// `assets/images/language_eng-01.png`
   String get select_language {
     return Intl.message(
-      'App Language',
+      'assets/images/language_eng-01.png',
       name: 'select_language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let's know you better!`
+  String get lets_know_you_better {
+    return Intl.message(
+      'Let\'s know you better!',
+      name: 'lets_know_you_better',
       desc: '',
       args: [],
     );

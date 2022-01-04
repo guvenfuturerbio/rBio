@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/chat/model/chat_notification.dart';
 import 'package:onedosehealth/features/home/model/banner_model.dart';
 import 'package:onedosehealth/features/auth/auth.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
@@ -74,6 +75,8 @@ abstract class ApiService {
   Future<GuvenResponseModel> addFirebaseTokenUi(
       AddFirebaseTokenRequest addFirebaseToken);
   Future<GuvenResponseModel> patientCallMeUi();
+    Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
+
   Future<GuvenResponseModel> getRoomStatusUi(String roomId);
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId);
   Future<GuvenResponseModel> deleteOnlineAppoFile(

@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+part of '../view/create_appointment_screen.dart';
 
-import '../../../../core/core.dart';
-import '../viewmodel/create_appointment_vm.dart';
-
-Widget historyDoctorItem(BuildContext context, String doctorName,
-    CreateAppointmentVm vm, int index) {
+Widget _buildHistoryDoctorCard(
+  BuildContext context,
+  String doctorName,
+  CreateAppointmentVm vm,
+  int index,
+) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     child: GestureDetector(

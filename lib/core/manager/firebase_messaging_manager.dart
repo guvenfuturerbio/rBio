@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../../features/chat/model/chat_person.dart';
+import '../../model/model.dart';
 import '../core.dart';
 
 // #region Top Level Variabled and Functions
@@ -14,16 +18,19 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
 
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 const AndroidNotificationChannel androidNotificationChannel =
     AndroidNotificationChannel(
   'high_importance_channel',
   'High Importance Notifications',
   description: 'This channel is used for important notifications.',
   importance: Importance.high,
+  sound: RawResourceAndroidNotificationSound('chat_bildirim'),
+  playSound: true,
 );
 
 class FirebaseMessagingManager {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String token;
 
   FirebaseMessagingManager._();
@@ -33,6 +40,10 @@ class FirebaseMessagingManager {
   static FirebaseMessagingManager get instance {
     _instance ??= FirebaseMessagingManager._()..init();
     return _instance;
+  }
+
+  static handleLogout() {
+    _instance = null;
   }
 
   static void mainInit() {
@@ -54,15 +65,18 @@ class FirebaseMessagingManager {
         android: initializationSettingsAndroid,
         iOS: initializationSettingsIOS,
       );
-      flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-      flutterLocalNotificationsPlugin.initialize(
+      await flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
         onSelectNotification: (payload) {
-          _clickDataHandler(jsonDecode(payload));
+          clickDataHandler(jsonDecode(payload));
         },
       );
     }
-
+    final initialPayload =
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    if (initialPayload?.payload != null) {
+      clickDataHandler(json.decode(initialPayload.payload));
+    }
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
@@ -100,8 +114,13 @@ class FirebaseMessagingManager {
           // Uygulama Ekranda Açıkken
           FirebaseMessaging.onMessage.listen((RemoteMessage message) {
             if (!kIsWeb) {
-              if (message != null) {
-                _showNotification(message);
+              if (Atom.isAndroid && message != null) {
+                ChatPerson otherPerson =
+                    ChatPerson.fromMap(json.decode(message.data['chatPerson']));
+
+                if (!(Atom.url.contains(PagePaths.CHAT) &&
+                    Atom.url.contains(otherPerson.id)))
+                  showNotification(message);
               }
             }
           });
@@ -109,7 +128,7 @@ class FirebaseMessagingManager {
           // Uygulama Arkaplanda Açıkken
           FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
             if (message != null) {
-              _clickDataHandler(message.data);
+              clickDataHandler(message.data);
             }
           });
 
@@ -118,7 +137,7 @@ class FirebaseMessagingManager {
               .getInitialMessage()
               .then((RemoteMessage message) {
             if (message != null) {
-              _clickDataHandler(message.data);
+              clickDataHandler(message.data);
             }
           });
 
@@ -141,33 +160,35 @@ class FirebaseMessagingManager {
     // setupInteractedMessage();
   }
 
-  void _showNotification(RemoteMessage message) {
-    final notificationType = getNotificationType(message.data);
-    if (notificationType == null) return;
+  static void showNotification(RemoteMessage message) {
+    if (Atom.isAndroid) {
+      final notificationType = getNotificationType(message.data);
+      if (notificationType == null) return;
 
-    switch (notificationType) {
-      case NotificationType.chat:
-        {
-          if (!Atom.url.contains(PagePaths.CHAT)) {
-            flutterLocalNotificationsShow(
-              message.hashCode,
-              message.notification.title,
-              message.notification.body,
-              jsonEncode(message.data),
-            );
+      switch (notificationType) {
+        case NotificationType.chat:
+          {
+            {
+              flutterLocalNotificationsShow(
+                message.hashCode,
+                message.notification?.title ?? '',
+                message.notification?.body ?? '',
+                jsonEncode(message.data),
+              );
+            }
+
+            break;
           }
 
-          break;
-        }
-
-      case NotificationType.route:
-        {
-          break;
-        }
+        case NotificationType.route:
+          {
+            break;
+          }
+      }
     }
   }
 
-  void flutterLocalNotificationsShow(
+  static void flutterLocalNotificationsShow(
     int id,
     String title,
     String body,
@@ -178,11 +199,12 @@ class FirebaseMessagingManager {
       title,
       body,
       NotificationDetails(
-        iOS: IOSNotificationDetails(),
+        iOS: IOSNotificationDetails(sound: 'chat_bildirim.aiff'),
         android: AndroidNotificationDetails(
           androidNotificationChannel.id,
           androidNotificationChannel.name,
           channelDescription: androidNotificationChannel.description,
+          sound: androidNotificationChannel.sound,
           icon: 'launch_background',
         ),
       ),
@@ -190,21 +212,28 @@ class FirebaseMessagingManager {
     );
   }
 
-  NotificationType getNotificationType(Map<String, dynamic> data) {
+  static NotificationType getNotificationType(Map<String, dynamic> data) {
     if (data == null) return null;
     final type = data['type'] as String;
     if (type == null) return null;
     return type.xNotificationTypeKeys;
   }
 
-  Future<void> _clickDataHandler(Map<String, dynamic> data) async {
+  Future<void> clickDataHandler(Map<String, dynamic> data) async {
     final notificationType = getNotificationType(data);
     if (notificationType == null) return;
 
     switch (notificationType) {
       case NotificationType.chat:
         {
-          Atom.to(PagePaths.CONSULTATION);
+          ChatPerson otherPerson =
+              ChatPerson.fromMap(json.decode(data['chatPerson']));
+          if (Atom.url.contains(PagePaths.CHAT)) {
+            Atom.historyBack();
+            await Future.delayed(Duration(milliseconds: 100));
+          }
+          Atom.to(PagePaths.CHAT,
+              queryParameters: {'otherPerson': (otherPerson.toJson())});
           break;
         }
 
@@ -225,7 +254,78 @@ class FirebaseMessagingManager {
 
   Future<void> getToken() async {
     token = await FirebaseMessaging.instance.getToken();
+
+    setTokenToServer(token);
     LoggerUtils.instance.i('FirebaseToken :: ' + token);
+  }
+
+  Future<void> setTokenToServer(String token) async {
+    AddFirebaseTokenRequest addFirebaseToken = AddFirebaseTokenRequest();
+    addFirebaseToken.firebaseId = token;
+    if (!kIsWeb) addFirebaseToken.phoneInfo = await getDeviceInformation();
+    await getIt<Repository>().addFirebaseTokenUi(addFirebaseToken);
+  }
+
+  Future<String> getDeviceInformation() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.toJsonString();
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.toJsonString();
+    }
+
+    return "";
+  }
+}
+
+extension on AndroidDeviceInfo {
+  String toJsonString() {
+    Map<String, dynamic> jsonMap = new Map();
+    jsonMap.addAll({
+      "android_id": androidId,
+      "is_physical_device": isPhysicalDevice,
+      "product": product,
+      "model": model,
+      "id": id,
+      "host": host,
+      "hardware": hardware,
+      "fingerprint": fingerprint,
+      "display": display,
+      "device": device,
+      "brand": brand,
+      "bootloader": bootloader,
+      "board": board,
+      "base_os": version.baseOS,
+      "release": version.release,
+      "sdk_int": version.sdkInt
+    });
+
+    return jsonEncode(jsonMap);
+  }
+}
+
+extension on IosDeviceInfo {
+  String toJsonString() {
+    Map<String, dynamic> jsonMap = new Map();
+    jsonMap.addAll({
+      "name": name,
+      "systemName": systemName,
+      "systemVersion": systemVersion,
+      "model": model,
+      "localizedModel": localizedModel,
+      "identifierForVendor": identifierForVendor,
+      "isPhysicalDevice": isPhysicalDevice,
+      "sysname": utsname.sysname,
+      "nodename": utsname.nodename,
+      "release": utsname.release,
+      "version": utsname.version,
+      "machine": utsname.machine
+    });
+
+    return jsonEncode(jsonMap);
   }
 }
 

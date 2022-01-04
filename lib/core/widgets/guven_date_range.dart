@@ -59,11 +59,17 @@ class GuvenDateRange extends StatelessWidget {
               vertical: 12.0,
               horizontal: 16,
             ),
-            child: Text(
-              DateFormat.yMMMd(Intl.getCurrentLocale())
-                  .format(startCurrentDate),
-              textAlign: TextAlign.center,
-              style: context.xHeadline3,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  DateFormat.yMMMd(Intl.getCurrentLocale())
+                      .format(startCurrentDate),
+                  textAlign: TextAlign.center,
+                  style: context.xHeadline3,
+                ),
+                Icon(Icons.arrow_drop_down)
+              ],
             ),
           ),
         ),
@@ -104,10 +110,17 @@ class GuvenDateRange extends StatelessWidget {
               vertical: 12.0,
               horizontal: 16,
             ),
-            child: Text(
-              DateFormat.yMMMd(Intl.getCurrentLocale()).format(endCurrentDate),
-              textAlign: TextAlign.center,
-              style: context.xHeadline3,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  DateFormat.yMMMd(Intl.getCurrentLocale())
+                      .format(endCurrentDate),
+                  textAlign: TextAlign.center,
+                  style: context.xHeadline3,
+                ),
+                Icon(Icons.arrow_drop_down)
+              ],
             ),
           ),
         ),

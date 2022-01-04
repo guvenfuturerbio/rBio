@@ -1,4 +1,3 @@
-import 'package:onedosehealth/features/doctor/blood_pressure_patient_detail/view/blood_pressure_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -8,6 +7,7 @@ import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
+import '../../features/doctor/blood_pressure_patient_detail/view/blood_pressure_detail_screen.dart';
 import '../../features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';

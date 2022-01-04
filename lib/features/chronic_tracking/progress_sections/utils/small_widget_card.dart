@@ -1,9 +1,8 @@
-import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/core.dart';
-import '../../../../core/extension/extension.dart';
+
+import '../../../../core/core.dart';
 
 class RbioSmallChronicWidget extends StatelessWidget {
   final String imageUrl;

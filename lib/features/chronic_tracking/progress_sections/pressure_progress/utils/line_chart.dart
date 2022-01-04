@@ -1,15 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../../../generated/l10n.dart';
+import '../../../lib/widgets/utils/time_period_filters.dart';
 import '../../utils/charts/sample_view.dart';
 import '../view/pressure_progres_page.dart';
-import '../view_model/pressure_measurement_view_model.dart';
 
 class AnimatedPulseChart extends SampleView {
   /// Creates the Scatter chart sample with dynamically updated data points.

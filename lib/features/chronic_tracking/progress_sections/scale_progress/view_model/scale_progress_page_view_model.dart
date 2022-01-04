@@ -1,23 +1,22 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/chart_data.dart';
-import 'package:onedosehealth/model/model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/constants/constants.dart' as rBio;
 import '../../../../../core/core.dart';
+import '../../../../../model/model.dart';
 import '../../../lib/notifiers/user_profiles_notifier.dart';
 import '../../../lib/widgets/utils/scale_margin_filter.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
+import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../../utils/selected_scale_type.dart';
 import '../../utils/progress_page_model.dart';
 import '../../utils/small_widget_card.dart';
 import '../utils/charts/animated_scale_buble_chart.dart';
 import '../utils/charts/animated_scale_line_chart.dart';
 import '../utils/scale_filter_pop_up/scale_filter_pop_up.dart';
+import '../utils/scale_measurements/scale_measurement_vm.dart';
 import '../utils/scale_tagger/scale_tagger_pop_up.dart';
 import '../view/scale_progress_page.dart';
 

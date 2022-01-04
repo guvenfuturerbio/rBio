@@ -12,24 +12,21 @@ class RbioLocaleDropdown extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 15.0, right: 10.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32.0),
-          border: Border.all(
-            color: getIt<ITheme>().mainColor,
-          ),
+          borderRadius: BorderRadius.circular(12.0),
+          color: getIt<ITheme>().cardBackgroundColor,
         ),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: DropdownButtonHideUnderline(
             child: DropdownButton<Locale>(
-              hint: Text(
-                getHint(context),
-                style: context.xHeadline4,
-              ),
-              items: LocaleProvider.delegate.supportedLocales.map(
+              value: context.read<LocaleNotifier>().current,
+              hint: getLocaleWidget(
+                  context.read<LocaleNotifier>().current, context),
+              items: context.read<LocaleNotifier>().supportedLocales.map(
                 (Locale localeValue) {
                   return DropdownMenuItem<Locale>(
                     value: localeValue,
-                    child: Text(localeValue.languageCode.toUpperCase()),
+                    child: getLocaleWidget(localeValue, context),
                   );
                 },
               ).toList(),
@@ -43,16 +40,28 @@ class RbioLocaleDropdown extends StatelessWidget {
     );
   }
 
-  String getHint(BuildContext context) =>
-      "${LocaleProvider.of(context).select_language} : ${getLocaleText(context)}";
-
-  String getLocaleText(BuildContext context) {
-    final supportedList = context.read<LocaleNotifier>().supportedLocales;
-    final locale = getIt<LocaleNotifier>().current;
-    if (locale.languageCode == supportedList.first.languageCode) {
-      return 'TR';
+  Widget getLocaleWidget(Locale localeValue, BuildContext context) {
+    if ('tr' == localeValue.languageCode) {
+      return Row(mainAxisSize: MainAxisSize.min, children: [
+        Image.asset(
+          R.image.tr_flag,
+          width: 30,
+        ),
+        R.sizes.wSizer4,
+        Text(
+          'TR',
+          style: context.xHeadline5,
+        ),
+      ]);
     } else {
-      return 'EN';
+      return Row(mainAxisSize: MainAxisSize.min, children: [
+        Image.asset(
+          R.image.eng_flag,
+          width: 30,
+        ),
+        R.sizes.wSizer4,
+        Text('EN', style: context.xHeadline5),
+      ]);
     }
   }
 }

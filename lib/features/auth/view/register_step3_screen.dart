@@ -84,13 +84,13 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: Text(
-                      "Enter the code",
+                      LocaleProvider.current.enter_the_code,
                       style: context.xHeadline1
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
                   Text(
-                    "Check your SMS",
+                    LocaleProvider.current.check_sms,
                     style: context.xHeadline3,
                   ),
                 ],

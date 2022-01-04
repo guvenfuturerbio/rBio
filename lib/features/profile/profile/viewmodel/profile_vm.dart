@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/notifiers/user_notifier.dart';
 
 part '../model/profile_numbers.dart';
 
@@ -23,11 +22,13 @@ class ProfileVm extends ChangeNotifier {
   }
 
   Future<void> logout(BuildContext context) async {
+    await FirebaseMessagingManager.instance.setTokenToServer("");
+
     await getIt<ISharedPreferencesManager>().clear();
     await getIt<ISharedPreferencesManager>().reload();
     await getIt<Repository>().localCacheService.removeAll();
     getIt<UserNotifier>().clear();
-
+    FirebaseMessagingManager.handleLogout();
     // Clear all boxes
     getIt<GlucoseStorageImpl>().clear();
     getIt<ScaleStorageImpl>().clear();

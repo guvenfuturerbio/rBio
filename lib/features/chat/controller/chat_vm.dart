@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:onedosehealth/features/chat/model/chat_person.dart';
 
 import '../../../core/core.dart';
-import '../../../core/data/service/firestore_manager.dart';
 import '../model/message.dart';
 
 class ChatVm with ChangeNotifier {
@@ -28,6 +27,7 @@ class ChatVm with ChangeNotifier {
     String currentUserId,
     String otherUserId,
     VoidCallback receiveNewMessage,
+    ValueNotifier<bool> firstLoadNotifier,
   ) {
     if (currentUserId.compareTo(otherUserId) == -1) {
       chatId = firestoreManager.getChatId(currentUserId, otherUserId);
@@ -44,12 +44,7 @@ class ChatVm with ChangeNotifier {
     streamSubscription = stream.listen((event) {
       final data = event.data();
       if (data != null && data['messages'] != null) {
-        final widgetsBinding = WidgetsBinding.instance;
-        if (widgetsBinding != null) {
-          widgetsBinding.addPostFrameCallback((_) {
-            receiveNewMessage();
-          });
-        }
+        receiveNewMessage();
 
         if (data['messages'].last['sentFrom'] == otherUserId &&
             data['users'][currentUserId] == false) {
@@ -75,6 +70,15 @@ class ChatVm with ChangeNotifier {
         otherLastSeen = data['users_lastSeenDate'] == null
             ? 0
             : data['users_lastSeenDate'][otherUserId];
+
+        if (!firstLoadNotifier.value) {
+          Future.delayed(
+            Duration(seconds: 1),
+            () {
+              firstLoadNotifier.value = true;
+            },
+          );
+        }
       }
 
       LoggerUtils.instance.i(event.data());
@@ -83,13 +87,15 @@ class ChatVm with ChangeNotifier {
     return stream;
   }
 
-  Future<bool> sendMessage(
-      Message message, String sendTo, ChatPerson currentPerson) async {
-    return await firestoreManager.sendMessage(message, sendTo, currentPerson);
+  Future<bool> sendMessage(Message message, String sendTo,
+      ChatPerson currentPerson, String otherNotiToken) async {
+    return await firestoreManager.sendMessage(
+        message, sendTo, currentPerson, otherNotiToken);
   }
 
   Future<void> getImage(int index, String uuid, String uuidOther,
-      ChatPerson currentPerson) async {
-    firestoreManager.getImage(index, uuid, uuidOther, currentPerson);
+      ChatPerson currentPerson, String otherNotiToken) async {
+    firestoreManager.getImage(
+        index, uuid, uuidOther, currentPerson, otherNotiToken);
   }
 }

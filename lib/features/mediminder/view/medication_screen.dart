@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../../../core/core.dart';
 import '../../../core/enums/remindable.dart';
 import '../mediminder.dart';
-import '../viewmodel/medication_vm.dart';
 
 class MedicationScreen extends StatelessWidget {
   Remindable remindable;
@@ -92,16 +91,7 @@ class MedicationScreen extends StatelessWidget {
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            begin: Alignment.bottomRight,
-            end: Alignment.topLeft,
-            colors: <Color>[
-              getIt<ITheme>().secondaryColor,
-              getIt<ITheme>().mainColor
-            ],
-          ),
-        ),
+            shape: BoxShape.circle, color: getIt<ITheme>().mainColor),
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SvgPicture.asset(
@@ -199,43 +189,37 @@ class MedicineCard extends StatelessWidget {
     String text,
     Widget okButton,
   ) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: getIt<ITheme>().mainColor,
-          title: Text(
-            title,
-            style: context.xHeadline1.copyWith(
-                color: getIt<ITheme>().textColor, fontWeight: FontWeight.w700),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.0),
+    Atom.show(AlertDialog(
+      backgroundColor: getIt<ITheme>().mainColor,
+      title: Text(
+        title,
+        style: context.xHeadline1.copyWith(
+            color: getIt<ITheme>().textColor, fontWeight: FontWeight.w700),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.0),
+        ),
+      ),
+      actions: [
+        okButton,
+      ],
+      content: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              text,
+              style:
+                  context.xHeadline3.copyWith(color: getIt<ITheme>().textColor),
             ),
-          ),
-          actions: [
-            okButton,
           ],
-          content: Container(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  text,
-                  style: context.xHeadline3
-                      .copyWith(color: getIt<ITheme>().textColor),
-                ),
-              ],
-            ),
-          ),
-          contentPadding: EdgeInsets.all(0.0),
-        );
-      },
-    );
+        ),
+      ),
+      contentPadding: EdgeInsets.all(0.0),
+    ));
   }
 }

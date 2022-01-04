@@ -62,22 +62,19 @@ class LoginScreenVm extends ChangeNotifier {
 
   String get locale => this._locale ?? "";
 
+  set clickedGeneralForm(bool value) {
+    this._clickedGeneralForm = value;
+    notifyListeners();
+  }
   bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
 
+  set checkedKvkkForm(bool value) {
+    this._checkedKvkk = value;
+    notifyListeners();
+  }
   bool get checkedKvkkForm => this._checkedKvkk ?? false;
 
   bool get passwordVisibility => this._passwordVisibility ?? false;
-
-  toggleKvkkFormClick() {
-    this._checkedKvkk = !checkedKvkkForm;
-    notifyListeners();
-    getIt<UserManager>().setKvkkFormState(checkedKvkkForm);
-  }
-
-  togglePasswordVisibility() {
-    this._passwordVisibility = !passwordVisibility;
-    notifyListeners();
-  }
 
   fetchConsentFormState() async {
     this._clickedGeneralForm =
@@ -238,7 +235,6 @@ class LoginScreenVm extends ChangeNotifier {
         // Güven online kullanıcı bilgileri
         await getIt<UserManager>().getUserProfile();
 
-        await UtilityManager().setTokenToServer(_guvenLogin.token.accessToken);
         this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
 
         if (getIt<UserNotifier>().isCronic) {

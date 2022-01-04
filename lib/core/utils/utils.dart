@@ -3,9 +3,6 @@ import 'dart:io';
 
 import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
-import 'package:device_info/device_info.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
@@ -679,30 +676,6 @@ class UtilityManager {
     );
   }
 
-  Future<void> setTokenToServer(String token) async {
-    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-    _firebaseMessaging.getToken().then((token) async {
-      AddFirebaseTokenRequest addFirebaseToken = AddFirebaseTokenRequest();
-      addFirebaseToken.firebaseId = token;
-      if (!kIsWeb) addFirebaseToken.phoneInfo = await getDeviceInformation();
-      await getIt<Repository>().addFirebaseTokenUi(addFirebaseToken);
-    });
-  }
-
-  Future<String> getDeviceInformation() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      return androidInfo.toJsonString();
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      return iosInfo.toJsonString();
-    }
-
-    return "";
-  }
-
   String getReadableTimeFromDateTime(DateTime measureDT) {
     return "${measureDT.hour > 9 ? measureDT.hour : "0" + measureDT.hour.toString()}:${measureDT.minute > 9 ? measureDT.minute : "0" + measureDT.minute.toString()}  ${measureDT.day}.${measureDT.month}.${measureDT.year}";
   }
@@ -784,54 +757,6 @@ class UtilityManager {
       default:
         return "";
     }
-  }
-}
-
-extension on AndroidDeviceInfo {
-  String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
-    jsonMap.addAll({
-      "android_id": androidId,
-      "is_physical_device": isPhysicalDevice,
-      "product": product,
-      "model": model,
-      "id": id,
-      "host": host,
-      "hardware": hardware,
-      "fingerprint": fingerprint,
-      "display": display,
-      "device": device,
-      "brand": brand,
-      "bootloader": bootloader,
-      "board": board,
-      "base_os": version.baseOS,
-      "release": version.release,
-      "sdk_int": version.sdkInt
-    });
-
-    return jsonEncode(jsonMap);
-  }
-}
-
-extension on IosDeviceInfo {
-  String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
-    jsonMap.addAll({
-      "name": name,
-      "systemName": systemName,
-      "systemVersion": systemVersion,
-      "model": model,
-      "localizedModel": localizedModel,
-      "identifierForVendor": identifierForVendor,
-      "isPhysicalDevice": isPhysicalDevice,
-      "sysname": utsname.sysname,
-      "nodename": utsname.nodename,
-      "release": utsname.release,
-      "version": utsname.version,
-      "machine": utsname.machine
-    });
-
-    return jsonEncode(jsonMap);
   }
 }
 
@@ -1011,31 +936,17 @@ class Mediminder {
     isFirstUser: false,
   );
 
-  GradientButton buttonDarkGradient({
+  Widget buttonDarkGradient({
     BuildContext context,
     String text,
     Function onPressed,
     double height,
     double width,
   }) =>
-      GradientButton(
-        increaseHeightBy: height ?? 16,
-        increaseWidthBy: width ?? 200,
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-        ),
-        textStyle: context.xHeadline3.copyWith(fontWeight: FontWeight.w600),
-        callback: onPressed,
-        gradient: LinearGradient(
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-          colors: <Color>[
-            getIt<ITheme>().secondaryColor,
-            getIt<ITheme>().mainColor,
-          ],
-        ),
-        shadowColor: Colors.black,
+      RbioElevatedButton(
+        title: text,
+        onTap: onPressed,
+        infinityWidth: true,
       );
 }
 

@@ -1,12 +1,10 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/model/banner_model.dart';
-import 'package:onedosehealth/features/home/utils/home_sizer.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
+import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 
 class HomeSlider extends StatefulWidget {
@@ -32,6 +30,7 @@ class _HomeSliderState extends State<HomeSlider> {
           height: getHeight(context),
           width: Atom.width,
           child: Stack(
+            fit: StackFit.expand,
             children: [
               //
               Positioned.fill(
@@ -39,32 +38,26 @@ class _HomeSliderState extends State<HomeSlider> {
                   itemCount: vm.bannerTabsModel.length,
                   itemBuilder:
                       (BuildContext context, int itemIndex, int pageViewIndex) {
-                    return GestureDetector(
-                      onTap: () {
-                        if (vm.isForDelete) {
-                          vm.addWidget(vm.key5);
-                        } else {
-                          if (vm.bannerTabsModel[itemIndex].destinationUrl
-                              .contains('http')) {
-                            launch(
-                                vm.bannerTabsModel[itemIndex].destinationUrl);
+                    return Container(
+                      width: double.infinity,
+                      child: GestureDetector(
+                        onTap: () {
+                          if (vm.isForDelete) {
+                            vm.addWidget(vm.key5);
                           } else {
-                            Atom.to(
-                                vm.bannerTabsModel[itemIndex].destinationUrl);
+                            if (vm.bannerTabsModel[itemIndex].destinationUrl
+                                .contains('http')) {
+                              launch(
+                                  vm.bannerTabsModel[itemIndex].destinationUrl);
+                            } else {
+                              Atom.to(
+                                  vm.bannerTabsModel[itemIndex].destinationUrl);
+                            }
                           }
-                        }
-                      },
-                      child: Card(
-                        margin: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            vm.bannerTabsModel[itemIndex].imageUrl,
-                            fit: BoxFit.fill,
-                          ),
+                        },
+                        child: Image.network(
+                          vm.bannerTabsModel[itemIndex].imageUrl,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     );
@@ -131,14 +124,6 @@ class _HomeSliderState extends State<HomeSlider> {
 
   double getHeight(BuildContext context) {
     return HomeSizer.instance.getBodySliderHeight();
-
-    final height = MediaQuery.of(context).size.height;
-    return R.sizes.screenHandler<double>(
-      context,
-      mobile: height * 0.23,
-      tablet: height * 0.25,
-      desktop: height * 0.25,
-    );
   }
 
   void _launchURL(String url) async {

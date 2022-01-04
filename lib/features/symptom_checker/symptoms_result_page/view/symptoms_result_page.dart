@@ -3,7 +3,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/widgets/rbio_appbar.dart';
 import '../../../../model/model.dart';
 import '../viewmodel/symptoms_result_page_vm.dart';
 

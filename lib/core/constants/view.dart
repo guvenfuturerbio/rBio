@@ -61,6 +61,28 @@ class _Sizes {
     );
   }
 
+  final Widget hSizer4 = SizedBox(height: 4);
+  final Widget hSizer8 = SizedBox(height: 8);
+  final Widget hSizer12 = SizedBox(height: 12);
+  final Widget hSizer16 = SizedBox(height: 16);
+  final Widget hSizer20 = SizedBox(height: 20);
+  final Widget hSizer24 = SizedBox(height: 24);
+  final Widget hSizer28 = SizedBox(height: 28);
+  final Widget hSizer32 = SizedBox(height: 32);
+  final Widget hSizer36 = SizedBox(height: 36);
+  final Widget hSizer40 = SizedBox(height: 40);
+
+  final Widget wSizer4 = SizedBox(width: 4);
+  final Widget wSizer8 = SizedBox(width: 8);
+  final Widget wSizer12 = SizedBox(width: 12);
+  final Widget wSizer16 = SizedBox(width: 16);
+  final Widget wSizer20 = SizedBox(width: 20);
+  final Widget wSizer24 = SizedBox(width: 24);
+  final Widget wSizer28 = SizedBox(width: 28);
+  final Widget wSizer32 = SizedBox(width: 32);
+  final Widget wSizer36 = SizedBox(width: 36);
+  final Widget wSizer40 = SizedBox(width: 40);
+
   // BorderRadius
   final BorderRadiusGeometry borderRadiusCircular = BorderRadius.circular(12);
 

@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
-import '../managers/local_notifications_manager.dart';
 import '../mediminder.dart';
 
 class Hba1cReminderListVm extends ChangeNotifier {

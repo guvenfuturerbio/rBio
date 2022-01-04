@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../core/core.dart';
 import '../../../core/data/imports/cronic_tracking.dart';
-import '../managers/local_notifications_manager.dart';
 import '../mediminder.dart';
 
 class StripVm with ChangeNotifier {
