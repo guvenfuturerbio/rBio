@@ -199,11 +199,12 @@ class FirebaseMessagingManager {
       title,
       body,
       NotificationDetails(
-        iOS: IOSNotificationDetails(),
+        iOS: IOSNotificationDetails(sound: 'chat_bildirim.aiff'),
         android: AndroidNotificationDetails(
           androidNotificationChannel.id,
           androidNotificationChannel.name,
           channelDescription: androidNotificationChannel.description,
+          sound: androidNotificationChannel.sound,
           icon: 'launch_background',
         ),
       ),
