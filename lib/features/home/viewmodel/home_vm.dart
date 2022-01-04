@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/utils/results_painter.dart';
-import 'package:onedosehealth/features/home/utils/symptom_checker_painter.dart';
-import '../utils/appointments_painter.dart';
-import '../utils/chronic_tracking_painter.dart';
-import '../utils/hospital_appointment_painter.dart';
-import '../utils/online_appointment_painter.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
 import '../../../core/core.dart';
 import '../model/banner_model.dart';
+import '../utils/appointments_painter.dart';
+import '../utils/chronic_tracking_painter.dart';
+import '../utils/hospital_appointment_painter.dart';
+import '../utils/online_appointment_painter.dart';
+import '../utils/results_painter.dart';
+import '../utils/symptom_checker_painter.dart';
 import '../view/home_screen.dart';
 import '../widgets/home_slider.dart';
 import '../widgets/reorderable_widget.dart';
-import '../widgets/user_card_tile.dart';
 import '../widgets/vertical_card_widget.dart';
 
 class HomeVm extends ChangeNotifier {
@@ -40,6 +39,69 @@ class HomeVm extends ChangeNotifier {
   //Slider widgetları
   List<BannerTabsModel> bannerTabsModel = [];
   SpringController springController;
+
+  List<Map<String, dynamic>> get drawerList => [
+        {
+          LocaleProvider.current.profile: () {
+            Atom.to(PagePaths.PROFILE);
+          }
+        },
+        {
+          LocaleProvider.current.lbl_find_hospital: () {
+            Atom.to(
+              PagePaths.CREATE_APPOINTMENT,
+              queryParameters: {
+                'forOnline': false.toString(),
+              },
+            );
+          },
+        },
+        {
+          LocaleProvider.current.take_video_appointment: () {
+            Atom.to(
+              PagePaths.CREATE_APPOINTMENT,
+              queryParameters: {
+                'forOnline': true.toString(),
+              },
+            );
+          }
+        },
+        {
+          LocaleProvider.current.chronic_track_home: () {
+            Atom.to(PagePaths.MEASUREMENT_TRACKING);
+          }
+        },
+        {
+          LocaleProvider.current.appointments: () {
+            Atom.to(PagePaths.APPOINTMENTS);
+          }
+        },
+        {
+          LocaleProvider.current.results: () {
+            Atom.to(PagePaths.ERESULT);
+          }
+        },
+        {
+          LocaleProvider.current.symptom_checker: () {
+            Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
+          }
+        },
+        {
+          LocaleProvider.current.devices: () {
+            Atom.to(PagePaths.DEVICES);
+          }
+        },
+        {
+          LocaleProvider.current.reminders: () {
+            Atom.to(PagePaths.MEDIMINDER_INITIAL);
+          }
+        },
+        {
+          LocaleProvider.current.request_and_suggestions: () {
+            Atom.to(PagePaths.SUGGEST_REQUEST);
+          }
+        },
+      ];
 
   HomeVm({this.mContext});
 
@@ -215,35 +277,27 @@ class HomeVm extends ChangeNotifier {
       "[<'5'>]": returner[4],
       "[<'6'>]": returner[5],
       "[<'7'>]": returner[6],
-      "[<'8'>]": returner[7],
     };
   }
 
-  final key1 = const Key('1');
+  final _key1 = const Key('1');
   final _key2 = const Key('2');
   final _key3 = const Key('3');
   final _key4 = const Key('4');
   final key5 = const Key('5');
   final _key6 = const Key('6');
   final _key7 = const Key('7');
-  final _key8 = const Key('8');
 
   // Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
-        MyReorderableWidget(
-          key: key1,
-          body: UserCardTile(homeVm: this),
-        ),
-
         //
-
         if (getIt<AppConfig>().takeHospitalAppointment)
           MyReorderableWidget(
-            key: _key2,
+            key: _key1,
             body: GestureDetector(
               onTap: () {
                 if (isForDelete) {
-                  addWidget(_key2);
+                  addWidget(_key1);
                 } else if (status == ShakeMod.notShaken) {
                   Atom.to(
                     PagePaths.CREATE_APPOINTMENT,
@@ -267,11 +321,11 @@ class HomeVm extends ChangeNotifier {
         //
         if (getIt<AppConfig>().takeOnlineAppointment)
           MyReorderableWidget(
-            key: _key3,
+            key: _key2,
             body: GestureDetector(
               onTap: () {
                 if (isForDelete) {
-                  addWidget(_key3);
+                  addWidget(_key2);
                 } else if (status == ShakeMod.notShaken) {
                   Atom.to(
                     PagePaths.CREATE_APPOINTMENT,
@@ -295,11 +349,11 @@ class HomeVm extends ChangeNotifier {
         //
         if (getIt<AppConfig>().chronicTracking)
           MyReorderableWidget(
-            key: _key4,
+            key: _key3,
             body: GestureDetector(
               onTap: () {
                 if (isForDelete) {
-                  addWidget(_key4);
+                  addWidget(_key3);
                 } else if (status == ShakeMod.notShaken) {
                   Atom.to(PagePaths.MEASUREMENT_TRACKING);
                 }
@@ -316,19 +370,12 @@ class HomeVm extends ChangeNotifier {
           ),
 
         //
-
         MyReorderableWidget(
-          key: key5,
-          body: HomeSlider(),
-        ),
-
-        //
-        MyReorderableWidget(
-          key: _key6,
+          key: _key4,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(_key6);
+                addWidget(_key4);
               } else if (status == ShakeMod.notShaken) {
                 Atom.to(PagePaths.APPOINTMENTS);
               }
@@ -346,11 +393,17 @@ class HomeVm extends ChangeNotifier {
 
         //
         MyReorderableWidget(
-          key: _key7,
+          key: key5,
+          body: HomeSlider(),
+        ),
+
+        //
+        MyReorderableWidget(
+          key: _key6,
           body: GestureDetector(
             onTap: () {
               if (isForDelete) {
-                addWidget(_key7);
+                addWidget(_key6);
               } else if (status == ShakeMod.notShaken) {
                 Atom.to(PagePaths.ERESULT);
               }
@@ -369,11 +422,11 @@ class HomeVm extends ChangeNotifier {
         //
         if (getIt<AppConfig>().symptomChecker)
           MyReorderableWidget(
-            key: _key8,
+            key: _key7,
             body: GestureDetector(
               onTap: () {
                 if (isForDelete) {
-                  addWidget(_key8);
+                  addWidget(_key7);
                 } else if (status == ShakeMod.notShaken) {
                   Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
                 }

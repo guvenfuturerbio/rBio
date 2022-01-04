@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioScaffold extends StatelessWidget {
+  final Key scaffoldKey;
   final IRbioAppBar appbar;
   final Widget body;
 
@@ -32,6 +33,7 @@ class RbioScaffold extends StatelessWidget {
 
   RbioScaffold({
     Key key,
+    this.scaffoldKey,
     @required this.appbar,
     @required this.body,
     this.backgroundColor,
@@ -60,6 +62,7 @@ class RbioScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: Column(
         children: [
           //

@@ -114,4 +114,6 @@ class _Images {
   final send_icon = 'assets/images/send_icon.svg';
   final video_icon_80 = 'assets/images/video_icon_80.svg';
   final weight_icon = 'assets/images/weight_icon.svg';
+  final search_icon = 'assets/images/search_icon.svg';
+  final menu_icon = 'assets/images/menu_icon.svg';
 }
