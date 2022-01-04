@@ -19,12 +19,12 @@ class VerticalCard extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Orientation> snapshot) {
         if (snapshot.hasData) {
           return SizedBox(
-            width: HomeSizer.instance.getWidth(context),
-            height: getHeight(context),
+            width: HomeSizer.instance.getBodyCardWidth(context),
+            height: HomeSizer.instance.getBodyCardHeight(),
             child: Card(
               margin: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Stack(
                 children: [
@@ -38,16 +38,6 @@ class VerticalCard extends StatelessWidget {
                   ),
 
                   //
-                  // Align(
-                  //   alignment: Alignment.topRight,
-                  //   child: Image.asset(
-                  //     topImage,
-                  //     width: Atom.height * 0.10,
-                  //     height: Atom.height * 0.10,
-                  //   ),
-                  // ),
-
-                  //
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Padding(
@@ -55,8 +45,9 @@ class VerticalCard extends StatelessWidget {
                       child: Text(
                         title,
                         maxLines: 3,
+                        textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
-                        style: getIt<ITheme>().textTheme.headline2,
+                        style: getIt<ITheme>().textTheme.headline3,
                       ),
                     ),
                   ),
@@ -70,7 +61,4 @@ class VerticalCard extends StatelessWidget {
       },
     );
   }
-
-  double getHeight(BuildContext context) =>
-      HomeSizer.instance.getBodyCardHeight();
 }
