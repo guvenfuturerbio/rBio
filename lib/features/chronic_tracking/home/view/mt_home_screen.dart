@@ -27,7 +27,8 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
             appbar: isLandscape
                 ? null
                 : RbioAppBar(
-                    title: RbioAppBar.textTitle(context, "Kronik Takip"),
+                    title: RbioAppBar.textTitle(
+                        context, LocaleProvider.current.chronic_track_home),
                   ),
             floatingActionButton: val.activeItem != null
                 ? FloatingActionButton(
