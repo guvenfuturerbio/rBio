@@ -38,6 +38,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   List<PatientAppointmentsResponse> _patientAppointments;
   List<PatientAppointmentsResponse> _holderForFavorites = [];
   List<String> _doctorsImageUrls = [];
+  List<int> _doctorsIds = [];
 
   // #region Getters
   LoadingProgress get relativeProgress => this._relativeProgress;
@@ -545,18 +546,23 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   Future<void> holderListFillFunc() async {
     _holderForFavorites = [];
+    _doctorsIds = [];
+    for (var appo in _patientAppointments) {
+      _doctorsIds.add(appo.resources.first.resourceId);
+    }
+    print('Current doctor ids: -->' + _doctorsIds.toString());
+    _doctorsIds = _doctorsIds.toSet().toList();
+    print('Removed duplicates ids: -->' + _doctorsIds.toString());
 
-    if (_patientAppointments.length >= 4) {
-      for (var item = 0; item < 4; item++) {
-        if (!(_holderForFavorites.contains(_patientAppointments[item]))) {
-          _holderForFavorites.add(_patientAppointments[item]);
-        }
+    if (_doctorsIds.length >= 4) {
+      for (var index = 0; index < 4; index++) {
+        _holderForFavorites.add(_patientAppointments.firstWhere((element) =>
+            element.resources.first.resourceId == _doctorsIds[index]));
       }
     } else {
-      for (var element in _patientAppointments) {
-        if (!(_holderForFavorites.contains(element))) {
-          _holderForFavorites.add(element);
-        }
+      for (var index = 0; index < _doctorsIds.length; index++) {
+        _holderForFavorites.add(_patientAppointments.firstWhere((element) =>
+            element.resources.first.resourceId == _doctorsIds[index]));
       }
     }
     notifyListeners();
