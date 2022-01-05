@@ -3,10 +3,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chat/model/chat_notification.dart';
-import 'package:onedosehealth/features/chat/model/get_chat_contacts_response.dart';
 
 import '../../../features/auth/auth.dart';
+import '../../../features/chat/model/chat_notification.dart';
+import '../../../features/chat/model/get_chat_contacts_response.dart';
 import '../../../features/home/model/banner_model.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
 import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';

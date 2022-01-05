@@ -61,6 +61,8 @@ class _Sizes {
     );
   }
 
+  final Widget defaultBottomPadding = SizedBox(height: Atom.safeBottom + 12);
+
   final Widget hSizer4 = SizedBox(height: 4);
   final Widget hSizer8 = SizedBox(height: 8);
   final Widget hSizer12 = SizedBox(height: 12);

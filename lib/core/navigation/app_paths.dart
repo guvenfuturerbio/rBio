@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -73,6 +72,11 @@ class VRouterRoutes {
         create: (context) => ProfileVm(),
         child: ProfileScreen(),
       ),
+    ),
+
+    VWidget(
+      path: PagePaths.PERSONAL_INFORMATION,
+      widget: PersonalInformationScreen(),
     ),
 
     VWidget(
@@ -183,11 +187,6 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.FOR_YOU_SUB_CATEGORIES_DETAIL,
       widget: ForYouSubCategoriesDetailScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.PERSONAL_INFORMATION,
-      widget: PersonalInformationScreen(),
     ),
 
     VWidget(

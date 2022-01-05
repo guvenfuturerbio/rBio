@@ -135,6 +135,10 @@ class _TableCalendarState extends State<_TableCalendar> {
             ),
           ),
 
+          enabledDayPredicate: (day) {
+            return widget.val.dateContains(day);
+          },
+
           //
           calendarBuilders: CalendarBuilders(
             // #region defaultBuilder
@@ -147,11 +151,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                 ),
                 child: Text(
                   '${day.day}',
-                  style: textStyle.copyWith(
-                    color: widget.val.dateContains(day)
-                        ? getIt<ITheme>().textColorSecondary
-                        : getIt<ITheme>().textColorPassive,
-                  ),
+                  style: textStyle,
                 ),
               );
             },
@@ -249,7 +249,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           onPageChanged: (focusedDay) {
             LoggerUtils.instance.i('Month Change : $focusedDay');
             widget.val.getAvailableDates(focusedDay);
-            
+
             _focusedDay = focusedDay;
           },
         ),

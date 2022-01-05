@@ -7,12 +7,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'dart:io';
+
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
+
+import '../../../../../../core/core.dart';
 
 import '../../../core/core.dart';
-import '../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
 import '../controller/chat_vm.dart';
 import '../model/chat_person.dart';
 import '../model/message.dart';
+
+part '../widget/image_preview_dialog.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key key}) : super(key: key);
@@ -405,10 +412,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => GalleryView(
-                    images: [message.message],
+                Atom.show(
+                  ImagePreviewDialog(
+                    image: message.message,
                   ),
                 );
               },
@@ -449,10 +455,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => GalleryView(
-                    images: [message.message],
+                Atom.show(
+                  ImagePreviewDialog(
+                    image: message.message,
                   ),
                 );
               },
