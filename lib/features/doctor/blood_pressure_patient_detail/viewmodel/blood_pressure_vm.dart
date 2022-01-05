@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/repository/doctor_repository.dart';
-import 'package:onedosehealth/core/enums/loading_progress.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
-import 'package:onedosehealth/features/doctor/blood_pressure_patient_detail/widget/charts/line_charts.dart';
-import 'package:onedosehealth/model/model.dart';
+
+import '../../../../core/core.dart';
+import '../../../../core/data/repository/doctor_repository.dart';
+import '../../../../model/model.dart';
+import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../widget/charts/line_charts.dart';
 
 class BloodPressurePatientDetailVm extends ChangeNotifier {
   List<BpMeasurementViewModel> bpMeasurements = [];

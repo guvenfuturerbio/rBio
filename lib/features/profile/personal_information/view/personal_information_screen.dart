@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 
 import '../../../../core/core.dart';
 import '../../../../model/shared/user_account_info.dart';
