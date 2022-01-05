@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:dart_date/dart_date.dart';
 
 import '../../../core/core.dart';
 import '../model/chat_person.dart';
@@ -59,6 +61,7 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
         lastMessageType: 0,
         lastMessageSender: '',
         messageTime: '',
+        timestamp: 0,
         hasRead: true,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
         id: apiItem.firebaseUserId,
@@ -77,12 +80,14 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
           chatPerson.lastMessageType = _getLastMessageType(fbData);
           chatPerson.lastMessageSender = _getLastMessageSender(fbData);
           chatPerson.messageTime = _getMessageTime(fbData);
+          chatPerson.timestamp = _getTimestamp(fbData);
+
           chatPerson.hasRead = _getHasRead(fbData);
           chatPerson.otherHasRead = _getOtherHasRead(fbData, chatPerson.id);
         }
       }
     }
-
+    result?.sort((a, b) => b.timestamp?.compareTo(a.timestamp ?? 0));
     return result;
   }
 
@@ -111,12 +116,16 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
     final messages = userData['messages'] as List;
     if (messages == null) return '';
     if (messages.isEmpty) return '';
-    // return timeago.format(
-    //   DateTime.fromMillisecondsSinceEpoch(messages.last['date']),
-    //   locale: getIt<LocaleNotifier>().current.languageCode,
-    // );
-    return DateTime.fromMillisecondsSinceEpoch(messages.last['date'])
-        .xFormatTime8(getIt<LocaleNotifier>().current.languageCode);
+    DateTime messageDate =
+        DateTime.fromMillisecondsSinceEpoch(messages.last['date']);
+    if (messageDate.isToday)
+      return DateTime.fromMillisecondsSinceEpoch(messages.last['date'])
+          .xFormatTime8(getIt<LocaleNotifier>().current.languageCode);
+    else
+      return timeago.format(
+        DateTime.fromMillisecondsSinceEpoch(messages.last['date']),
+        locale: getIt<LocaleNotifier>().current.languageCode,
+      );
   }
 
   bool _getHasRead(Map<String, dynamic> userData) {
@@ -129,5 +138,10 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
     final users = userData['users'] as Map;
     if (users == null) return true;
     return users[to] ?? true;
+  }
+
+  int _getTimestamp(Map<String, dynamic> fbData) {
+    final messages = fbData['messages'] as List;
+    return messages.last['date'];
   }
 }
