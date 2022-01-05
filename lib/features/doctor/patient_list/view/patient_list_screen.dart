@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,7 +26,8 @@ class DoctorPatientListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       type = Atom.queryParameters['type'].xPatientType;
-    } catch (_) {
+    } catch (e) {
+      log(e);
       return RbioRouteError();
     }
 

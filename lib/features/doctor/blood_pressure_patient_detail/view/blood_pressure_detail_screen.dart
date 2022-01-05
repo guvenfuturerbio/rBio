@@ -1,59 +1,37 @@
-import 'dart:convert';
-import 'dart:ui';
-
-import 'package:countup/countup.dart';
 import 'package:dropdown_banner/dropdown_banner.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
+import 'package:onedosehealth/features/doctor/blood_pressure_patient_detail/viewmodel/blood_pressure_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
-import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../../chronic_tracking/utils/glucose_margins_filter.dart';
-import '../../notifiers/bg_measurements_notifiers.dart';
-import '../../notifiers/patient_notifiers.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
 
-part '../viewmodel/blood_glucose_patient_detail_vm.dart';
-part '../viewmodel/blood_glucose_patient_picker_vm.dart';
-part '../widget/chart_filter.dart';
-part '../widget/charts/line_chart.dart';
-part '../widget/charts/sample_model.dart';
-part '../widget/charts/sample_view.dart';
-part '../widget/charts/scatter_chart.dart';
-part '../widget/custom_bar_pie.dart';
+import '../../../../../core/core.dart';
+
 part '../widget/graph_header_section.dart';
-part '../widget/hyper_picker.dart';
-part '../widget/hypo_picker.dart';
 part '../widget/measurement_list.dart';
-part '../widget/normal_range_selection_slider.dart';
-part '../widget/tagger_popup.dart';
-part '../widget/user_detail_card.dart';
 
-class BloodGlucosePatientDetailScreen extends StatefulWidget {
-  int patientId;
-  String patientName;
-
-  BloodGlucosePatientDetailScreen({Key key}) : super(key: key);
+class BloodPressurePatientDetailScreen extends StatefulWidget {
+  BloodPressurePatientDetailScreen({Key key}) : super(key: key);
 
   @override
-  _BloodGlucosePatientDetailScreenState createState() =>
-      _BloodGlucosePatientDetailScreenState();
+  _BloodPressurePatientDetailScreenState createState() =>
+      _BloodPressurePatientDetailScreenState();
 }
 
-class _BloodGlucosePatientDetailScreenState
-    extends State<BloodGlucosePatientDetailScreen>
+class _BloodPressurePatientDetailScreenState
+    extends State<BloodPressurePatientDetailScreen>
     with SingleTickerProviderStateMixin {
+  int patientId;
+  String patientName;
   AnimationController animationController;
   Animation<double> sizeAnimation;
 
@@ -85,19 +63,19 @@ class _BloodGlucosePatientDetailScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      widget.patientName = Atom.queryParameters['patientName'];
-      widget.patientId = int.parse(Atom.queryParameters['patientId']);
+      patientName = Atom.queryParameters['patientName'];
+      patientId = int.parse(Atom.queryParameters['patientId']);
     } catch (_) {
       return RbioRouteError();
     }
 
-    return ChangeNotifierProvider<BloodGlucosePatientDetailVm>(
-      create: (context) => BloodGlucosePatientDetailVm(
-          context: context, patientId: widget.patientId),
-      child: Consumer<BloodGlucosePatientDetailVm>(
+    return ChangeNotifierProvider<BloodPressurePatientDetailVm>(
+      create: (context) =>
+          BloodPressurePatientDetailVm(context: context, patientId: patientId),
+      child: Consumer<BloodPressurePatientDetailVm>(
         builder: (
           BuildContext context,
-          BloodGlucosePatientDetailVm vm,
+          BloodPressurePatientDetailVm vm,
           Widget child,
         ) {
           return DropdownBanner(
@@ -115,7 +93,7 @@ class _BloodGlucosePatientDetailScreenState
   RbioAppBar _buildAppBar() => RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
-          LocaleProvider.current.bg_measurement_tracking,
+          LocaleProvider.current.bp_tracking,
         ),
         actions: [
           Center(
@@ -130,7 +108,7 @@ class _BloodGlucosePatientDetailScreenState
         ],
       );
 
-  Widget _buildBody(BloodGlucosePatientDetailVm vm) => SingleChildScrollView(
+  Widget _buildBody(BloodPressurePatientDetailVm vm) => SingleChildScrollView(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         physics: BouncingScrollPhysics(),
@@ -141,40 +119,6 @@ class _BloodGlucosePatientDetailScreenState
           children: [
             //
             _buildExpandedUser(),
-
-            //
-            if (vm.stateProcessPatientDetail == LoadingProgress.LOADING) ...[
-              SizedBox(height: 12),
-              Shimmer.fromColors(
-                child: _UserDetailCard(
-                  patientDetail: DoctorPatientDetailModel(),
-                  targetRangePresses: () {},
-                  hypoEdit: () {},
-                  hyperEdit: () {},
-                ),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[100],
-              ),
-            ] else ...[
-              ClipRRect(
-                borderRadius: R.sizes.borderRadiusCircular,
-                child: SizeTransition(
-                  sizeFactor: sizeAnimation,
-                  child: _UserDetailCard(
-                    patientDetail: vm.patientDetail,
-                    targetRangePresses: () {
-                      vm.showEditAlert(_NormalRangeSelectionSlider());
-                    },
-                    hypoEdit: () {
-                      vm.showEditAlert(_HypoPicker());
-                    },
-                    hyperEdit: () {
-                      vm.showEditAlert(_HyperPicker());
-                    },
-                  ),
-                ),
-              ),
-            ],
 
             //
             SizedBox(height: 12),
@@ -190,22 +134,15 @@ class _BloodGlucosePatientDetailScreenState
                 SizedBox(
                   height: context.HEIGHT * .3,
                   child: _MeasurementList(
-                    bgMeasurements: vm.bgMeasurements,
+                    bpMeasurements: vm.bpMeasurements,
                     scrollController: _controller,
-                    useStickyGroupSeparatorsValue:
-                        vm.selected == LocaleProvider.current.daily ||
-                                vm.selected == LocaleProvider.current.specific
-                            ? true
-                            : false,
                   ),
                 ),
             ] else ...[
               Shimmer.fromColors(
-                child: _UserDetailCard(
-                  patientDetail: DoctorPatientDetailModel(),
-                  targetRangePresses: () {},
-                  hypoEdit: () {},
-                  hyperEdit: () {},
+                child: SizedBox(
+                  height: context.HEIGHT * .3,
+                  width: double.infinity,
                 ),
                 baseColor: Colors.grey[300],
                 highlightColor: Colors.grey[100],
@@ -255,7 +192,7 @@ class _BloodGlucosePatientDetailScreenState
                       child: Padding(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          widget.patientName ?? '',
+                          patientName ?? '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(

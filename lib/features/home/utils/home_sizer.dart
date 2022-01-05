@@ -24,4 +24,7 @@ class HomeSizer {
     final width = MediaQuery.of(context).size.width;
     return width * .45;
   }
+
+  double getBodyCardHeightLarge() => _getPartHeight() * 30;
+  double getBodyCardHeightMedium() => _getPartHeight() * 25;
 }

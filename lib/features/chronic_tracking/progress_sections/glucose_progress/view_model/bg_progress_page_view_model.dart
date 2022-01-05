@@ -653,6 +653,18 @@ class BgProgressPageViewModel
     setChartDailyData();
   }
 
+  changeStartDate(DateTime date) {
+    print(date);
+    print(selected);
+    _startDate = date;
+    setSelectedItem(selected);
+  }
+
+  changeEndDate(DateTime date) {
+    _endDate = date;
+    setSelectedItem(selected);
+  }
+
   Future<void> nextDate() async {
     await setStartDate(endDate);
     if (selected == TimePeriodFilter.WEEKLY) {

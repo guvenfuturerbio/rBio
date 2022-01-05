@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "blood_pressure_tracking" : MessageLookupByLibrary.simpleMessage("Tansiyon Takibi"),
     "bmi_tracking" : MessageLookupByLibrary.simpleMessage("Vücut Ölçüm Takibi"),
     "boy" : MessageLookupByLibrary.simpleMessage("ERKEK ÇOCUĞU"),
+    "bp_tracking" : MessageLookupByLibrary.simpleMessage("Tansiyon Takibi"),
     "btn_cancel" : MessageLookupByLibrary.simpleMessage("İptal"),
     "btn_confirm" : MessageLookupByLibrary.simpleMessage("Onayla"),
     "btn_delete" : MessageLookupByLibrary.simpleMessage("Sil"),

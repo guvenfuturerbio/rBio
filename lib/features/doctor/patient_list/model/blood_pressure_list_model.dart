@@ -85,5 +85,9 @@ class PatientBloodPressureListModel
   @override
   void itemOnTap(DoctorBloodPressurePatientModel model) {
     LoggerUtils.instance.i('OnTap : ${model.id}');
+    Atom.to(PagePaths.BLOOD_PRESSURE_PATIENT_DETAIL, queryParameters: {
+      'patientId': model.id.toString(),
+      'patientName': model.name,
+    });
   }
 }

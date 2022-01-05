@@ -7,6 +7,7 @@ import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
+import '../../features/doctor/blood_pressure_patient_detail/view/blood_pressure_detail_screen.dart';
 import '../../features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
@@ -370,6 +371,10 @@ class VRouterRoutes {
               widget: BloodGlucosePatientDetailScreen(),
             ),
             VWidget(
+              path: PagePaths.BLOOD_PRESSURE_PATIENT_DETAIL,
+              widget: BloodPressurePatientDetailScreen(),
+            ),
+            VWidget(
               path: PagePaths.DOCTOR_TREATMENT_PROCESS,
               widget: ChangeNotifierProvider<TreatmentProcessVm>(
                 create: (context) => TreatmentProcessVm(context: context),
@@ -497,6 +502,7 @@ class PagePaths {
   static const DOCTOR_PATIENT_LIST = '/doctor-patient-list';
   static const BLOOD_GLUCOSE_PATIENT_DETAIL = '/blood-glucose-patient-detail';
   static const BMI_PATIENT_DETAIL = '/bmi-patient-detail';
+  static const BLOOD_PRESSURE_PATIENT_DETAIL = '/bp-patient-detail';
   static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
   static const DOCTOR_VIDEO_CALL_EDIT = '/doctor-video-call-edit';
   static const DOCTOR_CONSULTATION = '/doctor-consultation';
