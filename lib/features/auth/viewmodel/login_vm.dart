@@ -66,12 +66,14 @@ class LoginScreenVm extends ChangeNotifier {
     this._clickedGeneralForm = value;
     notifyListeners();
   }
+
   bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
 
   set checkedKvkkForm(bool value) {
     this._checkedKvkk = value;
     notifyListeners();
   }
+
   bool get checkedKvkkForm => this._checkedKvkk ?? false;
 
   bool get passwordVisibility => this._passwordVisibility ?? false;
@@ -266,6 +268,18 @@ class LoginScreenVm extends ChangeNotifier {
         }
 
         // await getIt<SymptomRepository>().getSymtptomsApiToken();
+
+        try {
+          final profilImage = await getIt<Repository>().getProfilePicture();
+          if (profilImage != null) {
+            await getIt<ISharedPreferencesManager>().setString(
+              SharedPreferencesKeys.PROFILE_IMAGE,
+              profilImage,
+            );
+          }
+        } catch (e) {
+          //
+        }
 
         this._progress = LoadingProgress.DONE;
         // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');

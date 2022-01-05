@@ -169,8 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         //
                         CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage(R.image.circlevatar),
+                          backgroundImage: Utils.instance.getCacheProfileImage,
+                          radius: R.sizes.iconSize2,
+                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
                         ),
 
                         //
@@ -233,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           //
-                          R.sizes.hSizer4,
+                          R.sizes.hSizer8,
 
                           //
                           Text(
@@ -247,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 
                           //
-                          R.sizes.hSizer4,
+                          R.sizes.hSizer8,
 
                           //
                           Divider(

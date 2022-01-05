@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 
@@ -95,7 +99,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           return KeyboardDismissOnTap(
             child: RbioLoadingOverlay(
               isLoading: vm.showLoadingOverlay,
-              progressIndicator: RbioLoading(),
+              progressIndicator: RbioLoading.progressIndicator(),
               opacity: 0,
               child: RbioScaffold(
                 resizeToAvoidBottomInset: false,
@@ -115,117 +119,215 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   Widget _builBody(BuildContext context, PersonalInformationScreenVm vm) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(15),
-      scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          //
-          // Identity Number
-          _buildTitle(
-            userAccount.nationality.xIsTCNationality
-                ? LocaleProvider.of(context).tc_identity_number
-                : LocaleProvider.of(context).passport_number,
-          ),
-          _buildDisabledTextField(
-            _identityEditingController,
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Expanded(
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            removeBottom: true,
+            child: Scrollbar(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    //
+                    Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          //
+                          CircleAvatar(
+                            backgroundImage: vm.getProfileImage,
+                            radius: R.sizes.iconSize * 1.5,
+                            backgroundColor:
+                                getIt<ITheme>().cardBackgroundColor,
+                          ),
 
-          // Name
-          _buildSpacer(),
-          _buildTitle(
-            LocaleProvider.of(context).name,
-          ),
-          _buildDisabledTextField(
-            _nameEditingController,
-          ),
+                          //
+                          TextButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(
+                                getIt<ITheme>().textColorPassive,
+                              ),
+                            ),
+                            onPressed: () {
+                              _openCupertinoModalPopup(vm);
+                            },
+                            child: Text(
+                              LocaleProvider.current.change,
+                              style: context.xHeadline5.copyWith(
+                                color: getIt<ITheme>().mainColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSpacer(),
 
-          // Birthday
-          _buildSpacer(),
-          _buildTitle(
-            LocaleProvider.of(context).birth_date,
-          ),
-          _buildDisabledTextField(
-            _birthdayEditingController,
-          ),
+                    // Identity Number
+                    _buildTitle(
+                      userAccount.nationality.xIsTCNationality
+                          ? LocaleProvider.of(context).tc_identity_number
+                          : LocaleProvider.of(context).passport_number,
+                    ),
+                    _buildDisabledTextField(
+                      _identityEditingController,
+                    ),
 
-          // Phone Number
-          _buildSpacer(),
-          _buildTitle(
-            LocaleProvider.of(context).phone_number,
+                    // Name
+                    _buildSpacer(),
+                    _buildTitle(
+                      LocaleProvider.of(context).name,
+                    ),
+                    _buildDisabledTextField(
+                      _nameEditingController,
+                    ),
+
+                    // Birthday
+                    _buildSpacer(),
+                    _buildTitle(
+                      LocaleProvider.of(context).birth_date,
+                    ),
+                    _buildDisabledTextField(
+                      _birthdayEditingController,
+                    ),
+
+                    // Phone Number
+                    _buildSpacer(),
+                    _buildTitle(
+                      LocaleProvider.of(context).phone_number,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        //
+                        RbioCountryCodePicker(),
+
+                        //
+                        SizedBox(
+                          width: 5,
+                        ),
+
+                        //
+                        Expanded(
+                          child: RbioTextFormField(
+                            focusNode: phoneNumberFocus,
+                            controller: _phoneNumberEditingController,
+                            keyboardType: TextInputType.phone,
+                            textInputAction: TextInputAction.done,
+                            hintText:
+                                LocaleProvider.of(context).hint_input_password,
+                            inputFormatters: <TextInputFormatter>[
+                              TabToNextFieldTextInputFormatter(
+                                context,
+                                phoneNumberFocus,
+                                emailFocus,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // E-mail
+                    _buildSpacer(),
+                    _buildTitle(
+                      LocaleProvider.of(context).email_address,
+                    ),
+                    RbioTextFormField(
+                      focusNode: emailFocus,
+                      controller: _emailEditingController,
+                      textInputAction: TextInputAction.done,
+                      hintText: LocaleProvider.of(context).hint_input_password,
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          emailFocus,
+                          phoneNumberFocus,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-          Row(
+        ),
+
+        //
+        Container(
+          padding: EdgeInsets.only(
+            top: 8,
+          ),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
               //
-              RbioCountryCodePicker(),
-
-              //
-              SizedBox(
-                width: 5,
+              Expanded(
+                child: RbioElevatedButton(
+                  title: LocaleProvider.current.btn_cancel,
+                  onTap: () {
+                    vm.resetValues();
+                  },
+                  backColor: getIt<ITheme>().cardBackgroundColor,
+                  textColor: getIt<ITheme>().textColorSecondary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               //
+              R.sizes.wSizer12,
+
+              //
               Expanded(
-                child: RbioTextFormField(
-                  focusNode: phoneNumberFocus,
-                  controller: _phoneNumberEditingController,
-                  keyboardType: TextInputType.phone,
-                  border: RbioTextFormField.activeBorder(),
-                  textInputAction: TextInputAction.done,
-                  hintText: LocaleProvider.of(context).hint_input_password,
-                  inputFormatters: <TextInputFormatter>[
-                    TabToNextFieldTextInputFormatter(
-                      context,
-                      phoneNumberFocus,
-                      emailFocus,
-                    ),
-                  ],
+                child: RbioElevatedButton(
+                  title: LocaleProvider.current.update,
+                  onTap: () {
+                    vm.updateValues(
+                      newPhoneNumber: _phoneNumberEditingController.text.trim(),
+                      newEmail: _emailEditingController.text.trim(),
+                    );
+                  },
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
+        ),
 
-          // E-mail
-          _buildSpacer(),
-          _buildTitle(
-            LocaleProvider.of(context).email_address,
-          ),
-          RbioTextFormField(
-            focusNode: emailFocus,
-            controller: _emailEditingController,
-            border: RbioTextFormField.activeBorder(),
-            textInputAction: TextInputAction.done,
-            hintText: LocaleProvider.of(context).hint_input_password,
-            inputFormatters: <TextInputFormatter>[
-              TabToNextFieldTextInputFormatter(
-                context,
-                emailFocus,
-                phoneNumberFocus,
-              ),
-            ],
-          ),
-
-          //
-          _buildSubmitButton(vm),
-        ],
-      ),
+        //
+        R.sizes.defaultBottomPadding,
+      ],
     );
   }
 
-  Widget _buildSpacer() => SizedBox(height: 8);
+  Widget _buildSpacer() => SizedBox(height: 16);
 
   Widget _buildTitle(String title) => Padding(
-        padding: EdgeInsets.only(bottom: 4),
+        padding: EdgeInsets.only(bottom: 8, left: 14),
         child: Text(
           title,
-          style: context.xHeadline4,
+          style: context.xHeadline4.copyWith(
+            color: getIt<ITheme>().textColorPassive,
+          ),
         ),
       );
 
@@ -239,30 +341,62 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         ),
       );
 
-  Widget _buildSubmitButton(PersonalInformationScreenVm vm) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Spacer(),
-          Expanded(
-            flex: 3,
-            child: RbioElevatedButton(
-              title: LocaleProvider.current.update_information,
-              onTap: () {
-                vm.updateValues(
-                  newPhoneNumber: _phoneNumberEditingController.text.trim(),
-                  newEmail: _emailEditingController.text.trim(),
+  void _openCupertinoModalPopup(PersonalInformationScreenVm vm) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+          actions: <Widget>[
+            CupertinoActionSheetAction(
+              child: Text(
+                LocaleProvider.current.delete,
+                style: context.xHeadline4.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () async {
+                await vm.deletePhoto(context);
+              },
+            ),
+            CupertinoActionSheetAction(
+              child: Text(
+                LocaleProvider.current.gallery,
+                style: context.xHeadline4.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () async {
+                await vm.getPhotoFromSource(
+                  context,
+                  ImageSource.gallery,
                 );
               },
             ),
+            CupertinoActionSheetAction(
+              child: Text(
+                LocaleProvider.current.camera,
+                style: context.xHeadline4.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () async {
+                await vm.getPhotoFromSource(
+                  context,
+                  ImageSource.camera,
+                );
+              },
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            child: Text(
+              LocaleProvider.current.btn_cancel,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          Spacer(),
-        ],
-      ),
+        );
+      },
     );
   }
 }

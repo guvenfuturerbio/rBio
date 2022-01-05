@@ -81,11 +81,14 @@ class MedicationScreen extends StatelessWidget {
   Widget _buildFab(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Atom.to(PagePaths.MEDICATION_PERIOD, queryParameters: {
-          'drugResult': jsonEncode(
-              DrugResultModel(name: remindable.toShortString()).toJson()),
-          'remindable': remindable.toParseableString()
-        });
+        Atom.to(
+          PagePaths.MEDICATION_PERIOD,
+          queryParameters: {
+            'drugResult': jsonEncode(
+                DrugResultModel(name: remindable.toShortString()).toJson()),
+            'remindable': remindable.toParseableString()
+          },
+        );
       },
       child: Container(
         height: double.infinity,

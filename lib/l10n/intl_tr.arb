@@ -745,5 +745,7 @@
   "passwords_not_match": "Girilen şifreler eşleşmiyor.",
   "select_day_from": "Gün seçiniz",
   "select_day_to": "Diğer günü seçiniz",
-  "healthcare_employee": "Sağlık Çalışanı"
+  "healthcare_employee": "Sağlık Çalışanı",
+  "update": "Güncelle",
+  "change": "Değiştir"
 }

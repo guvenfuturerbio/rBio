@@ -26,6 +26,12 @@ class Utils {
     return _instance;
   }
 
+  String get getCacheProfileImageStr => getIt<ISharedPreferencesManager>()
+      .getString(SharedPreferencesKeys.PROFILE_IMAGE);
+  ImageProvider<Object> get getCacheProfileImage => getCacheProfileImageStr != null
+      ? MemoryImage(base64.decode(getCacheProfileImageStr))
+      : NetworkImage(R.image.circlevatar);
+
   // #region hideKeyboard
   void hideKeyboard(BuildContext context) {
     final currentFocus = FocusScope.of(context);

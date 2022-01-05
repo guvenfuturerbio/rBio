@@ -68,10 +68,10 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
     });
 
     // Daha sonra api list içerisindeki tüm itemlardan firebase içerisinde olanları güncelliyoruz.
-    result.forEach((chatPerson) {
-      streamList.docs.forEach((firebaseItem) {
+    for (var chatPerson in result) {
+      for (var firebaseItem in streamList.docs) {
         final fbData = firebaseItem.data();
-        final fbUsers = fbData['users'] as Map;
+        final fbUsers = fbData['users'] as Map<dynamic, dynamic>;
         if (fbUsers != null && fbUsers.containsKey(chatPerson.id)) {
           chatPerson.lastMessage = _getLastMessage(fbData);
           chatPerson.lastMessageType = _getLastMessageType(fbData);
@@ -80,8 +80,8 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
           chatPerson.hasRead = _getHasRead(fbData);
           chatPerson.otherHasRead = _getOtherHasRead(fbData, chatPerson.id);
         }
-      });
-    });
+      }
+    }
 
     return result;
   }

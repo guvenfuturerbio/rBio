@@ -76,6 +76,11 @@ class VRouterRoutes {
     ),
 
     VWidget(
+      path: PagePaths.PERSONAL_INFORMATION,
+      widget: PersonalInformationScreen(),
+    ),
+
+    VWidget(
       path: PagePaths.DEVICES,
       widget: DevicesScreen(),
     ),
@@ -183,11 +188,6 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.FOR_YOU_SUB_CATEGORIES_DETAIL,
       widget: ForYouSubCategoriesDetailScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.PERSONAL_INFORMATION,
-      widget: PersonalInformationScreen(),
     ),
 
     VWidget(
