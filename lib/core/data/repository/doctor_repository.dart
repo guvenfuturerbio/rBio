@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/domain/blood_pressure_model.dart';
 
 import '../../../model/model.dart';
 import '../../core.dart';
@@ -43,7 +44,7 @@ class DoctorRepository {
   Future<List<ScaleModel>> getMyPatientScale(
           int patientId, GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMyPatientScale(patientId, getMyPatientFilter);
-  Future<List<BloodGlucose>> getMyPatientBloodPressure(
+  Future<List<BloodPressureModel>> getMyPatientBloodPressure(
           int patientId, GetMyPatientFilter getMyPatientFilter) =>
       apiService.getMyPatientBloodPressure(patientId, getMyPatientFilter);
 }

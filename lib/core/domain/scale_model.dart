@@ -162,8 +162,10 @@ class ScaleModel extends HiveObject {
     height = int.parse(getIt<ProfileStorageImpl>().getFirst().height);
 
     List<String> nums =
-        getIt<ProfileStorageImpl>().getFirst().birthDate.split(".");
-    var yearOfBirth = int.parse(nums[2]);
+        getIt<ProfileStorageImpl>().getFirst()?.birthDate == null
+            ? null
+            : getIt<ProfileStorageImpl>().getFirst()?.birthDate?.split(".");
+    var yearOfBirth = nums == null ? 2021 : int.parse(nums[2]);
 
     age = DateTime.now().year - yearOfBirth < 15
         ? 15

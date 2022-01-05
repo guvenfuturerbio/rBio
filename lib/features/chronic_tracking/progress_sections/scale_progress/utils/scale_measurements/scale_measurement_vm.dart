@@ -27,6 +27,8 @@ class ScaleMeasurementViewModel {
 
   int get age => scaleModel.age;
 
+  set age(rhs) => scaleModel.age = (DateTime.now().year - rhs);
+
   int get height => scaleModel.height;
 
   int get gender => scaleModel.gender;

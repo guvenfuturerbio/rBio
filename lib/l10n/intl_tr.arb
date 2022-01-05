@@ -733,6 +733,7 @@
 
   "bg_measurement_tracking": "Kan Şekeri Takibi",
   "bmi_tracking": "Vücut Ölçüm Takibi",
+  "bp_tracking": "Tansiyon Takibi",
   "blood_pressure_tracking": "Tansiyon Takibi",
   "treatment_process": "Tedavi Süreci",
   "critical_metrics": "Kritik ölçümler",

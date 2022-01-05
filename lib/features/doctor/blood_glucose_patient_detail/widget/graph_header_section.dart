@@ -36,7 +36,9 @@ class _GraphHeaderSection extends StatelessWidget {
 
         //
         Container(
-          height: context.HEIGHT * 0.25,
+          height: MediaQuery.of(context).orientation == Orientation.portrait
+              ? context.HEIGHT * 0.25
+              : context.HEIGHT * 0.5,
           margin: EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: getIt<ITheme>().cardBackgroundColor,
@@ -68,20 +70,21 @@ class _GraphHeaderSection extends StatelessWidget {
         ),
 
         //
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(4),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return _CustomBarPie(
-                width: constraints.maxWidth,
-                height: (context.HEIGHT * 0.06) * context.TEXTSCALE,
-              );
-            }),
+        if (MediaQuery.of(context).orientation == Orientation.portrait)
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(4),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                return _CustomBarPie(
+                  width: constraints.maxWidth,
+                  height: (context.HEIGHT * 0.06) * context.TEXTSCALE,
+                );
+              }),
+            ),
           ),
-        ),
       ],
     );
   }

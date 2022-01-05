@@ -39,11 +39,12 @@ class BpProgressPage extends StatelessWidget {
                       ),
                       SizedBox(
                         height: context.HEIGHT * .1,
-                        child: Row(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          runSpacing: 25,
+                          spacing: 25,
                           children: [
-                            Spacer(),
                             _infoSection(context),
-                            Spacer(flex: 9),
                             ElevatedButton(
                               onPressed: () => value.showFilter(context),
                               style: ElevatedButton.styleFrom(
@@ -64,7 +65,6 @@ class BpProgressPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Spacer(),
                           ],
                         ),
                       ),
@@ -89,54 +89,57 @@ class BpProgressPage extends StatelessWidget {
     );
   }
 
-  Column _infoSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: context.WIDTH * .06,
-              child: Divider(
-                thickness: 3,
-                color: Colors.red[900],
+  SizedBox _infoSection(BuildContext context) {
+    return SizedBox(
+      width: context.WIDTH * .3 * context.TEXTSCALE,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: context.WIDTH * .06,
+                child: Divider(
+                  thickness: 3,
+                  color: Colors.red[900],
+                ),
               ),
-            ),
-            SizedBox(width: context.WIDTH * .02),
-            Text(LocaleProvider.current.sys)
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: context.WIDTH * .06,
-              child: Divider(
-                thickness: 3,
-                color: Colors.amber,
+              SizedBox(width: context.WIDTH * .02),
+              Text(LocaleProvider.current.sys)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: context.WIDTH * .06,
+                child: Divider(
+                  thickness: 3,
+                  color: Colors.amber,
+                ),
               ),
-            ),
-            SizedBox(width: context.WIDTH * .02),
-            Text(LocaleProvider.current.dia)
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: context.WIDTH * .06,
-              child: Divider(
-                thickness: 3,
-                color: Colors.lime[800],
+              SizedBox(width: context.WIDTH * .02),
+              Text(LocaleProvider.current.dia)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: context.WIDTH * .06,
+                child: Divider(
+                  thickness: 3,
+                  color: Colors.lime[800],
+                ),
               ),
-            ),
-            SizedBox(width: context.WIDTH * .02),
-            Text(LocaleProvider.current.pulse)
-          ],
-        ),
-      ],
+              SizedBox(width: context.WIDTH * .02),
+              Text(LocaleProvider.current.pulse)
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

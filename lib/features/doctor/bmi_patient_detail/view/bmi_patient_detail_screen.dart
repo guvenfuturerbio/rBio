@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dropdown_banner/dropdown_banner.dart';
@@ -126,19 +127,21 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
               ),
 
               //
-              SizedBox(
-                height: context.HEIGHT * .3,
-                child: _MeasurementList(
-                  scaleMeasurements: vm.scaleMeasurement,
-                  fetchScrolledData: vm.fetchScrolledData,
-                  scrollController: _controller,
-                  useStickyGroupSeparatorsValue:
-                      vm.selected == LocaleProvider.current.daily ||
-                              vm.selected == LocaleProvider.current.specific
-                          ? true
-                          : false,
+              if (MediaQuery.of(context).orientation == Orientation.portrait)
+                SizedBox(
+                  height: context.HEIGHT * .3,
+                  child: _MeasurementList(
+                    scaleMeasurements: vm.scaleMeasurement,
+                    fetchScrolledData: vm.fetchScrolledData,
+                    scrollController: _controller,
+                    useStickyGroupSeparatorsValue:
+                        vm.selected == LocaleProvider.current.daily ||
+                                vm.selected == LocaleProvider.current.specific
+                            ? true
+                            : false,
+                    selected: vm.currentScaleType,
+                  ),
                 ),
-              ),
             ] else ...[
               Shimmer.fromColors(
                 child: SizedBox(

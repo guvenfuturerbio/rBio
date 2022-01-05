@@ -52,7 +52,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
         return Container(
           alignment: Alignment.center,
           width: double.infinity,
-          height: (context.HEIGHT * .05) * context.TEXTSCALE,
+          height: (context.HEIGHT * .07) * context.TEXTSCALE,
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
@@ -119,7 +119,7 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
           borderRadius: const BorderRadius.all(Radius.circular(30.0)),
         ),
         padding: const EdgeInsets.all(10),
-        height: context.HEIGHT * .07 * context.TEXTSCALE,
+        height: context.HEIGHT * .1 * context.TEXTSCALE,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,8 +129,8 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    width: (context.HEIGHT * .07) * context.TEXTSCALE,
-                    height: (context.HEIGHT * .07) * context.TEXTSCALE,
+                    width: (context.HEIGHT * .1) * context.TEXTSCALE,
+                    height: (context.HEIGHT * .1) * context.TEXTSCALE,
                     decoration: measurementListBoxDecoration(
                         bgMeasurementViewModel), //             <--- BoxDecoration here
                     child: Column(
@@ -139,11 +139,11 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                       children: [
                         Text(
                           bgMeasurementViewModel.result,
-                          style: context.xHeadline1,
+                          style: context.xHeadline2,
                         ),
                         Text(
                           "mg/dL",
-                          style: context.xBodyText1,
+                          style: context.xCaption,
                         ),
                       ],
                     ),
@@ -155,8 +155,8 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                       children: [
                         Container(
                           margin: EdgeInsets.only(left: 8, right: 16),
-                          width: (context.HEIGHT * .03) * context.TEXTSCALE,
-                          height: (context.HEIGHT * .03) * context.TEXTSCALE,
+                          width: (context.HEIGHT * .05) * context.TEXTSCALE,
+                          height: (context.HEIGHT * .05) * context.TEXTSCALE,
                           child:
                               SvgPicture.asset(bgMeasurementViewModel.tag == 1
                                   ? R.image.beforemeal_icon_black

@@ -156,16 +156,16 @@ class DoctorApiServiceImpl extends DoctorApiService {
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum
-          .map((item) => BloodGlucose.fromJson(item))
-          .cast<BloodGlucose>()
+          .map((item) => ScaleModel.fromMap(item))
+          .cast<ScaleModel>()
           .toList();
     } else {
-      throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
+      throw Exception('/getMyPatientScale : ${response.isSuccessful}');
     }
   }
 
   @override
-  Future<List<BloodGlucose>> getMyPatientBloodPressure(
+  Future<List<BloodPressureModel>> getMyPatientBloodPressure(
       int patientId, GetMyPatientFilter getMyPatientFilter) async {
     final response = await helper.postGuven(
         R.endpoints.dc_getMyPatientPressure(patientId),
