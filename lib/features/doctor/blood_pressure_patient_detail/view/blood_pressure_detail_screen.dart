@@ -1,20 +1,18 @@
 import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
-import 'package:onedosehealth/features/doctor/blood_pressure_patient_detail/viewmodel/blood_pressure_vm.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../core/core.dart';
-import '../../../../model/model.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
-
 import '../../../../../core/core.dart';
+import '../../../../core/core.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
+import '../viewmodel/blood_pressure_vm.dart';
 
 part '../widget/graph_header_section.dart';
 part '../widget/measurement_list.dart';

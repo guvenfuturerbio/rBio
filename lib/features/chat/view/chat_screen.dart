@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_date/dart_date.dart';
@@ -30,6 +32,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   ChatPerson otherPerson;
+  StreamSubscription<bool> keyboardSubscription;
 
   FocusNode _focusNode;
   ScrollController _scrollController;
@@ -53,6 +56,19 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollController = ScrollController();
     firstLoadNotifier = ValueNotifier(false);
 
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      if (visible) {
+        Future.delayed(
+          Duration(milliseconds: 50),
+          () {
+            _scrollAnimateToEnd();
+          },
+        );
+      }
+    });
+
     super.initState();
   }
 
@@ -62,6 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _textEditingController.dispose();
     _scrollController.dispose();
     firstLoadNotifier.dispose();
+    keyboardSubscription.cancel();
     super.dispose();
   }
 
@@ -173,10 +190,10 @@ class _ChatScreenState extends State<ChatScreen> {
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) {
         Future.delayed(
-          Duration(milliseconds: 50),
+          Duration(milliseconds: 100),
           () {
             _scrollController.jumpTo(
-                _scrollController.position.maxScrollExtent + topPadding + 200);
+                _scrollController.position.maxScrollExtent + topPadding + 300);
           },
         );
       });
@@ -219,7 +236,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     focusNode: _focusNode,
                     controller: _textEditingController,
                     keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.go,
+                    textInputAction: TextInputAction.done,
+                    contentPadding: const EdgeInsets.only(
+                        left: 20, right: 40, top: 10, bottom: 10),
                     hintText: LocaleProvider.current.send_message,
                     onFieldSubmitted: (value) {
                       _sendMessage(chatVm);
