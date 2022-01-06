@@ -52,6 +52,7 @@ class HomeVm extends ChangeNotifier {
               PagePaths.CREATE_APPOINTMENT,
               queryParameters: {
                 'forOnline': false.toString(),
+                'fromSearch': false.toString(),
               },
             );
           },
@@ -62,6 +63,7 @@ class HomeVm extends ChangeNotifier {
               PagePaths.CREATE_APPOINTMENT,
               queryParameters: {
                 'forOnline': true.toString(),
+                'fromSearch': false.toString(),
               },
             );
           }
@@ -303,6 +305,7 @@ class HomeVm extends ChangeNotifier {
                     PagePaths.CREATE_APPOINTMENT,
                     queryParameters: {
                       'forOnline': false.toString(),
+                      'fromSearch': false.toString(),
                     },
                   );
                 }
@@ -331,6 +334,7 @@ class HomeVm extends ChangeNotifier {
                     PagePaths.CREATE_APPOINTMENT,
                     queryParameters: {
                       'forOnline': true.toString(),
+                      'fromSearch': false.toString(),
                     },
                   );
                 }
