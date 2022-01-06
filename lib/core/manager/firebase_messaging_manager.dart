@@ -8,13 +8,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import '../../features/chat/model/chat_person.dart';
 import '../../model/model.dart';
 import '../core.dart';
 
 // #region Top Level Variabled and Functions
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await FlutterAppBadger.updateBadgeCount(1);
+
   await Firebase.initializeApp();
 }
 

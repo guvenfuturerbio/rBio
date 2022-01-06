@@ -510,6 +510,8 @@ PODS:
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
+  - flutter_app_badger (0.0.1):
+    - Flutter
   - flutter_appavailability (0.0.1):
     - Flutter
   - flutter_facebook_sdk (0.0.1):
@@ -702,6 +704,7 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_app_badger (from `.symlinks/plugins/flutter_app_badger/ios`)
   - flutter_appavailability (from `.symlinks/plugins/flutter_appavailability/ios`)
   - flutter_facebook_sdk (from `.symlinks/plugins/flutter_facebook_sdk/ios`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
@@ -801,6 +804,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_app_badger:
+    :path: ".symlinks/plugins/flutter_app_badger/ios"
   flutter_appavailability:
     :path: ".symlinks/plugins/flutter_appavailability/ios"
   flutter_facebook_sdk:
@@ -895,6 +900,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 82c4a48638f53f7b184f3cc9f6cd2cbe533ab316
   FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_app_badger: 65de4d6f0c34a891df49e6cfb8a1c0496426fa68
   flutter_appavailability: ebf8f85abea44436d1262fcde8a4e64b2534b01a
   flutter_facebook_sdk: 82c8d10c6226b66de5459d6115ab02d1ecd66cd9
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
