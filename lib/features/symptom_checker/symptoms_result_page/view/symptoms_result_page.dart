@@ -24,11 +24,11 @@ class SymptomsResultPage extends StatefulWidget {
 }
 
 class _SymptomsResultPageState extends State<SymptomsResultPage> {
-  @override
+  /*@override
   void dispose() {
     RbioConfig.of(context).listBodySympRsp = null;
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -181,40 +181,56 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                                       .id ==
                                                   null) {
                                                 Atom.to(
-                                                  PagePaths.RESOURCES,
+                                                  PagePaths.CREATE_APPOINTMENT,
                                                   queryParameters: {
-                                                    'tenantId': '3',
-                                                    'departmentId': '379',
+                                                    'forOnline':
+                                                        true.toString(),
+                                                    'fromSearch':
+                                                        false.toString(),
+                                                    'fromSymptom':
+                                                        true.toString(),
+                                                    'tenantId': '256',
+                                                    'departmentId': '132',
                                                     'departmentName':
                                                         LocaleProvider.of(
                                                                 context)
                                                             .free_consultation_appointment,
-                                                    'fromOnlineAppo': 'false',
                                                   },
                                                 );
                                               } else {
-                                                Atom.to(PagePaths.RESOURCES,
+                                                Atom.to(
+                                                    PagePaths
+                                                        .CREATE_APPOINTMENT,
                                                     queryParameters: {
-                                                      'tenantId': '4',
+                                                      'forOnline':
+                                                          false.toString(),
+                                                      'fromSearch':
+                                                          false.toString(),
+                                                      'fromSymptom':
+                                                          true.toString(),
+                                                      'tenantId': '1',
                                                       'departmentId':
                                                           '${value.toNavigateDoctorsPageId}',
                                                       'departmentName': value
                                                           .specialisations[
                                                               index]
                                                           .name,
-                                                      'fromOnlineAppo': 'false',
                                                     });
                                               }
                                             } else {
                                               Atom.to(
-                                                PagePaths.RESOURCES,
+                                                PagePaths.CREATE_APPOINTMENT,
                                                 queryParameters: {
-                                                  'tenantId': '3',
-                                                  'departmentId': '379',
+                                                  'forOnline': true.toString(),
+                                                  'fromSearch':
+                                                      false.toString(),
+                                                  'fromSymptom':
+                                                      true.toString(),
+                                                  'tenantId': '256',
+                                                  'departmentId': '132',
                                                   'departmentName': LocaleProvider
                                                           .of(context)
                                                       .free_consultation_appointment,
-                                                  'fromOnlineAppo': 'false',
                                                 },
                                               );
                                             }
