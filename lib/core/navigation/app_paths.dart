@@ -1,3 +1,4 @@
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -247,20 +248,26 @@ class VRouterRoutes {
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
     ),
-
-    VWidget(
-      path: PagePaths.CONSULTATION,
-      widget: ConsultationScreen(),
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.CHAT,
-          widget: ChangeNotifierProvider<ChatVm>(
-            create: (context) => ChatVm(),
-            child: ChatScreen(),
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          print(FlutterAppBadger.isAppBadgeSupported());
+          await FlutterAppBadger.removeBadge();
+        },
+        stackedRoutes: [
+          VWidget(
+            path: PagePaths.CONSULTATION,
+            widget: ConsultationScreen(),
+            stackedRoutes: [
+              VWidget(
+                path: PagePaths.CHAT,
+                widget: ChangeNotifierProvider<ChatVm>(
+                  create: (context) => ChatVm(),
+                  child: ChatScreen(),
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
-    ),
+        ]),
 
     // Symptom Checker
     VGuard(

@@ -22,7 +22,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> checkChatNotification(RemoteMessage message) async {
-  final messageData = message.data;
+  final messageData = message?.data;
   if (messageData != null) {
     final type = messageData['type'];
     if (type == NotificationType.chat.xRawValue) {
