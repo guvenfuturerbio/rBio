@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/core/notifiers/notification_badge_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -105,18 +106,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            child2: IconButton(
-              icon: Container(
-                color: Colors.transparent,
-                child: SvgPicture.asset(
-                  R.image.chat_icon,
-                  color: Colors.white,
-                  width: R.sizes.iconSize,
-                ),
+            child2: SizedBox(
+              height: 50,
+              width: 50,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  //
+                  Positioned.fill(
+                    child: IconButton(
+                      icon: Container(
+                        color: Colors.transparent,
+                        child: SvgPicture.asset(
+                          R.image.chat_icon,
+                          color: Colors.white,
+                          width: R.sizes.iconSize,
+                        ),
+                      ),
+                      onPressed: () {
+                        vm.openConsultation();
+                      },
+                    ),
+                  ),
+
+                  //
+                  Consumer<NotificationBadgeNotifier>(
+                    builder: (context, badgeNotifier, child) {
+                      if (badgeNotifier.value) {
+                        return Align(
+                          alignment: Alignment.topRight,
+                          child: CircleAvatar(
+                            backgroundColor: R.color.darkRed,
+                            radius: 9,
+                          ),
+                        );
+                      }
+
+                      return SizedBox();
+                    },
+                  ),
+                ],
               ),
-              onPressed: () {
-                vm.openConsultation();
-              },
             ),
           ),
         ),

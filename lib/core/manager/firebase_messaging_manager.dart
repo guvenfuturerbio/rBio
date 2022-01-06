@@ -8,14 +8,31 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/chat/model/chat_person.dart';
 import '../../model/model.dart';
 import '../core.dart';
+import '../notifiers/notification_badge_notifier.dart';
 
 // #region Top Level Variabled and Functions
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  await checkChatNotification(message);
+}
+
+Future<void> checkChatNotification(RemoteMessage message) async {
+  final messageData = message.data;
+  if (messageData != null) {
+    final type = messageData['type'];
+    if (type == NotificationType.chat.xRawValue) {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.setBool(
+        SharedPreferencesKeys.CHAT_NOTIFICATION.xRawValue,
+        true,
+      );
+    }
+  }
 }
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -49,7 +66,7 @@ class FirebaseMessagingManager {
   static void mainInit() {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
-
+ 
   Future<void> init() async {
     if (!kIsWeb) {
       const AndroidInitializationSettings initializationSettingsAndroid =
@@ -112,9 +129,9 @@ class FirebaseMessagingManager {
           );
 
           // Uygulama Ekranda Açıkken
-          FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-            if (!kIsWeb) {
-              if (Atom.isAndroid && message != null) {
+          FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+            if (!kIsWeb && message != null) {
+              if (Atom.isAndroid) {
                 ChatPerson otherPerson =
                     ChatPerson.fromMap(json.decode(message.data['chatPerson']));
 
@@ -122,6 +139,9 @@ class FirebaseMessagingManager {
                     Atom.url.contains(otherPerson.id)))
                   showNotification(message);
               }
+
+              await checkChatNotification(message);
+              await getIt<NotificationBadgeNotifier>().changeValue(true);
             }
           });
 
