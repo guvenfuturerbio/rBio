@@ -106,20 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-<<<<<<< HEAD
-            child2: IconButton(
-              icon: Container(
-                color: Colors.transparent,
-                child: SvgPicture.asset(
-                  R.image.search_icon,
-                  color: Colors.white,
-                  width: R.sizes.iconSize,
-                ),
-              ),
-              onPressed: () {
-                Atom.to(PagePaths.SEARCH_PAGE);
-              },
-=======
             child2: SizedBox(
               height: 50,
               width: 50,
@@ -161,7 +147,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
->>>>>>> haydar
             ),
           ),
         ),
