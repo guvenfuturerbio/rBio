@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/notifiers/notification_badge_notifier.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:dart_date/dart_date.dart';
@@ -16,6 +17,7 @@ class DoctorConsultationVm extends ChangeNotifier with RbioVm {
   Stream<QuerySnapshot<Map<String, dynamic>>> stream;
 
   DoctorConsultationVm(this.mContext) {
+    getIt<NotificationBadgeNotifier>().changeValue(false);
     fetchAll();
   }
 

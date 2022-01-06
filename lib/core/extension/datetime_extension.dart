@@ -35,4 +35,19 @@ extension BuildContextExtensions on DateTime {
   /// Format : HH:MM
   String xFormatTime8([dynamic locale]) =>
       DateFormat("HH:MM", locale).format(this);
+
+  bool xIsSameDate(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
+  }
+
+  bool xIsSameDateTime(DateTime other) {
+    return year == other.year &&
+        month == other.month &&
+        day == other.day &&
+        hour == other.hour &&
+        minute == other.minute &&
+        second == other.second &&
+        millisecond == other.millisecond &&
+        microsecond == other.microsecond;
+  }
 }
