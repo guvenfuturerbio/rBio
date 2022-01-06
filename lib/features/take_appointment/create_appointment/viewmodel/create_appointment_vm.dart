@@ -11,6 +11,7 @@ enum Fields { DEPARTMENT, TENANTS, DOCTORS, RELATIVE }
 class CreateAppointmentVm extends ChangeNotifier {
   BuildContext mContext;
   bool forOnline;
+  bool fromSearch;
 
   List<FilterTenantsResponse> _tenantsFilterResponse;
   List<FilterDepartmentsResponse> _filterDepartmentsResponse;
@@ -79,12 +80,16 @@ class CreateAppointmentVm extends ChangeNotifier {
       this._patientAppointments;
   // #endregion
 
-  CreateAppointmentVm({
-    @required BuildContext context,
-    @required bool forOnline,
-  }) {
+  CreateAppointmentVm(
+      {@required BuildContext context,
+      @required bool forOnline,
+      @required bool fromSearch,
+      int tenantId,
+      int departmentId,
+      int resourceId}) {
     this.mContext = context;
     this.forOnline = forOnline;
+    this.fromSearch = fromSearch;
     this._patientId = getIt<UserNotifier>().getPatient().id;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
@@ -108,7 +113,39 @@ class CreateAppointmentVm extends ChangeNotifier {
       if (getIt<UserNotifier>().canAccessHospital()) {
         fetchPatientAppointments(context);
       }
+
+      if (fromSearch) {
+        fillFromSearch(tenantId, departmentId, resourceId);
+      } else {
+        print('EYC - ÇALIŞTIM');
+        clearFunc(Fields.TENANTS);
+      }
     });
+  }
+
+  Future<void> fillFromSearch(
+      int tenantId, int departmentId, int resourceId) async {
+    try {
+      for (var tenant in tenantsFilterResponse) {
+        if (tenant.id == tenantId) {
+          await hospitalSelection(tenant);
+        }
+      }
+
+      for (var department in filterDepartmentResponse) {
+        if (department.id == departmentId) {
+          await departmentSelection(department);
+        }
+      }
+
+      for (var doctor in filterResourcesResponse) {
+        if (doctor.id == resourceId) {
+          doctorSelection(doctor);
+        }
+      }
+    } catch (e) {
+      LoggerUtils.instance.e("fillFromSearch: $e");
+    }
   }
 
   Future<void> fillFromFavorites(int index) async {

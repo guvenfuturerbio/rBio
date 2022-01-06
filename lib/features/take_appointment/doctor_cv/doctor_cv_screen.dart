@@ -12,7 +12,6 @@ class DoctorCvScreen extends StatefulWidget {
   int resourceId;
   String doctorName;
   String departmentName;
-  bool fromOnlineSelect;
 
   DoctorCvScreen({
     this.tenantId,
@@ -20,7 +19,6 @@ class DoctorCvScreen extends StatefulWidget {
     this.resourceId,
     this.doctorName,
     this.departmentName,
-    this.fromOnlineSelect,
     this.doctorNameNoTitle,
   });
 
@@ -40,8 +38,6 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
       widget.doctorName = Uri.decodeFull(Atom.queryParameters['doctorName']);
       widget.departmentName =
           Uri.decodeFull(Atom.queryParameters['departmentName']);
-      widget.fromOnlineSelect =
-          Atom.queryParameters['fromOnlineSelect'] == "true" ? true : false;
     } catch (_) {
       return RbioRouteError();
     }
@@ -167,15 +163,13 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                   );
 
                   Atom.to(
-                    PagePaths.EVENTS,
+                    PagePaths.CREATE_APPOINTMENT,
                     queryParameters: {
-                      'fromOnlineSelect': widget.fromOnlineSelect.toString(),
+                      'fromOnline': 'false',
+                      'fromSearch': 'true',
                       'departmentId': widget.departmentId.toString(),
-                      'departmentName': Uri.encodeFull(widget.departmentName),
-                      'doctorName': Uri.encodeFull(widget.doctorName),
                       'resourceId': widget.resourceId.toString(),
                       'tenantId': widget.tenantId.toString(),
-                      'imageUrl': value.imageUrl
                     },
                   );
                 },

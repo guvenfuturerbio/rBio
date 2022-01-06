@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/shared/filter_resources_response.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -10,6 +13,12 @@ part '../widgets/history_doctor_card.dart';
 // ignore: must_be_immutable
 class CreateAppointmentScreen extends StatelessWidget {
   bool forOnline;
+  bool fromSearch = false;
+  int departmentId;
+  //String departmentName;
+  //String doctorName;
+  int resourceId;
+  int tenantId;
 
   CreateAppointmentScreen({Key key}) : super(key: key);
 
@@ -17,15 +26,27 @@ class CreateAppointmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       forOnline = Atom.queryParameters['forOnline'] == 'true';
+      if (Atom.queryParameters['fromSearch'] == 'true') {
+        this.fromSearch = true;
+        this.tenantId = int.parse(Atom.queryParameters['tenantId']) ?? 0;
+        this.departmentId =
+            int.parse(Atom.queryParameters['departmentId']) ?? 0;
+        this.resourceId = int.parse(Atom.queryParameters['resourceId']) ?? 0;
+      } else {
+        fromSearch = false;
+      }
     } catch (_) {
       return RbioRouteError();
     }
 
     return ChangeNotifierProvider<CreateAppointmentVm>(
       create: (context) => CreateAppointmentVm(
-        context: context,
-        forOnline: forOnline,
-      ),
+          context: context,
+          forOnline: forOnline,
+          fromSearch: fromSearch,
+          tenantId: tenantId,
+          departmentId: departmentId,
+          resourceId: resourceId),
       child: Consumer<CreateAppointmentVm>(
         builder: (
           BuildContext context,

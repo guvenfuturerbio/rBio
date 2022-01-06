@@ -1,4 +1,5 @@
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:onedosehealth/features/search/search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -93,6 +94,11 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.SELECTED_DEVICE,
       widget: SelectedDevicesScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.SEARCH_PAGE,
+      widget: SearchScreen(),
     ),
 
     // Create Appointment
@@ -356,7 +362,7 @@ class VRouterRoutes {
         VWidget(
           path: PagePaths.STRIP_PAGE,
           widget: StripScreen(),
-        ),
+        )
       ],
     ),
 
@@ -481,6 +487,9 @@ class PagePaths {
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
+
+  //Search
+  static const SEARCH_PAGE = '/search-page';
 
   //Mediminder
   static const MEDIMINDER_INITIAL = '/mediminder';
