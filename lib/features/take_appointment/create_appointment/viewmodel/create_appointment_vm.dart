@@ -12,6 +12,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   BuildContext mContext;
   bool forOnline;
   bool fromSearch;
+  bool fromSymptom;
 
   List<FilterTenantsResponse> _tenantsFilterResponse;
   List<FilterDepartmentsResponse> _filterDepartmentsResponse;
@@ -84,12 +85,14 @@ class CreateAppointmentVm extends ChangeNotifier {
       {@required BuildContext context,
       @required bool forOnline,
       @required bool fromSearch,
+      @required bool fromSymptom,
       int tenantId,
       int departmentId,
       int resourceId}) {
     this.mContext = context;
     this.forOnline = forOnline;
     this.fromSearch = fromSearch;
+    this.fromSymptom = fromSymptom;
     this._patientId = getIt<UserNotifier>().getPatient().id;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
@@ -117,10 +120,37 @@ class CreateAppointmentVm extends ChangeNotifier {
       if (fromSearch) {
         fillFromSearch(tenantId, departmentId, resourceId);
       } else {
-        print('EYC - ÇALIŞTIM');
-        clearFunc(Fields.TENANTS);
+        forOnline
+            ? print("For online!")
+            : fromSymptom
+                ? print("From smyptom!")
+                : clearFunc(Fields.TENANTS);
+      }
+
+      if (fromSymptom) {
+        fillFromSymptom(tenantId, departmentId);
       }
     });
+  }
+
+  Future<void> fillFromSymptom(int tenantId, int departmentId) async {
+    try {
+      if (!forOnline) {
+        for (var tenant in tenantsFilterResponse) {
+          if (tenant.id == tenantId) {
+            await hospitalSelection(tenant);
+          }
+        }
+      }
+
+      for (var department in filterDepartmentResponse) {
+        if (department.id == departmentId) {
+          await departmentSelection(department);
+        }
+      }
+    } catch (e) {
+      LoggerUtils.instance.e("fillFromSymptom: $e");
+    }
   }
 
   Future<void> fillFromSearch(
@@ -161,6 +191,8 @@ class CreateAppointmentVm extends ChangeNotifier {
       for (var department in filterDepartmentResponse) {
         if (department.id ==
             _holderForFavorites[index].resources.first.departmentId) {
+          print(
+              'departman : ${department.title} --> departmanId : ${department.id}');
           await departmentSelection(department);
         }
       }

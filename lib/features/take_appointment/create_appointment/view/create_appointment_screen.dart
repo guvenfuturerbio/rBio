@@ -11,6 +11,7 @@ part '../widgets/history_doctor_card.dart';
 class CreateAppointmentScreen extends StatelessWidget {
   bool forOnline;
   bool fromSearch = false;
+  bool fromSymptom = false;
   int departmentId;
   //String departmentName;
   //String doctorName;
@@ -32,6 +33,15 @@ class CreateAppointmentScreen extends StatelessWidget {
       } else {
         fromSearch = false;
       }
+
+      if (Atom.queryParameters['fromSymptom'] == 'true') {
+        fromSymptom = true;
+        this.tenantId = int.parse(Atom.queryParameters['tenantId']) ?? 0;
+        this.departmentId =
+            int.parse(Atom.queryParameters['departmentId']) ?? 0;
+      } else {
+        fromSymptom = false;
+      }
     } catch (_) {
       return RbioRouteError();
     }
@@ -41,6 +51,7 @@ class CreateAppointmentScreen extends StatelessWidget {
           context: context,
           forOnline: forOnline,
           fromSearch: fromSearch,
+          fromSymptom: fromSymptom,
           tenantId: tenantId,
           departmentId: departmentId,
           resourceId: resourceId),

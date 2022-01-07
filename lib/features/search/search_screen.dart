@@ -1,18 +1,7 @@
-import 'dart:convert';
-
-import 'package:atom/atom.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/constants/constants.dart';
-import 'package:onedosehealth/core/enums/loading_progress.dart';
-import 'package:onedosehealth/core/events/success_events.dart';
-import 'package:onedosehealth/core/manager/analytics_manager.dart';
-import 'package:onedosehealth/core/navigation/app_paths.dart';
-import 'package:onedosehealth/core/widgets/rbio_appbar.dart';
-import 'package:onedosehealth/core/widgets/rbio_loading.dart';
-import 'package:onedosehealth/core/widgets/rbio_scaffold.dart';
-import 'package:onedosehealth/generated/l10n.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/model.dart';
@@ -46,50 +35,15 @@ class _SearchScreenState extends State<SearchScreen> {
 
   PreferredSize _buildAppBar(SearchScreenVm value) {
     return RbioAppBar(
-      title: Container(
-        margin: EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5),
-        padding: EdgeInsets.only(left: 10),
+      title: SizedBox(
         width: double.infinity,
-        child: TextFormField(
-          cursorColor: R.color.blue,
-          autofocus: false,
+        child: RbioTextFormField(
+          hintText: LocaleProvider.of(context).search_hint,
           onChanged: (text) {
             value.setSearchText(text);
           },
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(
-              left: 10,
-              top: 10,
-              bottom: 15,
-            ),
-            border: InputBorder.none,
-            hintText: LocaleProvider.of(context).search_hint,
-            hintStyle: TextStyle(color: Color(0xFF969696), fontSize: 14),
-            labelStyle: TextStyle(color: R.color.black, fontSize: 14),
-            suffixIcon: Icon(
-              Icons.search,
-              color: Color(0xFF969696),
-            ),
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(200),
         ),
       ),
-      leading: IconButton(
-        icon: SvgPicture.asset(R.image.ic_back_white),
-        padding: EdgeInsets.only(top: Atom.isWeb ? 8 : 4),
-        onPressed: () {
-          Atom.historyBack();
-        },
-      ),
-      actions: [
-        Icon(
-          Icons.circle,
-          color: Colors.transparent,
-        )
-      ],
     );
   }
 
@@ -125,13 +79,8 @@ class _SearchScreenState extends State<SearchScreen> {
   ) {
     if (posts.isEmpty && value.filteredSocialResources.isEmpty) {
       return Center(
-        child: Text(
-          LocaleProvider.of(context).searchEmpty,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).textScaleFactor * 15,
-          ),
-        ),
+        child: Text(LocaleProvider.of(context).searchEmpty,
+            style: context.xHeadline2),
       );
     }
 
@@ -150,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: ListTile(
                   title: Text(
                     posts[index].title,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: context.xHeadline3,
                   ),
                   leading: SizedBox(
                     width: kIsWeb
@@ -213,22 +162,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                   .filteredSocialResources[index].imagePath),
                             ),
                             title: Text(
-                              value.filteredSocialResources[index].title,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          15),
-                            ),
-                            subtitle:
-                                Text(value.filteredSocialResources[index].text,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          10,
-                                    )),
+                                value.filteredSocialResources[index].title,
+                                style: context.xHeadline2),
+                            subtitle: Text(
+                                value.filteredSocialResources[index].text,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: context.xHeadline3),
                             onTap: () async {
                               value.clickPost(
                                   value.filteredSocialResources[index].id,
@@ -262,12 +202,13 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             title: Text(
               value.allSocialResources[index].title,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
               value.allSocialResources[index].text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
+              style: context.xHeadline5,
             ),
             onTap: () async {
               value.clickPost(value.allSocialResources[index].id,

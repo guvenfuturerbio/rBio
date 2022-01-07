@@ -118,13 +118,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Container(
                         color: Colors.transparent,
                         child: SvgPicture.asset(
-                          R.image.chat_icon,
+                          R.image.search_icon,
                           color: Colors.white,
                           width: R.sizes.iconSize,
                         ),
                       ),
                       onPressed: () {
-                        vm.openConsultation();
+                        Atom.to(PagePaths.SEARCH_PAGE);
                       },
                     ),
                   ),
