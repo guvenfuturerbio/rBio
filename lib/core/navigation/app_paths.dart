@@ -1,5 +1,4 @@
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:onedosehealth/features/search/search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -36,6 +35,7 @@ import '../../features/relatives/relatives.dart';
 import '../../features/results/e_result_screen.dart';
 import '../../features/results/e_result_vm.dart';
 import '../../features/results/visit_detail_screen.dart';
+import '../../features/search/search_screen.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
 import '../../features/store/covid_19/covid_19_screen.dart';
@@ -75,6 +75,13 @@ class VRouterRoutes {
         create: (context) => ProfileVm(),
         child: ProfileScreen(),
       ),
+      stackedRoutes: [
+        //
+        VWidget(
+          path: PagePaths.SUGGEST_REQUEST,
+          widget: RequestSuggestionsScreen(),
+        ),
+      ],
     ),
 
     VWidget(
@@ -91,7 +98,7 @@ class VRouterRoutes {
       path: PagePaths.ALL_DEVICES,
       widget: AvailableDevices(),
     ),
-    
+
     VWidget(
       path: PagePaths.SELECTED_DEVICE,
       widget: SelectedDevicesScreen(),
@@ -255,26 +262,27 @@ class VRouterRoutes {
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
     ),
+    
     VGuard(
-        beforeEnter: (vRedirector) async {
-          print(FlutterAppBadger.isAppBadgeSupported());
-          await FlutterAppBadger.removeBadge();
-        },
-        stackedRoutes: [
-          VWidget(
-            path: PagePaths.CONSULTATION,
-            widget: ConsultationScreen(),
-            stackedRoutes: [
-              VWidget(
-                path: PagePaths.CHAT,
-                widget: ChangeNotifierProvider<ChatVm>(
-                  create: (context) => ChatVm(),
-                  child: ChatScreen(),
-                ),
+      beforeEnter: (vRedirector) async {
+        await FlutterAppBadger.removeBadge();
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.CONSULTATION,
+          widget: ConsultationScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.CHAT,
+              widget: ChangeNotifierProvider<ChatVm>(
+                create: (context) => ChatVm(),
+                child: ChatScreen(),
               ),
-            ],
-          ),
-        ]),
+            ),
+          ],
+        ),
+      ],
+    ),
 
     // Symptom Checker
     VGuard(
@@ -306,22 +314,20 @@ class VRouterRoutes {
         ),
       ],
     ),
-    VGuard(
-        beforeEnter: (vRedirector) async {
-          if (!getIt<UserNotifier>().isCronic) {
-            vRedirector.stopRedirection();
-            Atom.show(NotChronicWarning());
-          }
-        },
-        stackedRoutes: [
-          VWidget(
-              path: PagePaths.MEASUREMENT_TRACKING,
-              widget: MeasurementTrackingHomeScreen())
-        ]),
 
-    VWidget(
-      path: PagePaths.SUGGEST_REQUEST,
-      widget: RequestSuggestionsScreen(),
+    VGuard(
+      beforeEnter: (vRedirector) async {
+        if (!getIt<UserNotifier>().isCronic) {
+          vRedirector.stopRedirection();
+          Atom.show(NotChronicWarning());
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.MEASUREMENT_TRACKING,
+          widget: MeasurementTrackingHomeScreen(),
+        ),
+      ],
     ),
 
     // Mediminder

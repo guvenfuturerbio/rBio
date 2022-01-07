@@ -46,7 +46,6 @@ dependencies:
   expandable: ^5.0.1
   file_picker: ^3.0.0
   firebase: 9.0.2
-  firebase_analytics: 8.3.4
   firebase_auth: 3.2.0
   firebase_core: 1.10.0
   firebase_dynamic_links: 3.0.1
@@ -182,5 +181,5 @@ flutter_intl:
   default_locale: en
 
 flutter_native_splash:
-  color: '#00A147'
-  image: 'assets/logo/onedose_app_logo.png'
+  color: "00A147"
+  image: "assets/logo/splash_image.png"

@@ -15,7 +15,7 @@ class RbioLoading extends StatelessWidget {
   }
 
   static Widget progressIndicator() => Scaffold(
-            backgroundColor: Colors.black38,
-            body: Center(child: RbioLoading()),
-          );
+        backgroundColor: Colors.black12,
+        body: Center(child: RbioLoading()),
+      );
 }

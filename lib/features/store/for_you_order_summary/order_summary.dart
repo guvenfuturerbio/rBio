@@ -306,12 +306,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                           'price': value?.selectedItem?.price ?? 0.toString(),
                         },
                       );
-
-                      AnalyticsManager().sendEvent(
-                        ItemPaymentClicked(
-                          itemName: value.selectedItem.title,
-                        ),
-                      );
                     },
                   ),
                 ),

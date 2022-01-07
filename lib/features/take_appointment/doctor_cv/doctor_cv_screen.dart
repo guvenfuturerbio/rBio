@@ -153,13 +153,6 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                     .make_an_appointment
                     .toUpperCase(),
                 onPressed: () {
-                  AnalyticsManager().sendEvent(
-                    OAMakeAppointmentClickEvent(
-                      widget.departmentName,
-                      widget.doctorName,
-                    ),
-                  );
-
                   Atom.to(
                     PagePaths.CREATE_APPOINTMENT,
                     queryParameters: {

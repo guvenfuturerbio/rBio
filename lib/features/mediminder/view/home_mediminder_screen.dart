@@ -11,13 +11,17 @@ class HomeMediminderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          LocaleProvider.current.reminders,
-        ),
-      ),
+      appbar: _buildAppBar(context),
       body: _buildBody(context),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.reminders,
+      ),
     );
   }
 

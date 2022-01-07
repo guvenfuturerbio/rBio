@@ -92,14 +92,13 @@ class ChangePasswordScreenVm extends ChangeNotifier {
             getIt<ISharedPreferencesManager>()
                 .getString(SharedPreferencesKeys.JWT_TOKEN),
           );
-          AnalyticsManager().sendEvent(new ChangeMyPasswordSuccessEvent());
           showGradientDialog(
-              this.mContext,
-              LocaleProvider.of(this.mContext).success_message_title,
-              LocaleProvider.of(this.mContext).succefully_created_pass);
+            this.mContext,
+            LocaleProvider.of(this.mContext).success_message_title,
+            LocaleProvider.of(this.mContext).succefully_created_pass,
+          );
           notifyListeners();
         } else {
-          AnalyticsManager().sendEvent(new ChangeMyPasswordFailEvent());
           try {
             int errorCode = response.datum;
             if (errorCode == 1) {
@@ -134,9 +133,7 @@ class ChangePasswordScreenVm extends ChangeNotifier {
         }
       } catch (error, stk) {
         Sentry.captureException(error, stackTrace: stk);
-        AnalyticsManager().sendEvent(new ChangeMyPasswordFailEvent());
         Future.delayed(const Duration(milliseconds: 500), () {
-          print(error);
           hideDialog(this.mContext);
           showGradientDialog(
               this.mContext,

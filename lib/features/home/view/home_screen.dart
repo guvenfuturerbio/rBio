@@ -106,47 +106,70 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            child2: SizedBox(
-              height: 50,
-              width: 50,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  //
-                  Positioned.fill(
-                    child: IconButton(
-                      icon: Container(
-                        color: Colors.transparent,
-                        child: SvgPicture.asset(
-                          R.image.search_icon,
-                          color: Colors.white,
-                          width: R.sizes.iconSize,
+            child2: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      //
+                      Positioned.fill(
+                        child: IconButton(
+                          icon: Container(
+                            color: Colors.transparent,
+                            child: SvgPicture.asset(
+                              R.image.chat_icon,
+                              color: Colors.white,
+                              width: R.sizes.iconSize,
+                            ),
+                          ),
+                          onPressed: () {
+                            Atom.to(PagePaths.CONSULTATION);
+                          },
                         ),
                       ),
-                      onPressed: () {
-                        Atom.to(PagePaths.SEARCH_PAGE);
-                      },
+
+                      //
+                      Consumer<NotificationBadgeNotifier>(
+                        builder: (context, badgeNotifier, child) {
+                          if (badgeNotifier.value) {
+                            return Align(
+                              alignment: Alignment.topRight,
+                              child: CircleAvatar(
+                                backgroundColor: R.color.darkRed,
+                                radius: 9,
+                              ),
+                            );
+                          }
+
+                          return SizedBox();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
+                //
+                IconButton(
+                  icon: Container(
+                    color: Colors.transparent,
+                    child: SvgPicture.asset(
+                      R.image.search_icon,
+                      color: Colors.white,
+                      width: R.sizes.iconSize,
                     ),
                   ),
-
-                  //
-                  Consumer<NotificationBadgeNotifier>(
-                    builder: (context, badgeNotifier, child) {
-                      if (badgeNotifier.value) {
-                        return Align(
-                          alignment: Alignment.topRight,
-                          child: CircleAvatar(
-                            backgroundColor: R.color.darkRed,
-                            radius: 9,
-                          ),
-                        );
-                      }
-
-                      return SizedBox();
-                    },
-                  ),
-                ],
-              ),
+                  onPressed: () {
+                    Atom.to(PagePaths.SEARCH_PAGE);
+                  },
+                ),
+              ],
             ),
           ),
         ),
@@ -210,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //
                         Expanded(
                           child: Text(
-                            '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
+                            Utils.instance.getCurrentUserNameAndSurname,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: context.xHeadline4,
