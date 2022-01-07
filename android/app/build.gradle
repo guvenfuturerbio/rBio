@@ -66,11 +66,6 @@ android {
                 storePassword System.getenv()["FCI_KEYSTORE_PASSWORD"]
                 keyAlias System.getenv()["FCI_KEY_ALIAS"]
                 keyPassword System.getenv()["FCI_KEY_PASSWORD"]
-            } else {
-                storeFile file("/Users/canavci/Downloads/onedosehealth")
-                storePassword "Gvn2000*!"
-                keyAlias "key0"
-                keyPassword "Gvn2000*!"
             }
         }
     }
