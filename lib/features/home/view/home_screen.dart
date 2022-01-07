@@ -269,8 +269,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           //
                           Text(
                             vm.drawerList[index].keys.first,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                             style: context.xHeadline4.copyWith(
                               color: getIt<ITheme>().textColor,
                               fontWeight: FontWeight.w600,

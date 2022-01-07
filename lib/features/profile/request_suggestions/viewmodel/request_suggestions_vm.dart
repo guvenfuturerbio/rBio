@@ -44,11 +44,12 @@ class RequestSuggestionsScreenVm extends ChangeNotifier {
 
   void showGradientDialog(String title, String text) {
     showDialog(
-        context: mContext,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return WarningDialog(title, text);
-        }).then((value) {
+      context: mContext,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return WarningDialog(title, text);
+      },
+    ).then((value) {
       Atom.to(PagePaths.MAIN, isReplacement: true);
     });
   }

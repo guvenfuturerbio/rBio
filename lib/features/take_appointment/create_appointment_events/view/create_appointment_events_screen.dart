@@ -143,6 +143,7 @@ class _CreateAppointmentEventsScreenState
               },
             ),
           ),
+          R.sizes.defaultBottomPadding,
         ],
       ],
     );

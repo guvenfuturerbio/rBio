@@ -91,6 +91,7 @@ class VRouterRoutes {
       path: PagePaths.ALL_DEVICES,
       widget: AvailableDevices(),
     ),
+    
     VWidget(
       path: PagePaths.SELECTED_DEVICE,
       widget: SelectedDevicesScreen(),

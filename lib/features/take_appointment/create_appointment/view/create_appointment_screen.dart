@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/model/shared/filter_resources_response.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -208,6 +205,8 @@ class CreateAppointmentScreen extends StatelessWidget {
           //
           vm.doctorSelected
               ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       height: 20,
@@ -219,7 +218,8 @@ class CreateAppointmentScreen extends StatelessWidget {
                           _openCreateAppointmentsEvents(vm);
                         },
                       ),
-                    )
+                    ),
+                    R.sizes.defaultBottomPadding,
                   ],
                 )
               : Column(

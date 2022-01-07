@@ -33,7 +33,9 @@ class GuvenDateRange extends StatelessWidget {
 
     return Wrap(
       alignment: WrapAlignment.center,
+      runAlignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
+      runSpacing: 15,
       children: [
         //
         InkWell(
@@ -68,7 +70,10 @@ class GuvenDateRange extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: context.xHeadline3,
                 ),
-                Icon(Icons.arrow_drop_down)
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: R.sizes.iconSize2,
+                )
               ],
             ),
           ),
@@ -119,7 +124,10 @@ class GuvenDateRange extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: context.xHeadline3,
                 ),
-                Icon(Icons.arrow_drop_down)
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: R.sizes.iconSize2,
+                ),
               ],
             ),
           ),

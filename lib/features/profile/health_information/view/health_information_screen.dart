@@ -75,8 +75,8 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
 
           return KeyboardDismissOnTap(
             child: RbioLoadingOverlay(
-              isLoading: false,
-              progressIndicator: RbioLoading(),
+              isLoading: vm.showProgressOverlay,
+              progressIndicator: RbioLoading.progressIndicator(),
               opacity: 0,
               child: RbioScaffold(
                 appbar: RbioAppBar(
@@ -85,12 +85,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     LocaleProvider.current.health_information,
                   ),
                 ),
-                body: RbioLoadingOverlay(
-                  isLoading: vm.showProgressOverlay,
-                  progressIndicator: RbioLoading.progressIndicator(),
-                  opacity: 0,
-                  child: _buildBody(vm),
-                ),
+                body: _buildBody(vm),
               ),
             ),
           );
@@ -100,105 +95,108 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
   }
 
   Widget _buildBody(HealthInformationVm vm) {
-    return Stack(
-      fit: StackFit.expand,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Positioned.fill(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Diabet Type
-                _buildTitle(LocaleProvider.current.diabet_type),
-                _buildTextField(
-                  vm,
-                  diabetTypeController,
-                  HealthInformationType.DiabetType,
-                ),
+        Expanded(
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            removeBottom: true,
+            child: Scrollbar(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Diabet Type
+                    _buildTitle(LocaleProvider.current.diabet_type),
+                    _buildTextField(
+                      vm,
+                      diabetTypeController,
+                      HealthInformationType.DiabetType,
+                    ),
 
-                // Height
-                _buildSpacer(),
-                _buildTitle(LocaleProvider.current.height),
-                _buildTextField(
-                  vm,
-                  heightController,
-                  HealthInformationType.Height,
-                ),
+                    // Height
+                    _buildSpacer(),
+                    _buildTitle(LocaleProvider.current.height),
+                    _buildTextField(
+                      vm,
+                      heightController,
+                      HealthInformationType.Height,
+                    ),
 
-                // Weight
-                _buildSpacer(),
-                _buildTitle(LocaleProvider.current.weight),
-                _buildTextField(
-                  vm,
-                  weightController,
-                  HealthInformationType.Weight,
-                ),
+                    // Weight
+                    _buildSpacer(),
+                    _buildTitle(LocaleProvider.current.weight),
+                    _buildTextField(
+                      vm,
+                      weightController,
+                      HealthInformationType.Weight,
+                    ),
 
-                // Normal Range
-                _buildSpacer(),
-                _buildTitle(LocaleProvider.current.normal_range),
-                _buildTextField(
-                  vm,
-                  normalRangeController,
-                  HealthInformationType.NormalRange,
-                ),
+                    // Normal Range
+                    _buildSpacer(),
+                    _buildTitle(LocaleProvider.current.normal_range),
+                    _buildTextField(
+                      vm,
+                      normalRangeController,
+                      HealthInformationType.NormalRange,
+                    ),
 
-                // Max Range
-                _buildSpacer(),
-                _buildTitle(LocaleProvider.current.max_range),
-                _buildTextField(
-                  vm,
-                  maxRangeController,
-                  HealthInformationType.MaxRange,
-                ),
+                    // Max Range
+                    _buildSpacer(),
+                    _buildTitle(LocaleProvider.current.max_range),
+                    _buildTextField(
+                      vm,
+                      maxRangeController,
+                      HealthInformationType.MaxRange,
+                    ),
 
-                // Min Range
-                _buildSpacer(),
-                _buildTitle(LocaleProvider.current.min_range),
-                _buildTextField(
-                  vm,
-                  minRangeController,
-                  HealthInformationType.MinRange,
-                ),
+                    // Min Range
+                    _buildSpacer(),
+                    _buildTitle(LocaleProvider.current.min_range),
+                    _buildTextField(
+                      vm,
+                      minRangeController,
+                      HealthInformationType.MinRange,
+                    ),
 
-                // Smoke
-                _buildSpacer(),
-                _buildTitle(LocaleProvider.current.do_you_smoke),
-                _buildTextField(
-                  vm,
-                  smokerController,
-                  HealthInformationType.Smoker,
-                ),
+                    // Smoke
+                    _buildSpacer(),
+                    _buildTitle(LocaleProvider.current.do_you_smoke),
+                    _buildTextField(
+                      vm,
+                      smokerController,
+                      HealthInformationType.Smoker,
+                    ),
 
-                // Year of Diagnosis
-                _buildSpacer(),
-                _buildTitle(LocaleProvider.current.year_of_diagnosis),
-                _buildTextField(
-                  vm,
-                  yearofDiagnosisController,
-                  HealthInformationType.YearofDiagnosis,
+                    // Year of Diagnosis
+                    _buildSpacer(),
+                    _buildTitle(LocaleProvider.current.year_of_diagnosis),
+                    _buildTextField(
+                      vm,
+                      yearofDiagnosisController,
+                      HealthInformationType.YearofDiagnosis,
+                    ),
+                  ],
                 ),
-
-                //
-                SizedBox(
-                  height: Atom.safeBottom + 60,
-                ),
-              ],
+              ),
             ),
           ),
         ),
 
         //
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: Atom.safeBottom + Atom.height * 0.05,
-            ),
+        Container(
+          padding: EdgeInsets.only(
+            top: 8,
+          ),
+          child: Center(
             child: RbioElevatedButton(
               title: LocaleProvider.current.update_information,
               onTap: () {
@@ -206,7 +204,10 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
               },
             ),
           ),
-        )
+        ),
+
+        //
+        R.sizes.defaultBottomPadding,
       ],
     );
   }

@@ -10,6 +10,7 @@ class RbioTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final String hintText;
+  final String labelText;
   final List<TextInputFormatter> inputFormatters;
   final void Function(String) onFieldSubmitted;
   final bool obscureText;
@@ -27,6 +28,7 @@ class RbioTextFormField extends StatelessWidget {
       this.controller,
       this.keyboardType,
       this.hintText,
+      this.labelText,
       this.inputFormatters,
       this.onFieldSubmitted,
       this.onChanged,
@@ -56,6 +58,7 @@ class RbioTextFormField extends StatelessWidget {
       decoration: Utils.instance
           .inputDecorationForLogin(
             hintText: hintText,
+            labelText: labelText,
             contentPadding: context.xTextScaleType == TextScaleType.Small
                 ? contentPadding
                 : EdgeInsets.only(left: 8),

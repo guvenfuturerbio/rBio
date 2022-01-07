@@ -14,111 +14,131 @@ class RequestSuggestionsScreen extends StatefulWidget {
 }
 
 class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController textEditingController;
+
+  @override
+  void initState() {
+    textEditingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RequestSuggestionsScreenVm>(
       create: (context) => RequestSuggestionsScreenVm(context: context),
       child: Consumer<RequestSuggestionsScreenVm>(
-        builder: (context, value, child) {
+        builder: (
+          BuildContext context,
+          RequestSuggestionsScreenVm vm,
+          Widget child,
+        ) {
           return RbioScaffold(
-            appbar: RbioAppBar(
-                title: TitleAppBarWhite(
-                    title: LocaleProvider.of(context).request_and_suggestions)),
-            body: value.showProgressOverlay
-                ? RbioLoading()
-                : SingleChildScrollView(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width < 800
-                              ? MediaQuery.of(context).size.width * 0.03
-                              : MediaQuery.of(context).size.width * 0.10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              LocaleProvider
-                                  .current.request_and_suggestions_text,
-                              style: context.xHeadline5.copyWith(
-                                  color: getIt<ITheme>().mainColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 8),
-                            height: MediaQuery.of(context).size.height * 0.45,
-                            child: Card(
-                              color: getIt<ITheme>().textColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              elevation: 4,
-                              child: TextField(
-                                  controller: textEditingController,
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: null,
-                                  maxLengthEnforced: true,
-                                  textInputAction: TextInputAction.done,
-                                  minLines: 2,
-                                  onChanged: (text) {
-                                    value.setText(text);
-                                  },
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(500),
-                                  ],
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.only(left: 12, right: 12),
-                                      hintStyle: context.xHeadline3,
-                                      labelText: LocaleProvider.of(context)
-                                          .request_and_suggestions,
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.transparent),
-                                        //  when the TextFormField in unfocused
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.transparent),
-                                        //  when the TextFormField in focused
-                                      ),
-                                      border: UnderlineInputBorder())),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(value.textLength.toString() + "/500"),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            children: [
-                              Spacer(),
-                              Expanded(
-                                flex: 2,
-                                child: RbioElevatedButton(
-                                  title: LocaleProvider.current.save,
-                                  onTap: () {
-                                    value.sendSuggestion();
-                                  },
-                                ),
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+            appbar: _buildAppBar(context),
+            body: _buildBody(vm, context),
           );
         },
       ),
     );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).request_and_suggestions,
+      ),
+    );
+  }
+
+  Widget _buildBody(
+    RequestSuggestionsScreenVm vm,
+    BuildContext context,
+  ) {
+    return vm.showProgressOverlay
+        ? RbioLoading()
+        : SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width < 800
+                    ? MediaQuery.of(context).size.width * 0.03
+                    : MediaQuery.of(context).size.width * 0.10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    LocaleProvider.current.request_and_suggestions_text,
+                    textAlign: TextAlign.center,
+                    style: context.xHeadline5.copyWith(
+                      color: getIt<ITheme>().mainColor,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+
+                //
+                Container(
+                  padding: EdgeInsets.only(top: 8),
+                  height: MediaQuery.of(context).size.height * 0.40,
+                  child: Card(
+                    elevation: 4,
+                    color: getIt<ITheme>().textColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: RbioTextFormField(
+                      controller: textEditingController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      textInputAction: TextInputAction.done,
+                      onChanged: (text) {
+                        vm.setText(text);
+                      },
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(500),
+                      ],
+                      hintText: LocaleProvider.current.request_and_suggestions,
+                    ),
+                  ),
+                ),
+
+                //
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    vm.textLength.toString() + "/500",
+                    style: context.xHeadline5,
+                  ),
+                ),
+
+                //
+                R.sizes.hSizer8,
+
+                //
+                Center(
+                  child: RbioElevatedButton(
+                    title: LocaleProvider.current.save,
+                    onTap: () {
+                      vm.sendSuggestion();
+                    },
+                    infinityWidth: true,
+                  ),
+                ),
+
+                //
+                R.sizes.defaultBottomPadding,
+              ],
+            ),
+          );
   }
 }

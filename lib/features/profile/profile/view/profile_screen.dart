@@ -84,37 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
 
               //
-              /*Container(
-                height: Atom.height * 0.25,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildNumberTile(
-                      vm.numbers?.relatives ?? 0,
-                      LocaleProvider.current.kids,
-                      () {
-                        Atom.to(PagePaths.RELATIVES);
-                      },
-                    ),
-                    _buildHorizontalGap(),
-                    _buildNumberTile(
-                      vm.numbers?.followers ?? 0,
-                      LocaleProvider.current.followers,
-                      () {
-                        Atom.to(PagePaths.FOLLOWERS);
-                      },
-                    ),
-                    _buildHorizontalGap(),
-                    _buildNumberTile(
-                      vm.numbers?.subscriptions ?? 0,
-                      LocaleProvider.current.subscriptions,
-                      () {},
-                    ),
-                  ],
-                ),
-              ),*/
-
-              //
               _buildVerticalGap(),
 
               //
@@ -190,7 +159,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () {
                   vm.logout(context);
                 },
-              )
+              ),
+
+              //
+              R.sizes.defaultBottomPadding,
             ],
           ),
         );

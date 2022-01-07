@@ -265,6 +265,7 @@ class Utils {
 
   InputDecoration inputDecorationForLogin({
     String hintText,
+    String labelText,
     EdgeInsetsGeometry contentPadding,
     InputBorder inputBorder,
   }) =>
@@ -275,6 +276,7 @@ class Utils {
         border: inputBorder,
         enabledBorder: inputBorder,
         hintText: hintText,
+        labelText: labelText,
         hintStyle: Atom.context.xHeadline4.copyWith(
           color: getIt<ITheme>().textColorPassive,
         ),
