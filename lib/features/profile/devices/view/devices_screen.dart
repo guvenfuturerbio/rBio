@@ -35,62 +35,74 @@ class _DevicesScreenState extends State<DevicesScreen> {
         return RbioLoading();
 
       case LoadingProgress.DONE:
-        return ListView(
-          shrinkWrap: true,
-          children: [
-            ...vm.devices
-                .map((device) => Column(
-                      children: [
-                        DeviceCard(
-                          background: getIt<ITheme>().cardBackgroundColor,
-                          image: UtilityManager()
-                              .getDeviceImageFromType(device.deviceType),
-                          name:
-                              '${device.manufacturerName}\n${device.serialNumber ?? ''}',
-                          trailing: Row(
+        return vm.devices.length > 0
+            ? ListView(
+                shrinkWrap: true,
+                children: [
+                  ...vm.devices
+                      .map((device) => Column(
                             children: [
-                              InkWell(
-                                  onTap: () {},
-                                  child: Icon(
-                                    Icons.info,
-                                    size: R.sizes.iconSize,
-                                  )),
-                              InkWell(
-                                  onTap: () {
-                                    Atom.show(GuvenAlert(
-                                        backgroundColor:
-                                            getIt<ITheme>().cardBackgroundColor,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 25),
-                                        title: GuvenAlert.buildTitle(
-                                          LocaleProvider.current.warning,
-                                        ),
-                                        content: GuvenAlert.buildDescription(
-                                            '${LocaleProvider.current.ble_delete_paired_device_approv}'),
-                                        actions: [
-                                          GuvenAlert.buildBigMaterialAction(
-                                              '${LocaleProvider.current.cancel}',
-                                              () => Atom.dismiss()),
-                                          GuvenAlert.buildBigMaterialAction(
-                                              '${LocaleProvider.current.yes}',
-                                              () => vm.deletePairedDevice(
-                                                  device.deviceId))
-                                        ]));
-                                  },
-                                  child: Icon(
-                                    Icons.cancel,
-                                    color: R.color.darkRed,
-                                    size: R.sizes.iconSize,
-                                  )),
+                              DeviceCard(
+                                background: getIt<ITheme>().cardBackgroundColor,
+                                image: UtilityManager()
+                                    .getDeviceImageFromType(device.deviceType),
+                                name:
+                                    '${device.manufacturerName}\n${device.serialNumber ?? ''}',
+                                trailing: Row(
+                                  children: [
+                                    InkWell(
+                                        onTap: () {},
+                                        child: Icon(
+                                          Icons.info,
+                                          size: R.sizes.iconSize,
+                                        )),
+                                    InkWell(
+                                        onTap: () {
+                                          Atom.show(GuvenAlert(
+                                              backgroundColor: getIt<ITheme>()
+                                                  .cardBackgroundColor,
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 25,
+                                                      vertical: 25),
+                                              title: GuvenAlert.buildTitle(
+                                                LocaleProvider.current.warning,
+                                              ),
+                                              content: GuvenAlert.buildDescription(
+                                                  '${LocaleProvider.current.ble_delete_paired_device_approv}'),
+                                              actions: [
+                                                GuvenAlert.buildBigMaterialAction(
+                                                    '${LocaleProvider.current.cancel}',
+                                                    () => Atom.dismiss()),
+                                                GuvenAlert.buildBigMaterialAction(
+                                                    '${LocaleProvider.current.yes}',
+                                                    () => vm.deletePairedDevice(
+                                                        device.deviceId))
+                                              ]));
+                                        },
+                                        child: Icon(
+                                          Icons.cancel,
+                                          color: R.color.darkRed,
+                                          size: R.sizes.iconSize,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              _buildVerticalGap()
                             ],
-                          ),
-                        ),
-                        _buildVerticalGap()
-                      ],
-                    ))
-                .toList()
-          ],
-        );
+                          ))
+                      .toList()
+                ],
+              )
+            : Center(
+                child: Text(
+                  LocaleProvider.current.add_new_device,
+                  textAlign: TextAlign.center,
+                  style: context.xHeadline1.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
 
       case LoadingProgress.ERROR:
         return RbioBodyError();
