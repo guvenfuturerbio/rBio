@@ -91,7 +91,7 @@ class VRouterRoutes {
       path: PagePaths.ALL_DEVICES,
       widget: AvailableDevices(),
     ),
-    
+
     VWidget(
       path: PagePaths.SELECTED_DEVICE,
       widget: SelectedDevicesScreen(),
@@ -257,8 +257,13 @@ class VRouterRoutes {
     ),
     VGuard(
         beforeEnter: (vRedirector) async {
-          print(FlutterAppBadger.isAppBadgeSupported());
-          await FlutterAppBadger.removeBadge();
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          } else {
+            print(FlutterAppBadger.isAppBadgeSupported());
+            await FlutterAppBadger.removeBadge();
+          }
         },
         stackedRoutes: [
           VWidget(

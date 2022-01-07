@@ -156,7 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "content_delete_doctor_second" : MessageLookupByLibrary.simpleMessage(" on list?"),
     "continue_lbl" : MessageLookupByLibrary.simpleMessage("Devam"),
     "contour_plus_blood_step1" : MessageLookupByLibrary.simpleMessage("Test stribini cihaza yerleştirin."),
-    "contour_plus_blood_step2" : MessageLookupByLibrary.simpleMessage("Bir kan damlası çıkartmak için parmağınızı parmak delme cihazı kullanın."),
+    "contour_plus_blood_step2" : MessageLookupByLibrary.simpleMessage("Bir kan damlası çıkartmak için parmağınızı parmak delme cihazı kullanarak delin."),
     "contour_plus_blood_step3" : MessageLookupByLibrary.simpleMessage("Kan damlasını test stribinin sarı uçlu alanına dikkatlice dokundurun."),
     "contour_plus_blood_step4" : MessageLookupByLibrary.simpleMessage("Kan şekeri sonucunu görüntüleyin."),
     "contour_plus_blood_sugar" : MessageLookupByLibrary.simpleMessage("Contour Plus Şeker Ölçüm"),

@@ -124,15 +124,25 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
         //
         Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
-            itemCount: posts.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildCard(vm, posts[index]);
-            },
-          ),
+          child: vm.patientAppointments.length > 0
+              ? ListView.builder(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: posts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _buildCard(vm, posts[index]);
+                  },
+                )
+              : Center(
+                  child: Text(
+                    LocaleProvider.current.no_result_selected_date,
+                    textAlign: TextAlign.center,
+                    style: context.xHeadline1.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
         ),
       ],
     );
