@@ -42,8 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String get getCurrentUserId => getIt<UserNotifier>().firebaseID;
   ChatPerson get getCurrentPerson => ChatPerson(
         id: getIt<UserNotifier>().firebaseID,
-        name:
-            '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
+        name: Utils.instance.getCurrentUserNameAndSurname,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
         firebaseToken: FirebaseMessagingManager.instance.token,
       );

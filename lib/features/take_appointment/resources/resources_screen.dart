@@ -107,29 +107,19 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                 posts[index].title,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              //subtitle: Text(posts[index].id.toString()),
               onTap: () {
-                AnalyticsManager().sendEvent(new OADoctorSelectionEvent(
-                    posts[index].departments[0].title, posts[index].title));
-                Atom.to(PagePaths.DOCTOR_CV, queryParameters: {
-                  'tenantId': widget.tenantId.toString(),
-                  'fromOnlineSelect': widget.fromOnlineAppo.toString(),
-                  'doctorNameNoTitle': Uri.encodeFull(posts[index].title),
-                  'departmentId': widget.departmentId.toString(),
-                  'departmentName': Uri.encodeFull(widget.departmentName),
-                  'doctorName': Uri.encodeFull(posts[index].title),
-                  'resourceId': posts[index].id.toString(),
-                });
-
-                /*Get.rootDelegate.toNamed('EventListPage', parameters: {
-                  ' doctorNameNoTitle': Uri.encodeFull(posts[index].title),
-                  'fromOnlineSelect': widget.fromOnlineAppo.toString(),
-                  'departmentId': widget.departmentId.toString(),
-                  'departmentName': Uri.encodeFull(widget.departmentName),
-                  'doctorName': Uri.encodeFull(posts[index].title),
-                  'resourceId': posts[index].id.toString(),
-                  'tenantId': widget.tenantId.toString(),
-                });*/
+                Atom.to(
+                  PagePaths.DOCTOR_CV,
+                  queryParameters: {
+                    'tenantId': widget.tenantId.toString(),
+                    'fromOnlineSelect': widget.fromOnlineAppo.toString(),
+                    'doctorNameNoTitle': Uri.encodeFull(posts[index].title),
+                    'departmentId': widget.departmentId.toString(),
+                    'departmentName': Uri.encodeFull(widget.departmentName),
+                    'doctorName': Uri.encodeFull(posts[index].title),
+                    'resourceId': posts[index].id.toString(),
+                  },
+                );
               },
             ),
           );

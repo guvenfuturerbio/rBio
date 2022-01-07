@@ -135,6 +135,8 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                   style: TextStyle(fontSize: 14, color: R.color.gray),
                 ),
               ),
+
+              //
               Container(
                 margin: EdgeInsets.only(top: 4),
                 child: Text(
@@ -142,25 +144,30 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                   style: TextStyle(fontSize: 14, color: R.color.gray),
                 ),
               ),
+
+              //
               Container(
                 margin: EdgeInsets.only(top: 20, bottom: 20),
                 child: RbioElevatedButton(
-                    title: LocaleProvider.of(context)
-                        .make_an_appointment
-                        .toUpperCase(),
-                    onTap: () {
-                      AnalyticsManager().sendEvent(
-                          new OAMakeAppointmentClickEvent(
-                              widget.departmentName, widget.doctorName));
-                      Atom.to(PagePaths.CREATE_APPOINTMENT, queryParameters: {
+                  title: LocaleProvider.of(context)
+                      .make_an_appointment
+                      .toUpperCase(),
+                  onTap: () {
+                    Atom.to(
+                      PagePaths.CREATE_APPOINTMENT,
+                      queryParameters: {
                         'forOnline': 'false',
                         'fromSearch': 'true',
                         'departmentId': widget.departmentId.toString(),
                         'resourceId': widget.resourceId.toString(),
                         'tenantId': widget.tenantId.toString(),
-                      });
-                    }),
+                      },
+                    );
+                  },
+                ),
               ),
+
+              //
               value.progress == LoadingProgress.DONE
                   ? Column(
                       children: [

@@ -38,9 +38,13 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
           RequestSuggestionsScreenVm vm,
           Widget child,
         ) {
-          return RbioScaffold(
-            appbar: _buildAppBar(context),
-            body: _buildBody(vm, context),
+          return RbioLoadingOverlay(
+            isLoading: vm.progressOverlay,
+            progressIndicator: RbioLoading.progressIndicator(),
+            child: RbioScaffold(
+              appbar: _buildAppBar(context),
+              body: _buildBody(vm, context),
+            ),
           );
         },
       ),
@@ -60,85 +64,82 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
     RequestSuggestionsScreenVm vm,
     BuildContext context,
   ) {
-    return vm.showProgressOverlay
-        ? RbioLoading()
-        : SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width < 800
-                    ? MediaQuery.of(context).size.width * 0.03
-                    : MediaQuery.of(context).size.width * 0.10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    LocaleProvider.current.request_and_suggestions_text,
-                    textAlign: TextAlign.center,
-                    style: context.xHeadline5.copyWith(
-                      color: getIt<ITheme>().mainColor,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
-
-                //
-                Container(
-                  padding: EdgeInsets.only(top: 8),
-                  height: MediaQuery.of(context).size.height * 0.40,
-                  child: Card(
-                    elevation: 4,
-                    color: getIt<ITheme>().textColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: RbioTextFormField(
-                      controller: textEditingController,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      textInputAction: TextInputAction.done,
-                      onChanged: (text) {
-                        vm.setText(text);
-                      },
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(500),
-                      ],
-                      hintText: LocaleProvider.current.request_and_suggestions,
-                    ),
-                  ),
-                ),
-
-                //
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    vm.textLength.toString() + "/500",
-                    style: context.xHeadline5,
-                  ),
-                ),
-
-                //
-                R.sizes.hSizer8,
-
-                //
-                Center(
-                  child: RbioElevatedButton(
-                    title: LocaleProvider.current.save,
-                    onTap: () {
-                      vm.sendSuggestion();
-                    },
-                    infinityWidth: true,
-                  ),
-                ),
-
-                //
-                R.sizes.defaultBottomPadding,
-              ],
+    return SingleChildScrollView(
+      padding: EdgeInsets.zero,
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              LocaleProvider.current.request_and_suggestions_text,
+              textAlign: TextAlign.center,
+              style: context.xHeadline5.copyWith(
+                color: getIt<ITheme>().mainColor,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+              ),
             ),
-          );
+          ),
+
+          //
+          Container(
+            padding: EdgeInsets.only(top: 8),
+            height: MediaQuery.of(context).size.height * 0.40,
+            child: Card(
+              elevation: 4,
+              color: getIt<ITheme>().textColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: RbioTextFormField(
+                controller: textEditingController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                textInputAction: TextInputAction.done,
+                onChanged: (text) {
+                  vm.setText(text);
+                },
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(500),
+                ],
+                hintText: LocaleProvider.current.request_and_suggestions,
+              ),
+            ),
+          ),
+
+          //
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              vm.textLength.toString() + "/500",
+              style: context.xHeadline5,
+            ),
+          ),
+
+          //
+          R.sizes.hSizer8,
+
+          //
+          Center(
+            child: RbioElevatedButton(
+              title: LocaleProvider.current.save,
+              onTap: () {
+                vm.sendSuggestion();
+              },
+              infinityWidth: true,
+            ),
+          ),
+
+          //
+          R.sizes.defaultBottomPadding,
+        ],
+      ),
+    );
   }
 }

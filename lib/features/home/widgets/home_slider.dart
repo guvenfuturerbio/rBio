@@ -41,6 +41,11 @@ class _HomeSliderState extends State<HomeSlider> {
                       (BuildContext context, int itemIndex, int pageViewIndex) {
                     return Container(
                       width: double.infinity,
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: getIt<ITheme>().cardBackgroundColor,
+                        borderRadius: R.sizes.borderRadiusCircular,
+                      ),
                       child: GestureDetector(
                         onTap: () {
                           if (vm.isForDelete) {
@@ -56,9 +61,16 @@ class _HomeSliderState extends State<HomeSlider> {
                             }
                           }
                         },
-                        child: CachedNetworkImage(
-                          imageUrl: vm.bannerTabsModel[itemIndex].imageUrl,
-                          fit: BoxFit.cover,
+                        child: ClipRRect(
+                          borderRadius: R.sizes.borderRadiusCircular,
+                          child: CachedNetworkImage(
+                            imageUrl: vm.bannerTabsModel[itemIndex].imageUrl,
+                            placeholder: (context, url) =>
+                                Center(child: RbioLoading()),
+                            errorWidget: (context, url, error) =>
+                                Center(child: Icon(Icons.error)),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     );
@@ -66,12 +78,7 @@ class _HomeSliderState extends State<HomeSlider> {
                   options: CarouselOptions(
                     height: HomeSizer.instance.getBodySliderHeight(),
                     autoPlay: !vm.isForDelete,
-                    // enlargeCenterPage: true,
-                    //aspectRatio: 1.0,
                     viewportFraction: 1,
-                    // scrollPhysics: vm.isForDelete
-                    //     ? NeverScrollableScrollPhysics()
-                    //     : ClampingScrollPhysics(),
                     onPageChanged: (index, reason) {
                       setState(() {
                         _current = index;
@@ -95,10 +102,12 @@ class _HomeSliderState extends State<HomeSlider> {
                             _controller.animateToPage(entry.key);
                           },
                           child: Container(
-                            width: 12.0,
-                            height: 12.0,
+                            width: 10.0,
+                            height: 10.0,
                             margin: EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 4.0),
+                              vertical: 8.0,
+                              horizontal: 4.0,
+                            ),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: (Theme.of(context).brightness ==

@@ -5,13 +5,23 @@ import '../../../../model/model.dart';
 
 class RequestSuggestionsScreenVm extends ChangeNotifier {
   BuildContext mContext;
-  String _text;
-  int _textLength;
-  bool _showProgressOverLay;
+
+  bool _progressOverlay = false;
+  bool get progressOverlay => _progressOverlay;
+  set progressOverlay(bool value) {
+    _progressOverlay = value;
+    notifyListeners();
+  }
 
   RequestSuggestionsScreenVm({BuildContext context}) {
     this.mContext = context;
   }
+
+  String _text;
+  int _textLength;
+
+  int get textLength => this._textLength ?? 0;
+  String get text => this._text ?? "";
 
   setText(String text) {
     this._text = text;
@@ -19,30 +29,25 @@ class RequestSuggestionsScreenVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get text => this._text ?? "";
-
-  int get textLength => this._textLength ?? 0;
-
-  bool get showProgressOverlay => this._showProgressOverLay ?? false;
-
   Future<void> sendSuggestion() async {
-    this._showProgressOverLay = true;
-    notifyListeners();
+    progressOverlay = true;
+
     try {
-      await getIt<Repository>()
-          .addSuggestion(SuggestionRequest(suggestionText: text));
-      this._showProgressOverLay = false;
-      notifyListeners();
-      showGradientDialog(LocaleProvider.current.info,
-          LocaleProvider.current.suggestion_thanks_message);
+      await getIt<Repository>().addSuggestion(
+        SuggestionRequest(suggestionText: text),
+      );
+      showWarningDialog(
+        LocaleProvider.current.info,
+        LocaleProvider.current.suggestion_thanks_message,
+      );
     } catch (e) {
-      this._showProgressOverLay = false;
       notifyListeners();
-      Navigator.pop(mContext);
+    } finally {
+      progressOverlay = false;
     }
   }
 
-  void showGradientDialog(String title, String text) {
+  void showWarningDialog(String title, String text) {
     showDialog(
       context: mContext,
       barrierDismissible: true,

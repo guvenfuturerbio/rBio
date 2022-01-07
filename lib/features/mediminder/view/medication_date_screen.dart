@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -89,53 +90,54 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
   }
 
   Widget _buildBody(MedicationDateVm value) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.zero,
-      scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
-      child: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20),
+    return RbioScrollbar(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.zero,
+        scrollDirection: Axis.vertical,
+        physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             //
-            SizedBox(
-              height: context.HEIGHT * .18,
+            SizedBox(height: Atom.height * 0.1),
+
+            //
+            Text(
+              LocaleProvider.current.medicine_usage_type_message,
+              style: context.xHeadline3,
+              textAlign: TextAlign.center,
             ),
 
             //
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Text(LocaleProvider.current.medicine_usage_type_message,
-                    style: context.xHeadline3),
-              ),
-            ),
+            _buildGap(),
 
             //
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              alignment: WrapAlignment.center,
+              runAlignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 for (UsageType usageType in UsageType.values)
                   GestureDetector(
                     onTap: () => {value.setSelectedUsageType(usageType)},
-                    child: Card(
-                      elevation: 6,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: usageType == value.selectedUsageType
+                            ? getIt<ITheme>().mainColor
+                            : Colors.white,
+                        borderRadius: R.sizes.borderRadiusCircular,
                       ),
-                      child: Container(
+                      child: Padding(
                         padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: usageType == value.selectedUsageType
-                                ? getIt<ITheme>().mainColor
-                                : Colors.white),
                         child: Text(
                           usageType.xToString(),
                           style: context.xHeadline3.copyWith(
-                              color: usageType == value.selectedUsageType
-                                  ? getIt<ITheme>().textColor
-                                  : getIt<ITheme>().textColorPassive),
+                            color: usageType == value.selectedUsageType
+                                ? getIt<ITheme>().textColor
+                                : getIt<ITheme>().textColorPassive,
+                          ),
                         ),
                       ),
                     ),
@@ -144,42 +146,42 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
             ),
 
             //
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Text(
-                  LocaleProvider.current.medicine_how_often_daily_message,
-                  style: context.xHeadline3,
-                ),
-              ),
+            _buildGap(true),
+
+            //
+            Text(
+              LocaleProvider.current.medicine_how_often_daily_message,
+              style: context.xHeadline3,
+              textAlign: TextAlign.center,
             ),
 
             //
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 15),
-                child: TextFormField(
-                  controller: drugDailyCountController,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  obscureText: false,
-                  maxLength: 2,
-                  style: Utils.instance.inputTextStyle(),
-                  decoration: Utils.instance.inputImageDecoration(
-                    hintText: LocaleProvider.current.medicine_daily_count,
-                    image: R.image.ic_user,
-                  ),
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
-                  ],
-                  onFieldSubmitted: (term) {},
-                  onChanged: (text) {
-                    if (text != null && text != '') {
-                      value
-                          .setDailyCount(text.isNotEmpty ? int.parse(text) : 0);
-                    }
-                  },
+            _buildGap(),
+
+            //
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 12,
+              ),
+              child: RbioTextFormField(
+                controller: drugDailyCountController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                obscureText: false,
+                prefixIcon: SvgPicture.asset(
+                  R.image.ic_user,
+                  fit: BoxFit.none,
                 ),
+                hintText: LocaleProvider.current.medicine_daily_count,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+                ],
+                onFieldSubmitted: (term) {},
+                onChanged: (text) {
+                  if (text != null && text != '') {
+                    value.setDailyCount(text.isNotEmpty ? int.parse(text) : 0);
+                  }
+                },
               ),
             ),
 
@@ -202,16 +204,16 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                   Center(
                     child: Padding(
                       padding: EdgeInsets.only(left: 20, right: 20, top: 15),
-                      child: TextFormField(
+                      child: RbioTextFormField(
                         controller: drugNameController,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.text,
                         obscureText: false,
                         maxLength: 10,
-                        style: Utils.instance.inputTextStyle(),
-                        decoration: Utils.instance.inputImageDecoration(
-                          hintText: LocaleProvider.current.medicine_name,
-                          image: R.image.ic_user,
+                        hintText: LocaleProvider.current.medicine_name,
+                        prefixIcon: SvgPicture.asset(
+                          R.image.ic_user,
+                          fit: BoxFit.none,
                         ),
                         inputFormatters: <TextInputFormatter>[],
                         onFieldSubmitted: (term) {},
@@ -241,16 +243,16 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
                       ),
 
                       //
-                      Container(
-                        margin: EdgeInsets.only(top: 20, bottom: 20),
-                        child: Mediminder.instance.buttonDarkGradient(
-                          context: context,
-                          text: LocaleProvider.current.confirm,
-                          onPressed: () {
-                            value.createReminderPlan(widget.remindable);
-                          },
-                        ),
+                      RbioElevatedButton(
+                        infinityWidth: true,
+                        title: LocaleProvider.current.confirm,
+                        onTap: () {
+                          value.createReminderPlan(widget.remindable);
+                        },
                       ),
+
+                      //
+                      R.sizes.defaultBottomPadding,
                     ],
                   ),
           ],
@@ -260,14 +262,19 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
   }
 
   Widget getErrorContainer(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Text(LocaleProvider.current.medicine_daily_count_error_message,
-            style: context.xHeadline3.copyWith(fontWeight: FontWeight.w600)),
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Text(
+        LocaleProvider.current.medicine_daily_count_error_message,
+        style: context.xHeadline3.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }
+
+  Widget _buildGap([bool isLarge = false]) =>
+      isLarge ? R.sizes.hSizer32 : R.sizes.hSizer16;
 
   Widget getPeriodSection(
     BuildContext context,
@@ -293,25 +300,27 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
     return Column(
       children: <Widget>[
         for (var index = 0; index < value.days.length; index++)
-          Container(
-            height: 56,
-            child: GestureDetector(
-              onTap: () => {value.setSelectedDay(index)},
-              child: Card(
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
+          GestureDetector(
+            onTap: () => {value.setSelectedDay(index)},
+            child: Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 15,
+              ),
+              decoration: BoxDecoration(
                 color: value.days[index].selected
-                    ? getIt<ITheme>().secondaryColor
+                    ? getIt<ITheme>().mainColor
                     : getIt<ITheme>().cardBackgroundColor,
-                child: Center(
-                  child: Text(value.days[index].name,
-                      style: context.xHeadline3.copyWith(
-                          color: value.days[index].selected
-                              ? getIt<ITheme>().textColor
-                              : getIt<ITheme>().textColorPassive)),
-                ),
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
+              child: Center(
+                child: Text(value.days[index].name,
+                    style: context.xHeadline3.copyWith(
+                        color: value.days[index].selected
+                            ? getIt<ITheme>().textColor
+                            : getIt<ITheme>().textColorPassive)),
               ),
             ),
           ),
@@ -322,39 +331,30 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
   Widget getIntermittentDaysSection(BuildContext context) {
     return Column(
       children: <Widget>[
-        Center(
-          child: Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: Text(
-              LocaleProvider
-                  .current.medicine_how_often_intermittent_daily_message,
-              style: context.xHeadline3,
-            ),
-          ),
+        Text(
+          LocaleProvider.current.medicine_how_often_intermittent_daily_message,
+          style: context.xHeadline3,
         ),
 
         //
-        Center(
-          child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 15),
-            child: TextFormField(
-              controller: intermittentDrugPerDayController,
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.number,
-              obscureText: false,
-              style: Utils.instance.inputTextStyle(),
-              decoration: Utils.instance.inputImageDecoration(
-                hintText:
-                    LocaleProvider.current.medicine_intermittent_daily_count,
-                image: R.image.ic_user,
-              ),
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
-              ],
-              onFieldSubmitted: (term) {},
-              onChanged: (text) {},
-            ),
+        _buildGap(),
+
+        //
+        RbioTextFormField(
+          controller: intermittentDrugPerDayController,
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.number,
+          obscureText: false,
+          hintText: LocaleProvider.current.medicine_intermittent_daily_count,
+          prefixIcon: SvgPicture.asset(
+            R.image.ic_user,
+            fit: BoxFit.none,
           ),
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+          ],
+          onFieldSubmitted: (term) {},
+          onChanged: (text) {},
         ),
       ],
     );
@@ -363,16 +363,15 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
   Widget getTimeAndDoseSection(MedicationDateVm value) {
     return Column(
       children: <Widget>[
-        Center(
-          child: Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: Text(
-              widget.remindable == Remindable.Medication
-                  ? LocaleProvider.current.medicine_time_and_dose_message
-                  : LocaleProvider.current.reminder_time_selection,
-              style: context.xHeadline3,
-            ),
-          ),
+        //
+        _buildGap(true),
+
+        Text(
+          widget.remindable == Remindable.Medication
+              ? LocaleProvider.current.medicine_time_and_dose_message
+              : LocaleProvider.current.reminder_time_selection,
+          style: context.xHeadline3,
+          textAlign: TextAlign.center,
         ),
 
         //
@@ -380,16 +379,16 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
           visible: widget.remindable == Remindable.Medication,
           child: Container(
             margin: EdgeInsets.all(10),
-            child: TextFormField(
+            child: RbioTextFormField(
               controller: dailyDoseController,
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.number,
               obscureText: false,
               maxLength: 1,
-              style: Utils.instance.inputTextStyle(),
-              decoration: Utils.instance.inputImageDecoration(
-                hintText: LocaleProvider.current.hint_dosage,
-                image: R.image.ic_user,
+              hintText: LocaleProvider.current.hint_dosage,
+              prefixIcon: SvgPicture.asset(
+                R.image.ic_user,
+                fit: BoxFit.none,
               ),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
@@ -403,30 +402,16 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
         ),
 
         //
+        _buildGap(),
+
+        //
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             for (var i = 0; i < value.doseTimes.length; i++)
-              GestureDetector(
-                onTap: () async {
-                  var timeOfDay = await _buildMaterialTimePicker(
-                    TimeOfDay(
-                      hour: value.doseTimes[i].hour,
-                      minute: value.doseTimes[i].minute,
-                    ),
-                  );
-
-                  if (timeOfDay != null) {
-                    value.setSelectedDoseDate(timeOfDay, i);
-                  }
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 5),
-                  child: _buildTimeCard(value.doseTimes[i], value),
-                ),
-              ),
+              _buildTimeCard(i, value.doseTimes[i], value),
           ],
         )
       ],
@@ -434,32 +419,50 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
   }
 
   Widget _buildTimeCard(
+    int index,
     DateTime dateTime,
     MedicationDateVm value,
   ) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25.0),
-      ),
-      child: Center(
-        child: Container(
-          padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
-          child: Column(
-            children: <Widget>[
-              Text(
-                DateFormat('HH:mm').format(dateTime),
-                style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                widget.remindable == Remindable.Medication
-                    ? ("${value.dailyDose} " +
-                        LocaleProvider.current.hint_dosage)
-                    : LocaleProvider.current.hint_hour,
-                style: context.xHeadline3,
-              ),
-            ],
+    return GestureDetector(
+      onTap: () async {
+        var timeOfDay = await _buildMaterialTimePicker(
+          TimeOfDay(
+            hour: value.doseTimes[index].hour,
+            minute: value.doseTimes[index].minute,
           ),
+        );
+
+        if (timeOfDay != null) {
+          value.setSelectedDoseDate(timeOfDay, index);
+        }
+      },
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 5),
+        padding: EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 5,
+        ),
+        decoration: BoxDecoration(
+          color: getIt<ITheme>().cardBackgroundColor,
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        child: Column(
+          children: <Widget>[
+            //
+            Text(
+              DateFormat('HH:mm').format(dateTime),
+              style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+            ),
+
+            //
+            Text(
+              widget.remindable == Remindable.Medication
+                  ? ("${value.dailyDose} " + LocaleProvider.current.hint_dosage)
+                  : LocaleProvider.current.hint_hour,
+              style: context.xHeadline3,
+            ),
+          ],
         ),
       ),
     );

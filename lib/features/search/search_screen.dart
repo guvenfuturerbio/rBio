@@ -8,9 +8,7 @@ import '../../../model/model.dart';
 import 'search_vm.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({
-    Key key,
-  }) : super(key: key);
+  SearchScreen({Key key}) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -47,40 +45,32 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildBody(SearchScreenVm value) {
-    return Padding(
-      padding: kIsWeb
-          ? EdgeInsets.symmetric(
-              horizontal: Atom.size.width < 800
-                  ? Atom.size.width * 0.03
-                  : Atom.size.width * 0.10)
-          : EdgeInsets.zero,
-      child: value.progress == LoadingProgress.DONE
-          ? _buildPosts(context, value.filterResources, value)
-          : Center(
-              child: RbioLoading(),
-            ),
-    );
+  Widget _buildBody(SearchScreenVm vm) {
+    switch (vm.progress) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
+      case LoadingProgress.DONE:
+        return vm.searchText.length > 3
+            ? _buildFilterResources(vm)
+            : _buildAllSocialResources(vm);
+
+      case LoadingProgress.ERROR:
+        return RbioBodyError();
+
+      default:
+        return SizedBox();
+    }
   }
 
-  Widget _buildPosts(
-    BuildContext context,
-    List<FilterResourcesResponse> posts,
-    SearchScreenVm value,
-  ) {
-    return value.searchText.length > 3
-        ? _buildFilterResources(posts, value)
-        : _buildAllSocialResources(value);
-  }
-
-  Widget _buildFilterResources(
-    List<FilterResourcesResponse> posts,
-    SearchScreenVm value,
-  ) {
-    if (posts.isEmpty && value.filteredSocialResources.isEmpty) {
+  Widget _buildFilterResources(SearchScreenVm value) {
+    if (value.filterResources.isEmpty &&
+        value.filteredSocialResources.isEmpty) {
       return Center(
-        child: Text(LocaleProvider.of(context).searchEmpty,
-            style: context.xHeadline2),
+        child: Text(
+          LocaleProvider.of(context).searchEmpty,
+          style: context.xHeadline2,
+        ),
       );
     }
 
@@ -90,15 +80,18 @@ class _SearchScreenState extends State<SearchScreen> {
           //
           ListView.builder(
             shrinkWrap: true,
-            itemCount: posts.length,
+            itemCount: value.filterResources.length,
             padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                elevation: 4,
+                elevation: 1,
+                shape: RoundedRectangleBorder(
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
                 child: ListTile(
                   title: Text(
-                    posts[index].title,
+                    value.filterResources[index].title,
                     style: context.xHeadline3,
                   ),
                   leading: SizedBox(
@@ -107,29 +100,34 @@ class _SearchScreenState extends State<SearchScreen> {
                             ? MediaQuery.of(context).size.width * 0.10
                             : MediaQuery.of(context).size.width * 0.03
                         : MediaQuery.of(context).size.width * 0.12,
-                    child: Image.asset(posts[index].tenants[0].id == 1
-                        ? R.image.oneDoseHealthPng
-                        : R.image.oneDoseHealthPng),
+                    child: Image.asset(
+                        value.filterResources[index].tenants[0].id == 1
+                            ? R.image.oneDoseHealthPng
+                            : R.image.oneDoseHealthPng),
                   ),
-                  subtitle: Text((posts[index].tenants[0].id == 1
-                          ? LocaleProvider.current.guven_hospital_ayranci
-                          : LocaleProvider.current.guven_cayyolu_campus) +
-                      "\n" +
-                      posts[index].departments[0].title),
+                  subtitle: Text(
+                      (value.filterResources[index].tenants[0].id == 1
+                              ? LocaleProvider.current.guven_hospital_ayranci
+                              : LocaleProvider.current.guven_cayyolu_campus) +
+                          "\n" +
+                          value.filterResources[index].departments[0].title),
                   onTap: () {
-                    AnalyticsManager().sendEvent(new OADoctorSelectionEvent(
-                        posts[index].departments[0].title, posts[index].title));
                     Atom.to(
                       PagePaths.DOCTOR_CV,
                       queryParameters: {
-                        'tenantId': posts[index].tenants[0].id.toString(),
-                        'departmentId':
-                            posts[index].departments[0].id.toString(),
-                        'resourceId': posts[index].id.toString(),
-                        'doctorName': Uri.encodeFull(posts[index].title),
-                        'departmentName':
-                            Uri.encodeFull(posts[index].departments[0].title),
-                        'doctorNameNoTitle': Uri.encodeFull(posts[index].title),
+                        'tenantId': value.filterResources[index].tenants[0].id
+                            .toString(),
+                        'departmentId': value
+                            .filterResources[index].departments[0].id
+                            .toString(),
+                        'resourceId':
+                            value.filterResources[index].id.toString(),
+                        'doctorName':
+                            Uri.encodeFull(value.filterResources[index].title),
+                        'departmentName': Uri.encodeFull(
+                            value.filterResources[index].departments[0].title),
+                        'doctorNameNoTitle':
+                            Uri.encodeFull(value.filterResources[index].title),
                       },
                     );
                   },
@@ -150,7 +148,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                       itemBuilder: (context, index) {
                         return Card(
-                          elevation: 4,
+                          elevation: 1,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: R.sizes.borderRadiusCircular,
+                          ),
                           child: ListTile(
                             leading: SizedBox(
                               width: kIsWeb
@@ -158,21 +159,25 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ? MediaQuery.of(context).size.width * 0.10
                                       : MediaQuery.of(context).size.width * 0.03
                                   : MediaQuery.of(context).size.width * 0.12,
-                              child: SvgPicture.asset(value
-                                  .filteredSocialResources[index].imagePath),
+                              child: SvgPicture.asset(
+                                value.filteredSocialResources[index].imagePath,
+                              ),
                             ),
                             title: Text(
-                                value.filteredSocialResources[index].title,
-                                style: context.xHeadline2),
+                              value.filteredSocialResources[index].title,
+                              style: context.xHeadline2,
+                            ),
                             subtitle: Text(
-                                value.filteredSocialResources[index].text,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: context.xHeadline3),
-                            onTap: () async {
+                              value.filteredSocialResources[index].text,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.xHeadline3,
+                            ),
+                            onTap: () {
                               value.clickPost(
-                                  value.filteredSocialResources[index].id,
-                                  value.filteredSocialResources[index].url);
+                                value.filteredSocialResources[index].id,
+                                value.filteredSocialResources[index].url,
+                              );
                             },
                           ),
                         );
@@ -186,10 +191,18 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildAllSocialResources(SearchScreenVm value) {
     return ListView.builder(
       shrinkWrap: true,
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue,
+      ),
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
       itemCount: value.allSocialResources.length,
       itemBuilder: (BuildContext context, int index) {
         return Card(
-          elevation: 4,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: R.sizes.borderRadiusCircular,
+          ),
           child: ListTile(
             leading: SizedBox(
               width: kIsWeb
@@ -197,8 +210,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       ? MediaQuery.of(context).size.width * 0.12
                       : MediaQuery.of(context).size.width * 0.03
                   : MediaQuery.of(context).size.width * 0.12,
-              child:
-                  SvgPicture.asset(value.allSocialResources[index].imagePath),
+              child: SvgPicture.asset(
+                value.allSocialResources[index].imagePath,
+              ),
             ),
             title: Text(
               value.allSocialResources[index].title,
@@ -210,9 +224,11 @@ class _SearchScreenState extends State<SearchScreen> {
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5,
             ),
-            onTap: () async {
-              value.clickPost(value.allSocialResources[index].id,
-                  value.allSocialResources[index].url);
+            onTap: () {
+              value.clickPost(
+                value.allSocialResources[index].id,
+                value.allSocialResources[index].url,
+              );
             },
           ),
         );

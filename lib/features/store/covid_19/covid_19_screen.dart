@@ -57,6 +57,7 @@ class _Covid19ScreenState extends State<Covid19Screen> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
+          //
           FadeInUp(
             duration: Duration(milliseconds: 1000),
             child: Container(
@@ -68,15 +69,16 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                     image: R.image.ic_test_icon,
                     number: LocaleProvider.current.lbl_number_hospital,
                     context: context),
-                onTap: () {
-                  AnalyticsManager().sendEvent(new Covid19PcrTestClickEvent());
-                },
+                onTap: () {},
               ),
             ),
           ),
+
+          //
           Container(
             child: Column(
               children: [
+                //
                 Container(
                   margin: EdgeInsets.only(left: 30, right: 30),
                   height: 30,
@@ -89,6 +91,8 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
+
+                //
                 CarouselSlider(
                   carouselController: controller,
                   options: CarouselOptions(
@@ -114,43 +118,52 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                     });
                   }).toList(),
                 ),
+
+                //
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: map<Widget>(cardList, (index, url) {
-                    return Container(
-                      width: 10.0,
-                      height: 10.0,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentIndex == index
-                            ? getIt<ITheme>().mainColor
-                            : getIt<ITheme>()
-                                .textColorSecondary
-                                .withOpacity(0.5),
-                      ),
-                    );
-                  }),
+                  children: map<Widget>(
+                    cardList,
+                    (index, url) {
+                      return Container(
+                        width: 10.0,
+                        height: 10.0,
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentIndex == index
+                              ? getIt<ITheme>().mainColor
+                              : getIt<ITheme>()
+                                  .textColorSecondary
+                                  .withOpacity(0.5),
+                        ),
+                      );
+                    },
+                  ),
                 ),
+
+                //
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                        icon: Icon(Icons.arrow_left),
-                        onPressed: () {
-                          controller.previousPage();
-                        }),
+                      icon: Icon(Icons.arrow_left),
+                      onPressed: () {
+                        controller.previousPage();
+                      },
+                    ),
                     IconButton(
-                        icon: Icon(Icons.arrow_right),
-                        onPressed: () {
-                          controller.nextPage();
-                        }),
+                      icon: Icon(Icons.arrow_right),
+                      onPressed: () {
+                        controller.nextPage();
+                      },
+                    ),
                   ],
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

@@ -176,14 +176,9 @@ class RegisterStep2ScreenVm with ChangeNotifier {
       } else {
         showGradientDialog(context, LocaleProvider.of(context).warning,
             response.message.toString());
-        AnalyticsManager()
-            .sendEvent(new RegisterStep1FailEvent("Register1 User TC", 22));
       }
     } catch (error) {
       Future.delayed(const Duration(milliseconds: 500), () {
-        AnalyticsManager()
-            .sendEvent(new RegisterStep1FailEvent("Register1 User TC", 22));
-        print(error);
         hideDialog(context);
         showGradientDialog(
             context,

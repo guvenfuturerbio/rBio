@@ -74,8 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               //
               RbioUserTile(
-                name:
-                    '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
+                name: Utils.instance.getCurrentUserNameAndSurname,
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.PROFILE_IMAGE),
                 leadingImage: UserLeadingImage.Circle,
@@ -177,74 +176,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildVerticalGap() => SizedBox(height: Atom.height * 0.015);
 
-  Widget _buildHorizontalGap() => SizedBox(width: Atom.width * 0.025);
-
-  Widget _buildNumberTile(int number, String title, VoidCallback onTap) {
-    return Expanded(
-      child: ClipRRect(
-        borderRadius: R.sizes.borderRadiusCircular,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            //
-            Positioned.fill(
-              child: Container(
-                color: getIt<ITheme>().cardBackgroundColor,
-              ),
-            ),
-
-            //
-            Align(
-              alignment: Alignment.center,
-              child: CircleAvatar(
-                radius: Atom.width * 0.08,
-                backgroundColor: getIt<ITheme>().secondaryColor,
-                child: Text(
-                  '$number',
-                  style: context.xHeadline1.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-
-            //
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: Atom.width * 0.020,
-                  left: Atom.width * 0.015,
-                  right: Atom.width * 0.015,
-                ),
-                child: Text(
-                  title,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ),
-
-            //
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildListItem(String title, VoidCallback onTap,
-      {bool isDivider = true}) {
+  Widget _buildListItem(
+    String title,
+    VoidCallback onTap, {
+    bool isDivider = true,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -273,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //
                 SvgPicture.asset(
                   R.image.ic_arrow_right,
-                  width: R.sizes.iconSize4,
+                  width: R.sizes.iconSize5,
                 ),
               ],
             ),

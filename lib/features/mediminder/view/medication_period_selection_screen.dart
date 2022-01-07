@@ -7,6 +7,7 @@ import '../../../core/enums/medicine_period.dart';
 import '../../../core/enums/remindable.dart';
 import '../mediminder.dart';
 
+// ignore: must_be_immutable
 class MedicationPeriodSelectionScreen extends StatefulWidget {
   DrugResultModel drugResult;
   Remindable remindable;
@@ -75,6 +76,7 @@ class _MedicationPeriodSelectionScreenState
 
     return ListView.builder(
       padding: EdgeInsets.all(8),
+      scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
       itemCount: periodList.length,
       itemBuilder: (BuildContext context, int index) {

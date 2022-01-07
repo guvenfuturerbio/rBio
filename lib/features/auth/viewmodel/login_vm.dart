@@ -282,12 +282,9 @@ class LoginScreenVm extends ChangeNotifier {
         }
 
         this._progress = LoadingProgress.DONE;
-        // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
-        // await UserService().saveAndRetrieveToken(userCredential.user, 'patientLogin');
-        // await UserService().handleSuccessfulLogin(userCredential.user);
+
         hideDialog(mContext);
         notifyListeners();
-        AnalyticsManager().sendEvent(LoginSuccessEvent());
         final term = Atom.queryParameters['then'];
         if (term != null && term != '') {
           Atom.to(term, isReplacement: true);

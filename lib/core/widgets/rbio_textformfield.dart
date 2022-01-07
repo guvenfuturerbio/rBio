@@ -20,9 +20,13 @@ class RbioTextFormField extends StatelessWidget {
   final InputBorder border;
   final String initialValue;
   final int maxLines;
+  final Widget prefixIcon;
+  final int maxLength;
 
   const RbioTextFormField(
       {Key key,
+      this.maxLength,
+      this.prefixIcon,
       this.initialValue,
       this.focusNode,
       this.controller,
@@ -45,6 +49,7 @@ class RbioTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength :maxLength,
       maxLines: maxLines,
       initialValue: initialValue,
       style: Utils.instance.inputTextStyle(),
@@ -63,6 +68,7 @@ class RbioTextFormField extends StatelessWidget {
                 ? contentPadding
                 : EdgeInsets.only(left: 8),
             inputBorder: border ?? defaultBorder(),
+            prefixIcon: prefixIcon,
           )
           .copyWith(
             filled: true,
