@@ -1,6 +1,5 @@
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
-import 'package:vrouter/vrouter.dart';
 
 import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
@@ -56,6 +55,7 @@ import '../../features/take_appointment/create_appointment_summary/view/create_a
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../core.dart';
 import '../widgets/chronic_error_alert.dart';
+import 'package:vrouter/vrouter.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -262,28 +262,27 @@ class VRouterRoutes {
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
     ),
-    
+
     VGuard(
-        beforeEnter: (vRedirector) async {
-          if (!getIt<UserNotifier>().isCronic) {
-            vRedirector.stopRedirection();
-            Atom.show(NotChronicWarning());
-          } else {
-            print(FlutterAppBadger.isAppBadgeSupported());
-            await FlutterAppBadger.removeBadge();
-          }
-        },
-        stackedRoutes: [
-          VWidget(
-            path: PagePaths.CONSULTATION,
-            widget: ConsultationScreen(),
-            stackedRoutes: [
-              VWidget(
-                path: PagePaths.CHAT,
-                widget: ChangeNotifierProvider<ChatVm>(
-                  create: (context) => ChatVm(),
-                  child: ChatScreen(),
-                ),
+      beforeEnter: (vRedirector) async {
+        if (!getIt<UserNotifier>().isCronic) {
+          vRedirector.stopRedirection();
+          Atom.show(NotChronicWarning());
+        } else {
+          print(FlutterAppBadger.isAppBadgeSupported());
+          await FlutterAppBadger.removeBadge();
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.CONSULTATION,
+          widget: ConsultationScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.CHAT,
+              widget: ChangeNotifierProvider<ChatVm>(
+                create: (context) => ChatVm(),
+                child: ChatScreen(),
               ),
             ),
           ],
