@@ -230,6 +230,7 @@ class LoginScreenVm extends ChangeNotifier {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
 
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
+        await getIt<UserManager>().setApplicationConsentFormState(true);
 
         //One dose hasta bilgileri
         final patientDetail = await getIt<Repository>().getPatientDetail();

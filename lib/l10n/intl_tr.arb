@@ -25,6 +25,8 @@
   "des_forgot_password": "We just need your registered Email to  send you password reset intruction",
   "des_forgot_password_tc": "Size geçici şifrenizi iletebilmemiz için T.C kimlik numaranız ve telefon numaranıza ihtiyacımız var",
   "des_forgot_password_other": "Size geçici şifrenizi iletebilmemiz için Pasaport numaranız ve telefon numaranıza ihtiyacımız var",
+  "not_chronic_warning": "Sağlık Takibi özelliğini kullanmak için lütfen 444 94 94 numaralı telefondan bize ulaşın",
+
   "gender_female": "Kadın",
   "gender_male": "Erkek",
   "hint_date": "Tarih",
@@ -427,7 +429,7 @@
   "close": "Kapat",
   "connect_glucometer": "Glukometre Ekle",
   "connect_scale": "Tartı Ekle",
-  "consultation": "Danışma",
+  "consultation": "Doktor Danışma Hattı",
   "contour_plus_blood_sugar": "Contour Plus Şeker Ölçüm",
   "daily": "Günlük",
   "date": "Tarih",

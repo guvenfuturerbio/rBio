@@ -99,7 +99,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               progressIndicator: RbioLoading.progressIndicator(),
               opacity: 0,
               child: RbioScaffold(
-                resizeToAvoidBottomInset: false,
+                resizeToAvoidBottomInset: true,
                 appbar: RbioAppBar(
                   title: RbioAppBar.textTitle(
                     context,

@@ -372,8 +372,12 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     userRegisterStep1.lastName = registerSurname;
                     //TODO : Düzenlenecek
                     userRegisterStep1.nationalityId = vm.isTcCitizen ? 213 : 38;
-                    userRegisterStep1.identityNumber =
-                        _identityEditingController.text;
+                    vm.isTcCitizen
+                        ? userRegisterStep1.identityNumber =
+                            _identityEditingController.text
+                        : userRegisterStep1.passportNumber =
+                            _identityEditingController.text;
+                    //
                     userRegisterStep1.gender = registerGender;
                     userRegisterStep1.gsm = registerPhoneNumber;
                     userRegisterStep1.birthDate = registerDateOfBirth;

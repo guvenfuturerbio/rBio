@@ -65,8 +65,6 @@ class _HomeSliderState extends State<HomeSlider> {
                           borderRadius: R.sizes.borderRadiusCircular,
                           child: CachedNetworkImage(
                             imageUrl: vm.bannerTabsModel[itemIndex].imageUrl,
-                            placeholder: (context, url) =>
-                                Center(child: RbioLoading()),
                             errorWidget: (context, url, error) =>
                                 Center(child: Icon(Icons.error)),
                             fit: BoxFit.cover,
