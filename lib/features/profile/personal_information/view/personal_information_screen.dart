@@ -76,6 +76,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         ? userAccount.patients.first.birthDate.replaceAll('.', '/')
         : "-";
 
+    _phoneNumberEditingController.text = userAccount.phoneNumber;
+    _emailEditingController.text =
+        userAccount.electronicMail.contains("@mailyok.com")
+            ? "-"
+            : userAccount.electronicMail;
+
     return ChangeNotifierProvider<PersonalInformationScreenVm>(
       create: (context) => PersonalInformationScreenVm(
         mContext: context,
@@ -90,16 +96,13 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           PersonalInformationScreenVm vm,
           Widget child,
         ) {
-          _phoneNumberEditingController.text = vm.phoneNumber;
-          _emailEditingController.text = vm.email;
-
           return KeyboardDismissOnTap(
             child: RbioLoadingOverlay(
               isLoading: vm.showLoadingOverlay,
               progressIndicator: RbioLoading.progressIndicator(),
               opacity: 0,
               child: RbioScaffold(
-                resizeToAvoidBottomInset: false,
+                resizeToAvoidBottomInset: true,
                 appbar: RbioAppBar(
                   title: RbioAppBar.textTitle(
                     context,

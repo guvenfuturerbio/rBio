@@ -22,6 +22,6 @@ class UserRegistrationStep2Model {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'password': password,
         'repassword': repassword,
-        'user_registration_step1': userRegistrationStep1,
+        'user_registration_step1':userRegistrationStep1.toJson(),
       };
 }

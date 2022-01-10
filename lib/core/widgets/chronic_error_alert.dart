@@ -8,7 +8,8 @@ class NotChronicWarning extends StatelessWidget {
     return GuvenAlert(
       backgroundColor: getIt<ITheme>().cardBackgroundColor,
       title: GuvenAlert.buildTitle(
-          "Kronik takip özelliğini kullanmak için lütfen ${LocaleProvider.current.phone_guven} numarasını arayınız"),
+        LocaleProvider.current.not_chronic_warning
+          ),
       actions: [
         GuvenAlert.buildMaterialAction(LocaleProvider.current.ok, () {
           Atom.dismiss();
