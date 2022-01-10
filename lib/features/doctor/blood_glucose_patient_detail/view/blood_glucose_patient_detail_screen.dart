@@ -188,7 +188,7 @@ class _BloodGlucosePatientDetailScreenState
               if (MediaQuery.of(context).orientation == Orientation.portrait)
                 //
                 SizedBox(
-                  height: context.HEIGHT * .3,
+                  height: context.HEIGHT * .5,
                   child: _MeasurementList(
                     bgMeasurements: vm.bgMeasurements,
                     scrollController: _controller,

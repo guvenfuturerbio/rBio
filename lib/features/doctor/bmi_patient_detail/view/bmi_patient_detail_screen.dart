@@ -129,7 +129,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
               //
               if (MediaQuery.of(context).orientation == Orientation.portrait)
                 SizedBox(
-                  height: context.HEIGHT * .3,
+                  height: context.HEIGHT * .5,
                   child: _MeasurementList(
                     scaleMeasurements: vm.scaleMeasurement,
                     fetchScrolledData: vm.fetchScrolledData,

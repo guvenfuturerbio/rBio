@@ -62,8 +62,6 @@ class _AnimationScaleScatterDefaultState extends SampleViewState {
         _unit = ScaleUnit.KG.toStr;
       }
 
-      print(
-          "Minimum: $_minimum, Maximum: $_maximum, Target Min: $_targetMin, Target Max: $_targetMax");
       return _getAnimationScatterChart();
     });
   }

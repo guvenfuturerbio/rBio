@@ -57,7 +57,6 @@ class MeasurementTrackingVm with ChangeNotifier {
   }
 
   setActiveItem(Key key) {
-    print(key);
     activeItem = items.firstWhere((element) => element.key == key);
     notifyListeners();
   }

@@ -708,7 +708,6 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   Widget smallWidget(Function() callBack) {
     ScaleMeasurementViewModel lastMeasurement = ScaleMeasurementViewModel(
         scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement());
-    log(lastMeasurement.scaleModel.toString());
     return RbioSmallChronicWidget(
       callback: callBack,
       lastMeasurement: lastMeasurement == null

@@ -22,14 +22,24 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   final int patientId;
 
   BloodPressurePatientDetailVm({this.context, this.patientId}) {
-    fetchBpMeasurement();
-    fetchScrolledDailyData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      update();
+    });
+  }
+
+  update() async {
+    _isDataLoading = true;
+    notifyListeners();
+    await fetchBpMeasurement();
+    await fetchScrolledDailyData();
 
     controller.addListener(() {
       if (controller.position.atEdge && controller.position.pixels != 0) {
         getNewItems();
       }
     });
+    _isDataLoading = false;
+    notifyListeners();
   }
 
   Widget get currentGraph => AnimatedPatientPulseChart();
@@ -57,7 +67,8 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
       GetMyPatientFilter(end: null, start: null),
     );
 
-    bpMeasurements = result.map((e) => BpMeasurementViewModel(bpModel: e));
+    bpMeasurements =
+        result.map((e) => BpMeasurementViewModel(bpModel: e)).toList();
 
     bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
@@ -275,10 +286,11 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   @override
   void changeGraphType() => null;
 
-  @override
-  void showFilter(context) => Atom.show(BpChartFilterPopUp(
+  void showFilter(_) => Atom.show(BpChartFilterPopUp(
         height: context.HEIGHT * .52,
         width: context.WIDTH * .6,
+        measurements: measurements,
+        callback: changeFilterType,
       ));
 
   void changeFilterType(Map<String, bool> selectedMeasurement) {

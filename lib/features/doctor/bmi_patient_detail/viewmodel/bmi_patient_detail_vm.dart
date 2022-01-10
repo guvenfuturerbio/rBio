@@ -180,7 +180,7 @@ class BmiPatientDetailVm extends ChangeNotifier
   Future<void> setStartDate(DateTime d) async {
     this._startDate = d;
     this._currentDateIndex = 0;
-    await fetchBgMeasurementsInDateRange(
+    await fetchBpMeasurementsInDateRange(
         startDate, endDate.add(Duration(days: 1)));
 
     notifyListeners();
@@ -196,7 +196,7 @@ class BmiPatientDetailVm extends ChangeNotifier
   Future<void> setEndDate(DateTime d) async {
     this._endDate = d;
     this._currentDateIndex = 0;
-    fetchBgMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
+    fetchBpMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
 
     notifyListeners();
   }
@@ -546,9 +546,8 @@ class BmiPatientDetailVm extends ChangeNotifier
     fetchBmiMeasurementsDateList();
   }
 
-  Future<void> fetchBgMeasurementsInDateRange(
+  Future<void> fetchBpMeasurementsInDateRange(
       DateTime start, DateTime end) async {
-    //final result = await MeasurementService().fetchBgMeasurements();
     scaleMeasurement.clear();
     for (var e in scaleData) {
       if (!scaleData.contains(ScaleMeasurementViewModel(scaleModel: e))) {

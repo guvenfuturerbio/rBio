@@ -173,8 +173,8 @@ class DoctorApiServiceImpl extends DoctorApiService {
         options: authOptions);
     if (response.isSuccessful == true) {
       return response.datum
-          .map((item) => BloodGlucose.fromJson(item))
-          .cast<BloodGlucose>()
+          .map((item) => BloodPressureModel.fromJson(item))
+          .cast<BloodPressureModel>()
           .toList();
     } else {
       throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
