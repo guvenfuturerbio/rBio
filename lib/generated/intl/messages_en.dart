@@ -226,6 +226,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "device_connection_step_4_Roche" : MessageLookupByLibrary.simpleMessage("When you get the \'OK\' text on the device, turn the device off and on again."),
     "device_connections" : MessageLookupByLibrary.simpleMessage("Device Connections"),
     "device_pairing_completed" : MessageLookupByLibrary.simpleMessage("The device is connected."),
+    "device_register" : MessageLookupByLibrary.simpleMessage("Please register a device"),
     "device_scale_connection_step_1_mi_scale" : MessageLookupByLibrary.simpleMessage("Place the scale on a hard, flat surface. Stop bare feet in touch with metal surfaces, make sure that the feet are properly in contact with electrodes."),
     "device_scale_connection_step_2_mi_scale" : MessageLookupByLibrary.simpleMessage("When scale is activated, Select the device you want to connect to."),
     "device_scale_connection_step_3_mi_scale" : MessageLookupByLibrary.simpleMessage("When the weight indicator is stabilized, your body compositions are started to be measured. When a progress indicator below the weight indicator flashes, it means that a measurement is complete, then weigh will match your smart device."),

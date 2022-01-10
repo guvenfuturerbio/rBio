@@ -749,5 +749,6 @@
   "select_day_to": "Diğer günü seçiniz",
   "healthcare_employee": "Sağlık Çalışanı",
   "update": "Güncelle",
-  "change": "Değiştir"
+  "change": "Değiştir",
+  "device_register": "Lütfen bir cihaz kaydediniz"
 }

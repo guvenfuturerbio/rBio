@@ -7584,6 +7584,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Please register a device`
+  String get device_register {
+    return Intl.message(
+      'Please register a device',
+      name: 'device_register',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

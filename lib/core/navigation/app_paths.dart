@@ -372,10 +372,37 @@ class VRouterRoutes {
           path: PagePaths.BLOOD_GLUCOSE_PAGE,
           widget: MedicationScreen(),
         ),
-        VWidget(
-          path: PagePaths.STRIP_PAGE,
-          widget: StripScreen(),
-        )
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (Mediminder.instance.selection?.deviceUUID == null ||
+                Mediminder.instance.selection?.deviceUUID == '') {
+              await Atom.show(
+                GuvenAlert(
+                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+                  content: GuvenAlert.buildDescription(
+                      LocaleProvider.current.device_register),
+                  actions: [
+                    //
+                    GuvenAlert.buildMaterialAction(
+                      LocaleProvider.current.Ok,
+                      () {
+                        Atom.dismiss();
+                        vRedirector.to(PagePaths.ALL_DEVICES);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.STRIP_PAGE,
+              widget: StripScreen(),
+            ),
+          ],
+        ),
       ],
     ),
 
