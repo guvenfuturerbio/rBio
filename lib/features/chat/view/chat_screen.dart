@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_date/dart_date.dart';
@@ -7,12 +9,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'dart:io';
+
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
+
+import '../../../../../../core/core.dart';
 
 import '../../../core/core.dart';
-import '../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
 import '../controller/chat_vm.dart';
 import '../model/chat_person.dart';
 import '../model/message.dart';
+
+part '../widget/image_preview_dialog.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key key}) : super(key: key);
@@ -23,6 +32,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   ChatPerson otherPerson;
+  StreamSubscription<bool> keyboardSubscription;
 
   FocusNode _focusNode;
   ScrollController _scrollController;
@@ -32,8 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String get getCurrentUserId => getIt<UserNotifier>().firebaseID;
   ChatPerson get getCurrentPerson => ChatPerson(
         id: getIt<UserNotifier>().firebaseID,
-        name:
-            '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
+        name: Utils.instance.getCurrentUserNameAndSurname,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
         firebaseToken: FirebaseMessagingManager.instance.token,
       );
@@ -46,6 +55,19 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollController = ScrollController();
     firstLoadNotifier = ValueNotifier(false);
 
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      if (visible) {
+        Future.delayed(
+          Duration(milliseconds: 50),
+          () {
+            _scrollAnimateToEnd();
+          },
+        );
+      }
+    });
+
     super.initState();
   }
 
@@ -55,6 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _textEditingController.dispose();
     _scrollController.dispose();
     firstLoadNotifier.dispose();
+    keyboardSubscription.cancel();
     super.dispose();
   }
 
@@ -166,10 +189,10 @@ class _ChatScreenState extends State<ChatScreen> {
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) {
         Future.delayed(
-          Duration(milliseconds: 50),
+          Duration(milliseconds: 100),
           () {
             _scrollController.jumpTo(
-                _scrollController.position.maxScrollExtent + topPadding + 200);
+                _scrollController.position.maxScrollExtent + topPadding + 300);
           },
         );
       });
@@ -212,7 +235,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     focusNode: _focusNode,
                     controller: _textEditingController,
                     keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.go,
+                    textInputAction: TextInputAction.done,
+                    contentPadding: const EdgeInsets.only(
+                        left: 20, right: 40, top: 10, bottom: 10),
                     hintText: LocaleProvider.current.send_message,
                     onFieldSubmitted: (value) {
                       _sendMessage(chatVm);
@@ -405,10 +430,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => GalleryView(
-                    images: [message.message],
+                Atom.show(
+                  ImagePreviewDialog(
+                    image: message.message,
                   ),
                 );
               },
@@ -449,10 +473,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => GalleryView(
-                    images: [message.message],
+                Atom.show(
+                  ImagePreviewDialog(
+                    image: message.message,
                   ),
                 );
               },

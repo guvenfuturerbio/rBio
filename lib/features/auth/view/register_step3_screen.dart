@@ -100,19 +100,11 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
             //
             Container(
               margin: EdgeInsets.only(right: 15, left: 15, bottom: 20, top: 40),
-              child: TextFormField(
+              child: RbioTextFormField(
                 controller: _smsController,
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.number,
-                style: Utils.instance.inputTextStyle(),
-                decoration: Utils.instance
-                    .inputDecorationForLogin(
-                      hintText:
-                          LocaleProvider.of(context).sms_verification_code,
-                    )
-                    .copyWith(
-                        fillColor: getIt<ITheme>().cardBackgroundColor,
-                        filled: true),
+                hintText: LocaleProvider.of(context).sms_verification_code,
                 focusNode: focus,
                 onFieldSubmitted: (term) {
                   UtilityManager().fieldFocusChange(context, focus, null);

@@ -37,9 +37,9 @@ class StripVm with ChangeNotifier {
       }
 
       if (Mediminder.instance.selection != null) {
-        stripDetailModel = await getIt<ChronicTrackingRepository>()
+        stripDetailModel = (await getIt<ChronicTrackingRepository>()
                 .getUserStrip(Mediminder.instance.selection?.id,
-                    Mediminder.instance.selection?.deviceUUID) ??
+                    Mediminder.instance.selection?.deviceUUID)) ??
             StripDetailModel();
 
         stripDetailModel.deviceUUID = Mediminder.instance.selection?.deviceUUID;

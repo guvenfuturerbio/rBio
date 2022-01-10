@@ -183,13 +183,11 @@ class FirestoreManager {
         contentAvailable: true,
         notification: NotificationModel(
           body: message.type == 0 ? message.message : "Media",
-          title:
-              "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
+          title: Utils.instance.getCurrentUserNameAndSurname,
         ),
         data: NotificationData(
           body: message.type == 0 ? message.message : "Media",
-          title:
-              "${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}",
+          title: Utils.instance.getCurrentUserNameAndSurname,
           chatPerson: currentUser,
           type: 'chat',
         ),

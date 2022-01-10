@@ -248,7 +248,9 @@ class BgTaggerPopUp extends StatelessWidget {
 
   Card getTagElement(bool isCurrent, String icon, String title) {
     return Card(
-      color: isCurrent ? R.color.btnDarkBlue : R.color.white,
+      color: isCurrent
+          ? getIt<ITheme>().mainColor
+          : getIt<ITheme>().cardBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
@@ -281,13 +283,9 @@ class BgTaggerPopUp extends StatelessWidget {
   BoxDecoration getTagElementDeco(bool isCurrent) {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(25),
-      gradient: LinearGradient(
-        begin: Alignment.bottomRight,
-        end: Alignment.topLeft,
-        colors: isCurrent
-            ? <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]
-            : <Color>[Colors.white, Colors.white],
-      ),
+      color: isCurrent
+          ? getIt<ITheme>().mainColor
+          : getIt<ITheme>().cardBackgroundColor,
     );
   } // TagSection #end
 

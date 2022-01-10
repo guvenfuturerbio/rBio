@@ -9,6 +9,7 @@ class ChatPerson {
   String messageTime;
   bool hasRead;
   bool otherHasRead;
+  int timestamp;
   String url;
   String firebaseToken;
 
@@ -19,6 +20,7 @@ class ChatPerson {
     this.lastMessageSender,
     this.lastMessageType,
     this.messageTime,
+    this.timestamp,
     this.hasRead = true,
     this.otherHasRead = false,
     this.url,

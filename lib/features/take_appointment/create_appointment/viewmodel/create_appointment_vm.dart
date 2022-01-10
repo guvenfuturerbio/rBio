@@ -11,6 +11,8 @@ enum Fields { DEPARTMENT, TENANTS, DOCTORS, RELATIVE }
 class CreateAppointmentVm extends ChangeNotifier {
   BuildContext mContext;
   bool forOnline;
+  bool fromSearch;
+  bool fromSymptom;
 
   List<FilterTenantsResponse> _tenantsFilterResponse;
   List<FilterDepartmentsResponse> _filterDepartmentsResponse;
@@ -38,6 +40,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   List<PatientAppointmentsResponse> _patientAppointments;
   List<PatientAppointmentsResponse> _holderForFavorites = [];
   List<String> _doctorsImageUrls = [];
+  List<int> _doctorsIds = [];
 
   // #region Getters
   LoadingProgress get relativeProgress => this._relativeProgress;
@@ -78,12 +81,18 @@ class CreateAppointmentVm extends ChangeNotifier {
       this._patientAppointments;
   // #endregion
 
-  CreateAppointmentVm({
-    @required BuildContext context,
-    @required bool forOnline,
-  }) {
+  CreateAppointmentVm(
+      {@required BuildContext context,
+      @required bool forOnline,
+      @required bool fromSearch,
+      @required bool fromSymptom,
+      int tenantId,
+      int departmentId,
+      int resourceId}) {
     this.mContext = context;
     this.forOnline = forOnline;
+    this.fromSearch = fromSearch;
+    this.fromSymptom = fromSymptom;
     this._patientId = getIt<UserNotifier>().getPatient().id;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
@@ -107,7 +116,66 @@ class CreateAppointmentVm extends ChangeNotifier {
       if (getIt<UserNotifier>().canAccessHospital()) {
         fetchPatientAppointments(context);
       }
+
+      if (fromSearch) {
+        fillFromSearch(tenantId, departmentId, resourceId);
+      } else {
+        forOnline
+            ? print("For online!")
+            : fromSymptom
+                ? print("From smyptom!")
+                : clearFunc(Fields.TENANTS);
+      }
+
+      if (fromSymptom) {
+        fillFromSymptom(tenantId, departmentId);
+      }
     });
+  }
+
+  Future<void> fillFromSymptom(int tenantId, int departmentId) async {
+    try {
+      if (!forOnline) {
+        for (var tenant in tenantsFilterResponse) {
+          if (tenant.id == tenantId) {
+            await hospitalSelection(tenant);
+          }
+        }
+      }
+
+      for (var department in filterDepartmentResponse) {
+        if (department.id == departmentId) {
+          await departmentSelection(department);
+        }
+      }
+    } catch (e) {
+      LoggerUtils.instance.e("fillFromSymptom: $e");
+    }
+  }
+
+  Future<void> fillFromSearch(
+      int tenantId, int departmentId, int resourceId) async {
+    try {
+      for (var tenant in tenantsFilterResponse) {
+        if (tenant.id == tenantId) {
+          await hospitalSelection(tenant);
+        }
+      }
+
+      for (var department in filterDepartmentResponse) {
+        if (department.id == departmentId) {
+          await departmentSelection(department);
+        }
+      }
+
+      for (var doctor in filterResourcesResponse) {
+        if (doctor.id == resourceId) {
+          doctorSelection(doctor);
+        }
+      }
+    } catch (e) {
+      LoggerUtils.instance.e("fillFromSearch: $e");
+    }
   }
 
   Future<void> fillFromFavorites(int index) async {
@@ -123,6 +191,8 @@ class CreateAppointmentVm extends ChangeNotifier {
       for (var department in filterDepartmentResponse) {
         if (department.id ==
             _holderForFavorites[index].resources.first.departmentId) {
+          print(
+              'departman : ${department.title} --> departmanId : ${department.id}');
           await departmentSelection(department);
         }
       }
@@ -545,18 +615,23 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   Future<void> holderListFillFunc() async {
     _holderForFavorites = [];
+    _doctorsIds = [];
+    for (var appo in _patientAppointments) {
+      _doctorsIds.add(appo.resources.first.resourceId);
+    }
+    print('Current doctor ids: -->' + _doctorsIds.toString());
+    _doctorsIds = _doctorsIds.toSet().toList();
+    print('Removed duplicates ids: -->' + _doctorsIds.toString());
 
-    if (_patientAppointments.length >= 4) {
-      for (var item = 0; item < 4; item++) {
-        if (!(_holderForFavorites.contains(_patientAppointments[item]))) {
-          _holderForFavorites.add(_patientAppointments[item]);
-        }
+    if (_doctorsIds.length >= 4) {
+      for (var index = 0; index < 4; index++) {
+        _holderForFavorites.add(_patientAppointments.firstWhere((element) =>
+            element.resources.first.resourceId == _doctorsIds[index]));
       }
     } else {
-      for (var element in _patientAppointments) {
-        if (!(_holderForFavorites.contains(element))) {
-          _holderForFavorites.add(element);
-        }
+      for (var index = 0; index < _doctorsIds.length; index++) {
+        _holderForFavorites.add(_patientAppointments.firstWhere((element) =>
+            element.resources.first.resourceId == _doctorsIds[index]));
       }
     }
     notifyListeners();

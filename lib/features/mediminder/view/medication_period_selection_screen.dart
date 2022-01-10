@@ -7,6 +7,7 @@ import '../../../core/enums/medicine_period.dart';
 import '../../../core/enums/remindable.dart';
 import '../mediminder.dart';
 
+// ignore: must_be_immutable
 class MedicationPeriodSelectionScreen extends StatefulWidget {
   DrugResultModel drugResult;
   Remindable remindable;
@@ -20,18 +21,26 @@ class _MedicationPeriodSelectionScreenState
     extends State<MedicationPeriodSelectionScreen> {
   @override
   Widget build(BuildContext context) {
-    widget.drugResult = DrugResultModel.fromJson(
-        jsonDecode(Atom.queryParameters['drugResult']));
-    widget.remindable = Atom.queryParameters['remindable'].toRemindable();
+    try {
+      widget.drugResult = DrugResultModel.fromJson(
+          jsonDecode(Atom.queryParameters['drugResult']));
+      widget.remindable = Atom.queryParameters['remindable'].toRemindable();
+    } catch (e) {
+      return RbioRouteError();
+    }
 
     return RbioScaffold(
-      appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          widget.drugResult.name,
-        ),
-      ),
+      appbar: _buildAppBar(context),
       body: _buildBody(),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        widget.drugResult.name,
+      ),
     );
   }
 
@@ -45,8 +54,10 @@ class _MedicationPeriodSelectionScreenState
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(top: 15),
-          child: Text(LocaleProvider.current.medicine_how_often_message,
-              style: context.xHeadline3),
+          child: Text(
+            LocaleProvider.current.medicine_how_often_message,
+            style: context.xHeadline3,
+          ),
         ),
 
         //
@@ -65,6 +76,7 @@ class _MedicationPeriodSelectionScreenState
 
     return ListView.builder(
       padding: EdgeInsets.all(8),
+      scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
       itemCount: periodList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -80,22 +92,14 @@ class _MedicationPeriodSelectionScreenState
                 style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
               ),
               onTap: () {
-                Atom.to(PagePaths.MEDICATION_DATE, queryParameters: {
-                  'remindable': widget.remindable.toParseableString(),
-                  'medicinePeriod':
-                      periodList[index].toParseableStringMedicine()
-                });
-
-                /*Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MedicationDateScreen(
-                      medicinePeriod: periodList[index],
-                      remindable: widget.remindable,
-                    ),
-                    settings: RouteSettings(name: 'NewEntry'),
-                  ),
-                );*/
+                Atom.to(
+                  PagePaths.MEDICATION_DATE,
+                  queryParameters: {
+                    'remindable': widget.remindable.toParseableString(),
+                    'medicinePeriod':
+                        periodList[index].toParseableStringMedicine()
+                  },
+                );
               },
             ),
           ),

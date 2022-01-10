@@ -30,6 +30,22 @@ class RegisterStep3ScreenVm with ChangeNotifier {
       hideDialog(context);
       if (response.isSuccessful == true) {
         Atom.to(PagePaths.LOGIN, isReplacement: true);
+        Atom.show(
+          GuvenAlert(
+            title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+            backgroundColor: getIt<ITheme>().cardBackgroundColor,
+            content: GuvenAlert.buildDescription(
+                LocaleProvider.current.succefully_created_account),
+            actions: [
+              GuvenAlert.buildBigMaterialAction(
+                LocaleProvider.current.Ok,
+                () {
+                  Atom.dismiss();
+                },
+              ),
+            ],
+          ),
+        );
       } else {
         showGradientDialog(context, LocaleProvider.of(context).warning,
             response.message.toString());

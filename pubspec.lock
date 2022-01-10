@@ -354,7 +354,7 @@ packages:
       name: dart_date
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   dart_notification_center:
     dependency: transitive
     description:
@@ -460,27 +460,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "9.0.2"
-  firebase_analytics:
-    dependency: "direct main"
-    description:
-      name: firebase_analytics
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "8.3.4"
-  firebase_analytics_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_analytics_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
-  firebase_analytics_web:
-    dependency: transitive
-    description:
-      name: firebase_analytics_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0+1"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -598,6 +577,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_app_badger:
+    dependency: "direct main"
+    description:
+      name: flutter_app_badger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.0"
   flutter_appavailability:
     dependency: "direct main"
     description:
@@ -1027,7 +1013,7 @@ packages:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   in_app_update:
     dependency: "direct main"
     description:
@@ -1323,7 +1309,7 @@ packages:
       name: path_provider_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   path_provider_windows:
     dependency: transitive
     description:
@@ -1393,7 +1379,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.0"
   pointycastle:
     dependency: transitive
     description:
@@ -1692,7 +1678,7 @@ packages:
       name: sqflite_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   stack_trace:
     dependency: transitive
     description:
@@ -1944,7 +1930,7 @@ packages:
       name: url_launcher_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   url_launcher_web:
     dependency: transitive
     description:
@@ -2021,7 +2007,7 @@ packages:
       name: webview_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   webview_flutter_wkwebview:
     dependency: transitive
     description:

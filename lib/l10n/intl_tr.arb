@@ -25,6 +25,8 @@
   "des_forgot_password": "We just need your registered Email to  send you password reset intruction",
   "des_forgot_password_tc": "Size geçici şifrenizi iletebilmemiz için T.C kimlik numaranız ve telefon numaranıza ihtiyacımız var",
   "des_forgot_password_other": "Size geçici şifrenizi iletebilmemiz için Pasaport numaranız ve telefon numaranıza ihtiyacımız var",
+  "not_chronic_warning": "Sağlık Takibi özelliğini kullanmak için lütfen 444 94 94 numaralı telefondan bize ulaşın",
+
   "gender_female": "Kadın",
   "gender_male": "Erkek",
   "hint_date": "Tarih",
@@ -427,7 +429,7 @@
   "close": "Kapat",
   "connect_glucometer": "Glukometre Ekle",
   "connect_scale": "Tartı Ekle",
-  "consultation": "Danışma",
+  "consultation": "Doktor Danışma Hattı",
   "contour_plus_blood_sugar": "Contour Plus Şeker Ölçüm",
   "daily": "Günlük",
   "date": "Tarih",
@@ -683,7 +685,7 @@
   "accu_check_step3": "Kan damlasını test stribinin sarı uçlu alanına dikkatlice dokundurun.",
   "accu_check_step4": "Kan şekeri sonucunu görüntüleyin.",
   "contour_plus_blood_step1": "Test stribini cihaza yerleştirin.",
-  "contour_plus_blood_step2": "Bir kan damlası çıkartmak için parmağınızı parmak delme cihazı kullanın.",
+  "contour_plus_blood_step2": "Bir kan damlası çıkartmak için parmağınızı parmak delme cihazı kullanarak delin.",
   "contour_plus_blood_step3": "Kan damlasını test stribinin sarı uçlu alanına dikkatlice dokundurun.",
   "contour_plus_blood_step4": "Kan şekeri sonucunu görüntüleyin.",
   "omron_arm_step1": "Cihazın bandını dirseğinizin hemen üzerinden bağlayın",
@@ -745,5 +747,8 @@
   "passwords_not_match": "Girilen şifreler eşleşmiyor.",
   "select_day_from": "Gün seçiniz",
   "select_day_to": "Diğer günü seçiniz",
-  "healthcare_employee": "Sağlık Çalışanı"
+  "healthcare_employee": "Sağlık Çalışanı",
+  "update": "Güncelle",
+  "change": "Değiştir",
+  "device_register": "Lütfen bir cihaz kaydediniz"
 }

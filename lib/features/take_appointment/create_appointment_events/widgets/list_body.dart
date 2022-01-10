@@ -87,26 +87,21 @@ class _ListBodyState extends State<ListBody>
         //
         Align(
           alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewPadding.bottom,
-            ),
-            child: ValueListenableBuilder(
-              valueListenable: widget.completeNotifier,
-              builder: (BuildContext context, _EventSelectedModel selectedModel,
-                  Widget child) {
-                return RbioSwitcher(
-                  showFirstChild:
-                      selectedModel != null && selectedModel.selected != null,
-                  child1: child,
-                  child2: SizedBox(),
-                );
-              },
-              child: RbioElevatedButton(
-                onTap: widget.onSubmit,
-                title: LocaleProvider.current.create_appointment_events,
-                fontWeight: FontWeight.bold,
-              ),
+          child: ValueListenableBuilder(
+            valueListenable: widget.completeNotifier,
+            builder: (BuildContext context, _EventSelectedModel selectedModel,
+                Widget child) {
+              return RbioSwitcher(
+                showFirstChild:
+                    selectedModel != null && selectedModel.selected != null,
+                child1: child,
+                child2: SizedBox(),
+              );
+            },
+            child: RbioElevatedButton(
+              onTap: widget.onSubmit,
+              title: LocaleProvider.current.create_appointment_events,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

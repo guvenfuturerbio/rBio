@@ -60,7 +60,9 @@ class _EResultScreenState extends State<EResultScreen> {
         SizedBox(height: 12.0),
 
         //
-        Expanded(child: _buildStateToWidget(vm)),
+        Expanded(
+          child: _buildStateToWidget(vm),
+        ),
       ],
     );
   }
@@ -84,7 +86,9 @@ class _EResultScreenState extends State<EResultScreen> {
         {
           return vm.visits.length > 0
               ? ListView.builder(
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.only(
+                    bottom: R.sizes.defaultBottomValue,
+                  ),
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),
                   itemCount: vm.visits.length,

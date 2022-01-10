@@ -6,7 +6,6 @@ import 'package:timezone/timezone.dart' as tz;
 import '../../../core/core.dart';
 import '../../../core/enums/remindable.dart';
 import '../../../core/timezone/timezone.dart';
-import '../managers/local_notifications_manager.dart';
 import '../mediminder.dart';
 
 class Hba1cReminderAddVm extends ChangeNotifier {

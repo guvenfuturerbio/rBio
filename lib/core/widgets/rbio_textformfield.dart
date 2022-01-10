@@ -10,6 +10,7 @@ class RbioTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final String hintText;
+  final String labelText;
   final List<TextInputFormatter> inputFormatters;
   final void Function(String) onFieldSubmitted;
   final bool obscureText;
@@ -19,14 +20,19 @@ class RbioTextFormField extends StatelessWidget {
   final InputBorder border;
   final String initialValue;
   final int maxLines;
+  final Widget prefixIcon;
+  final int maxLength;
 
   const RbioTextFormField(
       {Key key,
+      this.maxLength,
+      this.prefixIcon,
       this.initialValue,
       this.focusNode,
       this.controller,
       this.keyboardType,
       this.hintText,
+      this.labelText,
       this.inputFormatters,
       this.onFieldSubmitted,
       this.onChanged,
@@ -43,6 +49,7 @@ class RbioTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength :maxLength,
       maxLines: maxLines,
       initialValue: initialValue,
       style: Utils.instance.inputTextStyle(),
@@ -56,10 +63,12 @@ class RbioTextFormField extends StatelessWidget {
       decoration: Utils.instance
           .inputDecorationForLogin(
             hintText: hintText,
+            labelText: labelText,
             contentPadding: context.xTextScaleType == TextScaleType.Small
                 ? contentPadding
                 : EdgeInsets.only(left: 8),
             inputBorder: border ?? defaultBorder(),
+            prefixIcon: prefixIcon,
           )
           .copyWith(
             filled: true,

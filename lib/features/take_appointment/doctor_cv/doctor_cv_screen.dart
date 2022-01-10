@@ -12,7 +12,6 @@ class DoctorCvScreen extends StatefulWidget {
   int resourceId;
   String doctorName;
   String departmentName;
-  bool fromOnlineSelect;
 
   DoctorCvScreen({
     this.tenantId,
@@ -20,7 +19,6 @@ class DoctorCvScreen extends StatefulWidget {
     this.resourceId,
     this.doctorName,
     this.departmentName,
-    this.fromOnlineSelect,
     this.doctorNameNoTitle,
   });
 
@@ -40,8 +38,6 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
       widget.doctorName = Uri.decodeFull(Atom.queryParameters['doctorName']);
       widget.departmentName =
           Uri.decodeFull(Atom.queryParameters['departmentName']);
-      widget.fromOnlineSelect =
-          Atom.queryParameters['fromOnlineSelect'] == "true" ? true : false;
     } catch (_) {
       return RbioRouteError();
     }
@@ -127,29 +123,27 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
               margin: EdgeInsets.only(top: 10),
               child: Text(
                 widget.doctorName,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: R.color.black),
+                style: context.xHeadline2.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             Container(
               margin: EdgeInsets.only(top: 4),
               child: Text(
-                widget.tenantId == 1
-                    ? LocaleProvider.current.guven_hospital_ayranci
-                    : widget.tenantId == 7
-                        ? LocaleProvider.current.guven_cayyolu_campus
-                        : LocaleProvider.current.online_hospital,
-                style: TextStyle(fontSize: 14, color: R.color.gray),
-              ),
+                  widget.tenantId == 1
+                      ? LocaleProvider.current.guven_hospital_ayranci
+                      : widget.tenantId == 7
+                          ? LocaleProvider.current.guven_cayyolu_campus
+                          : LocaleProvider.current.online_hospital,
+                  style:
+                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
             ),
             Container(
               margin: EdgeInsets.only(top: 4),
-              child: Text(
-                widget.departmentName,
-                style: TextStyle(fontSize: 14, color: R.color.gray),
-              ),
+              child: Text(widget.departmentName,
+                  style:
+                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
             ),
             Container(
               margin: EdgeInsets.only(top: 20, bottom: 20),
@@ -159,23 +153,14 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                     .make_an_appointment
                     .toUpperCase(),
                 onPressed: () {
-                  AnalyticsManager().sendEvent(
-                    OAMakeAppointmentClickEvent(
-                      widget.departmentName,
-                      widget.doctorName,
-                    ),
-                  );
-
                   Atom.to(
-                    PagePaths.EVENTS,
+                    PagePaths.CREATE_APPOINTMENT,
                     queryParameters: {
-                      'fromOnlineSelect': widget.fromOnlineSelect.toString(),
+                      'fromOnline': 'false',
+                      'fromSearch': 'true',
                       'departmentId': widget.departmentId.toString(),
-                      'departmentName': Uri.encodeFull(widget.departmentName),
-                      'doctorName': Uri.encodeFull(widget.doctorName),
                       'resourceId': widget.resourceId.toString(),
                       'tenantId': widget.tenantId.toString(),
-                      'imageUrl': value.imageUrl
                     },
                   );
                 },
@@ -192,11 +177,9 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 ? false
                                 : true,
                         child: ListTile(
-                          title: Text(
-                            LocaleProvider.of(context).specialities,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          title: Text(LocaleProvider.of(context).specialities,
+                              style: context.xHeadline3
+                                  .copyWith(fontWeight: FontWeight.bold)),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -205,9 +188,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 value?.doctorCvResponse?.specialties?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value.doctorCvResponse.specialties[index]
-                                      .text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.specialties[index]
+                                          .text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -219,11 +204,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             ? false
                             : true,
                         child: ListTile(
-                          title: Text(
-                            LocaleProvider.of(context).treatments,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          title: Text(LocaleProvider.of(context).treatments,
+                              style: context.xHeadline3.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -232,9 +216,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 value?.doctorCvResponse?.treatments?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value
-                                      .doctorCvResponse.treatments[index].text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.treatments[index]
+                                          .text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -247,11 +233,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 ? false
                                 : true,
                         child: ListTile(
-                          title: Text(
-                            LocaleProvider.of(context).experiences,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          title: Text(LocaleProvider.of(context).experiences,
+                              style: context.xHeadline3.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -260,9 +245,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 value?.doctorCvResponse?.experiences?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value.doctorCvResponse.experiences[index]
-                                      .text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.experiences[index]
+                                          .text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -274,11 +261,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             ? false
                             : true,
                         child: ListTile(
-                          title: Text(
-                            LocaleProvider.of(context).educations,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          title: Text(LocaleProvider.of(context).educations,
+                              style: context.xHeadline3.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -287,9 +273,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 value?.doctorCvResponse?.educations?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value
-                                      .doctorCvResponse.educations[index].text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.educations[index]
+                                          .text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -302,11 +290,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 ? false
                                 : true,
                         child: ListTile(
-                          title: Text(
-                            LocaleProvider.of(context).publications,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          title: Text(LocaleProvider.of(context).publications,
+                              style: context.xHeadline3.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -315,9 +302,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 value?.doctorCvResponse?.publications?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value.doctorCvResponse.publications[index]
-                                      .text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.publications[index]
+                                          .text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -330,11 +319,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 ? false
                                 : true,
                         child: ListTile(
-                          title: Text(
-                            LocaleProvider.of(context).memberships,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          title: Text(LocaleProvider.of(context).memberships,
+                              style: context.xHeadline3.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -343,9 +331,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 value?.doctorCvResponse?.memberships?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value.doctorCvResponse.memberships[index]
-                                      .text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.memberships[index]
+                                          .text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -359,8 +349,9 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         child: ListTile(
                           title: Text(
                             LocaleProvider.of(context).trainings,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
+                            style: context.xHeadline3.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
@@ -369,8 +360,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             itemCount:
                                 value?.doctorCvResponse?.trainings?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value.doctorCvResponse.trainings[index].text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.trainings[index]
+                                          .text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -381,11 +375,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                                 ? false
                                 : true,
                         child: ListTile(
-                          title: Text(
-                            LocaleProvider.of(context).awards,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          title: Text(LocaleProvider.of(context).awards,
+                              style: context.xHeadline3.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )),
                           subtitle: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -393,8 +386,10 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             itemCount:
                                 value?.doctorCvResponse?.awards?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
-                              return Text('-' +
-                                  value.doctorCvResponse.awards[index].text);
+                              return Text(
+                                  '-' +
+                                      value.doctorCvResponse.awards[index].text,
+                                  style: context.xHeadline5);
                             },
                           ),
                         ),
@@ -407,12 +402,13 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         margin:
                             EdgeInsets.only(bottom: 20, left: 20, right: 20),
                         child: Text(
-                          widget.doctorName +
-                              " " +
-                              LocaleProvider.of(context).doctor_cv_not_uploaded,
-                          textAlign: TextAlign.center,
-                          textScaleFactor: 1.3,
-                        ),
+                            widget.doctorName +
+                                " " +
+                                LocaleProvider.of(context)
+                                    .doctor_cv_not_uploaded,
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.3,
+                            style: context.xHeadline5),
                       ),
           ],
         ),

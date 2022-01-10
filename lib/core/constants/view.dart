@@ -33,6 +33,27 @@ class _Sizes {
     }
   }
 
+  T textScaleHandler<T>(
+    BuildContext context, {
+    @required T small,
+    @required T medium,
+    @required T large,
+  }) {
+    final textScale = context.xTextScaleType;
+    switch (textScale) {
+      case TextScaleType.Small:
+        return small;
+
+      case TextScaleType.Medium:
+        return medium;
+
+      case TextScaleType.Large:
+        return large;
+    }
+
+    return small;
+  }
+
   Widget textScaleBuilder(
     BuildContext context, {
     @required Widget smallWidget,
@@ -60,6 +81,9 @@ class _Sizes {
       ),
     );
   }
+
+  double get defaultBottomValue => Atom.safeBottom + 12;
+  Widget get defaultBottomPadding => SizedBox(height: defaultBottomValue);
 
   final Widget hSizer4 = SizedBox(height: 4);
   final Widget hSizer8 = SizedBox(height: 8);

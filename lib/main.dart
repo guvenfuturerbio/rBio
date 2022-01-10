@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'core/core.dart';
+import 'core/notifiers/notification_badge_notifier.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
@@ -75,6 +76,9 @@ class _MyAppState extends State<MyApp> {
       color: Colors.white,
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider<NotificationBadgeNotifier>(
+            create: (context) => getIt<NotificationBadgeNotifier>(),
+          ),
           ChangeNotifierProvider(
             create: (context) => PatientNotifiers(),
           ),
@@ -123,74 +127,75 @@ class _MyAppState extends State<MyApp> {
             Widget child,
           ) {
             return OrientationBuilder(
-                builder: (BuildContext context, Orientation orientation) {
-              RbioConfig.of(context).changeOrientation(orientation);
+              builder: (BuildContext context, Orientation orientation) {
+                RbioConfig.of(context).changeOrientation(orientation);
 
-              return AtomMaterialApp(
-                initialUrl: PagePaths.LOGIN,
-                routes: VRouterRoutes.routes,
-                onSystemPop: (data) async {
-                  if (Atom.isDialogShow ?? false) {
-                    try {
-                      Atom.dismiss();
-                      data.stopRedirection();
-                    } catch (e) {}
-                  } else {
-                    final currentUrl = data.fromUrl;
-                    if (currentUrl.contains('/home')) {
-                      SystemNavigator.pop();
-                    } else if (data.historyCanBack()) {
-                      data.historyBack();
+                return AtomMaterialApp(
+                  initialUrl: PagePaths.LOGIN,
+                  routes: VRouterRoutes.routes,
+                  onSystemPop: (data) async {
+                    if (Atom.isDialogShow ?? false) {
+                      try {
+                        Atom.dismiss();
+                        data.stopRedirection();
+                      } catch (e) {}
+                    } else {
+                      final currentUrl = data.fromUrl;
+                      if (currentUrl.contains('/home')) {
+                        SystemNavigator.pop();
+                      } else if (data.historyCanBack()) {
+                        data.historyBack();
+                      }
                     }
-                  }
-                },
+                  },
 
-                //
-                title: 'Güven Online',
-                debugShowCheckedModeBanner: false,
-                navigatorObservers: [],
+                  //
+                  title: 'Güven Online',
+                  debugShowCheckedModeBanner: false,
+                  navigatorObservers: [],
 
-                //
-                builder: (BuildContext context, Widget child) {
-                  return Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: MediaQuery(
-                      data: MediaQuery.of(context).copyWith(
-                        textScaleFactor: themeNotifier.textScale.getValue(),
+                  //
+                  builder: (BuildContext context, Widget child) {
+                    return Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: MediaQuery(
+                        data: MediaQuery.of(context).copyWith(
+                          textScaleFactor: themeNotifier.textScale.getValue(),
+                        ),
+                        child: child,
                       ),
-                      child: child,
-                    ),
-                  );
-                },
+                    );
+                  },
 
-                //
-                theme: ThemeData(
-                  primaryColor: themeNotifier.theme.mainColor,
-                  scaffoldBackgroundColor:
-                      themeNotifier.theme.scaffoldBackgroundColor,
-                  fontFamily: themeNotifier.theme.fontFamily,
-                  textTheme: themeNotifier.theme.textTheme,
-                  textSelectionTheme: TextSelectionThemeData(
-                    cursorColor: getIt<ITheme>().mainColor,
-                    selectionColor: getIt<ITheme>().mainColor,
-                    selectionHandleColor: getIt<ITheme>().mainColor,
+                  //
+                  theme: ThemeData(
+                    primaryColor: themeNotifier.theme.mainColor,
+                    scaffoldBackgroundColor:
+                        themeNotifier.theme.scaffoldBackgroundColor,
+                    fontFamily: themeNotifier.theme.fontFamily,
+                    textTheme: themeNotifier.theme.textTheme,
+                    textSelectionTheme: TextSelectionThemeData(
+                      cursorColor: getIt<ITheme>().mainColor,
+                      selectionColor: getIt<ITheme>().mainColor,
+                      selectionHandleColor: getIt<ITheme>().mainColor,
+                    ),
+                    cupertinoOverrideTheme: CupertinoThemeData(
+                      primaryColor: getIt<ITheme>().mainColor,
+                    ),
                   ),
-                  cupertinoOverrideTheme: CupertinoThemeData(
-                    primaryColor: getIt<ITheme>().mainColor,
-                  ),
-                ),
-                locale: context.watch<LocaleNotifier>().current,
-                localizationsDelegates: const [
-                  LocaleProvider.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  DefaultCupertinoLocalizations.delegate
-                ],
-                supportedLocales:
-                    context.read<LocaleNotifier>().supportedLocales,
-              );
-            });
+                  locale: context.watch<LocaleNotifier>().current,
+                  localizationsDelegates: const [
+                    LocaleProvider.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    DefaultCupertinoLocalizations.delegate
+                  ],
+                  supportedLocales:
+                      context.read<LocaleNotifier>().supportedLocales,
+                );
+              },
+            );
           },
         ),
       ),

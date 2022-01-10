@@ -1,5 +1,5 @@
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
-import 'package:vrouter/vrouter.dart';
 
 import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
@@ -34,6 +34,7 @@ import '../../features/relatives/relatives.dart';
 import '../../features/results/e_result_screen.dart';
 import '../../features/results/e_result_vm.dart';
 import '../../features/results/visit_detail_screen.dart';
+import '../../features/search/search_screen.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
 import '../../features/store/covid_19/covid_19_screen.dart';
@@ -54,6 +55,7 @@ import '../../features/take_appointment/create_appointment_summary/view/create_a
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../core.dart';
 import '../widgets/chronic_error_alert.dart';
+import 'package:vrouter/vrouter.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -73,6 +75,18 @@ class VRouterRoutes {
         create: (context) => ProfileVm(),
         child: ProfileScreen(),
       ),
+      stackedRoutes: [
+        //
+        VWidget(
+          path: PagePaths.SUGGEST_REQUEST,
+          widget: RequestSuggestionsScreen(),
+        ),
+      ],
+    ),
+
+    VWidget(
+      path: PagePaths.PERSONAL_INFORMATION,
+      widget: PersonalInformationScreen(),
     ),
 
     VWidget(
@@ -84,9 +98,15 @@ class VRouterRoutes {
       path: PagePaths.ALL_DEVICES,
       widget: AvailableDevices(),
     ),
+
     VWidget(
       path: PagePaths.SELECTED_DEVICE,
       widget: SelectedDevicesScreen(),
+    ),
+
+    VWidget(
+      path: PagePaths.SEARCH_PAGE,
+      widget: SearchScreen(),
     ),
 
     // Create Appointment
@@ -186,11 +206,6 @@ class VRouterRoutes {
     ),
 
     VWidget(
-      path: PagePaths.PERSONAL_INFORMATION,
-      widget: PersonalInformationScreen(),
-    ),
-
-    VWidget(
       path: PagePaths.ORDER_SUMMARY,
       widget: OrderSummaryScreen(),
     ),
@@ -248,16 +263,29 @@ class VRouterRoutes {
       widget: WebConferanceScreen(),
     ),
 
-    VWidget(
-      path: PagePaths.CONSULTATION,
-      widget: ConsultationScreen(),
+    VGuard(
+      beforeEnter: (vRedirector) async {
+        if (!getIt<UserNotifier>().isCronic) {
+          vRedirector.stopRedirection();
+          Atom.show(NotChronicWarning());
+        } else {
+          print(FlutterAppBadger.isAppBadgeSupported());
+          await FlutterAppBadger.removeBadge();
+        }
+      },
       stackedRoutes: [
         VWidget(
-          path: PagePaths.CHAT,
-          widget: ChangeNotifierProvider<ChatVm>(
-            create: (context) => ChatVm(),
-            child: ChatScreen(),
-          ),
+          path: PagePaths.CONSULTATION,
+          widget: ConsultationScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.CHAT,
+              widget: ChangeNotifierProvider<ChatVm>(
+                create: (context) => ChatVm(),
+                child: ChatScreen(),
+              ),
+            ),
+          ],
         ),
       ],
     ),
@@ -292,22 +320,20 @@ class VRouterRoutes {
         ),
       ],
     ),
-    VGuard(
-        beforeEnter: (vRedirector) async {
-          if (!getIt<UserNotifier>().isCronic) {
-            vRedirector.stopRedirection();
-            Atom.show(NotChronicWarning());
-          }
-        },
-        stackedRoutes: [
-          VWidget(
-              path: PagePaths.MEASUREMENT_TRACKING,
-              widget: MeasurementTrackingHomeScreen())
-        ]),
 
-    VWidget(
-      path: PagePaths.SUGGEST_REQUEST,
-      widget: RequestSuggestionsScreen(),
+    VGuard(
+      beforeEnter: (vRedirector) async {
+        if (!getIt<UserNotifier>().isCronic) {
+          vRedirector.stopRedirection();
+          Atom.show(NotChronicWarning());
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.MEASUREMENT_TRACKING,
+          widget: MeasurementTrackingHomeScreen(),
+        ),
+      ],
     ),
 
     // Mediminder
@@ -346,9 +372,36 @@ class VRouterRoutes {
           path: PagePaths.BLOOD_GLUCOSE_PAGE,
           widget: MedicationScreen(),
         ),
-        VWidget(
-          path: PagePaths.STRIP_PAGE,
-          widget: StripScreen(),
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (Mediminder.instance.selection?.deviceUUID == null ||
+                Mediminder.instance.selection?.deviceUUID == '') {
+              await Atom.show(
+                GuvenAlert(
+                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+                  content: GuvenAlert.buildDescription(
+                      LocaleProvider.current.device_register),
+                  actions: [
+                    //
+                    GuvenAlert.buildMaterialAction(
+                      LocaleProvider.current.Ok,
+                      () {
+                        Atom.dismiss();
+                        vRedirector.to(PagePaths.ALL_DEVICES);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.STRIP_PAGE,
+              widget: StripScreen(),
+            ),
+          ],
         ),
       ],
     ),
@@ -474,6 +527,9 @@ class PagePaths {
 
   static const DOMOBILEPAYMENT = '/online-payment';
   static const IYZICORESPONSESMSPAYMENT = '/form-submit';
+
+  //Search
+  static const SEARCH_PAGE = '/search-page';
 
   //Mediminder
   static const MEDIMINDER_INITIAL = '/mediminder';

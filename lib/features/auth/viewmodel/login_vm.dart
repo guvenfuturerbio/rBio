@@ -66,12 +66,14 @@ class LoginScreenVm extends ChangeNotifier {
     this._clickedGeneralForm = value;
     notifyListeners();
   }
+
   bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
 
   set checkedKvkkForm(bool value) {
     this._checkedKvkk = value;
     notifyListeners();
   }
+
   bool get checkedKvkkForm => this._checkedKvkk ?? false;
 
   bool get passwordVisibility => this._passwordVisibility ?? false;
@@ -228,6 +230,8 @@ class LoginScreenVm extends ChangeNotifier {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
 
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
+        
+        await getIt<UserManager>().setApplicationConsentFormState(true);
 
         //One dose hasta bilgileri
         final patientDetail = await getIt<Repository>().getPatientDetail();
@@ -267,13 +271,22 @@ class LoginScreenVm extends ChangeNotifier {
 
         // await getIt<SymptomRepository>().getSymtptomsApiToken();
 
+        try {
+          final profilImage = await getIt<Repository>().getProfilePicture();
+          if (profilImage != null) {
+            await getIt<ISharedPreferencesManager>().setString(
+              SharedPreferencesKeys.PROFILE_IMAGE,
+              profilImage,
+            );
+          }
+        } catch (e) {
+          //
+        }
+
         this._progress = LoadingProgress.DONE;
-        // final userCredential = await UserService().signInWithEmailAndPasswordFirebase('deneme@gmal.com', '123456');
-        // await UserService().saveAndRetrieveToken(userCredential.user, 'patientLogin');
-        // await UserService().handleSuccessfulLogin(userCredential.user);
+
         hideDialog(mContext);
         notifyListeners();
-        AnalyticsManager().sendEvent(LoginSuccessEvent());
         final term = Atom.queryParameters['then'];
         if (term != null && term != '') {
           Atom.to(term, isReplacement: true);

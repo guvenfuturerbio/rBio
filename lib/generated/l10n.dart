@@ -255,6 +255,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Please contact us from 444 94 94 for Health Tracker services`
+  String get not_chronic_warning {
+    return Intl.message(
+      'Please contact us from 444 94 94 for Health Tracker services',
+      name: 'not_chronic_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// ` on list?`
   String get content_delete_doctor_second {
     return Intl.message(
@@ -4355,10 +4365,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Consultation`
+  /// `MD Hotline`
   String get consultation {
     return Intl.message(
-      'Consultation',
+      'MD Hotline',
       name: 'consultation',
       desc: '',
       args: [],
@@ -7550,6 +7560,36 @@ class LocaleProvider {
     return Intl.message(
       'Healthcare Employee',
       name: 'healthcare_employee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update`
+  String get update {
+    return Intl.message(
+      'Update',
+      name: 'update',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change`
+  String get change {
+    return Intl.message(
+      'Change',
+      name: 'change',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please register a device`
+  String get device_register {
+    return Intl.message(
+      'Please register a device',
+      name: 'device_register',
       desc: '',
       args: [],
     );

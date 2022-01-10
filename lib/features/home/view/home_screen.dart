@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/core/notifiers/notification_badge_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -105,18 +106,70 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            child2: IconButton(
-              icon: Container(
-                color: Colors.transparent,
-                child: SvgPicture.asset(
-                  R.image.chat_icon,
-                  color: Colors.white,
-                  width: R.sizes.iconSize,
+            child2: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      //
+                      Positioned.fill(
+                        child: IconButton(
+                          icon: Container(
+                            color: Colors.transparent,
+                            child: SvgPicture.asset(
+                              R.image.chat_icon,
+                              color: Colors.white,
+                              width: R.sizes.iconSize,
+                            ),
+                          ),
+                          onPressed: () {
+                            Atom.to(PagePaths.CONSULTATION);
+                          },
+                        ),
+                      ),
+
+                      //
+                      Consumer<NotificationBadgeNotifier>(
+                        builder: (context, badgeNotifier, child) {
+                          if (badgeNotifier.value) {
+                            return Align(
+                              alignment: Alignment.topRight,
+                              child: CircleAvatar(
+                                backgroundColor: R.color.darkRed,
+                                radius: 9,
+                              ),
+                            );
+                          }
+
+                          return SizedBox();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              onPressed: () {
-                vm.openConsultation();
-              },
+
+                //
+                IconButton(
+                  icon: Container(
+                    color: Colors.transparent,
+                    child: SvgPicture.asset(
+                      R.image.search_icon,
+                      color: Colors.white,
+                      width: R.sizes.iconSize,
+                    ),
+                  ),
+                  onPressed: () {
+                    Atom.to(PagePaths.SEARCH_PAGE);
+                  },
+                ),
+              ],
             ),
           ),
         ),
@@ -169,8 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         //
                         CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage(R.image.circlevatar),
+                          backgroundImage: Utils.instance.getCacheProfileImage,
+                          radius: R.sizes.iconSize2,
+                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
                         ),
 
                         //
@@ -179,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //
                         Expanded(
                           child: Text(
-                            '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}',
+                            Utils.instance.getCurrentUserNameAndSurname,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: context.xHeadline4,
@@ -233,13 +287,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           //
-                          R.sizes.hSizer4,
+                          R.sizes.hSizer8,
 
                           //
                           Text(
                             vm.drawerList[index].keys.first,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                             style: context.xHeadline4.copyWith(
                               color: getIt<ITheme>().textColor,
                               fontWeight: FontWeight.w600,
@@ -247,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 
                           //
-                          R.sizes.hSizer4,
+                          R.sizes.hSizer8,
 
                           //
                           Divider(

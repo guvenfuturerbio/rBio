@@ -10,6 +10,13 @@ part '../widgets/history_doctor_card.dart';
 // ignore: must_be_immutable
 class CreateAppointmentScreen extends StatelessWidget {
   bool forOnline;
+  bool fromSearch = false;
+  bool fromSymptom = false;
+  int departmentId;
+  //String departmentName;
+  //String doctorName;
+  int resourceId;
+  int tenantId;
 
   CreateAppointmentScreen({Key key}) : super(key: key);
 
@@ -17,15 +24,37 @@ class CreateAppointmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       forOnline = Atom.queryParameters['forOnline'] == 'true';
+      if (Atom.queryParameters['fromSearch'] == 'true') {
+        this.fromSearch = true;
+        this.tenantId = int.parse(Atom.queryParameters['tenantId']) ?? 0;
+        this.departmentId =
+            int.parse(Atom.queryParameters['departmentId']) ?? 0;
+        this.resourceId = int.parse(Atom.queryParameters['resourceId']) ?? 0;
+      } else {
+        fromSearch = false;
+      }
+
+      if (Atom.queryParameters['fromSymptom'] == 'true') {
+        fromSymptom = true;
+        this.tenantId = int.parse(Atom.queryParameters['tenantId']) ?? 0;
+        this.departmentId =
+            int.parse(Atom.queryParameters['departmentId']) ?? 0;
+      } else {
+        fromSymptom = false;
+      }
     } catch (_) {
       return RbioRouteError();
     }
 
     return ChangeNotifierProvider<CreateAppointmentVm>(
       create: (context) => CreateAppointmentVm(
-        context: context,
-        forOnline: forOnline,
-      ),
+          context: context,
+          forOnline: forOnline,
+          fromSearch: fromSearch,
+          fromSymptom: fromSymptom,
+          tenantId: tenantId,
+          departmentId: departmentId,
+          resourceId: resourceId),
       child: Consumer<CreateAppointmentVm>(
         builder: (
           BuildContext context,
@@ -187,6 +216,8 @@ class CreateAppointmentScreen extends StatelessWidget {
           //
           vm.doctorSelected
               ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       height: 20,
@@ -198,7 +229,8 @@ class CreateAppointmentScreen extends StatelessWidget {
                           _openCreateAppointmentsEvents(vm);
                         },
                       ),
-                    )
+                    ),
+                    R.sizes.defaultBottomPadding,
                   ],
                 )
               : Column(

@@ -6,57 +6,114 @@ class AvailableDevices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioStackedScaffold(
-        appbar: RbioAppBar(
-          title: RbioAppBar.textTitle(
-              context, LocaleProvider.current.supported_devices),
-        ),
-        body: ChangeNotifierProvider<AvailableDevicesVm>(
-          create: (_) => AvailableDevicesVm(),
-          child: Consumer<AvailableDevicesVm>(
-            builder: (_, val, __) {
-              return GridView.count(
-                padding: EdgeInsets.only(top: 95),
-                childAspectRatio: 5 / 3,
-                crossAxisCount: 2,
-                children: val.items
-                    .map((item) => deviceTypeContainer(context, item))
-                    .toList(),
-              );
-            },
-          ),
-        ));
+      appbar: _buildAppBar(context),
+      body: _buildBody(),
+    );
   }
 
-  Widget deviceTypeContainer(
-      BuildContext context, DeviceConnectionType device) {
-    return new GestureDetector(
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.supported_devices,
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return ChangeNotifierProvider<AvailableDevicesVm>(
+      create: (_) => AvailableDevicesVm(),
+      child: Consumer<AvailableDevicesVm>(
+        builder: (
+          BuildContext context,
+          AvailableDevicesVm vm,
+          Widget child,
+        ) {
+          return context.xTextScaleType == TextScaleType.Small
+              ? GridView.count(
+                  padding: EdgeInsets.only(
+                    top: RbioStackedScaffold.kHeight(context),
+                    bottom: R.sizes.defaultBottomValue,
+                  ),
+                  childAspectRatio: 6 / 4,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 0,
+                  children: vm.items
+                      .map((item) => _buildCard(context, item, true))
+                      .toList(),
+                )
+              : ListView(
+                  scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(
+                    top: RbioStackedScaffold.kHeight(context),
+                    bottom: R.sizes.defaultBottomValue,
+                  ),
+                  children: vm.items
+                      .map((item) => _buildCard(context, item, false))
+                      .toList(),
+                );
+        },
+      ),
+    );
+  }
+
+  Widget _buildCard(
+    BuildContext context,
+    DeviceConnectionType device,
+    bool isGridItem,
+  ) {
+    return GestureDetector(
       onTap: device.enable
           ? () {
-              Atom.to(PagePaths.SELECTED_DEVICE,
-                  queryParameters: {'device_type': device.deviceType.name});
+              Atom.to(
+                PagePaths.SELECTED_DEVICE,
+                queryParameters: {'device_type': device.deviceType.name},
+              );
             }
           : null,
       child: Container(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: Card(
-            elevation: 4,
-            color: device.enable ? null : R.color.bg_gray,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Row(
-                children: <Widget>[
-                  Expanded(flex: 2, child: Image.asset(device.imagePath)),
-                  Expanded(
-                    flex: 3,
-                    child: Text(device.name ?? LocaleProvider.current.unknown,
-                        style: context.xHeadline2),
-                  )
-                ],
-              ),
+        padding: isGridItem
+            ? EdgeInsets.symmetric(horizontal: 4)
+            : EdgeInsets.symmetric(horizontal: 8),
+        child: Card(
+          elevation: 4,
+          color: device.enable ? null : R.color.bg_gray,
+          shape: RoundedRectangleBorder(
+            borderRadius: R.sizes.borderRadiusCircular,
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                //
+                Expanded(
+                  flex: 2,
+                  child: Image.asset(
+                    device.imagePath,
+                  ),
+                ),
+
+                //
+                R.sizes.wSizer4,
+
+                //
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    device.name ?? LocaleProvider.current.unknown,
+                    style: context.xHeadline2,
+                  ),
+                )
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

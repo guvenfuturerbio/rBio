@@ -400,14 +400,9 @@ PODS:
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
-  - Firebase/Analytics (8.9.0):
-    - Firebase/Core
   - Firebase/Auth (8.9.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.9.0)
-  - Firebase/Core (8.9.0):
-    - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 8.9.0)
   - Firebase/CoreOnly (8.9.0):
     - FirebaseCore (= 8.9.0)
   - Firebase/DynamicLinks (8.9.0):
@@ -422,10 +417,6 @@ PODS:
   - Firebase/Storage (8.9.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.9.0)
-  - firebase_analytics (8.3.4):
-    - Firebase/Analytics (= 8.9.0)
-    - firebase_core
-    - Flutter
   - firebase_auth (3.2.0):
     - Firebase/Auth (= 8.9.0)
     - firebase_core
@@ -445,24 +436,6 @@ PODS:
     - Firebase/Storage (= 8.9.0)
     - firebase_core
     - Flutter
-  - FirebaseAnalytics (8.9.1):
-    - FirebaseAnalytics/AdIdSupport (= 8.9.1)
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
-    - GoogleUtilities/MethodSwizzler (~> 7.6)
-    - GoogleUtilities/Network (~> 7.6)
-    - "GoogleUtilities/NSData+zlib (~> 7.6)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (8.9.1):
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleAppMeasurement (= 8.9.1)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
-    - GoogleUtilities/MethodSwizzler (~> 7.6)
-    - GoogleUtilities/Network (~> 7.6)
-    - "GoogleUtilities/NSData+zlib (~> 7.6)"
-    - nanopb (~> 2.30908.0)
   - FirebaseAuth (8.9.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
@@ -510,6 +483,8 @@ PODS:
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
+  - flutter_app_badger (0.0.1):
+    - Flutter
   - flutter_appavailability (0.0.1):
     - Flutter
   - flutter_facebook_sdk (0.0.1):
@@ -545,26 +520,6 @@ PODS:
   - google_sign_in (0.0.1):
     - Flutter
     - GoogleSignIn (~> 5.0)
-  - GoogleAppMeasurement (8.9.1):
-    - GoogleAppMeasurement/AdIdSupport (= 8.9.1)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
-    - GoogleUtilities/MethodSwizzler (~> 7.6)
-    - GoogleUtilities/Network (~> 7.6)
-    - "GoogleUtilities/NSData+zlib (~> 7.6)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.9.1):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 8.9.1)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
-    - GoogleUtilities/MethodSwizzler (~> 7.6)
-    - GoogleUtilities/Network (~> 7.6)
-    - "GoogleUtilities/NSData+zlib (~> 7.6)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (8.9.1):
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
-    - GoogleUtilities/MethodSwizzler (~> 7.6)
-    - GoogleUtilities/Network (~> 7.6)
-    - "GoogleUtilities/NSData+zlib (~> 7.6)"
-    - nanopb (~> 2.30908.0)
   - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -581,8 +536,6 @@ PODS:
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.6.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.6.0):
-    - GoogleUtilities/Logger
   - GoogleUtilities/Network (7.6.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
@@ -656,9 +609,9 @@ PODS:
     - Flutter
     - Protobuf (~> 3.5)
     - SwiftProtobuf (~> 1.0)
-  - SDWebImage (5.12.1):
-    - SDWebImage/Core (= 5.12.1)
-  - SDWebImage/Core (5.12.1)
+  - SDWebImage (5.12.2):
+    - SDWebImage/Core (= 5.12.2)
+  - SDWebImage/Core (5.12.2)
   - Sentry (7.5.4):
     - Sentry/Core (= 7.5.4)
   - Sentry/Core (7.5.4)
@@ -695,13 +648,13 @@ DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
-  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_app_badger (from `.symlinks/plugins/flutter_app_badger/ios`)
   - flutter_appavailability (from `.symlinks/plugins/flutter_appavailability/ios`)
   - flutter_facebook_sdk (from `.symlinks/plugins/flutter_facebook_sdk/ios`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
@@ -744,7 +697,6 @@ SPEC REPOS:
     - DKPhotoGallery
     - FBSDKCoreKit
     - Firebase
-    - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -754,7 +706,6 @@ SPEC REPOS:
     - FirebaseMessaging
     - FirebaseStorage
     - FMDB
-    - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleUtilities
@@ -787,8 +738,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/device_info/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
-  firebase_analytics:
-    :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -801,6 +750,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_app_badger:
+    :path: ".symlinks/plugins/flutter_app_badger/ios"
   flutter_appavailability:
     :path: ".symlinks/plugins/flutter_appavailability/ios"
   flutter_facebook_sdk:
@@ -879,13 +830,11 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: a00fe2efd780c195a5e09201bf51c56106245b40
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
-  firebase_analytics: 7a7528bb2abf4ca22cff7a57bbf909dcab73e13d
   firebase_auth: 0d56cc4d105ff70d1547a7fcb10ee574ad05adf5
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
   firebase_dynamic_links: 9bf840ceeda753adfb296c6a6f3fdd705e3b6c77
   firebase_messaging: dff5cd08781ee1de988565a83c977e435405cd7e
   firebase_storage: a3bbe618ef41930ae31da8f4691d37e4ed84f14d
-  FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
@@ -895,6 +844,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 82c4a48638f53f7b184f3cc9f6cd2cbe533ab316
   FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_app_badger: 65de4d6f0c34a891df49e6cfb8a1c0496426fa68
   flutter_appavailability: ebf8f85abea44436d1262fcde8a4e64b2534b01a
   flutter_facebook_sdk: 82c8d10c6226b66de5459d6115ab02d1ecd66cd9
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
@@ -908,7 +858,6 @@ SPEC CHECKSUMS:
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in: c5cecea71f3be43282263550556e311c4cc03582
-  GoogleAppMeasurement: 837649ad3987936c232f6717c5680216f6243d24
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
@@ -934,7 +883,7 @@ SPEC CHECKSUMS:
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c
-  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
+  SDWebImage: 240e5c12b592fb1268c1d03b8c90d90e8c2ffe82
   Sentry: 5c5dd4005f3b7b9765d5a8871232cddbd0d888b7
   sentry_flutter: 4cd99764f9fe01c9415790d1f3fb1c7fd3a5cbe9
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410

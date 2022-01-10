@@ -57,25 +57,26 @@ class AddPatientRelativesScreenVm with ChangeNotifier {
       hideDialog(context);
       String responseMessage = response.message.toString();
       if (response.datum == 0) {
-        AnalyticsManager().sendEvent(new AddPatientRelativeSuccessEvent(0));
         showGradientDialog(
-            context,
-            LocaleProvider.of(context).success_message_title,
-            LocaleProvider.of(context).existing_relative_add);
+          context,
+          LocaleProvider.of(context).success_message_title,
+          LocaleProvider.of(context).existing_relative_add,
+        );
       } else if (response.datum == 1) {
-        AnalyticsManager().sendEvent(new AddPatientRelativeSuccessEvent(1));
         showGradientDialog(
-            context,
-            LocaleProvider.of(context).success_message_title,
-            LocaleProvider.of(context).add_new_relative);
+          context,
+          LocaleProvider.of(context).success_message_title,
+          LocaleProvider.of(context).add_new_relative,
+        );
       } else {
-        AnalyticsManager().sendEvent(new AddPatientRelativeSuccessEvent(-1));
         showGradientDialog(
-            context, LocaleProvider.of(context).warning, responseMessage);
+          context,
+          LocaleProvider.of(context).warning,
+          responseMessage,
+        );
       }
     } catch (error, stackTrace) {
       Sentry.captureException(error, stackTrace: stackTrace);
-      AnalyticsManager().sendEvent(new AddPatientRelativeFailEvent());
       Future.delayed(const Duration(milliseconds: 500), () {
         print(error);
         hideDialog(context);

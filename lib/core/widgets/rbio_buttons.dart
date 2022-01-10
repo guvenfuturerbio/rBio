@@ -40,14 +40,19 @@ class RbioElevatedButton extends StatelessWidget {
           elevation: showElevation ? null : 0,
         ),
         child: Padding(
-          padding: padding ??
-              defaultPadding(),
+          padding: padding ?? defaultPadding(),
           child: Text(
             title,
             textAlign: TextAlign.center,
             style: context.xHeadline3.copyWith(
               color: textColor ?? getIt<ITheme>().textColor,
               fontWeight: fontWeight,
+              fontSize: R.sizes.textScaleHandler<double>(
+                context,
+                small: context.xHeadline3.fontSize,
+                medium: context.xHeadline4.fontSize,
+                large: context.xHeadline5.fontSize,
+              ),
             ),
           ),
         ),

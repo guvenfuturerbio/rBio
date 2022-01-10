@@ -110,11 +110,6 @@ class _ForYouSubCategoriesDetailScreenState
                         child: _buildBuyPackageButton(
                           context,
                           () {
-                            AnalyticsManager().sendEvent(
-                              SubCategorySummaryClicked(
-                                subCategoryName: title,
-                              ),
-                            );
                             Atom.to(
                               PagePaths.ORDER_SUMMARY,
                               queryParameters: {

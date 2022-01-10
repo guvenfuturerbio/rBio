@@ -26,6 +26,16 @@ class Utils {
     return _instance;
   }
 
+  String get getCurrentUserNameAndSurname =>
+      '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}';
+
+  String get getCacheProfileImageStr => getIt<ISharedPreferencesManager>()
+      .getString(SharedPreferencesKeys.PROFILE_IMAGE);
+  ImageProvider<Object> get getCacheProfileImage =>
+      getCacheProfileImageStr != null
+          ? MemoryImage(base64.decode(getCacheProfileImageStr))
+          : NetworkImage(R.image.circlevatar);
+
   // #region hideKeyboard
   void hideKeyboard(BuildContext context) {
     final currentFocus = FocusScope.of(context);
@@ -259,8 +269,10 @@ class Utils {
 
   InputDecoration inputDecorationForLogin({
     String hintText,
+    String labelText,
     EdgeInsetsGeometry contentPadding,
     InputBorder inputBorder,
+    Widget prefixIcon,
   }) =>
       InputDecoration(
         contentPadding: contentPadding ??
@@ -269,6 +281,8 @@ class Utils {
         border: inputBorder,
         enabledBorder: inputBorder,
         hintText: hintText,
+        labelText: labelText,
+        prefixIcon: prefixIcon,
         hintStyle: Atom.context.xHeadline4.copyWith(
           color: getIt<ITheme>().textColorPassive,
         ),
@@ -315,12 +329,6 @@ class Utils {
                         'categoryId': id.toString(),
                       },
                     );
-
-          isSubCat
-              ? AnalyticsManager()
-                  .sendEvent(SubCategoryClicked(subCategoryName: title))
-              : AnalyticsManager()
-                  .sendEvent(CategoryClicked(categoryName: title));
         },
         child: Material(
           clipBehavior: Clip.antiAlias,
@@ -935,19 +943,6 @@ class Mediminder {
     smoker: true,
     isFirstUser: false,
   );
-
-  Widget buttonDarkGradient({
-    BuildContext context,
-    String text,
-    Function onPressed,
-    double height,
-    double width,
-  }) =>
-      RbioElevatedButton(
-        title: text,
-        onTap: onPressed,
-        infinityWidth: true,
-      );
 }
 
 class GradientDialog extends StatefulWidget {
