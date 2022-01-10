@@ -3,6 +3,7 @@ part of 'chronic_storage_service.dart';
 class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   final String boxKey = 'GlucoseBox';
+  bool _hasProgress = false;
 
   @override
   Future<void> init() async {
@@ -22,6 +23,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
                   measurementId: data.measurementId)
               .toJson());
       box.delete(key);
+      print('delete');
       notifyListeners();
       return true;
     } else {
@@ -46,6 +48,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       if (!data.isEqual(dataFromBox)) {
         await box.put(key, data);
         await updateServer(data);
+        print('update');
         notifyListeners();
       }
 
@@ -64,6 +67,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         data.measurementId = id;
         await box.add(data);
       }
+      print('write');
 
       notifyListeners();
       return true;
@@ -121,7 +125,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       data.imageURL = path;
       update(data, key);
       sendImageToServer(path, data.measurementId);
-      notifyListeners();
+      print('updateImage');
     } catch (e) {
       rethrow;
     }
@@ -129,23 +133,30 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   Future<bool> getAndWriteGlucoseData(
       {DateTime beginDate, DateTime endDate, int count}) async {
-    var glucoseDataList = await getBloodGlucoseDataOfPerson(
-        start: beginDate, end: endDate, count: count);
-    if (glucoseDataList.isNotEmpty) {
-      var _dubItem = 0;
-      print('===============================>${glucoseDataList.length}');
-      for (var glucose in glucoseDataList) {
-        if (doesExist(glucose)) _dubItem++;
+    if (!_hasProgress) {
+      _hasProgress = true;
+      var glucoseDataList = await getBloodGlucoseDataOfPerson(
+          start: beginDate, end: endDate, count: count);
+      if (glucoseDataList.isNotEmpty) {
+        var _dubItem = 0;
+        for (var glucose in glucoseDataList) {
+          if (doesExist(glucose)) _dubItem++;
+        }
+        if (_dubItem != glucoseDataList.length) {
+          await writeAll(glucoseDataList);
+
+          notifyListeners();
+          _hasProgress = false;
+          return false;
+        } else
+          _hasProgress = false;
+        return false;
+      } else {
+        _hasProgress = false;
+        return true;
       }
-      if (_dubItem != glucoseDataList.length) {
-        await writeAll(glucoseDataList);
-        notifyListeners();
-        return false;
-      } else
-        return false;
-    } else {
-      return true;
     }
+    return false;
   }
 
   Future<void> checkLastGlucoseData() async {
@@ -219,7 +230,6 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     try {
       await getIt<ChronicTrackingRepository>().uploadMeasurementImage(imagePath,
           getIt<ProfileStorageImpl>().getFirst().id ?? 0, measurementId);
-      notifyListeners();
     } catch (_) {
       rethrow;
     }

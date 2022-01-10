@@ -53,8 +53,6 @@ class _AnimationScatterDefaultState extends SampleViewState {
       _startDate = value.startDate;
       _endDate = value.endDate;
       _defaultScatterDataList = value.getDataScatterSeries();
-      print(
-          "Minimum: $_minimum, Maximum: $_maximum, Target Min: $_targetMin, Target Max: $_targetMax");
       return _getAnimationScatterChart();
     });
   }
@@ -114,7 +112,6 @@ class _AnimationScatterDefaultState extends SampleViewState {
     List<ScatterSeries<ChartData, DateTime>> list = [];
     list.addAll(_defaultScatterDataList);
     list.addAll(<ScatterSeries<ChartData, DateTime>>[]);
-    print(_startDate.toString() + " " + _endDate.toString());
     _selected == TimePeriodFilter.DAILY ||
             _selected == TimePeriodFilter.SPECIFIC
         ? list.add(ScatterSeries<ChartData, DateTime>(

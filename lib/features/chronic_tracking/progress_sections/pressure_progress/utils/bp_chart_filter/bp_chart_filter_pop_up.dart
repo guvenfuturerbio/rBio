@@ -10,7 +10,10 @@ import 'bp_chart_filter_pop_up_vm.dart';
 class BpChartFilterPopUp extends StatelessWidget {
   final double width;
   final double height;
-  const BpChartFilterPopUp({Key key, this.width, this.height})
+  final Map<String, bool> measurements;
+  final Function(Map<String, bool>) callback;
+  const BpChartFilterPopUp(
+      {Key key, this.width, this.height, this.measurements, this.callback})
       : super(key: key);
 
   @override
@@ -31,7 +34,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15)),
               child: ChangeNotifierProvider(
                 create: (_) => BpChartFilterPopUpVm(
-                    measurements:
+                    measurements: measurements ??
                         Provider.of<BpProgressPageVm>(context, listen: false)
                             .measurements),
                 child: Consumer<BpChartFilterPopUpVm>(
@@ -83,9 +86,13 @@ class BpChartFilterPopUp extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Provider.of<BpProgressPageVm>(context,
-                                        listen: false)
-                                    .changeFilterType(value.measurements);
+                                if (callback == null) {
+                                  Provider.of<BpProgressPageVm>(context,
+                                          listen: false)
+                                      .changeFilterType(value.measurements);
+                                } else {
+                                  callback(value.measurements);
+                                }
                                 Atom.dismiss();
                               },
                               child: Card(

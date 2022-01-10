@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/repository/doctor_repository.dart';
-import 'package:onedosehealth/core/enums/loading_progress.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
-import 'package:onedosehealth/features/doctor/blood_pressure_patient_detail/widget/charts/line_charts.dart';
-import 'package:onedosehealth/model/model.dart';
+
+import '../../../../core/core.dart';
+import '../../../../core/data/repository/doctor_repository.dart';
+import '../../../../model/model.dart';
+import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
+import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../widget/charts/line_charts.dart';
 
 class BloodPressurePatientDetailVm extends ChangeNotifier {
   List<BpMeasurementViewModel> bpMeasurements = [];
@@ -22,14 +22,24 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   final int patientId;
 
   BloodPressurePatientDetailVm({this.context, this.patientId}) {
-    fetchBpMeasurement();
-    fetchScrolledDailyData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      update();
+    });
+  }
+
+  update() async {
+    _isDataLoading = true;
+    notifyListeners();
+    await fetchBpMeasurement();
+    await fetchScrolledDailyData();
 
     controller.addListener(() {
       if (controller.position.atEdge && controller.position.pixels != 0) {
         getNewItems();
       }
     });
+    _isDataLoading = false;
+    notifyListeners();
   }
 
   Widget get currentGraph => AnimatedPatientPulseChart();
@@ -57,7 +67,8 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
       GetMyPatientFilter(end: null, start: null),
     );
 
-    bpMeasurements = result.map((e) => BpMeasurementViewModel(bpModel: e));
+    bpMeasurements =
+        result.map((e) => BpMeasurementViewModel(bpModel: e)).toList();
 
     bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
@@ -275,10 +286,11 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   @override
   void changeGraphType() => null;
 
-  @override
-  void showFilter(context) => Atom.show(BpChartFilterPopUp(
+  void showFilter(_) => Atom.show(BpChartFilterPopUp(
         height: context.HEIGHT * .52,
         width: context.WIDTH * .6,
+        measurements: measurements,
+        callback: changeFilterType,
       ));
 
   void changeFilterType(Map<String, bool> selectedMeasurement) {

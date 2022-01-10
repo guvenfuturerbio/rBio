@@ -1,11 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/utils/charts/sample_view.dart';
-import 'package:onedosehealth/features/doctor/blood_pressure_patient_detail/viewmodel/blood_pressure_vm.dart';
+import '../../../../../core/core.dart';
+import '../../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
+import '../../../../chronic_tracking/progress_sections/utils/charts/sample_view.dart';
+import '../../viewmodel/blood_pressure_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
