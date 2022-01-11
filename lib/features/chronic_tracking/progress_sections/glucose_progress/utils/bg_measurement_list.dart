@@ -211,7 +211,13 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    /*Icon(Icons.timer),*/
+                    if (bgMeasurementViewModel.isManual)
+                      Text(
+                        "M",
+                        style: context.xHeadline3.copyWith(
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     Text(
                         DateFormat("kk : mm")
                             .format(bgMeasurementViewModel.date),

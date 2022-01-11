@@ -16,7 +16,7 @@ class BloodGlucoseValue {
   String valueNote;
   @JsonKey(name: 'detail')
   BloodGlucoseValueDetail detail;
-  @JsonKey(name: 'is_manual')
+  @JsonKey(name: 'is_manuel')
   bool isManual;
   @JsonKey(name: 'device_uuid')
   String deviceUUID;

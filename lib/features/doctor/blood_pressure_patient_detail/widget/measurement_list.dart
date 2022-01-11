@@ -83,9 +83,18 @@ class _MeasurementList extends StatelessWidget {
       },
       child: Row(
         children: [
-          Container(
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Text(DateFormat("kk : mm").format(item.date)),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (item.isManual)
+                Text("M",
+                    style: context.xHeadline3
+                        .copyWith(fontWeight: FontWeight.w900)),
+              Container(
+                margin: const EdgeInsets.only(left: 10, right: 10),
+                child: Text(DateFormat("kk : mm").format(item.date)),
+              ),
+            ],
           ),
           Expanded(
             child: _listItem(context, item),
