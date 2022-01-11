@@ -136,7 +136,7 @@ class BpProgressPageVm
   Future<void> setStartDate(DateTime d) async {
     this._startDate = d;
     this._currentDateIndex = 0;
-    await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
+    await getIt<BloodPressureStorageImpl>().getAndWriteBpData(
         beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
     fetchBpMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
 
@@ -163,7 +163,7 @@ class BpProgressPageVm
   Future<void> setEndDate(DateTime d) async {
     this._endDate = d;
     this._currentDateIndex = 0;
-    await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
+    await getIt<BloodPressureStorageImpl>().getAndWriteBpData(
         beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
     fetchBpMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
 

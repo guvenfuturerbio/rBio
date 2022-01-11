@@ -179,8 +179,20 @@ Row _timeAndImageSection(
   return Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
     Container(
       margin: EdgeInsets.only(right: 20),
-      child: Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
-          style: context.xBodyText1),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (scaleMeasurementViewModel.isManuel)
+            Text(
+              "M",
+              style: context.xHeadline3.copyWith(
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
+              style: context.xBodyText1),
+        ],
+      ),
     ),
     (scaleMeasurementViewModel.imageUrl == null ||
             scaleMeasurementViewModel.imageUrl.isEmpty)

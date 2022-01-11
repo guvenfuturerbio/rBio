@@ -41,7 +41,7 @@ class BpMeasurementList extends StatelessWidget {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                height: (context.HEIGHT * .1) * context.TEXTSCALE,
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
@@ -91,9 +91,21 @@ class BpMeasurementList extends StatelessWidget {
         },
         child: Row(
           children: [
-            Container(
-              margin: const EdgeInsets.only(left: 10, right: 10),
-              child: Text(DateFormat("kk : mm").format(item.date)),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (item.isManual)
+                  Text(
+                    "M",
+                    style: context.xHeadline3.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  child: Text(DateFormat("kk : mm").format(item.date)),
+                ),
+              ],
             ),
             Expanded(
               child: _listItem(context, item),
@@ -128,7 +140,7 @@ class BpMeasurementList extends StatelessWidget {
   Container _listItem(BuildContext context, BpMeasurementViewModel item) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-      height: context.HEIGHT * .07 * context.TEXTSCALE,
+      height: context.HEIGHT * .12 * context.TEXTSCALE,
       decoration: BoxDecoration(
         color: Colors.green,
         gradient: LinearGradient(
@@ -175,6 +187,9 @@ class BpMeasurementList extends StatelessWidget {
         Text(
           parameter,
           style: context.xHeadline5,
+          overflow: TextOverflow.clip,
+          textAlign: TextAlign.center,
+          maxLines: 1,
         ),
         Text(
           measurement,

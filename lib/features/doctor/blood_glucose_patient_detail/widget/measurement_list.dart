@@ -173,9 +173,7 @@ Widget _buildCard(
                             //
                             Expanded(
                               child: Text(
-                                bgMeasurementViewModel.isManual
-                                    ? 'Manual'
-                                    : 'Otomatic',
+                                bgMeasurementViewModel.isManual ? 'M' : 'A',
                                 style: context.xHeadline5,
                                 textAlign: TextAlign.end,
                               ),

@@ -1,6 +1,5 @@
 import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
@@ -130,11 +129,11 @@ class _BloodPressurePatientDetailScreenState
               if (MediaQuery.of(context).orientation == Orientation.portrait)
                 //
                 SizedBox(
-                  height: context.HEIGHT * .3,
+                  height: context.HEIGHT * .5,
                   child: _MeasurementList(
-                    bpMeasurements: vm.bpMeasurements,
-                    scrollController: _controller,
-                  ),
+                      bpMeasurements: vm.bpMeasurements,
+                      scrollController: _controller,
+                      fetchScrolledData: vm.fetchScrolledData),
                 ),
             ] else ...[
               Shimmer.fromColors(

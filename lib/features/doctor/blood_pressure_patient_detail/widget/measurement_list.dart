@@ -37,7 +37,7 @@ class _MeasurementList extends StatelessWidget {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                height: (context.HEIGHT * .1) * context.TEXTSCALE,
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
@@ -70,60 +70,44 @@ class _MeasurementList extends StatelessWidget {
   }
 
   Widget measurementList(BpMeasurementViewModel item, BuildContext context) {
-    return Slidable(
-      actionPane: SlidableDrawerActionPane(),
-      actionExtentRatio: 0.40,
-      child: GestureDetector(
-        onTap: () {
-          Atom.show(
-            PressureTagger(
-              bpModel: item.bpModel,
-              isEdit: true,
-            ),
-            barrierColor: Colors.transparent,
-            barrierDismissible: false,
-          );
-        },
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 10, right: 10),
-              child: Text(DateFormat("kk : mm").format(item.date)),
-            ),
-            Expanded(
-              child: _listItem(context, item),
-            ),
-          ],
-        ),
+    return GestureDetector(
+      onTap: () {
+        Atom.show(
+          PressureTagger(
+            bpModel: item.bpModel,
+            isEdit: true,
+          ),
+          barrierColor: Colors.transparent,
+          barrierDismissible: false,
+        );
+      },
+      child: Row(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (item.isManual)
+                Text("M",
+                    style: context.xHeadline3
+                        .copyWith(fontWeight: FontWeight.w900)),
+              Container(
+                margin: const EdgeInsets.only(left: 10, right: 10),
+                child: Text(DateFormat("kk : mm").format(item.date)),
+              ),
+            ],
+          ),
+          Expanded(
+            child: _listItem(context, item),
+          ),
+        ],
       ),
-      secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: LocaleProvider.current.delete,
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: () async {
-            try {
-              await getIt<BloodPressureStorageImpl>().delete(item.bpModel.key);
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(
-                      '${LocaleProvider.current.delete_measurement_succesfull}')));
-            } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                    '${LocaleProvider.current.delete_measurement_un_succesfull}'),
-                backgroundColor: Colors.red,
-              ));
-            }
-          },
-        ),
-      ],
     );
   }
 
   Container _listItem(BuildContext context, BpMeasurementViewModel item) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-      height: context.HEIGHT * .07 * context.TEXTSCALE,
+      height: context.HEIGHT * .12 * context.TEXTSCALE,
       decoration: BoxDecoration(
         color: Colors.green,
         gradient: LinearGradient(
@@ -170,6 +154,7 @@ class _MeasurementList extends StatelessWidget {
         Text(
           parameter,
           style: context.xHeadline5,
+          overflow: TextOverflow.ellipsis,
         ),
         Text(
           measurement,

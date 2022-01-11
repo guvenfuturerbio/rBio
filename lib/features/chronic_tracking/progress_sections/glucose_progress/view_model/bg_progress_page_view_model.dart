@@ -30,12 +30,6 @@ class BgProgressPageViewModel
         print('data');
         print(selected);
       });
-      /* GlucoseRepository().addListener(() async {
-        //await fetchBgMeasurements();
-        //fetchScrolledDailyData();
-        print("Triggered GlucoseRepository Listener");
-        setSelectedItem(selected);
-      }); */
       UserProfilesNotifier().addListener(() async {
         setSelectedItem(selected);
       });
@@ -1070,12 +1064,10 @@ class BgProgressPageViewModel
           getIt<GlucoseStorageImpl>()
               .getAndWriteGlucoseData(endDate: bgMeasurements.first.date)
               .then((value) {
-            print(value);
             hasReachEnd = value;
           });
         }
       } catch (e, stk) {
-        print(e);
         debugPrintStack(stackTrace: stk);
       }
     });

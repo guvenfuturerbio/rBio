@@ -52,10 +52,7 @@ class DoctorPatientListScreen extends StatelessWidget {
 
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          LocaleProvider.current.bg_measurement_tracking,
-        ),
+        title: RbioAppBar.textTitle(context, getTitle()),
         actions: [
           Center(
             child: RbioBadge(
@@ -591,6 +588,17 @@ class DoctorPatientListScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String getTitle() {
+    if (type == PatientType.Bp) {
+      return LocaleProvider.current.blood_pressure_tracking;
+    } else if (type == PatientType.BMI) {
+      return LocaleProvider.current.bmi_tracking;
+    } else if (type == PatientType.Sugar) {
+      return LocaleProvider.current.bg_measurement_tracking;
+    }
+    return "";
   }
   // #endregion
 }

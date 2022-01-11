@@ -131,63 +131,72 @@ class __MeasurementListState extends State<_MeasurementList> {
 
   Row _timeAndImageSection(ScaleMeasurementViewModel scaleMeasurementViewModel,
       BuildContext context) {
-    return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 20),
-            child: Text(
-                DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
+    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: <
+        Widget>[
+      Container(
+        margin: EdgeInsets.only(right: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (scaleMeasurementViewModel.isManuel)
+              Text(
+                "M",
+                style: context.xHeadline3.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
                 style: context.xBodyText1),
-          ),
-          (scaleMeasurementViewModel.imageUrl == null ||
-                  scaleMeasurementViewModel.imageUrl.isEmpty)
-              ? Container(
-                  width: 60 * context.TEXTSCALE,
-                  height: 60 * context.TEXTSCALE,
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Container(
-                        padding: EdgeInsets.all(8),
-                        height: 25,
-                        width: 25,
-                        child: SvgPicture.asset(
-                          R.image.addphoto_icon,
-                        )),
-                  ))
-              : GestureDetector(
-                  onTap: () =>
-                      _galeryView(context, scaleMeasurementViewModel.imageUrl),
-                  child: SizedBox(
-                    width: 60 * context.TEXTSCALE,
-                    height: 60 * context.TEXTSCALE,
-                    child: StackOfCards(
-                      children: [
-                        ...scaleMeasurementViewModel.imageUrl.map(
-                          (e) => Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image(
-                                  image: FileImage(File(
-                                      getIt<ScaleStorageImpl>()
-                                          .getImagePathOfImageURL(e))),
-                                ),
-                              ),
+          ],
+        ),
+      ),
+      (scaleMeasurementViewModel.imageUrl == null ||
+              scaleMeasurementViewModel.imageUrl.isEmpty)
+          ? Container(
+              width: 60 * context.TEXTSCALE,
+              height: 60 * context.TEXTSCALE,
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Container(
+                    padding: EdgeInsets.all(8),
+                    height: 25,
+                    width: 25,
+                    child: SvgPicture.asset(
+                      R.image.addphoto_icon,
+                    )),
+              ))
+          : GestureDetector(
+              onTap: () =>
+                  _galeryView(context, scaleMeasurementViewModel.imageUrl),
+              child: SizedBox(
+                width: 60 * context.TEXTSCALE,
+                height: 60 * context.TEXTSCALE,
+                child: StackOfCards(
+                  children: [
+                    ...scaleMeasurementViewModel.imageUrl.map(
+                      (e) => Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image(
+                              image: FileImage(File(getIt<ScaleStorageImpl>()
+                                  .getImagePathOfImageURL(e))),
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                )
-        ]);
+                  ],
+                ),
+              ),
+            )
+    ]);
   }
 
   Expanded _textAndScaleSection(

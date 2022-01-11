@@ -120,7 +120,7 @@ class ScaleMeasurementViewModel {
   Map<String, int> get _getWeightRange {
     var range = {
       'min': (weightTarget['target'] ?? 0).toInt(),
-      'max': ((weightTarget['high'] - 1) ?? 0).toInt(),
+      'max': ((weightTarget['high'] ?? 1 - 1) ?? 0).toInt(),
     };
 
     return range;
@@ -129,7 +129,7 @@ class ScaleMeasurementViewModel {
   Map<String, int> get _getBodyFatRange {
     var range = {
       'min': (bodyFatTarget['target'] ?? 0).toInt(),
-      'max': ((bodyFatTarget['high'] - 1) ?? 0).toInt(),
+      'max': ((bodyFatTarget['high'] ?? 1 - 1) ?? 0).toInt(),
     };
 
     return range;
