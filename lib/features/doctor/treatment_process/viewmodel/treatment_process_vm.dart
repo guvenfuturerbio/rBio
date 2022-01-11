@@ -29,23 +29,9 @@ class TreatmentProcessVm extends ChangeNotifier with RbioVm {
     list = <TreatmentProcessItemModel>[
       TreatmentProcessItemModel(
         id: '1',
-        title: 'Görüntülü Görüşme',
-        description:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh',
+        title: 'Güncel tedavi',
+        description: '',
         dateTime: '01/01/2021 - 09:00',
-      ),
-      TreatmentProcessItemModel(
-        id: '2',
-        title: 'Hastane Görüşmesi',
-        description:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh',
-        dateTime: '01/12/2020 - 10:00',
-      ),
-      TreatmentProcessItemModel(
-        id: '3',
-        title: 'Sonuçlar',
-        description: 'Kan değerleri',
-        dateTime: '01/12/2020 - 09:00',
       ),
     ];
     progress = LoadingProgress.DONE;

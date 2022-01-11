@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
