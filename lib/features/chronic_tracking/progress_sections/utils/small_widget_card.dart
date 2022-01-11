@@ -32,6 +32,7 @@ class RbioSmallChronicWidget extends StatelessWidget {
             padding: EdgeInsets.only(right: 25),
             child: SvgPicture.asset(
               imageUrl,
+              alignment: Alignment.centerLeft,
               fit: BoxFit.scaleDown,
               height: Atom.height * .1,
             ),

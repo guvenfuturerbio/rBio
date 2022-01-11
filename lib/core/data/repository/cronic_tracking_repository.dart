@@ -12,7 +12,7 @@ class ChronicTrackingRepository {
   Future<GuvenResponseModel> saveAndRetrieveToken(
           SaveAndRetrieveTokenModel saveAndRetrieveToken, String token) =>
       apiService.saveAndRetrieveToken(saveAndRetrieveToken, token);
-  Future<StripDetailModel> getUserStrip(entegrationId, deviceUUID) =>
+  Future<StripDetailModel> getUserStrip(int entegrationId, String deviceUUID) =>
       apiService.getUserStrip(entegrationId, deviceUUID);
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
           BloodGlucoseValue bodyPages) =>

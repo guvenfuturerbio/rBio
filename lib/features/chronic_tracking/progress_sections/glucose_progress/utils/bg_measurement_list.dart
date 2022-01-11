@@ -33,7 +33,6 @@ class BgMeasurementListWidget extends StatefulWidget {
 class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
   @override
   Widget build(BuildContext context) {
-    print('------------------------>Length:${widget.bgMeasurements.length}');
     return GroupedListView<BgMeasurementGlucoseViewModel, DateTime>(
       elements: widget.bgMeasurements ?? <BgMeasurementGlucoseViewModel>[],
       order: GroupedListOrder.DESC,
@@ -212,7 +211,13 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    /*Icon(Icons.timer),*/
+                    if (bgMeasurementViewModel.isManual)
+                      Text(
+                        "M",
+                        style: context.xHeadline3.copyWith(
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     Text(
                         DateFormat("kk : mm")
                             .format(bgMeasurementViewModel.date),

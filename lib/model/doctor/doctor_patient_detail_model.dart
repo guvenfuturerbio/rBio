@@ -19,27 +19,30 @@ class DoctorPatientDetailModel {
   int yearOfDiagnosis;
   int stripCount;
   int id;
+  String phoneNumber;
+  String identification_number;
 
-  DoctorPatientDetailModel({
-    this.name,
-    this.birthDay,
-    this.gender,
-    this.height,
-    this.weight,
-    this.diabetType,
-    this.rangeMin,
-    this.rangeMax,
-    this.hyper,
-    this.hypo,
-    this.target,
-    this.imageUrl,
-    this.deviceUuid,
-    this.entegrationId,
-    this.smoker,
-    this.yearOfDiagnosis,
-    this.stripCount,
-    this.id,
-  });
+  DoctorPatientDetailModel(
+      {this.name,
+      this.birthDay,
+      this.gender,
+      this.height,
+      this.weight,
+      this.diabetType,
+      this.rangeMin,
+      this.rangeMax,
+      this.hyper,
+      this.hypo,
+      this.target,
+      this.imageUrl,
+      this.deviceUuid,
+      this.entegrationId,
+      this.smoker,
+      this.yearOfDiagnosis,
+      this.stripCount,
+      this.id,
+      this.phoneNumber,
+      this.identification_number});
 
   DoctorPatientDetailModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -62,6 +65,8 @@ class DoctorPatientDetailModel {
     yearOfDiagnosis = json['year_of_diagnosis'];
     stripCount = json['strip_count'];
     id = json['id'];
+    phoneNumber = json['phone_number'];
+    identification_number = json['identification_number'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,6 +91,8 @@ class DoctorPatientDetailModel {
     data['year_of_diagnosis'] = this.yearOfDiagnosis;
     data['strip_count'] = this.stripCount;
     data['id'] = this.id;
+    data['phone_number'] = phoneNumber;
+    data['identification_number'] = identification_number;
     return data;
   }
 }

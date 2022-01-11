@@ -209,8 +209,6 @@ class BloodPressureStorageImpl
       if (checkBox(true)) {
         List<BloodPressureModel> list = getAll();
         list.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-        print('hereeeeeeee');
-        print(list.length);
         return list[0];
       } else {
         return null;

@@ -139,7 +139,7 @@ class _Endpoints {
 
   String ct_saveAndRetrieveToken =
       '/AccessToken/validate-remote-token'.xBasePath;
-  String ct_getUserStrip(var entegrationId, var deviceuuid) =>
+  String ct_getUserStrip(int entegrationId, String deviceuuid) =>
       '/user/get-user-strip/${entegrationId}/${deviceuuid}'.xCronicTracking;
   String ct_insertNewBloodGlucoseValue =
       '/Measurement/add-blood-glucose-with-detail'.xCronicTracking;

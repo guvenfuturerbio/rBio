@@ -182,7 +182,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
             child: Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
-                'Ayşe Yıldırım' ?? '',
+                'Serkan Öztürk' ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: context.xHeadline5.copyWith(

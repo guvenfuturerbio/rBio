@@ -27,7 +27,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<StripDetailModel> getUserStrip(entegrationId, deviceUUID) async {
+  Future<StripDetailModel> getUserStrip(int entegrationId, String deviceUUID) async {
     final response = await helper.getGuven(
         R.endpoints.ct_getUserStrip(entegrationId, deviceUUID),
         options: authOptions);

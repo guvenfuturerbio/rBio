@@ -755,5 +755,6 @@
   "select_day_to": "Select another day",
   "healthcare_employee": "Healthcare Employee",
   "update": "Update",
-  "change": "Change"
+  "change": "Change",
+  "device_register": "Please register a device"
 }

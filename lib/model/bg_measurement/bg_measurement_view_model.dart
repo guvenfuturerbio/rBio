@@ -7,13 +7,15 @@ class BgMeasurementGlucoseViewModel {
   BgMeasurementGlucoseViewModel({this.bgMeasurement});
 
   DateTime get date {
-    DateTime dateTime = new DateTime(
-        int.parse(bgMeasurement.date.substring(0, 4)),
-        int.parse(bgMeasurement.date.substring(5, 7)),
-        int.parse(bgMeasurement.date.substring(8, 10)),
-        int.parse(bgMeasurement.date.substring(11, 13)),
-        int.parse(bgMeasurement.date.substring(14, 16)),
-        int.parse(bgMeasurement.date.substring(17, 19)));
+    DateTime dateTime = bgMeasurement?.date == null
+        ? DateTime.now()
+        : DateTime(
+            int.parse(bgMeasurement.date.substring(0, 4)),
+            int.parse(bgMeasurement.date.substring(5, 7)),
+            int.parse(bgMeasurement.date.substring(8, 10)),
+            int.parse(bgMeasurement.date.substring(11, 13)),
+            int.parse(bgMeasurement.date.substring(14, 16)),
+            int.parse(bgMeasurement.date.substring(17, 19)));
     return dateTime;
   }
 

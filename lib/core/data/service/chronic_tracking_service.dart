@@ -6,7 +6,7 @@ abstract class ChronicTrackingApiService {
 
   Future<GuvenResponseModel> saveAndRetrieveToken(
       SaveAndRetrieveTokenModel saveAndRetrieveToken, String token);
-  Future<StripDetailModel> getUserStrip(entegrationId, deviceUUID);
+  Future<StripDetailModel> getUserStrip(int entegrationId, String deviceUUID);
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
       BloodGlucoseValue bodyPages);
   Future<GuvenResponseModel> deleteBloodGlucoseValue(

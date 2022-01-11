@@ -222,6 +222,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "device_connection_step_4_Roche" : MessageLookupByLibrary.simpleMessage("Cihaz üzerinde \'OK\' yazısını aldığınızde cihazı kapatıp tekrar açınız."),
     "device_connections" : MessageLookupByLibrary.simpleMessage("Cihaz Bağlantıları"),
     "device_pairing_completed" : MessageLookupByLibrary.simpleMessage("Cihaz bağlandı"),
+    "device_register" : MessageLookupByLibrary.simpleMessage("Lütfen bir cihaz kaydediniz"),
     "device_scale_connection_step_1_mi_scale" : MessageLookupByLibrary.simpleMessage("Tartıyı sert, düz bir yüzeye yerleştirin. Çıplak ayakla, metal yüzeylere temas edecek şekilde durun, Ayakların elektrotlar ile düzgün bir biçimde temas ettiğinden emin olun"),
     "device_scale_connection_step_2_mi_scale" : MessageLookupByLibrary.simpleMessage("Cihaz etkinleştirildiğinde, bağlanmak istediğiniz cihazı seçin."),
     "device_scale_connection_step_3_mi_scale" : MessageLookupByLibrary.simpleMessage("Ağırlık göstergesi sabitlendiğinde, vücut bileşimleriniz ölçülmeye başlanır. Ağırlık göstergesinin altındaki bir ilerleme göstergesi yanıp söndüğünde, bir ölçümün tamamlandığı anlamına gelir, ardından tartınız akıllı cihazınızla eşleşecektir."),

@@ -122,12 +122,27 @@ class _UserDetailCard extends StatelessWidget {
             _buildTitleRow(
               context,
               leftTitle: LocaleProvider.current.strip_number_2,
-              rightTitle: '',
+              rightTitle: LocaleProvider.current.phone_number,
             ),
             _buildValueRow(
               context,
               leftValue: "200",
-              rightValue: '',
+              rightValue: patientDetail.phoneNumber ?? "",
+              rightOnTap: () {
+                if (patientDetail.phoneNumber != null)
+                  launch("tel://${patientDetail.phoneNumber}");
+              },
+            ),
+            //
+            _buildTitleRow(
+              context,
+              leftTitle: LocaleProvider.current.tc_identity_number,
+              rightTitle: "",
+            ),
+            _buildValueRow(
+              context,
+              leftValue: patientDetail.identification_number ?? "",
+              rightValue: "",
             ),
           ],
         ),
@@ -176,11 +191,10 @@ class _UserDetailCard extends StatelessWidget {
     );
   }
 
-  Widget _buildValueRow(
-    BuildContext context, {
-    @required String leftValue,
-    @required String rightValue,
-  }) {
+  Widget _buildValueRow(BuildContext context,
+      {@required String leftValue,
+      @required String rightValue,
+      VoidCallback rightOnTap}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -198,11 +212,14 @@ class _UserDetailCard extends StatelessWidget {
 
         //
         Expanded(
-          child: Text(
-            rightValue,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: context.xHeadline5,
+          child: InkWell(
+            onTap: rightOnTap,
+            child: Text(
+              rightValue,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.xHeadline5,
+            ),
           ),
         ),
       ],

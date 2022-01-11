@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -188,7 +189,7 @@ class _BloodGlucosePatientDetailScreenState
               if (MediaQuery.of(context).orientation == Orientation.portrait)
                 //
                 SizedBox(
-                  height: context.HEIGHT * .3,
+                  height: context.HEIGHT * .5,
                   child: _MeasurementList(
                     bgMeasurements: vm.bgMeasurements,
                     scrollController: _controller,

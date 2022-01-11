@@ -35,8 +35,10 @@ class AvailableDevices extends StatelessWidget {
                     top: RbioStackedScaffold.kHeight(context),
                     bottom: R.sizes.defaultBottomValue,
                   ),
-                  childAspectRatio: 5 / 3,
+                  childAspectRatio: 6 / 4,
                   crossAxisCount: 2,
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 0,
                   children: vm.items
                       .map((item) => _buildCard(context, item, true))
                       .toList(),
@@ -72,40 +74,46 @@ class AvailableDevices extends StatelessWidget {
             }
           : null,
       child: Container(
-          padding: isGridItem
-              ? EdgeInsets.symmetric(horizontal: 16)
-              : EdgeInsets.symmetric(horizontal: 8),
-          child: Card(
-            elevation: 4,
-            color: device.enable ? null : R.color.bg_gray,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  //
-                  Expanded(
-                    flex: 2,
-                    child: Image.asset(
-                      device.imagePath,
-                    ),
+        padding: isGridItem
+            ? EdgeInsets.symmetric(horizontal: 4)
+            : EdgeInsets.symmetric(horizontal: 8),
+        child: Card(
+          elevation: 4,
+          color: device.enable ? null : R.color.bg_gray,
+          shape: RoundedRectangleBorder(
+            borderRadius: R.sizes.borderRadiusCircular,
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                //
+                Expanded(
+                  flex: 2,
+                  child: Image.asset(
+                    device.imagePath,
                   ),
+                ),
 
-                  //
-                  Expanded(
-                    flex: 3,
-                    child: Text(device.name ?? LocaleProvider.current.unknown,
-                        style: context.xHeadline2),
-                  )
-                ],
-              ),
+                //
+                R.sizes.wSizer4,
+
+                //
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    device.name ?? LocaleProvider.current.unknown,
+                    style: context.xHeadline2,
+                  ),
+                )
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
