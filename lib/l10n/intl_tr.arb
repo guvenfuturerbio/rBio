@@ -751,5 +751,8 @@
   "update": "Güncelle",
   "change": "Değiştir",
   "device_register": "Lütfen bir cihaz kaydediniz",
-  "detailed_symptom": "Detaylı Sağlık Kontrolü"
+  "detailed_symptom": "Detaylı Sağlık Kontrolü",
+
+  "open_chart": "Grafiği Göster",
+  "close_chart": "Grafiği Gizle"
 }

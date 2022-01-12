@@ -97,106 +97,113 @@ class __MeasurementListState extends State<_MeasurementList> {
             barrierDismissible: false,
             barrierColor: Colors.transparent);
       },
-      child: Container(
-        alignment: Alignment.center,
-        height: (context.HEIGHT * .1) * context.TEXTSCALE,
-        margin: EdgeInsets.only(left: 8, right: 8, top: 8),
-        decoration: BoxDecoration(
-          color: Colors.green,
-          gradient: LinearGradient(
-              colors: [Colors.white, Colors.white],
-              begin: Alignment.bottomLeft,
-              end: Alignment.centerRight),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withAlpha(50),
-                blurRadius: 5,
-                spreadRadius: 0,
-                offset: Offset(5, 5))
-          ],
-          borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-        ),
-        padding: EdgeInsets.all(10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _textAndScaleSection(scaleMeasurementViewModel, context),
-            _timeAndImageSection(scaleMeasurementViewModel, context)
-          ],
-        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: Text(
+                DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
+                style: context.xBodyText1),
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              height: (context.HEIGHT * .08) * context.TEXTSCALE,
+              margin: EdgeInsets.only(left: 8, right: 8, top: 8),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                gradient: LinearGradient(
+                    colors: [Colors.white, Colors.white],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.centerRight),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(50),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: Offset(5, 5))
+                ],
+                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+              ),
+              padding: EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _textAndScaleSection(scaleMeasurementViewModel, context),
+                  _timeAndImageSection(scaleMeasurementViewModel, context)
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Row _timeAndImageSection(ScaleMeasurementViewModel scaleMeasurementViewModel,
       BuildContext context) {
-    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: <
-        Widget>[
-      Container(
-        margin: EdgeInsets.only(right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (scaleMeasurementViewModel.isManuel)
-              Text(
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          if (scaleMeasurementViewModel.isManuel)
+            Container(
+              margin: EdgeInsets.only(right: 20),
+              child: Text(
                 "M",
                 style: context.xHeadline3.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
               ),
-            Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
-                style: context.xBodyText1),
-          ],
-        ),
-      ),
-      (scaleMeasurementViewModel.imageUrl == null ||
-              scaleMeasurementViewModel.imageUrl.isEmpty)
-          ? Container(
-              width: 60 * context.TEXTSCALE,
-              height: 60 * context.TEXTSCALE,
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Container(
-                    padding: EdgeInsets.all(8),
-                    height: 25,
-                    width: 25,
-                    child: SvgPicture.asset(
-                      R.image.addphoto_icon,
-                    )),
-              ))
-          : GestureDetector(
-              onTap: () =>
-                  _galeryView(context, scaleMeasurementViewModel.imageUrl),
-              child: SizedBox(
-                width: 60 * context.TEXTSCALE,
-                height: 60 * context.TEXTSCALE,
-                child: StackOfCards(
-                  children: [
-                    ...scaleMeasurementViewModel.imageUrl.map(
-                      (e) => Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image(
-                              image: FileImage(File(getIt<ScaleStorageImpl>()
-                                  .getImagePathOfImageURL(e))),
+            ),
+          (scaleMeasurementViewModel.imageUrl == null ||
+                  scaleMeasurementViewModel.imageUrl.isEmpty)
+              ? Container(
+                  width: 60 * context.TEXTSCALE,
+                  height: 60 * context.TEXTSCALE,
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Container(
+                        padding: EdgeInsets.all(8),
+                        height: 25,
+                        width: 25,
+                        child: SvgPicture.asset(
+                          R.image.addphoto_icon,
+                        )),
+                  ))
+              : GestureDetector(
+                  onTap: () =>
+                      _galeryView(context, scaleMeasurementViewModel.imageUrl),
+                  child: SizedBox(
+                    width: 60 * context.TEXTSCALE,
+                    height: 60 * context.TEXTSCALE,
+                    child: StackOfCards(
+                      children: [
+                        ...scaleMeasurementViewModel.imageUrl.map(
+                          (e) => Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image(
+                                  image: FileImage(File(
+                                      getIt<ScaleStorageImpl>()
+                                          .getImagePathOfImageURL(e))),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            )
-    ]);
+                  ),
+                )
+        ]);
   }
 
   Expanded _textAndScaleSection(

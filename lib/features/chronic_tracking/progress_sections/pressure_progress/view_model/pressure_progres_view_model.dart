@@ -12,6 +12,7 @@ class BpProgressPageVm
   bool hasReachEnd = false;
 
   BpProgressPageVm() {
+    isChartShow = false;
     getIt<BloodPressureStorageImpl>().addListener(() {
       setSelectedItem(selected);
     });
@@ -23,6 +24,13 @@ class BpProgressPageVm
         getNewItems();
       }
     });
+  }
+  bool isChartShow = false;
+
+  @override
+  changeChartShowStatus() {
+    isChartShow = !isChartShow;
+    notifyListeners();
   }
 
   Widget get currentGraph => AnimatedPulseChart();

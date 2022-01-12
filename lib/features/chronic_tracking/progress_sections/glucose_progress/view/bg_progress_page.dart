@@ -70,37 +70,49 @@ class _BgProgressPage extends State<BgProgressPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: (context.HEIGHT * .4) * context.TEXTSCALE,
-                  child: GraphHeader(
+                if (value.isChartShow) ...[
+                  SizedBox(
+                      height: (context.HEIGHT * .4) * context.TEXTSCALE,
+                      child: GraphHeader(
+                        value: value,
+                        callBack: widget.callBack,
+                      )),
+                  BottomActionsOfGraph(
                     value: value,
-                    callBack: widget.callBack,
                   ),
-                ),
-                BottomActionsOfGraph(
-                  value: value,
-                ),
-                LayoutBuilder(builder: (context, constraints) {
-                  return Container(
-                    decoration: BoxDecoration(boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withAlpha(20),
-                          blurRadius: 5,
-                          spreadRadius: 0,
-                          offset: Offset(5, 5))
-                    ]),
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: CustomBarPie(
-                        width: constraints.maxWidth,
-                        height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                  LayoutBuilder(builder: (context, constraints) {
+                    return Container(
+                      decoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withAlpha(20),
+                            blurRadius: 5,
+                            spreadRadius: 0,
+                            offset: Offset(5, 5))
+                      ]),
+                      padding: EdgeInsets.symmetric(vertical: 4),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: CustomBarPie(
+                          width: constraints.maxWidth,
+                          height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                        ),
                       ),
+                    );
+                  }),
+                ],
+                if (!value.isChartShow)
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
+                    child: RbioElevatedButton(
+                      title: LocaleProvider.current.open_chart,
+                      onTap: value.changeChartShowStatus,
                     ),
-                  );
-                }),
+                  ),
                 SizedBox(
-                  height: context.HEIGHT * .4,
+                  height: value.isChartShow
+                      ? context.HEIGHT * .4
+                      : context.HEIGHT * .8,
                   child: BgMeasurementListWidget(
                     bgMeasurements: value.bgMeasurements,
                     scrollController: value.controller,

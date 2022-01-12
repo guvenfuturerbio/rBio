@@ -22,6 +22,7 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier
   }) {
     this.mContext = context;
     this._patientId = patientId;
+    isChartShow = false;
     update();
 
     // NotificationHandler().addListener(() async {
@@ -51,6 +52,13 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier
     //     }
     //   }
     // });
+  }
+
+  bool isChartShow = false;
+  @override
+  changeChartShowStatus() {
+    isChartShow = !isChartShow;
+    notifyListeners();
   }
 
   Future<void> update() async {

@@ -757,5 +757,8 @@
   "update": "Update",
   "change": "Change",
   "device_register": "Please register a device",
-  "detailed_symptom": "Detailed Symptom Checker"
+  "detailed_symptom": "Detailed Symptom Checker",
+
+  "open_chart": "Show Graph",
+  "close_chart": "Hide Graph"
 }
