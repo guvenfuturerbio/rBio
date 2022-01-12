@@ -61,7 +61,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     }
 
     return ChangeNotifierProvider<ForgotPasswordStep2ScreenVm>(
-      create: (context) => ForgotPasswordStep2ScreenVm(context: context),
+      create: (context) => ForgotPasswordStep2ScreenVm(context),
       child: Consumer<ForgotPasswordStep2ScreenVm>(
         builder: (
           BuildContext context,
@@ -202,8 +202,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
                           _passwordAgainController.text.length > 0) {
                         value.forgotPassStep2(changePasswordModel);
                       } else {
-                        value.showGradientDialog(
-                          context,
+                        value.showInfoDialog(
                           LocaleProvider.of(context).warning,
                           LocaleProvider.of(context).fill_all_field,
                         );

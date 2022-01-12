@@ -230,7 +230,7 @@ class LoginScreenVm extends ChangeNotifier {
         this._guvenLogin = await getIt<UserManager>().login(username, password);
 
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
-        
+
         await getIt<UserManager>().setApplicationConsentFormState(true);
 
         //One dose hasta bilgileri
@@ -377,24 +377,27 @@ class LoginScreenVm extends ChangeNotifier {
 
   bool get rememberMeChecked => this._rememberMeChecked ?? false;
 
-  toggleRememberMeChecked() {
+  void toggleRememberMeChecked() {
     this._rememberMeChecked = !rememberMeChecked;
     notifyListeners();
   }
 
   void showGradientDialog(BuildContext context, String title, String text) {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return WarningDialog(title, text);
-        }).then((value) {
-      if (text == LocaleProvider.current.approve_consent_form) {
-        showApplicationContestForm();
-      } else if ((text == LocaleProvider.current.must_clicked_kvkk)) {
-        showKvkkInfo();
-      }
-    });
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return WarningDialog(title, text);
+      },
+    ).then(
+      (value) {
+        if (text == LocaleProvider.current.approve_consent_form) {
+          showApplicationContestForm();
+        } else if ((text == LocaleProvider.current.must_clicked_kvkk)) {
+          showKvkkInfo();
+        }
+      },
+    );
   }
 
   void showLoadingDialog(BuildContext context) async {

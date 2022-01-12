@@ -4,32 +4,31 @@ import 'package:provider/provider.dart';
 import '../../../../core/core.dart';
 import 'e_result_vm.dart';
 
-class EResultScreen extends StatefulWidget {
+class EResultScreen extends StatelessWidget {
   const EResultScreen({Key key}) : super(key: key);
 
-  @override
-  _EResultScreenState createState() => _EResultScreenState();
-}
-
-class _EResultScreenState extends State<EResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<EResultScreenVm>(
       builder: (BuildContext context, EResultScreenVm value, Widget child) {
         return RbioScaffold(
-          appbar: RbioAppBar(
-            title: RbioAppBar.textTitle(
-              context,
-              LocaleProvider.current.results,
-            ),
-          ),
-          body: _buildBody(value),
+          appbar: _buildAppBar(context),
+          body: _buildBody(context, value),
         );
       },
     );
   }
 
-  Widget _buildBody(EResultScreenVm vm) {
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.results,
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, EResultScreenVm vm) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +60,7 @@ class _EResultScreenState extends State<EResultScreen> {
 
         //
         Expanded(
-          child: _buildStateToWidget(vm),
+          child: _buildStateToWidget(context, vm),
         ),
       ],
     );
@@ -77,7 +76,7 @@ class _EResultScreenState extends State<EResultScreen> {
     return LocaleProvider.current.online_hospital;
   }
 
-  Widget _buildStateToWidget(EResultScreenVm vm) {
+  Widget _buildStateToWidget(BuildContext context, EResultScreenVm vm) {
     switch (vm.progress) {
       case LoadingProgress.LOADING:
         return RbioLoading();

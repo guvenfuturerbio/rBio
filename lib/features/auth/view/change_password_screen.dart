@@ -15,6 +15,31 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  TextEditingController _passwordController;
+  TextEditingController _passwordAgainController;
+  TextEditingController _oldPasswordController;
+  FocusNode focusNode;
+
+  @override
+  void initState() {
+    _passwordController = TextEditingController();
+    _passwordAgainController = TextEditingController();
+    _oldPasswordController = TextEditingController();
+    focusNode = FocusNode();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _passwordAgainController.dispose();
+    _oldPasswordController.dispose();
+    focusNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ChangePasswordScreenVm>(
@@ -71,7 +96,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Container(
               margin: EdgeInsets.only(bottom: 20, top: 40),
               child: TextFormField(
-                controller: value.oldPasswordController,
+                controller: _oldPasswordController,
                 textInputAction: TextInputAction.next,
                 obscureText: value.passwordVisibility ? false : true,
                 style: Utils.instance.inputTextStyle(),
@@ -110,7 +135,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Container(
               margin: EdgeInsets.only(bottom: 20),
               child: TextFormField(
-                controller: value.passwordController,
+                controller: _passwordController,
                 textInputAction: TextInputAction.next,
                 onChanged: (text) {
                   value.checkPasswordCapability(text);
@@ -152,7 +177,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Container(
               margin: EdgeInsets.only(bottom: 20),
               child: TextFormField(
-                controller: value.passwordAgainController,
+                controller: _passwordAgainController,
                 textInputAction: TextInputAction.done,
                 obscureText: value.passwordVisibility ? false : true,
                 style: Utils.instance.inputTextStyle(),
@@ -306,23 +331,26 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_done.toUpperCase(),
                 onPressed: () {
-                  if (value.passwordAgainController.text.length > 0 &&
-                      value.passwordController.text.length > 0 &&
-                      value.oldPasswordController.text.length > 0) {
-                    if (value.passwordController.text ==
-                        value.passwordAgainController.text) {
-                      value.changePassword();
+                  if (_passwordAgainController.text.length > 0 &&
+                      _passwordController.text.length > 0 &&
+                      _oldPasswordController.text.length > 0) {
+                    if (_passwordController.text ==
+                        _passwordAgainController.text) {
+                      value.changePassword(
+                        newPassword: _passwordController.text.trim(),
+                        oldPassword: _oldPasswordController.text.trim(),
+                      );
                     } else {
-                      value.showGradientDialog(
-                          context,
-                          LocaleProvider.of(context).warning,
-                          LocaleProvider.of(context).pass_must_same);
+                      value.showInfoDialog(
+                        LocaleProvider.of(context).warning,
+                        LocaleProvider.of(context).pass_must_same,
+                      );
                     }
                   } else {
-                    value.showGradientDialog(
-                        context,
-                        LocaleProvider.of(context).warning,
-                        LocaleProvider.of(context).fill_all_field);
+                    value.showInfoDialog(
+                      LocaleProvider.of(context).warning,
+                      LocaleProvider.of(context).fill_all_field,
+                    );
                   }
                 },
               ),

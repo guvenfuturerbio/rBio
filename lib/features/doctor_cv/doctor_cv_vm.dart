@@ -4,18 +4,19 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:slugify/slugify.dart';
 import '../../../../model/home/take_appointment/doctor_cv_response.dart';
 
-class DoctorCvScreenVm extends ChangeNotifier {
-  DoctorCvResponse _doctorCvResponse;
+class DoctorCvScreenVm extends ChangeNotifier with RbioVm {
+  @override
   BuildContext mContext;
-  LoadingProgress _progress;
-  String _imageUrl;
-
   DoctorCvScreenVm({BuildContext context, String doctorNameNotTitle}) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchDoctorCv(doctorNameNotTitle);
     });
   }
+
+  DoctorCvResponse _doctorCvResponse;
+  LoadingProgress _progress;
+  String _imageUrl;
 
   LoadingProgress get progress => this._progress;
 
@@ -50,16 +51,6 @@ class DoctorCvScreenVm extends ChangeNotifier {
 
   DoctorCvResponse get doctorCvResponse => this._doctorCvResponse;
   String get imageUrl => this._imageUrl;
-
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
-  }
 
   String clearDoctorTitle(String text) {
     if (text.contains('dr.')) {

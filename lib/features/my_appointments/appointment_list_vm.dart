@@ -10,9 +10,11 @@ import '../shared/necessary_identity/necessary_identity_screen.dart';
 import '../shared/rate_dialog/rate_dialog.dart';
 import 'widget/question_dialog.dart';
 
-class AppointmentListVm extends ChangeNotifier {
-  List<TranslatorResponse> _translator;
+class AppointmentListVm extends ChangeNotifier with RbioVm {
+  @override
   BuildContext mContext;
+
+  List<TranslatorResponse> _translator;
   int _patientId;
   LoadingProgress _progress;
   bool _showProgressOverlay;
@@ -77,8 +79,10 @@ class AppointmentListVm extends ChangeNotifier {
       this._progress = LoadingProgress.DONE;
       notifyListeners();
     } catch (e) {
-      showGradientDialog(LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showInfoDialog(
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       this._progress = LoadingProgress.ERROR;
       notifyListeners();
     }
@@ -94,12 +98,12 @@ class AppointmentListVm extends ChangeNotifier {
         translatorPost,
       );
     } on RbioDisplayException catch (e) {
-      showGradientDialog(
+      showInfoDialog(
         LocaleProvider.current.warning,
         e.message,
       );
     } catch (e) {
-      showGradientDialog(
+      showInfoDialog(
         LocaleProvider.current.warning,
         e.toString().replaceAll("Exception: ", ""),
       );
@@ -158,8 +162,10 @@ class AppointmentListVm extends ChangeNotifier {
     } catch (e) {
       this._progress = LoadingProgress.ERROR;
       notifyListeners();
-      showGradientDialog(LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showInfoDialog(
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
     }
   }
 
@@ -191,11 +197,15 @@ class AppointmentListVm extends ChangeNotifier {
       notifyListeners();
 
       if (e.toString().contains("show")) {
-        showGradientDialog(LocaleProvider.current.warning,
-            e.toString().replaceAll("Exception: show", ""));
+        showInfoDialog(
+          LocaleProvider.current.warning,
+          e.toString().replaceAll("Exception: show", ""),
+        );
       } else {
-        showGradientDialog(LocaleProvider.current.warning,
-            LocaleProvider.current.sorry_dont_transaction);
+        showInfoDialog(
+          LocaleProvider.current.warning,
+          LocaleProvider.current.sorry_dont_transaction,
+        );
       }
     }
   }
@@ -221,8 +231,10 @@ class AppointmentListVm extends ChangeNotifier {
           SecretUtils.instance.get(SecretKeys.MOCK_APPOINTMENT), file.toList());
       return true;
     } catch (e) {
-      showGradientDialog(LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showInfoDialog(
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       this._showProgressOverlay = false;
       notifyListeners();
       return false;
@@ -240,21 +252,13 @@ class AppointmentListVm extends ChangeNotifier {
     } catch (e, stk) {
       print(e);
       debugPrintStack(stackTrace: stk);
-      showGradientDialog(LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showInfoDialog(
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       this._showProgressOverlay = false;
       notifyListeners();
     }
-  }
-
-  void showGradientDialog(String title, String text) {
-    showDialog(
-      context: mContext,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
   }
 
   void showQuestionDialog(String title, String text) {
@@ -365,13 +369,17 @@ class AppointmentListVm extends ChangeNotifier {
       } catch (e) {
         this._showProgressOverlay = false;
         notifyListeners();
-        showGradientDialog(LocaleProvider.current.warning,
-            LocaleProvider.current.sorry_dont_transaction);
+        showInfoDialog(
+          LocaleProvider.current.warning,
+          LocaleProvider.current.sorry_dont_transaction,
+        );
       }
     } else {
       await setCancelAppointmentRequest(data.id);
-      showQuestionDialog(LocaleProvider.of(mContext).warning,
-          LocaleProvider.of(mContext).cancel_appo_question);
+      showQuestionDialog(
+        LocaleProvider.of(mContext).warning,
+        LocaleProvider.of(mContext).cancel_appo_question,
+      );
     }
   }
 }

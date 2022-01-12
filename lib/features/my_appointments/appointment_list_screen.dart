@@ -10,8 +10,6 @@ import '../../../model/model.dart';
 import 'appointment_list_vm.dart';
 
 class AppointmentListScreen extends StatefulWidget {
-  String roomId;
-
   AppointmentListScreen();
 
   @override
@@ -126,7 +124,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         Expanded(
           child: vm.patientAppointments.length > 0
               ? ListView.builder(
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.only(
+                    bottom: R.sizes.defaultBottomValue,
+                  ),
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),
                   itemCount: posts.length,

@@ -38,7 +38,7 @@ class _UserDetailCard extends StatelessWidget {
             ),
             _buildValueRow(
               context,
-              leftValue: "-",
+              leftValue: patientDetail.identification_number ?? "",
               rightValue: patientDetail?.birthDay ?? "-",
             ),
 
@@ -132,17 +132,6 @@ class _UserDetailCard extends StatelessWidget {
                 if (patientDetail.phoneNumber != null)
                   launch("tel://${patientDetail.phoneNumber}");
               },
-            ),
-            //
-            _buildTitleRow(
-              context,
-              leftTitle: LocaleProvider.current.tc_identity_number,
-              rightTitle: "",
-            ),
-            _buildValueRow(
-              context,
-              leftValue: patientDetail.identification_number ?? "",
-              rightValue: "",
             ),
           ],
         ),
