@@ -94,17 +94,14 @@ class _HomeScreenState extends State<HomeScreen> {
             showFirstChild: vm.status.isShaken,
             child1: SizedBox(
               child: IconButton(
-                onPressed: () {
-                  vm.changeStatus();
-                },
-                icon: Text(
-                  LocaleProvider.current.done,
-                  style: context.xHeadline3.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+                  onPressed: () {
+                    vm.changeStatus();
+                  },
+                  icon: Icon(
+                    Icons.done,
+                    size: R.sizes.iconSize,
+                    color: getIt<ITheme>().cardBackgroundColor,
+                  )),
             ),
             child2: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
