@@ -105,12 +105,12 @@ class _UserDetailCard extends StatelessWidget {
             //
             _buildTitleRow(
               context,
-              leftTitle: LocaleProvider.current.medicines,
+              leftTitle: LocaleProvider.current.phone_number,
               rightTitle: LocaleProvider.current.smoking,
             ),
             _buildValueRow(
               context,
-              leftValue: "-",
+              leftValue: patientDetail.phoneNumber ?? "",
               rightValue: patientDetail?.smoker != null
                   ? patientDetail.smoker
                       ? LocaleProvider.current.yes
@@ -119,15 +119,13 @@ class _UserDetailCard extends StatelessWidget {
             ),
 
             //
-            _buildTitleRow(
-              context,
-              leftTitle: LocaleProvider.current.strip_number_2,
-              rightTitle: LocaleProvider.current.phone_number,
-            ),
+            _buildTitleRow(context,
+                leftTitle: LocaleProvider.current.strip_number_2,
+                rightTitle: ''),
             _buildValueRow(
               context,
               leftValue: "200",
-              rightValue: patientDetail.phoneNumber ?? "",
+              rightValue: '',
               rightOnTap: () {
                 if (patientDetail.phoneNumber != null)
                   launch("tel://${patientDetail.phoneNumber}");

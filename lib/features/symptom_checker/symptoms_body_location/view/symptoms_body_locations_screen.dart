@@ -68,130 +68,143 @@ class _SymptomsBodyLocationsScreenState
         return RbioLoading();
 
       case LoadingProgress.DONE:
-        return Column(
+        return Stack(
           children: [
-            //
-            Column(
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 25, top: 25),
-                  child: Text(
-                    selectedGenderId == 0
-                        ? LocaleProvider.of(context).gender_male
-                        : selectedGenderId == 1
-                            ? LocaleProvider.of(context).gender_female
-                            : selectedGenderId == 2
-                                ? LocaleProvider.of(context).boy
-                                : LocaleProvider.of(context).girl,
-                    style: context.xHeadline1.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: getIt<ITheme>().mainColor),
-                    textAlign: TextAlign.start,
+            SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(left: 25, top: 25),
+                        child: Text(
+                          selectedGenderId == 0
+                              ? LocaleProvider.of(context).gender_male
+                              : selectedGenderId == 1
+                                  ? LocaleProvider.of(context).gender_female
+                                  : selectedGenderId == 2
+                                      ? LocaleProvider.of(context).boy
+                                      : LocaleProvider.of(context).girl,
+                          style: context.xHeadline1.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: getIt<ITheme>().mainColor),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          LocaleProvider.of(context).complaint_body_part,
+                          style: context.xHeadline3,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    LocaleProvider.of(context).complaint_body_part,
-                    style: context.xHeadline3,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
-            ),
 
-            //
-            value.selectedBodyLocation == null ||
-                    value.selectedBodyLocation.name == ''
-                ? Container(margin: EdgeInsets.only(top: 20), child: Text(' '))
-                : Container(
-                    margin: EdgeInsets.only(top: 20),
-                    child: Text(
-                        LocaleProvider.of(context).choice +
-                            value.selectedBodyLocation.name,
-                        style: context.xHeadline3),
-                  ),
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.height / 2,
-                child: GestureDetector(
-                  onTapDown: (e) {
-                    value.notifier.value = e.localPosition;
-                    print(e.localPosition);
-                  },
-                  child: CustomPaint(
-                    painter: BodyPartsPainter(
-                      isGenderMale:
-                          selectedGenderId == 0 || selectedGenderId == 2
-                              ? true
-                              : false,
-                      clickedPathFunc: (myValue) {
-                        //print(myValue);
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((timeStamp) async {
-                          if (myValue != null) {
-                            await value.selectedBodyLocationFetch(
-                                value.getLocationsName(myValue));
-                          } else {
-                            await value.selectedBodyLocationFetch(null);
-                          }
-                        });
-                      },
-                      notifier: value.notifier,
-                      bodyLocations: value.bodyLocations,
-                    ),
-                    child: SizedBox.expand(),
-                  ),
-                ),
-              ),
-            ),
-
-            //
-            Visibility(
-              visible: value.selectedBodyLocation != null &&
-                      value.selectedBodyLocation.name != ''
-                  ? true
-                  : false,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(40)),
-                  child: RbioElevatedButton(
-                    onTap: () async {
-                      RbioConfig.of(context).bodyLocationRsp =
-                          value.selectedBodyLocation;
-                      Atom.to(
-                        PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
-                        queryParameters: {
-                          'selectedGenderId': selectedGenderId.toString(),
-                          'yearOfBirth': yearOfBirth,
-                          'isFromVoice': false.toString(),
+                  //
+                  value.selectedBodyLocation == null ||
+                          value.selectedBodyLocation.name == ''
+                      ? Container(
+                          margin: EdgeInsets.only(top: 20), child: Text(' '))
+                      : Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: Text(
+                              LocaleProvider.of(context).choice +
+                                  value.selectedBodyLocation.name,
+                              style: context.xHeadline3),
+                        ),
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: MediaQuery.of(context).size.height / 2,
+                      child: GestureDetector(
+                        onTapDown: (e) {
+                          value.notifier.value = e.localPosition;
+                          print(e.localPosition);
                         },
-                      ); /*
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BodySubLocationsPage(
-                            selectedBodyLocation: value.selectedBodyLocation,
-                            selectedGenderId: widget.selectedGenderId,
-                            yearOfBirth: widget.yearOfBirth,
-                            isFromVoice: widget.isFromVoice,
+                        child: CustomPaint(
+                          painter: BodyPartsPainter(
+                            isGenderMale:
+                                selectedGenderId == 0 || selectedGenderId == 2
+                                    ? true
+                                    : false,
+                            clickedPathFunc: (myValue) {
+                              //print(myValue);
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) async {
+                                if (myValue != null) {
+                                  await value.selectedBodyLocationFetch(
+                                      value.getLocationsName(myValue));
+                                } else {
+                                  await value.selectedBodyLocationFetch(null);
+                                }
+                              });
+                            },
+                            notifier: value.notifier,
+                            bodyLocations: value.bodyLocations,
+                          ),
+                          child: SizedBox(
+                            height: Atom.height * 0.4,
                           ),
                         ),
-                      );*/
-                    },
-                    title: LocaleProvider.of(context).continue_lbl,
+                      ),
+                    ),
+                  ),
+
+                  //
+
+                  //
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Visibility(
+                visible: value.selectedBodyLocation != null &&
+                        value.selectedBodyLocation.name != ''
+                    ? true
+                    : false,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(40)),
+                    child: RbioElevatedButton(
+                      onTap: () async {
+                        RbioConfig.of(context).bodyLocationRsp =
+                            value.selectedBodyLocation;
+                        Atom.to(
+                          PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
+                          queryParameters: {
+                            'selectedGenderId': selectedGenderId.toString(),
+                            'yearOfBirth': yearOfBirth,
+                            'isFromVoice': false.toString(),
+                          },
+                        ); /*
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BodySubLocationsPage(
+                                  selectedBodyLocation: value.selectedBodyLocation,
+                                  selectedGenderId: widget.selectedGenderId,
+                                  yearOfBirth: widget.yearOfBirth,
+                                  isFromVoice: widget.isFromVoice,
+                                ),
+                              ),
+                            );*/
+                      },
+                      title: LocaleProvider.of(context).continue_lbl,
+                    ),
                   ),
                 ),
               ),
             ),
-
-            //
-            Spacer(flex: 1),
           ],
         );
 

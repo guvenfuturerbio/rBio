@@ -38,7 +38,6 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   }) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      initDate = DateTime.now();
       setFilterRangeDate(DateTime.now());
 
       if (!forOnline) {
@@ -53,6 +52,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       }
 
       await getAvailableDates(DateTime.now());
+      //TODO: yarın gene bak
       await fetchEventsForSelected();
     });
   }
@@ -70,6 +70,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       } else {
         availableDates = await getAvailableLists(date, false, tenantId);
       }
+      initDate = availableDates.first;
+
       await setSelectedDate(initDate, true);
       availableDatesProgress = LoadingProgress.DONE;
       notifyListeners();
