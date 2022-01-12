@@ -217,6 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailed_error_dialog_part2" : MessageLookupByLibrary.simpleMessage("You may already have an appointment with the doctor you want to make an appointment with,"),
     "detailed_error_dialog_part3" : MessageLookupByLibrary.simpleMessage("If you think there is a different problem, you can call us at the number below."),
     "detailed_report" : MessageLookupByLibrary.simpleMessage("View Detailed Report"),
+    "detailed_symptom" : MessageLookupByLibrary.simpleMessage("Detailed Symptom Checker"),
     "details" : MessageLookupByLibrary.simpleMessage("Details"),
     "device_connection_step_1" : MessageLookupByLibrary.simpleMessage("If your Glucometer is open close your Glucometer."),
     "device_connection_step_2_Contour" : MessageLookupByLibrary.simpleMessage("Press and hold the power button on the side of the device for about 3 seconds until the bluetooth sign appears."),

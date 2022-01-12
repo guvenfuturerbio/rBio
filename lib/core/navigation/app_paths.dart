@@ -1,4 +1,5 @@
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:onedosehealth/features/detailed_symptom/detailed_symptom_checker.dart';
 import 'package:provider/provider.dart';
 
 import '../../features/auth/auth.dart';
@@ -82,6 +83,11 @@ class VRouterRoutes {
           widget: RequestSuggestionsScreen(),
         ),
       ],
+    ),
+
+    VWidget(
+      path: PagePaths.DETAILED_SYMPTOM,
+      widget: DetailedSymptomChecker(),
     ),
 
     VWidget(
@@ -552,6 +558,9 @@ class PagePaths {
   static const SYMPTOM_SUB_BODY_LOCATIONS = '/symptom-sub-body-locations';
   static const SYMPTOM_SELECT_PAGE = '/symptom-selection-page';
   static const SYMPTOM_RESULT_PAGE = '/symptom-result-page';
+
+  //Detailed Symptom
+  static const DETAILED_SYMPTOM = '/detailed-symptom';
 
   // Doctor
   static const DOCTOR_HOME = '/doctor';

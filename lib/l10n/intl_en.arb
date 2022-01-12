@@ -756,5 +756,6 @@
   "healthcare_employee": "Healthcare Employee",
   "update": "Update",
   "change": "Change",
-  "device_register": "Please register a device"
+  "device_register": "Please register a device",
+  "detailed_symptom": "Detailed Symptom Checker"
 }

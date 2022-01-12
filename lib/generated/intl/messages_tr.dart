@@ -213,6 +213,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailed_error_dialog_part2" : MessageLookupByLibrary.simpleMessage("Randevu almak istediğiniz doktor için zaten bir randevunuz olabilir,"),
     "detailed_error_dialog_part3" : MessageLookupByLibrary.simpleMessage("Farklı bir sorun olduğunu düşünüyorsanız aşağıdaki numaradan bizi arayabilirsiniz."),
     "detailed_report" : MessageLookupByLibrary.simpleMessage("Detaylı Rapor Görüntüle"),
+    "detailed_symptom" : MessageLookupByLibrary.simpleMessage("Detaylı Sağlık Kontrolü"),
     "details" : MessageLookupByLibrary.simpleMessage("Detaylar"),
     "device_connection_step_1" : MessageLookupByLibrary.simpleMessage("Glucometreniz açıksa glukometrenizi kapatın"),
     "device_connection_step_2_Contour" : MessageLookupByLibrary.simpleMessage("Glukometrenizin üzerindeki butona en az 3 saniye olacak şekilde, Bluetooth simgesini ve mavi ışığı görene dek basılı tutunuz."),

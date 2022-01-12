@@ -105,6 +105,13 @@ class HomeVm extends ChangeNotifier {
             Atom.to(PagePaths.SUGGEST_REQUEST);
           }
         },
+        {
+          LocaleProvider.current.detailed_symptom: () {
+            Atom.to(
+              PagePaths.DETAILED_SYMPTOM,
+            );
+          },
+        },
       ];
 
   HomeVm({this.mContext});

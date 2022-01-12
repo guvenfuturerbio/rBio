@@ -7594,6 +7594,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Detailed Symptom Checker`
+  String get detailed_symptom {
+    return Intl.message(
+      'Detailed Symptom Checker',
+      name: 'detailed_symptom',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
