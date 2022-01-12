@@ -80,56 +80,56 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            _buildExplanationText(LocaleProvider.of(context).preselection),
+        SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              _buildExplanationText(LocaleProvider.of(context).preselection),
 
-            //
-            _buildSelectionTile(
-              context,
-              value,
-              true,
-              LocaleProvider.of(context).gender_male,
-              R.image.man_icon,
-              0,
-            ),
+              //
+              _buildSelectionTile(
+                context,
+                value,
+                true,
+                LocaleProvider.of(context).gender_male,
+                R.image.man_icon,
+                0,
+              ),
 
-            //
-            _buildSelectionTile(
-              context,
-              value,
-              true,
-              LocaleProvider.of(context).gender_female,
-              R.image.women_icon,
-              1,
-            ),
+              //
+              _buildSelectionTile(
+                context,
+                value,
+                true,
+                LocaleProvider.of(context).gender_female,
+                R.image.women_icon,
+                1,
+              ),
 
-            //
-            _buildSelectionTile(
-              context,
-              value,
-              false,
-              LocaleProvider.of(context).boy,
-              R.image.boy_child_icon,
-              2,
-            ),
+              //
+              _buildSelectionTile(
+                context,
+                value,
+                false,
+                LocaleProvider.of(context).boy,
+                R.image.boy_child_icon,
+                2,
+              ),
 
-            //
-            _buildSelectionTile(
-              context,
-              value,
-              false,
-              LocaleProvider.of(context).girl,
-              R.image.girl_child_icon,
-              3,
-            ),
+              //
+              _buildSelectionTile(
+                context,
+                value,
+                false,
+                LocaleProvider.of(context).girl,
+                R.image.girl_child_icon,
+                3,
+              ),
 
-            //
-            Expanded(
-              child: Column(
+              //
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   //
@@ -139,17 +139,12 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                   //
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      height: 50,
-                      child: Card(
-                        elevation: 6,
-                        child: Container(
-                          child: Center(
-                            child: Text(
-                              value.yearOfBirth,
-                              style: TextStyle(fontSize: 25),
-                            ),
-                          ),
+                    child: Card(
+                      elevation: 6,
+                      child: Center(
+                        child: Text(
+                          value.yearOfBirth,
+                          style: context.xHeadline3,
                         ),
                       ),
                     ),
@@ -167,7 +162,9 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                       minValue: 1900,
                       maxValue: DateTime.now().year.toInt(),
                       step: 1,
-                      itemHeight: 25,
+                      itemHeight: context.xTextScaleType == TextScaleType.Small
+                          ? 25
+                          : 50,
                       axis: Axis.vertical,
                       onChanged: (newValue) {
                         value.yearOfBirthHandle(
@@ -189,8 +186,8 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                   )
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
 
         //
