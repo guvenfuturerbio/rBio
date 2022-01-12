@@ -47,7 +47,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ForgotPasswordStep1ScreenVm>(
-      create: (context) => ForgotPasswordStep1ScreenVm(context: context),
+      create: (context) => ForgotPasswordStep1ScreenVm(context),
       child: Consumer<ForgotPasswordStep1ScreenVm>(
         builder: (
           BuildContext context,
@@ -241,8 +241,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                               _tcIdentityEditingController.text.length > 0) {
                             value.forgotPassStep1(userRegisterStep1);
                           } else {
-                            value.showGradientDialog(
-                              context,
+                            value.showInfoDialog(
                               LocaleProvider.of(context).warning,
                               LocaleProvider.of(context).fill_all_field,
                             );

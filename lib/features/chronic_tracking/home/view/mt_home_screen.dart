@@ -18,136 +18,159 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (_) => MeasurementTrackingVm(),
-        child: Consumer<MeasurementTrackingVm>(builder: (_, val, __) {
+      create: (_) => MeasurementTrackingVm(),
+      child: Consumer<MeasurementTrackingVm>(
+        builder: (BuildContext context, MeasurementTrackingVm vm, Widget chil) {
           bool isLandscape =
               context.xMediaQuery.orientation == Orientation.landscape &&
                   !Atom.isWeb;
-          return RbioStackedScaffold(
-            appbar: isLandscape
-                ? null
-                : RbioAppBar(
-                    title: RbioAppBar.textTitle(
-                        context, LocaleProvider.current.chronic_track_home),
-                  ),
-            floatingActionButton: val.activeItem != null
-                ? FloatingActionButton(
-                    heroTag: 'adder',
-                    onPressed: () {
-                      val.activeItem.manuelEntry();
-                    },
-                    child: Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: getIt<ITheme>().mainColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: SvgPicture.asset(
-                          R.image.add,
-                          color: R.color.white,
-                        ),
-                      ),
-                    ),
-                    backgroundColor: R.color.white,
-                  )
-                : null,
-            body: val.state == LoadingProgress.LOADING
-                ? Center(child: CircularProgressIndicator())
-                : val.state == LoadingProgress.ERROR
-                    ? Center(
-                        child: Text('Error'),
-                      )
-                    : ListView(
-                        physics: ClampingScrollPhysics(),
-                        padding: isLandscape
-                            ? null
-                            : EdgeInsets.only(
-                                top: RbioStackedScaffold.kHeight(context)),
-                        children: [
-                          //
-                          Card(
-                            child: getIt<ProfileStorageImpl>().getAll().length >
-                                    1
-                                ? ExpandablePanel(
-                                    header: RbioUserTile(
-                                      width: Atom.width,
-                                      name: getIt<ProfileStorageImpl>()
-                                          .getFirst()
-                                          .name,
-                                      onTap: () {},
-                                      leadingImage: UserLeadingImage.Circle,
-                                    ),
-                                    collapsed: SizedBox(),
-                                    expanded: getIt<ProfileStorageImpl>()
-                                                .getAll()
-                                                .length >
-                                            1
-                                        ? Column(
-                                            children:
-                                                getIt<ProfileStorageImpl>()
-                                                    .getAll()
-                                                    .map((e) => RbioUserTile(
-                                                          width: Atom.width,
-                                                          name: e.name,
-                                                          onTap: () {},
-                                                          leadingImage:
-                                                              UserLeadingImage
-                                                                  .Circle,
-                                                        ))
-                                                    .cast<Widget>()
-                                                    .toList(),
-                                          )
-                                        : SizedBox(),
-                                  )
-                                : RbioUserTile(
-                                    width: Atom.width,
-                                    name: getIt<ProfileStorageImpl>()
-                                        .getFirst()
-                                        .name,
-                                    onTap: () {},
-                                    leadingImage: UserLeadingImage.Circle,
-                                  ),
-                          ),
 
-                          //
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(17),
-                              color: val.activeItem != null
-                                  ? Colors.transparent
-                                  : Colors.white,
-                              boxShadow: val.activeItem != null
-                                  ? [BoxShadow(color: Colors.transparent)]
-                                  : null,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(17),
-                              child: Column(
-                                children: val.items
-                                    .map(
-                                      (parentElement) => SectionCard(
-                                          isActive: val.activeItem != null &&
-                                              val.activeItem.key ==
-                                                  parentElement.key,
-                                          isVisible: val.activeItem == null,
-                                          smallChild: parentElement.smallChild,
-                                          largeChild: parentElement.largeChild,
-                                          hasDivider: val.activeItem == null &&
-                                              val.items.indexWhere((element) =>
-                                                      element.key ==
-                                                      parentElement.key) <
-                                                  val.items.length - 1),
-                                    )
-                                    .toList(),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+          return RbioStackedScaffold(
+            appbar: _buildAppBar(isLandscape, context),
+            body: _buildBody(context, vm, isLandscape),
+            floatingActionButton: _buildFAB(vm),
           );
-        }));
+        },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(bool isLandscape, BuildContext context) {
+    return isLandscape
+        ? null
+        : RbioAppBar(
+            title: RbioAppBar.textTitle(
+              context,
+              LocaleProvider.current.chronic_track_home,
+            ),
+          );
+  }
+
+  Widget _buildBody(
+    BuildContext context,
+    MeasurementTrackingVm vm,
+    bool isLandscape,
+  ) {
+    switch (vm.state) {
+      case LoadingProgress.LOADING:
+        return RbioLoading();
+
+      case LoadingProgress.DONE:
+        return _buildList(context, vm, isLandscape);
+
+      case LoadingProgress.ERROR:
+        return RbioBodyError();
+
+      default:
+        return SizedBox();
+    }
+  }
+
+  Widget _buildList(
+    BuildContext context,
+    MeasurementTrackingVm vm,
+    bool isLandscape,
+  ) {
+    return ListView(
+      physics: ClampingScrollPhysics(),
+      padding: isLandscape
+          ? null
+          : EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
+      children: [
+        //
+        Card(
+          child: getIt<ProfileStorageImpl>().getAll().length > 1
+              ? ExpandablePanel(
+                  header: RbioUserTile(
+                    width: Atom.width,
+                    name: getIt<ProfileStorageImpl>().getFirst().name,
+                    onTap: () {},
+                    leadingImage: UserLeadingImage.Circle,
+                  ),
+                  collapsed: SizedBox(),
+                  expanded: getIt<ProfileStorageImpl>().getAll().length > 1
+                      ? Column(
+                          children: getIt<ProfileStorageImpl>()
+                              .getAll()
+                              .map(
+                                (e) => RbioUserTile(
+                                  width: Atom.width,
+                                  name: e.name,
+                                  onTap: () {},
+                                  leadingImage: UserLeadingImage.Circle,
+                                ),
+                              )
+                              .cast<Widget>()
+                              .toList(),
+                        )
+                      : SizedBox(),
+                )
+              : RbioUserTile(
+                  width: Atom.width,
+                  name: getIt<ProfileStorageImpl>().getFirst().name,
+                  onTap: () {},
+                  leadingImage: UserLeadingImage.Circle,
+                ),
+        ),
+
+        //
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(17),
+            color: vm.activeItem != null ? Colors.transparent : Colors.white,
+            boxShadow: vm.activeItem != null
+                ? [BoxShadow(color: Colors.transparent)]
+                : null,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(17),
+            child: Column(
+              children: vm.items
+                  .map(
+                    (parentElement) => SectionCard(
+                      isActive: vm.activeItem != null &&
+                          vm.activeItem.key == parentElement.key,
+                      isVisible: vm.activeItem == null,
+                      smallChild: parentElement.smallChild,
+                      largeChild: parentElement.largeChild,
+                      hasDivider: vm.activeItem == null &&
+                          vm.items.indexWhere((element) =>
+                                  element.key == parentElement.key) <
+                              vm.items.length - 1,
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  FloatingActionButton _buildFAB(MeasurementTrackingVm val) {
+    return val.activeItem != null
+        ? FloatingActionButton(
+            heroTag: 'adder',
+            onPressed: () {
+              val.activeItem.manuelEntry();
+            },
+            child: Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: getIt<ITheme>().mainColor,
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: SvgPicture.asset(
+                  R.image.add,
+                  color: R.color.white,
+                ),
+              ),
+            ),
+            backgroundColor: R.color.white,
+          )
+        : null;
   }
 }

@@ -137,8 +137,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
                       widget.isWithoutTCKN,
                     );
                   } else {
-                    vm.showGradientDialog(
-                      context,
+                    vm.showInfoDialog(
                       LocaleProvider.of(context).warning,
                       LocaleProvider.of(context).fill_all_field,
                     );

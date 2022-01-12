@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 import '../auth.dart';
 
-class ForgotPasswordStep1ScreenVm extends ChangeNotifier {
+class ForgotPasswordStep1ScreenVm extends ChangeNotifier with RbioVm {
+  @override
   BuildContext mContext;
-  LoadingDialog loadingDialog;
+  ForgotPasswordStep1ScreenVm(this.mContext);
 
-  ForgotPasswordStep1ScreenVm({BuildContext context}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {});
-  }
+  LoadingDialog loadingDialog;
 
   void forgotPassStep1(UserRegistrationStep1Model userRegistrationStep1) async {
     try {
@@ -25,30 +23,15 @@ class ForgotPasswordStep1ScreenVm extends ChangeNotifier {
           'identityNumber': userRegistrationStep1.identificationNumber,
         },
       );
+    } catch (error, stackTrace) {
+      showDelayedErrorDialog(
+        error,
+        stackTrace,
+        () => hideDialog(this.mContext),
+      );
+    } finally {
       notifyListeners();
-    } catch (error) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        print(error);
-        hideDialog(this.mContext);
-        showGradientDialog(
-            this.mContext,
-            LocaleProvider.of(this.mContext).warning,
-            error.toString() == "network"
-                ? LocaleProvider.of(this.mContext).no_network_connection
-                : LocaleProvider.of(this.mContext).sorry_dont_transaction);
-        notifyListeners();
-      });
     }
-  }
-
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
   }
 
   void showLoadingDialog(BuildContext context) async {

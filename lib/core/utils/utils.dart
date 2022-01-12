@@ -655,16 +655,6 @@ class UtilityManager {
     );
   }
 
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
-  }
-
   void joinJitsiMeeting(JitsiMeetingOptions options) async {
     await getIt<Repository>().setJitsiWebConsultantId(options.room);
 

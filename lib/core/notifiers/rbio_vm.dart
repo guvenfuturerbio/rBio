@@ -6,12 +6,38 @@ import '../core.dart';
 abstract class RbioVm {
   BuildContext get mContext;
 
-  void showDefaultErrorDialog(dynamic throwable, dynamic stackTrace) {
+  void showDefaultErrorDialog(
+    dynamic throwable,
+    dynamic stackTrace, [
+    String title,
+    String description,
+  ]) {
     Sentry.captureException(throwable, stackTrace: stackTrace);
     showGradientDialog(
-      LocaleProvider.current.warning,
-      LocaleProvider.current.sorry_dont_transaction,
+      title ?? LocaleProvider.current.warning,
+      description ?? LocaleProvider.current.sorry_dont_transaction,
       false,
+    );
+  }
+
+  void showDelayedErrorDialog(
+    dynamic throwable,
+    dynamic stackTrace, [
+    VoidCallback voidCallback,
+    String title,
+    String description,
+  ]) {
+    Sentry.captureException(throwable, stackTrace: stackTrace);
+    Future.delayed(
+      const Duration(milliseconds: 500),
+      () {
+        voidCallback();
+        showInfoDialog(
+          title ?? LocaleProvider.of(this.mContext).warning,
+          description ??
+              LocaleProvider.of(this.mContext).sorry_dont_transaction,
+        );
+      },
     );
   }
 
@@ -32,6 +58,14 @@ abstract class RbioVm {
           Atom.to(PagePaths.MAIN, isReplacement: true);
         }
       },
+    );
+  }
+
+  void showInfoDialog(String title, String text, [BuildContext context]) {
+    showDialog(
+      context: context ?? mContext,
+      barrierDismissible: true,
+      builder: (BuildContext context) => WarningDialog(title, text),
     );
   }
 }
