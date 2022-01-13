@@ -765,6 +765,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "whats_covid" : MessageLookupByLibrary.simpleMessage("COVID-19"),
     "when_to_be_notified" : MessageLookupByLibrary.simpleMessage("Ne zaman hatırlatılmasını istersiniz?"),
     "which_depart_i_go" : MessageLookupByLibrary.simpleMessage("Hangi bölüme gideceğimi bilmiyorum"),
+    "widgets_add_message" : MessageLookupByLibrary.simpleMessage("Şu anda kullanımda olan 7 widget\'ınız var. Yeni widget eklemek için bunlardan birini kaldırın."),
     "wrong_password" : MessageLookupByLibrary.simpleMessage("Hatalı şifre"),
     "wrong_temporary_pass" : MessageLookupByLibrary.simpleMessage("Geçici şifrenizi hatalı girdiniz"),
     "wrong_user_credential" : MessageLookupByLibrary.simpleMessage("Hatalı Kullanıcı Adı ya da Şifre"),

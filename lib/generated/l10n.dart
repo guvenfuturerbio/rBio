@@ -7605,6 +7605,16 @@ class LocaleProvider {
     );
   }
 
+  /// `You have 7 widgets currently in use. Remove one of them to add new widget`
+  String get widgets_add_message {
+    return Intl.message(
+      'You have 7 widgets currently in use. Remove one of them to add new widget',
+      name: 'widgets_add_message',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Show Graph`
   String get open_chart {
     return Intl.message(
