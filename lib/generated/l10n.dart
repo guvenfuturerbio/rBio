@@ -7604,6 +7604,26 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Show Graph`
+  String get open_chart {
+    return Intl.message(
+      'Show Graph',
+      name: 'open_chart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hide Graph`
+  String get close_chart {
+    return Intl.message(
+      'Hide Graph',
+      name: 'close_chart',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

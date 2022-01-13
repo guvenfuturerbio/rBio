@@ -31,18 +31,31 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: (context.HEIGHT * .4) * context.TEXTSCALE,
-                      child: GraphHeader(
-                        value: value,
-                        callBack: widget.callBack,
+                    if (value.isChartShow) ...[
+                      SizedBox(
+                        height: (context.HEIGHT * .4) * context.TEXTSCALE,
+                        child: GraphHeader(
+                          value: value,
+                          callBack: widget.callBack,
+                        ),
                       ),
-                    ),
-                    BottomActionsOfGraph(
-                      value: value,
-                    ),
+                      BottomActionsOfGraph(
+                        value: value,
+                      ),
+                    ],
+                    if (!value.isChartShow)
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: context.HEIGHT * .02),
+                        child: RbioElevatedButton(
+                          title: LocaleProvider.current.open_chart,
+                          onTap: value.changeChartShowStatus,
+                        ),
+                      ),
                     Container(
-                      height: (context.HEIGHT * .5) * context.TEXTSCALE,
+                      height: value.isChartShow
+                          ? (context.HEIGHT * .4) * context.TEXTSCALE
+                          : (context.HEIGHT * .8),
                       margin: EdgeInsets.only(top: 8),
                       child: ScaleMeasurementListWidget(
                         scaleMeasurements: value.scaleMeasurements,
