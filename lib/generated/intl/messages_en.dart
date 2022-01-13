@@ -769,6 +769,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "whats_covid" : MessageLookupByLibrary.simpleMessage("COVID-19"),
     "when_to_be_notified" : MessageLookupByLibrary.simpleMessage("When would you like to be notified?"),
     "which_depart_i_go" : MessageLookupByLibrary.simpleMessage("Department finder"),
+    "widgets_add_message" : MessageLookupByLibrary.simpleMessage("You have 7 widgets currently in use. Remove one of them to add new widget"),
     "wrong_password" : MessageLookupByLibrary.simpleMessage("Wrong password"),
     "wrong_temporary_pass" : MessageLookupByLibrary.simpleMessage("You entered your temporary password incorrectly"),
     "wrong_user_credential" : MessageLookupByLibrary.simpleMessage("Wrong User ID or Password"),

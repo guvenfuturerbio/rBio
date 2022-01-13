@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/home/utils/detailed_symptom_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
@@ -143,20 +144,25 @@ class HomeVm extends ChangeNotifier {
           return false;
         }
       });
-    }
-
-    // Local'de kayıtlı liste varsa ona göre liste oluşturulur.
-    if (getIt<ISharedPreferencesManager>()
-        .containsKey(SharedPreferencesKeys.WIDGET_QUERY)) {
-      queryOfWidgetsInUse = getIt<ISharedPreferencesManager>()
-          .getStringList(SharedPreferencesKeys.WIDGET_QUERY);
-      Map<String, Widget> myMap = widgetMap();
-      widgetsInUse.clear();
-      queryOfWidgetsInUse.forEach((element) {
-        widgetsInUse.add(myMap[element]);
-      });
+      // Local'de kayıtlı liste varsa ona göre liste oluşturulur.
+      if (getIt<ISharedPreferencesManager>()
+          .containsKey(SharedPreferencesKeys.WIDGET_QUERY)) {
+        queryOfWidgetsInUse = getIt<ISharedPreferencesManager>()
+            .getStringList(SharedPreferencesKeys.WIDGET_QUERY);
+        Map<String, Widget> myMap = widgetMap();
+        widgetsInUse.clear();
+        queryOfWidgetsInUse.forEach((element) {
+          widgetsInUse.add(myMap[element]);
+        });
+      } else {
+        widgetsInUse = widgets().sublist(0, 7).toList();
+      }
     } else {
-      widgetsInUse = widgets();
+      deletedKeysHolder.add(_key8.toString());
+      widgetsDeleted.add(widgetMap()[_key8.toString()]);
+      getIt<ISharedPreferencesManager>().setStringList(
+          SharedPreferencesKeys.DELETED_WIDGETS, deletedKeysHolder);
+      widgetsInUse = widgets().sublist(0, 7).toList();
     }
   }
 
@@ -190,12 +196,22 @@ class HomeVm extends ChangeNotifier {
   // Kullanıcı widget eklediğinde çalışan fonks.
   Future<void> addWidget(Key widgetKey) async {
     Map<String, Widget> myMap = widgetMap();
-    myMap.forEach((key, value) {
-      if (key == widgetKey.toString()) {
-        widgetsInUse.add(value);
-        deletedKeysHolder.removeWhere((element) => element == key.toString());
-      }
-    });
+    if (widgetsInUse.length > 6) {
+      Atom.dismiss();
+      Future.delayed(Duration(milliseconds: 600), () {
+        Atom.show(AddWidgetWarning());
+      });
+      isForDelete = false;
+      notifyListeners();
+      return;
+    } else {
+      myMap.forEach((key, value) {
+        if (key == widgetKey.toString()) {
+          widgetsInUse.add(value);
+          deletedKeysHolder.removeWhere((element) => element == key.toString());
+        }
+      });
+    }
 
     getIt<ISharedPreferencesManager>().setStringList(
         SharedPreferencesKeys.DELETED_WIDGETS, deletedKeysHolder);
@@ -288,6 +304,7 @@ class HomeVm extends ChangeNotifier {
       "[<'5'>]": returner[4],
       "[<'6'>]": returner[5],
       "[<'7'>]": returner[6],
+      "[<'8'>]": returner[7],
     };
   }
 
@@ -298,6 +315,7 @@ class HomeVm extends ChangeNotifier {
   final key5 = const Key('5');
   final _key6 = const Key('6');
   final _key7 = const Key('7');
+  final _key8 = const Key('8');
 
   // Tüm widgetları çeken fonks.
   List<Widget> widgets() => <Widget>[
@@ -456,6 +474,27 @@ class HomeVm extends ChangeNotifier {
               ),
             ),
           ),
+
+        MyReorderableWidget(
+          key: _key8,
+          body: GestureDetector(
+            onTap: () {
+              if (isForDelete) {
+                addWidget(_key8);
+              } else if (status == ShakeMod.notShaken) {
+                Atom.to(PagePaths.DETAILED_SYMPTOM);
+              }
+            },
+            child: Consumer<LocaleNotifier>(
+              builder: (context, vm, child) {
+                return VerticalCard(
+                  title: LocaleProvider.current.detailed_symptom,
+                  painter: HomeDetailedCheckupCustomPainter(),
+                );
+              },
+            ),
+          ),
+        ),
       ];
 
   void openConsultation() {
@@ -474,5 +513,24 @@ extension ShakeModExt on ShakeMod {
 
   bool get isShaken {
     return this == ShakeMod.shaken;
+  }
+}
+
+class AddWidgetWarning extends StatelessWidget {
+  const AddWidgetWarning({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GuvenAlert(
+      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+      title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
+      content: GuvenAlert.buildDescription(
+          LocaleProvider.current.widgets_add_message),
+      actions: [
+        GuvenAlert.buildMaterialAction(LocaleProvider.current.ok, () {
+          Atom.dismiss();
+        })
+      ],
+    );
   }
 }

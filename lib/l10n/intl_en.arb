@@ -757,5 +757,6 @@
   "update": "Update",
   "change": "Change",
   "device_register": "Please register a device",
-  "detailed_symptom": "Detailed Symptom Checker"
+  "detailed_symptom": "Detailed Symptom Checker",
+  "widgets_add_message": "You have 7 widgets currently in use. Remove one of them to add new widget"
 }
