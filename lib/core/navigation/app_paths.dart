@@ -271,7 +271,7 @@ class VRouterRoutes {
 
     VGuard(
       beforeEnter: (vRedirector) async {
-        if (!getIt<UserNotifier>().isCronic) {
+        if (!(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)) {
           vRedirector.stopRedirection();
           Atom.show(NotChronicWarning());
         } else {

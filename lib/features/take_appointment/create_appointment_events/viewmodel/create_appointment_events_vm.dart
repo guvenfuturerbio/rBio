@@ -52,8 +52,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       }
 
       await getAvailableDates(DateTime.now());
-      //TODO: yarın gene bak
-      await fetchEventsForSelected();
+ 
     });
   }
 

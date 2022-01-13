@@ -10,7 +10,7 @@ abstract class UserManager {
   Future<RbioLoginResponse> login(String userName, String password);
   Future<void> saveLoginInfo(
       String userName, String password, bool rememberMeChecked, String token);
-  Future<UserLoginInfo> getSavedLoginInfo();
+  UserLoginInfo getSavedLoginInfo();
   Future updateIdentityNumber(String identityNumber);
   Future changeLoginUserParameter(String identityNumber);
   Future refreshToken();
@@ -27,7 +27,7 @@ abstract class UserManager {
   Future setApplicationConsentFormState(bool isChecked);
   bool getApplicationConsentFormState();
   Future setKvkkFormState(bool isChecked);
-  Future getKvkkFormState();
+  Future<bool> getKvkkFormState();
   Future<List<SocialPostsResponse>> getSocialPostWithTagsByText(String text);
   Future<List<SocialPostsResponse>> getAllSocialResources();
   Future<GuvenResponseModel> clickPost(int postId);
@@ -39,25 +39,28 @@ class UserManagerImpl extends UserManager {
     final response = await getIt<Repository>().login(userName, password);
     await getIt<ISharedPreferencesManager>()
         .setString(SharedPreferencesKeys.JWT_TOKEN, response.token.accessToken);
-    getIt<UserNotifier>().firebaseEmail = response.firebase_user_email;
-    getIt<UserNotifier>().firebasePassword = response.firebase_user_salt;
-    await getIt<FirestoreManager>().loginFirebase();
+
+    loginToFirebase(response);
     //Update user notifier depending on roles
     getIt<UserNotifier>().userTypeFetcher(response);
     return response;
   }
 
+  Future<void> loginToFirebase(RbioLoginResponse response) async {
+    getIt<UserNotifier>().firebaseEmail = response.firebase_user_email;
+    getIt<UserNotifier>().firebasePassword = response.firebase_user_salt;
+    await getIt<FirestoreManager>().loginFirebase();
+  }
+
   @override
   Future<void> saveLoginInfo(String userName, String password,
       bool rememberMeChecked, String token) async {
+    await getIt<ISharedPreferencesManager>()
+        .setString(SharedPreferencesKeys.LOGIN_USERNAME, userName);
     if (rememberMeChecked) {
-      await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.LOGIN_USERNAME, userName);
       await getIt<ISharedPreferencesManager>()
           .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
     } else {
-      await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.LOGIN_USERNAME, userName);
       await getIt<ISharedPreferencesManager>()
           .setString(SharedPreferencesKeys.LOGIN_PASSWORD, "");
     }
@@ -67,7 +70,7 @@ class UserManagerImpl extends UserManager {
   }
 
   @override
-  Future<UserLoginInfo> getSavedLoginInfo() async {
+  UserLoginInfo getSavedLoginInfo() {
     UserLoginInfo userLoginInfo = UserLoginInfo();
     String username = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.LOGIN_USERNAME);
@@ -332,7 +335,7 @@ class UserManagerImpl extends UserManager {
   }
 
   @override
-  Future getKvkkFormState() async {
+  Future<bool> getKvkkFormState() async {
     try {
       var response = await getIt<Repository>().getUserKvkkInfo();
       var datum = response.datum;
