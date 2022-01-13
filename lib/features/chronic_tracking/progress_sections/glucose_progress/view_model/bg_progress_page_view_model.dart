@@ -23,12 +23,9 @@ class BgProgressPageViewModel
     implements ProgressPage {
   BgProgressPageViewModel({BuildContext context}) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      isChartShow = false;
       getIt<GlucoseStorageImpl>().addListener(() {
-        print("Triggered GlucoseRepository Listener");
-
         setSelectedItem(selected);
-        print('data');
-        print(selected);
       });
       UserProfilesNotifier().addListener(() async {
         setSelectedItem(selected);
@@ -42,6 +39,14 @@ class BgProgressPageViewModel
         }
       });
     });
+    isChartShow = false;
+  }
+  bool isChartShow = false;
+
+  @override
+  changeChartShowStatus() {
+    isChartShow = !isChartShow;
+    notifyListeners();
   }
 
   ScrollController controller = ScrollController();

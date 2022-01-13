@@ -24,68 +24,42 @@ class BpProgressPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BpProgressPageVm>(
-      builder: (_, value, __) =>
-          MediaQuery.of(context).orientation == Orientation.portrait ||
-                  Atom.isWeb
-              ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: (context.HEIGHT * .4) * context.TEXTSCALE,
-                        child: GraphHeader(
-                          value: value,
-                          callBack: callback,
-                        ),
+      builder: (_, value, __) => MediaQuery.of(context).orientation ==
+                  Orientation.portrait ||
+              Atom.isWeb
+          ? SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (value.isChartShow) ...getGraph(context, value),
+                  if (!value.isChartShow)
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
+                      child: RbioElevatedButton(
+                        title: LocaleProvider.current.open_chart,
+                        onTap: value.changeChartShowStatus,
                       ),
-                      SizedBox(
-                        height: context.HEIGHT * .1,
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          runSpacing: 25,
-                          spacing: 25,
-                          children: [
-                            _infoSection(context),
-                            ElevatedButton(
-                              onPressed: () => value.showFilter(context),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                shadowColor: Colors.black.withAlpha(50),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 16),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(context.HEIGHT),
-                                ),
-                              ),
-                              child: AutoSizeText(
-                                '${LocaleProvider.current.filter_graphs}',
-                                maxLines: 1,
-                                style: context.xHeadline5.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: (context.HEIGHT * .4) * context.TEXTSCALE,
-                        child: BpMeasurementList(
-                          bpMeasurements: value.bpMeasurements,
-                          scrollController: value.controller,
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              : LandScapeGraphWidget(
-                  graph: value.currentGraph,
-                  value: value,
-                  filterAction: () => Atom.show(BpChartFilterPopUp(
-                    height: context.HEIGHT * .9,
-                    width: context.WIDTH * .3,
-                  )),
-                ),
+                    ),
+                  SizedBox(
+                    height: value.isChartShow
+                        ? (context.HEIGHT * .4) * context.TEXTSCALE
+                        : (context.HEIGHT * .8),
+                    child: BpMeasurementList(
+                      bpMeasurements: value.bpMeasurements,
+                      scrollController: value.controller,
+                    ),
+                  )
+                ],
+              ),
+            )
+          : LandScapeGraphWidget(
+              graph: value.currentGraph,
+              value: value,
+              filterAction: () => Atom.show(BpChartFilterPopUp(
+                height: context.HEIGHT * .9,
+                width: context.WIDTH * .3,
+              )),
+            ),
     );
   }
 
@@ -141,5 +115,65 @@ class BpProgressPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> getGraph(BuildContext context, value) {
+    return [
+      SizedBox(
+        height: (context.HEIGHT * .4) * context.TEXTSCALE,
+        child: GraphHeader(
+          value: value,
+          callBack: callback,
+        ),
+      ),
+      SizedBox(
+        height: context.HEIGHT * .1,
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          runAlignment: WrapAlignment.center,
+          runSpacing: 25,
+          spacing: 25,
+          children: [
+            _infoSection(context),
+            ElevatedButton(
+              onPressed: () => value.showFilter(context),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shadowColor: Colors.black.withAlpha(50),
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(context.HEIGHT),
+                ),
+              ),
+              child: AutoSizeText(
+                '${LocaleProvider.current.filter_graphs}',
+                maxLines: 1,
+                style: context.xHeadline5.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () => value.changeChartShowStatus(),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shadowColor: Colors.black.withAlpha(50),
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(context.HEIGHT),
+                ),
+              ),
+              child: AutoSizeText(
+                '${LocaleProvider.current.close_chart}',
+                maxLines: 1,
+                style: context.xHeadline5.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ];
   }
 }

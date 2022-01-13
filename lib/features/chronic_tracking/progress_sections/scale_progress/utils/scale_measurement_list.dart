@@ -96,9 +96,13 @@ class _ScaleMeasurementListWidgetState
                     return measurementList(scaleMeasurementViewModel, context);
                   },
                   callback: (ScaleMeasurementViewModel data) {
-                    Provider.of<ScaleProgressPageViewModel>(context,
+                    if (Provider.of<ScaleProgressPageViewModel>(context,
                             listen: false)
-                        .fetchScrolledData(data.date);
+                        .isChartShow) {
+                      Provider.of<ScaleProgressPageViewModel>(context,
+                              listen: false)
+                          .fetchScrolledData(data.date);
+                    }
                   },
                 ),
         ),
@@ -122,34 +126,42 @@ Widget measurementList(
             barrierDismissible: false,
             barrierColor: Colors.transparent);
       },
-      child: Container(
-        alignment: Alignment.center,
-        height: (context.HEIGHT * .1) * context.TEXTSCALE,
-        margin: EdgeInsets.only(left: 8, right: 8, top: 8),
-        decoration: BoxDecoration(
-          color: Colors.green,
-          gradient: LinearGradient(
-              colors: [Colors.white, Colors.white],
-              begin: Alignment.bottomLeft,
-              end: Alignment.centerRight),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withAlpha(50),
-                blurRadius: 5,
-                spreadRadius: 0,
-                offset: Offset(5, 5))
-          ],
-          borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-        ),
-        padding: EdgeInsets.all(10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _textAndScaleSection(scaleMeasurementViewModel, context),
-            _timeAndImageSection(scaleMeasurementViewModel, context)
-          ],
-        ),
+      child: Row(
+        children: [
+          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
+              style: context.xBodyText1),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              height: (context.HEIGHT * .08) * context.TEXTSCALE,
+              margin: EdgeInsets.only(left: 8, right: 8, top: 8),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                gradient: LinearGradient(
+                    colors: [Colors.white, Colors.white],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.centerRight),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(50),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: Offset(5, 5))
+                ],
+                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+              ),
+              padding: EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _textAndScaleSection(scaleMeasurementViewModel, context),
+                  _timeAndImageSection(scaleMeasurementViewModel, context)
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     ),
     secondaryActions: <Widget>[
@@ -177,23 +189,13 @@ Widget measurementList(
 Row _timeAndImageSection(
     ScaleMeasurementViewModel scaleMeasurementViewModel, BuildContext context) {
   return Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-    Container(
-      margin: EdgeInsets.only(right: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (scaleMeasurementViewModel.isManuel)
-            Text(
-              "M",
-              style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
-              style: context.xBodyText1),
-        ],
+    if (scaleMeasurementViewModel.isManuel)
+      Text(
+        "M",
+        style: context.xHeadline3.copyWith(
+          fontWeight: FontWeight.w900,
+        ),
       ),
-    ),
     (scaleMeasurementViewModel.imageUrl == null ||
             scaleMeasurementViewModel.imageUrl.isEmpty)
         ? Container(

@@ -53,7 +53,6 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
           width: double.infinity,
           height: (context.HEIGHT * .07) * context.TEXTSCALE,
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -66,7 +65,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Text(
                 '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
               ),
@@ -78,8 +77,11 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
         return measurementList(bgMeasurementViewModel, context);
       },
       callback: (BgMeasurementGlucoseViewModel data) {
-        Provider.of<BgProgressPageViewModel>(context, listen: false)
-            .fetchScrolledData(data.date);
+        if (Provider.of<BgProgressPageViewModel>(context, listen: false)
+            .isChartShow) {
+          Provider.of<BgProgressPageViewModel>(context, listen: false)
+              .fetchScrolledData(data.date);
+        }
       },
     );
   }
@@ -118,7 +120,7 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
           borderRadius: const BorderRadius.all(Radius.circular(30.0)),
         ),
         padding: const EdgeInsets.all(10),
-        height: context.HEIGHT * .1 * context.TEXTSCALE,
+        height: context.HEIGHT * .08 * context.TEXTSCALE,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

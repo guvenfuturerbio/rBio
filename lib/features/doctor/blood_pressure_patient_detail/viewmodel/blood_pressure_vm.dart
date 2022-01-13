@@ -23,8 +23,14 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
 
   BloodPressurePatientDetailVm({this.context, this.patientId}) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      isChartShow = false;
       update();
     });
+  }
+  bool isChartShow = false;
+  changeChartShowStatus() {
+    isChartShow = !isChartShow;
+    notifyListeners();
   }
 
   update() async {

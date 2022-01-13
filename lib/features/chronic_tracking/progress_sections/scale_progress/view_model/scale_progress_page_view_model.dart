@@ -29,7 +29,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   bool hasReachEnd = false;
   ScaleProgressPageViewModel() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      print('here');
+      isChartShow = false;
+
       getIt<ScaleStorageImpl>().addListener(() async {
         print("Triggered ScaleRepository Listener");
         setSelectedItem(selected);
@@ -45,6 +46,14 @@ class ScaleProgressPageViewModel extends ChangeNotifier
         }
       });
     });
+  }
+
+  bool isChartShow = false;
+
+  @override
+  changeChartShowStatus() {
+    isChartShow = !isChartShow;
+    notifyListeners();
   }
 
   Widget get bubleChart => AnimationScaleScatterDefault();

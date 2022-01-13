@@ -20,7 +20,16 @@ import '../widget/charts/animated_scale_line_chart.dart';
 class BmiPatientDetailVm extends ChangeNotifier
     with RbioVm, IBaseBottomActionsOfGraph {
   BmiPatientDetailVm(this.mContext, this.patientId) {
+    isChartShow = false;
     update();
+  }
+
+  bool isChartShow = false;
+
+  @override
+  changeChartShowStatus() {
+    isChartShow = !isChartShow;
+    notifyListeners();
   }
 
   int patientId;
