@@ -2995,10 +2995,10 @@ class LocaleProvider {
     );
   }
 
-  /// `This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in ANKARA GUVEN HOSPITAL and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.`
+  /// `This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.`
   String get request_and_suggestions_text {
     return Intl.message(
-      'This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in ANKARA GUVEN HOSPITAL and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.',
+      'This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.',
       name: 'request_and_suggestions_text',
       desc: '',
       args: [],

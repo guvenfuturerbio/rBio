@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -38,12 +39,14 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
           RequestSuggestionsScreenVm vm,
           Widget child,
         ) {
-          return RbioLoadingOverlay(
-            isLoading: vm.progressOverlay,
-            progressIndicator: RbioLoading.progressIndicator(),
-            child: RbioScaffold(
-              appbar: _buildAppBar(context),
-              body: _buildBody(vm, context),
+          return KeyboardDismissOnTap(
+            child: RbioLoadingOverlay(
+              isLoading: vm.progressOverlay,
+              progressIndicator: RbioLoading.progressIndicator(),
+              child: RbioScaffold(
+                appbar: _buildAppBar(context),
+                body: _buildBody(vm, context),
+              ),
             ),
           );
         },
@@ -128,7 +131,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
           //
           Center(
             child: RbioElevatedButton(
-              title: LocaleProvider.current.save,
+              title: LocaleProvider.current.send,
               onTap: () {
                 vm.sendSuggestion();
               },

@@ -108,15 +108,10 @@ class _HomeSliderState extends State<HomeSlider> {
                             ),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: (Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : getIt<ITheme>().mainColor)
-                                  .withOpacity(
-                                _current == entry.key ? 0.9 : 0.4,
-                              ),
+                              color: getIt<ITheme>().mainColor.withOpacity(_current == entry.key ? 0.9 : 0.4),
                               border: Border.all(
                                 color: R.color.white,
+                                width: 0.5,
                               ),
                             ),
                           ),
