@@ -23,10 +23,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
   FirebaseMessagingManager.mainInit();
   await setupLocator(appConfig);
-  _setupLogging();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
-
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -41,15 +39,6 @@ Future<void> main() async {
     RbioConfig(
       child: MyApp(),
     ),
-  );
-}
-
-void _setupLogging() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen(
-    (rec) {
-      LoggerUtils.instance.w('${rec.level.name}: ${rec.time}: ${rec.message}');
-    },
   );
 }
 

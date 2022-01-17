@@ -132,7 +132,12 @@ class _CreateAppointmentSummaryScreenState
 
             //
             Expanded(
-              child: _buildKeyboardVisibilityBuilder(vm),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SingleChildScrollView(
+                  child: _buildKeyboardVisibilityBuilder(vm),
+                ),
+              ),
             ),
           ],
         ),
@@ -183,13 +188,8 @@ class _CreateAppointmentSummaryScreenState
                               bottom: 13,
                             ),
                             onChanged: (term) {
-                              if (term != null) {
-                                if (term.length > 6) {
-                                  vm.summaryButton = SummaryButtons.ApplyActive;
-                                } else {
-                                  vm.summaryButton =
-                                      SummaryButtons.ApplyPassive;
-                                }
+                              if (term != null && term != '') {
+                                vm.summaryButton = SummaryButtons.ApplyActive;
                               } else {
                                 vm.summaryButton = SummaryButtons.ApplyPassive;
                               }
@@ -226,8 +226,8 @@ class _CreateAppointmentSummaryScreenState
                   ),
 
                   //
+                  _buildVerticalGap(),
                   if (!isKeyboardVisible) ...[
-                    _buildVerticalGap(),
                     _buildVerticalGap(),
                   ],
                 ],
