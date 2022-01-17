@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/notifiers/notification_badge_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 import '../../../core/core.dart';
+import '../../../core/notifiers/notification_badge_notifier.dart';
 import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 

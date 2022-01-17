@@ -393,7 +393,7 @@ class Utils {
                             textAlign: TextAlign.left,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: context.xHeadline3.copyWith(
+                            style: context.xHeadline4.copyWith(
                               fontWeight: FontWeight.bold,
                               color: getIt<ITheme>().textColor,
                             ),

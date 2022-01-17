@@ -54,6 +54,7 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
 
       case LoadingProgress.DONE:
         return GridView.builder(
+          padding: EdgeInsets.zero,
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: Atom.size.width < 800
                 ? Atom.size.width * 0.45

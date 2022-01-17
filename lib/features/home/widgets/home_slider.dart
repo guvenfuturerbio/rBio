@@ -27,9 +27,12 @@ class _HomeSliderState extends State<HomeSlider> {
         HomeVm vm,
         Widget child,
       ) {
-        return SizedBox(
+        return Container(
           height: getHeight(context),
           width: Atom.width,
+          margin: EdgeInsets.symmetric(
+            horizontal: 7,
+          ),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -67,7 +70,7 @@ class _HomeSliderState extends State<HomeSlider> {
                             imageUrl: vm.bannerTabsModel[itemIndex].imageUrl,
                             errorWidget: (context, url, error) =>
                                 Center(child: Icon(Icons.error)),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -108,7 +111,8 @@ class _HomeSliderState extends State<HomeSlider> {
                             ),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: getIt<ITheme>().mainColor.withOpacity(_current == entry.key ? 0.9 : 0.4),
+                              color: getIt<ITheme>().mainColor.withOpacity(
+                                  _current == entry.key ? 0.9 : 0.4),
                               border: Border.all(
                                 color: R.color.white,
                                 width: 0.5,

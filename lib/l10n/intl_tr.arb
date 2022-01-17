@@ -754,5 +754,6 @@
   "detailed_symptom": "Detaylı Sağlık Kontrolü",
   "widgets_add_message": "Şu anda kullanımda olan 7 widget'ınız var. Yeni widget eklemek için bunlardan birini kaldırın.",
   "open_chart": "Grafiği Göster",
-  "close_chart": "Grafiği Gizle"
+  "close_chart": "Grafiği Gizle",
+  "recent_appointments": "Son Randevularım"
 }

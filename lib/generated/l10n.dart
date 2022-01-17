@@ -7634,6 +7634,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Recent Appointments`
+  String get recent_appointments {
+    return Intl.message(
+      'Recent Appointments',
+      name: 'recent_appointments',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

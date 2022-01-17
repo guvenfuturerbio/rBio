@@ -588,6 +588,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "rate" : MessageLookupByLibrary.simpleMessage("Değerlendir"),
     "rate_appointment" : MessageLookupByLibrary.simpleMessage("Randevunuzu değerlendirmek ister misiniz ?"),
     "read_understood_kvkk" : MessageLookupByLibrary.simpleMessage("Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okudum ve anladım."),
+    "recent_appointments" : MessageLookupByLibrary.simpleMessage("Son Randevularım"),
     "relative_change_message" : MessageLookupByLibrary.simpleMessage("Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?"),
     "relatives" : MessageLookupByLibrary.simpleMessage("Yakınlarım"),
     "relatives_only_children_warning" : MessageLookupByLibrary.simpleMessage("Sadece 18 yaşından küçük çocuklarınızı ekleyebilirsiniz."),

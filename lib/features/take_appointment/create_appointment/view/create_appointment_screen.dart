@@ -113,7 +113,7 @@ class CreateAppointmentScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              LocaleProvider.current.favorites,
+              LocaleProvider.current.recent_appointments,
               style: context.xHeadline3,
             ),
           ),
@@ -122,6 +122,7 @@ class CreateAppointmentScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: vm.holderForFavorites
                   .map(

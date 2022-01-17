@@ -35,7 +35,7 @@ class AvailableDevices extends StatelessWidget {
                     top: RbioStackedScaffold.kHeight(context),
                     bottom: R.sizes.defaultBottomValue,
                   ),
-                  childAspectRatio: 6 / 4,
+                  childAspectRatio: 5 / 4,
                   crossAxisCount: 2,
                   crossAxisSpacing: 0,
                   mainAxisSpacing: 0,
@@ -106,7 +106,7 @@ class AvailableDevices extends StatelessWidget {
                   flex: 3,
                   child: Text(
                     device.name ?? LocaleProvider.current.unknown,
-                    style: context.xHeadline2,
+                    style: context.xHeadline3,
                   ),
                 )
               ],

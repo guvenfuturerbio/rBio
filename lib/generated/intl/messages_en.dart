@@ -592,6 +592,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "rate" : MessageLookupByLibrary.simpleMessage("Rate"),
     "rate_appointment" : MessageLookupByLibrary.simpleMessage("Would you like to rate your appointment ?"),
     "read_understood_kvkk" : MessageLookupByLibrary.simpleMessage("I have read and understood the notice of information regarding the policy of protection and processing of personal data."),
+    "recent_appointments" : MessageLookupByLibrary.simpleMessage("Recent Appointments"),
     "relative_change_message" : MessageLookupByLibrary.simpleMessage("Further operations will be completed by the selected user, do you confirm?"),
     "relatives" : MessageLookupByLibrary.simpleMessage("Relatives"),
     "relatives_only_children_warning" : MessageLookupByLibrary.simpleMessage("You can only add children of your own below age of 18"),

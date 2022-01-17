@@ -760,5 +760,6 @@
   "detailed_symptom": "Detailed Symptom Checker",
   "widgets_add_message": "You have 7 widgets currently in use. Remove one of them to add new widget",
   "open_chart": "Show Graph",
-  "close_chart": "Hide Graph"
+  "close_chart": "Hide Graph",
+  "recent_appointments": "Recent Appointments"
 }
