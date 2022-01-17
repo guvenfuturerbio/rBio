@@ -115,6 +115,9 @@ class _HomeSliderState extends State<HomeSlider> {
                                   .withOpacity(
                                 _current == entry.key ? 0.9 : 0.4,
                               ),
+                              border: Border.all(
+                                color: R.color.white,
+                              ),
                             ),
                           ),
                         );
@@ -137,52 +140,4 @@ class _HomeSliderState extends State<HomeSlider> {
   void _launchURL(String url) async {
     if (!await launch(url)) throw 'Could not launch $url';
   }
-
-  List<Widget> cardList = [
-    SizedBox(
-      width: Atom.width,
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-      ),
-    ),
-    SizedBox(
-      width: Atom.width,
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-      ),
-    ),
-    SizedBox(
-      width: Atom.width,
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-      ),
-    ),
-  ];
 }

@@ -428,6 +428,7 @@ class HomeVm extends ChangeNotifier {
         MyReorderableWidget(
           key: key5,
           body: HomeSlider(),
+          isShowDelete: false,
         ),
 
         //

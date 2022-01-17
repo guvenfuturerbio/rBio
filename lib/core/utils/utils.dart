@@ -52,6 +52,17 @@ class Utils {
   }
   // #endregion
 
+  // #region forcePortraitOrientation
+  void forcePortraitOrientation() {
+    SystemChrome.setPreferredOrientations(
+      [
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ],
+    );
+  }
+  // #endregion
+
   // #region getCacheApiCallList
   Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
     String url,

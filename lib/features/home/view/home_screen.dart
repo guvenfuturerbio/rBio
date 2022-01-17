@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     if (!Atom.isWeb) {
+      Utils.instance.forcePortraitOrientation();
       DeepLinkHandler().initDynamicLinks(context);
       FirebaseMessagingManager.instance;
     }
@@ -310,7 +311,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
+
+            //
+            _buildVersion(),
+
+            //
+            R.sizes.defaultBottomPadding,
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVersion() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        "v" + getIt<GuvenSettings>().version,
+        textAlign: TextAlign.left,
+        style: context.xHeadline5.copyWith(
+          color: getIt<ITheme>().textColor,
         ),
       ),
     );

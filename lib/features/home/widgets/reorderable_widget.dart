@@ -7,10 +7,12 @@ import '../viewmodel/home_vm.dart';
 
 class MyReorderableWidget extends StatelessWidget {
   final Widget body;
+  final bool isShowDelete;
 
   const MyReorderableWidget({
     Key key,
     this.body,
+    this.isShowDelete = true,
   }) : super(key: key);
 
   @override
@@ -36,27 +38,29 @@ class MyReorderableWidget extends StatelessWidget {
               ),
 
               //
-              Visibility(
-                visible: vm.status.isShaken,
-                child: GestureDetector(
-                  onTap: () {
-                    vm.removeWidget(key);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red.withOpacity(.6),
-                    ),
-                    height: 30,
-                    width: 30,
-                    child: const Icon(
-                      Icons.remove,
-                      color: Colors.white,
-                      size: 10,
+              if (isShowDelete) ...[
+                Visibility(
+                  visible: vm.status.isShaken,
+                  child: GestureDetector(
+                    onTap: () {
+                      vm.removeWidget(key);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.red.withOpacity(.6),
+                      ),
+                      height: 30,
+                      width: 30,
+                      child: const Icon(
+                        Icons.remove,
+                        color: Colors.white,
+                        size: 10,
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         );
