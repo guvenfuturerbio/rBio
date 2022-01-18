@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/notifiers/notification_badge_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 import '../../../core/core.dart';
+import '../../../core/notifiers/notification_badge_notifier.dart';
 import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     if (!Atom.isWeb) {
+      Utils.instance.forcePortraitOrientation();
       DeepLinkHandler().initDynamicLinks(context);
       FirebaseMessagingManager.instance;
     }
@@ -310,7 +311,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
+
+            //
+            _buildVersion(),
+
+            //
+            R.sizes.defaultBottomPadding,
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVersion() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        "v" + getIt<GuvenSettings>().version,
+        textAlign: TextAlign.left,
+        style: context.xHeadline5.copyWith(
+          color: getIt<ITheme>().textColor,
         ),
       ),
     );

@@ -24,7 +24,6 @@ Future<void> main() async {
   await setupLocator(appConfig);
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
-
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

@@ -346,47 +346,61 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoActionSheet(
-          actions: <Widget>[
-            CupertinoActionSheetAction(
-              child: Text(
-                LocaleProvider.current.delete,
-                style: context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () async {
-                await vm.deletePhoto(context);
-              },
-            ),
-            CupertinoActionSheetAction(
-              child: Text(
-                LocaleProvider.current.gallery,
-                style: context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () async {
-                await vm.getPhotoFromSource(
-                  context,
-                  ImageSource.gallery,
-                );
-              },
-            ),
-            CupertinoActionSheetAction(
-              child: Text(
-                LocaleProvider.current.camera,
-                style: context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () async {
-                await vm.getPhotoFromSource(
-                  context,
-                  ImageSource.camera,
-                );
-              },
-            ),
-          ],
+          actions: Atom.isWeb
+              ? <Widget>[
+                  CupertinoActionSheetAction(
+                    child: Text(
+                      LocaleProvider.current.delete,
+                      style: context.xHeadline4.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await vm.deletePhoto(context);
+                    },
+                  ),
+                ]
+              : <Widget>[
+                  CupertinoActionSheetAction(
+                    child: Text(
+                      LocaleProvider.current.delete,
+                      style: context.xHeadline4.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await vm.deletePhoto(context);
+                    },
+                  ),
+                  CupertinoActionSheetAction(
+                    child: Text(
+                      LocaleProvider.current.gallery,
+                      style: context.xHeadline4.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await vm.getPhotoFromSource(
+                        context,
+                        ImageSource.gallery,
+                      );
+                    },
+                  ),
+                  CupertinoActionSheetAction(
+                    child: Text(
+                      LocaleProvider.current.camera,
+                      style: context.xHeadline4.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await vm.getPhotoFromSource(
+                        context,
+                        ImageSource.camera,
+                      );
+                    },
+                  ),
+                ],
           cancelButton: CupertinoActionSheetAction(
             child: Text(
               LocaleProvider.current.btn_cancel,

@@ -45,6 +45,7 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
 
       case LoadingProgress.DONE:
         return GridView.builder(
+          padding: EdgeInsets.zero,
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: MediaQuery.of(context).size.width < 800
                 ? MediaQuery.of(context).size.width * 0.45
