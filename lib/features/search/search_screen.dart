@@ -189,49 +189,107 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildAllSocialResources(SearchScreenVm value) {
-    return ListView.builder(
-      shrinkWrap: true,
-      padding: EdgeInsets.only(
-        bottom: R.sizes.defaultBottomValue,
-      ),
-      scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
-      itemCount: value.allSocialResources.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
-          child: ListTile(
-            leading: SizedBox(
-              width: kIsWeb
-                  ? MediaQuery.of(context).size.width < 1400
-                      ? MediaQuery.of(context).size.width * 0.12
-                      : MediaQuery.of(context).size.width * 0.03
-                  : MediaQuery.of(context).size.width * 0.12,
-              child: SvgPicture.asset(
-                value.allSocialResources[index].imagePath,
-              ),
+    return Column(
+      children: [
+        Wrap(
+          children: _chips(value),
+        ),
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(
+              bottom: R.sizes.defaultBottomValue,
             ),
-            title: Text(
-              value.allSocialResources[index].title,
-              style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              value.allSocialResources[index].text,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: context.xHeadline5,
-            ),
-            onTap: () {
-              value.clickPost(
-                value.allSocialResources[index].id,
-                value.allSocialResources[index].url,
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            itemCount: value.allSocialResources.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 1,
+                shape: RoundedRectangleBorder(
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
+                child: ListTile(
+                  leading: SizedBox(
+                    width: kIsWeb
+                        ? MediaQuery.of(context).size.width < 1400
+                            ? MediaQuery.of(context).size.width * 0.12
+                            : MediaQuery.of(context).size.width * 0.03
+                        : MediaQuery.of(context).size.width * 0.12,
+                    child: SvgPicture.asset(
+                      value.allSocialResources[index].imagePath,
+                    ),
+                  ),
+                  title: Text(
+                    value.allSocialResources[index].title,
+                    style: context.xHeadline3
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    value.allSocialResources[index].text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.xHeadline5,
+                  ),
+                  onTap: () {
+                    value.clickPost(
+                      value.allSocialResources[index].id,
+                      value.allSocialResources[index].url,
+                    );
+                  },
+                ),
               );
             },
           ),
-        );
+        ),
+      ],
+    );
+  }
+
+  List<RbioFilterChip> _chips(SearchScreenVm value) {
+    return [
+      RbioFilterChip('Podcast', value),
+      /*   Chip(label: Text(LocaleProvider.current.doctor)),
+      Chip(
+        label: Text(LocaleProvider.current.youtube_stream),
+      )*/
+    ];
+  }
+}
+
+class RbioFilterChip extends StatefulWidget {
+  bool isSelected;
+  final String title;
+  RbioFilterChip(
+    this.title,
+    SearchScreenVm value, {
+    Key key,
+  }) : super(key: key);
+
+  @override
+  State<RbioFilterChip> createState() => _RbioFilterChipState();
+}
+
+class _RbioFilterChipState extends State<RbioFilterChip> {
+
+  @override
+  Widget build(BuildContext context) {
+    return FilterChip(
+      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+      selected: value.selectedFilters.contains(widget.title),
+      checkmarkColor: getIt<ITheme>().cardBackgroundColor,
+      selectedColor: getIt<ITheme>().mainColor,
+      label: Text(
+        widget.title,
+        style: isSelected
+            ? context.xBodyText1
+                .copyWith(color: getIt<ITheme>().cardBackgroundColor)
+            : context.xBodyText1,
+      ),
+      onSelected: (value) {
+        setState(() {
+          isSelected = !isSelected;
+        });
       },
     );
   }

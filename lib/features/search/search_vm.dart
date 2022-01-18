@@ -12,18 +12,21 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/model.dart';
 
+enum SearchFilter { podcast, doctor, youtube, blog }
+
 class SearchScreenVm extends ChangeNotifier {
   List<FilterResourcesResponse> _filterResources;
   LoadingProgress _progress;
   BuildContext mContext;
   String _searchText;
-
   List<SocialPostsResponse> _allSocialResources;
   List<SocialPostsResponse> _filteredSocialResources;
+  List<SearchFilter> _selectedFilters = [];
   LoadingProgress _socialPostProgress;
   LoadingDialog loadingDialog;
   bool fromOnlineAppo;
   String _token = "";
+
   List _names = [];
 
   SearchScreenVm({BuildContext context}) {
@@ -31,6 +34,12 @@ class SearchScreenVm extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchAllPosts();
     });
+  }
+  Future<void> toggleFilter(SearchFilter filter) async {
+    if (_selectedFilters.contains(filter)) {
+      _selectedFilters.remove(filter);
+      
+    } else {}
   }
 
   List<FilterResourcesResponse> get filterResources =>
