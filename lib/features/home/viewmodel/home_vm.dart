@@ -87,6 +87,13 @@ class HomeVm extends ChangeNotifier {
           }
         },
         {
+          LocaleProvider.current.for_you: () {
+            Atom.to(
+              PagePaths.FOR_YOU_CATEGORIES,
+            );
+          },
+        },
+        {
           LocaleProvider.current.symptom_checker: () {
             Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
           }
@@ -428,6 +435,7 @@ class HomeVm extends ChangeNotifier {
         MyReorderableWidget(
           key: key5,
           body: HomeSlider(),
+          isShowDelete: false,
         ),
 
         //
