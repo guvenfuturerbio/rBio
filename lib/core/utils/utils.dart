@@ -63,6 +63,10 @@ class Utils {
   }
   // #endregion
 
+  void releaseOrientation() {
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+  }
+
   // #region getCacheApiCallList
   Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
     String url,

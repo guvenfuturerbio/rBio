@@ -62,11 +62,13 @@ class MeasurementTrackingVm with ChangeNotifier {
 
   void setActiveItem(Key key) {
     activeItem = items.firstWhere((element) => element.key == key);
+    Utils.instance.releaseOrientation();
     notifyListeners();
   }
 
   void deActivateItem() {
     activeItem = null;
+    Utils.instance.forcePortraitOrientation();
     notifyListeners();
   }
 }

@@ -2,31 +2,27 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/doctor/notifiers/patient_notifiers.dart';
-import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
+import '../../../../../core/core.dart';
+import '../../../../../model/treatment_model/treatment_model.dart';
 
 part '../model/treatment_process_model.dart';
 
-class DoctorTreatmentProcessScreen extends StatefulWidget {
-  DoctorTreatmentProcessScreen({Key key}) : super(key: key);
+class TreatmentProcessScreen extends StatefulWidget {
+  TreatmentProcessScreen({Key key}) : super(key: key);
 
   @override
-  _DoctorTreatmentProcessScreenState createState() =>
-      _DoctorTreatmentProcessScreenState();
+  _TreatmentProcessScreenState createState() => _TreatmentProcessScreenState();
 }
 
-class _DoctorTreatmentProcessScreenState
-    extends State<DoctorTreatmentProcessScreen> {
+class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
         appbar: _buildAppBar(),
         floatingActionButton: FloatingActionButton(
           onPressed: () =>
-              Atom.to(PagePaths.DOCTOR_TREATMENT_EDIT, queryParameters: {}),
+              Atom.to(PagePaths.TREATMENT_EDIT_PROGRESS, queryParameters: {}),
           child: Icon(Icons.add),
           foregroundColor: context.xAppTheme.canvasColor,
           backgroundColor: context.xAppTheme.primaryColor,
@@ -39,20 +35,6 @@ class _DoctorTreatmentProcessScreenState
           context,
           LocaleProvider.current.treatment_process,
         ),
-        actions: [
-          Center(
-            child: RbioBadge(
-              image: R.image.chat_icon,
-              isDark: false,
-              onTap: () {
-                Atom.to(PagePaths.DOCTOR_CONSULTATION);
-              },
-            ),
-          ),
-          SizedBox(
-            width: 12,
-          ),
-        ],
       );
 
   Widget _buildBody() {
@@ -64,16 +46,9 @@ class _DoctorTreatmentProcessScreenState
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
-      itemCount: context
-          .watch<PatientNotifiers>()
-          .patientDetail
-          .treatmentModelList
-          .length,
+      itemCount: getIt<ProfileStorageImpl>().getFirst().treatmentList.length,
       itemBuilder: (BuildContext context, int index) {
-        var _item = context
-            .watch<PatientNotifiers>()
-            .patientDetail
-            .treatmentModelList[index];
+        var _item = getIt<ProfileStorageImpl>().getFirst().treatmentList[index];
         TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
             id: _item.id,
             title: _item.createDate.xFormatTime9(),
@@ -87,7 +62,7 @@ class _DoctorTreatmentProcessScreenState
   Widget _buildCard(TreatmentProcessItemModel item) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.DOCTOR_TREATMENT_EDIT,
+        Atom.to(PagePaths.TREATMENT_EDIT_PROGRESS,
             queryParameters: {'treatment_model': jsonEncode(item.toJson())});
       },
       child: Card(

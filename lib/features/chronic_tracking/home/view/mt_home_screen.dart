@@ -12,8 +12,21 @@ import '../utils/card_widget.dart';
 
 part '../vm/mt_home_vm.dart';
 
-class MeasurementTrackingHomeScreen extends StatelessWidget {
+class MeasurementTrackingHomeScreen extends StatefulWidget {
   const MeasurementTrackingHomeScreen({Key key}) : super(key: key);
+
+  @override
+  State<MeasurementTrackingHomeScreen> createState() =>
+      _MeasurementTrackingHomeScreenState();
+}
+
+class _MeasurementTrackingHomeScreenState
+    extends State<MeasurementTrackingHomeScreen> {
+  @override
+  void dispose() {
+    Utils.instance.forcePortraitOrientation();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,40 +91,8 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
           : EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
       children: [
         //
-        Card(
-          child: getIt<ProfileStorageImpl>().getAll().length > 1
-              ? ExpandablePanel(
-                  header: RbioUserTile(
-                    width: Atom.width,
-                    name: getIt<ProfileStorageImpl>().getFirst().name,
-                    onTap: () {},
-                    leadingImage: UserLeadingImage.Circle,
-                  ),
-                  collapsed: SizedBox(),
-                  expanded: getIt<ProfileStorageImpl>().getAll().length > 1
-                      ? Column(
-                          children: getIt<ProfileStorageImpl>()
-                              .getAll()
-                              .map(
-                                (e) => RbioUserTile(
-                                  width: Atom.width,
-                                  name: e.name,
-                                  onTap: () {},
-                                  leadingImage: UserLeadingImage.Circle,
-                                ),
-                              )
-                              .cast<Widget>()
-                              .toList(),
-                        )
-                      : SizedBox(),
-                )
-              : RbioUserTile(
-                  width: Atom.width,
-                  name: getIt<ProfileStorageImpl>().getFirst().name,
-                  onTap: () {},
-                  leadingImage: UserLeadingImage.Circle,
-                ),
-        ),
+        if (MediaQuery.of(context).orientation == Orientation.portrait)
+          _buildExpandedUser(),
 
         //
         Container(
@@ -172,5 +153,80 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
             backgroundColor: R.color.white,
           )
         : null;
+  }
+
+  Widget _buildExpandedUser() {
+    return Container(
+      height: 50,
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: Container(
+              height: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              decoration: BoxDecoration(
+                color: getIt<ITheme>().cardBackgroundColor,
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    foregroundImage: NetworkImage(R.image.circlevatar),
+                    backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  ),
+
+                  //
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        getIt<ProfileStorageImpl>().getFirst().name ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.xHeadline5.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          //
+          SizedBox(width: 6),
+
+          //
+          GestureDetector(
+            onTap: () {
+              Atom.to(PagePaths.TREATMENT_PROGRESS);
+            },
+            child: Container(
+              height: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: getIt<ITheme>().cardBackgroundColor,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Text(
+                LocaleProvider.current.treatment,
+                style: context.xHeadline5.copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

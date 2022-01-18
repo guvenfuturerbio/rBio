@@ -56,4 +56,6 @@ abstract class ChronicTrackingApiService {
   getBpMasurement(GetBpMeasurements getBpMeasurements);
 
   updateBpMeasurement(UpdateBpMeasurements updateBpMeasurements);
+
+  addTreatment(Person person, String treatment);
 }
