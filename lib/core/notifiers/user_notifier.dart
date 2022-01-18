@@ -106,4 +106,56 @@ class UserNotifier extends ChangeNotifier {
     patient = null;
     _userType = [];
   }
+
+  //
+  AllUsersModel checkUserExist(String tcEmailPassport) {
+    final sharedData = getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.ALL_USERS);
+    if (sharedData == null) {
+      return null;
+    } else {
+      final sharedMap = jsonDecode(sharedData) as Map<String, dynamic>;
+      final userExist = sharedMap.containsKey(tcEmailPassport);
+      if (userExist) {
+        return AllUsersModel.fromJson(sharedMap[tcEmailPassport]);
+      } else {
+        return null;
+      }
+    }
+  }
+
+  //
+  Future<void> saveUserHomeLists(bool isSharedClear) async {
+    final spManager = getIt<ISharedPreferencesManager>();
+    final currentUserName =
+        spManager.getString(SharedPreferencesKeys.LOGIN_USERNAME);
+    final deletedWidgets =
+        spManager.getStringList(SharedPreferencesKeys.DELETED_WIDGETS) ?? [];
+    final useWidgets =
+        spManager.getStringList(SharedPreferencesKeys.WIDGET_QUERY) ?? [];
+
+    final sharedData = spManager.getString(SharedPreferencesKeys.ALL_USERS);
+    Map<String, dynamic> sharedMap;
+    if (sharedData == null) {
+      sharedMap = {};
+    } else {
+      sharedMap = jsonDecode(sharedData);
+    }
+
+    sharedMap.addAll(
+      {
+        currentUserName: AllUsersModel(
+          deletedWidgets: deletedWidgets,
+          useWidgets: useWidgets,
+        ).toJson(),
+      },
+    );
+    if (isSharedClear) {
+      await spManager.clear();
+    }
+    await spManager.setString(
+      SharedPreferencesKeys.ALL_USERS,
+      jsonEncode(sharedMap),
+    );
+  }
 }

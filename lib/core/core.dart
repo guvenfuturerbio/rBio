@@ -12,6 +12,7 @@ export "data/service/api_service.dart";
 export "data/service/chronic_service/chronic_storage_service.dart";
 export 'data/service/firestore_manager.dart';
 export "data/service/local_cache_service.dart";
+export 'domain/all_users_model.dart';
 export "domain/base_model.dart";
 export "domain/glucose_model.dart";
 export "domain/network_cache_model.dart";

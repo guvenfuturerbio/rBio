@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/utils/detailed_symptom_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
@@ -7,6 +6,7 @@ import '../../../core/core.dart';
 import '../model/banner_model.dart';
 import '../utils/appointments_painter.dart';
 import '../utils/chronic_tracking_painter.dart';
+import '../utils/detailed_symptom_checker.dart';
 import '../utils/hospital_appointment_painter.dart';
 import '../utils/online_appointment_painter.dart';
 import '../utils/results_painter.dart';
@@ -37,6 +37,7 @@ class HomeVm extends ChangeNotifier {
 
   //Widgetların içerisinde bulunan onTap methodu için kullanılan bool değerimiz.
   bool isForDelete = false;
+  
   //Slider widgetları
   List<BannerTabsModel> bannerTabsModel = [];
   SpringController springController;
@@ -248,6 +249,7 @@ class HomeVm extends ChangeNotifier {
     });
     await getIt<ISharedPreferencesManager>()
         .setStringList(SharedPreferencesKeys.WIDGET_QUERY, queryOfWidgetsInUse);
+    await getIt<UserNotifier>().saveUserHomeLists(false);
   }
 
   void changeStatus() {

@@ -21,6 +21,7 @@ enum SharedPreferencesKeys {
   SYMPTOM_AUTH_TOKEN,
   PAIRED_DEVICES,
   CHAT_NOTIFICATION,
+  ALL_USERS, // Home Widget List Tutuyor
 
   hba1cList,
   medicines,

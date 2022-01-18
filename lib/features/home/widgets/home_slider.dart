@@ -33,100 +33,106 @@ class _HomeSliderState extends State<HomeSlider> {
           margin: EdgeInsets.symmetric(
             horizontal: 7,
           ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              //
-              Positioned.fill(
-                child: CarouselSlider.builder(
-                  itemCount: vm.bannerTabsModel.length,
-                  itemBuilder:
-                      (BuildContext context, int itemIndex, int pageViewIndex) {
-                    return Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: getIt<ITheme>().cardBackgroundColor,
-                        borderRadius: R.sizes.borderRadiusCircular,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (vm.isForDelete) {
-                            vm.addWidget(vm.key5);
-                          } else {
-                            if (vm.bannerTabsModel[itemIndex].destinationUrl
-                                .contains('http')) {
-                              launch(
-                                  vm.bannerTabsModel[itemIndex].destinationUrl);
-                            } else {
-                              Atom.to(
-                                  vm.bannerTabsModel[itemIndex].destinationUrl);
-                            }
-                          }
-                        },
-                        child: ClipRRect(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                          child: CachedNetworkImage(
-                            imageUrl: vm.bannerTabsModel[itemIndex].imageUrl,
-                            errorWidget: (context, url, error) =>
-                                Center(child: Icon(Icons.error)),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  options: CarouselOptions(
-                    height: HomeSizer.instance.getBodySliderHeight(),
-                    autoPlay: !vm.isForDelete,
-                    viewportFraction: 1,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _current = index;
-                      });
-                    },
-                  ),
-                ),
-              ),
-
-              //
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Visibility(
-                  visible: !vm.isForDelete,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: vm.bannerTabsModel.asMap().entries.map(
-                      (entry) {
-                        return GestureDetector(
-                          onTap: () {
-                            _controller.animateToPage(entry.key);
-                          },
-                          child: Container(
-                            width: 10.0,
-                            height: 10.0,
-                            margin: EdgeInsets.symmetric(
-                              vertical: 8.0,
-                              horizontal: 4.0,
-                            ),
+          child: vm.bannerTabsModel.isEmpty
+              ? SizedBox()
+              : Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    //
+                    Positioned.fill(
+                      child: CarouselSlider.builder(
+                        itemCount: vm.bannerTabsModel.length,
+                        itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) {
+                          return Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: getIt<ITheme>().mainColor.withOpacity(
-                                  _current == entry.key ? 0.9 : 0.4),
-                              border: Border.all(
-                                color: R.color.white,
-                                width: 0.5,
+                              color: getIt<ITheme>().cardBackgroundColor,
+                              borderRadius: R.sizes.borderRadiusCircular,
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (vm.isForDelete) {
+                                  vm.addWidget(vm.key5);
+                                } else {
+                                  if (vm
+                                      .bannerTabsModel[itemIndex].destinationUrl
+                                      .contains('http')) {
+                                    launch(vm.bannerTabsModel[itemIndex]
+                                        .destinationUrl);
+                                  } else {
+                                    Atom.to(vm.bannerTabsModel[itemIndex]
+                                        .destinationUrl);
+                                  }
+                                }
+                              },
+                              child: ClipRRect(
+                                borderRadius: R.sizes.borderRadiusCircular,
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      vm.bannerTabsModel[itemIndex].imageUrl,
+                                  errorWidget: (context, url, error) =>
+                                      Center(child: Icon(Icons.error)),
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ).toList(),
-                  ),
+                          );
+                        },
+                        options: CarouselOptions(
+                          height: HomeSizer.instance.getBodySliderHeight(),
+                          autoPlay: !vm.isForDelete,
+                          viewportFraction: 1,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _current = index;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+
+                    //
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Visibility(
+                        visible: !vm.isForDelete,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: vm.bannerTabsModel.asMap().entries.map(
+                            (entry) {
+                              return GestureDetector(
+                                onTap: () {
+                                  _controller.animateToPage(entry.key);
+                                },
+                                child: Container(
+                                  width: 10.0,
+                                  height: 10.0,
+                                  margin: EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                    horizontal: 4.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: getIt<ITheme>()
+                                        .mainColor
+                                        .withOpacity(
+                                            _current == entry.key ? 0.9 : 0.4),
+                                    border: Border.all(
+                                      color: R.color.white,
+                                      width: 0.5,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         );
       },
     );
