@@ -22,8 +22,6 @@ enum VersionCheckProgress { DONE, LOADING, ERROR }
 class LoginScreenVm extends ChangeNotifier {
   BuildContext mContext;
 
-  LoadingProgress _progress;
-
   VersionCheckProgress _versionCheckProgress;
 
   ApplicationVersionResponse _applicationVersionResponse;
@@ -51,10 +49,8 @@ class LoginScreenVm extends ChangeNotifier {
   LoginScreenVm({BuildContext context}) {
     this.mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      fetchConsentFormState();
       await getSavedLoginInfo();
-      await fetchConsentFormState();
-      await fetchKvkkFormState();
-      await autoLogin();
       //await startAppVersionOperation();
       //    packageInfo = await PackageInfo.fromPlatform();
     });
@@ -78,18 +74,13 @@ class LoginScreenVm extends ChangeNotifier {
 
   bool get passwordVisibility => this._passwordVisibility ?? false;
 
-  fetchConsentFormState() async {
+  void fetchConsentFormState() {
     this._clickedGeneralForm =
-        await getIt<UserManager>().getApplicationConsentFormState();
-    notifyListeners();
+        getIt<UserManager>().getApplicationConsentFormState();
   }
 
-  fetchKvkkFormState() async {
-    log(getIt<ISharedPreferencesManager>()
-            .getString(SharedPreferencesKeys.JWT_TOKEN) ??
-        '');
+  Future<void> fetchKvkkFormState() async {
     this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
-    notifyListeners();
   }
 
   toggleGeneralFormClick() {
@@ -99,7 +90,7 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> getSavedLoginInfo() async {
-    var userLoginInfo = await getIt<UserManager>().getSavedLoginInfo();
+    var userLoginInfo = getIt<UserManager>().getSavedLoginInfo();
     this._userLoginInfo = userLoginInfo;
     if (userLoginInfo.password != null && userLoginInfo.password.length > 0) {
       this._rememberMeChecked = true;
@@ -107,18 +98,20 @@ class LoginScreenVm extends ChangeNotifier {
     setUserIdText(userLoginInfo.username);
     setPasswordText(userLoginInfo.password);
     notifyListeners();
+    if ((userLoginInfo?.username ?? "").length > 0 &&
+        (userLoginInfo?.password ?? "").length > 0) {
+      await login(userLoginInfo.username, userLoginInfo.password);
+    }
   }
 
   setUserIdText(String text) {
     this._userId = text;
-    notifyListeners();
   }
 
   String get userId => this._userId ?? "";
 
   setPasswordText(String text) {
     this._password = text;
-    notifyListeners();
   }
 
   String get password => this._password ?? "";
@@ -150,17 +143,14 @@ class LoginScreenVm extends ChangeNotifier {
       this._versionCheckProgress ?? VersionCheckProgress.DONE;
 
   Future<void> fetchAppVersion() async {
-    this._progress = LoadingProgress.LOADING;
     notifyListeners();
     try {
       await Future.delayed(Duration(seconds: 2));
       this._applicationVersionResponse =
           await getIt<Repository>().getCurrentApplicationVersion();
-      this._progress = LoadingProgress.DONE;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
-      this._progress = LoadingProgress.ERROR;
       notifyListeners();
     }
   }
@@ -211,35 +201,32 @@ class LoginScreenVm extends ChangeNotifier {
     // app is up to date
     UserLoginInfo userLoginInfo =
         await getIt<UserManager>().getSavedLoginInfo();
-    if ((userLoginInfo?.username ?? "").length > 0 &&
-        (userLoginInfo?.password ?? "").length > 0) {
-      login(userLoginInfo.username, userLoginInfo.password);
-    }
   }
 
   bool get needForceUpdate => this._needForceUpdate ?? false;
 
   Future<void> login(String username, String password) async {
     if (checkFields(username, password)) {
-      showLoadingDialog(mContext);
-      this._progress = LoadingProgress.LOADING;
-      notifyListeners();
+      showLoadingDialog();
 
       try {
         // Roles and token
         this._guvenLogin = await getIt<UserManager>().login(username, password);
-
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
-        
-        await getIt<UserManager>().setApplicationConsentFormState(true);
 
-        //One dose hasta bilgileri
-        final patientDetail = await getIt<Repository>().getPatientDetail();
+        List<dynamic> results = await Future.wait(
+          [
+            getIt<UserManager>().setApplicationConsentFormState(true),
+            //One dose hasta bilgileri
+            getIt<Repository>().getPatientDetail(),
+            // Güven online kullanıcı bilgileri
+            getIt<UserManager>().getUserProfile(),
+            getIt<UserManager>().getKvkkFormState()
+          ],
+        );
 
-        // Güven online kullanıcı bilgileri
-        await getIt<UserManager>().getUserProfile();
-
-        this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
+        final patientDetail = results[1];
+        this._checkedKvkk = results[3];
 
         if (getIt<UserNotifier>().isCronic) {
           var profiles =
@@ -283,8 +270,6 @@ class LoginScreenVm extends ChangeNotifier {
           //
         }
 
-        this._progress = LoadingProgress.DONE;
-
         hideDialog(mContext);
         notifyListeners();
         final term = Atom.queryParameters['then'];
@@ -300,7 +285,6 @@ class LoginScreenVm extends ChangeNotifier {
         print(e);
         debugPrintStack(stackTrace: stackTrace);
         hideDialog(mContext);
-        this._progress = LoadingProgress.ERROR;
         notifyListeners();
         if (e.toString().contains("401")) {
           showGradientDialog(
@@ -373,33 +357,34 @@ class LoginScreenVm extends ChangeNotifier {
   ApplicationVersionResponse get applicationVersion =>
       this._applicationVersionResponse;
 
-  LoadingProgress get progress => this._progress;
-
   bool get rememberMeChecked => this._rememberMeChecked ?? false;
 
-  toggleRememberMeChecked() {
+  void toggleRememberMeChecked() {
     this._rememberMeChecked = !rememberMeChecked;
     notifyListeners();
   }
 
   void showGradientDialog(BuildContext context, String title, String text) {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return WarningDialog(title, text);
-        }).then((value) {
-      if (text == LocaleProvider.current.approve_consent_form) {
-        showApplicationContestForm();
-      } else if ((text == LocaleProvider.current.must_clicked_kvkk)) {
-        showKvkkInfo();
-      }
-    });
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return WarningDialog(title, text);
+      },
+    ).then(
+      (value) {
+        if (text == LocaleProvider.current.approve_consent_form) {
+          showApplicationContestForm();
+        } else if ((text == LocaleProvider.current.must_clicked_kvkk)) {
+          showKvkkInfo();
+        }
+      },
+    );
   }
 
-  void showLoadingDialog(BuildContext context) async {
+  void showLoadingDialog() async {
     await showDialog(
-        context: context,
+        context: mContext,
         barrierDismissible: false,
         builder: (BuildContext context) =>
             loadingDialog = loadingDialog ?? LoadingDialog());

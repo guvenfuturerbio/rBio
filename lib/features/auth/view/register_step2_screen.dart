@@ -405,14 +405,13 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                       vm.registerStep1(
                           userRegisterStep1, userRegisterStep1Model);
                     } else {
-                      vm.showGradientDialog(
-                          context,
-                          LocaleProvider.of(context).warning,
-                          LocaleProvider.of(context).fill_all_field);
+                      vm.showInfoDialog(
+                        LocaleProvider.of(context).warning,
+                        LocaleProvider.of(context).fill_all_field,
+                      );
                     }
                   } else {
-                    vm.showGradientDialog(
-                      context,
+                    vm.showInfoDialog(
                       LocaleProvider.of(context).warning,
                       LocaleProvider.of(context).check_personal_data,
                     );

@@ -4,20 +4,21 @@ import '../auth.dart';
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 
-class RegisterStep3ScreenVm with ChangeNotifier {
-  BuildContext context;
+class RegisterStep3ScreenVm extends ChangeNotifier with RbioVm {
+  @override
+  BuildContext mContext;
+  RegisterStep3ScreenVm(this.mContext);
+
   LoadingDialog loadingDialog;
   CountryListResponse countryList;
   DateTime selectedDate;
-
-  RegisterStep3ScreenVm(this.context) {}
 
   void registerStep3(
       UserRegistrationStep3Model userRegistrationStep3,
       UserRegistrationStep3Model userRegistrationStep3Model,
       bool isWithoutTCKN) async {
     try {
-      showLoadingDialog(context);
+      showLoadingDialog(mContext);
       GuvenResponseModel response;
       if (isWithoutTCKN) {
         response = await getIt<Repository>()
@@ -27,7 +28,7 @@ class RegisterStep3ScreenVm with ChangeNotifier {
             await getIt<Repository>().registerStep3Ui(userRegistrationStep3);
       }
 
-      hideDialog(context);
+      hideDialog(mContext);
       if (response.isSuccessful == true) {
         Atom.to(PagePaths.LOGIN, isReplacement: true);
         Atom.show(
@@ -47,40 +48,27 @@ class RegisterStep3ScreenVm with ChangeNotifier {
           ),
         );
       } else {
-        showGradientDialog(context, LocaleProvider.of(context).warning,
-            response.message.toString());
+        showInfoDialog(
+          LocaleProvider.of(mContext).warning,
+          response.message.toString(),
+        );
       }
-    } catch (error) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        print(error);
-        hideDialog(context);
-        showGradientDialog(
-            context,
-            LocaleProvider.of(context).warning,
-            error.toString() == "network"
-                ? LocaleProvider.of(context).no_network_connection
-                : LocaleProvider.of(context).sorry_dont_transaction);
-      });
+    } catch (error, stackTrace) {
+      showDelayedErrorDialog(
+        error,
+        stackTrace,
+        () => hideDialog(this.mContext),
+      );
     }
-  }
-
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
   }
 
   void showLoadingDialog(BuildContext context) async {
     await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
-    //builder: (BuildContext context) => WillPopScope(child:loadingDialog = LoadingDialog() , onWillPop:  () async => false,));
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
   }
 
   void hideDialog(BuildContext context) {

@@ -52,6 +52,21 @@ class Utils {
   }
   // #endregion
 
+  // #region forcePortraitOrientation
+  void forcePortraitOrientation() {
+    SystemChrome.setPreferredOrientations(
+      [
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ],
+    );
+  }
+  // #endregion
+
+  void releaseOrientation() {
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+  }
+
   // #region getCacheApiCallList
   Future<List<T>> getCacheApiCallList<T extends IBaseModel>(
     String url,
@@ -382,7 +397,7 @@ class Utils {
                             textAlign: TextAlign.left,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: context.xHeadline3.copyWith(
+                            style: context.xHeadline4.copyWith(
                               fontWeight: FontWeight.bold,
                               color: getIt<ITheme>().textColor,
                             ),
@@ -651,16 +666,6 @@ class UtilityManager {
             ),
           ),
         );
-      },
-    );
-  }
-
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
       },
     );
   }

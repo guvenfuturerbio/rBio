@@ -16,6 +16,8 @@ class PatientNotifiers extends ChangeNotifier {
     return _patientNotifiers;
   }
 
+  static PatientNotifiers get instace => _patientNotifiers;
+
   PatientNotifiers._internal();
 
   Future<void> fetchPatientDetail({@required int patientId}) async {

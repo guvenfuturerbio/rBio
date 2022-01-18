@@ -7,31 +7,37 @@ import '../../../model/model.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../auth.dart';
 
-class RegisterStep2ScreenVm with ChangeNotifier {
-  BuildContext context;
-  LoadingDialog loadingDialog;
-  CountryListResponse countryList;
-  DateTime selectedDate;
-  bool isWithOutTCKN;
-  bool _clickedGeneralForm;
-
-  bool _checkLowerCase;
-  bool _checkNumeric;
-  bool _checkSpecial;
-  bool _checkUpperCase;
-  bool _checkLength;
-  bool isTcCitizen = true;
-
-  //
-  String textFromPassController;
-  String textFromPassAgainController;
-
-  RegisterStep2ScreenVm(this.context) {
+class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
+  @override
+  BuildContext mContext;
+  RegisterStep2ScreenVm(this.mContext) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchConsentFormState();
     });
   }
 
+  LoadingDialog loadingDialog;
+  CountryListResponse countryList;
+  DateTime selectedDate;
+  bool isWithOutTCKN;
+  bool _clickedGeneralForm;
+  bool isTcCitizen = true;
+  String textFromPassController;
+  String textFromPassAgainController;
+
+  // Fields
+  bool _checkLowerCase;
+  bool _checkNumeric;
+  bool _checkSpecial;
+  bool _checkUpperCase;
+  bool _checkLength;
+
+  // Getters
+  bool get checkLowerCase => this._checkLowerCase ?? false;
+  bool get checkUpperCase => this._checkUpperCase ?? false;
+  bool get checkNumeric => this._checkNumeric ?? false;
+  bool get checkSpecial => this._checkSpecial ?? false;
+  bool get checkLength => this._checkLength ?? false;
   bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
 
   void passwordFetcher(String fromPwController) {
@@ -42,39 +48,13 @@ class RegisterStep2ScreenVm with ChangeNotifier {
     textFromPassAgainController = fromPwAgainController;
   }
 
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
-  }
-
-  void showLoadingDialog(BuildContext context) async {
-    await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
-    //builder: (BuildContext context) => WillPopScope(child:loadingDialog = LoadingDialog() , onWillPop:  () async => false,));
-  }
-
-  void hideDialog(BuildContext context) {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
-      Navigator.of(context).pop();
-      loadingDialog = null;
-    }
-  }
-
   Future<void> getCountries() async {
     try {
-      showLoadingDialog(context);
+      showLoadingDialog(mContext);
       final response = await getIt<Repository>().getCountries();
       countryList = CountryListResponse.fromMap(response.toJson());
       notifyListeners();
-      hideDialog(context);
+      hideDialog(mContext);
     } catch (error) {
       //
     }
@@ -115,7 +95,7 @@ class RegisterStep2ScreenVm with ChangeNotifier {
   Future<void> registerStep1(RegisterStep1PusulaModel userRegistrationStep1,
       UserRegistrationStep1Model registerStep1Model) async {
     try {
-      showLoadingDialog(context);
+      showLoadingDialog(mContext);
       GuvenResponseModel response;
       if (userRegistrationStep1.identityNumber.trim().isEmpty ||
           registerStep1Model.identificationNumber.trim().isEmpty) {
@@ -128,7 +108,7 @@ class RegisterStep2ScreenVm with ChangeNotifier {
             await getIt<Repository>().registerStep1Ui(userRegistrationStep1);
       }
 
-      hideDialog(context);
+      hideDialog(mContext);
       if (response.datum == 18 ||
           response.datum == 19 ||
           response.datum == 21 ||
@@ -155,75 +135,83 @@ class RegisterStep2ScreenVm with ChangeNotifier {
             isWithOutTCKN,
           );
         } else {
-          showGradientDialog(
-            context,
-            LocaleProvider.of(context).warning,
-            LocaleProvider.of(context).fill_all_field,
+          showInfoDialog(
+            LocaleProvider.of(mContext).warning,
+            LocaleProvider.of(mContext).fill_all_field,
           );
         }
       } else if (response.datum == 5 || response.datum == 2) {
-        showGradientDialog(context, LocaleProvider.of(context).warning,
-            "TC Kimlik numarası hatalı");
+        showInfoDialog(
+          LocaleProvider.of(mContext).warning,
+          "TC Kimlik numarası hatalı",
+        );
       } else if (response.datum == 4) {
-        showGradientDialog(context, LocaleProvider.of(context).warning,
-            LocaleProvider.of(context).already_registered_mail);
+        showInfoDialog(
+          LocaleProvider.of(mContext).warning,
+          LocaleProvider.of(mContext).already_registered_mail,
+        );
       } else if (response.datum == 15) {
-        showGradientDialog(context, LocaleProvider.of(context).warning,
-            LocaleProvider.of(context).already_registered_phone);
+        showInfoDialog(
+          LocaleProvider.of(mContext).warning,
+          LocaleProvider.of(mContext).already_registered_phone,
+        );
       } else if (response.datum == 16) {
-        showGradientDialog(context, LocaleProvider.of(context).warning,
-            LocaleProvider.of(context).credential_already_exist);
+        showInfoDialog(
+          LocaleProvider.of(mContext).warning,
+          LocaleProvider.of(mContext).credential_already_exist,
+        );
       } else {
-        showGradientDialog(context, LocaleProvider.of(context).warning,
-            response.message.toString());
+        showInfoDialog(
+          LocaleProvider.of(mContext).warning,
+          response.message.toString(),
+        );
       }
-    } catch (error) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        hideDialog(context);
-        showGradientDialog(
-            context,
-            LocaleProvider.of(context).warning,
-            error.toString() == "network"
-                ? LocaleProvider.of(context).no_network_connection
-                : LocaleProvider.of(context).sorry_dont_transaction);
-      });
+    } catch (error, stackTrace) {
+      showDelayedErrorDialog(
+        error,
+        stackTrace,
+        () => hideDialog(this.mContext),
+      );
+    } finally {
+      notifyListeners();
     }
   }
 
-  fetchConsentFormState() async {
+  Future<void> fetchConsentFormState() async {
     this._clickedGeneralForm =
         await getIt<UserManager>().getApplicationConsentFormState();
     notifyListeners();
   }
 
-  toggleGeneralFormClick() {
+  void toggleGeneralFormClick() {
     this._clickedGeneralForm = !clickedGeneralForm;
     if (clickedGeneralForm) {}
     notifyListeners();
   }
 
-  showApplicationContestForm() {
+  void showApplicationContestForm() {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return ConsentFormDialog(
-            title: LocaleProvider.current.approve_consent_form,
-            text: LocaleProvider.current.application_consent_form_text,
-            alwaysAsk: false,
-          );
-        }).then((value) async {
-      if (value != null && value) {
-        this._clickedGeneralForm = true;
-        notifyListeners();
-      } else if (value != null && !value) {
-        this._clickedGeneralForm = false;
-        notifyListeners();
-      }
-    });
+      context: mContext,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ConsentFormDialog(
+          title: LocaleProvider.current.approve_consent_form,
+          text: LocaleProvider.current.application_consent_form_text,
+          alwaysAsk: false,
+        );
+      },
+    ).then(
+      (value) async {
+        if (value != null && value) {
+          this._clickedGeneralForm = true;
+          notifyListeners();
+        } else if (value != null && !value) {
+          this._clickedGeneralForm = false;
+          notifyListeners();
+        }
+      },
+    );
   }
-
-  //
 
   void registerStep2(
     UserRegistrationStep2Model userRegistrationStep2,
@@ -234,7 +222,7 @@ class RegisterStep2ScreenVm with ChangeNotifier {
         ? userRegistrationStep2Model.password
         : userRegistrationStep2.password)) {
       try {
-        showLoadingDialog(context);
+        showLoadingDialog(mContext);
         GuvenResponseModel response;
         if (isWithoutTCKN) {
           response = await getIt<Repository>()
@@ -244,7 +232,7 @@ class RegisterStep2ScreenVm with ChangeNotifier {
               await getIt<Repository>().registerStep2Ui(userRegistrationStep2);
         }
 
-        hideDialog(context);
+        hideDialog(mContext);
         if (response.isSuccessful == true) {
           if (response.datum == 6) {
             Atom.to(
@@ -257,39 +245,20 @@ class RegisterStep2ScreenVm with ChangeNotifier {
             );
           }
         } else {
-          showGradientDialog(
-            context,
-            LocaleProvider.of(context).warning,
+          showInfoDialog(
+            LocaleProvider.of(mContext).warning,
             response.message.toString(),
           );
         }
-      } catch (error) {
-        Future.delayed(
-          const Duration(milliseconds: 500),
-          () {
-            print(error);
-            hideDialog(context);
-            showGradientDialog(
-                context,
-                LocaleProvider.of(context).warning,
-                error.toString() == "network"
-                    ? LocaleProvider.of(context).no_network_connection
-                    : LocaleProvider.of(context).sorry_dont_transaction);
-          },
+      } catch (error, stackTrace) {
+        showDelayedErrorDialog(
+          error,
+          stackTrace,
+          () => hideDialog(this.mContext),
         );
       }
     }
   }
-
-  get checkLowerCase => this._checkLowerCase ?? false;
-
-  get checkUpperCase => this._checkUpperCase ?? false;
-
-  get checkNumeric => this._checkNumeric ?? false;
-
-  get checkSpecial => this._checkSpecial ?? false;
-
-  get checkLength => this._checkLength ?? false;
 
   void checkPasswordCapability(String password) {
     this._checkLowerCase = PasswordAdvisor().checkLowercase(password);
@@ -306,5 +275,21 @@ class RegisterStep2ScreenVm with ChangeNotifier {
   void toggleCitizen() {
     isTcCitizen = !isTcCitizen;
     notifyListeners();
+  }
+
+  void showLoadingDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
+  }
+
+  void hideDialog(BuildContext context) {
+    if (loadingDialog != null && loadingDialog.isShowing()) {
+      Navigator.of(context).pop();
+      loadingDialog = null;
+    }
   }
 }

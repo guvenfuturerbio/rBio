@@ -27,9 +27,12 @@ class _HomeSliderState extends State<HomeSlider> {
         HomeVm vm,
         Widget child,
       ) {
-        return SizedBox(
+        return Container(
           height: getHeight(context),
           width: Atom.width,
+          margin: EdgeInsets.symmetric(
+            horizontal: 7,
+          ),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -67,7 +70,7 @@ class _HomeSliderState extends State<HomeSlider> {
                             imageUrl: vm.bannerTabsModel[itemIndex].imageUrl,
                             errorWidget: (context, url, error) =>
                                 Center(child: Icon(Icons.error)),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -108,12 +111,11 @@ class _HomeSliderState extends State<HomeSlider> {
                             ),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: (Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : getIt<ITheme>().mainColor)
-                                  .withOpacity(
-                                _current == entry.key ? 0.9 : 0.4,
+                              color: getIt<ITheme>().mainColor.withOpacity(
+                                  _current == entry.key ? 0.9 : 0.4),
+                              border: Border.all(
+                                color: R.color.white,
+                                width: 0.5,
                               ),
                             ),
                           ),
@@ -137,52 +139,4 @@ class _HomeSliderState extends State<HomeSlider> {
   void _launchURL(String url) async {
     if (!await launch(url)) throw 'Could not launch $url';
   }
-
-  List<Widget> cardList = [
-    SizedBox(
-      width: Atom.width,
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-      ),
-    ),
-    SizedBox(
-      width: Atom.width,
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-      ),
-    ),
-    SizedBox(
-      width: Atom.width,
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            "https://images.unsplash.com/photo-1636512957897-f3c28ba56e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80",
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-      ),
-    ),
-  ];
 }

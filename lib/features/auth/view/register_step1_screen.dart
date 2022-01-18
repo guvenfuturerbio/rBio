@@ -382,8 +382,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                       },
                     );
                   } else {
-                    vm.showGradientDialog(
-                      context,
+                    vm.showInfoDialog(
                       LocaleProvider.of(context).warning,
                       LocaleProvider.of(context).fill_all_field,
                     );

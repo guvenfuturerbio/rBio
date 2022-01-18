@@ -3,10 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
 import 'core/core.dart';
 import 'core/notifiers/notification_badge_notifier.dart';
 import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
@@ -24,7 +22,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
   FirebaseMessagingManager.mainInit();
   await setupLocator(appConfig);
-  _setupLogging();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(
@@ -41,15 +38,6 @@ Future<void> main() async {
     RbioConfig(
       child: MyApp(),
     ),
-  );
-}
-
-void _setupLogging() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen(
-    (rec) {
-      LoggerUtils.instance.w('${rec.level.name}: ${rec.time}: ${rec.message}');
-    },
   );
 }
 

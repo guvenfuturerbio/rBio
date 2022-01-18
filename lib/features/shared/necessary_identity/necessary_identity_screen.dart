@@ -18,7 +18,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<NecessaryIdentityScreenVm>(
-      create: (context) => NecessaryIdentityScreenVm(context: context),
+      create: (context) => NecessaryIdentityScreenVm(context),
       child: Consumer<NecessaryIdentityScreenVm>(
         builder: (BuildContext context, NecessaryIdentityScreenVm value,
             Widget child) {

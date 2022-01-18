@@ -10,8 +10,6 @@ import '../../../model/model.dart';
 import 'appointment_list_vm.dart';
 
 class AppointmentListScreen extends StatefulWidget {
-  String roomId;
-
   AppointmentListScreen();
 
   @override
@@ -126,7 +124,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         Expanded(
           child: vm.patientAppointments.length > 0
               ? ListView.builder(
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.only(
+                    bottom: R.sizes.defaultBottomValue,
+                  ),
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),
                   itemCount: posts.length,
@@ -210,73 +210,150 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         return Center(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
-            child: Wrap(
-              spacing: 4,
-              alignment: WrapAlignment.center,
-              runAlignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                RbioElevatedButton(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 2.0,
-                  ),
-                  title: "Upload\nFile",
-                  onTap: () async {
-                    Uint8List fileBytes = await value.getSelectedFile();
+            child: context.xTextScaleType == TextScaleType.Small
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: RbioElevatedAutoButton(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 2.0,
+                          ),
+                          title: "Upload\nFile",
+                          onTap: () async {
+                            Uint8List fileBytes = await value.getSelectedFile();
 
-                    if (fileBytes != null) {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return GuvenAlert(
-                            backgroundColor: Colors.white,
-                            title: GuvenAlert.buildTitle(
-                              LocaleProvider().upload_file_question,
-                            ),
-                            actions: [
-                              GuvenAlert.buildMaterialAction(
-                                LocaleProvider.of(context).confirm,
-                                () async {
-                                  await value.uploadFile(fileBytes);
-                                  Navigator.pop(context);
+                            if (fileBytes != null) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (BuildContext context) {
+                                  return GuvenAlert(
+                                    backgroundColor: Colors.white,
+                                    title: GuvenAlert.buildTitle(
+                                      LocaleProvider().upload_file_question,
+                                    ),
+                                    actions: [
+                                      GuvenAlert.buildMaterialAction(
+                                        LocaleProvider.of(context).confirm,
+                                        () async {
+                                          await value.uploadFile(fileBytes);
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                    content: SizedBox(),
+                                  );
                                 },
-                              ),
-                            ],
-                            content: SizedBox(),
-                          );
+                              );
+                            }
+                          },
+                        ),
+                      ),
+
+                      //
+                      R.sizes.wSizer4,
+
+                      //
+                      Expanded(
+                        child: RbioElevatedAutoButton(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 2.0,
+                          ),
+                          title: "Request\nTranslator",
+                          onTap: () {
+                            value.showTranslatorSelector(data.id.toString());
+                          },
+                        ),
+                      ),
+
+                      //
+                      R.sizes.wSizer4,
+
+                      //
+                      Expanded(
+                        child: RbioElevatedAutoButton(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 2.0,
+                          ),
+                          title: "Start\nMeeting",
+                          onTap: () {
+                            value.handleAppointment(data);
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : Wrap(
+                    spacing: 4,
+                    runSpacing: 5,
+                    alignment: WrapAlignment.center,
+                    runAlignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      RbioElevatedButton(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 2.0,
+                        ),
+                        title: "Upload\nFile",
+                        onTap: () async {
+                          Uint8List fileBytes = await value.getSelectedFile();
+
+                          if (fileBytes != null) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (BuildContext context) {
+                                return GuvenAlert(
+                                  backgroundColor: Colors.white,
+                                  title: GuvenAlert.buildTitle(
+                                    LocaleProvider().upload_file_question,
+                                  ),
+                                  actions: [
+                                    GuvenAlert.buildMaterialAction(
+                                      LocaleProvider.of(context).confirm,
+                                      () async {
+                                        await value.uploadFile(fileBytes);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                  content: SizedBox(),
+                                );
+                              },
+                            );
+                          }
                         },
-                      );
-                    }
-                  },
-                ),
+                      ),
 
-                //
-                RbioElevatedButton(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 2.0,
-                  ),
-                  title: "Request\nTranslator",
-                  onTap: () {
-                    value.showTranslatorSelector(data.id.toString());
-                  },
-                ),
+                      //
+                      RbioElevatedButton(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 2.0,
+                        ),
+                        title: "Request\nTranslator",
+                        onTap: () {
+                          value.showTranslatorSelector(data.id.toString());
+                        },
+                      ),
 
-                //
-                RbioElevatedButton(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 2.0,
+                      //
+                      RbioElevatedButton(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 2.0,
+                        ),
+                        title: "Start\nMeeting",
+                        onTap: () {
+                          value.handleAppointment(data);
+                        },
+                      ),
+                    ],
                   ),
-                  title: "Start\nMeeting",
-                  onTap: () {
-                    value.handleAppointment(data);
-                  },
-                ),
-              ],
-            ),
           ),
         );
       }

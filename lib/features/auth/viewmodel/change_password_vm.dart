@@ -4,15 +4,12 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../../core/core.dart';
 import '../../../model/shared/user_login_info.dart';
 
-class ChangePasswordScreenVm extends ChangeNotifier {
+class ChangePasswordScreenVm extends ChangeNotifier with RbioVm {
+  @override
   BuildContext mContext;
+
   LoadingProgress _progress;
-  final focus = FocusNode();
-  final TextEditingController _passwordController = new TextEditingController();
-  final TextEditingController _passwordAgainController =
-      new TextEditingController();
-  final TextEditingController _oldPasswordController =
-      new TextEditingController();
+
   bool _checkLowerCase;
   bool _checkNumeric;
   bool _checkSpecial;
@@ -32,11 +29,6 @@ class ChangePasswordScreenVm extends ChangeNotifier {
   }
 
   LoadingProgress get progress => this._progress;
-  TextEditingController get passwordController => this._passwordController;
-  TextEditingController get passwordAgainController =>
-      this._passwordAgainController;
-  TextEditingController get oldPasswordController =>
-      this._oldPasswordController;
   FocusNode get passwordFNode => this._passwordFNode;
   FocusNode get passwordAgainFNode => this._passwordAgainFNode;
   FocusNode get oldPasswordFNode => this._oldPasswordFNode;
@@ -70,20 +62,22 @@ class ChangePasswordScreenVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> changePassword() async {
-    if (checkPasswordCapabilityForAll(this._passwordController.text)) {
+  Future<void> changePassword({
+    @required String newPassword,
+    @required String oldPassword,
+  }) async {
+    if (checkPasswordCapabilityForAll(newPassword)) {
       try {
         showLoadingDialog(this.mContext);
         notifyListeners();
-        final response = await getIt<Repository>().changeUserPasswordUi(
-            this._oldPasswordController.text, this._passwordController.text);
+        final response = await getIt<Repository>()
+            .changeUserPasswordUi(oldPassword, newPassword);
         hideDialog(this.mContext);
         if (response.isSuccessful == true) {
           UserLoginInfo userLoginInfo =
               await getIt<UserManager>().getSavedLoginInfo();
-          await getIt<ISharedPreferencesManager>().setString(
-              SharedPreferencesKeys.LOGIN_PASSWORD,
-              this._passwordController.text);
+          await getIt<ISharedPreferencesManager>()
+              .setString(SharedPreferencesKeys.LOGIN_PASSWORD, newPassword);
           bool rememberChecked = userLoginInfo.password != "" ? true : false;
           await getIt<UserManager>().saveLoginInfo(
             userLoginInfo.username,
@@ -92,8 +86,7 @@ class ChangePasswordScreenVm extends ChangeNotifier {
             getIt<ISharedPreferencesManager>()
                 .getString(SharedPreferencesKeys.JWT_TOKEN),
           );
-          showGradientDialog(
-            this.mContext,
+          showInfoDialog(
             LocaleProvider.of(this.mContext).success_message_title,
             LocaleProvider.of(this.mContext).succefully_created_pass,
           );
@@ -102,32 +95,32 @@ class ChangePasswordScreenVm extends ChangeNotifier {
           try {
             int errorCode = response.datum;
             if (errorCode == 1) {
-              showGradientDialog(
-                  this.mContext,
-                  LocaleProvider.of(this.mContext).warning,
-                  LocaleProvider.of(this.mContext).error_old_password_wrong);
-            } else if (errorCode == 2) {
-              showGradientDialog(
-                  this.mContext,
-                  LocaleProvider.of(this.mContext).warning,
-                  LocaleProvider.of(this.mContext).error_password_mismatch);
-            } else if (errorCode == 4) {
-              showGradientDialog(
-                  this.mContext,
-                  LocaleProvider.of(this.mContext).warning,
-                  LocaleProvider.of(this.mContext).error_system_malfunction);
-            } else {
-              showGradientDialog(
-                  this.mContext,
-                  LocaleProvider.of(this.mContext).warning,
-                  LocaleProvider.of(this.mContext).sorry_dont_transaction);
-            }
-            notifyListeners();
-          } catch (e) {
-            showGradientDialog(
-                this.mContext,
+              showInfoDialog(
                 LocaleProvider.of(this.mContext).warning,
-                LocaleProvider.of(this.mContext).sorry_dont_transaction);
+                LocaleProvider.of(this.mContext).error_old_password_wrong,
+              );
+            } else if (errorCode == 2) {
+              showInfoDialog(
+                LocaleProvider.of(this.mContext).warning,
+                LocaleProvider.of(this.mContext).error_password_mismatch,
+              );
+            } else if (errorCode == 4) {
+              showInfoDialog(
+                LocaleProvider.of(this.mContext).warning,
+                LocaleProvider.of(this.mContext).error_system_malfunction,
+              );
+            } else {
+              showInfoDialog(
+                LocaleProvider.of(this.mContext).warning,
+                LocaleProvider.of(this.mContext).sorry_dont_transaction,
+              );
+            }
+          } catch (e) {
+            showInfoDialog(
+              LocaleProvider.of(this.mContext).warning,
+              LocaleProvider.of(this.mContext).sorry_dont_transaction,
+            );
+          } finally {
             notifyListeners();
           }
         }
@@ -136,36 +129,25 @@ class ChangePasswordScreenVm extends ChangeNotifier {
         Future.delayed(const Duration(milliseconds: 500), () {
           hideDialog(this.mContext);
           showGradientDialog(
-              this.mContext,
-              LocaleProvider.of(this.mContext).warning,
-              error.toString() == "network"
-                  ? LocaleProvider.of(this.mContext).no_network_connection
-                  : LocaleProvider.of(this.mContext).sorry_dont_transaction);
+            LocaleProvider.of(this.mContext).warning,
+            LocaleProvider.of(this.mContext).sorry_dont_transaction,
+            false,
+          );
         });
-        debugPrintStack(stackTrace: stk);
+      } finally {
         notifyListeners();
       }
     }
   }
 
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: this.mContext,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
-  }
-
   void showLoadingDialog(BuildContext context) async {
-    await new Future.delayed(new Duration(milliseconds: 30));
+    await Future.delayed(new Duration(milliseconds: 30));
     await showDialog(
-        context: this.mContext,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
-    //builder: (BuildContext context) => WillPopScope(child:loadingDialog = LoadingDialog() , onWillPop:  () async => false,));
+      context: this.mContext,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
   }
 
   void hideDialog(BuildContext context) {

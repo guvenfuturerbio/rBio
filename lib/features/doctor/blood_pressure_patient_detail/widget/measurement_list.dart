@@ -37,7 +37,7 @@ class _MeasurementList extends StatelessWidget {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: (context.HEIGHT * .1) * context.TEXTSCALE,
+                height: (context.HEIGHT * .07) * context.TEXTSCALE,
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
@@ -82,6 +82,7 @@ class _MeasurementList extends StatelessWidget {
         );
       },
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -107,13 +108,9 @@ class _MeasurementList extends StatelessWidget {
   Container _listItem(BuildContext context, BpMeasurementViewModel item) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-      height: context.HEIGHT * .12 * context.TEXTSCALE,
+      height: context.HEIGHT * .08 * context.TEXTSCALE,
       decoration: BoxDecoration(
-        color: Colors.green,
-        gradient: LinearGradient(
-            colors: [Colors.white, Colors.white],
-            begin: Alignment.bottomLeft,
-            end: Alignment.centerRight),
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
               color: Colors.black.withAlpha(50),
@@ -123,7 +120,7 @@ class _MeasurementList extends StatelessWidget {
         ],
         borderRadius: const BorderRadius.all(Radius.circular(30.0)),
       ),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(8),
       child: Row(
         children: [
           Expanded(
@@ -151,18 +148,25 @@ class _MeasurementList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text(
-          parameter,
-          style: context.xHeadline5,
-          overflow: TextOverflow.ellipsis,
+        Expanded(
+          child: Text(
+            parameter,
+            style: context.xBodyText2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        Text(
-          measurement,
-          style: context.xHeadline3,
+        Expanded(
+          flex: 2,
+          child: Text(
+            measurement,
+            style: context.xHeadline4,
+          ),
         ),
-        Text(
-          unit,
-          style: context.xBodyText2,
+        Expanded(
+          child: Text(
+            unit,
+            style: context.xBodyText2,
+          ),
         ),
       ],
     );

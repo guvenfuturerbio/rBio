@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:countup/countup.dart';
@@ -136,7 +137,7 @@ class _BloodGlucosePatientDetailScreenState
         scrollDirection: Axis.vertical,
         physics: BouncingScrollPhysics(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -182,14 +183,25 @@ class _BloodGlucosePatientDetailScreenState
 
             //
             if (!vm.isDataLoading) ...[
-              _GraphHeaderSection(
-                value: vm,
-                controller: _controller,
-              ),
+              vm.isChartShow
+                  ? _GraphHeaderSection(
+                      value: vm,
+                      controller: _controller,
+                    )
+                  : Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
+                      child: RbioElevatedButton(
+                        title: LocaleProvider.current.open_chart,
+                        onTap: vm.changeChartShowStatus,
+                      ),
+                    ),
               if (MediaQuery.of(context).orientation == Orientation.portrait)
                 //
                 SizedBox(
-                  height: context.HEIGHT * .5,
+                  height: vm.isChartShow
+                      ? context.HEIGHT * .5
+                      : context.HEIGHT * .8,
                   child: _MeasurementList(
                     bgMeasurements: vm.bgMeasurements,
                     scrollController: _controller,

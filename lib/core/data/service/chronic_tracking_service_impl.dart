@@ -27,7 +27,8 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<StripDetailModel> getUserStrip(int entegrationId, String deviceUUID) async {
+  Future<StripDetailModel> getUserStrip(
+      int entegrationId, String deviceUUID) async {
     final response = await helper.getGuven(
         R.endpoints.ct_getUserStrip(entegrationId, deviceUUID),
         options: authOptions);
@@ -208,6 +209,21 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       return response;
     } else {
       throw Exception('/updateProfile : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> addTreatment(
+      Person person, String treatment) async {
+    final response = await helper.patchGuven(
+      R.endpoints.ct_updateProfile(person.id),
+      data: person.toJson(treatment: treatment),
+      options: authOptions,
+    );
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception('/addTreatment : ${response.isSuccessful}');
     }
   }
 

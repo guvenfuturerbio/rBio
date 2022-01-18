@@ -2995,10 +2995,10 @@ class LocaleProvider {
     );
   }
 
-  /// `This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in ANKARA GUVEN HOSPITAL and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.`
+  /// `This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.`
   String get request_and_suggestions_text {
     return Intl.message(
-      'This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in ANKARA GUVEN HOSPITAL and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.',
+      'This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.',
       name: 'request_and_suggestions_text',
       desc: '',
       args: [],
@@ -7590,6 +7590,56 @@ class LocaleProvider {
     return Intl.message(
       'Please register a device',
       name: 'device_register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detailed Symptom Checker`
+  String get detailed_symptom {
+    return Intl.message(
+      'Detailed Symptom Checker',
+      name: 'detailed_symptom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have 7 widgets currently in use. Remove one of them to add new widget`
+  String get widgets_add_message {
+    return Intl.message(
+      'You have 7 widgets currently in use. Remove one of them to add new widget',
+      name: 'widgets_add_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Graph`
+  String get open_chart {
+    return Intl.message(
+      'Show Graph',
+      name: 'open_chart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hide Graph`
+  String get close_chart {
+    return Intl.message(
+      'Hide Graph',
+      name: 'close_chart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent Appointments`
+  String get recent_appointments {
+    return Intl.message(
+      'Recent Appointments',
+      name: 'recent_appointments',
       desc: '',
       args: [],
     );

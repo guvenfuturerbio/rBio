@@ -3,42 +3,44 @@ import 'package:get/get_connect/http/src/http.dart';
 
 import '../../../core/core.dart';
 
-class NecessaryIdentityScreenVm extends ChangeNotifier {
+class NecessaryIdentityScreenVm extends ChangeNotifier with RbioVm {
+  @override
   BuildContext mContext;
+  NecessaryIdentityScreenVm(this.mContext);
+
   Progress _progress;
   LoadingDialog loadingDialog;
 
-  NecessaryIdentityScreenVm({BuildContext context}) {
-    this.mContext = context;
-  }
-
   Progress get progress => this._progress;
 
-  updateIdentity(String identityNumber) async {
+  Future<void> updateIdentity(String identityNumber) async {
     if (identityNumber.isNotEmpty) {
       try {
         showLoadingDialog();
         await getIt<UserManager>().updateIdentityOps(identityNumber);
         hideDialog();
         Navigator.pop(mContext, true);
-      } catch (e) {
-        print("update identity error " + e.toString());
+      } catch (e, stackTrace) {
         hideDialog();
-        showGradientDialog(
-            LocaleProvider.current.warning,
-            e == 5
-                ? LocaleProvider.current.doesnt_match_tc
-                : LocaleProvider.current.sorry_dont_transaction);
+        showDefaultErrorDialog(
+          e,
+          stackTrace,
+          LocaleProvider.current.warning,
+          e == 5
+              ? LocaleProvider.current.doesnt_match_tc
+              : LocaleProvider.current.sorry_dont_transaction,
+        );
       }
     }
   }
 
   void showLoadingDialog() async {
     await showDialog(
-        context: mContext,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
+      context: mContext,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
   }
 
   void hideDialog() {
@@ -46,15 +48,5 @@ class NecessaryIdentityScreenVm extends ChangeNotifier {
       Navigator.of(mContext).pop();
       loadingDialog = null;
     }
-  }
-
-  void showGradientDialog(String title, String text) {
-    showDialog(
-      context: mContext,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
   }
 }

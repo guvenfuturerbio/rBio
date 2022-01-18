@@ -17,15 +17,20 @@ Widget _buildHistoryDoctorCard(
         child: Column(
           children: [
             ClipOval(
-              child: Image.network(vm.doctorsImageUrls[index],
-                  fit: BoxFit.cover,
-                  width: Atom.width * .14,
-                  height: Atom.width * .14),
+              child: Image.network(
+                vm.doctorsImageUrls[index],
+                fit: BoxFit.cover,
+                width: Atom.width * .14,
+                height: Atom.width * .14,
+              ),
             ),
+
+            //
             Text(
               doctorName,
-              textAlign: TextAlign.center,
               maxLines: 3,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(color: getIt<ITheme>().grey),
             )
           ],

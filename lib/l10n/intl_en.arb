@@ -295,7 +295,7 @@
   "doctor_legand": "(Not Satisfied 1 … 5 Very Satisfied)",
   "rate": "Rate",
   "request_and_suggestions": "Requests and Suggestions",
-  "request_and_suggestions_text": "This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in ANKARA GUVEN HOSPITAL and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.",
+  "request_and_suggestions_text": "This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution.",
   "accept_application_consent_form": "I have read, understood and approve the application consent form.",
   "application_consent_form_text": "Within the scope of this application, no medical procedure (such as examination, diagnosis, diagnosis, treatment) is offered or promised to you. In addition to using the application, you should be examined by a physician before making any health-related decision. All responsibility for the use of the application belongs to you, the application is provided \"as is\" and no guarantee is given to you. The service provided to you within the scope of the application is by no means the equivalent of being examined by a physician or following your health condition one-to-one by a physician. You should consult your physician for medical diagnosis and treatment, do not delay your controls, and apply to the nearest emergency room without wasting time in any emergency. Otherwise, we will not accept any responsibility.",
   "application_consent_form": "Application Consent Form",
@@ -756,5 +756,10 @@
   "healthcare_employee": "Healthcare Employee",
   "update": "Update",
   "change": "Change",
-  "device_register": "Please register a device"
+  "device_register": "Please register a device",
+  "detailed_symptom": "Detailed Symptom Checker",
+  "widgets_add_message": "You have 7 widgets currently in use. Remove one of them to add new widget",
+  "open_chart": "Show Graph",
+  "close_chart": "Hide Graph",
+  "recent_appointments": "Recent Appointments"
 }

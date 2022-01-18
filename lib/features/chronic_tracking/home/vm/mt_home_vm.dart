@@ -19,7 +19,7 @@ class MeasurementTrackingVm with ChangeNotifier {
     });
   }
 
-  void getValues() async {
+  Future<void> getValues() async {
     try {
       _state = LoadingProgress.LOADING;
       notifyListeners();
@@ -28,41 +28,47 @@ class MeasurementTrackingVm with ChangeNotifier {
         await getIt<GlucoseStorageImpl>().checkLastGlucoseData();
         await getIt<ScaleStorageImpl>().checkLastScale();
         await getIt<BloodPressureStorageImpl>().checkLastBp();
+
         items = [
           HomePageModel<BgProgressPageViewModel>(
-              title: '${LocaleProvider.current.blood_glucose_progress}',
-              key: Key('Glucose'),
-              activateCallBack: (key) => setActiveItem(key),
-              deActivateCallBack: deActivateItem),
+            title: '${LocaleProvider.current.blood_glucose_progress}',
+            key: Key('Glucose'),
+            activateCallBack: (key) => setActiveItem(key),
+            deActivateCallBack: deActivateItem,
+          ),
           HomePageModel<ScaleProgressPageViewModel>(
-              title: '${LocaleProvider.current.scale_progress}',
-              key: Key('Scale'),
-              activateCallBack: (key) => setActiveItem(key),
-              deActivateCallBack: deActivateItem),
+            title: '${LocaleProvider.current.scale_progress}',
+            key: Key('Scale'),
+            activateCallBack: (key) => setActiveItem(key),
+            deActivateCallBack: deActivateItem,
+          ),
           HomePageModel<BpProgressPageVm>(
-              title: '${LocaleProvider.current.scale_progress}',
-              key: Key('Pressure'),
-              activateCallBack: (key) => setActiveItem(key),
-              deActivateCallBack: deActivateItem),
+            title: '${LocaleProvider.current.scale_progress}',
+            key: Key('Pressure'),
+            activateCallBack: (key) => setActiveItem(key),
+            deActivateCallBack: deActivateItem,
+          ),
         ];
+
         _state = LoadingProgress.DONE;
         notifyListeners();
       }
     } catch (e, stk) {
-      print(e);
       debugPrintStack(stackTrace: stk);
       _state = LoadingProgress.ERROR;
       notifyListeners();
     }
   }
 
-  setActiveItem(Key key) {
+  void setActiveItem(Key key) {
     activeItem = items.firstWhere((element) => element.key == key);
+    Utils.instance.releaseOrientation();
     notifyListeners();
   }
 
-  deActivateItem() {
+  void deActivateItem() {
     activeItem = null;
+    Utils.instance.forcePortraitOrientation();
     notifyListeners();
   }
 }
