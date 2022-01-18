@@ -28,7 +28,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
             id: e.id,
             color: Utils.instance.fetchMeasurementColor(
                 measurement: int.parse(e.bloodGlucoseMeasurement.value),
-                criticMin: PatientNotifiers().patientDetail.hypo,
+                criticMin: PatientNotifiers.instace.patientDetail.hypo,
                 criticMax: PatientNotifiers().patientDetail.hyper,
                 targetMax: PatientNotifiers().patientDetail.rangeMax,
                 targetMin: PatientNotifiers().patientDetail.rangeMin),

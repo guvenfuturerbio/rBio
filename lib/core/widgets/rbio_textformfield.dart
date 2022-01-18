@@ -22,6 +22,7 @@ class RbioTextFormField extends StatelessWidget {
   final int maxLines;
   final Widget prefixIcon;
   final int maxLength;
+  final bool enabled;
 
   const RbioTextFormField(
       {Key key,
@@ -43,19 +44,21 @@ class RbioTextFormField extends StatelessWidget {
       this.autocorrect = true,
       this.textInputAction = TextInputAction.next,
       this.border,
+      this.enabled,
       this.maxLines = 1})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      maxLength :maxLength,
+      maxLength: maxLength,
       maxLines: maxLines,
       initialValue: initialValue,
       style: Utils.instance.inputTextStyle(),
       focusNode: focusNode,
       controller: controller,
       autocorrect: autocorrect,
+      enabled: enabled,
       enableSuggestions: enableSuggestions,
       obscureText: obscureText,
       keyboardType: keyboardType,

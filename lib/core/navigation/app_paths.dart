@@ -1,5 +1,8 @@
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:onedosehealth/features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
+import 'package:onedosehealth/features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import 'package:onedosehealth/features/detailed_symptom/detailed_symptom_checker.dart';
+import 'package:onedosehealth/features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../features/auth/auth.dart';
@@ -271,7 +274,8 @@ class VRouterRoutes {
 
     VGuard(
       beforeEnter: (vRedirector) async {
-        if (!(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)) {
+        if (!(getIt<UserNotifier>().isCronic ||
+            getIt<UserNotifier>().isDoctor)) {
           vRedirector.stopRedirection();
           Atom.show(NotChronicWarning());
         } else {
@@ -341,6 +345,30 @@ class VRouterRoutes {
         ),
       ],
     ),
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+              path: PagePaths.TREATMENT_PROGRESS,
+              widget: TreatmentProcessScreen())
+        ]),
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+              path: PagePaths.TREATMENT_EDIT_PROGRESS,
+              widget: TreatmentEditView())
+        ]),
 
     // Mediminder
     VGuard(
@@ -435,14 +463,11 @@ class VRouterRoutes {
             ),
             VWidget(
               path: PagePaths.DOCTOR_TREATMENT_PROCESS,
-              widget: ChangeNotifierProvider<TreatmentProcessVm>(
-                create: (context) => TreatmentProcessVm(context: context),
-                child: DoctorTreatmentProcessScreen(),
-              ),
+              widget: DoctorTreatmentProcessScreen(),
               stackedRoutes: [
                 VWidget(
-                  path: PagePaths.DOCTOR_VIDEO_CALL_EDIT,
-                  widget: DoctorVideoCallEditScreen(),
+                  path: PagePaths.DOCTOR_TREATMENT_EDIT,
+                  widget: PatientTreatmentEditView(),
                 ),
               ],
             ),
@@ -551,6 +576,8 @@ class PagePaths {
   static const SETTINGS = '/ct-settings';
   static const MEASUREMENT_TRACKING = '/measurement-tracking';
   static const BLOOD_GLUCOSE_PROGRESS = '/blood-gluecose-progress';
+  static const TREATMENT_PROGRESS = '/treatment-progress';
+  static const TREATMENT_EDIT_PROGRESS = '/tretment-edit-progress';
 
   // Symptom Checker
   static const SYMPTOM_MAIN_MENU = '/symptom-main';
@@ -569,6 +596,6 @@ class PagePaths {
   static const BMI_PATIENT_DETAIL = '/bmi-patient-detail';
   static const BLOOD_PRESSURE_PATIENT_DETAIL = '/bp-patient-detail';
   static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
-  static const DOCTOR_VIDEO_CALL_EDIT = '/doctor-video-call-edit';
+  static const DOCTOR_TREATMENT_EDIT = '/doctor-patient-treatment-edit';
   static const DOCTOR_CONSULTATION = '/doctor-consultation';
 }

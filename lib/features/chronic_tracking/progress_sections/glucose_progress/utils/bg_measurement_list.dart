@@ -65,7 +65,8 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: Text(
                 '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
               ),
@@ -120,7 +121,7 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
           borderRadius: const BorderRadius.all(Radius.circular(30.0)),
         ),
         padding: const EdgeInsets.all(10),
-        height: context.HEIGHT * .08 * context.TEXTSCALE,
+        height: context.HEIGHT * .1 * context.TEXTSCALE,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

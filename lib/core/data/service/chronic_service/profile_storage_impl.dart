@@ -102,6 +102,21 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
     }
   }
 
+  bool updateFromTreatment(Person data) {
+    try {
+      checkBox();
+      if (box.isNotEmpty) {
+        box.put(0, data);
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   @override
   Future updateServer(Person data) async {
     try {
@@ -124,6 +139,8 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
           box.putAt(0, data);
         }
         if (shouldSendToServer) await sendToServer(data);
+      } else {
+        print('here');
       }
       return true;
     } catch (_) {
