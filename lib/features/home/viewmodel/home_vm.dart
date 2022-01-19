@@ -36,16 +36,26 @@ class HomeVm extends ChangeNotifier {
     }
   }
 
+  static final key_hospitalAppointment = const ValueKey('hospitalAppointment');
+  static final key_onlineAppointment = const ValueKey('onlineAppointment');
+  static final key_chronicTracking = const ValueKey('chronicTracking');
+  static final key_appointments = const ValueKey('appointments');
+  static final key_slider = const ValueKey('slider');
+  static final key_results = const ValueKey('results');
+  static final key_symptomChecker = const ValueKey('symptomChecker');
+  static final key_detailedSymptom = const ValueKey('detailedSymptom');
+  static final key_healthcare_employee = const ValueKey('healthcare_employee');
+
   final Map<HomeWidgets, Key> keys = {
-    HomeWidgets.hospitalAppointment: const Key('hospitalAppointment'),
-    HomeWidgets.onlineAppointment: const Key('onlineAppointment'),
-    HomeWidgets.chronicTracking: const Key('chronicTracking'),
-    HomeWidgets.appointments: const Key('appointments'),
-    HomeWidgets.slider: const Key('slider'),
-    HomeWidgets.results: const Key('results'),
-    HomeWidgets.symptomChecker: const Key('symptomChecker'),
-    HomeWidgets.detailedSymptom: const Key('detailedSymptom'),
-    HomeWidgets.healthcare_employee: const Key('healthcare_employee'),
+    HomeWidgets.hospitalAppointment: key_hospitalAppointment,
+    HomeWidgets.onlineAppointment: key_onlineAppointment,
+    HomeWidgets.chronicTracking: key_chronicTracking,
+    HomeWidgets.appointments: key_appointments,
+    HomeWidgets.slider: key_slider,
+    HomeWidgets.results: key_results,
+    HomeWidgets.symptomChecker: key_symptomChecker,
+    HomeWidgets.detailedSymptom: key_detailedSymptom,
+    HomeWidgets.healthcare_employee: key_healthcare_employee,
   };
 
   final List<HomeWidgets> userDefaultValues = [
@@ -62,13 +72,12 @@ class HomeVm extends ChangeNotifier {
   final List<HomeWidgets> doctorDefaultValues = [
     HomeWidgets.hospitalAppointment,
     HomeWidgets.onlineAppointment,
-    HomeWidgets.chronicTracking,
+    HomeWidgets.healthcare_employee,
     HomeWidgets.appointments,
     HomeWidgets.slider,
     HomeWidgets.results,
     HomeWidgets.symptomChecker,
     HomeWidgets.detailedSymptom,
-    HomeWidgets.healthcare_employee,
   ];
 
   double startAngle = 0;
@@ -288,7 +297,7 @@ class HomeVm extends ChangeNotifier {
     notifyListeners();
 
     final sharedUserList = getUserWidgets;
-    final allWidgets = _getAllCases().map((e) => e.xRawValue).toList();
+    final allWidgets = _getAllCases(true).map((e) => e.xRawValue).toList();
     allWidgets.removeWhere((e) => sharedUserList.contains(e));
     // Kullanılmayan widgetlar
     final removedWidgetTypes = allWidgets.map((e) => e.xHomeWidgets).toList();
@@ -344,15 +353,18 @@ class HomeVm extends ChangeNotifier {
   // #endregion
 
   // #region _getAllCases
-  List<HomeWidgets> _getAllCases() {
+  List<HomeWidgets> _getAllCases([bool isDoctorRemove = false]) {
     final isDoctor = getIt<UserNotifier>().isDoctor;
     List<HomeWidgets> values = [];
     if (isDoctor) {
       values = doctorDefaultValues;
+      if (isDoctorRemove) {
+        values.add(HomeWidgets.chronicTracking);
+      }
     } else {
       values = userDefaultValues;
     }
-    return values;
+    return values.toSet().toList();
   }
   // #endregion
 
