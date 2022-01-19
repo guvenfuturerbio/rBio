@@ -25,8 +25,16 @@ class HomeVm extends ChangeNotifier {
 
   // #region Variables
   final sharedPreferencesManager = getIt<ISharedPreferencesManager>();
-  List<String> get getUserWidgets => sharedPreferencesManager
-      .getStringList(SharedPreferencesKeys.USER_WIDGETS);
+  List<String> get getUserWidgets {
+    final currentUserName = sharedPreferencesManager
+        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(currentUserName);
+    if (allUsersModel == null) {
+      return null;
+    } else {
+      return allUsersModel.useWidgets;
+    }
+  }
 
   final Map<HomeWidgets, Key> keys = {
     HomeWidgets.hospitalAppointment: const Key('hospitalAppointment'),
@@ -37,7 +45,7 @@ class HomeVm extends ChangeNotifier {
     HomeWidgets.results: const Key('results'),
     HomeWidgets.symptomChecker: const Key('symptomChecker'),
     HomeWidgets.detailedSymptom: const Key('detailedSymptom'),
-    HomeWidgets.healthcare_employee: const Key('doctor'),
+    HomeWidgets.healthcare_employee: const Key('healthcare_employee'),
   };
 
   final List<HomeWidgets> userDefaultValues = [
@@ -170,12 +178,12 @@ class HomeVm extends ChangeNotifier {
   // #endregion
 
   // #region init
-  Future<void> init() async {
+  Future<void> init(AllUsersModel allUsersModel) async {
     final widgetsBinding = WidgetsBinding.instance;
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) async {
         springController = SpringController(initialAnim: Motion.mirror);
-        await fetchWidgets();
+        await fetchWidgets(allUsersModel);
         await fetchBanners();
         notifyListeners();
       });
@@ -191,7 +199,7 @@ class HomeVm extends ChangeNotifier {
   // #endregion
 
   // #region fetchWidgets
-  Future<void> fetchWidgets() async {
+  Future<void> fetchWidgets(AllUsersModel allUsersModel) async {
     widgetsInUse = [];
     final sharedUserList = getUserWidgets;
     if (sharedUserList == null) {
@@ -256,9 +264,7 @@ class HomeVm extends ChangeNotifier {
 
   // #region saveWidgetList
   Future<void> saveWidgetList(List<String> list) async {
-    await sharedPreferencesManager.setStringList(
-        SharedPreferencesKeys.USER_WIDGETS, list);
-    await getIt<UserNotifier>().saveUserHomeLists(false);
+    await getIt<UserNotifier>().saveHomeWidgets(list);
   }
   // #endregion
 

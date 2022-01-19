@@ -23,7 +23,7 @@ class ProfileVm extends ChangeNotifier {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseMessagingManager.instance.setTokenToServer("");
-    await getIt<UserNotifier>().saveUserHomeLists(true);
+    await getIt<UserNotifier>().logout();
     await getIt<ISharedPreferencesManager>().reload();
     await getIt<Repository>().localCacheService.removeAll();
 

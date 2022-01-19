@@ -276,19 +276,8 @@ class LoginScreenVm extends ChangeNotifier {
           Atom.to(term, isReplacement: true);
         }
 
-        final allUsersModel = getIt<UserNotifier>().checkUserExist(username);
-        if (allUsersModel != null) {
-          await getIt<ISharedPreferencesManager>().setStringList(
-            SharedPreferencesKeys.DELETED_WIDGETS,
-            allUsersModel.deletedWidgets,
-          );
-          await getIt<ISharedPreferencesManager>().setStringList(
-            SharedPreferencesKeys.USER_WIDGETS,
-            allUsersModel.useWidgets,
-          );
-        }
-
-        mContext.read<HomeVm>().init();
+        final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+        mContext.read<HomeVm>().init(allUsersModel);
 
         await Future.delayed(Duration(milliseconds: 100));
         hideDialog(mContext);

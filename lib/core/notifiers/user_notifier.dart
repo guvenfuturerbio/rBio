@@ -108,9 +108,9 @@ class UserNotifier extends ChangeNotifier {
   }
 
   //
-  AllUsersModel checkUserExist(String tcEmailPassport) {
-    final sharedData = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.ALL_USERS);
+  AllUsersModel getHomeWidgets(String tcEmailPassport) {
+    final sharedData =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
     if (sharedData == null) {
       return null;
     } else {
@@ -125,35 +125,48 @@ class UserNotifier extends ChangeNotifier {
   }
 
   //
-  Future<void> saveUserHomeLists(bool isSharedClear) async {
-    final spManager = getIt<ISharedPreferencesManager>();
-    final currentUserName =
-        spManager.getString(SharedPreferencesKeys.LOGIN_USERNAME);
-    final deletedWidgets =
-        spManager.getStringList(SharedPreferencesKeys.DELETED_WIDGETS) ?? [];
-    final useWidgets =
-        spManager.getStringList(SharedPreferencesKeys.USER_WIDGETS) ?? [];
-
-    final sharedData = spManager.getString(SharedPreferencesKeys.ALL_USERS);
+  Future<void> saveHomeWidgets(
+    List<String> userWidgets, {
+    bool isSharedClear = false,
+  }) async {
+    final currentUserName = sharedPreferencesManager
+        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+    final sharedData =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
     Map<String, dynamic> sharedMap;
     if (sharedData == null) {
       sharedMap = {};
     } else {
       sharedMap = jsonDecode(sharedData);
     }
-
     sharedMap.addAll(
       {
         currentUserName: AllUsersModel(
-          deletedWidgets: deletedWidgets,
-          useWidgets: useWidgets,
+          useWidgets: userWidgets,
         ).toJson(),
       },
     );
     if (isSharedClear) {
-      await spManager.clear();
+      await sharedPreferencesManager.clear();
     }
-    await spManager.setString(
+    await sharedPreferencesManager.setString(
+      SharedPreferencesKeys.ALL_USERS,
+      jsonEncode(sharedMap),
+    );
+  }
+
+  //
+  Future<void> logout() async {
+    final sharedData =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
+    Map<String, dynamic> sharedMap;
+    if (sharedData == null) {
+      sharedMap = {};
+    } else {
+      sharedMap = jsonDecode(sharedData);
+    }
+    await sharedPreferencesManager.clear();
+    await sharedPreferencesManager.setString(
       SharedPreferencesKeys.ALL_USERS,
       jsonEncode(sharedMap),
     );
