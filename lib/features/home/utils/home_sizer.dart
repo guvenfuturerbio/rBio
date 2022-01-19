@@ -18,7 +18,7 @@ class HomeSizer {
   double _getPartHeight() => _getBodyHeight() / 78;
   double getBodyGapHeight() => _getPartHeight() / 1; // 3
   double getBodySliderHeight() => _getPartHeight() * 15; // 15
-  double getBodyCardHeight() => _getPartHeight() * 20; // 60
+  double getBodyCardHeight() => _getPartHeight() * 19; // 60
   double getRunSpacing() => Atom.width * .025;
   double getBodyCardWidth(BuildContext context) {
     final width = MediaQuery.of(context).size.width;

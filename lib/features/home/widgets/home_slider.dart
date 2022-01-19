@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
 import '../utils/home_sizer.dart';
+import '../view/home_screen.dart';
 import '../viewmodel/home_vm.dart';
 
 class HomeSlider extends StatefulWidget {
@@ -53,8 +54,8 @@ class _HomeSliderState extends State<HomeSlider> {
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                if (vm.isForDelete) {
-                                  vm.addWidget(vm.key5);
+                                if (vm.showDeletedAlert) {
+                                  vm.addWidget(HomeWidgets.slider);
                                 } else {
                                   if (vm
                                       .bannerTabsModel[itemIndex].destinationUrl
@@ -82,7 +83,7 @@ class _HomeSliderState extends State<HomeSlider> {
                         },
                         options: CarouselOptions(
                           height: HomeSizer.instance.getBodySliderHeight(),
-                          autoPlay: !vm.isForDelete,
+                          autoPlay: !vm.showDeletedAlert,
                           viewportFraction: 1,
                           onPageChanged: (index, reason) {
                             setState(() {
@@ -97,7 +98,7 @@ class _HomeSliderState extends State<HomeSlider> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Visibility(
-                        visible: !vm.isForDelete,
+                        visible: !vm.showDeletedAlert,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: vm.bannerTabsModel.asMap().entries.map(
@@ -140,9 +141,5 @@ class _HomeSliderState extends State<HomeSlider> {
 
   double getHeight(BuildContext context) {
     return HomeSizer.instance.getBodySliderHeight();
-  }
-
-  void _launchURL(String url) async {
-    if (!await launch(url)) throw 'Could not launch $url';
   }
 }

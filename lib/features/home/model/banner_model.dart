@@ -7,14 +7,15 @@ class BannerTabsModel {
   String groupName;
   int id;
 
-  BannerTabsModel(
-      {this.name,
-      this.index,
-      this.imageUrl,
-      this.destinationUrl,
-      this.applicationName,
-      this.groupName,
-      this.id});
+  BannerTabsModel({
+    this.name,
+    this.index,
+    this.imageUrl,
+    this.destinationUrl,
+    this.applicationName,
+    this.groupName,
+    this.id,
+  });
 
   BannerTabsModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];

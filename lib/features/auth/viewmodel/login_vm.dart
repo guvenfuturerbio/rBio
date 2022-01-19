@@ -283,7 +283,7 @@ class LoginScreenVm extends ChangeNotifier {
             allUsersModel.deletedWidgets,
           );
           await getIt<ISharedPreferencesManager>().setStringList(
-            SharedPreferencesKeys.WIDGET_QUERY,
+            SharedPreferencesKeys.USER_WIDGETS,
             allUsersModel.useWidgets,
           );
         }

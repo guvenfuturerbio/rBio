@@ -132,7 +132,7 @@ class UserNotifier extends ChangeNotifier {
     final deletedWidgets =
         spManager.getStringList(SharedPreferencesKeys.DELETED_WIDGETS) ?? [];
     final useWidgets =
-        spManager.getStringList(SharedPreferencesKeys.WIDGET_QUERY) ?? [];
+        spManager.getStringList(SharedPreferencesKeys.USER_WIDGETS) ?? [];
 
     final sharedData = spManager.getString(SharedPreferencesKeys.ALL_USERS);
     Map<String, dynamic> sharedMap;
