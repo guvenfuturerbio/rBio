@@ -212,6 +212,7 @@ class LoginScreenVm extends ChangeNotifier {
       try {
         // Roles and token
         this._guvenLogin = await getIt<UserManager>().login(username, password);
+
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
 
         List<dynamic> results = await Future.wait(
@@ -270,13 +271,18 @@ class LoginScreenVm extends ChangeNotifier {
           //
         }
 
-        hideDialog(mContext);
-        notifyListeners();
         final term = Atom.queryParameters['then'];
         if (term != null && term != '') {
           Atom.to(term, isReplacement: true);
         }
-        mContext.read<HomeVm>().init();
+
+        final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+        mContext.read<HomeVm>().init(allUsersModel);
+
+        await Future.delayed(Duration(milliseconds: 100));
+        hideDialog(mContext);
+        notifyListeners();
+
         Atom.to(PagePaths.MAIN, isReplacement: true);
 
         // MainNavigation.toHome(mContext);
