@@ -19,6 +19,7 @@ class PatientTreatmentEditView extends StatefulWidget {
 class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
   TextEditingController textEditingController;
   TreatmentModel _treatmentModel;
+  bool newModel;
 
   @override
   void initState() {
@@ -37,13 +38,10 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
   @override
   Widget build(BuildContext context) {
     try {
-      if (Atom.queryParameters.isEmpty) {
-        _treatmentModel = null;
-      } else {
-        _treatmentModel = TreatmentModel.fromJson(
-            jsonDecode(Atom.queryParameters['treatment_model']));
-        textEditingController.text = _treatmentModel.treatment;
-      }
+      newModel = Atom.queryParameters['newModel'] == 'true';
+      _treatmentModel = TreatmentModel.fromJson(
+          jsonDecode(Atom.queryParameters['treatment_model']));
+      textEditingController.text = _treatmentModel.treatment;
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
       LoggerUtils.instance.e(e.toString());
@@ -119,7 +117,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
               child: RbioTextFormField(
                 controller: textEditingController,
                 maxLines: null,
-                enabled: _treatmentModel == null,
+                enabled: newModel,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.done,
                 border: RbioTextFormField.noneBorder(),
@@ -133,7 +131,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
           ),
 
           //
-          if (_treatmentModel == null) _buildButtons(ctx),
+          if (newModel) _buildButtons(ctx),
 
           //
           SizedBox(

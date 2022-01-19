@@ -22,16 +22,7 @@ class _DoctorTreatmentProcessScreenState
     extends State<DoctorTreatmentProcessScreen> {
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-        appbar: _buildAppBar(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              Atom.to(PagePaths.DOCTOR_TREATMENT_EDIT, queryParameters: {}),
-          child: Icon(Icons.add),
-          foregroundColor: context.xAppTheme.canvasColor,
-          backgroundColor: context.xAppTheme.primaryColor,
-        ),
-        body: _buildBody());
+    return RbioScaffold(appbar: _buildAppBar(), body: _buildBody());
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
@@ -79,16 +70,18 @@ class _DoctorTreatmentProcessScreenState
             title: _item.createDate.xFormatTime9(),
             description: _item.treatment,
             dateTime: _item.createDate);
-        return _buildCard(_tempItem);
+        return _buildCard(_tempItem, index == 0 ? true : false);
       },
     );
   }
 
-  Widget _buildCard(TreatmentProcessItemModel item) {
+  Widget _buildCard(TreatmentProcessItemModel item, bool newModel) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.DOCTOR_TREATMENT_EDIT,
-            queryParameters: {'treatment_model': jsonEncode(item.toJson())});
+        Atom.to(PagePaths.DOCTOR_TREATMENT_EDIT, queryParameters: {
+          'treatment_model': jsonEncode(item.toJson()),
+          'newModel': newModel.toString()
+        });
       },
       child: Card(
         elevation: 0,

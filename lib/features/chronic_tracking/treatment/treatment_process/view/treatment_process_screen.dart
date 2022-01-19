@@ -18,16 +18,7 @@ class TreatmentProcessScreen extends StatefulWidget {
 class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-        appbar: _buildAppBar(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              Atom.to(PagePaths.TREATMENT_EDIT_PROGRESS, queryParameters: {}),
-          child: Icon(Icons.add),
-          foregroundColor: context.xAppTheme.canvasColor,
-          backgroundColor: context.xAppTheme.primaryColor,
-        ),
-        body: _buildBody());
+    return RbioScaffold(appbar: _buildAppBar(), body: _buildBody());
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
@@ -54,16 +45,18 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
             title: _item.createDate.xFormatTime9(),
             description: _item.treatment,
             dateTime: _item.createDate);
-        return _buildCard(_tempItem);
+        return _buildCard(_tempItem, newModel: index == 0 ? true : false);
       },
     );
   }
 
-  Widget _buildCard(TreatmentProcessItemModel item) {
+  Widget _buildCard(TreatmentProcessItemModel item, {bool newModel = false}) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.TREATMENT_EDIT_PROGRESS,
-            queryParameters: {'treatment_model': jsonEncode(item.toJson())});
+        Atom.to(PagePaths.TREATMENT_EDIT_PROGRESS, queryParameters: {
+          'treatment_model': jsonEncode(item.toJson()),
+          'newModel': newModel.toString()
+        });
       },
       child: Card(
         elevation: 0,
