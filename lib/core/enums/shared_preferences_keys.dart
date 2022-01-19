@@ -16,11 +16,10 @@ enum SharedPreferencesKeys {
   CANACCESSHOSPITALOPS,
   THEME,
   TEXT_SCALE,
-  DELETED_WIDGETS,
-  WIDGET_QUERY,
   SYMPTOM_AUTH_TOKEN,
   PAIRED_DEVICES,
   CHAT_NOTIFICATION,
+  ALL_USERS, // Home Widget List Tutuyor
 
   hba1cList,
   medicines,

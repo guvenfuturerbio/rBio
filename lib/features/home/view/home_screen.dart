@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,8 @@ import '../../../core/notifiers/notification_badge_notifier.dart';
 import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 
-enum ShakeMod { shaken, notShaken }
+part '../enum/home_widgets.dart';
+part '../enum/shake_mod.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -275,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return GestureDetector(
                     onTap: () {
                       scaffoldKey.currentState.openDrawer();
-                      vm.drawerList[index].values.first();
+                      vm.drawerList[index].onTap();
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -289,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           //
                           Text(
-                            vm.drawerList[index].keys.first,
+                            vm.drawerList[index].title ?? '',
                             style: context.xHeadline4.copyWith(
                               color: getIt<ITheme>().textColor,
                               fontWeight: FontWeight.w600,
@@ -337,32 +339,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(HomeVm val) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        Expanded(
-          child: ReorderableWrap(
-            alignment: WrapAlignment.center,
-            buildDraggableFeedback: (_, __, children) {
-              return children;
-            },
-            spacing: HomeSizer.instance.getRunSpacing(),
-            runSpacing: HomeSizer.instance.getBodyGapHeight(),
-            needsLongPressDraggable: true,
-            children: val.widgetsInUse,
-            onReorder: val.onReorder,
-            scrollDirection: Axis.vertical,
-            maxMainAxisCount: 2,
-            minMainAxisCount: 1,
-          ),
-        ),
-
-        //
-        SizedBox(height: Atom.safeBottom),
-      ],
+    return ReorderableWrap(
+      alignment: WrapAlignment.center,
+      buildDraggableFeedback: (_, __, children) {
+        return children;
+      },
+      spacing: HomeSizer.instance.getRunSpacing(),
+      runSpacing: HomeSizer.instance.getBodyGapHeight(),
+      needsLongPressDraggable: true,
+      children: val.widgetsInUse,
+      onReorder: val.onReorder,
+      scrollDirection: Axis.vertical,
+      maxMainAxisCount: 2,
+      minMainAxisCount: 1,
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue,
+      ),
     );
   }
 }
