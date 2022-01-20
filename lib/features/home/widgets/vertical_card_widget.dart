@@ -17,11 +17,11 @@ class VerticalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeNotifier>(
-      builder: (context, val, child) => SizedBox(
+      builder: (context, themeVm, child) => SizedBox(
         width: HomeSizer.instance.getBodyCardWidth(context),
-        height: val.textScale == TextScaleType.Large
+        height: themeVm.textScale == TextScaleType.Large
             ? HomeSizer.instance.getBodyCardHeightLarge()
-            : val.textScale == TextScaleType.Medium
+            : themeVm.textScale == TextScaleType.Medium
                 ? HomeSizer.instance.getBodyCardHeightMedium()
                 : HomeSizer.instance.getBodyCardHeight(),
         child: Card(
