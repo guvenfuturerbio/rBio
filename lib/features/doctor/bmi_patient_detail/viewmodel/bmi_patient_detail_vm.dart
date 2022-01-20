@@ -17,8 +17,8 @@ import '../../notifiers/patient_notifiers.dart';
 import '../widget/charts/animated_scale_buble_chart.dart';
 import '../widget/charts/animated_scale_line_chart.dart';
 
-class BmiPatientDetailVm extends ChangeNotifier
-    with RbioVm, IBaseBottomActionsOfGraph {
+class BmiPatientDetailVm extends RbioVm 
+    with IBaseBottomActionsOfGraph {
   BmiPatientDetailVm(this.mContext, this.patientId) {
     isChartShow = false;
     update();

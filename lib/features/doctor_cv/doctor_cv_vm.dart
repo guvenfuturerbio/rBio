@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:slugify/slugify.dart';
-import '../../../../model/home/take_appointment/doctor_cv_response.dart';
 
-class DoctorCvScreenVm extends ChangeNotifier with RbioVm {
+import '../../../../model/home/take_appointment/doctor_cv_response.dart';
+import '../../core/core.dart';
+
+class DoctorCvScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   DoctorCvScreenVm({BuildContext context, String doctorNameNotTitle}) {

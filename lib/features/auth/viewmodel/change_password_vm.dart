@@ -4,7 +4,7 @@ import '../../../core/core.dart';
 import '../../../model/shared/guven_response_model.dart';
 import '../../../model/shared/user_login_info.dart';
 
-class ChangePasswordScreenVm extends ChangeNotifier with RbioVm {
+class ChangePasswordScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   ChangePasswordScreenVm(this.mContext);

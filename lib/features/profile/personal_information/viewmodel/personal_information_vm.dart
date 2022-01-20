@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
-class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
+class PersonalInformationScreenVm extends RbioVm {
   @override
   BuildContext mContext;
 

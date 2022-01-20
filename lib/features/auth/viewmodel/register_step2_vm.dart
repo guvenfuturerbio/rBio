@@ -7,7 +7,7 @@ import '../../../model/model.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../auth.dart';
 
-class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
+class RegisterStep2ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   RegisterStep2ScreenVm(this.mContext) {

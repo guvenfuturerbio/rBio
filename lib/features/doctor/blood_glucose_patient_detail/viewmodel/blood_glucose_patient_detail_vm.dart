@@ -2,8 +2,8 @@ part of '../view/blood_glucose_patient_detail_screen.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class BloodGlucosePatientDetailVm extends ChangeNotifier
-    with RbioVm, IBaseBottomActionsOfGraph {
+class BloodGlucosePatientDetailVm extends RbioVm
+    with IBaseBottomActionsOfGraph {
   @override
   BuildContext mContext;
 

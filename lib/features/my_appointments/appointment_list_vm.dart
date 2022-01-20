@@ -10,7 +10,7 @@ import '../shared/necessary_identity/necessary_identity_screen.dart';
 import '../shared/rate_dialog/rate_dialog.dart';
 import 'widget/question_dialog.dart';
 
-class AppointmentListVm extends ChangeNotifier with RbioVm {
+class AppointmentListVm extends RbioVm {
   @override
   BuildContext mContext;
 

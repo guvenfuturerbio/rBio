@@ -3,8 +3,15 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../core.dart';
 
-abstract class RbioVm {
+abstract class RbioVm extends ChangeNotifier {
   BuildContext get mContext;
+
+  LoadingProgress _progress;
+  LoadingProgress get progress => _progress;
+  set progress(LoadingProgress value) {
+    _progress = value;
+    notifyListeners();
+  }
 
   void showDefaultErrorDialog(
     dynamic throwable,

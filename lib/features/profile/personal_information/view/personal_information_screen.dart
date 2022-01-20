@@ -95,23 +95,23 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           Widget child,
         ) {
           return KeyboardDismissOnTap(
-            child: RbioLoadingOverlay(
+            child: RbioStackedScaffold(
               isLoading: vm.showLoadingOverlay,
-              progressIndicator: RbioLoading.progressIndicator(),
-              opacity: 0,
-              child: RbioScaffold(
-                resizeToAvoidBottomInset: true,
-                appbar: RbioAppBar(
-                  title: RbioAppBar.textTitle(
-                    context,
-                    LocaleProvider.of(context).lbl_personal_information,
-                  ),
-                ),
-                body: _builBody(context, vm),
-              ),
+              resizeToAvoidBottomInset: true,
+              appbar: _buildAppBar(context),
+              body: _builBody(context, vm),
             ),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).lbl_personal_information,
       ),
     );
   }
@@ -126,7 +126,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         Expanded(
           child: MediaQuery.removePadding(
             context: context,
-            removeTop: true,
+            removeTop: false,
             removeBottom: true,
             child: Scrollbar(
               child: SingleChildScrollView(
@@ -138,6 +138,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    //
+                    R.sizes.stackedTopPadding(context),
+                    R.sizes.hSizer16,
+
                     //
                     Center(
                       child: Column(

@@ -274,7 +274,7 @@ class PersonAdapter extends TypeAdapter<Person> {
   @override
   void write(BinaryWriter writer, Person obj) {
     writer
-      ..writeByte(19)
+      ..writeByte(20)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)

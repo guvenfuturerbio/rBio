@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/http.dart';
 
 import '../../../core/core.dart';
 
-class NecessaryIdentityScreenVm extends ChangeNotifier with RbioVm {
+class NecessaryIdentityScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   NecessaryIdentityScreenVm(this.mContext);
 
-  Progress _progress;
   LoadingDialog loadingDialog;
-
-  Progress get progress => this._progress;
 
   Future<void> updateIdentity(String identityNumber) async {
     if (identityNumber.isNotEmpty) {

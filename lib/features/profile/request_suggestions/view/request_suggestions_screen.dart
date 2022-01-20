@@ -40,13 +40,10 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
           Widget child,
         ) {
           return KeyboardDismissOnTap(
-            child: RbioLoadingOverlay(
+            child: RbioStackedScaffold(
               isLoading: vm.progressOverlay,
-              progressIndicator: RbioLoading.progressIndicator(),
-              child: RbioScaffold(
-                appbar: _buildAppBar(context),
-                body: _buildBody(vm, context),
-              ),
+              appbar: _buildAppBar(context),
+              body: _buildBody(vm, context),
             ),
           );
         },
@@ -76,6 +73,10 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
+          //
+          R.sizes.stackedTopPadding(context),
+          R.sizes.hSizer16,
+
           //
           Padding(
             padding: const EdgeInsets.all(8.0),

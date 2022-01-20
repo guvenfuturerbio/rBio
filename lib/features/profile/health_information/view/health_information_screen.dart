@@ -74,22 +74,22 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
           );
 
           return KeyboardDismissOnTap(
-            child: RbioLoadingOverlay(
+            child: RbioStackedScaffold(
               isLoading: vm.showProgressOverlay,
-              progressIndicator: RbioLoading.progressIndicator(),
-              opacity: 0,
-              child: RbioScaffold(
-                appbar: RbioAppBar(
-                  title: RbioAppBar.textTitle(
-                    context,
-                    LocaleProvider.current.health_information,
-                  ),
-                ),
-                body: _buildBody(vm),
-              ),
+              appbar: _buildAppBar(context),
+              body: _buildBody(vm),
             ),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.health_information,
       ),
     );
   }
@@ -104,7 +104,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
         Expanded(
           child: MediaQuery.removePadding(
             context: context,
-            removeTop: true,
+            removeTop: false,
             removeBottom: true,
             child: Scrollbar(
               child: SingleChildScrollView(
@@ -114,6 +114,10 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //
+                    R.sizes.stackedTopPadding(context),
+                    R.sizes.hSizer16,
+
                     // Diabet Type
                     _buildTitle(LocaleProvider.current.diabet_type),
                     _buildTextField(

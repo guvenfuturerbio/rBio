@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 import '../auth.dart';
 
-class ForgotPasswordStep2ScreenVm extends ChangeNotifier with RbioVm {
+class ForgotPasswordStep2ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   ForgotPasswordStep2ScreenVm(this.mContext);

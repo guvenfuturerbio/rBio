@@ -4,7 +4,7 @@ import '../auth.dart';
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 
-class RegisterStep3ScreenVm extends ChangeNotifier with RbioVm {
+class RegisterStep3ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   RegisterStep3ScreenVm(this.mContext);

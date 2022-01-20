@@ -85,23 +85,23 @@ class _CreateAppointmentSummaryScreenState
           CreateAppointmentSummaryVm vm,
           Widget child,
         ) {
-          return RbioLoadingOverlay(
-            isLoading: vm.showOverlayLoading,
-            opacity: 0,
-            progressIndicator: RbioLoading.progressIndicator(),
-            child: KeyboardDismissOnTap(
-              child: RbioScaffold(
-                appbar: RbioAppBar(
-                  title: RbioAppBar.textTitle(
-                    context,
-                    LocaleProvider.current.create_appo,
-                  ),
-                ),
-                body: _buildBody(vm),
-              ),
+          return KeyboardDismissOnTap(
+            child: RbioStackedScaffold(
+              isLoading: vm.showOverlayLoading,
+              appbar: _buildAppBar(context),
+              body: _buildBody(vm),
             ),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.create_appo,
       ),
     );
   }
@@ -113,6 +113,10 @@ class _CreateAppointmentSummaryScreenState
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            //
+            R.sizes.stackedTopPadding(context),
+            R.sizes.hSizer16,
+
             //
             Text(
               LocaleProvider.current.appointment_details,
