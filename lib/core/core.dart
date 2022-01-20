@@ -74,6 +74,7 @@ export 'widgets/rbio_buttons.dart';
 export 'widgets/rbio_card_appo_card.dart';
 export 'widgets/rbio_country_code_picker.dart';
 export 'widgets/rbio_errors.dart';
+export 'widgets/rbio_image_preview_dialog.dart';
 export 'widgets/rbio_keyboard_actions.dart';
 export 'widgets/rbio_loading.dart';
 export 'widgets/rbio_loading_overlay.dart';

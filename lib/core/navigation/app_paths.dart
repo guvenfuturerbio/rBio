@@ -1,23 +1,25 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:onedosehealth/features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
-import 'package:onedosehealth/features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
-import 'package:onedosehealth/features/detailed_symptom/detailed_symptom_checker.dart';
-import 'package:onedosehealth/features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
+import 'package:onedosehealth/features/home/view/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:vrouter/vrouter.dart';
 
 import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
+import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
+import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
+import '../../features/dashboard/dashboard_navigation.dart';
+import '../../features/detailed_symptom/detailed_symptom_checker.dart';
 import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
 import '../../features/doctor/blood_pressure_patient_detail/view/blood_pressure_detail_screen.dart';
 import '../../features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
+import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../features/doctor/video_call_edit/view/video_call_edit_screen.dart';
-import '../../features/home/view/home_screen.dart';
 import '../../features/mediminder/view/hba1c_reminder_add_screen.dart';
 import '../../features/mediminder/view/hba1c_reminderlist_screen.dart';
 import '../../features/mediminder/view/home_mediminder_screen.dart';
@@ -59,7 +61,6 @@ import '../../features/take_appointment/create_appointment_summary/view/create_a
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../core.dart';
 import '../widgets/chronic_error_alert.dart';
-import 'package:vrouter/vrouter.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -68,6 +69,13 @@ class VRouterRoutes {
       widget: LoginScreen(), // LoginScreen(),
     ),
 
+    // VWidget(
+    //   path: PagePaths.MAIN,
+    //   widget: Container(),
+    //   stackedRoutes: [
+    //     DashboardNavigation(),
+    //   ],
+    // ),
     VWidget(
       path: PagePaths.MAIN,
       widget: HomeScreen(),

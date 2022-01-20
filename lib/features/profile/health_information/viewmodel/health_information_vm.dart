@@ -14,7 +14,7 @@ enum HealthInformationType {
   YearofDiagnosis,
 }
 
-class HealthInformationVm extends ChangeNotifier with RbioVm {
+class HealthInformationVm extends RbioVm {
   @override
   BuildContext mContext;
 

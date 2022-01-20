@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/notifiers/notification_badge_notifier.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:dart_date/dart_date.dart';
 
 import '../../../core/core.dart';
+import '../../../core/notifiers/notification_badge_notifier.dart';
 import '../model/chat_person.dart';
 import '../model/get_chat_contacts_response.dart';
 
-class DoctorConsultationVm extends ChangeNotifier with RbioVm {
+class DoctorConsultationVm extends RbioVm {
   @override
   BuildContext mContext;
 
