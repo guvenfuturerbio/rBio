@@ -44,7 +44,13 @@ class LoginScreenVm extends ChangeNotifier {
 
   bool _checkedKvkk;
 
-  bool _passwordVisibility;
+  bool _passwordVisibility = false;
+  bool get passwordVisibility => this._passwordVisibility;
+  void togglePasswordVisibility() {
+    _passwordVisibility = !_passwordVisibility;
+    notifyListeners();
+  }
+
   PackageInfo packageInfo;
   LoginScreenVm({BuildContext context}) {
     this.mContext = context;
@@ -71,8 +77,6 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   bool get checkedKvkkForm => this._checkedKvkk ?? false;
-
-  bool get passwordVisibility => this._passwordVisibility ?? false;
 
   void fetchConsentFormState() {
     this._clickedGeneralForm =

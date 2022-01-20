@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 
 import '../../../core/core.dart';
 import '../auth.dart';
@@ -19,15 +18,14 @@ class ForgotPasswordStep1Screen extends StatefulWidget {
 
 class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
   TextEditingController _tcIdentityEditingController;
-  masked.MaskedTextController _tcPhoneNumberEditingController;
+  TextEditingController _tcPhoneNumberEditingController;
   FocusNode tcNoFNode;
   FocusNode phoneNumberFNode;
 
   @override
   void initState() {
     _tcIdentityEditingController = TextEditingController();
-    _tcPhoneNumberEditingController =
-        masked.MaskedTextController(mask: '(000) 000-0000');
+    _tcPhoneNumberEditingController = TextEditingController();
     tcNoFNode = FocusNode();
     phoneNumberFNode = FocusNode();
 
@@ -87,23 +85,11 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
             //
             Padding(
               padding: const EdgeInsets.only(bottom: 15.0, left: 25, top: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      "Recover your password",
-                      style: context.xHeadline1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: context.TEXTSCALE * 30),
-                    ),
-                  ),
-                  Text(
-                    "Select the way for recovery.",
-                    style: context.xHeadline3,
-                  ),
-                ],
+              child: Text(
+                LocaleProvider.current.recover_your_password,
+                style: context.xHeadline1.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: context.TEXTSCALE * 30),
               ),
             ),
 

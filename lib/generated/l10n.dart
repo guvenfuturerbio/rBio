@@ -7644,6 +7644,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Recover your password`
+  String get recover_your_password {
+    return Intl.message(
+      'Recover your password',
+      name: 'recover_your_password',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

@@ -23,7 +23,7 @@ class RegisterStep3Screen extends StatefulWidget {
 }
 
 class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
-  final TextEditingController _smsController = new TextEditingController();
+  final TextEditingController _smsController = TextEditingController();
   final focus = FocusNode();
 
   LoadingDialog loadingDialog;

@@ -243,6 +243,12 @@ class _LoginScreenState extends State<LoginScreen> {
           textInputAction: TextInputAction.done,
           obscureText: value.passwordVisibility ? false : true,
           hintText: '', // LocaleProvider.of(context).hint_input_password,
+          suffixIcon: RbioVisibilitySuffixIcon(
+            eyesOpen: value.passwordVisibility,
+            onTap: () {
+              value.togglePasswordVisibility();
+            },
+          ),
           inputFormatters: <TextInputFormatter>[
             TabToNextFieldTextInputFormatter(
               context,

@@ -755,5 +755,6 @@
   "widgets_add_message": "Şu anda kullanımda olan 7 widget'ınız var. Yeni widget eklemek için bunlardan birini kaldırın.",
   "open_chart": "Grafiği Göster",
   "close_chart": "Grafiği Gizle",
-  "recent_appointments": "Son Randevularım"
+  "recent_appointments": "Son Randevularım",
+  "recover_your_password": "Şifremi Kurtar"
 }

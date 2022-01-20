@@ -1,10 +1,10 @@
-enum PasswordScore { Blank, VeryWeak, Weak, Medium, Strong, VeryStrong }
-
-bool validateStructure(String value) {
-  String pattern =
-      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-  RegExp regExp = new RegExp(pattern);
-  return regExp.hasMatch(value);
+enum PasswordScore {
+  Blank,
+  VeryWeak,
+  Weak,
+  Medium,
+  Strong,
+  VeryStrong,
 }
 
 class PasswordAdvisor {
@@ -14,11 +14,52 @@ class PasswordAdvisor {
   RegExp upperCase = RegExp("(?=.*?[A-Z])");
   RegExp specialCharacter = RegExp(r"[$&+,:;=?@#|'<>.^*()%!-]");
 
-  bool validateStructure(String value) {
+  bool upperCaseValue = false;
+  bool lowerCaseValue = false;
+  bool numericValue = false;
+  bool specialValue = false;
+  bool lengthValue = false;
+
+  bool validateStructureByPattern(String value) {
     String pattern =
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-    RegExp regExp = new RegExp(pattern);
+    RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(value);
+  }
+
+  bool validateStructure() =>
+      upperCaseValue &&
+      lowerCaseValue &&
+      numericValue &&
+      specialValue &&
+      lengthValue;
+
+  void checkPassword(String password) {
+    _checkUpperCase(password);
+    _checkLowercase(password);
+    _checkNumberInclude(password);
+    _checkSpecialCharacter(password);
+    _checkRequiredPasswordLength(password);
+  }
+
+  void _checkUpperCase(String password) {
+    upperCaseValue = upperCase.hasMatch(password);
+  }
+
+  void _checkLowercase(String password) {
+    lowerCaseValue = lowerCase.hasMatch(password);
+  }
+
+  void _checkNumberInclude(String password) {
+    numericValue = numberInclude.hasMatch(password);
+  }
+
+  void _checkSpecialCharacter(String password) {
+    specialValue = specialCharacter.hasMatch(password);
+  }
+
+  void _checkRequiredPasswordLength(String password) {
+    lengthValue = password.length < REQUIRED_PASSWORD_LENGTH ? false : true;
   }
 
   PasswordScore CheckStrength(String password) {
@@ -48,25 +89,5 @@ class PasswordAdvisor {
       default:
         return PasswordScore.Blank;
     }
-  }
-
-  bool checkNumberInclude(String password) {
-    return numberInclude.hasMatch(password);
-  }
-
-  bool checkLowercase(String password) {
-    return lowerCase.hasMatch(password);
-  }
-
-  bool checkUpperCase(String password) {
-    return upperCase.hasMatch(password);
-  }
-
-  bool checkSpecialCharacter(String password) {
-    return specialCharacter.hasMatch(password);
-  }
-
-  bool checkRequiredPasswordLength(String password) {
-    return password.length < REQUIRED_PASSWORD_LENGTH ? false : true;
   }
 }

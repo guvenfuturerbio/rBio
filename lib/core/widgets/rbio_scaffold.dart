@@ -137,19 +137,26 @@ class RbioScaffold extends StatelessWidget {
 
 class RbioBody extends StatelessWidget {
   final Widget child;
+  final bool isLoading;
 
   const RbioBody({
     Key key,
     @required this.child,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(maxWidth: 1200),
-      child: Padding(
-        padding: R.sizes.screenPadding(context),
-        child: child,
+      child: RbioLoadingOverlay(
+        child: Padding(
+          padding: R.sizes.screenPadding(context),
+          child: child,
+        ),
+        isLoading: isLoading,
+        progressIndicator: RbioLoading.progressIndicator(),
+        opacity: 0,
       ),
     );
   }

@@ -84,6 +84,8 @@ class _Sizes {
 
   double get defaultBottomValue => Atom.safeBottom + 12;
   Widget get defaultBottomPadding => SizedBox(height: defaultBottomValue);
+  Widget stackedTopPadding(BuildContext context) =>
+      SizedBox(height: 54 + MediaQuery.of(context).viewPadding.top);
 
   final Widget hSizer4 = SizedBox(height: 4);
   final Widget hSizer8 = SizedBox(height: 8);
