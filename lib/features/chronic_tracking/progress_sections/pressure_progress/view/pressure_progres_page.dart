@@ -1,65 +1,85 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/pressure_progress/utils/bp_measurement_list.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/utils/landscape_graph_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
 import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../utils/graph_header_widget.dart';
+import '../../utils/landscape_graph_widget.dart';
 import '../../utils/progress_page_model.dart';
 import '../../utils/small_widget_card.dart';
+import '../utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
+import '../utils/bp_measurement_list.dart';
 import '../utils/line_chart.dart';
 import '../utils/pressure_tagger/pressure_tagger.dart';
 import '../view_model/pressure_measurement_view_model.dart';
 
 part '../view_model/pressure_progres_view_model.dart';
 
-class BpProgressPage extends StatelessWidget {
+class BpProgressPage extends StatefulWidget {
   const BpProgressPage({Key key, this.callback}) : super(key: key);
   final Function() callback;
 
   @override
+  State<BpProgressPage> createState() => _BpProgressPageState();
+}
+
+class _BpProgressPageState extends State<BpProgressPage> {
+  @override
   Widget build(BuildContext context) {
     return Consumer<BpProgressPageVm>(
-      builder: (_, value, __) => MediaQuery.of(context).orientation ==
-                  Orientation.portrait ||
-              Atom.isWeb
-          ? SingleChildScrollView(
-              child: Column(
-                children: [
-                  if (value.isChartShow) ...getGraph(context, value),
-                  if (!value.isChartShow)
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
-                      child: RbioElevatedButton(
-                        title: LocaleProvider.current.open_chart,
-                        onTap: value.changeChartShowStatus,
-                      ),
+      builder: (_, value, __) =>
+          MediaQuery.of(context).orientation == Orientation.portrait ||
+                  Atom.isWeb
+              ? RbioStackedScaffold(
+                  appbar: RbioAppBar(
+                    title: RbioAppBar.textTitle(
+                      context,
+                      LocaleProvider.current.bg_measurement_tracking,
                     ),
-                  SizedBox(
-                    height: value.isChartShow
-                        ? (context.HEIGHT * .4) * context.TEXTSCALE
-                        : (context.HEIGHT * .8),
-                    child: BpMeasurementList(
-                      bpMeasurements: value.bpMeasurements,
-                      scrollController: value.controller,
+                  ),
+                  body: SingleChildScrollView(
+                    physics: NeverScrollableScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: R.sizes.stackedTopPaddingValue(context) + 8,
+                        ),
+                        if (value.isChartShow) ...getGraph(context, value),
+                        if (!value.isChartShow)
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: context.HEIGHT * .02),
+                            child: RbioElevatedButton(
+                              title: LocaleProvider.current.open_chart,
+                              onTap: () => context
+                                  .read<BpProgressPageVm>()
+                                  .changeChartShowStatus(),
+                            ),
+                          ),
+                        SizedBox(
+                          height: value.isChartShow
+                              ? (context.HEIGHT * .4) * context.TEXTSCALE
+                              : (context.HEIGHT * .8),
+                          child: BpMeasurementList(
+                            bpMeasurements: value.bpMeasurements,
+                            scrollController: value.controller,
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            )
-          : LandScapeGraphWidget(
-              graph: value.currentGraph,
-              value: value,
-              filterAction: () => Atom.show(BpChartFilterPopUp(
-                height: context.HEIGHT * .9,
-                width: context.WIDTH * .3,
-              )),
-            ),
+                  ),
+                )
+              : LandScapeGraphWidget(
+                  graph: value.currentGraph,
+                  value: value,
+                  filterAction: () => Atom.show(BpChartFilterPopUp(
+                    height: context.HEIGHT * .9,
+                    width: context.WIDTH * .3,
+                  )),
+                ),
     );
   }
 
@@ -123,7 +143,7 @@ class BpProgressPage extends StatelessWidget {
         height: (context.HEIGHT * .4) * context.TEXTSCALE,
         child: GraphHeader(
           value: value,
-          callBack: callback,
+          callBack: widget.callback,
         ),
       ),
       SizedBox(

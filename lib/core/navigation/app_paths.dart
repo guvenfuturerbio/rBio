@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:onedosehealth/features/home/view/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -9,9 +7,11 @@ import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
+import '../../features/chronic_tracking/progress_sections/glucose_progress/view/bg_progress_page.dart';
+import '../../features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
+import '../../features/chronic_tracking/progress_sections/scale_progress/view/scale_progress_page.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
-import '../../features/dashboard/dashboard_navigation.dart';
 import '../../features/detailed_symptom/detailed_symptom_checker.dart';
 import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
 import '../../features/doctor/blood_pressure_patient_detail/view/blood_pressure_detail_screen.dart';
@@ -20,6 +20,7 @@ import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
+import '../../features/home/view/home_screen.dart';
 import '../../features/mediminder/view/hba1c_reminder_add_screen.dart';
 import '../../features/mediminder/view/hba1c_reminderlist_screen.dart';
 import '../../features/mediminder/view/home_mediminder_screen.dart';
@@ -348,9 +349,22 @@ class VRouterRoutes {
       },
       stackedRoutes: [
         VWidget(
-          path: PagePaths.MEASUREMENT_TRACKING,
-          widget: MeasurementTrackingHomeScreen(),
-        ),
+            path: PagePaths.MEASUREMENT_TRACKING,
+            widget: MeasurementTrackingHomeScreen(),
+            stackedRoutes: [
+              VWidget(
+                path: PagePaths.BMI_PROGRESS,
+                widget: ScaleProgressPage(),
+              ),
+              VWidget(
+                path: PagePaths.BP_PROGRESS,
+                widget: BpProgressPage(),
+              ),
+              VWidget(
+                path: PagePaths.BLOOD_GLUCOSE_PROGRESS,
+                widget: BgProgressPage(),
+              ),
+            ]),
       ],
     ),
     VGuard(
@@ -584,6 +598,8 @@ class PagePaths {
   static const SETTINGS = '/ct-settings';
   static const MEASUREMENT_TRACKING = '/measurement-tracking';
   static const BLOOD_GLUCOSE_PROGRESS = '/blood-gluecose-progress';
+  static const BMI_PROGRESS = '/bmi-progress';
+  static const BP_PROGRESS = '/blood-pressure-progress';
   static const TREATMENT_PROGRESS = '/treatment-progress';
   static const TREATMENT_EDIT_PROGRESS = '/tretment-edit-progress';
 

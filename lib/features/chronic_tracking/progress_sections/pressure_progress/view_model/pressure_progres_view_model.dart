@@ -269,9 +269,9 @@ class BpProgressPageVm
   }
 
   @override
-  Widget largeWidget(Function() callBack) {
+  Widget largeWidget() {
     return BpProgressPage(
-      callback: callBack,
+      callback: changeChartShowStatus,
     );
   }
 

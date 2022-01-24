@@ -66,26 +66,6 @@ class BottomActionsOfGraph extends StatelessWidget {
               ),
             ),
           ),
-
-          ElevatedButton(
-            onPressed: () => value.changeChartShowStatus(),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              shadowColor: Colors.black.withAlpha(50),
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(context.HEIGHT),
-              ),
-            ),
-            child: AutoSizeText(
-              '${LocaleProvider.current.close_chart}',
-              maxLines: 1,
-              softWrap: false,
-              style: context.xHeadline5.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
         ],
       ),
     );
