@@ -120,6 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Atom.to(PagePaths.PERSONAL_INFORMATION);
                       },
                     ),
+                    //
 
                     //
                     _buildListItem(
@@ -162,6 +163,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       isDivider: false,
                     ),
+                                        _buildListItem(
+                      LocaleProvider.current.terms_and_privacy,
+                      () {
+                        Atom.to(PagePaths.TERMS_AND_PRIVACY);
+                      },
+                    ),
+
                   ],
                 ),
               ),

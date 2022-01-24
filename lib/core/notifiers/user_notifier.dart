@@ -155,8 +155,29 @@ class UserNotifier extends ChangeNotifier {
     );
   }
 
-  //
   Future<void> logout() async {
+    try {
+      Atom.show(RbioLoading.progressIndicator());
+      await FirebaseMessagingManager.instance.setTokenToServer("");
+      await getIt<UserNotifier>().widgetsSave();
+      await getIt<ISharedPreferencesManager>().reload();
+      await getIt<Repository>().localCacheService.removeAll();
+      getIt<UserNotifier>().clear();
+      FirebaseMessagingManager.handleLogout();
+      getIt<GlucoseStorageImpl>().clear();
+      getIt<ScaleStorageImpl>().clear();
+      getIt<BloodPressureStorageImpl>().clear();
+      getIt<ProfileStorageImpl>().clear();
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+    } finally {
+      Atom.dismiss();
+      Atom.to(PagePaths.LOGIN, isReplacement: true);
+    }
+  }
+
+  //
+  Future<void> widgetsSave() async {
     final sharedData =
         sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
     Map<String, dynamic> sharedMap;

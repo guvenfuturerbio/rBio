@@ -704,6 +704,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tc_or_passport" : MessageLookupByLibrary.simpleMessage("T.C identity/Passport Number"),
     "temporary_pass" : MessageLookupByLibrary.simpleMessage("Temporary Password"),
     "tenant_name" : MessageLookupByLibrary.simpleMessage("Hospital Name :"),
+    "terms_and_privacy" : MessageLookupByLibrary.simpleMessage("Terms and Privacy"),
     "test_name" : MessageLookupByLibrary.simpleMessage("Test Name"),
     "test_result" : MessageLookupByLibrary.simpleMessage("Test Result"),
     "thank_you_for_survey" : MessageLookupByLibrary.simpleMessage("Thank you for completing our survey."),

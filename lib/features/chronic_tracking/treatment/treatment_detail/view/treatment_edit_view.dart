@@ -106,7 +106,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
                 maxLines: null,
                 enabled: newModel,
                 keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.done,
+                textInputAction: TextInputAction.newline,
                 border: RbioTextFormField.noneBorder(),
               ),
             ),

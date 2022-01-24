@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:onedosehealth/features/home/view/home_screen.dart';
+import 'package:onedosehealth/features/profile/terms_and_privacy/terms_and_privacy.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -274,7 +275,10 @@ class VRouterRoutes {
       path: PagePaths.FULLPDFVIEWER,
       widget: FullPdfViewerScreen(),
     ),
-
+    VWidget(
+      path: PagePaths.TERMS_AND_PRIVACY,
+      widget: TermsAndPrivacyScreen(),
+    ),
     VWidget(
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
@@ -527,6 +531,7 @@ class PagePaths {
   static const CREATE_ONLINE_APPO = '/create-online-appointment';
   static const CONSULTATION = '/e-consultation';
   static const CHAT = '/chat';
+  static const TERMS_AND_PRIVACY = '/terms-and-privacy';
   static const LOGIN = '/login';
   static const REGISTER_FIRST = '/register-first';
   static const REGISTER_STEP_2 = '/register-2';
