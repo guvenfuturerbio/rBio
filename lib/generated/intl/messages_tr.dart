@@ -698,6 +698,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tc_or_passport" : MessageLookupByLibrary.simpleMessage("T.C Kimlik/Pasaport Numaranız"),
     "temporary_pass" : MessageLookupByLibrary.simpleMessage("Geçici Şifre"),
     "tenant_name" : MessageLookupByLibrary.simpleMessage("Hastane Adı :"),
+    "terms_and_privacy" : MessageLookupByLibrary.simpleMessage("Koşullar ve Gizlilik"),
     "test_name" : MessageLookupByLibrary.simpleMessage("Test Adı"),
     "test_result" : MessageLookupByLibrary.simpleMessage("Test Sonucu"),
     "thank_you_for_survey" : MessageLookupByLibrary.simpleMessage("Anketimize katıldığınız için teşekkür ederiz."),

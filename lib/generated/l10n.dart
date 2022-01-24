@@ -235,6 +235,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Terms and Privacy`
+  String get terms_and_privacy {
+    return Intl.message(
+      'Terms and Privacy',
+      name: 'terms_and_privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Reminders`
   String get reminders {
     return Intl.message(
