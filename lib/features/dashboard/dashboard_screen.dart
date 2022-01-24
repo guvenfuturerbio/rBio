@@ -70,7 +70,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   elevation: 0,
                   onPressed: () {
-                    DashboardNavigation.toHome(context);
+                    if (Atom.url != '/home/') {
+                      DashboardNavigation.toHome(context);
+                    }
                   },
                 ),
               ),

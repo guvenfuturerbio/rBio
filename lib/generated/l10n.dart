@@ -7664,6 +7664,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `You don't have any notifications yet`
+  String get notification_inbox_empty {
+    return Intl.message(
+      'You don\'t have any notifications yet',
+      name: 'notification_inbox_empty',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

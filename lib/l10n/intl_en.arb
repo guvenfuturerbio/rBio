@@ -763,5 +763,6 @@
   "open_chart": "Show Graph",
   "close_chart": "Hide Graph",
   "recent_appointments": "Recent Appointments",
-  "recover_your_password": "Recover your password"
+  "recover_your_password": "Recover your password",
+  "notification_inbox_empty": "You don't have any notifications yet"
 }

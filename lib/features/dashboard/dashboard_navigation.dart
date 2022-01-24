@@ -3,7 +3,9 @@ import 'package:vrouter/vrouter.dart';
 
 import '../../core/core.dart';
 import '../chat/view/consultation_screen.dart';
+import '../chronic_tracking/home/view/mt_home_screen.dart';
 import '../home/view/home_screen.dart';
+import '../notification_inbox/view/notification_inbox_screen.dart';
 import '../search/search_screen.dart';
 import 'dashboard_screen.dart';
 
@@ -63,26 +65,14 @@ class DashboardNavigation extends VRouteElementBuilder {
           VWidget(
             path: graph,
             name: graph,
-            widget: SizedBox.expand(
-              child: Container(
-                alignment: Alignment.center,
-                color: getIt<ITheme>().scaffoldBackgroundColor,
-                child: Text('Statics'),
-              ),
-            ),
+            widget: MeasurementTrackingHomeScreen(fromBottomBar: true),
           ),
 
           //
           VWidget(
             path: notifications,
             name: notifications,
-            widget: SizedBox.expand(
-              child: Container(
-                alignment: Alignment.center,
-                color: getIt<ITheme>().scaffoldBackgroundColor,
-                child: Text('Notifications'),
-              ),
-            ),
+            widget: NotificationInboxScreen(),
           ),
         ],
       ),
