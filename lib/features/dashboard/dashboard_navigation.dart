@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../core/core.dart';
+import '../chat/view/consultation_screen.dart';
+import '../home/view/home_screen.dart';
+import '../search/search_screen.dart';
 import 'dashboard_screen.dart';
 
 class DashboardNavigation extends VRouteElementBuilder {
@@ -10,13 +13,13 @@ class DashboardNavigation extends VRouteElementBuilder {
   static final String search = 'search';
   static final String chat = 'chat';
   static final String home = '';
-  static final String statics = 'support';
+  static final String graph = 'graph';
   static final String notifications = 'notifications';
 
   static void toSearch(BuildContext context) => Atom.to('/home/$search');
   static void toChat(BuildContext context) => Atom.to('/home/$chat');
   static void toHome(BuildContext context) => Atom.to('/home/$home');
-  static void toStatics(BuildContext context) => Atom.to('/home/$statics');
+  static void toGraph(BuildContext context) => Atom.to('/home/$graph');
   static void toNotifications(BuildContext context) =>
       Atom.to('/home/$notifications');
 
@@ -39,45 +42,27 @@ class DashboardNavigation extends VRouteElementBuilder {
           VWidget(
             path: search,
             name: search,
-            widget: SizedBox.expand(
-              child: Container(
-                alignment: Alignment.center,
-                color: getIt<ITheme>().scaffoldBackgroundColor,
-                child: Text('Search'),
-              ),
-            ),
+            widget: SearchScreen(fromBottomBar: true),
           ),
 
           //
           VWidget(
             path: chat,
             name: chat,
-            widget: SizedBox.expand(
-              child: Container(
-                alignment: Alignment.center,
-                color: getIt<ITheme>().scaffoldBackgroundColor,
-                child: Text('Chat'),
-              ),
-            ),
+            widget: ConsultationScreen(fromBottomBar: true),
           ),
 
           //
           VWidget(
             path: home,
             name: home,
-            widget: SizedBox.expand(
-              child: Container(
-                alignment: Alignment.center,
-                color: getIt<ITheme>().scaffoldBackgroundColor,
-                child: Text('Home'),
-              ),
-            ),
+            widget: HomeScreen(),
           ),
 
           //
           VWidget(
-            path: statics,
-            name: statics,
+            path: graph,
+            name: graph,
             widget: SizedBox.expand(
               child: Container(
                 alignment: Alignment.center,
@@ -111,7 +96,7 @@ class DashboardNavigation extends VRouteElementBuilder {
       return 1;
     } else if (state.names.contains(home)) {
       return 2;
-    } else if (state.names.contains(statics)) {
+    } else if (state.names.contains(graph)) {
       return 3;
     } else if (state.names.contains(notifications)) {
       return 4;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../core/core.dart';
 import 'bottom_navbar_painter.dart';
@@ -19,8 +20,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  double get kBarHeight => Atom.safeBottom + 56;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -45,13 +44,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Container(
         color: Colors.transparent,
         width: size.width,
-        height: kBarHeight,
+        height: R.sizes.bottomNavigationBarHeight,
         child: Stack(
           overflow: Overflow.visible,
           children: [
             //
             CustomPaint(
-              size: Size(size.width, kBarHeight),
+              size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
                 backgroundColor: getIt<ITheme>().cardBackgroundColor,
               ),
@@ -65,7 +64,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 width: 60,
                 child: FloatingActionButton(
                   backgroundColor: getIt<ITheme>().mainColor,
-                  child: Icon(Icons.shopping_basket),
+                  child: SvgPicture.asset(
+                    R.image.bottomNavigationHome,
+                    width: R.sizes.iconSize,
+                  ),
                   elevation: 0,
                   onPressed: () {
                     DashboardNavigation.toHome(context);
@@ -77,7 +79,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             //
             Container(
               width: size.width,
-              height: kBarHeight,
+              height: R.sizes.bottomNavigationBarHeight,
               padding: EdgeInsets.only(
                 bottom: Atom.safeBottom,
               ),
@@ -85,9 +87,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    icon: Icon(
-                      Icons.home,
-                      color: _getIconColor(0),
+                    icon: _getSvgChild(
+                      0,
+                      R.image.bottomNavigationSearch,
+                      R.image.bottomNavigationSearchGreen,
                     ),
                     onPressed: () {
                       DashboardNavigation.toSearch(context);
@@ -95,9 +98,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     splashColor: Colors.white,
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.restaurant_menu,
-                      color: _getIconColor(1),
+                    icon: _getSvgChild(
+                      1,
+                      R.image.bottomNavigationChat,
+                      R.image.bottomNavigationChatGreen,
                     ),
                     onPressed: () {
                       DashboardNavigation.toChat(context);
@@ -107,18 +111,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     width: size.width * 0.20,
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.bookmark,
-                      color: _getIconColor(3),
+                    icon: _getSvgChild(
+                      3,
+                      R.image.bottomNavigationGraph,
+                      R.image.bottomNavigationGraphGreen,
                     ),
                     onPressed: () {
-                      DashboardNavigation.toStatics(context);
+                      DashboardNavigation.toGraph(context);
                     },
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.notifications,
-                      color: _getIconColor(4),
+                    icon: _getSvgChild(
+                      4,
+                      R.image.bottomNavigationNotification,
+                      R.image.bottomNavigationNotificationGreen,
                     ),
                     onPressed: () {
                       DashboardNavigation.toNotifications(context);
@@ -133,7 +139,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Color _getIconColor(int iconIndex) => widget.currentIndex == iconIndex
-      ? getIt<ITheme>().mainColor
-      : Colors.grey.shade400;
+  Widget _getSvgChild(
+    int iconIndex,
+    String passiveImage,
+    String activeImage,
+  ) =>
+      widget.currentIndex != iconIndex
+          ? SvgPicture.asset(passiveImage, width: R.sizes.iconSize2)
+          : SvgPicture.asset(activeImage, width: R.sizes.iconSize2);
 }
