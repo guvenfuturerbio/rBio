@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/profile/terms_and_privacy/terms_and_privacy_vm.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/core.dart';
+import 'terms_and_privacy_vm.dart';
 
 class TermsAndPrivacyScreen extends StatefulWidget {
   const TermsAndPrivacyScreen({Key key}) : super(key: key);
@@ -14,21 +15,32 @@ class _TermsAndPrivacyScreenState extends State<TermsAndPrivacyScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TermsAndPrivacyVm>(
-        create: (context) => TermsAndPrivacyVm(),
-        child: Consumer<TermsAndPrivacyVm>(builder: (context, vm, child) {
+      create: (context) => TermsAndPrivacyVm(),
+      child: Consumer<TermsAndPrivacyVm>(
+        builder: (context, vm, child) {
           return RbioStackedScaffold(
-            appbar: RbioAppBar(
-              title: Text(LocaleProvider.current.terms_and_privacy),
-            ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildApplicationContest(vm),
-                _buildKVKK(vm)
-              ],
-            ),
+            appbar: _buildAppBar(),
+            body: _buildBody(vm),
           );
-        }));
+        },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
+      title: Text(LocaleProvider.current.terms_and_privacy),
+    );
+  }
+
+  Column _buildBody(TermsAndPrivacyVm vm) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildApplicationContest(vm),
+        _buildKVKK(vm),
+      ],
+    );
   }
 
   Widget _buildApplicationContest(TermsAndPrivacyVm value) {

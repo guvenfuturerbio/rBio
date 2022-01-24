@@ -499,6 +499,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "not_found" : MessageLookupByLibrary.simpleMessage("Not Found"),
     "not_specified" : MessageLookupByLibrary.simpleMessage("Not Specified"),
     "notes" : MessageLookupByLibrary.simpleMessage("Notes"),
+    "notification_inbox_empty" : MessageLookupByLibrary.simpleMessage("You don\'t have any notifications yet"),
     "oauth_credential_error" : MessageLookupByLibrary.simpleMessage("OAuth credential error"),
     "ok" : MessageLookupByLibrary.simpleMessage("OK"),
     "omron_arm_step1" : MessageLookupByLibrary.simpleMessage("Cihazın bandını dirseğinizin hemen üzerinden bağlayın"),

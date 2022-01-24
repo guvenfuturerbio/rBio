@@ -758,5 +758,6 @@
   "open_chart": "Grafiği Göster",
   "close_chart": "Grafiği Gizle",
   "recent_appointments": "Son Randevularım",
-  "recover_your_password": "Şifremi Kurtar"
+  "recover_your_password": "Şifremi Kurtar",
+  "notification_inbox_empty": "Henüz bildiriminiz yok"
 }

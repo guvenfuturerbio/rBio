@@ -70,17 +70,17 @@ class VRouterRoutes {
       widget: LoginScreen(), // LoginScreen(),
     ),
 
-    // VWidget(
-    //   path: PagePaths.MAIN,
-    //   widget: Container(),
-    //   stackedRoutes: [
-    //     DashboardNavigation(),
-    //   ],
-    // ),
     VWidget(
       path: PagePaths.MAIN,
-      widget: HomeScreen(),
+      widget: Container(),
+      stackedRoutes: [
+        DashboardNavigation(),
+      ],
     ),
+    // VWidget(
+    //   path: PagePaths.MAIN,
+    //   widget: HomeScreen(),
+    // ),
 
     VWidget(
       path: PagePaths.PROFILE,

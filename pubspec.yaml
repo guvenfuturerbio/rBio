@@ -159,6 +159,7 @@ flutter:
   assets:
     - env/
     - assets/images/
+    - assets/images/bottom_navigation/
     - assets/animations/
     - assets/sound/
     - assets/departments.json

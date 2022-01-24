@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,12 @@ import '../utils/card_widget.dart';
 part '../vm/mt_home_vm.dart';
 
 class MeasurementTrackingHomeScreen extends StatefulWidget {
-  const MeasurementTrackingHomeScreen({Key key}) : super(key: key);
+  final bool fromBottomBar;
+
+  const MeasurementTrackingHomeScreen({
+    Key key,
+    this.fromBottomBar = false,
+  }) : super(key: key);
 
   @override
   State<MeasurementTrackingHomeScreen> createState() =>
@@ -52,6 +56,9 @@ class _MeasurementTrackingHomeScreenState
     return isLandscape
         ? null
         : RbioAppBar(
+            leadingWidth: !widget.fromBottomBar ? null : 0,
+            leading:
+                !widget.fromBottomBar ? null : SizedBox(width: 0, height: 0),
             title: RbioAppBar.textTitle(
               context,
               LocaleProvider.current.chronic_track_home,
@@ -93,6 +100,9 @@ class _MeasurementTrackingHomeScreenState
         //
         if (MediaQuery.of(context).orientation == Orientation.portrait)
           _buildExpandedUser(),
+
+        //
+        R.sizes.hSizer12,
 
         //
         Container(
