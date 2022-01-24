@@ -400,9 +400,13 @@ class HomeVm extends ChangeNotifier {
               key: keys[HomeWidgets.hospitalAppointment],
               type: HomeWidgets.hospitalAppointment,
               isRemovedWidgets: isRemovedWidgets,
-              body: VerticalCard(
-                title: LocaleProvider.current.lbl_find_hospital,
-                painter: HomeHospitalAppointmentCustomPainter(),
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.lbl_find_hospital,
+                    painter: HomeHospitalAppointmentCustomPainter(),
+                  );
+                },
               ),
               onTap: () {
                 Atom.to(
@@ -426,9 +430,13 @@ class HomeVm extends ChangeNotifier {
               key: keys[HomeWidgets.onlineAppointment],
               type: HomeWidgets.onlineAppointment,
               isRemovedWidgets: isRemovedWidgets,
-              body: VerticalCard(
-                title: LocaleProvider.current.take_video_appointment,
-                painter: HomeOnlineAppointmentCustomPainter(),
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.take_video_appointment,
+                    painter: HomeOnlineAppointmentCustomPainter(),
+                  );
+                },
               ),
               onTap: () {
                 Atom.to(
@@ -452,9 +460,13 @@ class HomeVm extends ChangeNotifier {
               key: keys[HomeWidgets.chronicTracking],
               type: HomeWidgets.chronicTracking,
               isRemovedWidgets: isRemovedWidgets,
-              body: VerticalCard(
-                title: LocaleProvider.current.chronic_track_home,
-                painter: HomeChronicTrackingCustomPainter(),
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.chronic_track_home,
+                    painter: HomeChronicTrackingCustomPainter(),
+                  );
+                },
               ),
               onTap: () {
                 Atom.to(PagePaths.MEASUREMENT_TRACKING);
@@ -470,9 +482,13 @@ class HomeVm extends ChangeNotifier {
             key: keys[HomeWidgets.appointments],
             type: HomeWidgets.appointments,
             isRemovedWidgets: isRemovedWidgets,
-            body: VerticalCard(
-              title: LocaleProvider.current.appointments,
-              painter: HomeAppointmentsCustomPainter(),
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
+                return VerticalCard(
+                  title: LocaleProvider.current.appointments,
+                  painter: HomeAppointmentsCustomPainter(),
+                );
+              },
             ),
             onTap: () {
               Atom.to(PagePaths.APPOINTMENTS);
@@ -498,9 +514,13 @@ class HomeVm extends ChangeNotifier {
             key: keys[HomeWidgets.results],
             type: HomeWidgets.results,
             isRemovedWidgets: isRemovedWidgets,
-            body: VerticalCard(
-              title: LocaleProvider.current.results,
-              painter: HomeResultsCustomPainter(),
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
+                return VerticalCard(
+                  title: LocaleProvider.current.results,
+                  painter: HomeResultsCustomPainter(),
+                );
+              },
             ),
             onTap: () {
               Atom.to(PagePaths.ERESULT);
@@ -515,9 +535,13 @@ class HomeVm extends ChangeNotifier {
               key: keys[HomeWidgets.symptomChecker],
               type: HomeWidgets.symptomChecker,
               isRemovedWidgets: isRemovedWidgets,
-              body: VerticalCard(
-                title: LocaleProvider.current.symptom_checker,
-                painter: HomeSymptomCheckerCustomPainter(),
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
+                  return VerticalCard(
+                    title: LocaleProvider.current.symptom_checker,
+                    painter: HomeSymptomCheckerCustomPainter(),
+                  );
+                },
               ),
               onTap: () {
                 Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
@@ -533,9 +557,13 @@ class HomeVm extends ChangeNotifier {
             key: keys[HomeWidgets.detailedSymptom],
             type: HomeWidgets.detailedSymptom,
             isRemovedWidgets: isRemovedWidgets,
-            body: VerticalCard(
-              title: LocaleProvider.current.detailed_symptom,
-              painter: HomeDetailedCheckupCustomPainter(),
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
+                return VerticalCard(
+                  title: LocaleProvider.current.detailed_symptom,
+                  painter: HomeDetailedCheckupCustomPainter(),
+                );
+              },
             ),
             onTap: () {
               Atom.to(PagePaths.DETAILED_SYMPTOM);
@@ -549,9 +577,13 @@ class HomeVm extends ChangeNotifier {
             key: keys[HomeWidgets.healthcare_employee],
             type: HomeWidgets.healthcare_employee,
             isRemovedWidgets: isRemovedWidgets,
-            body: VerticalCard(
-              title: LocaleProvider.current.healthcare_employee,
-              painter: HomeHealthCareEmployeeCustomPainter(),
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
+                return VerticalCard(
+                  title: LocaleProvider.current.healthcare_employee,
+                  painter: HomeHealthCareEmployeeCustomPainter(),
+                );
+              },
             ),
             onTap: () {
               Atom.to(PagePaths.DOCTOR_HOME);
