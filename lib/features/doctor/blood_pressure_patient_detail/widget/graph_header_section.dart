@@ -38,7 +38,7 @@ class _GraphHeaderSection extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).orientation == Orientation.portrait
               ? context.HEIGHT * 0.25
-              : context.HEIGHT * 0.5,
+              : context.HEIGHT * 0.7,
           margin: EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: getIt<ITheme>().cardBackgroundColor,
@@ -60,36 +60,47 @@ class _GraphHeaderSection extends StatelessWidget {
                   ),
                 ),
               ),
+
+              //
+              if (MediaQuery.of(context).orientation == Orientation.portrait)
+                Positioned(
+                    right: 0,
+                    top: 0,
+                    child: GestureDetector(
+                      onTap: () => context
+                          .read<BloodPressurePatientDetailVm>()
+                          .changeChartShowStatus(),
+                      child: Icon(
+                        Icons.keyboard_arrow_up,
+                        size: 52 * context.TEXTSCALE,
+                      ),
+                    ))
             ],
           ),
         ),
 
         //
-        Wrap(
-            alignment: WrapAlignment.center,
-            runSpacing: 25,
-            spacing: 25,
-            children: [
-              _infoSection(context),
-              ElevatedButton(
-                onPressed: () => value.showFilter(context),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  shadowColor: Colors.black.withAlpha(50),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(context.HEIGHT),
-                  ),
-                ),
-                child: Text(
-                  '${LocaleProvider.current.filter_graphs}',
-                  maxLines: 1,
-                  style: context.xHeadline5.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+        Row(children: [
+          _infoSection(context),
+          ElevatedButton(
+            onPressed: () => value.showFilter(context),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.white,
+              shadowColor: Colors.black.withAlpha(50),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(context.HEIGHT),
               ),
-            ])
+            ),
+            child: Text(
+              '${LocaleProvider.current.filter_graphs}',
+              maxLines: 1,
+              style: context.xHeadline5.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ])
       ],
     );
   }

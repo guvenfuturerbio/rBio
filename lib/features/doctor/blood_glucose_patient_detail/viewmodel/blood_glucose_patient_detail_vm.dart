@@ -16,6 +16,8 @@ class BloodGlucosePatientDetailVm extends RbioVm
   bool isDataLoading = false;
   DateTime _scrolledDate;
 
+  final controller = ScrollController();
+
   BloodGlucosePatientDetailVm({
     @required BuildContext context,
     @required int patientId,
@@ -24,6 +26,12 @@ class BloodGlucosePatientDetailVm extends RbioVm
     this._patientId = patientId;
     isChartShow = false;
     update();
+
+    controller.addListener(() {
+      if (controller.position.atEdge && controller.position.pixels != 0) {
+        getNewItems();
+      }
+    });
 
     // NotificationHandler().addListener(() async {
     //   if (!_disposed) {
@@ -52,6 +60,13 @@ class BloodGlucosePatientDetailVm extends RbioVm
     //     }
     //   }
     // });
+  }
+
+  getNewItems() async {
+    await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
+        .getMoreData(
+            patientId: patientDetail.id, date: bgMeasurements.last.date);
+    filterDatas();
   }
 
   bool isChartShow = false;
@@ -690,6 +705,8 @@ class BloodGlucosePatientDetailVm extends RbioVm
     notifyListeners();
   }
 
+  getNewDatas(DateTime oldestDate) {}
+
   Future<void> fetchBgMeasurements() async {
     await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurements(patientId: _patientId);
@@ -745,6 +762,10 @@ class BloodGlucosePatientDetailVm extends RbioVm
           .fetchBgMeasurementsInDateRange(
               startDate, endDate.add(Duration(days: 1)));
     }
+    filterDatas();
+  }
+
+  filterDatas() {
     this.bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;

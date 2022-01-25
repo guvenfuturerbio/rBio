@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:countup/countup.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -59,7 +59,6 @@ class _BloodGlucosePatientDetailScreenState
   AnimationController animationController;
   Animation<double> sizeAnimation;
 
-  final _controller = ScrollController();
   final _dropdownBannerKey = GlobalKey<NavigatorState>();
 
   @override
@@ -73,6 +72,7 @@ class _BloodGlucosePatientDetailScreenState
       parent: animationController,
       curve: Curves.fastOutSlowIn,
     );
+    Utils.instance.releaseOrientation();
 
     super.initState();
   }
@@ -80,6 +80,7 @@ class _BloodGlucosePatientDetailScreenState
   @override
   void dispose() {
     animationController.dispose();
+    Utils.instance.forcePortraitOrientation();
 
     super.dispose();
   }
@@ -92,6 +93,9 @@ class _BloodGlucosePatientDetailScreenState
     } catch (_) {
       return RbioRouteError();
     }
+    MediaQuery.of(context).orientation == Orientation.landscape
+        ? SystemChrome.setEnabledSystemUIOverlays([])
+        : SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return ChangeNotifierProvider<BloodGlucosePatientDetailVm>(
       create: (context) => BloodGlucosePatientDetailVm(
@@ -104,10 +108,23 @@ class _BloodGlucosePatientDetailScreenState
         ) {
           return DropdownBanner(
             navigatorKey: _dropdownBannerKey,
-            child: RbioScaffold(
-              appbar: _buildAppBar(),
-              body: _buildBody(vm),
-            ),
+            child: !vm.isDataLoading &&
+                    MediaQuery.of(context).orientation == Orientation.landscape
+                ? _GraphHeaderSection(
+                    value: vm,
+                    controller: vm.controller,
+                  )
+                : RbioScaffold(
+                    appbar: _buildAppBar(),
+                    body: _buildBody(vm),
+                    floatingActionButton: FloatingActionButton(
+                      onPressed: () {
+                        LoggerUtils.instance.i(vm.bgMeasurements.last.date);
+                        LoggerUtils.instance.i(vm.bgMeasurements.first.date);
+                      },
+                      child: Icon(Icons.add),
+                    ),
+                  ),
           );
         },
       ),
@@ -186,7 +203,7 @@ class _BloodGlucosePatientDetailScreenState
               vm.isChartShow
                   ? _GraphHeaderSection(
                       value: vm,
-                      controller: _controller,
+                      controller: vm.controller,
                     )
                   : Padding(
                       padding:
@@ -204,7 +221,7 @@ class _BloodGlucosePatientDetailScreenState
                       : context.HEIGHT * .8,
                   child: _MeasurementList(
                     bgMeasurements: vm.bgMeasurements,
-                    scrollController: _controller,
+                    scrollController: vm.controller,
                     useStickyGroupSeparatorsValue:
                         vm.selected == LocaleProvider.current.daily ||
                                 vm.selected == LocaleProvider.current.specific
