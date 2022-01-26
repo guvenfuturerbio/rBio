@@ -93,8 +93,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
           child: RbioScaffold(
             resizeToAvoidBottomInset: true,
             appbar: RbioAppBarLogin(
-              title: Image.asset(
-                R.image.oneDoseHealthPng,
+              title: SvgPicture.asset(
+                R.image.oneDoseHealth,
                 height: 50,
               ),
             ),

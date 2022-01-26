@@ -50,8 +50,8 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
                     height: 50,
-                    child: Image.asset(
-                      R.image.oneDoseHealthPng,
+                    child: SvgPicture.asset(
+                      R.image.oneDoseHealth,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -150,8 +150,8 @@ class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
                 [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      R.image.oneDoseHealthPng,
+                    child: SvgPicture.asset(
+                      R.image.oneDoseHealth,
                       fit: BoxFit.fitHeight,
                     ),
                   ),

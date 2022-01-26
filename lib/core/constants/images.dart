@@ -104,7 +104,7 @@ class _Images {
   final error_icon = 'assets/images/error_icon.svg';
   final hearthpressure_icon = 'assets/images/hearthpressure_icon.svg';
   final hospital_icon = 'assets/images/hospital_icon.svg';
-  final oneDoseHealthPng = 'assets/images/onedose_health.png';
+  final oneDoseHealth = 'assets/images/onedose_logo.svg';
   final other_icon = 'assets/images/other_icon.svg';
   final phone_icon = 'assets/images/phone_icon.svg';
   final photo_icon = 'assets/images/photo_icon.svg';
@@ -117,13 +117,20 @@ class _Images {
   final search_icon = 'assets/images/search_icon.svg';
   final menu_icon = 'assets/images/menu_icon.svg';
 
-  final bottomNavigationChatGreen = 'assets/images/bottom_navigation/chat_icon_green.svg';
+  final bottomNavigationChatGreen =
+      'assets/images/bottom_navigation/chat_icon_green.svg';
   final bottomNavigationChat = 'assets/images/bottom_navigation/chat_icon.svg';
-  final bottomNavigationGraphGreen = 'assets/images/bottom_navigation/graph_icon_green.svg';
-  final bottomNavigationGraph = 'assets/images/bottom_navigation/graph_icon.svg';
+  final bottomNavigationGraphGreen =
+      'assets/images/bottom_navigation/graph_icon_green.svg';
+  final bottomNavigationGraph =
+      'assets/images/bottom_navigation/graph_icon.svg';
   final bottomNavigationHome = 'assets/images/bottom_navigation/home_icon.svg';
-  final bottomNavigationNotificationGreen = 'assets/images/bottom_navigation/notification_icon_green.svg';
-  final bottomNavigationNotification = 'assets/images/bottom_navigation/notification_icon.svg';
-  final bottomNavigationSearchGreen = 'assets/images/bottom_navigation/search_icon_green.svg';
-  final bottomNavigationSearch = 'assets/images/bottom_navigation/search_icon.svg';
+  final bottomNavigationNotificationGreen =
+      'assets/images/bottom_navigation/notification_icon_green.svg';
+  final bottomNavigationNotification =
+      'assets/images/bottom_navigation/notification_icon.svg';
+  final bottomNavigationSearchGreen =
+      'assets/images/bottom_navigation/search_icon_green.svg';
+  final bottomNavigationSearch =
+      'assets/images/bottom_navigation/search_icon.svg';
 }
