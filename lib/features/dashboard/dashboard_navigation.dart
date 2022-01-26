@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/dashboard/not_chronic_screen.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../core/core.dart';
@@ -51,7 +52,9 @@ class DashboardNavigation extends VRouteElementBuilder {
           VWidget(
             path: chat,
             name: chat,
-            widget: ConsultationScreen(fromBottomBar: true),
+            widget: 
+                 ConsultationScreen(fromBottomBar: true)
+
           ),
 
           //
@@ -63,10 +66,9 @@ class DashboardNavigation extends VRouteElementBuilder {
 
           //
           VWidget(
-            path: graph,
-            name: graph,
-            widget: MeasurementTrackingHomeScreen(fromBottomBar: true),
-          ),
+              path: graph,
+              name: graph,
+              widget: MeasurementTrackingHomeScreen(fromBottomBar: true)),
 
           //
           VWidget(

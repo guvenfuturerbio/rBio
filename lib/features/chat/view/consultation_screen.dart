@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/dashboard/not_chronic_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -17,19 +18,23 @@ class ConsultationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<DoctorConsultationVm>(
-      create: (context) => DoctorConsultationVm(context),
-      child: Consumer<DoctorConsultationVm>(builder: (
-        BuildContext context,
-        DoctorConsultationVm vm,
-        Widget child,
-      ) {
-        return RbioScaffold(
-          appbar: _buildAppBar(context),
-          body: _buildBody(context, vm),
-        );
-      }),
-    );
+    return !(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)
+        ? NotChronicScreen(
+            LocaleProvider.current.consultation,
+          )
+        : ChangeNotifierProvider<DoctorConsultationVm>(
+            create: (context) => DoctorConsultationVm(context),
+            child: Consumer<DoctorConsultationVm>(builder: (
+              BuildContext context,
+              DoctorConsultationVm vm,
+              Widget child,
+            ) {
+              return RbioScaffold(
+                appbar: _buildAppBar(context),
+                body: _buildBody(context, vm),
+              );
+            }),
+          );
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(

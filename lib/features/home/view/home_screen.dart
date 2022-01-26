@@ -85,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      actions: [
-        //
+      /*  actions: [
+       //
         Center(
           child: RbioSwitcher(
             showFirstChild: vm.status.isShaken,
@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         //
         R.sizes.wSizer8,
-      ],
+      ],*/
     );
   }
 
