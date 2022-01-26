@@ -106,10 +106,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             ? MediaQuery.of(context).size.width * 0.10
                             : MediaQuery.of(context).size.width * 0.03
                         : MediaQuery.of(context).size.width * 0.12,
-                    child: Image.asset(
+                    child: SvgPicture.asset(
                         value.filterResources[index].tenants[0].id == 1
-                            ? R.image.oneDoseHealthPng
-                            : R.image.oneDoseHealthPng),
+                            ? R.image.oneDoseHealth
+                            : R.image.oneDoseHealth),
                   ),
                   subtitle: Text(
                       (value.filterResources[index].tenants[0].id == 1
