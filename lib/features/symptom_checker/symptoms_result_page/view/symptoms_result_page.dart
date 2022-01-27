@@ -143,7 +143,10 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${value.specialisations[index].name}',
+                                value.specialisations[index].id == 15
+                                    ? LocaleProvider
+                                        .current.free_consultation_appointment
+                                    : '${value.specialisations[index].name}',
                                 style: context.xHeadline2,
                               ),
                               Column(

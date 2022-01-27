@@ -27,7 +27,8 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           AppointmentListVm vm,
           Widget child,
         ) {
-          return RbioScaffold(
+          return RbioStackedScaffold(
+            isLoading: vm.showProgressOverlay,
             appbar: _buildAppBar(context),
             body: _buildBody(vm),
           );
@@ -69,12 +70,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         return RbioLoading();
 
       case LoadingProgress.DONE:
-        return RbioLoadingOverlay(
-          child: _buildPosts(vm.patientAppointments, vm),
-          isLoading: vm.showProgressOverlay,
-          progressIndicator: RbioLoading.progressIndicator(),
-          opacity: 0,
-        );
+        return _buildPosts(vm.patientAppointments, vm);
 
       case LoadingProgress.ERROR:
         return RbioBodyError();
@@ -93,6 +89,10 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        //
+        R.sizes.stackedTopPadding(context),
+        R.sizes.hSizer8,
+
         //
         Text(
           LocaleProvider.current.date_filter,
@@ -155,7 +155,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     return RbioCardAppoCard.appointment(
       isActiveHeader:
           DateTime.parse(data.from).isAfter(DateTime.now()) ? true : false,
-      tenantName: data.tenant,
+      tenantName: data.tenant == "Nba Tıp Merkezi"
+          ? "Güven Hastanesi Çayyolu"
+          : data.tenant,
       doctorName: data.resources[0].resource,
       departmentName: data.resources[0].department,
       date: _getFormattedDate(data.from.substring(0, 10)),
@@ -169,9 +171,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
               child: Container(
                 color: Colors.red,
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  LocaleProvider.current.cancel,
+                  LocaleProvider.current.btn_cancel,
                   style: context.xHeadline3.copyWith(
                     color: getIt<ITheme>().textColor,
                   ),

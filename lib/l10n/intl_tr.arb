@@ -19,6 +19,8 @@
   "chronic_track_home": "Sağlık Takibi",
   "take_video_appointment": "Görüntülü Görüşme Randevusu",
   "profile": "Profil",
+  "terms_and_privacy": "Koşullar ve Gizlilik",
+
   "reminders": "Hatırlatıcılarım",
   "content_delete_doctor_first": "Do you want delete doctor ",
   "content_delete_doctor_second": " on list?",
@@ -755,5 +757,7 @@
   "widgets_add_message": "Şu anda kullanımda olan 7 widget'ınız var. Yeni widget eklemek için bunlardan birini kaldırın.",
   "open_chart": "Grafiği Göster",
   "close_chart": "Grafiği Gizle",
-  "recent_appointments": "Son Randevularım"
+  "recent_appointments": "Son Randevularım",
+  "recover_your_password": "Şifremi Kurtar",
+  "notification_inbox_empty": "Henüz bildiriminiz yok"
 }

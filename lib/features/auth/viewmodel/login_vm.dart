@@ -44,7 +44,13 @@ class LoginScreenVm extends ChangeNotifier {
 
   bool _checkedKvkk;
 
-  bool _passwordVisibility;
+  bool _passwordVisibility = false;
+  bool get passwordVisibility => this._passwordVisibility;
+  void togglePasswordVisibility() {
+    _passwordVisibility = !_passwordVisibility;
+    notifyListeners();
+  }
+
   PackageInfo packageInfo;
   LoginScreenVm({BuildContext context}) {
     this.mContext = context;
@@ -71,8 +77,6 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   bool get checkedKvkkForm => this._checkedKvkk ?? false;
-
-  bool get passwordVisibility => this._passwordVisibility ?? false;
 
   void fetchConsentFormState() {
     this._clickedGeneralForm =
@@ -212,6 +216,7 @@ class LoginScreenVm extends ChangeNotifier {
       try {
         // Roles and token
         this._guvenLogin = await getIt<UserManager>().login(username, password);
+
         await saveLoginInfo(username, password, guvenLogin.token.accessToken);
 
         List<dynamic> results = await Future.wait(
@@ -270,13 +275,18 @@ class LoginScreenVm extends ChangeNotifier {
           //
         }
 
-        hideDialog(mContext);
-        notifyListeners();
         final term = Atom.queryParameters['then'];
         if (term != null && term != '') {
           Atom.to(term, isReplacement: true);
         }
-        mContext.read<HomeVm>().init();
+
+        final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+        mContext.read<HomeVm>().init(allUsersModel);
+
+        await Future.delayed(Duration(milliseconds: 100));
+        hideDialog(mContext);
+        notifyListeners();
+
         Atom.to(PagePaths.MAIN, isReplacement: true);
 
         // MainNavigation.toHome(mContext);

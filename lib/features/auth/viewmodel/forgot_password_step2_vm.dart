@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 import '../auth.dart';
 
-class ForgotPasswordStep2ScreenVm extends ChangeNotifier with RbioVm {
+class ForgotPasswordStep2ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   ForgotPasswordStep2ScreenVm(this.mContext);
@@ -11,43 +11,29 @@ class ForgotPasswordStep2ScreenVm extends ChangeNotifier with RbioVm {
   final focus = FocusNode();
   LoadingDialog loadingDialog;
 
-  // Fields
-  bool _checkLowerCase;
-  bool _checkNumeric;
-  bool _checkSpecial;
-  bool _checkUpperCase;
-  bool _checkLength;
   bool _passwordVisibility;
-
-  // Getters
   bool get passwordVisibility => this._passwordVisibility ?? false;
-  bool get checkLowerCase => this._checkLowerCase ?? false;
-  bool get checkUpperCase => this._checkUpperCase ?? false;
-  bool get checkNumeric => this._checkNumeric ?? false;
-  bool get checkSpecial => this._checkSpecial ?? false;
-  bool get checkLength => this._checkLength ?? false;
-
-  void checkPasswordCapability(String password) {
-    this._checkLowerCase = PasswordAdvisor().checkLowercase(password);
-    this._checkUpperCase = PasswordAdvisor().checkUpperCase(password);
-    this._checkSpecial = PasswordAdvisor().checkSpecialCharacter(password);
-    this._checkNumeric = PasswordAdvisor().checkNumberInclude(password);
-    this._checkLength = PasswordAdvisor().checkRequiredPasswordLength(password);
-    notifyListeners();
-  }
-
   void togglePasswordVisibility() {
     this._passwordVisibility = !passwordVisibility;
     notifyListeners();
   }
 
-  bool checkPasswordCapabilityForAll(String password) {
-    return PasswordAdvisor().validateStructure(password);
+  final PasswordAdvisor passwordAdvisor = PasswordAdvisor();
+
+  bool get checkLowerCase => passwordAdvisor.lowerCaseValue;
+  bool get checkUpperCase => passwordAdvisor.upperCaseValue;
+  bool get checkNumeric => passwordAdvisor.numericValue;
+  bool get checkSpecial => passwordAdvisor.specialValue;
+  bool get checkLength => passwordAdvisor.lengthValue;
+
+  void checkPasswordCapability(String newPassword) {
+    passwordAdvisor.checkPassword(newPassword);
+    notifyListeners();
   }
 
   void forgotPassStep2(ChangePasswordModel changePasswordModel) async {
     try {
-      if (checkPasswordCapabilityForAll(changePasswordModel.newPassword)) {
+      if (passwordAdvisor.validateStructure()) {
         showLoadingDialog(this.mContext);
         notifyListeners();
 

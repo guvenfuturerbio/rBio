@@ -46,6 +46,8 @@ class ChronicTrackingRepository {
       apiService.addFirebaseToken(addFirebaseToken);
   Future<GuvenResponseModel> updateProfile(Person person, int id) =>
       apiService.updateProfile(person, id);
+  Future<GuvenResponseModel> addTreatment(Person person, String treatment) =>
+      apiService.addTreatment(person, treatment);
   Future<GuvenResponseModel> setDefaultProfile(Person person) =>
       apiService.setDefaultProfile(person);
   Future<GuvenResponseModel> updateUserStrip(

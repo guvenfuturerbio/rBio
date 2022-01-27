@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/home/utils/detailed_symptom_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
 import '../../../core/core.dart';
 import '../model/banner_model.dart';
+import '../model/drawer_model.dart';
 import '../utils/appointments_painter.dart';
 import '../utils/chronic_tracking_painter.dart';
+import '../utils/detailed_symptom_checker.dart';
+import '../utils/healthcare_employee_painter.dart';
 import '../utils/hospital_appointment_painter.dart';
 import '../utils/online_appointment_painter.dart';
 import '../utils/results_painter.dart';
@@ -18,37 +20,90 @@ import '../widgets/vertical_card_widget.dart';
 
 class HomeVm extends ChangeNotifier {
   final BuildContext mContext;
+
+  HomeVm({this.mContext});
+
+  // #region Variables
+  final sharedPreferencesManager = getIt<ISharedPreferencesManager>();
+  List<String> get getUserWidgets {
+    final currentUserName = sharedPreferencesManager
+        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(currentUserName);
+    if (allUsersModel == null) {
+      return null;
+    } else {
+      return allUsersModel.useWidgets;
+    }
+  }
+
+  static final key_hospitalAppointment = const ValueKey('hospitalAppointment');
+  static final key_onlineAppointment = const ValueKey('onlineAppointment');
+  static final key_chronicTracking = const ValueKey('chronicTracking');
+  static final key_appointments = const ValueKey('appointments');
+  static final key_slider = const ValueKey('slider');
+  static final key_results = const ValueKey('results');
+  static final key_symptomChecker = const ValueKey('symptomChecker');
+  static final key_detailedSymptom = const ValueKey('detailedSymptom');
+  static final key_healthcare_employee = const ValueKey('healthcare_employee');
+
+  final Map<HomeWidgets, Key> keys = {
+    HomeWidgets.hospitalAppointment: key_hospitalAppointment,
+    HomeWidgets.onlineAppointment: key_onlineAppointment,
+    HomeWidgets.chronicTracking: key_chronicTracking,
+    HomeWidgets.appointments: key_appointments,
+    HomeWidgets.slider: key_slider,
+    HomeWidgets.results: key_results,
+    HomeWidgets.symptomChecker: key_symptomChecker,
+    HomeWidgets.detailedSymptom: key_detailedSymptom,
+    HomeWidgets.healthcare_employee: key_healthcare_employee,
+  };
+
+  final List<HomeWidgets> userDefaultValues = [
+    HomeWidgets.hospitalAppointment,
+    HomeWidgets.onlineAppointment,
+    HomeWidgets.chronicTracking,
+    HomeWidgets.appointments,
+    HomeWidgets.slider,
+    HomeWidgets.results,
+    HomeWidgets.symptomChecker,
+    HomeWidgets.detailedSymptom,
+  ];
+
+  final List<HomeWidgets> doctorDefaultValues = [
+    HomeWidgets.hospitalAppointment,
+    HomeWidgets.onlineAppointment,
+    HomeWidgets.healthcare_employee,
+    HomeWidgets.appointments,
+    HomeWidgets.slider,
+    HomeWidgets.results,
+    HomeWidgets.symptomChecker,
+    HomeWidgets.detailedSymptom,
+  ];
+
   double startAngle = 0;
+
   double endAngle = 0;
 
   ShakeMod status = ShakeMod.notShaken;
 
-  //Kullanımda olan ve ekranda gösterilen widgetların tutulduğu liste
   List<Widget> widgetsInUse = [];
 
-  //Ekrandan silinen ama menüde görünmesi gereken silinmiş widgetları gösteren liste
-  List<Widget> widgetsDeleted = [];
+  bool showDeletedAlert = false;
 
-  //Silinmiş widgetların keylerini tutan listemiz. Shared Preferences için kullanılıyor.
-  List<String> deletedKeysHolder = [];
-
-  //Elde tutulan widgetların sırasını tutan listemiz. Shared Preferences için kullanılıyor.
-  List<String> queryOfWidgetsInUse = [];
-
-  //Widgetların içerisinde bulunan onTap methodu için kullanılan bool değerimiz.
-  bool isForDelete = false;
-  //Slider widgetları
   List<BannerTabsModel> bannerTabsModel = [];
+
   SpringController springController;
 
-  List<Map<String, dynamic>> get drawerList => [
-        {
-          LocaleProvider.current.profile: () {
+  List<DrawerModel> get drawerList => <DrawerModel>[
+        DrawerModel(
+          title: LocaleProvider.current.profile,
+          onTap: () {
             Atom.to(PagePaths.PROFILE);
-          }
-        },
-        {
-          LocaleProvider.current.lbl_find_hospital: () {
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.lbl_find_hospital,
+          onTap: () {
             Atom.to(
               PagePaths.CREATE_APPOINTMENT,
               queryParameters: {
@@ -58,9 +113,10 @@ class HomeVm extends ChangeNotifier {
               },
             );
           },
-        },
-        {
-          LocaleProvider.current.take_video_appointment: () {
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.take_video_appointment,
+          onTap: () {
             Atom.to(
               PagePaths.CREATE_APPOINTMENT,
               queryParameters: {
@@ -69,187 +125,165 @@ class HomeVm extends ChangeNotifier {
                 'fromSymptom': false.toString(),
               },
             );
-          }
-        },
-        {
-          LocaleProvider.current.chronic_track_home: () {
-            Atom.to(PagePaths.MEASUREMENT_TRACKING);
-          }
-        },
-        {
-          LocaleProvider.current.appointments: () {
-            Atom.to(PagePaths.APPOINTMENTS);
-          }
-        },
-        {
-          LocaleProvider.current.results: () {
-            Atom.to(PagePaths.ERESULT);
-          }
-        },
-        {
-          LocaleProvider.current.for_you: () {
-            Atom.to(
-              PagePaths.FOR_YOU_CATEGORIES,
-            );
           },
-        },
-        {
-          LocaleProvider.current.symptom_checker: () {
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.chronic_track_home,
+          onTap: () {
+            Atom.to(PagePaths.MEASUREMENT_TRACKING);
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.appointments,
+          onTap: () {
+            Atom.to(PagePaths.APPOINTMENTS);
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.results,
+          onTap: () {
+            Atom.to(PagePaths.ERESULT);
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.for_you,
+          onTap: () {
+            Atom.to(PagePaths.FOR_YOU_CATEGORIES);
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.symptom_checker,
+          onTap: () {
             Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
-          }
-        },
-        {
-          LocaleProvider.current.devices: () {
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.devices,
+          onTap: () {
             Atom.to(PagePaths.DEVICES);
-          }
-        },
-        {
-          LocaleProvider.current.reminders: () {
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.reminders,
+          onTap: () {
             Atom.to(PagePaths.MEDIMINDER_INITIAL);
-          }
-        },
-        {
-          LocaleProvider.current.request_and_suggestions: () {
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.request_and_suggestions,
+          onTap: () {
             Atom.to(PagePaths.SUGGEST_REQUEST);
-          }
-        },
-        {
-          LocaleProvider.current.detailed_symptom: () {
+          },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.detailed_symptom,
+          onTap: () {
             Atom.to(
               PagePaths.DETAILED_SYMPTOM,
             );
           },
-        },
+        ),
+        DrawerModel(
+          title: LocaleProvider.current.log_out,
+          onTap: () async {
+            await getIt<UserNotifier>().logout();
+          },
+        ),
       ];
+  // #endregion
 
-  HomeVm({this.mContext});
-
-  Future<void> init() async {
+  // #region init
+  Future<void> init(AllUsersModel allUsersModel) async {
     final widgetsBinding = WidgetsBinding.instance;
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) async {
         springController = SpringController(initialAnim: Motion.mirror);
-        await fetchWidgets();
-        bannerTabsModel =
-            await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
+        await fetchWidgets(allUsersModel);
+        await fetchBanners();
         notifyListeners();
       });
     }
   }
+  // #endregion
 
-  // Uygulama ilk açıldığında, silinmiş widgetların keylerini tutan veriyi shared preferences içinden çekip kullanılan widget listesini dolduran method.
-  void fetchWidgets() {
-    if (getIt<ISharedPreferencesManager>()
-        .containsKey(SharedPreferencesKeys.DELETED_WIDGETS)) {
-      deletedKeysHolder = getIt<ISharedPreferencesManager>()
-          .getStringList(SharedPreferencesKeys.DELETED_WIDGETS);
-      widgetsInUse.removeWhere((element) {
-        if (deletedKeysHolder.contains(element.key.toString())) {
-          widgetsDeleted.add(element);
-          return deletedKeysHolder.contains(element.key.toString());
-        } else {
-          return false;
+  // #region fetchBanners
+  Future<void> fetchBanners() async {
+    bannerTabsModel =
+        await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
+  }
+  // #endregion
+
+  // #region fetchWidgets
+  Future<void> fetchWidgets(AllUsersModel allUsersModel) async {
+    widgetsInUse = [];
+    final sharedUserList = getUserWidgets;
+    if (sharedUserList == null) {
+      List<String> setList = [];
+      List<HomeWidgets> values = _getAllCases();
+      values.forEach((widgetType) {
+        if (widgetType.isShowDefault()) {
+          final child = _getWidgetByType(widgetType, false);
+          if (child != null) {
+            setList.add(widgetType.xRawValue);
+            widgetsInUse.add(child);
+          }
         }
       });
-      // Local'de kayıtlı liste varsa ona göre liste oluşturulur.
-      if (getIt<ISharedPreferencesManager>()
-          .containsKey(SharedPreferencesKeys.WIDGET_QUERY)) {
-        queryOfWidgetsInUse = getIt<ISharedPreferencesManager>()
-            .getStringList(SharedPreferencesKeys.WIDGET_QUERY);
-        Map<String, Widget> myMap = widgetMap();
-        widgetsInUse.clear();
-        queryOfWidgetsInUse.forEach((element) {
-          widgetsInUse.add(myMap[element]);
-        });
-      } else {
-        widgetsInUse = widgets().sublist(0, 7).toList();
-      }
+      await saveWidgetList(setList);
     } else {
-      deletedKeysHolder.add(_key8.toString());
-      widgetsDeleted.add(widgetMap()[_key8.toString()]);
-      getIt<ISharedPreferencesManager>().setStringList(
-          SharedPreferencesKeys.DELETED_WIDGETS, deletedKeysHolder);
-      widgetsInUse = widgets().sublist(0, 7).toList();
+      final sharedTypes = sharedUserList.map((e) => e.xHomeWidgets).toList();
+      widgetsInUse = _getTypeToWidgetList(sharedTypes, false);
     }
   }
+  // #endregion
 
-  List<Widget> getDeletedList() {
-    Map<String, Widget> myMap = widgetMap();
-    final deletedItems = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.DELETED_WIDGETS);
-    if (deletedItems != null) {
-      return deletedItems.map((e) => myMap[e]).toList();
-    }
-
-    return [];
-  }
-
-  // Kullanıcı widget sildiğinde çalışan fonks.
-  Future<void> removeWidget(Key widgetKey) async {
-    for (var element in widgetsInUse) {
-      if (element.key == widgetKey) {
-        widgetsDeleted.add(element);
-        deletedKeysHolder.add(element.key.toString());
-      }
-    }
-
-    widgetsInUse.removeWhere((element) => widgetsDeleted.contains(element));
-    getIt<ISharedPreferencesManager>().setStringList(
-        SharedPreferencesKeys.DELETED_WIDGETS, deletedKeysHolder);
-    await querySaver();
+  // #region removeWidget
+  Future<void> removeWidget(HomeWidgets widgetType) async {
+    widgetsInUse.removeWhere((element) =>
+        ((element.key as ValueKey).value as String).xHomeWidgets == widgetType);
+    var sharedUserList = getUserWidgets ?? [];
+    sharedUserList.remove(widgetType.xRawValue);
+    await saveWidgetList(sharedUserList);
     notifyListeners();
   }
+  // #endregion
 
-  // Kullanıcı widget eklediğinde çalışan fonks.
-  Future<void> addWidget(Key widgetKey) async {
-    Map<String, Widget> myMap = widgetMap();
-    if (widgetsInUse.length > 6) {
-      Atom.dismiss();
-      Future.delayed(Duration(milliseconds: 600), () {
-        Atom.show(AddWidgetWarning());
-      });
-      isForDelete = false;
-      notifyListeners();
-      return;
-    } else {
-      myMap.forEach((key, value) {
-        if (key == widgetKey.toString()) {
-          widgetsInUse.add(value);
-          deletedKeysHolder.removeWhere((element) => element == key.toString());
-        }
-      });
-    }
-
-    getIt<ISharedPreferencesManager>().setStringList(
-        SharedPreferencesKeys.DELETED_WIDGETS, deletedKeysHolder);
-    await querySaver();
-    widgetsDeleted.removeWhere((element) => widgetsInUse.contains(element));
-    isForDelete = false;
+  // #region addWidget
+  Future<void> addWidget(HomeWidgets widgetType) async {
+    var sharedUserList = getUserWidgets ?? [];
+    sharedUserList.add(widgetType.xRawValue);
+    await saveWidgetList(sharedUserList);
+    widgetsInUse.add(_getWidgetByType(widgetType, false));
+    closeAddAlert();
     notifyListeners();
     Atom.dismiss();
   }
+  // #endregion
 
-  // Kullanıcı widgetların sırasını değiştirdiğinde çalışan fonks.
+  // #region onReorder
   void onReorder(int oldIndex, int newIndex) async {
     try {
       Widget row = widgetsInUse.removeAt(oldIndex);
       await widgetsInUse.insert(newIndex, row);
-      await querySaver();
+      List<String> setList = widgetsInUse.map((element) {
+        return ((element.key as ValueKey).value as String)
+            .xHomeWidgets
+            .xRawValue;
+      }).toList();
+      await saveWidgetList(setList);
     } catch (e) {
       LoggerUtils.instance.e(e);
     }
   }
+  // #endregion
 
-  // Yeri değişmiş, silinmiş veya eklenmiş widgetlardan sonra çalışan sıra kaydedici fonks.
-  void querySaver() async {
-    queryOfWidgetsInUse.clear();
-    widgetsInUse.forEach((element) {
-      queryOfWidgetsInUse.add(element.key.toString());
-    });
-    await getIt<ISharedPreferencesManager>()
-        .setStringList(SharedPreferencesKeys.WIDGET_QUERY, queryOfWidgetsInUse);
+  // #region saveWidgetList
+  Future<void> saveWidgetList(List<String> list) async {
+    await getIt<UserNotifier>().saveHomeWidgets(list);
   }
+  // #endregion
 
+  // #region changeStatus
   void changeStatus() {
     status = status.toggle();
     if (status.isShaken) {
@@ -261,11 +295,19 @@ class HomeVm extends ChangeNotifier {
     }
     notifyListeners();
   }
+  // #endregion
 
-  // Widget eklemek için açılan menü
+  // #region showRemovedWidgets
   void showRemovedWidgets() {
-    isForDelete = true;
+    openAddAlert();
     notifyListeners();
+
+    final sharedUserList = getUserWidgets;
+    final allWidgets = _getAllCases(true).map((e) => e.xRawValue).toList();
+    allWidgets.removeWhere((e) => sharedUserList.contains(e));
+    // Kullanılmayan widgetlar
+    final removedWidgetTypes = allWidgets.map((e) => e.xHomeWidgets).toList();
+    final removedChildren = _getTypeToWidgetList(removedWidgetTypes, true);
 
     Atom.show(
       Container(
@@ -279,13 +321,16 @@ class HomeVm extends ChangeNotifier {
                   Wrap(
                     spacing: 10,
                     runSpacing: 10,
-                    children: getDeletedList(),
+                    children: removedChildren,
                   ),
+
+                  //
+                  R.sizes.hSizer8,
 
                   //
                   RbioElevatedButton(
                     onTap: () {
-                      isForDelete = false;
+                      closeAddAlert();
                       notifyListeners();
                       Atom.dismiss();
                     },
@@ -299,246 +344,258 @@ class HomeVm extends ChangeNotifier {
       ),
     );
   }
+  // #endregion
 
-  // Widgetların sırasını çektikten sonra sırasına göre doldurluğumuz listenin beslendiği map.
-  Map<String, Widget> widgetMap() {
-    List<Widget> returner = widgets();
-    return <String, Widget>{
-      "[<'1'>]": returner[0],
-      "[<'2'>]": returner[1],
-      "[<'3'>]": returner[2],
-      "[<'4'>]": returner[3],
-      "[<'5'>]": returner[4],
-      "[<'6'>]": returner[5],
-      "[<'7'>]": returner[6],
-      "[<'8'>]": returner[7],
-    };
+  // #region openAddAlert
+  void openAddAlert() {
+    showDeletedAlert = true;
   }
+  // #endregion
 
-  final _key1 = const Key('1');
-  final _key2 = const Key('2');
-  final _key3 = const Key('3');
-  final _key4 = const Key('4');
-  final key5 = const Key('5');
-  final _key6 = const Key('6');
-  final _key7 = const Key('7');
-  final _key8 = const Key('8');
+  // #region closeAddAlert
+  void closeAddAlert() {
+    showDeletedAlert = false;
+  }
+  // #endregion
 
-  // Tüm widgetları çeken fonks.
-  List<Widget> widgets() => <Widget>[
-        //
-        if (getIt<AppConfig>().takeHospitalAppointment)
-          MyReorderableWidget(
-            key: _key1,
-            body: GestureDetector(
-              onTap: () {
-                if (isForDelete) {
-                  addWidget(_key1);
-                } else if (status == ShakeMod.notShaken) {
-                  Atom.to(
-                    PagePaths.CREATE_APPOINTMENT,
-                    queryParameters: {
-                      'forOnline': false.toString(),
-                      'fromSearch': false.toString(),
-                      'fromSymptom': false.toString(),
-                    },
-                  );
-                }
-              },
-              child: Consumer<LocaleNotifier>(
-                builder: (context, vm, child) {
+  // #region _getAllCases
+  List<HomeWidgets> _getAllCases([bool isDoctorRemove = false]) {
+    final isDoctor = getIt<UserNotifier>().isDoctor;
+    List<HomeWidgets> values = [];
+    if (isDoctor) {
+      values = doctorDefaultValues;
+      if (isDoctorRemove) {
+        values.add(HomeWidgets.chronicTracking);
+      }
+    } else {
+      values = userDefaultValues;
+    }
+    return values.toSet().toList();
+  }
+  // #endregion
+
+  // #region _getTypeToWidgetList
+  List<Widget> _getTypeToWidgetList(
+    List<HomeWidgets> types,
+    bool isRemovedWidgets,
+  ) {
+    final result = <Widget>[];
+    types.forEach((widgetType) {
+      final child = _getWidgetByType(widgetType, isRemovedWidgets);
+      if (child != null) {
+        result.add(child);
+      }
+    });
+    return result;
+  }
+  // #endregion
+
+  // #region _getWidgetByType
+  Widget _getWidgetByType(HomeWidgets widgetType, bool isRemovedWidgets) {
+    switch (widgetType) {
+      case HomeWidgets.hospitalAppointment:
+        {
+          if (getIt<AppConfig>().takeHospitalAppointment)
+            return MyReorderableWidget(
+              key: keys[HomeWidgets.hospitalAppointment],
+              type: HomeWidgets.hospitalAppointment,
+              isRemovedWidgets: isRemovedWidgets,
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
                   return VerticalCard(
                     title: LocaleProvider.current.lbl_find_hospital,
                     painter: HomeHospitalAppointmentCustomPainter(),
                   );
                 },
               ),
-            ),
-          ),
-
-        //
-        if (getIt<AppConfig>().takeOnlineAppointment)
-          MyReorderableWidget(
-            key: _key2,
-            body: GestureDetector(
               onTap: () {
-                if (isForDelete) {
-                  addWidget(_key2);
-                } else if (status == ShakeMod.notShaken) {
-                  Atom.to(
-                    PagePaths.CREATE_APPOINTMENT,
-                    queryParameters: {
-                      'forOnline': true.toString(),
-                      'fromSearch': false.toString(),
-                      'fromSymptom': false.toString(),
-                    },
-                  );
-                }
+                Atom.to(
+                  PagePaths.CREATE_APPOINTMENT,
+                  queryParameters: {
+                    'forOnline': false.toString(),
+                    'fromSearch': false.toString(),
+                    'fromSymptom': false.toString(),
+                  },
+                );
               },
-              child: Consumer<LocaleNotifier>(
-                builder: (context, vm, child) {
+            );
+
+          break;
+        }
+
+      case HomeWidgets.onlineAppointment:
+        {
+          if (getIt<AppConfig>().takeOnlineAppointment)
+            return MyReorderableWidget(
+              key: keys[HomeWidgets.onlineAppointment],
+              type: HomeWidgets.onlineAppointment,
+              isRemovedWidgets: isRemovedWidgets,
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
                   return VerticalCard(
                     title: LocaleProvider.current.take_video_appointment,
                     painter: HomeOnlineAppointmentCustomPainter(),
                   );
                 },
               ),
-            ),
-          ),
-
-        //
-        if (getIt<AppConfig>().chronicTracking)
-          MyReorderableWidget(
-            key: _key3,
-            body: GestureDetector(
               onTap: () {
-                if (isForDelete) {
-                  addWidget(_key3);
-                } else if (status == ShakeMod.notShaken) {
-                  Atom.to(PagePaths.MEASUREMENT_TRACKING);
-                }
+                Atom.to(
+                  PagePaths.CREATE_APPOINTMENT,
+                  queryParameters: {
+                    'forOnline': true.toString(),
+                    'fromSearch': false.toString(),
+                    'fromSymptom': false.toString(),
+                  },
+                );
               },
-              child: Consumer<LocaleNotifier>(
-                builder: (context, vm, child) {
+            );
+
+          break;
+        }
+
+      case HomeWidgets.chronicTracking:
+        {
+          if (getIt<AppConfig>().chronicTracking)
+            return MyReorderableWidget(
+              key: keys[HomeWidgets.chronicTracking],
+              type: HomeWidgets.chronicTracking,
+              isRemovedWidgets: isRemovedWidgets,
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
                   return VerticalCard(
                     title: LocaleProvider.current.chronic_track_home,
                     painter: HomeChronicTrackingCustomPainter(),
                   );
                 },
               ),
-            ),
-          ),
+              onTap: () {
+                Atom.to(PagePaths.MEASUREMENT_TRACKING);
+              },
+            );
 
-        //
-        MyReorderableWidget(
-          key: _key4,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key4);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.APPOINTMENTS);
-              }
-            },
-            child: Consumer<LocaleNotifier>(
-              builder: (context, vm, child) {
+          break;
+        }
+
+      case HomeWidgets.appointments:
+        {
+          return MyReorderableWidget(
+            key: keys[HomeWidgets.appointments],
+            type: HomeWidgets.appointments,
+            isRemovedWidgets: isRemovedWidgets,
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
                 return VerticalCard(
                   title: LocaleProvider.current.appointments,
                   painter: HomeAppointmentsCustomPainter(),
                 );
               },
             ),
-          ),
-        ),
-
-        //
-        MyReorderableWidget(
-          key: key5,
-          body: HomeSlider(),
-          isShowDelete: false,
-        ),
-
-        //
-        MyReorderableWidget(
-          key: _key6,
-          body: GestureDetector(
             onTap: () {
-              if (isForDelete) {
-                addWidget(_key6);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.ERESULT);
-              }
+              Atom.to(PagePaths.APPOINTMENTS);
             },
-            child: Consumer<LocaleNotifier>(
-              builder: (context, vm, child) {
+          );
+        }
+
+      case HomeWidgets.slider:
+        {
+          return MyReorderableWidget(
+            key: keys[HomeWidgets.slider],
+            type: HomeWidgets.slider,
+            isRemovedWidgets: isRemovedWidgets,
+            body: HomeSlider(),
+            showDeleteIcon: false,
+            isVerticalCard: false,
+          );
+        }
+
+      case HomeWidgets.results:
+        {
+          return MyReorderableWidget(
+            key: keys[HomeWidgets.results],
+            type: HomeWidgets.results,
+            isRemovedWidgets: isRemovedWidgets,
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
                 return VerticalCard(
                   title: LocaleProvider.current.results,
                   painter: HomeResultsCustomPainter(),
                 );
               },
             ),
-          ),
-        ),
+            onTap: () {
+              Atom.to(PagePaths.ERESULT);
+            },
+          );
+        }
 
-        //
-        if (getIt<AppConfig>().symptomChecker)
-          MyReorderableWidget(
-            key: _key7,
-            body: GestureDetector(
-              onTap: () {
-                if (isForDelete) {
-                  addWidget(_key7);
-                } else if (status == ShakeMod.notShaken) {
-                  Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
-                }
-              },
-              child: Consumer<LocaleNotifier>(
-                builder: (context, vm, child) {
+      case HomeWidgets.symptomChecker:
+        {
+          if (getIt<AppConfig>().symptomChecker)
+            return MyReorderableWidget(
+              key: keys[HomeWidgets.symptomChecker],
+              type: HomeWidgets.symptomChecker,
+              isRemovedWidgets: isRemovedWidgets,
+              body: Consumer<LocaleNotifier>(
+                builder: (context, localeVm, widget) {
                   return VerticalCard(
                     title: LocaleProvider.current.symptom_checker,
                     painter: HomeSymptomCheckerCustomPainter(),
                   );
                 },
               ),
-            ),
-          ),
+              onTap: () {
+                Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
+              },
+            );
 
-        MyReorderableWidget(
-          key: _key8,
-          body: GestureDetector(
-            onTap: () {
-              if (isForDelete) {
-                addWidget(_key8);
-              } else if (status == ShakeMod.notShaken) {
-                Atom.to(PagePaths.DETAILED_SYMPTOM);
-              }
-            },
-            child: Consumer<LocaleNotifier>(
-              builder: (context, vm, child) {
+          break;
+        }
+
+      case HomeWidgets.detailedSymptom:
+        {
+          return MyReorderableWidget(
+            key: keys[HomeWidgets.detailedSymptom],
+            type: HomeWidgets.detailedSymptom,
+            isRemovedWidgets: isRemovedWidgets,
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
                 return VerticalCard(
                   title: LocaleProvider.current.detailed_symptom,
                   painter: HomeDetailedCheckupCustomPainter(),
                 );
               },
             ),
-          ),
-        ),
-      ];
+            onTap: () {
+              Atom.to(PagePaths.DETAILED_SYMPTOM);
+            },
+          );
+        }
 
-  void openConsultation() {
-    Atom.to(PagePaths.CONSULTATION);
-  }
-}
+      case HomeWidgets.healthcare_employee:
+        {
+          return MyReorderableWidget(
+            key: keys[HomeWidgets.healthcare_employee],
+            type: HomeWidgets.healthcare_employee,
+            isRemovedWidgets: isRemovedWidgets,
+            body: Consumer<LocaleNotifier>(
+              builder: (context, localeVm, widget) {
+                return VerticalCard(
+                  title: LocaleProvider.current.healthcare_employee,
+                  painter: HomeHealthCareEmployeeCustomPainter(),
+                );
+              },
+            ),
+            onTap: () {
+              Atom.to(PagePaths.DOCTOR_HOME);
+            },
+          );
+        }
 
-extension ShakeModExt on ShakeMod {
-  ShakeMod toggle() {
-    if (this == ShakeMod.shaken) {
-      return ShakeMod.notShaken;
-    } else {
-      return ShakeMod.shaken;
+      default:
+        return null;
     }
-  }
 
-  bool get isShaken {
-    return this == ShakeMod.shaken;
+    return null;
   }
-}
-
-class AddWidgetWarning extends StatelessWidget {
-  const AddWidgetWarning({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: getIt<ITheme>().cardBackgroundColor,
-      title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
-      content: GuvenAlert.buildDescription(
-          LocaleProvider.current.widgets_add_message),
-      actions: [
-        GuvenAlert.buildMaterialAction(LocaleProvider.current.ok, () {
-          Atom.dismiss();
-        })
-      ],
-    );
-  }
+  // #endregion
 }

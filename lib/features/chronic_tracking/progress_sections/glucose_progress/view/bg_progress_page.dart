@@ -23,43 +23,6 @@ class BgProgressPage extends StatefulWidget {
 }
 
 class _BgProgressPage extends State<BgProgressPage> {
-  ScrollController _controller = ScrollController();
-  /*  Future<void> goPdfPage(String img64) async {
-    BloodGlucoseReportBody bloodGlucoseReportBody = new BloodGlucoseReportBody(
-        start: "2010-09-10T00:00:00",
-        end: "2022-09-10T00:00:00",
-        reportType: 2,
-        userId:
-            UserProfilesNotifier().selection?.id ?? 0); // Report Type 2 -> PDF
-    final response = await getIt<ChronicTrackingRepository>()
-        .getBloodGlucoseReport(bloodGlucoseReportBody);
-    var datum = response.datum;
-    var bytes = base64.decode(datum);
-
-    File file = new File("");
-
-    String fileName = LocaleProvider.current.pdf_filename;
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    file = new File('$dir/$fileName');
-    await file.writeAsBytes(bytes);
-
-    Navigator.of(context).pop();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => FullPdfViewerScreen(
-            file.path,
-            _getFormattedDate(DateTime.now().toString()),
-          ),
-        ));
-  }
- */
-  /* String _getFormattedDate(String date) {
-    var parsedDate = DateTime.parse(date);
-    String textDate = new DateFormat("d MMMM yyyy").format(parsedDate);
-    return textDate;
-  } */
-
   @override
   Widget build(BuildContext context) {
     var value = Provider.of<BgProgressPageViewModel>(context);

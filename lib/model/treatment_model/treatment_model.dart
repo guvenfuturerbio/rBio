@@ -11,7 +11,7 @@ class TreatmentModel {
 */
 
   String treatment;
-  String createDate;
+  DateTime createDate;
   int id;
 
   TreatmentModel({
@@ -21,13 +21,15 @@ class TreatmentModel {
   });
   TreatmentModel.fromJson(Map<String, dynamic> json) {
     treatment = json['treatment']?.toString();
-    createDate = json['create_date']?.toString();
+    createDate = json['create_date'] != null
+        ? DateTime.parse(json['create_date'])
+        : DateTime.now();
     id = json['id']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['treatment'] = treatment;
-    data['create_date'] = createDate;
+    data['create_date'] = createDate.toIso8601String();
     data['id'] = id;
     return data;
   }

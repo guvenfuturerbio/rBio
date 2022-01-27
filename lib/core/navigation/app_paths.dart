@@ -1,20 +1,26 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:onedosehealth/features/detailed_symptom/detailed_symptom_checker.dart';
+import 'package:onedosehealth/features/home/view/home_screen.dart';
+import 'package:onedosehealth/features/profile/terms_and_privacy/terms_and_privacy.dart';
 import 'package:provider/provider.dart';
+import 'package:vrouter/vrouter.dart';
 
 import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
+import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
+import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
+import '../../features/dashboard/dashboard_navigation.dart';
+import '../../features/detailed_symptom/detailed_symptom_checker.dart';
 import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
 import '../../features/doctor/blood_pressure_patient_detail/view/blood_pressure_detail_screen.dart';
 import '../../features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
+import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../features/doctor/video_call_edit/view/video_call_edit_screen.dart';
-import '../../features/home/view/home_screen.dart';
 import '../../features/mediminder/view/hba1c_reminder_add_screen.dart';
 import '../../features/mediminder/view/hba1c_reminderlist_screen.dart';
 import '../../features/mediminder/view/home_mediminder_screen.dart';
@@ -56,7 +62,6 @@ import '../../features/take_appointment/create_appointment_summary/view/create_a
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../core.dart';
 import '../widgets/chronic_error_alert.dart';
-import 'package:vrouter/vrouter.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -67,8 +72,15 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.MAIN,
-      widget: HomeScreen(),
+      widget: Container(),
+      stackedRoutes: [
+        DashboardNavigation(),
+      ],
     ),
+    // VWidget(
+    //   path: PagePaths.MAIN,
+    //   widget: HomeScreen(),
+    // ),
 
     VWidget(
       path: PagePaths.PROFILE,
@@ -263,7 +275,10 @@ class VRouterRoutes {
       path: PagePaths.FULLPDFVIEWER,
       widget: FullPdfViewerScreen(),
     ),
-
+    VWidget(
+      path: PagePaths.TERMS_AND_PRIVACY,
+      widget: TermsAndPrivacyScreen(),
+    ),
     VWidget(
       path: PagePaths.WEBCONFERANCE,
       widget: WebConferanceScreen(),
@@ -271,7 +286,8 @@ class VRouterRoutes {
 
     VGuard(
       beforeEnter: (vRedirector) async {
-        if (!(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)) {
+        if (!(getIt<UserNotifier>().isCronic ||
+            getIt<UserNotifier>().isDoctor)) {
           vRedirector.stopRedirection();
           Atom.show(NotChronicWarning());
         } else {
@@ -341,6 +357,30 @@ class VRouterRoutes {
         ),
       ],
     ),
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+              path: PagePaths.TREATMENT_PROGRESS,
+              widget: TreatmentProcessScreen())
+        ]),
+    VGuard(
+        beforeEnter: (vRedirector) async {
+          if (!getIt<UserNotifier>().isCronic) {
+            vRedirector.stopRedirection();
+            Atom.show(NotChronicWarning());
+          }
+        },
+        stackedRoutes: [
+          VWidget(
+              path: PagePaths.TREATMENT_EDIT_PROGRESS,
+              widget: TreatmentEditView())
+        ]),
 
     // Mediminder
     VGuard(
@@ -435,14 +475,11 @@ class VRouterRoutes {
             ),
             VWidget(
               path: PagePaths.DOCTOR_TREATMENT_PROCESS,
-              widget: ChangeNotifierProvider<TreatmentProcessVm>(
-                create: (context) => TreatmentProcessVm(context: context),
-                child: DoctorTreatmentProcessScreen(),
-              ),
+              widget: DoctorTreatmentProcessScreen(),
               stackedRoutes: [
                 VWidget(
-                  path: PagePaths.DOCTOR_VIDEO_CALL_EDIT,
-                  widget: DoctorVideoCallEditScreen(),
+                  path: PagePaths.DOCTOR_TREATMENT_EDIT,
+                  widget: PatientTreatmentEditView(),
                 ),
               ],
             ),
@@ -494,6 +531,7 @@ class PagePaths {
   static const CREATE_ONLINE_APPO = '/create-online-appointment';
   static const CONSULTATION = '/e-consultation';
   static const CHAT = '/chat';
+  static const TERMS_AND_PRIVACY = '/terms-and-privacy';
   static const LOGIN = '/login';
   static const REGISTER_FIRST = '/register-first';
   static const REGISTER_STEP_2 = '/register-2';
@@ -551,6 +589,8 @@ class PagePaths {
   static const SETTINGS = '/ct-settings';
   static const MEASUREMENT_TRACKING = '/measurement-tracking';
   static const BLOOD_GLUCOSE_PROGRESS = '/blood-gluecose-progress';
+  static const TREATMENT_PROGRESS = '/treatment-progress';
+  static const TREATMENT_EDIT_PROGRESS = '/tretment-edit-progress';
 
   // Symptom Checker
   static const SYMPTOM_MAIN_MENU = '/symptom-main';
@@ -569,6 +609,6 @@ class PagePaths {
   static const BMI_PATIENT_DETAIL = '/bmi-patient-detail';
   static const BLOOD_PRESSURE_PATIENT_DETAIL = '/bp-patient-detail';
   static const DOCTOR_TREATMENT_PROCESS = '/doctor-treatment_process';
-  static const DOCTOR_VIDEO_CALL_EDIT = '/doctor-video-call-edit';
+  static const DOCTOR_TREATMENT_EDIT = '/doctor-patient-treatment-edit';
   static const DOCTOR_CONSULTATION = '/doctor-consultation';
 }

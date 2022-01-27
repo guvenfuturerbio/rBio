@@ -106,4 +106,90 @@ class UserNotifier extends ChangeNotifier {
     patient = null;
     _userType = [];
   }
+
+  //
+  AllUsersModel getHomeWidgets(String tcEmailPassport) {
+    final sharedData =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
+    if (sharedData == null) {
+      return null;
+    } else {
+      final sharedMap = jsonDecode(sharedData) as Map<String, dynamic>;
+      final userExist = sharedMap.containsKey(tcEmailPassport);
+      if (userExist) {
+        return AllUsersModel.fromJson(sharedMap[tcEmailPassport]);
+      } else {
+        return null;
+      }
+    }
+  }
+
+  //
+  Future<void> saveHomeWidgets(
+    List<String> userWidgets, {
+    bool isSharedClear = false,
+  }) async {
+    final currentUserName = sharedPreferencesManager
+        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+    final sharedData =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
+    Map<String, dynamic> sharedMap;
+    if (sharedData == null) {
+      sharedMap = {};
+    } else {
+      sharedMap = jsonDecode(sharedData);
+    }
+    sharedMap.addAll(
+      {
+        currentUserName: AllUsersModel(
+          useWidgets: userWidgets,
+        ).toJson(),
+      },
+    );
+    if (isSharedClear) {
+      await sharedPreferencesManager.clear();
+    }
+    await sharedPreferencesManager.setString(
+      SharedPreferencesKeys.ALL_USERS,
+      jsonEncode(sharedMap),
+    );
+  }
+
+  Future<void> logout() async {
+    try {
+      Atom.show(RbioLoading.progressIndicator());
+      await FirebaseMessagingManager.instance.setTokenToServer("");
+      await getIt<UserNotifier>().widgetsSave();
+      await getIt<ISharedPreferencesManager>().reload();
+      await getIt<Repository>().localCacheService.removeAll();
+      getIt<UserNotifier>().clear();
+      FirebaseMessagingManager.handleLogout();
+      getIt<GlucoseStorageImpl>().clear();
+      getIt<ScaleStorageImpl>().clear();
+      getIt<BloodPressureStorageImpl>().clear();
+      getIt<ProfileStorageImpl>().clear();
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+    } finally {
+      Atom.dismiss();
+      Atom.to(PagePaths.LOGIN, isReplacement: true);
+    }
+  }
+
+  //
+  Future<void> widgetsSave() async {
+    final sharedData =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
+    Map<String, dynamic> sharedMap;
+    if (sharedData == null) {
+      sharedMap = {};
+    } else {
+      sharedMap = jsonDecode(sharedData);
+    }
+    await sharedPreferencesManager.clear();
+    await sharedPreferencesManager.setString(
+      SharedPreferencesKeys.ALL_USERS,
+      jsonEncode(sharedMap),
+    );
+  }
 }

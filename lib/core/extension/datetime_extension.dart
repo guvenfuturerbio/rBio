@@ -36,6 +36,11 @@ extension BuildContextExtensions on DateTime {
   String xFormatTime8([dynamic locale]) =>
       DateFormat("HH:MM", locale).format(this);
 
+  /// Format : dd/MM/yyyy - HH:MM
+  String xFormatTime9([dynamic locale]) {
+    return DateFormat("dd/MM/yy - HH:MM", locale).format(this);
+  }
+
   bool xIsSameDate(DateTime other) {
     return year == other.year && month == other.month && day == other.day;
   }

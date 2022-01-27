@@ -2,8 +2,8 @@ part of '../view/blood_glucose_patient_detail_screen.dart';
 
 enum GraphType { BUBBLE, LINE }
 
-class BloodGlucosePatientDetailVm extends ChangeNotifier
-    with RbioVm, IBaseBottomActionsOfGraph {
+class BloodGlucosePatientDetailVm extends RbioVm
+    with IBaseBottomActionsOfGraph {
   @override
   BuildContext mContext;
 
@@ -122,9 +122,12 @@ class BloodGlucosePatientDetailVm extends ChangeNotifier
           .fetchPatientDetail(patientId: _patientId);
       this._patientDetail =
           Provider.of<PatientNotifiers>(mContext, listen: false).patientDetail;
+      LoggerUtils.instance.e(this.patientDetail.toJson());
       _stateProcessPatientDetail = LoadingProgress.DONE;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stk) {
+      LoggerUtils.instance.e(e.toString());
+      debugPrintStack(stackTrace: stk);
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
       dispose(); //Dispose if patient detail is not available.
       _stateProcessPatientDetail = LoadingProgress.ERROR;

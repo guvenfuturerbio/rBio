@@ -7,7 +7,7 @@ import '../../../model/model.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../auth.dart';
 
-class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
+class RegisterStep2ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   RegisterStep2ScreenVm(this.mContext) {
@@ -25,19 +25,6 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
   String textFromPassController;
   String textFromPassAgainController;
 
-  // Fields
-  bool _checkLowerCase;
-  bool _checkNumeric;
-  bool _checkSpecial;
-  bool _checkUpperCase;
-  bool _checkLength;
-
-  // Getters
-  bool get checkLowerCase => this._checkLowerCase ?? false;
-  bool get checkUpperCase => this._checkUpperCase ?? false;
-  bool get checkNumeric => this._checkNumeric ?? false;
-  bool get checkSpecial => this._checkSpecial ?? false;
-  bool get checkLength => this._checkLength ?? false;
   bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
 
   void passwordFetcher(String fromPwController) {
@@ -260,17 +247,8 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
     }
   }
 
-  void checkPasswordCapability(String password) {
-    this._checkLowerCase = PasswordAdvisor().checkLowercase(password);
-    this._checkUpperCase = PasswordAdvisor().checkUpperCase(password);
-    this._checkSpecial = PasswordAdvisor().checkSpecialCharacter(password);
-    this._checkNumeric = PasswordAdvisor().checkNumberInclude(password);
-    this._checkLength = PasswordAdvisor().checkRequiredPasswordLength(password);
-    notifyListeners();
-  }
-
   bool checkPasswordCapabilityForAll(String password) =>
-      PasswordAdvisor().validateStructure(password);
+      PasswordAdvisor().validateStructureByPattern(password);
 
   void toggleCitizen() {
     isTcCitizen = !isTcCitizen;

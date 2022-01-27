@@ -1,6 +1,6 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/dashboard/not_chronic_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -12,33 +12,57 @@ import '../utils/card_widget.dart';
 
 part '../vm/mt_home_vm.dart';
 
-class MeasurementTrackingHomeScreen extends StatelessWidget {
-  const MeasurementTrackingHomeScreen({Key key}) : super(key: key);
+class MeasurementTrackingHomeScreen extends StatefulWidget {
+  final bool fromBottomBar;
+
+  const MeasurementTrackingHomeScreen({
+    Key key,
+    this.fromBottomBar = false,
+  }) : super(key: key);
+
+  @override
+  State<MeasurementTrackingHomeScreen> createState() =>
+      _MeasurementTrackingHomeScreenState();
+}
+
+class _MeasurementTrackingHomeScreenState
+    extends State<MeasurementTrackingHomeScreen> {
+  @override
+  void dispose() {
+    Utils.instance.forcePortraitOrientation();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => MeasurementTrackingVm(),
-      child: Consumer<MeasurementTrackingVm>(
-        builder: (BuildContext context, MeasurementTrackingVm vm, Widget chil) {
-          bool isLandscape =
-              context.xMediaQuery.orientation == Orientation.landscape &&
-                  !Atom.isWeb;
+    return !getIt<UserNotifier>().isCronic
+        ? NotChronicScreen(LocaleProvider.current.chronic_track_home)
+        : ChangeNotifierProvider(
+            create: (_) => MeasurementTrackingVm(),
+            child: Consumer<MeasurementTrackingVm>(
+              builder: (BuildContext context, MeasurementTrackingVm vm,
+                  Widget chil) {
+                bool isLandscape =
+                    context.xMediaQuery.orientation == Orientation.landscape &&
+                        !Atom.isWeb;
 
-          return RbioStackedScaffold(
-            appbar: _buildAppBar(isLandscape, context),
-            body: _buildBody(context, vm, isLandscape),
-            floatingActionButton: _buildFAB(vm),
+                return RbioStackedScaffold(
+                  appbar: _buildAppBar(isLandscape, context),
+                  body: _buildBody(context, vm, isLandscape),
+                  floatingActionButton: _buildFAB(vm),
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 
   RbioAppBar _buildAppBar(bool isLandscape, BuildContext context) {
     return isLandscape
         ? null
         : RbioAppBar(
+            leadingWidth: !widget.fromBottomBar ? null : 0,
+            leading:
+                !widget.fromBottomBar ? null : SizedBox(width: 0, height: 0),
             title: RbioAppBar.textTitle(
               context,
               LocaleProvider.current.chronic_track_home,
@@ -78,40 +102,11 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
           : EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
       children: [
         //
-        Card(
-          child: getIt<ProfileStorageImpl>().getAll().length > 1
-              ? ExpandablePanel(
-                  header: RbioUserTile(
-                    width: Atom.width,
-                    name: getIt<ProfileStorageImpl>().getFirst().name,
-                    onTap: () {},
-                    leadingImage: UserLeadingImage.Circle,
-                  ),
-                  collapsed: SizedBox(),
-                  expanded: getIt<ProfileStorageImpl>().getAll().length > 1
-                      ? Column(
-                          children: getIt<ProfileStorageImpl>()
-                              .getAll()
-                              .map(
-                                (e) => RbioUserTile(
-                                  width: Atom.width,
-                                  name: e.name,
-                                  onTap: () {},
-                                  leadingImage: UserLeadingImage.Circle,
-                                ),
-                              )
-                              .cast<Widget>()
-                              .toList(),
-                        )
-                      : SizedBox(),
-                )
-              : RbioUserTile(
-                  width: Atom.width,
-                  name: getIt<ProfileStorageImpl>().getFirst().name,
-                  onTap: () {},
-                  leadingImage: UserLeadingImage.Circle,
-                ),
-        ),
+        if (MediaQuery.of(context).orientation == Orientation.portrait)
+          _buildExpandedUser(),
+
+        //
+        R.sizes.hSizer12,
 
         //
         Container(
@@ -172,5 +167,80 @@ class MeasurementTrackingHomeScreen extends StatelessWidget {
             backgroundColor: R.color.white,
           )
         : null;
+  }
+
+  Widget _buildExpandedUser() {
+    return Container(
+      height: 50,
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: Container(
+              height: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              decoration: BoxDecoration(
+                color: getIt<ITheme>().cardBackgroundColor,
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    foregroundImage: NetworkImage(R.image.circlevatar),
+                    backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  ),
+
+                  //
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        getIt<ProfileStorageImpl>().getFirst().name ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.xHeadline5.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          //
+          SizedBox(width: 6),
+
+          //
+          GestureDetector(
+            onTap: () {
+              Atom.to(PagePaths.TREATMENT_PROGRESS);
+            },
+            child: Container(
+              height: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: getIt<ITheme>().cardBackgroundColor,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Text(
+                LocaleProvider.current.treatment,
+                style: context.xHeadline5.copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

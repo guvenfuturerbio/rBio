@@ -6,11 +6,13 @@ import '../core.dart';
 class RbioCountryCodePicker extends StatelessWidget {
   final String initialSelection;
   final void Function(CountryCode countryCode) onChanged;
+  final bool isActiveBorder;
 
   const RbioCountryCodePicker({
     Key key,
     this.initialSelection,
     this.onChanged,
+    this.isActiveBorder = false,
   }) : super(key: key);
 
   @override
@@ -19,6 +21,13 @@ class RbioCountryCodePicker extends StatelessWidget {
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
+        border: isActiveBorder
+            ? Border.all(
+                width: 0,
+                style: BorderStyle.solid,
+                color: getIt<ITheme>().mainColor,
+              )
+            : null,
       ),
       child: CountryCodePicker(
         onChanged: onChanged,

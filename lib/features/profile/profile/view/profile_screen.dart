@@ -26,32 +26,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-      appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          LocaleProvider.current.profile,
-        ),
-        actions: [
-          //
-          IconButton(
-            onPressed: () {
-              context.read<ThemeNotifier>().changeTextScale();
-            },
-            icon: SvgPicture.asset(
-              R.image.change_size_icon,
-              color: getIt<ITheme>().iconSecondaryColor,
-            ),
-          ),
-        ],
-      ),
+    return Consumer<ProfileVm>(
+      builder: (BuildContext context, ProfileVm vm, Widget child) {
+        return RbioStackedScaffold(
+          isLoading: vm.showProgressOverlay,
+          appbar: _buildAppBar(),
+          body: _buildBody(vm),
+        );
+      },
+    );
+  }
 
-      //
-      body: Consumer<ProfileVm>(
-        builder: (context, value, child) {
-          return _buildBody(value);
-        },
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.profile,
       ),
+      actions: [
+        //
+        IconButton(
+          onPressed: () {
+            context.read<ThemeNotifier>().changeTextScale();
+          },
+          icon: SvgPicture.asset(
+            R.image.change_size_icon,
+            color: getIt<ITheme>().iconSecondaryColor,
+          ),
+        ),
+      ],
     );
   }
 
@@ -69,6 +72,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
+              //
+              R.sizes.stackedTopPadding(context),
+              R.sizes.hSizer8,
+
               //
               RbioLocaleDropdown(),
 
@@ -113,6 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Atom.to(PagePaths.PERSONAL_INFORMATION);
                       },
                     ),
+                    //
 
                     //
                     _buildListItem(
@@ -141,12 +149,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //
                     _buildListItem(
+                      LocaleProvider.current.change_password,
+                      () {
+                        Atom.to(PagePaths.CHANGE_PASSWORD);
+                      },
+                    ),
+
+                    //
+                    _buildListItem(
                       LocaleProvider.current.request_and_suggestions,
                       () {
                         Atom.to(PagePaths.SUGGEST_REQUEST);
                       },
                       isDivider: false,
                     ),
+                                        _buildListItem(
+                      LocaleProvider.current.terms_and_privacy,
+                      () {
+                        Atom.to(PagePaths.TERMS_AND_PRIVACY);
+                      },
+                    ),
+
                   ],
                 ),
               ),

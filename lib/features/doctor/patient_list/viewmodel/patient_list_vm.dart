@@ -17,7 +17,7 @@ enum DoctorPatientListSortType {
   //
 }
 
-class DoctorPatientListVm extends ChangeNotifier with RbioVm {
+class DoctorPatientListVm extends RbioVm {
   @override
   BuildContext mContext;
   PatientType type;

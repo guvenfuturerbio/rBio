@@ -222,36 +222,48 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     bool checkboxValue,
     String text,
   ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        Container(
-          child: Checkbox(
+    final child = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: Text(
+              text,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: context.xHeadline5.copyWith(
+                color: getIt<ITheme>().textColorSecondary,
+              ),
+            ),
+          ),
+
+          //
+          Checkbox(
             value: checkboxValue,
             onChanged: (value) {},
             activeColor: getIt<ITheme>().mainColor,
-            side: BorderSide(
-              color: Colors.grey,
-            ),
-            shape: CircleBorder(), //// <-- leading Checkbox
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
-        ),
-
-        //
-        Expanded(
-          child: Text(
-            text,
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
-            style: context.xHeadline3.copyWith(
-              color: getIt<ITheme>().textColorSecondary,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
+
+    if (checkboxValue) {
+      return child;
+    } else {
+      return IgnorePointer(
+        ignoring: true,
+        child: Opacity(
+          opacity: 0.3,
+          child: child,
+        ),
+      );
+    }
   }
 }

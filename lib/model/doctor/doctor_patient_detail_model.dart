@@ -104,60 +104,60 @@ class DoctorPatientDetailModel {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'birthDay': birthDay,
+      'birth_day': birthDay,
       'gender': gender,
       'height': height,
       'weight': weight,
-      'diabetType': diabetType.toJson(),
-      'rangeMin': rangeMin,
-      'rangeMax': rangeMax,
+      'diabet_type': diabetType.toJson(),
+      'range_min': rangeMin,
+      'range_max': rangeMax,
       'hyper': hyper,
       'hypo': hypo,
       'target': target,
-      'imageUrl': imageUrl,
-      'deviceUuid': deviceUuid,
-      'entegrationId': entegrationId,
+      'image_url': imageUrl,
+      'device_uuid': deviceUuid,
+      'entegration_id': entegrationId,
       'smoker': smoker,
-      'yearOfDiagnosis': yearOfDiagnosis,
-      'stripCount': stripCount,
+      'year_of_diagnosis': yearOfDiagnosis,
+      'strip_count': stripCount,
       'id': id,
-      'phoneNumber': phoneNumber,
+      'phone_number': phoneNumber,
       'identification_number': identification_number,
-      'treatmentModelList': treatmentModelList.map((x) => x.toJson()).toList(),
+      'treatment_List': treatmentModelList.map((x) => x.toJson()).toList(),
     };
   }
 
   factory DoctorPatientDetailModel.fromMap(Map<String, dynamic> map) {
     return DoctorPatientDetailModel(
       name: map['name'] ?? '',
-      birthDay: map['birthDay'] ?? '',
+      birthDay: map['birth_day'] ?? '',
       gender: map['gender'] ?? '',
       height: map['height'] ?? '',
       weight: map['weight'] ?? '',
-      diabetType: DiabetType.fromJson(map['diabetType']),
-      rangeMin: map['rangeMin']?.toInt() ?? 0,
-      rangeMax: map['rangeMax']?.toInt() ?? 0,
+      diabetType: DiabetType.fromJson(map['diabet_type']),
+      rangeMin: map['range_min']?.toInt() ?? 0,
+      rangeMax: map['range_max']?.toInt() ?? 0,
       hyper: map['hyper']?.toInt() ?? 0,
       hypo: map['hypo']?.toInt() ?? 0,
       target: map['target']?.toInt() ?? 0,
-      imageUrl: map['imageUrl'] ?? '',
-      deviceUuid: map['deviceUuid'] ?? '',
+      imageUrl: map['image_url'] ?? '',
+      deviceUuid: map['device_uuid'] ?? '',
       entegrationId: map['entegrationId']?.toInt() ?? 0,
       smoker: map['smoker'] ?? false,
-      yearOfDiagnosis: map['yearOfDiagnosis']?.toInt() ?? 0,
-      stripCount: map['stripCount']?.toInt() ?? 0,
+      yearOfDiagnosis: map['year_of_diagnosis']?.toInt() ?? 0,
+      stripCount: map['strip_count']?.toInt() ?? 0,
       id: map['id']?.toInt() ?? 0,
-      phoneNumber: map['phoneNumber'] ?? '',
+      phoneNumber: map['phone_number'] ?? '',
       identification_number: map['identification_number'] ?? '',
       treatmentModelList: List<TreatmentModel>.from(
-          map['treatmentModelList']?.map((x) => TreatmentModel.fromJson(x))),
+          map['treatment_list']?.map((x) => TreatmentModel.fromJson(x))),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory DoctorPatientDetailModel.fromJson(String source) =>
-      DoctorPatientDetailModel.fromMap(json.decode(source));
+  factory DoctorPatientDetailModel.fromJson(Map<String, dynamic> source) =>
+      DoctorPatientDetailModel.fromMap(source);
 
   @override
   String toString() {

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
 
 @HiveType(typeId: 2)
 class Person extends HiveObject {
@@ -71,12 +72,15 @@ class Person extends HiveObject {
   bool smoker; // 0 non smoker , 1 smoker, 2 smokes occasionally, 3 smokes often
   @HiveField(18)
   bool isFirstUser;
+  @HiveField(18)
+  List<TreatmentModel> treatmentList;
 
   File profileImage = new File("");
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PersonToJson(this);
+  Map<String, dynamic> toJson({String treatment}) =>
+      _$PersonToJson(this, treatment);
 
   Person fromDefault({
     @required String name,
@@ -126,7 +130,8 @@ class Person extends HiveObject {
       this.manufacturerId = 0,
       this.yearOfDiagnosis = 2021,
       this.smoker = false,
-      this.isFirstUser = false});
+      this.isFirstUser = false,
+      this.treatmentList});
 
   Person copy() {
     final _json = toJson();
@@ -169,56 +174,67 @@ class Person extends HiveObject {
 }
 
 Person _$PersonFromJson(Map<String, dynamic> json) => Person(
-      id: json['entegration_id'],
-      imageURL: json['image_url'],
-      name: json['name'],
-      gender: json['gender'],
-      birthDate: json['birth_day'],
-      weight: json['weight'],
-      height: json['height'],
-      diabetesType: json['diabetes_type'],
-      rangeMin: json['range_min'],
-      rangeMax: json['range_max'],
-      hyper: json['hyper'],
-      hypo: json['hypo'],
-      target: json['target'],
-      userId: json['id'],
-      deviceUUID: json['device_uuid'],
-      manufacturerId: json['manufacturer_id'],
-      yearOfDiagnosis: json['year_of_diagnosis'],
-      smoker: json['smoker'] == null
-          ? false
-          : json['smoker'] == 0
-              ? false
-              : true,
-      isFirstUser: json['is_first_user'] == null
-          ? false
-          : json['is_first_user'] == 0
-              ? false
-              : true,
-    );
+    id: json['entegration_id'],
+    imageURL: json['image_url'],
+    name: json['name'],
+    gender: json['gender'],
+    birthDate: json['birth_day'],
+    weight: json['weight'],
+    height: json['height'],
+    diabetesType: json['diabetes_type'],
+    rangeMin: json['range_min'],
+    rangeMax: json['range_max'],
+    hyper: json['hyper'],
+    hypo: json['hypo'],
+    target: json['target'],
+    userId: json['id'],
+    deviceUUID: json['device_uuid'],
+    manufacturerId: json['manufacturer_id'],
+    yearOfDiagnosis: json['year_of_diagnosis'],
+    smoker: json['smoker'] == null
+        ? false
+        : json['smoker'] == 0
+            ? false
+            : true,
+    isFirstUser: json['is_first_user'] == null
+        ? false
+        : json['is_first_user'] == 0
+            ? false
+            : true,
+    treatmentList: json['treatment_list'] != null
+        ? (json['treatment_list'] as List)
+            .map((e) => TreatmentModel.fromJson(e))
+            .toList()
+        : []);
 
-Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
-      'id': instance.userId,
-      'entegration_id': instance.id,
-      'image_url': instance.imageURL,
-      'name': instance.name,
-      'birth_day': instance.birthDate,
-      'gender': instance.gender,
-      'height': instance.height,
-      'weight': instance.weight,
-      'diabetes_type': instance.diabetesType,
-      'hypo': instance.hypo,
-      'range_min': instance.rangeMin,
-      'target': instance.target,
-      'range_max': instance.rangeMax,
-      'hyper': instance.hyper,
-      'device_uuid': instance.deviceUUID,
-      'manufacturer_id': instance.manufacturerId,
-      'year_of_diagnosis': instance.yearOfDiagnosis,
-      'smoker': instance.smoker,
-      'is_first_user': instance.isFirstUser,
-    };
+Map<String, dynamic> _$PersonToJson(Person instance, String treatment) {
+  var map = <String, dynamic>{
+    'id': instance.userId,
+    'entegration_id': instance.id,
+    'image_url': instance.imageURL,
+    'name': instance.name,
+    'birth_day': instance.birthDate,
+    'gender': instance.gender,
+    'height': instance.height,
+    'weight': instance.weight,
+    'diabetes_type': instance.diabetesType,
+    'hypo': instance.hypo,
+    'range_min': instance.rangeMin,
+    'target': instance.target,
+    'range_max': instance.rangeMax,
+    'hyper': instance.hyper,
+    'device_uuid': instance.deviceUUID,
+    'manufacturer_id': instance.manufacturerId,
+    'year_of_diagnosis': instance.yearOfDiagnosis,
+    'smoker': instance.smoker,
+    'is_first_user': instance.isFirstUser,
+  };
+
+  if (treatment != null) {
+    map['treatment'] = treatment;
+  }
+  return map;
+}
 
 class PersonAdapter extends TypeAdapter<Person> {
   @override
@@ -231,32 +247,34 @@ class PersonAdapter extends TypeAdapter<Person> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Person(
-      id: fields[1] as int,
-      imageURL: fields[2] as String,
-      name: fields[3] as String,
-      gender: fields[5] as String,
-      birthDate: fields[4] as String,
-      weight: fields[7] as String,
-      height: fields[6] as String,
-      diabetesType: fields[8] as String,
-      rangeMin: fields[10] as int,
-      rangeMax: fields[12] as int,
-      hyper: fields[13] as int,
-      hypo: fields[9] as int,
-      target: fields[11] as int,
-      userId: fields[0] as int,
-      deviceUUID: fields[14] as String,
-      manufacturerId: fields[15] as int,
-      yearOfDiagnosis: fields[16] as int,
-      smoker: fields[17] as bool,
-      isFirstUser: fields[18] as bool,
-    );
+        id: fields[1] as int,
+        imageURL: fields[2] as String,
+        name: fields[3] as String,
+        gender: fields[5] as String,
+        birthDate: fields[4] as String,
+        weight: fields[7] as String,
+        height: fields[6] as String,
+        diabetesType: fields[8] as String,
+        rangeMin: fields[10] as int,
+        rangeMax: fields[12] as int,
+        hyper: fields[13] as int,
+        hypo: fields[9] as int,
+        target: fields[11] as int,
+        userId: fields[0] as int,
+        deviceUUID: fields[14] as String,
+        manufacturerId: fields[15] as int,
+        yearOfDiagnosis: fields[16] as int,
+        smoker: fields[17] as bool,
+        isFirstUser: fields[18] as bool,
+        treatmentList: (fields[19] as List<String>)
+            .map((e) => TreatmentModel.fromJson(jsonDecode(e)))
+            .toList());
   }
 
   @override
   void write(BinaryWriter writer, Person obj) {
     writer
-      ..writeByte(19)
+      ..writeByte(20)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -294,7 +312,9 @@ class PersonAdapter extends TypeAdapter<Person> {
       ..writeByte(17)
       ..write(obj.smoker)
       ..writeByte(18)
-      ..write(obj.isFirstUser);
+      ..write(obj.isFirstUser)
+      ..writeByte(19)
+      ..write(obj.treatmentList.map((e) => jsonEncode(e.toJson())).toList());
   }
 
   @override

@@ -22,63 +22,89 @@ class RbioTextFormField extends StatelessWidget {
   final int maxLines;
   final Widget prefixIcon;
   final int maxLength;
+  final bool enabled;
+  final Widget suffixIcon;
 
-  const RbioTextFormField(
-      {Key key,
-      this.maxLength,
-      this.prefixIcon,
-      this.initialValue,
-      this.focusNode,
-      this.controller,
-      this.keyboardType,
-      this.hintText,
-      this.labelText,
-      this.inputFormatters,
-      this.onFieldSubmitted,
-      this.onChanged,
-      this.contentPadding =
-          const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-      this.enableSuggestions = true,
-      this.obscureText = false,
-      this.autocorrect = true,
-      this.textInputAction = TextInputAction.next,
-      this.border,
-      this.maxLines = 1})
-      : super(key: key);
+  const RbioTextFormField({
+    Key key,
+    this.maxLength,
+    this.prefixIcon,
+    this.initialValue,
+    this.focusNode,
+    this.controller,
+    this.keyboardType,
+    this.hintText,
+    this.labelText,
+    this.inputFormatters,
+    this.onFieldSubmitted,
+    this.onChanged,
+    this.contentPadding =
+        const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+    this.enableSuggestions = true,
+    this.obscureText = false,
+    this.autocorrect = true,
+    this.textInputAction = TextInputAction.next,
+    this.border,
+    this.enabled,
+    this.maxLines = 1,
+    this.suffixIcon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      maxLength :maxLength,
+      maxLength: maxLength,
       maxLines: maxLines,
       initialValue: initialValue,
       style: Utils.instance.inputTextStyle(),
       focusNode: focusNode,
       controller: controller,
       autocorrect: autocorrect,
+      enabled: enabled,
       enableSuggestions: enableSuggestions,
       obscureText: obscureText,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
-      decoration: Utils.instance
-          .inputDecorationForLogin(
-            hintText: hintText,
-            labelText: labelText,
-            contentPadding: context.xTextScaleType == TextScaleType.Small
-                ? contentPadding
-                : EdgeInsets.only(left: 8),
-            inputBorder: border ?? defaultBorder(),
-            prefixIcon: prefixIcon,
-          )
-          .copyWith(
-            filled: true,
-            fillColor: getIt<ITheme>().cardBackgroundColor,
-          ),
+      decoration: defaultDecoration(
+        context,
+        hintText: hintText,
+        labelText: labelText,
+        contentPadding: contentPadding,
+        border: border,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+      ),
       cursorColor: getIt<ITheme>().mainColor,
       onChanged: onChanged,
       inputFormatters: inputFormatters,
       onFieldSubmitted: onFieldSubmitted,
     );
+  }
+
+  static InputDecoration defaultDecoration(
+    BuildContext context, {
+    String hintText,
+    String labelText,
+    EdgeInsetsGeometry contentPadding,
+    InputBorder border,
+    Widget prefixIcon,
+    Widget suffixIcon,
+  }) {
+    return Utils.instance
+        .inputDecorationForLogin(
+          hintText: hintText,
+          labelText: labelText,
+          contentPadding: context.xTextScaleType == TextScaleType.Small
+              ? contentPadding
+              : EdgeInsets.only(left: 8),
+          inputBorder: border ?? defaultBorder(),
+          prefixIcon: prefixIcon,
+        )
+        .copyWith(
+          filled: true,
+          fillColor: getIt<ITheme>().cardBackgroundColor,
+          suffixIcon: suffixIcon,
+        );
   }
 
   static InputBorder noneBorder() => InputBorder.none;

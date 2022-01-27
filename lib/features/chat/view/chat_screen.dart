@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,15 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
-import 'dart:io';
-
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../core/core.dart';
-
 import '../../../core/core.dart';
 import '../controller/chat_vm.dart';
 import '../model/chat_person.dart';
@@ -431,7 +429,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               onPressed: () {
                 Atom.show(
-                  ImagePreviewDialog(
+                  RbioImagePreviewDialog(
                     image: message.message,
                   ),
                 );
@@ -474,7 +472,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               onPressed: () {
                 Atom.show(
-                  ImagePreviewDialog(
+                  RbioImagePreviewDialog(
                     image: message.message,
                   ),
                 );

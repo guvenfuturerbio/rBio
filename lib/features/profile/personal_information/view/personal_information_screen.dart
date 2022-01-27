@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -27,20 +26,19 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   TextEditingController _phoneNumberEditingController;
   TextEditingController _emailEditingController;
 
-  FocusNode phoneNumberFocus;
-  FocusNode emailFocus;
+  FocusNode _phoneNumberFocus;
+  FocusNode _emailFocus;
 
   @override
   void initState() {
     _identityEditingController = TextEditingController();
     _nameEditingController = TextEditingController();
     _birthdayEditingController = TextEditingController();
-    _phoneNumberEditingController =
-        masked.MaskedTextController(mask: '(000) 000-0000');
+    _phoneNumberEditingController = TextEditingController();
     _emailEditingController = TextEditingController();
 
-    phoneNumberFocus = FocusNode();
-    emailFocus = FocusNode();
+    _phoneNumberFocus = FocusNode();
+    _emailFocus = FocusNode();
 
     super.initState();
   }
@@ -53,8 +51,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     _phoneNumberEditingController.dispose();
     _emailEditingController.dispose();
 
-    phoneNumberFocus.dispose();
-    emailFocus.dispose();
+    _phoneNumberFocus.dispose();
+    _emailFocus.dispose();
 
     super.dispose();
   }
@@ -97,23 +95,23 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           Widget child,
         ) {
           return KeyboardDismissOnTap(
-            child: RbioLoadingOverlay(
+            child: RbioStackedScaffold(
               isLoading: vm.showLoadingOverlay,
-              progressIndicator: RbioLoading.progressIndicator(),
-              opacity: 0,
-              child: RbioScaffold(
-                resizeToAvoidBottomInset: true,
-                appbar: RbioAppBar(
-                  title: RbioAppBar.textTitle(
-                    context,
-                    LocaleProvider.of(context).lbl_personal_information,
-                  ),
-                ),
-                body: _builBody(context, vm),
-              ),
+              resizeToAvoidBottomInset: true,
+              appbar: _buildAppBar(context),
+              body: _builBody(context, vm),
             ),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).lbl_personal_information,
       ),
     );
   }
@@ -128,7 +126,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         Expanded(
           child: MediaQuery.removePadding(
             context: context,
-            removeTop: true,
+            removeTop: false,
             removeBottom: true,
             child: Scrollbar(
               child: SingleChildScrollView(
@@ -140,6 +138,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    //
+                    R.sizes.stackedTopPadding(context),
+                    R.sizes.hSizer16,
+
                     //
                     Center(
                       child: Column(
@@ -217,7 +219,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         //
-                        RbioCountryCodePicker(),
+                        RbioCountryCodePicker(
+                          isActiveBorder: true,
+                        ),
 
                         //
                         SizedBox(
@@ -227,8 +231,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         //
                         Expanded(
                           child: RbioTextFormField(
-                            focusNode: phoneNumberFocus,
+                            focusNode: _phoneNumberFocus,
                             controller: _phoneNumberEditingController,
+                            border: RbioTextFormField.activeBorder(),
                             keyboardType: TextInputType.phone,
                             textInputAction: TextInputAction.done,
                             hintText:
@@ -236,8 +241,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             inputFormatters: <TextInputFormatter>[
                               TabToNextFieldTextInputFormatter(
                                 context,
-                                phoneNumberFocus,
-                                emailFocus,
+                                _phoneNumberFocus,
+                                _emailFocus,
                               ),
                             ],
                           ),
@@ -251,15 +256,16 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       LocaleProvider.of(context).email_address,
                     ),
                     RbioTextFormField(
-                      focusNode: emailFocus,
+                      focusNode: _emailFocus,
                       controller: _emailEditingController,
+                      border: RbioTextFormField.activeBorder(),
                       textInputAction: TextInputAction.done,
                       hintText: LocaleProvider.of(context).hint_input_password,
                       inputFormatters: <TextInputFormatter>[
                         TabToNextFieldTextInputFormatter(
                           context,
-                          emailFocus,
-                          phoneNumberFocus,
+                          _emailFocus,
+                          _phoneNumberFocus,
                         ),
                       ],
                     ),
