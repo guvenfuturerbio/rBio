@@ -273,6 +273,9 @@ class Repository {
   Future<GuvenResponseModel> filterSocialPosts(String search) =>
       apiService.filterSocialPosts(search);
 
+  Future<GuvenResponseModel> filterSocialPlatform(String search) =>
+      apiService.filterSocialPlatform(search);
+
   Future<GuvenResponseModel> socialResource() async {
     final url = R.endpoints.socialResourcePath;
     return await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(

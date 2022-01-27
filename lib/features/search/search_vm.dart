@@ -12,8 +12,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/model.dart';
 
-enum SearchFilter { podcast, doctor, youtube, blog }
-
 class SearchScreenVm extends ChangeNotifier {
   List<FilterResourcesResponse> _filterResources;
   LoadingProgress _progress;
@@ -21,7 +19,7 @@ class SearchScreenVm extends ChangeNotifier {
   String _searchText;
   List<SocialPostsResponse> _allSocialResources;
   List<SocialPostsResponse> _filteredSocialResources;
-  List<SearchFilter> _selectedFilters = [];
+  List<String> _filterTitleList = [];
   LoadingProgress _socialPostProgress;
   LoadingDialog loadingDialog;
   bool fromOnlineAppo;
@@ -34,12 +32,6 @@ class SearchScreenVm extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchAllPosts();
     });
-  }
-  Future<void> toggleFilter(SearchFilter filter) async {
-    if (_selectedFilters.contains(filter)) {
-      _selectedFilters.remove(filter);
-      
-    } else {}
   }
 
   List<FilterResourcesResponse> get filterResources =>
@@ -55,11 +47,50 @@ class SearchScreenVm extends ChangeNotifier {
   List<SocialPostsResponse> get filteredSocialResources =>
       this._filteredSocialResources ?? [];
 
+  List<String> get filterTitleList => this._filterTitleList ?? [];
+
   String get token => this._token;
 
   LoadingProgress get socialPostProgress => this._socialPostProgress;
 
   List get names => this._names;
+
+  Future<void> toggleFilter(String filterTitle) async {
+    _searchText = "";
+    _allSocialResources.clear();
+    notifyListeners();
+    if (_filterTitleList.contains(filterTitle)) {
+      _filterTitleList.remove(filterTitle);
+    } else {
+      _filterTitleList.add(filterTitle);
+    }
+    if (_filterTitleList.length != 0) {
+      for (var item in _filterTitleList) {
+        if (item == 'Doctor') {
+          fetchResources("   ");
+        } else {
+          this._progress = LoadingProgress.LOADING;
+          notifyListeners();
+          try {
+            var tmpList =
+                await getIt<UserManager>().getPostsWithByTagsByPlatform(item);
+            this._allSocialResources.addAll(tmpList);
+            this._progress = LoadingProgress.DONE;
+            notifyListeners();
+          } catch (error) {
+            LoggerUtils.instance.e(error);
+            this._progress = LoadingProgress.ERROR;
+            notifyListeners();
+            showGradientDialog(mContext, LocaleProvider.current.warning,
+                LocaleProvider.current.sorry_dont_transaction);
+          }
+        }
+      }
+    } else {
+      await fetchAllPosts();
+    }
+    notifyListeners();
+  }
 
   Future<void> setSearchText(String text) async {
     try {

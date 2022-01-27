@@ -28,7 +28,15 @@ class _SearchScreenState extends State<SearchScreen> {
           return RbioScaffold(
             resizeToAvoidBottomInset: false,
             appbar: _buildAppBar(value),
-            body: _buildBody(value),
+            body: Column(
+              children: [
+                Wrap(
+                  spacing: 8,
+                  children: _chips(value),
+                ),
+                Expanded(child: _buildBody(value)),
+              ],
+            ),
           );
         },
       ),
@@ -197,9 +205,6 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildAllSocialResources(SearchScreenVm value) {
     return Column(
       children: [
-        Wrap(
-          children: _chips(value),
-        ),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
@@ -254,7 +259,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   List<RbioFilterChip> _chips(SearchScreenVm value) {
     return [
-      RbioFilterChip('Podcast', value),
+      //RbioFilterChip('Doctor', value),
+      RbioFilterChip('Blog', value),
+      RbioFilterChip('Spotify', value),
+      RbioFilterChip('Youtube', value),
+      //RbioFilterChip('Bundle', value),
       /*   Chip(label: Text(LocaleProvider.current.doctor)),
       Chip(
         label: Text(LocaleProvider.current.youtube_stream),
@@ -265,10 +274,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
 class RbioFilterChip extends StatefulWidget {
   bool isSelected;
-  final String title;
+  String title;
+  SearchScreenVm value;
   RbioFilterChip(
     this.title,
-    SearchScreenVm value, {
+    this.value, {
     Key key,
   }) : super(key: key);
 
@@ -277,25 +287,22 @@ class RbioFilterChip extends StatefulWidget {
 }
 
 class _RbioFilterChipState extends State<RbioFilterChip> {
-
   @override
   Widget build(BuildContext context) {
     return FilterChip(
       backgroundColor: getIt<ITheme>().cardBackgroundColor,
-      selected: value.selectedFilters.contains(widget.title),
+      selected: widget.value.filterTitleList.contains(widget.title),
       checkmarkColor: getIt<ITheme>().cardBackgroundColor,
       selectedColor: getIt<ITheme>().mainColor,
       label: Text(
         widget.title,
-        style: isSelected
+        style: widget.value.filterTitleList.contains(widget.title)
             ? context.xBodyText1
                 .copyWith(color: getIt<ITheme>().cardBackgroundColor)
             : context.xBodyText1,
       ),
-      onSelected: (value) {
-        setState(() {
-          isSelected = !isSelected;
-        });
+      onSelected: (val) {
+        widget.value.toggleFilter(widget.title);
       },
     );
   }

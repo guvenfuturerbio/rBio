@@ -69,8 +69,7 @@ class _Endpoints {
           .xBasePath;
   final deleteProfilePicturePath = '/file/delete-profile-photo'.xBasePath;
   final uploadProfilePicturePath = '/file/profil-image-upload'.xBasePath;
-  final getChatContacts =
-      '/User/get-chat-contacts'.xBasePath;
+  final getChatContacts = '/User/get-chat-contacts'.xBasePath;
   String downloadAppointmentSingleFilePath(String folder, String path) =>
       '/file/download-patient-appointment-single-file/$folder/$path'.xBasePath;
   final getAllFilesPath =
@@ -85,6 +84,9 @@ class _Endpoints {
   String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBasePath;
   String filterSocialPostsPath(String search) =>
       '/socialpost/getPostWithTagsByText/$search'.xBasePath;
+  String filterSocialPostsPlatform(String platform) =>
+      '/socialPost/getPostWithTagsByPlatform/$platform'.xBasePath;
+
   String getBannerTab(String applicationName, String groupName) =>
       '/Banner/get-banner-tabs/$applicationName/$groupName'.xBasePath;
   final socialResourcePath = '/socialpost/getAllPosts'.xBasePath;
