@@ -34,19 +34,16 @@ class MeasurementTrackingVm with ChangeNotifier {
             title: '${LocaleProvider.current.blood_glucose_progress}',
             key: Key('Glucose'),
             activateCallBack: (key) => setActiveItem(key),
-            deActivateCallBack: deActivateItem,
           ),
           HomePageModel<ScaleProgressPageViewModel>(
             title: '${LocaleProvider.current.scale_progress}',
             key: Key('Scale'),
             activateCallBack: (key) => setActiveItem(key),
-            deActivateCallBack: deActivateItem,
           ),
           HomePageModel<BpProgressPageVm>(
             title: '${LocaleProvider.current.scale_progress}',
             key: Key('Pressure'),
             activateCallBack: (key) => setActiveItem(key),
-            deActivateCallBack: deActivateItem,
           ),
         ];
 
@@ -61,14 +58,15 @@ class MeasurementTrackingVm with ChangeNotifier {
   }
 
   void setActiveItem(Key key) {
-    activeItem = items.firstWhere((element) => element.key == key);
     Utils.instance.releaseOrientation();
-    notifyListeners();
-  }
 
-  void deActivateItem() {
-    activeItem = null;
-    Utils.instance.forcePortraitOrientation();
+    if (key == Key('Glucose')) {
+      Atom.to(PagePaths.BLOOD_GLUCOSE_PROGRESS);
+    } else if (key == Key('Scale')) {
+      Atom.to(PagePaths.BMI_PROGRESS);
+    } else if (key == Key('Pressure')) {
+      Atom.to(PagePaths.BP_PROGRESS);
+    }
     notifyListeners();
   }
 }

@@ -60,6 +60,7 @@ class Utils {
         DeviceOrientation.portraitDown,
       ],
     );
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
   // #endregion
 

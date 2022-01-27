@@ -1,5 +1,6 @@
 import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
@@ -46,6 +47,7 @@ class _BloodPressurePatientDetailScreenState
       parent: animationController,
       curve: Curves.fastOutSlowIn,
     );
+    Utils.instance.releaseOrientation();
 
     super.initState();
   }
@@ -53,6 +55,7 @@ class _BloodPressurePatientDetailScreenState
   @override
   void dispose() {
     animationController.dispose();
+    Utils.instance.forcePortraitOrientation();
 
     super.dispose();
   }
@@ -65,6 +68,9 @@ class _BloodPressurePatientDetailScreenState
     } catch (_) {
       return RbioRouteError();
     }
+    MediaQuery.of(context).orientation == Orientation.landscape
+        ? SystemChrome.setEnabledSystemUIOverlays([])
+        : SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return ChangeNotifierProvider<BloodPressurePatientDetailVm>(
       create: (context) =>
@@ -77,10 +83,16 @@ class _BloodPressurePatientDetailScreenState
         ) {
           return DropdownBanner(
             navigatorKey: _dropdownBannerKey,
-            child: RbioScaffold(
-              appbar: _buildAppBar(),
-              body: _buildBody(vm),
-            ),
+            child: !vm.isDataLoading &&
+                    MediaQuery.of(context).orientation == Orientation.landscape
+                ? _GraphHeaderSection(
+                    value: vm,
+                    controller: _controller,
+                  )
+                : RbioScaffold(
+                    appbar: _buildAppBar(),
+                    body: _buildBody(vm),
+                  ),
           );
         },
       ),
@@ -115,13 +127,15 @@ class _BloodPressurePatientDetailScreenState
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            _buildExpandedUser(),
+            if (MediaQuery.of(context).orientation == Orientation.portrait)
+              _buildExpandedUser(),
 
             //
-            SizedBox(height: 12),
+            if (MediaQuery.of(context).orientation == Orientation.portrait)
+              SizedBox(height: 12),
 
-            //
-            if (!vm.isDataLoading) ...[
+            if (!vm.isDataLoading &&
+                MediaQuery.of(context).orientation == Orientation.portrait) ...[
               vm.isChartShow
                   ? _GraphHeaderSection(
                       value: vm,
@@ -143,7 +157,7 @@ class _BloodPressurePatientDetailScreenState
                       : context.HEIGHT * .8,
                   child: _MeasurementList(
                       bpMeasurements: vm.bpMeasurements,
-                      scrollController: _controller,
+                      scrollController: vm.controller,
                       fetchScrolledData: vm.fetchScrolledData),
                 ),
             ] else ...[
