@@ -181,21 +181,6 @@ Widget _buildCard(
                           ],
                         ),
                       ),
-
-                      //
-                      SizedBox(width: 8),
-
-                      //
-                      if (bgMeasurementViewModel.imageURL != null &&
-                          bgMeasurementViewModel.imageURL != '') ...[
-                        Image.network(bgMeasurementViewModel.imageURL),
-                      ] else ...[
-                        Container(
-                          width: 50,
-                          height: 50,
-                          color: Colors.black.withOpacity(0.1),
-                        ),
-                      ],
                     ],
                   ),
                 ),
