@@ -157,7 +157,7 @@ class _BloodPressurePatientDetailScreenState
                       : context.HEIGHT * .8,
                   child: _MeasurementList(
                       bpMeasurements: vm.bpMeasurements,
-                      scrollController: _controller,
+                      scrollController: vm.controller,
                       fetchScrolledData: vm.fetchScrolledData),
                 ),
             ] else ...[
