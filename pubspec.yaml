@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none'
 
-version: 1.0.10+21
+version: 1.0.11+22
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
@@ -159,6 +159,7 @@ flutter:
   assets:
     - env/
     - assets/images/
+    - assets/images/bottom_navigation/
     - assets/animations/
     - assets/sound/
     - assets/departments.json

@@ -235,6 +235,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Terms and Privacy`
+  String get terms_and_privacy {
+    return Intl.message(
+      'Terms and Privacy',
+      name: 'terms_and_privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Reminders`
   String get reminders {
     return Intl.message(
@@ -7650,6 +7660,16 @@ class LocaleProvider {
     return Intl.message(
       'Recover your password',
       name: 'recover_your_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You don't have any notifications yet`
+  String get notification_inbox_empty {
+    return Intl.message(
+      'You don\'t have any notifications yet',
+      name: 'notification_inbox_empty',
       desc: '',
       args: [],
     );

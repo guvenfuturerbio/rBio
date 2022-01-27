@@ -1,14 +1,18 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/model.dart';
+import '../../core/core.dart';
 import 'search_vm.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({Key key}) : super(key: key);
+  final bool fromBottomBar;
+
+  SearchScreen({
+    Key key,
+    this.fromBottomBar = false,
+  }) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -33,6 +37,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   PreferredSize _buildAppBar(SearchScreenVm value) {
     return RbioAppBar(
+      leadingWidth: !widget.fromBottomBar ? null : 0,
+      leading: !widget.fromBottomBar ? null : SizedBox(width: 0, height: 0),
       title: SizedBox(
         width: double.infinity,
         child: RbioTextFormField(
@@ -100,10 +106,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             ? MediaQuery.of(context).size.width * 0.10
                             : MediaQuery.of(context).size.width * 0.03
                         : MediaQuery.of(context).size.width * 0.12,
-                    child: Image.asset(
+                    child: SvgPicture.asset(
                         value.filterResources[index].tenants[0].id == 1
-                            ? R.image.oneDoseHealthPng
-                            : R.image.oneDoseHealthPng),
+                            ? R.image.oneDoseHealth
+                            : R.image.oneDoseHealth),
                   ),
                   subtitle: Text(
                       (value.filterResources[index].tenants[0].id == 1

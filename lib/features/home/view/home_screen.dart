@@ -40,17 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
         HomeVm vm,
         Widget child,
       ) {
-        return GestureDetector(
-          onLongPress: () {
-            vm.changeStatus();
-          },
-          child: RbioScaffold(
-            scaffoldKey: scaffoldKey,
-            drawerEnableOpenDragGesture: true,
-            drawer: _buildDrawer(vm),
-            appbar: _buildAppBar(vm),
-            body: _buildBody(vm),
-          ),
+        return RbioScaffold(
+          scaffoldKey: scaffoldKey,
+          drawerEnableOpenDragGesture: true,
+          drawer: _buildDrawer(vm),
+          appbar: _buildAppBar(vm),
+          body: _buildBody(vm),
         );
       },
     );
@@ -90,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      actions: [
-        //
+      /*  actions: [
+       //
         Center(
           child: RbioSwitcher(
             showFirstChild: vm.status.isShaken,
@@ -176,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         //
         R.sizes.wSizer8,
-      ],
+      ],*/
     );
   }
 
@@ -338,22 +333,27 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBody(HomeVm val) {
-    return ReorderableWrap(
-      alignment: WrapAlignment.center,
-      buildDraggableFeedback: (_, __, children) {
-        return children;
+  Widget _buildBody(HomeVm vm) {
+    return GestureDetector(
+      onLongPress: () {
+        vm.changeStatus();
       },
-      spacing: HomeSizer.instance.getRunSpacing(),
-      runSpacing: HomeSizer.instance.getBodyGapHeight(),
-      needsLongPressDraggable: true,
-      children: val.widgetsInUse,
-      onReorder: val.onReorder,
-      scrollDirection: Axis.vertical,
-      maxMainAxisCount: 2,
-      minMainAxisCount: 1,
-      padding: EdgeInsets.only(
-        bottom: R.sizes.defaultBottomValue,
+      child: ReorderableWrap(
+        alignment: WrapAlignment.center,
+        buildDraggableFeedback: (_, __, children) {
+          return children;
+        },
+        spacing: HomeSizer.instance.getRunSpacing(),
+        runSpacing: HomeSizer.instance.getBodyGapHeight(),
+        needsLongPressDraggable: true,
+        children: vm.widgetsInUse,
+        onReorder: vm.onReorder,
+        scrollDirection: Axis.vertical,
+        maxMainAxisCount: 2,
+        minMainAxisCount: 1,
+        padding: EdgeInsets.only(
+          bottom: R.sizes.bottomNavigationBarHeight + 16,
+        ),
       ),
     );
   }

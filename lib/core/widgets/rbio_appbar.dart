@@ -9,11 +9,13 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
   final Widget title;
   final Widget leading;
   final List<Widget> actions;
+  final double leadingWidth;
 
   RbioAppBar({
     this.title,
     this.leading,
     this.actions,
+    this.leadingWidth,
   }) : super(
           preferredSize: Size.fromHeight(64),
           child: AppBar(
@@ -23,6 +25,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             backgroundColor: getIt<ITheme>().mainColor,
 
             //
+            leadingWidth: leadingWidth,
             leading: leading ??
                 Align(
                   alignment: Alignment.center,
@@ -47,8 +50,8 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
                     height: 50,
-                    child: Image.asset(
-                      R.image.oneDoseHealthPng,
+                    child: SvgPicture.asset(
+                      R.image.oneDoseHealth,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -147,12 +150,14 @@ class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
                 [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      R.image.oneDoseHealthPng,
+                    child: SvgPicture.asset(
+                      R.image.oneDoseHealth,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
-                  SizedBox(width: 15,),
+                  SizedBox(
+                    width: 15,
+                  ),
                 ],
           ),
         );

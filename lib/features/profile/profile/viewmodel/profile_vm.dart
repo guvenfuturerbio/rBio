@@ -29,22 +29,6 @@ class ProfileVm extends ChangeNotifier {
   }
 
   Future<void> logout(BuildContext context) async {
-    try {
-      showProgressOverlay = true;
-      await FirebaseMessagingManager.instance.setTokenToServer("");
-      await getIt<UserNotifier>().logout();
-      await getIt<ISharedPreferencesManager>().reload();
-      await getIt<Repository>().localCacheService.removeAll();
-      getIt<UserNotifier>().clear();
-      FirebaseMessagingManager.handleLogout();
-      getIt<GlucoseStorageImpl>().clear();
-      getIt<ScaleStorageImpl>().clear();
-      getIt<BloodPressureStorageImpl>().clear();
-      getIt<ProfileStorageImpl>().clear();
-      Atom.to(PagePaths.LOGIN, isReplacement: true);
-    } catch (e) {
-      showProgressOverlay = false;
-      LoggerUtils.instance.e(e.toString());
-    }
+   await getIt<UserNotifier>().logout();
   }
 }

@@ -76,15 +76,15 @@ class HealthInformationVm extends RbioVm {
       pick: () async {
         switch (selectedType) {
           case 1:
-            changeDiabetsType('${LocaleProvider.current.diabetes_type_1}');
+            changeDiabetsType('${LocaleProvider.of(mContext).diabetes_type_1}');
             break;
 
           case 2:
-            changeDiabetsType('${LocaleProvider.current.diabetes_type_2}');
+            changeDiabetsType('${LocaleProvider.of(mContext).diabetes_type_2}');
             break;
 
           default:
-            changeDiabetsType('${LocaleProvider.current.non_diabetes}');
+            changeDiabetsType('${LocaleProvider.of(mContext).non_diabetes}');
         }
 
         _closeBottomSheet();
@@ -502,7 +502,7 @@ class HealthInformationVm extends RbioVm {
     heightController.text = "${selection.height} cm";
     maxRangeController.text = "${selection.hyper} mg/dl";
     minRangeController.text = "${selection.hypo} mg/dl";
-    smokerController.text = "${selection.smoker}";
+    smokerController.text = selection.smoker ? LocaleProvider.current.smoker : LocaleProvider.current.non_smoker;
     yearofDiagnosisController.text = "${selection.yearOfDiagnosis}";
   }
   // #endregion

@@ -80,8 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
   RbioAppBarLogin _buildAppBar() {
     return RbioAppBarLogin(
       leading: SizedBox(),
-      title: Image.asset(
-        R.image.oneDoseHealthPng,
+      title: SvgPicture.asset(
+        R.image.oneDoseHealth,
         height: 50,
       ),
     );

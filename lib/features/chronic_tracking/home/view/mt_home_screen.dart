@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/dashboard/not_chronic_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -12,7 +13,12 @@ import '../utils/card_widget.dart';
 part '../vm/mt_home_vm.dart';
 
 class MeasurementTrackingHomeScreen extends StatefulWidget {
-  const MeasurementTrackingHomeScreen({Key key}) : super(key: key);
+  final bool fromBottomBar;
+
+  const MeasurementTrackingHomeScreen({
+    Key key,
+    this.fromBottomBar = false,
+  }) : super(key: key);
 
   @override
   State<MeasurementTrackingHomeScreen> createState() =>
@@ -29,28 +35,34 @@ class _MeasurementTrackingHomeScreenState
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => MeasurementTrackingVm(),
-      child: Consumer<MeasurementTrackingVm>(
-        builder: (BuildContext context, MeasurementTrackingVm vm, Widget chil) {
-          bool isLandscape =
-              context.xMediaQuery.orientation == Orientation.landscape &&
-                  !Atom.isWeb;
+    return !getIt<UserNotifier>().isCronic
+        ? NotChronicScreen(LocaleProvider.current.chronic_track_home)
+        : ChangeNotifierProvider(
+            create: (_) => MeasurementTrackingVm(),
+            child: Consumer<MeasurementTrackingVm>(
+              builder: (BuildContext context, MeasurementTrackingVm vm,
+                  Widget chil) {
+                bool isLandscape =
+                    context.xMediaQuery.orientation == Orientation.landscape &&
+                        !Atom.isWeb;
 
-          return RbioStackedScaffold(
-            appbar: _buildAppBar(isLandscape, context),
-            body: _buildBody(context, vm, isLandscape),
-            floatingActionButton: _buildFAB(vm),
+                return RbioStackedScaffold(
+                  appbar: _buildAppBar(isLandscape, context),
+                  body: _buildBody(context, vm, isLandscape),
+                  floatingActionButton: _buildFAB(vm),
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 
   RbioAppBar _buildAppBar(bool isLandscape, BuildContext context) {
     return isLandscape
         ? null
         : RbioAppBar(
+            leadingWidth: !widget.fromBottomBar ? null : 0,
+            leading:
+                !widget.fromBottomBar ? null : SizedBox(width: 0, height: 0),
             title: RbioAppBar.textTitle(
               context,
               LocaleProvider.current.chronic_track_home,
@@ -92,6 +104,9 @@ class _MeasurementTrackingHomeScreenState
         //
         if (MediaQuery.of(context).orientation == Orientation.portrait)
           _buildExpandedUser(),
+
+        //
+        R.sizes.hSizer12,
 
         //
         Container(

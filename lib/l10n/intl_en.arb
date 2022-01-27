@@ -19,6 +19,7 @@
   "take_video_appointment": "Video Call Appointment",
   "devices": "Devices",
   "profile": "Profile",
+  "terms_and_privacy": "Terms and Privacy",
   "reminders": "Reminders",
   "content_delete_doctor_first": "Do you want delete doctor ",
   "not_chronic_warning": "Please contact us from 444 94 94 for Health Tracker services",
@@ -762,5 +763,6 @@
   "open_chart": "Show Graph",
   "close_chart": "Hide Graph",
   "recent_appointments": "Recent Appointments",
-  "recover_your_password": "Recover your password"
+  "recover_your_password": "Recover your password",
+  "notification_inbox_empty": "You don't have any notifications yet"
 }
