@@ -75,7 +75,7 @@ abstract class ApiService {
   Future<GuvenResponseModel> addFirebaseTokenUi(
       AddFirebaseTokenRequest addFirebaseToken);
   Future<GuvenResponseModel> patientCallMeUi();
-    Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
+  Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
 
   Future<GuvenResponseModel> getRoomStatusUi(String roomId);
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId);
@@ -102,6 +102,7 @@ abstract class ApiService {
   Future<GuvenResponseModel> changeActiveUserToRelative(String id);
   Future<GuvenResponseModel> clickPost(int postId);
   Future<GuvenResponseModel> filterSocialPosts(String search);
+  Future<GuvenResponseModel> filterSocialPlatform(String search);
   Future<GuvenResponseModel> socialResource();
   Future<GuvenResponseModel> getAppointmentTypeViaWebConsultantId();
   Future<GuvenResponseModel> requestTranslator(

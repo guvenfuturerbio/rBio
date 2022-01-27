@@ -697,6 +697,19 @@ class ApiServiceImpl extends ApiService {
     }
   }
 
+  @override
+  Future<GuvenResponseModel> filterSocialPlatform(String search) async {
+    final response = await helper.getGuven(
+        R.endpoints.filterSocialPostsPlatform(search),
+        options: authOptions);
+    if (response.isSuccessful) {
+      return response;
+    } else {
+      throw Exception(
+          '/filterSocialPostsPlatform/$search : ${response.isSuccessful}');
+    }
+  }
+
   Future<List<BannerTabsModel>> getBannerTab(
       String applicationName, String groupName) async {
     final response = await helper.getGuven(

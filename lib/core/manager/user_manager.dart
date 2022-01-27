@@ -30,6 +30,7 @@ abstract class UserManager {
   Future<bool> getKvkkFormState();
   Future<List<SocialPostsResponse>> getSocialPostWithTagsByText(String text);
   Future<List<SocialPostsResponse>> getAllSocialResources();
+  Future<List<SocialPostsResponse>> getPostsWithByTagsByPlatform(String text);
   Future<GuvenResponseModel> clickPost(int postId);
 }
 
@@ -345,6 +346,19 @@ class UserManagerImpl extends UserManager {
     } catch (_) {
       return false;
     }
+  }
+
+  @override
+  Future<List<SocialPostsResponse>> getPostsWithByTagsByPlatform(
+      String text) async {
+    var response = await getIt<Repository>().filterSocialPlatform(text);
+    List<SocialPostsResponse> filteredSocialResources = <SocialPostsResponse>[];
+    var datum = response.datum;
+    for (var data in datum) {
+      final filteredSocialResponse = SocialPostsResponse.fromJson(data);
+      filteredSocialResources.add(filteredSocialResponse);
+    }
+    return filteredSocialResources;
   }
 
   @override
