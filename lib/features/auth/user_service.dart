@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -100,7 +99,7 @@ class UserService {
         SharedPreferencesKeys.JWT_TOKEN, response.datum["access_token"]);
   }
 
-  Future<AuthCredential> googleSignInService() async {
+  /*Future<AuthCredential> googleSignInService() async {
     try {
       bool isSignedIn = await GoogleSignIn().isSignedIn();
       if (isSignedIn) {
@@ -137,7 +136,7 @@ class UserService {
       rethrow;
     }
   }
-
+*/
   /*Future<OAuthCredential> appleSignInService() async {
     final rawNonce = generateNonce();
     final nonce = sha256ofString(rawNonce);

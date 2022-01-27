@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/rate_dialog.dart';
@@ -231,26 +231,17 @@ class UserManagerImpl extends UserManager {
           ? parseJwtPayLoad(token)['name']
           : parseJwtPayLoad(token)['fullname'];
       print("toplantı başlıyooor " + webConsultantId);
-      var options = JitsiMeetingOptions(room: webConsultantId)
-// Required, spaces will be trimmed
-        ..serverURL = "https://stream.guven.com.tr/"
-        ..subject = " "
-        ..userDisplayName = name
-        ..userEmail = " "
-        ..audioOnly = false
-        ..audioMuted = false
-        ..webOptions = {
-          "roomName": "${webConsultantId}",
-          "width": "100%",
-          "height": "100%",
-          "enableWelcomePage": false,
-          "chromeExtensionBanner": null,
-          "interfaceConfigOverwrite": {
-            "DEFAULT_BACKGROUND": '#000000',
-          },
-          "userInfo": {"displayName": "${name}"}
-        }
-        ..videoMuted = false;
+      var options = JitsiMeetingOptions(
+          roomNameOrUrl: webConsultantId,
+          serverUrl: "https://stream.guven.com.tr/",
+          subject: " ",
+          userDisplayName: name,
+          userEmail : " ",
+          isAudioOnly: false,isAudioMuted : false,
+isVideoMuted :false
+          );
+
+
       showDialog(
           context: context,
           barrierDismissible: true,
@@ -262,16 +253,16 @@ class UserManagerImpl extends UserManager {
             );
           }).then((value) async {
         if (value != null && value) {
-          await JitsiMeet.joinMeeting(
+          await JitsiMeetWrapper.joinMeeting(options:
             options,
             listener: JitsiMeetingListener(
               onConferenceWillJoin: (message) {
-                debugPrint("${options.room} will join with message: $message");
+                debugPrint("${options.roomNameOrUrl} will join with message: $message");
               },
               onConferenceJoined: (message) {
-                debugPrint("${options.room} joined with message: $message");
+                debugPrint("${options.roomNameOrUrl} joined with message: $message");
               },
-              onConferenceTerminated: (message) async {
+              onConferenceTerminated: (message, _) async {
                 await showDialog(
                     context: context,
                     barrierDismissible: true,
@@ -280,7 +271,7 @@ class UserManagerImpl extends UserManager {
                         availabilityId: availabilityId,
                       );
                     });
-                debugPrint("${options.room} terminated with message: $message");
+                debugPrint("${options.roomNameOrUrl} terminated with message: $message");
               },
             ),
           );

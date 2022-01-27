@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../features/shared/do_not_show_again_dialog.dart';
@@ -672,19 +672,19 @@ class UtilityManager {
   }
 
   void joinJitsiMeeting(JitsiMeetingOptions options) async {
-    await getIt<Repository>().setJitsiWebConsultantId(options.room);
+    await getIt<Repository>().setJitsiWebConsultantId(options.roomNameOrUrl);
 
-    await JitsiMeet.joinMeeting(
-      options,
+    await JitsiMeetWrapper.joinMeeting(
+      options:options,
       listener: JitsiMeetingListener(
         onConferenceWillJoin: (message) {
-          debugPrint("${options.room} will join with message: $message");
+          debugPrint("${options.roomNameOrUrl} will join with message: $message");
         },
         onConferenceJoined: (message) {
-          debugPrint("${options.room} joined with message: $message");
+          debugPrint("${options.roomNameOrUrl} joined with message: $message");
         },
-        onConferenceTerminated: (message) {
-          debugPrint("${options.room} terminated with message: $message");
+        onConferenceTerminated: (message,_) {
+          debugPrint("${options.roomNameOrUrl} terminated with message: $message");
         },
       ),
     );
