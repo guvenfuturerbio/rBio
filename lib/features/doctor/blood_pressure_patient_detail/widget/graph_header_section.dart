@@ -80,7 +80,7 @@ class _GraphHeaderSection extends StatelessWidget {
         ),
 
         //
-        Row(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           _infoSection(context),
           ElevatedButton(
             onPressed: () => value.showFilter(context),
