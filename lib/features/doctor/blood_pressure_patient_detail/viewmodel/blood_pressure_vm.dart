@@ -25,6 +25,12 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       isChartShow = false;
       update();
+      controller.addListener(() async {
+        if (controller.position.atEdge && controller.position.pixels != 0) {
+          await getMoreData();
+          fetchScrolledDailyData();
+        }
+      });
     });
   }
   bool isChartShow = false;
@@ -39,11 +45,6 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
     await fetchBpMeasurement();
     await fetchScrolledDailyData();
 
-    controller.addListener(() {
-      if (controller.position.atEdge && controller.position.pixels != 0) {
-        getNewItems();
-      }
-    });
     _isDataLoading = false;
     notifyListeners();
   }
@@ -53,6 +54,7 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   ScrollController controller = ScrollController();
   TimePeriodFilter _selected;
   TimePeriodFilter get selected => _selected ?? TimePeriodFilter.DAILY;
+  bool allDataLoaded = false;
 
   Map<String, bool> _measurementFilters;
 
@@ -73,6 +75,36 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
       GetMyPatientFilter(end: null, start: null),
     );
 
+    bpMeasurements =
+        result.map((e) => BpMeasurementViewModel(bpModel: e)).toList();
+
+    bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
+  }
+
+  Future<void> getMoreData() async {
+    int addedItem = 0;
+    final result = await getIt<DoctorRepository>().getMyPatientBloodPressure(
+      patientId,
+      GetMyPatientFilter(
+          end: bpMeasurements.first.date.toIso8601String(), start: null),
+    );
+
+    for (var item in result) {
+      bool alreadyInList = false;
+      for (var localItem in bpMeasurements) {
+        if (item.isEqual(localItem.bpModel)) {
+          alreadyInList = true;
+          break;
+        }
+      }
+      if (!alreadyInList) {
+        bpMeasurements.add(BpMeasurementViewModel(bpModel: item));
+        addedItem++;
+      }
+    }
+    if (addedItem == 0) {
+      allDataLoaded = true;
+    }
     bpMeasurements =
         result.map((e) => BpMeasurementViewModel(bpModel: e)).toList();
 

@@ -27,43 +27,57 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
       builder: (context, value, child) {
         return MediaQuery.of(context).orientation == Orientation.portrait ||
                 Atom.isWeb
-            ? SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    if (value.isChartShow) ...[
+            ? RbioStackedScaffold(
+                appbar: RbioAppBar(
+                  title: RbioAppBar.textTitle(
+                    context,
+                    LocaleProvider.current.bg_measurement_tracking,
+                  ),
+                ),
+                body: SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       SizedBox(
-                        height: (context.HEIGHT * .4) * context.TEXTSCALE,
-                        child: GraphHeader(
+                        height: R.sizes.stackedTopPaddingValue(context) + 8,
+                      ),
+                      if (value.isChartShow) ...[
+                        SizedBox(
+                          height: (context.HEIGHT * .4) * context.TEXTSCALE,
+                          child: GraphHeader(
+                            value: value,
+                            callBack: () => context
+                                .read<ScaleProgressPageViewModel>()
+                                .changeChartShowStatus(),
+                          ),
+                        ),
+                        BottomActionsOfGraph(
                           value: value,
-                          callBack: widget.callBack,
                         ),
-                      ),
-                      BottomActionsOfGraph(
-                        value: value,
-                      ),
+                      ],
+                      if (!value.isChartShow)
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: context.HEIGHT * .02),
+                          child: RbioElevatedButton(
+                            title: LocaleProvider.current.open_chart,
+                            onTap: value.changeChartShowStatus,
+                          ),
+                        ),
+                      Container(
+                        height: value.isChartShow
+                            ? (context.HEIGHT * .4) * context.TEXTSCALE
+                            : (context.HEIGHT * .8),
+                        margin: EdgeInsets.only(top: 8),
+                        child: ScaleMeasurementListWidget(
+                          scaleMeasurements: value.scaleMeasurements,
+                          scrollController: value.controller,
+                          useStickyGroupSeparatorsValue: true,
+                        ),
+                      )
                     ],
-                    if (!value.isChartShow)
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: context.HEIGHT * .02),
-                        child: RbioElevatedButton(
-                          title: LocaleProvider.current.open_chart,
-                          onTap: value.changeChartShowStatus,
-                        ),
-                      ),
-                    Container(
-                      height: value.isChartShow
-                          ? (context.HEIGHT * .4) * context.TEXTSCALE
-                          : (context.HEIGHT * .8),
-                      margin: EdgeInsets.only(top: 8),
-                      child: ScaleMeasurementListWidget(
-                        scaleMeasurements: value.scaleMeasurements,
-                        scrollController: value.controller,
-                        useStickyGroupSeparatorsValue: true,
-                      ),
-                    )
-                  ],
+                  ),
                 ),
               )
             : LandScapeGraphWidget(

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+import '../../core/core.dart';
+import '../../features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 
 import '../ble_models/paired_device.dart';
 import 'scale_device_model.dart';

@@ -84,6 +84,37 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
     notifyListeners();
   }
 
+  getMoreData({@required int patientId, DateTime date}) async {
+    final result = await getIt<DoctorRepository>().getMyPatientBloodGlucose(
+      patientId,
+      GetMyPatientFilter(end: date.toIso8601String(), start: null),
+    );
+
+    this.bloodGlucoseList = result;
+    List<BgMeasurementViewModel> bgMeasure = bloodGlucoseList
+        .map((e) => BgMeasurementViewModel(
+              bgMeasurement: BgMeasurement(
+                notes: e.bloodGlucoseMeasurement.valueNote,
+                id: e.id,
+                color: Utils.instance.fetchMeasurementColor(
+                    measurement: int.parse(e.bloodGlucoseMeasurement.value),
+                    criticMin: PatientNotifiers().patientDetail.hypo,
+                    criticMax: PatientNotifiers().patientDetail.hyper,
+                    targetMax: PatientNotifiers().patientDetail.rangeMax,
+                    targetMin: PatientNotifiers().patientDetail.rangeMin),
+                date: e.detail.occurrenceTime,
+                tag: e.tag.id,
+                result: e.bloodGlucoseMeasurement.value,
+                isManual: e.isManuel,
+              ),
+            ))
+        .toList();
+    bgMeasurements.addAll(bgMeasure);
+    this.bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
+    fetchBgMeasurementsDateList(bgMeasurements);
+    notifyListeners();
+  }
+
   void fetchBgMeasurementsDateList(
       List<BgMeasurementViewModel> bgMeasurements) {
     bool isInclude = false;

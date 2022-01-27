@@ -23,7 +23,7 @@ class HomePageModel<K extends ProgressPage> {
     largeChild = Consumer<K>(
       builder: (ctx, value, __) {
         manuelEntry = () => value.manuelEntry(ctx);
-        return value.largeWidget(deActivateCallBack);
+        return value.largeWidget();
       },
     );
     smallChild = Consumer<K>(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import 'package:onedosehealth/model/model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
+import '../../../../../model/model.dart';
 import '../../../lib/notifiers/user_profiles_notifier.dart';
 import '../../../lib/widgets/utils/time_period_filters.dart';
 import '../../../utils/bg_filter_pop_up/bg_filter_pop_up.dart';
+import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../../utils/glucose_margins_filter.dart';
 import '../../utils/progress_page_model.dart';
 import '../../utils/small_widget_card.dart';
@@ -39,7 +39,7 @@ class BgProgressPageViewModel
         }
       });
     });
-    isChartShow = false;
+    isChartShow = true;
   }
   bool isChartShow = false;
 
@@ -990,10 +990,8 @@ class BgProgressPageViewModel
   }
 
   @override
-  Widget largeWidget(Function() callBack) {
-    return BgProgressPage(
-      callBack: callBack,
-    );
+  Widget largeWidget() {
+    return BgProgressPage();
   }
 
   @override

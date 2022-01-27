@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
+import '../treatment_model/treatment_model.dart';
 
 import 'diabet_type.dart';
 

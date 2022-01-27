@@ -12,7 +12,7 @@ class BpProgressPageVm
   bool hasReachEnd = false;
 
   BpProgressPageVm() {
-    isChartShow = false;
+    isChartShow = true;
     getIt<BloodPressureStorageImpl>().addListener(() {
       setSelectedItem(selected);
     });
@@ -269,9 +269,9 @@ class BpProgressPageVm
   }
 
   @override
-  Widget largeWidget(Function() callBack) {
+  Widget largeWidget() {
     return BpProgressPage(
-      callback: callBack,
+      callback: changeChartShowStatus,
     );
   }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -29,7 +27,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   bool hasReachEnd = false;
   ScaleProgressPageViewModel() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      isChartShow = false;
+      isChartShow = true;
 
       getIt<ScaleStorageImpl>().addListener(() async {
         print("Triggered ScaleRepository Listener");
@@ -709,8 +707,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   }
 
   @override
-  Widget largeWidget(Function() callBack) {
-    return ScaleProgressPage(callBack: callBack);
+  Widget largeWidget() {
+    return ScaleProgressPage(callBack: changeChartShowStatus);
   }
 
   @override

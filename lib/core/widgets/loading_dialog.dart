@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
+import '../core.dart';
 
 class LoadingDialog extends StatefulWidget {
   LoadingDialogState state;
