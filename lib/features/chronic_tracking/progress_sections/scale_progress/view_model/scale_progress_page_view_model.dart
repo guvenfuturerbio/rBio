@@ -27,7 +27,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   bool hasReachEnd = false;
   ScaleProgressPageViewModel() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      isChartShow = false;
+      isChartShow = true;
 
       getIt<ScaleStorageImpl>().addListener(() async {
         print("Triggered ScaleRepository Listener");

@@ -39,7 +39,7 @@ class BgProgressPageViewModel
         }
       });
     });
-    isChartShow = false;
+    isChartShow = true;
   }
   bool isChartShow = false;
 

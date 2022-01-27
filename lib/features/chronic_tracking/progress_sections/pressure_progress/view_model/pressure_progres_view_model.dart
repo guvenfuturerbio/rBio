@@ -12,7 +12,7 @@ class BpProgressPageVm
   bool hasReachEnd = false;
 
   BpProgressPageVm() {
-    isChartShow = false;
+    isChartShow = true;
     getIt<BloodPressureStorageImpl>().addListener(() {
       setSelectedItem(selected);
     });
