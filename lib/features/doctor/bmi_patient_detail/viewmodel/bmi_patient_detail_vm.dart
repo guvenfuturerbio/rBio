@@ -17,13 +17,25 @@ import '../../notifiers/patient_notifiers.dart';
 import '../widget/charts/animated_scale_buble_chart.dart';
 import '../widget/charts/animated_scale_line_chart.dart';
 
-class BmiPatientDetailVm extends RbioVm 
-    with IBaseBottomActionsOfGraph {
+class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   BmiPatientDetailVm(this.mContext, this.patientId) {
     isChartShow = false;
     update();
+    controller.addListener(() {
+      if (controller.position.atEdge && controller.position.pixels != 0) {
+        getNewItems();
+      }
+    });
   }
 
+  getNewItems() async {
+    if (!allDataLoaded) {
+      await getMoreData();
+      fetchScrolledDailyData();
+    }
+  }
+
+  bool allDataLoaded = false;
   bool isChartShow = false;
 
   @override
@@ -37,6 +49,8 @@ class BmiPatientDetailVm extends RbioVm
   bool _disposed = false;
   bool isDataLoading = false;
   DateTime _scrolledDate;
+
+  final controller = ScrollController();
 
   LoadingProgress _stateProcessPatientDetail;
   LoadingProgress _stateProcessPatientMeasurements;
@@ -541,6 +555,43 @@ class BmiPatientDetailVm extends RbioVm
     this.scaleData = result;
 
     this.scaleMeasurement.clear();
+
+    this.scaleMeasurement =
+        scaleData.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
+    scaleMeasurement.removeWhere(
+        (element) => element.getMeasurement(currentScaleType) == null);
+    var year = int.parse(_patientDetail.birthDay.split('.')[2]);
+    for (var item in scaleMeasurement) {
+      item.age = year < 10 ? 15 : year;
+    }
+    this.scaleMeasurement.sort((a, b) => a.date.compareTo(b.date));
+
+    fetchBmiMeasurementsDateList();
+  }
+
+  getMoreData() async {
+    int addedItem = 0;
+    final result = await getIt<DoctorRepository>().getMyPatientScale(
+      patientId,
+      GetMyPatientFilter(
+          end: scaleMeasurement.first.date.toIso8601String(), start: null),
+    );
+    for (var item in result) {
+      bool alreadyInList = false;
+      for (var localItem in scaleData) {
+        if (item.isEqual(localItem)) {
+          alreadyInList = true;
+          break;
+        }
+      }
+      if (!alreadyInList) {
+        scaleData.add(item);
+        addedItem++;
+      }
+    }
+    if (addedItem == 0) {
+      allDataLoaded = true;
+    }
 
     this.scaleMeasurement =
         scaleData.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();

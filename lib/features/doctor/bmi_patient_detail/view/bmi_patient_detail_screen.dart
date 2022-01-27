@@ -158,7 +158,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
                   child: _MeasurementList(
                     scaleMeasurements: vm.scaleMeasurement,
                     fetchScrolledData: vm.fetchScrolledData,
-                    scrollController: _controller,
+                    scrollController: vm.controller,
                     useStickyGroupSeparatorsValue:
                         vm.selected == LocaleProvider.current.daily ||
                                 vm.selected == LocaleProvider.current.specific
