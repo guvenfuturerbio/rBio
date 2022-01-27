@@ -1,5 +1,4 @@
 import '../../../core/core.dart';
-
 import '../filter_tenants_response.dart';
 
 class FilterDepartmentsResponse extends IBaseModel<FilterDepartmentsResponse> {

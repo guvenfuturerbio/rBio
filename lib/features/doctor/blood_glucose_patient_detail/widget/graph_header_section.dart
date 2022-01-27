@@ -38,7 +38,7 @@ class _GraphHeaderSection extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).orientation == Orientation.portrait
               ? context.HEIGHT * 0.25
-              : context.HEIGHT * 0.5,
+              : context.HEIGHT * 0.7,
           margin: EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: getIt<ITheme>().cardBackgroundColor,
@@ -60,6 +60,21 @@ class _GraphHeaderSection extends StatelessWidget {
                   ),
                 ),
               ),
+
+              //
+              if (MediaQuery.of(context).orientation == Orientation.portrait)
+                Positioned(
+                    right: 0,
+                    top: 0,
+                    child: GestureDetector(
+                      onTap: () => context
+                          .read<BloodGlucosePatientDetailVm>()
+                          .changeChartShowStatus(),
+                      child: Icon(
+                        Icons.keyboard_arrow_up,
+                        size: 52 * context.TEXTSCALE,
+                      ),
+                    ))
             ],
           ),
         ),

@@ -53,40 +53,65 @@ class _HomeScreenState extends State<HomeScreen> {
 
   RbioAppBar _buildAppBar(HomeVm vm) {
     return RbioAppBar(
-      leading: Center(
-        child: RbioSwitcher(
-          showFirstChild: vm.status.isShaken,
-          child1: IconButton(
-            onPressed: () {
-              vm.changeStatus();
-              vm.showRemovedWidgets();
-            },
-            icon: Icon(
-              Icons.add,
-              size: R.sizes.iconSize,
-              color: Colors.white,
-            ),
-          ),
-          child2: SizedBox(
-            child: InkWell(
-              child: Container(
-                color: Colors.transparent,
-                padding: const EdgeInsets.all(8),
-                child: SvgPicture.asset(
-                  R.image.menu_icon,
-                  color: Colors.white,
-                  width: R.sizes.iconSize2,
-                ),
-              ),
-              onTap: () {
-                scaffoldKey.currentState.openDrawer();
+        leading: Center(
+          child: RbioSwitcher(
+            showFirstChild: vm.status.isShaken,
+            child1: IconButton(
+              onPressed: () {
+                vm.changeStatus();
+                vm.showRemovedWidgets();
               },
+              icon: Icon(
+                Icons.add,
+                size: R.sizes.iconSize,
+                color: Colors.white,
+              ),
+            ),
+            child2: SizedBox(
+              child: InkWell(
+                child: Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.all(8),
+                  child: SvgPicture.asset(
+                    R.image.menu_icon,
+                    color: Colors.white,
+                    width: R.sizes.iconSize2,
+                  ),
+                ),
+                onTap: () {
+                  scaffoldKey.currentState.openDrawer();
+                },
+              ),
             ),
           ),
         ),
-      ),
-      /*  actions: [
-       //
+        actions: [
+          Visibility(
+            visible: vm.status.isShaken,
+            replacement: SizedBox.fromSize(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.done,
+                  size: R.sizes.iconSize,
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+            child: SizedBox(
+              child: IconButton(
+                  onPressed: () {
+                    vm.changeStatus();
+                  },
+                  icon: Icon(
+                    Icons.done,
+                    size: R.sizes.iconSize,
+                    color: getIt<ITheme>().cardBackgroundColor,
+                  )),
+            ),
+          )
+        ]
+        /*
         Center(
           child: RbioSwitcher(
             showFirstChild: vm.status.isShaken,
@@ -172,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
         //
         R.sizes.wSizer8,
       ],*/
-    );
+        );
   }
 
   Drawer _buildDrawer(HomeVm vm) {

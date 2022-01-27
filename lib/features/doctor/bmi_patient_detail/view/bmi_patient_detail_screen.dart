@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
@@ -53,6 +54,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
       parent: animationController,
       curve: Curves.fastOutSlowIn,
     );
+    Utils.instance.releaseOrientation();
 
     super.initState();
   }
@@ -60,6 +62,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
   @override
   void dispose() {
     animationController.dispose();
+    Utils.instance.forcePortraitOrientation();
 
     super.dispose();
   }
@@ -72,15 +75,26 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
     } catch (_) {
       return RbioRouteError();
     }
+
+    MediaQuery.of(context).orientation == Orientation.landscape
+        ? SystemChrome.setEnabledSystemUIOverlays([])
+        : SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return ChangeNotifierProvider(
       create: (ctx) => BmiPatientDetailVm(ctx, patientId),
       child: Consumer<BmiPatientDetailVm>(
         builder: (_, vm, __) => DropdownBanner(
           navigatorKey: _dropdownBannerKey,
-          child: RbioScaffold(
-            appbar: _buildAppBar(),
-            body: _buildBody(vm),
-          ),
+          child: !vm.isDataLoading &&
+                  MediaQuery.of(context).orientation == Orientation.landscape
+              ? _GraphHeaderSection(
+                  value: vm,
+                  controller: _controller,
+                )
+              : RbioScaffold(
+                  appbar: _buildAppBar(),
+                  body: _buildBody(vm),
+                ),
         ),
       ),
     );
@@ -144,7 +158,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
                   child: _MeasurementList(
                     scaleMeasurements: vm.scaleMeasurement,
                     fetchScrolledData: vm.fetchScrolledData,
-                    scrollController: _controller,
+                    scrollController: vm.controller,
                     useStickyGroupSeparatorsValue:
                         vm.selected == LocaleProvider.current.daily ||
                                 vm.selected == LocaleProvider.current.specific
