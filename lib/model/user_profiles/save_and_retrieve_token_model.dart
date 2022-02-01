@@ -1,6 +1,6 @@
 class SaveAndRetrieveTokenModel {
-  String token;
-  String accession;
+  String? token;
+  String? accession;
 
   SaveAndRetrieveTokenModel({
     this.token,

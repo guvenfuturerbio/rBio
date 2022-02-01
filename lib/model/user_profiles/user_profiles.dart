@@ -1,6 +1,6 @@
 import '../../../../../core/core.dart';
 
 class UserProfiles {
-  Person active;
+  Person? active;
   List<Person> person = [];
 }

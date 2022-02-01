@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.11+22
 
 environment:
-  sdk: '>=2.7.0 <3.0.0'
+  sdk: '>=2.15.0 <3.0.0'
 
 dependency_overrides:
   flutter_reactive_ble:
@@ -126,6 +126,7 @@ dev_dependencies:
     sdk: flutter
   json_annotation: ^4.0.1
   json_serializable: ^4.1.0
+  lint: ^1.8.2
 
 flutter:
   uses-material-design: true

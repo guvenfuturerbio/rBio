@@ -10,9 +10,9 @@ class TreatmentModel {
 } 
 */
 
-  String treatment;
-  DateTime createDate;
-  int id;
+  String? treatment;
+  DateTime? createDate;
+  int? id;
 
   TreatmentModel({
     this.treatment,
