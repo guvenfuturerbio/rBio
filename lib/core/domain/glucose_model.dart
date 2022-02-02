@@ -24,7 +24,7 @@ class GlucoseData extends HiveObject {
   static const MEASUREMENT_ID = "id";
 
   @HiveField(0)
-  int measurementId;
+  int? measurementId;
   @HiveField(1)
   String level;
   @HiveField(2)
@@ -47,7 +47,7 @@ class GlucoseData extends HiveObject {
   @HiveField(10)
   bool isDeleted;
   @HiveField(11)
-  int userId;
+  int? userId;
   // BG
   String get date => DateTime.fromMillisecondsSinceEpoch(time).toString();
   Color get color =>
@@ -64,8 +64,8 @@ class GlucoseData extends HiveObject {
     this.deviceName = "",
     this.imageURL = "",
     this.isDeleted = false,
-    required this.userId,
-    required this.measurementId,
+    this.userId,
+    this.measurementId,
   });
 
   GlucoseData fromGlucoseData(GlucoseData glucoseData) {
@@ -86,7 +86,8 @@ class GlucoseData extends HiveObject {
   }
 
   GlucoseData copy() {
-    return GlucoseData.fromMap(jsonDecode(jsonEncode(toMap()))as Map<String,dynamic>);
+    return GlucoseData.fromMap(
+        jsonDecode(jsonEncode(toMap())) as Map<String, dynamic>);
   }
 
   factory GlucoseData.fromMap(Map map) => GlucoseData(

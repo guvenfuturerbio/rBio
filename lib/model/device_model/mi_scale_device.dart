@@ -1,20 +1,18 @@
 import 'dart:typed_data';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+
 import '../../core/core.dart';
 import '../../features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
-
 import '../ble_models/paired_device.dart';
 import 'scale_device_model.dart';
 
 class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
-  final DiscoveredDevice device;
-
-  MiScaleDevice(this.device) : super(device);
+  MiScaleDevice({DiscoveredDevice? device}) : super(device);
   @override
   MiScaleDevice from(DiscoveredDevice device) {
     if (matchesDeviceType(device)) {
-      return MiScaleDevice(device);
+      return MiScaleDevice(device: device);
     } else {
       throw Exception('Device doesnt march any device');
     }
@@ -66,7 +64,7 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
     } // Return new scale data
     super.scaleData = ScaleMeasurementViewModel(
       scaleModel: ScaleModel(
-        device: device!.toJson(),
+        device: device.toJson(),
         measurementComplete: measurementComplete,
         weightStabilized: weightStabilized,
         weightRemoved: weightRemoved,
@@ -80,7 +78,7 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
   }
 
   @override
-  bool matchesDeviceType(device) {
+  bool matchesDeviceType(DiscoveredDevice device) {
     return device.name == 'MIBFS' &&
         device.serviceData.length == 1 &&
         device.serviceData.values.first.length == 13;

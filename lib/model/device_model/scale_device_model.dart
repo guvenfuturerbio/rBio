@@ -6,28 +6,27 @@ import '../../features/chronic_tracking/progress_sections/scale_progress/utils/s
 import '../ble_models/paired_device.dart';
 
 abstract class ScaleDevice<T> {
-  final DiscoveredDevice device;
-  static ScaleMeasurementViewModel? _scaleData;
+  final DiscoveredDevice? device;
+  ScaleMeasurementViewModel? scaleData;
 
   ScaleDevice(this.device);
 
   /// The id of the discovere d device
-  String get id => device.id;
+  String? get id => device?.id;
 
   /// The name of the discovered device
-  String get name => device.name;
+  String? get name => device?.name;
 
   /// The signal strength of the device when it was first discovered
-  int get rssi => device.rssi;
-
-  ScaleMeasurementViewModel? get scaleData => _scaleData;
-  set scaleData(data) => _scaleData = data as ScaleMeasurementViewModel?;
+  int? get rssi => device?.rssi;
 
   /// Parse the raw advertisement data to obtain a [T] instance
   ScaleMeasurementViewModel? parseScaleData(
-      PairedDevice device, Uint8List data);
+    PairedDevice device,
+    Uint8List data,
+  );
 
-  bool matchesDeviceType(device);
+  bool matchesDeviceType(DiscoveredDevice device);
 
   /// Constructs an instance of an extending [Device] class.
   ///

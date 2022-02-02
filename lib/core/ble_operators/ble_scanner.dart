@@ -5,16 +5,16 @@ class BleScannerOps extends ChangeNotifier {
 
   final FlutterReactiveBle _ble;
 
-  String? deviceId;
-  late List<String> pairedDevices;
+  String? _deviceId;
+  List<String?>? pairedDevices;
 
   StreamSubscription? _subscription;
 
   BleScannerOps(this._ble) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-      List<PairedDevice> pairedDevice =
+      final List<PairedDevice> pairedDevice =
           await getIt<BleDeviceManager>().getPairedDevices();
-      pairedDevices = pairedDevice.map((e) => e.deviceId).toList();
+      pairedDevices = pairedDevice.map((e) => e.deviceId!).toList();
     });
   }
 
@@ -23,17 +23,12 @@ class BleScannerOps extends ChangeNotifier {
     Uuid([0x18, 0x1B])
   ];
 
-  List<DiscoveredDevice> get discoveredDevices => this._devices;
+  List<DiscoveredDevice> get discoveredDevices => _devices;
 
-  setDeviceId(String deviceId) {
-    this.deviceId = deviceId;
-  }
+  set deviceId(String rhsDeviceId) => _deviceId = rhsDeviceId;
+  String get deviceId => _deviceId ?? '';
 
-  addDeviceId(List<String> deviceIds) {
-    pairedDevices = deviceIds;
-  }
-
-  startScan() async {
+  Future<void> startScan() async {
     _ble.statusStream.listen((bleStatus) async {
       if (bleStatus == BleStatus.ready) {
         _devices.clear();
@@ -48,7 +43,7 @@ class BleScannerOps extends ChangeNotifier {
             _devices.add(device);
 
             /// AutoConnector Methode caller
-            if (pairedDevices != null && pairedDevices.contains(device.id)) {
+            if (pairedDevices != null && pairedDevices!.contains(device.id)) {
               getIt<BleConnectorOps>().connect(device);
             }
             /*  if (device.id == deviceId) {
@@ -68,14 +63,14 @@ class BleScannerOps extends ChangeNotifier {
     });
   }
 
-  stopScan() async {
+  Future<void> stopScan() async {
     await _subscription?.cancel();
     _subscription = null;
     notifyListeners();
   }
 
-  refreshDeviceList() {
-    _devices?.clear();
+  void refreshDeviceList() {
+    _devices.clear();
     notifyListeners();
   }
 }
