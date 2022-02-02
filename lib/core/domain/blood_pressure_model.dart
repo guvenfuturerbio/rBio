@@ -5,46 +5,47 @@ import 'package:hive_flutter/adapters.dart';
 @HiveType(typeId: 3)
 class BloodPressureModel extends HiveObject {
   @HiveField(0)
-  DateTime dateTime;
+  DateTime? dateTime;
   @HiveField(1)
-  String deviceUUID;
+  String? deviceUUID;
   @HiveField(2)
-  int dia;
+  int? dia;
   @HiveField(3)
-  bool isManual;
+  bool? isManual;
   @HiveField(4)
-  int measurementId;
+  int? measurementId;
   @HiveField(5)
-  String note;
+  String? note;
   @HiveField(6)
-  int pulse;
+  int? pulse;
   @HiveField(7)
-  int sys;
+  int? sys;
 
-  BloodPressureModel(
-      {this.dateTime,
-      this.deviceUUID,
-      this.dia,
-      this.isManual,
-      this.measurementId,
-      this.note,
-      this.pulse,
-      this.sys});
+  BloodPressureModel({
+    this.dateTime,
+    this.deviceUUID,
+    this.dia,
+    this.isManual,
+    this.measurementId,
+    this.note,
+    this.pulse,
+    this.sys,
+  });
 
   factory BloodPressureModel.fromJson(Map<String, dynamic> map) =>
       BloodPressureModel(
-        dateTime: DateTime.parse(map['occurrence_time']),
-        deviceUUID: map['device_uuid'] ?? "",
-        dia: map['dia_value'],
-        isManual: map['is_manuel'] ?? false,
-        measurementId: map['measurement_id'] ?? 0,
-        note: map['note'] ?? "",
-        pulse: map['pulse_value'],
-        sys: map['sys_value'],
+        dateTime: DateTime.parse(map['occurrence_time'] as String),
+        deviceUUID: map['device_uuid'] as String? ?? "",
+        dia: map['dia_value']as int?,
+        isManual: map['is_manuel']as bool? ?? false,
+        measurementId: map['measurement_id'] as int? ?? 0,
+        note: map['note']as String? ?? "",
+        pulse: map['pulse_value'] as int?,
+        sys: map['sys_value'] as int?,
       );
 
   Map<String, dynamic> toJson() => {
-        'occurrence_time': dateTime.toIso8601String(),
+        'occurrence_time': dateTime?.toIso8601String(),
         'device_uuid': deviceUUID,
         'dia_value': dia,
         'is_manuel': isManual,
@@ -63,8 +64,8 @@ class BloodPressureModel extends HiveObject {
   bool operator ==(Object other) {
     if (other is BloodPressureModel) {
       if (measurementId == null || other.measurementId == null) {
-        return dateTime.millisecondsSinceEpoch ==
-            dateTime.millisecondsSinceEpoch;
+        return dateTime?.millisecondsSinceEpoch ==
+            dateTime?.millisecondsSinceEpoch;
       } else {
         return measurementId == other.measurementId;
       }
@@ -78,7 +79,7 @@ class BloodPressureModel extends HiveObject {
   }
 
   BloodPressureModel copy() {
-    return BloodPressureModel.fromJson(jsonDecode(jsonEncode(this.toJson())));
+    return BloodPressureModel.fromJson(jsonDecode(jsonEncode(toJson()))as Map<String,dynamic>);
   }
 }
 
@@ -110,7 +111,7 @@ class BloodPressureModelAdapter extends TypeAdapter<BloodPressureModel> {
     writer
       ..writeByte(8)
       ..writeByte(0)
-      ..write(obj.dateTime.toIso8601String())
+      ..write(obj.dateTime?.toIso8601String())
       ..writeByte(1)
       ..write(obj.deviceUUID)
       ..writeByte(2)

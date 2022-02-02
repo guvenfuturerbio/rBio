@@ -73,20 +73,20 @@ class Person extends HiveObject {
   @HiveField(18)
   bool isFirstUser;
   @HiveField(18)
-  List<TreatmentModel> treatmentList;
+  List<TreatmentModel>? treatmentList;
 
   File profileImage = new File("");
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 
-  Map<String, dynamic> toJson({String treatment}) =>
+  Map<String, dynamic> toJson({required String treatment}) =>
       _$PersonToJson(this, treatment);
 
   Person fromDefault({
-    @required String name,
-    @required String lastName,
-    @required String birthDate,
-    @required String gender,
+    required String name,
+    required String lastName,
+    required String birthDate,
+    required String gender,
   }) {
     return Person(
         id: DateTime.now().millisecondsSinceEpoch,
@@ -134,10 +134,10 @@ class Person extends HiveObject {
       this.treatmentList});
 
   Person copy() {
-    final _json = toJson();
+    final _json = toJson(treatment: '');
     final _jsonEncode = jsonEncode(_json);
     final _jsonDecode = jsonDecode(_jsonEncode);
-    final person = Person.fromJson(_jsonDecode);
+    final person = Person.fromJson(_jsonDecode as Map<String, dynamic>);
     return person;
   }
 
@@ -146,7 +146,8 @@ class Person extends HiveObject {
       other is Person && other.userId == userId && other.id == id;
 
   bool isEqual(Person other) {
-    return jsonEncode(this.toJson()) == jsonEncode(other.toJson());
+    return jsonEncode(toJson(treatment: '')) ==
+        jsonEncode(other.toJson(treatment: ''));
   }
 
   @override
@@ -174,23 +175,23 @@ class Person extends HiveObject {
 }
 
 Person _$PersonFromJson(Map<String, dynamic> json) => Person(
-    id: json['entegration_id'],
-    imageURL: json['image_url'],
-    name: json['name'],
-    gender: json['gender'],
-    birthDate: json['birth_day'],
-    weight: json['weight'],
-    height: json['height'],
-    diabetesType: json['diabetes_type'],
-    rangeMin: json['range_min'],
-    rangeMax: json['range_max'],
-    hyper: json['hyper'],
-    hypo: json['hypo'],
-    target: json['target'],
-    userId: json['id'],
-    deviceUUID: json['device_uuid'],
-    manufacturerId: json['manufacturer_id'],
-    yearOfDiagnosis: json['year_of_diagnosis'],
+    id: json['entegration_id'] as int,
+    imageURL: json['image_url'] as String,
+    name: json['name'] as String,
+    gender: json['gender'] as String,
+    birthDate: json['birth_day'] as String,
+    weight: json['weight'] as String,
+    height: json['height'] as String,
+    diabetesType: json['diabetes_type'] as String,
+    rangeMin: json['range_min'] as int,
+    rangeMax: json['range_max'] as int,
+    hyper: json['hyper'] as int,
+    hypo: json['hypo'] as int,
+    target: json['target'] as int,
+    userId: json['id'] as int,
+    deviceUUID: json['device_uuid'] as String,
+    manufacturerId: json['manufacturer_id'] as int,
+    yearOfDiagnosis: json['year_of_diagnosis'] as int,
     smoker: json['smoker'] == null
         ? false
         : json['smoker'] == 0
@@ -203,7 +204,7 @@ Person _$PersonFromJson(Map<String, dynamic> json) => Person(
             : true,
     treatmentList: json['treatment_list'] != null
         ? (json['treatment_list'] as List)
-            .map((e) => TreatmentModel.fromJson(e))
+            .map((e) => TreatmentModel.fromJson(e as Map<String, dynamic>))
             .toList()
         : []);
 
@@ -247,28 +248,32 @@ class PersonAdapter extends TypeAdapter<Person> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Person(
-        id: fields[1] as int,
-        imageURL: fields[2] as String,
-        name: fields[3] as String,
-        gender: fields[5] as String,
-        birthDate: fields[4] as String,
-        weight: fields[7] as String,
-        height: fields[6] as String,
-        diabetesType: fields[8] as String,
-        rangeMin: fields[10] as int,
-        rangeMax: fields[12] as int,
-        hyper: fields[13] as int,
-        hypo: fields[9] as int,
-        target: fields[11] as int,
-        userId: fields[0] as int,
-        deviceUUID: fields[14] as String,
-        manufacturerId: fields[15] as int,
-        yearOfDiagnosis: fields[16] as int,
-        smoker: fields[17] as bool,
-        isFirstUser: fields[18] as bool,
-        treatmentList: (fields[19] as List<String>)
-            .map((e) => TreatmentModel.fromJson(jsonDecode(e)))
-            .toList());
+      id: fields[1] as int,
+      imageURL: fields[2] as String,
+      name: fields[3] as String,
+      gender: fields[5] as String,
+      birthDate: fields[4] as String,
+      weight: fields[7] as String,
+      height: fields[6] as String,
+      diabetesType: fields[8] as String,
+      rangeMin: fields[10] as int,
+      rangeMax: fields[12] as int,
+      hyper: fields[13] as int,
+      hypo: fields[9] as int,
+      target: fields[11] as int,
+      userId: fields[0] as int,
+      deviceUUID: fields[14] as String,
+      manufacturerId: fields[15] as int,
+      yearOfDiagnosis: fields[16] as int,
+      smoker: fields[17] as bool,
+      isFirstUser: fields[18] as bool,
+      treatmentList: (fields[19] as List<String>)
+          .map(
+            (e) =>
+                TreatmentModel.fromJson(jsonDecode(e) as Map<String, dynamic>),
+          )
+          .toList(),
+    );
   }
 
   @override
@@ -314,7 +319,7 @@ class PersonAdapter extends TypeAdapter<Person> {
       ..writeByte(18)
       ..write(obj.isFirstUser)
       ..writeByte(19)
-      ..write(obj.treatmentList.map((e) => jsonEncode(e.toJson())).toList());
+      ..write(obj.treatmentList?.map((e) => jsonEncode(e.toJson())).toList());
   }
 
   @override

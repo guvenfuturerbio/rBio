@@ -8,20 +8,20 @@ import '../core.dart';
 
 @HiveType(typeId: 0)
 class GlucoseData extends HiveObject {
-  static final LEVEL = "level";
-  static final TAG = "tag"; // -1, 0, 1, 2, 3
-  static final NOTE = "note";
-  static final TIME = "time";
-  static final DEVICE = "device"; // Accu-Chek = 0 ; Contour Plus = 1;
-  static final MANUAL =
+  static const LEVEL = "level";
+  static const TAG = "tag"; // -1, 0, 1, 2, 3
+  static const NOTE = "note";
+  static const TIME = "time";
+  static const DEVICE = "device"; // Accu-Chek = 0 ; Contour Plus = 1;
+  static const MANUAL =
       "manual"; // If data is manually entered the field is true, otherwise it's false
-  static final DEVICE_NAME = "device_name";
-  static final DEVICE_UUID = "device_uuid";
-  static final IMAGE_URL = "image_url";
-  static final IS_DELETED = "is_deleted";
-  static final USER_ID = "user_id";
-  static final TABLE = "glucose";
-  static final MEASUREMENT_ID = "id";
+  static const DEVICE_NAME = "device_name";
+  static const DEVICE_UUID = "device_uuid";
+  static const IMAGE_URL = "image_url";
+  static const IS_DELETED = "is_deleted";
+  static const USER_ID = "user_id";
+  static const TABLE = "glucose";
+  static const MEASUREMENT_ID = "id";
 
   @HiveField(0)
   int measurementId;
@@ -53,68 +53,72 @@ class GlucoseData extends HiveObject {
   Color get color =>
       UtilityManager().getGlucoseMeasurementColor(int.parse(level));
 
-  GlucoseData(
-      {this.level,
-      this.tag,
-      this.note,
-      this.time,
-      this.device,
-      this.manual = false,
-      this.deviceUUID = "",
-      this.deviceName = "",
-      this.imageURL = "",
-      this.isDeleted = false,
-      this.userId,
-      this.measurementId});
+  GlucoseData({
+    required this.level,
+    required this.tag,
+    required this.note,
+    required this.time,
+    required this.device,
+    this.manual = false,
+    this.deviceUUID = "",
+    this.deviceName = "",
+    this.imageURL = "",
+    this.isDeleted = false,
+    required this.userId,
+    required this.measurementId,
+  });
 
   GlucoseData fromGlucoseData(GlucoseData glucoseData) {
-    return new GlucoseData(
-        level: glucoseData.level,
-        tag: glucoseData.tag,
-        note: glucoseData.note,
-        time: glucoseData.time,
-        device: glucoseData.device,
-        manual: glucoseData.manual,
-        deviceName: glucoseData.deviceName,
-        deviceUUID: glucoseData.deviceUUID,
-        imageURL: glucoseData.imageURL,
-        isDeleted: glucoseData.isDeleted,
-        userId: glucoseData.userId,
-        measurementId: glucoseData.measurementId);
+    return GlucoseData(
+      level: glucoseData.level,
+      tag: glucoseData.tag,
+      note: glucoseData.note,
+      time: glucoseData.time,
+      device: glucoseData.device,
+      manual: glucoseData.manual,
+      deviceName: glucoseData.deviceName,
+      deviceUUID: glucoseData.deviceUUID,
+      imageURL: glucoseData.imageURL,
+      isDeleted: glucoseData.isDeleted,
+      userId: glucoseData.userId,
+      measurementId: glucoseData.measurementId,
+    );
   }
 
   GlucoseData copy() {
-    return GlucoseData.fromMap(jsonDecode(jsonEncode(this.toMap())));
+    return GlucoseData.fromMap(jsonDecode(jsonEncode(toMap()))as Map<String,dynamic>);
   }
 
   factory GlucoseData.fromMap(Map map) => GlucoseData(
-      level: map[LEVEL],
-      tag: map[TAG],
-      note: map[NOTE],
-      time: map[TIME],
-      device: map[DEVICE],
-      manual: map[MANUAL] == 0 ? false : true,
-      deviceName: map[DEVICE_NAME],
-      deviceUUID: map[DEVICE_UUID],
-      imageURL: map[IMAGE_URL],
-      isDeleted: map[IS_DELETED] == 0 ? false : true,
-      userId: map[USER_ID],
-      measurementId: map[MEASUREMENT_ID]);
+        level: map[LEVEL] as String,
+        tag: map[TAG] as int,
+        note: map[NOTE] as String,
+        time: map[TIME] as int,
+        device: map[DEVICE] as int,
+        manual: map[MANUAL] == 0 ? false : true,
+        deviceName: map[DEVICE_NAME] as String,
+        deviceUUID: map[DEVICE_UUID] as String,
+        imageURL: map[IMAGE_URL] as String,
+        isDeleted: map[IS_DELETED] == 0 ? false : true,
+        userId: map[USER_ID] as int,
+        measurementId: map[MEASUREMENT_ID] as int,
+      );
 
   GlucoseData fromMap(Map map) {
     return GlucoseData(
-        level: map[LEVEL],
-        tag: map[TAG],
-        note: map[NOTE],
-        time: map[TIME],
-        device: map[DEVICE],
-        manual: map[MANUAL] == 0 ? false : true,
-        deviceName: map[DEVICE_NAME],
-        deviceUUID: map[DEVICE_UUID],
-        imageURL: map[IMAGE_URL],
-        isDeleted: map[IS_DELETED] == 0 ? false : true,
-        userId: map[USER_ID],
-        measurementId: map[MEASUREMENT_ID]);
+      level: map[LEVEL] as String,
+      tag: map[TAG] as int,
+      note: map[NOTE] as String,
+      time: map[TIME] as int,
+      device: map[DEVICE] as int,
+      manual: map[MANUAL] == 0 ? false : true,
+      deviceName: map[DEVICE_NAME] as String,
+      deviceUUID: map[DEVICE_UUID] as String,
+      imageURL: map[IMAGE_URL] as String,
+      isDeleted: map[IS_DELETED] == 0 ? false : true,
+      userId: map[USER_ID] as int,
+      measurementId: map[MEASUREMENT_ID] as int,
+    );
   }
 
   Map<String, dynamic> toMap() {

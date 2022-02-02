@@ -41,90 +41,90 @@ class ScaleModel extends HiveObject {
   static final String IS_DELETED = 'is_deleted';
 
   /// Value is `true` if the weight has stabilized.
-  final bool weightStabilized;
+  bool? weightStabilized;
 
   /// Value is `true` if the device is done measuring.
   /// This value is usually given after other measurements (such as body fat) have been completed as well.
-  final bool measurementComplete;
+  bool? measurementComplete;
 
   /// Value is `true` if there is no weight detected.
-  final bool weightRemoved;
+  bool? weightRemoved;
 
   /// ID of the device this data was parsed from.
 
   @HiveField(0)
-  final Map<String, dynamic> device;
+  Map<String, dynamic>? device;
 
   @HiveField(1)
-  double weight;
+  double? weight;
 
   /// The currently configured weight unit on the device.
   @HiveField(2)
-  final ScaleUnit unit;
+  final ScaleUnit? unit;
 
   /// Body Index Variables
   /// This variable calculating after measurement complete.
   @HiveField(3)
-  double bmi;
+  double? bmi;
   @HiveField(4)
-  double water;
+  double? water;
   @HiveField(5)
-  double bodyFat;
+  double? bodyFat;
   @HiveField(6)
-  double visceralFat;
+  double? visceralFat;
   @HiveField(7)
-  double boneMass;
+  double? boneMass;
   @HiveField(8)
-  double muscle;
+  double? muscle;
   @HiveField(9)
-  double bmh;
+  double? bmh;
 
   /// This variable giving the data has deleted on db
   @HiveField(10)
-  bool isDeleted;
+  bool? isDeleted;
 
   /// User optinally can add the note related this measurements
   @HiveField(11)
-  String note;
+  String? note;
 
   /// User can add manualy own weight but taken as a default value [false]
   @HiveField(12)
-  bool isManuel;
+  bool? isManuel;
 
   /// Image variable holding only path/url data for the scale not required.
   /// The variable length must be <=3,
   /// When trying to parse this stuation must be handeled
   @HiveField(13)
-  List<String> images = [];
+  List<String>? images = [];
 
   /// Data will use calculate BMI Body Mass etc.
   @HiveField(14)
-  int impedance;
+  int? impedance;
 
   /// This variables taken by user information.
   /// required for calculating other variable
   @HiveField(15)
-  int height;
+  int? height;
   @HiveField(16)
-  int gender;
+  int? gender;
   @HiveField(17)
-  int age;
+  int? age;
 
   /// Each scale measurement must have a unic id. We are giving this value as a [dateTime.milisecondsSinceEpoch(dateTime)]
   @HiveField(18)
-  int time;
+  int? time;
 
   /// The timestamp given by the device.
   ///
   /// Note that this value must only be considered valid if [weightRemoved] is `false` and [weightStabilized] is `true`.
   /// This can also be checked by calling [dateTimeValid]
   @HiveField(19)
-  DateTime dateTime;
+  DateTime? dateTime;
 
   /// this value provided by server.
   /// So can be return null.
   @HiveField(20)
-  int measurementId;
+  int? measurementId;
 
   bool get dateTimeValid => weightStabilized && !weightRemoved;
 
@@ -161,10 +161,9 @@ class ScaleModel extends HiveObject {
         : 0;
     height = int.parse(getIt<ProfileStorageImpl>().getFirst().height);
 
-    List<String> nums =
-        getIt<ProfileStorageImpl>().getFirst()?.birthDate == null
-            ? null
-            : getIt<ProfileStorageImpl>().getFirst()?.birthDate?.split(".");
+    List<String> nums = getIt<ProfileStorageImpl>().getFirst().birthDate == null
+        ? null
+        : getIt<ProfileStorageImpl>().getFirst().birthDate.split(".");
     var yearOfBirth = nums == null ? 2021 : int.parse(nums[2]);
 
     age = DateTime.now().year - yearOfBirth < 15
@@ -175,23 +174,27 @@ class ScaleModel extends HiveObject {
   @override
   factory ScaleModel.fromMap(Map map) {
     return ScaleModel(
-        device: map[DEVICE] == null ? null : jsonDecode(map[DEVICE]),
-        time: map[TIME] ??
-            DateTime.parse(map['occurrence_time']).millisecondsSinceEpoch,
-        weight: map[WEIGHT],
+        device: map[DEVICE] == null
+            ? null
+            : jsonDecode(map[DEVICE] as String) as Map<String, dynamic>,
+        time: map[TIME] as int? ??
+            DateTime.parse(map['occurrence_time'] as String)
+                .millisecondsSinceEpoch,
+        weight: map[WEIGHT] as double?,
         unit: (map[SCALE_UNIT] as String).fromStr,
         isManuel: map[MANUEL] == 0 ? false : true,
         images: map[IMAGES] == null ? [] : (map[IMAGES] as List).cast<String>(),
-        note: map[NOTE],
-        water: map[WATER],
-        bmi: map[BMI],
-        bodyFat: map[BODY_FAT],
-        boneMass: map[BONE_MASS],
-        muscle: map[MUSCLE],
-        measurementId: map[MEASUREMENT_ID],
-        visceralFat: map[VISCERAL_FAT],
+        note: map[NOTE] as String?,
+        water: map[WATER] as double?,
+        bmi: map[BMI] as double?,
+        bodyFat: map[BODY_FAT] as double?,
+        boneMass: map[BONE_MASS] as double?,
+        muscle: map[MUSCLE] as double?,
+        measurementId: map[MEASUREMENT_ID] as int?,
+        visceralFat: map[VISCERAL_FAT] as double?,
         isDeleted: map[IS_DELETED] == 0 ? false : true,
-        dateTime: DateTime.parse(map[DATE_TIME] ?? map['occurrence_time']));
+        dateTime:
+            DateTime.parse(map[DATE_TIME] as int? ?? map['occurrence_time']));
   }
 
   @override
@@ -235,35 +238,38 @@ class ScaleModel extends HiveObject {
   }
 
   ScaleModel copy() {
-    return ScaleModel.fromMap(jsonDecode(jsonEncode(this.toMap())));
+    return ScaleModel.fromMap(jsonDecode(jsonEncode(this.toMap()));
   }
 
   ScaleModel fromMap(Map map) => ScaleModel(
-      device: jsonDecode(map[DEVICE]),
-      time: map[TIME],
-      weight: map[WEIGHT],
-      unit: map[SCALE_UNIT],
-      isManuel: map[MANUEL] == 0 ? false : true,
-      images: (map[IMAGES] as List).cast<String>(),
-      note: map[NOTE],
-      water: map[WATER],
-      bmi: map[BMI],
-      bmh: map['bmh'],
-      bodyFat: map[BODY_FAT],
-      boneMass: map[BONE_MASS],
-      muscle: map[MUSCLE],
-      measurementId: map[MEASUREMENT_ID],
-      visceralFat: map[VISCERAL_FAT],
-      isDeleted: map[IS_DELETED] == 0 ? false : true,
-      dateTime: DateTime.parse(map[DATE_TIME]));
+        device: jsonDecode(map[DEVICE] as String) as Map<String, dynamic>,
+        time: map[TIME] as int?,
+        weight: map[WEIGHT] as double?,
+        unit: map[SCALE_UNIT] as ScaleUnit?,
+        isManuel: map[MANUEL] == 0 ? false : true,
+        images: (map[IMAGES] as List).cast<String>(),
+        note: map[NOTE] as String?,
+        water: map[WATER] as double?,
+        bmi: map[BMI] as double?,
+        bmh: map['bmh'] as double?,
+        bodyFat: map[BODY_FAT] as double?,
+        boneMass: map[BONE_MASS] as double?,
+        muscle: map[MUSCLE] as double?,
+        measurementId: map[MEASUREMENT_ID] as int?,
+        visceralFat: map[VISCERAL_FAT] as double?,
+        isDeleted: map[IS_DELETED] == 0 ? false : true,
+        dateTime: DateTime.parse(
+          map[DATE_TIME] as String,
+        ),
+      );
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       DEVICE: device == null ? null : jsonEncode(device),
       TIME: time,
       WEIGHT: weight,
-      SCALE_UNIT: unit.toStr,
-      MANUEL: isManuel ? 1 : 0,
+      SCALE_UNIT: unit?.toStr,
+      MANUEL: isManuel ?? false ? 1 : 0,
       IMAGES: images,
       NOTE: note,
       WATER: water,
@@ -274,9 +280,9 @@ class ScaleModel extends HiveObject {
       HEIGHT: height,
       MEASUREMENT_ID: measurementId,
       VISCERAL_FAT: visceralFat,
-      IS_DELETED: isDeleted ? 1 : 0,
+      IS_DELETED: isDeleted ?? false ? 1 : 0,
       USER_ID: 0,
-      DATE_TIME: dateTime.toIso8601String(),
+      DATE_TIME: dateTime?.toIso8601String(),
     };
   }
 
@@ -327,7 +333,7 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
     };
     print(fields);
     return ScaleModel(
-      device: jsonDecode(fields[0] as String),
+      device: jsonDecode(fields[0] as String) as Map<String, dynamic>,
       weight: fields[1] as double,
       unit: (fields[2] as String).fromStr,
       dateTime: DateTime.parse(fields[19] as String),
@@ -360,7 +366,7 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
       ..writeByte(1)
       ..write(obj.weight)
       ..writeByte(2)
-      ..write(obj.unit.toStr)
+      ..write(obj.unit?.toStr)
       ..writeByte(3)
       ..write(obj.bmi)
       ..writeByte(4)
@@ -394,7 +400,7 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
       ..writeByte(18)
       ..write(obj.time)
       ..writeByte(19)
-      ..write(obj.dateTime.toIso8601String())
+      ..write(obj.dateTime?.toIso8601String())
       ..writeByte(20)
       ..write(obj.measurementId);
   }

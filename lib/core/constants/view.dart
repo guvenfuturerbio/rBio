@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 part of 'constants.dart';
 
 class GuvenColors {
@@ -13,15 +15,15 @@ class GuvenColors {
 }
 
 class _Sizes {
-  double _mobilePadding = 12;
-  double _tabletPadding = 24;
-  double _desktopPadding = 48;
+  final double _mobilePadding = 12;
+  final double _tabletPadding = 24;
+  final double _desktopPadding = 48;
 
   T screenHandler<T>(
     BuildContext context, {
-    @required T mobile,
-    @required T tablet,
-    @required T desktop,
+    required T mobile,
+    required T tablet,
+    required T desktop,
   }) {
     final width = MediaQuery.of(context).size.width;
     if (width < 576) {
@@ -35,9 +37,9 @@ class _Sizes {
 
   T textScaleHandler<T>(
     BuildContext context, {
-    @required T small,
-    @required T medium,
-    @required T large,
+    required T small,
+    required T medium,
+    required T large,
   }) {
     final textScale = context.xTextScaleType;
     switch (textScale) {
@@ -49,15 +51,15 @@ class _Sizes {
 
       case TextScaleType.Large:
         return large;
+      default:
+        return small;
     }
-
-    return small;
   }
 
   Widget textScaleBuilder(
     BuildContext context, {
-    @required Widget smallWidget,
-    @required Widget largeWidget,
+    required Widget smallWidget,
+    required Widget largeWidget,
   }) =>
       context.xTextScaleType == TextScaleType.Small ? smallWidget : largeWidget;
 
@@ -90,27 +92,27 @@ class _Sizes {
       SizedBox(height: 54 + MediaQuery.of(context).viewPadding.top);
   final double bottomNavigationBarHeight = Atom.safeBottom + 56;
 
-  final Widget hSizer4 = SizedBox(height: 4);
-  final Widget hSizer8 = SizedBox(height: 8);
-  final Widget hSizer12 = SizedBox(height: 12);
-  final Widget hSizer16 = SizedBox(height: 16);
-  final Widget hSizer20 = SizedBox(height: 20);
-  final Widget hSizer24 = SizedBox(height: 24);
-  final Widget hSizer28 = SizedBox(height: 28);
-  final Widget hSizer32 = SizedBox(height: 32);
-  final Widget hSizer36 = SizedBox(height: 36);
-  final Widget hSizer40 = SizedBox(height: 40);
+  final Widget hSizer4 = const SizedBox(height: 4);
+  final Widget hSizer8 = const SizedBox(height: 8);
+  final Widget hSizer12 = const SizedBox(height: 12);
+  final Widget hSizer16 = const SizedBox(height: 16);
+  final Widget hSizer20 = const SizedBox(height: 20);
+  final Widget hSizer24 = const SizedBox(height: 24);
+  final Widget hSizer28 = const SizedBox(height: 28);
+  final Widget hSizer32 = const SizedBox(height: 32);
+  final Widget hSizer36 = const SizedBox(height: 36);
+  final Widget hSizer40 = const SizedBox(height: 40);
 
-  final Widget wSizer4 = SizedBox(width: 4);
-  final Widget wSizer8 = SizedBox(width: 8);
-  final Widget wSizer12 = SizedBox(width: 12);
-  final Widget wSizer16 = SizedBox(width: 16);
-  final Widget wSizer20 = SizedBox(width: 20);
-  final Widget wSizer24 = SizedBox(width: 24);
-  final Widget wSizer28 = SizedBox(width: 28);
-  final Widget wSizer32 = SizedBox(width: 32);
-  final Widget wSizer36 = SizedBox(width: 36);
-  final Widget wSizer40 = SizedBox(width: 40);
+  final Widget wSizer4 = const SizedBox(width: 4);
+  final Widget wSizer8 = const SizedBox(width: 8);
+  final Widget wSizer12 = const SizedBox(width: 12);
+  final Widget wSizer16 = const SizedBox(width: 16);
+  final Widget wSizer20 = const SizedBox(width: 20);
+  final Widget wSizer24 = const SizedBox(width: 24);
+  final Widget wSizer28 = const SizedBox(width: 28);
+  final Widget wSizer32 = const SizedBox(width: 32);
+  final Widget wSizer36 = const SizedBox(width: 36);
+  final Widget wSizer40 = const SizedBox(width: 40);
 
   // BorderRadius
   final BorderRadiusGeometry borderRadiusCircular = BorderRadius.circular(12);
@@ -124,60 +126,60 @@ class _Sizes {
 }
 
 class _Color {
-  final gray = Color(0xFF969696);
-  final grey = Color(0xFF696969);
-  final black = Color(0xFF131313);
-  final white = Color(0xFFFFFFFF);
-  final dark_black = Color(0xFF000000);
+  final gray = const Color(0xFF969696);
+  final grey = const Color(0xFF696969);
+  final black = const Color(0xFF131313);
+  final white = const Color(0xFFFFFFFF);
+  final dark_black = const Color(0xFF000000);
   final blue = getIt<ITheme>().mainColor; // Color(0xFFC74852);
-  final light_blue = Color(0xFFE18B94);
-  final dark_blue = Color(0xFF862634);
-  final dark_white = Color(0xFFE5E5E5);
-  final online_appointment = Color(0xFF100A9F);
-  final light_online_appointment = Color(0xFF648DE5);
-  final online_appointment_text = Color(0xFFFFFFFF);
-  final ayranci = Color(0xFF63C1B8);
-  final light_ayranci = Color(0xFFB7DBD8);
-  final ayranci_text = Color(0xFF000000);
-  final cayyolu = Color(0xFFFF6F59);
-  final light_cayyolu = Color(0xFFF0B7AB);
-  final cayyolu_text = Color(0xFFFFFFFF);
-  final danisma = Color(0xff65c0b8);
-  final danisma_light = Color(0xffafdfdb);
+  final light_blue = const Color(0xFFE18B94);
+  final dark_blue = const Color(0xFF862634);
+  final dark_white = const Color(0xFFE5E5E5);
+  final online_appointment = const Color(0xFF100A9F);
+  final light_online_appointment = const Color(0xFF648DE5);
+  final online_appointment_text = const Color(0xFFFFFFFF);
+  final ayranci = const Color(0xFF63C1B8);
+  final light_ayranci = const Color(0xFFB7DBD8);
+  final ayranci_text = const Color(0xFF000000);
+  final cayyolu = const Color(0xFFFF6F59);
+  final light_cayyolu = const Color(0xFFF0B7AB);
+  final cayyolu_text = const Color(0xFFFFFFFF);
+  final danisma = const Color(0xff65c0b8);
+  final danisma_light = const Color(0xffafdfdb);
 
-  final text = Color(0xFF333333);
-  final title = Color(0xFFa5a5a5);
-  final mainColor = Color.fromRGBO(37, 48, 133, 1);
-  final graphRangeColor = Color(0xFFCBEBD9);
-  final btnDarkBlue = Color.fromRGBO(37, 48, 133, 1);
-  final btnLightBlue = Color.fromRGBO(0, 0, 255, 1);
+  final text = const Color(0xFF333333);
+  final title = const Color(0xFFa5a5a5);
+  final mainColor = const Color.fromRGBO(37, 48, 133, 1);
+  final graphRangeColor = const Color(0xFFCBEBD9);
+  final btnDarkBlue = const Color.fromRGBO(37, 48, 133, 1);
+  final btnLightBlue = const Color.fromRGBO(0, 0, 255, 1);
 
   // from OneDoseRepo
-  final very_high = Color(0xFFf4bb44);
-  final high = Color(0xFFf7ec57);
-  final target = Color(0xFF66c791);
-  final low = Color(0xFFe98884);
-  final very_low = Color(0xFFe2605b);
-  final graph_plot_range = Color(0xFFCBEBD9);
-  final state_color = Color(0xFF7a7a7a);
-  final defaultBlue = Color.fromRGBO(0, 104, 255, 1);
-  final light_dark_blue = Color.fromRGBO(0, 0, 255, 1);
-  final background = Color(0xFFF0F0F0);
-  final green_dashboard = Color(0xFFc2e9d1);
-  final color = Color.fromRGBO(51, 51, 51, 1);
-  final main_color = Color.fromRGBO(37, 48, 133, 1);
-  final border_color = Color.fromRGBO(51, 51, 51, 1);
-  final bg_gray = Color(0xFFF3F3F3);
-  final chart_gray = Color(0xffDDDEDE);
-  final darkBlue = Color.fromRGBO(37, 48, 133, 1);
-  final backgroundColor = Color.fromRGBO(240, 240, 240, 1);
-  final darkYellow = Color.fromRGBO(255, 182, 0, 1);
-  final lightYellow = Color.fromRGBO(255, 220, 133, 1);
-  final circleBlue = Color.fromRGBO(133, 214, 255, 1);
-  final darkRed = Color.fromRGBO(219, 56, 50, 1);
-  final lightRed = Color.fromRGBO(232, 128, 124, 1);
-  final drawerBgLightBlue = Color.fromRGBO(133, 214, 255, 1);
-  final regularBlue = Color.fromRGBO(0, 104, 255, 1);
+  final very_high = const Color(0xFFf4bb44);
+  final high = const Color(0xFFf7ec57);
+  final target = const Color(0xFF66c791);
+  final low = const Color(0xFFe98884);
+  final very_low = const Color(0xFFe2605b);
+  final graph_plot_range = const Color(0xFFCBEBD9);
+  final state_color = const Color(0xFF7a7a7a);
+  final defaultBlue = const Color.fromRGBO(0, 104, 255, 1);
+  final light_dark_blue = const Color.fromRGBO(0, 0, 255, 1);
+  final background = const Color(0xFFF0F0F0);
+  final green_dashboard = const Color(0xFFc2e9d1);
+  final color = const Color.fromRGBO(51, 51, 51, 1);
+  final main_color = const Color.fromRGBO(37, 48, 133, 1);
+  final border_color = const Color.fromRGBO(51, 51, 51, 1);
+  final bg_gray = const Color(0xFFF3F3F3);
+  final chart_gray = const Color(0xffDDDEDE);
+  final darkBlue = const Color.fromRGBO(37, 48, 133, 1);
+  final backgroundColor = const Color.fromRGBO(240, 240, 240, 1);
+  final darkYellow = const Color.fromRGBO(255, 182, 0, 1);
+  final lightYellow = const Color.fromRGBO(255, 220, 133, 1);
+  final circleBlue = const Color.fromRGBO(133, 214, 255, 1);
+  final darkRed = const Color.fromRGBO(219, 56, 50, 1);
+  final lightRed = const Color.fromRGBO(232, 128, 124, 1);
+  final drawerBgLightBlue = const Color.fromRGBO(133, 214, 255, 1);
+  final regularBlue = const Color.fromRGBO(0, 104, 255, 1);
 
-  final darkGreen = Color.fromRGBO(255, 102, 198, 143);
+  final darkGreen = const Color.fromRGBO(255, 102, 198, 143);
 }

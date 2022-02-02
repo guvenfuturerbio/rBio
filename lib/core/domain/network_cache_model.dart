@@ -8,9 +8,9 @@ class NetworkCacheModel extends IBaseModel<NetworkCacheModel> {
   String appVersion;
 
   NetworkCacheModel({
-    this.data,
-    @required this.expirationTime,
-    @required this.appVersion,
+    required this.data,
+    required this.expirationTime,
+    required this.appVersion,
   });
 
   factory NetworkCacheModel.fromJson(Map<String, dynamic> json) =>

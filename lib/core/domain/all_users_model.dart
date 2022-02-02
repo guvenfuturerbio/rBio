@@ -3,16 +3,17 @@ import '../core.dart';
 // Cihaz üzerinde uygulamaya giriş yapan tüm kullanıcıları tuttuğumuz model.
 // Her kullanıcının home widget listesini saklıyoruz.
 class AllUsersModel extends IBaseModel<AllUsersModel> {
-  List<String> useWidgets;
+  late List<String> useWidgets;
 
   AllUsersModel({
-    this.useWidgets,
+    required this.useWidgets,
   });
 
   AllUsersModel.fromJson(Map<String, dynamic> json) {
-    useWidgets = json['useWidgets'].cast<String>();
+    useWidgets = json['useWidgets'] as List<String>;
   }
 
+  @override
   Map<String, dynamic> toJson() => <String, dynamic>{
         'useWidgets': useWidgets,
       };
