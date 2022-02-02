@@ -27,7 +27,7 @@ enum SharedPreferencesKeys {
 }
 
 extension SharedPreferencesKeysStringExt on String {
-  SharedPreferencesKeys get xSharedKeys => SharedPreferencesKeys.values
+  SharedPreferencesKeys? get xSharedKeys => SharedPreferencesKeys.values
       .firstWhereOrNull((element) => element.xRawValue == this);
 }
 

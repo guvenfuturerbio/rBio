@@ -56,7 +56,7 @@ class DoctorPatientListVm extends RbioVm {
   // #region _getAllByType
   Future<PatientListModel<dynamic>> _getAllByType() async {
     switch (type) {
-      case PatientType.Sugar:
+      case PatientType.sugar:
         {
           return PatientBloodGlucoseListModel(
             mContext,

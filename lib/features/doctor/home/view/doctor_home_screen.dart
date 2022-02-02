@@ -38,7 +38,7 @@ class DoctorHomeScreen extends StatelessWidget {
             Atom.to(
               PagePaths.DOCTOR_PATIENT_LIST,
               queryParameters: {
-                'type': PatientType.Sugar.xRawValue,
+                'type': PatientType.sugar.xRawValue,
               },
             );
           },
