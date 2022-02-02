@@ -21,7 +21,7 @@ class ThemeNotifier extends ChangeNotifier {
     if (sharedTextScale != null) {
       textScale = sharedTextScale.xTextScaleKeys;
     } else {
-      textScale = TextScaleType.Small;
+      textScale = TextScaleType.small;
     }
 
     getIt.registerSingleton<ITheme>(theme);

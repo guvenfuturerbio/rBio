@@ -3,12 +3,12 @@ import 'package:collection/collection.dart';
 import '../core.dart';
 
 enum ThemeType {
-  Green,
-  Burgundy,
+  green,
+  burgundy,
 }
 
 extension ThemeTypeStringExt on String {
-  ThemeType get xTheme =>
+  ThemeType? get xTheme =>
       ThemeType.values.firstWhereOrNull((element) => element.xRawValue == this);
 }
 
@@ -17,10 +17,10 @@ extension ThemeTypeExt on ThemeType {
 
   ITheme get xGetTheme {
     switch (this) {
-      case ThemeType.Green:
+      case ThemeType.green:
         return GreenTheme();
 
-      case ThemeType.Burgundy:
+      case ThemeType.burgundy:
         return BurgundyTheme();
 
       default:

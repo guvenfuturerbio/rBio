@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AnimatedFadedWidget extends StatefulWidget {
   final Widget child;
 
-  const AnimatedFadedWidget({Key key, this.child}) : super(key: key);
+  const AnimatedFadedWidget({Key? key, required this.child}) : super(key: key);
 
   @override
   _AnimatedFadedWidgetState createState() => _AnimatedFadedWidgetState();
@@ -14,7 +14,7 @@ class AnimatedFadedWidget extends StatefulWidget {
 
 class _AnimatedFadedWidgetState extends State<AnimatedFadedWidget> {
   bool isShow = false;
-  Timer timer;
+  Timer? timer;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _AnimatedFadedWidgetState extends State<AnimatedFadedWidget> {
 
   @override
   void dispose() {
-    timer.cancel();
+    timer?.cancel();
     super.dispose();
   }
 
