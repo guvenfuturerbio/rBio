@@ -1,3 +1,5 @@
+import 'package:onedosehealth/core/exception/model_cast_exception.dart';
+
 import '../../core/core.dart';
 
 class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
@@ -28,5 +30,14 @@ class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
     data['message'] = message;
     data['datum'] = datum;
     return data;
+  }
+}
+
+extension MapCast on GuvenResponseModel {
+  Map<String, dynamic> get xGetMap {
+    if (datum is Map<String, dynamic>) {
+      return datum as Map<String, dynamic>;
+    }
+    throw RbioModelCastException("Model cast exception");
   }
 }

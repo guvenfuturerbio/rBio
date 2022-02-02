@@ -4,8 +4,8 @@ class ApiServiceImpl extends ApiService {
   final IDioHelper helper;
   ApiServiceImpl(this.helper) : super(helper);
 
-  String get getToken =>
-      getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.JWT_TOKEN);
+  String? get getToken =>
+      getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.JWT_TOKEN);
   Options get authOptions => Options(
       headers: {'Authorization': getToken, 'Lang': Intl.getCurrentLocale()});
   Options get emptyAuthOptions =>
@@ -20,8 +20,8 @@ class ApiServiceImpl extends ApiService {
     final response = await helper.postGuven(
         R.endpoints.loginPath, <String, dynamic>{},
         queryParameters: {'userName': username, 'password': password});
-    if (response.isSuccessful) {
-      return RbioLoginResponse.fromJson(response.datum);
+    if (response.isSuccessful??false) {
+      return RbioLoginResponse.fromJson(response.xGetMap);
     } else {
       throw Exception('/login : ${response.isSuccessful}');
     }
@@ -30,7 +30,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<List<ForYouCategoryResponse>> getAllPackage(String path) async {
     final response = await helper.getGuven(path, options: authOptions);
-    if (response.isSuccessful) {
+    if (response.isSuccessful?? false) {
       final result = response.datum
           .map((item) => ForYouCategoryResponse.fromJson(item))
           .cast<ForYouCategoryResponse>()

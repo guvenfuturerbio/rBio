@@ -35,9 +35,11 @@ abstract class ApiService {
   Future<GuvenResponseModel> registerStep2WithOutTc(
       UserRegistrationStep2Model userRegistrationStep2);
   Future<GuvenResponseModel> registerStep3Ui(
-      UserRegistrationStep3Model userRegistrationStep3);
+    UserRegistrationStep3Model userRegistrationStep3,
+  );
   Future<GuvenResponseModel> registerStep3WithOutTc(
-      UserRegistrationStep3Model userRegistrationStep3);
+    UserRegistrationStep3Model userRegistrationStep3,
+  );
   Future<GuvenResponseModel> updateUserSystemName(String identityNumber);
   Future<UserAccount> getUserProfile();
   Future<Map<String, dynamic>> getActiveStream();
@@ -45,27 +47,37 @@ abstract class ApiService {
   Future<ApplicationVersionResponse> getCurrentApplicationVersion();
   Future<PatientResponse> getPatientDetail(String url);
   Future<List<BannerTabsModel>> getBannerTab(
-      String applicationName, String groupName);
+    String applicationName,
+    String groupName,
+  );
   //
   Future<List<FilterTenantsResponse>> filterTenants(
-      String path, FilterTenantsRequest filterTenantsRequest);
+    String path,
+    FilterTenantsRequest filterTenantsRequest,
+  );
   Future<List<FilterDepartmentsResponse>> filterDepartments(
-      FilterDepartmentsRequest filterDepartmentsRequest);
+    FilterDepartmentsRequest filterDepartmentsRequest,
+  );
   Future<List<FilterResourcesResponse>> filterResources(
-      FilterResourcesRequest filterResourcesRequest);
+    FilterResourcesRequest filterResourcesRequest,
+  );
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID);
   Future<List<GetEventsResponse>> getEvents(GetEventsRequest getEventsRequest);
   Future<List<GetEventsResponse>> findResourceClosestAvailablePlan(
-      ResourceForAvailablePlanRequest resourceForAvailablePlanRequest);
+    ResourceForAvailablePlanRequest resourceForAvailablePlanRequest,
+  );
   Future<int> saveAppointment(AppointmentRequest appointmentRequest);
   Future<List<AvailableDate>> findResourceAvailableDays(
-      FindResourceAvailableDaysRequest findResourceAvailableDaysRequest);
+    FindResourceAvailableDaysRequest findResourceAvailableDaysRequest,
+  );
   //
   Future<PatientRelativeInfoResponse> getAllRelatives(
-      GetAllRelativesRequest bodyPages);
+    GetAllRelativesRequest bodyPages,
+  );
   Future<GuvenResponseModel> getCountries();
   Future<GuvenResponseModel> forgotPasswordUi(
-      UserRegistrationStep1Model userRegistrationStep1);
+    UserRegistrationStep1Model userRegistrationStep1,
+  );
   Future<GuvenResponseModel> changePasswordUi(
       ChangePasswordModel changePasswordModel);
   Future<GuvenResponseModel> updateContactInfo(
