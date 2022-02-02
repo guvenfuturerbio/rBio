@@ -3,13 +3,13 @@ import 'package:collection/collection.dart';
 import '../core.dart';
 
 enum PatientType {
-  Sugar,
+  sugar,
   BMI,
   Bp,
 }
 
 extension PatientTypeStringExt on String {
-  PatientType get xPatientType => PatientType.values
+  PatientType? get xPatientType => PatientType.values
       .firstWhereOrNull((element) => element.xRawValue == this);
 }
 

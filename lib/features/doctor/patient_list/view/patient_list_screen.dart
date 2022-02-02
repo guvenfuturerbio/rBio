@@ -595,7 +595,7 @@ class DoctorPatientListScreen extends StatelessWidget {
       return LocaleProvider.current.blood_pressure_tracking;
     } else if (type == PatientType.BMI) {
       return LocaleProvider.current.bmi_tracking;
-    } else if (type == PatientType.Sugar) {
+    } else if (type == PatientType.sugar) {
       return LocaleProvider.current.bg_measurement_tracking;
     }
     return "";

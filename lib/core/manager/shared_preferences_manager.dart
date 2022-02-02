@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../enums/shared_preferences_keys.dart';
@@ -26,7 +28,7 @@ abstract class ISharedPreferencesManager {
 }
 
 class SharedPreferencesManager extends ISharedPreferencesManager {
-  SharedPreferences sharedPreferences;
+  late SharedPreferences sharedPreferences;
 
   @override
   Future<void> init() async {
@@ -35,24 +37,26 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
 
   @override
   Future<bool> setBool(SharedPreferencesKeys key, bool value) async =>
-      await sharedPreferences.setBool(key.xRawValue, value);
+      sharedPreferences.setBool(key.xRawValue, value);
 
   @override
   Future<bool> setDouble(SharedPreferencesKeys key, double value) async =>
-      await sharedPreferences.setDouble(key.xRawValue, value);
+      sharedPreferences.setDouble(key.xRawValue, value);
 
   @override
   Future<bool> setInt(SharedPreferencesKeys key, int value) async =>
-      await sharedPreferences.setInt(key.xRawValue, value);
+      sharedPreferences.setInt(key.xRawValue, value);
 
   @override
   Future<bool> setString(SharedPreferencesKeys key, String value) async =>
-      await sharedPreferences.setString(key.xRawValue, value);
+      sharedPreferences.setString(key.xRawValue, value);
 
   @override
   Future<bool> setStringList(
-          SharedPreferencesKeys key, List<String> value) async =>
-      await sharedPreferences.setStringList(key.xRawValue, value);
+    SharedPreferencesKeys key,
+    List<String> value,
+  ) async =>
+      sharedPreferences.setStringList(key.xRawValue, value);
 
   @override
   dynamic get(SharedPreferencesKeys key) {
@@ -64,7 +68,7 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
   }
 
   @override
-  bool getBool(SharedPreferencesKeys key) {
+  bool? getBool(SharedPreferencesKeys key) {
     try {
       return sharedPreferences.getBool(key.xRawValue);
     } catch (e) {
@@ -73,7 +77,7 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
   }
 
   @override
-  double getDouble(SharedPreferencesKeys key) {
+  double? getDouble(SharedPreferencesKeys key) {
     try {
       return sharedPreferences.getDouble(key.xRawValue);
     } catch (e) {
@@ -82,7 +86,7 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
   }
 
   @override
-  int getInt(SharedPreferencesKeys key) {
+  int? getInt(SharedPreferencesKeys key) {
     try {
       return sharedPreferences.getInt(key.xRawValue);
     } catch (e) {
@@ -91,7 +95,7 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
   }
 
   @override
-  String getString(SharedPreferencesKeys key) {
+  String? getString(SharedPreferencesKeys key) {
     try {
       return sharedPreferences.getString(key.xRawValue);
     } catch (e) {
@@ -100,7 +104,7 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
   }
 
   @override
-  List<String> getStringList(SharedPreferencesKeys key) {
+  List<String>? getStringList(SharedPreferencesKeys key) {
     try {
       return sharedPreferences.getStringList(key.xRawValue);
     } catch (e) {

@@ -18,7 +18,7 @@ enum SecretKeys {
 }
 
 extension SecretKeysStringExt on String {
-  SecretKeys get xSecretKeys => SecretKeys.values
+  SecretKeys? get xSecretKeys => SecretKeys.values
       .firstWhereOrNull((element) => element.xRawValue == this);
 }
 

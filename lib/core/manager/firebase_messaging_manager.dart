@@ -22,7 +22,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> checkChatNotification(RemoteMessage message) async {
-  final messageData = message?.data;
+  final messageData = message.data;
   if (messageData != null) {
     final type = messageData['type'];
     if (type == NotificationType.chat.xRawValue) {
@@ -48,13 +48,13 @@ const AndroidNotificationChannel androidNotificationChannel =
 );
 
 class FirebaseMessagingManager {
-  String token;
+  String? token;
 
   FirebaseMessagingManager._();
 
-  static FirebaseMessagingManager _instance;
+  static FirebaseMessagingManager? _instance;
 
-  static FirebaseMessagingManager get instance {
+  static FirebaseMessagingManager? get instance {
     _instance ??= FirebaseMessagingManager._()..init();
     return _instance;
   }
@@ -66,7 +66,7 @@ class FirebaseMessagingManager {
   static void mainInit() {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
- 
+
   Future<void> init() async {
     if (!kIsWeb) {
       const AndroidInitializationSettings initializationSettingsAndroid =
@@ -85,14 +85,16 @@ class FirebaseMessagingManager {
       await flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
         onSelectNotification: (payload) {
-          clickDataHandler(jsonDecode(payload));
+          clickDataHandler(
+              jsonDecode(payload as String) as Map<String, dynamic>);
         },
       );
     }
     final initialPayload =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
     if (initialPayload?.payload != null) {
-      clickDataHandler(json.decode(initialPayload.payload));
+      clickDataHandler(json.decode(initialPayload?.payload as String)
+          as Map<String, dynamic>);
     }
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
@@ -132,12 +134,14 @@ class FirebaseMessagingManager {
           FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
             if (!kIsWeb && message != null) {
               if (Atom.isAndroid) {
-                ChatPerson otherPerson =
-                    ChatPerson.fromMap(json.decode(message.data['chatPerson']));
+                final ChatPerson otherPerson = ChatPerson.fromMap(
+                    json.decode(message.data['chatPerson'] as String)
+                        as Map<String, dynamic>);
 
                 if (!(Atom.url.contains(PagePaths.CHAT) &&
-                    Atom.url.contains(otherPerson.id)))
+                    Atom.url.contains(otherPerson.id as String))) {
                   showNotification(message);
+                }
               }
 
               await checkChatNotification(message);
@@ -155,7 +159,7 @@ class FirebaseMessagingManager {
           // Uygulama Kapalı İken.
           await FirebaseMessaging.instance
               .getInitialMessage()
-              .then((RemoteMessage message) {
+              .then((RemoteMessage? message) {
             if (message != null) {
               clickDataHandler(message.data);
             }
@@ -232,10 +236,10 @@ class FirebaseMessagingManager {
     );
   }
 
-  static NotificationType getNotificationType(Map<String, dynamic> data) {
-    if (data == null) return null;
+  static NotificationType? getNotificationType(Map<String, dynamic> data) {
+    //if (data == null) return null;
     final type = data['type'] as String;
-    if (type == null) return null;
+    //if (type == null) return null;
     return type.xNotificationTypeKeys;
   }
 
@@ -246,14 +250,16 @@ class FirebaseMessagingManager {
     switch (notificationType) {
       case NotificationType.chat:
         {
-          ChatPerson otherPerson =
-              ChatPerson.fromMap(json.decode(data['chatPerson']));
+          final ChatPerson otherPerson = ChatPerson.fromMap(json
+              .decode(data['chatPerson'] as String) as Map<String, dynamic>);
           if (Atom.url.contains(PagePaths.CHAT)) {
             Atom.historyBack();
-            await Future.delayed(Duration(milliseconds: 100));
+            await Future.delayed(const Duration(milliseconds: 100));
           }
-          Atom.to(PagePaths.CHAT,
-              queryParameters: {'otherPerson': (otherPerson.toJson())});
+          Atom.to(
+            PagePaths.CHAT,
+            queryParameters: {'otherPerson': otherPerson.toJson()},
+          );
           break;
         }
 
@@ -262,9 +268,10 @@ class FirebaseMessagingManager {
           final parameters = data['parameters'];
           final route = data['route'];
           if (parameters != null) {
-            Atom.to(route, queryParameters: parameters);
+            Atom.to(route as String,
+                queryParameters: parameters as Map<String, String>);
           } else {
-            Atom.to(route);
+            Atom.to(route as String);
           }
 
           break;
@@ -275,8 +282,8 @@ class FirebaseMessagingManager {
   Future<void> getToken() async {
     token = await FirebaseMessaging.instance.getToken();
 
-    setTokenToServer(token);
-    LoggerUtils.instance.i('FirebaseToken :: ' + token);
+    setTokenToServer(token as String);
+    LoggerUtils.instance.i('FirebaseToken : $token');
   }
 
   Future<void> setTokenToServer(String token) async {
@@ -355,7 +362,7 @@ enum NotificationType {
 }
 
 extension NotificationTypeStringExt on String {
-  NotificationType get xNotificationTypeKeys => NotificationType.values
+  NotificationType? get xNotificationTypeKeys => NotificationType.values
       .firstWhereOrNull((element) => element.xRawValue == this);
 }
 
