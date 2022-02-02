@@ -4,20 +4,20 @@ import 'package:provider/provider.dart';
 import '../../progress_sections/utils/progress_page_model.dart';
 
 class HomePageModel<K extends ProgressPage> {
-  final String title;
-  final Color color;
+  final String? title;
+  final Color? color;
   final Key key;
-  Widget largeChild;
-  Widget smallChild;
+  Widget? largeChild;
+  Widget? smallChild;
   final Function(Key key) activateCallBack;
-  final Function() deActivateCallBack;
-  Function() manuelEntry;
+  final Function()? deActivateCallBack;
+  Function()? manuelEntry;
 
-  HomePageModel({
-    this.title,
+  HomePageModel(
     this.key,
+    this.activateCallBack, {
+    this.title,
     this.color,
-    this.activateCallBack,
     this.deActivateCallBack,
   }) {
     largeChild = Consumer<K>(

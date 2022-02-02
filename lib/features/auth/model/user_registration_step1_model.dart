@@ -1,10 +1,10 @@
 class UserRegistrationStep1Model {
-  String name;
-  String surname;
-  String phoneNumber;
-  String identificationNumber;
-  String electronicMail;
-  String userNationality;
+  String? name;
+  String? surname;
+  String? phoneNumber;
+  String? identificationNumber;
+  String? electronicMail;
+  String? userNationality;
 
   UserRegistrationStep1Model({
     this.name,

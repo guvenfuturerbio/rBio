@@ -1,25 +1,29 @@
 class VoucherPriceRequest {
-  String resourceId;
-  String tenantId;
-  String departmentId;
-  String voucherCode;
+  String? resourceId;
+  String? tenantId;
+  String? departmentId;
+  String? voucherCode;
 
-  VoucherPriceRequest(
-      {this.resourceId, this.tenantId, this.departmentId, this.voucherCode});
+  VoucherPriceRequest({
+    this.resourceId,
+    this.tenantId,
+    this.departmentId,
+    this.voucherCode,
+  });
 
   VoucherPriceRequest.fromJson(Map<String, dynamic> json) {
-    resourceId = json['resourceId'];
-    tenantId = json['tenantId'];
-    departmentId = json['departmentId'];
-    voucherCode = json['voucherCode'];
+    resourceId = json['resourceId'] as String?;
+    tenantId = json['tenantId'] as String?;
+    departmentId = json['departmentId'] as String?;
+    voucherCode = json['voucherCode'] as String?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['resourceId'] = this.resourceId;
-    data['tenantId'] = this.tenantId;
-    data['departmentId'] = this.departmentId;
-    data['voucherCode'] = this.voucherCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['resourceId'] = resourceId;
+    data['tenantId'] = tenantId;
+    data['departmentId'] = departmentId;
+    data['voucherCode'] = voucherCode;
     return data;
   }
 }

@@ -6,7 +6,7 @@ import 'package:onedosehealth/core/core.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DetailedSymptomChecker extends StatefulWidget {
-  const DetailedSymptomChecker({Key key}) : super(key: key);
+  const DetailedSymptomChecker({Key? key}) : super(key: key);
 
   @override
   _DetailedSymptomCheckerState createState() => _DetailedSymptomCheckerState();
@@ -15,7 +15,7 @@ class DetailedSymptomChecker extends StatefulWidget {
 class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
-  WebViewController myWebController;
+  WebViewController? myWebController;
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +37,17 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
           // ignore: prefer_collection_literals
           navigationDelegate: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
-              print('blocking navigation to $request}');
+              LoggerUtils.instance.d('blocking navigation to $request}');
               return NavigationDecision.prevent;
             }
-            print('allowing navigation to $request');
+            LoggerUtils.instance.d('allowing navigation to $request');
             return NavigationDecision.navigate;
           },
           onPageStarted: (String url) {
-            print('Page started loading: $url');
+            LoggerUtils.instance.d('Page started loading: $url');
           },
           onPageFinished: (String url) {
-            print('Page finished loading: $url');
+            LoggerUtils.instance.d('Page finished loading: $url');
           },
           gestureNavigationEnabled: true,
         ),

@@ -14,8 +14,7 @@ class BleConnectorOps extends ChangeNotifier {
   // ignore: close_sinks
   final _deviceConnectionController = StreamController<ConnectionStateUpdate>();
 
-  BleConnectorOps({FlutterReactiveBle ble}) {
-    this._ble = ble;
+  BleConnectorOps(this._ble) {
     listenConnectedDeviceStream();
   }
 

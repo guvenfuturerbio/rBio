@@ -9,10 +9,10 @@ class DashboardScreen extends StatefulWidget {
   final Widget child;
   final int currentIndex;
 
-  DashboardScreen({
-    Key key,
-    @required this.child,
-    @required this.currentIndex,
+  DashboardScreen(
+    this.child,
+    this.currentIndex, {
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -52,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomPaint(
               size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
-                backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                 getIt<ITheme>().cardBackgroundColor,
               ),
             ),
 
@@ -119,7 +119,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationGraphGreen,
                     ),
                     onPressed: () {
-                      
                       DashboardNavigation.toGraph(context);
                     },
                   ),

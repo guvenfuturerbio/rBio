@@ -6,12 +6,12 @@ import '../../../../core/core.dart';
 import 'doctor_cv_vm.dart';
 
 class DoctorCvScreen extends StatefulWidget {
-  String doctorNameNoTitle;
-  int tenantId;
-  int departmentId;
-  int resourceId;
-  String doctorName;
-  String departmentName;
+  String? doctorNameNoTitle;
+  int? tenantId;
+  int? departmentId;
+  int? resourceId;
+  String? doctorName;
+  String? departmentName;
 
   DoctorCvScreen({
     this.tenantId,

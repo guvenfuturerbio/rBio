@@ -1,8 +1,8 @@
 import 'resource_request.dart';
 
 class FindResourceAvailableDaysRequest {
-  ResourceRequest resourceRequest;
-  int appointmentType;
+  ResourceRequest? resourceRequest;
+  int? appointmentType;
 
   FindResourceAvailableDaysRequest({
     this.resourceRequest,

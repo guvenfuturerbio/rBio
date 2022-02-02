@@ -37,8 +37,8 @@ class DashboardNavigation extends VRouteElementBuilder {
           Widget child,
         ) {
           return DashboardScreen(
-            child: child,
-            currentIndex: getCurrent(state),
+             child,
+            getCurrent(state),
           );
         },
         nestedRoutes: [

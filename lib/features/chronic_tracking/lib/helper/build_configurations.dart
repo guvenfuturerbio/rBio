@@ -1,7 +1,7 @@
 enum Environment { DEV, STAGING, PROD }
 
 class BuildConfigurations {
-  static Map<String, dynamic> _config;
+  static late Map<String, dynamic> _config;
 
   static void setEnvironment(Environment env) {
     switch (env) {

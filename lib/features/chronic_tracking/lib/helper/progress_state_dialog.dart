@@ -7,14 +7,14 @@ import 'resources.dart';
 
 // ignore: must_be_immutable
 class ProgressStateDialog extends StatefulWidget {
-  _ProgressStateDialogState state;
+  late _ProgressStateDialogState state;
   final String image;
   final String text;
   bool isShowing() {
     return state != null && state.mounted;
   }
 
-  ProgressStateDialog({this.text, this.image});
+  ProgressStateDialog({required this.text, required this.image});
   @override
   createState() => state = _ProgressStateDialogState();
 }

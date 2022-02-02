@@ -1,10 +1,10 @@
 class ApplicationVersionResponse {
-  String minimum;
-  String latest;
-  String name;
-  String releaseNotes;
-  String androidUrl;
-  String iosUrl;
+  String? minimum;
+  String? latest;
+  String? name;
+  String? releaseNotes;
+  String? androidUrl;
+  String? iosUrl;
 
   ApplicationVersionResponse({
     this.minimum,
@@ -16,22 +16,22 @@ class ApplicationVersionResponse {
   });
 
   ApplicationVersionResponse.fromJson(Map<String, dynamic> json) {
-    minimum = json['minimum'];
-    latest = json['latest'];
-    name = json['name'];
-    releaseNotes = json['release_notes'];
-    androidUrl = json['android_url'];
-    iosUrl = json['ios_url'];
+    minimum = json['minimum'] as String;
+    latest = json['latest']as String;
+    name = json['name']as String;
+    releaseNotes = json['release_notes']as String;
+    androidUrl = json['android_url']as String;
+    iosUrl = json['ios_url']as String;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['minumum'] = this.minimum;
-    data['latest'] = this.latest;
-    data['name'] = this.name;
-    data['release_notes'] = this.releaseNotes;
-    data['android_url'] = this.androidUrl;
-    data['ios_url'] = this.iosUrl;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['minumum'] = minimum;
+    data['latest'] = latest;
+    data['name'] = name;
+    data['release_notes'] = releaseNotes;
+    data['android_url'] = androidUrl;
+    data['ios_url'] = iosUrl;
     return data;
   }
 }

@@ -1,8 +1,8 @@
 class ChangePasswordModel {
-  String identificationNumber;
-  String oldPassword;
-  String newPassword;
-  String newPasswordConfirmation;
+  String? identificationNumber;
+  String? oldPassword;
+  String? newPassword;
+  String? newPasswordConfirmation;
 
   ChangePasswordModel({
     this.identificationNumber,

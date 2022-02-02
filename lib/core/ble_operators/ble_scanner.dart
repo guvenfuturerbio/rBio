@@ -3,19 +3,18 @@ part of 'ble_operators.dart';
 class BleScannerOps extends ChangeNotifier {
   final _devices = <DiscoveredDevice>[];
 
-  FlutterReactiveBle _ble;
+  final FlutterReactiveBle _ble;
 
-  String deviceId;
-  List<String> pairedDevices;
+  String? deviceId;
+  late List<String> pairedDevices;
 
-  StreamSubscription _subscription;
+  StreamSubscription? _subscription;
 
-  BleScannerOps({FlutterReactiveBle ble}) {
-    this._ble = ble;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  BleScannerOps(this._ble) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       List<PairedDevice> pairedDevice =
           await getIt<BleDeviceManager>().getPairedDevices();
-      pairedDevices = pairedDevice?.map((e) => e.deviceId)?.toList() ?? [];
+      pairedDevices = pairedDevice.map((e) => e.deviceId).toList();
     });
   }
 
@@ -34,10 +33,10 @@ class BleScannerOps extends ChangeNotifier {
     pairedDevices = deviceIds;
   }
 
-  startScan() {
+  startScan() async {
     _ble.statusStream.listen((bleStatus) async {
       if (bleStatus == BleStatus.ready) {
-        _devices?.clear();
+        _devices.clear();
         _subscription?.cancel();
         _subscription = _ble.scanForDevices(withServices: _supported).listen(
             (device) async {

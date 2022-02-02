@@ -17,76 +17,78 @@ const String patchMethod = 'PATCH';
 abstract class IDioHelper {
   Future<GuvenResponseModel> getGuven(
     String path, {
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgress,
   });
 
   Future<GuvenResponseModel> postGuven(
     String path,
     dynamic data, {
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onSendProgress,
-    ProgressCallback onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   });
 
   Future<GuvenResponseModel> deleteGuven(
     String path, {
-    data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
+   dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
   });
 
   Future<GuvenResponseModel> patchGuven(
     String path, {
     dynamic data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    void Function(int, int) onSendProgress,
-    void Function(int, int) onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   });
 
   Future<R> dioGet<T extends IBaseModel, R>(
     String path, {
-    T parseModel,
-    bool isJsonDecode = false,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onReceiveProgress,
+    T? parseModel,
+    bool? isJsonDecode = false,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgress,
   });
 
   Future dioPost(
     String path,
     dynamic data, {
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onSendProgress,
-    ProgressCallback onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   });
 
   Future dioDelete(
-    String path, {
-    data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
+    String path, 
+    {
+    dynamic data,
+  
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
   });
 
   Future dioPatch(
     String path, {
     dynamic data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    void Function(int, int) onSendProgress,
-    void Function(int, int) onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   });
 }
 
@@ -254,7 +256,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                                       getIt<ISharedPreferencesManager>()
                                           .get(SharedPreferencesKeys.JWT_TOKEN),
                                 },
-                              )),
+                              ),),
                       );
                       return handler.resolve(response);
                     } catch (_) {
@@ -285,10 +287,10 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   @override
   Future<GuvenResponseModel> getGuven(
     String path, {
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback?onReceiveProgress,
   }) async {
     return await dioGet<GuvenResponseModel, GuvenResponseModel>(
       path,
@@ -305,11 +307,11 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   Future<GuvenResponseModel> postGuven(
     String path,
     dynamic data, {
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onSendProgress,
-    ProgressCallback onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     final response = await dioPost(
       path,

@@ -1,12 +1,12 @@
 class MedicineForScheduledModel {
-  int notificationId;
-  String name;
-  int dayIndex;
-  String time;
-  int dosage;
-  String medicinePeriod;
-  String remindable;
-  String usageType;
+  int? notificationId;
+  String? name;
+  int? dayIndex;
+  String? time;
+  int? dosage;
+  String? medicinePeriod;
+  String? remindable;
+  String? usageType;
 
   MedicineForScheduledModel({
     this.notificationId,
@@ -21,14 +21,14 @@ class MedicineForScheduledModel {
 
   factory MedicineForScheduledModel.fromJson(Map<String, dynamic> parsedJson) {
     return MedicineForScheduledModel(
-        notificationId: parsedJson['id'],
-        name: parsedJson['name'],
-        dayIndex: parsedJson['day'],
-        time: parsedJson['time'],
-        medicinePeriod: parsedJson['medicinePeriod'],
-        dosage: parsedJson['dosage'],
-        remindable: parsedJson['remindable'],
-        usageType: parsedJson['usageType']);
+        notificationId: parsedJson['id'] as int?,
+        name: parsedJson['name'] as String?,
+        dayIndex: parsedJson['day'] as int?,
+        time: parsedJson['time'] as String?,
+        medicinePeriod: parsedJson['medicinePeriod'] as String?,
+        dosage: parsedJson['dosage'] as int?,
+        remindable: parsedJson['remindable'] as String?,
+        usageType: parsedJson['usageType'] as String?);
   }
 
   Map<String, dynamic> toJson() {
