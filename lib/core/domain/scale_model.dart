@@ -9,36 +9,36 @@ class ScaleModel extends HiveObject {
   /// const DB Parameters
 
   /// Table
-  static final TABLE = 'scale';
+  static const table = 'scale';
 
   /// Unic
-  static final TIME = 'time';
+  static const timeConst = 'time';
 
   /// Device Constants
-  static final String DEVICE = 'device';
-  static final String DEVICE_TYPE = 'device_type';
-  static final String DEVICE_NAME = 'device_name';
-  static final String DEVICE_ID = 'device_id';
+  static const String deviceConst = 'device';
+  static const String deviceTypeConst = 'device_type';
+  static const String deviceNameConst = 'device_name';
+  static const String deviceIdConst = 'device_id';
 
   /// Scale Constants
-  static final String BMI = 'bmi';
-  static final String BODY_FAT = 'body_fat';
-  static final String BONE_MASS = 'bone_mass';
-  static final String DATE_TIME = 'date_time';
-  static final String HEIGHT = 'height';
-  static final String MANUEL = 'manuel';
-  static final String MEASUREMENT_ID = 'measurement_id';
-  static final String VISCERAL_FAT = 'visceral_fat';
-  static final String WATER = 'water';
-  static final String WEIGHT = 'weight';
-  static final String SCALE_UNIT = 'unit';
-  static final String MUSCLE = 'muscle';
+  static const String bmiConst = 'bmi';
+  static const String bodyFatConst = 'body_fat';
+  static const String boneMassConst = 'bone_mass';
+  static const String dateTimeConst = 'date_time';
+  static const String heightConst = 'height';
+  static const String manualConst = 'manuel';
+  static const String measurementIdConst = 'measurement_id';
+  static const String visceralFatConst = 'visceral_fat';
+  static const String waterConst = 'water';
+  static const String weightConst = 'weight';
+  static const String scaleUnitConst = 'unit';
+  static const String muscleConst = 'muscle';
 
   /// Spesific Constants
-  static final String USER_ID = 'user_id';
-  static final String IMAGES = 'images';
-  static final String NOTE = 'note';
-  static final String IS_DELETED = 'is_deleted';
+  static const String userIdConst = 'user_id';
+  static const String imagesConst = 'images';
+  static const String noteConst = 'note';
+  static const String isDeletedConst = 'is_deleted';
 
   /// Value is `true` if the weight has stabilized.
   bool? weightStabilized;
@@ -117,7 +117,7 @@ class ScaleModel extends HiveObject {
   /// The timestamp given by the device.
   ///
   /// Note that this value must only be considered valid if [weightRemoved] is `false` and [weightStabilized] is `true`.
-  /// This can also be checked by calling [dateTimeValid]
+  /// This can also be checked by calling dateTimeValid
   @HiveField(19)
   DateTime? dateTime;
 
@@ -125,8 +125,6 @@ class ScaleModel extends HiveObject {
   /// So can be return null.
   @HiveField(20)
   int? measurementId;
-
-  bool get dateTimeValid => weightStabilized && !weightRemoved;
 
   @override
   ScaleModel({
@@ -161,10 +159,10 @@ class ScaleModel extends HiveObject {
         : 0;
     height = int.parse(getIt<ProfileStorageImpl>().getFirst().height);
 
-    List<String> nums = getIt<ProfileStorageImpl>().getFirst().birthDate == null
-        ? null
-        : getIt<ProfileStorageImpl>().getFirst().birthDate.split(".");
-    var yearOfBirth = nums == null ? 2021 : int.parse(nums[2]);
+    final List<String> nums =
+        getIt<ProfileStorageImpl>().getFirst().birthDate.split(".");
+
+    final yearOfBirth = int.parse(nums[2]);
 
     age = DateTime.now().year - yearOfBirth < 15
         ? 15
@@ -174,27 +172,31 @@ class ScaleModel extends HiveObject {
   @override
   factory ScaleModel.fromMap(Map map) {
     return ScaleModel(
-        device: map[DEVICE] == null
-            ? null
-            : jsonDecode(map[DEVICE] as String) as Map<String, dynamic>,
-        time: map[TIME] as int? ??
-            DateTime.parse(map['occurrence_time'] as String)
-                .millisecondsSinceEpoch,
-        weight: map[WEIGHT] as double?,
-        unit: (map[SCALE_UNIT] as String).fromStr,
-        isManuel: map[MANUEL] == 0 ? false : true,
-        images: map[IMAGES] == null ? [] : (map[IMAGES] as List).cast<String>(),
-        note: map[NOTE] as String?,
-        water: map[WATER] as double?,
-        bmi: map[BMI] as double?,
-        bodyFat: map[BODY_FAT] as double?,
-        boneMass: map[BONE_MASS] as double?,
-        muscle: map[MUSCLE] as double?,
-        measurementId: map[MEASUREMENT_ID] as int?,
-        visceralFat: map[VISCERAL_FAT] as double?,
-        isDeleted: map[IS_DELETED] == 0 ? false : true,
-        dateTime:
-            DateTime.parse(map[DATE_TIME] as int? ?? map['occurrence_time']));
+      device: map[deviceConst] == null
+          ? null
+          : jsonDecode(map[deviceConst] as String) as Map<String, dynamic>,
+      time: map[timeConst] as int? ??
+          DateTime.parse(map['occurrence_time'] as String)
+              .millisecondsSinceEpoch,
+      weight: map[weightConst] as double?,
+      unit: (map[scaleUnitConst] as String).fromStr,
+      isManuel: map[manualConst] != 0,
+      images: map[imagesConst] == null
+          ? []
+          : (map[imagesConst] as List).cast<String>(),
+      note: map[noteConst] as String?,
+      water: map[waterConst] as double?,
+      bmi: map[bmiConst] as double?,
+      bodyFat: map[bodyFatConst] as double?,
+      boneMass: map[boneMassConst] as double?,
+      muscle: map[muscleConst] as double?,
+      measurementId: map[measurementIdConst] as int?,
+      visceralFat: map[visceralFatConst] as double?,
+      isDeleted: map[isDeletedConst] != 0,
+      dateTime: DateTime.parse(
+        (map[dateTimeConst] as String?) ?? map['occurrence_time'] as String,
+      ),
+    );
   }
 
   @override
@@ -226,81 +228,80 @@ class ScaleModel extends HiveObject {
 
   String get getUnit {
     switch (unit) {
-      case ScaleUnit.KG:
+      case ScaleUnit.kg:
         return 'kg';
-        break;
-      case ScaleUnit.LBS:
+      case ScaleUnit.lbs:
         return 'lbs';
-        break;
       default:
         throw Exception('Unit has not defined');
     }
   }
 
   ScaleModel copy() {
-    return ScaleModel.fromMap(jsonDecode(jsonEncode(this.toMap()));
+    return ScaleModel.fromMap(
+      jsonDecode(jsonEncode(toMap())) as Map<String, dynamic>,
+    );
   }
 
   ScaleModel fromMap(Map map) => ScaleModel(
-        device: jsonDecode(map[DEVICE] as String) as Map<String, dynamic>,
-        time: map[TIME] as int?,
-        weight: map[WEIGHT] as double?,
-        unit: map[SCALE_UNIT] as ScaleUnit?,
-        isManuel: map[MANUEL] == 0 ? false : true,
-        images: (map[IMAGES] as List).cast<String>(),
-        note: map[NOTE] as String?,
-        water: map[WATER] as double?,
-        bmi: map[BMI] as double?,
+        device: jsonDecode(map[deviceConst] as String) as Map<String, dynamic>,
+        time: map[timeConst] as int?,
+        weight: map[weightConst] as double?,
+        unit: map[scaleUnitConst] as ScaleUnit?,
+        isManuel: map[manualConst] != 0,
+        images: (map[imagesConst] as List).cast<String>(),
+        note: map[noteConst] as String?,
+        water: map[waterConst] as double?,
+        bmi: map[bmiConst] as double?,
         bmh: map['bmh'] as double?,
-        bodyFat: map[BODY_FAT] as double?,
-        boneMass: map[BONE_MASS] as double?,
-        muscle: map[MUSCLE] as double?,
-        measurementId: map[MEASUREMENT_ID] as int?,
-        visceralFat: map[VISCERAL_FAT] as double?,
-        isDeleted: map[IS_DELETED] == 0 ? false : true,
+        bodyFat: map[bodyFatConst] as double?,
+        boneMass: map[boneMassConst] as double?,
+        muscle: map[muscleConst] as double?,
+        measurementId: map[measurementIdConst] as int?,
+        visceralFat: map[visceralFatConst] as double?,
+        isDeleted: map[isDeletedConst] != 0,
         dateTime: DateTime.parse(
-          map[DATE_TIME] as String,
+          map[dateTimeConst] as String,
         ),
       );
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      DEVICE: device == null ? null : jsonEncode(device),
-      TIME: time,
-      WEIGHT: weight,
-      SCALE_UNIT: unit?.toStr,
-      MANUEL: isManuel ?? false ? 1 : 0,
-      IMAGES: images,
-      NOTE: note,
-      WATER: water,
-      BMI: bmi,
-      BODY_FAT: bodyFat,
-      BONE_MASS: boneMass,
-      MUSCLE: muscle,
-      HEIGHT: height,
-      MEASUREMENT_ID: measurementId,
-      VISCERAL_FAT: visceralFat,
-      IS_DELETED: isDeleted ?? false ? 1 : 0,
-      USER_ID: 0,
-      DATE_TIME: dateTime?.toIso8601String(),
+      deviceConst: device == null ? null : jsonEncode(device),
+      timeConst: time,
+      weightConst: weight,
+      scaleUnitConst: unit?.toStr,
+      manualConst: isManuel ?? false ? 1 : 0,
+      imagesConst: images,
+      noteConst: note,
+      waterConst: water,
+      bmiConst: bmi,
+      bodyFatConst: bodyFat,
+      boneMassConst: boneMass,
+      muscleConst: muscle,
+      heightConst: height,
+      measurementIdConst: measurementId,
+      visceralFatConst: visceralFat,
+      isDeletedConst: isDeleted ?? false ? 1 : 0,
+      userIdConst: 0,
+      dateTimeConst: dateTime?.toIso8601String(),
     };
   }
 
   bool isEqual(ScaleModel other) {
-    return jsonEncode(this.toMap()) == jsonEncode(other.toMap());
+    return jsonEncode(toMap()) == jsonEncode(other.toMap());
   }
 }
 
-enum ScaleUnit { KG, LBS }
-enum StripMode { ADD, SUBTRACT, NONE }
+enum ScaleUnit { kg, lbs }
+enum StripMode { add, subtract, none }
 
 extension SUE on ScaleUnit {
   String get toStr {
     switch (this) {
-      case ScaleUnit.KG:
+      case ScaleUnit.kg:
         return 'kg';
-        break;
-      case ScaleUnit.LBS:
+      case ScaleUnit.lbs:
         return 'lbs';
       default:
         throw Exception('Unhandled scale type');
@@ -312,11 +313,11 @@ extension ScalUnitString on String {
   ScaleUnit get fromStr {
     switch (this) {
       case 'kg':
-        return ScaleUnit.KG;
+        return ScaleUnit.kg;
       case 'lbs':
-        return ScaleUnit.LBS;
+        return ScaleUnit.lbs;
       default:
-        return ScaleUnit.KG;
+        return ScaleUnit.kg;
     }
   }
 }
@@ -331,7 +332,6 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    print(fields);
     return ScaleModel(
       device: jsonDecode(fields[0] as String) as Map<String, dynamic>,
       weight: fields[1] as double,

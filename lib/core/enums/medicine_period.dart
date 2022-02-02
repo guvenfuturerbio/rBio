@@ -1,25 +1,22 @@
 import '../core.dart';
 
 enum MedicinePeriod {
-  EVERY_DAY,
-  SPECIFIC_DAYS,
-  INTERMITTENT_DAYS,
+  everyDay,
+  spesificDays,
+  intermittenDays,
 }
 
 extension MedicinePeriodExtensions on MedicinePeriod {
   String toShortString() {
     switch (this) {
-      case MedicinePeriod.EVERY_DAY:
+      case MedicinePeriod.everyDay:
         return LocaleProvider.current.every_day;
-        break;
 
-      case MedicinePeriod.SPECIFIC_DAYS:
+      case MedicinePeriod.spesificDays:
         return LocaleProvider.current.specific_days;
-        break;
 
-      case MedicinePeriod.INTERMITTENT_DAYS:
+      case MedicinePeriod.intermittenDays:
         return LocaleProvider.current.intermittent_days;
-        break;
 
       default:
         throw Exception('toShortString');
@@ -28,13 +25,13 @@ extension MedicinePeriodExtensions on MedicinePeriod {
 
   String toParseableStringMedicine() {
     switch (this) {
-      case MedicinePeriod.EVERY_DAY:
+      case MedicinePeriod.everyDay:
         return 'EveryDay';
 
-      case MedicinePeriod.SPECIFIC_DAYS:
+      case MedicinePeriod.spesificDays:
         return 'SpecificDays';
 
-      case MedicinePeriod.INTERMITTENT_DAYS:
+      case MedicinePeriod.intermittenDays:
         return 'IntermittentDays';
 
       default:
@@ -47,16 +44,16 @@ extension ParseToMedicinePeriod on String {
   MedicinePeriod toMedicinePeriod() {
     switch (this) {
       case 'EveryDay':
-        return MedicinePeriod.EVERY_DAY;
+        return MedicinePeriod.everyDay;
 
       case 'SpecificDays':
-        return MedicinePeriod.SPECIFIC_DAYS;
+        return MedicinePeriod.spesificDays;
 
       case 'IntermittentDays':
-        return MedicinePeriod.INTERMITTENT_DAYS;
+        return MedicinePeriod.intermittenDays;
 
       default:
-        return MedicinePeriod.EVERY_DAY;
+        return MedicinePeriod.everyDay;
     }
   }
 }

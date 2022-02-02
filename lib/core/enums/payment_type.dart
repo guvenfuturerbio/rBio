@@ -1,19 +1,19 @@
 enum PaymentType {
-  PACKAGE, // online package
-  APPOINTMENT, // online appointment
-  TEST // covid19 test
+  package, // online package
+  appointment, // online appointment
+  test // covid19 test
 }
 
 extension PaymentTypeExtension on PaymentType {
   int get xGetIndex {
     switch (this) {
-      case PaymentType.PACKAGE:
+      case PaymentType.package:
         return 0;
 
-      case PaymentType.APPOINTMENT:
+      case PaymentType.appointment:
         return 1;
 
-      case PaymentType.TEST:
+      case PaymentType.test:
         return 2;
 
       default:
@@ -26,16 +26,16 @@ extension PaymentTypeIntExtension on int {
   PaymentType get xGetPaymenType {
     switch (this) {
       case 0:
-        return PaymentType.PACKAGE;
+        return PaymentType.package;
 
       case 1:
-        return PaymentType.APPOINTMENT;
+        return PaymentType.appointment;
 
       case 2:
-        return PaymentType.TEST;
+        return PaymentType.test;
 
       default:
-        return PaymentType.PACKAGE;
+        return PaymentType.package;
     }
   }
 }
