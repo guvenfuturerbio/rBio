@@ -47,15 +47,19 @@ class UserManagerImpl extends UserManager {
     return response;
   }
 
-  Future<void> loginToFirebase(RbioLoginResponse response) async {
-    getIt<UserNotifier>().firebaseEmail = response.firebase_user_email;
-    getIt<UserNotifier>().firebasePassword = response.firebase_user_salt;
+  Future<void> loginToFirebase(RbioLoginResponse? response) async {
+    getIt<UserNotifier>().firebaseEmail = response?.firebase_user_email;
+    getIt<UserNotifier>().firebasePassword = response?.firebase_user_salt;
     await getIt<FirestoreManager>().loginFirebase();
   }
 
   @override
-  Future<void> saveLoginInfo(String userName, String password,
-      bool rememberMeChecked, String token) async {
+  Future<void> saveLoginInfo(
+    String userName,
+    String password,
+    bool rememberMeChecked,
+    String token,
+  ) async {
     await getIt<ISharedPreferencesManager>()
         .setString(SharedPreferencesKeys.LOGIN_USERNAME, userName);
     if (rememberMeChecked) {
@@ -73,10 +77,10 @@ class UserManagerImpl extends UserManager {
   @override
   UserLoginInfo getSavedLoginInfo() {
     UserLoginInfo userLoginInfo = UserLoginInfo();
-    String username = getIt<ISharedPreferencesManager>()
+    String? username = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.LOGIN_USERNAME);
     userLoginInfo.username = username;
-    String password = getIt<ISharedPreferencesManager>()
+    String? password = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
     userLoginInfo.password = password;
     return userLoginInfo;
@@ -84,14 +88,14 @@ class UserManagerImpl extends UserManager {
 
   @override
   Future updateIdentityNumber(String identityNumber) async {
-    var response =
+    final response =
         await getIt<Repository>().updateUserSystemName(identityNumber);
     if (response.datum == 10) {
       return response.datum;
     } else if (response.datum == 5) {
       throw 5;
     } else {
-      throw response.datum ?? "";
+      throw response.datum as Object;
     }
   }
 
@@ -99,9 +103,13 @@ class UserManagerImpl extends UserManager {
   Future changeLoginUserParameter(String identityNumber) async {
     final token =
         getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.JWT_TOKEN);
-    UserLoginInfo userLoginInfo = await getSavedLoginInfo();
-    saveLoginInfo(identityNumber, userLoginInfo.password,
-        userLoginInfo.password.isEmpty ? false : true, token);
+    final UserLoginInfo userLoginInfo = getSavedLoginInfo();
+    saveLoginInfo(
+      identityNumber,
+      userLoginInfo.password,
+      userLoginInfo.password.isEmpty ? false : true,
+      token as String,
+    );
   }
 
   @override
@@ -236,11 +244,10 @@ class UserManagerImpl extends UserManager {
           serverUrl: "https://stream.guven.com.tr/",
           subject: " ",
           userDisplayName: name,
-          userEmail : " ",
-          isAudioOnly: false,isAudioMuted : false,
-isVideoMuted :false
-          );
-
+          userEmail: " ",
+          isAudioOnly: false,
+          isAudioMuted: false,
+          isVideoMuted: false);
 
       showDialog(
           context: context,
@@ -253,14 +260,16 @@ isVideoMuted :false
             );
           }).then((value) async {
         if (value != null && value) {
-          await JitsiMeetWrapper.joinMeeting(options:
-            options,
+          await JitsiMeetWrapper.joinMeeting(
+            options: options,
             listener: JitsiMeetingListener(
               onConferenceWillJoin: (message) {
-                debugPrint("${options.roomNameOrUrl} will join with message: $message");
+                debugPrint(
+                    "${options.roomNameOrUrl} will join with message: $message");
               },
               onConferenceJoined: (message) {
-                debugPrint("${options.roomNameOrUrl} joined with message: $message");
+                debugPrint(
+                    "${options.roomNameOrUrl} joined with message: $message");
               },
               onConferenceTerminated: (message, _) async {
                 await showDialog(
@@ -271,7 +280,8 @@ isVideoMuted :false
                         availabilityId: availabilityId,
                       );
                     });
-                debugPrint("${options.roomNameOrUrl} terminated with message: $message");
+                debugPrint(
+                    "${options.roomNameOrUrl} terminated with message: $message");
               },
             ),
           );

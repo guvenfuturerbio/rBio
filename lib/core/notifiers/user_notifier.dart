@@ -11,9 +11,9 @@ class UserNotifier extends ChangeNotifier {
   PatientResponse patient;
   List<UserType> _userType = [];
   //
-  String firebaseID;
-  String firebaseEmail;
-  String firebasePassword;
+  String? firebaseID;
+  String? firebaseEmail;
+  String? firebasePassword;
   //
   bool get isDoctor => _userType.contains(UserType.doctor);
   bool get isCronic => _userType.contains(UserType.chronic_user);
