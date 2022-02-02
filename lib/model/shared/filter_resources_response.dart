@@ -3,16 +3,16 @@ import '../../core/domain/base_model.dart';
 import '../model.dart';
 
 class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse> {
-  List<FilterTenantsResponse> departments;
-  bool enabled;
-  String gender;
-  int id;
-  bool isSSIContractor;
-  bool isTSSContractor;
-  List<FilterTenantsResponse> tenants;
-  String title;
-  bool isOnline; //hekim aktiflik durum
-  bool isOnlineForWeb; //webden randevu kabul edip etmemesi
+  List<FilterTenantsResponse>? departments;
+  bool? enabled;
+  String? gender;
+  int? id;
+  bool? isSSIContractor;
+  bool? isTSSContractor;
+  List<FilterTenantsResponse>? tenants;
+  String? title;
+  bool? isOnline; //hekim aktiflik durum
+  bool? isOnlineForWeb; //webden randevu kabul edip etmemesi
 
   FilterResourcesResponse({
     this.departments,
@@ -31,42 +31,43 @@ class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse> {
     if (json['departments'] != null) {
       departments = <FilterTenantsResponse>[];
       json['departments'].forEach((v) {
-        departments.add(new FilterTenantsResponse.fromJson(v));
+        departments
+            ?.add(FilterTenantsResponse.fromJson(v as Map<String, dynamic>));
       });
     }
-    enabled = json['enabled'];
-    gender = json['gender'];
-    id = json['id'];
-    isSSIContractor = json['isSSIContractor'];
-    isTSSContractor = json['isTSSContractor'];
+    enabled = json['enabled'] as bool?;
+    gender = json['gender'] as String?;
+    id = json['id'] as int?;
+    isSSIContractor = json['isSSIContractor'] as bool?;
+    isTSSContractor = json['isTSSContractor'] as bool?;
     if (json['tenants'] != null) {
       tenants = <FilterTenantsResponse>[];
       json['tenants'].forEach((v) {
-        tenants.add(new FilterTenantsResponse.fromJson(v));
+        tenants?.add(FilterTenantsResponse.fromJson(v as Map<String, dynamic>));
       });
     }
-    title = json['title'];
-    isOnline = json['isOnline'];
-    isOnlineForWeb = json['isOnlineForWeb'];
+    title = json['title'] as String?;
+    isOnline = json['isOnline'] as bool?;
+    isOnlineForWeb = json['isOnlineForWeb'] as bool?;
   }
 
   @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.departments != null) {
-      data['departments'] = this.departments.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (departments != null) {
+      data['departments'] = departments?.map((v) => v.toJson()).toList();
     }
-    data['enabled'] = this.enabled;
-    data['gender'] = this.gender;
-    data['id'] = this.id;
-    data['isSSIContractor'] = this.isSSIContractor;
-    data['isTSSContractor'] = this.isTSSContractor;
-    if (this.tenants != null) {
-      data['tenants'] = this.tenants.map((v) => v.toJson()).toList();
+    data['enabled'] = enabled;
+    data['gender'] = gender;
+    data['id'] = id;
+    data['isSSIContractor'] = isSSIContractor;
+    data['isTSSContractor'] = isTSSContractor;
+    if (tenants != null) {
+      data['tenants'] = tenants?.map((v) => v.toJson()).toList();
     }
-    data['title'] = this.title;
-    data['isOnline'] = this.isOnline;
-    data['isOnlineForWeb'] = this.isOnlineForWeb;
+    data['title'] = title;
+    data['isOnline'] = isOnline;
+    data['isOnlineForWeb'] = isOnlineForWeb;
     return data;
   }
 

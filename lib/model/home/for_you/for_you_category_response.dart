@@ -1,9 +1,9 @@
 import '../../../core/domain/base_model.dart';
 
 class ForYouCategoryResponse extends IBaseModel<ForYouCategoryResponse> {
-  int id;
-  String text;
-  String icon;
+  int? id;
+  String? text;
+  String? icon;
 
   ForYouCategoryResponse({
     this.id,
@@ -12,16 +12,17 @@ class ForYouCategoryResponse extends IBaseModel<ForYouCategoryResponse> {
   });
 
   ForYouCategoryResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    text = json['text'];
-    icon = json['icon'];
+    id = json['id'] as int?;
+    text = json['text'] as String?;
+    icon = json['icon'] as String?;
   }
 
+  @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['icon'] = this.icon;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['icon'] = icon;
     return data;
   }
 

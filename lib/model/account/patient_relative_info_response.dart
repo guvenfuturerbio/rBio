@@ -4,37 +4,35 @@ class PatientRelativeInfoResponse {
   PatientRelativeInfoResponse(this.patientRelatives);
 
   PatientRelativeInfoResponse.fromJson(Map<String, dynamic> json) {
-    var data = json['data'];
+    final data = json['data'];
 
-    for (var patient in data) {
-      if (this.patientRelatives == null) {
-        this.patientRelatives = [];
-      }
-      String name = patient["patient"]["user"]["name"].toString();
-      String surname = patient["patient"]["user"]["surname"].toString();
-      String tcNo =
+    for (final patient in data) {
+      final String name = patient["patient"]["user"]["name"].toString();
+      final String surname = patient["patient"]["user"]["surname"].toString();
+      final String tcNo =
           patient["patient"]["user"]["identification_number"].toString();
-      String id = patient["patient"]["id"].toString();
-      this.patientRelatives.add(new PatientRelative(name, surname, tcNo, id));
+      final String id = patient["patient"]["id"].toString();
+      patientRelatives.add(
+        PatientRelative(name: name, surname: surname, tcNo: tcNo, id: id),
+      );
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     return data;
   }
 }
 
 class PatientRelative {
-  String name;
-  String surname;
-  String tcNo;
-  String id;
-
-  PatientRelative(String name, String surname, String tcNo, String id) {
-    this.name = name;
-    this.surname = surname;
-    this.tcNo = tcNo;
-    this.id = id;
-  }
+  String? name;
+  String? surname;
+  String? tcNo;
+  String? id;
+  PatientRelative({
+    this.name,
+    this.surname,
+    this.tcNo,
+    this.id,
+  });
 }

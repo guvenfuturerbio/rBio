@@ -3,13 +3,13 @@ import 'detail_model.dart';
 import 'tag_model.dart';
 
 class BloodGlucose {
-  String date;
-  BloodGlucoseMeasurementModel bloodGlucoseMeasurement;
-  DetailModel detail;
-  TagModel tag;
-  String deviceId;
-  bool isManuel;
-  int id;
+  String? date;
+  BloodGlucoseMeasurementModel? bloodGlucoseMeasurement;
+  DetailModel? detail;
+  TagModel? tag;
+  String? deviceId;
+  bool? isManuel;
+  int? id;
 
   BloodGlucose({
     this.date,
@@ -22,35 +22,40 @@ class BloodGlucose {
   });
 
   BloodGlucose.fromJson(Map<String, dynamic> json) {
-    date = json['date'];
+    date = json['date'] as String?;
     bloodGlucoseMeasurement = json['blood_glucose_measurement'] != null
-        ? new BloodGlucoseMeasurementModel.fromJson(
-            json['blood_glucose_measurement'])
+        ? BloodGlucoseMeasurementModel.fromJson(
+            json['blood_glucose_measurement'] as Map<String, dynamic>,
+          )
         : null;
     detail = json['detail'] != null
-        ? new DetailModel.fromJson(json['detail'])
+        ? DetailModel.fromJson(
+            json['detail'] as Map<String, dynamic>,
+          )
         : null;
-    tag = json['tag'] != null ? new TagModel.fromJson(json['tag']) : null;
-    deviceId = json['device_id'];
-    isManuel = json['is_manuel'];
-    id = json['id'];
+    tag = json['tag'] != null
+        ? TagModel.fromJson(json['tag'] as Map<String, dynamic>)
+        : null;
+    deviceId = json['device_id'] as String?;
+    isManuel = json['is_manuel'] as bool?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['date'] = this.date;
-    if (this.bloodGlucoseMeasurement != null) {
-      data['blood_glucose_measurement'] = this.bloodGlucoseMeasurement.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['date'] = date;
+    if (bloodGlucoseMeasurement != null) {
+      data['blood_glucose_measurement'] = bloodGlucoseMeasurement?.toJson();
     }
-    if (this.detail != null) {
-      data['detail'] = this.detail.toJson();
+    if (detail != null) {
+      data['detail'] = detail?.toJson();
     }
-    if (this.tag != null) {
-      data['tag'] = this.tag.toJson();
+    if (tag != null) {
+      data['tag'] = tag?.toJson();
     }
-    data['device_id'] = this.deviceId;
-    data['is_manuel'] = this.isManuel;
-    data['id'] = this.id;
+    data['device_id'] = deviceId;
+    data['is_manuel'] = isManuel;
+    data['id'] = id;
     return data;
   }
 }

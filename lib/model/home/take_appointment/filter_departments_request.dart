@@ -1,6 +1,6 @@
 class FilterDepartmentsRequest {
-  int tenantId;
-  String search;
+  int? tenantId;
+  String? search;
 
   FilterDepartmentsRequest({
     this.tenantId,
@@ -9,8 +9,8 @@ class FilterDepartmentsRequest {
 
   factory FilterDepartmentsRequest.fromJson(Map<String, dynamic> json) =>
       FilterDepartmentsRequest(
-        tenantId: json['tenantId'] as int,
-        search: json['search'] as String,
+        tenantId: json['tenantId'] as int?,
+        search: json['search'] as String?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

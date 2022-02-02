@@ -1,9 +1,9 @@
 class VisitRequest {
-  String identityNumber;
-  String from;
-  String to;
-  int hasResults;
-  int isForeignPatient;
+  String? identityNumber;
+  String? from;
+  String? to;
+  int? hasResults;
+  int? isForeignPatient;
 
   VisitRequest({
     this.identityNumber,
@@ -13,13 +13,12 @@ class VisitRequest {
     this.isForeignPatient,
   });
 
-  factory VisitRequest.fromJson(Map<String, dynamic> json) =>
-      VisitRequest(
-        identityNumber: json['identityNumber'] as String,
-        from: json['from'] as String,
-        to: json['to'] as String,
-        hasResults: json['hasResults'] as int,
-        isForeignPatient: json['isForeignPatient'] as int,
+  factory VisitRequest.fromJson(Map<String, dynamic> json) => VisitRequest(
+        identityNumber: json['identityNumber'] as String?,
+        from: json['from'] as String?,
+        to: json['to'] as String?,
+        hasResults: json['hasResults'] as int?,
+        isForeignPatient: json['isForeignPatient'] as int?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

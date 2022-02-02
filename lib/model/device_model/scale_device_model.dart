@@ -7,9 +7,9 @@ import '../ble_models/paired_device.dart';
 
 abstract class ScaleDevice<T> {
   final DiscoveredDevice device;
-  static ScaleMeasurementViewModel _scaleData;
+  static ScaleMeasurementViewModel? _scaleData;
 
-  ScaleDevice({this.device});
+  ScaleDevice(this.device);
 
   /// The id of the discovere d device
   String get id => device.id;
@@ -20,11 +20,12 @@ abstract class ScaleDevice<T> {
   /// The signal strength of the device when it was first discovered
   int get rssi => device.rssi;
 
-  ScaleMeasurementViewModel get scaleData => _scaleData;
-  set scaleData(data) => _scaleData = data;
+  ScaleMeasurementViewModel? get scaleData => _scaleData;
+  set scaleData(data) => _scaleData = data as ScaleMeasurementViewModel?;
 
   /// Parse the raw advertisement data to obtain a [T] instance
-  ScaleMeasurementViewModel parseScaleData(PairedDevice device, Uint8List data);
+  ScaleMeasurementViewModel? parseScaleData(
+      PairedDevice device, Uint8List data);
 
   bool matchesDeviceType(device);
 

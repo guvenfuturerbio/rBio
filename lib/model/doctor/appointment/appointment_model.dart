@@ -4,16 +4,16 @@ import 'patient_for_appointment_model.dart';
 import 'zoom_model.dart';
 
 class Appointment {
-  PatientForAppointmentModel patient;
-  AvailabilityModel availability;
-  String pnrNumber;
-  int appointmentTypeCategoryId;
-  String webConsultAppId;
-  List<String> documents;
-  DoctorHospitalDepartmentModel doctorHospitalDepartment;
-  int videoType;
-  ZoomModel zoom;
-  int id;
+  PatientForAppointmentModel? patient;
+  AvailabilityModel? availability;
+  String? pnrNumber;
+  int? appointmentTypeCategoryId;
+  String? webConsultAppId;
+  List<String>? documents;
+  DoctorHospitalDepartmentModel? doctorHospitalDepartment;
+  int? videoType;
+  ZoomModel? zoom;
+  int? id;
 
   Appointment({
     this.patient,
@@ -30,45 +30,51 @@ class Appointment {
 
   Appointment.fromJson(Map<String, dynamic> json) {
     patient = json['patient'] != null
-        ? new PatientForAppointmentModel.fromJson(json['patient'])
+        ? PatientForAppointmentModel.fromJson(
+            json['patient'] as Map<String, dynamic>,
+          )
         : null;
     availability = json['availability'] != null
-        ? new AvailabilityModel.fromJson(json['availability'])
+        ? AvailabilityModel.fromJson(
+            json['availability'] as Map<String, dynamic>,
+          )
         : null;
-    pnrNumber = json['pnr_number'];
-    appointmentTypeCategoryId = json['appointment_type_category_id'];
-    webConsultAppId = json['web_consult_app_id'];
-    documents = json['documents'].cast<String>();
+    pnrNumber = json['pnr_number'] as String?;
+    appointmentTypeCategoryId = json['appointment_type_category_id'] as int?;
+    webConsultAppId = json['web_consult_app_id'] as String?;
+    documents = json['documents'].cast<String>() as List<String>?;
     doctorHospitalDepartment = json['doctor_hospital_department'] != null
-        ? new DoctorHospitalDepartmentModel.fromJson(
-            json['doctor_hospital_department'])
+        ? DoctorHospitalDepartmentModel.fromJson(
+            json['doctor_hospital_department'] as Map<String, dynamic>,
+          )
         : null;
-    videoType = json['video_type'];
-    zoom = json['zoom'] != null ? new ZoomModel.fromJson(json['zoom']) : null;
-    id = json['id'];
+    videoType = json['video_type'] as int?;
+    zoom = json['zoom'] != null
+        ? ZoomModel.fromJson(json['zoom'] as Map<String, dynamic>)
+        : null;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.patient != null) {
-      data['patient'] = this.patient.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (patient != null) {
+      data['patient'] = patient?.toJson();
     }
-    if (this.availability != null) {
-      data['availability'] = this.availability.toJson();
+    if (availability != null) {
+      data['availability'] = availability?.toJson();
     }
-    data['pnr_number'] = this.pnrNumber;
-    data['appointment_type_category_id'] = this.appointmentTypeCategoryId;
-    data['web_consult_app_id'] = this.webConsultAppId;
-    data['documents'] = this.documents;
-    if (this.doctorHospitalDepartment != null) {
-      data['doctor_hospital_department'] =
-          this.doctorHospitalDepartment.toJson();
+    data['pnr_number'] = pnrNumber;
+    data['appointment_type_category_id'] = appointmentTypeCategoryId;
+    data['web_consult_app_id'] = webConsultAppId;
+    data['documents'] = documents;
+    if (doctorHospitalDepartment != null) {
+      data['doctor_hospital_department'] = doctorHospitalDepartment?.toJson();
     }
-    data['video_type'] = this.videoType;
-    if (this.zoom != null) {
-      data['zoom'] = this.zoom.toJson();
+    data['video_type'] = videoType;
+    if (zoom != null) {
+      data['zoom'] = zoom?.toJson();
     }
-    data['id'] = this.id;
+    data['id'] = id;
     return data;
   }
 }

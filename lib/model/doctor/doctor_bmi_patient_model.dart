@@ -1,7 +1,7 @@
 class DoctorBMIPatientModel {
-  String name;
-  List<DoctorBMIMeasurements> bmiMeasurements;
-  int id;
+  String? name;
+  List<DoctorBMIMeasurements>? bmiMeasurements;
+  int? id;
 
   DoctorBMIPatientModel({
     this.name,
@@ -10,45 +10,46 @@ class DoctorBMIPatientModel {
   });
 
   DoctorBMIPatientModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    name = json['name'] as String?;
     if (json['bmi_measurements'] != null) {
-      bmiMeasurements = new List<DoctorBMIMeasurements>();
+      bmiMeasurements = <DoctorBMIMeasurements>[];
       json['bmi_measurements'].forEach((v) {
-        bmiMeasurements.add(new DoctorBMIMeasurements.fromJson(v));
+        bmiMeasurements
+            ?.add(DoctorBMIMeasurements.fromJson(v as Map<String, dynamic>));
       });
     }
-    id = json['id'];
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    if (this.bmiMeasurements != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    if (bmiMeasurements != null) {
       data['bmi_measurements'] =
-          this.bmiMeasurements.map((v) => v.toJson()).toList();
+          bmiMeasurements?.map((v) => v.toJson()).toList();
     }
-    data['id'] = this.id;
+    data['id'] = id;
     return data;
   }
 }
 
 class DoctorBMIMeasurements {
-  int id;
-  int entegrationId;
-  String occurrenceTime;
-  double weight;
-  double bmi;
-  int measurementId;
-  double water;
-  double bodyFat;
-  double visceralFat;
-  double boneMass;
-  double muscle;
-  double bmh;
-  int scaleUnit;
-  String deviceId;
-  bool isManuel;
-  String note;
+  int? id;
+  int? entegrationId;
+  String? occurrenceTime;
+  double? weight;
+  double? bmi;
+  int? measurementId;
+  double? water;
+  double? bodyFat;
+  double? visceralFat;
+  double? boneMass;
+  double? muscle;
+  double? bmh;
+  int? scaleUnit;
+  String? deviceId;
+  bool? isManuel;
+  String? note;
 
   DoctorBMIMeasurements({
     this.id,
@@ -70,42 +71,42 @@ class DoctorBMIMeasurements {
   });
 
   DoctorBMIMeasurements.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    entegrationId = json['entegration_id'];
-    occurrenceTime = json['occurrence_time'];
-    weight = json['weight'];
-    bmi = json['bmi'];
-    measurementId = json['measurement_id'];
-    water = json['water'];
-    bodyFat = json['body_fat'];
-    visceralFat = json['visceral_fat'];
-    boneMass = json['bone_mass'];
-    muscle = json['muscle'];
-    bmh = json['bmh'];
-    scaleUnit = json['scale_unit'];
-    deviceId = json['device_id'];
-    isManuel = json['is_manuel'];
-    note = json['note'];
+    id = json['id'] as int?;
+    entegrationId = json['entegration_id'] as int?;
+    occurrenceTime = json['occurrence_time'] as String?;
+    weight = json['weight'] as double?;
+    bmi = json['bmi'] as double?;
+    measurementId = json['measurement_id'] as int?;
+    water = json['water'] as double?;
+    bodyFat = json['body_fat'] as double?;
+    visceralFat = json['visceral_fat'] as double?;
+    boneMass = json['bone_mass'] as double?;
+    muscle = json['muscle'] as double?;
+    bmh = json['bmh'] as double?;
+    scaleUnit = json['scale_unit'] as int?;
+    deviceId = json['device_id'] as String?;
+    isManuel = json['is_manuel'] as bool?;
+    note = json['note'] as String?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['entegration_id'] = this.entegrationId;
-    data['occurrence_time'] = this.occurrenceTime;
-    data['weight'] = this.weight;
-    data['bmi'] = this.bmi;
-    data['measurement_id'] = this.measurementId;
-    data['water'] = this.water;
-    data['body_fat'] = this.bodyFat;
-    data['visceral_fat'] = this.visceralFat;
-    data['bone_mass'] = this.boneMass;
-    data['muscle'] = this.muscle;
-    data['bmh'] = this.bmh;
-    data['scale_unit'] = this.scaleUnit;
-    data['device_id'] = this.deviceId;
-    data['is_manuel'] = this.isManuel;
-    data['note'] = this.note;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['entegration_id'] = entegrationId;
+    data['occurrence_time'] = occurrenceTime;
+    data['weight'] = weight;
+    data['bmi'] = bmi;
+    data['measurement_id'] = measurementId;
+    data['water'] = water;
+    data['body_fat'] = bodyFat;
+    data['visceral_fat'] = visceralFat;
+    data['bone_mass'] = boneMass;
+    data['muscle'] = muscle;
+    data['bmh'] = bmh;
+    data['scale_unit'] = scaleUnit;
+    data['device_id'] = deviceId;
+    data['is_manuel'] = isManuel;
+    data['note'] = note;
     return data;
   }
 }

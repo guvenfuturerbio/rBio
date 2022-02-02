@@ -1,9 +1,9 @@
 import '../../core/core.dart';
 
 class FilterTenantsResponse extends IBaseModel<FilterTenantsResponse> {
-  bool enabled;
-  int id;
-  String title;
+  bool? enabled;
+  int? id;
+  String? title;
 
   FilterTenantsResponse({
     this.enabled,
@@ -12,17 +12,17 @@ class FilterTenantsResponse extends IBaseModel<FilterTenantsResponse> {
   });
 
   FilterTenantsResponse.fromJson(Map<String, dynamic> json) {
-    enabled = json['enabled'];
-    id = json['id'];
-    title = json['title'];
+    enabled = json['enabled'] as bool?;
+    id = json['id'] as int?;
+    title = json['title'] as String?;
   }
 
   @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['enabled'] = this.enabled;
-    data['id'] = this.id;
-    data['title'] = this.title;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['enabled'] = enabled;
+    data['id'] = id;
+    data['title'] = title;
     return data;
   }
 

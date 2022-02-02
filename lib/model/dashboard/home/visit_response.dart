@@ -1,19 +1,19 @@
 class VisitResponse {
-  int countOfLaboratoryResults;
-  int countOfPathologyResults;
-  int countOfRadiologyResults;
-  String department;
-  bool hasLaboratoryResults;
-  bool hasPathologyResults;
-  bool hasRadiologyResults;
-  int id;
-  String identityNumber;
-  String openingDate;
-  String patient;
-  int patientId;
-  String physician;
-  String tenant;
-  int tenantId;
+  int? countOfLaboratoryResults;
+  int? countOfPathologyResults;
+  int? countOfRadiologyResults;
+  String? department;
+  bool? hasLaboratoryResults;
+  bool? hasPathologyResults;
+  bool? hasRadiologyResults;
+  int? id;
+  String? identityNumber;
+  String? openingDate;
+  String? patient;
+  int? patientId;
+  String? physician;
+  String? tenant;
+  int? tenantId;
 
   VisitResponse({
     this.countOfLaboratoryResults,
@@ -34,40 +34,40 @@ class VisitResponse {
   });
 
   VisitResponse.fromJson(Map<String, dynamic> json) {
-    countOfLaboratoryResults = json['countOfLaboratoryResults'];
-    countOfPathologyResults = json['countOfPathologyResults'];
-    countOfRadiologyResults = json['countOfRadiologyResults'];
-    department = json['department'];
-    hasLaboratoryResults = json['hasLaboratoryResults'];
-    hasPathologyResults = json['hasPathologyResults'];
-    hasRadiologyResults = json['hasRadiologyResults'];
-    id = json['id'];
-    identityNumber = json['identityNumber'];
-    openingDate = json['openingDate'];
-    patient = json['patient'];
-    patientId = json['patientId'];
-    physician = json['physician'];
-    tenant = json['tenant'];
-    tenantId = json['tenantId'];
+    countOfLaboratoryResults = json['countOfLaboratoryResults'] as int?;
+    countOfPathologyResults = json['countOfPathologyResults'] as int?;
+    countOfRadiologyResults = json['countOfRadiologyResults'] as int?;
+    department = json['department'] as String?;
+    hasLaboratoryResults = json['hasLaboratoryResults'] as bool?;
+    hasPathologyResults = json['hasPathologyResults'] as bool?;
+    hasRadiologyResults = json['hasRadiologyResults'] as bool?;
+    id = json['id'] as int?;
+    identityNumber = json['identityNumber'] as String?;
+    openingDate = json['openingDate'] as String?;
+    patient = json['patient'] as String?;
+    patientId = json['patientId'] as int?;
+    physician = json['physician'] as String?;
+    tenant = json['tenant'] as String?;
+    tenantId = json['tenantId'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['countOfLaboratoryResults'] = this.countOfLaboratoryResults;
-    data['countOfPathologyResults'] = this.countOfPathologyResults;
-    data['countOfRadiologyResults'] = this.countOfRadiologyResults;
-    data['department'] = this.department;
-    data['hasLaboratoryResults'] = this.hasLaboratoryResults;
-    data['hasPathologyResults'] = this.hasPathologyResults;
-    data['hasRadiologyResults'] = this.hasRadiologyResults;
-    data['id'] = this.id;
-    data['identityNumber'] = this.identityNumber;
-    data['openingDate'] = this.openingDate;
-    data['patient'] = this.patient;
-    data['patientId'] = this.patientId;
-    data['physician'] = this.physician;
-    data['tenant'] = this.tenant;
-    data['tenantId'] = this.tenantId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['countOfLaboratoryResults'] = countOfLaboratoryResults;
+    data['countOfPathologyResults'] = countOfPathologyResults;
+    data['countOfRadiologyResults'] = countOfRadiologyResults;
+    data['department'] = department;
+    data['hasLaboratoryResults'] = hasLaboratoryResults;
+    data['hasPathologyResults'] = hasPathologyResults;
+    data['hasRadiologyResults'] = hasRadiologyResults;
+    data['id'] = id;
+    data['identityNumber'] = identityNumber;
+    data['openingDate'] = openingDate;
+    data['patient'] = patient;
+    data['patientId'] = patientId;
+    data['physician'] = physician;
+    data['tenant'] = tenant;
+    data['tenantId'] = tenantId;
     return data;
   }
 }

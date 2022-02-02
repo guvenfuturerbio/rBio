@@ -6,33 +6,33 @@ class RbioLoginResponse {
     this.firebase_user_salt,
   });
 
-  String firebase_user_email;
-  String firebase_user_salt;
-  Token token;
-  List<String> roles;
+  String? firebase_user_email;
+  String? firebase_user_salt;
+  Token? token;
+  List<String>? roles;
 
   factory RbioLoginResponse.fromJson(Map<String, dynamic> json) =>
       RbioLoginResponse(
-        token: Token.fromJson(json["token"]),
-        roles: List<String>.from(json["roles"].map((x) => x)),
-        firebase_user_email: json['firebase_user_email'],
-        firebase_user_salt: json['firebase_user_salt'],
+        token: Token.fromJson(json["token"] as Map<String, dynamic>),
+        roles: List<String>.from(json["roles"].map((x) => x) as List<String>),
+        firebase_user_email: json['firebase_user_email'] as String?,
+        firebase_user_salt: json['firebase_user_salt'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
-        "token": token.toJson(),
-        "roles": List<dynamic>.from(roles.map((x) => x)),
+        "token": token?.toJson(),
+        "roles": List<dynamic>.from(roles!.map((x) => x)),
       };
 }
 
 class Token {
-  String accessToken;
-  int expiresIn;
-  int refreshExpiresIn;
-  String refreshToken;
-  String tokenType;
-  String sessionState;
-  String scope;
+  String? accessToken;
+  int? expiresIn;
+  int? refreshExpiresIn;
+  String? refreshToken;
+  String? tokenType;
+  String? sessionState;
+  String? scope;
 
   Token({
     this.accessToken,
@@ -45,13 +45,13 @@ class Token {
   });
 
   factory Token.fromJson(Map<String, dynamic> json) => Token(
-        accessToken: json["access_token"],
-        expiresIn: json["expires_in"],
-        refreshExpiresIn: json["refresh_expires_in"],
-        refreshToken: json["refresh_token"],
-        tokenType: json["token_type"],
-        sessionState: json["session_state"],
-        scope: json["scope"],
+        accessToken: json["access_token"] as String?,
+        expiresIn: json["expires_in"] as int?,
+        refreshExpiresIn: json["refresh_expires_in"] as int?,
+        refreshToken: json["refresh_token"] as String?,
+        tokenType: json["token_type"] as String?,
+        sessionState: json["session_state"] as String?,
+        scope: json["scope"] as String?,
       );
 
   Map<String, dynamic> toJson() => {

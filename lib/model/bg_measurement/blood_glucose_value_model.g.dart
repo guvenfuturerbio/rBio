@@ -12,7 +12,8 @@ BloodGlucoseValue _$BloodGlucoseValueFromJson(Map<String, dynamic> json) {
     valueType: json['value_type'] as String,
     valueNote: json['value_note'] as String,
     detail: BloodGlucoseValueDetail.fromJson(
-        json['detail'] as Map<String, dynamic>),
+      json['detail'] as Map<String, dynamic>,
+    ),
     id: json['entegration_id'] as int,
     isManual: json['is_manuel'] as bool,
     deviceUUID: json['device_uuid'] as String,
@@ -25,7 +26,7 @@ Map<String, dynamic> _$BloodGlucoseValueToJson(BloodGlucoseValue instance) =>
       'value': instance.value,
       'value_type': instance.valueType,
       'value_note': instance.valueNote,
-      'detail': instance.detail.toJson(),
+      'detail': instance.detail?.toJson(),
       'is_manuel': instance.isManual,
       'device_uuid': instance.deviceUUID,
     };

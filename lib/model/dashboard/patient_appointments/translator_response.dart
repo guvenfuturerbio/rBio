@@ -1,7 +1,7 @@
 class TranslatorResponse {
-  String language;
-  String name;
-  int id;
+  String? language;
+  String? name;
+  int? id;
 
   TranslatorResponse({
     this.language,
@@ -10,16 +10,16 @@ class TranslatorResponse {
   });
 
   TranslatorResponse.fromJson(Map<String, dynamic> json) {
-    language = json['language'];
-    name = json['name'];
-    id = json['id'];
+    language = json['language'] as String?;
+    name = json['name'] as String?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['language'] = this.language;
-    data['name'] = this.name;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['language'] = language;
+    data['name'] = name;
+    data['id'] = id;
     return data;
   }
 }

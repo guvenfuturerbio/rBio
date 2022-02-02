@@ -1,6 +1,6 @@
 class LaboratoryPdfResultRequest {
-  int visitId;
-  List<int> processes;
+  int? visitId;
+  List<int>? processes;
 
   LaboratoryPdfResultRequest({
     this.processes,
@@ -11,7 +11,7 @@ class LaboratoryPdfResultRequest {
       LaboratoryPdfResultRequest(
         processes:
             (json['processes'] as List<dynamic>).map((e) => e as int).toList(),
-        visitId: json['visitId'] as int,
+        visitId: json['visitId'] as int?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

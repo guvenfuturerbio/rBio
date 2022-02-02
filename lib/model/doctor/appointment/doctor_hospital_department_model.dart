@@ -1,12 +1,12 @@
 import 'hospital_department_model.dart';
 
 class DoctorHospitalDepartmentModel {
-  HospitalDepartmentModel hospitalDepartment;
-  bool areAppointmentsAvailable;
-  bool isSgkAgreementPossible;
-  bool isWebAppointmentAvailable;
-  String doctorLegacyId;
-  int id;
+  HospitalDepartmentModel? hospitalDepartment;
+  bool? areAppointmentsAvailable;
+  bool? isSgkAgreementPossible;
+  bool? isWebAppointmentAvailable;
+  String? doctorLegacyId;
+  int? id;
 
   DoctorHospitalDepartmentModel({
     this.hospitalDepartment,
@@ -19,25 +19,27 @@ class DoctorHospitalDepartmentModel {
 
   DoctorHospitalDepartmentModel.fromJson(Map<String, dynamic> json) {
     hospitalDepartment = json['hospital_department'] != null
-        ? new HospitalDepartmentModel.fromJson(json['hospital_department'])
+        ? HospitalDepartmentModel.fromJson(
+            json['hospital_department'] as Map<String, dynamic>,
+          )
         : null;
-    areAppointmentsAvailable = json['are_appointments_available'];
-    isSgkAgreementPossible = json['is_sgk_agreement_possible'];
-    isWebAppointmentAvailable = json['is_web_appointment_available'];
-    doctorLegacyId = json['doctor_legacy_id'];
-    id = json['id'];
+    areAppointmentsAvailable = json['are_appointments_available'] as bool?;
+    isSgkAgreementPossible = json['is_sgk_agreement_possible'] as bool?;
+    isWebAppointmentAvailable = json['is_web_appointment_available'] as bool?;
+    doctorLegacyId = json['doctor_legacy_id'] as String?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.hospitalDepartment != null) {
-      data['hospital_department'] = this.hospitalDepartment.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (hospitalDepartment != null) {
+      data['hospital_department'] = hospitalDepartment?.toJson();
     }
-    data['are_appointments_available'] = this.areAppointmentsAvailable;
-    data['is_sgk_agreement_possible'] = this.isSgkAgreementPossible;
-    data['is_web_appointment_available'] = this.isWebAppointmentAvailable;
-    data['doctor_legacy_id'] = this.doctorLegacyId;
-    data['id'] = this.id;
+    data['are_appointments_available'] = areAppointmentsAvailable;
+    data['is_sgk_agreement_possible'] = isSgkAgreementPossible;
+    data['is_web_appointment_available'] = isWebAppointmentAvailable;
+    data['doctor_legacy_id'] = doctorLegacyId;
+    data['id'] = id;
     return data;
   }
 }

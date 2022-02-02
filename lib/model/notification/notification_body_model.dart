@@ -1,5 +1,3 @@
-
-
 import 'package:json_annotation/json_annotation.dart';
 part 'notification_body_model.g.dart';
 
@@ -20,21 +18,20 @@ class NotificationBodyModel<T> {
   Map<String, dynamic> toJson() => _$NotificationBodyModelToJson(this);
 }*/
 
-
 @JsonSerializable()
 class PatientRangeChangeBody {
   @JsonKey(name: "from")
-  int fromId;
+  int? fromId;
   @JsonKey(name: "entegration_id")
-  int entegrationId;
+  int? entegrationId;
   @JsonKey(name: "normal_min")
-  double normalMin;
+  double? normalMin;
   @JsonKey(name: "normal_max")
-  double normalMax;
+  double? normalMax;
   @JsonKey(name: "alert_min")
-  double alertMin;
+  double? alertMin;
   @JsonKey(name: "alert_max")
-  double alertMax;
+  double? alertMax;
 
   PatientRangeChangeBody({
     this.fromId,
@@ -42,10 +39,11 @@ class PatientRangeChangeBody {
     this.normalMin,
     this.normalMax,
     this.alertMin,
-    this.alertMax
+    this.alertMax,
   });
 
-  factory PatientRangeChangeBody.fromJson(Map<String, dynamic> json) => _$PatientRangeChangeBodyFromJson(json);
+  factory PatientRangeChangeBody.fromJson(Map<String, dynamic> json) =>
+      _$PatientRangeChangeBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$PatientRangeChangeBodyToJson(this);
 }

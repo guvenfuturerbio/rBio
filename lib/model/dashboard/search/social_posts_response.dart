@@ -1,14 +1,14 @@
 import '../../../core/core.dart';
 
 class SocialPostsResponse {
-  String title;
-  String text;
-  String url;
-  String periodStart;
-  SocialPlatform socialPlatform;
-  List<BlogPostTags> blogPostTags;
-  int id;
-  String imagePath;
+  String? title;
+  String? text;
+  String? url;
+  String? periodStart;
+  SocialPlatform? socialPlatform;
+  List<BlogPostTags>? blogPostTags;
+  int? id;
+  String? imagePath;
 
   SocialPostsResponse({
     this.title,
@@ -22,21 +22,23 @@ class SocialPostsResponse {
   });
 
   SocialPostsResponse.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    text = json['text'];
-    url = json['url'];
-    periodStart = json['period_start'];
+    title = json['title'] as String?;
+    text = json['text'] as String?;
+    url = json['url'] as String?;
+    periodStart = json['period_start'] as String?;
     socialPlatform = json['social_platform'] != null
-        ? new SocialPlatform.fromJson(json['social_platform'])
+        ? SocialPlatform.fromJson(
+            json['social_platform'] as Map<String, dynamic>,
+          )
         : null;
     if (json['blog_post_tags'] != null) {
       blogPostTags = <BlogPostTags>[];
       json['blog_post_tags'].forEach((v) {
-        blogPostTags.add(new BlogPostTags.fromJson(v));
+        blogPostTags?.add(BlogPostTags.fromJson(v as Map<String, dynamic>));
       });
     }
-    id = json['id'];
-    imagePath = fetchImagePaths(socialPlatform.id);
+    id = json['id'] as int?;
+    imagePath = fetchImagePaths(socialPlatform?.id ?? 0) as String?;
   }
 
   fetchImagePaths(int id) {
@@ -63,26 +65,26 @@ class SocialPostsResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['text'] = this.text;
-    data['url'] = this.url;
-    data['period_start'] = this.periodStart;
-    if (this.socialPlatform != null) {
-      data['social_platform'] = this.socialPlatform.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['text'] = text;
+    data['url'] = url;
+    data['period_start'] = periodStart;
+    if (socialPlatform != null) {
+      data['social_platform'] = socialPlatform?.toJson();
     }
     if (this.blogPostTags != null) {
       data['blog_post_tags'] =
-          this.blogPostTags.map((v) => v.toJson()).toList();
+          blogPostTags?.map((v) => v.toJson()).toList() as Map<String, dynamic>;
     }
-    data['id'] = this.id;
+    data['id'] = id;
     return data;
   }
 }
 
 class BlogPostTags {
-  SocialPlatform postTag;
-  int id;
+  SocialPlatform? postTag;
+  int? id;
 
   BlogPostTags({
     this.postTag,
@@ -91,24 +93,24 @@ class BlogPostTags {
 
   BlogPostTags.fromJson(Map<String, dynamic> json) {
     postTag = json['post_tag'] != null
-        ? new SocialPlatform.fromJson(json['post_tag'])
+        ? SocialPlatform.fromJson(json['post_tag'] as Map<String, dynamic>)
         : null;
-    id = json['id'];
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.postTag != null) {
-      data['post_tag'] = this.postTag.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (postTag != null) {
+      data['post_tag'] = postTag?.toJson();
     }
-    data['id'] = this.id;
+    data['id'] = id;
     return data;
   }
 }
 
 class SocialPlatform {
-  String name;
-  int id;
+  String? name;
+  int? id;
 
   SocialPlatform({
     this.name,
@@ -116,14 +118,14 @@ class SocialPlatform {
   });
 
   SocialPlatform.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    id = json['id'];
+    name = json['name'] as String?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['id'] = id;
     return data;
   }
 }

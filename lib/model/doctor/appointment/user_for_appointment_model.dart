@@ -1,10 +1,10 @@
 class UserForAppointmentModel {
-  String name;
-  String surname;
-  String identificationNumber;
-  String passportNumber;
-  String phoneNumber;
-  int id;
+  String? name;
+  String? surname;
+  String? identificationNumber;
+  String? passportNumber;
+  String? phoneNumber;
+  int? id;
 
   UserForAppointmentModel({
     this.name,
@@ -16,22 +16,22 @@ class UserForAppointmentModel {
   });
 
   UserForAppointmentModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    surname = json['surname'];
-    identificationNumber = json['identification_number'];
-    passportNumber = json['passaport_number'];
-    phoneNumber = json['phone_number'];
-    id = json['id'];
+    name = json['name'] as String?;
+    surname = json['surname'] as String?;
+    identificationNumber = json['identification_number'] as String?;
+    passportNumber = json['passaport_number'] as String?;
+    phoneNumber = json['phone_number'] as String?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['surname'] = this.surname;
-    data['identification_number'] = this.identificationNumber;
-    data['passaport_number'] = this.passportNumber;
-    data['phone_number'] = this.phoneNumber;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['surname'] = surname;
+    data['identification_number'] = identificationNumber;
+    data['passaport_number'] = passportNumber;
+    data['phone_number'] = phoneNumber;
+    data['id'] = id;
     return data;
   }
 }

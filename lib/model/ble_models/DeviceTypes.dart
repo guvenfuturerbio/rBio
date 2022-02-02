@@ -1,17 +1,18 @@
 class DeviceConnectionType {
-  String name;
-  String imagePath;
-  bool usesBLE;
-  bool enable;
-  String navigateLink;
-  DeviceType deviceType;
-  DeviceConnectionType(
-      {this.name,
-      this.imagePath,
-      this.usesBLE = true,
-      this.navigateLink,
-      this.deviceType,
-      this.enable});
+  String? name;
+  String? imagePath;
+  bool? usesBLE;
+  bool? enable;
+  String? navigateLink;
+  DeviceType? deviceType;
+  DeviceConnectionType({
+    this.name,
+    this.imagePath,
+    this.usesBLE = true,
+    this.navigateLink,
+    this.deviceType,
+    this.enable,
+  });
 }
 
 enum DeviceType {
@@ -25,7 +26,7 @@ enum DeviceType {
 }
 
 extension DeviceTypeExtension on DeviceType {
-  String get name {
+  String? get name {
     switch (this) {
       case DeviceType.ACCU_CHEK:
         return 'ACCU-CHEK';
@@ -48,7 +49,7 @@ extension DeviceTypeExtension on DeviceType {
 }
 
 extension TypeExtensionOnDevice on String {
-  DeviceType get toType {
+  DeviceType? get toType {
     if (this == 'ACCU-CHEK') {
       return DeviceType.ACCU_CHEK;
     } else if (this == 'Contour Plus One') {
@@ -68,7 +69,7 @@ extension TypeExtensionOnDevice on String {
     }
   }
 
-  DeviceType get fromEnv {
+  DeviceType? get fromEnv {
     if (this == 'ACCU_CHEK') {
       return DeviceType.ACCU_CHEK;
     } else if (this == 'CONTOUR_PLUS_ONE') {

@@ -1,18 +1,18 @@
 class GetBodySublocationResponse {
-  int id;
-  String name;
+  int? id;
+  String? name;
 
   GetBodySublocationResponse({this.id, this.name});
 
   GetBodySublocationResponse.fromJson(Map<String, dynamic> json) {
-    id = json['ID'];
-    name = json['Name'];
+    id = json['ID'] as int?;
+    name = json['Name'] as String?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.id;
-    data['Name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = id;
+    data['Name'] = name;
     return data;
   }
 }

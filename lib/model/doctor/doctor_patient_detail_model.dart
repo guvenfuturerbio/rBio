@@ -7,27 +7,27 @@ import '../treatment_model/treatment_model.dart';
 import 'diabet_type.dart';
 
 class DoctorPatientDetailModel {
-  String name;
-  String birthDay;
-  String gender;
-  String height;
-  String weight;
-  DiabetType diabetType;
-  int rangeMin;
-  int rangeMax;
-  int hyper;
-  int hypo;
-  int target;
-  String imageUrl;
-  String deviceUuid;
-  int entegrationId;
-  bool smoker;
-  int yearOfDiagnosis;
-  int stripCount;
-  int id;
-  String phoneNumber;
-  String identification_number;
-  List<TreatmentModel> treatmentModelList;
+  String? name;
+  String? birthDay;
+  String? gender;
+  String? height;
+  String? weight;
+  DiabetType? diabetType;
+  int? rangeMin;
+  int? rangeMax;
+  int? hyper;
+  int? hypo;
+  int? target;
+  String? imageUrl;
+  String? deviceUuid;
+  int? entegrationId;
+  bool? smoker;
+  int? yearOfDiagnosis;
+  int? stripCount;
+  int? id;
+  String? phoneNumber;
+  String? identification_number;
+  List<TreatmentModel>? treatmentModelList;
   DoctorPatientDetailModel({
     this.name,
     this.birthDay,
@@ -53,27 +53,27 @@ class DoctorPatientDetailModel {
   });
 
   DoctorPatientDetailModel copyWith({
-    String name,
-    String birthDay,
-    String gender,
-    String height,
-    String weight,
-    DiabetType diabetType,
-    int rangeMin,
-    int rangeMax,
-    int hyper,
-    int hypo,
-    int target,
-    String imageUrl,
-    String deviceUuid,
-    int entegrationId,
-    bool smoker,
-    int yearOfDiagnosis,
-    int stripCount,
-    int id,
-    String phoneNumber,
-    String identification_number,
-    List<TreatmentModel> treatmentModelList,
+    String? name,
+    String? birthDay,
+    String? gender,
+    String? height,
+    String? weight,
+    DiabetType? diabetType,
+    int? rangeMin,
+    int? rangeMax,
+    int? hyper,
+    int? hypo,
+    int? target,
+    String? imageUrl,
+    String? deviceUuid,
+    int? entegrationId,
+    bool? smoker,
+    int? yearOfDiagnosis,
+    int? stripCount,
+    int? id,
+    String? phoneNumber,
+    String? identification_number,
+    List<TreatmentModel>? treatmentModelList,
   }) {
     return DoctorPatientDetailModel(
       name: name ?? this.name,
@@ -108,7 +108,7 @@ class DoctorPatientDetailModel {
       'gender': gender,
       'height': height,
       'weight': weight,
-      'diabet_type': diabetType.toJson(),
+      'diabet_type': diabetType?.toJson(),
       'range_min': rangeMin,
       'range_max': rangeMax,
       'hyper': hyper,
@@ -123,34 +123,38 @@ class DoctorPatientDetailModel {
       'id': id,
       'phone_number': phoneNumber,
       'identification_number': identification_number,
-      'treatment_List': treatmentModelList.map((x) => x.toJson()).toList(),
+      'treatment_List': treatmentModelList?.map((x) => x.toJson()).toList(),
     };
   }
 
   factory DoctorPatientDetailModel.fromMap(Map<String, dynamic> map) {
     return DoctorPatientDetailModel(
-      name: map['name'] ?? '',
-      birthDay: map['birth_day'] ?? '',
-      gender: map['gender'] ?? '',
-      height: map['height'] ?? '',
-      weight: map['weight'] ?? '',
-      diabetType: DiabetType.fromJson(map['diabet_type']),
-      rangeMin: map['range_min']?.toInt() ?? 0,
-      rangeMax: map['range_max']?.toInt() ?? 0,
-      hyper: map['hyper']?.toInt() ?? 0,
-      hypo: map['hypo']?.toInt() ?? 0,
-      target: map['target']?.toInt() ?? 0,
-      imageUrl: map['image_url'] ?? '',
-      deviceUuid: map['device_uuid'] ?? '',
-      entegrationId: map['entegrationId']?.toInt() ?? 0,
-      smoker: map['smoker'] ?? false,
-      yearOfDiagnosis: map['year_of_diagnosis']?.toInt() ?? 0,
-      stripCount: map['strip_count']?.toInt() ?? 0,
-      id: map['id']?.toInt() ?? 0,
-      phoneNumber: map['phone_number'] ?? '',
-      identification_number: map['identification_number'] ?? '',
+      name: map['name'] as String?,
+      birthDay: map['birth_day'] as String?,
+      gender: map['gender'] as String?,
+      height: map['height'] as String?,
+      weight: map['weight'] as String?,
+      diabetType:
+          DiabetType.fromJson(map['diabet_type'] as Map<String, dynamic>),
+      rangeMin: map['range_min'] as int?,
+      rangeMax: map['range_max'] as int?,
+      hyper: map['hyper'] as int?,
+      hypo: map['hypo'] as int?,
+      target: map['target'] as int?,
+      imageUrl: map['image_url'] as String?,
+      deviceUuid: map['device_uuid'] as String?,
+      entegrationId: map['entegrationId'] as int?,
+      smoker: map['smoker'] as bool?,
+      yearOfDiagnosis: map['year_of_diagnosis'] as int?,
+      stripCount: map['strip_count'] as int?,
+      id: map['id'] as int?,
+      phoneNumber: map['phone_number'] as String?,
+      identification_number: map['identification_number'] as String?,
       treatmentModelList: List<TreatmentModel>.from(
-          map['treatment_list']?.map((x) => TreatmentModel.fromJson(x))),
+        map['treatment_list']
+                ?.map((x) => TreatmentModel.fromJson(x as Map<String, dynamic>))
+            as Iterable<dynamic>,
+      ),
     );
   }
 

@@ -2,10 +2,10 @@ import 'department_model.dart';
 import 'hospital_model.dart';
 
 class HospitalDepartmentModel {
-  DepartmentModel department;
-  HospitalModel hospital;
-  String legacyId;
-  int id;
+  DepartmentModel? department;
+  HospitalModel? hospital;
+  String? legacyId;
+  int? id;
 
   HospitalDepartmentModel({
     this.department,
@@ -16,25 +16,25 @@ class HospitalDepartmentModel {
 
   HospitalDepartmentModel.fromJson(Map<String, dynamic> json) {
     department = json['department'] != null
-        ? new DepartmentModel.fromJson(json['department'])
+        ? DepartmentModel.fromJson(json['department'] as Map<String, dynamic>)
         : null;
     hospital = json['hospital'] != null
-        ? new HospitalModel.fromJson(json['hospital'])
+        ? HospitalModel.fromJson(json['hospital'] as Map<String, dynamic>)
         : null;
-    legacyId = json['legacy_id'];
-    id = json['id'];
+    legacyId = json['legacy_id'] as String?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.department != null) {
-      data['department'] = this.department.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (department != null) {
+      data['department'] = department?.toJson();
     }
-    if (this.hospital != null) {
-      data['hospital'] = this.hospital.toJson();
+    if (hospital != null) {
+      data['hospital'] = hospital?.toJson();
     }
-    data['legacy_id'] = this.legacyId;
-    data['id'] = this.id;
+    data['legacy_id'] = legacyId;
+    data['id'] = id;
     return data;
   }
 }

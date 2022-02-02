@@ -1,7 +1,7 @@
 class GetVideoCallPriceRequest {
-  int resourceId;
-  int tenantId;
-  int departmentId;
+  int? resourceId;
+  int? tenantId;
+  int? departmentId;
 
   GetVideoCallPriceRequest({
     this.resourceId,
@@ -11,9 +11,9 @@ class GetVideoCallPriceRequest {
 
   factory GetVideoCallPriceRequest.fromJson(Map<String, dynamic> json) =>
       GetVideoCallPriceRequest(
-        resourceId: json['resourceId'] as int,
-        tenantId: json['tenantId'] as int,
-        departmentId: json['departmentId'] as int,
+        resourceId: json['resourceId'] as int?,
+        tenantId: json['tenantId'] as int?,
+        departmentId: json['departmentId'] as int?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

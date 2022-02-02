@@ -1,7 +1,7 @@
 class PatientAppointmentRequest {
-  int patientId;
-  String from;
-  String to;
+  int? patientId;
+  String? from;
+  String? to;
 
   PatientAppointmentRequest({
     this.patientId,
@@ -11,9 +11,9 @@ class PatientAppointmentRequest {
 
   factory PatientAppointmentRequest.fromJson(Map<String, dynamic> json) =>
       PatientAppointmentRequest(
-        patientId: json['patientId'] as int,
-        from: json['from'] as String,
-        to: json['to'] as String,
+        patientId: json['patientId'] as int?,
+        from: json['from'] as String?,
+        to: json['to'] as String?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

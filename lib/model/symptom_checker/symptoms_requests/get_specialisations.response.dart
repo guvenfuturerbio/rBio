@@ -1,24 +1,24 @@
 class GetSpecialisationsResponse {
-  int id;
-  String name;
+  int? id;
+  String? name;
   dynamic accuracy;
-  int ranking;
+  int? ranking;
 
   GetSpecialisationsResponse({this.id, this.name, this.accuracy, this.ranking});
 
   GetSpecialisationsResponse.fromJson(Map<String, dynamic> json) {
-    id = json['ID'];
-    name = json['Name'];
-    accuracy = json['Accuracy'];
-    ranking = json['Ranking'];
+    id = json['ID'] as int?;
+    name = json['Name'] as String?;
+    accuracy = json['Accuracy'] as dynamic;
+    ranking = json['Ranking'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.id;
-    data['Name'] = this.name;
-    data['Accuracy'] = this.accuracy;
-    data['Ranking'] = this.ranking;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = id;
+    data['Name'] = name;
+    data['Accuracy'] = accuracy;
+    data['Ranking'] = ranking;
     return data;
   }
 }

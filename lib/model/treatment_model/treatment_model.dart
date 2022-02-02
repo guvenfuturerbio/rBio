@@ -22,14 +22,14 @@ class TreatmentModel {
   TreatmentModel.fromJson(Map<String, dynamic> json) {
     treatment = json['treatment']?.toString();
     createDate = json['create_date'] != null
-        ? DateTime.parse(json['create_date'])
+        ? DateTime.parse(json['create_date'] as String) as DateTime?
         : DateTime.now();
-    id = json['id']?.toInt();
+    id = json['id']?.toInt() as int?;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['treatment'] = treatment;
-    data['create_date'] = createDate.toIso8601String();
+    data['create_date'] = createDate?.toIso8601String();
     data['id'] = id;
     return data;
   }
