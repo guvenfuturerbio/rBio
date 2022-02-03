@@ -27,7 +27,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     String token,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_saveAndRetrieveToken,
+      R.endpoints.ctSaveAndRetrieveToken,
       saveAndRetrieveToken.toJson(),
       options: Options(
         headers: {'Authorization': token, 'Lang': Intl.getCurrentLocale()},
@@ -46,7 +46,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     String deviceUUID,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.ct_getUserStrip(entegrationId, deviceUUID),
+      R.endpoints.ctGetUserStrip(entegrationId, deviceUUID),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -61,7 +61,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     BloodGlucoseValue bodyPages,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_insertNewBloodGlucoseValue,
+      R.endpoints.ctInsertNewBloodGlucoseValue,
       bodyPages.toJson(),
       options: authOptions,
     );
@@ -77,7 +77,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     DeleteBloodGlucoseMeasurementRequest deleteBloodGlucoseMeasurementRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_deleteBloodGlucoseValue,
+      R.endpoints.ctDeleteBloodGlucoseValue,
       deleteBloodGlucoseMeasurementRequest.toJson(),
       options: authOptions,
     );
@@ -93,7 +93,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     UpdateBloodGlucoseMeasurementRequest updateBloodGlucoseMeasurementRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_updateBloodGlucoseValue,
+      R.endpoints.ctUpdateBloodGlucoseValue,
       updateBloodGlucoseMeasurementRequest.toJson(),
       options: authOptions,
     );
@@ -116,7 +116,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       "file": await MultipartFile.fromFile(file, filename: fileName),
     });
     final response = await helper.postGuven(
-      R.endpoints.ct_uploadMeasurementImage(entegrationId, measurementId),
+      R.endpoints.ctUploadMeasurementImage(entegrationId, measurementId),
       formData,
       options: authOptions..headers?.addAll($headers),
     );
@@ -132,7 +132,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     BloodGlucoseReportBody bloodGlucoseReportBody,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_getBloodGlucoseReport,
+      R.endpoints.ctGetBloodGlucoseReport,
       bloodGlucoseReportBody.toJson(),
       options: authOptions,
     );
@@ -148,7 +148,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPersonData,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_getBloodGlucoseDataOfPerson,
+      R.endpoints.ctGetBloodGlucoseDataOfPerson,
       getBloodGlucoseDataOfPersonData.toJson(),
       options: authOptions,
     );
@@ -164,7 +164,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<List<Person>> getAllProfiles() async {
     final response = await helper.getGuven(
-      R.endpoints.ct_getAllProfiles,
+      R.endpoints.ctGetAllProfiles,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -180,7 +180,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> addProfile(Person person) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_addProfile,
+      R.endpoints.ctAddProfile,
       person.toJson(),
       options: authOptions,
     );
@@ -194,7 +194,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> changeProfile(int userId) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_changeProfile(userId),
+      R.endpoints.ctChangeProfile(userId),
       {},
       options: authOptions,
     );
@@ -208,7 +208,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> deleteProfile(int userId) async {
     final response = await helper.deleteGuven(
-      R.endpoints.ct_changeProfile(userId),
+      R.endpoints.ctChangeProfile(userId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -223,7 +223,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     AddFirebaseToken addFirebaseToken,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_addFirebaseToken,
+      R.endpoints.ctAddFirebaseToken,
       addFirebaseToken.toJson(),
       options: authOptions,
     );
@@ -237,7 +237,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> updateProfile(Person person, int id) async {
     final response = await helper.patchGuven(
-      R.endpoints.ct_updateProfile(id),
+      R.endpoints.ctUpdateProfile(id),
       data: person.toJson(),
       options: authOptions,
     );
@@ -254,7 +254,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     String treatment,
   ) async {
     final response = await helper.patchGuven(
-      R.endpoints.ct_updateProfile(person.id),
+      R.endpoints.ctUpdateProfile(person.id),
       data: person.toJson(treatment: treatment),
       options: authOptions,
     );
@@ -268,7 +268,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> setDefaultProfile(Person person) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_setDefaultProfile,
+      R.endpoints.ctSetDefaultProfile,
       person.toJson(),
       options: authOptions,
     );
@@ -284,7 +284,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     StripDetailModel stripDetailModel,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_updateUserStrip,
+      R.endpoints.ctUpdateUserStrip,
       stripDetailModel.toJson(),
       options: authOptions,
     );
@@ -298,7 +298,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> deleteUserStrip(int id, int entegrationId) async {
     final response = await helper.deleteGuven(
-      R.endpoints.ct_deleteUserStrip(id, entegrationId),
+      R.endpoints.ctDeleteUserStrip(id, entegrationId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -314,7 +314,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     int entegrationId,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.ct_isDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
+      R.endpoints.ctIsDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -332,7 +332,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     int entegrationId,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_addHospitalHba1cMeasurement(entegrationId),
+      R.endpoints.ctAddHospitalHba1cMeasurement(entegrationId),
       hospitalHba1cMeasurementModel.toJson(),
       options: authOptions,
     );
@@ -351,7 +351,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     int entegrationId,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_getHba1cMeasurementList(entegrationId),
+      R.endpoints.ctGetHba1cMeasurementList(entegrationId),
       getHba1cMeasurementListModel.toJson(),
       options: authOptions,
     );
@@ -365,7 +365,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> getMedicineByFilter(String text) async {
     final response = await helper.getGuven(
-      R.endpoints.ct_getMedicineByFilter(text),
+      R.endpoints.ctGetMedicineByFilter(text),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -380,7 +380,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     AddScaleMasurementBody addScaleMasurementBody,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_insertNewScaleValue,
+      R.endpoints.ctInsertNewScaleValue,
       addScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -396,7 +396,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     DeleteScaleMasurementBody deleteScaleMasurementBody,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_deleteScaleMeasurement,
+      R.endpoints.ctDeleteScaleMeasurement,
       deleteScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -412,7 +412,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     GetScaleMasurementBody getScaleMasurementBody,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_getScaleMeasurement,
+      R.endpoints.ctGetScaleMeasurement,
       getScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -428,7 +428,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     UpdateScaleMasurementBody updateScaleMasurementBody,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_updateScaleMeasurement,
+      R.endpoints.ctUpdateScaleMeasurement,
       updateScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -444,7 +444,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     DeleteBpMeasurements deleteBpMeasurements,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_deleteBpMeasurement,
+      R.endpoints.ctDeleteBpMeasurement,
       deleteBpMeasurements.toJson(),
       options: authOptions,
     );
@@ -460,7 +460,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     GetBpMeasurements getBpMeasurements,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_getBpMeasurement,
+      R.endpoints.ctGetBpMeasurement,
       getBpMeasurements.toJson(),
       options: authOptions,
     );
@@ -476,7 +476,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     AddBpWithDetail addBpWithDetail,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_insertNewBpValue,
+      R.endpoints.ctInsertNewBpValue,
       addBpWithDetail.toJson(),
       options: authOptions,
     );
@@ -492,7 +492,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     UpdateBpMeasurements updateBpMeasurements,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_updateBpMeasurement,
+      R.endpoints.ctUpdateBpMeasurement,
       updateBpMeasurements.toJson(),
       options: authOptions,
     );

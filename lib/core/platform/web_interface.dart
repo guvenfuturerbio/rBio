@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 
 class MobileWebInterface {
   static void registerViewFactory(String viewId, dynamic cb) {
-  
     ui.platformViewRegistry.registerViewFactory(viewId, cb);
   }
 

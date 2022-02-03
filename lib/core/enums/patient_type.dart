@@ -14,5 +14,5 @@ extension PatientTypeStringExt on String {
 }
 
 extension PatientTypeExt on PatientType {
-  String get xRawValue => GetEnumValue(this);
+  String get xRawValue => getEnumValue(this);
 }

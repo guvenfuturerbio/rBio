@@ -93,15 +93,15 @@ abstract class IDioHelper {
 extension DioHelperExtension on IDioHelper {
   // #region GetResponseResult
   dynamic getResponseResult<T extends IBaseModel, R>(
-      dynamic data, T? parserModel, bool? isJsonDecode) {
+      dynamic data, T? parserModel, bool isJsonDecode) {
     if (parserModel == null) return data;
 
     dynamic model;
 
     if (isJsonDecode) {
-      model = ParseModel<R, T>(jsonDecode(data), parserModel);
+      model = parseModel<R, T>(jsonDecode(data), parserModel);
     } else {
-      model = ParseModel<R, T>(data, parserModel);
+      model = parseModel<R, T>(data, parserModel);
     }
 
     return model;
@@ -109,7 +109,7 @@ extension DioHelperExtension on IDioHelper {
   // #endregion
 }
 
-R ParseModel<R, T extends IBaseModel>(dynamic responseBody, T model) {
+R parseModel<R, T extends IBaseModel>(dynamic responseBody, T model) {
   if (responseBody is List) {
     return responseBody.map((data) => model.fromJson(data)).cast<T>().toList()
         as R;
@@ -149,6 +149,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
 
     httpClientAdapter = MobileWebInterface.getAdapter();
     final newAdapter = MobileWebInterface.onHttpClientCreate(httpClientAdapter);
+
     if (newAdapter != null) {
       httpClientAdapter = newAdapter;
     }
@@ -223,7 +224,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
           final statusCode = error.response?.statusCode;
           if (statusCode != null) {
             if (statusCode == 401) {
-              if (!Atom.url.contains(PagePaths.LOGIN)) {
+              if (!Atom.url.contains(PagePaths.login)) {
                 final password = getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.loginPassword);
                 final userName = getIt<ISharedPreferencesManager>()
@@ -232,7 +233,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                 if (password != null && userName != null) {
                   if (R.endpoints.loginPath
                       .contains(error.response!.requestOptions.uri.path)) {
-                    Atom.to(PagePaths.LOGIN, isReplacement: true);
+                    Atom.to(PagePaths.login, isReplacement: true);
                   } else {
                     try {
                       await getIt<UserManager>().login(userName, password);
@@ -269,7 +270,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                     }
                   }
                 } else {
-                  Atom.to(PagePaths.LOGIN, isReplacement: true);
+                  Atom.to(PagePaths.login, isReplacement: true);
                 }
               }
             }
@@ -296,10 +297,10 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       path,
       isJsonDecode: false,
       parseModel: GuvenResponseModel(),
-      queryParameters: queryParameters as Map<String, dynamic>?,
-      options: options as Options?,
-      cancelToken: cancelToken as CancelToken?,
-      onReceiveProgress: onReceiveProgress as Function(int, int)?,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 
@@ -330,9 +331,9 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   Future<GuvenResponseModel> deleteGuven(
     String path, {
     data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
   }) async {
     final response = await dioDelete(
       path,
@@ -349,11 +350,11 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   Future<GuvenResponseModel> patchGuven(
     String path, {
     dynamic data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    void Function(int, int) onSendProgress,
-    void Function(int, int) onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
     final response = await dioPatch(
       path,
@@ -395,11 +396,12 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         }
       }
 
-      return getResponseResult<T, R>(response.data, parseModel, isJsonDecode);
+      return getResponseResult<T, R>(
+          response.data, parseModel, isJsonDecode ?? false);
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw FormatException('Unable to process the data');
+      throw const FormatException('Unable to process the data');
     } catch (e) {
       rethrow;
     }
@@ -411,11 +413,11 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   Future dioPost(
     String path,
     dynamic data, {
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onSendProgress,
-    ProgressCallback onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     try {
       final response = await post(
@@ -428,8 +430,9 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      if (response.statusCode < HttpStatus.ok ||
-          response.statusCode > HttpStatus.badRequest) {
+      if (response.statusCode == null ||
+          response.statusCode! < HttpStatus.ok ||
+          response.statusCode! > HttpStatus.badRequest) {
         throw Exception('POST | ${response.data}');
       }
 
@@ -437,7 +440,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw FormatException('Unable to process the data');
+      throw const FormatException('Unable to process the data');
     } catch (e) {
       rethrow;
     }
@@ -449,9 +452,9 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   Future dioDelete(
     String path, {
     data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
   }) async {
     try {
       final response = await delete(
@@ -462,8 +465,9 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         cancelToken: cancelToken,
       );
 
-      if (response.statusCode < HttpStatus.ok ||
-          response.statusCode > HttpStatus.badRequest) {
+      if (response.statusCode == null ||
+          response.statusCode! < HttpStatus.ok ||
+          response.statusCode! > HttpStatus.badRequest) {
         throw Exception('DELETE | ${response.data}');
       }
 
@@ -471,7 +475,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw FormatException('Unable to process the data');
+      throw const FormatException('Unable to process the data');
     } catch (e) {
       rethrow;
     }
@@ -483,11 +487,11 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   Future dioPatch(
     String path, {
     dynamic data,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    void Function(int, int) onSendProgress,
-    void Function(int, int) onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
     try {
       final response = await patch(
@@ -500,8 +504,9 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      if (response.statusCode < HttpStatus.ok ||
-          response.statusCode > HttpStatus.badRequest) {
+      if (response.statusCode == null ||
+          response.statusCode! < HttpStatus.ok ||
+          response.statusCode! > HttpStatus.badRequest) {
         throw Exception('PATCH | ${response.data}');
       }
 
@@ -509,7 +514,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw FormatException('Unable to process the data');
+      throw const FormatException('Unable to process the data');
     } catch (e) {
       rethrow;
     }

@@ -140,7 +140,7 @@ class GuvenAlert extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        gradient: AppGradient(),
+        gradient: appGradient(),
         borderRadius: BorderRadius.circular(8),
       ),
       child: FlatButton(

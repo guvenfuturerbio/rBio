@@ -23,15 +23,13 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> checkChatNotification(RemoteMessage message) async {
   final messageData = message.data;
-  if (messageData != null) {
-    final type = messageData['type'];
-    if (type == NotificationType.chat.xRawValue) {
-      final sharedPreferences = await SharedPreferences.getInstance();
-      await sharedPreferences.setBool(
-        SharedPreferencesKeys.chatNotification.xRawValue,
-        true,
-      );
-    }
+  final type = messageData['type'];
+  if (type == NotificationType.chat.xRawValue) {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setBool(
+      SharedPreferencesKeys.chatNotification.xRawValue,
+      true,
+    );
   }
 }
 
@@ -71,13 +69,13 @@ class FirebaseMessagingManager {
     if (!kIsWeb) {
       const AndroidInitializationSettings initializationSettingsAndroid =
           AndroidInitializationSettings('@mipmap/ic_launcher');
-      final IOSInitializationSettings initializationSettingsIOS =
+      const IOSInitializationSettings initializationSettingsIOS =
           IOSInitializationSettings(
         requestAlertPermission: true,
         requestBadgePermission: true,
         requestSoundPermission: true,
       );
-      final InitializationSettings initializationSettings =
+      const InitializationSettings initializationSettings =
           InitializationSettings(
         android: initializationSettingsAndroid,
         iOS: initializationSettingsIOS,
@@ -132,7 +130,7 @@ class FirebaseMessagingManager {
 
           // Uygulama Ekranda Açıkken
           FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-            if (!kIsWeb && message != null) {
+            if (!kIsWeb) {
               if (Atom.isAndroid) {
                 final ChatPerson otherPerson = ChatPerson.fromMap(
                     json.decode(message.data['chatPerson'] as String)
@@ -151,9 +149,7 @@ class FirebaseMessagingManager {
 
           // Uygulama Arkaplanda Açıkken
           FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-            if (message != null) {
-              clickDataHandler(message.data);
-            }
+            clickDataHandler(message.data);
           });
 
           // Uygulama Kapalı İken.
@@ -223,7 +219,7 @@ class FirebaseMessagingManager {
       title,
       body,
       NotificationDetails(
-        iOS: IOSNotificationDetails(sound: 'chat_bildirim.aiff'),
+        iOS: const IOSNotificationDetails(sound: 'chat_bildirim.aiff'),
         android: AndroidNotificationDetails(
           androidNotificationChannel.id,
           androidNotificationChannel.name,
@@ -310,7 +306,7 @@ class FirebaseMessagingManager {
 
 extension on AndroidDeviceInfo {
   String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
+    Map<String, dynamic> jsonMap = {};
     jsonMap.addAll({
       "android_id": androidId,
       "is_physical_device": isPhysicalDevice,
@@ -336,7 +332,7 @@ extension on AndroidDeviceInfo {
 
 extension on IosDeviceInfo {
   String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
+    Map<String, dynamic> jsonMap = {};
     jsonMap.addAll({
       "name": name,
       "systemName": systemName,
@@ -367,5 +363,5 @@ extension NotificationTypeStringExt on String {
 }
 
 extension NotificationTypeExt on NotificationType {
-  String get xRawValue => GetEnumValue(this);
+  String get xRawValue => getEnumValue(this);
 }
