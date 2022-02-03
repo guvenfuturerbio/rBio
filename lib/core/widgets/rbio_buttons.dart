@@ -6,17 +6,17 @@ import '../core.dart';
 // #region RbioElevatedButton
 class RbioElevatedButton extends StatelessWidget {
   final String title;
-  final FontWeight fontWeight;
-  final VoidCallback onTap;
+  final FontWeight? fontWeight;
+  final void Function()? onTap;
   final bool infinityWidth;
-  final Color backColor;
-  final Color textColor;
+  final Color? backColor;
+  final Color? textColor;
   final bool showElevation;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   const RbioElevatedButton({
-    Key key,
-    this.title,
+    Key? key,
+    required this.title,
     this.onTap,
     this.fontWeight,
     this.infinityWidth = false,
@@ -50,9 +50,9 @@ class RbioElevatedButton extends StatelessWidget {
               fontWeight: fontWeight,
               fontSize: R.sizes.textScaleHandler<double>(
                 context,
-                small: context.xHeadline3.fontSize,
-                medium: context.xHeadline4.fontSize,
-                large: context.xHeadline5.fontSize,
+                small: context.xHeadline3.fontSize ?? 24,
+                medium: context.xHeadline4.fontSize ?? 24,
+                large: context.xHeadline5.fontSize ?? 24,
               ),
             ),
           ),
@@ -75,17 +75,17 @@ class RbioElevatedButton extends StatelessWidget {
 
 class RbioElevatedAutoButton extends StatelessWidget {
   final String title;
-  final FontWeight fontWeight;
-  final VoidCallback onTap;
+  final FontWeight? fontWeight;
+  final void Function()? onTap;
   final bool infinityWidth;
-  final Color backColor;
-  final Color textColor;
+  final Color? backColor;
+  final Color? textColor;
   final bool showElevation;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   const RbioElevatedAutoButton({
-    Key key,
-    this.title,
+    Key? key,
+    required this.title,
     this.onTap,
     this.fontWeight,
     this.infinityWidth = false,

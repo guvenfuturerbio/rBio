@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioCountryCodePicker extends StatelessWidget {
-  final String initialSelection;
-  final void Function(CountryCode countryCode) onChanged;
+  final String? initialSelection;
+  final void Function(CountryCode countryCode)? onChanged;
   final bool isActiveBorder;
 
   const RbioCountryCodePicker({
-    Key key,
+    Key? key,
     this.initialSelection,
     this.onChanged,
     this.isActiveBorder = false,
@@ -32,7 +32,7 @@ class RbioCountryCodePicker extends StatelessWidget {
       child: CountryCodePicker(
         onChanged: onChanged,
         initialSelection: initialSelection ?? 'TR',
-        favorite: ['+90', 'TR'],
+        favorite: const ['+90', 'TR'],
 
         //
         alignLeft: false,
@@ -53,10 +53,10 @@ class RbioCountryCodePicker extends StatelessWidget {
         ),
         searchDecoration: Utils.instance.inputDecorationForLogin(
           hintText: '',
-          contentPadding: EdgeInsets.all(8),
+          contentPadding: const EdgeInsets.all(8),
           inputBorder: RbioTextFormField.activeBorder(),
         ),
-        flagDecoration: BoxDecoration(),
+        flagDecoration: const BoxDecoration(),
         textStyle: context.xHeadline4,
         dialogTextStyle: context.xHeadline4,
         dialogSize: Size.fromHeight(Atom.height * 0.60),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/dashboard/not_chronic_screen.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../core/core.dart';
@@ -13,11 +12,11 @@ import 'dashboard_screen.dart';
 class DashboardNavigation extends VRouteElementBuilder {
   DashboardNavigation();
 
-  static final String search = 'search';
-  static final String chat = 'chat';
-  static final String home = '';
-  static final String graph = 'graph';
-  static final String notifications = 'notifications';
+  static String search = 'search';
+  static String chat = 'chat';
+  static String home = '';
+  static String graph = 'graph';
+  static String notifications = 'notifications';
 
   static void toSearch(BuildContext context) => Atom.to('/home/$search');
   static void toChat(BuildContext context) => Atom.to('/home/$chat');
@@ -37,7 +36,7 @@ class DashboardNavigation extends VRouteElementBuilder {
           Widget child,
         ) {
           return DashboardScreen(
-             child,
+            child,
             getCurrent(state),
           );
         },
@@ -50,25 +49,22 @@ class DashboardNavigation extends VRouteElementBuilder {
 
           //
           VWidget(
-            path: chat,
-            name: chat,
-            widget: 
-                 ConsultationScreen(fromBottomBar: true)
-
-          ),
+              path: chat,
+              name: chat,
+              widget: ConsultationScreen(fromBottomBar: true)),
 
           //
           VWidget(
             path: home,
             name: home,
-            widget: HomeScreen(),
+            widget: const HomeScreen(),
           ),
 
           //
           VWidget(
               path: graph,
               name: graph,
-              widget: MeasurementTrackingHomeScreen(fromBottomBar: true)),
+              widget: const MeasurementTrackingHomeScreen(fromBottomBar: true)),
 
           //
           VWidget(

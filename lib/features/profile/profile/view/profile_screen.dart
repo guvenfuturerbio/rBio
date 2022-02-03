@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../viewmodel/profile_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();

@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 class RbioLoadingOverlay extends StatefulWidget {
   final bool isLoading;
   final double opacity;
-  final Color color;
+  final Color? color;
   final Widget progressIndicator;
   final Widget child;
 
-  RbioLoadingOverlay({
-    @required this.isLoading,
-    @required this.child,
+  const RbioLoadingOverlay({
+    Key? key,
+    required this.isLoading,
+    required this.child,
     this.opacity = 0.5,
     this.progressIndicator = const CircularProgressIndicator(),
     this.color,
-  });
+  }) : super(key: key);
 
   @override
   _RbioLoadingOverlayState createState() => _RbioLoadingOverlayState();
@@ -21,16 +22,18 @@ class RbioLoadingOverlay extends StatefulWidget {
 
 class _RbioLoadingOverlayState extends State<RbioLoadingOverlay>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
-  bool _overlayVisible;
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late bool _overlayVisible;
 
   @override
   void initState() {
     super.initState();
     _overlayVisible = false;
-    _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _animation.addStatusListener((status) {
       // ignore: unnecessary_statements

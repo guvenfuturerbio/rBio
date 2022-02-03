@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioSelectBottomSheet<T> extends StatelessWidget {
-  final initalItem;
+  final dynamic initalItem;
   final List<Widget> children;
   final Function(dynamic) onSelectedItemChanged;
-  final Function pick;
+  final void Function()? pick;
 
   const RbioSelectBottomSheet({
-    Key key,
-    @required this.onSelectedItemChanged,
-    @required this.children,
-    @required this.initalItem,
-    @required this.pick,
+    Key? key,
+    required this.onSelectedItemChanged,
+    required this.children,
+    required this.initalItem,
+    required this.pick,
   }) : super(key: key);
 
   @override
@@ -31,7 +31,7 @@ class RbioSelectBottomSheet<T> extends StatelessWidget {
           _buildHeader(context),
 
           //
-          Divider(
+          const Divider(
             color: Colors.black26,
             height: 0,
           ),
@@ -55,7 +55,7 @@ class RbioSelectBottomSheet<T> extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

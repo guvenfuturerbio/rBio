@@ -4,29 +4,29 @@ import 'package:flutter/services.dart';
 import '../core.dart';
 
 class RbioTextFormField extends StatelessWidget {
-  final FocusNode focusNode;
-  final TextEditingController controller;
-  final bool autocorrect;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
-  final String hintText;
-  final String labelText;
-  final List<TextInputFormatter> inputFormatters;
-  final void Function(String) onFieldSubmitted;
-  final bool obscureText;
-  final bool enableSuggestions;
-  final void Function(String) onChanged;
-  final EdgeInsetsGeometry contentPadding;
-  final InputBorder border;
-  final String initialValue;
-  final int maxLines;
-  final Widget prefixIcon;
-  final int maxLength;
-  final bool enabled;
-  final Widget suffixIcon;
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
+  final bool? autocorrect;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final String? hintText;
+  final String? labelText;
+  final List<TextInputFormatter>? inputFormatters;
+  final void Function(String)? onFieldSubmitted;
+  final bool? obscureText;
+  final bool? enableSuggestions;
+  final void Function(String)? onChanged;
+  final EdgeInsetsGeometry? contentPadding;
+  final InputBorder? border;
+  final String? initialValue;
+  final int? maxLines;
+  final Widget? prefixIcon;
+  final int? maxLength;
+  final bool? enabled;
+  final Widget? suffixIcon;
 
   const RbioTextFormField({
-    Key key,
+    Key? key,
     this.maxLength,
     this.prefixIcon,
     this.initialValue,
@@ -59,10 +59,10 @@ class RbioTextFormField extends StatelessWidget {
       style: Utils.instance.inputTextStyle(),
       focusNode: focusNode,
       controller: controller,
-      autocorrect: autocorrect,
+      autocorrect: autocorrect ?? true,
       enabled: enabled,
-      enableSuggestions: enableSuggestions,
-      obscureText: obscureText,
+      enableSuggestions: enableSuggestions ?? true,
+      obscureText: obscureText ?? false,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       decoration: defaultDecoration(
@@ -83,20 +83,20 @@ class RbioTextFormField extends StatelessWidget {
 
   static InputDecoration defaultDecoration(
     BuildContext context, {
-    String hintText,
-    String labelText,
-    EdgeInsetsGeometry contentPadding,
-    InputBorder border,
-    Widget prefixIcon,
-    Widget suffixIcon,
+    String? hintText,
+    String? labelText,
+    EdgeInsetsGeometry? contentPadding,
+    InputBorder? border,
+    Widget? prefixIcon,
+    Widget? suffixIcon,
   }) {
     return Utils.instance
         .inputDecorationForLogin(
           hintText: hintText,
           labelText: labelText,
-          contentPadding: context.xTextScaleType == TextScaleType.Small
+          contentPadding: context.xTextScaleType == TextScaleType.small
               ? contentPadding
-              : EdgeInsets.only(left: 8),
+              : const EdgeInsets.only(left: 8),
           inputBorder: border ?? defaultBorder(),
           prefixIcon: prefixIcon,
         )

@@ -52,9 +52,9 @@ enum PointsMode {
 /// given [fallbackWidth] and [fallbackHeight].
 class Sparkline extends StatelessWidget {
   /// Creates a widget that represents provided [data] in a Sparkline chart.
-  Sparkline({
-    Key key,
-    @required this.data,
+  const Sparkline({
+    Key? key,
+    required this.data,
     this.lineWidth = 2.0,
     this.lineColor = Colors.lightBlue,
     this.lineGradient,
@@ -67,18 +67,7 @@ class Sparkline extends StatelessWidget {
     this.fillGradient,
     this.fallbackHeight = 100.0,
     this.fallbackWidth = 300.0,
-  })  : assert(data != null),
-        assert(lineWidth != null),
-        assert(lineColor != null),
-        assert(pointsMode != null),
-        assert(pointSize != null),
-        assert(pointColor != null),
-        assert(sharpCorners != null),
-        assert(fillMode != null),
-        assert(fillColor != null),
-        assert(fallbackHeight != null),
-        assert(fallbackWidth != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// List of values to be represented by the sparkline.
   ///
@@ -103,7 +92,7 @@ class Sparkline extends StatelessWidget {
   /// A gradient to use when coloring the sparkline.
   ///
   /// If this is specified, [lineColor] has no effect.
-  final Gradient lineGradient;
+  final Gradient? lineGradient;
 
   /// Determines how individual data points should be drawn over the sparkline.
   ///
@@ -141,7 +130,7 @@ class Sparkline extends StatelessWidget {
   /// A gradient to use when filling the chart, as determined by [fillMode].
   ///
   /// If this is specified, [fillColor] has no effect.
-  final Gradient fillGradient;
+  final Gradient? fillGradient;
 
   /// The width to use when the sparkline is in a situation with an unbounded
   /// width.
@@ -161,12 +150,12 @@ class Sparkline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new LimitedBox(
+    return LimitedBox(
       maxWidth: fallbackWidth,
       maxHeight: fallbackHeight,
-      child: new CustomPaint(
+      child: CustomPaint(
         size: Size.infinite,
-        painter: new _SparklinePainter(
+        painter: _SparklinePainter(
           data,
           lineWidth: lineWidth,
           lineColor: lineColor,
@@ -187,16 +176,16 @@ class Sparkline extends StatelessWidget {
 class _SparklinePainter extends CustomPainter {
   _SparklinePainter(
     this.dataPoints, {
-    @required this.lineWidth,
-    @required this.lineColor,
+    required this.lineWidth,
+    required this.lineColor,
     this.lineGradient,
-    @required this.sharpCorners,
-    @required this.fillMode,
-    @required this.fillColor,
+    required this.sharpCorners,
+    required this.fillMode,
+    required this.fillColor,
     this.fillGradient,
-    @required this.pointsMode,
-    @required this.pointSize,
-    @required this.pointColor,
+    required this.pointsMode,
+    required this.pointSize,
+    required this.pointColor,
   })  : _max = dataPoints.reduce(math.max),
         _min = dataPoints.reduce(math.min);
 
@@ -204,13 +193,13 @@ class _SparklinePainter extends CustomPainter {
 
   final double lineWidth;
   final Color lineColor;
-  final Gradient lineGradient;
+  final Gradient? lineGradient;
 
   final bool sharpCorners;
 
   final FillMode fillMode;
   final Color fillColor;
-  final Gradient fillGradient;
+  final Gradient? fillGradient;
 
   final PointsMode pointsMode;
   final double pointSize;
@@ -229,8 +218,8 @@ class _SparklinePainter extends CustomPainter {
     final Path path = Path();
     final List<Offset> points = <Offset>[];
 
-    Offset startPoint;
-    Offset lastPoint;
+    late Offset startPoint;
+    late Offset lastPoint;
 
     for (int i = 0; i < dataPoints.length; i++) {
       double x = i * widthNormalizer + lineWidth / 2;
@@ -265,7 +254,7 @@ class _SparklinePainter extends CustomPainter {
 
     if (lineGradient != null) {
       final Rect lineRect = Rect.fromLTWH(0.0, 0.0, width, height);
-      paint.shader = lineGradient.createShader(lineRect);
+      paint.shader = lineGradient?.createShader(lineRect);
     }
 
     if (fillMode != FillMode.none) {
@@ -283,14 +272,14 @@ class _SparklinePainter extends CustomPainter {
       }
       fillPath.close();
 
-      Paint fillPaint = new Paint()
+      Paint fillPaint = Paint()
         ..strokeWidth = 0.0
         ..color = fillColor
         ..style = PaintingStyle.fill;
 
       if (fillGradient != null) {
         final Rect fillRect = Rect.fromLTWH(0.0, 0.0, width, height);
-        fillPaint.shader = fillGradient.createShader(fillRect);
+        fillPaint.shader = fillGradient?.createShader(fillRect);
       }
       canvas.drawPath(fillPath, fillPaint);
     }
@@ -303,7 +292,7 @@ class _SparklinePainter extends CustomPainter {
       Paint pointsPaintBorder = Paint()
         ..strokeCap = StrokeCap.round
         ..strokeWidth = pointSize + 5
-        ..color = Color(0xFFFFFFFF);
+        ..color = const Color(0xFFFFFFFF);
       canvas.drawPoints(ui.PointMode.points, pointsDraw, pointsPaintBorder);
 
       Paint pointsPaint = Paint()
@@ -312,16 +301,6 @@ class _SparklinePainter extends CustomPainter {
         ..color = pointColor;
       canvas.drawPoints(ui.PointMode.points, pointsDraw, pointsPaint);
     }
-  }
-
-  Offset getEndPoint(
-      {double widthNormalizer, double heightNormalizer, double height}) {
-    final i = dataPoints.length - 1;
-    final value = dataPoints[i];
-    double x = i * widthNormalizer + lineWidth / 2;
-    double y = height - (value - _min) * heightNormalizer + lineWidth / 2;
-
-    return Offset(x, y);
   }
 
   @override

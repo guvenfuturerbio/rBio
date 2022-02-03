@@ -7,9 +7,9 @@ class RbioVisibilitySuffixIcon extends StatelessWidget {
   final VoidCallback onTap;
 
   const RbioVisibilitySuffixIcon({
-    Key key,
-    @required this.eyesOpen,
-    @required this.onTap,
+    Key? key,
+    required this.eyesOpen,
+    required this.onTap,
   }) : super(key: key);
 
   @override

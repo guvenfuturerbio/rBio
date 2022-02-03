@@ -7,7 +7,7 @@ import '../../../../core/core.dart';
 import '../viewmodel/request_suggestions_vm.dart';
 
 class RequestSuggestionsScreen extends StatefulWidget {
-  const RequestSuggestionsScreen({Key key}) : super(key: key);
+  const RequestSuggestionsScreen({Key? key}) : super(key: key);
 
   @override
   _RequestSuggestionsScreenState createState() =>
@@ -15,7 +15,7 @@ class RequestSuggestionsScreen extends StatefulWidget {
 }
 
 class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
-  TextEditingController textEditingController;
+  late TextEditingController textEditingController;
 
   @override
   void initState() {

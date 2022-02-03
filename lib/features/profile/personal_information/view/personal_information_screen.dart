@@ -10,7 +10,7 @@ import '../../../../model/shared/user_account_info.dart';
 import '../viewmodel/personal_information_vm.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  PersonalInformationScreen({Key key}) : super(key: key);
+  const PersonalInformationScreen({Key? key}) : super(key: key);
 
   @override
   _PersonalInformationScreenState createState() =>

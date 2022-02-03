@@ -6,18 +6,20 @@ import '../core.dart';
 mixin IRbioAppBar on PreferredSize {}
 
 class RbioAppBar extends PreferredSize with IRbioAppBar {
-  final Widget title;
-  final Widget leading;
-  final List<Widget> actions;
-  final double leadingWidth;
+  final Widget? title;
+  final Widget? leading;
+  final List<Widget>? actions;
+  final double? leadingWidth;
 
   RbioAppBar({
+    Key? key,
     this.title,
     this.leading,
     this.actions,
     this.leadingWidth,
   }) : super(
-          preferredSize: Size.fromHeight(64),
+          key: key,
+          preferredSize: const Size.fromHeight(64),
           child: AppBar(
             toolbarHeight: 64,
             centerTitle: true,
@@ -32,7 +34,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                   child: InkWell(
                     child: Container(
                       color: Colors.transparent,
-                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+                      padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
                         R.image.back_icon,
                         width: R.sizes.iconSize,
@@ -68,7 +70,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                         child: InkWell(
                           child: Container(
                             color: Colors.transparent,
-                            padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+                            padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                             child: SvgPicture.asset(
                               R.image.back_icon,
                               width: R.sizes.iconSize,
@@ -89,7 +91,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
       child: InkWell(
         child: Container(
           color: Colors.transparent,
-          padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+          padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
           child: SvgPicture.asset(
             R.image.back_icon,
             width: R.sizes.iconSize,
@@ -114,16 +116,16 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
 }
 
 class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
-  final Widget title;
-  final List<Widget> actions;
-  final Widget leading;
+  final List<Widget>? actions;
+  final Widget? leading;
 
   RbioAppBarLogin({
-    this.title,
+    Key? key,
     this.actions,
     this.leading,
   }) : super(
-          preferredSize: Size.fromHeight(64),
+          key: key,
+          preferredSize: const Size.fromHeight(64),
           child: AppBar(
             backgroundColor: getIt<ITheme>().mainColor,
             toolbarHeight: 64,
@@ -135,7 +137,7 @@ class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
                   child: InkWell(
                     child: Container(
                       color: Colors.transparent,
-                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+                      padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
                         R.image.back_icon,
                         width: R.sizes.iconSize,
@@ -155,7 +157,7 @@ class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
                       fit: BoxFit.fitHeight,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                 ],

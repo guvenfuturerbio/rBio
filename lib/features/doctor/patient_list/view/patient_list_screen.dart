@@ -174,7 +174,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: RbioOverlayMenu(
                       tiles: vm.getPopupWidgets(),
-                      margin: EdgeInsets.only(top: 50),
+                      margin: const EdgeInsets.only(top: 50),
                       color: getIt<ITheme>().cardBackgroundColor,
                       borderRadius: R.sizes.borderRadiusCircular,
                       separator: Container(

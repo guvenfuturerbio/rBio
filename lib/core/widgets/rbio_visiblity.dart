@@ -6,13 +6,13 @@ class RbioVisibility extends StatelessWidget {
   final bool isShow;
 
   const RbioVisibility({
-    Key key,
-    @required this.isShow,
-    @required this.child,
+    Key? key,
+    required this.isShow,
+    required this.child,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => isShow ? child : SizedBox();
+  Widget build(BuildContext context) => isShow ? child : const SizedBox();
 }
 
 /// Toplantıda bahsedilecek konular:

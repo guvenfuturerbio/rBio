@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
 import '../core.dart';
 
 class RbioLocaleDropdown extends StatelessWidget {
-  const RbioLocaleDropdown({Key key}) : super(key: key);
+  const RbioLocaleDropdown({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,9 @@ class RbioLocaleDropdown extends StatelessWidget {
                 },
               ).toList(),
               onChanged: (valueLocale) {
-                getIt<LocaleNotifier>().changeLocale(valueLocale);
+                if (valueLocale != null) {
+                  getIt<LocaleNotifier>().changeLocale(valueLocale);
+                }
               },
             ),
           ),

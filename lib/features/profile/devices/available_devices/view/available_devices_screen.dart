@@ -1,7 +1,7 @@
 part of '../../devices.dart';
 
 class AvailableDevices extends StatelessWidget {
-  const AvailableDevices({Key key}) : super(key: key);
+  const AvailableDevices({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

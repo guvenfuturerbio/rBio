@@ -7,7 +7,7 @@ class MeasurementTrackingVm with ChangeNotifier {
   LoadingProgress get state => _state;
 
   HomePageModel _selectedPage;
-  HomePageModel activeItem;
+  HomePageModel? activeItem;
 
   HomePageModel get selectedPage => _selectedPage == null
       ? HomePageModel(title: LocaleProvider.current.chronic_track)

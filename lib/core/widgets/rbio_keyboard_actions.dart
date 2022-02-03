@@ -8,9 +8,9 @@ class RbioKeyboardActions extends StatelessWidget {
   final List<FocusNode> focusList;
 
   const RbioKeyboardActions({
-    Key key,
-    @required this.child,
-    @required this.focusList,
+    Key? key,
+    required this.child,
+    required this.focusList,
   }) : super(key: key);
 
   @override
@@ -39,7 +39,10 @@ class RbioKeyboardActions extends StatelessWidget {
             Utils.instance.hideKeyboard(context);
           },
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 14.0,
+              horizontal: 12.0,
+            ),
             child: Text(
               LocaleProvider.current.close_lbl,
               style: context.xHeadline4.copyWith(

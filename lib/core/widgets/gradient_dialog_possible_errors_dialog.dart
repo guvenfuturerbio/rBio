@@ -7,7 +7,11 @@ class DialogForPossibleErrorDialog extends StatefulWidget {
   final String title;
   final Widget body;
 
-  DialogForPossibleErrorDialog({this.title, this.body});
+  const DialogForPossibleErrorDialog({
+    Key? key,
+    required this.title,
+    required this.body,
+  }) : super(key: key);
 
   @override
   _DialogForPossibleErrorDialogState createState() =>

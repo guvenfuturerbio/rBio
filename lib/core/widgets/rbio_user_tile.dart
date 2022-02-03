@@ -7,21 +7,21 @@ import '../core.dart';
 
 class RbioUserTile extends StatelessWidget {
   final double width;
-  final String name;
-  final String imageBytes;
-  final String imageUrl;
+  final String? name;
+  final String? imageBytes;
+  final String? imageUrl;
   final void Function() onTap;
   final UserLeadingImage leadingImage;
-  final UserTrailingIcons trailingIcon;
+  final UserTrailingIcons? trailingIcon;
 
-  RbioUserTile({
-    Key key,
-    @required this.width,
-    @required this.name,
+  const RbioUserTile({
+    Key? key,
+    required this.width,
+    required this.name,
     this.imageBytes,
     this.imageUrl,
-    @required this.onTap,
-    @required this.leadingImage,
+    required this.onTap,
+    required this.leadingImage,
     this.trailingIcon,
   }) : super(key: key);
 
@@ -41,7 +41,7 @@ class RbioUserTile extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
-          contentPadding: EdgeInsets.symmetric(
+          contentPadding: const EdgeInsets.symmetric(
             horizontal: 16.0,
             vertical: 6.0,
           ),
@@ -74,10 +74,10 @@ class RbioUserTile extends StatelessWidget {
         return CircleAvatar(
           backgroundColor: getIt<ITheme>().mainColor,
           backgroundImage: imageBytes != null
-              ? MemoryImage(base64.decode(imageBytes))
+              ? MemoryImage(base64.decode(imageBytes!))
               : imageUrl == null
                   ? NetworkImage(R.image.circlevatar)
-                  : NetworkImage(imageUrl),
+                  : NetworkImage(imageUrl!) as ImageProvider<Object>?,
           radius: Atom.width * 0.06,
         );
 
@@ -86,21 +86,21 @@ class RbioUserTile extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: imageBytes != null
-                  ? MemoryImage(base64.decode(imageBytes))
+                  ? MemoryImage(base64.decode(imageBytes!))
                   : imageUrl == null
                       ? NetworkImage(R.image.circlevatar)
-                      : NetworkImage(imageUrl),
+                      : NetworkImage(imageUrl!) as ImageProvider<Object>,
             ),
           ),
           width: Atom.width * 0.12,
         );
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
-  Widget _getTrailingIcon(UserTrailingIcons type) {
+  Widget _getTrailingIcon(UserTrailingIcons? type) {
     switch (type) {
       case UserTrailingIcons.RightArrow:
         return SvgPicture.asset(
@@ -116,7 +116,7 @@ class RbioUserTile extends StatelessWidget {
         );
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }

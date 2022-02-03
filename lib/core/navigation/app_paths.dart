@@ -69,7 +69,7 @@ class VRouterRoutes {
   static var routes = [
     VWidget(
       path: PagePaths.LOGIN,
-      widget: LoginScreen(), // LoginScreen(),
+      widget: const LoginScreen(),
     ),
 
     VWidget(
@@ -88,25 +88,25 @@ class VRouterRoutes {
       path: PagePaths.PROFILE,
       widget: ChangeNotifierProvider<ProfileVm>(
         create: (context) => ProfileVm(),
-        child: ProfileScreen(),
+        child: const ProfileScreen(),
       ),
       stackedRoutes: [
         //
         VWidget(
           path: PagePaths.SUGGEST_REQUEST,
-          widget: RequestSuggestionsScreen(),
+          widget: const RequestSuggestionsScreen(),
         ),
       ],
     ),
 
     VWidget(
       path: PagePaths.DETAILED_SYMPTOM,
-      widget: DetailedSymptomChecker(),
+      widget: const DetailedSymptomChecker(),
     ),
 
     VWidget(
       path: PagePaths.PERSONAL_INFORMATION,
-      widget: PersonalInformationScreen(),
+      widget: const PersonalInformationScreen(),
     ),
 
     VWidget(
@@ -116,12 +116,12 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.ALL_DEVICES,
-      widget: AvailableDevices(),
+      widget: const AvailableDevices(),
     ),
 
     VWidget(
       path: PagePaths.SELECTED_DEVICE,
-      widget: SelectedDevicesScreen(),
+      widget: const SelectedDevicesScreen(),
     ),
 
     VWidget(

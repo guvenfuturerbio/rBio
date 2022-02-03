@@ -7,11 +7,11 @@ import 'package:photo_view/photo_view_gallery.dart';
 import '../core.dart';
 
 class RbioImagePreviewDialog extends StatelessWidget {
-  final String image;
-  final File fileImage;
+  final String? image;
+  final File? fileImage;
 
   const RbioImagePreviewDialog({
-    Key key,
+    Key? key,
     this.image,
     this.fileImage,
   }) : super(key: key);
@@ -21,29 +21,29 @@ class RbioImagePreviewDialog extends StatelessWidget {
     return SafeArea(
       child: Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.only(
+        insetPadding: const EdgeInsets.only(
           top: 20,
           bottom: 20,
         ),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
         child: Stack(
           children: [
             PhotoViewGallery(
               gaplessPlayback: true,
-              scrollPhysics: ClampingScrollPhysics(),
+              scrollPhysics: const ClampingScrollPhysics(),
               onPageChanged: (index) {},
               pageOptions: [
                 PhotoViewGalleryPageOptions(
                   minScale: PhotoViewComputedScale.contained,
                   imageProvider: fileImage == null
-                      ? NetworkImage(image)
-                      : FileImage(fileImage),
+                      ? NetworkImage(image!)
+                      : FileImage(fileImage!) as ImageProvider<Object>,
                 ),
               ],
               loadingBuilder: (context, event) {
-                return RbioLoading();
+                return const RbioLoading();
               },
             ),
 

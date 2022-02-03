@@ -7,8 +7,8 @@ class DetailedGradientMessageWidget extends StatelessWidget {
   final String currentLocale;
 
   const DetailedGradientMessageWidget({
-    Key key,
-    this.currentLocale,
+    Key? key,
+    required this.currentLocale,
   }) : super(key: key);
 
   @override
@@ -40,10 +40,10 @@ class DetailedGradientMessageWidget extends StatelessWidget {
           },
           child: Center(
             child: Padding(
-              padding: EdgeInsets.only(top: 12.0),
+              padding: const EdgeInsets.only(top: 12.0),
               child: Text(
                 LocaleProvider.current.phone_guven,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),

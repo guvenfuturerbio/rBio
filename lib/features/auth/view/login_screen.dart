@@ -12,17 +12,17 @@ import '../../../core/core.dart';
 import '../viewmodel/login_vm.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _userNameEditingController;
-  TextEditingController _passwordEditingController;
-  FocusNode _usernameFocusNode;
-  FocusNode _passwordFocusNode;
+  late TextEditingController _userNameEditingController;
+  late TextEditingController _passwordEditingController;
+  late FocusNode _usernameFocusNode;
+  late FocusNode _passwordFocusNode;
 
   @override
   void initState() {
@@ -52,14 +52,14 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (
           BuildContext context,
           LoginScreenVm value,
-          Widget child,
+          Widget? child,
         ) {
           _userNameEditingController.text = value.userId;
           _userNameEditingController.selection =
-              TextSelection.collapsed(offset: value?.userId?.length ?? 0);
+              TextSelection.collapsed(offset: value.userId.length);
           _passwordEditingController.text = value.password;
           _passwordEditingController.selection =
-              TextSelection.collapsed(offset: value?.password?.length ?? 0);
+              TextSelection.collapsed(offset: value.password.length);
 
           return _buildScreen(value);
         },
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   RbioAppBarLogin _buildAppBar() {
     return RbioAppBarLogin(
-      leading: SizedBox(),
+      leading: const SizedBox(),
       title: SvgPicture.asset(
         R.image.oneDoseHealth,
         height: 50,
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //
-            RbioLocaleDropdown(),
+            const RbioLocaleDropdown(),
 
             //
             _buildHeader(),

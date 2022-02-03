@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

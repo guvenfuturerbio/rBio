@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 import '../../../core/core.dart';
-import '../../../core/notifiers/notification_badge_notifier.dart';
 import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 
@@ -13,7 +12,7 @@ part '../enum/home_widgets.dart';
 part '../enum/shake_mod.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (
         BuildContext context,
         HomeVm vm,
-        Widget child,
+        Widget? child,
       ) {
         return RbioScaffold(
           scaffoldKey: scaffoldKey,
@@ -79,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 onTap: () {
-                  scaffoldKey.currentState.openDrawer();
+                  scaffoldKey.currentState?.openDrawer();
                 },
               ),
             ),
@@ -223,11 +222,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       vertical: 6,
                       horizontal: 4,
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 15,
                       right: 5,
                     ),
@@ -275,8 +274,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   onPressed: () {
-                    if (scaffoldKey.currentState.isDrawerOpen) {
-                      scaffoldKey.currentState.openEndDrawer();
+                    if (scaffoldKey.currentState?.isDrawerOpen ?? false) {
+                      scaffoldKey.currentState?.openEndDrawer();
                     }
                   },
                 ),
@@ -289,14 +288,14 @@ class _HomeScreenState extends State<HomeScreen> {
             //
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.only(left: 15, top: 12),
+                padding: const EdgeInsets.only(left: 15, top: 12),
                 scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: vm.drawerList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      scaffoldKey.currentState.openDrawer();
+                      scaffoldKey.currentState?.openDrawer();
                       vm.drawerList[index].onTap();
                     },
                     child: Container(
@@ -311,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           //
                           Text(
-                            vm.drawerList[index].title ?? '',
+                            vm.drawerList[index].title,
                             style: context.xHeadline4.copyWith(
                               color: getIt<ITheme>().textColor,
                               fontWeight: FontWeight.w600,

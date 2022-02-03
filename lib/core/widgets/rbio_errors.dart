@@ -4,19 +4,19 @@ import 'package:flutter_svg/svg.dart';
 import '../core.dart';
 
 class RbioRouteError extends StatelessWidget {
-  const RbioRouteError({Key key}) : super(key: key);
+  const RbioRouteError({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(),
-      body: RbioBodyError(),
+      body: const RbioBodyError(),
     );
   }
 }
 
 class RbioBodyError extends StatelessWidget {
-  const RbioBodyError({Key key}) : super(key: key);
+  const RbioBodyError({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class RbioBodyError extends StatelessWidget {
         if (Atom.isWeb) ...[
           Center(
             child: Container(
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 600,
               ),
               child: SvgPicture.asset(
@@ -72,5 +72,5 @@ class RbioBodyError extends StatelessWidget {
     );
   }
 
-  Widget _buildGap() => SizedBox(height: 16);
+  Widget _buildGap() => const SizedBox(height: 16);
 }
