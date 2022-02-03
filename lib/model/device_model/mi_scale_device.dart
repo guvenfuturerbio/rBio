@@ -37,7 +37,7 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
     final measurementComplete = data![1] & (0x01 << 1) != 0;
     final weightStabilized = data[1] & (0x01 << 5) != 0;
     final weightRemoved = data[1] & (0x01 << 7) != 0;
-    final unit = (data[0] & 0x01 != 0) ? ScaleUnit.LBS : ScaleUnit.KG;
+    final unit = (data[0] & 0x01 != 0) ? ScaleUnit.lbs : ScaleUnit.kg;
     final isBitSet = (data[1] & (1 << 1)) != 0;
     // Parse date
     final year = byteData?.getUint16(2, Endian.little);
@@ -57,9 +57,9 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
     // Parse weight
     double? weight = byteData?.getUint16(11, Endian.little).toDouble();
     weight ??= 1;
-    if (unit == ScaleUnit.LBS) {
+    if (unit == ScaleUnit.lbs) {
       weight /= 100;
-    } else if (unit == ScaleUnit.KG) {
+    } else if (unit == ScaleUnit.kg) {
       weight /= 200;
     } // Return new scale data
     super.scaleData = ScaleMeasurementViewModel(
