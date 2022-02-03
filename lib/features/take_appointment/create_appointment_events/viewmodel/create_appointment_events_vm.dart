@@ -52,7 +52,6 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       }
 
       await getAvailableDates(DateTime.now());
- 
     });
   }
 
@@ -69,6 +68,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       } else {
         availableDates = await getAvailableLists(date, false, tenantId);
       }
+      availableDates.sort();
       initDate = availableDates.first;
 
       await setSelectedDate(initDate, true);
