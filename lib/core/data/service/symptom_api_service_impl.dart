@@ -14,9 +14,18 @@ class SymptomApiServiceImpl extends SymptomApiService {
   @override
   Future<SymptomAuthResponse> getSymtptomsApiToken() async {
     try {
-      final response = await helper.dioPost(R.endpoints.symptomCheckerLogin, {},
-          options: authOptions);
-      return SymptomAuthResponse.fromJson(response);
+      final response = await helper.dioPost(
+        R.endpoints.symptomCheckerLogin,
+        {},
+        options: authOptions,
+      );
+      if (response is Map<String, dynamic>?) {
+        if (response != null) {
+          return SymptomAuthResponse.fromJson(response);
+        }
+      }
+
+      throw Exception('/getSymtptomsApiToken: $response');
     } catch (e) {
       throw Exception('/getSymtptomsApiToken: $e');
     }
@@ -26,23 +35,29 @@ class SymptomApiServiceImpl extends SymptomApiService {
   // #region getProposedSymptoms
   @override
   Future<List<GetBodySymptomsResponse>> getProposedSymptoms(
-      String symptoms,
-      String gender,
-      String year_of_birth,
-      String token,
-      String language) async {
+    String symptoms,
+    String gender,
+    String yearOfBirth,
+    String token,
+    String language,
+  ) async {
     try {
       final response = await helper.dioGet(
         R.endpoints.symptomGetProposed,
         queryParameters: <String, dynamic>{
           'symptoms': symptoms,
           'gender': gender,
-          'year_of_birth': year_of_birth,
+          'year_of_birth': yearOfBirth,
           'token': token,
           'language': language
         },
       );
-      if (response is List) {
+
+      if (response == null) {
+        throw Exception("/getProposedSymptoms data null");
+      }
+
+      if (response is List<Map<String, dynamic>>) {
         return response
             .map((e) => GetBodySymptomsResponse.fromJson(e))
             .toList();
@@ -60,25 +75,30 @@ class SymptomApiServiceImpl extends SymptomApiService {
   // #region getSpeacialisations
   @override
   Future<List<GetSpecialisationsResponse>> getSpeacialisations(
-      String symptoms,
-      String gender,
-      String year_of_birth,
-      String token,
-      String format,
-      String language) async {
+    String symptoms,
+    String gender,
+    String yearOfBirth,
+    String token,
+    String format,
+    String language,
+  ) async {
     try {
       final response = await helper.dioGet(
         R.endpoints.symptomGetSpecialisations,
         queryParameters: <String, dynamic>{
           'symptoms': symptoms,
           'gender': gender,
-          'year_of_birth': year_of_birth,
+          'year_of_birth': yearOfBirth,
           'token': token,
           'format': format,
           'language': language
         },
       );
-      if (response is List) {
+      if (response == null) {
+        throw Exception("/getSpeacialisations data null");
+      }
+
+      if (response is List<Map<String, dynamic>>) {
         return response
             .map((e) => GetSpecialisationsResponse.fromJson(e))
             .toList();
@@ -96,7 +116,9 @@ class SymptomApiServiceImpl extends SymptomApiService {
   // #region getBodyLocations
   @override
   Future<List<GetBodyLocationResponse>> getBodyLocations(
-      String token, String language) async {
+    String token,
+    String language,
+  ) async {
     try {
       final response = await helper.dioGet(
         R.endpoints.symptomGetBodyLocations,
@@ -105,7 +127,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           'language': language
         },
       );
-      if (response is List) {
+      if (response == null) {
+        throw Exception("/getBodyLocations data null");
+      }
+
+      if (response is List<Map<String, dynamic>>) {
         return response
             .map((e) => GetBodyLocationResponse.fromJson(e))
             .toList();
@@ -123,7 +149,10 @@ class SymptomApiServiceImpl extends SymptomApiService {
   // #region getBodySubLocations
   @override
   Future<List<GetBodySublocationResponse>> getBodySubLocations(
-      String token, String language, int locationID) async {
+    String token,
+    String language,
+    int locationID,
+  ) async {
     try {
       final response = await helper.dioGet(
         R.endpoints.symptomGetBodySubLocations(locationID),
@@ -132,7 +161,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           'language': language,
         },
       );
-      if (response is List) {
+      if (response == null) {
+        throw Exception("/getBodySubLocations data null");
+      }
+
+      if (response is List<Map<String, dynamic>>) {
         return response
             .map((e) => GetBodySublocationResponse.fromJson(e))
             .toList();
@@ -150,7 +183,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
   // #region getBodySymptoms
   @override
   Future<List<GetBodySymptomsResponse>> getBodySymptoms(
-      String token, String language, int locationID, int gender) async {
+    String token,
+    String language,
+    int locationID,
+    int gender,
+  ) async {
     try {
       final response = await helper.dioGet(
         R.endpoints.symptomGetBodySymptoms(locationID, gender),
@@ -159,7 +196,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           'language': language,
         },
       );
-      if (response is List) {
+      if (response == null) {
+        throw Exception("/getBodySymptoms data null");
+      }
+
+      if (response is List<Map<String, dynamic>>) {
         return response
             .map((e) => GetBodySymptomsResponse.fromJson(e))
             .toList();

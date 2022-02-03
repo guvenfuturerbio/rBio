@@ -55,6 +55,6 @@ class BgMeasurementGlucoseViewModel {
   }
 
   int get measurementId {
-    return bgMeasurement.measurementId;
+    return bgMeasurement.measurementId!;
   }
 }

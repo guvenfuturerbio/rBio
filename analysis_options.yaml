@@ -10,12 +10,14 @@ include: package:lint/analysis_options.yaml
 # You might want to exclude auto-generated files from dart analysis
 analyzer:
   exclude:
+    - packages/
     #- '**.freezed.dart'
 
 # You can customize the lint rules set to your own liking. A list of all rules
 # can be found at https://dart-lang.github.io/linter/lints/options/options.html
 linter:
   rules:
+    always_use_package_imports: true
     # Util classes are awesome!
     # avoid_classes_with_only_static_members: false
 

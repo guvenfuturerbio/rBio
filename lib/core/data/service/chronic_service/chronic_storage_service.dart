@@ -25,8 +25,8 @@ part 'scale_storage_impl.dart';
 
 abstract class ChronicStorageService<T extends HiveObject>
     extends ChangeNotifier {
-  String boxKey;
-  Box<T> box;
+  late String boxKey;
+  late Box<T> box;
 
   Future<void> init();
 
