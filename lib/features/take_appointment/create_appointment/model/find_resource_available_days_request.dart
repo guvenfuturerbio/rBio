@@ -10,7 +10,7 @@ class FindResourceAvailableDaysRequest {
   });
 
   Map<String, dynamic> toJson() => {
-        'resource': resourceRequest.toJson(),
+        'resource': resourceRequest?.toJson(),
         'appointmentType': appointmentType,
       };
 

@@ -12,45 +12,45 @@ class DoctorCvScreenVm extends ChangeNotifier {
   String _imageUrl;
 
   DoctorCvScreenVm({BuildContext context, String doctorNameNotTitle}) {
-    this.mContext = context;
+    mContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchDoctorCv(doctorNameNotTitle);
     });
   }
 
-  LoadingProgress get progress => this._progress;
+  LoadingProgress get progress => _progress;
 
   Future<void> fetchDoctorCv(String doctorName) async {
-    this._progress = LoadingProgress.LOADING;
+    _progress = LoadingProgress.loading;
     notifyListeners();
 
     try {
       final doctorId = Slugify(Utils.instance.clearDoctorTitle(
           doctorName.toLowerCase().xTurkishCharacterToEnglish));
-      this._doctorCvResponse =
+      _doctorCvResponse =
           await getIt<Repository>().getDoctorCvDetails(doctorId);
-      if (this._doctorCvResponse != null) {
-        this._progress = LoadingProgress.DONE;
-        this._imageUrl = SecretUtils.instance.get(SecretKeys.DEV_4_GUVEN) +
+      if (_doctorCvResponse != null) {
+        _progress = LoadingProgress.done;
+        _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven) +
                 "/storage/app/media/" +
                 this?._doctorCvResponse?.image1 ??
             "";
       } else {
-        this._progress = LoadingProgress.ERROR;
-        this._imageUrl = "";
+        _progress = LoadingProgress.error;
+        _imageUrl = "";
       }
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
       debugPrintStack(stackTrace: stackTrace);
-      this._progress = LoadingProgress.ERROR;
-      this._imageUrl = "";
+      _progress = LoadingProgress.ERROR;
+      _imageUrl = "";
       notifyListeners();
     }
   }
 
-  DoctorCvResponse get doctorCvResponse => this._doctorCvResponse;
-  String get imageUrl => this._imageUrl;
+  DoctorCvResponse get doctorCvResponse => _doctorCvResponse;
+  String get imageUrl => _imageUrl;
 
   void showGradientDialog(BuildContext context, String title, String text) {
     showDialog(

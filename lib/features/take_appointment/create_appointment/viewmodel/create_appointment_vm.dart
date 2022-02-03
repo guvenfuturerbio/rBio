@@ -6,7 +6,7 @@ import 'package:turkish/turkish.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
-enum Fields { DEPARTMENT, TENANTS, DOCTORS, RELATIVE }
+enum Fields { department, tenant, doctors, relative }
 
 class CreateAppointmentVm extends ChangeNotifier {
   BuildContext mContext;
@@ -18,10 +18,10 @@ class CreateAppointmentVm extends ChangeNotifier {
   List<FilterDepartmentsResponse> _filterDepartmentsResponse;
   List<FilterResourcesResponse> _filterResourcesResponse;
 
-  LoadingProgress _relativeProgress = LoadingProgress.LOADING;
-  LoadingProgress _progress = LoadingProgress.LOADING;
-  LoadingProgress _departmentProgress = LoadingProgress.LOADING;
-  LoadingProgress _doctorProgress = LoadingProgress.LOADING;
+  LoadingProgress _relativeProgress = LoadingProgress.loading;
+  LoadingProgress _progress = LoadingProgress.loading;
+  LoadingProgress _departmentProgress = LoadingProgress.loading;
+  LoadingProgress _doctorProgress = LoadingProgress.loading;
 
   FilterTenantsResponse _dropdownValueTenant;
   FilterDepartmentsResponse _dropdownValueDepartment;
@@ -43,29 +43,29 @@ class CreateAppointmentVm extends ChangeNotifier {
   List<int> _doctorsIds = [];
 
   // #region Getters
-  LoadingProgress get relativeProgress => this._relativeProgress;
-  LoadingProgress get progress => this._progress;
-  LoadingProgress get departmentProgress => this._departmentProgress;
-  LoadingProgress get doctorProgress => this._doctorProgress;
+  LoadingProgress get relativeProgress => _relativeProgress;
+  LoadingProgress get progress => _progress;
+  LoadingProgress get departmentProgress => _departmentProgress;
+  LoadingProgress get doctorProgress => _doctorProgress;
 
   List<FilterTenantsResponse> get tenantsFilterResponse =>
-      this._tenantsFilterResponse;
+      _tenantsFilterResponse;
   List<FilterDepartmentsResponse> get filterDepartmentResponse =>
-      this._filterDepartmentsResponse;
+      _filterDepartmentsResponse;
   List<FilterResourcesResponse> get filterResourcesResponse =>
-      this._filterResourcesResponse;
+      _filterResourcesResponse;
   List<PatientAppointmentsResponse> get holderForFavorites =>
       _holderForFavorites;
   List<String> get doctorsImageUrls => _doctorsImageUrls;
 
-  FilterTenantsResponse get dropdownValueTenant => this._dropdownValueTenant;
+  FilterTenantsResponse get dropdownValueTenant => _dropdownValueTenant;
   FilterDepartmentsResponse get dropdownValueDepartment =>
-      this._dropdownValueDepartment;
-  FilterResourcesResponse get dropdownValueDoctor => this._dropdownValueDoctor;
+      _dropdownValueDepartment;
+  FilterResourcesResponse get dropdownValueDoctor => _dropdownValueDoctor;
 
-  bool get hospitalSelected => this._hospitalSelected;
-  bool get departmentSelected => this._departmentSelected;
-  bool get doctorSelected => this._doctorSelected;
+  bool get hospitalSelected => _hospitalSelected;
+  bool get departmentSelected => _departmentSelected;
+  bool get doctorSelected => _doctorSelected;
 
   DateTime get startDate => _startDate != null
       ? DateTime(_startDate.year, _startDate.month, _startDate.day)
@@ -78,22 +78,22 @@ class CreateAppointmentVm extends ChangeNotifier {
           DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
 
   List<PatientAppointmentsResponse> get patientAppointments =>
-      this._patientAppointments;
+      _patientAppointments;
   // #endregion
 
   CreateAppointmentVm(
-      {@required BuildContext context,
-      @required bool forOnline,
-      @required bool fromSearch,
-      @required bool fromSymptom,
-      int tenantId,
-      int departmentId,
-      int resourceId}) {
-    this.mContext = context;
+      {required BuildContext context,
+      required bool forOnline,
+      required bool fromSearch,
+      required bool fromSymptom,
+      int? tenantId,
+      int? departmentId,
+      int? resourceId}) {
+    mContext = context;
     this.forOnline = forOnline;
     this.fromSearch = fromSearch;
     this.fromSymptom = fromSymptom;
-    this._patientId = getIt<UserNotifier>().getPatient().id;
+    _patientId = getIt<UserNotifier>().getPatient().id;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
       if (forOnline) {
@@ -124,7 +124,7 @@ class CreateAppointmentVm extends ChangeNotifier {
             ? print("For online!")
             : fromSymptom
                 ? print("From smyptom!")
-                : clearFunc(Fields.TENANTS);
+                : clearFunc(Fields.tenant);
       }
 
       if (fromSymptom) {
@@ -190,7 +190,7 @@ class CreateAppointmentVm extends ChangeNotifier {
 
       for (var department in filterDepartmentResponse) {
         if (department.id ==
-            _holderForFavorites[index].resources.first.departmentId) {
+            _holderForFavorites[index].resources?.first.departmentId) {
           print(
               'departman : ${department.title} --> departmanId : ${department.id}');
           await departmentSelection(department);
@@ -199,7 +199,7 @@ class CreateAppointmentVm extends ChangeNotifier {
 
       for (var doctor in filterResourcesResponse) {
         if (doctor.id ==
-            _holderForFavorites[index].resources.first.resourceId) {
+            _holderForFavorites[index].resources?.first.resourceId) {
           doctorSelection(doctor);
         }
       }
@@ -212,14 +212,14 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   // #region fetchTenants
   Future<void> fetchTenants() async {
-    this._progress = LoadingProgress.LOADING;
+    _progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      this._tenantsFilterResponse = await getIt<Repository>()
+      _tenantsFilterResponse = await getIt<Repository>()
           .filterTenants(FilterTenantsRequest(departmanId: null));
-      this._tenantsFilterResponse =
-          removeOtherTenants(this._tenantsFilterResponse);
-      this._progress = LoadingProgress.DONE;
+      _tenantsFilterResponse =
+          removeOtherTenants(_tenantsFilterResponse);
+      _progress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
@@ -228,7 +228,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      this._progress = LoadingProgress.ERROR;
+      _progress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -236,7 +236,7 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   // #region fetchRelatives
   Future<void> fetchRelatives() async {
-    _relativeProgress = LoadingProgress.LOADING;
+    _relativeProgress = LoadingProgress.loading;
     notifyListeners();
 
     GetAllRelativesRequest bodyPages = GetAllRelativesRequest();
@@ -257,13 +257,13 @@ class CreateAppointmentVm extends ChangeNotifier {
     columnsObject.name = "null";
     columnsObject.data = "patient.user.name";
     columnsObject.searchable = true;
-    bodyPages.columns.add(columnsObject);
+    bodyPages.columns?.add(columnsObject);
 
     bodyPages.order = <OrderObject>[];
     OrderObject orderObject = new OrderObject();
     orderObject.column = 0;
     orderObject.dir = "desc";
-    bodyPages.order.add(orderObject);
+    bodyPages.order?.add(orderObject);
 
     try {
       relativeResponse = await getIt<Repository>().getAllRelatives(bodyPages);
@@ -274,16 +274,16 @@ class CreateAppointmentVm extends ChangeNotifier {
       relativeResponse = PatientRelativeInfoResponse(
         [
           PatientRelative(
-            currentPatient.firstName,
-            currentPatient.lastName,
-            currentPatient.identityNumber,
-            currentPatient.id.toString(),
+          name:  currentPatient.firstName,
+          surname:  currentPatient.lastName,
+           tcNo: currentPatient.identityNumber,
+           id: currentPatient.id.toString(),
           ),
           ...relativeResponse.patientRelatives,
         ],
       );
       dropdownValueRelative = relativeResponse.patientRelatives.first;
-      _relativeProgress = LoadingProgress.DONE;
+      _relativeProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
@@ -292,7 +292,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      _relativeProgress = LoadingProgress.ERROR;
+      _relativeProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -303,16 +303,16 @@ class CreateAppointmentVm extends ChangeNotifier {
     FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest,
   ) async {
     try {
-      this._progress = LoadingProgress.LOADING;
-      this._departmentProgress = LoadingProgress.LOADING;
+      _progress = LoadingProgress.loading;
+      _departmentProgress = LoadingProgress.loading;
       notifyListeners();
 
-      this._filterDepartmentsResponse = await getIt<Repository>()
+      _filterDepartmentsResponse = await getIt<Repository>()
           .fetchOnlineDepartments(filterOnlineDepartmentsRequest);
-      List<String> string = [];
-      this._filterDepartmentsResponse.forEach((element) {
+      List<String?> string = [];
+      for (var element in _filterDepartmentsResponse) {
         string.add(element.title);
-      });
+      }
       string = string..sort(turkish.comparator);
       List<FilterDepartmentsResponse> temp = [];
       string.forEach((element) {
@@ -332,8 +332,8 @@ class CreateAppointmentVm extends ChangeNotifier {
         ),
       );
       _filterDepartmentsResponse = temp;
-      this._progress = LoadingProgress.DONE;
-      this._departmentProgress = LoadingProgress.DONE;
+      _progress = LoadingProgress.done;
+      _departmentProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
@@ -343,8 +343,8 @@ class CreateAppointmentVm extends ChangeNotifier {
         LocaleProvider.current.sorry_dont_transaction,
       );
 
-      this._progress = LoadingProgress.ERROR;
-      this._departmentProgress = LoadingProgress.ERROR;
+      _progress = LoadingProgress.error;
+      _departmentProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -355,13 +355,13 @@ class CreateAppointmentVm extends ChangeNotifier {
     FilterDepartmentsRequest filterDepartmentsRequest,
   ) async {
     try {
-      this._departmentProgress = LoadingProgress.LOADING;
+      _departmentProgress = LoadingProgress.loading;
       notifyListeners();
       List<String> string = [];
 
-      this._filterDepartmentsResponse =
+      _filterDepartmentsResponse =
           await getIt<Repository>().filterDepartments(filterDepartmentsRequest);
-      this._filterDepartmentsResponse.forEach((element) {
+      _filterDepartmentsResponse.forEach((element) {
         string.add(element.title);
       });
       string = string..sort(turkish.comparator);
@@ -384,7 +384,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         ),
       );
       _filterDepartmentsResponse = temp;
-      this._departmentProgress = LoadingProgress.DONE;
+      _departmentProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
@@ -393,7 +393,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      this._departmentProgress = LoadingProgress.ERROR;
+      _departmentProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -403,13 +403,13 @@ class CreateAppointmentVm extends ChangeNotifier {
   Future<void> fetchResources(
     FilterResourcesRequest filterResourcesRequest,
   ) async {
-    this._doctorProgress = LoadingProgress.LOADING;
+    _doctorProgress = LoadingProgress.loading;
     notifyListeners();
 
     try {
-      this._filterResourcesResponse =
+      _filterResourcesResponse =
           await getIt<Repository>().filterResources(filterResourcesRequest);
-      this._filterResourcesResponse.insert(
+      _filterResourcesResponse.insert(
             0,
             FilterResourcesResponse(
               departments: [],
@@ -424,7 +424,7 @@ class CreateAppointmentVm extends ChangeNotifier {
               title: LocaleProvider.current.pls_select,
             ),
           );
-      this._doctorProgress = LoadingProgress.DONE;
+      _doctorProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
@@ -433,7 +433,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      this._doctorProgress = LoadingProgress.ERROR;
+      _doctorProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -442,7 +442,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   // #region hospitalSelection
   Future<void> hospitalSelection(
       FilterTenantsResponse selectionResponse) async {
-    clearFunc(Fields.TENANTS);
+    clearFunc(Fields.tenant);
     _dropdownValueTenant = selectionResponse;
     if (selectionResponse.id != -2) {
       await fetchDepartments(FilterDepartmentsRequest(
@@ -460,7 +460,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   // try
   Future<void> departmentSelection(
       FilterDepartmentsResponse selectionResponse) async {
-    clearFunc(Fields.DEPARTMENT);
+    clearFunc(Fields.department);
     _dropdownValueDepartment = selectionResponse;
     if (selectionResponse.id != -2) {
       await fetchResources(
@@ -502,12 +502,12 @@ class CreateAppointmentVm extends ChangeNotifier {
   // #region clearFunc
   void clearFunc(Fields currentField) {
     switch (currentField) {
-      case Fields.DEPARTMENT:
+      case Fields.department:
         _filterResourcesResponse?.clear();
         _dropdownValueDoctor = null;
         _doctorSelected = false;
         break;
-      case Fields.TENANTS:
+      case Fields.tenant:
         _filterResourcesResponse?.clear();
         _filterDepartmentsResponse?.clear();
         _dropdownValueDoctor = null;
@@ -567,10 +567,10 @@ class CreateAppointmentVm extends ChangeNotifier {
   // #endregion
 
   Future<void> fetchPatientAppointments(BuildContext context) async {
-    this._progress = LoadingProgress.LOADING;
+    _progress = LoadingProgress.loading
     notifyListeners();
     try {
-      this._patientAppointments =
+      _patientAppointments =
           await getIt<Repository>().getPatientAppointments(
         PatientAppointmentRequest(
           patientId: _patientId,
@@ -594,7 +594,7 @@ class CreateAppointmentVm extends ChangeNotifier {
           DoctorCvResponse tmpResp =
               await getIt<Repository>().getDoctorCvDetails(doctorId);
           _doctorsImageUrls.add(
-              SecretUtils.instance.get(SecretKeys.DEV_4_GUVEN) +
+              SecretUtils.instance.get(SecretKeys.dev4Guven) +
                   "/storage/app/media/" +
                   tmpResp.image1);
         } catch (e) {
@@ -602,11 +602,11 @@ class CreateAppointmentVm extends ChangeNotifier {
         }
       }
       ;
-      this._progress = LoadingProgress.DONE;
+      _progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
       print(e);
-      this._progress = LoadingProgress.ERROR;
+      _progress = LoadingProgress.error;
       notifyListeners();
       showGradientDialog(context, LocaleProvider.current.warning,
           LocaleProvider.current.sorry_dont_transaction);

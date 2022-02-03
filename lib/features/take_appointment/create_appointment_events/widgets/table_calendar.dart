@@ -3,7 +3,7 @@ part of '../view/create_appointment_events_screen.dart';
 class _TableCalendar extends StatefulWidget {
   final DateTime focusedDay;
   final CreateAppointmentEventsVm val;
-  final ValueNotifier<_EventSelectedModel> completeNotifier;
+  final ValueNotifier<_EventSelectedModel?> completeNotifier;
 
   const _TableCalendar({
     Key key,

@@ -19,7 +19,7 @@ import 'features/home/viewmodel/home_vm.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appConfig = DefaultConfig();
-  await SecretUtils.instance.setup(Environment.PROD);
+  await SecretUtils.instance.setup(Environment.prod);
   await Firebase.initializeApp();
   FirebaseMessagingManager.mainInit();
   await setupLocator(appConfig);
@@ -113,7 +113,7 @@ class _MyAppState extends State<MyApp> {
           builder: (
             BuildContext context,
             ThemeNotifier themeNotifier,
-            Widget child,
+            Widget? child,
           ) {
             return OrientationBuilder(
               builder: (BuildContext context, Orientation orientation) {
@@ -123,13 +123,13 @@ class _MyAppState extends State<MyApp> {
                   initialUrl: PagePaths.LOGIN,
                   routes: VRouterRoutes.routes,
                   onSystemPop: (data) async {
-                    if (Atom.isDialogShow ?? false) {
+                    if (Atom.isDialogShow) {
                       try {
                         Atom.dismiss();
                         data.stopRedirection();
                       } catch (e) {}
                     } else {
-                      final currentUrl = data.fromUrl;
+                      final currentUrl = data.fromUrl ?? "";
                       if (currentUrl.contains('/home')) {
                         SystemNavigator.pop();
                       } else if (data.historyCanBack()) {
@@ -144,14 +144,14 @@ class _MyAppState extends State<MyApp> {
                   navigatorObservers: [],
 
                   //
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return Directionality(
                       textDirection: TextDirection.ltr,
                       child: MediaQuery(
                         data: MediaQuery.of(context).copyWith(
                           textScaleFactor: themeNotifier.textScale.getValue(),
                         ),
-                        child: child,
+                        child: child!,
                       ),
                     );
                   },
@@ -182,6 +182,7 @@ class _MyAppState extends State<MyApp> {
                   ],
                   supportedLocales:
                       context.read<LocaleNotifier>().supportedLocales,
+                  onPop: (VRedirector) async {},
                 );
               },
             );

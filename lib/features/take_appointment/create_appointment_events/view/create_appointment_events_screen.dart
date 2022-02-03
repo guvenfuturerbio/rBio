@@ -12,17 +12,18 @@ part '../widgets/list_body.dart';
 part '../widgets/table_calendar.dart';
 
 class CreateAppointmentEventsScreen extends StatefulWidget {
-  String patientId;
-  String patientName;
-  int tenantId;
-  String tenantName;
-  int departmentId;
-  String departmentName;
-  int resourceId;
-  String resourceName;
-  bool forOnline;
+  late String patientId;
+  late String patientName;
+  late int tenantId;
+  late String tenantName;
+  late int departmentId;
+  late String departmentName;
+  late int resourceId;
+  late String resourceName;
+  late bool forOnline;
 
-  CreateAppointmentEventsScreen({Key key}) : super(key: key);
+  CreateAppointmentEventsScreen({Key? key}) : super(key: key);
+
 
   @override
   _CreateAppointmentEventsScreenState createState() =>
@@ -31,24 +32,24 @@ class CreateAppointmentEventsScreen extends StatefulWidget {
 
 class _CreateAppointmentEventsScreenState
     extends State<CreateAppointmentEventsScreen> {
-  ValueNotifier<_EventSelectedModel> completeNotifier = ValueNotifier(null);
+  late ValueNotifier<_EventSelectedModel?> completeNotifier = ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
     try {
-      widget.patientId = Uri.decodeFull(Atom.queryParameters['patientId']);
-      widget.patientName = Uri.decodeFull(Atom.queryParameters['patientName']);
-      widget.tenantId = int.parse(Atom.queryParameters['tenantId']);
-      widget.tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']);
-      widget.departmentId = int.parse(Atom.queryParameters['departmentId']);
+      widget.patientId = Uri.decodeFull(Atom.queryParameters['patientId']!);
+      widget.patientName = Uri.decodeFull(Atom.queryParameters['patientName']!);
+      widget.tenantId = int.parse(Atom.queryParameters['tenantId']!);
+      widget.tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']!);
+      widget.departmentId = int.parse(Atom.queryParameters['departmentId']!);
       widget.departmentName =
-          Uri.decodeFull(Atom.queryParameters['departmentName']);
-      widget.resourceId = int.parse(Atom.queryParameters['resourceId']);
+          Uri.decodeFull(Atom.queryParameters['departmentName']!);
+      widget.resourceId = int.parse(Atom.queryParameters['resourceId']!);
       widget.resourceName =
-          Uri.decodeFull(Atom.queryParameters['resourceName']);
+          Uri.decodeFull(Atom.queryParameters['resourceName']!);
       widget.forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<CreateAppointmentEventsVm>(
@@ -63,7 +64,7 @@ class _CreateAppointmentEventsScreenState
         builder: (
           BuildContext context,
           CreateAppointmentEventsVm val,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: RbioAppBar(
@@ -91,19 +92,19 @@ class _CreateAppointmentEventsScreenState
         _buildHeaderInfo(),
 
         //
-        if (val.availableDatesProgress == LoadingProgress.LOADING) ...[
+        if (val.availableDatesProgress == LoadingProgress.loading) ...[
           SizedBox(
             height: Atom.height * 0.35,
-            child: RbioLoading(),
+            child: const RbioLoading(),
           ),
-        ] else if (val.availableDatesProgress == LoadingProgress.DONE) ...[
+        ] else if (val.availableDatesProgress == LoadingProgress.done) ...[
           _TableCalendar(
             val: val,
             completeNotifier: completeNotifier,
             focusedDay: val.initDate,
           ),
-        ] else if (val.availableDatesProgress == LoadingProgress.ERROR) ...[
-          Expanded(
+        ] else if (val.availableDatesProgress == LoadingProgress.error) ...[
+          const Expanded(
             child: RbioBodyError(),
           ),
         ],
@@ -112,9 +113,9 @@ class _CreateAppointmentEventsScreenState
         const SizedBox(height: 8.0),
 
         //
-        if (val.slotsProgress == LoadingProgress.LOADING) ...[
-          Expanded(child: RbioLoading()),
-        ] else if (val.slotsProgress == LoadingProgress.DONE) ...[
+        if (val.slotsProgress == LoadingProgress.loading) ...[
+          const Expanded(child: RbioLoading()),
+        ] else if (val.slotsProgress == LoadingProgress.done) ...[
           Expanded(
             child: ListBody(
               completeNotifier: completeNotifier,
@@ -135,8 +136,8 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': completeNotifier.value.selected.from.toString(),
-                    'to': completeNotifier.value.selected.to.toString(),
+                    'from': completeNotifier.value.selected!.from.toString(),
+                    'to': completeNotifier.value.selected!.to.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );
@@ -155,11 +156,11 @@ class _CreateAppointmentEventsScreenState
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
-        borderRadius: BorderRadius.vertical(
+        borderRadius: const BorderRadius.vertical(
           top: Radius.circular(15),
         ),
       ),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -217,7 +218,7 @@ class _CreateAppointmentEventsScreenState
     );
   }
 
-  Widget _buildHeaderVerticalGap() => SizedBox(height: 8);
+  Widget _buildHeaderVerticalGap() => const SizedBox(height: 8);
 
   Widget _buildHeaderActiveText(String text) => Text(
         text ?? '',

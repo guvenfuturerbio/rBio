@@ -9,41 +9,42 @@ part '../widgets/history_doctor_card.dart';
 
 // ignore: must_be_immutable
 class CreateAppointmentScreen extends StatelessWidget {
-  bool forOnline;
-  bool fromSearch = false;
-  bool fromSymptom = false;
-  int departmentId;
+  late bool forOnline;
+  late bool fromSearch = false;
+  late bool fromSymptom = false;
+  late int departmentId;
   //String departmentName;
   //String doctorName;
-  int resourceId;
-  int tenantId;
+  late int resourceId;
+  late int tenantId;
 
-  CreateAppointmentScreen({Key key}) : super(key: key);
+  CreateAppointmentScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     try {
       forOnline = Atom.queryParameters['forOnline'] == 'true';
       if (Atom.queryParameters['fromSearch'] == 'true') {
-        this.fromSearch = true;
-        this.tenantId = int.parse(Atom.queryParameters['tenantId']) ?? 0;
-        this.departmentId =
-            int.parse(Atom.queryParameters['departmentId']) ?? 0;
-        this.resourceId = int.parse(Atom.queryParameters['resourceId']) ?? 0;
+        fromSearch = true;
+        tenantId = int.parse(Atom.queryParameters['tenantId']!);
+        departmentId =
+            int.parse(Atom.queryParameters['departmentId']!) ;
+        resourceId = int.parse(Atom.queryParameters['resourceId']!) ;
       } else {
         fromSearch = false;
       }
 
       if (Atom.queryParameters['fromSymptom'] == 'true') {
         fromSymptom = true;
-        this.tenantId = int.parse(Atom.queryParameters['tenantId']) ?? 0;
-        this.departmentId =
-            int.parse(Atom.queryParameters['departmentId']) ?? 0;
+        tenantId = int.parse(Atom.queryParameters['tenantId']!) ;
+        departmentId =
+            int.parse(Atom.queryParameters['departmentId']!) ;
       } else {
         fromSymptom = false;
       }
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<CreateAppointmentVm>(
@@ -59,7 +60,7 @@ class CreateAppointmentScreen extends StatelessWidget {
         builder: (
           BuildContext context,
           CreateAppointmentVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: _buildAppBar(context),
@@ -84,17 +85,17 @@ class CreateAppointmentScreen extends StatelessWidget {
   // #region _buildBody
   Widget _buildBody(BuildContext context, CreateAppointmentVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return _buildSuccess(context, vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
   // #endregion
@@ -103,7 +104,7 @@ class CreateAppointmentScreen extends StatelessWidget {
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -128,7 +129,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                   .map(
                     (item) => _buildHistoryDoctorCard(
                       context,
-                      item.resources.first.resource,
+                      item.resources?.first.resource,
                       vm,
                       vm.holderForFavorites.indexOf(item),
                     ),
@@ -138,9 +139,9 @@ class CreateAppointmentScreen extends StatelessWidget {
           ),
 
           //
-          vm.relativeProgress == LoadingProgress.LOADING
-              ? RbioLoading()
-              : CreateAppoWidget(
+          vm.relativeProgress == LoadingProgress.loading
+              ? const RbioLoading()
+              : createAppoWidget(
                   context: context,
                   header: LocaleProvider.current.appo_for,
                   hint: LocaleProvider.current.pls_select_person,
@@ -153,15 +154,13 @@ class CreateAppointmentScreen extends StatelessWidget {
                 ),
 
           //
-          CreateAppoWidget(
+          createAppoWidget(
             context: context,
             header: LocaleProvider.current.hosp_selection,
             hint: forOnline
                 ? LocaleProvider.current.get_online_appointment
                 : LocaleProvider.current.pls_select_hosp,
-            itemList: vm.tenantsFilterResponse == null
-                ? []
-                : vm.tenantsFilterResponse,
+            itemList: vm.tenantsFilterResponse ,
             val: vm,
             whichField: Fields.TENANTS,
             progress: vm.progress,
@@ -172,18 +171,16 @@ class CreateAppointmentScreen extends StatelessWidget {
           IgnorePointer(
             ignoring: !vm.hospitalSelected,
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 1300),
+              duration: const Duration(milliseconds: 1300),
               curve: Curves.ease,
               opacity: vm.hospitalSelected ? 1 : 0,
-              child: vm.departmentProgress == LoadingProgress.LOADING
-                  ? RbioLoading()
-                  : CreateAppoWidget(
+              child: vm.departmentProgress == LoadingProgress.loading
+                  ? const RbioLoading()
+                  : createAppoWidget(
                       context: context,
                       header: LocaleProvider.current.depart_selection,
                       hint: LocaleProvider.current.pls_select_depart,
-                      itemList: vm.filterDepartmentResponse == null
-                          ? []
-                          : vm.filterDepartmentResponse,
+                      itemList: vm.filterDepartmentResponse ,
                       val: vm,
                       whichField: Fields.DEPARTMENT,
                       progress: vm.departmentProgress,
@@ -195,18 +192,16 @@ class CreateAppointmentScreen extends StatelessWidget {
           IgnorePointer(
             ignoring: !vm.departmentSelected || !vm.hospitalSelected,
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 1300),
+              duration: const Duration(milliseconds: 1300),
               curve: Curves.ease,
               opacity: vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
-              child: vm.doctorProgress == LoadingProgress.LOADING
-                  ? RbioLoading()
-                  : CreateAppoWidget(
+              child: vm.doctorProgress == LoadingProgress.loading
+                  ? const RbioLoading()
+                  : createAppoWidget(
                       context: context,
                       header: LocaleProvider.current.doctor_selection,
                       hint: LocaleProvider.current.pls_select_doctor,
-                      itemList: vm.filterResourcesResponse == null
-                          ? []
-                          : vm.filterResourcesResponse,
+                      itemList: vm.filterResourcesResponse ,
                       val: vm,
                       whichField: Fields.DOCTORS,
                       progress: vm.doctorProgress,
@@ -220,7 +215,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Center(
@@ -237,7 +232,7 @@ class CreateAppointmentScreen extends StatelessWidget {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Padding(
@@ -271,7 +266,7 @@ class CreateAppointmentScreen extends StatelessWidget {
     Atom.to(
       PagePaths.CREATE_APPOINTMENT_EVENTS,
       queryParameters: {
-        'patientId': Uri.encodeFull(val.dropdownValueRelative.id),
+        'patientId': Uri.encodeFull(val.dropdownValueRelative.id!),
         'patientName': Uri.encodeFull(
             '${val.dropdownValueRelative.name} ${val.dropdownValueRelative.surname}'),
         'tenantId': val.dropdownValueTenant.id.toString(),

@@ -6,10 +6,10 @@ class ListBody extends StatefulWidget {
   final void Function() onSubmit;
 
   const ListBody({
-    Key key,
-    @required this.completeNotifier,
-    @required this.vm,
-    @required this.onSubmit,
+    Key? key,
+    required this.completeNotifier,
+    required this.vm,
+    required this.onSubmit,
   }) : super(key: key);
 
   @override
@@ -18,15 +18,15 @@ class ListBody extends StatefulWidget {
 
 class _ListBodyState extends State<ListBody>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<Offset> offset;
+  late AnimationController controller;
+  late Animation<Offset> offset;
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration:const Duration(milliseconds: 250),
     );
     offset = Tween<Offset>(
       begin: Offset(0.0, -0.3),
