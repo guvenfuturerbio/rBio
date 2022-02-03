@@ -24,8 +24,9 @@ class Repository {
     required this.localCacheService,
   });
 
-  Future<RbioLoginResponse> login(String? username, String? password) =>
-      apiService.login(username, password);
+  Future<RbioLoginResponse> login(String username, String password) {
+    return apiService.login(username, password);
+  }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = R.endpoints.getAllPackagePath;
