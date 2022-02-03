@@ -32,10 +32,11 @@ class Utils {
 
   String? get getCacheProfileImageStr => getIt<ISharedPreferencesManager>()
       .getString(SharedPreferencesKeys.profileImage);
+
   ImageProvider<Object> get getCacheProfileImage =>
       getCacheProfileImageStr != null
-          ? MemoryImage(base64.decode(getCacheProfileImageStr))
-          : NetworkImage(R.image.circlevatar);
+          ? MemoryImage(base64.decode(getCacheProfileImageStr!))
+          : NetworkImage(R.image.circlevatar) as ImageProvider<Object>;
 
   // #region hideKeyboard
   void hideKeyboard(BuildContext context) {
@@ -61,7 +62,16 @@ class Utils {
         DeviceOrientation.portraitDown,
       ],
     );
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top,
+      SystemUiOverlay.bottom,
+    ]);
+    // SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
   // #endregion
 

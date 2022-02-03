@@ -43,13 +43,13 @@ class _Sizes {
   }) {
     final textScale = context.xTextScaleType;
     switch (textScale) {
-      case TextScaleType.Small:
+      case TextScaleType.small:
         return small;
 
-      case TextScaleType.Medium:
+      case TextScaleType.medium:
         return medium;
 
-      case TextScaleType.Large:
+      case TextScaleType.large:
         return large;
       default:
         return small;
@@ -61,7 +61,7 @@ class _Sizes {
     required Widget smallWidget,
     required Widget largeWidget,
   }) =>
-      context.xTextScaleType == TextScaleType.Small ? smallWidget : largeWidget;
+      context.xTextScaleType == TextScaleType.small ? smallWidget : largeWidget;
 
   EdgeInsets screenPadding(BuildContext context) {
     return screenHandler<EdgeInsets>(

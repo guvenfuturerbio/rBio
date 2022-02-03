@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 part of 'constants.dart';
 
 class _Endpoints {
@@ -32,7 +34,7 @@ class _Endpoints {
   final getPatientDetailPath = '/Pusula/getPatientByToken'.xBasePath;
 
   String getDoctorCvDetailsPath(String doctorWebID) =>
-      '/api/doctor/${doctorWebID}'.xGuvenPath;
+      '/api/doctor/$doctorWebID'.xGuvenPath;
 
   final filterTenantsPath = '/Pusula/filterTenants'.xBasePath;
   final filterDepartmentsPath = '/Pusula/FilterDepartments'.xBasePath;
@@ -135,7 +137,7 @@ class _Endpoints {
       '/diagnosis/specialisations'.xSymptomCheckerRequest;
   final symptomGetBodyLocations = '/body/locations'.xSymptomCheckerRequest;
   String symptomGetBodySubLocations(int locationID) =>
-      '/body/locations/${locationID}'.xSymptomCheckerRequest;
+      '/body/locations/$locationID'.xSymptomCheckerRequest;
   String symptomGetBodySymptoms(int locationID, int gender) =>
       '/symptoms/${locationID}/${gender}'.xSymptomCheckerRequest;
 
@@ -159,8 +161,8 @@ class _Endpoints {
           .xCronicTracking;
   String ct_getAllProfiles = '/profile/get-all'.xCronicTracking;
   String ct_addProfile = '/profile/add'.xCronicTracking;
-  String ct_changeProfile(entegration_id) =>
-      '/profile/set-profile/${entegration_id}'.xCronicTracking;
+  String ct_changeProfile(entegrationId) =>
+      '/profile/set-profile/${entegrationId}'.xCronicTracking;
   String ct_deleteProfile(var userId) =>
       '/profile/delete/$userId'.xCronicTracking;
   String ct_addFirebaseToken = '/user/add-user-firebaseId'.xCronicTracking;
@@ -229,15 +231,15 @@ class _Endpoints {
 }
 
 extension _EndpointsExtension on String {
-  String get xBasePath => SecretUtils.instance.get(SecretKeys.BASE_URL) + this;
+  String get xBasePath => SecretUtils.instance.get(SecretKeys.baseUrl) + this;
   String get xGuvenPath =>
-      SecretUtils.instance.get(SecretKeys.DEV_4_GUVEN) + this;
+      SecretUtils.instance.get(SecretKeys.dev4Guven) + this;
   String get xSymptomCheckerLogin =>
-      SecretUtils.instance.get(SecretKeys.SYMPTOM_CHECKER_LOGIN) + this;
+      SecretUtils.instance.get(SecretKeys.symtonCheckerLogin) + this;
   String get xSymptomCheckerRequest =>
-      SecretUtils.instance.get(SecretKeys.SYMPTOM_REQUEST_URL) + this;
+      SecretUtils.instance.get(SecretKeys.symtomRequestLogin) + this;
   String get xCronicTracking =>
-      SecretUtils.instance.get(SecretKeys.CHRONIC_TRACKING_BASE_URL) + this;
+      SecretUtils.instance.get(SecretKeys.chronicTrackingBaseUrl) + this;
   String get xDoctorBaseUrl =>
-      SecretUtils.instance.get(SecretKeys.DOCTOR_BASE_URL) + this;
+      SecretUtils.instance.get(SecretKeys.doctorBaseUrl) + this;
 }

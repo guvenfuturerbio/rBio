@@ -16,7 +16,14 @@ class SecretUtils {
 
   final _map = <SecretKeys, String>{};
 
-  String? get(SecretKeys key) => _map[key];
+  String get(SecretKeys key) {
+    final value = _map[key];
+    if (value == null) {
+      throw Exception("$key valu null");
+    }
+
+    return value;
+  }
 
   Future<void> setup(
     Environment env, {
