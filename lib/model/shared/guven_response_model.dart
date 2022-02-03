@@ -34,10 +34,29 @@ class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
 }
 
 extension MapCast on GuvenResponseModel {
+  bool get xIsSuccessful => isSuccessful ?? false;
+
   Map<String, dynamic> get xGetMap {
     if (datum is Map<String, dynamic>) {
       return datum as Map<String, dynamic>;
     }
+
     throw RbioModelCastException("Model cast exception");
+  }
+
+  bool get xGetBool {
+    if (datum is bool) {
+      return datum as bool;
+    }
+
+    throw RbioModelCastException("Model cast exception");
+  }
+
+  List<Map<String, dynamic>> get xGetMapList {
+    if (this is List<Map<String, dynamic>>) {
+      return this as List<Map<String, dynamic>>;
+    }
+
+    throw RbioModelCastException("Dynamic cast exception");
   }
 }

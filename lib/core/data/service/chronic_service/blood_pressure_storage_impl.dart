@@ -11,7 +11,7 @@ class BloodPressureStorageImpl
   }
 
   List<Map<String, dynamic>> get map {
-    var list = [
+    final list = [
       {"occurrence_time": "", "pulse": 72, "sys": 125, "dia": 86},
       {"occurrence_time": "", "pulse": 85, "sys": 104, "dia": 57},
       {"occurrence_time": "", "pulse": 84, "sys": 101, "dia": 58},
@@ -131,31 +131,44 @@ class BloodPressureStorageImpl
         "2021-01-03T05:00:00.000",
       ];
 
-  checkBox([bool checkIsEmpty = false]) {
-    if (!box.isOpen)
-      throw Exception('Box can\'t open please check your box!!!');
+  bool checkBox([bool checkIsEmpty = false]) {
+    if (!box.isOpen) {
+      throw Exception('Box can"t open please check your box!!!');
+    }
+
     if (checkIsEmpty) {
       return box.isNotEmpty;
-    } else
+    } else {
       return true;
+    }
   }
 
   @override
-  Future<bool> delete(key) async {
+  Future<bool> delete(dynamic key) async {
     try {
       if (checkBox(true) && box.containsKey(key)) {
-        BloodPressureModel data = box.get(key);
-        await deleteFromServer(
-            data.dateTime.millisecondsSinceEpoch,
+        final BloodPressureModel? data = box.get(key);
+        if (data == null) {
+          throw Exception("data null");
+        }
+
+        if (data.dateTime != null) {
+          await deleteFromServer(
+            data.dateTime!.millisecondsSinceEpoch,
             DeleteBpMeasurements(
-                    entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
-                    measurementId: data.measurementId)
-                .toJson());
-        box.delete(key);
-        notifyListeners();
-        return true;
-      } else
+              entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+              measurementId: data.measurementId,
+            ).toJson(),
+          );
+          box.delete(key);
+          notifyListeners();
+          return true;
+        }
+
+        throw Exception("dateTime null");
+      } else {
         return false;
+      }
     } catch (e) {
       rethrow;
     }
@@ -163,10 +176,13 @@ class BloodPressureStorageImpl
 
   @override
   Future deleteFromServer(
-      int timeKey, Map<String, dynamic> deleteMeasurementRequest) async {
+    int timeKey,
+    Map<String, dynamic> deleteMeasurementRequest,
+  ) async {
     try {
       await getIt<ChronicTrackingRepository>().deleteBpMeasurement(
-          DeleteBpMeasurements.fromJson(deleteMeasurementRequest));
+        DeleteBpMeasurements.fromJson(deleteMeasurementRequest),
+      );
     } catch (_) {
       rethrow;
     }
@@ -178,12 +194,18 @@ class BloodPressureStorageImpl
   }
 
   @override
-  BloodPressureModel get(key) {
+  BloodPressureModel get(dynamic key) {
     try {
-      if (checkBox(true))
-        return box.get(key);
-      else
+      if (checkBox(true)) {
+        final data = box.get(key);
+        if (data == null) {
+          throw Exception("data null");
+        }
+
+        return data;
+      } else {
         throw Exception('box: $boxKey is empty');
+      }
     } catch (_) {
       rethrow;
     }
@@ -192,12 +214,11 @@ class BloodPressureStorageImpl
   @override
   List<BloodPressureModel> getAll() {
     try {
-      if (checkBox())
-      // return map.map((e) => BloodPressureModel.fromJson(e)).toList();
-      {
+      if (checkBox()) {
         return box.values.toList();
-      } else
+      } else {
         return [];
+      }
     } catch (_) {
       rethrow;
     }
@@ -207,11 +228,19 @@ class BloodPressureStorageImpl
   BloodPressureModel getLatestMeasurement() {
     try {
       if (checkBox(true)) {
-        List<BloodPressureModel> list = getAll();
-        list.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+        final List<BloodPressureModel> list = getAll();
+        list.sort((a, b) {
+          final aDate = a.dateTime;
+          final bDate = b.dateTime;
+          if (aDate == null || bDate == null) {
+            throw Exception("aDate : $aDate bDate : $bDate");
+          }
+
+          return bDate.compareTo(aDate);
+        });
         return list[0];
       } else {
-        return null;
+        throw Exception("box checkBox");
       }
     } catch (e) {
       rethrow;
@@ -220,17 +249,18 @@ class BloodPressureStorageImpl
 
   @override
   Future sendToServer(BloodPressureModel data) async {
-    int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
+    final int userId = getIt<ProfileStorageImpl>().getFirst().id;
 
     final AddBpWithDetail addBpWithDetail = AddBpWithDetail(
-        deviceUuid: data.deviceUUID,
-        dia: data.dia,
-        entegrationId: userId,
-        isManual: data.isManual,
-        note: data.note,
-        occurrenceTime: data.dateTime,
-        pulse: data.pulse,
-        sys: data.sys);
+      deviceUuid: data.deviceUUID,
+      dia: data.dia,
+      entegrationId: userId,
+      isManual: data.isManual,
+      note: data.note,
+      occurrenceTime: data.dateTime,
+      pulse: data.pulse,
+      sys: data.sys,
+    );
     try {
       return (await getIt<ChronicTrackingRepository>()
               .insertNewBpValue(addBpWithDetail))
@@ -241,7 +271,7 @@ class BloodPressureStorageImpl
   }
 
   @override
-  Future<bool> update(BloodPressureModel data, key) async {
+  Future<bool> update(BloodPressureModel data, dynamic key) async {
     try {
       if (checkBox()) {
         await updateServer(data);
@@ -258,37 +288,42 @@ class BloodPressureStorageImpl
 
   @override
   Future updateServer(BloodPressureModel data) async {
-    int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
+    final int userId = getIt<ProfileStorageImpl>().getFirst().id;
 
     final UpdateBpMeasurements updateBpMeasurements = UpdateBpMeasurements(
-        deviceUuid: data.deviceUUID,
-        dia: data.dia,
-        entegrationId: userId,
-        id: 0,
-        isManual: data.isManual,
-        measurementId: data.measurementId,
-        note: data.note,
-        occurrenceTime: data.dateTime,
-        pulse: data.pulse,
-        sys: data.sys);
+      deviceUuid: data.deviceUUID,
+      dia: data.dia,
+      entegrationId: userId,
+      id: 0,
+      isManual: data.isManual,
+      measurementId: data.measurementId,
+      note: data.note,
+      occurrenceTime: data.dateTime,
+      pulse: data.pulse,
+      sys: data.sys,
+    );
     try {
-      (await getIt<ChronicTrackingRepository>()
-              .updateBpMeasurement(updateBpMeasurements))
-          .datum;
+      await getIt<ChronicTrackingRepository>()
+          .updateBpMeasurement(updateBpMeasurements);
     } catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<bool> write(BloodPressureModel data,
-      {bool shouldSendToServer = false}) async {
+  Future<bool> write(
+    BloodPressureModel data, {
+    bool shouldSendToServer = false,
+  }) async {
     try {
       if (checkBox()) {
         if (shouldSendToServer) {
-          int id;
-          id = await sendToServer(data);
-          data.measurementId = id;
+          final id = await sendToServer(data);
+          if (id is int?) {
+            if (id != null) {
+              data.measurementId = id;
+            }
+          }
         }
         await box.add(data);
         notifyListeners();
@@ -315,8 +350,8 @@ class BloodPressureStorageImpl
     }
   }
 
-  checkLastBp() async {
-    var list = (await getBpValues(count: 1));
+  Future<void> checkLastBp() async {
+    final list = await getBpValues(count: 1);
     if (list.isNotEmpty) {
       final lastData = list.last;
       if (getLatestMeasurement() == null ||
@@ -328,44 +363,62 @@ class BloodPressureStorageImpl
     }
   }
 
-  Future<List<BloodPressureModel>> getBpValues(
-      {DateTime beginDate, DateTime endDate, int count}) async {
+  Future<List<BloodPressureModel>> getBpValues({
+    DateTime? beginDate,
+    DateTime? endDate,
+    int? count,
+  }) async {
     try {
-      GetBpMeasurements getScaleMasurementBody = GetBpMeasurements(
-          entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
-          beginDate: beginDate,
-          endDate: endDate,
-          count: count);
+      final GetBpMeasurements getScaleMasurementBody = GetBpMeasurements(
+        entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+        beginDate: beginDate,
+        endDate: endDate,
+        count: count,
+      );
 
       final response = await getIt<ChronicTrackingRepository>()
           .getBpDataOfPerson(getScaleMasurementBody);
 
-      List datum = response.datum;
-      List<BloodPressureModel> bpDataList = <BloodPressureModel>[];
-      for (var scaleMeasurement in datum) {
-        bpDataList.add(BloodPressureModel.fromJson(scaleMeasurement));
+      final datum = response.datum;
+      if (datum is List?) {
+        if (datum != null) {
+          final List<BloodPressureModel> bpDataList = <BloodPressureModel>[];
+          for (final scaleMeasurement in datum) {
+            bpDataList.add(
+              BloodPressureModel.fromJson(
+                scaleMeasurement as Map<String, dynamic>,
+              ),
+            );
+          }
+          return bpDataList;
+        }
       }
-      return bpDataList;
+
+      throw Exception("datum null");
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<bool> getAndWriteBpData(
-      {DateTime beginDate, DateTime endDate, int count = 20}) async {
-    var list =
+  Future<bool> getAndWriteBpData({
+    DateTime? beginDate,
+    DateTime? endDate,
+    int count = 20,
+  }) async {
+    final list =
         await getBpValues(beginDate: beginDate, endDate: endDate, count: count);
     if (list.isNotEmpty) {
       var _dubItem = 0;
-      for (var glucose in list) {
+      for (final glucose in list) {
         if (doesExist(glucose)) _dubItem++;
       }
       if (_dubItem != list.length) {
         await writeAll(list);
         notifyListeners();
         return false;
-      } else
+      } else {
         return false;
+      }
     } else {
       return true;
     }

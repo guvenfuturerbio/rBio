@@ -2,7 +2,7 @@ part of 'local_cache_service.dart';
 
 class LocalCacheServiceImpl extends LocalCacheService {
   final _boxKey = 'network_cache';
-  Box box;
+  late Box box;
 
   @override
   Future<void> init() async {
@@ -11,10 +11,10 @@ class LocalCacheServiceImpl extends LocalCacheService {
 
   @override
   Future<String> get(String url) async {
-    final jsonString = box.get(url);
+    final jsonString = box.get(url) as String?;
 
     if (jsonString != null && jsonString != '') {
-      final jsonModel = jsonDecode(jsonString);
+      final jsonModel = jsonDecode(jsonString) as Map<String, dynamic>;
       final cacheModel = NetworkCacheModel.fromJson(jsonModel);
       final now = DateTime.now();
 
@@ -32,7 +32,7 @@ class LocalCacheServiceImpl extends LocalCacheService {
       }
     }
 
-    return null;
+    throw Exception("$url local cache null");
   }
 
   @override
@@ -44,9 +44,7 @@ class LocalCacheServiceImpl extends LocalCacheService {
         appVersion: getIt<GuvenSettings>().version,
       );
       final jsonString = jsonEncode(cacheModel.toJson());
-      if (jsonString != null) {
-        await box.put(url, jsonString);
-      }
+      await box.put(url, jsonString);
       return true;
     } catch (_) {
       return false;
@@ -63,6 +61,7 @@ class LocalCacheServiceImpl extends LocalCacheService {
     }
   }
 
+  @override
   Future<bool> removeAll() async {
     try {
       await box.clear();
