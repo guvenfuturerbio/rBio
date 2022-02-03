@@ -19,20 +19,20 @@ class CalendarHeader extends StatelessWidget {
   final VoidCallback onHeaderLongPress;
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
-  final DayBuilder headerTitleBuilder;
+  final DayBuilder? headerTitleBuilder;
 
   const CalendarHeader({
-    Key key,
+    Key? key,
     this.locale,
-    @required this.focusedMonth,
-    @required this.calendarFormat,
-    @required this.headerStyle,
-    @required this.onLeftChevronTap,
-    @required this.onRightChevronTap,
-    @required this.onHeaderTap,
-    @required this.onHeaderLongPress,
-    @required this.onFormatButtonTap,
-    @required this.availableCalendarFormats,
+    required this.focusedMonth,
+    required this.calendarFormat,
+    required this.headerStyle,
+    required this.onLeftChevronTap,
+    required this.onRightChevronTap,
+    required this.onHeaderTap,
+    required this.onHeaderLongPress,
+    required this.onFormatButtonTap,
+    required this.availableCalendarFormats,
     this.headerTitleBuilder,
   }) : super(key: key);
 
@@ -42,7 +42,7 @@ class CalendarHeader extends StatelessWidget {
         DateFormat.yMMMM(locale).format(focusedMonth);
 
     return ClipRRect(
-      borderRadius: BorderRadius.vertical(
+      borderRadius: const BorderRadius.vertical(
         top: Radius.circular(15),
       ),
       child: Container(

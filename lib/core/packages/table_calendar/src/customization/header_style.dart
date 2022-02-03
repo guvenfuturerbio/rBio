@@ -26,7 +26,7 @@ class HeaderStyle {
   /// ```dart
   /// titleTextFormatter: (date, locale) => DateFormat.yM(locale).format(date),
   /// ```
-  final TextFormatter titleTextFormatter;
+  final TextFormatter? titleTextFormatter;
 
   /// Style for title Text (month-year) displayed in header.
   final TextStyle titleTextStyle;
