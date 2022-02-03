@@ -18,16 +18,16 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
   final bool fromCovidPcr;
 
   IyzicoResponseSmsPaymentScreen({
-    Key key,
-    this.uid,
-    this.html,
-    this.departmentName,
-    this.doctorName,
-    this.appointmentType,
-    this.hospitalName,
-    this.appointmentFee,
-    this.fromDeepLink = false,
-    this.fromCovidPcr = false,
+    Key? key,
+    required this.uid,
+    required this.html,
+    required this.departmentName,
+    required this.doctorName,
+    required this.appointmentType,
+    required this.hospitalName,
+    required this.appointmentFee,
+     this.fromDeepLink = false,
+     this.fromCovidPcr = false,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,6 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
 @override
 class _IyzicoResponseSmsPaymentScreenState
     extends State<IyzicoResponseSmsPaymentScreen> {
-  bool answer;
 
   final String html;
 

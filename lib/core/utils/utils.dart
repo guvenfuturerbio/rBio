@@ -622,7 +622,7 @@ class UtilityManager {
   UtilityManager._internal();
 
   void fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+      BuildContext context, FocusNode currentFocus, FocusNode? nextFocus) {
     currentFocus.unfocus();
     if (nextFocus == null) {
       return;
@@ -798,7 +798,7 @@ String getHospitalName(BuildContext context, PatientAppointmentsResponse data) {
 class TabToNextFieldTextInputFormatter extends TextInputFormatter {
   BuildContext context;
   FocusNode fromFN;
-  FocusNode toFN;
+  FocusNode? toFN;
 
   TabToNextFieldTextInputFormatter(this.context, this.fromFN, this.toFN);
 

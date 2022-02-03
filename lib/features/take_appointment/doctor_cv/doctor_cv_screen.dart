@@ -71,8 +71,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                value.progress == LoadingProgress.done
-                    ? Image.network(
+                if (value.progress == LoadingProgress.done) Image.network(
                         value.imageUrl,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
@@ -84,29 +83,28 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             ),
                           );
                         },
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
-                          if (loadingProgress == null)
+                        loadingBuilder: (BuildContext context, Widget? child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
                             return Utils.instance.CustomCircleAvatar(
                                 child: Container(
                                   child: child,
                                 ),
                                 size: 120);
-                          return Container(
-                              child: Stack(
+                          }
+                          return Stack(
                             alignment: Alignment.center,
-                            children: [
-                              const RbioLoading(),
-                              Center(
-                                  child: Container(
-                                width: 120,
-                                height: 120,
-                              ))
+                            children: const[
+                           RbioLoading(),
+                           Center(
+                              child: SizedBox(
+                            width: 120,
+                            height: 120,
+                          ))
                             ],
-                          ));
+                          );
                         },
-                      )
-                    : Utils.instance.CustomCircleAvatar(
+                      ) else Utils.instance.CustomCircleAvatar(
                         size: 120,
                         child: SvgPicture.asset(
                           R.image.doctor_avatar,
@@ -149,7 +147,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                     .toUpperCase(),
                 onPressed: () {
                   Atom.to(
-                    PagePaths.CREATE_APPOINTMENT,
+                    PagePaths.createAppointment,
                     queryParameters: {
                       'fromOnline': 'false',
                       'fromSearch': 'true',
@@ -166,7 +164,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                     children: [
                       Visibility(
                         visible:
-                            (value?.doctorCvResponse?.specialties?.length ??
+                            (value.doctorCvResponse.specialties?.length ??
                                         0) ==
                                     0
                                 ? false
@@ -180,20 +178,20 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.specialties?.length ??
+                                value.doctorCvResponse.specialties?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.specialties[index]
-                                          .text,
+                                      value.doctorCvResponse.specialties![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
                         ),
                       ),
                       Visibility(
-                        visible: (value?.doctorCvResponse?.treatments?.length ??
+                        visible: (value.doctorCvResponse.treatments?.length ??
                                     0) ==
                                 0
                             ? false
@@ -208,13 +206,13 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.treatments?.length ??
+                                value.doctorCvResponse.treatments?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.treatments[index]
-                                          .text,
+                                      value.doctorCvResponse.treatments![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
@@ -222,7 +220,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value?.doctorCvResponse?.experiences?.length ??
+                            (value.doctorCvResponse.experiences?.length ??
                                         0) ==
                                     0
                                 ? false
@@ -237,20 +235,20 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.experiences?.length ??
+                                value.doctorCvResponse.experiences?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.experiences[index]
-                                          .text,
+                                      value.doctorCvResponse.experiences![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
                         ),
                       ),
                       Visibility(
-                        visible: (value?.doctorCvResponse?.educations?.length ??
+                        visible: (value.doctorCvResponse.educations?.length ??
                                     0) ==
                                 0
                             ? false
@@ -265,13 +263,13 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.educations?.length ??
+                                value.doctorCvResponse.educations?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.educations[index]
-                                          .text,
+                                      value.doctorCvResponse.educations![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
@@ -279,7 +277,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value?.doctorCvResponse?.publications?.length ??
+                            (value.doctorCvResponse.publications?.length ??
                                         0) ==
                                     0
                                 ? false
@@ -294,13 +292,13 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.publications?.length ??
+                                value.doctorCvResponse.publications?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.publications[index]
-                                          .text,
+                                      value.doctorCvResponse.publications![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
@@ -308,7 +306,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value?.doctorCvResponse?.memberships?.length ??
+                            (value.doctorCvResponse.memberships?.length ??
                                         0) ==
                                     0
                                 ? false
@@ -323,13 +321,13 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.memberships?.length ??
+                                value.doctorCvResponse.memberships?.length ??
                                     0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.memberships[index]
-                                          .text,
+                                      value.doctorCvResponse.memberships![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
@@ -337,7 +335,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value?.doctorCvResponse?.trainings?.length ?? 0) ==
+                            (value.doctorCvResponse.trainings?.length ?? 0) ==
                                     0
                                 ? false
                                 : true,
@@ -353,12 +351,12 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.trainings?.length ?? 0,
+                                value.doctorCvResponse.trainings?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.trainings[index]
-                                          .text,
+                                      value.doctorCvResponse.trainings![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
@@ -366,7 +364,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value?.doctorCvResponse?.awards?.length ?? 0) == 0
+                            (value.doctorCvResponse.awards?.length ?? 0) == 0
                                 ? false
                                 : true,
                         child: ListTile(
@@ -379,11 +377,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value?.doctorCvResponse?.awards?.length ?? 0,
+                                value.doctorCvResponse.awards?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.awards[index].text,
+                                      value.doctorCvResponse.awards![index].text!,
                                   style: context.xHeadline5);
                             },
                           ),

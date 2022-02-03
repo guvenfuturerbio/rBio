@@ -6,10 +6,10 @@ class _TableCalendar extends StatefulWidget {
   final ValueNotifier<_EventSelectedModel?> completeNotifier;
 
   const _TableCalendar({
-    Key key,
-    @required this.focusedDay,
-    @required this.val,
-    @required this.completeNotifier,
+    Key? key,
+    required this.focusedDay,
+    required this.val,
+    required this.completeNotifier,
   }) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class _TableCalendar extends StatefulWidget {
 class _TableCalendarState extends State<_TableCalendar> {
   static const Color borderColor = Color.fromARGB(255, 238, 238, 238);
 
-  BoxBorder get boxBorder => Border(
+  BoxBorder get boxBorder => const Border(
         right: BorderSide(
           color: borderColor,
         ),
@@ -32,8 +32,8 @@ class _TableCalendarState extends State<_TableCalendar> {
         color: Colors.black,
       );
 
-  DateTime _focusedDay;
-  DateTime _selectedDay;
+  late DateTime _focusedDay;
+  late DateTime _selectedDay;
 
   void _onDaySelected(
     CreateAppointmentEventsVm value,

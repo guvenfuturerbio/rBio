@@ -36,10 +36,10 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   //For favorites
   DateTime _startDate, _endDate;
-  int _patientId;
+  int? _patientId;
   List<PatientAppointmentsResponse> _patientAppointments;
   List<PatientAppointmentsResponse> _holderForFavorites = [];
-  List<String> _doctorsImageUrls = [];
+  final List<String> _doctorsImageUrls = [];
   List<int> _doctorsIds = [];
 
   // #region Getters
@@ -58,7 +58,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       _holderForFavorites;
   List<String> get doctorsImageUrls => _doctorsImageUrls;
 
-  FilterTenantsResponse get dropdownValueTenant => _dropdownValueTenant;
+   FilterTenantsResponse get dropdownValueTenant => _dropdownValueTenant;
   FilterDepartmentsResponse get dropdownValueDepartment =>
       _dropdownValueDepartment;
   FilterResourcesResponse get dropdownValueDoctor => _dropdownValueDoctor;
@@ -94,7 +94,7 @@ class CreateAppointmentVm extends ChangeNotifier {
     this.fromSearch = fromSearch;
     this.fromSymptom = fromSymptom;
     _patientId = getIt<UserNotifier>().getPatient().id;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
       if (forOnline) {
         _hospitalSelected = true;
@@ -118,18 +118,22 @@ class CreateAppointmentVm extends ChangeNotifier {
       }
 
       if (fromSearch) {
-        fillFromSearch(tenantId, departmentId, resourceId);
+        if(tenantId !=null&& departmentId!=null&& resourceId!=null) {
+          fillFromSearch(tenantId, departmentId, resourceId);
+        }
       } else {
         forOnline
-            ? print("For online!")
+            ? LoggerUtils.instance.d("For online!")
             : fromSymptom
-                ? print("From smyptom!")
+                ?LoggerUtils.instance.d("From smyptom!")
                 : clearFunc(Fields.tenant);
       }
 
       if (fromSymptom) {
+                if(tenantId !=null&& departmentId!=null) {
+
         fillFromSymptom(tenantId, departmentId);
-      }
+      }}
     });
   }
 

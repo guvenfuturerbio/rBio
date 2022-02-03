@@ -6,14 +6,14 @@ import '../../../../core/core.dart';
 import '../../../../model/home/take_appointment/doctor_cv_response.dart';
 
 class DoctorCvScreenVm extends ChangeNotifier {
-  DoctorCvResponse _doctorCvResponse;
-  BuildContext mContext;
-  LoadingProgress _progress;
-  String _imageUrl;
+  late DoctorCvResponse _doctorCvResponse;
+  late BuildContext mContext;
+  late LoadingProgress _progress;
+  late String _imageUrl;
 
-  DoctorCvScreenVm({BuildContext context, String doctorNameNotTitle}) {
+  DoctorCvScreenVm({required BuildContext context,required String doctorNameNotTitle}) {
     mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchDoctorCv(doctorNameNotTitle);
     });
   }
@@ -31,10 +31,9 @@ class DoctorCvScreenVm extends ChangeNotifier {
           await getIt<Repository>().getDoctorCvDetails(doctorId);
       if (_doctorCvResponse != null) {
         _progress = LoadingProgress.done;
-        _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven) +
+        _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven)! +
                 "/storage/app/media/" +
-                this?._doctorCvResponse?.image1 ??
-            "";
+                _doctorCvResponse.image1! ;
       } else {
         _progress = LoadingProgress.error;
         _imageUrl = "";
@@ -43,7 +42,7 @@ class DoctorCvScreenVm extends ChangeNotifier {
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
       debugPrintStack(stackTrace: stackTrace);
-      _progress = LoadingProgress.ERROR;
+      _progress = LoadingProgress.error;
       _imageUrl = "";
       notifyListeners();
     }

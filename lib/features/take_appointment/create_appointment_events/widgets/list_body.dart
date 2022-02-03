@@ -26,11 +26,11 @@ class _ListBodyState extends State<ListBody>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration:const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
     );
     offset = Tween<Offset>(
-      begin: Offset(0.0, -0.3),
-      end: Offset(0.0, 0.0),
+      begin: const Offset(0.0, -0.3),
+      end: const Offset(0.0, 0.0),
     ).animate(controller);
   }
 
@@ -46,7 +46,7 @@ class _ListBodyState extends State<ListBody>
       fit: StackFit.expand,
       children: [
         //
-        if (widget.vm.availableSlots?.keys?.isEmpty) ...[
+        if (widget.vm.availableSlots.keys.isEmpty) ...[
           Positioned.fill(
             child: Center(
               child: Text(
@@ -69,7 +69,7 @@ class _ListBodyState extends State<ListBody>
                 ),
 
                 //
-                Expanded(
+                const Expanded(
                   flex: 3,
                   child: SizedBox(),
                 ),
@@ -90,12 +90,12 @@ class _ListBodyState extends State<ListBody>
           child: ValueListenableBuilder(
             valueListenable: widget.completeNotifier,
             builder: (BuildContext context, _EventSelectedModel selectedModel,
-                Widget child) {
+                Widget? child) {
               return RbioSwitcher(
                 showFirstChild:
-                    selectedModel != null && selectedModel.selected != null,
-                child1: child,
-                child2: SizedBox(),
+                    selectedModel.selected != null,
+                child1: child!,
+                child2: const SizedBox(),
               );
             },
             child: RbioElevatedButton(
@@ -115,15 +115,15 @@ class _ListBodyState extends State<ListBody>
       builder: (
         BuildContext context,
         _EventSelectedModel selectedModel,
-        Widget child,
+        Widget? child,
       ) {
         return SingleChildScrollView(
           padding: EdgeInsets.zero,
           scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              for (var item in widget.vm.availableSlots?.keys ?? []) ...[
+              for (var item in widget.vm.availableSlots.keys) ...[
                 _buildLeftCard(
                   context,
                   item,
@@ -153,23 +153,23 @@ class _ListBodyState extends State<ListBody>
         },
         child: Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: 8),
-          padding: EdgeInsets.symmetric(
+          margin: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.symmetric(
             vertical: 7,
           ),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: widget.completeNotifier.value?.value == value
+            color: widget.completeNotifier.value.value == value
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Text(
-            '${value}:00',
+            '$value:00',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
-              color: widget.completeNotifier.value?.value == value
+              color: widget.completeNotifier.value.value == value
                   ? getIt<ITheme>().textColor
                   : getIt<ITheme>().textColorSecondary,
             ),
@@ -179,20 +179,18 @@ class _ListBodyState extends State<ListBody>
     );
   }
 
-  _EventSelectedModel oldModel;
+  late _EventSelectedModel oldModel;
   Widget _buildRightList() {
     return ValueListenableBuilder(
       valueListenable: widget.completeNotifier,
       builder: (
         BuildContext context,
         _EventSelectedModel selectedModel,
-        Widget child,
+        Widget? child,
       ) {
-        if (selectedModel == null) {
-          return SizedBox();
-        }
 
-        if (oldModel?.value != selectedModel.value) {
+
+        if (oldModel.value != selectedModel.value) {
           controller.reset();
           controller.forward();
         }
@@ -202,7 +200,7 @@ class _ListBodyState extends State<ListBody>
           position: offset,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: selectedModel.items
@@ -229,8 +227,8 @@ class _ListBodyState extends State<ListBody>
         },
         child: Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: 8),
-          padding: EdgeInsets.symmetric(
+          margin: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.symmetric(
             vertical: 7,
           ),
           alignment: Alignment.center,

@@ -17,16 +17,13 @@ import '../../../generated/l10n.dart';
 
 class IyzicoResponseVm with ChangeNotifier {
   // Properties
-  String _serverUrl = "https://api.guven.com.tr/cerebrumplushub";
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> stream;
-  bool connectionIsOpen;
   String code;
-  String errorText;
+  String? errorText;
   String videoId;
   String uid;
-  Logger _logger;
   StreamSubscription<LogRecord> _logMessagesSub;
-  
+
   IyzicoResponseVm(this.uid) {
     listenFirestore();
   }
@@ -38,7 +35,7 @@ class IyzicoResponseVm with ChangeNotifier {
   @override
   void dispose() {
     stream.cancel();
-    _logMessagesSub?.cancel();
+    _logMessagesSub.cancel();
     super.dispose();
   }
 
@@ -48,13 +45,13 @@ class IyzicoResponseVm with ChangeNotifier {
         .doc(uid)
         .snapshots()
         .listen((event) {
-      if (event.data() != null && event.data()['code'] != "99") {
+      if (event.data() != null && event.data()?['code'] != "99") {
         String userName = parseJwtPayLoad(getIt<ISharedPreferencesManager>()
-            .get(SharedPreferencesKeys.JWT_TOKEN))['name'];
-        errorText = event.data()['errorText'];
-        videoId = event.data()['videoId'];
-        code = event.data()['code'];
-        Atom.to(PagePaths.MAIN, isReplacement: true);
+            .get(SharedPreferencesKeys.jwtToken))['name'];
+        errorText = event.data()?['errorText'];
+        videoId = event.data()?['videoId'];
+        code = event.data()?['code'];
+        Atom.to(PagePaths.main, isReplacement: true);
 
         if (code == "13") {
           Atom.show(GradientDialogForPaymentDialog(
@@ -77,10 +74,9 @@ class IyzicoResponseVm with ChangeNotifier {
 
   void _handleMessage(List<Object> args) {
     {
-      print('Message came from the channel');
-      code = args[0];
-      errorText = args[1];
-      videoId = args[2];
+      code = args[0] as String;
+      errorText = args[1] as String;
+      videoId = args[2] as String;
     }
     {}
   }
@@ -92,9 +88,7 @@ class IyzicoResponseVm with ChangeNotifier {
 
 class HttpOverrideCertificateVerificationInDev extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext context) {
-    return super.createHttpClient(context)
+  Future<HttpClient> createHttpClient(SecurityContext context) async => super.createHttpClient(context)
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
-  }
 }

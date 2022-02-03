@@ -149,7 +149,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       ? []
                       : vm.relativeResponse.patientRelatives,
                   val: vm,
-                  whichField: Fields.RELATIVE,
+                  whichField: Fields.relative,
                   progress: vm.relativeProgress,
                 ),
 
@@ -162,7 +162,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                 : LocaleProvider.current.pls_select_hosp,
             itemList: vm.tenantsFilterResponse ,
             val: vm,
-            whichField: Fields.TENANTS,
+            whichField: Fields.tenant,
             progress: vm.progress,
             isOnline: forOnline,
           ),
@@ -182,7 +182,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       hint: LocaleProvider.current.pls_select_depart,
                       itemList: vm.filterDepartmentResponse ,
                       val: vm,
-                      whichField: Fields.DEPARTMENT,
+                      whichField: Fields.department,
                       progress: vm.departmentProgress,
                     ),
             ),
@@ -203,7 +203,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       hint: LocaleProvider.current.pls_select_doctor,
                       itemList: vm.filterResourcesResponse ,
                       val: vm,
-                      whichField: Fields.DOCTORS,
+                      whichField: Fields.doctors,
                       progress: vm.doctorProgress,
                     ),
             ),
@@ -249,7 +249,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       child: Center(
                         child: RbioElevatedButton(
                           onTap: () {
-                            Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
+                            Atom.to(PagePaths.symptomMainMenu);
                           },
                           title: LocaleProvider.current.depart_analyse,
                         ),
@@ -264,7 +264,7 @@ class CreateAppointmentScreen extends StatelessWidget {
 
   void _openCreateAppointmentsEvents(CreateAppointmentVm val) {
     Atom.to(
-      PagePaths.CREATE_APPOINTMENT_EVENTS,
+      PagePaths.createAppointmentEvents,
       queryParameters: {
         'patientId': Uri.encodeFull(val.dropdownValueRelative.id!),
         'patientName': Uri.encodeFull(

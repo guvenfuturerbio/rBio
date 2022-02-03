@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -14,12 +13,12 @@ class DoMobilePaymentScreen extends StatefulWidget {
   final String price;
   final String voucherCode;
 
-  DoMobilePaymentScreen({
-    Key key,
-    this.appointment,
-    this.appointmentId,
-    this.price,
-    this.voucherCode,
+  const DoMobilePaymentScreen({
+    Key? key,
+    required this.appointment,
+    required this.appointmentId,
+    required this.price,
+    required this.voucherCode,
   }) : super(key: key);
 
   @override
@@ -27,15 +26,15 @@ class DoMobilePaymentScreen extends StatefulWidget {
 }
 
 class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
-  TextEditingController _cardHolderNameController;
-  MaskedTextController _cardNumberController;
-  TextEditingController _expiryDateController;
-  TextEditingController _cvvCodeController;
+  late TextEditingController _cardHolderNameController;
+  late MaskedTextController _cardNumberController;
+  late TextEditingController _expiryDateController;
+  late TextEditingController _cvvCodeController;
 
-  FocusNode _cardHolderNameFNode;
-  FocusNode _cardNumberFNode;
-  FocusNode _cardCcvFNode;
-  FocusNode _cardExpirityDateFNode;
+  late FocusNode _cardHolderNameFNode;
+  late FocusNode _cardNumberFNode;
+  late FocusNode _cardCcvFNode;
+  late FocusNode _cardExpirityDateFNode;
 
   @override
   void initState() {
@@ -79,7 +78,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
         builder: (
           BuildContext context,
           DoMobilePaymentScreenVm value,
-          Widget child,
+          Widget? child,
         ) {
           return _buildScreen(value);
         },
@@ -92,7 +91,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
       child: RbioLoadingOverlay(
         opacity: 0,
         isLoading: value.showOverlay,
-        progressIndicator: RbioLoading(),
+        progressIndicator: const RbioLoading(),
         child: DefaultTabController(
           length: 2,
           child: RbioScaffold(
@@ -127,7 +126,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
       child: SingleChildScrollView(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -135,7 +134,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
           children: <Widget>[
             //
             Padding(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -250,7 +249,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
 
             //
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 50,
                 right: 50,
                 left: 50,
@@ -281,7 +280,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                           onTap: () {
                             value.showDistanceSaleContract(
                               packageName: LocaleProvider.current.online_appo,
-                              price: widget?.price ?? 0.toString(),
+                              price: widget.price ,
                             );
                           },
                           child: Text(
@@ -379,5 +378,5 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
     );
   }
 
-  Widget _buildVerticalGap() => SizedBox(height: 8);
+  Widget _buildVerticalGap() => const SizedBox(height: 8);
 }
