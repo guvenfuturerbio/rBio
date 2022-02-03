@@ -4,8 +4,8 @@ import '../core.dart';
 
 enum PatientType {
   sugar,
-  BMI,
-  Bp,
+  bmi,
+  bp,
 }
 
 extension PatientTypeStringExt on String {

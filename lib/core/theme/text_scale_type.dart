@@ -3,37 +3,37 @@ import 'package:collection/src/iterable_extensions.dart';
 import '../core.dart';
 
 enum TextScaleType {
-  Small,
-  Medium,
-  Large,
+  small,
+  medium,
+  large,
 }
 
 extension TextScaleTypeExtensions on TextScaleType {
   TextScaleType getNextType() {
     switch (this) {
-      case TextScaleType.Small:
-        return TextScaleType.Medium;
+      case TextScaleType.small:
+        return TextScaleType.medium;
 
-      case TextScaleType.Medium:
-        return TextScaleType.Large;
+      case TextScaleType.medium:
+        return TextScaleType.large;
 
-      case TextScaleType.Large:
-        return TextScaleType.Small;
+      case TextScaleType.large:
+        return TextScaleType.small;
 
       default:
-        return TextScaleType.Medium;
+        return TextScaleType.medium;
     }
   }
 
   double getValue() {
     switch (this) {
-      case TextScaleType.Small:
+      case TextScaleType.small:
         return 1.0;
 
-      case TextScaleType.Medium:
+      case TextScaleType.medium:
         return 1.5;
 
-      case TextScaleType.Large:
+      case TextScaleType.large:
         return 2.0;
 
       default:
@@ -45,6 +45,6 @@ extension TextScaleTypeExtensions on TextScaleType {
 }
 
 extension TextScaleTypeStringExt on String {
-  TextScaleType get xTextScaleKeys => TextScaleType.values
-      .firstWhereOrNull((element) => element.xRawValue == this);
+  TextScaleType? get xTextScaleKeys => TextScaleType.values
+      .firstWhereOrNull((element) => element.xRawValue == this) ;
 }

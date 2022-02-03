@@ -1,5 +1,5 @@
 enum LoadingProgress {
-  DONE,
-  ERROR,
-  LOADING,
+  done,
+  error,
+  loading,
 }

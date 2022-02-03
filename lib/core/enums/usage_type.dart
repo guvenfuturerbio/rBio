@@ -1,21 +1,21 @@
 import '../core.dart';
 
 enum UsageType {
-  HUNGRY,
-  FULL,
-  IRRELEVANT,
+  hungry,
+  full,
+  irrelevant,
 }
 
 extension UserTypeExtension on UsageType {
   String xToString() {
     switch (this) {
-      case UsageType.HUNGRY:
+      case UsageType.hungry:
         return LocaleProvider.current.hungry;
 
-      case UsageType.FULL:
+      case UsageType.full:
         return LocaleProvider.current.full;
 
-      case UsageType.IRRELEVANT:
+      case UsageType.irrelevant:
         return LocaleProvider.current.irrelevant;
 
       default:

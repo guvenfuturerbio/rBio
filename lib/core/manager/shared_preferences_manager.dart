@@ -14,11 +14,11 @@ abstract class ISharedPreferencesManager {
   Future<bool> setStringList(SharedPreferencesKeys key, List<String> value);
 
   dynamic get(SharedPreferencesKeys key);
-  bool getBool(SharedPreferencesKeys key);
-  double getDouble(SharedPreferencesKeys key);
-  int getInt(SharedPreferencesKeys key);
-  String getString(SharedPreferencesKeys key);
-  List<String> getStringList(SharedPreferencesKeys key);
+  bool? getBool(SharedPreferencesKeys key);
+  double? getDouble(SharedPreferencesKeys key);
+  int? getInt(SharedPreferencesKeys key);
+  String? getString(SharedPreferencesKeys key);
+  List<String>? getStringList(SharedPreferencesKeys key);
 
   Future<bool> remove(SharedPreferencesKeys key);
   Set<String> getKeys();
@@ -114,10 +114,10 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
 
   @override
   Future<bool> remove(SharedPreferencesKeys key) async =>
-      await sharedPreferences.remove(key.xRawValue);
+      sharedPreferences.remove(key.xRawValue);
 
   @override
-  Future<bool> clear() async => await sharedPreferences.clear();
+  Future<bool> clear() async => sharedPreferences.clear();
 
   @override
   Set<String> getKeys() => sharedPreferences.getKeys();
@@ -127,5 +127,5 @@ class SharedPreferencesManager extends ISharedPreferencesManager {
       sharedPreferences.containsKey(key.xRawValue);
 
   @override
-  Future<void> reload() async => await sharedPreferences.reload();
+  Future<void> reload() async => sharedPreferences.reload();
 }
