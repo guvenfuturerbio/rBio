@@ -12,12 +12,13 @@ class SymptomsResultPage extends StatefulWidget {
       this.symptoms,
       this.gender,
       this.year_of_birth,
-      this.isFromVoice});
+      this.isFromVoice})
+      : super(key: key);
 
-  List<GetBodySymptomsResponse>? symptoms;
-  String? gender;
-  String? year_of_birth;
-  bool? isFromVoice;
+  late List<GetBodySymptomsResponse>? symptoms;
+  late String? gender;
+  late String? year_of_birth;
+  late bool? isFromVoice;
 
   @override
   State<SymptomsResultPage> createState() => _SymptomsResultPageState();
@@ -38,15 +39,15 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
       widget.year_of_birth = Atom.queryParameters['year_of_birth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
     return ChangeNotifierProvider(
       create: (context) => SymptomsResultPageVm(
         context: context,
-        gender: this.widget.gender,
-        selectedSymptoms: this.widget.symptoms,
-        year_of_birth: this.widget.year_of_birth,
-        isFromVoice: this.widget.isFromVoice,
+        gender: widget.gender as String,
+        selectedSymptoms: widget.symptoms as List<GetBodySymptomsResponse>,
+        year_of_birth: widget.year_of_birth as String,
+        isFromVoice: widget.isFromVoice as bool,
       ),
       child: Consumer<SymptomsResultPageVm>(
         builder: (context, value, child) {
@@ -66,12 +67,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
 
   Widget _buildResultList(BuildContext context, SymptomsResultPageVm value) {
     switch (value.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
-        break;
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
-        return value.specialisations.length == 0
+      case LoadingProgress.done:
+        return value.specialisations.isEmpty
             ? Column(
                 children: [
                   Padding(
@@ -177,14 +177,15 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                         child: FlatButton(
                                           onPressed: () async {
                                             await value.loadNavigationData(value
-                                                .specialisations[index].id);
+                                                .specialisations[index]
+                                                .id as int);
                                             if (value.toNavigateDoctorsPageId !=
                                                 null) {
                                               if (value.specialisations[index]
                                                       .id ==
                                                   null) {
                                                 Atom.to(
-                                                  PagePaths.CREATE_APPOINTMENT,
+                                                  PagePaths.createAppointment,
                                                   queryParameters: {
                                                     'forOnline':
                                                         true.toString(),
@@ -202,8 +203,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                                 );
                                               } else {
                                                 Atom.to(
-                                                    PagePaths
-                                                        .CREATE_APPOINTMENT,
+                                                    PagePaths.createAppointment,
                                                     queryParameters: {
                                                       'forOnline':
                                                           false.toString(),
@@ -217,12 +217,12 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                                       'departmentName': value
                                                           .specialisations[
                                                               index]
-                                                          .name,
+                                                          .name as String,
                                                     });
                                               }
                                             } else {
                                               Atom.to(
-                                                PagePaths.CREATE_APPOINTMENT,
+                                                PagePaths.createAppointment,
                                                 queryParameters: {
                                                   'forOnline': true.toString(),
                                                   'fromSearch':
@@ -271,11 +271,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 ),
               );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }
