@@ -6,9 +6,9 @@ import '../core.dart';
 abstract class RbioVm extends ChangeNotifier {
   BuildContext get mContext;
 
-  LoadingProgress _progress;
-  LoadingProgress get progress => _progress;
-  set progress(LoadingProgress value) {
+  LoadingProgress? _progress;
+  LoadingProgress? get progress => _progress;
+  set progress(LoadingProgress? value) {
     _progress = value;
     notifyListeners();
   }
@@ -16,8 +16,8 @@ abstract class RbioVm extends ChangeNotifier {
   void showDefaultErrorDialog(
     dynamic throwable,
     dynamic stackTrace, [
-    String title,
-    String description,
+    String? title,
+    String? description,
   ]) {
     Sentry.captureException(throwable, stackTrace: stackTrace);
     showGradientDialog(
@@ -30,15 +30,17 @@ abstract class RbioVm extends ChangeNotifier {
   void showDelayedErrorDialog(
     dynamic throwable,
     dynamic stackTrace, [
-    VoidCallback voidCallback,
-    String title,
-    String description,
+    VoidCallback? voidCallback,
+    String? title,
+    String? description,
   ]) {
     Sentry.captureException(throwable, stackTrace: stackTrace);
     Future.delayed(
       const Duration(milliseconds: 500),
       () {
-        voidCallback();
+        if (voidCallback != null) {
+          voidCallback();
+        }
         showInfoDialog(
           title ?? LocaleProvider.of(this.mContext).warning,
           description ??
@@ -68,7 +70,7 @@ abstract class RbioVm extends ChangeNotifier {
     );
   }
 
-  void showInfoDialog(String title, String text, [BuildContext context]) {
+  void showInfoDialog(String title, String text, [BuildContext? context]) {
     showDialog(
       context: context ?? mContext,
       barrierDismissible: true,

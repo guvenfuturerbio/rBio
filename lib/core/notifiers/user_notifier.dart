@@ -8,7 +8,7 @@ import '../core.dart';
 enum UserType { doctor, chronic_user, basic_user }
 
 class UserNotifier extends ChangeNotifier {
-  PatientResponse patient;
+  PatientResponse? patient;
   List<UserType> _userType = [];
   //
   String? firebaseID;
@@ -19,89 +19,105 @@ class UserNotifier extends ChangeNotifier {
   bool get isCronic => _userType.contains(UserType.chronic_user);
   bool get isPatient => _userType.contains(UserType.basic_user);
 
-  SharedPreferencesManager sharedPreferencesManager =
-      getIt<ISharedPreferencesManager>();
+  final sharedPreferencesManager = getIt<ISharedPreferencesManager>();
 
   Future<void> setPatient(PatientResponse patient) async {
     final stringData = jsonEncode(patient.toJson());
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.PATIENT, stringData);
+        .setString(SharedPreferencesKeys.patient, stringData);
   }
 
   PatientResponse getPatient() {
     final stringData = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.PATIENT);
+        .getString(SharedPreferencesKeys.patient);
     if (stringData != null) {
       final decodeData = jsonDecode(stringData);
-      return PatientResponse.fromJson(decodeData);
+      if (decodeData is Map<String, dynamic>?) {
+        if (decodeData != null) {
+          return PatientResponse.fromJson(decodeData);
+        }
+      }
     }
 
-    return null;
+    throw Exception("patient null");
   }
 
   void userTypeFetcher(RbioLoginResponse rsp) {
-    if (rsp.roles.contains("Doctor")) {
+    if (rsp.roles?.contains("Doctor") ?? false) {
       _userType.add(UserType.doctor);
     }
-    if (rsp.roles.contains("cronicPatient")) {
+    if (rsp.roles?.contains("cronicPatient") ?? false) {
       _userType.add(UserType.chronic_user);
     }
-    if (rsp.roles.contains("AllMain")) {
+    if (rsp.roles?.contains("AllMain") ?? false) {
       _userType.add(UserType.basic_user);
     }
   }
 
 // Guven online user account set
   Future<void> setUserAccount(UserAccount userAccount) async {
-    bool _canAccessHospitalOps;
+    bool? _canAccessHospitalOps;
 
     if (userAccount.nationality == "TC") {
-      if (userAccount.identificationNumber.isNotEmpty &&
-          userAccount.identificationNumber != null) {
+      final identificationNumber = userAccount.identificationNumber;
+      if (identificationNumber != null && identificationNumber != '') {
         _canAccessHospitalOps = true;
       }
     } else {
-      if (userAccount.passaportNumber.isNotEmpty &&
-          userAccount.passaportNumber != null) {
+      final passaportNumber = userAccount.passaportNumber;
+      if (userAccount.passaportNumber != null && passaportNumber != '') {
         _canAccessHospitalOps = true;
       }
     }
 
     await sharedPreferencesManager.setString(
-        SharedPreferencesKeys.USERACCOUNT, jsonEncode(userAccount.toJson()));
+      SharedPreferencesKeys.userAccount,
+      jsonEncode(
+        userAccount.toJson(),
+      ),
+    );
     await sharedPreferencesManager.setBool(
-        SharedPreferencesKeys.CANACCESSHOSPITALOPS, _canAccessHospitalOps);
+      SharedPreferencesKeys.canAccessHospitalOps,
+      _canAccessHospitalOps ?? false,
+    );
   }
 
-// Güven online user account get
+  // Güven online user account get
   UserAccount getUserAccount() {
     final userAccountStr =
-        sharedPreferencesManager.getString(SharedPreferencesKeys.USERACCOUNT);
+        sharedPreferencesManager.getString(SharedPreferencesKeys.userAccount);
     if (userAccountStr != null) {
-      final model = UserAccount.fromJson(jsonDecode(userAccountStr));
-      return model;
+      final decodeData = jsonDecode(userAccountStr);
+      if (decodeData is Map<String, dynamic>?) {
+        if (decodeData != null) {
+          final model = UserAccount.fromJson(decodeData);
+          return model;
+        }
+      }
     }
 
-    return null;
+    throw Exception('UserAccount null');
   }
 
   Future<bool> checkAccessToken() async {
     final jwtToken =
-        sharedPreferencesManager.getString(SharedPreferencesKeys.JWT_TOKEN);
+        sharedPreferencesManager.getString(SharedPreferencesKeys.jwtToken);
     if (jwtToken == null) {
       return false;
     }
 
-    var response = await getIt<Repository>().getPatientDetail();
-    if (response != null) {
+    try {
+      await getIt<Repository>().getPatientDetail();
       return true;
-    } else {
+    } catch (e) {
       return false;
     }
   }
 
-  bool canAccessHospital() => sharedPreferencesManager
-      .getBool(SharedPreferencesKeys.CANACCESSHOSPITALOPS);
+  bool canAccessHospital() =>
+      sharedPreferencesManager
+          .getBool(SharedPreferencesKeys.canAccessHospitalOps) ??
+      false;
   void clear() {
     patient = null;
     _userType = [];
@@ -110,9 +126,9 @@ class UserNotifier extends ChangeNotifier {
   //
   AllUsersModel getHomeWidgets(String tcEmailPassport) {
     final sharedData =
-        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
+        sharedPreferencesManager.getString(SharedPreferencesKeys.allUsers);
     if (sharedData == null) {
-      return null;
+      throw Exception("")
     } else {
       final sharedMap = jsonDecode(sharedData) as Map<String, dynamic>;
       final userExist = sharedMap.containsKey(tcEmailPassport);
