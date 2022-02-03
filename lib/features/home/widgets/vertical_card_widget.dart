@@ -9,9 +9,9 @@ class VerticalCard extends StatelessWidget {
   final CustomPainter painter;
 
   const VerticalCard({
-    Key key,
-    @required this.title,
-    @required this.painter,
+    Key? key,
+    required this.title,
+    required this.painter,
   }) : super(key: key);
 
   @override
@@ -19,9 +19,9 @@ class VerticalCard extends StatelessWidget {
     return Consumer<ThemeNotifier>(
       builder: (context, themeVm, child) => SizedBox(
         width: HomeSizer.instance.getBodyCardWidth(context),
-        height: themeVm.textScale == TextScaleType.Large
+        height: themeVm.textScale == TextScaleType.large
             ? HomeSizer.instance.getBodyCardHeightLarge()
-            : themeVm.textScale == TextScaleType.Medium
+            : themeVm.textScale == TextScaleType.medium
                 ? HomeSizer.instance.getBodyCardHeightMedium()
                 : HomeSizer.instance.getBodyCardHeight(),
         child: Card(

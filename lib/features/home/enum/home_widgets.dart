@@ -9,15 +9,15 @@ enum HomeWidgets {
   results,
   symptomChecker,
   detailedSymptom,
-  healthcare_employee,
+  healthcareEmployee,
 }
 
 extension HomeWidgetsExt on HomeWidgets {
-  String get xRawValue => GetEnumValue(this);
+  String get xRawValue => getEnumValue(this);
   bool isShowDefault() => this != HomeWidgets.detailedSymptom;
 }
 
 extension HomeWidgetsStringExt on String {
-  HomeWidgets get xHomeWidgets => HomeWidgets.values
+  HomeWidgets? get xHomeWidgets => HomeWidgets.values
       .firstWhereOrNull((element) => element.xRawValue == this);
 }

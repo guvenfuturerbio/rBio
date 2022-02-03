@@ -115,7 +115,7 @@ class _Sizes {
   final Widget wSizer40 = const SizedBox(width: 40);
 
   // BorderRadius
-  final BorderRadiusGeometry borderRadiusCircular = BorderRadius.circular(12);
+  final BorderRadius borderRadiusCircular = BorderRadius.circular(12);
 
   // Icons
   final double iconSize = 30;
