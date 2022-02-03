@@ -235,6 +235,36 @@ class LocaleProvider {
     );
   }
 
+  /// `Upload\nFile`
+  String get uploadFile {
+    return Intl.message(
+      'Upload\nFile',
+      name: 'uploadFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request\nTranslator`
+  String get requestTranslator {
+    return Intl.message(
+      'Request\nTranslator',
+      name: 'requestTranslator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start\nMeeting`
+  String get startMeeting {
+    return Intl.message(
+      'Start\nMeeting',
+      name: 'startMeeting',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Terms and Privacy`
   String get terms_and_privacy {
     return Intl.message(

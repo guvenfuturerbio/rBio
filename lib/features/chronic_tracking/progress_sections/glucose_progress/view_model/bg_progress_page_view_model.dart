@@ -23,7 +23,7 @@ class BgProgressPageViewModel
     implements ProgressPage {
   BgProgressPageViewModel({BuildContext context}) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      isChartShow = false;
+      isChartShow = true;
       getIt<GlucoseStorageImpl>().addListener(() {
         setSelectedItem(selected);
       });

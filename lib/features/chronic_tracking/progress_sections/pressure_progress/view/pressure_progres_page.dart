@@ -1,5 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
@@ -36,8 +37,30 @@ class _BpProgressPageState extends State<BpProgressPage> {
                   appbar: RbioAppBar(
                     title: RbioAppBar.textTitle(
                       context,
-                      LocaleProvider.current.bg_measurement_tracking,
+                      LocaleProvider.current.blood_pressure_tracking,
                     ),
+                  ),
+                  floatingActionButton: FloatingActionButton(
+                    heroTag: 'adder',
+                    onPressed: () {
+                      value.manuelEntry(context);
+                    },
+                    child: Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: getIt<ITheme>().mainColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: SvgPicture.asset(
+                          R.image.add,
+                          color: R.color.white,
+                        ),
+                      ),
+                    ),
+                    backgroundColor: R.color.white,
                   ),
                   body: SingleChildScrollView(
                     physics: NeverScrollableScrollPhysics(),

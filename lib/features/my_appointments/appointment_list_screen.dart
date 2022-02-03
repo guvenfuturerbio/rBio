@@ -221,7 +221,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                             horizontal: 8.0,
                             vertical: 2.0,
                           ),
-                          title: "Upload\nFile",
+                          title: '${LocaleProvider.current.uploadFile}',
                           onTap: () async {
                             Uint8List fileBytes = await value.getSelectedFile();
 
@@ -263,7 +263,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                             horizontal: 8.0,
                             vertical: 2.0,
                           ),
-                          title: "Request\nTranslator",
+                          title: '${LocaleProvider.current.requestTranslator}',
                           onTap: () {
                             value.showTranslatorSelector(data.id.toString());
                           },
@@ -280,7 +280,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                             horizontal: 8.0,
                             vertical: 2.0,
                           ),
-                          title: "Start\nMeeting",
+                          title: '${LocaleProvider.current.startMeeting}',
                           onTap: () {
                             value.handleAppointment(data);
                           },
