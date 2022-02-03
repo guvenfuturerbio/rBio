@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../model/model.dart';
 import '../core.dart';
 
-enum UserType { doctor, chronic_user, basic_user }
+enum UserType { doctor, chronicUser, basicUser }
 
 class UserNotifier extends ChangeNotifier {
   PatientResponse? patient;
@@ -16,8 +16,8 @@ class UserNotifier extends ChangeNotifier {
   String? firebasePassword;
   //
   bool get isDoctor => _userType.contains(UserType.doctor);
-  bool get isCronic => _userType.contains(UserType.chronic_user);
-  bool get isPatient => _userType.contains(UserType.basic_user);
+  bool get isCronic => _userType.contains(UserType.chronicUser);
+  bool get isPatient => _userType.contains(UserType.basicUser);
 
   final sharedPreferencesManager = getIt<ISharedPreferencesManager>();
 
@@ -47,10 +47,10 @@ class UserNotifier extends ChangeNotifier {
       _userType.add(UserType.doctor);
     }
     if (rsp.roles?.contains("cronicPatient") ?? false) {
-      _userType.add(UserType.chronic_user);
+      _userType.add(UserType.chronicUser);
     }
     if (rsp.roles?.contains("AllMain") ?? false) {
-      _userType.add(UserType.basic_user);
+      _userType.add(UserType.basicUser);
     }
   }
 
@@ -128,14 +128,14 @@ class UserNotifier extends ChangeNotifier {
     final sharedData =
         sharedPreferencesManager.getString(SharedPreferencesKeys.allUsers);
     if (sharedData == null) {
-      throw Exception("")
+      throw Exception("allUser null");
     } else {
       final sharedMap = jsonDecode(sharedData) as Map<String, dynamic>;
       final userExist = sharedMap.containsKey(tcEmailPassport);
       if (userExist) {
         return AllUsersModel.fromJson(sharedMap[tcEmailPassport]);
       } else {
-        return null;
+        throw Exception("user doesnt exist");
       }
     }
   }
@@ -145,10 +145,11 @@ class UserNotifier extends ChangeNotifier {
     List<String> userWidgets, {
     bool isSharedClear = false,
   }) async {
-    final currentUserName = sharedPreferencesManager
-        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+    final currentUserName =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.loginUserName);
+    if (currentUserName == null) return;
     final sharedData =
-        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
+        sharedPreferencesManager.getString(SharedPreferencesKeys.allUsers);
     Map<String, dynamic> sharedMap;
     if (sharedData == null) {
       sharedMap = {};
@@ -166,7 +167,7 @@ class UserNotifier extends ChangeNotifier {
       await sharedPreferencesManager.clear();
     }
     await sharedPreferencesManager.setString(
-      SharedPreferencesKeys.ALL_USERS,
+      SharedPreferencesKeys.allUsers,
       jsonEncode(sharedMap),
     );
   }
@@ -195,7 +196,7 @@ class UserNotifier extends ChangeNotifier {
   //
   Future<void> widgetsSave() async {
     final sharedData =
-        sharedPreferencesManager.getString(SharedPreferencesKeys.ALL_USERS);
+        sharedPreferencesManager.getString(SharedPreferencesKeys.allUsers);
     Map<String, dynamic> sharedMap;
     if (sharedData == null) {
       sharedMap = {};
@@ -204,7 +205,7 @@ class UserNotifier extends ChangeNotifier {
     }
     await sharedPreferencesManager.clear();
     await sharedPreferencesManager.setString(
-      SharedPreferencesKeys.ALL_USERS,
+      SharedPreferencesKeys.allUsers,
       jsonEncode(sharedMap),
     );
   }

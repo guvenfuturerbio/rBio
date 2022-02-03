@@ -28,7 +28,7 @@ Future<void> checkChatNotification(RemoteMessage message) async {
     if (type == NotificationType.chat.xRawValue) {
       final sharedPreferences = await SharedPreferences.getInstance();
       await sharedPreferences.setBool(
-        SharedPreferencesKeys.CHAT_NOTIFICATION.xRawValue,
+        SharedPreferencesKeys.chatNotification.xRawValue,
         true,
       );
     }
@@ -54,9 +54,9 @@ class FirebaseMessagingManager {
 
   static FirebaseMessagingManager? _instance;
 
-  static FirebaseMessagingManager? get instance {
+  static FirebaseMessagingManager get instance {
     _instance ??= FirebaseMessagingManager._()..init();
-    return _instance;
+    return _instance!;
   }
 
   static handleLogout() {

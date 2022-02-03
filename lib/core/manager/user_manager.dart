@@ -9,7 +9,11 @@ import '../core.dart';
 abstract class UserManager {
   Future<RbioLoginResponse> login(String userName, String password);
   Future<void> saveLoginInfo(
-      String userName, String password, bool rememberMeChecked, String token);
+    String userName,
+    String password,
+    bool rememberMeChecked,
+    String token,
+  );
   UserLoginInfo getSavedLoginInfo();
   Future updateIdentityNumber(String identityNumber);
   Future changeLoginUserParameter(String identityNumber);
@@ -18,11 +22,16 @@ abstract class UserManager {
   Future updateIdentityOps(String identityNumber);
   Future getAllTranslator();
   Future requestTranslator(
-      String appointmentId, TranslatorRequest translatorPost);
+    String appointmentId,
+    TranslatorRequest translatorPost,
+  );
   Future<String> getAppointmentType(String roomId);
   Future checkOnlineMeetingAccessible(String roomId);
   Future startMeeting(
-      BuildContext context, String webConsultantId, int availabilityId);
+    BuildContext context,
+    String webConsultantId,
+    int availabilityId,
+  );
   Future setOnlineAppointmentMobileEntrance(String webConsultantId);
   Future setApplicationConsentFormState(bool isChecked);
   bool getApplicationConsentFormState();
@@ -36,15 +45,21 @@ abstract class UserManager {
 
 class UserManagerImpl extends UserManager {
   @override
-  Future<RbioLoginResponse> login(String userName, String password) async {
+  Future<RbioLoginResponse> login(String? userName, String? password) async {
     final response = await getIt<Repository>().login(userName, password);
-    await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.JWT_TOKEN, response.token.accessToken);
+    if (response.token != null && response.token?.accessToken != null) {
+      await getIt<ISharedPreferencesManager>().setString(
+        SharedPreferencesKeys.jwtToken,
+        response.token!.accessToken!,
+      );
 
-    loginToFirebase(response);
-    //Update user notifier depending on roles
-    getIt<UserNotifier>().userTypeFetcher(response);
-    return response;
+      loginToFirebase(response);
+      //Update user notifier depending on roles
+      getIt<UserNotifier>().userTypeFetcher(response);
+      return response;
+    } else {
+      throw "Access token is null!";
+    }
   }
 
   Future<void> loginToFirebase(RbioLoginResponse? response) async {
@@ -61,27 +76,27 @@ class UserManagerImpl extends UserManager {
     String token,
   ) async {
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.LOGIN_USERNAME, userName);
+        .setString(SharedPreferencesKeys.loginUserName, userName);
     if (rememberMeChecked) {
       await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
+          .setString(SharedPreferencesKeys.loginPassword, password);
     } else {
       await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.LOGIN_PASSWORD, "");
+          .setString(SharedPreferencesKeys.loginPassword, "");
     }
 
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.JWT_TOKEN, token);
+        .setString(SharedPreferencesKeys.jwtToken, token);
   }
 
   @override
   UserLoginInfo getSavedLoginInfo() {
-    UserLoginInfo userLoginInfo = UserLoginInfo();
-    String? username = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+    final UserLoginInfo userLoginInfo = UserLoginInfo();
+    final String? username = getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.loginUserName);
     userLoginInfo.username = username;
-    String? password = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
+    final String? password = getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.loginPassword);
     userLoginInfo.password = password;
     return userLoginInfo;
   }
@@ -102,27 +117,42 @@ class UserManagerImpl extends UserManager {
   @override
   Future changeLoginUserParameter(String identityNumber) async {
     final token =
-        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.JWT_TOKEN);
+        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.jwtToken);
     final UserLoginInfo userLoginInfo = getSavedLoginInfo();
-    saveLoginInfo(
-      identityNumber,
-      userLoginInfo.password,
-      userLoginInfo.password.isEmpty ? false : true,
-      token as String,
-    );
+    if (userLoginInfo.password != null && token != null) {
+      saveLoginInfo(
+        identityNumber,
+        userLoginInfo.password!,
+        userLoginInfo.password!.isEmpty ? false : true,
+        token as String,
+      );
+    } else {
+      throw "There are null data in the saveLoginInfo section!";
+    }
   }
 
   @override
   Future refreshToken() async {
     final token =
-        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.JWT_TOKEN);
-    UserLoginInfo userLoginInfo = await getSavedLoginInfo();
+        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.jwtToken);
+    final UserLoginInfo userLoginInfo = getSavedLoginInfo();
     await login(
-        userLoginInfo.username,
-        getIt<ISharedPreferencesManager>()
-            .getString(SharedPreferencesKeys.LOGIN_PASSWORD));
-    await saveLoginInfo(userLoginInfo.username, userLoginInfo.password,
-        userLoginInfo.password.isEmpty ? false : true, token);
+      userLoginInfo.username,
+      getIt<ISharedPreferencesManager>()
+          .getString(SharedPreferencesKeys.loginPassword),
+    );
+    if (userLoginInfo.username != null &&
+        userLoginInfo.password != null &&
+        token != null) {
+      await saveLoginInfo(
+        userLoginInfo.username!,
+        userLoginInfo.password!,
+        userLoginInfo.password!.isEmpty ? false : true,
+        token as String,
+      );
+    } else {
+      throw "There are null data in the refreshToken section!";
+    }
   }
 
   @override
@@ -141,18 +171,21 @@ class UserManagerImpl extends UserManager {
 
   @override
   Future getAllTranslator() async {
-    var response = await getIt<Repository>().getAllTranslator();
-    List<TranslatorResponse> translators = <TranslatorResponse>[];
-    var data = response.datum;
-    for (var data1 in data) {
-      translators.add(TranslatorResponse.fromJson(data1));
+    final response = await getIt<Repository>().getAllTranslator();
+    final List<TranslatorResponse> translators = <TranslatorResponse>[];
+    final data = response.datum;
+    for (final data1 in data) {
+      translators
+          .add(TranslatorResponse.fromJson(data1 as Map<String, dynamic>));
     }
     return translators;
   }
 
   @override
   Future requestTranslator(
-      String appointmentId, TranslatorRequest translatorPost) async {
+    String appointmentId,
+    TranslatorRequest translatorPost,
+  ) async {
     await getIt<Repository>().requestTranslator(appointmentId, translatorPost);
     return true;
   }
@@ -163,9 +196,14 @@ class UserManagerImpl extends UserManager {
     try {
       final responseForType =
           await getIt<Repository>().getAppointmentTypeViaWebConsultantId();
-      var datum = responseForType.datum;
-      StreamType streamTypeResponse = new StreamType.fromJson(datum);
-      streamType = streamTypeResponse.provider;
+      final datum = responseForType.datum;
+      final StreamType streamTypeResponse =
+          StreamType.fromJson(datum as Map<String, dynamic>);
+      if (streamTypeResponse.provider != null) {
+        streamType = streamTypeResponse.provider!;
+      } else {
+        throw "streamTypeResponse.provider is null!";
+      }
       return streamType;
     } catch (_) {
       return streamType;
@@ -175,7 +213,7 @@ class UserManagerImpl extends UserManager {
   @override
   Future checkOnlineMeetingAccessible(String roomId) async {
     final streamType = await getAppointmentType(roomId);
-    var response = await getIt<Repository>().getRoomStatusUi(roomId);
+    final response = await getIt<Repository>().getRoomStatusUi(roomId);
     final datum = response.datum;
     if (streamType == "Zoom" && datum != -1) {
       return true;
@@ -183,13 +221,13 @@ class UserManagerImpl extends UserManager {
       return true;
     } else if (datum == -1) {
       //ödemesi yapılmamış girilemez.
-      throw Exception("show" + LocaleProvider.current.online_appo_error_eksi1);
+      throw Exception("show${LocaleProvider.current.online_appo_error_eksi1}");
     } else if (datum == 0) {
       //daha önce bitmiş girilemez
-      throw Exception("show" + LocaleProvider.current.online_appo_error_0);
+      throw Exception("show${LocaleProvider.current.online_appo_error_0}");
     } else if (datum == 1) {
       //erken geldi açılmaz
-      throw Exception("show" + LocaleProvider.current.online_appo_error_1);
+      throw Exception("show${LocaleProvider.current.online_appo_error_1}");
     } else if (datum == 2) {
       //oda açılır doktor beklenir
       return true;
@@ -198,7 +236,7 @@ class UserManagerImpl extends UserManager {
       return true;
     } else if (datum == 4) {
       //geç geldi oda açılmaz.
-      throw Exception("show" + LocaleProvider.current.online_appo_error_4);
+      throw Exception("show${LocaleProvider.current.online_appo_error_4}");
     }
   }
 
@@ -209,8 +247,8 @@ class UserManagerImpl extends UserManager {
     int availabilityId,
   ) async {
     final token =
-        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.JWT_TOKEN);
-    String streamType = "Jitsi";
+        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.jwtToken);
+    const String streamType = "Jitsi";
 
     if (streamType == "Zoom") {
       // ZoomOptions zoomOptions = new ZoomOptions(
@@ -235,59 +273,65 @@ class UserManagerImpl extends UserManager {
       // Get.rootDelegate
       //     .toNamed('MeetingPage', arguments: {meetingOptions, zoomOptions});
     } else {
-      String name = parseJwtPayLoad(token)['name'] != null
-          ? parseJwtPayLoad(token)['name']
-          : parseJwtPayLoad(token)['fullname'];
-      print("toplantı başlıyooor " + webConsultantId);
-      var options = JitsiMeetingOptions(
-          roomNameOrUrl: webConsultantId,
-          serverUrl: "https://stream.guven.com.tr/",
-          subject: " ",
-          userDisplayName: name,
-          userEmail: " ",
-          isAudioOnly: false,
-          isAudioMuted: false,
-          isVideoMuted: false);
+      final String name = parseJwtPayLoad(token as String)['name'] != null
+          ? parseJwtPayLoad(token)['name'] as String
+          : parseJwtPayLoad(token)['fullname'] as String;
+      print("toplantı başlıyooor $webConsultantId");
+      final options = JitsiMeetingOptions(
+        roomNameOrUrl: webConsultantId,
+        serverUrl: "https://stream.guven.com.tr/",
+        subject: " ",
+        userDisplayName: name,
+        userEmail: " ",
+        isAudioOnly: false,
+        isAudioMuted: false,
+        isVideoMuted: false,
+      );
 
       showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return ConsentFormDialog(
-              title: LocaleProvider.current.approve_consent_form,
-              text: LocaleProvider.current.application_consent_form_text,
-              alwaysAsk: true,
-            );
-          }).then((value) async {
-        if (value != null && value) {
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return ConsentFormDialog(
+            title: LocaleProvider.current.approve_consent_form,
+            text: LocaleProvider.current.application_consent_form_text,
+            alwaysAsk: true,
+          );
+        },
+      ).then((value) async {
+        if (value != null && value as bool) {
           await JitsiMeetWrapper.joinMeeting(
             options: options,
             listener: JitsiMeetingListener(
               onConferenceWillJoin: (message) {
                 debugPrint(
-                    "${options.roomNameOrUrl} will join with message: $message");
+                  "${options.roomNameOrUrl} will join with message: $message",
+                );
               },
               onConferenceJoined: (message) {
                 debugPrint(
-                    "${options.roomNameOrUrl} joined with message: $message");
+                  "${options.roomNameOrUrl} joined with message: $message",
+                );
               },
               onConferenceTerminated: (message, _) async {
                 await showDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (BuildContext context) {
-                      return RateDialog(
-                        availabilityId: availabilityId,
-                      );
-                    });
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return RateDialog(
+                      availabilityId: availabilityId,
+                    );
+                  },
+                );
                 debugPrint(
-                    "${options.roomNameOrUrl} terminated with message: $message");
+                  "${options.roomNameOrUrl} terminated with message: $message",
+                );
               },
             ),
           );
 
           setOnlineAppointmentMobileEntrance(webConsultantId);
-        } else if (value != null && !value) {}
+        } else if (value != null && !(value as bool)) {}
       });
     }
   }
@@ -301,20 +345,20 @@ class UserManagerImpl extends UserManager {
   Future setApplicationConsentFormState(bool isChecked) async {
     if (isChecked) {
       await getIt<ISharedPreferencesManager>()
-          .setBool(SharedPreferencesKeys.APPLICATION_CONSENT_FORM, true);
+          .setBool(SharedPreferencesKeys.applicationConsentForm, true);
     } else {
       await getIt<ISharedPreferencesManager>()
-          .setBool(SharedPreferencesKeys.APPLICATION_CONSENT_FORM, false);
+          .setBool(SharedPreferencesKeys.applicationConsentForm, false);
     }
   }
 
   @override
   bool getApplicationConsentFormState() {
     if (getIt<ISharedPreferencesManager>()
-            .getBool(SharedPreferencesKeys.APPLICATION_CONSENT_FORM) !=
+            .getBool(SharedPreferencesKeys.applicationConsentForm) !=
         null) {
       return getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.APPLICATION_CONSENT_FORM);
+          .getBool(SharedPreferencesKeys.applicationConsentForm)!;
     } else {
       return false;
     }
@@ -326,7 +370,7 @@ class UserManagerImpl extends UserManager {
       try {
         await getIt<Repository>().updateUserKvkkInfo();
         // if the user didn't get the token then try until they get the token
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
         setKvkkFormState(isChecked);
       } on Exception {
         //
@@ -339,11 +383,12 @@ class UserManagerImpl extends UserManager {
   @override
   Future<bool> getKvkkFormState() async {
     try {
-      var response = await getIt<Repository>().getUserKvkkInfo();
-      var datum = response.datum;
+      final response = await getIt<Repository>().getUserKvkkInfo();
+      final datum = response.datum;
       KvkkApproveResponse kvkkApproveResponse = KvkkApproveResponse();
-      kvkkApproveResponse = KvkkApproveResponse.fromJson(datum);
-      return kvkkApproveResponse.isKVKKAprovved;
+      kvkkApproveResponse =
+          KvkkApproveResponse.fromJson(datum as Map<String, dynamic>);
+      return kvkkApproveResponse.isKVKKAprovved!;
     } catch (_) {
       return false;
     }
@@ -351,12 +396,15 @@ class UserManagerImpl extends UserManager {
 
   @override
   Future<List<SocialPostsResponse>> getPostsWithByTagsByPlatform(
-      String text) async {
-    var response = await getIt<Repository>().filterSocialPlatform(text);
-    List<SocialPostsResponse> filteredSocialResources = <SocialPostsResponse>[];
-    var datum = response.datum;
-    for (var data in datum) {
-      final filteredSocialResponse = SocialPostsResponse.fromJson(data);
+    String text,
+  ) async {
+    final response = await getIt<Repository>().filterSocialPlatform(text);
+    final List<SocialPostsResponse> filteredSocialResources =
+        <SocialPostsResponse>[];
+    final datum = response.datum;
+    for (final data in datum) {
+      final filteredSocialResponse =
+          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       filteredSocialResources.add(filteredSocialResponse);
     }
     return filteredSocialResources;
@@ -364,12 +412,15 @@ class UserManagerImpl extends UserManager {
 
   @override
   Future<List<SocialPostsResponse>> getSocialPostWithTagsByText(
-      String text) async {
-    var response = await getIt<Repository>().filterSocialPosts(text);
-    List<SocialPostsResponse> filteredSocialResources = <SocialPostsResponse>[];
-    var datum = response.datum;
-    for (var data in datum) {
-      final filteredSocialResponse = SocialPostsResponse.fromJson(data);
+    String text,
+  ) async {
+    final response = await getIt<Repository>().filterSocialPosts(text);
+    final List<SocialPostsResponse> filteredSocialResources =
+        <SocialPostsResponse>[];
+    final datum = response.datum;
+    for (final data in datum) {
+      final filteredSocialResponse =
+          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       filteredSocialResources.add(filteredSocialResponse);
     }
     return filteredSocialResources;
@@ -377,11 +428,13 @@ class UserManagerImpl extends UserManager {
 
   @override
   Future<List<SocialPostsResponse>> getAllSocialResources() async {
-    var response = await getIt<Repository>().socialResource();
-    List<SocialPostsResponse> allSocialResources = <SocialPostsResponse>[];
-    var datum = response.datum;
-    for (var data in datum) {
-      final allSocialPostsResponse = SocialPostsResponse.fromJson(data);
+    final response = await getIt<Repository>().socialResource();
+    final List<SocialPostsResponse> allSocialResources =
+        <SocialPostsResponse>[];
+    final datum = response.datum;
+    for (final data in datum) {
+      final allSocialPostsResponse =
+          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       allSocialResources.add(allSocialPostsResponse);
     }
     return allSocialResources;

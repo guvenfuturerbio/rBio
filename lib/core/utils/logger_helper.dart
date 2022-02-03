@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class LoggerUtils {
-  Logger logger;
+  late Logger logger;
 
   LoggerUtils._() {
     logger = Logger(
@@ -17,10 +17,10 @@ class LoggerUtils {
     );
   }
 
-  static LoggerUtils _instance;
+  static late LoggerUtils _instance;
 
   static LoggerUtils get instance {
-    _instance ??= LoggerUtils._();
+    _instance;
     return _instance;
   }
 
