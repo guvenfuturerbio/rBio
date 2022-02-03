@@ -25,21 +25,21 @@ class CellContent extends StatelessWidget {
   final CalendarBuilders calendarBuilders;
 
   const CellContent({
-    Key key,
-    @required this.day,
-    @required this.focusedDay,
-    @required this.calendarStyle,
-    @required this.calendarBuilders,
-    @required this.isTodayHighlighted,
-    @required this.isToday,
-    @required this.isSelected,
-    @required this.isRangeStart,
-    @required this.isRangeEnd,
-    @required this.isWithinRange,
-    @required this.isOutside,
-    @required this.isDisabled,
-    @required this.isHoliday,
-    @required this.isWeekend,
+    Key? key,
+    required this.day,
+    required this.focusedDay,
+    required this.calendarStyle,
+    required this.calendarBuilders,
+    required this.isTodayHighlighted,
+    required this.isToday,
+    required this.isSelected,
+    required this.isRangeStart,
+    required this.isRangeEnd,
+    required this.isWithinRange,
+    required this.isOutside,
+    required this.isDisabled,
+    required this.isHoliday,
+    required this.isWeekend,
     this.locale,
   }) : super(key: key);
 
@@ -49,7 +49,7 @@ class CellContent extends StatelessWidget {
     final dayLabel = day.xFormatTime5(locale);
     final semanticsLabel = '$dowLabel, $dayLabel';
 
-    Widget cell =
+    Widget? cell =
         calendarBuilders.prioritizedBuilder?.call(context, day, focusedDay);
 
     if (cell != null) {
@@ -64,7 +64,7 @@ class CellContent extends StatelessWidget {
     final margin = calendarStyle.cellMargin;
     final padding = calendarStyle.cellPadding;
     final alignment = calendarStyle.cellAlignment;
-    final duration = const Duration(milliseconds: 250);
+    const duration = Duration(milliseconds: 250);
 
     if (isDisabled) {
       cell = calendarBuilders.disabledBuilder?.call(context, day, focusedDay) ??

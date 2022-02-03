@@ -19,7 +19,7 @@ GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerSingleton<AppConfig>(appConfig);
-  String directory;
+  late String directory;
 
   if (!Atom.isWeb) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -117,11 +117,11 @@ class GuvenSettings {
   String appDocDirectory;
 
   GuvenSettings(
-      {@required this.appName,
-      @required this.packageName,
-      @required this.version,
-      @required this.buildNumber,
-      @required this.appDocDirectory});
+      {required this.appName,
+      required this.packageName,
+      required this.version,
+      required this.buildNumber,
+      required this.appDocDirectory});
 }
 
 Future<void> registerStorage() async {

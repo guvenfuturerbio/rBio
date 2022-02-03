@@ -138,7 +138,7 @@ class FirebaseMessagingManager {
                     json.decode(message.data['chatPerson'] as String)
                         as Map<String, dynamic>);
 
-                if (!(Atom.url.contains(PagePaths.CHAT) &&
+                if (!(Atom.url.contains(PagePaths.chat) &&
                     Atom.url.contains(otherPerson.id as String))) {
                   showNotification(message);
                 }
@@ -252,12 +252,12 @@ class FirebaseMessagingManager {
         {
           final ChatPerson otherPerson = ChatPerson.fromMap(json
               .decode(data['chatPerson'] as String) as Map<String, dynamic>);
-          if (Atom.url.contains(PagePaths.CHAT)) {
+          if (Atom.url.contains(PagePaths.chat)) {
             Atom.historyBack();
             await Future.delayed(const Duration(milliseconds: 100));
           }
           Atom.to(
-            PagePaths.CHAT,
+            PagePaths.chat,
             queryParameters: {'otherPerson': otherPerson.toJson()},
           );
           break;

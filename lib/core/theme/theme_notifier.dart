@@ -8,7 +8,7 @@ class ThemeNotifier extends ChangeNotifier {
 
   ThemeNotifier() {
     final sharedTheme = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.THEME);
+        .getString(SharedPreferencesKeys.theme);
     if (sharedTheme != null) {
       final sharedThemeKey = sharedTheme.xTheme;
       theme = sharedThemeKey!.xGetTheme;
@@ -17,7 +17,7 @@ class ThemeNotifier extends ChangeNotifier {
     }
 
     final sharedTextScale = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.TEXT_SCALE);
+        .getString(SharedPreferencesKeys.textScale);
     if (sharedTextScale != null) {
       textScale = sharedTextScale.xTextScaleKeys!;
     } else {
@@ -30,7 +30,7 @@ class ThemeNotifier extends ChangeNotifier {
   Future<void> changeTheme(ThemeType type) async {
     theme = type.xGetTheme;
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.THEME, type.xRawValue);
+        .setString(SharedPreferencesKeys.theme, type.xRawValue);
     getIt.unregister<ITheme>();
     getIt.registerSingleton<ITheme>(theme);
     notifyListeners();
@@ -39,7 +39,7 @@ class ThemeNotifier extends ChangeNotifier {
   Future<void> changeTextScale() async {
     textScale = textScale.getNextType();
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.TEXT_SCALE, textScale.xRawValue);
+        .setString(SharedPreferencesKeys.textScale, textScale.xRawValue);
     getIt.unregister<ITheme>();
     getIt.registerSingleton<ITheme>(theme);
     notifyListeners();

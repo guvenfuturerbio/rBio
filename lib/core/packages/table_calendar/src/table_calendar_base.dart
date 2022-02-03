@@ -15,9 +15,9 @@ class TableCalendarBase extends StatefulWidget {
   final DateTime lastDay;
   final DateTime focusedDay;
   final CalendarFormat calendarFormat;
-  final DayBuilder dowBuilder;
+  final DayBuilder? dowBuilder;
   final FocusedDayBuilder dayBuilder;
-  final double dowHeight;
+  final double? dowHeight;
   final double rowHeight;
   final bool sixWeekMonthsEnforced;
   final bool dowVisible;
@@ -33,27 +33,30 @@ class TableCalendarBase extends StatefulWidget {
   final AvailableGestures availableGestures;
   final SimpleSwipeConfig simpleSwipeConfig;
   final Map<CalendarFormat, String> availableCalendarFormats;
-  final SwipeCallback onVerticalSwipe;
-  final void Function(DateTime focusedDay) onPageChanged;
-  final void Function(PageController pageController) onCalendarCreated;
+  final SwipeCallback? onVerticalSwipe;
+  final void Function(DateTime focusedDay)? onPageChanged;
+  final void Function(PageController pageController)? onCalendarCreated;
 
   TableCalendarBase({
-    Key key,
-    @required this.daysBackgroundColor,
-    @required this.cellBackgroundColor,
-    @required this.firstDay,
-    @required this.lastDay,
-    @required this.focusedDay,
+    Key? key,
+    required this.daysBackgroundColor,
+    required this.cellBackgroundColor,
+    required this.firstDay,
+    required this.lastDay,
+    required this.focusedDay,
+    required this.dayBuilder,
+    required this.rowHeight,
+    required this.dowDecoration,
+    required this.rowDecoration,
+    required this.tableBorder,
     this.calendarFormat = CalendarFormat.month,
     this.dowBuilder,
-    @required this.dayBuilder,
     this.dowHeight,
-    @required this.rowHeight,
+    this.onVerticalSwipe,
+    this.onPageChanged,
+    this.onCalendarCreated,
     this.sixWeekMonthsEnforced = false,
     this.dowVisible = true,
-    this.dowDecoration,
-    this.rowDecoration,
-    this.tableBorder,
     this.formatAnimationDuration = const Duration(milliseconds: 200),
     this.formatAnimationCurve = Curves.linear,
     this.pageAnimationEnabled = true,
@@ -70,9 +73,6 @@ class TableCalendarBase extends StatefulWidget {
       CalendarFormat.twoWeeks: '2 weeks',
       CalendarFormat.week: 'Week',
     },
-    this.onVerticalSwipe,
-    this.onPageChanged,
-    this.onCalendarCreated,
   })  : assert(!dowVisible || (dowHeight != null && dowBuilder != null)),
         assert(isSameDay(focusedDay, firstDay) || focusedDay.isAfter(firstDay)),
         assert(isSameDay(focusedDay, lastDay) || focusedDay.isBefore(lastDay)),
@@ -84,11 +84,11 @@ class TableCalendarBase extends StatefulWidget {
 
 class _TableCalendarBaseState extends State<TableCalendarBase>
     with SingleTickerProviderStateMixin {
-  ValueNotifier<double> _pageHeight;
-  PageController _pageController;
-  DateTime _focusedDay;
-  int _previousIndex;
-  bool _pageCallbackDisabled;
+  late ValueNotifier<double> _pageHeight;
+  late PageController _pageController;
+  late DateTime _focusedDay;
+  late int _previousIndex;
+  late bool _pageCallbackDisabled;
 
   @override
   void initState() {
@@ -196,7 +196,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
                   constraints.hasBoundedHeight ? constraints.maxHeight : value;
 
               return AnimatedSize(
-                vsync: this,
                 duration: widget.formatAnimationDuration,
                 curve: widget.formatAnimationCurve,
                 alignment: Alignment.topCenter,
@@ -212,8 +211,8 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
               constraints: constraints,
               pageController: _pageController,
               scrollPhysics: _canScrollHorizontally
-                  ? PageScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
+                  ? const PageScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
               firstDay: widget.firstDay,
               lastDay: widget.lastDay,
               startingDayOfWeek: widget.startingDayOfWeek,
@@ -222,7 +221,7 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
               focusedDay: _focusedDay,
               sixWeekMonthsEnforced: widget.sixWeekMonthsEnforced,
               dowVisible: widget.dowVisible,
-              dowHeight: widget.dowHeight,
+              dowHeight: widget.dowHeight!,
               rowHeight: widget.rowHeight,
               dowDecoration: widget.dowDecoration,
               rowDecoration: widget.rowDecoration,
@@ -260,7 +259,7 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
 
   double _getPageHeight(int rowCount) {
     final dowHeight = widget.dowVisible ? widget.dowHeight : 0.0;
-    return dowHeight + rowCount * widget.rowHeight;
+    return dowHeight! + rowCount * widget.rowHeight;
   }
 
   int _calculateFocusedPage(

@@ -45,7 +45,7 @@ abstract class UserManager {
 
 class UserManagerImpl extends UserManager {
   @override
-  Future<RbioLoginResponse> login(String? userName, String? password) async {
+  Future<RbioLoginResponse> login(String userName, String password) async {
     final response = await getIt<Repository>().login(userName, password);
     if (response.token != null && response.token?.accessToken != null) {
       await getIt<ISharedPreferencesManager>().setString(
@@ -137,9 +137,9 @@ class UserManagerImpl extends UserManager {
         getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.jwtToken);
     final UserLoginInfo userLoginInfo = getSavedLoginInfo();
     await login(
-      userLoginInfo.username,
+      userLoginInfo.username as String,
       getIt<ISharedPreferencesManager>()
-          .getString(SharedPreferencesKeys.loginPassword),
+          .getString(SharedPreferencesKeys.loginPassword) as String,
     );
     if (userLoginInfo.username != null &&
         userLoginInfo.password != null &&

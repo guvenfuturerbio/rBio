@@ -34,8 +34,8 @@ class Utils {
       .getString(SharedPreferencesKeys.profileImage);
   ImageProvider<Object> get getCacheProfileImage =>
       getCacheProfileImageStr != null
-          ? MemoryImage(base64.decode(getCacheProfileImageStr as String))
-          : NetworkImage(R.image.circlevatar as String);
+          ? MemoryImage(base64.decode(getCacheProfileImageStr))
+          : NetworkImage(R.image.circlevatar);
 
   // #region hideKeyboard
   void hideKeyboard(BuildContext context) {
@@ -332,10 +332,10 @@ class Utils {
       GestureDetector(
         onTap: () {
           id == -1
-              ? Atom.to(PagePaths.COVID19)
+              ? Atom.to(PagePaths.covid19)
               : isSubCat
                   ? Atom.to(
-                      PagePaths.FOR_YOU_SUB_CATEGORIES_DETAIL,
+                      PagePaths.forYouSubCategoriesDetail,
                       queryParameters: {
                         'title':
                             title != null ? Uri.encodeFull(title) : "No title",
@@ -343,7 +343,7 @@ class Utils {
                       },
                     )
                   : Atom.to(
-                      PagePaths.FOR_YOU_SUB_CATEGORIES,
+                      PagePaths.forYouSubCategories,
                       queryParameters: {
                         'title':
                             title != null ? Uri.encodeFull(title) : "No title",

@@ -13,11 +13,11 @@ class CalendarCore extends StatelessWidget {
   final Color daysBackgroundColor;
   final Color foregroundColor;
 
-  final DateTime focusedDay;
+  final DateTime? focusedDay;
   final DateTime firstDay;
   final DateTime lastDay;
   final CalendarFormat calendarFormat;
-  final DayBuilder dowBuilder;
+  final DayBuilder? dowBuilder;
   final FocusedDayBuilder dayBuilder;
   final bool sixWeekMonthsEnforced;
   final bool dowVisible;
@@ -25,25 +25,28 @@ class CalendarCore extends StatelessWidget {
   final Decoration rowDecoration;
   final TableBorder tableBorder;
   final double dowHeight;
-  final double rowHeight;
+  final double? rowHeight;
   final BoxConstraints constraints;
-  final int previousIndex;
+  final int? previousIndex;
   final StartingDayOfWeek startingDayOfWeek;
-  final PageController pageController;
-  final ScrollPhysics scrollPhysics;
+  final PageController? pageController;
+  final ScrollPhysics? scrollPhysics;
   final _OnCalendarPageChanged onPageChanged;
 
   const CalendarCore({
-    Key key,
+    Key? key,
     this.dowBuilder,
-    @required this.daysBackgroundColor,
-    @required this.foregroundColor,
-    @required this.dayBuilder,
-    @required this.onPageChanged,
-    @required this.firstDay,
-    @required this.lastDay,
-    @required this.constraints,
-    this.dowHeight,
+    required this.daysBackgroundColor,
+    required this.foregroundColor,
+    required this.dayBuilder,
+    required this.onPageChanged,
+    required this.firstDay,
+    required this.lastDay,
+    required this.constraints,
+    required this.dowHeight,
+    required this.dowDecoration,
+    required this.rowDecoration,
+    required this.tableBorder,
     this.rowHeight,
     this.startingDayOfWeek = StartingDayOfWeek.sunday,
     this.calendarFormat = CalendarFormat.month,
@@ -52,11 +55,8 @@ class CalendarCore extends StatelessWidget {
     this.previousIndex,
     this.sixWeekMonthsEnforced = false,
     this.dowVisible = true,
-    this.dowDecoration,
-    this.rowDecoration,
-    this.tableBorder,
     this.scrollPhysics,
-  })  : assert(!dowVisible || (dowHeight != null && dowBuilder != null)),
+  })  : assert(!dowVisible || dowBuilder != null),
         super(key: key);
 
   @override
@@ -155,7 +155,7 @@ class CalendarCore extends StatelessWidget {
       return prevFocusedDay;
     }
 
-    final pageDif = pageIndex - previousIndex;
+    final pageDif = pageIndex - (previousIndex ?? 0);
     DateTime day;
 
     switch (format) {

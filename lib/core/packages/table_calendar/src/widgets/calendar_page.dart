@@ -10,21 +10,21 @@ class CalendarPage extends StatelessWidget {
   final Color daysBackgroundColor;
   final Color cellBackgroundColor;
 
-  final Widget Function(BuildContext context, DateTime day) dowBuilder;
+  final Widget Function(BuildContext context, DateTime day)? dowBuilder;
   final Widget Function(BuildContext context, DateTime day) dayBuilder;
   final List<DateTime> visibleDays;
-  final Decoration dowDecoration;
-  final Decoration rowDecoration;
-  final TableBorder tableBorder;
+  final Decoration? dowDecoration;
+  final Decoration? rowDecoration;
+  final TableBorder? tableBorder;
   final bool dowVisible;
 
   const CalendarPage({
-    Key key,
-    @required this.daysBackgroundColor,
-    @required this.cellBackgroundColor,
-    @required this.visibleDays,
+    Key? key,
+    required this.daysBackgroundColor,
+    required this.cellBackgroundColor,
+    required this.visibleDays,
     this.dowBuilder,
-    @required this.dayBuilder,
+    required this.dayBuilder,
     this.dowDecoration,
     this.rowDecoration,
     this.tableBorder,
@@ -48,7 +48,7 @@ class CalendarPage extends StatelessWidget {
       decoration: BoxDecoration(color: daysBackgroundColor),
       children: List.generate(
         7,
-        (index) => dowBuilder(context, visibleDays[index]),
+        (index) => dowBuilder!(context, visibleDays[index]),
       ).toList(),
     );
   }
