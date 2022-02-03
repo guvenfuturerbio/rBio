@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class ThemeNotifier extends ChangeNotifier {
-  ITheme theme;
-  TextScaleType textScale;
+  late ITheme theme;
+  late TextScaleType textScale;
 
   ThemeNotifier() {
     final sharedTheme = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.THEME);
     if (sharedTheme != null) {
       final sharedThemeKey = sharedTheme.xTheme;
-      theme = sharedThemeKey.xGetTheme;
+      theme = sharedThemeKey!.xGetTheme;
     } else {
       theme = GreenTheme();
     }
@@ -19,7 +19,7 @@ class ThemeNotifier extends ChangeNotifier {
     final sharedTextScale = getIt<ISharedPreferencesManager>()
         .getString(SharedPreferencesKeys.TEXT_SCALE);
     if (sharedTextScale != null) {
-      textScale = sharedTextScale.xTextScaleKeys;
+      textScale = sharedTextScale.xTextScaleKeys!;
     } else {
       textScale = TextScaleType.small;
     }

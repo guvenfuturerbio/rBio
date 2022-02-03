@@ -21,7 +21,7 @@ abstract class ITheme {
 
 class GreenTheme extends ITheme {
   @override
-  ThemeType get type => ThemeType.Green;
+  ThemeType get type => ThemeType.green;
 
   @override
   String get fontFamily => 'SourceSans';
@@ -116,7 +116,7 @@ class GreenTheme extends ITheme {
 
 class BurgundyTheme extends ITheme {
   @override
-  ThemeType get type => ThemeType.Burgundy;
+  ThemeType get type => ThemeType.burgundy;
 
   @override
   String get fontFamily => 'SourceSans';
