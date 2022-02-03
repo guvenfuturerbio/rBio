@@ -3,8 +3,17 @@ part of '../imports/cronic_tracking.dart';
 class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   ChronicTrackingApiServiceImpl(IDioHelper helper) : super(helper);
 
-  String get getChronicTrackingToken => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.JWT_TOKEN);
+  String get getChronicTrackingToken {
+    final String? val = getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.jwtToken);
+
+    if (val != null) {
+      return val;
+    } else {
+      throw Exception('ChronicTrackingApiService Token Null');
+    }
+  }
+
   Options get authOptions => Options(
         headers: {
           'Authorization': getChronicTrackingToken,
@@ -183,7 +192,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> changeProfile(userId) async {
+  Future<GuvenResponseModel> changeProfile(int userId) async {
     final response = await helper.postGuven(
       R.endpoints.ct_changeProfile(userId),
       {},
@@ -197,7 +206,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> deleteProfile(var userId) async {
+  Future<GuvenResponseModel> deleteProfile(int userId) async {
     final response = await helper.deleteGuven(
       R.endpoints.ct_changeProfile(userId),
       options: authOptions,
@@ -287,7 +296,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> deleteUserStrip(var id, var entegrationId) async {
+  Future<GuvenResponseModel> deleteUserStrip(int id, int entegrationId) async {
     final response = await helper.deleteGuven(
       R.endpoints.ct_deleteUserStrip(id, entegrationId),
       options: authOptions,
@@ -301,8 +310,8 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> isDeviceIdRegisteredForSomeUser(
-    var deviceId,
-    var entegrationId,
+    String deviceId,
+    int entegrationId,
   ) async {
     final response = await helper.getGuven(
       R.endpoints.ct_isDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
@@ -312,14 +321,15 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       return response;
     } else {
       throw Exception(
-          '/isDeviceIdRegisteredForSomeUser : ${response.isSuccessful}');
+        '/isDeviceIdRegisteredForSomeUser : ${response.isSuccessful}',
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> addHospitalHba1cMeasurement(
     HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
-    entegrationId,
+    int entegrationId,
   ) async {
     final response = await helper.postGuven(
       R.endpoints.ct_addHospitalHba1cMeasurement(entegrationId),
@@ -330,14 +340,16 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       return response;
     } else {
       throw Exception(
-          '/addHospitalHba1cMeasurement : ${response.isSuccessful}');
+        '/addHospitalHba1cMeasurement : ${response.isSuccessful}',
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getHba1cMeasurementList(
-      GetHba1cMeasurementListModel getHba1cMeasurementListModel,
-      entegrationId) async {
+    GetHba1cMeasurementListModel getHba1cMeasurementListModel,
+    int entegrationId,
+  ) async {
     final response = await helper.postGuven(
       R.endpoints.ct_getHba1cMeasurementList(entegrationId),
       getHba1cMeasurementListModel.toJson(),
@@ -365,7 +377,8 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> insertNewScaleValue(
-      AddScaleMasurementBody addScaleMasurementBody) async {
+    AddScaleMasurementBody addScaleMasurementBody,
+  ) async {
     final response = await helper.postGuven(
       R.endpoints.ct_insertNewScaleValue,
       addScaleMasurementBody.toJson(),

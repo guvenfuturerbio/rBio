@@ -3,8 +3,16 @@ part of '../repository/doctor_repository.dart';
 class DoctorApiServiceImpl extends DoctorApiService {
   DoctorApiServiceImpl(IDioHelper helper) : super(helper);
 
-  String get getToken => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.JWT_TOKEN);
+  String get getToken {
+    final String? token = getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.jwtToken);
+    if (token != null) {
+      return token;
+    } else {
+      throw Exception('DoctorApiService token null');
+    }
+  }
+
   Options get emptyOptions => Options(headers: {});
   Options get authOptions => Options(headers: {
         'Authorization': getToken,
@@ -13,9 +21,9 @@ class DoctorApiServiceImpl extends DoctorApiService {
       });
 
   @override
-  Future<RbioLoginResponse> login(String userName, String password) async {
+  Future<RbioLoginResponse> login(String userId, String password) async {
     final response =
-        await helper.postGuven(R.endpoints.dc_Login(userName, password), {});
+        await helper.postGuven(R.endpoints.dc_Login(userId, password), {});
     if (response.isSuccessful == true) {
       return RbioLoginResponse.fromJson(response.xGetMap);
     } else {

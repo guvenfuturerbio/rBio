@@ -5,57 +5,80 @@ abstract class ChronicTrackingApiService {
   ChronicTrackingApiService(this.helper);
 
   Future<GuvenResponseModel> saveAndRetrieveToken(
-      SaveAndRetrieveTokenModel saveAndRetrieveToken, String token);
+    SaveAndRetrieveTokenModel saveAndRetrieveToken,
+    String token,
+  );
   Future<StripDetailModel> getUserStrip(int entegrationId, String deviceUUID);
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
-      BloodGlucoseValue bodyPages);
+    BloodGlucoseValue bodyPages,
+  );
   Future<GuvenResponseModel> deleteBloodGlucoseValue(
-      DeleteBloodGlucoseMeasurementRequest
-          deleteBloodGlucoseMeasurementRequest);
+    DeleteBloodGlucoseMeasurementRequest deleteBloodGlucoseMeasurementRequest,
+  );
   Future<GuvenResponseModel> updateBloodGlucoseValue(
-      UpdateBloodGlucoseMeasurementRequest
-          updateBloodGlucoseMeasurementRequest);
+    UpdateBloodGlucoseMeasurementRequest updateBloodGlucoseMeasurementRequest,
+  );
   Future<GuvenResponseModel> uploadMeasurementImage(
-      String file, int entegrationId, int measurementId);
+    String file,
+    int entegrationId,
+    int measurementId,
+  );
   Future<GuvenResponseModel> getBloodGlucoseReport(
-      BloodGlucoseReportBody bloodGlucoseReportBody);
+    BloodGlucoseReportBody bloodGlucoseReportBody,
+  );
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
-      GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson);
+    GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson,
+  );
   Future<List<Person>> getAllProfiles();
   Future<GuvenResponseModel> addProfile(Person person);
-  Future<GuvenResponseModel> changeProfile(var userId);
-  Future<GuvenResponseModel> deleteProfile(var userId);
+  Future<GuvenResponseModel> changeProfile(int userId);
+  Future<GuvenResponseModel> deleteProfile(int userId);
   Future<GuvenResponseModel> addFirebaseToken(
-      AddFirebaseToken addFirebaseToken);
+    AddFirebaseToken addFirebaseToken,
+  );
   Future<GuvenResponseModel> updateProfile(Person person, int id);
   Future<GuvenResponseModel> setDefaultProfile(Person person);
   Future<GuvenResponseModel> updateUserStrip(StripDetailModel stripDetailModel);
-  Future<GuvenResponseModel> deleteUserStrip(var id, var entegrationId);
+  Future<GuvenResponseModel> deleteUserStrip(int id, int entegrationId);
   Future<GuvenResponseModel> isDeviceIdRegisteredForSomeUser(
-      var deviceId, var entegrationId);
+    String deviceId,
+    int entegrationId,
+  );
   Future<GuvenResponseModel> addHospitalHba1cMeasurement(
-      HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
-      var entegrationId);
+    HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
+    int entegrationId,
+  );
   Future<GuvenResponseModel> getHba1cMeasurementList(
-      GetHba1cMeasurementListModel getHba1cMeasurementListModel,
-      var entegrationId);
+    GetHba1cMeasurementListModel getHba1cMeasurementListModel,
+    int entegrationId,
+  );
   Future<GuvenResponseModel> getMedicineByFilter(String text);
   Future<GuvenResponseModel> insertNewScaleValue(
-      AddScaleMasurementBody addScaleMasurementBody);
+    AddScaleMasurementBody addScaleMasurementBody,
+  );
   Future<GuvenResponseModel> deleteScaleMeasurement(
-      DeleteScaleMasurementBody deleteScaleMasurementBody);
+    DeleteScaleMasurementBody deleteScaleMasurementBody,
+  );
   Future<GuvenResponseModel> getScaleMasurement(
-      GetScaleMasurementBody getScaleMasurementBody);
+    GetScaleMasurementBody getScaleMasurementBody,
+  );
   Future<GuvenResponseModel> updateScaleMeasurement(
-      UpdateScaleMasurementBody updateScaleMasurementBody);
+    UpdateScaleMasurementBody updateScaleMasurementBody,
+  );
 
-  insertNewBpValue(AddBpWithDetail addBpWithDetail);
+  Future<GuvenResponseModel> insertNewBpValue(AddBpWithDetail addBpWithDetail);
 
-  deleteBpMeasurement(DeleteBpMeasurements deleteBpMeasurements);
+  Future<GuvenResponseModel> deleteBpMeasurement(
+    DeleteBpMeasurements deleteBpMeasurements,
+  );
 
-  getBpMasurement(GetBpMeasurements getBpMeasurements);
+  Future<GuvenResponseModel> getBpMasurement(
+    GetBpMeasurements getBpMeasurements,
+  );
 
-  updateBpMeasurement(UpdateBpMeasurements updateBpMeasurements);
+  Future<GuvenResponseModel> updateBpMeasurement(
+    UpdateBpMeasurements updateBpMeasurements,
+  );
 
-  addTreatment(Person person, String treatment);
+  Future<GuvenResponseModel> addTreatment(Person person, String treatment);
 }

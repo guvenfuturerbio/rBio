@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 part of 'chronic_storage_service.dart';
 
 class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
@@ -48,12 +50,14 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   Future<bool> update(GlucoseData data, dynamic key) async {
     if (box.isOpen && box.isNotEmpty) {
-      final GlucoseData dataFromBox = get(key);
+      final GlucoseData? dataFromBox = get(key);
 
-      if (!data.isEqual(dataFromBox)) {
+      if (dataFromBox != null && !data.isEqual(dataFromBox)) {
         await box.put(key, data);
         await updateServer(data);
         notifyListeners();
+      } else {
+        throw Exception('could not find data in the bpx');
       }
 
       return true;
@@ -73,8 +77,6 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         data.measurementId = id;
         await box.add(data);
       }
-      print('write');
-
       notifyListeners();
       return true;
     } else {
@@ -83,13 +85,13 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future<bool> writeAll(List<GlucoseData> dataList) async {
+  Future<bool> writeAll(List<GlucoseData> data) async {
     try {
       if (box.isOpen) {
         List<GlucoseData> _glucoseDataList = <GlucoseData>[];
-        for (var data in dataList) {
-          if (!doesExist(data)) {
-            _glucoseDataList.add(data);
+        for (var item in data) {
+          if (!doesExist(item)) {
+            _glucoseDataList.add(item);
           }
         }
         await box.addAll(_glucoseDataList);
@@ -99,13 +101,12 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       }
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
-      print(e);
       rethrow;
     }
   }
 
   @override
-  GlucoseData get(key) {
+  GlucoseData? get(key) {
     if (box.isNotEmpty && box.isNotEmpty) {
       return box.getAt(key);
     } else {
@@ -114,7 +115,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  GlucoseData getLatestMeasurement() {
+  GlucoseData? getLatestMeasurement() {
     if (box.isOpen && box.isNotEmpty) {
       List<GlucoseData> list = box.values.toList();
 
@@ -125,24 +126,27 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     return null;
   }
 
-  updateImage(String path, key) {
+  void updateImage(String path, key) {
     try {
-      GlucoseData data = get(key);
-      data.imageURL = path;
-      update(data, key);
-      sendImageToServer(path, data.measurementId);
-      print('updateImage');
+      GlucoseData? data = get(key);
+      if (data != null) {
+        data.imageURL = path;
+        update(data, key);
+        sendImageToServer(path, data.measurementId!);
+      } else {
+        throw Exception('could not find correct data in the bpx');
+      }
     } catch (e) {
       rethrow;
     }
   }
 
   Future<bool> getAndWriteGlucoseData(
-      {DateTime beginDate, DateTime endDate, int count}) async {
+      {DateTime? beginDate, DateTime? endDate, int? count}) async {
     if (!_hasProgress) {
       _hasProgress = true;
       var glucoseDataList = await getBloodGlucoseDataOfPerson(
-          start: beginDate, end: endDate, count: count);
+          start: beginDate, end: endDate, count: count ?? 20);
       if (glucoseDataList.isNotEmpty) {
         var _dubItem = 0;
         for (var glucose in glucoseDataList) {
@@ -154,8 +158,9 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
           notifyListeners();
           _hasProgress = false;
           return false;
-        } else
+        } else {
           _hasProgress = false;
+        }
         return false;
       } else {
         _hasProgress = false;
@@ -170,7 +175,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     if (list.isNotEmpty) {
       final lastData = list.last;
       if (getLatestMeasurement() == null ||
-          !lastData.isEqual(getLatestMeasurement())) {
+          !lastData.isEqual(getLatestMeasurement()!)) {
         box.clear();
         getAndWriteGlucoseData();
       }
@@ -183,12 +188,12 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future<void> deleteFromServer(int timeKey,
-      Map<String, dynamic> deleteBloodGlucoseMeasurementRequest) async {
+  Future<void> deleteFromServer(
+      int timeKey, Map<String, dynamic> deleteMeasurementRequest) async {
     try {
       getIt<ChronicTrackingRepository>().deleteBloodGlucoseValue(
           DeleteBloodGlucoseMeasurementRequest.fromJson(
-              deleteBloodGlucoseMeasurementRequest));
+              deleteMeasurementRequest));
     } catch (_) {
       rethrow;
     }
@@ -228,17 +233,17 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future updateServer(GlucoseData glucoseData) async {
+  Future updateServer(GlucoseData data) async {
     try {
       await getIt<ChronicTrackingRepository>().updateBloodGlucoseValue(
         UpdateBloodGlucoseMeasurementRequest(
           entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
-          measurementId: glucoseData.measurementId,
-          tag: glucoseData.tag,
-          value: int.parse(glucoseData.level),
+          measurementId: data.measurementId,
+          tag: data.tag,
+          value: int.parse(data.level),
           type: "mg",
-          note: glucoseData.note,
-          date: glucoseData.date,
+          note: data.note,
+          date: data.date,
         ),
       );
     } catch (_) {
@@ -286,10 +291,8 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
           if (list == null) {
             throw Exception("blood_glucose_measurement_details list null");
           }
-          
-          if(list is List<Map<String, dynamic>>) {
-            
-          }
+
+          if (list is List<Map<String, dynamic>>) {}
 
           final List<GlucoseData> glucoseDataList = [];
           for (final bgMeasurement in list) {
@@ -304,7 +307,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
             bool manual = bgMeasurement["is_manuel"];
             String deviceId = bgMeasurement['device_id'];
             int measurementId = bgMeasurement["id"];
-            GlucoseData glucoseData = new GlucoseData(
+            GlucoseData glucoseData = GlucoseData(
                 time: time,
                 userId: entegrationId,
                 level: level,
@@ -319,9 +322,9 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
           return glucoseDataList;
         }
       }
+      return [];
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
-      print(e);
       return [];
     }
   }

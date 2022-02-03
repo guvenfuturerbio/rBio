@@ -5,7 +5,7 @@ class ApiServiceImpl extends ApiService {
   ApiServiceImpl(this.helper) : super(helper);
 
   String? get getToken => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.JWT_TOKEN);
+      .getString(SharedPreferencesKeys.jwtToken);
   Options get authOptions => Options(
         headers: {'Authorization': getToken, 'Lang': Intl.getCurrentLocale()},
       );
@@ -1204,11 +1204,11 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<GuvenResponseModel> doMobilePaymentWithVoucher(
-    DoMobilePaymentWithVoucherRequest doMobilePaymentRequest,
+    DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest,
   ) async {
     final response = await helper.postGuven(
       R.endpoints.doMobilePaymentWithVoucher,
-      doMobilePaymentRequest.toJson(),
+      doMobilePaymentWithVoucherRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -1309,11 +1309,11 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<List<AvailableDate>> findResourceAvailableDays(
-    FindResourceAvailableDaysRequest request,
+    FindResourceAvailableDaysRequest findResourceAvailableDaysRequest,
   ) async {
     final response = await helper.postGuven(
       R.endpoints.findResourceAvailableDays,
-      request.toJson(),
+      findResourceAvailableDaysRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {

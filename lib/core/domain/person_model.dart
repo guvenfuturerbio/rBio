@@ -79,14 +79,14 @@ class Person extends HiveObject {
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 
-  Map<String, dynamic> toJson({required String treatment}) =>
+  Map<String, dynamic> toJson({String? treatment}) =>
       _$PersonToJson(this, treatment);
 
   Person fromDefault({
-    required String name,
-    required String lastName,
-    required String birthDate,
-    required String gender,
+    String name = 'First',
+    String lastName = 'Last Name',
+    String birthDate = '2022-02-03T11:08:06.655',
+    String gender = 'Unspesified',
   }) {
     return Person(
         id: DateTime.now().millisecondsSinceEpoch,
@@ -102,7 +102,7 @@ class Person extends HiveObject {
         manufacturerId: 0,
         imageURL:
             "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
-        name: '${name} ${lastName}',
+        name: '$name $lastName',
         birthDate: birthDate,
         gender: gender,
         diabetesType: 'nondia',
@@ -208,7 +208,7 @@ Person _$PersonFromJson(Map<String, dynamic> json) => Person(
             .toList()
         : []);
 
-Map<String, dynamic> _$PersonToJson(Person instance, String treatment) {
+Map<String, dynamic> _$PersonToJson(Person instance, String? treatment) {
   var map = <String, dynamic>{
     'id': instance.userId,
     'entegration_id': instance.id,

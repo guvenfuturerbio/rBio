@@ -15,7 +15,7 @@ import '../../../features/chat/model/notification_model.dart';
 import '../../core.dart';
 
 class FirestoreManager {
-  PickedFile? imageFile;
+  XFile? imageFile;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseDB = FirebaseFirestore.instance;
 
@@ -29,13 +29,18 @@ class FirestoreManager {
   String getChatId(String first, String second) => "$first - $second";
 
   Future<void> loginFirebase() async {
-    final userCredential = await _auth.signInWithEmailAndPassword(
-      email: getIt<UserNotifier>().firebaseEmail,
-      password: getIt<UserNotifier>().firebasePassword,
-    );
-    final User? user = userCredential.user;
-    if (user != null) {
-      getIt<UserNotifier>().firebaseID = user.uid;
+    if (getIt<UserNotifier>().firebaseEmail != null &&
+        getIt<UserNotifier>().firebasePassword != null) {
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: getIt<UserNotifier>().firebaseEmail!,
+        password: getIt<UserNotifier>().firebasePassword!,
+      );
+      final User? user = userCredential.user;
+      if (user != null) {
+        getIt<UserNotifier>().firebaseID = user.uid;
+      }
+    } else {
+      throw Exception('Firebase email or password null');
     }
   }
 
@@ -167,8 +172,8 @@ class FirestoreManager {
   ) async {
     final ImagePicker imagePicker = ImagePicker();
     imageFile = index == 0
-        ? await imagePicker.getImage(source: ImageSource.gallery)
-        : await imagePicker.getImage(source: ImageSource.camera);
+        ? await imagePicker.pickImage(source: ImageSource.gallery)
+        : await imagePicker.pickImage(source: ImageSource.camera);
 
     if (imageFile != null) {
       uploadFile(sender, reciever, currentPerson, otherNotiToken);

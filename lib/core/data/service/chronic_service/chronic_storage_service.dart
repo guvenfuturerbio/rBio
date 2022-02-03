@@ -30,11 +30,11 @@ abstract class ChronicStorageService<T extends HiveObject>
 
   Future<void> init();
 
-  T get(key);
+  T? get(key);
 
   List<T> getAll();
 
-  T getLatestMeasurement();
+  T? getLatestMeasurement();
 
   Future<bool> write(T data, {bool shouldSendToServer = false});
 

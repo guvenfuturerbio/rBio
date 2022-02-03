@@ -5,7 +5,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
   String boxKey = 'PersonData';
 
   @override
-  Box<Person> box;
+  late Box<Person> box;
 
   @override
   Future<bool> delete(key) async {
@@ -33,7 +33,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
   }
 
   @override
-  Person get(key) {
+  Person? get(key) {
     try {
       checkBox();
 
@@ -54,7 +54,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
     if (box.isNotEmpty) {
       return box.values.toList();
     } else {
-      return null;
+      return [];
     }
   }
 
@@ -69,7 +69,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
 
   @override
   Person getLatestMeasurement() {
-    return null;
+    throw UnimplementedError('doesn\'t spesified methode');
   }
 
   @override
@@ -88,7 +88,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
       checkBox();
       if (box.isNotEmpty) {
         var person = get(key);
-        if (!person.isEqual(data)) {
+        if (person != null && !person.isEqual(data)) {
           await updateServer(data);
           box.put(key, data);
         }
@@ -139,8 +139,6 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
           box.putAt(0, data);
         }
         if (shouldSendToServer) await sendToServer(data);
-      } else {
-        print('here');
       }
       return true;
     } catch (_) {
@@ -154,8 +152,9 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
   }
 
   checkBox() {
-    if (!box.isOpen)
+    if (!box.isOpen) {
       throw Exception('Box can\'t open please check your box!!!');
+    }
   }
 
   @override

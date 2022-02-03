@@ -20,8 +20,8 @@ class Repository {
   final LocalCacheService localCacheService;
 
   Repository({
-    @required this.apiService,
-    @required this.localCacheService,
+    required this.apiService,
+    required this.localCacheService,
   });
 
   Future<RbioLoginResponse> login(String username, String password) =>
@@ -29,10 +29,10 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = R.endpoints.getAllPackagePath;
-    return await Utils.instance.getCacheApiCallList(
+    return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllPackage(url),
-      Duration(days: 1),
+      const Duration(days: 1),
       ForYouCategoryResponse(),
       localCacheService,
     );
@@ -40,10 +40,10 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
     final url = R.endpoints.getAllSubCategoriesPath(id);
-    return await Utils.instance.getCacheApiCallList(
+    return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllSubCategories(url),
-      Duration(days: 1),
+      const Duration(days: 1),
       ForYouCategoryResponse(),
       localCacheService,
     );
@@ -63,7 +63,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getSubCategoryDetail(url),
-      Duration(days: 1),
+      const Duration(days: 1),
       ForYouSubCategoryDetailResponse(),
       localCacheService,
     );
@@ -126,7 +126,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterTenantsResponse>(
       url,
       () => apiService.filterTenants(url, filterTenantsRequest),
-      Duration(days: 10),
+      const Duration(days: 10),
       FilterTenantsResponse(),
       localCacheService,
     );
@@ -139,7 +139,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url + bodyString,
       () => apiService.filterDepartments(filterDepartmentsRequest),
-      Duration(days: 1),
+      const Duration(days: 1),
       FilterDepartmentsResponse(),
       localCacheService,
       localeHandle: true,
@@ -153,7 +153,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterResourcesResponse>(
       url + bodyString,
       () => apiService.filterResources(filterResourcesRequest),
-      Duration(days: 1),
+      const Duration(days: 1),
       FilterResourcesResponse(),
       localCacheService,
     );
@@ -164,7 +164,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
       url,
       () => apiService.getDoctorCvDetails(doctorWebID),
-      Duration(days: 1),
+      const Duration(days: 1),
       DoctorCvResponse(),
       localCacheService,
     );
@@ -281,7 +281,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
       url,
       () => apiService.socialResource(),
-      Duration(days: 1),
+      const Duration(days: 1),
       GuvenResponseModel(),
       localCacheService,
     );
@@ -361,7 +361,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url,
       () => apiService.fetchOnlineDepartments(filterOnlineDepartmentsRequest),
-      Duration(days: 1),
+      const Duration(days: 1),
       FilterDepartmentsResponse(),
       localCacheService,
       localeHandle: true,
