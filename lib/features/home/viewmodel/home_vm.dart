@@ -20,14 +20,14 @@ import '../widgets/vertical_card_widget.dart';
 
 class HomeVm extends ChangeNotifier {
   final BuildContext mContext;
-
-  HomeVm({this.mContext});
+  HomeVm(this.mContext);
 
   // #region Variables
   final sharedPreferencesManager = getIt<ISharedPreferencesManager>();
-  List<String> get getUserWidgets {
-    final currentUserName = sharedPreferencesManager
-        .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+  List<String>? get getUserWidgets {
+    final currentUserName =
+        sharedPreferencesManager.getString(SharedPreferencesKeys.loginUserName);
+    if (currentUserName == null) return null;
     final allUsersModel = getIt<UserNotifier>().getHomeWidgets(currentUserName);
     if (allUsersModel == null) {
       return null;
@@ -36,26 +36,26 @@ class HomeVm extends ChangeNotifier {
     }
   }
 
-  static final key_hospitalAppointment = const ValueKey('hospitalAppointment');
-  static final key_onlineAppointment = const ValueKey('onlineAppointment');
-  static final key_chronicTracking = const ValueKey('chronicTracking');
-  static final key_appointments = const ValueKey('appointments');
-  static final key_slider = const ValueKey('slider');
-  static final key_results = const ValueKey('results');
-  static final key_symptomChecker = const ValueKey('symptomChecker');
-  static final key_detailedSymptom = const ValueKey('detailedSymptom');
-  static final key_healthcare_employee = const ValueKey('healthcare_employee');
+  static const keyHospitalAppointment = ValueKey('hospitalAppointment');
+  static const keyOnlineAppointment = ValueKey('onlineAppointment');
+  static const keyChronicTracking = ValueKey('chronicTracking');
+  static const keyAppointments = ValueKey('appointments');
+  static const keySlider = ValueKey('slider');
+  static const keyResults = ValueKey('results');
+  static const keySymptomChecker = ValueKey('symptomChecker');
+  static const keyDetailedSymptom = ValueKey('detailedSymptom');
+  static const keyHealthcareEmployee = ValueKey('healthcare_employee');
 
   final Map<HomeWidgets, Key> keys = {
-    HomeWidgets.hospitalAppointment: key_hospitalAppointment,
-    HomeWidgets.onlineAppointment: key_onlineAppointment,
-    HomeWidgets.chronicTracking: key_chronicTracking,
-    HomeWidgets.appointments: key_appointments,
-    HomeWidgets.slider: key_slider,
-    HomeWidgets.results: key_results,
-    HomeWidgets.symptomChecker: key_symptomChecker,
-    HomeWidgets.detailedSymptom: key_detailedSymptom,
-    HomeWidgets.healthcare_employee: key_healthcare_employee,
+    HomeWidgets.hospitalAppointment: keyHospitalAppointment,
+    HomeWidgets.onlineAppointment: keyOnlineAppointment,
+    HomeWidgets.chronicTracking: keyChronicTracking,
+    HomeWidgets.appointments: keyAppointments,
+    HomeWidgets.slider: keySlider,
+    HomeWidgets.results: keyResults,
+    HomeWidgets.symptomChecker: keySymptomChecker,
+    HomeWidgets.detailedSymptom: keyDetailedSymptom,
+    HomeWidgets.healthcareEmployee: keyHealthcareEmployee,
   };
 
   final List<HomeWidgets> userDefaultValues = [
@@ -72,7 +72,7 @@ class HomeVm extends ChangeNotifier {
   final List<HomeWidgets> doctorDefaultValues = [
     HomeWidgets.hospitalAppointment,
     HomeWidgets.onlineAppointment,
-    HomeWidgets.healthcare_employee,
+    HomeWidgets.healthcareEmployee,
     HomeWidgets.appointments,
     HomeWidgets.slider,
     HomeWidgets.results,
@@ -92,20 +92,20 @@ class HomeVm extends ChangeNotifier {
 
   List<BannerTabsModel> bannerTabsModel = [];
 
-  SpringController springController;
+  late SpringController springController;
 
   List<DrawerModel> get drawerList => <DrawerModel>[
         DrawerModel(
           title: LocaleProvider.current.profile,
           onTap: () {
-            Atom.to(PagePaths.PROFILE);
+            Atom.to(PagePaths.profile);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           onTap: () {
             Atom.to(
-              PagePaths.CREATE_APPOINTMENT,
+              PagePaths.createAppointment,
               queryParameters: {
                 'forOnline': false.toString(),
                 'fromSearch': false.toString(),
@@ -118,7 +118,7 @@ class HomeVm extends ChangeNotifier {
           title: LocaleProvider.current.take_video_appointment,
           onTap: () {
             Atom.to(
-              PagePaths.CREATE_APPOINTMENT,
+              PagePaths.createAppointment,
               queryParameters: {
                 'forOnline': true.toString(),
                 'fromSearch': false.toString(),
@@ -130,56 +130,56 @@ class HomeVm extends ChangeNotifier {
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
           onTap: () {
-            Atom.to(PagePaths.MEASUREMENT_TRACKING);
+            Atom.to(PagePaths.measurementTracking);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.appointments,
           onTap: () {
-            Atom.to(PagePaths.APPOINTMENTS);
+            Atom.to(PagePaths.appointment);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.results,
           onTap: () {
-            Atom.to(PagePaths.ERESULT);
+            Atom.to(PagePaths.eResult);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.for_you,
           onTap: () {
-            Atom.to(PagePaths.FOR_YOU_CATEGORIES);
+            Atom.to(PagePaths.forYouCategories);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
           onTap: () {
-            Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
+            Atom.to(PagePaths.symptomMainMenu);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.devices,
           onTap: () {
-            Atom.to(PagePaths.DEVICES);
+            Atom.to(PagePaths.devices);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.reminders,
           onTap: () {
-            Atom.to(PagePaths.MEDIMINDER_INITIAL);
+            Atom.to(PagePaths.mediminderInitial);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           onTap: () {
-            Atom.to(PagePaths.SUGGEST_REQUEST);
+            Atom.to(PagePaths.suggestResult);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.detailed_symptom,
           onTap: () {
             Atom.to(
-              PagePaths.DETAILED_SYMPTOM,
+              PagePaths.detailedSymptom,
             );
           },
         ),
@@ -220,7 +220,7 @@ class HomeVm extends ChangeNotifier {
     if (sharedUserList == null) {
       List<String> setList = [];
       List<HomeWidgets> values = _getAllCases();
-      values.forEach((widgetType) {
+      for (var widgetType in values) {
         if (widgetType.isShowDefault()) {
           final child = _getWidgetByType(widgetType, false);
           if (child != null) {
@@ -228,7 +228,7 @@ class HomeVm extends ChangeNotifier {
             widgetsInUse.add(child);
           }
         }
-      });
+      }
       await saveWidgetList(setList);
     } else {
       final sharedTypes = sharedUserList.map((e) => e.xHomeWidgets).toList();
@@ -253,10 +253,13 @@ class HomeVm extends ChangeNotifier {
     var sharedUserList = getUserWidgets ?? [];
     sharedUserList.add(widgetType.xRawValue);
     await saveWidgetList(sharedUserList);
-    widgetsInUse.add(_getWidgetByType(widgetType, false));
-    closeAddAlert();
-    notifyListeners();
-    Atom.dismiss();
+    final newWidget = _getWidgetByType(widgetType, false);
+    if (newWidget != null) {
+      widgetsInUse.add(newWidget);
+      closeAddAlert();
+      notifyListeners();
+      Atom.dismiss();
+    }
   }
   // #endregion
 
@@ -264,12 +267,14 @@ class HomeVm extends ChangeNotifier {
   void onReorder(int oldIndex, int newIndex) async {
     try {
       Widget row = widgetsInUse.removeAt(oldIndex);
-      await widgetsInUse.insert(newIndex, row);
-      List<String> setList = widgetsInUse.map((element) {
-        return ((element.key as ValueKey).value as String)
-            .xHomeWidgets
-            .xRawValue;
-      }).toList();
+      widgetsInUse.insert(newIndex, row);
+      List<String> setList = widgetsInUse.map((Widget element) {
+        final _widget =
+            ((element.key as ValueKey).value as String).xHomeWidgets;
+        if (_widget != null) {
+          return _widget.xRawValue;
+        }
+      }).toList() as List<String>;
       await saveWidgetList(setList);
     } catch (e) {
       LoggerUtils.instance.e(e);
@@ -303,6 +308,7 @@ class HomeVm extends ChangeNotifier {
     notifyListeners();
 
     final sharedUserList = getUserWidgets;
+    if (sharedUserList == null) return;
     final allWidgets = _getAllCases(true).map((e) => e.xRawValue).toList();
     allWidgets.removeWhere((e) => sharedUserList.contains(e));
     // Kullanılmayan widgetlar
@@ -313,7 +319,7 @@ class HomeVm extends ChangeNotifier {
       Container(
         color: Colors.black12,
         child: Consumer<HomeVm>(
-          builder: (BuildContext context, HomeVm val, Widget child) {
+          builder: (BuildContext context, HomeVm val, Widget? child) {
             return SizedBox.expand(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -376,28 +382,28 @@ class HomeVm extends ChangeNotifier {
 
   // #region _getTypeToWidgetList
   List<Widget> _getTypeToWidgetList(
-    List<HomeWidgets> types,
+    List<HomeWidgets?> types,
     bool isRemovedWidgets,
   ) {
     final result = <Widget>[];
-    types.forEach((widgetType) {
+    for (var widgetType in types) {
       final child = _getWidgetByType(widgetType, isRemovedWidgets);
       if (child != null) {
         result.add(child);
       }
-    });
+    }
     return result;
   }
   // #endregion
 
   // #region _getWidgetByType
-  Widget _getWidgetByType(HomeWidgets widgetType, bool isRemovedWidgets) {
+  Widget? _getWidgetByType(HomeWidgets? widgetType, bool isRemovedWidgets) {
     switch (widgetType) {
       case HomeWidgets.hospitalAppointment:
         {
-          if (getIt<AppConfig>().takeHospitalAppointment)
+          if (getIt<AppConfig>().takeHospitalAppointment) {
             return MyReorderableWidget(
-              key: keys[HomeWidgets.hospitalAppointment],
+              key: keys[HomeWidgets.hospitalAppointment]!,
               type: HomeWidgets.hospitalAppointment,
               isRemovedWidgets: isRemovedWidgets,
               body: Consumer<LocaleNotifier>(
@@ -410,7 +416,7 @@ class HomeVm extends ChangeNotifier {
               ),
               onTap: () {
                 Atom.to(
-                  PagePaths.CREATE_APPOINTMENT,
+                  PagePaths.createAppointment,
                   queryParameters: {
                     'forOnline': false.toString(),
                     'fromSearch': false.toString(),
@@ -419,15 +425,16 @@ class HomeVm extends ChangeNotifier {
                 );
               },
             );
+          }
 
           break;
         }
 
       case HomeWidgets.onlineAppointment:
         {
-          if (getIt<AppConfig>().takeOnlineAppointment)
+          if (getIt<AppConfig>().takeOnlineAppointment) {
             return MyReorderableWidget(
-              key: keys[HomeWidgets.onlineAppointment],
+              key: keys[HomeWidgets.onlineAppointment]!,
               type: HomeWidgets.onlineAppointment,
               isRemovedWidgets: isRemovedWidgets,
               body: Consumer<LocaleNotifier>(
@@ -440,7 +447,7 @@ class HomeVm extends ChangeNotifier {
               ),
               onTap: () {
                 Atom.to(
-                  PagePaths.CREATE_APPOINTMENT,
+                  PagePaths.createAppointment,
                   queryParameters: {
                     'forOnline': true.toString(),
                     'fromSearch': false.toString(),
@@ -449,15 +456,16 @@ class HomeVm extends ChangeNotifier {
                 );
               },
             );
+          }
 
           break;
         }
 
       case HomeWidgets.chronicTracking:
         {
-          if (getIt<AppConfig>().chronicTracking)
+          if (getIt<AppConfig>().chronicTracking) {
             return MyReorderableWidget(
-              key: keys[HomeWidgets.chronicTracking],
+              key: keys[HomeWidgets.chronicTracking]!,
               type: HomeWidgets.chronicTracking,
               isRemovedWidgets: isRemovedWidgets,
               body: Consumer<LocaleNotifier>(
@@ -469,9 +477,10 @@ class HomeVm extends ChangeNotifier {
                 },
               ),
               onTap: () {
-                Atom.to(PagePaths.MEASUREMENT_TRACKING);
+                Atom.to(PagePaths.measurementTracking);
               },
             );
+          }
 
           break;
         }
@@ -479,7 +488,7 @@ class HomeVm extends ChangeNotifier {
       case HomeWidgets.appointments:
         {
           return MyReorderableWidget(
-            key: keys[HomeWidgets.appointments],
+            key: keys[HomeWidgets.appointments]!,
             type: HomeWidgets.appointments,
             isRemovedWidgets: isRemovedWidgets,
             body: Consumer<LocaleNotifier>(
@@ -491,7 +500,7 @@ class HomeVm extends ChangeNotifier {
               },
             ),
             onTap: () {
-              Atom.to(PagePaths.APPOINTMENTS);
+              Atom.to(PagePaths.appointment);
             },
           );
         }
@@ -499,10 +508,10 @@ class HomeVm extends ChangeNotifier {
       case HomeWidgets.slider:
         {
           return MyReorderableWidget(
-            key: keys[HomeWidgets.slider],
+            key: keys[HomeWidgets.slider]!,
             type: HomeWidgets.slider,
             isRemovedWidgets: isRemovedWidgets,
-            body: HomeSlider(),
+            body: const HomeSlider(),
             showDeleteIcon: false,
             isVerticalCard: false,
           );
@@ -523,14 +532,14 @@ class HomeVm extends ChangeNotifier {
               },
             ),
             onTap: () {
-              Atom.to(PagePaths.ERESULT);
+              Atom.to(PagePaths.eResult);
             },
           );
         }
 
       case HomeWidgets.symptomChecker:
         {
-          if (getIt<AppConfig>().symptomChecker)
+          if (getIt<AppConfig>().symptomChecker) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.symptomChecker],
               type: HomeWidgets.symptomChecker,
@@ -544,9 +553,10 @@ class HomeVm extends ChangeNotifier {
                 },
               ),
               onTap: () {
-                Atom.to(PagePaths.SYMPTOM_MAIN_MENU);
+                Atom.to(PagePaths.symptomMainMenu);
               },
             );
+          }
 
           break;
         }
@@ -566,16 +576,16 @@ class HomeVm extends ChangeNotifier {
               },
             ),
             onTap: () {
-              Atom.to(PagePaths.DETAILED_SYMPTOM);
+              Atom.to(PagePaths.detailedSymptom);
             },
           );
         }
 
-      case HomeWidgets.healthcare_employee:
+      case HomeWidgets.healthcareEmployee:
         {
           return MyReorderableWidget(
-            key: keys[HomeWidgets.healthcare_employee],
-            type: HomeWidgets.healthcare_employee,
+            key: keys[HomeWidgets.healthcareEmployee],
+            type: HomeWidgets.healthcareEmployee,
             isRemovedWidgets: isRemovedWidgets,
             body: Consumer<LocaleNotifier>(
               builder: (context, localeVm, widget) {
@@ -586,7 +596,7 @@ class HomeVm extends ChangeNotifier {
               },
             ),
             onTap: () {
-              Atom.to(PagePaths.DOCTOR_HOME);
+              Atom.to(PagePaths.doctorHome);
             },
           );
         }

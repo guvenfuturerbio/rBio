@@ -124,7 +124,7 @@ class UserNotifier extends ChangeNotifier {
   }
 
   //
-  AllUsersModel getHomeWidgets(String tcEmailPassport) {
+  AllUsersModel? getHomeWidgets(String tcEmailPassport) {
     final sharedData =
         sharedPreferencesManager.getString(SharedPreferencesKeys.allUsers);
     if (sharedData == null) {
