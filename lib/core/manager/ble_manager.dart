@@ -18,7 +18,7 @@ class BleDeviceManager extends ChangeNotifier {
       final List<String> _pairedDeviceOnLocal =
           _pairedDevices.map((device) => jsonEncode(device.toJson())).toList();
       final response = await sharedPrefs.setStringList(
-        SharedPreferencesKeys.PAIRED_DEVICES,
+        SharedPreferencesKeys.pairedDevices,
         _pairedDeviceOnLocal,
       );
       getIt<BleScannerOps>().pairedDevices =
@@ -50,7 +50,7 @@ class BleDeviceManager extends ChangeNotifier {
       final List<String> _pairedDeviceOnLocal =
           response.map((device) => jsonEncode(device.toJson())).toList();
       await sharedPrefs.setStringList(
-        SharedPreferencesKeys.PAIRED_DEVICES,
+        SharedPreferencesKeys.pairedDevices,
         _pairedDeviceOnLocal,
       );
     }
@@ -59,13 +59,18 @@ class BleDeviceManager extends ChangeNotifier {
 
   /// multiple Paired device can be associated. So This method getting all [PairedDevice] as a [List<PairedDevice>]
   Future<List<PairedDevice>> getPairedDevices() async {
-    final List<String> paired =
-        sharedPrefs.getStringList(SharedPreferencesKeys.PAIRED_DEVICES);
-    final List<PairedDevice> pairedDevices = paired
-        .map(
-          (e) => PairedDevice.fromJson(jsonDecode(e) as Map<String, dynamic>),
-        )
-        .toList();
+    final List<String>? paired =
+        sharedPrefs.getStringList(SharedPreferencesKeys.pairedDevices);
+    List<PairedDevice> pairedDevices = [];
+    if (paired != null) {
+      pairedDevices = paired
+          .map(
+            (e) => PairedDevice.fromJson(jsonDecode(e) as Map<String, dynamic>),
+          )
+          .toList();
+    } else {
+      throw "Paired devices list is null!";
+    }
     return pairedDevices;
   }
 }

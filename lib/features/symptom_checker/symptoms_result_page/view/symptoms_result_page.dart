@@ -8,16 +8,16 @@ import '../viewmodel/symptoms_result_page_vm.dart';
 
 class SymptomsResultPage extends StatefulWidget {
   SymptomsResultPage(
-      {Key key,
+      {Key? key,
       this.symptoms,
       this.gender,
       this.year_of_birth,
       this.isFromVoice});
 
-  List<GetBodySymptomsResponse> symptoms;
-  String gender;
-  String year_of_birth;
-  bool isFromVoice;
+  List<GetBodySymptomsResponse>? symptoms;
+  String? gender;
+  String? year_of_birth;
+  bool? isFromVoice;
 
   @override
   State<SymptomsResultPage> createState() => _SymptomsResultPageState();

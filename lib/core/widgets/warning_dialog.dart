@@ -24,7 +24,7 @@ class _WarningDialogState extends State<WarningDialog> {
       LocaleProvider.of(context).Ok,
       () {
         widget.text == LocaleProvider.of(context).succefully_created_pass
-            ? Atom.to(PagePaths.MAIN)
+            ? Atom.to(PagePaths.main)
             : Atom.pop();
       },
     );

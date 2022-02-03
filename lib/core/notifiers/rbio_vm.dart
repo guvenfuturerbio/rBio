@@ -64,7 +64,7 @@ abstract class RbioVm extends ChangeNotifier {
     ).then(
       (value) async {
         if (closeAfter) {
-          Atom.to(PagePaths.MAIN, isReplacement: true);
+          Atom.to(PagePaths.main, isReplacement: true);
         }
       },
     );

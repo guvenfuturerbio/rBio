@@ -3,7 +3,7 @@ part of 'ble_operators.dart';
 enum BleReactorState { loading, done, error }
 
 class BleReactorOps extends ChangeNotifier {
-  BleReactorOps(this._ble);
+  BleReactorOps(this._ble, {FlutterReactiveBle ble});
   final FlutterReactiveBle _ble;
 
   bool isFirstConnect = true;

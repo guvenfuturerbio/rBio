@@ -36,7 +36,7 @@ class _GradientDialogForPaymentDialogState
           LocaleProvider.of(context).Ok,
           () {
             if (widget.code == "13" || widget.code == "10") {
-              Atom.to(PagePaths.MAIN, isReplacement: true);
+              Atom.to(PagePaths.main, isReplacement: true);
             } else {
               Navigator.of(context).pop();
             }

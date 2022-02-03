@@ -189,7 +189,7 @@ class UserNotifier extends ChangeNotifier {
       LoggerUtils.instance.e(e);
     } finally {
       Atom.dismiss();
-      Atom.to(PagePaths.LOGIN, isReplacement: true);
+      Atom.to(PagePaths.login, isReplacement: true);
     }
   }
 

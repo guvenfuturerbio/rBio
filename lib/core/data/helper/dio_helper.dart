@@ -35,7 +35,7 @@ abstract class IDioHelper {
 
   Future<GuvenResponseModel> deleteGuven(
     String path, {
-   dynamic data,
+    dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -72,10 +72,8 @@ abstract class IDioHelper {
   });
 
   Future dioDelete(
-    String path, 
-    {
+    String path, {
     dynamic data,
-  
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -95,7 +93,7 @@ abstract class IDioHelper {
 extension DioHelperExtension on IDioHelper {
   // #region GetResponseResult
   dynamic getResponseResult<T extends IBaseModel, R>(
-      dynamic data, T parserModel, bool isJsonDecode) {
+      dynamic data, T? parserModel, bool? isJsonDecode) {
     if (parserModel == null) return data;
 
     dynamic model;
@@ -173,7 +171,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                     '${file.value.filename} ${file.value.contentType}';
               }
               for (var field in data.fields) {
-                map['${field.key}'] = '${field.value}';
+                map[field.key] = field.value;
               }
               LoggerUtils.instance.d(map);
             }
@@ -227,13 +225,13 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
             if (statusCode == 401) {
               if (!Atom.url.contains(PagePaths.LOGIN)) {
                 final password = getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.LOGIN_PASSWORD);
+                    .getString(SharedPreferencesKeys.loginPassword);
                 final userName = getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.LOGIN_USERNAME);
+                    .getString(SharedPreferencesKeys.loginUserName);
 
-                if (password != null) {
+                if (password != null && userName != null) {
                   if (R.endpoints.loginPath
-                      .contains(error.response.requestOptions.uri.path)) {
+                      .contains(error.response!.requestOptions.uri.path)) {
                     Atom.to(PagePaths.LOGIN, isReplacement: true);
                   } else {
                     try {
@@ -248,21 +246,23 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                         onReceiveProgress: requestModel.onReceiveProgress,
                         onSendProgress: requestModel.onSendProgress,
                         options: Options(
-                            method: requestModel.method,
-                            headers: requestModel.headers
-                              ..addAll(
-                                {
-                                  'Authorization':
-                                      getIt<ISharedPreferencesManager>()
-                                          .get(SharedPreferencesKeys.JWT_TOKEN),
-                                },
-                              ),),
+                          method: requestModel.method,
+                          headers: requestModel.headers
+                            ..addAll(
+                              {
+                                'Authorization':
+                                    getIt<ISharedPreferencesManager>()
+                                        .getString(
+                                            SharedPreferencesKeys.jwtToken),
+                              },
+                            ),
+                        ),
                       );
                       return handler.resolve(response);
                     } catch (_) {
                       return handler.reject(
                         DioError(
-                          requestOptions: error.response.requestOptions,
+                          requestOptions: error.response!.requestOptions,
                           error: Exception('401'),
                         ),
                       );
@@ -290,16 +290,16 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
-    ProgressCallback?onReceiveProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     return await dioGet<GuvenResponseModel, GuvenResponseModel>(
       path,
       isJsonDecode: false,
       parseModel: GuvenResponseModel(),
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-      onReceiveProgress: onReceiveProgress,
+      queryParameters: queryParameters as Map<String, dynamic>?,
+      options: options as Options?,
+      cancelToken: cancelToken as CancelToken?,
+      onReceiveProgress: onReceiveProgress as Function(int, int)?,
     );
   }
 
@@ -372,12 +372,12 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   @override
   Future<R> dioGet<T extends IBaseModel, R>(
     String path, {
-    T parseModel,
-    bool isJsonDecode = false,
-    Map<String, dynamic> queryParameters,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onReceiveProgress,
+    T? parseModel,
+    bool? isJsonDecode = false,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgress,
   }) async {
     try {
       final response = await get(
@@ -388,9 +388,11 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      if (response.statusCode < HttpStatus.ok ||
-          response.statusCode > HttpStatus.badRequest) {
-        throw Exception('GET | ${response.data}');
+      if (response.statusCode != null) {
+        if (response.statusCode! < HttpStatus.ok ||
+            response.statusCode! > HttpStatus.badRequest) {
+          throw Exception('GET | ${response.data}');
+        }
       }
 
       return getResponseResult<T, R>(response.data, parseModel, isJsonDecode);
