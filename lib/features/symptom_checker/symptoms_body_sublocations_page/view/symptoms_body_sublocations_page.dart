@@ -7,13 +7,13 @@ import '../../../../model/model.dart';
 import '../viewmodel/symptoms_body_sublocations_vm.dart';
 
 class BodySubLocationsPage extends StatefulWidget {
-  GetBodyLocationResponse selectedBodyLocation;
-  int selectedGenderId;
-  String yearOfBirth;
-  bool isFromVoice;
+  late GetBodyLocationResponse? selectedBodyLocation;
+  late int? selectedGenderId;
+  late String? yearOfBirth;
+  late bool? isFromVoice;
 
   BodySubLocationsPage({
-    Key key,
+    Key? key,
     this.selectedGenderId,
     this.yearOfBirth,
     this.selectedBodyLocation,
@@ -29,7 +29,9 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
   void dispose() {
     try {
       RbioConfig.of(context).bodyLocationRsp = null;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     super.dispose();
   }
 
@@ -38,16 +40,16 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
     try {
       widget.selectedBodyLocation = RbioConfig.of(context).bodyLocationRsp;
       widget.selectedGenderId =
-          int.parse(Atom.queryParameters['selectedGenderId']);
+          int.parse(Atom.queryParameters['selectedGenderId'] as String);
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
     return ChangeNotifierProvider(
       create: (context) => BodySublocationsVm(
           context: context,
-          bodyLocationId: widget.selectedBodyLocation.id,
+          bodyLocationId: widget.selectedBodyLocation!.id,
           genderId: widget.selectedGenderId == 0 || widget.selectedGenderId == 2
               ? 0
               : 1,
@@ -58,7 +60,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
         builder: (
           BuildContext context,
           BodySublocationsVm value,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: RbioAppBar(
@@ -76,11 +78,10 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
 
   Widget _buildBody(BuildContext context, BodySublocationsVm value) {
     switch (value.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
-        break;
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return Column(
           children: [
             Column(
@@ -88,7 +89,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 25, top: 25),
+                  margin: const EdgeInsets.only(left: 25, top: 25),
                   child: Text(
                     widget.selectedGenderId == 0
                         ? LocaleProvider.of(context).gender_male
@@ -103,11 +104,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 35),
+                  margin: const EdgeInsets.only(left: 35),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      widget.selectedBodyLocation.name,
+                      widget.selectedBodyLocation!.name!,
                       style: context.xHeadline3
                           .copyWith(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.start,
@@ -123,7 +124,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     elevation: 10,
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
                     child: ExpandablePanel(
@@ -134,7 +135,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                           value.expControllerList[index].toggle();
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 8),
                           child: Text(
                             '${value.bodySubLocations[index].name}',
@@ -144,10 +145,10 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                         ),
                       ),
                       collapsed: ListTile(
-                        title: Container(
+                        title: SizedBox(
                           height: MediaQuery.of(context).size.height / 4,
-                          child: value.symptomControl == LoadingProgress.LOADING
-                              ? RbioLoading()
+                          child: value.symptomControl == LoadingProgress.loading
+                              ? const RbioLoading()
                               : ListView.builder(
                                   padding: const EdgeInsets.all(8),
                                   itemCount:
@@ -167,7 +168,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Container(
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -176,7 +177,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                     value
                                                         .allBodySymptoms[index]
                                                             [indx]
-                                                        .name,
+                                                        .name!,
                                                     softWrap: true,
                                                     maxLines: 2,
                                                     overflow:
@@ -207,12 +208,13 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                                 index][indx])
                                                         ? true
                                                         : false,
-                                                    child: Icon(Icons.close,
+                                                    child: const Icon(
+                                                        Icons.close,
                                                         size: 20)),
                                               ),
                                             ],
                                           ),
-                                          Divider()
+                                          const Divider()
                                         ],
                                       ),
                                     );
@@ -231,7 +233,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
                 child: RbioElevatedButton(
-                    onTap: value.selectedSymptoms.length != 0
+                    onTap: value.selectedSymptoms.isNotEmpty
                         ? () async {
                             RbioConfig.of(context).bodyLocationRsp =
                                 widget.selectedBodyLocation;
@@ -239,28 +241,14 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                 value.selectedSymptoms;
                             RbioConfig.of(context).sublocationVm = value;
                             Atom.to(
-                              PagePaths.SYMPTOM_SELECT_PAGE,
+                              PagePaths.symptomSelectPage,
                               queryParameters: {
                                 'selectedGenderId':
                                     widget.selectedGenderId.toString(),
-                                'yearOfBirth': widget.yearOfBirth,
+                                'yearOfBirth': widget.yearOfBirth!,
                                 'isFromVoice': false.toString(),
                               },
-                            ); /*
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BodySymptomsSelectionPage(
-                                  selectedGenderId: widget.selectedGenderId,
-                                  yearOfBirth: widget.yearOfBirth,
-                                  selectedBodyLocation:
-                                      widget.selectedBodyLocation,
-                                  selectedBodySymptoms: value.selectedSymptoms,
-                                  isFromVoice: widget.isFromVoice,
-                                  myPv: value,
-                                ),
-                              ),
-                            );*/
+                            );
                           }
                         : null,
                     title: LocaleProvider.of(context).continue_lbl),
@@ -269,11 +257,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
           ],
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }
