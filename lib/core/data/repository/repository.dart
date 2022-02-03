@@ -20,11 +20,11 @@ class Repository {
   final LocalCacheService localCacheService;
 
   Repository({
-    @required this.apiService,
-    @required this.localCacheService,
+    required this.apiService,
+    required this.localCacheService,
   });
 
-  Future<RbioLoginResponse> login(String username, String password) =>
+  Future<RbioLoginResponse> login(String? username, String? password) =>
       apiService.login(username, password);
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {

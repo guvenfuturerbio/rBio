@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_equal_for_default_values
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -19,22 +21,21 @@ import '../core.dart';
 class Utils {
   Utils._();
 
-  static Utils _instance;
+  static late Utils _instance;
 
   static Utils get instance {
-    _instance ??= Utils._();
     return _instance;
   }
 
   String get getCurrentUserNameAndSurname =>
       '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}';
 
-  String get getCacheProfileImageStr => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.PROFILE_IMAGE);
+  String? get getCacheProfileImageStr => getIt<ISharedPreferencesManager>()
+      .getString(SharedPreferencesKeys.profileImage);
   ImageProvider<Object> get getCacheProfileImage =>
       getCacheProfileImageStr != null
-          ? MemoryImage(base64.decode(getCacheProfileImageStr))
-          : NetworkImage(R.image.circlevatar);
+          ? MemoryImage(base64.decode(getCacheProfileImageStr as String))
+          : NetworkImage(R.image.circlevatar as String);
 
   // #region hideKeyboard
   void hideKeyboard(BuildContext context) {
@@ -79,7 +80,7 @@ class Utils {
   }) async {
     final cacheUrl = url +
         (localeHandle
-            ? '/${getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.SELECTED_LOCALE)}'
+            ? '/${getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.selectedLocale)}'
             : '');
     final localData = await localCacheService.get(cacheUrl);
     if (localData == null) {
@@ -108,7 +109,7 @@ class Utils {
   }) async {
     final cacheUrl = url +
         (localeHandle
-            ? '/${getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.SELECTED_LOCALE)}'
+            ? '/${getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.selectedLocale)}'
             : '');
     final localData = await localCacheService.get(cacheUrl);
     if (localData == null) {
@@ -119,7 +120,7 @@ class Utils {
     } else {
       final localModel = json.decode(localData);
       if (localModel is Map) {
-        return model.fromJson(localModel);
+        return model.fromJson(localModel as Map<String, dynamic>);
       }
 
       throw Exception('getCacheApiCallModel : ${model.runtimeType}');
@@ -177,17 +178,19 @@ class Utils {
   }
 
   InputDecoration inputImageDecoration({
-    String image,
-    String hintText,
-    Function suffixIconClicked,
-    Widget suffixIcon,
+    String? image,
+    String? hintText,
+    required Function suffixIconClicked,
+    Widget? suffixIcon,
   }) =>
       InputDecoration(
-        contentPadding: EdgeInsets.all(0),
-        prefixIcon: SvgPicture.asset(
-          image,
-          fit: BoxFit.none,
-        ),
+        contentPadding: EdgeInsets.zero,
+        prefixIcon: image != null
+            ? SvgPicture.asset(
+                image,
+                fit: BoxFit.none,
+              )
+            : const Icon(Icons.close),
         focusedBorder: _borderTextField(),
         border: _borderTextField(),
         focusColor: getIt<ITheme>().mainColor,
@@ -198,7 +201,7 @@ class Utils {
               suffixIconClicked();
             },
             child: suffixIcon ??
-                SizedBox(
+                const SizedBox(
                   width: 0,
                 ),
           ),
@@ -210,7 +213,7 @@ class Utils {
 
   InputDecoration inputImageDecorationRed({image: String, hintText: String}) =>
       InputDecoration(
-        contentPadding: EdgeInsets.all(0),
+        contentPadding: EdgeInsets.zero,
         prefixIcon: SvgPicture.asset(
           image,
           fit: BoxFit.none,
@@ -232,7 +235,7 @@ class Utils {
 
   GradientButton button({
     text: String,
-    Function onPressed,
+    required Function onPressed,
     double height = 16,
     double width = 200,
   }) =>
@@ -248,19 +251,19 @@ class Utils {
         ),
         textStyle: TextStyle(
             fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
-        callback: onPressed,
+        callback: onPressed(),
         gradient: AppGradient(),
         shadowColor: Colors.black,
       );
 
   GradientButton passiveButton({
     text: String,
-    Function onPressed,
+    required Function onPressed,
     double height = 16,
     double width = 200,
   }) =>
       GradientButton(
-        callback: onPressed,
+        callback: onPressed(),
         increaseWidthBy: width,
         increaseHeightBy: height,
         shadowColor: Colors.black.withAlpha(50),
@@ -284,15 +287,15 @@ class Utils {
       );
 
   InputDecoration inputDecorationForLogin({
-    String hintText,
-    String labelText,
-    EdgeInsetsGeometry contentPadding,
-    InputBorder inputBorder,
-    Widget prefixIcon,
+    String? hintText,
+    String? labelText,
+    EdgeInsetsGeometry? contentPadding,
+    InputBorder? inputBorder,
+    Widget? prefixIcon,
   }) =>
       InputDecoration(
         contentPadding: contentPadding ??
-            EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+            const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
         focusedBorder: inputBorder,
         border: inputBorder,
         enabledBorder: inputBorder,
@@ -306,8 +309,8 @@ class Utils {
 
   Widget CustomCircleAvatar({
     double size = 50,
-    Widget child,
-    BoxDecoration decoration,
+    Widget? child,
+    BoxDecoration? decoration,
   }) =>
       Container(
         width: size,
@@ -320,11 +323,11 @@ class Utils {
       );
 
   Widget ForYouCategoryCard({
-    BuildContext context,
-    final int id,
-    final String title,
-    final Image icon,
-    final bool isSubCat,
+    required BuildContext context,
+    final int? id,
+    final String? title,
+    final Image? icon,
+    required final bool isSubCat,
   }) =>
       GestureDetector(
         onTap: () {
@@ -334,14 +337,16 @@ class Utils {
                   ? Atom.to(
                       PagePaths.FOR_YOU_SUB_CATEGORIES_DETAIL,
                       queryParameters: {
-                        'title': Uri.encodeFull(title),
+                        'title':
+                            title != null ? Uri.encodeFull(title) : "No title",
                         'subCategoryId': id.toString()
                       },
                     )
                   : Atom.to(
                       PagePaths.FOR_YOU_SUB_CATEGORIES,
                       queryParameters: {
-                        'title': Uri.encodeFull(title),
+                        'title':
+                            title != null ? Uri.encodeFull(title) : "No title",
                         'categoryId': id.toString(),
                       },
                     );
@@ -352,7 +357,7 @@ class Utils {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Container(
+          child: SizedBox(
             height: 300,
             width: 300,
             child: Stack(
@@ -385,16 +390,16 @@ class Utils {
                           color: R.color.dark_black.withAlpha(50),
                           blurRadius: 15,
                           spreadRadius: 0,
-                          offset: Offset(5, 10),
+                          offset: const Offset(5, 10),
                         ),
                       ],
                     ),
                     child: Wrap(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Text(
-                            title,
+                            title ?? "No title",
                             textAlign: TextAlign.left,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -423,11 +428,11 @@ class Utils {
   }
 
   Color fetchMeasurementColor({
-    @required int measurement,
-    @required int criticMin,
-    @required int criticMax,
-    @required int targetMax,
-    @required int targetMin,
+    required int measurement,
+    required int criticMin,
+    required int criticMax,
+    required int targetMax,
+    required int targetMin,
   }) {
     Color color;
     if (measurement <= criticMin) {
@@ -551,13 +556,13 @@ InputBorder _borderTextFieldRed() => OutlineInputBorder(
           width: 0, style: BorderStyle.solid, color: R.color.light_blue),
     );
 
-Widget TitleAppBarWhite({String title}) => Container(
+Widget TitleAppBarWhite({String? title}) => Container(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Text(
-        title,
+        title ?? "No title",
         overflow: TextOverflow.ellipsis,
         maxLines: 2,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           color: Colors.white,
           fontWeight: FontWeight.w600,
@@ -567,11 +572,11 @@ Widget TitleAppBarWhite({String title}) => Container(
     );
 
 Widget MainAppBar({
-  BuildContext context,
-  Widget leading,
-  Widget title,
-  List<Widget> actions,
-  Widget bottom,
+  required BuildContext context,
+  Widget? leading,
+  Widget? title,
+  List<Widget>? actions,
+  Widget? bottom,
 }) =>
     PreferredSize(
         child: Container(
@@ -579,21 +584,21 @@ Widget MainAppBar({
           child: Stack(
             children: <Widget>[
               Positioned(
-                child: leading == null ? Container() : leading,
+                child: leading ?? const SizedBox(),
                 left: 0,
               ),
               Center(
                 child: title == null
                     ? Container()
                     : Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20),
+                        padding: const EdgeInsets.only(left: 20, right: 20),
                         child: title,
                       ),
               ),
               Positioned(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: actions == null ? [] : actions,
+                  children: actions ?? [],
                 ),
                 right: 0,
               )
@@ -614,7 +619,7 @@ class UtilityManager {
     return _instance;
   }
 
-  UtilityManager._internal() {}
+  UtilityManager._internal();
 
   void fieldFocusChange(
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
@@ -639,7 +644,7 @@ class UtilityManager {
         return GuvenAlert(
           title: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w700,
               color: Colors.white,
@@ -657,7 +662,7 @@ class UtilityManager {
               children: <Widget>[
                 Text(
                   text,
-                  style: new TextStyle(
+                  style: const TextStyle(
                     fontSize: 20.0,
                     fontFamily: 'Roboto',
                     color: Colors.white,
@@ -675,16 +680,18 @@ class UtilityManager {
     await getIt<Repository>().setJitsiWebConsultantId(options.roomNameOrUrl);
 
     await JitsiMeetWrapper.joinMeeting(
-      options:options,
+      options: options,
       listener: JitsiMeetingListener(
         onConferenceWillJoin: (message) {
-          debugPrint("${options.roomNameOrUrl} will join with message: $message");
+          debugPrint(
+              "${options.roomNameOrUrl} will join with message: $message");
         },
         onConferenceJoined: (message) {
           debugPrint("${options.roomNameOrUrl} joined with message: $message");
         },
-        onConferenceTerminated: (message,_) {
-          debugPrint("${options.roomNameOrUrl} terminated with message: $message");
+        onConferenceTerminated: (message, _) {
+          debugPrint(
+              "${options.roomNameOrUrl} terminated with message: $message");
         },
       ),
     );
@@ -722,7 +729,7 @@ class UtilityManager {
     }
   }
 
-  Widget getDeviceImage(int deviceId) {
+  Widget? getDeviceImage(int deviceId) {
     switch (deviceId) {
       case 87:
         return Image.asset(R.image.mi_scale);
@@ -735,7 +742,7 @@ class UtilityManager {
     }
   }
 
-  Widget getDeviceImageFromType(DeviceType device) {
+  Widget? getDeviceImageFromType(DeviceType device) {
     switch (device) {
       case DeviceType.MI_SCALE:
         return Image.asset(R.image.mi_scale);
@@ -748,7 +755,7 @@ class UtilityManager {
     }
   }
 
-  String getDeviceImageStringFromType(DeviceType device) {
+  String? getDeviceImageStringFromType(DeviceType device) {
     print(device);
     switch (device) {
       case DeviceType.MI_SCALE:
@@ -818,9 +825,9 @@ class TabToNextFieldTextInputFormatter extends TextInputFormatter {
 }
 
 Future<void> showCompulsoryUpdateDialog({
-  Function onPressed,
+  required Function onPressed,
   context,
-  String message,
+  String? message,
 }) async {
   await showDialog<String>(
     context: context,
@@ -832,9 +839,9 @@ Future<void> showCompulsoryUpdateDialog({
       return GuvenAlert(
         backgroundColor: Colors.white,
         title: GuvenAlert.buildTitle(title),
-        content: GuvenAlert.buildDescription(message),
+        content: GuvenAlert.buildDescription(message ?? "No message"),
         actions: <Widget>[
-          GuvenAlert.buildMaterialAction(btnLabel, onPressed),
+          GuvenAlert.buildMaterialAction(btnLabel, onPressed()),
         ],
       );
     },
@@ -842,9 +849,9 @@ Future<void> showCompulsoryUpdateDialog({
 }
 
 Future<void> showOptionalUpdateDialog({
-  Function onPressed,
+  required Function onPressed,
   context,
-  String message,
+  String? message,
 }) async {
   await showDialog<String>(
     context: context,
@@ -857,7 +864,7 @@ Future<void> showOptionalUpdateDialog({
       return DoNotAskAgainDialog(
         dialogKeyName: "kUpdateDialogKeyName",
         title: title,
-        subTitle: message,
+        subTitle: message ?? "No message",
         positiveButtonText: btnLabel,
         negativeButtonText: btnLabelCancel,
         onPositiveButtonClicked: () {
@@ -875,7 +882,7 @@ String fillAllFields(String formContext, String userName, String email,
     String phoneNumber, String currentDate, String packageName) {
   List<String> formTmpList = formContext.split(' ').toList();
   formContext = "";
-  formTmpList.forEach((element) {
+  for (var element in formTmpList) {
     if (element.contains(R.dynamicVar.userName)) {
       formContext +=
           ' ' + element.replaceFirst(R.dynamicVar.userName, userName);
@@ -903,7 +910,7 @@ String fillAllFields(String formContext, String userName, String email,
     } else {
       formContext += ' ' + element;
     }
-  });
+  }
   return formContext;
 }
 
@@ -920,10 +927,9 @@ Gradient AppGradient() => LinearGradient(
 class Mediminder {
   Mediminder._();
 
-  static Mediminder _instance;
+  static late Mediminder _instance;
 
   static Mediminder get instance {
-    _instance ??= Mediminder._();
     return _instance;
   }
 
@@ -974,13 +980,13 @@ class _GradientDialogState extends State<GradientDialog> {
 
     return AlertDialog(
       backgroundColor: getIt<ITheme>().mainColor,
-      contentPadding: EdgeInsets.all(0.0),
+      contentPadding: EdgeInsets.zero,
       title: Text(
         widget.title,
         style: context.xHeadline1.copyWith(
             fontWeight: FontWeight.w700, color: getIt<ITheme>().textColor),
       ),
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(20.0),
         ),
@@ -1006,10 +1012,10 @@ class _GradientDialogState extends State<GradientDialog> {
 }
 
 class ProgressDialog extends StatefulWidget {
-  static _ProgressDialogState state;
+  static late _ProgressDialogState state;
 
   bool isShowing() {
-    return state != null && state.mounted;
+    return state.mounted;
   }
 
   @override
@@ -1022,7 +1028,7 @@ class _ProgressDialogState extends State<ProgressDialog> {
     return AlertDialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      insetPadding: EdgeInsets.all(10),
+      insetPadding: const EdgeInsets.all(10),
       content: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -1032,7 +1038,7 @@ class _ProgressDialogState extends State<ProgressDialog> {
             height: 150,
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
               gradient: blueGradient(),
             ),
             child: Column(
@@ -1050,26 +1056,26 @@ class _ProgressDialogState extends State<ProgressDialog> {
   }
 
   Widget progress({
-    Key key,
-    double value,
-    Color backgroundColor,
-    Animation valueColor,
-    String semanticsLabel,
-    String semanticsValue,
+    Key? key,
+    double? value,
+    Color? backgroundColor,
+    Animation? valueColor,
+    String? semanticsLabel,
+    String? semanticsValue,
   }) =>
       ShakeAnimatedWidget(
         enabled: true,
-        duration: Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 1500),
         shakeAngle: Rotation.deg(z: 10),
         curve: Curves.linear,
-        child: Container(
+        child: SizedBox(
           width: 80,
           height: 80,
           child: SvgPicture.asset(R.image.stethoscope),
         ),
       );
 
-  Gradient blueGradient() => LinearGradient(
+  Gradient blueGradient() => const LinearGradient(
         colors: [
           Colors.black12,
           Colors.black12,

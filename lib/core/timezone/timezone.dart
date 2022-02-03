@@ -8,7 +8,7 @@ class TimeZone {
   TimeZone._() {
     initializeTimeZones();
   }
-  static TimeZone _this;
+  static late TimeZone _this;
 
   Future<String> getTimeZoneName() async =>
       FlutterNativeTimezone.getLocalTimezone();

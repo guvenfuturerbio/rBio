@@ -5,10 +5,10 @@ import '../core.dart';
 class SecretUtils {
   SecretUtils._();
 
-  static SecretUtils _instance;
+  static late SecretUtils _instance;
 
   static SecretUtils get instance {
-    _instance ??= SecretUtils._();
+    _instance;
     return _instance;
   }
 
@@ -16,7 +16,7 @@ class SecretUtils {
 
   final _map = <SecretKeys, String>{};
 
-  String get(SecretKeys key) => _map[key];
+  String? get(SecretKeys key) => _map[key];
 
   Future<void> setup(
     Environment env, {

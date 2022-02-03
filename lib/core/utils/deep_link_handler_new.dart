@@ -5,10 +5,8 @@ import 'package:vrouter/src/core/extended_context.dart';
 import '../core.dart';
 
 class DeepLinkHandler {
-  static const String DID_COMPLETE_SURVEY_KEY = "DID_COMPLETE_SURVEY";
-
   static final DeepLinkHandler _instance = DeepLinkHandler._internal();
-  BuildContext context;
+  late BuildContext context;
 
   factory DeepLinkHandler() {
     return _instance;
@@ -19,13 +17,13 @@ class DeepLinkHandler {
   String deepLinkPath = "";
   Future<void> initDynamicLinks(BuildContext context) async {
     this.context = context;
-    Uri deepLink;
-    final PendingDynamicLinkData data =
+    Uri? deepLink;
+    final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     deepLink = data?.link;
 
     FirebaseDynamicLinks.instance.onLink(
-      onSuccess: (PendingDynamicLinkData dynamicLink) async {
+      onSuccess: (PendingDynamicLinkData? dynamicLink) async {
         deepLink = dynamicLink?.link;
         checkDeepLink(deepLink);
       },
@@ -38,9 +36,9 @@ class DeepLinkHandler {
     return checkDeepLink(deepLink);
   }
 
-  Future<void> checkDeepLink(Uri deepLink) async {
+  Future<void> checkDeepLink(Uri? deepLink) async {
     if (deepLink != null) {
-      if (deepLink.queryParameters.length > 0) {
+      if (deepLink.queryParameters.isNotEmpty) {
         {
           context.vRouter
               .to(deepLink.path, queryParameters: deepLink.queryParameters);
