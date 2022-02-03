@@ -3,7 +3,7 @@ part of 'ble_operators.dart';
 enum BleReactorState { loading, done, error }
 
 class BleReactorOps extends ChangeNotifier {
-  BleReactorOps(this._ble, {FlutterReactiveBle ble});
+  BleReactorOps(this._ble);
   final FlutterReactiveBle _ble;
 
   bool isFirstConnect = true;
@@ -337,7 +337,7 @@ class BleReactorOps extends ChangeNotifier {
     try {
       _ble.subscribeToCharacteristic(_characteristic).listen(
         (event) async {
-          if (!(Atom.isDialogShow ?? false)) {
+          if (!(Atom.isDialogShow)) {
             Atom.show(
               MiScalePopUp(
                 hasAlreadyPair: deviceAlreadyPaired,
@@ -364,7 +364,7 @@ class BleReactorOps extends ChangeNotifier {
               );
               scaleDevice.scaleData = null;
             }
-            final popUpCanClose = (Atom.isDialogShow ?? false) &&
+            final popUpCanClose = (Atom.isDialogShow) &&
                 (scaleDevice.scaleData!.scaleModel.weightRemoved)! &&
                 !scaleDevice.scaleData!.scaleModel.measurementComplete!;
 

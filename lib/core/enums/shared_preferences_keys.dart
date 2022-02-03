@@ -32,5 +32,5 @@ extension SharedPreferencesKeysStringExt on String {
 }
 
 extension SharedPreferencesKeysExt on SharedPreferencesKeys {
-  String get xRawValue => GetEnumValue(this);
+  String get xRawValue => getEnumValue(this);
 }

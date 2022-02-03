@@ -23,7 +23,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   @override
   Future<RbioLoginResponse> login(String userId, String password) async {
     final response =
-        await helper.postGuven(R.endpoints.dc_Login(userId, password), {});
+        await helper.postGuven(R.endpoints.dcLogin(userId, password), {});
     if (response.isSuccessful == true) {
       return RbioLoginResponse.fromJson(response.xGetMap);
     } else {
@@ -36,7 +36,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     AppointmentFilter appointmentFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getAllAppointment,
+      R.endpoints.dcGetAllAppointment,
       appointmentFilter.toJson(),
       options: authOptions,
     );
@@ -55,7 +55,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getMySugarPatient,
+      R.endpoints.dcGetMySugarPatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -74,7 +74,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getMyScalePatient,
+      R.endpoints.dcGetMyScalePatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -93,7 +93,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getMyBpPatient,
+      R.endpoints.dcGetMyBpPatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -112,7 +112,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getMyBMIPatient,
+      R.endpoints.dcGetMyBMIPatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -130,7 +130,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   @override
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId) async {
     final response = await helper.getGuven(
-      R.endpoints.dc_getMyPatientDetail(patientId),
+      R.endpoints.dcGetMyPatientDetail(patientId),
       options: authOptions,
     );
     if (response.isSuccessful == true) {
@@ -146,7 +146,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     UpdateMyPatientLimit updateMyPatientLimit,
   ) async {
     final response = await helper.patchGuven(
-      R.endpoints.dc_updateMyPatientLimit(patientId),
+      R.endpoints.dcUpdateMyPatientLimit(patientId),
       data: updateMyPatientLimit.toJson(),
       options: authOptions,
     );
@@ -163,7 +163,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getMyPatientBloodGlucose(patientId),
+      R.endpoints.dcGetMyPatientBloodGlucose(patientId),
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -183,7 +183,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getMyPatientScale(patientId),
+      R.endpoints.dcGetMyPatientScale(patientId),
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -203,7 +203,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dc_getMyPatientPressure(patientId),
+      R.endpoints.dcGetMyPatientPressure(patientId),
       getMyPatientFilter.toJson(),
       options: authOptions,
     );

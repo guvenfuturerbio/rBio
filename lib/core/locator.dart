@@ -100,11 +100,11 @@ Future<void> setupLocator(AppConfig appConfig) async {
   if (!Atom.isWeb) {
     getIt.registerSingleton<FlutterReactiveBle>(FlutterReactiveBle());
     getIt.registerLazySingleton<BleReactorOps>(
-        () => BleReactorOps(ble: getIt<FlutterReactiveBle>()));
+        () => BleReactorOps(getIt<FlutterReactiveBle>()));
     getIt.registerLazySingleton<BleConnectorOps>(
-        () => BleConnectorOps(ble: getIt<FlutterReactiveBle>()));
+        () => BleConnectorOps(getIt<FlutterReactiveBle>()));
     getIt.registerLazySingleton<BleScannerOps>(
-        () => BleScannerOps(ble: getIt<FlutterReactiveBle>()));
+        () => BleScannerOps(getIt<FlutterReactiveBle>()));
     getIt.registerLazySingleton<BleDeviceManager>(() => BleDeviceManager());
   }
 }

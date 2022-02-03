@@ -36,5 +36,5 @@ class SecretUtils {
   }
 
   SecretKeys _fromString(s) =>
-      SecretKeys.values.firstWhere((v) => GetEnumValue(v) == s);
+      SecretKeys.values.firstWhere((v) => getEnumValue(v) == s);
 }

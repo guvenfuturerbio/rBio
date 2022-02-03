@@ -149,6 +149,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
 
     httpClientAdapter = MobileWebInterface.getAdapter();
     final newAdapter = MobileWebInterface.onHttpClientCreate(httpClientAdapter);
+
     if (newAdapter != null) {
       httpClientAdapter = newAdapter;
     }
@@ -329,7 +330,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   @override
   Future<GuvenResponseModel> deleteGuven(
     String path, {
-    dynamic data,
+    data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -400,7 +401,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw FormatException('Unable to process the data');
+      throw const FormatException('Unable to process the data');
     } catch (e) {
       rethrow;
     }
@@ -429,11 +430,10 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      final statusCode = response.statusCode;
-      if (statusCode != null) {
-        if (statusCode < HttpStatus.ok || statusCode > HttpStatus.badRequest) {
-          throw Exception('POST | ${response.data}');
-        }
+      if (response.statusCode == null ||
+          response.statusCode! < HttpStatus.ok ||
+          response.statusCode! > HttpStatus.badRequest) {
+        throw Exception('POST | ${response.data}');
       }
 
       return response.data;
@@ -451,7 +451,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
   @override
   Future dioDelete(
     String path, {
-    dynamic data,
+    data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -465,11 +465,10 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         cancelToken: cancelToken,
       );
 
-      final statusCode = response.statusCode;
-      if (statusCode != null) {
-        if (statusCode < HttpStatus.ok || statusCode > HttpStatus.badRequest) {
-          throw Exception('DELETE | ${response.data}');
-        }
+      if (response.statusCode == null ||
+          response.statusCode! < HttpStatus.ok ||
+          response.statusCode! > HttpStatus.badRequest) {
+        throw Exception('DELETE | ${response.data}');
       }
 
       return response.data;
@@ -505,11 +504,10 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      final statusCode = response.statusCode;
-      if (statusCode != null) {
-        if (statusCode < HttpStatus.ok || statusCode > HttpStatus.badRequest) {
-          throw Exception('PATCH | ${response.data}');
-        }
+      if (response.statusCode == null ||
+          response.statusCode! < HttpStatus.ok ||
+          response.statusCode! > HttpStatus.badRequest) {
+        throw Exception('PATCH | ${response.data}');
       }
 
       return response.data;

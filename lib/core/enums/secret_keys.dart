@@ -23,5 +23,5 @@ extension SecretKeysStringExt on String {
 }
 
 extension SecretKeysExt on SecretKeys {
-  String get xRawValue => GetEnumValue(this);
+  String get xRawValue => getEnumValue(this);
 }

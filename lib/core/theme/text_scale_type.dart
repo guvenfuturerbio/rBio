@@ -1,4 +1,4 @@
-import 'package:collection/src/iterable_extensions.dart';
+import 'package:collection/collection.dart';
 
 import '../core.dart';
 
@@ -41,10 +41,10 @@ extension TextScaleTypeExtensions on TextScaleType {
     }
   }
 
-  String get xRawValue => GetEnumValue(this);
+  String get xRawValue => getEnumValue(this);
 }
 
 extension TextScaleTypeStringExt on String {
   TextScaleType? get xTextScaleKeys => TextScaleType.values
-      .firstWhereOrNull((element) => element.xRawValue == this) ;
+      .firstWhereOrNull((element) => element.xRawValue == this);
 }
