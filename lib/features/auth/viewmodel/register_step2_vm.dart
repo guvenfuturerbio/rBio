@@ -11,81 +11,74 @@ class RegisterStep2ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   RegisterStep2ScreenVm(this.mContext) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await fetchConsentFormState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      fetchConsentFormState();
     });
   }
 
-  LoadingDialog loadingDialog;
-  CountryListResponse countryList;
-  DateTime selectedDate;
-  bool isWithOutTCKN;
-  bool _clickedGeneralForm;
-  bool isTcCitizen = true;
-  String textFromPassController;
-  String textFromPassAgainController;
+  late bool isWithOutTCKN;
+  String textFromPass = '';
+  String textFromPassAgain = '';
 
-  bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
+  DateTime? selectedDate;
+  bool isTcCitizen = true;
+  LoadingDialog? loadingDialog;
+
+  bool _clickedGeneralForm = false;
+  bool get clickedGeneralForm => _clickedGeneralForm;
 
   void passwordFetcher(String fromPwController) {
-    textFromPassController = fromPwController;
+    textFromPass = fromPwController;
   }
 
   void passwordAgainFetcher(String fromPwAgainController) {
-    textFromPassAgainController = fromPwAgainController;
-  }
-
-  Future<void> getCountries() async {
-    try {
-      showLoadingDialog(mContext);
-      final response = await getIt<Repository>().getCountries();
-      countryList = CountryListResponse.fromMap(response.toJson());
-      notifyListeners();
-      hideDialog(mContext);
-    } catch (error) {
-      //
-    }
+    textFromPassAgain = fromPwAgainController;
   }
 
   Future<void> selectDate(BuildContext context) async {
-    if (selectedDate == null) {
-      selectedDate = DateTime.now();
-    }
+    selectedDate ??= DateTime.now();
 
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(selectedDate.year - 150),
-        lastDate: DateTime(selectedDate.year + 1),
-        helpText: LocaleProvider.of(context)
-            .select_birth_date, // Can be used as title
-        cancelText: LocaleProvider.of(context).btn_cancel,
-        confirmText: LocaleProvider.of(context).btn_confirm,
-        // locale: new Locale(Intl.getCurrentLocale().toLowerCase()),
-        builder: (context, child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              primaryColor: getIt<ITheme>().secondaryColor,
-              accentColor: getIt<ITheme>().mainColor,
-              colorScheme: ColorScheme.light(
-                primary: getIt<ITheme>().mainColor,
-              ),
-              buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-            ), // This will change to light theme.
-            child: child,
-          );
-        });
-    if (picked != null && picked != selectedDate) selectedDate = picked;
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate!,
+      firstDate: DateTime(selectedDate!.year - 150),
+      lastDate: DateTime(selectedDate!.year + 1),
+      helpText:
+          LocaleProvider.of(context).select_birth_date, // Can be used as title
+      cancelText: LocaleProvider.of(context).btn_cancel,
+      confirmText: LocaleProvider.of(context).btn_confirm,
+      // locale: new Locale(Intl.getCurrentLocale().toLowerCase()),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: getIt<ITheme>().secondaryColor,
+            accentColor: getIt<ITheme>().mainColor,
+            colorScheme: ColorScheme.light(
+              primary: getIt<ITheme>().mainColor,
+            ),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null && picked != selectedDate) {
+      selectedDate = picked;
+    }
     notifyListeners();
   }
 
-  Future<void> registerStep1(RegisterStep1PusulaModel userRegistrationStep1,
-      UserRegistrationStep1Model registerStep1Model) async {
+  Future<void> registerStep1(
+    RegisterStep1PusulaModel userRegistrationStep1,
+    UserRegistrationStep1Model registerStep1Model,
+  ) async {
     try {
       showLoadingDialog(mContext);
       GuvenResponseModel response;
-      if (userRegistrationStep1.identityNumber.trim().isEmpty ||
-          registerStep1Model.identificationNumber.trim().isEmpty) {
+      if ((userRegistrationStep1.identityNumber ?? '').trim().isEmpty ||
+          (registerStep1Model.identificationNumber ?? '').trim().isEmpty) {
         isWithOutTCKN = true;
         response = await getIt<Repository>()
             .registerStep1WithOutTc(registerStep1Model);
@@ -104,18 +97,17 @@ class RegisterStep2ScreenVm extends RbioVm {
         UserRegistrationStep2Model userRegisterStep2 =
             UserRegistrationStep2Model();
         userRegisterStep2.userRegistrationStep1 = registerStep1Model;
-        userRegisterStep2.password = textFromPassController;
-        userRegisterStep2.repassword = textFromPassAgainController;
+        userRegisterStep2.password = textFromPass;
+        userRegisterStep2.repassword = textFromPassAgain;
 
         // Burada old modele dönüştürülmeyecek ikinci bir model oluşturuyoruz.
         UserRegistrationStep2Model userRegisterStep2Model =
             UserRegistrationStep2Model();
         userRegisterStep2Model.userRegistrationStep1 = registerStep1Model;
-        userRegisterStep2Model.password = textFromPassController;
-        userRegisterStep2Model.repassword = textFromPassAgainController;
+        userRegisterStep2Model.password = textFromPass;
+        userRegisterStep2Model.repassword = textFromPassAgain;
 
-        if (textFromPassController.length > 0 &&
-            textFromPassAgainController.length > 0) {
+        if (textFromPass.isNotEmpty && textFromPassAgain.isNotEmpty) {
           registerStep2(
             userRegisterStep2,
             userRegisterStep2Model,
@@ -157,21 +149,20 @@ class RegisterStep2ScreenVm extends RbioVm {
       showDelayedErrorDialog(
         error,
         stackTrace,
-        () => hideDialog(this.mContext),
+        () => hideDialog(mContext),
       );
     } finally {
       notifyListeners();
     }
   }
 
-  Future<void> fetchConsentFormState() async {
-    this._clickedGeneralForm =
-        await getIt<UserManager>().getApplicationConsentFormState();
+  void fetchConsentFormState() {
+    _clickedGeneralForm = getIt<UserManager>().getApplicationConsentFormState();
     notifyListeners();
   }
 
   void toggleGeneralFormClick() {
-    this._clickedGeneralForm = !clickedGeneralForm;
+    _clickedGeneralForm = !clickedGeneralForm;
     if (clickedGeneralForm) {}
     notifyListeners();
   }
@@ -190,10 +181,10 @@ class RegisterStep2ScreenVm extends RbioVm {
     ).then(
       (value) async {
         if (value != null && value) {
-          this._clickedGeneralForm = true;
+          _clickedGeneralForm = true;
           notifyListeners();
         } else if (value != null && !value) {
-          this._clickedGeneralForm = false;
+          _clickedGeneralForm = false;
           notifyListeners();
         }
       },
@@ -205,9 +196,10 @@ class RegisterStep2ScreenVm extends RbioVm {
     UserRegistrationStep2Model userRegistrationStep2Model,
     bool isWithoutTCKN,
   ) async {
-    if (checkPasswordCapabilityForAll(isWithoutTCKN
-        ? userRegistrationStep2Model.password
-        : userRegistrationStep2.password)) {
+    if (checkPasswordCapabilityForAll((isWithoutTCKN
+            ? userRegistrationStep2Model.password
+            : userRegistrationStep2.password) ??
+        '')) {
       try {
         showLoadingDialog(mContext);
         GuvenResponseModel response;
@@ -223,7 +215,7 @@ class RegisterStep2ScreenVm extends RbioVm {
         if (response.isSuccessful == true) {
           if (response.datum == 6) {
             Atom.to(
-              PagePaths.REGISTER_STEP_3,
+              PagePaths.registerStep3,
               queryParameters: {
                 'isWithoutTCKN': isWithoutTCKN.toString(),
                 'userRegistrationStep2Model':
@@ -241,7 +233,7 @@ class RegisterStep2ScreenVm extends RbioVm {
         showDelayedErrorDialog(
           error,
           stackTrace,
-          () => hideDialog(this.mContext),
+          () => hideDialog(mContext),
         );
       }
     }
@@ -265,9 +257,11 @@ class RegisterStep2ScreenVm extends RbioVm {
   }
 
   void hideDialog(BuildContext context) {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
-      Navigator.of(context).pop();
-      loadingDialog = null;
+    if (loadingDialog != null) {
+      if (loadingDialog!.isShowing()) {
+        Navigator.of(context).pop();
+        loadingDialog = null;
+      }
     }
   }
 }

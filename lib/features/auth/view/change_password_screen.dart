@@ -9,20 +9,20 @@ import '../../../core/core.dart';
 import '../viewmodel/change_password_vm.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({Key key}) : super(key: key);
+  const ChangePasswordScreen({Key? key}) : super(key: key);
 
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  TextEditingController _passwordController;
-  TextEditingController _passwordAgainController;
-  TextEditingController _oldPasswordController;
+  late TextEditingController _passwordController;
+  late TextEditingController _passwordAgainController;
+  late TextEditingController _oldPasswordController;
 
-  FocusNode _oldPasswordFocusNode;
-  FocusNode _passwordFocusNode;
-  FocusNode _passwordAgainFocusNode;
+  late FocusNode _oldPasswordFocusNode;
+  late FocusNode _passwordFocusNode;
+  late FocusNode _passwordAgainFocusNode;
 
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       builder: (
         BuildContext context,
         ChangePasswordScreenVm vm,
-        Widget child,
+        Widget? child,
       ) {
         return RbioStackedScaffold(
           resizeToAvoidBottomInset: true,
@@ -120,7 +120,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             //
             Container(
-              margin: EdgeInsets.only(bottom: 20, top: 20),
+              margin: const EdgeInsets.only(bottom: 20, top: 20),
               child: RbioTextFormField(
                 focusNode: _oldPasswordFocusNode,
                 controller: _oldPasswordController,
@@ -156,7 +156,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             //
             Container(
-              margin: EdgeInsets.only(bottom: 20),
+              margin: const EdgeInsets.only(bottom: 20),
               child: RbioTextFormField(
                 focusNode: _passwordFocusNode,
                 controller: _passwordController,
@@ -195,7 +195,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             //
             Container(
-              margin: EdgeInsets.only(bottom: 20),
+              margin: const EdgeInsets.only(bottom: 20),
               child: RbioTextFormField(
                 focusNode: _passwordAgainFocusNode,
                 controller: _passwordAgainController,
@@ -261,7 +261,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             //
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 20,
                 left: 20,
                 right: 20,
@@ -292,7 +292,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     String text,
   ) {
     final child = Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
       child: Row(

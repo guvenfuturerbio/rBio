@@ -4,14 +4,14 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
-import 'package:vrouter/src/core/extended_context.dart';
+import 'package:vrouter/vrouter.dart';
 
 import '../auth.dart';
 import '../../../core/core.dart';
 import '../viewmodel/register_step2_vm.dart';
 
 class RegisterStep2Screen extends StatefulWidget {
-  RegisterStep2Screen({Key key}) : super(key: key);
+  const RegisterStep2Screen({Key? key}) : super(key: key);
 
   @override
   _RegisterStep2ScreenState createState() => _RegisterStep2ScreenState();
@@ -19,24 +19,24 @@ class RegisterStep2Screen extends StatefulWidget {
 
 class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   // #region vRouter Params
-  String registerName;
-  String registerSurname;
-  String registerGender;
-  String registerDateOfBirth;
-  String registerPhoneNumber;
+  late String registerName;
+  late String registerSurname;
+  late String registerGender;
+  late String registerDateOfBirth;
+  late String registerPhoneNumber;
   // #endregion
 
   List genderList = ["E", "K"];
 
-  TextEditingController _identityEditingController;
-  TextEditingController _emailEditingController;
-  TextEditingController _passwordEditingController;
-  TextEditingController _passwordAgainEditingController;
+  late TextEditingController _identityEditingController;
+  late TextEditingController _emailEditingController;
+  late TextEditingController _passwordEditingController;
+  late TextEditingController _passwordAgainEditingController;
 
-  FocusNode _identityFocusNode;
-  FocusNode _emailFocusNode;
-  FocusNode _passwordFocusNode;
-  FocusNode _passwordAgainFocusNode;
+  late FocusNode _identityFocusNode;
+  late FocusNode _emailFocusNode;
+  late FocusNode _passwordFocusNode;
+  late FocusNode _passwordAgainFocusNode;
 
   bool checkedValueForFn = false;
   bool checkedValueForTc = true;
@@ -74,30 +74,25 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   @override
   Widget build(BuildContext context) {
     try {
-      registerName = Atom.queryParameters['registerName'];
-      registerSurname = Atom.queryParameters['registerSurname'];
-      registerPhoneNumber = Atom.queryParameters['registerPhoneNumber'];
-      registerGender = Atom.queryParameters['registerGender'];
-      registerDateOfBirth = Atom.queryParameters['registerDateOfBirth'];
+      registerName = Atom.queryParameters['registerName']!;
+      registerSurname = Atom.queryParameters['registerSurname']!;
+      registerPhoneNumber = Atom.queryParameters['registerPhoneNumber']!;
+      registerGender = Atom.queryParameters['registerGender']!;
+      registerDateOfBirth = Atom.queryParameters['registerDateOfBirth']!;
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
     return ChangeNotifierProvider<RegisterStep2ScreenVm>(
       create: (_) => RegisterStep2ScreenVm(context),
       child: Consumer<RegisterStep2ScreenVm>(builder: (
         BuildContext context,
         RegisterStep2ScreenVm vm,
-        Widget child,
+        Widget? child,
       ) {
         return KeyboardDismissOnTap(
           child: RbioScaffold(
             resizeToAvoidBottomInset: true,
-            appbar: RbioAppBarLogin(
-              title: SvgPicture.asset(
-                R.image.oneDoseHealth,
-                height: 50,
-              ),
-            ),
+            appbar: RbioAppBarLogin(),
             body: _buildBody(vm),
           ),
         );
@@ -162,7 +157,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
 
                 //
                 Container(
-                  margin: EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                     bottom: 10,
                   ),
                   child: RbioTextFormField(
@@ -200,7 +195,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
               children: [
                 //
                 Padding(
-                  padding: EdgeInsets.only(left: 15.0, bottom: 5),
+                  padding: const EdgeInsets.only(left: 15.0, bottom: 5),
                   child: Text(
                     LocaleProvider.current.email,
                     style: context.xHeadline3,
@@ -209,7 +204,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
 
                 //
                 Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   child: RbioTextFormField(
                     focusNode: _emailFocusNode,
                     controller: _emailEditingController,
@@ -250,7 +245,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
 
                 //
                 Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   child: RbioTextFormField(
                     obscureText: true,
                     focusNode: _passwordFocusNode,
@@ -294,7 +289,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
 
                 //
                 Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   child: RbioTextFormField(
                     obscureText: true,
                     focusNode: _passwordAgainFocusNode,
@@ -360,7 +355,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
 
             //
             Container(
-              margin: EdgeInsets.only(top: 5, bottom: 10),
+              margin: const EdgeInsets.only(top: 5, bottom: 10),
               child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_next.toUpperCase(),
                 onPressed: () {
@@ -395,13 +390,12 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     userRegisterStep1Model.electronicMail =
                         _emailEditingController.text;
 
-                    if (_identityEditingController.text.length > 0 &&
-                        _emailEditingController.text.length > 0) {
+                    if (_identityEditingController.text.isNotEmpty &&
+                        _emailEditingController.text.isNotEmpty) {
                       vm.registerStep1(
                           userRegisterStep1, userRegisterStep1Model);
-                    } else if ((_identityEditingController.text == null ||
-                            _identityEditingController.text.length == 0) &&
-                        _emailEditingController.text.length > 0) {
+                    } else if ((_identityEditingController.text.isEmpty) &&
+                        _emailEditingController.text.isNotEmpty) {
                       vm.registerStep1(
                           userRegisterStep1, userRegisterStep1Model);
                     } else {
@@ -439,7 +433,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     ),
                   ),
                   onTap: () {
-                    context.vRouter.to(PagePaths.LOGIN);
+                    context.vRouter.to(PagePaths.login);
                   },
                 ),
               ],
@@ -504,20 +498,21 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
     );
   }
 
-  String gender;
+  String? gender;
   Widget addRadioButton(int btnValue, String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Radio(
+        Radio<String>(
           activeColor: Theme.of(context).primaryColor,
           value: genderList[btnValue],
           groupValue: gender,
           onChanged: (value) {
-            setState(() {
-              print(value);
-              gender = value;
-            });
+            if (value != null) {
+              setState(() {
+                gender = value;
+              });
+            }
           },
         ),
         Text(title, style: context.xHeadline3)

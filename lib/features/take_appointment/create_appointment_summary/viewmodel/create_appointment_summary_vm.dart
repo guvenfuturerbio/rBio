@@ -51,7 +51,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   bool get priceLoading => _priceLoading ?? false;
 
   CreateAppointmentSummaryVm({
-   required this.mContext,
+    required this.mContext,
     required this.tenantId,
     required this.departmentId,
     required this.resourceId,
@@ -73,8 +73,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     }
     textDate = DateTime.parse(from).xFormatTime2();
 
-    appointmentRange =
-        from.substring(11, 16) + " - " + to.substring(11, 16);
+    appointmentRange = from.substring(11, 16) + " - " + to.substring(11, 16);
   }
 
   bool _showOverlayLoading = false;
@@ -118,8 +117,8 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
 
   Future<void> saveAppointment({
     required bool forOnline,
-   required  bool forFree,
-   required  int appointmentId,
+    required bool forFree,
+    required int appointmentId,
     required String price,
   }) async {
     showOverlayLoading = true;
@@ -159,7 +158,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
               appointmentId: appointmentId,
               voucherCode: voucherCode,
             ),
-            settings:const RouteSettings(name: PagePaths.doMobilePayment),
+            settings: const RouteSettings(name: PagePaths.doMobilePayment),
           ),
         );
         _showOverlayLoading = false;

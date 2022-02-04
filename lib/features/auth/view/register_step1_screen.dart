@@ -5,14 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
-import 'package:vrouter/src/core/extended_context.dart';
+import 'package:vrouter/vrouter.dart';
 
 import '../../../core/core.dart';
-import '../../../model/model.dart';
 import '../viewmodel/register_step2_vm.dart';
 
 class RegisterStep1Screen extends StatefulWidget {
-  const RegisterStep1Screen({Key key}) : super(key: key);
+  const RegisterStep1Screen({Key? key}) : super(key: key);
 
   @override
   _RegisterStep1ScreenState createState() => _RegisterStep1ScreenState();
@@ -20,15 +19,14 @@ class RegisterStep1Screen extends StatefulWidget {
 
 class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
   List genderList = ["E", "K"];
-  Country country;
 
-  TextEditingController _nameEditingController;
-  TextEditingController _surnameEditingController;
-  TextEditingController _phoneNumberEditingController;
+  late TextEditingController _nameEditingController;
+  late TextEditingController _surnameEditingController;
+  late TextEditingController _phoneNumberEditingController;
 
-  FocusNode _nameFocusNode;
-  FocusNode _surnameFocusNode;
-  FocusNode _phoneNumberFocusNode;
+  late FocusNode _nameFocusNode;
+  late FocusNode _surnameFocusNode;
+  late FocusNode _phoneNumberFocusNode;
 
   @override
   void initState() {
@@ -64,17 +62,12 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         builder: (
           BuildContext context,
           RegisterStep2ScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioScaffold(
               resizeToAvoidBottomInset: true,
-              appbar: RbioAppBarLogin(
-                title: SvgPicture.asset(
-                  R.image.oneDoseHealth,
-                  height: 50,
-                ),
-              ),
+              appbar: RbioAppBarLogin(),
               body: _buildBody(vm),
             ),
           );
@@ -113,7 +106,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                           LocaleProvider.current.btn_sign_up,
                           style: context.xHeadline1.copyWith(
                             fontWeight: FontWeight.bold,
-                            fontSize: context.TEXTSCALE * 30,
+                            fontSize: context.textScale * 30,
                           ),
                         ),
                       ),
@@ -141,29 +134,27 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                               style: context.xHeadline3,
                             ),
                           ),
-                          Container(
-                            child: RbioTextFormField(
-                              focusNode: _nameFocusNode,
-                              controller: _nameEditingController,
-                              obscureText: false,
-                              keyboardType: TextInputType.name,
-                              textInputAction: TextInputAction.next,
-                              hintText: LocaleProvider.of(context).name,
-                              onFieldSubmitted: (term) {
-                                UtilityManager().fieldFocusChange(
-                                  context,
-                                  _nameFocusNode,
-                                  _surnameFocusNode,
-                                );
-                              },
-                            ),
+                          RbioTextFormField(
+                            focusNode: _nameFocusNode,
+                            controller: _nameEditingController,
+                            obscureText: false,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            hintText: LocaleProvider.of(context).name,
+                            onFieldSubmitted: (term) {
+                              UtilityManager().fieldFocusChange(
+                                context,
+                                _nameFocusNode,
+                                _surnameFocusNode,
+                              );
+                            },
                           ),
                         ],
                       ),
                     ),
 
                     //
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
 
@@ -184,7 +175,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                               bottom: 10,
                             ),
                             child: RbioTextFormField(
@@ -230,7 +221,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 //
                 Container(
                   color: Colors.transparent,
-                  margin: EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                     bottom: 10,
                   ),
                   child: Row(
@@ -262,7 +253,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 InkWell(
                   onTap: () => vm.selectDate(context),
                   child: Container(
-                    padding: EdgeInsets.all(13),
+                    padding: const EdgeInsets.all(13),
                     decoration: BoxDecoration(
                       color: R.color.white,
                       border: Border.all(
@@ -281,14 +272,15 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                                         .withOpacity(0.5)))
                             : Text(
                                 DateFormat('dd MMMM yyyy')
-                                    .format(vm.selectedDate),
-                                style: TextStyle(
+                                    .format(vm.selectedDate!),
+                                style: const TextStyle(
                                   fontSize: 16,
-                                )),
-                        Icon(Icons.calendar_today)
+                                ),
+                              ),
+                        const Icon(Icons.calendar_today)
                       ],
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       bottom: 10,
                     ),
                   ),
@@ -317,10 +309,10 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //
-                      RbioCountryCodePicker(),
+                      const RbioCountryCodePicker(),
 
                       //
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
 
@@ -356,7 +348,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
             //
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 5,
                 bottom: 10,
                 left: 50,
@@ -366,16 +358,16 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 infinityWidth: true,
                 title: LocaleProvider.of(context).btn_next.toUpperCase(),
                 onTap: () {
-                  if (_nameEditingController.text.length > 0 &&
-                      _surnameEditingController.text.length > 0 &&
-                      _phoneNumberEditingController.text.length > 0 &&
+                  if (_nameEditingController.text.isNotEmpty &&
+                      _surnameEditingController.text.isNotEmpty &&
+                      _phoneNumberEditingController.text.isNotEmpty &&
                       vm.selectedDate != null) {
                     Atom.to(
-                      PagePaths.REGISTER_STEP_2,
+                      PagePaths.registerStep2,
                       queryParameters: {
                         'registerName': _nameEditingController.text,
                         'registerSurname': _surnameEditingController.text,
-                        'registerGender': gender,
+                        'registerGender': gender!.toString(),
                         'registerDateOfBirth': vm.selectedDate.toString(),
                         'registerPhoneNumber':
                             _phoneNumberEditingController.text
@@ -409,21 +401,15 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     ),
                   ),
                   onTap: () {
-                    context.vRouter.to(PagePaths.LOGIN);
+                    context.vRouter.to(PagePaths.login);
                   },
                 ),
               ],
             ),
 
-            //
-            //   buildSeperator(),
-
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-
-            //
-            //     buildSocialLogin(),
           ],
         ),
       ),
@@ -478,7 +464,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
     );
   }
 
-  String gender;
+  String? gender;
 
   Widget addRadioButton(int btnValue, String title) {
     return Expanded(
@@ -488,15 +474,16 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Radio(
+            Radio<String>(
               activeColor: Theme.of(context).primaryColor,
               value: genderList[btnValue],
               groupValue: gender,
               onChanged: (value) {
-                setState(() {
-                  print(value);
-                  gender = value;
-                });
+                if (value != null) {
+                  setState(() {
+                    gender = value;
+                  });
+                }
               },
             ),
             Text(title, style: context.xHeadline3)

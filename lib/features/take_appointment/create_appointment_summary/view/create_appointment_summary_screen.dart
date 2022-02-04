@@ -8,7 +8,7 @@ import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
 
 class CreateAppointmentSummaryScreen extends StatefulWidget {
- const CreateAppointmentSummaryScreen({Key? key}) : super(key: key);
+  const CreateAppointmentSummaryScreen({Key? key}) : super(key: key);
 
   @override
   _CreateAppointmentSummaryScreenState createState() =>
@@ -18,9 +18,9 @@ class CreateAppointmentSummaryScreen extends StatefulWidget {
 class _CreateAppointmentSummaryScreenState
     extends State<CreateAppointmentSummaryScreen> {
   late String patientId;
- late  String patientName;
+  late String patientName;
   late int tenantId;
- late  String tenantName;
+  late String tenantName;
   late int departmentId;
   late String departmentName;
   late int resourceId;
@@ -185,7 +185,7 @@ class _CreateAppointmentSummaryScreenState
                             hintText: LocaleProvider.current.discount_code,
                             border: RbioTextFormField.noneBorder(),
                             textInputAction: TextInputAction.done,
-                            contentPadding:const EdgeInsets.only(
+                            contentPadding: const EdgeInsets.only(
                               left: 0,
                               right: 20,
                               top: 10,
@@ -307,7 +307,6 @@ class _CreateAppointmentSummaryScreenState
                         showElevation: false,
                         onTap: () {
                           vm.saveAppointment(
-                          
                             price: vm.orgVideoCallPriceResponse?.patientPrice
                                 ?.toString() as String,
                             forOnline: forOnline,
@@ -406,7 +405,7 @@ class _CreateAppointmentSummaryScreenState
 
       case SummaryButtons.applyPassive:
         title = LocaleProvider.current.apply_discount;
-        onTap = (){};
+        onTap = () {};
         break;
 
       case SummaryButtons.applyActive:
@@ -428,7 +427,7 @@ class _CreateAppointmentSummaryScreenState
 
       case SummaryButtons.none:
         title = "";
-        onTap = (){};
+        onTap = () {};
         break;
     }
 
