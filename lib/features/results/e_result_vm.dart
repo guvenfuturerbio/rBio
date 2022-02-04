@@ -5,24 +5,52 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../shared/necessary_identity/necessary_identity_screen.dart';
 
-class EResultScreenVm extends ChangeNotifier {
-  LoadingProgress _progress;
+class EResultScreenVm extends RbioVm {
+  @override
   BuildContext mContext;
-  List<VisitResponse> _visits;
-  VisitRequest _visitRequestBody;
-  DateTime _startDate, _endDate;
-  bool _hasResult;
 
-  EResultScreenVm({BuildContext context}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  late List<VisitResponse> visits;
+  VisitRequest? _visitRequestBody;
+
+  DateTime get startDate => _startDate != null
+      ? DateTime(_startDate!.year, _startDate!.month, _startDate!.day)
+      : DateTime(
+          DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+
+  DateTime get endDate => _endDate != null
+      ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day, 23, 59, 59)
+      : DateTime(
+          DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+
+  DateTime? _startDate, _endDate;
+  void setStartDate(DateTime d) {
+    _startDate = d;
+    fetchVisits();
+    notifyListeners();
+  }
+
+  void setEndDate(DateTime d) {
+    _endDate = d;
+    fetchVisits();
+    notifyListeners();
+  }
+
+  bool hasResult = true;
+  void toggleHasResult() {
+    hasResult = !hasResult;
+    fetchVisits();
+    notifyListeners();
+  }
+
+  EResultScreenVm(this.mContext) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       try {
         if (getIt<UserNotifier>().canAccessHospital()) {
-          WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
             await fetchVisits();
           });
         } else {
-          WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
             await showNecessary();
           });
         }
@@ -37,7 +65,7 @@ class EResultScreenVm extends ChangeNotifier {
       context: mContext,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return NecessaryIdentityScreen();
+        return const NecessaryIdentityScreen();
       },
     ).then((value) async {
       if ((value ?? false) == true) {
@@ -48,55 +76,8 @@ class EResultScreenVm extends ChangeNotifier {
     });
   }
 
-  setVisitRequestBody({
-    String from,
-    String to,
-    int hasResult,
-    int isForeignPatient,
-    String identityNumber,
-  }) {
-    this._visitRequestBody = VisitRequest(
-      from: from,
-      hasResults: hasResult,
-      identityNumber: identityNumber,
-      isForeignPatient: isForeignPatient,
-      to: to,
-    );
-    notifyListeners();
-  }
-
-  DateTime get startDate => _startDate != null
-      ? DateTime(_startDate.year, _startDate.month, _startDate.day)
-      : DateTime(
-          DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
-
-  void setStartDate(DateTime d) {
-    this._startDate = d;
-    fetchVisits();
-    notifyListeners();
-  }
-
-  DateTime get endDate => _endDate != null
-      ? DateTime(_endDate.year, _endDate.month, _endDate.day, 23, 59, 59)
-      : DateTime(
-          DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
-
-  void setEndDate(DateTime d) {
-    this._endDate = d;
-    fetchVisits();
-    notifyListeners();
-  }
-
-  bool get hasResult => this._hasResult ?? true;
-
-  toggleHasResult() {
-    this._hasResult = !hasResult;
-    fetchVisits();
-    notifyListeners();
-  }
-
   VisitRequest get visitRequestBody =>
-      this._visitRequestBody ??
+      _visitRequestBody ??
       VisitRequest(
           from: startDate.toString(),
           to: endDate.toString(),
@@ -110,36 +91,34 @@ class EResultScreenVm extends ChangeNotifier {
                   ? getIt<UserNotifier>().getPatient().identityNumber
                   : getIt<UserNotifier>().getPatient().passportNumber);
 
-  LoadingProgress get progress => this._progress ?? LoadingProgress.LOADING;
-
   Future<void> fetchVisits() async {
-    this._progress = LoadingProgress.LOADING;
+    progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      this._visits = await getIt<Repository>().getVisits(visitRequestBody);
-      _visits.sort((a, b) => DateTime.parse(b.openingDate)
-          .compareTo(DateTime.parse(a.openingDate)));
-      this._progress = LoadingProgress.DONE;
+      visits = await getIt<Repository>().getVisits(visitRequestBody);
+      visits.sort((a, b) {
+        final aOpeningDate = a.openingDate;
+        final bOpeningDate = b.openingDate;
+
+        if (aOpeningDate != null && bOpeningDate != null) {
+          return DateTime.parse(bOpeningDate).compareTo(
+            DateTime.parse(aOpeningDate),
+          );
+        }
+
+        return -1;
+      });
+
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
-      print("getVisits exception" + e.toString());
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
-      this._progress = LoadingProgress.ERROR;
+      progress = LoadingProgress.error;
+      showInfoDialog(
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       notifyListeners();
     }
-  }
-
-  List<VisitResponse> get visits => this._visits;
-
-  void showGradientDialog(BuildContext context, String title, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return WarningDialog(title, text);
-      },
-    );
   }
 }

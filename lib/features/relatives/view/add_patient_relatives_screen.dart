@@ -10,7 +10,7 @@ import '../../../model/model.dart';
 import '../viewmodel/add_patient_relatives_vm.dart';
 
 class AddPatientRelativesScreen extends StatefulWidget {
-  const AddPatientRelativesScreen({Key key}) : super(key: key);
+  const AddPatientRelativesScreen({Key? key}) : super(key: key);
 
   @override
   State<AddPatientRelativesScreen> createState() =>
@@ -18,8 +18,8 @@ class AddPatientRelativesScreen extends StatefulWidget {
 }
 
 class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
-  TextEditingController _nameEditingController;
-  TextEditingController _surnameEditingController;
+  late TextEditingController _nameEditingController;
+  late TextEditingController _surnameEditingController;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
         builder: (
           BuildContext context,
           AddPatientRelativesScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioScaffold(
@@ -63,23 +63,22 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
 
   Widget _buildBody(BuildContext context, AddPatientRelativesScreenVm vm) {
     switch (vm.status) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
-        return _buildWithUserAcc(context, vm.userAccount, vm);
+      case LoadingProgress.done:
+        return _buildWithUserAcc(context, vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
   Widget _buildWithUserAcc(
     BuildContext context,
-    UserAccount userAccount,
     AddPatientRelativesScreenVm vm,
   ) {
     return KeyboardAvoider(
@@ -90,21 +89,19 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           //
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
 
           //
           _buildTitle(context, LocaleProvider.current.name),
 
           //
-          Container(
-            child: RbioTextFormField(
-              controller: _nameEditingController,
-              obscureText: false,
-              keyboardType: TextInputType.name,
-              textInputAction: TextInputAction.next,
-              hintText: LocaleProvider.of(context).name,
-              onFieldSubmitted: (term) {},
-            ),
+          RbioTextFormField(
+            controller: _nameEditingController,
+            obscureText: false,
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next,
+            hintText: LocaleProvider.of(context).name,
+            onFieldSubmitted: (term) {},
           ),
 
           //
@@ -134,7 +131,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
           InkWell(
             onTap: () => vm.selectDate(context),
             child: Container(
-              padding: EdgeInsets.all(13),
+              padding: const EdgeInsets.all(13),
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
@@ -151,7 +148,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                             ),
                           )
                         : Text(
-                            DateFormat('dd MMMM yyyy').format(vm.selectedDate),
+                            DateFormat('dd MMMM yyyy').format(vm.selectedDate!),
                             style: context.xHeadline4,
                           ),
                   ),
@@ -173,7 +170,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
           InkWell(
             onTap: () => showCountryPicker(vm),
             child: Container(
-              padding: EdgeInsets.only(left: 13.0, bottom: 15, top: 13),
+              padding: const EdgeInsets.only(left: 13.0, bottom: 15, top: 13),
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
@@ -192,7 +189,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                   ),
 
                   //
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
 
                   //
                   SvgPicture.asset(
@@ -205,7 +202,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
           ),
 
           //
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
 
           //
           Center(
@@ -258,16 +255,21 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
           width: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
-            itemCount: vm.countryList.countries.length,
+            physics: const BouncingScrollPhysics(),
+            itemCount: vm.countryList.countries?.length ?? 0,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 onTap: () {
-                  vm.setSelectedCountry(vm.countryList.countries[index]);
-                  Atom.dismiss();
+                  final countries = vm.countryList.countries;
+                  if (countries != null) {
+                    if (countries.isNotEmpty) {
+                      vm.setSelectedCountry(countries[index]);
+                      Atom.dismiss();
+                    }
+                  }
                 },
                 title: Text(
-                  vm.countryList.countries[index].name,
+                  vm.countryList.countries?[index].name ?? '',
                   style: context.xHeadline4,
                 ),
               );
@@ -279,9 +281,11 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
   }
 
   void addUser(AddPatientRelativesScreenVm vm) {
+    if (vm.selectedDate == null) return;
+
     AddPatientRelativeRequest addPatientRelative = AddPatientRelativeRequest();
     String formattedDate =
-        DateFormat('EEE MMM dd yyyy HH:mm:ss', 'en').format(vm.selectedDate);
+        DateFormat('EEE MMM dd yyyy HH:mm:ss', 'en').format(vm.selectedDate!);
     formattedDate += " GMT+0300 (GMT+03:00)";
 
     addPatientRelative.firstName = _nameEditingController.text;
@@ -296,13 +300,12 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
         ? addPatientRelative.patientType = 1
         : addPatientRelative.patientType = 3;
 
-    if (_nameEditingController.text.length > 0 &&
-        _surnameEditingController.text.length > 0 &&
+    if (_nameEditingController.text.isNotEmpty &&
+        _surnameEditingController.text.isNotEmpty &&
         vm.selectedDate != null) {
       vm.savePatientRelative(addPatientRelative, context);
     } else {
-      vm.showGradientDialog(
-        context,
+      vm.showInfoDialog(
         LocaleProvider.of(context).warning,
         LocaleProvider.of(context).fill_all_field,
       );
@@ -332,7 +335,11 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
               value: vm.genderList[btnValue],
               groupValue: vm.gender,
               onChanged: (value) {
-                vm.setGender(value);
+                if (value != null) {
+                  if (value is String) {
+                    vm.setGender(value);
+                  }
+                }
               },
             ),
 

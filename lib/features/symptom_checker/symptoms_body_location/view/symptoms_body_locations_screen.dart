@@ -178,7 +178,7 @@ class _SymptomsBodyLocationsScreenState
                         BoxDecoration(borderRadius: BorderRadius.circular(40)),
                     child: RbioElevatedButton(
                       onTap: () async {
-                        RbioConfig.of(context).bodyLocationRsp =
+                        RbioConfig.of(context)?.bodyLocationRsp =
                             value.selectedBodyLocation;
                         Atom.to(
                           PagePaths.symptomSubBodyLocations,

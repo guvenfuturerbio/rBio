@@ -32,12 +32,12 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RequestSuggestionsScreenVm>(
-      create: (context) => RequestSuggestionsScreenVm(context: context),
+      create: (context) => RequestSuggestionsScreenVm(context),
       child: Consumer<RequestSuggestionsScreenVm>(
         builder: (
           BuildContext context,
           RequestSuggestionsScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioStackedScaffold(
@@ -66,7 +66,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
   ) {
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -93,7 +93,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
 
           //
           Container(
-            padding: EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(top: 8),
             height: MediaQuery.of(context).size.height * 0.40,
             child: Card(
               elevation: 4,

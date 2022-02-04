@@ -8,20 +8,15 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../../../core/core.dart';
 import 'visit_detail_vm.dart';
 
+// ignore: must_be_immutable
 class VisitDetailScreen extends StatefulWidget {
-  int countOfRadiologyResults;
-  int countOfPathologyResults;
-  int countOfLaboratoryResult;
-  int visitId;
-  int patientId;
+  int? countOfRadiologyResults;
+  int? countOfPathologyResults;
+  int? countOfLaboratoryResult;
+  int? visitId;
+  int? patientId;
 
-  VisitDetailScreen({
-    this.countOfRadiologyResults,
-    this.countOfPathologyResults,
-    this.countOfLaboratoryResult,
-    this.visitId,
-    this.patientId,
-  });
+  VisitDetailScreen({Key? key}) : super(key: key);
 
   @override
   _VisitDetailScreenState createState() => _VisitDetailScreenState();
@@ -32,31 +27,31 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   Widget build(BuildContext context) {
     try {
       widget.countOfRadiologyResults =
-          int.parse(Atom.queryParameters['countOfRadiologyResults']);
+          int.parse(Atom.queryParameters['countOfRadiologyResults']!);
       widget.countOfPathologyResults =
-          int.parse(Atom.queryParameters['countOfPathologyResults']);
+          int.parse(Atom.queryParameters['countOfPathologyResults']!);
       widget.countOfLaboratoryResult =
-          int.parse(Atom.queryParameters['countOfLaboratoryResult']);
-      widget.visitId = int.parse(Atom.queryParameters['visitId']);
-      widget.patientId = int.parse(Atom.queryParameters['patientId']);
+          int.parse(Atom.queryParameters['countOfLaboratoryResult']!);
+      widget.visitId = int.parse(Atom.queryParameters['visitId']!);
+      widget.patientId = int.parse(Atom.queryParameters['patientId']!);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<VisitDetailScreenVm>(
       create: (context) => VisitDetailScreenVm(
-        context: context,
-        countOfLaboratoryResults: widget.countOfLaboratoryResult,
-        countOfPathologyResults: widget.countOfPathologyResults,
-        countOfRadiologyResults: widget.countOfRadiologyResults,
-        visitId: widget.visitId,
-        patientId: widget.patientId,
+        context,
+        countOfLaboratoryResults: widget.countOfLaboratoryResult!,
+        countOfPathologyResults: widget.countOfPathologyResults!,
+        countOfRadiologyResults: widget.countOfRadiologyResults!,
+        visitId: widget.visitId!,
+        patientId: widget.patientId!,
       ),
       child: Consumer<VisitDetailScreenVm>(
         builder: (
           BuildContext context,
           VisitDetailScreenVm value,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: _buildAppBar(value),
@@ -78,7 +73,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
         InkWell(
           child: Container(
             color: Colors.transparent,
-            padding: EdgeInsets.fromLTRB(8, 8, 14, 8),
+            padding: const EdgeInsets.fromLTRB(8, 8, 14, 8),
             child: SvgPicture.asset(
               R.image.ic_ios_share,
               width: R.sizes.iconSize3,
@@ -122,19 +117,19 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
           onPressed: () => vm.togglePathologySelected(),
           text: LocaleProvider.current.pathology_result,
           isActive: vm.pathologySelected,
-          visibility: widget.countOfPathologyResults > 0 ? true : false,
+          visibility: widget.countOfPathologyResults! > 0 ? true : false,
         ),
         _buildTabButton(
           onPressed: () => vm.toggleRadiologySelected(),
           text: LocaleProvider.current.radiology_result,
           isActive: vm.radiologySelected,
-          visibility: widget.countOfRadiologyResults > 0 ? true : false,
+          visibility: widget.countOfRadiologyResults! > 0 ? true : false,
         ),
         _buildTabButton(
           onPressed: () => vm.toggleLaboratorySelected(),
           text: LocaleProvider.current.laboratory_result,
           isActive: vm.laboratorySelected,
-          visibility: widget.countOfLaboratoryResult > 0 ? true : false,
+          visibility: widget.countOfLaboratoryResult! > 0 ? true : false,
         )
       ],
     );
@@ -143,10 +138,10 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
   // #region _buildTabButton
   Widget _buildTabButton({
-    VoidCallback onPressed,
-    bool visibility,
-    String text,
-    bool isActive,
+    required VoidCallback onPressed,
+    required bool visibility,
+    required String text,
+    required bool isActive,
   }) {
     return Visibility(
       visible: visibility,
@@ -154,8 +149,8 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
         child: InkWell(
           onTap: () => onPressed(),
           child: AnimatedContainer(
-            duration: Duration(milliseconds: 200),
-            margin: EdgeInsets.all(8),
+            duration: const Duration(milliseconds: 200),
+            margin: const EdgeInsets.all(8),
             padding: const EdgeInsets.all(10.0),
             decoration: _getTabButtonDecoration(isActive),
             child: Text(
@@ -177,13 +172,13 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   BoxDecoration _getTabButtonDecoration(bool isActive) {
     return BoxDecoration(
       color: isActive ? getIt<ITheme>().mainColor : Colors.white,
-      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      borderRadius: const BorderRadius.all(Radius.circular(15.0)),
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
           spreadRadius: 5,
           blurRadius: 7,
-          offset: Offset(0, 3),
+          offset: const Offset(0, 3),
         ),
       ],
     );
@@ -193,17 +188,17 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   // #region _buildStateToWidget
   Widget _buildStateToWidget(VisitDetailScreenVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return _buildDone(vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
   // #endregion
@@ -212,11 +207,11 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   Widget _buildDone(VisitDetailScreenVm vm) {
     if (vm.laboratorySelected) {
       if (vm.laboratoryFileBytes == null) {
-        return RbioLoading();
+        return const RbioLoading();
       }
 
       return SfPdfViewer.memory(
-        base64.decode(vm.laboratoryFileBytes),
+        base64.decode(vm.laboratoryFileBytes!),
         canShowPaginationDialog: false,
       );
 
@@ -370,13 +365,13 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
     } else if (vm.pathologySelected) {
       return ListView.builder(
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: vm.pathologyResults.length,
         itemBuilder: (context, index) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.all(8),
-            margin: EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
               color: getIt<ITheme>().cardBackgroundColor,
               borderRadius: BorderRadius.circular(10),
@@ -391,7 +386,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                   children: <Widget>[
                     //
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Image.asset(
                         R.image.hospital_results_red,
                         height: 25,
@@ -401,9 +396,9 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
                     //
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        vm.pathologyResults[index].procedures,
+                        vm.pathologyResults[index].procedures ?? '',
                         style: context.xHeadline4.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -414,9 +409,9 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
                 //
                 Padding(
-                  padding: EdgeInsets.only(left: 10, top: 4),
+                  padding: const EdgeInsets.only(left: 10, top: 4),
                   child: Text(
-                    vm.pathologyResults[index].status,
+                    vm.pathologyResults[index].status ?? '',
                     style: context.xHeadline4.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -430,14 +425,14 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
     } else if (vm.radiologySelected) {
       return ListView.builder(
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.only(top: 12),
-        itemCount: vm.radiologyResult.length,
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(top: 12),
+        itemCount: vm.radiologyResults.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.all(8),
-            margin: EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
               color: getIt<ITheme>().cardBackgroundColor,
               borderRadius: BorderRadius.circular(10),
@@ -453,7 +448,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                   children: <Widget>[
                     //
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Image.asset(
                         R.image.hospital_results_red,
                         height: 25,
@@ -463,9 +458,9 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
                     //
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        DateTime.parse(vm.radiologyResult[index]?.takenAt ?? "")
+                        DateTime.parse(vm.radiologyResults[index].takenAt ?? "")
                             .xFormatTime2(),
                         style: context.xHeadline4.copyWith(
                           fontWeight: FontWeight.w600,
@@ -477,7 +472,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
                 //
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -493,13 +488,13 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
                       //
                       Text(
-                        vm.radiologyResult[index]?.name ?? "-",
+                        vm.radiologyResults[index].name ?? "-",
                         style: context.xHeadline3,
                       ),
 
                       //
                       Padding(
-                        padding: EdgeInsets.only(top: 6),
+                        padding: const EdgeInsets.only(top: 6),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
@@ -533,7 +528,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                           //
                           Expanded(
                             child: Text(
-                              vm.radiologyResult[index]?.group ?? "-",
+                              vm.radiologyResults[index].group ?? "-",
                               style: context.xHeadline3,
                             ),
                           ),
@@ -541,9 +536,9 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                           //
                           Expanded(
                             child: Text(
-                              vm.radiologyResult[index].reportState == 6
-                                  ? getFormattedDateWithTime(
-                                      vm.radiologyResult[index]?.approvedAt ??
+                              vm.radiologyResults[index].reportState == 6
+                                  ? Utils.instance.getFormattedDateWithTime(
+                                      vm.radiologyResults[index].approvedAt ??
                                           "-")
                                   : "-",
                               style: context.xHeadline3,
@@ -564,13 +559,17 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     //
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 8, right: 8),
-                        child: vm.radiologyResult[index].reportState == 6
+                        padding: const EdgeInsets.only(top: 8, right: 8),
+                        child: vm.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(
                                 text: LocaleProvider.current.show_result,
                                 onPressed: () {
-                                  vm.showResult(vm.radiologyResult[index].name,
-                                      vm.radiologyResult[index].reportLink);
+                                  final name = vm.radiologyResults[index].name;
+                                  final reportLink =
+                                      vm.radiologyResults[index].reportLink;
+                                  if (name != null && reportLink != null) {
+                                    vm.showResult(name, reportLink);
+                                  }
                                 },
                               )
                             : Utils.instance.passiveButton(
@@ -583,14 +582,17 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     //
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: vm.radiologyResult[index].report != null &&
-                                vm.radiologyResult[index].reportState == 6
+                        padding: const EdgeInsets.only(top: 8),
+                        child: vm.radiologyResults[index].report != null &&
+                                vm.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(
                                 text: LocaleProvider.current.show_report,
                                 onPressed: () {
-                                  vm.getRadiologyResultsAsPdf(
-                                      vm.radiologyResult[index].id);
+                                  final processId =
+                                      vm.radiologyResults[index].id;
+                                  if (processId != null) {
+                                    vm.getRadiologyResultsAsPdf(processId);
+                                  }
                                 },
                               )
                             : Utils.instance.passiveButton(
@@ -607,7 +609,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
         },
       );
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
   }
   // #endregion

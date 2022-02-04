@@ -18,16 +18,16 @@ class PersonalInformationScreen extends StatefulWidget {
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
-  UserAccount userAccount;
+  late UserAccount userAccount;
 
-  TextEditingController _identityEditingController;
-  TextEditingController _nameEditingController;
-  TextEditingController _birthdayEditingController;
-  TextEditingController _phoneNumberEditingController;
-  TextEditingController _emailEditingController;
+  late TextEditingController _identityEditingController;
+  late TextEditingController _nameEditingController;
+  late TextEditingController _birthdayEditingController;
+  late TextEditingController _phoneNumberEditingController;
+  late TextEditingController _emailEditingController;
 
-  FocusNode _phoneNumberFocus;
-  FocusNode _emailFocus;
+  late FocusNode _phoneNumberFocus;
+  late FocusNode _emailFocus;
 
   @override
   void initState() {
@@ -62,37 +62,45 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     try {
       userAccount = getIt<UserNotifier>().getUserAccount();
     } catch (e) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
-    _identityEditingController.text = userAccount.nationality.xIsTCNationality
-        ? userAccount.identificationNumber
-        : userAccount.passaportNumber;
-    _nameEditingController.text = userAccount.name + " " + userAccount.surname;
+    final xIsTCNationality = userAccount.nationality?.xIsTCNationality;
+    if (xIsTCNationality != null) {
+      _identityEditingController.text = xIsTCNationality
+          ? userAccount.identificationNumber ?? ''
+          : userAccount.passaportNumber ?? '';
+    }
 
-    _birthdayEditingController.text = userAccount.patients.length > 0
-        ? userAccount.patients.first.birthDate.replaceAll('.', '/')
-        : "-";
+    final userName = userAccount.name ?? '';
+    final userSurname = userAccount.surname ?? '';
+    _nameEditingController.text = userName + " " + userSurname;
 
-    _phoneNumberEditingController.text = userAccount.phoneNumber;
-    _emailEditingController.text =
-        userAccount.electronicMail.contains("@mailyok.com")
-            ? "-"
-            : userAccount.electronicMail;
+    final patientsLength = userAccount.patients?.length ?? 0;
+    final patientsFirstBirthDate =
+        userAccount.patients?.first.birthDate?.replaceAll('.', '/') ?? '';
+    _birthdayEditingController.text =
+        patientsLength > 0 ? patientsFirstBirthDate : "-";
+
+    _phoneNumberEditingController.text = userAccount.phoneNumber ?? '';
+
+    final isEMail =
+        userAccount.electronicMail?.contains("@mailyok.com") ?? false;
+    if (isEMail) {
+      _emailEditingController.text = userAccount.electronicMail ?? '';
+    }
 
     return ChangeNotifierProvider<PersonalInformationScreenVm>(
       create: (context) => PersonalInformationScreenVm(
         mContext: context,
-        email: userAccount.electronicMail.contains("@mailyok.com")
-            ? "-"
-            : userAccount.electronicMail,
-        phoneNumber: userAccount.phoneNumber,
+        email: isEMail ? "-" : (userAccount.electronicMail ?? ''),
+        phoneNumber: userAccount.phoneNumber ?? '',
       ),
       child: Consumer<PersonalInformationScreenVm>(
         builder: (
           BuildContext context,
           PersonalInformationScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioStackedScaffold(
@@ -132,7 +140,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               child: SingleChildScrollView(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -178,11 +186,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         ],
                       ),
                     ),
+
                     _buildSpacer(),
 
                     // Identity Number
                     _buildTitle(
-                      userAccount.nationality.xIsTCNationality
+                      (userAccount.nationality?.xIsTCNationality ?? false)
                           ? LocaleProvider.of(context).tc_identity_number
                           : LocaleProvider.of(context).passport_number,
                     ),
@@ -219,12 +228,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         //
-                        RbioCountryCodePicker(
+                        const RbioCountryCodePicker(
                           isActiveBorder: true,
                         ),
 
                         //
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
 
@@ -278,9 +287,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
         //
         Container(
-          padding: EdgeInsets.only(
-            top: 8,
-          ),
+          padding: const EdgeInsets.only(top: 8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -325,10 +332,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     );
   }
 
-  Widget _buildSpacer() => SizedBox(height: 16);
+  Widget _buildSpacer() => const SizedBox(height: 16);
 
   Widget _buildTitle(String title) => Padding(
-        padding: EdgeInsets.only(bottom: 8, left: 14),
+        padding: const EdgeInsets.only(bottom: 8, left: 14),
         child: Text(
           title,
           style: context.xHeadline4.copyWith(

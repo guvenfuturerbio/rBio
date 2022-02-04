@@ -8,11 +8,11 @@ class RangeSelectionSlider extends StatefulWidget {
   final double lowerValue;
   final double upperValue;
 
-  RangeSelectionSlider({
-    Key key,
-    @required this.id,
-    @required this.lowerValue,
-    @required this.upperValue,
+  const RangeSelectionSlider({
+    Key? key,
+    required this.id,
+    required this.lowerValue,
+    required this.upperValue,
   }) : super(key: key);
 
   @override
@@ -20,8 +20,8 @@ class RangeSelectionSlider extends StatefulWidget {
 }
 
 class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
-  double lowerValue;
-  double upperValue;
+  late double lowerValue;
+  late double upperValue;
 
   @override
   void initState() {
@@ -47,14 +47,14 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
 
             //
             Expanded(
-              child: Container(
+              child: SizedBox(
                 width: Atom.width * 0.9,
                 child: FlutterSlider(
-                  step: FlutterSliderStep(step: 10),
+                  step: const FlutterSliderStep(step: 10),
                   handlerWidth: 32,
                   handlerHeight: 32,
                   values: [
@@ -68,7 +68,8 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                     boxStyle: FlutterSliderTooltipBox(
                       decoration: BoxDecoration(
                         color: getIt<ITheme>().mainColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
                       ),
                     ),
                     alwaysShowTooltip: true,
@@ -104,10 +105,10 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
             InkWell(
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
                   color: getIt<ITheme>().mainColor,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(12.0),
                     bottomRight: Radius.circular(12.0),
                   ),

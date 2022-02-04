@@ -22,7 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SearchScreenVm>(
-      create: (context) => SearchScreenVm(context: context),
+      create: (context) => SearchScreenVm(context),
       child: Consumer<SearchScreenVm>(
         builder: (BuildContext context, SearchScreenVm value, Widget? child) {
           return RbioScaffold(
@@ -43,10 +43,11 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  PreferredSize _buildAppBar(SearchScreenVm value) {
+  IRbioAppBar _buildAppBar(SearchScreenVm value) {
     return RbioAppBar(
       leadingWidth: !widget.fromBottomBar ? null : 0,
-      leading: !widget.fromBottomBar ? null : SizedBox(width: 0, height: 0),
+      leading:
+          !widget.fromBottomBar ? null : const SizedBox(width: 0, height: 0),
       title: SizedBox(
         width: double.infinity,
         child: RbioTextFormField(
@@ -61,19 +62,19 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildBody(SearchScreenVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return vm.searchText.length > 3
             ? _buildFilterResources(vm)
             : _buildAllSocialResources(vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -95,9 +96,16 @@ class _SearchScreenState extends State<SearchScreen> {
           ListView.builder(
             shrinkWrap: true,
             itemCount: value.filterResources.length,
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-            physics: NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
+              final filterResource = value.filterResources[index];
+              final filterResourceTitle = filterResource.title ?? '';
+              final tenantsFirstId = filterResource.tenants?.first.id;
+              final departmentId = filterResource.departments?.first.id;
+              final departmentTitle =
+                  filterResource.departments?.first.title ?? '';
+
               return Card(
                 elevation: 1,
                 shape: RoundedRectangleBorder(
@@ -105,7 +113,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 child: ListTile(
                   title: Text(
-                    value.filterResources[index].title,
+                    filterResource.title ?? '',
                     style: context.xHeadline3,
                   ),
                   leading: SizedBox(
@@ -115,33 +123,27 @@ class _SearchScreenState extends State<SearchScreen> {
                             : MediaQuery.of(context).size.width * 0.03
                         : MediaQuery.of(context).size.width * 0.12,
                     child: SvgPicture.asset(
-                        value.filterResources[index].tenants[0].id == 1
-                            ? R.image.oneDoseHealth
-                            : R.image.oneDoseHealth),
+                      tenantsFirstId == 1
+                          ? R.image.oneDoseHealth
+                          : R.image.oneDoseHealth,
+                    ),
                   ),
-                  subtitle: Text(
-                      (value.filterResources[index].tenants[0].id == 1
-                              ? LocaleProvider.current.guven_hospital_ayranci
-                              : LocaleProvider.current.guven_cayyolu_campus) +
-                          "\n" +
-                          value.filterResources[index].departments[0].title),
+                  subtitle: Text((tenantsFirstId == 1
+                          ? LocaleProvider.current.guven_hospital_ayranci
+                          : LocaleProvider.current.guven_cayyolu_campus) +
+                      "\n" +
+                      departmentTitle),
                   onTap: () {
                     Atom.to(
-                      PagePaths.DOCTOR_CV,
+                      PagePaths.doctorCv,
                       queryParameters: {
-                        'tenantId': value.filterResources[index].tenants[0].id
-                            .toString(),
-                        'departmentId': value
-                            .filterResources[index].departments[0].id
-                            .toString(),
-                        'resourceId':
-                            value.filterResources[index].id.toString(),
-                        'doctorName':
-                            Uri.encodeFull(value.filterResources[index].title),
-                        'departmentName': Uri.encodeFull(
-                            value.filterResources[index].departments[0].title),
+                        'tenantId': tenantsFirstId.toString(),
+                        'departmentId': departmentId.toString(),
+                        'resourceId': filterResource.id.toString(),
+                        'doctorName': Uri.encodeFull(filterResourceTitle),
+                        'departmentName': Uri.encodeFull(departmentTitle),
                         'doctorNameNoTitle':
-                            Uri.encodeFull(value.filterResources[index].title),
+                            Uri.encodeFull(filterResourceTitle),
                       },
                     );
                   },
@@ -149,54 +151,6 @@ class _SearchScreenState extends State<SearchScreen> {
               );
             },
           ),
-
-          //
-          value.socialPostProgress == LoadingProgress.LOADING
-              ? RbioLoading()
-              : value.socialPostProgress == LoadingProgress.ERROR
-                  ? Container()
-                  : ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: value.filteredSocialResources.length,
-                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: R.sizes.borderRadiusCircular,
-                          ),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: kIsWeb
-                                  ? MediaQuery.of(context).size.width < 1000
-                                      ? MediaQuery.of(context).size.width * 0.10
-                                      : MediaQuery.of(context).size.width * 0.03
-                                  : MediaQuery.of(context).size.width * 0.12,
-                              child: SvgPicture.asset(
-                                value.filteredSocialResources[index].imagePath,
-                              ),
-                            ),
-                            title: Text(
-                              value.filteredSocialResources[index].title,
-                              style: context.xHeadline2,
-                            ),
-                            subtitle: Text(
-                              value.filteredSocialResources[index].text,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: context.xHeadline3,
-                            ),
-                            onTap: () {
-                              value.clickPost(
-                                value.filteredSocialResources[index].id,
-                                value.filteredSocialResources[index].url,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
         ],
       ),
     );
@@ -212,9 +166,11 @@ class _SearchScreenState extends State<SearchScreen> {
               bottom: R.sizes.defaultBottomValue,
             ),
             scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: value.allSocialResources.length,
             itemBuilder: (BuildContext context, int index) {
+              final allSocialResource = value.allSocialResources[index];
+
               return Card(
                 elevation: 1,
                 shape: RoundedRectangleBorder(
@@ -228,25 +184,26 @@ class _SearchScreenState extends State<SearchScreen> {
                             : MediaQuery.of(context).size.width * 0.03
                         : MediaQuery.of(context).size.width * 0.12,
                     child: SvgPicture.asset(
-                      value.allSocialResources[index].imagePath,
+                      allSocialResource.imagePath ?? '',
                     ),
                   ),
                   title: Text(
-                    value.allSocialResources[index].title,
+                    allSocialResource.title ?? '',
                     style: context.xHeadline3
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    value.allSocialResources[index].text,
+                    allSocialResource.text ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: context.xHeadline5,
                   ),
                   onTap: () {
-                    value.clickPost(
-                      value.allSocialResources[index].id,
-                      value.allSocialResources[index].url,
-                    );
+                    final itemId = allSocialResource.id;
+                    final itemUrl = allSocialResource.url;
+                    if (itemId != null && itemUrl != null) {
+                      value.clickPost(itemId, itemUrl);
+                    }
                   },
                 ),
               );
@@ -257,52 +214,41 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  List<RbioFilterChip> _chips(SearchScreenVm value) {
+  List<RbioFilterChip> _chips(SearchScreenVm vm) {
     return [
-      //RbioFilterChip('Doctor', value),
-      RbioFilterChip('Blog', value),
-      RbioFilterChip('Spotify', value),
-      RbioFilterChip('Youtube', value),
-      //RbioFilterChip('Bundle', value),
-      /*   Chip(label: Text(LocaleProvider.current.doctor)),
-      Chip(
-        label: Text(LocaleProvider.current.youtube_stream),
-      )*/
+      RbioFilterChip(title: 'Blog', vm: vm),
+      RbioFilterChip(title: 'Spotify', vm: vm),
+      RbioFilterChip(title: 'Youtube', vm: vm),
     ];
   }
 }
 
-class RbioFilterChip extends StatefulWidget {
-  bool isSelected;
-  String title;
-  SearchScreenVm value;
-  RbioFilterChip(
-    this.title,
-    this.value, {
-    Key key,
+class RbioFilterChip extends StatelessWidget {
+  final String title;
+  final SearchScreenVm vm;
+
+  const RbioFilterChip({
+    Key? key,
+    required this.title,
+    required this.vm,
   }) : super(key: key);
 
-  @override
-  State<RbioFilterChip> createState() => _RbioFilterChipState();
-}
-
-class _RbioFilterChipState extends State<RbioFilterChip> {
   @override
   Widget build(BuildContext context) {
     return FilterChip(
       backgroundColor: getIt<ITheme>().cardBackgroundColor,
-      selected: widget.value.filterTitleList.contains(widget.title),
+      selected: vm.filterTitleList.contains(title),
       checkmarkColor: getIt<ITheme>().cardBackgroundColor,
       selectedColor: getIt<ITheme>().mainColor,
       label: Text(
-        widget.title,
-        style: widget.value.filterTitleList.contains(widget.title)
+        title,
+        style: vm.filterTitleList.contains(title)
             ? context.xBodyText1
                 .copyWith(color: getIt<ITheme>().cardBackgroundColor)
             : context.xBodyText1,
       ),
       onSelected: (val) {
-        widget.value.toggleFilter(widget.title);
+        vm.toggleFilter(title);
       },
     );
   }
