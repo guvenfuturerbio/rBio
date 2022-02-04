@@ -1,13 +1,8 @@
 part of '../devices.dart';
 
-class DevicesScreen extends StatefulWidget {
-  DevicesScreen({Key key}) : super(key: key);
+class DevicesScreen extends StatelessWidget {
+  const DevicesScreen({Key? key}) : super(key: key);
 
-  @override
-  _DevicesScreenState createState() => _DevicesScreenState();
-}
-
-class _DevicesScreenState extends State<DevicesScreen> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
@@ -20,8 +15,8 @@ class _DevicesScreenState extends State<DevicesScreen> {
       body: ChangeNotifierProvider(
         create: (_) => DevicesVm(),
         child: Consumer<DevicesVm>(
-          builder: (context, value, child) {
-            return _buildBody(value);
+          builder: (BuildContext context, DevicesVm vm, Widget? child) {
+            return _buildBody(context, vm);
           },
         ),
       ),
@@ -29,71 +24,14 @@ class _DevicesScreenState extends State<DevicesScreen> {
     );
   }
 
-  Widget _buildBody(DevicesVm vm) {
+  Widget _buildBody(BuildContext context, DevicesVm vm) {
     switch (vm.state) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
-        return vm.devices.length > 0
-            ? ListView(
-                shrinkWrap: true,
-                children: [
-                  ...vm.devices
-                      .map((device) => Column(
-                            children: [
-                              DeviceCard(
-                                background: getIt<ITheme>().cardBackgroundColor,
-                                image: UtilityManager()
-                                    .getDeviceImageFromType(device.deviceType),
-                                name:
-                                    '${device.manufacturerName}\n${device.serialNumber ?? ''}',
-                                trailing: Row(
-                                  children: [
-                                    InkWell(
-                                        onTap: () {},
-                                        child: Icon(
-                                          Icons.info,
-                                          size: R.sizes.iconSize,
-                                        )),
-                                    InkWell(
-                                        onTap: () {
-                                          Atom.show(GuvenAlert(
-                                              backgroundColor: getIt<ITheme>()
-                                                  .cardBackgroundColor,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 25,
-                                                      vertical: 25),
-                                              title: GuvenAlert.buildTitle(
-                                                LocaleProvider.current.warning,
-                                              ),
-                                              content: GuvenAlert.buildDescription(
-                                                  '${LocaleProvider.current.ble_delete_paired_device_approv}'),
-                                              actions: [
-                                                GuvenAlert.buildBigMaterialAction(
-                                                    '${LocaleProvider.current.cancel}',
-                                                    () => Atom.dismiss()),
-                                                GuvenAlert.buildBigMaterialAction(
-                                                    '${LocaleProvider.current.yes}',
-                                                    () => vm.deletePairedDevice(
-                                                        device.deviceId))
-                                              ]));
-                                        },
-                                        child: Icon(
-                                          Icons.cancel,
-                                          color: R.color.darkRed,
-                                          size: R.sizes.iconSize,
-                                        )),
-                                  ],
-                                ),
-                              ),
-                              _buildVerticalGap()
-                            ],
-                          ))
-                      .toList()
-                ],
-              )
+      case LoadingProgress.done:
+        return vm.devices.isNotEmpty
+            ? _buildListView(vm)
             : Center(
                 child: Text(
                   LocaleProvider.current.add_new_device,
@@ -104,19 +42,96 @@ class _DevicesScreenState extends State<DevicesScreen> {
                 ),
               );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
+  }
+
+  Widget _buildListView(DevicesVm vm) {
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        ...vm.devices
+            .map(
+              (device) => Column(
+                children: [
+                  DeviceCard(
+                    background: getIt<ITheme>().cardBackgroundColor,
+                    image: device.deviceType == null
+                        ? const SizedBox()
+                        : UtilityManager()
+                                .getDeviceImageFromType(device.deviceType!) ??
+                            const SizedBox(),
+                    name:
+                        '${device.manufacturerName}\n${device.serialNumber ?? ''}',
+                    trailing: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.info,
+                            size: R.sizes.iconSize,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Atom.show(
+                              GuvenAlert(
+                                backgroundColor:
+                                    getIt<ITheme>().cardBackgroundColor,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 25,
+                                  vertical: 25,
+                                ),
+                                title: GuvenAlert.buildTitle(
+                                  LocaleProvider.current.warning,
+                                ),
+                                content: GuvenAlert.buildDescription(
+                                    LocaleProvider.current
+                                        .ble_delete_paired_device_approv),
+                                actions: [
+                                  GuvenAlert.buildBigMaterialAction(
+                                    LocaleProvider.current.cancel,
+                                    () => Atom.dismiss(),
+                                  ),
+                                  GuvenAlert.buildBigMaterialAction(
+                                    LocaleProvider.current.yes,
+                                    () => vm.deletePairedDevice(
+                                      device.deviceId ?? '',
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                          child: Icon(
+                            Icons.cancel,
+                            color: R.color.darkRed,
+                            size: R.sizes.iconSize,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //
+                  _buildVerticalGap()
+                ],
+              ),
+            )
+            .toList()
+      ],
+    );
   }
 
   Widget _buildFab() {
     return FloatingActionButton(
       backgroundColor: getIt<ITheme>().mainColor,
       onPressed: () {
-        Atom.to(PagePaths.ALL_DEVICES);
+        Atom.to(PagePaths.allDevices);
       },
       child: Center(
         child: SvgPicture.asset(

@@ -121,7 +121,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.selectedDevice,
-      widget: const SelectedDevicesScreen(key: Key('SelectedDeviceScreen')),
+      widget: SelectedDevicesScreen(),
     ),
 
     VWidget(

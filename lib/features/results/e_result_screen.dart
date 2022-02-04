@@ -5,12 +5,12 @@ import '../../../../core/core.dart';
 import 'e_result_vm.dart';
 
 class EResultScreen extends StatelessWidget {
-  const EResultScreen({Key key}) : super(key: key);
+  const EResultScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<EResultScreenVm>(
-      builder: (BuildContext context, EResultScreenVm value, Widget child) {
+      builder: (BuildContext context, EResultScreenVm value, Widget? child) {
         return RbioScaffold(
           appbar: _buildAppBar(context),
           body: _buildBody(context, value),
@@ -42,7 +42,7 @@ class EResultScreen extends StatelessWidget {
 
         //
         Container(
-          margin: EdgeInsets.only(left: 8, top: 8, right: 8),
+          margin: const EdgeInsets.only(left: 8, top: 8, right: 8),
           child: GuvenDateRange(
             startCurrentDate: vm.startDate,
             onStartDateChange: (date) {
@@ -56,7 +56,7 @@ class EResultScreen extends StatelessWidget {
         ),
 
         //
-        SizedBox(height: 12.0),
+        const SizedBox(height: 12.0),
 
         //
         Expanded(
@@ -78,52 +78,13 @@ class EResultScreen extends StatelessWidget {
 
   Widget _buildStateToWidget(BuildContext context, EResultScreenVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         {
-          return vm.visits.length > 0
-              ? ListView.builder(
-                  padding: EdgeInsets.only(
-                    bottom: R.sizes.defaultBottomValue,
-                  ),
-                  scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: vm.visits.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return RbioCardAppoCard.result(
-                      date: DateTime.parse(vm.visits[index].openingDate)
-                          .xFormatTime2(),
-                      departmentName: vm.visits[index].department ?? '',
-                      doctorName: vm.visits[index].physician ?? '',
-                      tenantName: getTenantName(vm.visits[index].tenantId),
-                      openDetailTap: vm.visits[index].hasLaboratoryResults ||
-                              vm.visits[index].hasRadiologyResults ||
-                              vm.visits[index].hasPathologyResults
-                          ? () {
-                              Atom.to(
-                                PagePaths.VISIT_DETAIL,
-                                queryParameters: {
-                                  'countOfRadiologyResults': vm
-                                      .visits[index].countOfRadiologyResults
-                                      .toString(),
-                                  'countOfPathologyResults': vm
-                                      .visits[index].countOfPathologyResults
-                                      .toString(),
-                                  'countOfLaboratoryResult': vm
-                                      .visits[index].countOfLaboratoryResults
-                                      .toString(),
-                                  'patientId':
-                                      vm.visits[index].patientId.toString(),
-                                  'visitId': vm.visits[index].id.toString(),
-                                },
-                              );
-                            }
-                          : null,
-                    );
-                  },
-                )
+          return vm.visits.isNotEmpty
+              ? _buildListView()
               : Center(
                   child: Text(
                     LocaleProvider.current.no_result_selected_date,
@@ -135,11 +96,51 @@ class EResultScreen extends StatelessWidget {
                 );
         }
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
+  }
+
+  Widget _buildListView(EResultScreenVm vm) {
+    return ListView.builder(
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue,
+      ),
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
+      itemCount: vm.visits.length,
+      itemBuilder: (BuildContext context, int index) {
+        final item = vm.visits[index];
+
+        return RbioCardAppoCard.result(
+          date: DateTime.parse(item.openingDate).xFormatTime2(),
+          departmentName: vm.visits[index].department ?? '',
+          doctorName: vm.visits[index].physician ?? '',
+          tenantName: getTenantName(item.tenantId),
+          openDetailTap: item.hasLaboratoryResults ||
+                  item.hasRadiologyResults ||
+                  item.hasPathologyResults
+              ? () {
+                  Atom.to(
+                    PagePaths.VISIT_DETAIL,
+                    queryParameters: {
+                      'countOfRadiologyResults':
+                          vm.visits[index].countOfRadiologyResults.toString(),
+                      'countOfPathologyResults':
+                          vm.visits[index].countOfPathologyResults.toString(),
+                      'countOfLaboratoryResult':
+                          vm.visits[index].countOfLaboratoryResults.toString(),
+                      'patientId': vm.visits[index].patientId.toString(),
+                      'visitId': vm.visits[index].id.toString(),
+                    },
+                  );
+                }
+              : null,
+        );
+      },
+    );
   }
 }

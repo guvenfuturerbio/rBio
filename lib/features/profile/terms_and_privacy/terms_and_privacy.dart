@@ -4,23 +4,18 @@ import 'package:provider/provider.dart';
 import '../../../core/core.dart';
 import 'terms_and_privacy_vm.dart';
 
-class TermsAndPrivacyScreen extends StatefulWidget {
-  const TermsAndPrivacyScreen({Key key}) : super(key: key);
+class TermsAndPrivacyScreen extends StatelessWidget {
+  const TermsAndPrivacyScreen({Key? key}) : super(key: key);
 
-  @override
-  State<TermsAndPrivacyScreen> createState() => _TermsAndPrivacyScreenState();
-}
-
-class _TermsAndPrivacyScreenState extends State<TermsAndPrivacyScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TermsAndPrivacyVm>(
       create: (context) => TermsAndPrivacyVm(),
       child: Consumer<TermsAndPrivacyVm>(
-        builder: (context, vm, child) {
+        builder: (BuildContext context, TermsAndPrivacyVm vm, Widget? child) {
           return RbioStackedScaffold(
             appbar: _buildAppBar(),
-            body: _buildBody(vm),
+            body: _buildBody(context, vm),
           );
         },
       ),
@@ -33,17 +28,20 @@ class _TermsAndPrivacyScreenState extends State<TermsAndPrivacyScreen> {
     );
   }
 
-  Column _buildBody(TermsAndPrivacyVm vm) {
+  Column _buildBody(BuildContext context, TermsAndPrivacyVm vm) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildApplicationContest(vm),
-        _buildKVKK(vm),
+        _buildApplicationContest(context, vm),
+        _buildKVKK(context, vm),
       ],
     );
   }
 
-  Widget _buildApplicationContest(TermsAndPrivacyVm value) {
+  Widget _buildApplicationContest(
+    BuildContext context,
+    TermsAndPrivacyVm value,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +79,7 @@ class _TermsAndPrivacyScreenState extends State<TermsAndPrivacyScreen> {
     );
   }
 
-  Widget _buildKVKK(TermsAndPrivacyVm value) {
+  Widget _buildKVKK(BuildContext context, TermsAndPrivacyVm value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -94,9 +92,11 @@ class _TermsAndPrivacyScreenState extends State<TermsAndPrivacyScreen> {
             width: 35,
             height: 35,
             child: Checkbox(
-              value: value.checkedKvkkForm,
+              value: value.checkedKvkk,
               onChanged: (newValue) {
-                value.checkedKvkkForm = newValue;
+                if (newValue != null) {
+                  value.setCheckedKvkk(newValue);
+                }
               },
               activeColor: getIt<ITheme>().mainColor,
             ),

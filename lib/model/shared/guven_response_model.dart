@@ -33,7 +33,7 @@ class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
   }
 }
 
-extension MapCast on GuvenResponseModel {
+extension MapCastExtension on GuvenResponseModel {
   bool get xIsSuccessful => isSuccessful ?? false;
 
   Map<String, dynamic> get xGetMap {

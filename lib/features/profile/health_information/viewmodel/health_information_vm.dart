@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/shared/guven_response_model.dart';
 
 import '../../../../core/core.dart';
 import '../../../../core/data/imports/cronic_tracking.dart';
 
 enum HealthInformationType {
-  DiabetType,
-  Weight,
-  NormalRange,
-  Height,
-  MaxRange,
-  MinRange,
-  Smoker,
-  YearofDiagnosis,
+  diabetType,
+  weight,
+  normalRange,
+  height,
+  maxRange,
+  minRange,
+  smoker,
+  yearofDiagnosis,
 }
 
 class HealthInformationVm extends RbioVm {
@@ -25,15 +26,13 @@ class HealthInformationVm extends RbioVm {
     notifyListeners();
   }
 
-  var key;
-  Person _selection;
-  Person get selection => _selection;
+  dynamic key;
+  late Person selection;
 
-  HealthInformationVm({BuildContext context}) {
-    this.mContext = context;
-    _selection = getIt<ProfileStorageImpl>().getFirst();
-    key = _selection.key;
-    _selection = _selection.copy();
+  HealthInformationVm(this.mContext) {
+    selection = getIt<ProfileStorageImpl>().getFirst();
+    key = selection.key;
+    selection = selection.copy();
   }
 
   Future<void> updateInformation(Person person) async {
@@ -41,10 +40,12 @@ class HealthInformationVm extends RbioVm {
     try {
       person.isFirstUser = false;
       person.userId = -1;
-      final response = await getIt<ChronicTrackingRepository>()
-          .updateProfile(person, person.id);
-      if (response.isSuccessful) {
-        getIt<ProfileStorageImpl>().update(_selection, key);
+      final response = await getIt<ChronicTrackingRepository>().updateProfile(
+        person,
+        person.id,
+      );
+      if (response.xIsSuccessful) {
+        getIt<ProfileStorageImpl>().update(selection, key);
       }
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
@@ -55,18 +56,18 @@ class HealthInformationVm extends RbioVm {
 
   // #region showDiabetsSheet
   void showDiabetsSheet() {
-    var selectedType;
+    late int selectedType;
 
     _showBottomSheet(
-      children: _getChildren(HealthInformationType.DiabetType),
-      initialItem: _getInitialItem(HealthInformationType.DiabetType),
+      children: _getChildren(HealthInformationType.diabetType),
+      initialItem: _getInitialItem(HealthInformationType.diabetType),
       onSelectedItemChanged: (value) {
         if (value == null) {
-          selectedType = _selection.diabetesType == null
+          selectedType = selection.diabetesType == null
               ? 0
-              : _selection.diabetesType == 'Type 1'
+              : selection.diabetesType == 'Type 1'
                   ? 1
-                  : _selection.diabetesType == 'Type 2'
+                  : selection.diabetesType == 'Type 2'
                       ? 2
                       : 0;
         } else {
@@ -76,15 +77,15 @@ class HealthInformationVm extends RbioVm {
       pick: () async {
         switch (selectedType) {
           case 1:
-            changeDiabetsType('${LocaleProvider.of(mContext).diabetes_type_1}');
+            changeDiabetsType(LocaleProvider.of(mContext).diabetes_type_1);
             break;
 
           case 2:
-            changeDiabetsType('${LocaleProvider.of(mContext).diabetes_type_2}');
+            changeDiabetsType(LocaleProvider.of(mContext).diabetes_type_2);
             break;
 
           default:
-            changeDiabetsType('${LocaleProvider.of(mContext).non_diabetes}');
+            changeDiabetsType(LocaleProvider.of(mContext).non_diabetes);
         }
 
         _closeBottomSheet();
@@ -95,18 +96,18 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeDiabetsType
   void changeDiabetsType(String type) {
-    _selection.diabetesType = type;
+    selection.diabetesType = type;
     notifyListeners();
   }
   // #endregion
 
   // #region showHeightSheet
   void showHeightSheet() {
-    var selectedHeight;
+    late int selectedHeight;
 
     _showBottomSheet(
-      children: _getChildren(HealthInformationType.Height),
-      initialItem: _getInitialItem(HealthInformationType.Height),
+      children: _getChildren(HealthInformationType.height),
+      initialItem: _getInitialItem(HealthInformationType.height),
       onSelectedItemChanged: (value) => selectedHeight = value,
       pick: () {
         changeHeight(selectedHeight);
@@ -118,18 +119,18 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeHeight
   void changeHeight(int height) {
-    _selection.height = height.toString();
+    selection.height = height.toString();
     notifyListeners();
   }
   // #endregion
 
   // #region showWeightSheet
   void showWeightSheet() {
-    var selectedWeight;
+    late int selectedWeight;
 
     _showBottomSheet(
-      children: _getChildren(HealthInformationType.Weight),
-      initialItem: _getInitialItem(HealthInformationType.Weight),
+      children: _getChildren(HealthInformationType.weight),
+      initialItem: _getInitialItem(HealthInformationType.weight),
       onSelectedItemChanged: (value) => selectedWeight = value,
       pick: () {
         changeWeight(selectedWeight);
@@ -141,16 +142,16 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeWeight
   void changeWeight(int weight) {
-    _selection.weight = weight.toString();
+    selection.weight = weight.toString();
     notifyListeners();
   }
   // #endregion
 
   // #region changeNormalRange
-  void changeNormalRange(Map<String, dynamic> value) {
+  void changeNormalRange(Map<dynamic, dynamic> value) {
     if (value['min'] != null && value['max'] != null) {
-      _selection.rangeMin = value['min'];
-      _selection.rangeMax = value['max'];
+      selection.rangeMin = value['min'];
+      selection.rangeMax = value['max'];
     }
     notifyListeners();
   }
@@ -158,11 +159,11 @@ class HealthInformationVm extends RbioVm {
 
   // #region showMaxRangeSheet
   void showMaxRangeSheet() {
-    var _selectedMaxRange;
+    late int _selectedMaxRange;
 
     _showBottomSheet(
-      children: _getChildren(HealthInformationType.MaxRange),
-      initialItem: _getInitialItem(HealthInformationType.MaxRange),
+      children: _getChildren(HealthInformationType.maxRange),
+      initialItem: _getInitialItem(HealthInformationType.maxRange),
       onSelectedItemChanged: (val) =>
           val = _selectedMaxRange = _getMaxRangeList()[val],
       pick: () {
@@ -175,8 +176,8 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeMaxRange
   void changeMaxRange(int selectedHyper) async {
-    _selection.hyper = selectedHyper < _selection.rangeMax
-        ? _selection.rangeMax + 1
+    selection.hyper = selectedHyper < selection.rangeMax
+        ? selection.rangeMax + 1
         : selectedHyper;
     notifyListeners();
   }
@@ -184,11 +185,11 @@ class HealthInformationVm extends RbioVm {
 
   // #region showMinRangeSheet
   void showMinRangeSheet() {
-    var _selectedMinRange;
+    int? _selectedMinRange;
 
     _showBottomSheet(
-      children: _getChildren(HealthInformationType.MinRange),
-      initialItem: _getInitialItem(HealthInformationType.MinRange),
+      children: _getChildren(HealthInformationType.minRange),
+      initialItem: _getInitialItem(HealthInformationType.minRange),
       onSelectedItemChanged: (val) => _selectedMinRange = val,
       pick: () {
         changeMinRange(_selectedMinRange);
@@ -199,11 +200,11 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region changeMinRange
-  void changeMinRange(int selectedMinRange) {
+  void changeMinRange(int? selectedMinRange) {
     if (selectedMinRange != null) {
       var _tempHypo = selectedMinRange * 10;
-      _selection.hypo =
-          _tempHypo > _selection.rangeMin ? _selection.rangeMin - 1 : _tempHypo;
+      selection.hypo =
+          _tempHypo > selection.rangeMin ? selection.rangeMin - 1 : _tempHypo;
       notifyListeners();
     }
   }
@@ -211,16 +212,16 @@ class HealthInformationVm extends RbioVm {
 
   // #region showSmokerSheet
   void showSmokerSheet() {
-    var selectedType;
+    late int selectedType;
 
     _showBottomSheet(
-      children: _getChildren(HealthInformationType.Smoker),
-      initialItem: _getInitialItem(HealthInformationType.Smoker),
+      children: _getChildren(HealthInformationType.smoker),
+      initialItem: _getInitialItem(HealthInformationType.smoker),
       onSelectedItemChanged: (value) {
         if (value != null) {
-          selectedType = _selection.smoker == null
+          selectedType = selection.smoker == null
               ? 0
-              : _selection.smoker
+              : selection.smoker
                   ? 0
                   : 1;
         } else {
@@ -245,7 +246,7 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeSmokerType
   void changeSmokerType(bool type) {
-    _selection.smoker = type;
+    selection.smoker = type;
     notifyListeners();
   }
   // #endregion
@@ -253,13 +254,13 @@ class HealthInformationVm extends RbioVm {
   // #region showDiagnosisSheet
   void showDiagnosisSheet() {
     {
-      var selectedYear;
+      late int selectedYear;
 
       _showBottomSheet(
-        children: _getChildren(HealthInformationType.YearofDiagnosis),
-        initialItem: _getInitialItem(HealthInformationType.YearofDiagnosis),
+        children: _getChildren(HealthInformationType.yearofDiagnosis),
+        initialItem: _getInitialItem(HealthInformationType.yearofDiagnosis),
         onSelectedItemChanged: (value) =>
-            selectedYear = DateTime.now().year - value,
+            selectedYear = (DateTime.now().year - value).toInt(),
         pick: () {
           changeDiagnosis(selectedYear);
           _closeBottomSheet();
@@ -271,7 +272,7 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeDiagnosis
   void changeDiagnosis(int diagnosis) {
-    _selection.yearOfDiagnosis = diagnosis;
+    selection.yearOfDiagnosis = diagnosis;
     notifyListeners();
   }
   // #endregion
@@ -279,47 +280,47 @@ class HealthInformationVm extends RbioVm {
   // #region _getInitialItem
   int _getInitialItem(HealthInformationType type) {
     switch (type) {
-      case HealthInformationType.DiabetType:
+      case HealthInformationType.diabetType:
         {
-          return _selection.diabetesType == "Type 1"
+          return selection.diabetesType == "Type 1"
               ? 1
-              : (_selection.diabetesType == "Type 2" ? 2 : 0);
+              : (selection.diabetesType == "Type 2" ? 2 : 0);
         }
 
-      case HealthInformationType.Height:
+      case HealthInformationType.height:
         {
-          return int.parse(_selection.height) ?? 150;
+          return int.tryParse(selection.height) ?? 150;
         }
 
-      case HealthInformationType.Weight:
-        return _selection.weight == 'null'
+      case HealthInformationType.weight:
+        return selection.weight == 'null'
             ? 0
-            : int.parse(_selection.weight) ?? 50;
+            : int.tryParse(selection.weight) ?? 50;
 
-      case HealthInformationType.Smoker:
+      case HealthInformationType.smoker:
         {
-          return _selection.smoker == null
+          return selection.smoker == null
               ? 0
-              : _selection.smoker
+              : selection.smoker
                   ? 1
                   : 0;
         }
 
-      case HealthInformationType.YearofDiagnosis:
+      case HealthInformationType.yearofDiagnosis:
         {
-          return _selection.yearOfDiagnosis != null
-              ? DateTime.now().year - _selection.yearOfDiagnosis
+          return selection.yearOfDiagnosis != null
+              ? DateTime.now().year - selection.yearOfDiagnosis
               : 0;
         }
 
-      case HealthInformationType.MaxRange:
+      case HealthInformationType.maxRange:
         {
-          return _getMaxRangeList().indexOf(_selection.hyper);
+          return _getMaxRangeList().indexOf(selection.hyper);
         }
 
-      case HealthInformationType.MinRange:
+      case HealthInformationType.minRange:
         {
-          return _selection.hypo ~/ 10;
+          return selection.hypo ~/ 10;
         }
 
       default:
@@ -333,7 +334,7 @@ class HealthInformationVm extends RbioVm {
     TextStyle _bottomTextStyle = mContext.xHeadline2;
 
     switch (type) {
-      case HealthInformationType.DiabetType:
+      case HealthInformationType.diabetType:
         {
           return [
             Center(
@@ -357,7 +358,7 @@ class HealthInformationVm extends RbioVm {
           ];
         }
 
-      case HealthInformationType.Height:
+      case HealthInformationType.height:
         {
           return List.generate(
             250,
@@ -370,7 +371,7 @@ class HealthInformationVm extends RbioVm {
           );
         }
 
-      case HealthInformationType.Weight:
+      case HealthInformationType.weight:
         {
           return List.generate(
             250,
@@ -383,7 +384,7 @@ class HealthInformationVm extends RbioVm {
           );
         }
 
-      case HealthInformationType.Smoker:
+      case HealthInformationType.smoker:
         {
           return [
             Center(
@@ -401,7 +402,7 @@ class HealthInformationVm extends RbioVm {
           ];
         }
 
-      case HealthInformationType.YearofDiagnosis:
+      case HealthInformationType.yearofDiagnosis:
         {
           return List.generate(
             100,
@@ -414,7 +415,7 @@ class HealthInformationVm extends RbioVm {
           );
         }
 
-      case HealthInformationType.MaxRange:
+      case HealthInformationType.maxRange:
         {
           return _getMaxRangeList()
               .map(
@@ -428,10 +429,10 @@ class HealthInformationVm extends RbioVm {
               .toList();
         }
 
-      case HealthInformationType.MinRange:
+      case HealthInformationType.minRange:
         {
           return List.generate(
-            (_selection.rangeMin + 10) ~/ 10,
+            (selection.rangeMin + 10) ~/ 10,
             (index) => Center(
               child: Text(
                 (index * 10).toString() + " mg/dL.",
@@ -450,7 +451,7 @@ class HealthInformationVm extends RbioVm {
   // #region _getMaxRangeList
   List<int> _getMaxRangeList() {
     List<int> hyperWidget = [];
-    for (int i = _selection.rangeMax; i < 1000; i = i + 10) {
+    for (int i = selection.rangeMax; i < 1000; i = i + 10) {
       hyperWidget.add(i);
     }
     return hyperWidget;
@@ -459,10 +460,10 @@ class HealthInformationVm extends RbioVm {
 
   // #region _showBottomSheet
   void _showBottomSheet({
-    List<Widget> children,
-    int initialItem,
-    void Function(dynamic) onSelectedItemChanged,
-    void Function() pick,
+    required List<Widget> children,
+    required int initialItem,
+    required void Function(dynamic) onSelectedItemChanged,
+    required void Function() pick,
   }) {
     showModalBottomSheet(
       context: mContext,
@@ -486,14 +487,14 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeTextFiels
   void changeTextFiels({
-    TextEditingController diabetTypeController,
-    TextEditingController weightController,
-    TextEditingController normalRangeController,
-    TextEditingController heightController,
-    TextEditingController maxRangeController,
-    TextEditingController minRangeController,
-    TextEditingController smokerController,
-    TextEditingController yearofDiagnosisController,
+    required TextEditingController diabetTypeController,
+    required TextEditingController weightController,
+    required TextEditingController normalRangeController,
+    required TextEditingController heightController,
+    required TextEditingController maxRangeController,
+    required TextEditingController minRangeController,
+    required TextEditingController smokerController,
+    required TextEditingController yearofDiagnosisController,
   }) {
     diabetTypeController.text = selection.diabetesType;
     weightController.text = "${selection.weight} kg";
@@ -502,7 +503,9 @@ class HealthInformationVm extends RbioVm {
     heightController.text = "${selection.height} cm";
     maxRangeController.text = "${selection.hyper} mg/dl";
     minRangeController.text = "${selection.hypo} mg/dl";
-    smokerController.text = selection.smoker ? LocaleProvider.current.smoker : LocaleProvider.current.non_smoker;
+    smokerController.text = selection.smoker
+        ? LocaleProvider.current.smoker
+        : LocaleProvider.current.non_smoker;
     yearofDiagnosisController.text = "${selection.yearOfDiagnosis}";
   }
   // #endregion
