@@ -66,7 +66,7 @@ class EResultScreen extends StatelessWidget {
     );
   }
 
-  String getTenantName(int tenantId) {
+  String getTenantName(int? tenantId) {
     if (tenantId == 1) {
       return LocaleProvider.current.guven_hospital_ayranci;
     } else if (tenantId == 7) {
@@ -84,7 +84,7 @@ class EResultScreen extends StatelessWidget {
       case LoadingProgress.done:
         {
           return vm.visits.isNotEmpty
-              ? _buildListView()
+              ? _buildListView(vm)
               : Center(
                   child: Text(
                     LocaleProvider.current.no_result_selected_date,
@@ -116,16 +116,16 @@ class EResultScreen extends StatelessWidget {
         final item = vm.visits[index];
 
         return RbioCardAppoCard.result(
-          date: DateTime.parse(item.openingDate).xFormatTime2(),
+          date: DateTime.parse(item.openingDate ?? '').xFormatTime2(),
           departmentName: vm.visits[index].department ?? '',
           doctorName: vm.visits[index].physician ?? '',
           tenantName: getTenantName(item.tenantId),
-          openDetailTap: item.hasLaboratoryResults ||
-                  item.hasRadiologyResults ||
-                  item.hasPathologyResults
+          openDetailTap: (item.hasLaboratoryResults ?? false) ||
+                  (item.hasRadiologyResults ?? false) ||
+                  (item.hasPathologyResults ?? false)
               ? () {
                   Atom.to(
-                    PagePaths.VISIT_DETAIL,
+                    PagePaths.visitDetail,
                     queryParameters: {
                       'countOfRadiologyResults':
                           vm.visits[index].countOfRadiologyResults.toString(),
@@ -138,7 +138,7 @@ class EResultScreen extends StatelessWidget {
                     },
                   );
                 }
-              : null,
+              : () {},
         );
       },
     );

@@ -5,7 +5,7 @@ import '../../../core/core.dart';
 import 'necessary_identity_vm.dart';
 
 class NecessaryIdentityScreen extends StatefulWidget {
-  const NecessaryIdentityScreen({Key key}) : super(key: key);
+  const NecessaryIdentityScreen({Key? key}) : super(key: key);
 
   @override
   _NecessaryIdentityScreenState createState() =>
@@ -21,7 +21,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
       create: (context) => NecessaryIdentityScreenVm(context),
       child: Consumer<NecessaryIdentityScreenVm>(
         builder: (BuildContext context, NecessaryIdentityScreenVm value,
-            Widget child) {
+            Widget? child) {
           return GuvenAlert(
             backgroundColor: Colors.white,
             title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
@@ -64,7 +64,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                         image: R.image.ic_user,
                       ),
                     ),
-                    margin: EdgeInsets.only(bottom: 10, top: 20),
+                    margin: const EdgeInsets.only(bottom: 10, top: 20),
                   ),
                 ],
               ),
