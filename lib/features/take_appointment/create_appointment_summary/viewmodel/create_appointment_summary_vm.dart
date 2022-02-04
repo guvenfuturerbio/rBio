@@ -40,17 +40,14 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  String voucherCode;
-  String _appointmentRange;
-  String _textDate;
-  String _hospitalName;
+  String? voucherCode;
+  String? appointmentRange;
+  String? textDate;
+  late String hospitalName;
   GetVideoCallPriceResponse? orgVideoCallPriceResponse;
   GetVideoCallPriceResponse? newVideoCallPriceResponse;
-  bool _priceLoading;
+  bool? _priceLoading;
 
-  String get hospitalName => _hospitalName;
-  String get textDate => _textDate;
-  String get appointmentRange => _appointmentRange;
   bool get priceLoading => _priceLoading ?? false;
 
   CreateAppointmentSummaryVm({
@@ -65,18 +62,18 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   }) {
     if (forOnline) {
       summaryButton = SummaryButtons.add;
-      _hospitalName = LocaleProvider.current.online_appo;
+      hospitalName = LocaleProvider.current.online_appo;
       WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
         await getResourceVideoCallPrice();
       });
     } else if (tenantId == 1) {
-      _hospitalName = LocaleProvider.current.guven_hospital_ayranci;
+      hospitalName = LocaleProvider.current.guven_hospital_ayranci;
     } else if (tenantId == 7) {
-      _hospitalName = LocaleProvider.current.guven_cayyolu_campus;
+      hospitalName = LocaleProvider.current.guven_cayyolu_campus;
     }
-    _textDate = DateTime.parse(from).xFormatTime2();
+    textDate = DateTime.parse(from).xFormatTime2();
 
-    _appointmentRange =
+    appointmentRange =
         from.substring(11, 16) + " - " + to.substring(11, 16);
   }
 
@@ -220,7 +217,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
             departmentId: departmentId.toString(),
             voucherCode: message));
     voucherCode = message;
-    newVideoCallPriceResponse = orgVideoCallPriceResponse.copyWith(
+    newVideoCallPriceResponse = orgVideoCallPriceResponse?.copyWith(
       patientPrice: response.datum,
     );
     showOverlayLoading = false;

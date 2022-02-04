@@ -122,7 +122,7 @@ class _CreateAppointmentEventsScreenState
               vm: val,
               onSubmit: () {
                 Atom.to(
-                  PagePaths.CREATE_APPOINTMENT_SUMMARY,
+                  PagePaths.createAppointmentSummary,
                   queryParameters: {
                     'patientId': Uri.encodeFull(widget.patientId),
                     'patientName': Uri.encodeFull(widget.patientName),
@@ -136,8 +136,8 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': completeNotifier.value.selected!.from.toString(),
-                    'to': completeNotifier.value.selected!.to.toString(),
+                    'from': completeNotifier.value.selected.from.toString(),
+                    'to': completeNotifier.value.selected.to.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );

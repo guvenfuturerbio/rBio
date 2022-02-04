@@ -9,8 +9,8 @@ import 'search_vm.dart';
 class SearchScreen extends StatefulWidget {
   final bool fromBottomBar;
 
-  SearchScreen({
-    Key key,
+  const SearchScreen({
+    Key? key,
     this.fromBottomBar = false,
   }) : super(key: key);
 
@@ -24,7 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return ChangeNotifierProvider<SearchScreenVm>(
       create: (context) => SearchScreenVm(context: context),
       child: Consumer<SearchScreenVm>(
-        builder: (BuildContext context, SearchScreenVm value, Widget child) {
+        builder: (BuildContext context, SearchScreenVm value, Widget? child) {
           return RbioScaffold(
             resizeToAvoidBottomInset: false,
             appbar: _buildAppBar(value),

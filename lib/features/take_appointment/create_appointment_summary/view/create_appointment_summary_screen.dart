@@ -26,8 +26,8 @@ class _CreateAppointmentSummaryScreenState
   int resourceId;
   String resourceName;
   String date;
-  String from;
-  String to;
+  String? from;
+  String? to;
   bool forOnline;
 
   TextEditingController codeEditingController;
@@ -52,15 +52,15 @@ class _CreateAppointmentSummaryScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      patientId = Uri.decodeFull(Atom.queryParameters['patientId']);
-      patientName = Uri.decodeFull(Atom.queryParameters['patientName']);
-      tenantId = int.parse(Atom.queryParameters['tenantId']);
-      tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']);
-      departmentId = int.parse(Atom.queryParameters['departmentId']);
-      departmentName = Uri.decodeFull(Atom.queryParameters['departmentName']);
-      resourceId = int.parse(Atom.queryParameters['resourceId']);
-      resourceName = Uri.decodeFull(Atom.queryParameters['resourceName']);
-      date = Atom.queryParameters['date'];
+      patientId = Uri.decodeFull(Atom.queryParameters['patientId']!);
+      patientName = Uri.decodeFull(Atom.queryParameters['patientName']!);
+      tenantId = int.parse(Atom.queryParameters['tenantId']!);
+      tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']!);
+      departmentId = int.parse(Atom.queryParameters['departmentId']!);
+      departmentName = Uri.decodeFull(Atom.queryParameters['departmentName']!);
+      resourceId = int.parse(Atom.queryParameters['resourceId']!);
+      resourceName = Uri.decodeFull(Atom.queryParameters['resourceName']!);
+      date = Atom.queryParameters['date']!;
       from = Atom.queryParameters['from'];
       to = Atom.queryParameters['to'];
       forOnline = Atom.queryParameters['forOnline'] == 'true';
@@ -83,7 +83,7 @@ class _CreateAppointmentSummaryScreenState
         builder: (
           BuildContext context,
           CreateAppointmentSummaryVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioStackedScaffold(
@@ -185,7 +185,7 @@ class _CreateAppointmentSummaryScreenState
                             hintText: LocaleProvider.current.discount_code,
                             border: RbioTextFormField.noneBorder(),
                             textInputAction: TextInputAction.done,
-                            contentPadding: EdgeInsets.only(
+                            contentPadding:const EdgeInsets.only(
                               left: 0,
                               right: 20,
                               top: 10,
@@ -193,9 +193,9 @@ class _CreateAppointmentSummaryScreenState
                             ),
                             onChanged: (term) {
                               if (term != null && term != '') {
-                                vm.summaryButton = SummaryButtons.ApplyActive;
+                                vm.summaryButton = SummaryButtons.applyActive;
                               } else {
-                                vm.summaryButton = SummaryButtons.ApplyPassive;
+                                vm.summaryButton = SummaryButtons.applyPassive;
                               }
                             },
                           ),
@@ -214,7 +214,7 @@ class _CreateAppointmentSummaryScreenState
                               );
                               if (code != null) {
                                 codeEditingController.text = code;
-                                vm.summaryButton = SummaryButtons.ApplyActive;
+                                vm.summaryButton = SummaryButtons.applyActive;
                               }
                             },
                             child: SvgPicture.asset(
@@ -399,33 +399,33 @@ class _CreateAppointmentSummaryScreenState
         title = LocaleProvider.current.add_discount_code;
         onTap = () {
           vm.showCodeField = true;
-          vm.summaryButton = SummaryButtons.ApplyPassive;
+          vm.summaryButton = SummaryButtons.applyPassive;
         };
         break;
 
-      case SummaryButtons.ApplyPassive:
+      case SummaryButtons.applyPassive:
         title = LocaleProvider.current.apply_discount;
         onTap = null;
         break;
 
-      case SummaryButtons.ApplyActive:
+      case SummaryButtons.applyActive:
         title = LocaleProvider.current.apply_discount;
         onTap = () {
           vm.applyCode(codeEditingController.text.trim());
-          vm.summaryButton = SummaryButtons.Cancel;
+          vm.summaryButton = SummaryButtons.cancel;
         };
         break;
 
-      case SummaryButtons.Cancel:
+      case SummaryButtons.cancel:
         title = LocaleProvider.current.cancel_discount;
         onTap = () {
           codeEditingController.text = '';
           vm.codeCancel();
-          vm.summaryButton = SummaryButtons.ApplyPassive;
+          vm.summaryButton = SummaryButtons.applyPassive;
         };
         break;
 
-      case SummaryButtons.None:
+      case SummaryButtons.none:
         title = null;
         onTap = null;
         break;
@@ -436,10 +436,10 @@ class _CreateAppointmentSummaryScreenState
     return RbioElevatedButton(
       onTap: onTap,
       title: title,
-      backColor: vm.summaryButton == SummaryButtons.Add
+      backColor: vm.summaryButton == SummaryButtons.add
           ? getIt<ITheme>().cardBackgroundColor
           : getIt<ITheme>().mainColor,
-      textColor: vm.summaryButton == SummaryButtons.Add
+      textColor: vm.summaryButton == SummaryButtons.add
           ? getIt<ITheme>().textColorSecondary
           : getIt<ITheme>().textColor,
       fontWeight: FontWeight.w600,

@@ -18,10 +18,10 @@ import '../../../generated/l10n.dart';
 class IyzicoResponseVm with ChangeNotifier {
   // Properties
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> stream;
-  String code;
+  String? code;
   String? errorText;
-  String videoId;
-  String uid;
+  String? videoId;
+  String ?uid;
   StreamSubscription<LogRecord> _logMessagesSub;
 
   IyzicoResponseVm(this.uid) {

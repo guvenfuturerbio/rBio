@@ -11,14 +11,14 @@ class DoMobilePaymentScreen extends StatefulWidget {
   final AppointmentRequest appointment;
   final int appointmentId;
   final String price;
-  final String voucherCode;
+  final String? voucherCode;
 
   const DoMobilePaymentScreen({
     Key? key,
     required this.appointment,
     required this.appointmentId,
     required this.price,
-    required this.voucherCode,
+    this.voucherCode,
   }) : super(key: key);
 
   @override
@@ -72,7 +72,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
       create: (context) => DoMobilePaymentScreenVm(
         appointmentRequest: widget.appointment,
         context: context,
-        voucherCode: widget.voucherCode,
+        voucherCode: widget.voucherCode ?? "",
       ),
       child: Consumer<DoMobilePaymentScreenVm>(
         builder: (
@@ -280,7 +280,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                           onTap: () {
                             value.showDistanceSaleContract(
                               packageName: LocaleProvider.current.online_appo,
-                              price: widget.price ,
+                              price: widget.price,
                             );
                           },
                           child: Text(

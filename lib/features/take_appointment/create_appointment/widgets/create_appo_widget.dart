@@ -54,11 +54,11 @@ Widget _buildDropdown(
       isExpanded: true,
       underline: const SizedBox(),
       focusColor: Colors.white,
-      value: whichField == Fields.DEPARTMENT
+      value: whichField == Fields.department
           ? val.dropdownValueDepartment
-          : whichField == Fields.TENANTS
+          : whichField == Fields.tenant
               ? val.dropdownValueTenant
-              : whichField == Fields.RELATIVE
+              : whichField == Fields.relative
                   ? val.dropdownValueRelative
                   : val.dropdownValueDoctor,
       style: context.xHeadline5,
@@ -68,7 +68,7 @@ Widget _buildDropdown(
           return DropdownMenuItem<dynamic>(
             value: value,
             child: Text(
-              whichField == Fields.RELATIVE
+              whichField == Fields.relative
                   ? '${value.name} ${value.surname}'
                   : value.title,
               style: context.xHeadline5,
@@ -81,13 +81,13 @@ Widget _buildDropdown(
         style: context.xHeadline5,
       ),
       onChanged: (dynamic value) {
-        if (whichField == Fields.DEPARTMENT) {
+        if (whichField == Fields.department) {
           val.departmentSelection(value);
-        } else if (whichField == Fields.TENANTS) {
+        } else if (whichField == Fields.tenant) {
           val.hospitalSelection(value);
-        } else if (whichField == Fields.DOCTORS) {
+        } else if (whichField == Fields.doctors) {
           val.doctorSelection(value);
-        } else if (whichField == Fields.RELATIVE) {
+        } else if (whichField == Fields.relative) {
           val.relativeSelection(value);
         }
       },

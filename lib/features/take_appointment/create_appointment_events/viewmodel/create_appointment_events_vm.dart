@@ -8,35 +8,34 @@ import '../../create_appointment/model/find_resource_available_days_request.dart
 import '../../create_appointment/model/resource_request.dart';
 
 class CreateAppointmentEventsVm extends ChangeNotifier {
-  BuildContext mContext;
-  int tenantId;
-  int resourceId;
-  int departmentId;
-  bool forOnline;
+  final BuildContext mContext;
+  final int tenantId;
+  final int resourceId;
+  final int departmentId;
+  final bool forOnline;
 
   int? patientId = getIt<UserNotifier>().getPatient().id;
 
   DateTime selectedDate = DateTime.now();
-  String filterFromDate;
-  String filterToDate;
+  late String filterFromDate;
+  late String filterToDate;
 
-  LoadingProgress slotsProgress;
-  LoadingProgress availableDatesProgress;
+  late LoadingProgress slotsProgress;
+  late LoadingProgress availableDatesProgress;
   List<ResourcesRequest> resourceRequestList = [];
-  Map<String, List<ResourcesRequest>> availableSlots;
+  late Map<String, List<ResourcesRequest>> availableSlots;
 
   List<DateTime> availableDates = [];
 
-  DateTime initDate;
+  late DateTime initDate;
 
   CreateAppointmentEventsVm({
-    required BuildContext context,
+    required this.mContext,
     required this.tenantId,
     required this.departmentId,
     required this.resourceId,
     required this.forOnline,
   }) {
-    mContext = context;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       setFilterRangeDate(DateTime.now());
 
@@ -95,7 +94,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         ),
       ),
     ))
-        .map((e) => DateTime.parse(e.day).toLocal())
+        .map((e) => DateTime.parse(e.day!).toLocal())
         .toList();
   }
 

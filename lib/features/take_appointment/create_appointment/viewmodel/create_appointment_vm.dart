@@ -11,25 +11,25 @@ enum Fields { department, tenant, doctors, relative }
 class CreateAppointmentVm extends ChangeNotifier {
   BuildContext mContext;
   bool forOnline;
-  bool fromSearch;
+  late bool fromSearch;
   bool fromSymptom;
 
-  List<FilterTenantsResponse> _tenantsFilterResponse;
-  List<FilterDepartmentsResponse> _filterDepartmentsResponse;
-  List<FilterResourcesResponse> _filterResourcesResponse;
+  List<FilterTenantsResponse> tenantsFilterResponse;
+  List<FilterDepartmentsResponse> filterDepartmentsResponse;
+  List<FilterResourcesResponse> filterResourcesResponse;
 
-  LoadingProgress _relativeProgress = LoadingProgress.loading;
-  LoadingProgress _progress = LoadingProgress.loading;
-  LoadingProgress _departmentProgress = LoadingProgress.loading;
-  LoadingProgress _doctorProgress = LoadingProgress.loading;
+  LoadingProgress relativeProgress = LoadingProgress.loading;
+  LoadingProgress progress = LoadingProgress.loading;
+  LoadingProgress departmentProgress = LoadingProgress.loading;
+  LoadingProgress doctorProgress = LoadingProgress.loading;
 
-  FilterTenantsResponse _dropdownValueTenant;
-  FilterDepartmentsResponse _dropdownValueDepartment;
-  FilterResourcesResponse _dropdownValueDoctor;
+  FilterTenantsResponse? _dropdownValueTenant;
+  FilterDepartmentsResponse? dropdownValueDepartment;
+  FilterResourcesResponse? dropdownValueDoctor;
 
-  bool _hospitalSelected = false;
-  bool _departmentSelected = false;
-  bool _doctorSelected = false;
+  bool hospitalSelected = false;
+  bool departmentSelected = false;
+  bool doctorSelected = false;
 
   PatientRelativeInfoResponse relativeResponse;
   PatientRelative dropdownValueRelative;
@@ -43,29 +43,6 @@ class CreateAppointmentVm extends ChangeNotifier {
   List<int> _doctorsIds = [];
 
   // #region Getters
-  LoadingProgress get relativeProgress => _relativeProgress;
-  LoadingProgress get progress => _progress;
-  LoadingProgress get departmentProgress => _departmentProgress;
-  LoadingProgress get doctorProgress => _doctorProgress;
-
-  List<FilterTenantsResponse> get tenantsFilterResponse =>
-      _tenantsFilterResponse;
-  List<FilterDepartmentsResponse> get filterDepartmentResponse =>
-      _filterDepartmentsResponse;
-  List<FilterResourcesResponse> get filterResourcesResponse =>
-      _filterResourcesResponse;
-  List<PatientAppointmentsResponse> get holderForFavorites =>
-      _holderForFavorites;
-  List<String> get doctorsImageUrls => _doctorsImageUrls;
-
-   FilterTenantsResponse get dropdownValueTenant => _dropdownValueTenant;
-  FilterDepartmentsResponse get dropdownValueDepartment =>
-      _dropdownValueDepartment;
-  FilterResourcesResponse get dropdownValueDoctor => _dropdownValueDoctor;
-
-  bool get hospitalSelected => _hospitalSelected;
-  bool get departmentSelected => _departmentSelected;
-  bool get doctorSelected => _doctorSelected;
 
   DateTime get startDate => _startDate != null
       ? DateTime(_startDate.year, _startDate.month, _startDate.day)
@@ -83,21 +60,18 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   CreateAppointmentVm(
       {required BuildContext context,
-      required bool forOnline,
-      required bool fromSearch,
-      required bool fromSymptom,
+      required  this.forOnline,
+      required this.fromSearch,
+      required this. fromSymptom,
       int? tenantId,
       int? departmentId,
       int? resourceId}) {
     mContext = context;
-    this.forOnline = forOnline;
-    this.fromSearch = fromSearch;
-    this.fromSymptom = fromSymptom;
     _patientId = getIt<UserNotifier>().getPatient().id;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
       if (forOnline) {
-        _hospitalSelected = true;
+        hospitalSelected = true;
         await fetchOnlineDepartments(
           FilterOnlineDepartmentsRequest(
             appointmentType: R.dynamicVar.onlineAppointmentType.toString(),
@@ -518,8 +492,8 @@ class CreateAppointmentVm extends ChangeNotifier {
         _dropdownValueDepartment = null;
         _departmentSelected = false;
         break;
-      case Fields.DOCTORS:
-      case Fields.RELATIVE:
+      case Fields.doctors:
+      case Fields.relative:
         break;
     }
     notifyListeners();

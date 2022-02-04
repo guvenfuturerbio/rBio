@@ -20,38 +20,38 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
       AppointmentRequest appointmentRequest,
       String voucherCode}) {
     this.appointmentRequest = appointmentRequest;
-    this.mContext = context;
+    mContext = context;
     this.voucherCode = voucherCode;
   }
 
-  bool get showOverlay => this._showOverlay ?? false;
+  bool get showOverlay => _showOverlay ?? false;
 
-  GuvenResponseModel get paymentResponse => this._paymentResponse;
+  GuvenResponseModel get paymentResponse => _paymentResponse;
 
-  bool get isSalesContractConfirmed => this._isSalesContractConfirmed ?? false;
+  bool get isSalesContractConfirmed => _isSalesContractConfirmed ?? false;
 
   bool get cancellationFormConfirmed =>
-      this._cancellationFormConfirmed ?? false;
+      _cancellationFormConfirmed ?? false;
 
   Future<void> doMobilePayment(ERandevuCCResponse cc, int appointmentId) async {
     if (checkRequiredFields(cc)) {
-      this._showOverlay = true;
+      _showOverlay = true;
       cc.expirationMonth = cc.expirationMonth.substring(0, 2);
       cc.expirationYear = "20" + cc.expirationYear.substring(3, 5);
       notifyListeners();
 
       try {
-        this._paymentResponse =
+        _paymentResponse =
             await getIt<Repository>().doMobilePaymentWithVoucher(
           DoMobilePaymentWithVoucherRequest(
               appointmentId: appointmentId,
               cc: cc,
               appointmentRequest:
-                  this.appointmentRequest.saveAppointmentsRequest,
+                  appointmentRequest.saveAppointmentsRequest,
               voucherCode: voucherCode),
         );
 
-        final html = Map.from(this._paymentResponse.datum)['do_result'];
+        final html = Map.from(_paymentResponse.datum)['do_result'];
         RegisterViews.instance.doMobilePayment(html);
         Navigator.push(
           mContext,
@@ -59,25 +59,24 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
             builder: (context) => IyzicoResponseSmsPaymentScreen(
               html: html,
             ),
-            settings: RouteSettings(name: PagePaths.IYZICORESPONSESMSPAYMENT),
+            settings: RouteSettings(name: PagePaths.iyzicoResponseSmsPayment),
           ),
         );
-        this._showOverlay = false;
+        _showOverlay = false;
         notifyListeners();
       } catch (e, stackTrace) {
         Sentry.captureException(e, stackTrace: stackTrace);
-        print("DoMobilePaymentException" + e.toString());
         showGradientDialog(LocaleProvider.current.warning,
             LocaleProvider.current.sorry_dont_transaction);
-        this._showOverlay = false;
+        _showOverlay = false;
         notifyListeners();
       }
     }
   }
 
   Future<void> showDistanceSaleContract({
-    String packageName,
-    String price,
+   required String packageName,
+   required String price,
   }) async {
     UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
     String filledForm = await fillAllFormFields(
@@ -120,12 +119,12 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   }
 
   toggleSalesContract() {
-    this._isSalesContractConfirmed = !isSalesContractConfirmed;
+    _isSalesContractConfirmed = !isSalesContractConfirmed;
     notifyListeners();
   }
 
   toggleCancellationForm() {
-    this._cancellationFormConfirmed = !cancellationFormConfirmed;
+    _cancellationFormConfirmed = !cancellationFormConfirmed;
     notifyListeners();
   }
 

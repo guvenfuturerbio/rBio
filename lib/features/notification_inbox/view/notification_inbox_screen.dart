@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 
 class NotificationInboxScreen extends StatefulWidget {
-  NotificationInboxScreen({Key key}) : super(key: key);
+  const NotificationInboxScreen({Key? key}) : super(key: key);
+
 
   @override
   State<NotificationInboxScreen> createState() =>

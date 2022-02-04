@@ -8,26 +8,26 @@ import 'iyzico_response_vm.dart';
 
 class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
   final String html;
-  final String uid;
+  final String? uid;
   bool fromDeepLink;
-  final String departmentName;
-  final String doctorName;
-  final String appointmentType;
-  final String hospitalName;
-  final String appointmentFee;
+  final String? departmentName;
+  final String? doctorName;
+  final String? appointmentType;
+  final String? hospitalName;
+  final String? appointmentFee;
   final bool fromCovidPcr;
 
   IyzicoResponseSmsPaymentScreen({
     Key? key,
-    required this.uid,
+    this.uid,
     required this.html,
-    required this.departmentName,
-    required this.doctorName,
-    required this.appointmentType,
-    required this.hospitalName,
-    required this.appointmentFee,
-     this.fromDeepLink = false,
-     this.fromCovidPcr = false,
+    this.departmentName,
+    this.doctorName,
+    this.appointmentType,
+    this.hospitalName,
+    this.appointmentFee,
+    this.fromDeepLink = false,
+    this.fromCovidPcr = false,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,6 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
 @override
 class _IyzicoResponseSmsPaymentScreenState
     extends State<IyzicoResponseSmsPaymentScreen> {
-
   final String html;
 
   _IyzicoResponseSmsPaymentScreenState(String formHtml)
