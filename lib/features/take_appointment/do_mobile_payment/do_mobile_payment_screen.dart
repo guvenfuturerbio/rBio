@@ -71,7 +71,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
     return ChangeNotifierProvider<DoMobilePaymentScreenVm>(
       create: (context) => DoMobilePaymentScreenVm(
         appointmentRequest: widget.appointment,
-        context: context,
+        mContext: context,
         voucherCode: widget.voucherCode ?? "",
       ),
       child: Consumer<DoMobilePaymentScreenVm>(

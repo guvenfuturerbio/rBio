@@ -13,7 +13,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   bool? _showOverlay;
   bool? _isSalesContractConfirmed;
   bool? _cancellationFormConfirmed;
-  GuvenResponseModel _paymentResponse;
+  late GuvenResponseModel _paymentResponse;
 
   DoMobilePaymentScreenVm(
       {required this.mContext, this.appointmentRequest, this.voucherCode});
@@ -30,7 +30,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     if (checkRequiredFields(cc)) {
       _showOverlay = true;
       cc.expirationMonth = cc.expirationMonth?.substring(0, 2);
-      cc.expirationYear = "20" + cc.expirationYear?.substring(3, 5);
+      cc.expirationYear = "20" + cc.expirationYear!.substring(3, 5);
       notifyListeners();
 
       try {
@@ -50,7 +50,8 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
             builder: (context) => IyzicoResponseSmsPaymentScreen(
               html: html,
             ),
-            settings: RouteSettings(name: PagePaths.iyzicoResponseSmsPayment),
+            settings:
+                const RouteSettings(name: PagePaths.iyzicoResponseSmsPayment),
           ),
         );
         _showOverlay = false;
@@ -72,9 +73,9 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.distance_sales_contract_context,
-      (userAccount.name + ' ' + userAccount.surname),
-      userAccount.electronicMail,
-      userAccount.phoneNumber,
+      (userAccount.name! + ' ' + userAccount.surname!),
+      userAccount.electronicMail ?? "",
+      userAccount.phoneNumber ?? "",
       packageName,
       (DateTime.now().toString().substring(0, 10)),
     );
@@ -82,15 +83,15 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   }
 
   Future<void> showCancellationAndRefund({
-    String packageName,
-    String price,
+    required String packageName,
+    required String price,
   }) async {
     UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.preinformation_form_context,
-      (userAccount.name + ' ' + userAccount.surname),
-      userAccount.electronicMail,
-      userAccount.phoneNumber,
+      (userAccount.name! + ' ' + userAccount.surname!),
+      userAccount.electronicMail ?? "",
+      userAccount.phoneNumber ?? "",
       packageName,
       (DateTime.now().toString().substring(0, 10)),
     );
@@ -152,6 +153,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     } catch (e) {
       showGradientDialog(LocaleProvider.of(mContext).warning,
           LocaleProvider.of(mContext).check_and_try_again);
+      return false;
     }
   }
 

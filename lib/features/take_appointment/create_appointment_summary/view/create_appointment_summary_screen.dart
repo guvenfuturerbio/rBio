@@ -61,8 +61,8 @@ class _CreateAppointmentSummaryScreenState
       resourceId = int.parse(Atom.queryParameters['resourceId']!);
       resourceName = Uri.decodeFull(Atom.queryParameters['resourceName']!);
       date = Atom.queryParameters['date']!;
-      from = Atom.queryParameters['from'];
-      to = Atom.queryParameters['to'];
+      from = Atom.queryParameters['from'] as String;
+      to = Atom.queryParameters['to'] as String;
       forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (_) {
       return RbioRouteError();
@@ -71,7 +71,7 @@ class _CreateAppointmentSummaryScreenState
     return ChangeNotifierProvider<CreateAppointmentSummaryVm>(
       create: (context) => CreateAppointmentSummaryVm(
         mContext: context,
-        patientId: getIt<UserNotifier>().getPatient().id,
+        patientId: getIt<UserNotifier>().getPatient().id!,
         tenantId: tenantId,
         departmentId: departmentId,
         resourceId: resourceId,
@@ -308,11 +308,11 @@ class _CreateAppointmentSummaryScreenState
                         onTap: () {
                           vm.saveAppointment(
                           
-                            price: vm?.orgVideoCallPriceResponse?.patientPrice
-                                ?.toString(),
+                            price: vm.orgVideoCallPriceResponse?.patientPrice
+                                ?.toString() as String,
                             forOnline: forOnline,
                             forFree:
-                                (vm?.orgVideoCallPriceResponse?.patientPrice ??
+                                (vm.orgVideoCallPriceResponse?.patientPrice ??
                                             0) <
                                         1
                                     ? true
@@ -343,12 +343,12 @@ class _CreateAppointmentSummaryScreenState
   Widget _buildPrice(CreateAppointmentSummaryVm vm) {
     var _newPrice;
     if (vm.orgVideoCallPriceResponse != null &&
-        vm.orgVideoCallPriceResponse.patientPrice != null) {
-      String _price = '${vm.orgVideoCallPriceResponse.patientPrice} TL';
+        vm.orgVideoCallPriceResponse?.patientPrice != null) {
+      String _price = '${vm.orgVideoCallPriceResponse!.patientPrice!} TL';
 
       if (vm.newVideoCallPriceResponse != null &&
-          vm.newVideoCallPriceResponse.patientPrice != null) {
-        _newPrice = '${vm.newVideoCallPriceResponse.patientPrice} TL';
+          vm.newVideoCallPriceResponse?.patientPrice != null) {
+        _newPrice = '${vm.newVideoCallPriceResponse!.patientPrice!} TL';
       }
       return _newPrice != null
           ? Row(
@@ -396,7 +396,7 @@ class _CreateAppointmentSummaryScreenState
     VoidCallback onTap;
 
     switch (vm.summaryButton) {
-      case SummaryButtons.Add:
+      case SummaryButtons.add:
         title = LocaleProvider.current.add_discount_code;
         onTap = () {
           vm.showCodeField = true;
@@ -406,7 +406,7 @@ class _CreateAppointmentSummaryScreenState
 
       case SummaryButtons.applyPassive:
         title = LocaleProvider.current.apply_discount;
-        onTap = null;
+        onTap = (){};
         break;
 
       case SummaryButtons.applyActive:
@@ -427,8 +427,8 @@ class _CreateAppointmentSummaryScreenState
         break;
 
       case SummaryButtons.none:
-        title = null;
-        onTap = null;
+        title = "";
+        onTap = (){};
         break;
     }
 

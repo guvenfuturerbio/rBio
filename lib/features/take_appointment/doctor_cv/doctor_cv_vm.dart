@@ -31,7 +31,7 @@ class DoctorCvScreenVm extends ChangeNotifier {
           await getIt<Repository>().getDoctorCvDetails(doctorId);
       if (_doctorCvResponse != null) {
         _progress = LoadingProgress.done;
-        _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven)! +
+        _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven) +
                 "/storage/app/media/" +
                 _doctorCvResponse.image1! ;
       } else {
