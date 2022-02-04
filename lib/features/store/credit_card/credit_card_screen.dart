@@ -14,11 +14,11 @@ class CreditCardScreen extends StatefulWidget {
   String price;
 
   CreditCardScreen({
-    Key key,
-    this.paymentObjectCode,
-    this.paymentType,
-    this.price,
-    this.packageName,
+    Key? key,
+    required this.paymentObjectCode,
+    required this.paymentType,
+    required this.price,
+    required this.packageName,
   }) : super(key: key);
 
   @override

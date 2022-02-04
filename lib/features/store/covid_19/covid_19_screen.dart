@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/core.dart';
 
 class Covid19Screen extends StatefulWidget {
-  const Covid19Screen({Key key}) : super(key: key);
+  const Covid19Screen({Key? key}) : super(key: key);
 
   @override
   _Covid19ScreenState createState() => _Covid19ScreenState();

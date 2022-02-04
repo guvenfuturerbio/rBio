@@ -5,52 +5,42 @@ import '../../../../model/model.dart';
 
 class OrderSummaryScreenVm extends ChangeNotifier {
   OrderSummaryScreenVm(BuildContext context, var id) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    mContext = context;
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchSubCategoryItems(id);
-      setSelectedItem(subCategoryItems[0]);
+      setSelectedItem(subCategoryItems![0]);
     });
   }
-  int _index;
+  int? selectedIndex;
 
-  BuildContext mContext;
+  BuildContext? mContext;
 
-  List<ForYouSubCategoryItemsResponse> _subCategoryItems;
+  List<ForYouSubCategoryItemsResponse>? subCategoryItems;
 
-  List<ForYouSubCategoryItemsResponse> get subCategoryItems =>
-      this._subCategoryItems;
+  LoadingProgress? progress;
 
-  LoadingProgress _progress;
-
-  LoadingProgress get progress => this._progress ?? LoadingProgress.LOADING;
-
-  ForYouSubCategoryItemsResponse _selectedItem;
-
-  ForYouSubCategoryItemsResponse get selectedItem => this._selectedItem;
-
-  int get selectedIndex => this._index ?? 0;
+  ForYouSubCategoryItemsResponse? selectedItem;
 
   void setSelectedIndex(int index) {
-    this._index = index;
+    selectedIndex = index;
     notifyListeners();
   }
 
   void setSelectedItem(ForYouSubCategoryItemsResponse subCategoryItems) {
-    this._selectedItem = subCategoryItems;
+    selectedItem = subCategoryItems;
     notifyListeners();
   }
 
   fetchSubCategoryItems(String id) async {
     try {
-      this._progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       notifyListeners();
-      this._subCategoryItems =
-          await getIt<Repository>().getSubCategoryItems(id);
-      this._progress = LoadingProgress.DONE;
+      subCategoryItems = await getIt<Repository>().getSubCategoryItems(id);
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      this._progress = LoadingProgress.ERROR;
-      showGradientDialog(mContext, LocaleProvider.current.warning,
+      progress = LoadingProgress.error;
+      showGradientDialog(mContext!, LocaleProvider.current.warning,
           LocaleProvider.current.sorry_dont_transaction);
       notifyListeners();
     }
@@ -68,10 +58,10 @@ class OrderSummaryScreenVm extends ChangeNotifier {
 
   void showWebViewPage() {
     Atom.to(
-      PagePaths.WEBVIEW,
+      PagePaths.webView,
       queryParameters: {
-        'url': Uri.encodeFull(selectedItem.url),
-        'title': Uri.encodeFull(selectedItem.title),
+        'url': Uri.encodeFull(selectedItem!.url!),
+        'title': Uri.encodeFull(selectedItem!.title ?? "No title"),
       },
     );
   }
