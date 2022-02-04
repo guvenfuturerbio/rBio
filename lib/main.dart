@@ -36,12 +36,14 @@ Future<void> main() async {
   );
   runApp(
     RbioConfig(
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -77,7 +79,7 @@ class _MyAppState extends State<MyApp> {
             create: (context) => BgMeasurementsNotifierDoc(),
           ),
           ChangeNotifierProvider<HomeVm>(
-            create: (context) => HomeVm(),
+            create: (context) => HomeVm(context),
           ),
           ChangeNotifierProvider<ThemeNotifier>(
             create: (context) => ThemeNotifier(),
@@ -116,17 +118,19 @@ class _MyAppState extends State<MyApp> {
           ) {
             return OrientationBuilder(
               builder: (BuildContext context, Orientation orientation) {
-                RbioConfig.of(context).changeOrientation(orientation);
+                RbioConfig.of(context)?.changeOrientation(orientation);
 
                 return AtomMaterialApp(
-                  initialUrl: PagePaths.LOGIN,
+                  initialUrl: PagePaths.login,
                   routes: VRouterRoutes.routes,
                   onSystemPop: (data) async {
                     if (Atom.isDialogShow) {
                       try {
                         Atom.dismiss();
                         data.stopRedirection();
-                      } catch (e) {}
+                      } catch (e) {
+                        LoggerUtils.instance.i(e);
+                      }
                     } else {
                       final currentUrl = data.fromUrl ?? "";
                       if (currentUrl.contains('/home')) {
@@ -140,7 +144,7 @@ class _MyAppState extends State<MyApp> {
                   //
                   title: 'Güven Online',
                   debugShowCheckedModeBanner: false,
-                  navigatorObservers: [],
+                  navigatorObservers: const [],
 
                   //
                   builder: (BuildContext context, Widget? child) {
@@ -181,7 +185,7 @@ class _MyAppState extends State<MyApp> {
                   ],
                   supportedLocales:
                       context.read<LocaleNotifier>().supportedLocales,
-                  onPop: (VRedirector) async {},
+                  onPop: (vRedirector) async {},
                 );
               },
             );

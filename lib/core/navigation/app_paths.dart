@@ -111,7 +111,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.devices,
-      widget: DevicesScreen(),
+      widget: const DevicesScreen(),
     ),
 
     VWidget(
@@ -126,7 +126,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.searchPage,
-      widget: SearchScreen(),
+      widget: const SearchScreen(),
     ),
 
     // Create Appointment
@@ -201,7 +201,7 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.eResult,
       widget: ChangeNotifierProvider<EResultScreenVm>(
-        create: (context) => EResultScreenVm(),
+        create: (context) => EResultScreenVm(context),
         child: const EResultScreen(key: Key('EResultScreen')),
       ),
     ),
@@ -240,7 +240,7 @@ class VRouterRoutes {
       path: PagePaths.relatives,
       widget: ChangeNotifierProvider<RelativesVm>(
         create: (context) => RelativesVm(),
-        child: RelativesScreen(),
+        child: const RelativesScreen(),
       ),
     ),
 
@@ -436,8 +436,8 @@ class VRouterRoutes {
         ),
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (Mediminder.instance.selection?.deviceUUID == null ||
-                Mediminder.instance.selection?.deviceUUID == '') {
+            if (Mediminder.instance.selection.deviceUUID == null ||
+                Mediminder.instance.selection.deviceUUID == '') {
               await Atom.show(
                 GuvenAlert(
                   backgroundColor: getIt<ITheme>().cardBackgroundColor,
