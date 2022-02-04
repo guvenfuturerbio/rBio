@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 
 class WebConferanceScreen extends StatefulWidget {
-  String webConsultAppId;
-  int availability;
+  String? webConsultAppId;
+  int? availability;
 
   WebConferanceScreen({Key? key}) : super(key: key);
 
@@ -20,8 +20,8 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
       (_) async {
         await getIt<UserManager>().startMeeting(
           context,
-          widget.webConsultAppId,
-          widget.availability,
+          widget.webConsultAppId ?? '',
+          widget.availability ?? 0,
         );
       },
     );

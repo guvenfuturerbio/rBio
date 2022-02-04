@@ -14,20 +14,13 @@ class AppointmentListVm extends RbioVm {
   @override
   BuildContext mContext;
 
-  List<TranslatorResponse> _translator;
-  List<TranslatorResponse> get translators => _translator;
-
-  LoadingProgress _progress;
-  LoadingProgress get progress => _progress;
-
-  List<PatientAppointmentsResponse> _patientAppointments;
-  List<PatientAppointmentsResponse> get patientAppointments =>
-      _patientAppointments;
+  List<TranslatorResponse>? translator;
+  List<PatientAppointmentsResponse>? patientAppointments;
 
   late int _patientId;
-  bool showProgressOverlay;
+  bool showProgressOverlay = false;
   DateTime? _startDate, _endDate;
-  CancelAppointmentRequest cancelAppointmentRequest;
+  CancelAppointmentRequest? cancelAppointmentRequest;
 
   AppointmentListVm(this.mContext, {String? jitsiRoomId}) {
     _patientId = getIt<UserNotifier>().getPatient().id ?? 0;
@@ -71,17 +64,17 @@ class AppointmentListVm extends RbioVm {
 
   Future<void> fetchAllTranslator() async {
     try {
-      _progress = LoadingProgress.loading;
+      progress = LoadingProgress.loading;
       notifyListeners();
-      _translator = await getIt<UserManager>().getAllTranslator();
-      _progress = LoadingProgress.done;
+      translator = await getIt<UserManager>().getAllTranslator();
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
       showInfoDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      _progress = LoadingProgress.error;
+      progress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -127,12 +120,12 @@ class AppointmentListVm extends RbioVm {
       builder: (BuildContext context) {
         return CustomPopUpDropDown(
           title: LocaleProvider.of(context).get_translator,
-          translators: translators,
+          translators: translator ?? [],
           onChange: (value) {
             requestTranslator(
               appointmentId,
               TranslatorRequest(
-                interpreterId: translators[value].id,
+                interpreterId: translator?[value].id,
               ),
             );
           },
@@ -148,20 +141,20 @@ class AppointmentListVm extends RbioVm {
   }
 
   Future<void> fetchPatientAppointments() async {
-    _progress = LoadingProgress.loading;
+    progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      _patientAppointments = await getIt<Repository>().getPatientAppointments(
+      patientAppointments = await getIt<Repository>().getPatientAppointments(
         PatientAppointmentRequest(
           patientId: _patientId,
           to: endDate.toString(),
           from: startDate.toString(),
         ),
       );
-      _progress = LoadingProgress.done;
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      _progress = LoadingProgress.error;
+      progress = LoadingProgress.error;
       notifyListeners();
       showInfoDialog(
         LocaleProvider.current.warning,
@@ -246,10 +239,12 @@ class AppointmentListVm extends RbioVm {
   }
 
   Future<void> cancelAppointment() async {
+    if (cancelAppointmentRequest == null) return;
+
     try {
       showProgressOverlay = true;
       notifyListeners();
-      await getIt<Repository>().cancelAppointment(cancelAppointmentRequest);
+      await getIt<Repository>().cancelAppointment(cancelAppointmentRequest!);
       await fetchPatientAppointments();
       showProgressOverlay = false;
       notifyListeners();

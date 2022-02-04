@@ -70,7 +70,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         return const RbioLoading();
 
       case LoadingProgress.done:
-        return _buildPosts(vm.patientAppointments, vm);
+        return _buildPosts(vm.patientAppointments ?? [], vm);
 
       case LoadingProgress.error:
         return const RbioBodyError();
@@ -122,7 +122,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
         //
         Expanded(
-          child: vm.patientAppointments.isNotEmpty
+          child: (vm.patientAppointments?.isNotEmpty ?? false)
               ? ListView.builder(
                   padding: EdgeInsets.only(
                     bottom: R.sizes.defaultBottomValue,
