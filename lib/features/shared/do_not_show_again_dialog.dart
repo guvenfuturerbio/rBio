@@ -6,17 +6,16 @@ class DoNotAskAgainDialog extends StatefulWidget {
   final String title, subTitle, positiveButtonText, negativeButtonText;
   final Function onPositiveButtonClicked;
   final String doNotAskAgainText;
-  final String dialogKeyName;
 
-  DoNotAskAgainDialog({
-    this.dialogKeyName,
-    this.title,
-    this.subTitle,
-    this.positiveButtonText,
-    this.negativeButtonText,
-    this.onPositiveButtonClicked,
+  const DoNotAskAgainDialog({
+    Key? key,
+    required this.title,
+    required this.subTitle,
+    required this.positiveButtonText,
+    required this.negativeButtonText,
+    required this.onPositiveButtonClicked,
     this.doNotAskAgainText = 'Never ask again',
-  });
+  }) : super(key: key);
 
   @override
   _DoNotAskAgainDialogState createState() => _DoNotAskAgainDialogState();
@@ -27,7 +26,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
 
   Future<void> _updateDoNotShowAgain() async {
     await getIt<ISharedPreferencesManager>()
-        .setBool(SharedPreferencesKeys.UPDATE_DIALOG, false);
+        .setBool(SharedPreferencesKeys.updateDialog, false);
   }
 
   @override
@@ -56,7 +55,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                     value: doNotAskAgain,
                     onChanged: (val) {
                       setState(() {
-                        doNotAskAgain = val;
+                        doNotAskAgain = val!;
                       });
                     },
                     activeColor: getIt<ITheme>().mainColor,
@@ -64,7 +63,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                 ),
 
                 //
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
 
                 //
                 GestureDetector(

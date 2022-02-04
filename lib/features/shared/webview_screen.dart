@@ -10,11 +10,11 @@ import '../../core/core.dart';
 
 class WebViewScreen extends StatefulWidget {
   String url;
-  String title;
+  String? title;
 
   WebViewScreen({
-    Key key,
-    this.url,
+    Key? key,
+    required this.url,
     this.title,
   }) : super(key: key);
 
@@ -29,21 +29,21 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.title = Uri.decodeFull(Atom.queryParameters['title']);
-      widget.url = Uri.decodeFull(Atom.queryParameters['url']);
+      widget.title = Uri.decodeFull(Atom.queryParameters['title'] as String);
+      widget.url = Uri.decodeFull(Atom.queryParameters['url'] as String);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return RbioScaffold(
       appbar: RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
-          widget.title,
+          widget.title ?? "No title!",
         ),
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: 10, right: 20),
+            padding: const EdgeInsets.only(top: 10, right: 20),
             child: GestureDetector(
               onTap: () => {shareFile(context, widget.url)},
               child: Platform.isIOS
@@ -84,6 +84,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
   }
 
   void shareFile(BuildContext context, String url) async {
-    await FlutterShare.share(title: widget.title, linkUrl: url);
+    await FlutterShare.share(title: widget.title ?? "No title!", linkUrl: url);
   }
 }
