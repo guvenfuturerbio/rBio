@@ -2,10 +2,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
-import 'package:vrouter/src/core/extended_context.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../../core/core.dart';
@@ -47,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => LoginScreenVm(context: context),
+      create: (context) => LoginScreenVm(context),
       child: Consumer<LoginScreenVm>(
         builder: (
           BuildContext context,
@@ -80,10 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
   RbioAppBarLogin _buildAppBar() {
     return RbioAppBarLogin(
       leading: const SizedBox(),
-      title: SvgPicture.asset(
-        R.image.oneDoseHealth,
-        height: 50,
-      ),
     );
   }
 
@@ -116,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             //
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.WIDTH * 0.1),
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.1),
               child: Column(
                 children: [
                   //
@@ -190,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         //
         Container(
-          margin: EdgeInsets.only(bottom: 20),
+          margin: const EdgeInsets.only(bottom: 20),
           child: RbioTextFormField(
             obscureText: false,
             autocorrect: false,
@@ -315,7 +309,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           onPressed: () {
-            Atom.to(PagePaths.FORGOT_PASSWORD_STEP_1);
+            Atom.to(PagePaths.forgotPasswordStep1);
           },
         ),
       ],
@@ -337,7 +331,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Checkbox(
               value: value.clickedGeneralForm,
               onChanged: (newValue) {
-                value.clickedGeneralForm = newValue;
+                if (newValue != null) {
+                  value.clickedGeneralForm = newValue;
+                }
               },
               activeColor: getIt<ITheme>().mainColor,
             ),
@@ -377,7 +373,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Checkbox(
               value: value.checkedKvkkForm,
               onChanged: (newValue) {
-                value.checkedKvkkForm = newValue;
+                if (newValue != null) {
+                  value.checkedKvkkForm = newValue;
+                }
               },
               activeColor: getIt<ITheme>().mainColor,
             ),
@@ -413,7 +411,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Container(
                   child:
-                      value.versionCheckProgress == VersionCheckProgress.LOADING
+                      value.versionCheckProgress == VersionCheckProgress.loading
                           ? Column(
                               children: <Widget>[
                                 LoadingDialog(),
@@ -449,7 +447,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       onTap: () {
-                        context.vRouter.to(PagePaths.REGISTER_FIRST);
+                        context.vRouter.to(PagePaths.registerStep1);
                       },
                     ),
                   ],
@@ -462,9 +460,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 5, bottom: 10),
+                  margin: const EdgeInsets.only(top: 5, bottom: 10),
                   child: value.versionCheckProgress ==
-                          VersionCheckProgress.LOADING
+                          VersionCheckProgress.loading
                       ? Column(
                           children: <Widget>[
                             LoadingDialog(),
@@ -474,7 +472,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         )
                       : value.versionCheckProgress ==
-                                  VersionCheckProgress.DONE &&
+                                  VersionCheckProgress.done &&
                               value.needForceUpdate == false
                           ? Utils.instance.button(
                               text: LocaleProvider.of(context).btn_sign_in,
@@ -487,7 +485,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                           : value.needForceUpdate == true &&
                                   value.versionCheckProgress !=
-                                      VersionCheckProgress.ERROR
+                                      VersionCheckProgress.error
                               ? Utils.instance.button(
                                   onPressed: () {
                                     value.startAppVersionOperation();
@@ -524,7 +522,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       onTap: () {
-                        context.vRouter.to(PagePaths.REGISTER_FIRST);
+                        context.vRouter.to(PagePaths.registerStep1);
                       },
                     ),
                   ],
@@ -532,64 +530,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           );
-  }
-
-  Widget _buildSeperator() {
-    return Row(
-      children: [
-        //
-        Expanded(
-          child: Container(
-            height: 1,
-            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-          ),
-        ),
-
-        //
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            "or",
-            style: context.xHeadline3.copyWith(
-              color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-            ),
-          ),
-        ),
-
-        //
-        Expanded(
-          child: Container(
-            height: 1,
-            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialLogin() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        //
-        SvgPicture.asset(
-          R.image.facebook,
-          width: 50,
-        ),
-
-        //
-        SvgPicture.asset(
-          R.image.apple,
-          width: 50,
-        ),
-
-        //
-        SvgPicture.asset(
-          R.image.google,
-          width: 50,
-        ),
-      ],
-    );
   }
 
   Widget _buildVersion() {

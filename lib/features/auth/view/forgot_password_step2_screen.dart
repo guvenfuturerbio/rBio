@@ -8,7 +8,7 @@ import '../auth.dart';
 import '../viewmodel/forgot_password_step2_vm.dart';
 
 class ForgotPasswordStep2Screen extends StatefulWidget {
-  ForgotPasswordStep2Screen({Key key}) : super(key: key);
+  const ForgotPasswordStep2Screen({Key? key}) : super(key: key);
 
   @override
   _ForgotPasswordStep2ScreenState createState() =>
@@ -16,15 +16,15 @@ class ForgotPasswordStep2Screen extends StatefulWidget {
 }
 
 class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
-  String identityNumber;
+  late String identityNumber;
 
-  TextEditingController _temporaryController;
-  TextEditingController _passwordController;
-  TextEditingController _passwordAgainController;
+  late TextEditingController _temporaryController;
+  late TextEditingController _passwordController;
+  late TextEditingController _passwordAgainController;
 
-  FocusNode _temporaryFocusNode;
-  FocusNode _passwordFocusNode;
-  FocusNode _passwordAgainFocusNode;
+  late FocusNode _temporaryFocusNode;
+  late FocusNode _passwordFocusNode;
+  late FocusNode _passwordAgainFocusNode;
 
   @override
   void initState() {
@@ -55,9 +55,9 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
   @override
   Widget build(BuildContext context) {
     try {
-      identityNumber = Atom.queryParameters['identityNumber'];
+      identityNumber = Atom.queryParameters['identityNumber']!;
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<ForgotPasswordStep2ScreenVm>(
@@ -66,7 +66,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
         builder: (
           BuildContext context,
           ForgotPasswordStep2ScreenVm value,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioScaffold(
@@ -82,7 +82,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
 
   Widget _buildBody(ForgotPasswordStep2ScreenVm value) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 20),
       child: KeyboardAvoider(
         autoScroll: true,
         child: RbioKeyboardActions(
@@ -98,7 +98,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
             children: <Widget>[
               //
               Container(
-                margin: EdgeInsets.only(bottom: 20, top: 40),
+                margin: const EdgeInsets.only(bottom: 20, top: 40),
                 child: RbioTextFormField(
                   focusNode: _temporaryFocusNode,
                   controller: _temporaryController,
@@ -111,7 +111,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
 
               //
               Container(
-                margin: EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 20),
                 child: RbioTextFormField(
                   focusNode: _passwordFocusNode,
                   controller: _passwordController,
@@ -127,7 +127,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
 
               //
               Container(
-                margin: EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 20),
                 child: RbioTextFormField(
                   focusNode: _passwordAgainFocusNode,
                   controller: _passwordAgainController,
@@ -171,7 +171,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
               //
               Center(
                 child: Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  margin: const EdgeInsets.only(top: 20, bottom: 20),
                   child: RbioElevatedButton(
                     title: LocaleProvider.of(context).btn_done.toUpperCase(),
                     onTap: () {
@@ -197,9 +197,9 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
                       changePasswordModel.oldPassword =
                           _temporaryController.text;
 
-                      if (_temporaryController.text.length > 0 &&
-                          _passwordController.text.length > 0 &&
-                          _passwordAgainController.text.length > 0) {
+                      if (_temporaryController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty &&
+                          _passwordAgainController.text.isNotEmpty) {
                         value.forgotPassStep2(changePasswordModel);
                       } else {
                         value.showInfoDialog(
@@ -223,7 +223,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     String text,
   ) {
     final child = Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
       child: Row(

@@ -5,12 +5,12 @@ import '../../../core/core.dart';
 import 'kvkk_form_vm.dart';
 
 class KvkkFormScreen extends StatefulWidget {
-  final String title;
-  final String text;
+  final String? title;
+  final String? text;
   final alwaysAsk;
 
-  KvkkFormScreen({
-    Key key,
+  const KvkkFormScreen({
+    Key? key,
     this.title,
     this.text,
     this.alwaysAsk,
@@ -25,12 +25,12 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
   Widget build(BuildContext context) {
     return GuvenAlert(
       backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title),
+      title: GuvenAlert.buildTitle(widget.title!),
       content: SingleChildScrollView(
         child: ChangeNotifierProvider<KvkkFormScreenVm>(
           create: (context) => KvkkFormScreenVm(
             context: context,
-            alwaysAsk: widget?.alwaysAsk ?? false,
+            alwaysAsk: widget.alwaysAsk ?? false,
           ),
           child: Consumer<KvkkFormScreenVm>(
             builder: (context, value, child) {
@@ -41,10 +41,10 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     //
-                    GuvenAlert.buildSmallDescription(widget.text),
+                    GuvenAlert.buildSmallDescription(widget.text!),
 
                     //
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
 

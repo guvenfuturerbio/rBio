@@ -7,7 +7,7 @@ class NecessaryIdentityScreenVm extends RbioVm {
   BuildContext mContext;
   NecessaryIdentityScreenVm(this.mContext);
 
-  LoadingDialog loadingDialog;
+  LoadingDialog? loadingDialog;
 
   Future<void> updateIdentity(String identityNumber) async {
     if (identityNumber.isNotEmpty) {
@@ -40,7 +40,7 @@ class NecessaryIdentityScreenVm extends RbioVm {
   }
 
   void hideDialog() {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
+    if (loadingDialog != null && loadingDialog!.isShowing()) {
       Navigator.of(mContext).pop();
       loadingDialog = null;
     }
