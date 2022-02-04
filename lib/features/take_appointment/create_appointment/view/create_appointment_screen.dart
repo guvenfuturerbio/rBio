@@ -49,7 +49,7 @@ class CreateAppointmentScreen extends StatelessWidget {
 
     return ChangeNotifierProvider<CreateAppointmentVm>(
       create: (context) => CreateAppointmentVm(
-          context: context,
+          mContext: context,
           forOnline: forOnline,
           fromSearch: fromSearch,
           fromSymptom: fromSymptom,
@@ -147,7 +147,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                   hint: LocaleProvider.current.pls_select_person,
                   itemList: vm.relativeResponse == null
                       ? []
-                      : vm.relativeResponse.patientRelatives,
+                      : vm.relativeResponse!.patientRelatives,
                   val: vm,
                   whichField: Fields.relative,
                   progress: vm.relativeProgress,
@@ -160,7 +160,7 @@ class CreateAppointmentScreen extends StatelessWidget {
             hint: forOnline
                 ? LocaleProvider.current.get_online_appointment
                 : LocaleProvider.current.pls_select_hosp,
-            itemList: vm.tenantsFilterResponse ,
+            itemList: vm.tenantsFilterResponse! ,
             val: vm,
             whichField: Fields.tenant,
             progress: vm.progress,
@@ -180,7 +180,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       context: context,
                       header: LocaleProvider.current.depart_selection,
                       hint: LocaleProvider.current.pls_select_depart,
-                      itemList: vm.filterDepartmentResponse ,
+                      itemList: vm.filterDepartmentResponse!,
                       val: vm,
                       whichField: Fields.department,
                       progress: vm.departmentProgress,
@@ -201,7 +201,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       context: context,
                       header: LocaleProvider.current.doctor_selection,
                       hint: LocaleProvider.current.pls_select_doctor,
-                      itemList: vm.filterResourcesResponse ,
+                      itemList: vm.filterResourceResponse !,
                       val: vm,
                       whichField: Fields.doctors,
                       progress: vm.doctorProgress,
@@ -269,14 +269,14 @@ class CreateAppointmentScreen extends StatelessWidget {
         'patientId': Uri.encodeFull(val.dropdownValueRelative.id!),
         'patientName': Uri.encodeFull(
             '${val.dropdownValueRelative.name} ${val.dropdownValueRelative.surname}'),
-        'tenantId': val.dropdownValueTenant.id.toString(),
-        'tenantName': Uri.encodeFull(val.dropdownValueTenant.title.toString()),
-        'departmentId': val.dropdownValueDepartment.id.toString(),
+        'tenantId': val.dropdownValueTenant!.id!.toString(),
+        'tenantName': Uri.encodeFull(val.dropdownValueTenant!.title.toString()),
+        'departmentId': val.dropdownValueDepartment!.id.toString(),
         'departmentName':
-            Uri.encodeFull(val.dropdownValueDepartment.title.toString()),
-        'resourceId': val.dropdownValueDoctor.id.toString(),
+            Uri.encodeFull(val.dropdownValueDepartment!.title.toString()),
+        'resourceId': val.dropdownValueDoctor!.id.toString(),
         'resourceName':
-            Uri.encodeFull(val.dropdownValueDoctor.title.toString()),
+            Uri.encodeFull(val.dropdownValueDoctor!.title.toString()),
         'forOnline': forOnline.toString(),
       },
     );

@@ -8,21 +8,15 @@ import 'iyzico_response_sms_payment_page.dart';
 
 class DoMobilePaymentScreenVm extends ChangeNotifier {
   BuildContext mContext;
-  AppointmentRequest appointmentRequest;
-  String voucherCode;
-  bool _showOverlay;
-  bool _isSalesContractConfirmed;
-  bool _cancellationFormConfirmed;
+  AppointmentRequest? appointmentRequest;
+  String? voucherCode;
+  bool? _showOverlay;
+  bool? _isSalesContractConfirmed;
+  bool? _cancellationFormConfirmed;
   GuvenResponseModel _paymentResponse;
 
   DoMobilePaymentScreenVm(
-      {BuildContext context,
-      AppointmentRequest appointmentRequest,
-      String voucherCode}) {
-    this.appointmentRequest = appointmentRequest;
-    mContext = context;
-    this.voucherCode = voucherCode;
-  }
+      {required this.mContext, this.appointmentRequest, this.voucherCode});
 
   bool get showOverlay => _showOverlay ?? false;
 
@@ -30,24 +24,21 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
 
   bool get isSalesContractConfirmed => _isSalesContractConfirmed ?? false;
 
-  bool get cancellationFormConfirmed =>
-      _cancellationFormConfirmed ?? false;
+  bool get cancellationFormConfirmed => _cancellationFormConfirmed ?? false;
 
   Future<void> doMobilePayment(ERandevuCCResponse cc, int appointmentId) async {
     if (checkRequiredFields(cc)) {
       _showOverlay = true;
-      cc.expirationMonth = cc.expirationMonth.substring(0, 2);
-      cc.expirationYear = "20" + cc.expirationYear.substring(3, 5);
+      cc.expirationMonth = cc.expirationMonth?.substring(0, 2);
+      cc.expirationYear = "20" + cc.expirationYear?.substring(3, 5);
       notifyListeners();
 
       try {
-        _paymentResponse =
-            await getIt<Repository>().doMobilePaymentWithVoucher(
+        _paymentResponse = await getIt<Repository>().doMobilePaymentWithVoucher(
           DoMobilePaymentWithVoucherRequest(
               appointmentId: appointmentId,
               cc: cc,
-              appointmentRequest:
-                  appointmentRequest.saveAppointmentsRequest,
+              appointmentRequest: appointmentRequest?.saveAppointmentsRequest,
               voucherCode: voucherCode),
         );
 
@@ -75,8 +66,8 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   }
 
   Future<void> showDistanceSaleContract({
-   required String packageName,
-   required String price,
+    required String packageName,
+    required String price,
   }) async {
     UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
     String filledForm = await fillAllFormFields(
@@ -130,33 +121,38 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
 
   bool checkRequiredFields(ERandevuCCResponse cc) {
     bool isCorrect = false;
-    if (cc.cardHolder.length > 0) {
-      if (cc.cardNumber.replaceAll(" ", "").length == 16) {
-        if (cc.cvv.length > 2) {
-          if ((cc?.expirationYear?.length ?? 0) == 5) {
-            if ((cc?.expirationMonth?.length ?? 0) == 5) {
-              isCorrect = true;
+    try {
+      if (cc.cardHolder!.isNotEmpty) {
+        if (cc.cardNumber!.replaceAll(" ", "").length == 16) {
+          if (cc.cvv!.length > 2) {
+            if ((cc.expirationYear?.length ?? 0) == 5) {
+              if ((cc.expirationMonth?.length ?? 0) == 5) {
+                isCorrect = true;
+              } else {
+                showGradientDialog(LocaleProvider.of(mContext).warning,
+                    LocaleProvider.of(mContext).expiration_date_should_be);
+              }
             } else {
               showGradientDialog(LocaleProvider.of(mContext).warning,
                   LocaleProvider.of(mContext).expiration_date_should_be);
             }
           } else {
             showGradientDialog(LocaleProvider.of(mContext).warning,
-                LocaleProvider.of(mContext).expiration_date_should_be);
+                LocaleProvider.of(mContext).cvv_code_least_3_digit);
           }
         } else {
           showGradientDialog(LocaleProvider.of(mContext).warning,
-              LocaleProvider.of(mContext).cvv_code_least_3_digit);
+              LocaleProvider.of(mContext).credit_card_lenght_should);
         }
       } else {
         showGradientDialog(LocaleProvider.of(mContext).warning,
-            LocaleProvider.of(mContext).credit_card_lenght_should);
+            LocaleProvider.of(mContext).card_holder_cannot_empty);
       }
-    } else {
+      return isCorrect;
+    } catch (e) {
       showGradientDialog(LocaleProvider.of(mContext).warning,
-          LocaleProvider.of(mContext).card_holder_cannot_empty);
+          LocaleProvider.of(mContext).check_and_try_again);
     }
-    return isCorrect;
   }
 
   void showGradientDialog(String title, String text) {

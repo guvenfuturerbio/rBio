@@ -58,13 +58,12 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   Future<void> getAvailableDates(DateTime date) async {
     initDate = date;
     availableDatesProgress = LoadingProgress.loading;
-    slotsProgress = null;
     notifyListeners();
 
     try {
       if (forOnline) {
-        availableDates..addAll(await getAvailableLists(date, true, 1));
-        availableDates..addAll(await getAvailableLists(date, true, 7));
+        availableDates.addAll(await getAvailableLists(date, true, 1));
+        availableDates.addAll(await getAvailableLists(date, true, 7));
       } else {
         availableDates = await getAvailableLists(date, false, tenantId);
       }
@@ -210,7 +209,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
             tmp.add(element);
           }
 
-          data.events?.forEach((event) {
+          for (var event in data.events) {
             for (var element in availableSlotsList) {
               DateTime dateFrom = DateTime(
                 DateTime.parse(filterFromDate).year,
@@ -234,7 +233,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
                 tmp.remove(element);
               }
             }
-          });
+          }
 
           availableSlotsList = tmp;
           List<DateTime> removedList = [];
@@ -271,7 +270,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       }
 
       availableSlots = appointments.groupBy(
-        (m) => m.from.substring(11, 16).substring(0, 2),
+        (m) => m.from!.substring(11, 16).substring(0, 2),
       );
       notifyListeners();
     } catch (e, stackTrace) {

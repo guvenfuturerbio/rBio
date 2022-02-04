@@ -127,7 +127,7 @@ class _ListBodyState extends State<ListBody>
                 _buildLeftCard(
                   context,
                   item,
-                  widget.vm.availableSlots[item],
+                  widget.vm.availableSlots[item]!,
                 ),
               ],
             ],
@@ -159,7 +159,7 @@ class _ListBodyState extends State<ListBody>
           ),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: widget.completeNotifier.value.value == value
+            color: widget.completeNotifier.value?.value == value
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor,
             borderRadius: BorderRadius.circular(15),
@@ -169,7 +169,7 @@ class _ListBodyState extends State<ListBody>
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
-              color: widget.completeNotifier.value.value == value
+              color: widget.completeNotifier.value?.value == value
                   ? getIt<ITheme>().textColor
                   : getIt<ITheme>().textColorSecondary,
             ),
@@ -205,7 +205,7 @@ class _ListBodyState extends State<ListBody>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: selectedModel.items
                   ?.map((e) => _buildRightCard(context, e))
-                  .toList(),
+                  .toList() as List<Widget>,
             ),
           ),
         );

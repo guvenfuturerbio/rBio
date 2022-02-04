@@ -17,29 +17,23 @@ import '../../../generated/l10n.dart';
 
 class IyzicoResponseVm with ChangeNotifier {
   // Properties
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> stream;
-  String? code;
-  String? errorText;
-  String? videoId;
-  String ?uid;
-  StreamSubscription<LogRecord> _logMessagesSub;
+  late StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> stream;
+  late String code;
+  late String errorText;
+  late String videoId;
+  late String? uid;
 
   IyzicoResponseVm(this.uid) {
     listenFirestore();
   }
 
-  void _handleLogMessage(LogRecord msg) {
-    print(msg.message);
-  }
-
   @override
   void dispose() {
     stream.cancel();
-    _logMessagesSub.cancel();
     super.dispose();
   }
 
-  String listenFirestore() {
+  void listenFirestore() {
     stream = FirebaseFirestore.instance
         .collection("/iyzico")
         .doc(uid)
@@ -71,24 +65,4 @@ class IyzicoResponseVm with ChangeNotifier {
       }
     });
   }
-
-  void _handleMessage(List<Object> args) {
-    {
-      code = args[0] as String;
-      errorText = args[1] as String;
-      videoId = args[2] as String;
-    }
-    {}
-  }
-
-  void _httpClientCreateCallback(Client httpClient) {
-    HttpOverrides.global = HttpOverrideCertificateVerificationInDev();
-  }
-}
-
-class HttpOverrideCertificateVerificationInDev extends HttpOverrides {
-  @override
-  Future<HttpClient> createHttpClient(SecurityContext context) async => super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
 }

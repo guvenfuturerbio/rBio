@@ -8,7 +8,7 @@ import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
 
 class CreateAppointmentSummaryScreen extends StatefulWidget {
-  CreateAppointmentSummaryScreen({Key key}) : super(key: key);
+ const CreateAppointmentSummaryScreen({Key? key}) : super(key: key);
 
   @override
   _CreateAppointmentSummaryScreenState createState() =>
@@ -17,21 +17,21 @@ class CreateAppointmentSummaryScreen extends StatefulWidget {
 
 class _CreateAppointmentSummaryScreenState
     extends State<CreateAppointmentSummaryScreen> {
-  String patientId;
-  String patientName;
-  int tenantId;
-  String tenantName;
-  int departmentId;
-  String departmentName;
-  int resourceId;
-  String resourceName;
-  String date;
-  String? from;
-  String? to;
-  bool forOnline;
+  late String patientId;
+ late  String patientName;
+  late int tenantId;
+ late  String tenantName;
+  late int departmentId;
+  late String departmentName;
+  late int resourceId;
+  late String resourceName;
+  late String date;
+  late String from;
+  late String to;
+  late bool forOnline;
 
-  TextEditingController codeEditingController;
-  FocusNode codeFocusNode;
+  late TextEditingController codeEditingController;
+  late FocusNode codeFocusNode;
 
   @override
   void initState() {
@@ -307,6 +307,7 @@ class _CreateAppointmentSummaryScreenState
                         showElevation: false,
                         onTap: () {
                           vm.saveAppointment(
+                          
                             price: vm?.orgVideoCallPriceResponse?.patientPrice
                                 ?.toString(),
                             forOnline: forOnline,

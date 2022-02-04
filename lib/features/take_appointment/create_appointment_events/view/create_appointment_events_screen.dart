@@ -54,7 +54,7 @@ class _CreateAppointmentEventsScreenState
 
     return ChangeNotifierProvider<CreateAppointmentEventsVm>(
       create: (context) => CreateAppointmentEventsVm(
-        context: context,
+        mContext: context,
         tenantId: widget.tenantId,
         departmentId: widget.departmentId,
         resourceId: widget.resourceId,
@@ -127,7 +127,7 @@ class _CreateAppointmentEventsScreenState
                     'patientId': Uri.encodeFull(widget.patientId),
                     'patientName': Uri.encodeFull(widget.patientName),
                     'tenantId':
-                        completeNotifier.value.selected.tenantId.toString(),
+                        completeNotifier.value!.selected!.tenantId!.toString(),
                     'tenantName': Uri.encodeFull(widget.tenantName.toString()),
                     'departmentId': widget.departmentId.toString(),
                     'departmentName':
@@ -136,8 +136,8 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': completeNotifier.value.selected.from.toString(),
-                    'to': completeNotifier.value.selected.to.toString(),
+                    'from': completeNotifier.value!.selected!.from!.toString(),
+                    'to': completeNotifier.value!.selected!.to!.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );
@@ -221,14 +221,14 @@ class _CreateAppointmentEventsScreenState
   Widget _buildHeaderVerticalGap() => const SizedBox(height: 8);
 
   Widget _buildHeaderActiveText(String text) => Text(
-        text ?? '',
+        text ,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline3,
       );
 
   Widget _buildHeaderPassiveText(String text) => Text(
-        text ?? '',
+        text,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline4.copyWith(

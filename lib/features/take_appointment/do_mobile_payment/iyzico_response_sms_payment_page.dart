@@ -19,7 +19,7 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
 
   IyzicoResponseSmsPaymentScreen({
     Key? key,
-    this.uid,
+     this.uid,
     required this.html,
     this.departmentName,
     this.doctorName,
@@ -57,7 +57,7 @@ class _IyzicoResponseSmsPaymentScreenState
           return RbioScaffold(
             appbar: RbioAppBar(),
             body: kIsWeb
-                ? HtmlElementView(
+                ? const HtmlElementView(
                     viewType: "PayPalButtons",
                   )
                 : WebView(
