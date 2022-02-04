@@ -5,19 +5,19 @@ import 'package:onedosehealth/features/chronic_tracking/utils/selected_scale_typ
 
 class ScaleMeasurementViewModel {
   final ScaleModel scaleModel;
-  ScaleMeasurementViewModel({this.scaleModel});
+  ScaleMeasurementViewModel({required this.scaleModel});
 
-  bool get isDeleted => scaleModel.isDeleted;
+  bool? get isDeleted => scaleModel.isDeleted;
 
-  int get id => scaleModel.time;
+  int? get id => scaleModel.time;
 
   bool get isManuel => scaleModel.isManuel ?? false;
 
-  int get measurementId => scaleModel.measurementId;
+  int? get measurementId => scaleModel.measurementId;
 
-  DateTime get date => scaleModel?.dateTime;
+  DateTime? get date => scaleModel.dateTime;
 
-  double get weight => scaleModel?.weight;
+  double? get weight => scaleModel.weight;
 
   set weight(rhs) => scaleModel.weight = rhs;
 
@@ -25,46 +25,46 @@ class ScaleMeasurementViewModel {
 
   get time => scaleModel.time;
 
-  int get age => scaleModel.age;
+  int? get age => scaleModel.age;
 
-  set age(rhs) => scaleModel.age = (DateTime.now().year - rhs);
+  set age(int? rhs) => scaleModel.age = (DateTime.now().year - (rhs ?? 0));
 
-  int get height => scaleModel.height;
+  int? get height => scaleModel.height;
 
-  int get gender => scaleModel.gender;
+  int? get gender => scaleModel.gender;
 
-  double get bmi => scaleModel.bmi;
+  double? get bmi => scaleModel.bmi;
 
-  set bmi(rhs) => scaleModel.bmi = rhs;
+  set bmi(double? rhs) => scaleModel.bmi = rhs;
 
-  double get bodyFat => scaleModel.bodyFat;
+  double? get bodyFat => scaleModel.bodyFat;
 
-  set bodyFat(rhs) => scaleModel.bodyFat = rhs;
+  set bodyFat(double? rhs) => scaleModel.bodyFat = rhs;
 
-  double get boneMass => scaleModel.boneMass;
+  double? get boneMass => scaleModel.boneMass;
 
-  set boneMass(rhs) => scaleModel.boneMass = rhs;
+  set boneMass(double? rhs) => scaleModel.boneMass = rhs;
 
-  double get water => scaleModel.water;
+  double? get water => scaleModel.water;
 
-  set water(rhs) => scaleModel.water = rhs;
+  set water(double? rhs) => scaleModel.water = rhs;
 
-  double get visceralFat => scaleModel.visceralFat;
+  double? get visceralFat => scaleModel.visceralFat;
 
-  set visceralFat(rhs) => scaleModel.visceralFat = rhs;
+  set visceralFat(double? rhs) => scaleModel.visceralFat = rhs;
 
-  double get muscle => scaleModel.muscle;
+  double? get muscle => scaleModel.muscle;
 
-  set muscle(rhs) => scaleModel.muscle = rhs;
+  set muscle(double? rhs) => scaleModel.muscle = rhs;
 
-  double get bmh => scaleModel.bmh;
+  double? get bmh => scaleModel.bmh;
 
-  set bmh(rhs) => scaleModel.bmh = rhs;
+  set bmh(double? rhs) => scaleModel.bmh = rhs;
 
-  List<String> get images => scaleModel.images;
+  List<String> get images => scaleModel.images ?? [];
   set images(List<String> rhs) => scaleModel.images = rhs;
 
-  DateTime get dateTime => scaleModel.dateTime;
+  DateTime get dateTime => scaleModel.dateTime ?? DateTime.now();
 
   set dateTime(rhs) => scaleModel.dateTime = rhs;
 
@@ -72,41 +72,34 @@ class ScaleMeasurementViewModel {
 
   set note(String rhs) => scaleModel.note = rhs;
 
-  double getMeasurement(SelectedScaleType type) =>
+  double? getMeasurement(SelectedScaleType type) =>
       _getReleatedMeasurement(type);
 
   Color getColor(SelectedScaleType type) => _getColor(type);
 
-  List<String> get imageUrl => scaleModel.images;
+  List<String> get imageUrl => scaleModel.images ?? [];
 
-  ScaleUnit get unit => scaleModel?.unit;
+  ScaleUnit get unit => scaleModel.unit ?? ScaleUnit.kg;
 
-  int minRange(SelectedScaleType selected) => getTargetMin(selected);
-  int maxRange(SelectedScaleType selected) => getTargetMax(selected);
+  int? minRange(SelectedScaleType selected) => getTargetMin(selected);
+  int? maxRange(SelectedScaleType selected) => getTargetMax(selected);
 
-  int getTargetMin(SelectedScaleType type) {
+  int? getTargetMin(SelectedScaleType type) {
     switch (type) {
       case SelectedScaleType.BMI:
         return _getBmiRange['min'];
-        break;
       case SelectedScaleType.WEIGHT:
         return _getWeightRange['min'];
-        break;
       case SelectedScaleType.BODY_FAT:
         return _getBodyFatRange['min'];
-        break;
       case SelectedScaleType.BONE_MASS:
         return _getBoneMassRange['min'];
-        break;
       case SelectedScaleType.WATER:
         return _getWaterRange['min'];
-        break;
       case SelectedScaleType.VISCERAL_FAT:
         return _getVisceralFatRange['min'];
-        break;
       case SelectedScaleType.MUSCLE:
         return _getMuscleRange['min'];
-        break;
       default:
         return 0;
     }
@@ -120,7 +113,7 @@ class ScaleMeasurementViewModel {
   Map<String, int> get _getWeightRange {
     var range = {
       'min': (weightTarget['target'] ?? 0).toInt(),
-      'max': ((weightTarget['high'] ?? 1 - 1) ?? 0).toInt(),
+      'max': (weightTarget['high'] ?? 1 - 1).toInt(),
     };
 
     return range;
@@ -129,7 +122,7 @@ class ScaleMeasurementViewModel {
   Map<String, int> get _getBodyFatRange {
     var range = {
       'min': (bodyFatTarget['target'] ?? 0).toInt(),
-      'max': ((bodyFatTarget['high'] ?? 1 - 1) ?? 0).toInt(),
+      'max': (bodyFatTarget['high'] ?? 1 - 1).toInt(),
     };
 
     return range;
@@ -162,36 +155,28 @@ class ScaleMeasurementViewModel {
     return {'min': 0, 'max': 0};
   }
 
-  int getTargetMax(SelectedScaleType type) {
+  int? getTargetMax(SelectedScaleType type) {
     switch (type) {
       case SelectedScaleType.BMI:
         return _getBmiRange['max'];
-        break;
       case SelectedScaleType.WEIGHT:
         return _getWeightRange['max'];
-        break;
       case SelectedScaleType.BODY_FAT:
         return _getBodyFatRange['max'];
-        break;
       case SelectedScaleType.BONE_MASS:
         return _getBoneMassRange['max'];
-        break;
       case SelectedScaleType.WATER:
         return _getWaterRange['max'];
-        break;
       case SelectedScaleType.VISCERAL_FAT:
         return _getVisceralFatRange['max'];
-        break;
       case SelectedScaleType.MUSCLE:
         return _getMuscleRange['max'];
-
-        break;
       default:
         return 0;
     }
   }
 
-  Color _getWeightColor(double weight) {
+  Color _getWeightColor(double? weight) {
     double low, target, high;
     var map = weightTarget;
     low = map['low'] ?? 0;
@@ -217,35 +202,35 @@ class ScaleMeasurementViewModel {
 
   Map<String, double> get weightTarget {
     Map<String, double> map = {};
-    if (age > 10 && age < 25) {
-      map['low'] = (height * height) / 10000 * 19;
-      map['target'] = (height * height) / 10000 * 22;
-      map['high'] = (height * height) / 10000 * 24;
-    } else if (age > 24 && age < 35) {
-      map['low'] = (height * height) / 10000 * 20;
-      map['target'] = (height * height) / 10000 * 23;
-      map['high'] = (height * height) / 10000 * 25;
-    } else if (age > 34 && age < 45) {
-      map['low'] = (height * height) / 10000 * 21;
-      map['target'] = (height * height) / 10000 * 24;
-      map['high'] = (height * height) / 10000 * 26;
-    } else if (age > 44 && age < 55) {
-      map['low'] = (height * height) / 10000 * 22;
-      map['target'] = (height * height) / 10000 * 25;
-      map['high'] = (height * height) / 10000 * 27;
-    } else if (age > 54 && age < 65) {
-      map['low'] = (height * height) / 10000 * 23;
-      map['target'] = (height * height) / 10000 * 26;
-      map['high'] = (height * height) / 10000 * 28;
-    } else if (age > 65) {
-      map['low'] = (height * height) / 10000 * 24;
-      map['target'] = (height * height) / 10000 * 27;
-      map['high'] = (height * height) / 10000 * 29;
+    if (age! > 10 && age! < 25) {
+      map['low'] = (height! * height!) / 10000 * 19;
+      map['target'] = (height! * height!) / 10000 * 22;
+      map['high'] = (height! * height!) / 10000 * 24;
+    } else if (age! > 24 && age! < 35) {
+      map['low'] = (height! * height!) / 10000 * 20;
+      map['target'] = (height! * height!) / 10000 * 23;
+      map['high'] = (height! * height!) / 10000 * 25;
+    } else if (age! > 34 && age! < 45) {
+      map['low'] = (height! * height!) / 10000 * 21;
+      map['target'] = (height! * height!) / 10000 * 24;
+      map['high'] = (height! * height!) / 10000 * 26;
+    } else if (age! > 44 && age! < 55) {
+      map['low'] = (height! * height!) / 10000 * 22;
+      map['target'] = (height! * height!) / 10000 * 25;
+      map['high'] = (height! * height!) / 10000 * 27;
+    } else if (age! > 54 && age! < 65) {
+      map['low'] = (height! * height!) / 10000 * 23;
+      map['target'] = (height! * height!) / 10000 * 26;
+      map['high'] = (height! * height!) / 10000 * 28;
+    } else if (age! > 65) {
+      map['low'] = (height! * height!) / 10000 * 24;
+      map['target'] = (height! * height!) / 10000 * 27;
+      map['high'] = (height! * height!) / 10000 * 29;
     }
     return map;
   }
 
-  Color _getBmiColor(double bmi) {
+  Color _getBmiColor(double? bmi) {
     if (bmi != null) {
       if (bmi < 19) {
         return R.color.low;
@@ -263,11 +248,10 @@ class ScaleMeasurementViewModel {
     }
   }
 
-  Color _getBodyFatColor(double bodyFat) {
+  Color _getBodyFatColor(double? bodyFat) {
     double low, target, high;
 
     Map<String, double> map = bodyFatTarget;
-    print(map);
     low = map['low'] ?? 0;
     target = map['target'] ?? 0;
     high = map['high'] ?? 0;
@@ -291,23 +275,23 @@ class ScaleMeasurementViewModel {
 
   Map<String, double> get bodyFatTarget {
     Map<String, double> map = {};
-    if (age > 10 && age < 18) {
+    if (age! > 10 && age! < 18) {
       map['low'] = 16;
       map['target'] = 30;
       map['high'] = 35;
-    } else if (age == 19) {
+    } else if (age! == 19) {
       map['low'] = 18;
       map['target'] = 31;
       map['high'] = 36;
-    } else if (age >= 20 && age < 40) {
+    } else if (age! >= 20 && age! < 40) {
       map['low'] = 20;
       map['target'] = 32;
       map['high'] = 38;
-    } else if (age >= 40 && age < 60) {
+    } else if (age! >= 40 && age! < 60) {
       map['low'] = 22;
       map['target'] = 33;
       map['high'] = 39;
-    } else if (age >= 60) {
+    } else if (age! >= 60) {
       map['low'] = 23;
       map['target'] = 35;
       map['high'] = 41;
@@ -315,23 +299,23 @@ class ScaleMeasurementViewModel {
     return map;
   }
 
-  Color _getBoneMassColor(double boneMass) {
-    if (weight != null) {
+  Color _getBoneMassColor(double? boneMass) {
+    if (weight != null && boneMass != null) {
       if (gender == 0 &&
-          ((weight <= 65 && boneMass == 2.65) ||
-              ((weight <= 65 && weight >= 95) && boneMass == 3.29) ||
-              ((weight > 95) && boneMass == 3.69))) {
+          ((weight! <= 65 && boneMass == 2.65) ||
+              ((weight! <= 65 && weight! >= 95) && boneMass == 3.29) ||
+              ((weight! > 95) && boneMass == 3.69))) {
         return R.color.target;
-      } else if (((weight <= 50 && boneMass == 1.95) ||
-          ((weight <= 50 && weight >= 75) && boneMass == 2.40) ||
-          ((weight > 76) && boneMass == 2.95))) {
+      } else if (((weight! <= 50 && boneMass == 1.95) ||
+          ((weight! <= 50 && weight! >= 75) && boneMass == 2.40) ||
+          ((weight! > 76) && boneMass == 2.95))) {
         return R.color.target;
       }
     }
     return R.color.grey.withOpacity(.2);
   }
 
-  Color _getWaterColor(double water) {
+  Color _getWaterColor(double? water) {
     if (water != null) {
       if (gender == 0) {
         if (water < 51) {
@@ -359,7 +343,7 @@ class ScaleMeasurementViewModel {
     }
   }
 
-  Color _getVisceralFatColor(double visceralFat) {
+  Color _getVisceralFatColor(double? visceralFat) {
     if (visceralFat != null) {
       if (visceralFat > 0 && visceralFat <= 10) {
         return R.color.target;
@@ -373,7 +357,7 @@ class ScaleMeasurementViewModel {
     }
   }
 
-  Color _getMuscleColor(double muscle) {
+  Color _getMuscleColor(double? muscle) {
     if (muscle != null) {
       return R.color.target;
     } else {
@@ -385,31 +369,24 @@ class ScaleMeasurementViewModel {
     switch (type) {
       case SelectedScaleType.BMI:
         return _getBmiColor(bmi);
-        break;
       case SelectedScaleType.WEIGHT:
         return _getWeightColor(weight);
-        break;
       case SelectedScaleType.BODY_FAT:
         return _getBodyFatColor(bodyFat);
-        break;
       case SelectedScaleType.BONE_MASS:
         return _getBoneMassColor(boneMass);
-        break;
       case SelectedScaleType.WATER:
         return _getWaterColor(water);
-        break;
       case SelectedScaleType.VISCERAL_FAT:
         return _getVisceralFatColor(visceralFat);
-        break;
       case SelectedScaleType.MUSCLE:
         return _getMuscleColor(muscle);
-        break;
       default:
         return R.color.grey.withOpacity(.2);
     }
   }
 
-  double _getReleatedMeasurement(SelectedScaleType type) {
+  double? _getReleatedMeasurement(SelectedScaleType type) {
     switch (type) {
       case SelectedScaleType.BMI:
         return bmi;
@@ -433,7 +410,7 @@ class ScaleMeasurementViewModel {
   void calculateVariables() {
     bmi = getBMI();
     bmh = getBMH();
-    time = (dateTime ?? DateTime.now()).millisecondsSinceEpoch;
+    time = dateTime.millisecondsSinceEpoch;
     if (!isManuel) {
       visceralFat = getVisceralFat();
       if (scaleModel.impedance != null) {
@@ -445,10 +422,10 @@ class ScaleMeasurementViewModel {
     }
   }
 
-  double getBMI() => weight / (((height * height) / 100.0) / 100.0);
+  double getBMI() => weight! / (((height! * height!) / 100.0) / 100.0);
 
   double getWater() {
-    var coeff;
+    double coeff;
     var water = (100.0 - getBodyFat()) * 0.7;
 
     if (water < 50) {
@@ -463,30 +440,30 @@ class ScaleMeasurementViewModel {
   double getBodyFat() {
     double bodyFat = 0.0;
     double lbmSub = 0.8;
-    if (gender == 0 && age <= 49) {
+    if (gender == 0 && age! <= 49) {
       lbmSub = 9.25;
-    } else if (gender == 0 && age > 49) {
+    } else if (gender == 0 && age! > 49) {
       lbmSub = 7.25;
     }
     double lbmCoeff = getLBMCoefficient();
     double coeff = 1.0;
-    if (gender == 1 && weight < 61.0) {
+    if (gender == 1 && weight! < 61.0) {
       coeff = 0.98;
-    } else if (gender == 0 && weight > 60.0) {
+    } else if (gender == 0 && weight! > 60.0) {
       coeff = 0.96;
 
-      if (height > 160) {
+      if (height! > 160) {
         coeff *= 1.03;
       }
-    } else if (gender == 0 && weight < 50.0) {
+    } else if (gender == 0 && weight! < 50.0) {
       coeff = 1.02;
 
-      if (height > 160) {
+      if (height! > 160) {
         coeff *= 1.03;
       }
     }
 
-    bodyFat = (1.0 - (((lbmCoeff - lbmSub) * coeff) / weight)) * 100.0;
+    bodyFat = (1.0 - (((lbmCoeff - lbmSub) * coeff) / weight!)) * 100.0;
 
     if (bodyFat > 63.0) {
       bodyFat = 75.0;
@@ -496,10 +473,10 @@ class ScaleMeasurementViewModel {
   }
 
   double getLBMCoefficient() {
-    double lbm = (height * 9.058 / 100.0) * (height / 100.0);
-    lbm += weight * 0.32 + 12.226;
-    lbm -= scaleModel.impedance * 0.0068;
-    lbm -= age * 0.0542;
+    double lbm = (height! * 9.058 / 100.0) * (height! / 100.0);
+    lbm += weight! * 0.32 + 12.226;
+    lbm -= scaleModel.impedance! * 0.0068;
+    lbm -= age! * 0.0542;
 
     return lbm;
   }
@@ -507,26 +484,27 @@ class ScaleMeasurementViewModel {
   double getVisceralFat() {
     double visceralFat = 0.0;
     if (gender == 0) {
-      if (weight > (13.0 - (height * 0.5)) * -1.0) {
+      if (weight! > (13.0 - (height! * 0.5)) * -1.0) {
         double subsubcalc =
-            ((height * 1.45) + (height * 0.1158) * height) - 120.0;
-        double subcalc = weight * 500.0 / subsubcalc;
-        visceralFat = (subcalc - 6.0) + (age * 0.07);
+            ((height! * 1.45) + (height! * 0.1158) * height!) - 120.0;
+        double subcalc = weight! * 500.0 / subsubcalc;
+        visceralFat = (subcalc - 6.0) + (age! * 0.07);
       } else {
-        double subcalc = 0.691 + (height * -0.0024) + (height * -0.0024);
-        visceralFat = (((height * 0.027) - (subcalc * weight)) * -1.0) +
-            (age * 0.07) -
-            age;
+        double subcalc = 0.691 + (height! * -0.0024) + (height! * -0.0024);
+        visceralFat = (((height! * 0.027) - (subcalc * weight!)) * -1.0) +
+            (age! * 0.07) -
+            age!;
       }
     } else {
-      if (height < weight * 1.6) {
-        double subcalc = ((height * 0.4) - (height * (height * 0.0826))) * -1.0;
+      if (height! < weight! * 1.6) {
+        double subcalc =
+            ((height! * 0.4) - (height! * (height! * 0.0826))) * -1.0;
         visceralFat =
-            ((weight * 305.0) / (subcalc + 48.0)) - 2.9 + (age * 0.15);
+            ((weight! * 305.0) / (subcalc + 48.0)) - 2.9 + (age! * 0.15);
       } else {
-        double subcalc = 0.765 + height * -0.0015;
-        visceralFat = (((height * 0.143) - (weight * subcalc)) * -1.0) +
-            (age * 0.15) -
+        double subcalc = 0.765 + height! * -0.0015;
+        visceralFat = (((height! * 0.143) - (weight! * subcalc)) * -1.0) +
+            (age! * 0.15) -
             5.0;
       }
     }
@@ -562,7 +540,7 @@ class ScaleMeasurementViewModel {
 
   double getMuscle() {
     double muscleMass =
-        weight - ((getBodyFat() * 0.01) * weight) - getBoneMass();
+        weight! - ((getBodyFat() * 0.01) * weight!) - getBoneMass();
 
     if (gender == 0 && muscleMass >= 84.0) {
       muscleMass = 120.0;
@@ -575,9 +553,9 @@ class ScaleMeasurementViewModel {
 
   double getBMH() {
     if (gender == 0) {
-      return 66.5 + (13.75 * weight) + (5.03 * height) - (6.75 * age);
+      return 66.5 + (13.75 * weight!) + (5.03 * height!) - (6.75 * age!);
     } else {
-      return 655.1 + (9.56 * weight) + (1.85 * height) - (4.68 * age);
+      return 655.1 + (9.56 * weight!) + (1.85 * height!) - (4.68 * age!);
     }
   }
 

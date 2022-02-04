@@ -10,26 +10,24 @@ import '../../../../../../../core/core.dart';
 
 class BgTaggerVm extends ChangeNotifier {
   BgTaggerVm({
-    this.context,
+    required this.context,
     this.isEdit = false,
-    this.data,
-    this.isManual,
-    this.key,
+    required this.data,
+    required this.isManual,
+    required this.key,
   }) {
-    controller.text = data.level ?? '';
-    noteController.text = data.note ?? '';
+    controller.text = data.level;
+    noteController.text = data.note;
   }
 
-  final key;
+  final Key key;
   final BuildContext context;
   final GlucoseData data;
   final bool isEdit;
   final bool isManual;
   final TextEditingController controller = TextEditingController();
   final TextEditingController noteController = TextEditingController();
-  DateTime get date => data.time == null
-      ? DateTime.now()
-      : DateTime.fromMillisecondsSinceEpoch(data.time);
+  DateTime get date => DateTime.fromMillisecondsSinceEpoch(data.time);
 
   void onChanged(String value) {
     data.level = controller.text == '' ? '0' : controller.text;
@@ -60,10 +58,9 @@ class BgTaggerVm extends ChangeNotifier {
           }
         } else {
           cameraPerm = await Permission.camera.request();
-          print(cameraPerm);
         }
       } catch (e) {
-        print(e);
+        LoggerUtils.instance.e(e);
       }
 
       if (photoPerm == PermissionStatus.denied ||
@@ -76,20 +73,21 @@ class BgTaggerVm extends ChangeNotifier {
         return;
       }
 
-      final PickedFile pickedFile = await picker.getImage(source: imageSource);
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final PickedFile? pickedFile = await picker.getImage(source: imageSource);
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
         Navigator.pop(context);
       });
-      final fileName = basename(pickedFile.path);
-      final file = File(fileName);
-      await file.copy('${getIt<GuvenSettings>().appDocDirectory}/$fileName');
+
       if (pickedFile != null) {
+        final fileName = basename(pickedFile.path);
+        final file = File(fileName);
+        await file.copy('${getIt<GuvenSettings>().appDocDirectory}/$fileName');
         changePic(pickedFile, fileName);
       } else {
-        print('No image selected.');
+        LoggerUtils.instance.e('No image selected.');
       }
     } catch (e, stk) {
-      print(e);
+      LoggerUtils.instance.e(e);
       debugPrintStack(stackTrace: stk);
     }
   }
@@ -121,22 +119,22 @@ class BgTaggerVm extends ChangeNotifier {
 
   Future<void> rightAction() async {
     if (data.level != "" && data.level != "0") {
-      data.note = noteController.text ?? "";
-      data.userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
+      data.note = noteController.text;
+      data.userId = getIt<ProfileStorageImpl>().getFirst().id;
       data.tag = data.tag ?? 3;
 
       await getIt<GlucoseStorageImpl>().write(data, shouldSendToServer: true);
       if (data.imageURL != null && data.imageURL != "") {
-        await getIt<GlucoseStorageImpl>().updateImage(data.imageURL, data.key);
+        getIt<GlucoseStorageImpl>().updateImage(data.imageURL!, data.key);
       }
     }
     Atom.dismiss();
   }
 
   Future<void> update() async {
-    data.note = noteController.text ?? "";
+    data.note = noteController.text;
     if (data.imageURL != null && data.imageURL != "") {
-      getIt<GlucoseStorageImpl>().updateImage(data.imageURL, key);
+      getIt<GlucoseStorageImpl>().updateImage(data.imageURL!, key);
     } else {
       await getIt<GlucoseStorageImpl>().update(data, key);
     }

@@ -4,7 +4,7 @@ import '../../../../../core/core.dart';
 class BgMeasurementGlucoseViewModel {
   final GlucoseData bgMeasurement;
 
-  BgMeasurementGlucoseViewModel(this.bgMeasurement);
+  BgMeasurementGlucoseViewModel({required this.bgMeasurement});
 
   DateTime get date {
     final DateTime dateTime = DateTime(
@@ -26,11 +26,11 @@ class BgMeasurementGlucoseViewModel {
     return bgMeasurement.time;
   }
 
-  String get imageURL {
+  String? get imageURL {
     return bgMeasurement.imageURL;
   }
 
-  set imageURL(String url) {
+  set imageURL(String? url) {
     bgMeasurement.imageURL = url;
   }
 
@@ -42,7 +42,7 @@ class BgMeasurementGlucoseViewModel {
     return bgMeasurement.color;
   }
 
-  int get tag {
+  int? get tag {
     return bgMeasurement.tag;
   }
 

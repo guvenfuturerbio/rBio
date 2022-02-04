@@ -1,43 +1,35 @@
 import '../../../../../generated/l10n.dart';
 
 enum GlucoseMarginsFilter {
-  VERY_LOW,
-  LOW,
-  TARGET,
-  HIGH,
-  VERY_HIGH,
-  HUNGRY,
-  FULL,
-  OTHER
+  veryLow,
+  low,
+  target,
+  high,
+  veryHigh,
+  hungry,
+  full,
+  other
 }
 
 extension GlucoseMarginsFilterExtension on GlucoseMarginsFilter {
   String toShortString() {
     switch (this) {
-      case GlucoseMarginsFilter.VERY_LOW:
+      case GlucoseMarginsFilter.veryLow:
         return LocaleProvider.current.very_low;
-        break;
-      case GlucoseMarginsFilter.LOW:
+      case GlucoseMarginsFilter.low:
         return LocaleProvider.current.low;
-        break;
-      case GlucoseMarginsFilter.TARGET:
+      case GlucoseMarginsFilter.target:
         return LocaleProvider.current.target;
-        break;
-      case GlucoseMarginsFilter.HIGH:
+      case GlucoseMarginsFilter.high:
         return LocaleProvider.current.high;
-        break;
-      case GlucoseMarginsFilter.VERY_HIGH:
+      case GlucoseMarginsFilter.veryHigh:
         return LocaleProvider.current.very_high;
-        break;
-      case GlucoseMarginsFilter.HUNGRY:
+      case GlucoseMarginsFilter.hungry:
         return LocaleProvider.current.hungry;
-        break;
-      case GlucoseMarginsFilter.FULL:
+      case GlucoseMarginsFilter.full:
         return LocaleProvider.current.full;
-        break;
-      case GlucoseMarginsFilter.OTHER:
+      case GlucoseMarginsFilter.other:
         return LocaleProvider.current.other;
-        break;
     }
   }
 }

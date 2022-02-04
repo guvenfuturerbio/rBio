@@ -6,7 +6,7 @@ import '../../../../../model/treatment_model/treatment_model.dart';
 
 class TreatmentEditVm extends ChangeNotifier {
   TreatmentModel selectedModel;
-  String patientName;
+  late String patientName;
   TreatmentEditVm(this.selectedModel) {
     patientName = getIt<ProfileStorageImpl>().getFirst().name;
   }
@@ -16,7 +16,7 @@ class TreatmentEditVm extends ChangeNotifier {
         .addTreatment(getIt<ProfileStorageImpl>().getFirst(), treatment);
     var profiles = await getIt<ChronicTrackingRepository>().getAllProfiles();
     if (profiles.isNotEmpty) {
-      await getIt<ProfileStorageImpl>().updateFromTreatment(
+      getIt<ProfileStorageImpl>().updateFromTreatment(
         profiles.last,
       );
     }

@@ -34,7 +34,6 @@ class LocaleProvider {
       Intl.defaultLocale = localeName;
       final instance = LocaleProvider();
       LocaleProvider._current = instance;
-
       return instance;
     });
   }

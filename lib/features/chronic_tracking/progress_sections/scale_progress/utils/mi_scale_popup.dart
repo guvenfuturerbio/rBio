@@ -7,17 +7,17 @@ import 'scale_measurements/scale_measurement_vm.dart';
 
 class MiScalePopUp extends StatelessWidget {
   final bool hasAlreadyPair;
-  const MiScalePopUp({Key key, this.hasAlreadyPair = false}) : super(key: key);
+  const MiScalePopUp({Key? key, this.hasAlreadyPair = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
           color: getIt<ITheme>().mainColor,
-          height: context.HEIGHT,
-          width: context.WIDTH,
+          height: context.height,
+          width: context.width,
           child: Consumer<BleReactorOps>(builder: (_, _bleReactor, __) {
-            ScaleMeasurementViewModel data = _bleReactor.scaleDevice.scaleData;
+            ScaleMeasurementViewModel? data = _bleReactor.scaleDevice.scaleData;
             return hasAlreadyPair
                 ? _scaleStep(_bleReactor, context, data)
                 : _pairingStep(_bleReactor, context);
@@ -26,50 +26,50 @@ class MiScalePopUp extends StatelessWidget {
   }
 
   Column _scaleStep(BleReactorOps _bleReactor, BuildContext context,
-      ScaleMeasurementViewModel data) {
-    return _bleReactor.scaleDevice != null ||
-            _bleReactor.scaleDevice.scaleData != null
+      ScaleMeasurementViewModel? data) {
+    return data != null && _bleReactor.scaleDevice.scaleData != null
         ? Column(
             children: [
               Expanded(
                 child: Center(
                     child: getMeasurementStatus(context, data.scaleModel)),
               ),
-              if (data.scaleModel.measurementComplete &&
-                  data.scaleModel.impedance != 0)
+              if (data.scaleModel.measurementComplete ??
+                  true && data.scaleModel.impedance != 0)
                 Expanded(
                     child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 2.5,
                     crossAxisCount: 2,
                   ),
                   children: [
                     textItem(
-                        '${LocaleProvider.current.scale_data_bmi}: ${data.bmi.toStringAsFixed(2)}'),
+                        '${LocaleProvider.current.scale_data_bmi}: ${data.bmi?.toStringAsFixed(2)}'),
                     textItem(
-                        '${LocaleProvider.current.scale_data_body_fat}: ${data.bodyFat.toStringAsFixed(2)} ${data.unit}'),
+                        '${LocaleProvider.current.scale_data_body_fat}: ${data.bodyFat?.toStringAsFixed(2)} ${data.unit}'),
                     textItem(
-                        '${LocaleProvider.current.scale_data_bone_mass}: ${data.boneMass.toStringAsFixed(2)} ${data.unit}'),
+                        '${LocaleProvider.current.scale_data_bone_mass}: ${data.boneMass?.toStringAsFixed(2)} ${data.unit}'),
                     textItem(
-                        '${LocaleProvider.current.scale_data_muscle}: ${data.muscle.toStringAsFixed(2)} ${data.unit}'),
+                        '${LocaleProvider.current.scale_data_muscle}: ${data.muscle?.toStringAsFixed(2)} ${data.unit}'),
                     textItem(
-                        '${LocaleProvider.current.scale_data_visceral_fat}: ${data.visceralFat.toStringAsFixed(2)}'),
+                        '${LocaleProvider.current.scale_data_visceral_fat}: ${data.visceralFat?.toStringAsFixed(2)}'),
                     textItem(
-                        '${LocaleProvider.current.scale_data_water}: ${data.water.toStringAsFixed(2)}%')
+                        '${LocaleProvider.current.scale_data_water}: ${data.water?.toStringAsFixed(2)}%')
                   ],
                 )),
               Text(
-                data.scaleModel.weightStabilized
-                    ? data.scaleModel.measurementComplete
-                        ? '${LocaleProvider.current.ble_scale_weight_info}'
-                        : '${LocaleProvider.current.ble_scale_stabilizing_info}'
-                    : '${LocaleProvider.current.ble_scale_weight_calculating_info}',
+                data.scaleModel.weightStabilized ?? false
+                    ? data.scaleModel.measurementComplete ?? false
+                        ? LocaleProvider.current.ble_scale_weight_info
+                        : LocaleProvider.current.ble_scale_stabilizing_info
+                    : LocaleProvider.current.ble_scale_weight_calculating_info,
                 style: TextStyle(color: R.color.white),
               ),
               SizedBox(
-                height: context.HEIGHT * 0.1,
-                child: _bleReactor
-                        .scaleDevice.scaleData.scaleModel.measurementComplete
+                height: context.height * 0.1,
+                child: _bleReactor.scaleDevice.scaleData?.scaleModel
+                            .measurementComplete ??
+                        false
                     ? Row(
                         children: [
                           Expanded(
@@ -80,40 +80,30 @@ class MiScalePopUp extends StatelessWidget {
                                   _bleReactor.scaleDevice.scaleData = null;
                                   Atom.dismiss();
                                 },
-                                child: Text(
-                                    '${LocaleProvider.current.close.toUpperCase()}')),
+                                child: Text(LocaleProvider.current.close
+                                    .toUpperCase())),
                           ),
                           Expanded(
                             child: TextButton(
                                 style: TextButton.styleFrom(
                                     primary: R.color.white),
                                 onPressed: () async {
-                                  print(_bleReactor
-                                      .scaleDevice.scaleData.scaleModel
-                                      .toMap()
-                                      .toString());
-                                  // TODO Will Be handle
-                                  /* await ScaleRepository().addNewScaleData(
-                                      _bleReactor.scaleDevice.scaleData, false); */
                                   _bleReactor.scaleDevice.scaleData = null;
                                   Atom.dismiss();
                                 },
                                 child: Text(
-                                    '${LocaleProvider.current.save.toUpperCase()}')),
+                                    LocaleProvider.current.save.toUpperCase())),
                           ),
                         ],
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               )
             ],
           )
         : Column(
             children: [
               Expanded(
-                child: Container(
-                  child:
-                      Text('${LocaleProvider.current.ble_scale_scaling_info}'),
-                ),
+                child: Text(LocaleProvider.current.ble_scale_scaling_info),
               ),
             ],
           );
@@ -129,17 +119,17 @@ class MiScalePopUp extends StatelessWidget {
             Text(
               data.weight.toString(),
               style: TextStyle(
-                  color: R.color.white, fontSize: context.TEXTSCALE * 32),
+                  color: R.color.white, fontSize: context.textScale * 32),
             ),
             Text(
               data.getUnit,
               style: TextStyle(
-                  color: R.color.white, fontSize: context.TEXTSCALE * 32),
+                  color: R.color.white, fontSize: context.textScale * 32),
             )
           ],
         ),
         ProgressCircle(
-          size: context.HEIGHT * .5,
+          size: context.height * .5,
           color: R.color.white,
         ),
       ],
@@ -154,25 +144,30 @@ class MiScalePopUp extends StatelessWidget {
             child: Stack(
               alignment: AlignmentDirectional.center,
               children: [
-                _bleReactor.scaleDevice.scaleData.scaleModel.measurementComplete
-                    ? SizedBox()
+                _bleReactor.scaleDevice.scaleData?.scaleModel
+                            .measurementComplete ??
+                        false
+                    ? const SizedBox()
                     : ProgressCircle(
-                        size: context.HEIGHT * .5, color: R.color.white),
+                        size: context.height * .5, color: R.color.white),
                 Text(
-                    _bleReactor.scaleDevice.scaleData.scaleModel
-                            .measurementComplete
+                    _bleReactor.scaleDevice.scaleData?.scaleModel
+                                .measurementComplete ??
+                            false
                         ? LocaleProvider.current.pair_successful
                         : LocaleProvider.current.pairing,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: R.color.white,
-                        fontSize: _bleReactor.scaleDevice.scaleData.scaleModel
-                                .measurementComplete
-                            ? context.TEXTSCALE * 25
+                        fontSize: _bleReactor.scaleDevice.scaleData?.scaleModel
+                                    .measurementComplete ??
+                                false
+                            ? context.textScale * 25
                             : null)),
               ],
             )),
-        _bleReactor.scaleDevice.scaleData.scaleModel.measurementComplete
+        _bleReactor.scaleDevice.scaleData?.scaleModel.measurementComplete ??
+                false
             ? Expanded(
                 child: Row(
                   children: [
@@ -185,15 +180,15 @@ class MiScalePopUp extends StatelessWidget {
                             getIt<BleReactorOps>().clearControlPointResponse();
                             Atom.dismiss();
                             Atom.historyBack();
-                            Atom.to(PagePaths.DEVICES, isReplacement: true);
+                            Atom.to(PagePaths.devices, isReplacement: true);
                           },
-                          child: Text(
-                              '${LocaleProvider.current.done.toUpperCase()}')),
+                          child:
+                              Text(LocaleProvider.current.done.toUpperCase())),
                     ),
                   ],
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }

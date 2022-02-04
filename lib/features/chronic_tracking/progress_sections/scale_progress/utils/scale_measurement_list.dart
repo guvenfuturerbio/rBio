@@ -16,13 +16,15 @@ import 'scale_measurements/scale_measurement_vm.dart';
 import 'scale_tagger/scale_tagger_pop_up.dart';
 
 class ScaleMeasurementListWidget extends StatefulWidget {
-  final List<ScaleMeasurementViewModel> scaleMeasurements;
+  final List<ScaleMeasurementViewModel>? scaleMeasurements;
   final ScrollController scrollController;
-  final bool useStickyGroupSeparatorsValue;
-  ScaleMeasurementListWidget(
-      {this.scaleMeasurements,
-      this.scrollController,
-      this.useStickyGroupSeparatorsValue});
+  final bool? useStickyGroupSeparatorsValue;
+  const ScaleMeasurementListWidget({
+    Key? key,
+    this.scaleMeasurements,
+    required this.scrollController,
+    this.useStickyGroupSeparatorsValue,
+  });
   @override
   _ScaleMeasurementListWidgetState createState() =>
       _ScaleMeasurementListWidgetState();
@@ -33,8 +35,8 @@ class _ScaleMeasurementListWidgetState
   @override
   Widget build(BuildContext context) {
     var list = <ScaleMeasurementViewModel>[];
-    if (widget.scaleMeasurements != null)
-      list = widget.scaleMeasurements
+    if (widget.scaleMeasurements != null) {
+      list = widget.scaleMeasurements!
           .where((element) =>
               element.getMeasurement(Provider.of<ScaleProgressPageViewModel>(
                       context,
@@ -42,11 +44,12 @@ class _ScaleMeasurementListWidgetState
                   .currentScaleType) !=
               null)
           .toList();
+    }
     return Column(
       children: [
         Expanded(
           child: list.isEmpty
-              ? Center(child: Text('${LocaleProvider.current.no_measurement}'))
+              ? Center(child: Text(LocaleProvider.current.no_measurement))
               : GroupedListView<ScaleMeasurementViewModel, DateTime>(
                   elements: list,
                   scrollDirection: Axis.vertical,
@@ -54,23 +57,23 @@ class _ScaleMeasurementListWidgetState
                   controller: widget.scrollController,
                   floatingHeader: true,
                   padding: EdgeInsets.only(
-                      bottom: 2 * (context.HEIGHT * .1) * context.TEXTSCALE),
+                      bottom: 2 * (context.height * .1) * context.textScale),
                   useStickyGroupSeparators:
                       widget.useStickyGroupSeparatorsValue ?? false,
                   groupBy:
                       (ScaleMeasurementViewModel scaleMeasurementViewModel) =>
                           DateTime(
-                              scaleMeasurementViewModel.date.year,
-                              scaleMeasurementViewModel.date.month,
-                              scaleMeasurementViewModel.date.day),
+                              scaleMeasurementViewModel.date!.year,
+                              scaleMeasurementViewModel.date!.month,
+                              scaleMeasurementViewModel.date!.day),
                   groupHeaderBuilder:
                       (ScaleMeasurementViewModel bgMeasurementViewModel) {
                     return Container(
                       alignment: Alignment.center,
                       width: double.infinity,
-                      height: (context.HEIGHT * .07) * context.TEXTSCALE,
+                      height: (context.height * .07) * context.textScale,
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 8),
+                        margin: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -78,14 +81,15 @@ class _ScaleMeasurementListWidgetState
                                 color: Colors.black.withAlpha(50),
                                 blurRadius: 5,
                                 spreadRadius: 0,
-                                offset: Offset(5, 5))
+                                offset: const Offset(5, 5))
                           ],
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
+                            DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
+                                .format(bgMeasurementViewModel.date!),
                           ),
                         ),
                       ),
@@ -101,7 +105,7 @@ class _ScaleMeasurementListWidgetState
                         .isChartShow) {
                       Provider.of<ScaleProgressPageViewModel>(context,
                               listen: false)
-                          .fetchScrolledData(data.date);
+                          .fetchScrolledData(data.date!);
                     }
                   },
                 ),
@@ -114,7 +118,7 @@ class _ScaleMeasurementListWidgetState
 Widget measurementList(
     ScaleMeasurementViewModel scaleMeasurementViewModel, BuildContext context) {
   return Slidable(
-    actionPane: SlidableDrawerActionPane(),
+    actionPane: const SlidableDrawerActionPane(),
     actionExtentRatio: 0.25,
     child: GestureDetector(
       onTap: () {
@@ -128,16 +132,16 @@ Widget measurementList(
       },
       child: Row(
         children: [
-          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
+          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date!),
               style: context.xBodyText1),
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              height: (context.HEIGHT * .08) * context.TEXTSCALE,
-              margin: EdgeInsets.only(left: 8, right: 8, top: 8),
+              height: (context.height * .08) * context.textScale,
+              margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
               decoration: BoxDecoration(
                 color: Colors.green,
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                     colors: [Colors.white, Colors.white],
                     begin: Alignment.bottomLeft,
                     end: Alignment.centerRight),
@@ -146,11 +150,11 @@ Widget measurementList(
                       color: Colors.black.withAlpha(50),
                       blurRadius: 5,
                       spreadRadius: 0,
-                      offset: Offset(5, 5))
+                      offset: const Offset(5, 5))
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(30.0)),
               ),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,14 +175,10 @@ Widget measurementList(
         icon: Icons.delete,
         onTap: () {
           try {
-            //_showSnackBar('Delete')
-
-            print(scaleMeasurementViewModel.id);
-
             getIt<ScaleStorageImpl>()
                 .delete(scaleMeasurementViewModel.scaleModel.key);
           } catch (e) {
-            print(e);
+            LoggerUtils.instance.e(e);
           }
         },
       ),
@@ -196,18 +196,17 @@ Row _timeAndImageSection(
           fontWeight: FontWeight.w900,
         ),
       ),
-    (scaleMeasurementViewModel.imageUrl == null ||
-            scaleMeasurementViewModel.imageUrl.isEmpty)
-        ? Container(
-            width: 60 * context.TEXTSCALE,
-            height: 60 * context.TEXTSCALE,
+    (scaleMeasurementViewModel.imageUrl.isEmpty)
+        ? SizedBox(
+            width: 60 * context.textScale,
+            height: 60 * context.textScale,
             child: Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   height: 25,
                   width: 25,
                   child: SvgPicture.asset(
@@ -218,8 +217,8 @@ Row _timeAndImageSection(
             onTap: () =>
                 _galeryView(context, scaleMeasurementViewModel.imageUrl),
             child: SizedBox(
-              width: 60 * context.TEXTSCALE,
-              height: 60 * context.TEXTSCALE,
+              width: 60 * context.textScale,
+              height: 60 * context.textScale,
               child: StackOfCards(
                 children: [
                   ...scaleMeasurementViewModel.imageUrl.map(
@@ -259,19 +258,20 @@ Expanded _textAndScaleSection(
             children: [
               Text(
                   scaleMeasurementViewModel
-                      .getMeasurement(
-                          Provider.of<ScaleProgressPageViewModel>(context)
-                              .currentScaleType)
-                      .toStringAsFixed(2),
+                          .getMeasurement(
+                              Provider.of<ScaleProgressPageViewModel>(context)
+                                  .currentScaleType)
+                          ?.toStringAsFixed(2) ??
+                      '',
                   style: context.xHeadline1),
-              Text('${(scaleMeasurementViewModel.unit ?? ScaleUnit.KG).toStr}',
+              Text(scaleMeasurementViewModel.unit.toStr,
                   style: context.xBodyText1),
             ],
           ),
         ),
         Expanded(
           flex: 4,
-          child: Text(scaleMeasurementViewModel.note ?? ''),
+          child: Text(scaleMeasurementViewModel.note),
         ),
       ],
     ),

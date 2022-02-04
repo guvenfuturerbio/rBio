@@ -11,7 +11,7 @@ import 'bg_filter_pop_up_vm.dart';
 class BgFilterPopUp extends StatelessWidget {
   final double width;
   final double height;
-  const BgFilterPopUp({Key key, @required this.width, @required this.height})
+  const BgFilterPopUp({Key? key, required this.width, required this.height})
       : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class BgFilterPopUp extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(10),
+        insetPadding: const EdgeInsets.all(10),
         elevation: 0,
         child: ChangeNotifierProvider(
           create: (_) => BgFilterPopUpVm(
@@ -47,13 +47,13 @@ class BgFilterPopUp extends StatelessWidget {
                             children: value.colorInfo.keys
                                 .map((color) => _colorFilterItem(
                                     text:
-                                        value.colorInfo[color].toShortString(),
+                                        value.colorInfo[color]!.toShortString(),
                                     status: value.isFilterSelected(
-                                        value.colorInfo[color]),
+                                        value.colorInfo[color]!),
                                     color: color,
                                     size: 15,
                                     statCallback: (_) => value
-                                        .changeFilter(value.colorInfo[color]),
+                                        .changeFilter(value.colorInfo[color]!),
                                     isHungry: false))
                                 .toList(),
                           ),
@@ -68,14 +68,14 @@ class BgFilterPopUp extends StatelessWidget {
                                     status: value.isFilterSelected(state),
                                     color: R.color.state_color,
                                     size: 15,
-                                    style: state == GlucoseMarginsFilter.FULL ||
-                                            state == GlucoseMarginsFilter.HUNGRY
+                                    style: state == GlucoseMarginsFilter.full ||
+                                            state == GlucoseMarginsFilter.hungry
                                         ? BoxShape.circle
                                         : BoxShape.rectangle,
                                     statCallback: (_) =>
                                         value.changeFilter(state),
                                     isHungry:
-                                        state == GlucoseMarginsFilter.HUNGRY))
+                                        state == GlucoseMarginsFilter.hungry))
                                 .toList(),
                           ),
                         ),
@@ -104,12 +104,12 @@ class BgFilterPopUp extends StatelessWidget {
                                           R.color.white
                                         ]),
                                   ),
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 15, vertical: 10),
                                   child: Text(
                                     LocaleProvider.current.cancel,
                                     softWrap: false,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black, fontSize: 17),
                                   ),
                                 ),
@@ -138,14 +138,14 @@ class BgFilterPopUp extends StatelessWidget {
                                           R.color.btnDarkBlue
                                         ]),
                                   ),
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 15, vertical: 10),
                                   child: Text(
-                                    '${LocaleProvider.current.save}',
+                                    LocaleProvider.current.save,
                                     maxLines: 1,
                                     textAlign: TextAlign.center,
                                     softWrap: false,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 17),
                                   ),
                                 ),
@@ -161,9 +161,9 @@ class BgFilterPopUp extends StatelessWidget {
                               value.resetFilterValues();
                             },
                             child: Text(
-                                '${LocaleProvider.current.reset_filter_value}',
+                                LocaleProvider.current.reset_filter_value,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     decoration: TextDecoration.underline)))
                       ],
                     ),
@@ -178,20 +178,20 @@ class BgFilterPopUp extends StatelessWidget {
   }
 
   Padding _colorFilterItem(
-      {double size,
-      String text,
-      Color color,
-      bool status,
-      BoxShape style,
-      Function(bool) statCallback,
-      bool isHungry}) {
+      {double? size,
+      required String text,
+      required Color color,
+      bool? status,
+      BoxShape? style,
+      Function(bool?)? statCallback,
+      required bool isHungry}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 25),
+            margin: const EdgeInsets.symmetric(horizontal: 25),
             height: size,
             width: size,
             decoration: BoxDecoration(
@@ -203,8 +203,7 @@ class BgFilterPopUp extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(flex: 2, child: Text('$text')),
-          //TODO: will be change to Sinem's design
+          Expanded(flex: 2, child: Text(text)),
           Expanded(
               child: SizedBox(
                   height: size,

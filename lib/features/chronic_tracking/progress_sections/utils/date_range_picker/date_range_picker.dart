@@ -4,21 +4,20 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart' as intl;
 import '../../../../../core/core.dart';
 import 'package:provider/provider.dart';
-import '../../../lib/widgets/utils/time_period_filters.dart';
 
 part 'date_range_picker_vm.dart';
 
 class DateRangePicker extends StatelessWidget {
-  DateRangePicker(
-      {Key key,
-      this.selected,
-      this.setSelectedItem,
-      this.setStartDate,
-      this.setEndDate,
-      this.endDate,
-      this.startDate,
-      this.nextDate,
-      this.previousDate,
+  const DateRangePicker(
+      {Key? key,
+      required this.selected,
+      required this.setSelectedItem,
+      required this.setStartDate,
+      required this.setEndDate,
+      required this.endDate,
+      required this.startDate,
+      required this.nextDate,
+      required this.previousDate,
       this.height})
       : super(key: key);
   final TimePeriodFilter selected;
@@ -31,17 +30,17 @@ class DateRangePicker extends StatelessWidget {
   final Function(DateTime) setStartDate;
   final Function(DateTime) setEndDate;
 
-  final double height;
+  final double? height;
 
   final Function() nextDate;
   final Function() previousDate;
 
   List<TimePeriodFilter> get items => [
-        TimePeriodFilter.DAILY,
-        TimePeriodFilter.WEEKLY,
-        TimePeriodFilter.MONTHLY,
-        TimePeriodFilter.MONTHLY_THREE,
-        TimePeriodFilter.SPECIFIC
+        TimePeriodFilter.daily,
+        TimePeriodFilter.weekly,
+        TimePeriodFilter.monthly,
+        TimePeriodFilter.monthlyThree,
+        TimePeriodFilter.spesific
       ];
 
   @override
@@ -53,29 +52,31 @@ class DateRangePicker extends StatelessWidget {
         break;
       } else {
         var _current = Locale(intl.Intl.getCurrentLocale());
-        bool _isRtl = _current == Locale('ar') || _current == Locale('fa');
+        bool _isRtl =
+            _current == const Locale('ar') || _current == const Locale('fa');
         final span = TextSpan(text: (items[i]).toShortString());
         final painter = TextPainter(
             text: span,
             maxLines: 1,
             textDirection: _isRtl ? TextDirection.rtl : TextDirection.ltr,
-            textScaleFactor: context.TEXTSCALE);
+            textScaleFactor: context.textScale);
 
         painter.layout();
 
-        hasOverflow = painter.size.width >= (context.WIDTH - 16) / items.length;
+        hasOverflow = painter.size.width >= (context.width - 16) / items.length;
       }
     }
 
     return ChangeNotifierProvider(
-      create: (_) => DateRangePickerVm(context: context, items: items),
+      create: (_) =>
+          DateRangePickerVm(context: context, items: items, selected: selected),
       child: Consumer<DateRangePickerVm>(
         builder: (_, value, __) =>
             LayoutBuilder(builder: (context, constraints) {
           return Container(
             height: height ??
-                (context.HEIGHT * .05) *
-                    (context.TEXTSCALE > 1 ? (context.TEXTSCALE / 2) : 1),
+                (context.height * .05) *
+                    (context.textScale > 1 ? (context.textScale / 2) : 1),
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -83,18 +84,18 @@ class DateRangePicker extends StatelessWidget {
             child: Row(
               children: [
                 AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  width: value.focusType == _SelectionState.FOCUSED &&
-                          selected != TimePeriodFilter.DAILY
+                  duration: const Duration(milliseconds: 300),
+                  width: value.focusType == _SelectionState.focused &&
+                          selected != TimePeriodFilter.daily
                       ? (context.xMediaQuery.size.width / items.length)
                       : constraints.maxWidth,
-                  child: (value.focusType == _SelectionState.FOCUSED &&
-                          selected != TimePeriodFilter.DAILY)
+                  child: (value.focusType == _SelectionState.focused &&
+                          selected != TimePeriodFilter.daily)
                       ? singleSelectedItem(value, context)
                       : itemList(value, hasOverflow, constraints),
                 ),
-                if (value.focusType == _SelectionState.FOCUSED &&
-                    selected != TimePeriodFilter.DAILY)
+                if (value.focusType == _SelectionState.focused &&
+                    selected != TimePeriodFilter.daily)
                   Expanded(
                       child: Center(
                     child: ListView(
@@ -112,7 +113,6 @@ class DateRangePicker extends StatelessWidget {
 
   GestureDetector singleSelectedItem(
       DateRangePickerVm value, BuildContext context) {
-    print(selected);
     return GestureDetector(
         onTap: () {
           value.changeFocusedType();
@@ -120,7 +120,7 @@ class DateRangePicker extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           height: double.infinity,
-          width: context.WIDTH / items.length,
+          width: context.width / items.length,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: R.color.white,
@@ -129,7 +129,7 @@ class DateRangePicker extends StatelessWidget {
                   color: Colors.black.withAlpha(50),
                   blurRadius: 5,
                   spreadRadius: 0,
-                  offset: Offset(3, 3))
+                  offset: const Offset(3, 3))
             ],
           ),
           child: AutoSizeText(
@@ -151,7 +151,7 @@ class DateRangePicker extends StatelessWidget {
             .map<Widget>(
               (e) => GestureDetector(
                 onTap: () {
-                  if (selected != TimePeriodFilter.DAILY) {
+                  if (selected != TimePeriodFilter.daily) {
                     value.changeFocusedType();
                   }
                   if (selected != e) {
@@ -162,8 +162,9 @@ class DateRangePicker extends StatelessWidget {
                   width:
                       hasOverflow ? null : constraints.maxWidth / items.length,
                   alignment: Alignment.center,
-                  padding:
-                      hasOverflow ? EdgeInsets.symmetric(horizontal: 10) : null,
+                  padding: hasOverflow
+                      ? const EdgeInsets.symmetric(horizontal: 10)
+                      : null,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: e == selected ? R.color.white : null,
@@ -173,7 +174,7 @@ class DateRangePicker extends StatelessWidget {
                                 color: Colors.black.withAlpha(50),
                                 blurRadius: 5,
                                 spreadRadius: 0,
-                                offset: Offset(3, 3))
+                                offset: const Offset(3, 3))
                           ]
                         : null,
                   ),
@@ -191,7 +192,7 @@ class DateRangePicker extends StatelessWidget {
   }
 
   Widget getRangeSelector(BuildContext context) {
-    if (selected == TimePeriodFilter.SPECIFIC)
+    if (selected == TimePeriodFilter.spesific) {
       return Row(
         children: [
           GestureDetector(
@@ -206,13 +207,13 @@ class DateRangePicker extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.green,
                   ),
-                  width: 8 * context.TEXTSCALE,
-                  height: 8 * context.TEXTSCALE,
+                  width: 8 * context.textScale,
+                  height: 8 * context.textScale,
                 ),
                 AutoSizeText(intl.DateFormat.yMMMd(intl.Intl.getCurrentLocale())
                     .format(startDate)),
@@ -220,7 +221,7 @@ class DateRangePicker extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: context.WIDTH * .06,
+            width: context.width * .06,
           ),
           GestureDetector(
             onTap: () => DatePicker.showDatePicker(context,
@@ -233,13 +234,13 @@ class DateRangePicker extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.red,
                   ),
-                  width: 8 * context.TEXTSCALE,
-                  height: 8 * context.TEXTSCALE,
+                  width: 8 * context.textScale,
+                  height: 8 * context.textScale,
                 ),
                 AutoSizeText(intl.DateFormat.yMMMd(intl.Intl.getCurrentLocale())
                     .format(endDate)),
@@ -248,7 +249,7 @@ class DateRangePicker extends StatelessWidget {
           ),
         ],
       );
-    else
+    } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -256,24 +257,25 @@ class DateRangePicker extends StatelessWidget {
           InkWell(
             child: Icon(
               Icons.arrow_back,
-              size: IconTheme.of(context).size * context.TEXTSCALE,
+              size: IconTheme.of(context).size! * context.textScale,
             ),
             onTap: previousDate,
           ),
           AutoSizeText(intl.DateFormat.yMMMd(intl.Intl.getCurrentLocale())
               .format(startDate)),
-          AutoSizeText(" - "),
+          const AutoSizeText(" - "),
           AutoSizeText(intl.DateFormat.yMMMd(intl.Intl.getCurrentLocale())
               .format(endDate)),
           InkWell(
             child: Icon(
               Icons.arrow_forward,
-              size: IconTheme.of(context).size * context.TEXTSCALE,
+              size: IconTheme.of(context).size! * context.textScale,
             ),
             onTap: nextDate,
           )
         ],
       );
+    }
   }
 }
 

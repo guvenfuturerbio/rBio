@@ -3,19 +3,15 @@ import 'dart:math' as math show sin, pi;
 
 class ProgressCircle extends StatefulWidget {
   const ProgressCircle({
-    Key key,
-    this.color,
+    Key? key,
+    required this.color,
     this.size = 50.0,
-    this.itemBuilder,
     this.duration = const Duration(milliseconds: 1200),
-    this.controller,
   }) : super(key: key);
 
   final Color color;
   final double size;
-  final IndexedWidgetBuilder itemBuilder;
   final Duration duration;
-  final AnimationController controller;
 
   @override
   _ProgressCircleState createState() => _ProgressCircleState();
@@ -37,22 +33,19 @@ class _ProgressCircleState extends State<ProgressCircle>
     -0.2,
     -0.1
   ];
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = (widget.controller ??
-        AnimationController(vsync: this, duration: widget.duration))
+    _controller = AnimationController(vsync: this, duration: widget.duration)
       ..repeat();
   }
 
   @override
   void dispose() {
-    if (widget.controller == null) {
-      _controller.dispose();
-    }
+    _controller.dispose();
     super.dispose();
   }
 
@@ -87,15 +80,12 @@ class _ProgressCircleState extends State<ProgressCircle>
     );
   }
 
-  Widget _itemBuilder(int index) => widget.itemBuilder != null
-      ? widget.itemBuilder(context, index)
-      : DecoratedBox(
-          decoration:
-              BoxDecoration(color: widget.color, shape: BoxShape.circle));
+  Widget _itemBuilder(int index) => DecoratedBox(
+      decoration: BoxDecoration(color: widget.color, shape: BoxShape.circle));
 }
 
 class DelayTween extends Tween<double> {
-  DelayTween({double begin, double end, @required this.delay})
+  DelayTween({double? begin, double? end, required this.delay})
       : super(begin: begin, end: end);
 
   final double delay;

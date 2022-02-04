@@ -9,16 +9,16 @@ import '../../../../../model/treatment_model/treatment_model.dart';
 import '../view_model/treatment_edit_vm.dart';
 
 class TreatmentEditView extends StatefulWidget {
-  const TreatmentEditView({Key key}) : super(key: key);
+  const TreatmentEditView({Key? key}) : super(key: key);
 
   @override
   State<TreatmentEditView> createState() => _TreatmentEditViewState();
 }
 
 class _TreatmentEditViewState extends State<TreatmentEditView> {
-  TextEditingController textEditingController;
-  TreatmentModel _treatmentModel;
-  bool newModel;
+  late TextEditingController textEditingController;
+  TreatmentModel? _treatmentModel;
+  bool? newModel;
   @override
   void initState() {
     textEditingController = TextEditingController();
@@ -36,18 +36,27 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
   @override
   Widget build(BuildContext context) {
     try {
-      newModel = Atom.queryParameters['newModel'] == 'true';
-      _treatmentModel = TreatmentModel.fromJson(
-          jsonDecode(Atom.queryParameters['treatment_model']));
-      textEditingController.text = _treatmentModel.treatment;
+      if (Atom.queryParameters['newModel'] != null) {
+        newModel = Atom.queryParameters['newModel'] == 'true';
+      } else {
+        throw Exception('newModel argument does not exist');
+      }
+      if (Atom.queryParameters['treatment_model'] != null) {
+        _treatmentModel = TreatmentModel.fromJson(
+            jsonDecode(Atom.queryParameters['treatment_model']!));
+      } else {
+        _treatmentModel = null;
+        throw Exception('treatment_model argument does not exist');
+      }
+      textEditingController.text = _treatmentModel!.treatment!;
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
       LoggerUtils.instance.e(e.toString());
-      return RbioRouteError();
+      return const RbioRouteError();
     }
     return KeyboardDismissOnTap(
       child: ChangeNotifierProvider<TreatmentEditVm>(
-        create: (_) => TreatmentEditVm(_treatmentModel),
+        create: (_) => TreatmentEditVm(_treatmentModel!),
         child: Consumer<TreatmentEditVm>(builder: (ctx, vm, __) {
           return RbioScaffold(
             appbar: _buildAppBar(),
@@ -78,7 +87,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
 
           //
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 8,
               left: 16,
               right: 8,
@@ -113,12 +122,12 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
           ),
 
           //
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
 
           //
-          if (newModel) _buildButtons(ctx),
+          if (newModel!) _buildButtons(ctx),
 
           //
           SizedBox(
@@ -149,7 +158,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
             ],
           );
         } else {
-          return SizedBox();
+          return const SizedBox();
         }
       },
     );
@@ -159,7 +168,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
     return Container(
       height: 50,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
@@ -175,9 +184,9 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
           //
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Text(
-                ctx.watch<TreatmentEditVm>().patientName ?? '',
+                ctx.watch<TreatmentEditVm>().patientName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: context.xHeadline5.copyWith(
@@ -205,7 +214,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
               ctx
                       .read<TreatmentEditVm>()
                       .selectedModel
-                      ?.createDate
+                      .createDate
                       ?.xFormatTime9() ??
                   DateTime.now().xFormatTime9(),
               textAlign: TextAlign.end,

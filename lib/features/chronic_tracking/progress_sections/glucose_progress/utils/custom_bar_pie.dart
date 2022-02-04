@@ -6,18 +6,19 @@ import '../../../../../core/core.dart';
 import '../view_model/bg_progress_page_view_model.dart';
 
 class CustomBarPie extends StatelessWidget {
-  var width = 10.0;
-  var height = 10.0;
+  final double width;
+  final double height;
 
-  CustomBarPie({
-    @required this.width,
-    @required this.height,
+  const CustomBarPie({
+    Key? key,
+    this.width = 10.0,
+    this.height = 10.0,
   });
 
   @override
   Widget build(BuildContext context) {
     return Consumer<BgProgressPageViewModel>(builder: (context, value, child) {
-      return Container(
+      return SizedBox(
         width: width,
         child: value.totalValuableCount == 0
             ? SizedBox(
@@ -29,7 +30,7 @@ class CustomBarPie extends StatelessWidget {
             : Row(
                 children: [
                   AnimatedContainer(
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
                           ? 0
@@ -48,7 +49,7 @@ class CustomBarPie extends StatelessWidget {
                                   value.totalValuableCount) *
                               100)),
                   AnimatedContainer(
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
                           ? 0
@@ -66,7 +67,7 @@ class CustomBarPie extends StatelessWidget {
                           : (value.chartLow.length / value.totalValuableCount) *
                               100)),
                   AnimatedContainer(
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
                           ? 0
@@ -85,7 +86,7 @@ class CustomBarPie extends StatelessWidget {
                                   value.totalValuableCount) *
                               100)),
                   AnimatedContainer(
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
                           ? 0
@@ -104,7 +105,7 @@ class CustomBarPie extends StatelessWidget {
                                   value.totalValuableCount) *
                               100)),
                   AnimatedContainer(
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       height: height,
                       width: value.totalValuableCount == 0
                           ? 0
@@ -138,13 +139,13 @@ Widget animatedCount(double count) {
               fit: BoxFit.fitWidth,
               child: Column(
                 children: [
-                  Text("%"),
+                  const Text("%"),
                   Countup(
                     begin: 0.0,
                     end: count,
                     precision: 1,
-                    duration: Duration(seconds: 1),
-                    style: TextStyle(
+                    duration: const Duration(seconds: 1),
+                    style: const TextStyle(
                         fontSize: 12,
                         color: Colors.black54,
                         fontWeight: FontWeight.bold),

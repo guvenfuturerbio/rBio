@@ -227,7 +227,7 @@ class _MeasurementTrackingHomeScreenState
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.TREATMENT_PROGRESS);
+              Atom.to(PagePaths.treatmentProgress);
             },
             child: Container(
               height: double.infinity,

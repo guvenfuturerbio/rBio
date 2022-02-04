@@ -1,25 +1,20 @@
-import '../../../../../generated/l10n.dart';
+import '../core.dart';
 
-enum TimePeriodFilter { DAILY, WEEKLY, MONTHLY, MONTHLY_THREE, SPECIFIC }
+enum TimePeriodFilter { daily, weekly, monthly, monthlyThree, spesific }
 
 extension TimePeriodFilterExtension on TimePeriodFilter {
   String toShortString() {
     switch (this) {
-      case TimePeriodFilter.DAILY:
+      case TimePeriodFilter.daily:
         return LocaleProvider.current.daily;
-        break;
-      case TimePeriodFilter.WEEKLY:
+      case TimePeriodFilter.weekly:
         return LocaleProvider.current.weekly;
-        break;
-      case TimePeriodFilter.MONTHLY:
+      case TimePeriodFilter.monthly:
         return LocaleProvider.current.monthly;
-        break;
-      case TimePeriodFilter.MONTHLY_THREE:
+      case TimePeriodFilter.monthlyThree:
         return LocaleProvider.current.three_months;
-        break;
-      case TimePeriodFilter.SPECIFIC:
+      case TimePeriodFilter.spesific:
         return LocaleProvider.current.specific;
-        break;
       default:
         return '';
     }
@@ -29,15 +24,15 @@ extension TimePeriodFilterExtension on TimePeriodFilter {
 extension TimePeriodStringExtension on String {
   TimePeriodFilter get fromString {
     if (this == LocaleProvider.current.daily) {
-      return TimePeriodFilter.DAILY;
+      return TimePeriodFilter.daily;
     } else if (this == LocaleProvider.current.weekly) {
-      return TimePeriodFilter.WEEKLY;
+      return TimePeriodFilter.weekly;
     } else if (this == LocaleProvider.current.monthly) {
-      return TimePeriodFilter.MONTHLY;
+      return TimePeriodFilter.monthly;
     } else if (this == LocaleProvider.current.three_months) {
-      return TimePeriodFilter.MONTHLY_THREE;
+      return TimePeriodFilter.monthlyThree;
     } else if (this == LocaleProvider.current.specific) {
-      return TimePeriodFilter.SPECIFIC;
+      return TimePeriodFilter.spesific;
     } else {
       throw Exception(
           '$this: The content does not exist please check your code base');

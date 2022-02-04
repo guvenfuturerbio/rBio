@@ -9,11 +9,10 @@ import 'bp_chart_filter_pop_up_vm.dart';
 
 class BpChartFilterPopUp extends StatelessWidget {
   final double width;
-  final double height;
-  final Map<String, bool> measurements;
-  final Function(Map<String, bool>) callback;
+  final Map<String, bool>? measurements;
+  final Function(Map<String, bool>)? callback;
   const BpChartFilterPopUp(
-      {Key key, this.width, this.height, this.measurements, this.callback})
+      {Key? key, this.measurements, this.callback, required this.width})
       : super(key: key);
 
   @override
@@ -22,10 +21,10 @@ class BpChartFilterPopUp extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(10),
+        insetPadding: const EdgeInsets.all(10),
         elevation: 0,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.WIDTH * .03),
+          padding: EdgeInsets.symmetric(horizontal: context.width * .03),
           child: SizedBox(
             width: width,
             child: Card(
@@ -39,14 +38,14 @@ class BpChartFilterPopUp extends StatelessWidget {
                             .measurements),
                 child: Consumer<BpChartFilterPopUpVm>(
                   builder: (_, value, __) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: context.HEIGHT * .01),
+                              vertical: context.height * .01),
                           child: ListView(shrinkWrap: true, children: [
                             ...value.measurements.keys
                                 .map((key) => CheckboxListTile(
@@ -75,7 +74,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(25),
                                       color:
                                           getIt<ITheme>().cardBackgroundColor),
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 16, right: 16, top: 10, bottom: 10),
                                   child: Text(
                                     LocaleProvider.current.cancel,
@@ -91,7 +90,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                                           listen: false)
                                       .changeFilterType(value.measurements);
                                 } else {
-                                  callback(value.measurements);
+                                  callback!(value.measurements);
                                 }
                                 Atom.dismiss();
                               },
@@ -105,7 +104,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                                     color: getIt<ITheme>().mainColor,
                                     borderRadius: BorderRadius.circular(25),
                                   ),
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 16, right: 16, top: 10, bottom: 10),
                                   child: Text(
                                     LocaleProvider.current.save,

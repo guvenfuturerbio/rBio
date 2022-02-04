@@ -1,6 +1,5 @@
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import '../../../../model/ble_models/DeviceTypes.dart';
-
+import 'package:onedosehealth/model/ble_models/DeviceTypes.dart';
 
 DeviceType getDeviceType(DiscoveredDevice device) {
   if (device.name == 'MIBFS' &&
@@ -15,4 +14,3 @@ DeviceType getDeviceType(DiscoveredDevice device) {
 
   throw Exception('Nondefined device');
 }
-

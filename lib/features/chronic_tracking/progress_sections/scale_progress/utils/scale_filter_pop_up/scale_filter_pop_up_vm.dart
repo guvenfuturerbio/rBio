@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../utils/selected_scale_type.dart';
 
 class ScaleFilterPopupVm extends ChangeNotifier {
-  ScaleFilterPopupVm({SelectedScaleType scaleType}) {
+  ScaleFilterPopupVm({SelectedScaleType? scaleType}) {
     _selectedScaleType = scaleType;
   }
 
@@ -16,10 +16,10 @@ class ScaleFilterPopupVm extends ChangeNotifier {
     SelectedScaleType.WATER,
   ];
 
-  SelectedScaleType _selectedScaleType;
+  SelectedScaleType? _selectedScaleType;
   SelectedScaleType get selectedScaleType =>
       _selectedScaleType ?? SelectedScaleType.WEIGHT;
-  changeScaleType(SelectedScaleType type) {
+  changeScaleType(SelectedScaleType? type) {
     _selectedScaleType = type;
     notifyListeners();
   }

@@ -28,7 +28,7 @@ class GlucoseData extends HiveObject {
   @HiveField(1)
   String level;
   @HiveField(2)
-  int tag; // 1 aç 2 tok 3 other
+  int? tag; // 1 aç 2 tok 3 other
   @HiveField(3)
   String note;
   @HiveField(4)
@@ -42,7 +42,7 @@ class GlucoseData extends HiveObject {
   @HiveField(8)
   String deviceUUID;
   @HiveField(9)
-  String imageURL;
+  String? imageURL;
   PickedFile imageFile = PickedFile("");
   @HiveField(10)
   bool isDeleted;
@@ -55,7 +55,7 @@ class GlucoseData extends HiveObject {
 
   GlucoseData({
     required this.level,
-    required this.tag,
+    this.tag,
     required this.note,
     required this.time,
     required this.device,
