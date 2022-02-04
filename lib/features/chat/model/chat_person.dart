@@ -23,7 +23,7 @@ class ChatPerson {
     this.timestamp,
     this.hasRead = true,
     this.otherHasRead = false,
-    this.url,
+    this.url = "",
     this.firebaseToken,
   });
 

@@ -13,8 +13,8 @@ class DoctorConsultationVm extends RbioVm {
   @override
   BuildContext mContext;
 
-  List<GetChatContactsResponse> apiUserList;
-  Stream<QuerySnapshot<Map<String, dynamic>>> stream;
+  late List<GetChatContactsResponse> apiUserList;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> stream;
 
   DoctorConsultationVm(this.mContext) {
     getIt<NotificationBadgeNotifier>().changeValue(false);
@@ -24,23 +24,15 @@ class DoctorConsultationVm extends RbioVm {
   Future<List<GetChatContactsResponse>> getChatContactsFirebaseId() async {
     return await getIt<Repository>().getChatContacts();
   }
-
-  LoadingProgress _progress;
-  LoadingProgress get progress => _progress;
-  set progress(LoadingProgress value) {
-    _progress = value;
-    notifyListeners();
-  }
-
   Future<void> fetchAll() async {
     try {
       apiUserList = [];
-      progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       apiUserList = await getChatContactsFirebaseId();
       stream = getIt<FirestoreManager>().getContactsAndMessages();
-      progress = LoadingProgress.DONE;
+      progress = LoadingProgress.done;
     } catch (e, stackTrace) {
-      progress = LoadingProgress.ERROR;
+      progress = LoadingProgress.error;
       Sentry.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         LocaleProvider.current.warning,
@@ -85,11 +77,11 @@ class DoctorConsultationVm extends RbioVm {
           chatPerson.timestamp = _getTimestamp(fbData);
 
           chatPerson.hasRead = _getHasRead(fbData);
-          chatPerson.otherHasRead = _getOtherHasRead(fbData, chatPerson.id);
+          chatPerson.otherHasRead = _getOtherHasRead(fbData, chatPerson.id!);
         }
       }
     }
-    result?.sort((a, b) => b.timestamp?.compareTo(a.timestamp ?? 0));
+    result.sort((a, b) => b.timestamp!.compareTo(a.timestamp ?? 0));
     return result;
   }
 
@@ -123,11 +115,12 @@ class DoctorConsultationVm extends RbioVm {
     if (messageDate.isToday)
       return DateTime.fromMillisecondsSinceEpoch(messages.last['date'])
           .xFormatTime8(getIt<LocaleNotifier>().current.languageCode);
-    else
+    else {
       return timeago.format(
         DateTime.fromMillisecondsSinceEpoch(messages.last['date']),
         locale: getIt<LocaleNotifier>().current.languageCode,
       );
+    }
   }
 
   bool _getHasRead(Map<String, dynamic> userData) {
