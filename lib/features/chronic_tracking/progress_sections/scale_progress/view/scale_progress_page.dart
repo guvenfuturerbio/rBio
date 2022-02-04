@@ -11,9 +11,9 @@ import '../utils/scale_measurement_list.dart';
 import '../view_model/scale_progress_page_view_model.dart';
 
 class ScaleProgressPage extends StatefulWidget {
-  final Function() callBack;
+  final Function()? callBack;
 
-  const ScaleProgressPage({Key? key, required this.callBack}) : super(key: key);
+  const ScaleProgressPage({Key? key,  this.callBack}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ScaleProgressPage();

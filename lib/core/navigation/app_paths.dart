@@ -279,10 +279,12 @@ class VRouterRoutes {
       path: PagePaths.fullPdfViewer,
       widget: FullPdfViewerScreen(),
     ),
+
     VWidget(
       path: PagePaths.termsAndPrivacy,
       widget: const TermsAndPrivacyScreen(key: Key('TermsAndPrivacyScreen')),
     ),
+
     VWidget(
       path: PagePaths.webConferance,
       widget: WebConferanceScreen(),

@@ -9,14 +9,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../core/core.dart';
 
 class WebViewScreen extends StatefulWidget {
-  String url;
+  String? url;
   String? title;
 
-  WebViewScreen({
-    Key? key,
-    required this.url,
-    this.title,
-  }) : super(key: key);
+  WebViewScreen({Key? key}) : super(key: key);
 
   @override
   _WebViewScreenState createState() => _WebViewScreenState();
@@ -45,7 +41,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10, right: 20),
             child: GestureDetector(
-              onTap: () => {shareFile(context, widget.url)},
+              onTap: () => {shareFile(context, widget.url ?? '')},
               child: Platform.isIOS
                   ? SvgPicture.asset(R.image.ic_ios_share)
                   : SvgPicture.asset(R.image.ic_android_share),

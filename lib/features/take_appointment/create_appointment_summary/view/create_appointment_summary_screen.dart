@@ -65,7 +65,7 @@ class _CreateAppointmentSummaryScreenState
       to = Atom.queryParameters['to'] as String;
       forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<CreateAppointmentSummaryVm>(
@@ -127,7 +127,7 @@ class _CreateAppointmentSummaryScreenState
             ),
 
             //
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
 
@@ -192,7 +192,7 @@ class _CreateAppointmentSummaryScreenState
                               bottom: 13,
                             ),
                             onChanged: (term) {
-                              if (term != null && term != '') {
+                              if (term != '') {
                                 vm.summaryButton = SummaryButtons.applyActive;
                               } else {
                                 vm.summaryButton = SummaryButtons.applyPassive;
@@ -208,7 +208,7 @@ class _CreateAppointmentSummaryScreenState
                               final code = await Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return QRCodeScannerScreen();
+                                    return const QRCodeScannerScreen();
                                   },
                                 ),
                               );
@@ -299,7 +299,7 @@ class _CreateAppointmentSummaryScreenState
                     ),
 
                     //
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
 
                     //
                     Expanded(
@@ -340,7 +340,7 @@ class _CreateAppointmentSummaryScreenState
   }
 
   Widget _buildPrice(CreateAppointmentSummaryVm vm) {
-    var _newPrice;
+    String? _newPrice;
     if (vm.orgVideoCallPriceResponse != null &&
         vm.orgVideoCallPriceResponse?.patientPrice != null) {
       String _price = '${vm.orgVideoCallPriceResponse!.patientPrice!} TL';
@@ -349,6 +349,7 @@ class _CreateAppointmentSummaryScreenState
           vm.newVideoCallPriceResponse?.patientPrice != null) {
         _newPrice = '${vm.newVideoCallPriceResponse!.patientPrice!} TL';
       }
+
       return _newPrice != null
           ? Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -386,12 +387,12 @@ class _CreateAppointmentSummaryScreenState
               ),
             );
     } else {
-      return RbioLoading();
+      return const RbioLoading();
     }
   }
 
   Widget _buildSummaryButton(CreateAppointmentSummaryVm vm) {
-    String title;
+    String? title;
     VoidCallback onTap;
 
     switch (vm.summaryButton) {
@@ -431,7 +432,7 @@ class _CreateAppointmentSummaryScreenState
         break;
     }
 
-    if (title == null) return SizedBox();
+    if (title == null) return const SizedBox();
 
     return RbioElevatedButton(
       onTap: onTap,
@@ -450,7 +451,7 @@ class _CreateAppointmentSummaryScreenState
   Widget _buildInfoCard(CreateAppointmentSummaryVm vm) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
@@ -549,9 +550,9 @@ class _CreateAppointmentSummaryScreenState
     );
   }
 
-  Widget _buildVerticalGap() => SizedBox(height: 8);
+  Widget _buildVerticalGap() => const SizedBox(height: 8);
 
-  Widget _buildHorizontalGap() => SizedBox(width: 12);
+  Widget _buildHorizontalGap() => const SizedBox(width: 12);
 
   Widget _buildActiveText(String text) => Text(
         text,

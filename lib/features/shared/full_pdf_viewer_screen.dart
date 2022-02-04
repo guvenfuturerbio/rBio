@@ -9,18 +9,14 @@ import '../../core/core.dart';
 
 class FullPdfViewerScreen extends StatelessWidget {
   String? title;
-  String pdfPath;
+  String? pdfPath;
 
-  FullPdfViewerScreen({
-    Key? key,
-    required this.pdfPath,
-    this.title,
-  }) : super(key: key);
+  FullPdfViewerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     try {
-      title = Uri.decodeFull(Atom.queryParameters['title'] as String);
+      title = Uri.decodeFull(Atom.queryParameters['title']!);
       pdfPath = Uri.decodeFull(Atom.queryParameters['pdfPath'] as String);
     } catch (_) {
       return const RbioRouteError();
@@ -31,10 +27,13 @@ class FullPdfViewerScreen extends StatelessWidget {
         title: RbioAppBar.textTitle(context, title ?? "No title"),
         actions: <Widget>[
           Padding(
-            // ignore: prefer_const_constructors
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
-              onTap: () => {shareFile(context, pdfPath)},
+              onTap: () {
+                if (pdfPath != null) {
+                  shareFile(context, pdfPath!);
+                }
+              },
               child: Platform.isIOS
                   ? SvgPicture.asset(R.image.ic_ios_share)
                   : SvgPicture.asset(R.image.ic_android_share),
@@ -44,10 +43,12 @@ class FullPdfViewerScreen extends StatelessWidget {
       ),
 
       //
-      body: SfPdfViewer.file(
-        File(pdfPath),
-        canShowPaginationDialog: false,
-      ),
+      body: pdfPath == null
+          ? const SizedBox()
+          : SfPdfViewer.file(
+              File(pdfPath!),
+              canShowPaginationDialog: false,
+            ),
     );
   }
 

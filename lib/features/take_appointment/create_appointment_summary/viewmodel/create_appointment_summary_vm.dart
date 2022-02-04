@@ -1,11 +1,11 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../create_appointment/model/voucher_price_request.dart';
 import '../../do_mobile_payment/do_mobile_payment_screen.dart';
 
 enum SummaryButtons {
@@ -118,7 +118,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   Future<void> saveAppointment({
     required bool forOnline,
     required bool forFree,
-    required int appointmentId,
+    int? appointmentId,
     required String price,
   }) async {
     showOverlayLoading = true;
@@ -155,7 +155,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
               appointment: AppointmentRequest(
                 saveAppointmentsRequest: saveAppointmentsRequest,
               ),
-              appointmentId: appointmentId,
+              appointmentId: appointmentId ?? 0,
               voucherCode: voucherCode,
             ),
             settings: const RouteSettings(name: PagePaths.doMobilePayment),

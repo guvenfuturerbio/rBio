@@ -5,6 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/helper/workers.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,9 +15,6 @@ import '../../model/firebase/add_firebase_body.dart';
 import '../../model/user/usermodel.dart';
 import '../../model/user_profiles/save_and_retrieve_token_model.dart';
 import '../../model/user_profiles/token_user_text_body.dart';
-import '../chronic_tracking/lib/helper/workers.dart';
-import '../chronic_tracking/lib/notifiers/shared_preferences_handler.dart';
-import '../chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 
 class UserService {
   static const String applicationConsentForm = "APPLICATION_CONSENT_FORM";
@@ -241,7 +239,7 @@ class UserService {
 
       Person person = profiles.last;
       await getIt<ProfileStorageImpl>().write(person, shouldSendToServer: true);
-      UserProfilesNotifier().selection = profiles[0];
+      // UserProfilesNotifier().selection = profiles[0];
       saveInformationForAutoLogin(userCredential);
 
       // token save process
@@ -265,14 +263,14 @@ class UserService {
   }
 
   void saveInformationForAutoLogin(User user) async {
-    SharedPreferencesHandler().saveLastLoggedUserUid(user.uid);
-    SharedPreferencesHandler().saveLastDisplayName(user.displayName ?? "");
-    SharedPreferencesHandler().saveLastEmail(user.email ?? '');
+    // SharedPreferencesHandler().saveLastLoggedUserUid(user.uid);
+    // SharedPreferencesHandler().saveLastDisplayName(user.displayName ?? "");
+    // SharedPreferencesHandler().saveLastEmail(user.email ?? '');
   }
 
   Future<void> deleteInformationForAutoLogin() async {
     //SharedPreferencesHandler().saveLastLoggedUserUid(null); // Algorithm works by detecting change so never remove uid
-    SharedPreferencesHandler().deleteAutoLoginInfo();
+    // SharedPreferencesHandler().deleteAutoLoginInfo();
   }
 }
 

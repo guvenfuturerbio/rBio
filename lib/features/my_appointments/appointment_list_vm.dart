@@ -15,75 +15,73 @@ class AppointmentListVm extends RbioVm {
   BuildContext mContext;
 
   List<TranslatorResponse> _translator;
-  int _patientId;
+  List<TranslatorResponse> get translators => _translator;
+
   LoadingProgress _progress;
-  bool _showProgressOverlay;
-  DateTime _startDate, _endDate;
+  LoadingProgress get progress => _progress;
+
   List<PatientAppointmentsResponse> _patientAppointments;
-  CancelAppointmentRequest _cancelAppointmentRequest;
-  List<TranslatorResponse> get translators => this._translator;
+  List<PatientAppointmentsResponse> get patientAppointments =>
+      _patientAppointments;
 
-  AppointmentListVm({BuildContext context, String jitsiRoomId}) {
-    this.mContext = context;
-    this._patientId = getIt<UserNotifier>().getPatient().id;
-    this._showProgressOverlay = false;
+  late int _patientId;
+  bool showProgressOverlay;
+  DateTime? _startDate, _endDate;
+  CancelAppointmentRequest cancelAppointmentRequest;
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  AppointmentListVm(this.mContext, {String? jitsiRoomId}) {
+    _patientId = getIt<UserNotifier>().getPatient().id ?? 0;
+    showProgressOverlay = false;
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       if (getIt<UserNotifier>().canAccessHospital()) {
         await fetchAllTranslator();
         await fetchPatientAppointments();
       } else {
         showNecessary();
       }
-      if (jitsiRoomId != null) await joinMeeting(jitsiRoomId, null);
+
+      if (jitsiRoomId != null) {
+        await joinMeeting(jitsiRoomId, null);
+      }
     });
   }
 
-  LoadingProgress get progress => this._progress;
-
-  List<PatientAppointmentsResponse> get patientAppointments =>
-      this._patientAppointments;
-
-  bool get showProgressOverlay => this._showProgressOverlay;
-
-  CancelAppointmentRequest get cancelAppointmentRequest =>
-      this._cancelAppointmentRequest;
-
   DateTime get startDate => _startDate != null
-      ? DateTime(_startDate.year, _startDate.month, _startDate.day)
+      ? DateTime(_startDate!.year, _startDate!.month, _startDate!.day)
       : DateTime(
           DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
 
   void setStartDate(DateTime d) {
-    this._startDate = d;
+    _startDate = d;
     fetchPatientAppointments();
     notifyListeners();
   }
 
   DateTime get endDate => _endDate != null
-      ? DateTime(_endDate.year, _endDate.month, _endDate.day, 23, 59, 59)
+      ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day, 23, 59, 59)
       : DateTime(
           DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
 
   void setEndDate(DateTime d) {
-    this._endDate = d;
+    _endDate = d;
     fetchPatientAppointments();
     notifyListeners();
   }
 
   Future<void> fetchAllTranslator() async {
     try {
-      this._progress = LoadingProgress.LOADING;
+      _progress = LoadingProgress.loading;
       notifyListeners();
-      this._translator = await getIt<UserManager>().getAllTranslator();
-      this._progress = LoadingProgress.DONE;
+      _translator = await getIt<UserManager>().getAllTranslator();
+      _progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
       showInfoDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      this._progress = LoadingProgress.ERROR;
+      _progress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -131,8 +129,12 @@ class AppointmentListVm extends RbioVm {
           title: LocaleProvider.of(context).get_translator,
           translators: translators,
           onChange: (value) {
-            requestTranslator(appointmentId,
-                TranslatorRequest(interpreterId: translators[value].id));
+            requestTranslator(
+              appointmentId,
+              TranslatorRequest(
+                interpreterId: translators[value].id,
+              ),
+            );
           },
         );
       },
@@ -140,27 +142,26 @@ class AppointmentListVm extends RbioVm {
   }
 
   void setCancelAppointmentRequest(int id) {
-    this._cancelAppointmentRequest = CancelAppointmentRequest(
+    cancelAppointmentRequest = CancelAppointmentRequest(
         id: id, cancellationNote: "CancelFromMobile", cancellationReasonId: 3);
     notifyListeners();
   }
 
   Future<void> fetchPatientAppointments() async {
-    this._progress = LoadingProgress.LOADING;
+    _progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      this._patientAppointments =
-          await getIt<Repository>().getPatientAppointments(
+      _patientAppointments = await getIt<Repository>().getPatientAppointments(
         PatientAppointmentRequest(
           patientId: _patientId,
           to: endDate.toString(),
           from: startDate.toString(),
         ),
       );
-      this._progress = LoadingProgress.DONE;
+      _progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      this._progress = LoadingProgress.ERROR;
+      _progress = LoadingProgress.error;
       notifyListeners();
       showInfoDialog(
         LocaleProvider.current.warning,
@@ -169,16 +170,16 @@ class AppointmentListVm extends RbioVm {
     }
   }
 
-  Future<void> joinMeeting(String webConsultantId, int availabilityId) async {
+  Future<void> joinMeeting(String webConsultantId, int? availabilityId) async {
     //webConsultantId = webConsultantId.substring(webConsultantId.indexOf('='));
-    this._showProgressOverlay = true;
+    showProgressOverlay = true;
     notifyListeners();
 
     try {
       if (kIsWeb) {
-        if (Atom.url != PagePaths.WEBCONFERANCE) {
+        if (Atom.url != PagePaths.webConferance) {
           Atom.to(
-            PagePaths.WEBCONFERANCE,
+            PagePaths.webConferance,
             queryParameters: {
               'webConsultAppId': webConsultantId.toString(),
               'availability': availabilityId.toString(),
@@ -186,16 +187,19 @@ class AppointmentListVm extends RbioVm {
           );
         }
       } else {
-        //await UserService().checkOnlineMeetingAccessible(webConsultantId);
-        await getIt<UserManager>()
-            .startMeeting(mContext, webConsultantId, availabilityId);
+        if (availabilityId != null) {
+          await getIt<UserManager>().startMeeting(
+            mContext,
+            webConsultantId,
+            availabilityId,
+          );
+        }
       }
-      this._showProgressOverlay = false;
+      showProgressOverlay = false;
       notifyListeners();
     } catch (e) {
-      this._showProgressOverlay = false;
+      showProgressOverlay = false;
       notifyListeners();
-
       if (e.toString().contains("show")) {
         showInfoDialog(
           LocaleProvider.current.warning,
@@ -210,14 +214,13 @@ class AppointmentListVm extends RbioVm {
     }
   }
 
-  Future<Uint8List> getSelectedFile() async {
-    FilePickerResult filePickerResult = await FilePicker.platform.pickFiles(
+  Future<Uint8List?> getSelectedFile() async {
+    FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['svg', 'pdf', 'png', 'jpg', 'bmp']);
-    PlatformFile file = filePickerResult.files[0];
-    Uint8List fileBytes;
+    PlatformFile? file = filePickerResult?.files[0];
+    Uint8List? fileBytes;
     if (file != null) {
-      print('file selected');
       fileBytes = file.bytes;
     }
     return fileBytes;
@@ -225,17 +228,18 @@ class AppointmentListVm extends RbioVm {
 
   Future<bool> uploadFile(Uint8List file) async {
     try {
-      this._showProgressOverlay = true;
+      showProgressOverlay = true;
       notifyListeners();
       await getIt<Repository>().uploadPatientDocuments(
-          SecretUtils.instance.get(SecretKeys.MOCK_APPOINTMENT), file.toList());
+          SecretUtils.instance.get(SecretKeys.mockAppointment),
+          file.toList() as Uint8List);
       return true;
     } catch (e) {
       showInfoDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      this._showProgressOverlay = false;
+      showProgressOverlay = false;
       notifyListeners();
       return false;
     }
@@ -243,20 +247,19 @@ class AppointmentListVm extends RbioVm {
 
   Future<void> cancelAppointment() async {
     try {
-      this._showProgressOverlay = true;
+      showProgressOverlay = true;
       notifyListeners();
       await getIt<Repository>().cancelAppointment(cancelAppointmentRequest);
       await fetchPatientAppointments();
-      this._showProgressOverlay = false;
+      showProgressOverlay = false;
       notifyListeners();
     } catch (e, stk) {
-      print(e);
       debugPrintStack(stackTrace: stk);
       showInfoDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
       );
-      this._showProgressOverlay = false;
+      showProgressOverlay = false;
       notifyListeners();
     }
   }
@@ -279,7 +282,7 @@ class AppointmentListVm extends RbioVm {
         context: mContext,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return NecessaryIdentityScreen();
+          return const NecessaryIdentityScreen();
         }).then((value) async {
       if ((value ?? false) == true) {
         await fetchAllTranslator();
@@ -291,12 +294,13 @@ class AppointmentListVm extends RbioVm {
   }
 
   Future<bool> isOnlineAppointmentPaid(int id) async {
-    this._showProgressOverlay = true;
+    showProgressOverlay = true;
     notifyListeners();
     try {
       await getIt<Repository>().checkOnlineAppointmentPayment(
-          CheckPaymentRequest(appointmentId: id));
-      this._showProgressOverlay = false;
+        CheckPaymentRequest(appointmentId: id),
+      );
+      showProgressOverlay = false;
       notifyListeners();
       return true;
     } on Exception {
@@ -307,10 +311,15 @@ class AppointmentListVm extends RbioVm {
   Future<void> handleAppointment(PatientAppointmentsResponse data) async {
     if (data.type == R.dynamicVar.onlineAppointmentType) {
       try {
-        bool result = await isOnlineAppointmentPaid(data.id);
+        late bool result;
+        if (data.id != null) {
+          result = await isOnlineAppointmentPaid(data.id!);
+        }
 
         if (result) {
-          joinMeeting(data.videoGuid, data.id);
+          if (data.videoGuid != null) {
+            joinMeeting(data.videoGuid!, data.id);
+          }
         } else {
           showDialog(
             context: mContext,
@@ -333,7 +342,7 @@ class AppointmentListVm extends RbioVm {
                   ),
 
                   //
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
 
@@ -343,18 +352,19 @@ class AppointmentListVm extends RbioVm {
                     () {
                       Navigator.pop(mContext);
                       Atom.to(
-                        PagePaths.APPOINTMENT_SUMMARY,
+                        PagePaths.appointmentSummary,
                         queryParameters: {
                           'tenantId': data.tenantId.toString(),
                           'departmentId':
-                              data.resources[0].departmentId.toString(),
-                          'resourceId': data.resources[0].resourceId.toString(),
+                              data.resources![0].departmentId.toString(),
+                          'resourceId':
+                              data.resources![0].resourceId.toString(),
                           'doctorName':
-                              Uri.encodeFull(data.resources[0].resource),
-                          'departmentName':
-                              Uri.encodeFull(data.resources[0].department),
-                          'from': data.from,
-                          'to': data.to,
+                              Uri.encodeFull(data.resources![0].resource ?? ''),
+                          'departmentName': Uri.encodeFull(
+                              data.resources![0].department ?? ''),
+                          'from': data.from ?? '',
+                          'to': data.to ?? '',
                           'forOnline': true.toString(),
                           'imageUrl': data.id.toString(),
                         },
@@ -367,7 +377,7 @@ class AppointmentListVm extends RbioVm {
           );
         }
       } catch (e) {
-        this._showProgressOverlay = false;
+        showProgressOverlay = false;
         notifyListeners();
         showInfoDialog(
           LocaleProvider.current.warning,
@@ -375,7 +385,10 @@ class AppointmentListVm extends RbioVm {
         );
       }
     } else {
-      await setCancelAppointmentRequest(data.id);
+      if (data.id != null) {
+        setCancelAppointmentRequest(data.id!);
+      }
+
       showQuestionDialog(
         LocaleProvider.of(mContext).warning,
         LocaleProvider.of(mContext).cancel_appo_question,

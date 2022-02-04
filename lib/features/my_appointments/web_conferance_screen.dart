@@ -6,11 +6,7 @@ class WebConferanceScreen extends StatefulWidget {
   String webConsultAppId;
   int availability;
 
-  WebConferanceScreen({
-    Key key,
-    this.webConsultAppId,
-    this.availability,
-  }) : super(key: key);
+  WebConferanceScreen({Key? key}) : super(key: key);
 
   @override
   _WebConferanceScreenState createState() => _WebConferanceScreenState();
@@ -20,11 +16,13 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance?.addPostFrameCallback(
       (_) async {
-        await getIt<UserManager>()
-            .startMeeting(context, widget.webConsultAppId, widget.availability);
+        await getIt<UserManager>().startMeeting(
+          context,
+          widget.webConsultAppId,
+          widget.availability,
+        );
       },
     );
   }
@@ -32,10 +30,10 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.webConsultAppId = Atom.queryParameters['webConsultAppId'];
-      widget.availability = int.parse(Atom.queryParameters['availability']);
+      widget.webConsultAppId = Atom.queryParameters['webConsultAppId']!;
+      widget.availability = int.parse(Atom.queryParameters['availability']!);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return RbioScaffold(
@@ -48,8 +46,8 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
     return SizedBox(
       width: Atom.size.width,
       height: Atom.size.height,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+      child: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Card(
           color: Colors.white54,
         ),

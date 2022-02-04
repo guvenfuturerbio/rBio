@@ -6,7 +6,7 @@ import '../../../core/core.dart';
 import 'all_files_vm.dart';
 
 class AllFilesScreen extends StatefulWidget {
-  const AllFilesScreen({Key key}) : super(key: key);
+  const AllFilesScreen({Key? key}) : super(key: key);
 
   @override
   _AllFilesScreenState createState() => _AllFilesScreenState();
@@ -18,7 +18,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
     return ChangeNotifierProvider<AllFilesVm>(
       create: (context) => AllFilesVm(context),
       child: Consumer<AllFilesVm>(
-        builder: (BuildContext context, AllFilesVm vm, Widget child) {
+        builder: (BuildContext context, AllFilesVm vm, Widget? child) {
           return RbioStackedScaffold(
             isLoading: vm.showProgressOverlay,
             appbar: _buildAppBar(),
@@ -40,17 +40,17 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
 
   Widget _buildBody(AllFilesVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return _buildListView(vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -70,7 +70,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
         top: R.sizes.stackedTopPaddingValue(context) + 8,
       ),
       scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemCount: vm.fileLists.length,
       itemBuilder: (BuildContext context, int index) {
         return _buildCard(vm, vm.fileLists[index]);
@@ -87,18 +87,18 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
           child: Row(
             children: <Widget>[
               SvgPicture.asset(
-                file.fileType.toLowerCase() == "pdf"
+                (file.fileType ?? '').toLowerCase() == "pdf"
                     ? R.image.ic_file_icon
                     : R.image.ic_image_icon,
               ),
 
               //
               Container(
-                margin: EdgeInsets.only(left: 10, right: 10),
+                margin: const EdgeInsets.only(left: 10, right: 10),
                 width: 1,
                 height: 30,
                 color: getIt<ITheme>().textColorPassive,
@@ -107,7 +107,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
               //
               Expanded(
                 child: Text(
-                  file.file,
+                  file.file ?? '',
                   style: TextStyle(color: R.color.black, fontSize: 18),
                 ),
               ),

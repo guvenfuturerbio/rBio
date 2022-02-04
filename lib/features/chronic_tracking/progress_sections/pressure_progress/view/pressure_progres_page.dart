@@ -17,8 +17,8 @@ import '../view_model/pressure_measurement_view_model.dart';
 part '../view_model/pressure_progres_view_model.dart';
 
 class BpProgressPage extends StatefulWidget {
-  const BpProgressPage({Key? key, required this.callback}) : super(key: key);
-  final Function() callback;
+  const BpProgressPage({Key? key, this.callback}) : super(key: key);
+  final Function()? callback;
 
   @override
   State<BpProgressPage> createState() => _BpProgressPageState();

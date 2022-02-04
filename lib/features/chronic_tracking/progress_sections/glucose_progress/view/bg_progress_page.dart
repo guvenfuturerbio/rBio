@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/bg_filter_pop_up/bg_filter_pop_up.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../utils/bg_filter_pop_up/bg_filter_pop_up.dart';
 import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../utils/graph_header_widget.dart';
 import '../../utils/landscape_graph_widget.dart';
@@ -12,14 +12,12 @@ import '../view_model/bg_progress_page_view_model.dart';
 
 /// MG19
 class BgProgressPage extends StatefulWidget {
-  final Function() callBack;
+  final void Function()? callBack;
 
-  const BgProgressPage({Key? key, required this.callBack}) : super(key: key);
+  const BgProgressPage({Key? key, this.callBack}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _BgProgressPage();
-  }
+  State<StatefulWidget> createState() => _BgProgressPage();
 }
 
 class _BgProgressPage extends State<BgProgressPage> {
@@ -35,47 +33,63 @@ class _BgProgressPage extends State<BgProgressPage> {
                 LocaleProvider.current.bg_measurement_tracking,
               ),
             ),
+
+            //
             body: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  //
                   SizedBox(
                     height: R.sizes.stackedTopPaddingValue(context) + 8,
                   ),
+
+                  //
                   _buildExpandedUser(),
+
+                  //
                   if (value.isChartShow) ...[
                     SizedBox(
-                        height: (context.height * .4) * context.textScale,
-                        child: GraphHeader(
-                          value: value,
-                          callBack: () => context
-                              .read<BgProgressPageViewModel>()
-                              .changeChartShowStatus(),
-                        )),
+                      height: (context.height * .4) * context.textScale,
+                      child: GraphHeader(
+                        value: value,
+                        callBack: () => context
+                            .read<BgProgressPageViewModel>()
+                            .changeChartShowStatus(),
+                      ),
+                    ),
                     BottomActionsOfGraph(
                       value: value,
                     ),
-                    LayoutBuilder(builder: (context, constraints) {
-                      return Container(
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withAlpha(20),
-                              blurRadius: 5,
-                              spreadRadius: 0,
-                              offset: const Offset(5, 5))
-                        ]),
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: CustomBarPie(
-                            width: constraints.maxWidth,
-                            height: (context.height * .05) * context.textScale,
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha(20),
+                                blurRadius: 5,
+                                spreadRadius: 0,
+                                offset: const Offset(5, 5),
+                              ),
+                            ],
                           ),
-                        ),
-                      );
-                    }),
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: CustomBarPie(
+                              width: constraints.maxWidth,
+                              height:
+                                  (context.height * .05) * context.textScale,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
+
+                  //
                   if (!value.isChartShow)
                     Padding(
                       padding:
