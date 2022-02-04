@@ -47,7 +47,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
       //this._selectedBodySymptoms = symptomsList;
       notifyListeners();
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       notifyListeners();
     }
   }
@@ -70,7 +70,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
       proposedProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       proposedProgress = LoadingProgress.error;
       notifyListeners();
     }

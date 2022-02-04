@@ -69,7 +69,7 @@ class _QuantityDropdownWidgetState extends State<QuantityDropdownWidget> {
                   width: 30,
                   height: 12,
                   onPressed: () {
-                    print("Update worked!");
+                    LoggerUtils.instance.i("Update worked!");
                   })
             ],
           );

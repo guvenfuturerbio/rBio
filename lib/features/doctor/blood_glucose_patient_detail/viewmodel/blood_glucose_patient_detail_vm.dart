@@ -97,7 +97,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
         _scrolledDate = date;
         this.bgMeasurementsDailyData.clear();
 
-        //print("current Date " + reversedList[currentDateIndex].toString());
+        //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
         for (var data in bgMeasurements) {
           if (DateTime(data.date.year, data.date.month, data.date.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
@@ -392,7 +392,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
   }
 
   Future<void> setSelectedItem(String s) async {
-    print('data-----------> $s');
+    LoggerUtils.instance.i('data-----------> $s');
     if (s != _selectedItem) {
       resetFilterState();
       this._currentDateIndex = 0;
@@ -446,7 +446,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
     this.bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
-    print(bgMeasurements.length);
+    LoggerUtils.instance.i(bgMeasurements.length);
     //fetchScrolledDailyData();
     notifyListeners();
   }
@@ -508,11 +508,11 @@ class BloodGlucosePatientDetailVm extends RbioVm
     List<DateTime> dateList =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurementDates;
-    //print(dateList.toString());
+    //LoggerUtils.instance.i(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
-      //print("current Date " + reversedList[currentDateIndex].toString());
+      //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
       for (var data in bgMeasurements) {
         if (DateTime(data.date.year, data.date.month, data.date.day)
             .isAtSameMomentAs(DateTime(

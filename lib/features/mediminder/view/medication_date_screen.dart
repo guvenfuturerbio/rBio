@@ -57,7 +57,7 @@ class _MedicationDateScreenState extends State<MedicationDateScreen> {
       widget.medicinePeriod =
           Atom.queryParameters['medicinePeriod'].toMedicinePeriod();
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
     }
 
     return ChangeNotifierProvider<MedicationDateVm>(

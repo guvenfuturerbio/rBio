@@ -27,7 +27,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
       isChartShow = true;
 
       getIt<ScaleStorageImpl>().addListener(() async {
-        print("Triggered ScaleRepository Listener");
+        LoggerUtils.instance.i("Triggered ScaleRepository Listener");
         setSelectedItem(selected);
       });
 
@@ -357,11 +357,11 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   void fetchScrolledDailyData() {
     scaleMeasurementsDailyData.clear();
     List<DateTime> dateList = fetchScaleMeasurementsDateList();
-    //print(dateList.toString());
+    //LoggerUtils.instance.i(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
-      //print("current Date " + reversedList[currentDateIndex].toString());
+      //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
       for (var data in scaleMeasurements) {
         if (DateTime(data.date!.year, data.date!.month, data.date!.day)
             .isAtSameMomentAs(DateTime(

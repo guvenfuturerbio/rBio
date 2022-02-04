@@ -30,7 +30,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
     try {
       RbioConfig.of(context)?.bodyLocationRsp = null;
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
     }
     super.dispose();
   }

@@ -65,7 +65,7 @@ class BodySublocationsVm extends ChangeNotifier {
       notifyListeners();
       await fetchBodySymptoms(bodySubLocations, genderId);
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();
     }
@@ -90,7 +90,7 @@ class BodySublocationsVm extends ChangeNotifier {
     } catch (e) {
       symptomControl = LoadingProgress.error;
       notifyListeners();
-      print(e);
+      LoggerUtils.instance.i(e);
     }
   }
 

@@ -48,7 +48,7 @@ class SymptomsHomeVm extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       progress = LoadingProgress.error;
-      print(e);
+      LoggerUtils.instance.i(e);
       notifyListeners();
     }
   }

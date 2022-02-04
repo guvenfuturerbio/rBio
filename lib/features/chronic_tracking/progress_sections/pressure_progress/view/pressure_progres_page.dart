@@ -135,13 +135,16 @@ class _BpProgressPageState extends State<BpProgressPage> {
     );
   }
 
-  List<Widget> getGraph(BuildContext context, value) {
+  List<Widget> getGraph(BuildContext context, BpProgressPageVm value) {
     return [
       SizedBox(
         height: (context.height * .4) * context.textScale,
         child: GraphHeader(
           value: value,
-          callBack: widget.callback,
+          callBack: widget.callback ??
+              () {
+                LoggerUtils.instance.i('Graph');
+              },
         ),
       ),
       SizedBox(

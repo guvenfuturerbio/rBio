@@ -36,7 +36,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
       RbioConfig.of(context)?.bodyLocationRsp = null;
       RbioConfig.of(context)?.listBodySympRsp = null;
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
     }
     super.dispose();
   }

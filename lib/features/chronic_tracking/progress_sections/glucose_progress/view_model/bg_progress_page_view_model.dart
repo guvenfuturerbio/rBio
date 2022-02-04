@@ -400,7 +400,7 @@ class BgProgressPageViewModel
         _scrolledDate = date;
         bgMeasurementsDailyData.clear();
 
-        //print("current Date " + reversedList[currentDateIndex].toString());
+        //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
         for (var data in bgMeasurements) {
           if (DateTime(data.date.year, data.date.month, data.date.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
@@ -416,11 +416,11 @@ class BgProgressPageViewModel
   void fetchScrolledDailyData() {
     bgMeasurementsDailyData.clear();
     List<DateTime> dateList = fetchBgMeasurementDates();
-    //print(dateList.toString());
+    //LoggerUtils.instance.i(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
-      //print("current Date " + reversedList[currentDateIndex].toString());
+      //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
       for (var data in bgMeasurements) {
         if (DateTime(data.date.year, data.date.month, data.date.day)
             .isAtSameMomentAs(DateTime(

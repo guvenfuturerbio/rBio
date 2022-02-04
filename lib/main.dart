@@ -86,14 +86,11 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider<UserNotifier>(
               create: (context) => getIt<UserNotifier>()),
-          ChangeNotifierProvider<UserProfilesNotifier>(
-            create: (context) => UserProfilesNotifier(),
-          ),
           ChangeNotifierProvider<ScaleProgressPageViewModel>(
             create: (ctx) => ScaleProgressPageViewModel(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
-              value: BgProgressPageViewModel()),
+              value: BgProgressPageViewModel(context: context)),
           ChangeNotifierProvider<BpProgressPageVm>.value(
               value: BpProgressPageVm()),
           if (!Atom.isWeb) ...[

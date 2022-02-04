@@ -66,7 +66,7 @@ class PressureTaggerVm extends ChangeNotifier {
   }
 
   changeSys(String sys) {
-    print(sys);
+    LoggerUtils.instance.i(sys);
     if (sysController.text.isEmpty || sysController.text[0] == '0') {
       bpModel?.sys = null;
     } else {
@@ -76,7 +76,7 @@ class PressureTaggerVm extends ChangeNotifier {
   }
 
   changeDia(String dia) {
-    print(dia);
+    LoggerUtils.instance.i(dia);
     if (diaController.text.isEmpty || diaController.text[0] == '0') {
       bpModel?.dia = null;
     } else {

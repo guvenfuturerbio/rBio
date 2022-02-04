@@ -50,7 +50,7 @@ class SymptomsResultPageVm extends ChangeNotifier {
           symptomsIds.add(element.id!);
         }
       } else {
-        print("Symptoms null!");
+        LoggerUtils.instance.i("Symptoms null!");
       }
       List<GetSpecialisationsResponse> specialisations =
           await getIt<SymptomRepository>().getSpeacialisations(
@@ -59,7 +59,7 @@ class SymptomsResultPageVm extends ChangeNotifier {
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();
     }
@@ -95,7 +95,7 @@ class SymptomsResultPageVm extends ChangeNotifier {
       });
       return resultId;
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
     }
   }
 }

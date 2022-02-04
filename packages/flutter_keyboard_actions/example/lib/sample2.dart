@@ -56,7 +56,7 @@ class MyCustomBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final TextEditingController controller;
 
   const MyCustomBarWidget({
-    Key key,
+    Key? key,
     this.node,
     this.controller,
   }) : super(key: key);

@@ -777,7 +777,6 @@ Future<void> showOptionalUpdateDialog({
       String btnLabelCancel = LocaleProvider.of(context).later;
       String btnLabelDontAskAgain = LocaleProvider.of(context).dont_ask_again;
       return DoNotAskAgainDialog(
-        dialogKeyName: "kUpdateDialogKeyName",
         title: title,
         subTitle: message ?? "No message",
         positiveButtonText: btnLabel,

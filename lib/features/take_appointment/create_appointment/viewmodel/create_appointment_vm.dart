@@ -176,7 +176,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       for (var department in filterDepartmentResponse!) {
         if (department.id ==
             holderForFavorites[index].resources?.first.departmentId) {
-          print(
+          LoggerUtils.instance.i(
               'departman : ${department.title} --> departmanId : ${department.id}');
           await departmentSelection(department);
         }
@@ -585,7 +585,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();
       showGradientDialog(context, LocaleProvider.current.warning,
@@ -599,9 +599,10 @@ class CreateAppointmentVm extends ChangeNotifier {
     for (var appo in patientAppointments!) {
       _doctorsIds.add(appo.resources!.first.resourceId!);
     }
-    print('Current doctor ids: -->' + _doctorsIds.toString());
+    LoggerUtils.instance.i('Current doctor ids: -->' + _doctorsIds.toString());
     _doctorsIds = _doctorsIds.toSet().toList();
-    print('Removed duplicates ids: -->' + _doctorsIds.toString());
+    LoggerUtils.instance
+        .i('Removed duplicates ids: -->' + _doctorsIds.toString());
 
     if (_doctorsIds.length >= 4) {
       for (var index = 0; index < 4; index++) {

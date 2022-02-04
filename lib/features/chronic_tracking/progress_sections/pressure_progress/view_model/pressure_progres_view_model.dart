@@ -61,11 +61,11 @@ class BpProgressPageVm
   void fetchScrolledDailyData() {
     bpMeasurementsDailyData.clear();
     List<DateTime> dateList = fetchBpMeasurementDates();
-    //print(dateList.toString());
+    //LoggerUtils.instance.i(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
-      //print("current Date " + reversedList[currentDateIndex].toString());
+      //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
       for (var data in bpMeasurements) {
         if (DateTime(data.date.year, data.date.month, data.date.day)
             .isAtSameMomentAs(DateTime(
@@ -88,7 +88,7 @@ class BpProgressPageVm
         _scrolledDate = date;
         bpMeasurementsDailyData.clear();
 
-        //print("current Date " + reversedList[currentDateIndex].toString());
+        //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
         for (var data in bpMeasurements) {
           if (DateTime(data.date.year, data.date.month, data.date.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {

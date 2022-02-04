@@ -153,7 +153,7 @@ class VRouterRoutes {
               stackedRoutes: [
                 VWidget(
                   path: PagePaths.createAppointmentSummary,
-                  widget: CreateAppointmentSummaryScreen(),
+                  widget: const CreateAppointmentSummaryScreen(),
                 ),
               ],
             ),
@@ -169,12 +169,12 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.registerStep2,
-      widget: RegisterStep2Screen(),
+      widget: const RegisterStep2Screen(),
     ),
 
     VWidget(
       path: PagePaths.registerStep3,
-      widget: RegisterStep3Screen(),
+      widget: const RegisterStep3Screen(),
     ),
 
     VWidget(
@@ -185,7 +185,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.forgotPasswordStep2,
-      widget: ForgotPasswordStep2Screen(),
+      widget: const ForgotPasswordStep2Screen(),
     ),
 
     VWidget(
@@ -251,7 +251,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.appointment,
-      widget: AppointmentListScreen(),
+      widget: const AppointmentListScreen(),
     ),
 
     VWidget(
@@ -331,7 +331,7 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.symptomBodyLocations,
-          widget: SymptomsBodyLocationsScreen(),
+          widget: const SymptomsBodyLocationsScreen(),
         ),
         VWidget(
           path: PagePaths.symptomSubBodyLocations,
@@ -385,7 +385,7 @@ class VRouterRoutes {
         stackedRoutes: [
           VWidget(
               path: PagePaths.treatmentProgress,
-              widget: TreatmentProcessScreen())
+              widget: const TreatmentProcessScreen())
         ]),
     VGuard(
         beforeEnter: (vRedirector) async {

@@ -70,7 +70,7 @@ class RateDialogVm extends ChangeNotifier {
           LocaleProvider.current.suggestion_thanks_message);
     } catch (e) {
       hideDialog(mContext!);
-      print("rateAppointment Error " + e.toString());
+      LoggerUtils.instance.i("rateAppointment Error " + e.toString());
       Navigator.pop(mContext!);
       showLoadingOverLay = false;
       notifyListeners();

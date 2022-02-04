@@ -114,11 +114,11 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   void fetchScrolledDailyData() {
     this.bpMeasurementsDailyData.clear();
     List<DateTime> dateList = fetchBpMeasurementDates();
-    //print(dateList.toString());
+    //LoggerUtils.instance.i(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
-      //print("current Date " + reversedList[currentDateIndex].toString());
+      //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
       for (var data in bpMeasurements) {
         if (DateTime(data.date.year, data.date.month, data.date.day)
             .isAtSameMomentAs(DateTime(
@@ -141,7 +141,7 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
         _scrolledDate = date;
         this.bpMeasurementsDailyData.clear();
 
-        //print("current Date " + reversedList[currentDateIndex].toString());
+        //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
         for (var data in bpMeasurements) {
           if (DateTime(data.date.year, data.date.month, data.date.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
@@ -305,12 +305,12 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
           getIt<BloodPressureStorageImpl>()
               .getAndWriteBpData(endDate: bpMeasurements.first.date)
               .then((value) {
-            print(value);
+            LoggerUtils.instance.i(value);
             hasReachEnd = value;
           });
         }
       } catch (e, stk) {
-        print(e);
+        LoggerUtils.instance.i(e);
         debugPrintStack(stackTrace: stk);
       }
     });

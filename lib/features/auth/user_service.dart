@@ -108,10 +108,10 @@ class UserService {
 
       final GoogleSignInAccount googleSignInAccount =
           await GoogleSignIn().signIn();
-      print('hree');
+      LoggerUtils.instance.i('hree');
 
       if (googleSignInAccount == null) {
-        print("null googleSignInAccount");
+        LoggerUtils.instance.i("null googleSignInAccount");
         throw Exception("null googleSignInAccount");
       }
 
@@ -119,7 +119,7 @@ class UserService {
           await googleSignInAccount.authentication;
 
       if (googleSignInAuthentication == null) {
-        print("null googleSignInAuthentication");
+        LoggerUtils.instance.i("null googleSignInAuthentication");
         throw Exception("null googleSignInAuthentication");
       }
       final AuthCredential credential = GoogleAuthProvider.credential(

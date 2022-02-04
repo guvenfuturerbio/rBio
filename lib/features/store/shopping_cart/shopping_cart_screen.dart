@@ -94,7 +94,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                               width: 30,
                                               height: 12,
                                               onPressed: () {
-                                                print("Delete worked");
+                                                LoggerUtils.instance
+                                                    .i("Delete worked");
                                               }),
                                         ],
                                       ),

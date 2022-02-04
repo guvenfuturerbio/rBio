@@ -49,7 +49,7 @@ class StripVm with ChangeNotifier {
         initCount = stripDetailModel.currentCount;
       }
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
     } finally {
       hideDialog(mContext);
       notifyListeners();

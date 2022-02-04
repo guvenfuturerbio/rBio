@@ -60,17 +60,17 @@ class _WebViewScreenState extends State<WebViewScreen> {
             // ignore: prefer_collection_literals
             navigationDelegate: (NavigationRequest request) {
               if (request.url.startsWith('https://www.youtube.com/')) {
-                print('blocking navigation to $request}');
+                LoggerUtils.instance.i('blocking navigation to $request}');
                 return NavigationDecision.prevent;
               }
-              print('allowing navigation to $request');
+              LoggerUtils.instance.i('allowing navigation to $request');
               return NavigationDecision.navigate;
             },
             onPageStarted: (String url) {
-              print('Page started loading: $url');
+              LoggerUtils.instance.i('Page started loading: $url');
             },
             onPageFinished: (String url) {
-              print('Page finished loading: $url');
+              LoggerUtils.instance.i('Page finished loading: $url');
             },
             gestureNavigationEnabled: true,
           );

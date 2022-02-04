@@ -54,7 +54,7 @@ class SymptomsBodyLocationsVm extends ChangeNotifier {
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();
     }

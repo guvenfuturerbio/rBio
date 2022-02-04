@@ -143,7 +143,7 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
       await Future.delayed(Duration(milliseconds: 300));
       Navigator.pop(context, true);
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       hideDialog(context);
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
       this._stateProcess = LoadingProgress.ERROR;

@@ -59,11 +59,12 @@ class LocalNotificationsManagerImpl extends LocalNotificationsManager {
 
   Future<void> onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
-    print(TAG + " onDidReceiveLocalNotification " + payload.toString());
+    LoggerUtils.instance
+        .i(TAG + " onDidReceiveLocalNotification " + payload.toString());
   }
 
   Future onSelectNotification(String payload) async {
-    print(TAG + " onSelectNotification " + payload.toString());
+    LoggerUtils.instance.i(TAG + " onSelectNotification " + payload.toString());
   }
 
   @override

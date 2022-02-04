@@ -126,7 +126,7 @@ class _SymptomsBodyLocationsScreenState
                       child: GestureDetector(
                         onTapDown: (e) {
                           value.notifier!.value = e.localPosition;
-                          print(e.localPosition);
+                          LoggerUtils.instance.i(e.localPosition);
                         },
                         child: CustomPaint(
                           painter: BodyPartsPainter(
@@ -135,7 +135,7 @@ class _SymptomsBodyLocationsScreenState
                                     ? true
                                     : false,
                             clickedPathFunc: (myValue) {
-                              //print(myValue);
+                              //LoggerUtils.instance.i(myValue);
                               WidgetsBinding.instance!
                                   .addPostFrameCallback((timeStamp) async {
                                 if (myValue != null) {

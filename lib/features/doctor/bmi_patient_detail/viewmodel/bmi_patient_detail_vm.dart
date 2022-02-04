@@ -386,7 +386,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   }
 
   void fetchScrolledData(DateTime date) {
-    print(date);
+    LoggerUtils.instance.i(date);
     if (date != null && selected == TimePeriodFilter.DAILY) {
       var _temp = DateTime(_scrolledDate?.year ?? 2000,
           _scrolledDate?.month ?? 01, _scrolledDate?.day ?? 01);
@@ -425,7 +425,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   }
 
   Future<void> setSelectedItem(TimePeriodFilter s) async {
-    print('data-----------> $s');
+    LoggerUtils.instance.i('data-----------> $s');
 
     this._currentDateIndex = 0;
     notifyListeners();

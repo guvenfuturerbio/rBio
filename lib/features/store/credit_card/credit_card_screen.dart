@@ -8,18 +8,12 @@ import '../../../../model/model.dart';
 import 'credit_card_vm.dart';
 
 class CreditCardScreen extends StatefulWidget {
-  int paymentObjectCode;
-  PaymentType paymentType;
-  String packageName;
-  String price;
+  int? paymentObjectCode;
+  PaymentType? paymentType;
+  String? packageName;
+  String? price;
 
-  CreditCardScreen({
-    Key? key,
-    required this.paymentObjectCode,
-    required this.paymentType,
-    required this.price,
-    required this.packageName,
-  }) : super(key: key);
+  CreditCardScreen({Key? key}) : super(key: key);
 
   @override
   _CreditCardScreenState createState() => _CreditCardScreenState();
@@ -63,7 +57,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
     return ChangeNotifierProvider<CreditCardScreenVm>(
       create: (context) => CreditCardScreenVm(
         context: context,
-        paymentType: widget.paymentType,
+        paymentType: widget.paymentType!,
       ),
       child: Consumer<CreditCardScreenVm>(
         builder: (context, value, child) {
@@ -95,7 +89,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               decoration: Utils.instance
                   .inputImageDecoration(
                     suffixIconClicked: () {
-                      print("icon clicked!");
+                      LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_holder,
                     image: R.image.ic_user,
@@ -122,7 +116,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               decoration: Utils.instance
                   .inputImageDecoration(
                     suffixIconClicked: () {
-                      print("icon clicked!");
+                      LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_number,
                     image: R.image.credit_card_number,
@@ -149,7 +143,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               decoration: Utils.instance
                   .inputImageDecoration(
                     suffixIconClicked: () {
-                      print("icon clicked!");
+                      LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_cvv,
                     image: R.image.ic_password,
@@ -176,7 +170,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               decoration: Utils.instance
                   .inputImageDecoration(
                     suffixIconClicked: () {
-                      print("icon clicked!");
+                      LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_expired_date,
                     image: R.image.credit_calendar,
@@ -213,7 +207,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                   child: InkWell(
                 onTap: () => {
                   value.showDistanceSaleContract(
-                      price: widget.price, packageName: widget.packageName)
+                    price: widget.price!,
+                    packageName: widget.packageName!,
+                  )
                 },
                 child:
                     Text(LocaleProvider.current.accept_distance_sales_contract,
@@ -243,7 +239,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               child: InkWell(
                 onTap: () {
                   value.showCancellationAndRefund(
-                      packageName: widget.packageName, price: widget.price);
+                    packageName: widget.packageName!,
+                    price: widget.price!,
+                  );
                 },
                 child: Text(
                   LocaleProvider.current.information_form,
