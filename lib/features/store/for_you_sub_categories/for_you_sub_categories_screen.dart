@@ -7,11 +7,11 @@ import '../../../../core/core.dart';
 import 'for_you_sub_categories_vm.dart';
 
 class ForYouSubCategoriesScreen extends StatelessWidget {
-  int categoryId;
-  String title;
+  int? categoryId;
+  String? title;
 
   ForYouSubCategoriesScreen({
-    Key key,
+    Key? key,
     this.categoryId,
     this.title,
   }) : super(key: key);
@@ -19,10 +19,10 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     try {
-      categoryId = int.parse(Atom.queryParameters['categoryId']);
-      title = Uri.decodeFull(Atom.queryParameters['title']);
+      categoryId = int.parse(Atom.queryParameters['categoryId'] as String);
+      title = Uri.decodeFull(Atom.queryParameters['title'] as String);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<ForUSubCategoriesScreenVm>(
@@ -31,13 +31,13 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
         builder: (
           BuildContext context,
           ForUSubCategoriesScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: RbioAppBar(
               title: RbioAppBar.textTitle(
                 context,
-                title,
+                title ?? "No title",
               ),
             ),
             body: _buildBody(vm),
@@ -49,10 +49,10 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
 
   Widget _buildBody(ForUSubCategoriesScreenVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return GridView.builder(
           padding: EdgeInsets.zero,
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -65,23 +65,24 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
           ),
           itemCount: vm.categories.length,
           itemBuilder: (BuildContext context, int index) {
-            return Utils.instance.ForYouCategoryCard(
+            return Utils.instance.forYouCategoryCard(
               context: context,
               title: vm.categories[index].text,
               id: vm.categories[index].id,
-              icon: (vm?.categories[index]?.icon != null)
-                  ? Image.memory(base64Decode(vm.categories[index].icon))
+              icon: (vm.categories[index].icon != null)
+                  ? Image.memory(
+                      base64Decode(vm.categories[index].icon as String))
                   : Image.asset(R.image.covid_cat_icon),
               isSubCat: true,
             );
           },
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }

@@ -7,7 +7,7 @@ import '../../../../core/core.dart';
 import 'for_you_categories_vm.dart';
 
 class ForYouCategoriesScreen extends StatefulWidget {
-  const ForYouCategoriesScreen({Key key}) : super(key: key);
+  const ForYouCategoriesScreen({Key? key}) : super(key: key);
 
   @override
   _ForYouCategoriesScreenState createState() => _ForYouCategoriesScreenState();
@@ -22,7 +22,7 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
         builder: (
           BuildContext context,
           ForYouCategoriesPageVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: RbioAppBar(
@@ -40,10 +40,10 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
 
   Widget _buildBody(ForYouCategoriesPageVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return GridView.builder(
           padding: EdgeInsets.zero,
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -54,25 +54,26 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
             crossAxisSpacing: 20,
             mainAxisSpacing: 25,
           ),
-          itemCount: vm.categories.length,
+          itemCount: vm.categories!.length,
           itemBuilder: (BuildContext ctx, int index) {
-            return Utils.instance.ForYouCategoryCard(
+            return Utils.instance.forYouCategoryCard(
               context: context,
-              title: vm.categories[index].text,
-              id: vm.categories[index].id,
-              icon: vm.categories[index].icon != null
-                  ? Image.memory(base64Decode(vm.categories[index].icon))
+              title: vm.categories![index].text,
+              id: vm.categories![index].id,
+              icon: vm.categories![index].icon != null
+                  ? Image.memory(
+                      base64Decode(vm.categories![index].icon as String))
                   : Image.asset(R.image.covid_cat_icon),
               isSubCat: false,
             );
           },
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }
