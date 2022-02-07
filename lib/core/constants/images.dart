@@ -133,4 +133,10 @@ class _Images {
       'assets/images/bottom_navigation/search_icon_green.svg';
   final bottomNavigationSearch =
       'assets/images/bottom_navigation/search_icon.svg';
+
+  final bloodglucose_icon = 'assets/images/reminders/bloodglucose_icon.svg';
+  final hba1c_icon = 'assets/images/reminders/hba1c_icon.svg';
+  final medication_icon = 'assets/images/reminders/medication_icon.svg';
+  final strip_icon = 'assets/images/reminders/strip_icon.svg';
+  final water_icon = 'assets/images/reminders/water_icon.svg';
 }

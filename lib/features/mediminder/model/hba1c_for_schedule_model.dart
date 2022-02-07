@@ -13,10 +13,10 @@ class Hba1CForScheduleModel {
 
   factory Hba1CForScheduleModel.fromJson(Map<String, dynamic> json) =>
       Hba1CForScheduleModel(
-        id: json["id"] as int,
-        lastTestDate: json["last_test_date"] as String?,
-        lastTestValue: json["last_test_value"] as String?,
-        reminderDate: json["reminder_date"] as String?,
+        id: json["id"],
+        lastTestDate: json["last_test_date"],
+        lastTestValue: json["last_test_value"],
+        reminderDate: json["reminder_date"],
       );
 
   Map<String, dynamic> toJson() => {

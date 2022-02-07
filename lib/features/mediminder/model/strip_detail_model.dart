@@ -1,9 +1,9 @@
 class StripDetailModel {
-  String? deviceUUID;
-  int? currentCount;
-  int? alarmCount;
-  int? entegrationId;
-  bool? isNotificationActive;
+  String deviceUUID;
+  int currentCount;
+  int alarmCount;
+  int entegrationId;
+  bool isNotificationActive;
 
   StripDetailModel({
     this.deviceUUID = "",
@@ -15,11 +15,11 @@ class StripDetailModel {
 
   factory StripDetailModel.fromJson(Map<String, dynamic> json) =>
       StripDetailModel(
-        deviceUUID: json['device_UUID'] as String?,
-        currentCount: json['current_count'] as int?,
-        alarmCount: json['alarm_count'] as int?,
-        entegrationId: json['entegration_id'] as int?,
-        isNotificationActive: json['is_active'] as bool?,
+        deviceUUID: json['device_UUID'] as String,
+        currentCount: json['current_count'] as int,
+        alarmCount: json['alarm_count'] as int,
+        entegrationId: json['entegration_id'] as int,
+        isNotificationActive: json['is_active'] as bool,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

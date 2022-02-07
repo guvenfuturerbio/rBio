@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/manager/local_notification_manager.dart';
 
 import '../../../core/core.dart';
 import '../../../core/enums/medicine_period.dart';
@@ -9,84 +10,138 @@ import '../../../core/enums/usage_type.dart';
 import '../mediminder.dart';
 
 class MedicationVm extends ChangeNotifier {
-  BuildContext mContext;
+  late BuildContext mContext;
   MedicationVm(this.mContext) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchAll();
     });
   }
 
-  List<MedicineForScheduledModel> _medicineForScheduled;
-  List<MedicineForScheduledModel> get medicineForScheduled =>
-      this._medicineForScheduled ?? [];
+  List<MedicineForScheduledModel> medicineForScheduled = [];
 
   Future<void> fetchAll() async {
-    List<String> jsonList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.medicines);
+    List<String>? jsonList = getIt<ISharedPreferencesManager>()
+        .getStringList(SharedPreferencesKeys.MEDICINES);
     List<MedicineForScheduledModel> prefList = [];
     if (jsonList != null) {
       for (String jsonMedicine in jsonList) {
         Map<String, dynamic> jsonMap = jsonDecode(jsonMedicine);
         prefList.add(MedicineForScheduledModel.fromJson(jsonMap));
       }
-      this._medicineForScheduled = prefList;
+      medicineForScheduled = prefList;
       notifyListeners();
     }
   }
 
-  Future<void> removeMedicine(
-      MedicineForScheduledModel medicineForScheduled) async {
-    // Vm'de ki listeden item'ı sil
-    this._medicineForScheduled.removeWhere((medicine) =>
-        medicine.notificationId == medicineForScheduled.notificationId);
+  Future<void> removeAllMedicines(int createdDate) async {
+    // Notificationlar'ı iptal et
+    await Future.forEach<MedicineForScheduledModel>(
+      medicineForScheduled,
+      (item) async {
+        if (item.createdDate == createdDate) {
+          if (item.notificationId != null) {
+            // Notification'ı iptal et
+            await getIt<LocalNotificationManager>()
+                .cancelNotification(item.notificationId!);
+          }
+        }
+      },
+    );
 
-    // Notification'ı iptal et
-    getIt<LocalNotificationsManager>()
-        .cancel(medicineForScheduled.notificationId);
+    // Vm'de ki listeden itemları'ı sil
+    medicineForScheduled
+        .removeWhere((medicine) => medicine.createdDate == createdDate);
 
     // Shared Preferences'da ki listeyi güncelle
+    await _saveList();
+
+    notifyListeners();
+  }
+
+  Future<void> removeMedicine(MedicineForScheduledModel item) async {
+    // Vm'de ki listeden item'ı sil
+    medicineForScheduled.removeWhere(
+        (medicine) => medicine.notificationId == item.notificationId);
+
+    // Notification'ı iptal et
+    if (item.notificationId != null) {
+      await getIt<LocalNotificationManager>()
+          .cancelNotification(item.notificationId!);
+    }
+
+    // Shared Preferences'da ki listeyi güncelle
+    await _saveList();
+
+    notifyListeners();
+  }
+
+  Future<void> _saveList() async {
     List<String> medicineJsonList = [];
-    if (this._medicineForScheduled.length != 0) {
-      for (var medicines in this._medicineForScheduled) {
+    if (medicineForScheduled.isNotEmpty) {
+      for (var medicines in medicineForScheduled) {
         String medicineJson = jsonEncode(medicines.toJson());
         medicineJsonList.add(medicineJson);
       }
     }
     await getIt<ISharedPreferencesManager>()
-        .setStringList(SharedPreferencesKeys.medicines, medicineJsonList);
-
-    notifyListeners();
+        .setStringList(SharedPreferencesKeys.MEDICINES, medicineJsonList);
   }
 
   String getSubTitle(MedicineForScheduledModel medicine) {
-    if (medicine.medicinePeriod == MedicinePeriod.SPECIFIC_DAYS.toString()) {
-      return LocaleProvider.current.every +
-          " " +
-          _getDayString(medicine.dayIndex) +
-          (", " + _getUsageType(medicine.usageType));
-    } else {
-      return _getPeriodString(medicine.medicinePeriod) +
-          (", " + _getUsageType(medicine.usageType)) +
-          (medicine.remindable == Remindable.Medication.toString()
-              ? ", " +
-                  medicine.dosage.toString() +
-                  " " +
-                  LocaleProvider.current.hint_dosage
-              : " ");
+    String result = "";
+
+    final medicinePeriod = medicine.medicinePeriod;
+
+    if (medicinePeriod != null) {
+      if (medicinePeriod.xMedicinePeriodKeys == MedicinePeriod.specificDays) {
+        result += LocaleProvider.current.every;
+        result += " ";
+        result += _getDayString(medicine.dayIndex);
+        result += ", " + _getUsageType(medicine.usageType);
+      } else {
+        result += _getPeriodString(medicine.medicinePeriod);
+        result += ", " + _getUsageType(medicine.usageType);
+
+        final remindable = medicine.remindable;
+        if (remindable != null) {
+          if (remindable.xRemindableKeys == Remindable.medication) {
+            result += ", " +
+                medicine.dosage.toString() +
+                " " +
+                LocaleProvider.current.hint_dosage;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  String _getPeriodString(String? period) {
+    if (period == null) return '';
+    final medicinePeriod = period.xMedicinePeriodKeys;
+
+    switch (medicinePeriod) {
+      case MedicinePeriod.oneTime:
+        return LocaleProvider.of(mContext).one_time;
+
+      case MedicinePeriod.everyDay:
+        return LocaleProvider.of(mContext).every_day;
+
+      case MedicinePeriod.specificDays:
+        return LocaleProvider.of(mContext).specific_days;
+
+      case MedicinePeriod.intermittentDays:
+        return LocaleProvider.of(mContext).intermittent_days;
+
+      default:
+        return '';
     }
   }
 
-  String _getPeriodString(String period) {
-    if (period == MedicinePeriod.EVERY_DAY.toString()) {
-      return LocaleProvider.of(mContext).every_day;
-    } else if (period == MedicinePeriod.SPECIFIC_DAYS.toString()) {
-      return LocaleProvider.of(mContext).specific_days;
-    } else {
-      return LocaleProvider.of(mContext).intermittent_days;
-    }
-  }
+  String _getDayString(int? dayIndex) {
+    if (dayIndex == null) return '';
 
-  String _getDayString(int dayIndex) {
     final newIndex = dayIndex + 1;
     if (newIndex == 1) {
       return LocaleProvider.of(mContext).weekdays_monday;
@@ -107,13 +162,22 @@ class MedicationVm extends ChangeNotifier {
     }
   }
 
-  String _getUsageType(String usageType) {
-    if (usageType == UsageType.FULL.toString()) {
-      return LocaleProvider.of(mContext).full;
-    } else if (usageType == UsageType.IRRELEVANT.toString()) {
-      return LocaleProvider.of(mContext).irrelevant;
-    } else {
-      return LocaleProvider.of(mContext).hungry;
+  String _getUsageType(String? usageType) {
+    if (usageType == null) return '';
+    final type = usageType.xUsageTypeKeys;
+
+    switch (type) {
+      case UsageType.hungry:
+        return LocaleProvider.of(mContext).hungry;
+
+      case UsageType.full:
+        return LocaleProvider.of(mContext).full;
+
+      case UsageType.irrelevant:
+        return LocaleProvider.of(mContext).irrelevant;
+
+      default:
+        return '';
     }
   }
 }

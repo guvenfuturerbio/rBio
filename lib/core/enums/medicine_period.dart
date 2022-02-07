@@ -1,59 +1,38 @@
+import 'package:collection/collection.dart';
+
 import '../core.dart';
 
 enum MedicinePeriod {
+  oneTime,
   everyDay,
-  spesificDays,
-  intermittenDays,
+  specificDays,
+  intermittentDays,
 }
 
 extension MedicinePeriodExtensions on MedicinePeriod {
+  String get xRawValue => getEnumValue(this);
+
   String toShortString() {
     switch (this) {
+      case MedicinePeriod.oneTime:
+        return LocaleProvider.current.one_time;
+
       case MedicinePeriod.everyDay:
         return LocaleProvider.current.every_day;
 
-      case MedicinePeriod.spesificDays:
+      case MedicinePeriod.specificDays:
         return LocaleProvider.current.specific_days;
 
-      case MedicinePeriod.intermittenDays:
+      case MedicinePeriod.intermittentDays:
         return LocaleProvider.current.intermittent_days;
 
       default:
-        throw Exception('toShortString');
-    }
-  }
-
-  String toParseableStringMedicine() {
-    switch (this) {
-      case MedicinePeriod.everyDay:
-        return 'EveryDay';
-
-      case MedicinePeriod.spesificDays:
-        return 'SpecificDays';
-
-      case MedicinePeriod.intermittenDays:
-        return 'IntermittentDays';
-
-      default:
-        return LocaleProvider.current.error;
+        return "";
     }
   }
 }
 
-extension ParseToMedicinePeriod on String {
-  MedicinePeriod toMedicinePeriod() {
-    switch (this) {
-      case 'EveryDay':
-        return MedicinePeriod.everyDay;
-
-      case 'SpecificDays':
-        return MedicinePeriod.spesificDays;
-
-      case 'IntermittentDays':
-        return MedicinePeriod.intermittenDays;
-
-      default:
-        return MedicinePeriod.everyDay;
-    }
-  }
+extension MedicinePeriodKeysStringExt on String {
+  MedicinePeriod? get xMedicinePeriodKeys => MedicinePeriod.values
+      .firstWhereOrNull((element) => element.xRawValue == this);
 }

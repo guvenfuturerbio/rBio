@@ -5,25 +5,32 @@ import '../core.dart';
 
 class GuvenAlert extends StatelessWidget {
   final Color? backgroundColor;
+  final EdgeInsets? insetPadding;
   final EdgeInsetsGeometry? contentPadding;
   final Widget? title;
   final ShapeBorder? shape;
   final List<Widget>? actions;
   final Widget? content;
+  final double? elevation;
 
   const GuvenAlert({
     Key? key,
     this.backgroundColor,
+    this.insetPadding,
     this.contentPadding,
     this.title,
     this.shape,
     this.actions,
     this.content,
+    this.elevation,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      elevation: elevation,
+      insetPadding: insetPadding ??
+          const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
       backgroundColor: backgroundColor ?? getIt<ITheme>().mainColor,
       contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
       title: context.xTextScaleType == TextScaleType.large

@@ -5,12 +5,12 @@ import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../features/mediminder/mediminder.dart';
 import 'core.dart';
 import 'data/imports/cronic_tracking.dart';
 import 'data/repository/doctor_repository.dart';
 import 'data/service/symptom_api_service.dart';
 import 'domain/blood_pressure_model.dart';
+import 'manager/local_notification_manager.dart';
 import 'notifiers/notification_badge_notifier.dart';
 
 // This is our global ServiceLocator
@@ -88,8 +88,8 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerLazySingleton(() => ChronicTrackingRepository(
       apiService: getIt<ChronicTrackingApiService>(),
       localCacheService: getIt<LocalCacheService>()));
-  getIt.registerLazySingleton<LocalNotificationsManager>(
-      () => LocalNotificationsManagerImpl());
+  getIt.registerLazySingleton<LocalNotificationManager>(
+      () => LocalNotificationManagerImpl());
 
 //  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
   // getIt<PushedNotificationHandlerNew>().initializeGCM();

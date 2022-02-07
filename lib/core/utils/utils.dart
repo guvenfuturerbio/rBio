@@ -40,6 +40,30 @@ class Utils {
     }
   }
 
+  Future<TimeOfDay?> openMaterialTimePicker(
+    BuildContext context,
+    TimeOfDay timeOfDay,
+  ) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              primary: getIt<ITheme>().mainColor,
+            ),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
+      initialTime: timeOfDay,
+      initialEntryMode: TimePickerEntryMode.input,
+    );
+    return picked;
+  }
+
   // #region hideKeyboard
   void hideKeyboard(BuildContext context) {
     final currentFocus = FocusScope.of(context);
@@ -872,10 +896,14 @@ class Mediminder {
 }
 
 class GradientDialog extends StatefulWidget {
-  final String title;
-  final String text;
+  final String? title;
+  final String? text;
 
-  const GradientDialog(Key? key, this.title, this.text) : super(key: key);
+  const GradientDialog({
+    Key? key,
+    this.title,
+    this.text,
+  }) : super(key: key);
 
   @override
   _GradientDialogState createState() => _GradientDialogState();
@@ -896,7 +924,7 @@ class _GradientDialogState extends State<GradientDialog> {
       backgroundColor: getIt<ITheme>().mainColor,
       contentPadding: EdgeInsets.zero,
       title: Text(
-        widget.title,
+        widget.title ?? '',
         style: context.xHeadline1.copyWith(
             fontWeight: FontWeight.w700, color: getIt<ITheme>().textColor),
       ),
@@ -915,9 +943,12 @@ class _GradientDialogState extends State<GradientDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(widget.text,
-                style: context.xHeadline3
-                    .copyWith(color: getIt<ITheme>().textColor)),
+            Text(
+              widget.text ?? '',
+              style: context.xHeadline3.copyWith(
+                color: getIt<ITheme>().textColor,
+              ),
+            ),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:onedosehealth/core/manager/local_notification_manager.dart';
 
 import '../../../core/core.dart';
 import '../../../core/data/imports/cronic_tracking.dart';
@@ -8,10 +9,10 @@ import '../mediminder.dart';
 class StripVm with ChangeNotifier {
   StripDetailModel stripDetailModel = StripDetailModel();
   BuildContext mContext;
-  ProgressDialog progressDialog;
+  ProgressDialog? progressDialog;
 
   StripVm(this.mContext) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await loadValues();
     });
   }
@@ -20,36 +21,36 @@ class StripVm with ChangeNotifier {
   int alarmCount = 0;
   int stripCount = 0;
   int usedStripCount = 0;
+  Person? userLocal;
 
   Future<void> loadValues() async {
     showLoadingDialog();
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
 
     try {
       if (getIt<ISharedPreferencesManager>()
           .containsKey(SharedPreferencesKeys.usedStripCount)) {
         usedStripCount = getIt<ISharedPreferencesManager>()
-            .getInt(SharedPreferencesKeys.usedStripCount);
+                .getInt(SharedPreferencesKeys.usedStripCount) ??
+            0;
       } else {
         usedStripCount = 0;
         await getIt<ISharedPreferencesManager>()
             .setInt(SharedPreferencesKeys.usedStripCount, 0);
       }
 
-      if (Mediminder.instance.selection != null) {
+      userLocal = getIt<ProfileStorageImpl>().getFirst();
+      if (userLocal != null) {
         stripDetailModel = (await getIt<ChronicTrackingRepository>()
-                .getUserStrip(Mediminder.instance.selection?.id,
-                    Mediminder.instance.selection?.deviceUUID)) ??
-            StripDetailModel();
-
-        stripDetailModel.deviceUUID = Mediminder.instance.selection?.deviceUUID;
+            .getUserStrip(userLocal!.id, userLocal!.deviceUUID));
+        stripDetailModel.deviceUUID = userLocal!.deviceUUID;
         alarmCount = stripDetailModel.alarmCount;
-        stripDetailModel.entegrationId = Mediminder.instance.selection?.id;
+        stripDetailModel.entegrationId = userLocal!.id;
         stripCount = stripDetailModel.currentCount;
         initCount = stripDetailModel.currentCount;
       }
     } catch (e) {
-      LoggerUtils.instance.i(e);
+      LoggerUtils.instance.e(e);
     } finally {
       hideDialog(mContext);
       notifyListeners();
@@ -84,8 +85,9 @@ class StripVm with ChangeNotifier {
   Future<void> saveData() async {
     final diff = initCount - stripCount;
     if (diff > 0) {
-      final newUseStripCount = getIt<ISharedPreferencesManager>()
-              .getInt(SharedPreferencesKeys.usedStripCount) +
+      final newUseStripCount = (getIt<ISharedPreferencesManager>()
+                  .getInt(SharedPreferencesKeys.usedStripCount) ??
+              0) +
           diff;
       await getIt<ISharedPreferencesManager>()
           .setInt(SharedPreferencesKeys.usedStripCount, newUseStripCount);
@@ -94,8 +96,8 @@ class StripVm with ChangeNotifier {
 
     stripDetailModel.alarmCount = alarmCount;
     stripDetailModel.currentCount = stripCount;
-    stripDetailModel.deviceUUID = Mediminder.instance.selection?.deviceUUID;
-    stripDetailModel.entegrationId = Mediminder.instance.selection?.id;
+    stripDetailModel.deviceUUID = userLocal!.deviceUUID;
+    stripDetailModel.entegrationId = userLocal!.id;
 
     await getIt<ChronicTrackingRepository>().updateUserStrip(stripDetailModel);
 
@@ -118,14 +120,16 @@ class StripVm with ChangeNotifier {
       context: mContext,
       barrierDismissible: false,
       builder: (BuildContext context) =>
-          progressDialog = progressDialog ?? ProgressDialog(),
+          progressDialog = progressDialog ?? const ProgressDialog(),
     );
   }
 
   void hideDialog(BuildContext context) {
-    if (progressDialog != null && progressDialog.isShowing()) {
-      Atom.dismiss();
-      progressDialog = null;
+    if (progressDialog != null) {
+      if (progressDialog!.isShowing()) {
+        Atom.dismiss();
+        progressDialog = null;
+      }
     }
   }
 
@@ -133,9 +137,12 @@ class StripVm with ChangeNotifier {
     StripDetailModel stripDetailModel,
   ) async {
     if (stripDetailModel.alarmCount >= stripDetailModel.currentCount) {
-      await getIt<LocalNotificationsManager>().showNotification(
-          LocaleProvider.current.strip_count_low,
-          stripLocaleProviderFetcher(stripDetailModel.currentCount.toString()));
+      getIt<LocalNotificationManager>().show(
+        LocaleProvider.current.strip_count_low,
+        stripLocaleProviderFetcher(
+          stripDetailModel.currentCount.toString(),
+        ),
+      );
     }
   }
 
@@ -145,24 +152,22 @@ class StripVm with ChangeNotifier {
   }
 
   static void decrementAndSave(int value) async {
+    final userLocal = getIt<ProfileStorageImpl>().getFirst();
     final sharedPrefs = getIt<ISharedPreferencesManager>();
-    final int usedStripCount =
-        (sharedPrefs.getInt(SharedPreferencesKeys.usedStripCount) ??
-            sharedPrefs.setInt(SharedPreferencesKeys.usedStripCount, 0));
     final stripDetailModel = await getIt<ChronicTrackingRepository>()
-            .getUserStrip(Mediminder.instance.selection?.id,
-                Mediminder.instance.selection?.deviceUUID) ??
-        StripDetailModel();
-    stripDetailModel.deviceUUID = Mediminder.instance.selection?.deviceUUID;
-    stripDetailModel.entegrationId = Mediminder.instance.selection?.id;
+        .getUserStrip(userLocal.id, userLocal.deviceUUID);
+    stripDetailModel.deviceUUID = userLocal.deviceUUID;
+    stripDetailModel.entegrationId = userLocal.id;
     if (stripDetailModel.currentCount - value > 0) {
       stripDetailModel.currentCount = stripDetailModel.currentCount - value;
     } else {
       stripDetailModel.currentCount = 0;
     }
     checkAlarmAndSendNotification(stripDetailModel);
-    await sharedPrefs.setInt(SharedPreferencesKeys.usedStripCount,
-        sharedPrefs.getInt(SharedPreferencesKeys.usedStripCount) + value);
+    await sharedPrefs.setInt(
+        SharedPreferencesKeys.usedStripCount,
+        (sharedPrefs.getInt(SharedPreferencesKeys.usedStripCount) ?? 0) +
+            value);
     getIt<ChronicTrackingRepository>().updateUserStrip(stripDetailModel);
   }
 }
