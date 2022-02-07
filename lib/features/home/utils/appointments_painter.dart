@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class HomeAppointmentsCustomPainter extends CustomPainter {
@@ -57,7 +59,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_0.close();
 
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Color(0xffffd9ad).withOpacity(1.0);
+    paint_0_fill.color = const Color(0xffffd9ad).withOpacity(1.0);
     canvas.drawPath(path_0, paint_0_fill);
 
     Path path_1 = Path();
@@ -185,7 +187,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_1.close();
 
     Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
-    paint_1_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_1_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_1, paint_1_fill);
 
     Path path_2 = Path();
@@ -275,7 +277,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_2.close();
 
     Paint paint_2_fill = Paint()..style = PaintingStyle.fill;
-    paint_2_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_2_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_2, paint_2_fill);
 
     Path path_3 = Path();
@@ -405,7 +407,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_3.close();
 
     Paint paint_3_fill = Paint()..style = PaintingStyle.fill;
-    paint_3_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_3_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_3, paint_3_fill);
 
     Path path_4 = Path();
@@ -523,7 +525,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_4.close();
 
     Paint paint_4_fill = Paint()..style = PaintingStyle.fill;
-    paint_4_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_4_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_4, paint_4_fill);
 
     Path path_5 = Path();
@@ -731,7 +733,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_5.close();
 
     Paint paint_5_fill = Paint()..style = PaintingStyle.fill;
-    paint_5_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_5_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_5, paint_5_fill);
 
     Path path_6 = Path();
@@ -940,7 +942,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_6.close();
 
     Paint paint_6_fill = Paint()..style = PaintingStyle.fill;
-    paint_6_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_6_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_6, paint_6_fill);
 
     Path path_7 = Path();
@@ -1159,7 +1161,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_7.close();
 
     Paint paint_7_fill = Paint()..style = PaintingStyle.fill;
-    paint_7_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_7_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_7, paint_7_fill);
 
     Path path_8 = Path();
@@ -1374,7 +1376,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_8.close();
 
     Paint paint_8_fill = Paint()..style = PaintingStyle.fill;
-    paint_8_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_8_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_8, paint_8_fill);
 
     Path path_9 = Path();
@@ -1582,7 +1584,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_9.close();
 
     Paint paint_9_fill = Paint()..style = PaintingStyle.fill;
-    paint_9_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_9_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_9, paint_9_fill);
 
     Path path_10 = Path();
@@ -1724,7 +1726,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_10.close();
 
     Paint paint_10_fill = Paint()..style = PaintingStyle.fill;
-    paint_10_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_10_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_10, paint_10_fill);
 
     Path path_11 = Path();
@@ -1970,7 +1972,7 @@ class HomeAppointmentsCustomPainter extends CustomPainter {
     path_11.close();
 
     Paint paint_11_fill = Paint()..style = PaintingStyle.fill;
-    paint_11_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_11_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_11, paint_11_fill);
   }
 

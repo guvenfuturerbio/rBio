@@ -1,31 +1,37 @@
 import '../../../../../../generated/l10n.dart';
 
 enum SelectedScaleType {
-  BMI,
-  WEIGHT,
-  BODY_FAT,
-  BONE_MASS,
-  WATER,
-  VISCERAL_FAT,
-  MUSCLE
+  bmi,
+  weight,
+  bodyFat,
+  boneMass,
+  water,
+  visceralFat,
+  muscle,
 }
 
 extension SclaeToStringExtension on SelectedScaleType {
   get toStr {
     switch (this) {
-      case SelectedScaleType.BMI:
+      case SelectedScaleType.bmi:
         return LocaleProvider.current.scale_data_bmi;
-      case SelectedScaleType.WEIGHT:
+
+      case SelectedScaleType.weight:
         return LocaleProvider.current.weight;
-      case SelectedScaleType.BODY_FAT:
+
+      case SelectedScaleType.bodyFat:
         return LocaleProvider.current.scale_data_body_fat;
-      case SelectedScaleType.BONE_MASS:
+
+      case SelectedScaleType.boneMass:
         return LocaleProvider.current.scale_data_bone_mass;
-      case SelectedScaleType.WATER:
+
+      case SelectedScaleType.water:
         return LocaleProvider.current.scale_data_water;
-      case SelectedScaleType.VISCERAL_FAT:
+
+      case SelectedScaleType.visceralFat:
         return LocaleProvider.current.scale_data_visceral_fat;
-      case SelectedScaleType.MUSCLE:
+
+      case SelectedScaleType.muscle:
         return LocaleProvider.current.scale_data_muscle;
     }
   }

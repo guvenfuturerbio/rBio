@@ -1,22 +1,25 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import '../core.dart';
+
+part 'all_users_model.g.dart';
 
 // Cihaz üzerinde uygulamaya giriş yapan tüm kullanıcıları tuttuğumuz model.
 // Her kullanıcının home widget listesini saklıyoruz.
+@JsonSerializable()
 class AllUsersModel extends IBaseModel<AllUsersModel> {
-  late List<String> useWidgets;
+  @JsonKey(name: "useWidgets")
+  List<String>? useWidgets;
 
   AllUsersModel({
-    required this.useWidgets,
+    this.useWidgets,
   });
 
-  AllUsersModel.fromJson(Map<String, dynamic> json) {
-    useWidgets = json['useWidgets'] as List<String>;
-  }
+  factory AllUsersModel.fromJson(Map<String, dynamic> json) =>
+      _$AllUsersModelFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'useWidgets': useWidgets,
-      };
+  Map<String, dynamic> toJson() => _$AllUsersModelToJson(this);
 
   @override
   AllUsersModel fromJson(Map<String, dynamic> json) {

@@ -352,36 +352,41 @@ class VRouterRoutes {
       },
       stackedRoutes: [
         VWidget(
-            path: PagePaths.measurementTracking,
-            widget: const MeasurementTrackingHomeScreen(),
-            stackedRoutes: [
-              VWidget(
-                path: PagePaths.bmiProgress,
-                widget: const ScaleProgressPage(key: Key('ScaleProgressPage')),
-              ),
-              VWidget(
-                path: PagePaths.bpProgress,
-                widget: const BpProgressPage(key: Key('BpProgressPage')),
-              ),
-              VWidget(
-                path: PagePaths.bloodGlucoseProgress,
-                widget: const BgProgressPage(key: Key('BgProgressPage')),
-              ),
-            ]),
+          path: PagePaths.measurementTracking,
+          widget: const MeasurementTrackingHomeScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.bmiProgress,
+              widget: const ScaleProgressPage(key: Key('ScaleProgressPage')),
+            ),
+            VWidget(
+              path: PagePaths.bpProgress,
+              widget: const BpProgressPage(key: Key('BpProgressPage')),
+            ),
+            VWidget(
+              path: PagePaths.bloodGlucoseProgress,
+              widget: const BgProgressPage(key: Key('BgProgressPage')),
+            ),
+          ],
+        ),
       ],
     ),
+
     VGuard(
-        beforeEnter: (vRedirector) async {
-          if (!getIt<UserNotifier>().isCronic) {
-            vRedirector.stopRedirection();
-            Atom.show(NotChronicWarning());
-          }
-        },
-        stackedRoutes: [
-          VWidget(
-              path: PagePaths.treatmentProgress,
-              widget: TreatmentProcessScreen())
-        ]),
+      beforeEnter: (vRedirector) async {
+        if (!getIt<UserNotifier>().isCronic) {
+          vRedirector.stopRedirection();
+          Atom.show(NotChronicWarning());
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.treatmentProgress,
+          widget: const TreatmentProcessScreen(),
+        )
+      ],
+    ),
+
     VGuard(
       beforeEnter: (vRedirector) async {
         if (!getIt<UserNotifier>().isCronic) {
@@ -454,8 +459,8 @@ class VRouterRoutes {
               //vRedirector.stopRedirection();
             } else {
               final hasSugarDevice = pairedDevices.any((item) =>
-                  item.deviceType == DeviceType.ACCU_CHEK ||
-                  item.deviceType == DeviceType.CONTOUR_PLUS_ONE);
+                  item.deviceType == DeviceType.accuChek ||
+                  item.deviceType == DeviceType.contourPlusOne);
               if (!hasSugarDevice) {
                 await showAlert();
                 vRedirector.stopRedirection();
@@ -465,7 +470,7 @@ class VRouterRoutes {
           stackedRoutes: [
             VWidget(
               path: PagePaths.strip,
-              widget: StripScreen(),
+              widget: const StripScreen(),
             ),
           ],
         ),
@@ -475,7 +480,7 @@ class VRouterRoutes {
     // Doctor
     VWidget(
       path: PagePaths.doctorHome,
-      widget: DoctorHomeScreen(),
+      widget: const DoctorHomeScreen(),
       stackedRoutes: [
         VWidget(
           path: PagePaths.doctorPatientList,
@@ -488,15 +493,15 @@ class VRouterRoutes {
             ),
             VWidget(
               path: PagePaths.doctorGlucosePatientDetailL,
-              widget: BloodGlucosePatientDetailScreen(),
+              widget: const BloodGlucosePatientDetailScreen(),
             ),
             VWidget(
               path: PagePaths.doctorPatientList,
-              widget: BloodPressurePatientDetailScreen(),
+              widget: const BloodPressurePatientDetailScreen(),
             ),
             VWidget(
               path: PagePaths.doctorTreatmentProgress,
-              widget: DoctorTreatmentProcessScreen(),
+              widget: const DoctorTreatmentProcessScreen(),
               stackedRoutes: [
                 VWidget(
                   path: PagePaths.doctorTreatmentEdit,

@@ -27,8 +27,8 @@ class LocaleNotifier with ChangeNotifier {
 
   // -------- -------- -------- --------
 
-  static const _trLocal = const Locale('tr', 'TR');
-  static const _enLocal = const Locale('en', 'US');
+  static const _trLocal = Locale('tr', 'TR');
+  static const _enLocal = Locale('en', 'US');
   final List<Locale> supportedLocales = [_trLocal, _enLocal];
   Locale getLocaleByLanguageCode(String value) {
     if (value == _trLocal.languageCode) {

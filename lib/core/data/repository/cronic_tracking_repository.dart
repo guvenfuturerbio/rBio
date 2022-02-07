@@ -40,9 +40,9 @@ class ChronicTrackingRepository {
   ) =>
       apiService.getBloodGlucoseReport(bloodGlucoseReportBody);
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
-    GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson,
+    GetBloodGlucoseDataOfPerson data,
   ) =>
-      apiService.getBloodGlucoseDataOfPerson(getBloodGlucoseDataOfPerson);
+      apiService.getBloodGlucoseDataOfPerson(data);
   Future<List<Person>> getAllProfiles() => apiService.getAllProfiles();
   Future<GuvenResponseModel> addProfile(Person person) =>
       apiService.addProfile(person);

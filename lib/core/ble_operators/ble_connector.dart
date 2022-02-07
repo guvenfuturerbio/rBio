@@ -5,7 +5,7 @@ class BleConnectorOps extends ChangeNotifier {
 
   bool isFirstConnect = true;
 
-  List<ConnectionStateUpdate> _deviceConnectionStateUpdate = [];
+  final List<ConnectionStateUpdate> _deviceConnectionStateUpdate = [];
 
   DiscoveredDevice? _device;
 
@@ -36,13 +36,13 @@ class BleConnectorOps extends ChangeNotifier {
         notifyListeners();
         if (event.connectionState == DeviceConnectionState.connected) {
           switch (getDeviceType(device!)) {
-            case DeviceType.ACCU_CHEK:
+            case DeviceType.accuChek:
               getIt<BleReactorOps>().write(device!);
               break;
-            case DeviceType.CONTOUR_PLUS_ONE:
+            case DeviceType.contourPlusOne:
               getIt<BleReactorOps>().write(device!);
               break;
-            case DeviceType.MI_SCALE:
+            case DeviceType.miScale:
               getIt<BleReactorOps>().subscribeScaleDevice(device!);
               break;
             default:

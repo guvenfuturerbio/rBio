@@ -220,53 +220,59 @@ class ScaleTagger extends StatelessWidget {
   List<Widget> _sectionItems(BuildContext context) {
     return [
       scaleSection(
-          measurement: scaleModel.bmi,
-          name: LocaleProvider.current.scale_data_bmi,
-          color: scaleModel.getColor(SelectedScaleType.BMI),
-          type: '',
-          index: 1,
-          crossAxisCount: 1,
-          context: context),
+        measurement: scaleModel.bmi,
+        name: LocaleProvider.current.scale_data_bmi,
+        color: scaleModel.getColor(SelectedScaleType.bmi),
+        type: '',
+        index: 1,
+        crossAxisCount: 1,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.bodyFat,
-          name: LocaleProvider.current.scale_data_body_fat,
-          color: scaleModel.getColor(SelectedScaleType.BODY_FAT),
-          type: '%',
-          index: 2,
-          crossAxisCount: 1,
-          context: context),
+        measurement: scaleModel.bodyFat,
+        name: LocaleProvider.current.scale_data_body_fat,
+        color: scaleModel.getColor(SelectedScaleType.bodyFat),
+        type: '%',
+        index: 2,
+        crossAxisCount: 1,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.boneMass,
-          name: LocaleProvider.current.scale_data_bone_mass,
-          color: scaleModel.getColor(SelectedScaleType.BONE_MASS),
-          type: '${scaleModel.scaleModel.unit ?? ScaleUnit.kg.toStr}',
-          index: 3,
-          crossAxisCount: 2,
-          context: context),
+        measurement: scaleModel.boneMass,
+        name: LocaleProvider.current.scale_data_bone_mass,
+        color: scaleModel.getColor(SelectedScaleType.boneMass),
+        type: '${scaleModel.scaleModel.unit ?? ScaleUnit.kg.toStr}',
+        index: 3,
+        crossAxisCount: 2,
+        context: context,
+      ),
       scaleSection(
-          name: LocaleProvider.current.scale_data_muscle,
-          measurement: scaleModel.muscle,
-          color: scaleModel.getColor(SelectedScaleType.MUSCLE),
-          type: '%',
-          index: 4,
-          crossAxisCount: 2,
-          context: context),
+        name: LocaleProvider.current.scale_data_muscle,
+        measurement: scaleModel.muscle,
+        color: scaleModel.getColor(SelectedScaleType.muscle),
+        type: '%',
+        index: 4,
+        crossAxisCount: 2,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.visceralFat,
-          name: LocaleProvider.current.scale_data_visceral_fat,
-          color: scaleModel.getColor(SelectedScaleType.VISCERAL_FAT),
-          type: '',
-          index: 5,
-          crossAxisCount: 3,
-          context: context),
+        measurement: scaleModel.visceralFat,
+        name: LocaleProvider.current.scale_data_visceral_fat,
+        color: scaleModel.getColor(SelectedScaleType.visceralFat),
+        type: '',
+        index: 5,
+        crossAxisCount: 3,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.water,
-          name: LocaleProvider.current.scale_data_water,
-          color: scaleModel.getColor(SelectedScaleType.WATER),
-          type: '%',
-          index: 6,
-          crossAxisCount: 3,
-          context: context),
+        measurement: scaleModel.water,
+        name: LocaleProvider.current.scale_data_water,
+        color: scaleModel.getColor(SelectedScaleType.water),
+        type: '%',
+        index: 6,
+        crossAxisCount: 3,
+        context: context,
+      ),
     ];
   }
 
@@ -281,23 +287,31 @@ class ScaleTagger extends StatelessWidget {
               width: height * .2,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withAlpha(50),
-                        blurRadius: 5,
-                        spreadRadius: 0,
-                        offset: const Offset(3, 3))
-                  ],
-                  border: Border.all(
-                      width: 13,
-                      color: scaleModel.getColor(SelectedScaleType.WEIGHT)),
-                  shape: BoxShape.circle,
-                  color: R.color.white),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(50),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: const Offset(3, 3))
+                ],
+                border: Border.all(
+                  width: 13,
+                  color: scaleModel.getColor(
+                    SelectedScaleType.weight,
+                  ),
+                ),
+                shape: BoxShape.circle,
+                color: R.color.white,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _inputSection(
-                      measurement: scaleModel.weight!, context: context),
+                    measurement: scaleModel.weight!,
+                    context: context,
+                  ),
+
+                  //
                   Text(
                     scaleModel.unit.toStr,
                     style: const TextStyle(color: Colors.black, fontSize: 14),

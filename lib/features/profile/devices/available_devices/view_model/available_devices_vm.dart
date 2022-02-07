@@ -3,42 +3,42 @@ part of '../../devices.dart';
 class AvailableDevicesVm extends ChangeNotifier {
   final devDevices = [
     DeviceConnectionType(
-      deviceType: DeviceType.CONTOUR_PLUS_ONE,
+      deviceType: DeviceType.contourPlusOne,
       name: LocaleProvider.current.contour_plus_blood_sugar,
       imagePath: R.image.contour,
       enable: true,
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.ACCU_CHEK,
+      deviceType: DeviceType.accuChek,
       name: LocaleProvider.current.accu_chek_blood_sugar,
       imagePath: R.image.accuCheckPng,
       enable: true,
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.OMRON_BLOOD_PRESSURE_ARM,
+      deviceType: DeviceType.omronBloodPressureArm,
       name: LocaleProvider.current.omron_blood_pressure_arm,
       imagePath: R.image.omronBloodPressureArm,
       enable: false,
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.OMRON_BLOOD_PRESSURE_WRIST,
+      deviceType: DeviceType.omronBloodPressureWrist,
       name: LocaleProvider.current.omron_blood_pressure_wrist,
       imagePath: R.image.omronBloodPressureWrist,
       enable: false,
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.OMRON_SCALE,
+      deviceType: DeviceType.omronScale,
       name: LocaleProvider.current.omron_scale,
       imagePath: R.image.omronScale,
       enable: false,
       usesBLE: false,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.MI_SCALE,
+      deviceType: DeviceType.miScale,
       name: LocaleProvider.current.mi_scale,
       imagePath: R.image.miScale,
       enable: true,
@@ -48,21 +48,21 @@ class AvailableDevicesVm extends ChangeNotifier {
 
   final prodDevices = [
     DeviceConnectionType(
-      deviceType: DeviceType.CONTOUR_PLUS_ONE,
+      deviceType: DeviceType.contourPlusOne,
       name: LocaleProvider.current.contour_plus_blood_sugar,
       imagePath: R.image.contour,
       enable: true,
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.ACCU_CHEK,
+      deviceType: DeviceType.accuChek,
       name: LocaleProvider.current.accu_chek_blood_sugar,
       imagePath: R.image.accuCheckPng,
       enable: true,
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.MI_SCALE,
+      deviceType: DeviceType.miScale,
       name: LocaleProvider.current.mi_scale,
       imagePath: R.image.miScale,
       enable: true,

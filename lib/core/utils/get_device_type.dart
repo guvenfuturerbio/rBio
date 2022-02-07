@@ -5,11 +5,11 @@ DeviceType getDeviceType(DiscoveredDevice device) {
   if (device.name == 'MIBFS' &&
       device.serviceData.length == 1 &&
       device.serviceData.values.first.length == 13) {
-    return DeviceType.MI_SCALE;
+    return DeviceType.miScale;
   } else if (device.manufacturerData[0] == 112) {
-    return DeviceType.ACCU_CHEK;
+    return DeviceType.accuChek;
   } else if (device.manufacturerData[0] == 103) {
-    return DeviceType.CONTOUR_PLUS_ONE;
+    return DeviceType.contourPlusOne;
   }
 
   throw Exception('Nondefined device');

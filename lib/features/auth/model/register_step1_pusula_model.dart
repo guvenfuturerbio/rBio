@@ -1,5 +1,3 @@
-import 'user_registration_step1_model.dart';
-
 class RegisterStep1PusulaModel {
   String? birthDate;
   String? email;
@@ -34,10 +32,10 @@ class RegisterStep1PusulaModel {
   RegisterStep1PusulaModel.fromJson(Map<String, dynamic> json) {
     birthDate = json['birthDate'] as String;
     email = json['email'] as String;
-    firstName = json['firstName']as String;
-    gender = json['gender']as String;
-    gsm = json['gsm']as String;
-    hasETKApproval = json['hasETKApproval']as bool;
+    firstName = json['firstName'] as String;
+    gender = json['gender'] as String;
+    gsm = json['gsm'] as String;
+    hasETKApproval = json['hasETKApproval'] as bool;
     hasKVKKApproval = json['hasKVKKApproval'] as bool;
     id = json['id'] as int;
     identityNumber = json['identityNumber'] as String;
@@ -47,10 +45,8 @@ class RegisterStep1PusulaModel {
     patientType = json['patientType'] as int;
   }
 
-
-
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['birthDate'] = birthDate;
     data['email'] = email;
     data['firstName'] = firstName;

@@ -35,7 +35,7 @@ class SelectedDeviceVm extends ChangeNotifier {
 
   Map<String, String> getPairOrder() {
     switch (deviceType) {
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         Map<String, String> map = <String, String>{
           '1': LocaleProvider.current.device_connection_step_1,
           '2': LocaleProvider.current.device_connection_step_2_Roche,
@@ -44,7 +44,7 @@ class SelectedDeviceVm extends ChangeNotifier {
 
         return map;
 
-      case DeviceType.CONTOUR_PLUS_ONE:
+      case DeviceType.contourPlusOne:
         Map<String, String> map = <String, String>{
           '1': LocaleProvider.current.device_connection_step_1,
           '2': LocaleProvider.current.device_connection_step_2_Contour,
@@ -56,7 +56,7 @@ class SelectedDeviceVm extends ChangeNotifier {
         }
         return map;
 
-      case DeviceType.MI_SCALE:
+      case DeviceType.miScale:
         return <String, String>{
           '1': LocaleProvider.current.device_scale_connection_step_1_mi_scale,
           '2': LocaleProvider.current.device_scale_connection_step_2_mi_scale,
@@ -69,22 +69,22 @@ class SelectedDeviceVm extends ChangeNotifier {
 
   bool isFocusedDevice(DiscoveredDevice device) {
     switch (deviceType) {
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         return device.manufacturerData[0] == 112;
 
-      case DeviceType.CONTOUR_PLUS_ONE:
+      case DeviceType.contourPlusOne:
         return device.manufacturerData[0] == 103;
 
-      case DeviceType.OMRON_BLOOD_PRESSURE_ARM:
+      case DeviceType.omronBloodPressureArm:
         return false;
 
-      case DeviceType.OMRON_BLOOD_PRESSURE_WRIST:
+      case DeviceType.omronBloodPressureWrist:
         return false;
 
-      case DeviceType.OMRON_SCALE:
+      case DeviceType.omronScale:
         return false;
 
-      case DeviceType.MI_SCALE:
+      case DeviceType.miScale:
         return device.name == 'MIBFS' &&
             device.serviceData.length == 1 &&
             device.serviceData.values.first.length == 13;
@@ -158,7 +158,7 @@ class SelectedDeviceVm extends ChangeNotifier {
     device,
   ) async {
     switch (deviceType) {
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         connectIsActive &&
                 (_bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
@@ -170,7 +170,7 @@ class SelectedDeviceVm extends ChangeNotifier {
             : null;
         connectClicked();
         break;
-      case DeviceType.CONTOUR_PLUS_ONE:
+      case DeviceType.contourPlusOne:
         connectIsActive &&
                 (_bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
@@ -182,16 +182,16 @@ class SelectedDeviceVm extends ChangeNotifier {
             : null;
         connectClicked();
         break;
-      case DeviceType.OMRON_BLOOD_PRESSURE_ARM:
+      case DeviceType.omronBloodPressureArm:
         // TODO: Handle this case.
         break;
-      case DeviceType.OMRON_BLOOD_PRESSURE_WRIST:
+      case DeviceType.omronBloodPressureWrist:
         // TODO: Handle this case.
         break;
-      case DeviceType.OMRON_SCALE:
+      case DeviceType.omronScale:
         // TODO: Handle this case.
         break;
-      case DeviceType.MI_SCALE:
+      case DeviceType.miScale:
         connectIsActive &&
                 (_bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connecting &&

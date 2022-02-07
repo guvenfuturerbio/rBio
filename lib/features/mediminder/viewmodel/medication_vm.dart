@@ -21,7 +21,7 @@ class MedicationVm extends ChangeNotifier {
 
   Future<void> fetchAll() async {
     List<String>? jsonList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.MEDICINES);
+        .getStringList(SharedPreferencesKeys.medicines);
     List<MedicineForScheduledModel> prefList = [];
     if (jsonList != null) {
       for (String jsonMedicine in jsonList) {
@@ -84,7 +84,7 @@ class MedicationVm extends ChangeNotifier {
       }
     }
     await getIt<ISharedPreferencesManager>()
-        .setStringList(SharedPreferencesKeys.MEDICINES, medicineJsonList);
+        .setStringList(SharedPreferencesKeys.medicines, medicineJsonList);
   }
 
   String getSubTitle(MedicineForScheduledModel medicine) {

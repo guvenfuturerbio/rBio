@@ -2,7 +2,6 @@ import 'dart:io' as platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/model/ble_models/paired_device.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -11,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
 import '../../../core/data/imports/cronic_tracking.dart';
+import '../../../model/ble_models/paired_device.dart';
 import '../../../model/model.dart';
 import '../../home/viewmodel/home_vm.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
@@ -271,9 +271,8 @@ class LoginScreenVm extends ChangeNotifier {
           Atom.to(term, isReplacement: true);
         }
         final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
-        if (allUsersModel != null) {
-          mContext.read<HomeVm>().init(allUsersModel);
-        }
+        mContext.read<HomeVm>().init(allUsersModel);
+
         await Future.delayed(const Duration(milliseconds: 100));
         hideDialog(mContext);
         notifyListeners();

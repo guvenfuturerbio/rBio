@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'base_model.dart';
 
 class NetworkCacheModel extends IBaseModel<NetworkCacheModel> {

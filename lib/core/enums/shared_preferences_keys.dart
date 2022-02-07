@@ -22,7 +22,7 @@ enum SharedPreferencesKeys {
   allUsers, // Home Widget List Tutuyor
 
   hba1cList,
-  MEDICINES,
+  medicines,
   usedStripCount,
 }
 

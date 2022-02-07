@@ -8,17 +8,17 @@ class ScaleFilterPopupVm extends ChangeNotifier {
   }
 
   List<SelectedScaleType> filterList = [
-    SelectedScaleType.WEIGHT,
-    SelectedScaleType.BMI,
-    SelectedScaleType.BODY_FAT,
-    SelectedScaleType.MUSCLE,
-    SelectedScaleType.VISCERAL_FAT,
-    SelectedScaleType.WATER,
+    SelectedScaleType.weight,
+    SelectedScaleType.bmi,
+    SelectedScaleType.bodyFat,
+    SelectedScaleType.muscle,
+    SelectedScaleType.visceralFat,
+    SelectedScaleType.water,
   ];
 
   SelectedScaleType? _selectedScaleType;
   SelectedScaleType get selectedScaleType =>
-      _selectedScaleType ?? SelectedScaleType.WEIGHT;
+      _selectedScaleType ?? SelectedScaleType.weight;
   changeScaleType(SelectedScaleType? type) {
     _selectedScaleType = type;
     notifyListeners();

@@ -13,7 +13,7 @@ class CustomBarPie extends StatelessWidget {
     Key? key,
     this.width = 10.0,
     this.height = 10.0,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

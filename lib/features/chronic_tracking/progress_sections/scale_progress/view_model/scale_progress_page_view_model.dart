@@ -127,7 +127,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
 
   SelectedScaleType? _selectedScaleType;
   SelectedScaleType get currentScaleType =>
-      _selectedScaleType ?? SelectedScaleType.WEIGHT;
+      _selectedScaleType ?? SelectedScaleType.weight;
 
   Map<int, List<ChartData>> get chartDataTagged => _chartDataTagged;
 

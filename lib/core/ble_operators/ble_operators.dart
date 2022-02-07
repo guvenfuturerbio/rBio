@@ -6,8 +6,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/core/manager/local_notification_manager.dart';
-import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../core/core.dart';
@@ -18,6 +16,7 @@ import '../../features/chronic_tracking/progress_sections/scale_progress/utils/s
 import '../../model/ble_models/paired_device.dart';
 import '../../model/device_model/mi_scale_device.dart';
 import '../../model/device_model/scale_device_model.dart';
+import '../manager/local_notification_manager.dart';
 
 part 'ble_connector.dart';
 part 'ble_reactor.dart';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -175,7 +173,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   SelectedScaleType? _selectedItem;
 
   SelectedScaleType get currentScaleType =>
-      _selectedItem ?? SelectedScaleType.WEIGHT;
+      _selectedItem ?? SelectedScaleType.weight;
 
   int? _currentDateIndex;
 
@@ -466,7 +464,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   Widget? _currentGraph;
   Widget get currentGraph =>
-      _currentGraph ?? (AnimationPatientScaleScatterDefault() as Widget);
+      _currentGraph ?? const AnimationPatientScaleScatterDefault();
 
   GraphType? _currentGraphType;
 
@@ -485,8 +483,8 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   setCurrentGraph() {
     currentGraphType == GraphType.bubble
-        ? _currentGraph = AnimationPatientScaleScatterDefault() as Widget
-        : _currentGraph = AnimationPatientScaleLineDefaultState() as Widget;
+        ? _currentGraph = const AnimationPatientScaleScatterDefault()
+        : _currentGraph = const AnimationPatientScaleLineDefaultState();
   }
 
   @override

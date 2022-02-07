@@ -151,7 +151,7 @@ class MedicationDateVm extends RbioVm {
   Future<void> _generateUniqueIdForSchedule() async {
     List<int> numberList = [];
     List<String>? jsonList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.MEDICINES);
+        .getStringList(SharedPreferencesKeys.medicines);
 
     List<int> prefList = [];
     if (jsonList != null) {
@@ -389,14 +389,14 @@ class MedicationDateVm extends RbioVm {
 
     List<String> medicineJsonList = [];
     final sharedList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.MEDICINES);
+        .getStringList(SharedPreferencesKeys.medicines);
     if (sharedList != null) {
       medicineJsonList = sharedList;
     }
 
     medicineJsonList.add(medicineStr);
     await getIt<ISharedPreferencesManager>()
-        .setStringList(SharedPreferencesKeys.MEDICINES, medicineJsonList);
+        .setStringList(SharedPreferencesKeys.medicines, medicineJsonList);
   }
 
   String _getNotificationTitle() {

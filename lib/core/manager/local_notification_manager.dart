@@ -284,7 +284,7 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
     String? payload,
   }) async {
     final sharedList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.MEDICINES);
+        .getStringList(SharedPreferencesKeys.medicines);
     var notificationIds = <int>[];
     if (sharedList != null) {
       for (String jsonMedicine in sharedList) {

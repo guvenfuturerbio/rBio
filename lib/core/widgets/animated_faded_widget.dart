@@ -42,7 +42,7 @@ class _AnimatedFadedWidgetState extends State<AnimatedFadedWidget> {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: isShow ? 1.0 : 0.0,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       child: widget.child,
     );
   }

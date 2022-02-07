@@ -24,6 +24,7 @@ class DoctorConsultationVm extends RbioVm {
   Future<List<GetChatContactsResponse>> getChatContactsFirebaseId() async {
     return await getIt<Repository>().getChatContacts();
   }
+
   Future<void> fetchAll() async {
     try {
       apiUserList = [];
@@ -48,7 +49,7 @@ class DoctorConsultationVm extends RbioVm {
     List<ChatPerson> result = <ChatPerson>[];
 
     // İlk önce api'den gelen tüm kullanıcıları listeye ekliyoruz.
-    apiUserList.forEach((apiItem) {
+    for (var apiItem in apiUserList) {
       final newPerson = ChatPerson(
         name: apiItem.contactNameSurname,
         lastMessage: '',
@@ -62,13 +63,13 @@ class DoctorConsultationVm extends RbioVm {
         firebaseToken: apiItem.firebaseToken,
       );
       result.add(newPerson);
-    });
+    }
 
     // Daha sonra api list içerisindeki tüm itemlardan firebase içerisinde olanları güncelliyoruz.
     for (var chatPerson in result) {
       for (var firebaseItem in streamList.docs) {
         final fbData = firebaseItem.data();
-        final fbUsers = fbData['users'] as Map<dynamic, dynamic>;
+        final fbUsers = fbData['users'] as Map<dynamic, dynamic>?;
         if (fbUsers != null && fbUsers.containsKey(chatPerson.id)) {
           chatPerson.lastMessage = _getLastMessage(fbData);
           chatPerson.lastMessageType = _getLastMessageType(fbData);
@@ -86,36 +87,36 @@ class DoctorConsultationVm extends RbioVm {
   }
 
   int _getLastMessageType(Map<String, dynamic> userData) {
-    final messages = userData['messages'] as List;
+    final messages = userData['messages'] as List?;
     if (messages == null) return 0;
     if (messages.isEmpty) return 0;
     return messages.last['type'] ?? 0;
   }
 
   String _getLastMessage(Map<String, dynamic> userData) {
-    final messages = userData['messages'] as List;
+    final messages = userData['messages'] as List?;
     if (messages == null) return '';
     if (messages.isEmpty) return '';
     return messages.last['message'] ?? '';
   }
 
   String _getLastMessageSender(Map<String, dynamic> userData) {
-    final messages = userData['messages'] as List;
+    final messages = userData['messages'] as List?;
     if (messages == null) return '';
     if (messages.isEmpty) return '';
     return messages.last['sentFrom'] ?? '';
   }
 
   String _getMessageTime(Map<String, dynamic> userData) {
-    final messages = userData['messages'] as List;
+    final messages = userData['messages'] as List?;
     if (messages == null) return '';
     if (messages.isEmpty) return '';
     DateTime messageDate =
         DateTime.fromMillisecondsSinceEpoch(messages.last['date']);
-    if (messageDate.isToday)
+    if (messageDate.isToday) {
       return DateTime.fromMillisecondsSinceEpoch(messages.last['date'])
           .xFormatTime8(getIt<LocaleNotifier>().current.languageCode);
-    else {
+    } else {
       return timeago.format(
         DateTime.fromMillisecondsSinceEpoch(messages.last['date']),
         locale: getIt<LocaleNotifier>().current.languageCode,
@@ -124,13 +125,13 @@ class DoctorConsultationVm extends RbioVm {
   }
 
   bool _getHasRead(Map<String, dynamic> userData) {
-    final users = userData['users'] as Map;
+    final users = userData['users'] as Map?;
     if (users == null) return true;
     return users[getIt<UserNotifier>().firebaseID] ?? true;
   }
 
   bool _getOtherHasRead(Map<String, dynamic> userData, String to) {
-    final users = userData['users'] as Map;
+    final users = userData['users'] as Map?;
     if (users == null) return true;
     return users[to] ?? true;
   }

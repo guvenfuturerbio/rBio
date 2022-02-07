@@ -86,20 +86,27 @@ class ScaleMeasurementViewModel {
 
   int? getTargetMin(SelectedScaleType type) {
     switch (type) {
-      case SelectedScaleType.BMI:
+      case SelectedScaleType.bmi:
         return _getBmiRange['min'];
-      case SelectedScaleType.WEIGHT:
+
+      case SelectedScaleType.weight:
         return _getWeightRange['min'];
-      case SelectedScaleType.BODY_FAT:
+
+      case SelectedScaleType.bodyFat:
         return _getBodyFatRange['min'];
-      case SelectedScaleType.BONE_MASS:
+
+      case SelectedScaleType.boneMass:
         return _getBoneMassRange['min'];
-      case SelectedScaleType.WATER:
+
+      case SelectedScaleType.water:
         return _getWaterRange['min'];
-      case SelectedScaleType.VISCERAL_FAT:
+
+      case SelectedScaleType.visceralFat:
         return _getVisceralFatRange['min'];
-      case SelectedScaleType.MUSCLE:
+
+      case SelectedScaleType.muscle:
         return _getMuscleRange['min'];
+
       default:
         return 0;
     }
@@ -157,19 +164,19 @@ class ScaleMeasurementViewModel {
 
   int? getTargetMax(SelectedScaleType type) {
     switch (type) {
-      case SelectedScaleType.BMI:
+      case SelectedScaleType.bmi:
         return _getBmiRange['max'];
-      case SelectedScaleType.WEIGHT:
+      case SelectedScaleType.weight:
         return _getWeightRange['max'];
-      case SelectedScaleType.BODY_FAT:
+      case SelectedScaleType.bodyFat:
         return _getBodyFatRange['max'];
-      case SelectedScaleType.BONE_MASS:
+      case SelectedScaleType.boneMass:
         return _getBoneMassRange['max'];
-      case SelectedScaleType.WATER:
+      case SelectedScaleType.water:
         return _getWaterRange['max'];
-      case SelectedScaleType.VISCERAL_FAT:
+      case SelectedScaleType.visceralFat:
         return _getVisceralFatRange['max'];
-      case SelectedScaleType.MUSCLE:
+      case SelectedScaleType.muscle:
         return _getMuscleRange['max'];
       default:
         return 0;
@@ -367,19 +374,19 @@ class ScaleMeasurementViewModel {
 
   Color _getColor(SelectedScaleType type) {
     switch (type) {
-      case SelectedScaleType.BMI:
+      case SelectedScaleType.bmi:
         return _getBmiColor(bmi);
-      case SelectedScaleType.WEIGHT:
+      case SelectedScaleType.weight:
         return _getWeightColor(weight);
-      case SelectedScaleType.BODY_FAT:
+      case SelectedScaleType.bodyFat:
         return _getBodyFatColor(bodyFat);
-      case SelectedScaleType.BONE_MASS:
+      case SelectedScaleType.boneMass:
         return _getBoneMassColor(boneMass);
-      case SelectedScaleType.WATER:
+      case SelectedScaleType.water:
         return _getWaterColor(water);
-      case SelectedScaleType.VISCERAL_FAT:
+      case SelectedScaleType.visceralFat:
         return _getVisceralFatColor(visceralFat);
-      case SelectedScaleType.MUSCLE:
+      case SelectedScaleType.muscle:
         return _getMuscleColor(muscle);
       default:
         return R.color.grey.withOpacity(.2);
@@ -388,20 +395,27 @@ class ScaleMeasurementViewModel {
 
   double? _getReleatedMeasurement(SelectedScaleType type) {
     switch (type) {
-      case SelectedScaleType.BMI:
+      case SelectedScaleType.bmi:
         return bmi;
-      case SelectedScaleType.WEIGHT:
+
+      case SelectedScaleType.weight:
         return weight;
-      case SelectedScaleType.BODY_FAT:
+
+      case SelectedScaleType.bodyFat:
         return bodyFat;
-      case SelectedScaleType.BONE_MASS:
+
+      case SelectedScaleType.boneMass:
         return boneMass;
-      case SelectedScaleType.WATER:
+
+      case SelectedScaleType.water:
         return water;
-      case SelectedScaleType.VISCERAL_FAT:
+
+      case SelectedScaleType.visceralFat:
         return visceralFat;
-      case SelectedScaleType.MUSCLE:
+
+      case SelectedScaleType.muscle:
         return muscle;
+
       default:
         throw Exception('No related value as $type');
     }

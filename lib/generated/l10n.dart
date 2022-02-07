@@ -15,7 +15,7 @@ import 'intl/messages_all.dart';
 class LocaleProvider {
   LocaleProvider();
 
-  static LocaleProvider current;
+  static late LocaleProvider current;
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
@@ -33,7 +33,7 @@ class LocaleProvider {
   }
 
   static LocaleProvider of(BuildContext context) {
-    return Localizations.of<LocaleProvider>(context, LocaleProvider);
+    return Localizations.of<LocaleProvider>(context, LocaleProvider)!;
   }
 
   /// `Create`

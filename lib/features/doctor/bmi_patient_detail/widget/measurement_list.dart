@@ -6,12 +6,15 @@ class _MeasurementList extends StatefulWidget {
   final bool? useStickyGroupSeparatorsValue;
   final SelectedScaleType selected;
   final Function(DateTime) fetchScrolledData;
-  const _MeasurementList(
-      {required this.scaleMeasurements,
-      this.selected = SelectedScaleType.WEIGHT,
-      required this.scrollController,
-      this.useStickyGroupSeparatorsValue,
-      required this.fetchScrolledData});
+
+  const _MeasurementList({
+    required this.scaleMeasurements,
+    this.selected = SelectedScaleType.weight,
+    required this.scrollController,
+    this.useStickyGroupSeparatorsValue,
+    required this.fetchScrolledData,
+  });
+
   @override
   __MeasurementListState createState() => __MeasurementListState();
 }

@@ -1,14 +1,14 @@
 enum PasswordScore {
-  Blank,
-  VeryWeak,
-  Weak,
-  Medium,
-  Strong,
-  VeryStrong,
+  blank,
+  veryWeak,
+  weak,
+  medium,
+  strong,
+  veryStrong,
 }
 
 class PasswordAdvisor {
-  int REQUIRED_PASSWORD_LENGTH = 8;
+  static const int requiredPasswordLength = 8;
   RegExp numberInclude = RegExp("(?=.*?[0-9])");
   RegExp lowerCase = RegExp("(?=.*?[a-z])");
   RegExp upperCase = RegExp("(?=.*?[A-Z])");
@@ -59,13 +59,13 @@ class PasswordAdvisor {
   }
 
   void _checkRequiredPasswordLength(String password) {
-    lengthValue = password.length < REQUIRED_PASSWORD_LENGTH ? false : true;
+    lengthValue = password.length < requiredPasswordLength ? false : true;
   }
 
-  PasswordScore CheckStrength(String password) {
+  PasswordScore checkStrength(String password) {
     int score = 0;
-    if (password.length < 1) return PasswordScore.Blank;
-    if (password.length < 4) return PasswordScore.VeryWeak;
+    if (password.isEmpty) return PasswordScore.blank;
+    if (password.length < 4) return PasswordScore.veryWeak;
     if (password.length >= 8) score++;
     if (password.length >= 12) score++;
     if (numberInclude.firstMatch(password) != null) score++;
@@ -75,19 +75,19 @@ class PasswordAdvisor {
 
     switch (score) {
       case 0:
-        return PasswordScore.Blank;
+        return PasswordScore.blank;
       case 1:
-        return PasswordScore.VeryWeak;
+        return PasswordScore.veryWeak;
       case 2:
-        return PasswordScore.Weak;
+        return PasswordScore.weak;
       case 3:
-        return PasswordScore.Medium;
+        return PasswordScore.medium;
       case 4:
-        return PasswordScore.Strong;
+        return PasswordScore.strong;
       case 5:
-        return PasswordScore.VeryStrong;
+        return PasswordScore.veryStrong;
       default:
-        return PasswordScore.Blank;
+        return PasswordScore.blank;
     }
   }
 }

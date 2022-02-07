@@ -33,22 +33,25 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   final picker = ImagePicker();
 
-  ScaleTaggerVm(
-      {required this.context,
-      this.scaleModel,
-      this.isManuel = false,
-      this.key}) {
+  ScaleTaggerVm({
+    required this.context,
+    this.scaleModel,
+    this.isManuel = false,
+    this.key,
+  }) {
     scaleModel ??= ScaleMeasurementViewModel(
-        scaleModel: ScaleModel(
-            isManuel: isManuel,
-            device: PairedDevice(
-                    deviceId: 'manuel',
-                    deviceType: DeviceType.MANUEL,
-                    manufacturerName: 'manuel',
-                    modelName: 'manuel',
-                    serialNumber: 'manuel')
-                .toJson(),
-            unit: ScaleUnit.kg));
+      scaleModel: ScaleModel(
+        isManuel: isManuel,
+        device: PairedDevice(
+          deviceId: 'manuel',
+          deviceType: DeviceType.manuel,
+          manufacturerName: 'manuel',
+          modelName: 'manuel',
+          serialNumber: 'manuel',
+        ).toJson(),
+        unit: ScaleUnit.kg,
+      ),
+    );
     _fillControllers(isInit: true);
     scrollController = ScrollController();
   }

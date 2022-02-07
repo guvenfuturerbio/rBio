@@ -5,6 +5,7 @@ class DeviceConnectionType {
   bool? enable;
   String? navigateLink;
   DeviceType? deviceType;
+
   DeviceConnectionType({
     this.name,
     this.imagePath,
@@ -16,32 +17,39 @@ class DeviceConnectionType {
 }
 
 enum DeviceType {
-  ACCU_CHEK,
-  CONTOUR_PLUS_ONE,
-  OMRON_BLOOD_PRESSURE_ARM,
-  OMRON_BLOOD_PRESSURE_WRIST,
-  OMRON_SCALE,
-  MI_SCALE,
-  MANUEL
+  accuChek,
+  contourPlusOne,
+  omronBloodPressureArm,
+  omronBloodPressureWrist,
+  omronScale,
+  miScale,
+  manuel,
 }
 
 extension DeviceTypeExtension on DeviceType {
   String? get name {
     switch (this) {
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         return 'ACCU-CHEK';
-      case DeviceType.CONTOUR_PLUS_ONE:
+
+      case DeviceType.contourPlusOne:
         return 'Contour Plus One';
-      case DeviceType.OMRON_BLOOD_PRESSURE_ARM:
+
+      case DeviceType.omronBloodPressureArm:
         return 'Omron Blood Pressure Arm';
-      case DeviceType.OMRON_BLOOD_PRESSURE_WRIST:
+
+      case DeviceType.omronBloodPressureWrist:
         return 'Omron Blood Pressure Wrist';
-      case DeviceType.OMRON_SCALE:
+
+      case DeviceType.omronScale:
         return 'Omron Scale';
-      case DeviceType.MI_SCALE:
+
+      case DeviceType.miScale:
         return 'Mi Scale';
-      case DeviceType.MANUEL:
+
+      case DeviceType.manuel:
         return 'manuel';
+
       default:
         return null;
     }
@@ -51,19 +59,19 @@ extension DeviceTypeExtension on DeviceType {
 extension TypeExtensionOnDevice on String {
   DeviceType? get toType {
     if (this == 'ACCU-CHEK') {
-      return DeviceType.ACCU_CHEK;
+      return DeviceType.accuChek;
     } else if (this == 'Contour Plus One') {
-      return DeviceType.CONTOUR_PLUS_ONE;
+      return DeviceType.contourPlusOne;
     } else if (this == 'Omron Blood Pressure Arm') {
-      return DeviceType.OMRON_BLOOD_PRESSURE_ARM;
+      return DeviceType.omronBloodPressureArm;
     } else if (this == 'Omron Blood Pressure Wrist') {
-      return DeviceType.OMRON_BLOOD_PRESSURE_WRIST;
+      return DeviceType.omronBloodPressureWrist;
     } else if (this == 'Omron Scale') {
-      return DeviceType.OMRON_SCALE;
+      return DeviceType.omronScale;
     } else if (this == 'Mi Scale') {
-      return DeviceType.MI_SCALE;
+      return DeviceType.miScale;
     } else if (this == 'manuel') {
-      return DeviceType.MANUEL;
+      return DeviceType.manuel;
     } else {
       return null;
     }
@@ -71,17 +79,17 @@ extension TypeExtensionOnDevice on String {
 
   DeviceType? get fromEnv {
     if (this == 'ACCU_CHEK') {
-      return DeviceType.ACCU_CHEK;
+      return DeviceType.accuChek;
     } else if (this == 'CONTOUR_PLUS_ONE') {
-      return DeviceType.CONTOUR_PLUS_ONE;
+      return DeviceType.contourPlusOne;
     } else if (this == 'OMRON_BLOOD_PRESSURE_ARM') {
-      return DeviceType.OMRON_BLOOD_PRESSURE_ARM;
+      return DeviceType.omronBloodPressureArm;
     } else if (this == 'OMRON_BLOOD_PRESSURE_WRIST') {
-      return DeviceType.OMRON_BLOOD_PRESSURE_WRIST;
+      return DeviceType.omronBloodPressureWrist;
     } else if (this == 'OMRON_SCALE') {
-      return DeviceType.OMRON_SCALE;
+      return DeviceType.omronScale;
     } else if (this == 'MI_SCALE') {
-      return DeviceType.MI_SCALE;
+      return DeviceType.miScale;
     } else {
       return null;
     }

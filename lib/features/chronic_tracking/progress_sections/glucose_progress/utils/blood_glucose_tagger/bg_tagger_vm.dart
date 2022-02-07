@@ -45,7 +45,7 @@ class BgTaggerVm extends ChangeNotifier {
   }
 
   void getPhotoFromSource(ImageSource imageSource) async {
-    var photoPerm, cameraPerm;
+    late PermissionStatus photoPerm, cameraPerm;
     final picker = ImagePicker();
 
     try {

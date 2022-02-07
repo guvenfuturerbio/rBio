@@ -385,54 +385,60 @@ class ScaleTagger extends StatelessWidget {
   List<Widget> _sectionItems(ScaleTaggerVm value) {
     return [
       scaleSection(
-          controller: value.bmiController,
-          name: LocaleProvider.current.scale_data_bmi,
-          color: value.scaleModel!.getColor(SelectedScaleType.BMI),
-          type: '',
-          index: 1,
-          isBmi: true,
-          crossAxisCount: 1,
-          onChanged: value.changeBmi),
+        controller: value.bmiController,
+        name: LocaleProvider.current.scale_data_bmi,
+        color: value.scaleModel!.getColor(SelectedScaleType.bmi),
+        type: '',
+        index: 1,
+        isBmi: true,
+        crossAxisCount: 1,
+        onChanged: value.changeBmi,
+      ),
       scaleSection(
-          controller: value.bodyFatController,
-          name: LocaleProvider.current.scale_data_body_fat,
-          color: value.scaleModel!.getColor(SelectedScaleType.BODY_FAT),
-          type: '%',
-          index: 2,
-          crossAxisCount: 1,
-          onChanged: value.changeBodyFat),
+        controller: value.bodyFatController,
+        name: LocaleProvider.current.scale_data_body_fat,
+        color: value.scaleModel!.getColor(SelectedScaleType.bodyFat),
+        type: '%',
+        index: 2,
+        crossAxisCount: 1,
+        onChanged: value.changeBodyFat,
+      ),
       scaleSection(
-          controller: value.boneMassController,
-          name: LocaleProvider.current.scale_data_bone_mass,
-          color: value.scaleModel!.getColor(SelectedScaleType.BONE_MASS),
-          type: '${value.scaleModel!.unit}',
-          index: 3,
-          crossAxisCount: 2,
-          onChanged: value.changeBoneMass),
+        controller: value.boneMassController,
+        name: LocaleProvider.current.scale_data_bone_mass,
+        color: value.scaleModel!.getColor(SelectedScaleType.boneMass),
+        type: '${value.scaleModel!.unit}',
+        index: 3,
+        crossAxisCount: 2,
+        onChanged: value.changeBoneMass,
+      ),
       scaleSection(
-          name: LocaleProvider.current.scale_data_muscle,
-          controller: value.muscleController,
-          color: value.scaleModel!.getColor(SelectedScaleType.MUSCLE),
-          type: '%',
-          index: 4,
-          crossAxisCount: 2,
-          onChanged: value.changeMuscle),
+        name: LocaleProvider.current.scale_data_muscle,
+        controller: value.muscleController,
+        color: value.scaleModel!.getColor(SelectedScaleType.muscle),
+        type: '%',
+        index: 4,
+        crossAxisCount: 2,
+        onChanged: value.changeMuscle,
+      ),
       scaleSection(
-          controller: value.visceralController,
-          name: LocaleProvider.current.scale_data_visceral_fat,
-          color: value.scaleModel!.getColor(SelectedScaleType.VISCERAL_FAT),
-          type: '',
-          index: 5,
-          crossAxisCount: 3,
-          onChanged: value.changeVisceral),
+        controller: value.visceralController,
+        name: LocaleProvider.current.scale_data_visceral_fat,
+        color: value.scaleModel!.getColor(SelectedScaleType.visceralFat),
+        type: '',
+        index: 5,
+        crossAxisCount: 3,
+        onChanged: value.changeVisceral,
+      ),
       scaleSection(
-          controller: value.waterController,
-          name: LocaleProvider.current.scale_data_water,
-          color: value.scaleModel!.getColor(SelectedScaleType.WATER),
-          type: '%',
-          index: 6,
-          crossAxisCount: 3,
-          onChanged: value.changeWater),
+        controller: value.waterController,
+        name: LocaleProvider.current.scale_data_water,
+        color: value.scaleModel!.getColor(SelectedScaleType.water),
+        type: '%',
+        index: 6,
+        crossAxisCount: 3,
+        onChanged: value.changeWater,
+      ),
     ];
   }
 
@@ -447,21 +453,24 @@ class ScaleTagger extends StatelessWidget {
               width: height * .2,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withAlpha(50),
-                        blurRadius: 5,
-                        spreadRadius: 0,
-                        offset: const Offset(3, 3))
-                  ],
-                  border: Border.all(
-                      width: 13,
-                      color:
-                          value.scaleModel!.getColor(SelectedScaleType.WEIGHT)),
-                  shape: BoxShape.circle,
-                  color: isUpdate || scaleModel == null
-                      ? R.color.white
-                      : R.color.background),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(50),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: const Offset(3, 3))
+                ],
+                border: Border.all(
+                  width: 13,
+                  color: value.scaleModel!.getColor(
+                    SelectedScaleType.weight,
+                  ),
+                ),
+                shape: BoxShape.circle,
+                color: isUpdate || scaleModel == null
+                    ? R.color.white
+                    : R.color.background,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

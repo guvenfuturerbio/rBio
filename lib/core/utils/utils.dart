@@ -165,11 +165,11 @@ class Utils {
     if (device.name == 'MIBFS' &&
         device.serviceData.length == 1 &&
         device.serviceData.values.first.length == 13) {
-      return DeviceType.MI_SCALE;
+      return DeviceType.miScale;
     } else if (device.manufacturerData[0] == 112) {
-      return DeviceType.ACCU_CHEK;
+      return DeviceType.accuChek;
     } else if (device.manufacturerData[0] == 103) {
-      return DeviceType.CONTOUR_PLUS_ONE;
+      return DeviceType.contourPlusOne;
     }
 
     throw Exception('Nondefined device');
@@ -687,13 +687,13 @@ class UtilityManager {
 
   Widget? getDeviceImageFromType(DeviceType device) {
     switch (device) {
-      case DeviceType.MI_SCALE:
+      case DeviceType.miScale:
         return Image.asset(R.image.miScale);
 
-      case DeviceType.CONTOUR_PLUS_ONE:
+      case DeviceType.contourPlusOne:
         return Image.asset(R.image.contour);
 
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         return Image.asset(R.image.accuCheckPng);
 
       default:
@@ -703,13 +703,13 @@ class UtilityManager {
 
   String? getDeviceImageStringFromType(DeviceType device) {
     switch (device) {
-      case DeviceType.MI_SCALE:
+      case DeviceType.miScale:
         return R.image.miScale;
 
-      case DeviceType.CONTOUR_PLUS_ONE:
+      case DeviceType.contourPlusOne:
         return R.image.contour;
 
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         return R.image.accuCheckPng;
       default:
         return null;

@@ -192,8 +192,11 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     }
   }
 
-  Future<List<ScaleModel>> getScaleDatas(
-      {DateTime? beginDate, DateTime? endDate, int? count}) async {
+  Future<List<ScaleModel>> getScaleDatas({
+    DateTime? beginDate,
+    DateTime? endDate,
+    int? count,
+  }) async {
     try {
       GetScaleMasurementBody getScaleMasurementBody = GetScaleMasurementBody(
           entegrationId: getIt<ProfileStorageImpl>().getFirst().id,

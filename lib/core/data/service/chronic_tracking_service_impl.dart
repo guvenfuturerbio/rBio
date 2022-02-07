@@ -149,11 +149,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
-    GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPersonData,
-  ) async {
+      GetBloodGlucoseDataOfPerson data) async {
     final response = await helper.postGuven(
       R.endpoints.ctGetBloodGlucoseDataOfPerson,
-      getBloodGlucoseDataOfPersonData.toJson(),
+      data.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {

@@ -1,6 +1,7 @@
 part of 'api_service.dart';
 
 class ApiServiceImpl extends ApiService {
+  @override
   final IDioHelper helper;
   ApiServiceImpl(this.helper) : super(helper);
 

@@ -10,15 +10,15 @@ class NotificationData {
 
   NotificationData.fromJson(Map<String, dynamic> json) {
     type = json['type'] as String?;
-    title = json['title']as String?;
-    body = json['body']as String?;
+    title = json['title'] as String?;
+    body = json['body'] as String?;
     chatPerson = json['chatPerson'] != null
-        ?  ChatPerson.fromMap(json['chatPerson']as Map<String, dynamic>)
+        ? ChatPerson.fromMap(json['chatPerson'] as Map<String, dynamic>)
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['type'] = type;
     data['title'] = title;
     data['body'] = body;

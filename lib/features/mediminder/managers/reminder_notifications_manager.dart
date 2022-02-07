@@ -40,7 +40,7 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
   @override
   Future<void> checkOneTimeNotifications() async {
     final sharedList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.MEDICINES);
+        .getStringList(SharedPreferencesKeys.medicines);
     var medicineList = <MedicineForScheduledModel>[];
     if (sharedList != null) {
       for (String jsonMedicine in sharedList) {
@@ -74,7 +74,7 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
       final savedList =
           differenceList.map((e) => jsonEncode(e.toJson())).toList();
       await getIt<ISharedPreferencesManager>()
-          .setStringList(SharedPreferencesKeys.MEDICINES, savedList);
+          .setStringList(SharedPreferencesKeys.medicines, savedList);
     }
   }
 

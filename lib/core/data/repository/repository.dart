@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
-
 import '../../../features/auth/auth.dart';
 import '../../../features/chat/model/chat_notification.dart';
 import '../../../features/chat/model/get_chat_contacts_response.dart';

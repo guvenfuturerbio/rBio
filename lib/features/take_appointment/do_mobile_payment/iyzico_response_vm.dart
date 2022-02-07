@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:atom/atom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:http/src/client.dart';
-import 'package:logging/logging.dart';
 
 import '../../../core/enums/shared_preferences_keys.dart';
 import '../../../core/locator.dart';
@@ -48,19 +45,23 @@ class IyzicoResponseVm with ChangeNotifier {
         Atom.to(PagePaths.main, isReplacement: true);
 
         if (code == "13") {
-          Atom.show(GradientDialogForPaymentDialog(
-            LocaleProvider.current.payment_successful,
-            videoId,
-            code,
-            userName,
-          ));
+          Atom.show(
+            GradientDialogForPaymentDialog(
+              errorText: LocaleProvider.current.payment_successful,
+              videoId: videoId,
+              code: code,
+              name: userName,
+            ),
+          );
         } else {
-          Atom.show(GradientDialogForPaymentDialog(
-            LocaleProvider.current.payment_not_successful,
-            videoId,
-            code,
-            userName,
-          ));
+          Atom.show(
+            GradientDialogForPaymentDialog(
+              errorText: LocaleProvider.current.payment_not_successful,
+              videoId: videoId,
+              code: code,
+              name: userName,
+            ),
+          );
         }
       }
     });

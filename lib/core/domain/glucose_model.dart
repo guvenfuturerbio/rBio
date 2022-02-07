@@ -27,29 +27,42 @@ class GlucoseData extends HiveObject {
 
   @HiveField(0)
   int? measurementId;
+
   @HiveField(1)
   String level;
+
   @HiveField(2)
   int? tag; // 1 aç 2 tok 3 other
+
   @HiveField(3)
   String note;
+
   @HiveField(4)
   int time;
+
   @HiveField(5)
   int device;
+
   @HiveField(6)
   bool manual;
+
   @HiveField(7)
   String deviceName;
+
   @HiveField(8)
   String deviceUUID;
+
   @HiveField(9)
   String? imageURL;
-  PickedFile imageFile = PickedFile("");
+
   @HiveField(10)
   bool isDeleted;
+
   @HiveField(11)
   int? userId;
+
+  PickedFile imageFile = PickedFile("");
+
   // BG
   String get date => DateTime.fromMillisecondsSinceEpoch(time).toString();
   Color get color =>

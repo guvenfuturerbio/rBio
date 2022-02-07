@@ -193,16 +193,11 @@ class HomeVm extends ChangeNotifier {
   // #endregion
 
   // #region init
-  Future<void> init(AllUsersModel allUsersModel) async {
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) async {
-        springController = SpringController(initialAnim: Motion.mirror);
-        await fetchWidgets(allUsersModel);
-        await fetchBanners();
-        notifyListeners();
-      });
-    }
+  Future<void> init(AllUsersModel? allUsersModel) async {
+    springController = SpringController(initialAnim: Motion.mirror);
+    await fetchWidgets(allUsersModel);
+    await fetchBanners();
+    notifyListeners();
   }
   // #endregion
 
@@ -214,7 +209,7 @@ class HomeVm extends ChangeNotifier {
   // #endregion
 
   // #region fetchWidgets
-  Future<void> fetchWidgets(AllUsersModel allUsersModel) async {
+  Future<void> fetchWidgets(AllUsersModel? allUsersModel) async {
     widgetsInUse = [];
     final sharedUserList = getUserWidgets;
     if (sharedUserList == null) {
@@ -268,14 +263,20 @@ class HomeVm extends ChangeNotifier {
     try {
       Widget row = widgetsInUse.removeAt(oldIndex);
       widgetsInUse.insert(newIndex, row);
-      List<String> setList = widgetsInUse.map((Widget element) {
+      List<String?> setList = widgetsInUse.map((Widget element) {
         final _widget =
             ((element.key as ValueKey).value as String).xHomeWidgets;
         if (_widget != null) {
           return _widget.xRawValue;
         }
-      }).toList() as List<String>;
-      await saveWidgetList(setList);
+      }).toList();
+      List<String> newList = [];
+      for (var item in setList) {
+        if (item != null) {
+          newList.add(item);
+        }
+      }
+      await saveWidgetList(newList);
     } catch (e) {
       LoggerUtils.instance.e(e);
     }

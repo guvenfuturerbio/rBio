@@ -8,12 +8,13 @@ class GradientDialogForPaymentDialog extends StatefulWidget {
   final String code;
   final String name;
 
-  GradientDialogForPaymentDialog(
-    this.errorText,
-    this.videoId,
-    this.code,
-    this.name,
-  );
+  const GradientDialogForPaymentDialog({
+    Key? key,
+    required this.errorText,
+    required this.videoId,
+    required this.code,
+    required this.name,
+  }) : super(key: key);
 
   @override
   _GradientDialogForPaymentDialogState createState() =>

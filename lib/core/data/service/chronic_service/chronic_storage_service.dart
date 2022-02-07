@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:logger/logger.dart';
 
 import '../../../../model/bg_measurement/blood_glucose_value_detail_model.dart';
 import '../../../../model/bg_measurement/blood_glucose_value_model.dart';

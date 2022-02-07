@@ -57,10 +57,10 @@ class BleScannerOps extends ChangeNotifier {
           }
         }, onError: (e) => log(e.toString()));
       } else if (bleStatus == BleStatus.unauthorized) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         await Permission.location.request();
       } else if (bleStatus == BleStatus.poweredOff) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
 
         // await SystemShortcuts.bluetooth();
       }
