@@ -83,15 +83,15 @@ class PatientBloodGlucoseListModel
   void filterList(DoctorPatientListSortType sortType) {
     switch (sortType) {
       case DoctorPatientListSortType.criticalMetrics:
-        _filterList = _list.sortedBy((i) => i.name);
+        _filterList = _list.sortedBy((i) => i.name!).toList();
         break;
 
       case DoctorPatientListSortType.fromNewest:
-        _filterList = _list.sortedBy((i) => i.alertMin);
+        _filterList = _list.sortedBy((i) => i.alertMin!).toList();
         break;
 
       case DoctorPatientListSortType.fromOldest:
-        _filterList = _list.sortedBy((i) => i.alertMax);
+        _filterList = _list.sortedBy((i) => i.alertMax!).toList();
         break;
 
       default:
