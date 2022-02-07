@@ -8,9 +8,9 @@ part of 'additional_info_model.dart';
 
 AdditionalInfoModel _$AdditionalInfoModelFromJson(Map<String, dynamic> json) {
   return AdditionalInfoModel(
-    identificationNumber: json['identification_number'] as String,
-    country: json['country'] as String,
-    phoneNumber: json['phone_number'] as String,
+    identificationNumber: json['identification_number'] as String?,
+    country: json['country'] as String?,
+    phoneNumber: json['phone_number'] as String?,
   );
 }
 

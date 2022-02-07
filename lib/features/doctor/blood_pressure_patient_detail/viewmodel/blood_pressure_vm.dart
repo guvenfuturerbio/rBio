@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 
 import '../../../../core/core.dart';
 import '../../../../core/data/repository/doctor_repository.dart';
@@ -8,20 +9,31 @@ import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pres
 import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
 import '../widget/charts/line_charts.dart';
 
-class BloodPressurePatientDetailVm extends ChangeNotifier {
+class BloodPressurePatientDetailVm extends RbioVm
+    with IBaseBottomActionsOfGraph {
   List<BpMeasurementViewModel> bpMeasurements = [];
   List<BpMeasurementViewModel> bpMeasurementsDailyData = [];
+
+  Map<String, bool>? _measurementFilters;
+  Map<String, bool> get measurements =>
+      _measurementFilters ??
+      {
+        LocaleProvider.current.sys: true,
+        LocaleProvider.current.dia: true,
+        LocaleProvider.current.pulse: true,
+      };
 
   int _currentDateIndex = 0;
   int get currentDateIndex => _currentDateIndex;
 
   bool hasReachEnd = false;
 
-  final BuildContext context;
+  @override
+  final BuildContext mContext;
   final int patientId;
 
   BloodPressurePatientDetailVm(
-      {required this.context, required this.patientId}) {
+      {required this.mContext, required this.patientId}) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isChartShow = false;
       update();
@@ -34,6 +46,7 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
     });
   }
   bool isChartShow = false;
+  @override
   changeChartShowStatus() {
     isChartShow = !isChartShow;
     notifyListeners();
@@ -49,7 +62,7 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget get currentGraph => AnimatedPatientPulseChart();
+  Widget get currentGraph => const AnimatedPatientPulseChart();
 
   ScrollController? controller = ScrollController();
   TimePeriodFilter? selected;
@@ -317,15 +330,18 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   }
 
   showPressureTagger(_) {
-    Atom.show(PressureTagger(),
+    Atom.show(const PressureTagger(),
         barrierDismissible: false, barrierColor: Colors.transparent);
   }
 
   @override
-  void changeGraphType() => null;
+  void changeGraphType() {
+    throw UnimplementedError(
+        'Error: Just one graph type for blood pressure graph type!!!!');
+  }
 
-  void showFilter(_) => Atom.show(BpChartFilterPopUp(
-        height: context.height * .52,
+  @override
+  void showFilter(BuildContext context) => Atom.show(BpChartFilterPopUp(
         width: context.width * .6,
         measurements: measurementFilters!,
         callback: changeFilterType,

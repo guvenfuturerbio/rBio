@@ -301,13 +301,13 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   Map<int, List<ChartData>> get chartVeryHighTagged => _chartVeryHighTagged;
 
-  int get targetMin => PatientNotifiers()?.patientDetail?.rangeMin ?? 0;
+  int get targetMin => PatientNotifiers().patientDetail.rangeMin ?? 0;
 
-  int get targetMax => PatientNotifiers()?.patientDetail?.rangeMax ?? 0;
+  int get targetMax => PatientNotifiers().patientDetail.rangeMax ?? 0;
 
-  int get criticMin => PatientNotifiers()?.patientDetail?.hypo ?? 0;
+  int get criticMin => PatientNotifiers().patientDetail.hypo ?? 0;
 
-  int get criticMax => PatientNotifiers()?.patientDetail?.hyper ?? 0;
+  int get criticMax => PatientNotifiers().patientDetail.hyper ?? 0;
 
   int get dailyHighestValue {
     int highest = bgMeasurementsDailyData.isNotEmpty
@@ -498,7 +498,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
     _listLastIndex = index;
   }
 
-  int get currentDateIndex => _currentDateIndex ?? 0;
+  int get currentDateIndex => _currentDateIndex;
 
   void setCurrentDateIndex(int value) {
     _currentDateIndex += value;

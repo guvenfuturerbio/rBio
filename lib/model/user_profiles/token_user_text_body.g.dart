@@ -8,9 +8,9 @@ part of 'token_user_text_body.dart';
 
 TokenUserTextBody _$TokenUserTextBodyFromJson(Map<String, dynamic> json) {
   return TokenUserTextBody(
-    id: json['Id'] as String,
-    name: json['NameSurname'] as String,
-    email: json['ElectronicMail'] as String,
+    id: json['Id'] as String?,
+    name: json['NameSurname'] as String?,
+    email: json['ElectronicMail'] as String?,
   );
 }
 

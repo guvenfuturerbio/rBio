@@ -9,13 +9,13 @@ part of 'update_bg_measurement_request.dart';
 UpdateBloodGlucoseMeasurementRequest
     _$UpdateBloodGlucoseMeasurementRequestFromJson(Map<String, dynamic> json) {
   return UpdateBloodGlucoseMeasurementRequest(
-    entegrationId: json['entegration_id'] as int,
-    measurementId: json['measurement_id'] as int,
-    tag: json['measurement_tag'] as int,
-    value: json['measurement_value'] as int,
-    type: json['measurement_type'] as String,
-    note: json['measurement_note'] as String,
-    date: json['occurrence'] as String,
+    entegrationId: json['entegration_id'] as int?,
+    measurementId: json['measurement_id'] as int?,
+    tag: json['measurement_tag'] as int?,
+    value: json['measurement_value'] as int?,
+    type: json['measurement_type'] as String?,
+    note: json['measurement_note'] as String?,
+    date: json['occurrence'] as String?,
   );
 }
 

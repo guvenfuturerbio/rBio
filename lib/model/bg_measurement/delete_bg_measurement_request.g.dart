@@ -9,8 +9,8 @@ part of 'delete_bg_measurement_request.dart';
 DeleteBloodGlucoseMeasurementRequest
     _$DeleteBloodGlucoseMeasurementRequestFromJson(Map<String, dynamic> json) {
   return DeleteBloodGlucoseMeasurementRequest(
-    entegrationId: json['entegration_id'] as int,
-    measurementId: json['measurement_id'] as int,
+    entegrationId: json['entegration_id'] as int?,
+    measurementId: json['measurement_id'] as int?,
   );
 }
 

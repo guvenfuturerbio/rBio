@@ -9,9 +9,9 @@ part of 'hospital_hba1c_measurement.dart';
 HospitalHba1cMeasurementModel _$HospitalHba1cMeasurementModelFromJson(
     Map<String, dynamic> json) {
   return HospitalHba1cMeasurementModel(
-    value: (json['value'] as num).toDouble(),
-    date: json['date'] as String,
-    note: json['note'] as String,
+    value: (json['value'] as num?)?.toDouble(),
+    date: json['date'] as String?,
+    note: json['note'] as String?,
   );
 }
 

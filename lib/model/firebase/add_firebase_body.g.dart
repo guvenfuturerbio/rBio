@@ -8,8 +8,8 @@ part of 'add_firebase_body.dart';
 
 AddFirebaseToken _$AddFirebaseTokenFromJson(Map<String, dynamic> json) {
   return AddFirebaseToken(
-    firebaseId: json['fire_base_id'] as String,
-    phoneInfo: json['phone_info'] as String,
+    firebaseId: json['fire_base_id'] as String?,
+    phoneInfo: json['phone_info'] as String?,
   );
 }
 

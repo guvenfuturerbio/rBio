@@ -42,9 +42,8 @@ abstract class RbioVm extends ChangeNotifier {
           voidCallback();
         }
         showInfoDialog(
-          title ?? LocaleProvider.of(this.mContext).warning,
-          description ??
-              LocaleProvider.of(this.mContext).sorry_dont_transaction,
+          title ?? LocaleProvider.of(mContext).warning,
+          description ?? LocaleProvider.of(mContext).sorry_dont_transaction,
         );
       },
     );

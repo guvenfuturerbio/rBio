@@ -79,7 +79,7 @@ class _BloodPressurePatientDetailScreenState
 
     return ChangeNotifierProvider<BloodPressurePatientDetailVm>(
       create: (context) => BloodPressurePatientDetailVm(
-          context: context, patientId: patientId as int),
+          mContext: context, patientId: patientId as int),
       child: Consumer<BloodPressurePatientDetailVm>(
         builder: (
           BuildContext context,
@@ -171,8 +171,8 @@ class _BloodPressurePatientDetailScreenState
                   height: context.height * .3,
                   width: double.infinity,
                 ),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[100],
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
               ),
             ],
           ],

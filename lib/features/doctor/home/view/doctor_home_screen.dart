@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/core.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  DoctorHomeScreen({Key key}) : super(key: key);
+  const DoctorHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class DoctorHomeScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       children: [
         //
@@ -36,7 +36,7 @@ class DoctorHomeScreen extends StatelessWidget {
           LocaleProvider.current.bg_measurement_tracking,
           () {
             Atom.to(
-              PagePaths.DOCTOR_PATIENT_LIST,
+              PagePaths.doctorPatientList,
               queryParameters: {
                 'type': PatientType.sugar.xRawValue,
               },
@@ -51,9 +51,9 @@ class DoctorHomeScreen extends StatelessWidget {
           LocaleProvider.current.bmi_tracking,
           () {
             Atom.to(
-              PagePaths.DOCTOR_PATIENT_LIST,
+              PagePaths.doctorPatientList,
               queryParameters: {
-                'type': PatientType.BMI.xRawValue,
+                'type': PatientType.bmi.xRawValue,
               },
             );
           },
@@ -66,9 +66,9 @@ class DoctorHomeScreen extends StatelessWidget {
           LocaleProvider.current.blood_pressure_tracking,
           () {
             Atom.to(
-              PagePaths.DOCTOR_PATIENT_LIST,
+              PagePaths.doctorPatientList,
               queryParameters: {
-                'type': PatientType.Bp.xRawValue,
+                'type': PatientType.bp.xRawValue,
               },
             );
           },
@@ -92,7 +92,7 @@ class DoctorHomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             //
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             //
             SvgPicture.asset(
@@ -102,7 +102,7 @@ class DoctorHomeScreen extends StatelessWidget {
             ),
 
             //
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
 
@@ -113,7 +113,7 @@ class DoctorHomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 //
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
 
                 //
                 Expanded(
@@ -131,7 +131,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 ),
 
                 //
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
 
                 //
                 RbioBadge(
@@ -139,12 +139,12 @@ class DoctorHomeScreen extends StatelessWidget {
                 ),
 
                 //
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
               ],
             ),
 
             //
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
           ],
         ),
       ),

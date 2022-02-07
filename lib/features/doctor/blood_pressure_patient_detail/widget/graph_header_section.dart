@@ -25,7 +25,7 @@ class _GraphHeaderSection extends StatelessWidget {
             startDate: value!.startDate!,
             nextDate: value!.nextDate,
             previousDate: value!.previousDate,
-            selected: value!.selected,
+            selected: value!.selected!,
             setSelectedItem: (val) {
               return value!.setSelectedItem(val);
             },

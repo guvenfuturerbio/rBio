@@ -9,8 +9,8 @@ part of 'blood_glucose_value_detail_model.dart';
 BloodGlucoseValueDetail _$BloodGlucoseValueDetailFromJson(
     Map<String, dynamic> json) {
   return BloodGlucoseValueDetail(
-    time: json['occurrence_time'] as String,
-    tag: json['sugar_measure_tag_id'] as int,
+    time: json['occurrence_time'] as String?,
+    tag: json['sugar_measure_tag_id'] as int?,
   );
 }
 
