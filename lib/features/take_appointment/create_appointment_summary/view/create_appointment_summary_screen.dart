@@ -218,7 +218,7 @@ class _CreateAppointmentSummaryScreenState
                               }
                             },
                             child: SvgPicture.asset(
-                              R.image.qr_icon,
+                              R.image.qr,
                               width: 28,
                             ),
                           ),
@@ -431,8 +431,6 @@ class _CreateAppointmentSummaryScreenState
         onTap = () {};
         break;
     }
-
-    if (title == null) return const SizedBox();
 
     return RbioElevatedButton(
       onTap: onTap,

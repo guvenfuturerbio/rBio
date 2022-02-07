@@ -48,7 +48,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),
@@ -195,7 +195,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
 
           //
           SvgPicture.asset(
-            R.image.arrow_down_icon,
+            R.image.arrowDown,
             height: 10,
           ),
         ],

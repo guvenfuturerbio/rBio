@@ -93,7 +93,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 true,
                 LocaleProvider.of(context).gender_male,
-                R.image.man_icon,
+                R.image.manIcon,
                 0,
               ),
 
@@ -103,7 +103,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 true,
                 LocaleProvider.of(context).gender_female,
-                R.image.women_icon,
+                R.image.women,
                 1,
               ),
 
@@ -113,7 +113,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 false,
                 LocaleProvider.of(context).boy,
-                R.image.boy_child_icon,
+                R.image.boyChild,
                 2,
               ),
 
@@ -123,7 +123,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 false,
                 LocaleProvider.of(context).girl,
-                R.image.girl_child_icon,
+                R.image.girlChild,
                 3,
               ),
 
@@ -150,7 +150,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                   ),
 
                   //
-                  Divider(),
+                  const Divider(),
 
                   //
                   Container(

@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -133,7 +131,7 @@ class _BloodGlucosePatientDetailScreenState
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),
@@ -290,7 +288,7 @@ class _BloodGlucosePatientDetailScreenState
 
                     //
                     SvgPicture.asset(
-                      R.image.arrow_down_icon,
+                      R.image.arrowDown,
                       height: 10,
                     ),
                   ],

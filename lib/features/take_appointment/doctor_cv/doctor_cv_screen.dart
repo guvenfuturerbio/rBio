@@ -15,8 +15,6 @@ class DoctorCvScreen extends StatefulWidget {
 
   DoctorCvScreen({Key? key}) : super(key: key);
 
-
-
   @override
   _DoctorCvScreenState createState() => _DoctorCvScreenState();
 }
@@ -67,51 +65,58 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            //
             Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                if (value.progress == LoadingProgress.done) Image.network(
-                        value.imageUrl,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Utils.instance.customCircleAvatar(
-                            size: 120,
-                            child: SvgPicture.asset(
-                              R.image.doctor_avatar,
-                              fit: BoxFit.fill,
+                if (value.progress == LoadingProgress.done)
+                  Image.network(
+                    value.imageUrl,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Utils.instance.customCircleAvatar(
+                        size: 120,
+                        child: SvgPicture.asset(
+                          R.image.doctorAvatar,
+                          fit: BoxFit.fill,
+                        ),
+                      );
+                    },
+                    loadingBuilder: (BuildContext context, Widget? child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return Utils.instance.customCircleAvatar(
+                            child: Container(
+                              child: child,
                             ),
-                          );
-                        },
-                        loadingBuilder: (BuildContext context, Widget? child,
-                            ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return Utils.instance.customCircleAvatar(
-                                child: Container(
-                                  child: child,
-                                ),
-                                size: 120);
-                          }
-                          return Stack(
-                            alignment: Alignment.center,
-                            children: const[
-                           RbioLoading(),
-                           Center(
+                            size: 120);
+                      }
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: const [
+                          RbioLoading(),
+                          Center(
                               child: SizedBox(
                             width: 120,
                             height: 120,
                           ))
-                            ],
-                          );
-                        },
-                      ) else Utils.instance.customCircleAvatar(
-                        size: 120,
-                        child: SvgPicture.asset(
-                          R.image.doctor_avatar,
-                          fit: BoxFit.fill,
-                        )),
+                        ],
+                      );
+                    },
+                  )
+                else
+                  Utils.instance.customCircleAvatar(
+                    size: 120,
+                    child: SvgPicture.asset(
+                      R.image.doctorAvatar,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
               ],
             ),
+
+            //
             Container(
               margin: const EdgeInsets.only(top: 10),
               child: Text(
@@ -121,6 +126,8 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                 ),
               ),
             ),
+
+            //
             Container(
               margin: const EdgeInsets.only(top: 4),
               child: Text(
@@ -164,8 +171,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                     children: [
                       Visibility(
                         visible:
-                            (value.doctorCvResponse.specialties?.length ??
-                                        0) ==
+                            (value.doctorCvResponse.specialties?.length ?? 0) ==
                                     0
                                 ? false
                                 : true,
@@ -178,8 +184,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value.doctorCvResponse.specialties?.length ??
-                                    0,
+                                value.doctorCvResponse.specialties?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
@@ -191,11 +196,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: (value.doctorCvResponse.treatments?.length ??
-                                    0) ==
-                                0
-                            ? false
-                            : true,
+                        visible:
+                            (value.doctorCvResponse.treatments?.length ?? 0) ==
+                                    0
+                                ? false
+                                : true,
                         child: ListTile(
                           title: Text(LocaleProvider.of(context).treatments,
                               style: context.xHeadline3.copyWith(
@@ -206,8 +211,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value.doctorCvResponse.treatments?.length ??
-                                    0,
+                                value.doctorCvResponse.treatments?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
@@ -220,8 +224,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value.doctorCvResponse.experiences?.length ??
-                                        0) ==
+                            (value.doctorCvResponse.experiences?.length ?? 0) ==
                                     0
                                 ? false
                                 : true,
@@ -235,8 +238,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value.doctorCvResponse.experiences?.length ??
-                                    0,
+                                value.doctorCvResponse.experiences?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
@@ -248,11 +250,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: (value.doctorCvResponse.educations?.length ??
-                                    0) ==
-                                0
-                            ? false
-                            : true,
+                        visible:
+                            (value.doctorCvResponse.educations?.length ?? 0) ==
+                                    0
+                                ? false
+                                : true,
                         child: ListTile(
                           title: Text(LocaleProvider.of(context).educations,
                               style: context.xHeadline3.copyWith(
@@ -263,8 +265,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value.doctorCvResponse.educations?.length ??
-                                    0,
+                                value.doctorCvResponse.educations?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
@@ -276,12 +277,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                         ),
                       ),
                       Visibility(
-                        visible:
-                            (value.doctorCvResponse.publications?.length ??
-                                        0) ==
-                                    0
-                                ? false
-                                : true,
+                        visible: (value.doctorCvResponse.publications?.length ??
+                                    0) ==
+                                0
+                            ? false
+                            : true,
                         child: ListTile(
                           title: Text(LocaleProvider.of(context).publications,
                               style: context.xHeadline3.copyWith(
@@ -297,8 +297,8 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.publications![index]
-                                          .text!,
+                                      value.doctorCvResponse
+                                          .publications![index].text!,
                                   style: context.xHeadline5);
                             },
                           ),
@@ -306,8 +306,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value.doctorCvResponse.memberships?.length ??
-                                        0) ==
+                            (value.doctorCvResponse.memberships?.length ?? 0) ==
                                     0
                                 ? false
                                 : true,
@@ -321,8 +320,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                value.doctorCvResponse.memberships?.length ??
-                                    0,
+                                value.doctorCvResponse.memberships?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
@@ -335,8 +333,7 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       ),
                       Visibility(
                         visible:
-                            (value.doctorCvResponse.trainings?.length ?? 0) ==
-                                    0
+                            (value.doctorCvResponse.trainings?.length ?? 0) == 0
                                 ? false
                                 : true,
                         child: ListTile(
@@ -381,7 +378,8 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               return Text(
                                   '-' +
-                                      value.doctorCvResponse.awards![index].text!,
+                                      value.doctorCvResponse.awards![index]
+                                          .text!,
                                   style: context.xHeadline5);
                             },
                           ),
@@ -392,8 +390,8 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                 : value.progress == LoadingProgress.loading
                     ? const RbioLoading()
                     : Container(
-                        margin:
-                            const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        margin: const EdgeInsets.only(
+                            bottom: 20, left: 20, right: 20),
                         child: Text(
                             widget.doctorName +
                                 " " +

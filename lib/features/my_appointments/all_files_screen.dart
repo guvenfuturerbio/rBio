@@ -92,8 +92,8 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
             children: <Widget>[
               SvgPicture.asset(
                 (file.fileType ?? '').toLowerCase() == "pdf"
-                    ? R.image.ic_file_icon
-                    : R.image.ic_image_icon,
+                    ? R.image.file
+                    : R.image.imageIcon,
               ),
 
               //
@@ -114,7 +114,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
 
               //
               SvgPicture.asset(
-                R.image.ic_arrow_right,
+                R.image.arrowRight,
               ),
             ],
           ),

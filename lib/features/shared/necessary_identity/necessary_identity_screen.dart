@@ -61,7 +61,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       style: Utils.instance.inputTextStyle(),
                       decoration: Utils.instance.inputImageDecorationRed(
                         hintText: LocaleProvider.of(context).tc_or_passport,
-                        image: R.image.ic_user,
+                        image: R.image.user,
                       ),
                     ),
                     margin: const EdgeInsets.only(bottom: 10, top: 20),

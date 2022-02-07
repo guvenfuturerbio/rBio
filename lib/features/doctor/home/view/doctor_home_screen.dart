@@ -32,7 +32,7 @@ class DoctorHomeScreen extends StatelessWidget {
         //
         _buildCard(
           context,
-          R.image.ct_blood_glucose,
+          R.image.bloodGlucose,
           LocaleProvider.current.bg_measurement_tracking,
           () {
             Atom.to(
@@ -47,7 +47,7 @@ class DoctorHomeScreen extends StatelessWidget {
         //
         _buildCard(
           context,
-          R.image.ct_body_scale,
+          R.image.bodyScale,
           LocaleProvider.current.bmi_tracking,
           () {
             Atom.to(
@@ -62,7 +62,7 @@ class DoctorHomeScreen extends StatelessWidget {
         //
         _buildCard(
           context,
-          R.image.ct_blood_pressure,
+          R.image.bloodPressure,
           LocaleProvider.current.blood_pressure_tracking,
           () {
             Atom.to(
@@ -135,7 +135,7 @@ class DoctorHomeScreen extends StatelessWidget {
 
                 //
                 RbioBadge(
-                  image: R.image.chat_icon,
+                  image: R.image.chat,
                 ),
 
                 //

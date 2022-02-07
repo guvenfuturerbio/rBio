@@ -104,13 +104,13 @@ class RbioUserTile extends StatelessWidget {
     switch (type) {
       case UserTrailingIcons.RightArrow:
         return SvgPicture.asset(
-          R.image.arrow_right_icon,
+          R.image.arrowRightIcon,
           width: R.sizes.iconSize5,
         );
 
       case UserTrailingIcons.Cancel:
         return SvgPicture.asset(
-          R.image.cancel_icon,
+          R.image.cancel,
           color: Colors.black,
           width: R.sizes.iconSize3,
         );

@@ -51,7 +51,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     return [
       InkWell(
         child: SvgPicture.asset(
-          R.image.ic_all_files_grey,
+          R.image.allFilesGrey,
           color: R.color.white,
         ),
         onTap: () {

@@ -35,7 +35,7 @@ class RbioBodyError extends StatelessWidget {
                 maxWidth: 600,
               ),
               child: SvgPicture.asset(
-                R.image.error_icon,
+                R.image.error,
               ),
             ),
           ),
@@ -43,7 +43,7 @@ class RbioBodyError extends StatelessWidget {
         ] else ...[
           Center(
             child: SvgPicture.asset(
-              R.image.error_icon,
+              R.image.error,
               width: Atom.width * 0.3,
             ),
           ),

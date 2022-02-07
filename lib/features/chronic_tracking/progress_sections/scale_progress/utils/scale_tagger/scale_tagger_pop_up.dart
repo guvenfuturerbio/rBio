@@ -225,7 +225,7 @@ class ScaleTagger extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: SvgPicture.asset(
-                                    R.image.addphoto_icon,
+                                    R.image.addphotoIcon,
                                   ),
                                 ),
                               )

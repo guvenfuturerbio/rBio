@@ -193,7 +193,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
 
                   //
                   SvgPicture.asset(
-                    R.image.arrow_down_icon,
+                    R.image.arrowDown,
                     width: R.sizes.iconSize3,
                   ),
                 ],

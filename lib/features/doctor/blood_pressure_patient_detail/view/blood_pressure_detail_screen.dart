@@ -17,7 +17,7 @@ part '../widget/graph_header_section.dart';
 part '../widget/measurement_list.dart';
 
 class BloodPressurePatientDetailScreen extends StatefulWidget {
-  BloodPressurePatientDetailScreen({Key? key}) : super(key: key);
+  const BloodPressurePatientDetailScreen({Key? key}) : super(key: key);
 
   @override
   _BloodPressurePatientDetailScreenState createState() =>
@@ -111,7 +111,7 @@ class _BloodPressurePatientDetailScreenState
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),
@@ -230,7 +230,7 @@ class _BloodPressurePatientDetailScreenState
 
                     //
                     SvgPicture.asset(
-                      R.image.arrow_down_icon,
+                      R.image.arrowDown,
                       height: 10,
                     ),
                   ],

@@ -42,7 +42,7 @@ class ReminderHomeScreen extends StatelessWidget {
     return [
       _buildCard(
         context,
-        R.image.bloodglucose_icon,
+        R.image.reminderBloodGlucose,
         Remindable.bloodGlucose,
         onTap: () {
           Atom.to(
@@ -55,7 +55,7 @@ class ReminderHomeScreen extends StatelessWidget {
       ),
       _buildCard(
         context,
-        R.image.strip_icon,
+        R.image.reminderStrip,
         Remindable.strip,
         onTap: () {
           Atom.to(PagePaths.strip);
@@ -63,7 +63,7 @@ class ReminderHomeScreen extends StatelessWidget {
       ),
       _buildCard(
         context,
-        R.image.medication_icon,
+        R.image.reminderMedication,
         Remindable.medication,
         onTap: () {
           Atom.to(
@@ -76,7 +76,7 @@ class ReminderHomeScreen extends StatelessWidget {
       ),
       _buildCard(
         context,
-        R.image.hba1c_icon,
+        R.image.reminderHba1c,
         Remindable.hbA1c,
         onTap: () {
           Atom.to(

@@ -128,7 +128,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 obscureText: value.oldPasswordVisibility ? false : true,
                 hintText: LocaleProvider.of(context).hint_input_old_password,
                 prefixIcon: SvgPicture.asset(
-                  R.image.ic_password_small,
+                  R.image.passwordSmall,
                   fit: BoxFit.none,
                 ),
                 suffixIcon: RbioVisibilitySuffixIcon(
@@ -164,7 +164,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 obscureText: value.passwordVisibility ? false : true,
                 hintText: LocaleProvider.of(context).hint_input_password,
                 prefixIcon: SvgPicture.asset(
-                  R.image.ic_password_again,
+                  R.image.passwordAgain,
                   fit: BoxFit.none,
                 ),
                 suffixIcon: RbioVisibilitySuffixIcon(
@@ -203,7 +203,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 obscureText: value.passwordAgainVisibility ? false : true,
                 hintText: LocaleProvider.of(context).password_again,
                 prefixIcon: SvgPicture.asset(
-                  R.image.ic_password_again,
+                  R.image.passwordAgain,
                   fit: BoxFit.none,
                 ),
                 suffixIcon: RbioVisibilitySuffixIcon(

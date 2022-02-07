@@ -211,7 +211,7 @@ class ConsultationScreen extends StatelessWidget {
                                   item.lastMessageSender ==
                                       getIt<UserNotifier>().firebaseID
                               ? SvgPicture.asset(
-                                  R.image.eyeseen_icon,
+                                  R.image.eyeSeen,
                                   height: 12,
                                 )
                               : const SizedBox(),

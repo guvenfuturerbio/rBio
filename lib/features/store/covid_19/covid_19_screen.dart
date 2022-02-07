@@ -67,7 +67,7 @@ class _Covid19ScreenState extends State<Covid19Screen> {
               child: InkWell(
                 child: _ItemTakeCovid(
                     title: LocaleProvider.current.take_covid_19,
-                    image: R.image.ic_test_icon,
+                    image: R.image.test,
                     number: LocaleProvider.current.lbl_number_hospital,
                     context: context),
                 onTap: () {},
@@ -173,10 +173,13 @@ class _Covid19ScreenState extends State<Covid19Screen> {
   }
 }
 
+// ignore: must_be_immutable
 class MopItem extends StatelessWidget {
   String image = "";
   String text = "";
+
   MopItem(this.image, this.text, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.transparent,
                   padding: const EdgeInsets.all(8),
                   child: SvgPicture.asset(
-                    R.image.menu_icon,
+                    R.image.menu,
                     color: Colors.white,
                     width: R.sizes.iconSize2,
                   ),
@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Container(
                     color: Colors.transparent,
                     child: SvgPicture.asset(
-                      R.image.cancel_icon,
+                      R.image.cancel,
                       color: Colors.white,
                       width: R.sizes.iconSize2,
                     ),

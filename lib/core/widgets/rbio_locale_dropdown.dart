@@ -46,7 +46,7 @@ class RbioLocaleDropdown extends StatelessWidget {
     if ('tr' == localeValue.languageCode) {
       return Row(mainAxisSize: MainAxisSize.min, children: [
         Image.asset(
-          R.image.tr_flag,
+          R.image.trFlag,
           width: 30,
         ),
         R.sizes.wSizer4,
@@ -58,7 +58,7 @@ class RbioLocaleDropdown extends StatelessWidget {
     } else {
       return Row(mainAxisSize: MainAxisSize.min, children: [
         Image.asset(
-          R.image.eng_flag,
+          R.image.engFlag,
           width: 30,
         ),
         R.sizes.wSizer4,

@@ -85,7 +85,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           calendarFormat: CalendarFormat.twoWeeks,
           rangeSelectionMode: RangeSelectionMode.toggledOff,
           startingDayOfWeek: StartingDayOfWeek.monday,
-          calendarStyle: CalendarStyle(
+          calendarStyle: const CalendarStyle(
             // Use `CalendarStyle` to customize the UI
             outsideDaysVisible: true,
           ),
@@ -101,13 +101,13 @@ class _TableCalendarState extends State<_TableCalendar> {
             headerPadding: EdgeInsets.zero,
             decoration: BoxDecoration(
               color: getIt<ITheme>().secondaryColor,
-              borderRadius: BorderRadius.vertical(
+              borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(15),
               ),
             ),
 
             //
-            leftChevronMargin: EdgeInsets.only(
+            leftChevronMargin: const EdgeInsets.only(
               top: 8,
               left: 12,
               bottom: 8,
@@ -115,13 +115,13 @@ class _TableCalendarState extends State<_TableCalendar> {
             leftChevronPadding: EdgeInsets.zero,
             leftChevronVisible: true,
             leftChevronIcon: SvgPicture.asset(
-              R.image.arrow_left_icon,
+              R.image.arrowLeft,
               color: Colors.black,
               width: R.sizes.iconSize5,
             ),
 
             //
-            rightChevronMargin: EdgeInsets.only(
+            rightChevronMargin: const EdgeInsets.only(
               top: 8,
               right: 12,
               bottom: 8,
@@ -129,7 +129,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             rightChevronPadding: EdgeInsets.zero,
             rightChevronVisible: true,
             rightChevronIcon: SvgPicture.asset(
-              R.image.arrow_right_icon,
+              R.image.arrowRightIcon,
               color: Colors.black,
               width: R.sizes.iconSize5,
             ),
@@ -204,7 +204,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                   border: boxBorder,
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: getIt<ITheme>().mainColor,
                     shape: BoxShape.circle,

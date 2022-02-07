@@ -158,17 +158,17 @@ class _TaggerPopUp extends StatelessWidget {
       children: <Widget>[
         getTagElement(
           currentTag == 1,
-          R.image.beforemeal_icon_black,
+          R.image.beforeMealIconBlack,
           LocaleProvider.current.hungry,
         ),
         getTagElement(
           currentTag == 2,
-          R.image.aftermeal_icon_black,
+          R.image.aftermealIconBlack,
           LocaleProvider.current.full,
         ),
         getTagElement(
           currentTag == 3,
-          R.image.other_icon,
+          R.image.otherIcon,
           LocaleProvider.current.other,
         ),
       ],

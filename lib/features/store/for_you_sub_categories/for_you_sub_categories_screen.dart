@@ -72,7 +72,7 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
               icon: (vm.categories[index].icon != null)
                   ? Image.memory(
                       base64Decode(vm.categories[index].icon as String))
-                  : Image.asset(R.image.covid_cat_icon),
+                  : Image.asset(R.image.covidCat),
               isSubCat: true,
             );
           },

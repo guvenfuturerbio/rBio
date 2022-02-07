@@ -186,62 +186,76 @@ Widget measurementList(
   );
 }
 
-Row _timeAndImageSection(
-    ScaleMeasurementViewModel scaleMeasurementViewModel, BuildContext context) {
-  return Row(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-    if (scaleMeasurementViewModel.isManuel)
-      Text(
-        "M",
-        style: context.xHeadline3.copyWith(
-          fontWeight: FontWeight.w900,
+Widget _timeAndImageSection(
+  ScaleMeasurementViewModel scaleMeasurementViewModel,
+  BuildContext context,
+) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+      if (scaleMeasurementViewModel.isManuel)
+        Text(
+          "M",
+          style: context.xHeadline3.copyWith(
+            fontWeight: FontWeight.w900,
+          ),
         ),
-      ),
-    (scaleMeasurementViewModel.imageUrl.isEmpty)
-        ? SizedBox(
-            width: 60 * context.textScale,
-            height: 60 * context.textScale,
-            child: Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Container(
+
+      //
+      (scaleMeasurementViewModel.imageUrl.isEmpty)
+          ? SizedBox(
+              width: 60 * context.textScale,
+              height: 60 * context.textScale,
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Container(
                   padding: const EdgeInsets.all(8),
                   height: 25,
                   width: 25,
                   child: SvgPicture.asset(
-                    R.image.addphoto_icon,
-                  )),
-            ))
-        : GestureDetector(
-            onTap: () =>
-                _galeryView(context, scaleMeasurementViewModel.imageUrl),
-            child: SizedBox(
-              width: 60 * context.textScale,
-              height: 60 * context.textScale,
-              child: StackOfCards(
-                children: [
-                  ...scaleMeasurementViewModel.imageUrl.map(
-                    (e) => Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: ClipRRect(
+                    R.image.addphotoIcon,
+                  ),
+                ),
+              ),
+            )
+          : GestureDetector(
+              onTap: () =>
+                  _galeryView(context, scaleMeasurementViewModel.imageUrl),
+              child: SizedBox(
+                width: 60 * context.textScale,
+                height: 60 * context.textScale,
+                child: StackOfCards(
+                  children: [
+                    ...scaleMeasurementViewModel.imageUrl.map(
+                      (e) => Card(
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image(
-                            image: FileImage(File(getIt<ScaleStorageImpl>()
-                                .getImagePathOfImageURL(e))),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image(
+                              image: FileImage(
+                                File(
+                                  getIt<ScaleStorageImpl>()
+                                      .getImagePathOfImageURL(e),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          )
-  ]);
+    ],
+  );
 }
 
 Expanded _textAndScaleSection(

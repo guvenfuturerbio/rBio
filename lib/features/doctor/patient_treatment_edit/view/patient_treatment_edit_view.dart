@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/doctor/patient_treatment_edit/view_model/patient_treatment_vm.dart';
-import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/core.dart';
+import '../../../../model/treatment_model/treatment_model.dart';
+import '../view_model/patient_treatment_vm.dart';
 
 class PatientTreatmentEditView extends StatefulWidget {
   const PatientTreatmentEditView({Key? key}) : super(key: key);
@@ -69,7 +69,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),

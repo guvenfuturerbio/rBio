@@ -288,7 +288,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
           Expanded(
             child: _buildTagCard(
               value,
-              R.image.other_icon,
+              R.image.otherIcon,
               UsageType.irrelevant,
               false,
             ),
@@ -313,7 +313,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
           ),
           _buildTagCard(
             value,
-            R.image.other_icon,
+            R.image.otherIcon,
             UsageType.irrelevant,
             true,
           )
@@ -421,7 +421,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
           obscureText: false,
           hintText: LocaleProvider.current.medicine_intermittent_daily_count,
           prefixIcon: SvgPicture.asset(
-            R.image.ic_user,
+            R.image.user,
             fit: BoxFit.none,
           ),
           inputFormatters: <TextInputFormatter>[
@@ -507,7 +507,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
               color: Colors.transparent,
               padding: const EdgeInsets.all(8),
               child: SvgPicture.asset(
-                R.image.other_icon,
+                R.image.otherIcon,
                 width: R.sizes.iconSize3,
               ),
             ),
@@ -614,7 +614,7 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: SvgPicture.asset(
-                      R.image.arrow_down_icon,
+                      R.image.arrowDown,
                       width: R.sizes.iconSize3,
                     ),
                   ),
@@ -787,7 +787,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: SvgPicture.asset(
-                      R.image.arrow_down_icon,
+                      R.image.arrowDown,
                       width: R.sizes.iconSize3,
                     ),
                   ),

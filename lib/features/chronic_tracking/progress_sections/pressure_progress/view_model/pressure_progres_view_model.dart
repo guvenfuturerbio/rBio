@@ -296,7 +296,7 @@ class BpProgressPageVm
           ? LocaleProvider.current.no_measurement
           : 'Sys: ${lastMeasurement.sys ?? ''}, Dia: ${lastMeasurement.dia ?? ''}, Pulse: ${lastMeasurement.pulse ?? ''}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
-      imageUrl: R.image.ct_blood_pressure,
+      imageUrl: R.image.bloodPressure,
     );
   }
 

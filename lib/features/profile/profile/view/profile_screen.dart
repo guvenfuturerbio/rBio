@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             context.read<ThemeNotifier>().changeTextScale();
           },
           icon: SvgPicture.asset(
-            R.image.change_size_icon,
+            R.image.changeSize,
             color: getIt<ITheme>().iconSecondaryColor,
           ),
         ),
@@ -230,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 //
                 SvgPicture.asset(
-                  R.image.ic_arrow_right,
+                  R.image.arrowRight,
                   width: R.sizes.iconSize5,
                 ),
               ],

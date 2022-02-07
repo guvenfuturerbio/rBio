@@ -75,7 +75,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
             color: Colors.transparent,
             padding: const EdgeInsets.fromLTRB(8, 8, 14, 8),
             child: SvgPicture.asset(
-              R.image.ic_ios_share,
+              R.image.iosShare,
               width: R.sizes.iconSize3,
             ),
           ),
@@ -388,7 +388,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Image.asset(
-                        R.image.hospital_results_red,
+                        R.image.hospitalResultsRed,
                         height: 25,
                         width: 25,
                       ),
@@ -450,7 +450,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Image.asset(
-                        R.image.hospital_results_red,
+                        R.image.hospitalResultsRed,
                         height: 25,
                         width: 25,
                       ),

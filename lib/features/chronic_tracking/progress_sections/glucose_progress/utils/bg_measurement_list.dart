@@ -161,18 +161,21 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                           margin: const EdgeInsets.only(left: 8, right: 16),
                           width: (context.height * .05) * context.textScale,
                           height: (context.height * .05) * context.textScale,
-                          child:
-                              SvgPicture.asset(bgMeasurementViewModel.tag == 1
-                                  ? R.image.beforemeal_icon_black
-                                  : bgMeasurementViewModel.tag == 2
-                                      ? R.image.aftermeal_icon_black
-                                      : R.image.other_icon),
+                          child: SvgPicture.asset(
+                            bgMeasurementViewModel.tag == 1
+                                ? R.image.beforeMealIconBlack
+                                : bgMeasurementViewModel.tag == 2
+                                    ? R.image.aftermealIconBlack
+                                    : R.image.otherIcon,
+                          ),
                         ),
                         Expanded(
-                          child: Text((bgMeasurementViewModel.note.length > 10
-                              ? "${bgMeasurementViewModel.note.substring(0, 10)}..."
-                              : bgMeasurementViewModel.note)),
-                        )
+                          child: Text(
+                            (bgMeasurementViewModel.note.length > 10
+                                ? "${bgMeasurementViewModel.note.substring(0, 10)}..."
+                                : bgMeasurementViewModel.note),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -198,7 +201,7 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                                   bgMeasurementViewModel.imageURL == "" ||
                                   Atom.isWeb
                               ? SvgPicture.asset(
-                                  R.image.addphoto_icon,
+                                  R.image.addphotoIcon,
                                 )
                               : PhotoView(
                                   imageProvider: FileImage(File(

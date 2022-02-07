@@ -121,7 +121,7 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
                   left: 10,
                 ),
                 child: SvgPicture.asset(
-                  R.image.arrow_right_icon,
+                  R.image.arrowRightIcon,
                   height: 15,
                 ),
               ),

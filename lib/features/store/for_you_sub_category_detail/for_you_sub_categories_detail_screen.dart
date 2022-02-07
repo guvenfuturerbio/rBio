@@ -228,7 +228,7 @@ class _ForYouSubCategoriesDetailScreenState
           child: _ItemTakeCovid(
             context: context,
             title: title,
-            image: R.image.ic_test_icon,
+            image: R.image.test,
           ),
           onTap: onTap,
         ),
@@ -237,17 +237,19 @@ class _ForYouSubCategoriesDetailScreenState
   }
 }
 
-class mopItem extends StatelessWidget {
+class ListCard extends StatelessWidget {
   String image = "";
   String text = "";
   String title = "";
 
-  mopItem(
-    this.image,
-    this.title,
-    this.text,
-  );
+  ListCard({
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -259,7 +261,7 @@ class mopItem extends StatelessWidget {
               constraints: const BoxConstraints(maxHeight: 300, maxWidth: 300),
               child: image != null
                   ? Image.memory(base64Decode(image))
-                  : Image.asset(R.image.covid_cat_icon),
+                  : Image.asset(R.image.covidCat),
               margin: const EdgeInsets.all(30),
             ),
 
@@ -348,11 +350,13 @@ Widget _ItemTakeCovid({
                     ),
                   ),
           ),
+
+          //
           Positioned(
             child: Container(
               child: Transform.rotate(
                 angle: -math.pi / 1.0,
-                child: SvgPicture.asset(R.image.ic_back_white),
+                child: SvgPicture.asset(R.image.backWhite),
               ),
               margin: const EdgeInsets.only(left: 15, right: 5),
             ),

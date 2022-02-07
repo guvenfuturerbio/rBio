@@ -25,13 +25,21 @@ class ForYouSubCategoriesDetailScreenVm extends ChangeNotifier {
 
   List? cardList;
 
-  setCardList() {
+  void setCardList() {
     progress = LoadingProgress.loading;
     notifyListeners();
+
     List list = [];
     for (var data in subCategoryDetail) {
-      list.add(mopItem(data.image!, data.title!, data.text!));
+      list.add(
+        ListCard(
+          image: data.image!,
+          title: data.title!,
+          text: data.text!,
+        ),
+      );
     }
+
     cardList = list;
     progress = LoadingProgress.done;
     notifyListeners();

@@ -224,7 +224,7 @@ class _MedicineCardState extends State<MedicineCard> {
                       Padding(
                         padding: const EdgeInsets.all(8),
                         child: SvgPicture.asset(
-                          R.image.arrow_down_icon,
+                          R.image.arrowDown,
                           width: R.sizes.iconSize3,
                         ),
                       ),

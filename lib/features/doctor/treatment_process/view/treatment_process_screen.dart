@@ -34,7 +34,7 @@ class _DoctorTreatmentProcessScreenState
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
               onTap: () {
                 Atom.to(PagePaths.doctorCosultation);
@@ -145,7 +145,7 @@ class _DoctorTreatmentProcessScreenState
                   left: 10,
                 ),
                 child: SvgPicture.asset(
-                  R.image.arrow_right_icon,
+                  R.image.arrowRightIcon,
                   height: 15,
                 ),
               ),

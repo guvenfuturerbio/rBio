@@ -55,7 +55,7 @@ class _GraphHeaderSection extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 40, top: 45),
                   child: SvgPicture.asset(
-                    R.image.grafik_arkasi,
+                    R.image.grafikArkasi,
                     alignment: Alignment.centerRight,
                   ),
                 ),

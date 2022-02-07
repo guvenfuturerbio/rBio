@@ -44,23 +44,23 @@ class SocialPostsResponse {
   fetchImagePaths(int id) {
     switch (id) {
       case 1:
-        return R.image.facebook_icon;
+        return R.image.facebookIcon;
       case 2:
-        return R.image.twitter_icon;
+        return R.image.twitter;
       case 3:
-        return R.image.linkedin_icon;
+        return R.image.linkedinIcon;
       case 4:
-        return R.image.spotify_icon;
+        return R.image.spotify;
       case 5:
-        return R.image.instagram_icon;
+        return R.image.instagram;
       case 6:
-        return R.image.default_icon;
+        return R.image.defaultIcon;
       case 7:
-        return R.image.youtube_icon;
+        return R.image.youtube;
       case 8:
-        return R.image.website_icon;
+        return R.image.website;
       default:
-        return R.image.default_icon;
+        return R.image.defaultIcon;
     }
   }
 

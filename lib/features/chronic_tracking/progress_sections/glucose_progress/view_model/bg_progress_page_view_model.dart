@@ -1008,7 +1008,7 @@ class BgProgressPageViewModel
           ? LocaleProvider.current.no_measurement
           : '${lastMeasurement.result}  mg/dl',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
-      imageUrl: R.image.ct_blood_glucose,
+      imageUrl: R.image.bloodGlucose,
     );
   }
 

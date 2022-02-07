@@ -65,7 +65,7 @@ class GraphHeader extends StatelessWidget {
                     margin: const EdgeInsets.only(left: 40, top: 45),
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: SvgPicture.asset(
-                      R.image.grafik_arkasi,
+                      R.image.grafikArkasi,
                       alignment: Alignment.centerRight,
                     )),
               ),

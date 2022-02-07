@@ -80,6 +80,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       autoScroll: true,
       child: Column(
         children: <Widget>[
+          //
           Container(
             child: TextFormField(
               controller: _cardHolderNameController,
@@ -92,7 +93,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_holder,
-                    image: R.image.ic_user,
+                    image: R.image.user,
                   )
                   .copyWith(fillColor: R.color.white, filled: true),
               focusNode: cardHolderNameFNode,
@@ -107,7 +108,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
             ),
             margin: const EdgeInsets.only(bottom: 20, top: 40),
           ),
+
+          //
           Container(
+            margin: const EdgeInsets.only(bottom: 20),
             child: TextFormField(
               controller: _cardNumberController,
               textInputAction: TextInputAction.next,
@@ -119,20 +123,28 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_number,
-                    image: R.image.credit_card_number,
+                    image: R.image.creditCardNumber,
                   )
-                  .copyWith(fillColor: R.color.white, filled: true),
+                  .copyWith(
+                    fillColor: R.color.white,
+                    filled: true,
+                  ),
               focusNode: cardNumberFNode,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, cardNumberFNode, cardCcvFNode)
+                  context,
+                  cardNumberFNode,
+                  cardCcvFNode,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, cardNumberFNode, cardCcvFNode);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  cardNumberFNode,
+                  cardCcvFNode,
+                );
               },
             ),
-            margin: const EdgeInsets.only(bottom: 20),
           ),
           Container(
             child: TextFormField(
@@ -146,7 +158,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_cvv,
-                    image: R.image.ic_password,
+                    image: R.image.password,
                   )
                   .copyWith(fillColor: R.color.white, filled: true),
               focusNode: cardCcvFNode,
@@ -173,7 +185,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       LoggerUtils.instance.i("icon clicked!");
                     },
                     hintText: LocaleProvider.current.credit_card_expired_date,
-                    image: R.image.credit_calendar,
+                    image: R.image.creditCalendar,
                   )
                   .copyWith(fillColor: R.color.white, filled: true),
               focusNode: cardExpirityDateFNode,

@@ -35,8 +35,8 @@ class FullPdfViewerScreen extends StatelessWidget {
                 }
               },
               child: Platform.isIOS
-                  ? SvgPicture.asset(R.image.ic_ios_share)
-                  : SvgPicture.asset(R.image.ic_android_share),
+                  ? SvgPicture.asset(R.image.iosShare)
+                  : SvgPicture.asset(R.image.androidShare),
             ),
           )
         ],

@@ -165,13 +165,15 @@ class __MeasurementListState extends State<_MeasurementList> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Container(
-                        padding: const EdgeInsets.all(8),
-                        height: 25,
-                        width: 25,
-                        child: SvgPicture.asset(
-                          R.image.addphoto_icon,
-                        )),
-                  ))
+                      padding: const EdgeInsets.all(8),
+                      height: 25,
+                      width: 25,
+                      child: SvgPicture.asset(
+                        R.image.addphotoIcon,
+                      ),
+                    ),
+                  ),
+                )
               : GestureDetector(
                   onTap: () =>
                       _galeryView(context, scaleMeasurementViewModel.imageUrl),

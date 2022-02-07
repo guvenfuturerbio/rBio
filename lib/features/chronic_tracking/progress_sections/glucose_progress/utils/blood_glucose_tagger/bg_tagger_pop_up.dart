@@ -218,7 +218,7 @@ class BgTaggerPopUp extends StatelessWidget {
           onTap: () => changeTag(1),
           child: getTagElement(
             currentTag == 1,
-            R.image.beforemeal_icon_black,
+            R.image.beforeMealIconBlack,
             LocaleProvider.current.hungry,
           ),
         ),
@@ -226,7 +226,7 @@ class BgTaggerPopUp extends StatelessWidget {
           onTap: () => changeTag(2),
           child: getTagElement(
             currentTag == 2,
-            R.image.aftermeal_icon_black,
+            R.image.aftermealIconBlack,
             LocaleProvider.current.full,
           ),
         ),
@@ -234,7 +234,7 @@ class BgTaggerPopUp extends StatelessWidget {
           onTap: () => changeTag(3),
           child: getTagElement(
             currentTag == null || currentTag == 3,
-            R.image.other_icon,
+            R.image.otherIcon,
             LocaleProvider.current.other,
           ),
         ),
@@ -312,7 +312,7 @@ class BgTaggerPopUp extends StatelessWidget {
                                     value.data.imageURL == "") ||
                                 Atom.isWeb
                             ? SvgPicture.asset(
-                                R.image.addphoto_icon,
+                                R.image.addphotoIcon,
                               )
                             : PhotoView(
                                 imageProvider: FileImage(File(

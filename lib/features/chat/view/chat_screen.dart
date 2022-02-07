@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -33,11 +30,11 @@ class _ChatScreenState extends State<ChatScreen> {
   late StreamSubscription<bool> keyboardSubscription;
 
   late FocusNode _focusNode;
- late  ScrollController _scrollController;
- late  TextEditingController _textEditingController;
+  late ScrollController _scrollController;
+  late TextEditingController _textEditingController;
   late ValueNotifier<bool> firstLoadNotifier;
 
-  String  getCurrentUserId = getIt<UserNotifier>().firebaseID!;
+  String getCurrentUserId = getIt<UserNotifier>().firebaseID!;
   ChatPerson get getCurrentPerson => ChatPerson(
         id: getIt<UserNotifier>().firebaseID,
         name: Utils.instance.getCurrentUserNameAndSurname,
@@ -210,7 +207,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             IconButton(
               icon: SvgPicture.asset(
-                R.image.photo_icon,
+                R.image.photo,
                 color: getIt<ITheme>().mainColor,
                 width: 25,
               ),
@@ -247,7 +244,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                       color: getIt<ITheme>().mainColor,
-                      icon: SvgPicture.asset(R.image.send_icon, width: 25),
+                      icon: SvgPicture.asset(R.image.send, width: 25),
                       onPressed: () => _sendMessage(chatVm),
                     ),
                   ),
@@ -269,7 +266,7 @@ class _ChatScreenState extends State<ChatScreen> {
   ) {
     final documentData = documentSnapshot.data();
     if (documentData == null) return const SizedBox();
-    final messages = documentData['messages'] as List;
+    final messages = documentData['messages'] as List?;
     if (messages == null) {
       return const SizedBox();
     }
@@ -391,7 +388,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time)}',
+            DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time),
             textAlign: TextAlign.center,
             style: context.xHeadline5,
           ),
@@ -603,7 +600,7 @@ class _ChatScreenState extends State<ChatScreen> {
         bottom: 7,
       ),
       child: SvgPicture.asset(
-        R.image.eyeseen_icon,
+        R.image.eyeSeen,
         height: 12,
       ),
     );
@@ -611,7 +608,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _sendMessage(ChatVm chatVm) async {
     try {
-      if (_textEditingController.text.trim().length > 0) {
+      if (_textEditingController.text.trim().isNotEmpty) {
         final _messageSent = Message(
           sentFrom: getCurrentUserId,
           message: _textEditingController.text,

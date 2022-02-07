@@ -341,7 +341,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
               }
             },
             icon: SvgPicture.asset(
-              R.image.other_icon,
+              R.image.otherIcon,
               width: R.sizes.iconSize2,
             ),
           ),

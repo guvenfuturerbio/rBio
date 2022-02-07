@@ -57,7 +57,7 @@ class DoctorPatientListScreen extends StatelessWidget {
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),
@@ -352,7 +352,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                       //
                       RbioBadge(
                         isBigSize: false,
-                        image: R.image.clock_icon,
+                        image: R.image.clock,
                       ),
 
                       //
@@ -361,7 +361,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                       //
                       RbioBadge(
                         isBigSize: false,
-                        image: R.image.chat_icon,
+                        image: R.image.chat,
                       ),
                     ],
                   ),
@@ -481,7 +481,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                               Expanded(
                                 child: RbioBadge(
                                   isBigSize: false,
-                                  image: R.image.clock_icon,
+                                  image: R.image.clock,
                                 ),
                               ),
 
@@ -492,7 +492,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                               Expanded(
                                 child: RbioBadge(
                                   isBigSize: false,
-                                  image: R.image.chat_icon,
+                                  image: R.image.chat,
                                 ),
                               ),
 
@@ -512,7 +512,7 @@ class DoctorPatientListScreen extends StatelessWidget {
 
               //
               SvgPicture.asset(
-                R.image.right_arrow,
+                R.image.rightArrow,
                 width: 8,
               ),
             ],

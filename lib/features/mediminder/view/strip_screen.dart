@@ -149,7 +149,7 @@ class _StripScreenState extends State<StripScreen> {
                   SizedBox(
                     height: 20,
                     width: 20,
-                    child: SvgPicture.asset(R.image.mark_icon),
+                    child: SvgPicture.asset(R.image.markIcon),
                   ),
 
                   //
@@ -432,7 +432,7 @@ class _StripScreenState extends State<StripScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                R.image.done_icon,
+                R.image.done,
                 height: 30,
                 width: 30,
               ),

@@ -672,11 +672,14 @@ class UtilityManager {
   Widget? getDeviceImage(int deviceId) {
     switch (deviceId) {
       case 87:
-        return Image.asset(R.image.mi_scale);
+        return Image.asset(R.image.miScale);
+
       case 103:
-        return Image.asset(R.image.contour_png);
+        return Image.asset(R.image.contour);
+
       case 112:
-        return Image.asset(R.image.accu_check_png);
+        return Image.asset(R.image.accuCheckPng);
+
       default:
         return null;
     }
@@ -685,11 +688,14 @@ class UtilityManager {
   Widget? getDeviceImageFromType(DeviceType device) {
     switch (device) {
       case DeviceType.MI_SCALE:
-        return Image.asset(R.image.mi_scale);
+        return Image.asset(R.image.miScale);
+
       case DeviceType.CONTOUR_PLUS_ONE:
-        return Image.asset(R.image.contour_png);
+        return Image.asset(R.image.contour);
+
       case DeviceType.ACCU_CHEK:
-        return Image.asset(R.image.accu_check_png);
+        return Image.asset(R.image.accuCheckPng);
+
       default:
         return null;
     }
@@ -698,11 +704,13 @@ class UtilityManager {
   String? getDeviceImageStringFromType(DeviceType device) {
     switch (device) {
       case DeviceType.MI_SCALE:
-        return R.image.mi_scale;
+        return R.image.miScale;
+
       case DeviceType.CONTOUR_PLUS_ONE:
-        return R.image.contour_png;
+        return R.image.contour;
+
       case DeviceType.ACCU_CHEK:
-        return R.image.accu_check_png;
+        return R.image.accuCheckPng;
       default:
         return null;
     }
@@ -712,8 +720,10 @@ class UtilityManager {
     switch (deviceId) {
       case 103:
         return "Contour Plus";
+
       case 112:
         return "ACCU-CHEK";
+
       default:
         return "";
     }

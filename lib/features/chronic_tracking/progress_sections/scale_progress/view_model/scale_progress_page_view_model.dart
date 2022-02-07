@@ -726,7 +726,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
           ? LocaleProvider.current.no_measurement
           : '${lastMeasurement.weight ?? ''} ${lastMeasurement.unit.toStr}',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
-      imageUrl: rbio.R.image.ct_body_scale,
+      imageUrl: rbio.R.image.bodyScale,
     );
   }
 

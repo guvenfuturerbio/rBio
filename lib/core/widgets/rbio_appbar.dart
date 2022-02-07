@@ -36,7 +36,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                       color: Colors.transparent,
                       padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
-                        R.image.back_icon,
+                        R.image.back,
                         width: R.sizes.iconSize,
                       ),
                     ),
@@ -72,7 +72,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                             color: Colors.transparent,
                             padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                             child: SvgPicture.asset(
-                              R.image.back_icon,
+                              R.image.back,
                               width: R.sizes.iconSize,
                             ),
                           ),
@@ -93,7 +93,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
           color: Colors.transparent,
           padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
           child: SvgPicture.asset(
-            R.image.back_icon,
+            R.image.back,
             width: R.sizes.iconSize,
           ),
         ),
@@ -139,7 +139,7 @@ class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
                       color: Colors.transparent,
                       padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
-                        R.image.back_icon,
+                        R.image.back,
                         width: R.sizes.iconSize,
                       ),
                     ),
