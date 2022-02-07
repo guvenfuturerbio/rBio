@@ -1,11 +1,11 @@
 part of '../view/blood_pressure_detail_screen.dart';
 
 class _GraphHeaderSection extends StatelessWidget {
-  final BloodPressurePatientDetailVm value;
-  final ScrollController controller;
+  final BloodPressurePatientDetailVm? value;
+  final ScrollController? controller;
 
   const _GraphHeaderSection({
-    Key key,
+    Key? key,
     this.value,
     this.controller,
   }) : super(key: key);
@@ -21,25 +21,25 @@ class _GraphHeaderSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: DateRangePicker(
-            endDate: value.endDate,
-            startDate: value.startDate,
-            nextDate: value.nextDate,
-            previousDate: value.previousDate,
-            selected: value.selected,
+            endDate: value!.endDate!,
+            startDate: value!.startDate!,
+            nextDate: value!.nextDate,
+            previousDate: value!.previousDate,
+            selected: value!.selected,
             setSelectedItem: (val) {
-              return value.setSelectedItem(val);
+              return value!.setSelectedItem(val);
             },
-            setEndDate: value.setStartDate,
-            setStartDate: value.setEndDate,
+            setEndDate: value!.setStartDate,
+            setStartDate: value!.setEndDate,
           ),
         ),
 
         //
         Container(
           height: MediaQuery.of(context).orientation == Orientation.portrait
-              ? context.HEIGHT * 0.25
-              : context.HEIGHT * 0.7,
-          margin: EdgeInsets.all(8),
+              ? context.height * 0.25
+              : context.height * 0.7,
+          margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: getIt<ITheme>().cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
@@ -48,12 +48,12 @@ class _GraphHeaderSection extends StatelessWidget {
             alignment: Alignment.bottomRight,
             children: [
               //
-              value.currentGraph,
+              value!.currentGraph,
 
               //
               IgnorePointer(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 40, top: 45),
+                  padding: const EdgeInsets.only(left: 40, top: 45),
                   child: SvgPicture.asset(
                     R.image.grafik_arkasi,
                     alignment: Alignment.centerRight,
@@ -70,10 +70,8 @@ class _GraphHeaderSection extends StatelessWidget {
                       onTap: () => context
                           .read<BloodPressurePatientDetailVm>()
                           .changeChartShowStatus(),
-                      child: Icon(
-                        Icons.keyboard_arrow_up,
-                        size: 52 * context.TEXTSCALE,
-                      ),
+                      child: Icon(Icons.keyboard_arrow_up,
+                          size: 52 * context.textScale),
                     ))
             ],
           ),
@@ -83,17 +81,17 @@ class _GraphHeaderSection extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           _infoSection(context),
           ElevatedButton(
-            onPressed: () => value.showFilter(context),
+            onPressed: () => value!.showFilter(context),
             style: ElevatedButton.styleFrom(
               primary: Colors.white,
               shadowColor: Colors.black.withAlpha(50),
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(context.HEIGHT),
+                borderRadius: BorderRadius.circular(context.height),
               ),
             ),
             child: Text(
-              '${LocaleProvider.current.filter_graphs}',
+              LocaleProvider.current.filter_graphs,
               maxLines: 1,
               style: context.xHeadline5.copyWith(
                 fontWeight: FontWeight.bold,
@@ -107,7 +105,7 @@ class _GraphHeaderSection extends StatelessWidget {
 
   SizedBox _infoSection(BuildContext context) {
     return SizedBox(
-      width: context.WIDTH * .3 * context.TEXTSCALE,
+      width: context.width * .3 * context.textScale,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -116,13 +114,13 @@ class _GraphHeaderSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: context.WIDTH * .06,
+                width: context.width * .06,
                 child: Divider(
                   thickness: 3,
                   color: Colors.red[900],
                 ),
               ),
-              SizedBox(width: context.WIDTH * .02),
+              SizedBox(width: context.width * .02),
               Text(LocaleProvider.current.sys)
             ],
           ),
@@ -130,13 +128,13 @@ class _GraphHeaderSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: context.WIDTH * .06,
-                child: Divider(
+                width: context.width * .06,
+                child: const Divider(
                   thickness: 3,
                   color: Colors.amber,
                 ),
               ),
-              SizedBox(width: context.WIDTH * .02),
+              SizedBox(width: context.width * .02),
               Text(LocaleProvider.current.dia)
             ],
           ),
@@ -144,13 +142,13 @@ class _GraphHeaderSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: context.WIDTH * .06,
+                width: context.width * .06,
                 child: Divider(
                   thickness: 3,
                   color: Colors.lime[800],
                 ),
               ),
-              SizedBox(width: context.WIDTH * .02),
+              SizedBox(width: context.width * .02),
               Text(LocaleProvider.current.pulse)
             ],
           ),

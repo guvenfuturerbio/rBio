@@ -380,7 +380,7 @@ class VRouterRoutes {
         stackedRoutes: [
           VWidget(
               path: PagePaths.treatmentProgress,
-              widget: const TreatmentProcessScreen())
+              widget: TreatmentProcessScreen())
         ]),
     VGuard(
       beforeEnter: (vRedirector) async {

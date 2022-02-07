@@ -1,11 +1,11 @@
 part of '../view/blood_pressure_detail_screen.dart';
 
 class _MeasurementList extends StatelessWidget {
-  final List<BpMeasurementViewModel> bpMeasurements;
-  final ScrollController scrollController;
-  final Function(DateTime) fetchScrolledData;
+  final List<BpMeasurementViewModel>? bpMeasurements;
+  final ScrollController? scrollController;
+  final Function(DateTime)? fetchScrolledData;
   const _MeasurementList(
-      {Key key,
+      {Key? key,
       this.bpMeasurements,
       this.scrollController,
       this.fetchScrolledData})
@@ -13,19 +13,19 @@ class _MeasurementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return bpMeasurements.isEmpty
+    return bpMeasurements!.isEmpty
         ? Center(
             child: Text(LocaleProvider.current.no_measurement),
           )
         : GroupedListView<BpMeasurementViewModel, DateTime>(
-            elements: bpMeasurements ?? <BpMeasurementViewModel>[],
+            elements: bpMeasurements!,
             order: GroupedListOrder.DESC,
             controller: scrollController,
             scrollDirection: Axis.vertical,
             floatingHeader: true,
             shrinkWrap: true,
             padding: EdgeInsets.only(
-                bottom: context.HEIGHT * .28 * context.TEXTSCALE),
+                bottom: context.height * .28 * context.textScale),
             useStickyGroupSeparators: true,
             groupBy: (BpMeasurementViewModel bgMeasurementViewModel) =>
                 DateTime(
@@ -37,9 +37,9 @@ class _MeasurementList extends StatelessWidget {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: (context.HEIGHT * .07) * context.TEXTSCALE,
+                height: (context.height * .07) * context.textScale,
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 8),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
@@ -47,7 +47,7 @@ class _MeasurementList extends StatelessWidget {
                           color: Colors.black.withAlpha(50),
                           blurRadius: 5,
                           spreadRadius: 0,
-                          offset: Offset(5, 5))
+                          offset: const Offset(5, 5))
                     ],
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -64,7 +64,7 @@ class _MeasurementList extends StatelessWidget {
               return measurementList(bpMeasurementViewModel, context);
             },
             callback: (BpMeasurementViewModel data) {
-              fetchScrolledData(data.date);
+              fetchScrolledData!(data.date);
             },
           );
   }
@@ -108,7 +108,7 @@ class _MeasurementList extends StatelessWidget {
   Container _listItem(BuildContext context, BpMeasurementViewModel item) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-      height: context.HEIGHT * .08 * context.TEXTSCALE,
+      height: context.height * .08 * context.textScale,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -116,7 +116,7 @@ class _MeasurementList extends StatelessWidget {
               color: Colors.black.withAlpha(50),
               blurRadius: 5,
               spreadRadius: 0,
-              offset: Offset(5, 5))
+              offset: const Offset(5, 5))
         ],
         borderRadius: const BorderRadius.all(Radius.circular(30.0)),
       ),
@@ -127,12 +127,12 @@ class _MeasurementList extends StatelessWidget {
             child: _listItemChild(context, LocaleProvider.current.sys,
                 item.sys.toString(), 'mm/Hg'),
           ),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: _listItemChild(context, LocaleProvider.current.dia,
                 item.dia.toString(), 'mm/Hg'),
           ),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: _listItemChild(context, LocaleProvider.current.pulse,
                 item.pulse.toString(), 'bpm'),
