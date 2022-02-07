@@ -70,11 +70,11 @@ class PatientBloodPressureListModel
   void filterList(DoctorPatientListSortType sortType) {
     switch (sortType) {
       case DoctorPatientListSortType.fromNewest:
-        _filterList = _list.sortedBy((i) => i.name);
+        _filterList = _list.sortedBy((i) => i.name!).toList();
         break;
 
       case DoctorPatientListSortType.fromOldest:
-        _filterList = _list.sortedBy((i) => i.id);
+        _filterList = _list.sortedBy((i) => i.id!).toList();
         break;
 
       default:
