@@ -130,7 +130,7 @@ class BleReactorOps extends ChangeNotifier {
         barrierDismissible: false,
       );
     }
-    getIt<LocalNotificationsManager>().showNotification(
+    getIt<LocalNotificationManager>().show(
       LocaleProvider.current.blood_glucose_measurement,
       LocaleProvider.current.blood_glucose_imported,
     );

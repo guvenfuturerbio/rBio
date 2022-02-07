@@ -166,7 +166,7 @@ class HomeVm extends ChangeNotifier {
         DrawerModel(
           title: LocaleProvider.current.reminders,
           onTap: () {
-            Atom.to(PagePaths.mediminderInitial);
+            Atom.to(PagePaths.reminder);
           },
         ),
         DrawerModel(

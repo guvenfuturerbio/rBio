@@ -22,13 +22,7 @@ import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../features/mediminder/view/hba1c_reminder_add_screen.dart';
-import '../../features/mediminder/view/hba1c_reminderlist_screen.dart';
-import '../../features/mediminder/view/home_mediminder_screen.dart';
-import '../../features/mediminder/view/medication_date_screen.dart';
-import '../../features/mediminder/view/medication_period_selection_screen.dart';
-import '../../features/mediminder/view/medication_screen.dart';
-import '../../features/mediminder/view/strip_screen.dart';
+import '../../features/mediminder/mediminder.dart';
 import '../../features/my_appointments/all_files_screen.dart';
 import '../../features/my_appointments/appointment_list_screen.dart';
 import '../../features/my_appointments/web_conferance_screen.dart';
@@ -62,6 +56,7 @@ import '../../features/take_appointment/create_appointment/view/create_appointme
 import '../../features/take_appointment/create_appointment_events/view/create_appointment_events_screen.dart';
 import '../../features/take_appointment/create_appointment_summary/view/create_appointment_summary_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
+import '../../model/ble_models/DeviceTypes.dart';
 import '../core.dart';
 import '../widgets/chronic_error_alert.dart';
 
@@ -388,17 +383,18 @@ class VRouterRoutes {
               widget: const TreatmentProcessScreen())
         ]),
     VGuard(
-        beforeEnter: (vRedirector) async {
-          if (!getIt<UserNotifier>().isCronic) {
-            vRedirector.stopRedirection();
-            Atom.show(NotChronicWarning());
-          }
-        },
-        stackedRoutes: [
-          VWidget(
-              path: PagePaths.treatmentEditProgress,
-              widget: const TreatmentEditView(key: Key('TreatmentEditView')))
-        ]),
+      beforeEnter: (vRedirector) async {
+        if (!getIt<UserNotifier>().isCronic) {
+          vRedirector.stopRedirection();
+          Atom.show(NotChronicWarning());
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+            path: PagePaths.treatmentEditProgress,
+            widget: const TreatmentEditView(key: Key('TreatmentEditView')))
+      ],
+    ),
 
     // Mediminder
     VGuard(
@@ -409,20 +405,16 @@ class VRouterRoutes {
       },
       stackedRoutes: [
         VWidget(
-          path: PagePaths.mediminderInitial,
-          widget: const HomeMediminderScreen(key: Key('HomeMediminderScreen')),
+          path: PagePaths.reminder,
+          widget: const ReminderHomeScreen(),
         ),
         VWidget(
-          path: PagePaths.medicationPage,
-          widget: MedicationScreen(),
+          path: PagePaths.reminderList,
+          widget: ReminderListScreen(),
         ),
         VWidget(
-          path: PagePaths.medicationPeriod,
-          widget: MedicationPeriodSelectionScreen(),
-        ),
-        VWidget(
-          path: PagePaths.medicationDate,
-          widget: MedicationDateScreen(),
+          path: PagePaths.medicationAdd,
+          widget: MedicationAddScreen(),
         ),
         VWidget(
           path: PagePaths.hba1cReminderAdd,
@@ -432,14 +424,9 @@ class VRouterRoutes {
           path: PagePaths.hba1cList,
           widget: Hba1cReminderListScreen(),
         ),
-        VWidget(
-          path: PagePaths.bloodGlucosePage,
-          widget: MedicationScreen(),
-        ),
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (Mediminder.instance.selection.deviceUUID == null ||
-                Mediminder.instance.selection.deviceUUID == '') {
+            Future<void> showAlert() async {
               await Atom.show(
                 GuvenAlert(
                   backgroundColor: getIt<ITheme>().cardBackgroundColor,
@@ -459,10 +446,25 @@ class VRouterRoutes {
                 ),
               );
             }
+
+            final pairedDevices =
+                await getIt<BleDeviceManager>().getPairedDevices();
+            if (pairedDevices.isEmpty) {
+              await showAlert();
+              //vRedirector.stopRedirection();
+            } else {
+              final hasSugarDevice = pairedDevices.any((item) =>
+                  item.deviceType == DeviceType.ACCU_CHEK ||
+                  item.deviceType == DeviceType.CONTOUR_PLUS_ONE);
+              if (!hasSugarDevice) {
+                await showAlert();
+                vRedirector.stopRedirection();
+              }
+            }
           },
           stackedRoutes: [
             VWidget(
-              path: PagePaths.stripPage,
+              path: PagePaths.strip,
               widget: StripScreen(),
             ),
           ],
@@ -597,14 +599,12 @@ class PagePaths {
   static const searchPage = '/search-page';
 
   //Mediminder
-  static const mediminderInitial = '/mediminder';
-  static const bloodGlucosePage = '/mediminder/blood-glucose';
-  static const medicationPage = '/mediminder/medication';
-  static const hba1cList = '/mediminder/hba1c-list';
-  static const hba1cReminderAdd = '/mediminder/hba1c-reminder-add';
-  static const stripPage = '/mediminder/strips';
-  static const medicationPeriod = '/mediminder/medication-period';
-  static const medicationDate = '/mediminder/medication-date';
+  static const reminder = '/reminder';
+  static const reminderList = '/reminder/list';
+  static const hba1cList = '/reminder/hba1c-list';
+  static const hba1cReminderAdd = '/reminder/hba1c-reminder-add';
+  static const strip = '/reminder/strips';
+  static const medicationAdd = '/reminder/medication-add';
 
   // Chroic Tracking
   static const settings = '/ct-settings';

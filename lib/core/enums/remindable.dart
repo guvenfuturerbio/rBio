@@ -1,19 +1,23 @@
+import 'package:collection/collection.dart';
+
 import '../core.dart';
 
 enum Remindable {
   bloodGlucose,
   strip,
   medication,
-  hba1c,
+  hbA1c,
 }
 
 extension ParseToString on Remindable {
-  String toShortString() {
+  String get xRawValue => getEnumValue(this);
+
+  String toShortTitle() {
     switch (this) {
       case Remindable.bloodGlucose:
         return LocaleProvider.current.blood_glucose_measurement;
 
-      case Remindable.hba1c:
+      case Remindable.hbA1c:
         return LocaleProvider.current.hbA1c_measurement;
 
       case Remindable.strip:
@@ -27,12 +31,12 @@ extension ParseToString on Remindable {
     }
   }
 
-  String toParseableString() {
+  String toRouteString() {
     switch (this) {
       case Remindable.bloodGlucose:
         return 'BloodGlucose';
 
-      case Remindable.hba1c:
+      case Remindable.hbA1c:
         return 'HbA1c';
 
       case Remindable.strip:
@@ -48,13 +52,16 @@ extension ParseToString on Remindable {
 }
 
 extension ParseToRemindable on String {
-  Remindable toRemindable() {
+  Remindable? get xRemindableKeys => Remindable.values
+      .firstWhereOrNull((element) => element.xRawValue == this);
+
+  Remindable toRouteToRemindable() {
     switch (this) {
       case 'BloodGlucose':
         return Remindable.bloodGlucose;
 
       case 'HbA1c':
-        return Remindable.hba1c;
+        return Remindable.hbA1c;
 
       case 'Strip':
         return Remindable.strip;

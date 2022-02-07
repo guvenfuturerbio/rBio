@@ -35,6 +35,16 @@ class LocaleProvider {
     return Localizations.of<LocaleProvider>(context, LocaleProvider);
   }
 
+  /// `Create`
+  String get btn_create {
+    return Intl.message(
+      'Create',
+      name: 'btn_create',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cancel`
   String get btn_cancel {
     return Intl.message(
@@ -3895,6 +3905,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Fri`
+  String get weekdays_friday_short {
+    return Intl.message(
+      'Fri',
+      name: 'weekdays_friday_short',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Accept`
   String get accept {
     return Intl.message(
@@ -4245,10 +4265,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Blood Glucose Measurement`
+  /// `Blood Glucose Measurement Reminder`
   String get blood_glucose_measurement {
     return Intl.message(
-      'Blood Glucose Measurement',
+      'Blood Glucose Measurement Reminder',
       name: 'blood_glucose_measurement',
       desc: '',
       args: [],
@@ -4440,6 +4460,16 @@ class LocaleProvider {
     return Intl.message(
       'Do you want to delete selected reminder?',
       name: 'delete_medicine_confirm_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to delete all reminders?`
+  String get delete_medicine_confirm_all_message {
+    return Intl.message(
+      'Do you want to delete all reminders?',
+      name: 'delete_medicine_confirm_all_message',
       desc: '',
       args: [],
     );
@@ -4775,6 +4805,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Please select at least one day.`
+  String get error_empty_specific_day_selected {
+    return Intl.message(
+      'Please select at least one day.',
+      name: 'error_empty_specific_day_selected',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Please select the reminder's interval`
   String get error_empty_time_interval {
     return Intl.message(
@@ -4810,6 +4850,16 @@ class LocaleProvider {
     return Intl.message(
       'Estimated HbA1c %',
       name: 'estimated_hb1ac',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `One time`
+  String get one_time {
+    return Intl.message(
+      'One time',
+      name: 'one_time',
       desc: '',
       args: [],
     );
@@ -4925,10 +4975,10 @@ class LocaleProvider {
     );
   }
 
-  /// `hbA1c Measurement`
+  /// `HbA1c Measurement Reminder`
   String get hbA1c_measurement {
     return Intl.message(
-      'hbA1c Measurement',
+      'HbA1c Measurement Reminder',
       name: 'hbA1c_measurement',
       desc: '',
       args: [],
@@ -5205,20 +5255,20 @@ class LocaleProvider {
     );
   }
 
-  /// `Last Test Value: `
+  /// `Last test value`
   String get last_result {
     return Intl.message(
-      'Last Test Value: ',
+      'Last test value',
       name: 'last_result',
       desc: '',
       args: [],
     );
   }
 
-  /// `Last Test Date: `
+  /// `Last test date`
   String get last_test_date {
     return Intl.message(
-      'Last Test Date: ',
+      'Last test date',
       name: 'last_test_date',
       desc: '',
       args: [],
@@ -6055,11 +6105,21 @@ class LocaleProvider {
     );
   }
 
-  /// `Reminder Date: `
+  /// `Reminder date`
   String get reminder_date {
     return Intl.message(
-      'Reminder Date: ',
+      'Reminder date',
       name: 'reminder_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reminder hour`
+  String get reminder_hour {
+    return Intl.message(
+      'Reminder hour',
+      name: 'reminder_hour',
       desc: '',
       args: [],
     );
@@ -6445,10 +6505,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Strip Tracker`
+  /// `Strip Reminder`
   String get strip_tracker {
     return Intl.message(
-      'Strip Tracker',
+      'Strip Reminder',
       name: 'strip_tracker',
       desc: '',
       args: [],
@@ -6745,11 +6805,31 @@ class LocaleProvider {
     );
   }
 
+  /// `Mon`
+  String get weekdays_monday_short {
+    return Intl.message(
+      'Mon',
+      name: 'weekdays_monday_short',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Saturday`
   String get weekdays_saturday {
     return Intl.message(
       'Saturday',
       name: 'weekdays_saturday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sat`
+  String get weekdays_saturday_short {
+    return Intl.message(
+      'Sat',
+      name: 'weekdays_saturday_short',
       desc: '',
       args: [],
     );
@@ -6765,11 +6845,31 @@ class LocaleProvider {
     );
   }
 
+  /// `Sun`
+  String get weekdays_sunday_short {
+    return Intl.message(
+      'Sun',
+      name: 'weekdays_sunday_short',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Thursday`
   String get weekdays_thursday {
     return Intl.message(
       'Thursday',
       name: 'weekdays_thursday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thu`
+  String get weekdays_thursday_short {
+    return Intl.message(
+      'Thu',
+      name: 'weekdays_thursday_short',
       desc: '',
       args: [],
     );
@@ -6785,11 +6885,31 @@ class LocaleProvider {
     );
   }
 
+  /// `Tue`
+  String get weekdays_tuesday_short {
+    return Intl.message(
+      'Tue',
+      name: 'weekdays_tuesday_short',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Wednesday`
   String get weekdays_wednesday {
     return Intl.message(
       'Wednesday',
       name: 'weekdays_wednesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wed`
+  String get weekdays_wednesday_short {
+    return Intl.message(
+      'Wed',
+      name: 'weekdays_wednesday_short',
       desc: '',
       args: [],
     );
@@ -7670,6 +7790,76 @@ class LocaleProvider {
     return Intl.message(
       'You don\'t have any notifications yet',
       name: 'notification_inbox_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select tag`
+  String get select_tag {
+    return Intl.message(
+      'Select tag',
+      name: 'select_tag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After Meal`
+  String get after_meal {
+    return Intl.message(
+      'After Meal',
+      name: 'after_meal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Before Meal`
+  String get before_meal {
+    return Intl.message(
+      'Before Meal',
+      name: 'before_meal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How often`
+  String get how_often {
+    return Intl.message(
+      'How often',
+      name: 'how_often',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alert`
+  String get alert {
+    return Intl.message(
+      'Alert',
+      name: 'alert',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How many times a day?`
+  String get how_many_times_a_day {
+    return Intl.message(
+      'How many times a day?',
+      name: 'how_many_times_a_day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Days`
+  String get days {
+    return Intl.message(
+      'Days',
+      name: 'days',
       desc: '',
       args: [],
     );

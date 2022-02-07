@@ -1,11 +1,10 @@
-export 'managers/local_notifications_manager.dart';
+export 'managers/reminder_notifications_manager.dart';
 
 export 'view/hba1c_reminder_add_screen.dart';
 export 'view/hba1c_reminderlist_screen.dart';
-export 'view/home_mediminder_screen.dart';
-export 'view/medication_date_screen.dart';
-export 'view/medication_period_selection_screen.dart';
-export 'view/medication_screen.dart';
+export 'view/reminder_home_screen.dart';
+export 'view/medication_add_screen.dart';
+export 'view/reminder_list_screen.dart';
 export 'view/strip_screen.dart';
 
 export 'model/drug_result_model.dart';

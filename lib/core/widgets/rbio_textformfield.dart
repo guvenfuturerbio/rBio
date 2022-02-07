@@ -24,6 +24,7 @@ class RbioTextFormField extends StatelessWidget {
   final int? maxLength;
   final bool? enabled;
   final Widget? suffixIcon;
+  final Color? backColor;
 
   const RbioTextFormField({
     Key? key,
@@ -48,6 +49,7 @@ class RbioTextFormField extends StatelessWidget {
     this.enabled,
     this.maxLines = 1,
     this.suffixIcon,
+    this.backColor,
   }) : super(key: key);
 
   @override
@@ -73,6 +75,7 @@ class RbioTextFormField extends StatelessWidget {
         border: border,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+        backColor: backColor,
       ),
       cursorColor: getIt<ITheme>().mainColor,
       onChanged: onChanged,
@@ -89,6 +92,7 @@ class RbioTextFormField extends StatelessWidget {
     InputBorder? border,
     Widget? prefixIcon,
     Widget? suffixIcon,
+    Color? backColor,
   }) {
     return Utils.instance
         .inputDecorationForLogin(
@@ -102,7 +106,7 @@ class RbioTextFormField extends StatelessWidget {
         )
         .copyWith(
           filled: true,
-          fillColor: getIt<ITheme>().cardBackgroundColor,
+          fillColor: backColor ?? getIt<ITheme>().cardBackgroundColor,
           suffixIcon: suffixIcon,
         );
   }
