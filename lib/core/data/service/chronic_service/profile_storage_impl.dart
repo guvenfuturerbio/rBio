@@ -122,7 +122,8 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
     try {
       data.isFirstUser = false;
       data.userId = -1;
-      await getIt<ChronicTrackingRepository>().updateProfile(data, data.id);
+      await getIt<ChronicTrackingRepository>()
+          .updateProfile(data, data.id ?? 0);
     } catch (_) {
       rethrow;
     }
@@ -142,6 +143,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
       }
       return true;
     } catch (_) {
+      LoggerUtils.instance.e(_);
       rethrow;
     }
   }

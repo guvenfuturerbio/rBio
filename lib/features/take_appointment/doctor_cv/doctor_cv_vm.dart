@@ -11,7 +11,8 @@ class DoctorCvScreenVm extends ChangeNotifier {
   late LoadingProgress _progress;
   late String _imageUrl;
 
-  DoctorCvScreenVm({required BuildContext context,required String doctorNameNotTitle}) {
+  DoctorCvScreenVm(
+      {required BuildContext context, required String doctorNameNotTitle}) {
     mContext = context;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchDoctorCv(doctorNameNotTitle);
@@ -25,15 +26,15 @@ class DoctorCvScreenVm extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final doctorId = Slugify(Utils.instance.clearDoctorTitle(
+      final doctorId = slugify(Utils.instance.clearDoctorTitle(
           doctorName.toLowerCase().xTurkishCharacterToEnglish));
       _doctorCvResponse =
           await getIt<Repository>().getDoctorCvDetails(doctorId);
       if (_doctorCvResponse != null) {
         _progress = LoadingProgress.done;
         _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven) +
-                "/storage/app/media/" +
-                _doctorCvResponse.image1! ;
+            "/storage/app/media/" +
+            _doctorCvResponse.image1!;
       } else {
         _progress = LoadingProgress.error;
         _imageUrl = "";

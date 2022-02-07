@@ -7,11 +7,11 @@ import 'package:universal_html/html.dart';
 class RegisterViews {
   RegisterViews._();
 
-  static late RegisterViews _instance;
+  static RegisterViews? _instance;
 
   static RegisterViews get instance {
-    _instance;
-    return _instance;
+    _instance ??= RegisterViews._();
+    return _instance!;
   }
 
   void init() {

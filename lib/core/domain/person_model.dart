@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'person_model.g.dart';
 
 @HiveType(typeId: 2)
+@JsonSerializable()
 class Person extends HiveObject {
   static const ID = "id";
   static const USER_ID = 'entegration_id';
@@ -35,52 +39,73 @@ class Person extends HiveObject {
   static const MAX_PERSON = 5;
 
   @HiveField(0)
-  int userId;
+  @JsonKey(name: ID)
+  int? userId;
   @HiveField(1)
-  int id;
+  @JsonKey(name: USER_ID)
+  int? id;
   @HiveField(2)
-  String imageURL;
+  @JsonKey(name: IMAGE_URL)
+  String? imageURL;
   @HiveField(3)
-  String name;
+  @JsonKey(name: NAME)
+  String? name;
   @HiveField(4)
-  String birthDate;
+  @JsonKey(name: BIRTH_DATE)
+  String? birthDate;
   @HiveField(5)
-  String gender;
+  @JsonKey(name: GENDER)
+  String? gender;
   @HiveField(6)
-  String height;
+  @JsonKey(name: HEIGHT)
+  String? height;
   @HiveField(7)
-  String weight;
+  @JsonKey(name: WEIGHT)
+  String? weight;
   @HiveField(8)
-  String diabetesType;
+  @JsonKey(name: DIABETES_TYPE)
+  String? diabetesType;
   @HiveField(9)
-  int hypo;
+  @JsonKey(name: HYPO)
+  int? hypo;
   @HiveField(10)
-  int rangeMin;
+  @JsonKey(name: RANGE_MIN)
+  int? rangeMin;
   @HiveField(11)
-  int target;
+  @JsonKey(name: 'target')
+  int? target;
   @HiveField(12)
-  int rangeMax;
+  @JsonKey(name: RANGE_MAX)
+  int? rangeMax;
   @HiveField(13)
-  int hyper;
+  @JsonKey(name: HYPER)
+  int? hyper;
   @HiveField(14)
-  String deviceUUID;
+  @JsonKey(name: DEVICE_UUID)
+  String? deviceUUID;
   @HiveField(15)
-  int manufacturerId;
+  @JsonKey(name: MANUFACTURER_ID)
+  int? manufacturerId;
   @HiveField(16)
-  int yearOfDiagnosis;
+  @JsonKey(name: YEAR_OF_DIGANOSIS)
+  int? yearOfDiagnosis;
   @HiveField(17)
-  bool smoker; // 0 non smoker , 1 smoker, 2 smokes occasionally, 3 smokes often
+  @JsonKey(name: SMOKER)
+  bool?
+      smoker; // 0 non smoker , 1 smoker, 2 smokes occasionally, 3 smokes often
   @HiveField(18)
-  bool isFirstUser;
-  @HiveField(18)
+  @JsonKey(ignore: true)
+  bool? isFirstUser;
+  @HiveField(19)
+  @JsonKey(name: 'treatment_list')
   List<TreatmentModel>? treatmentList;
 
-  File profileImage = new File("");
+  @JsonKey(ignore: true)
+  File profileImage = File("");
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 
-  Map<String, dynamic> toJson({String? treatment}) =>
-      _$PersonToJson(this, treatment);
+  Map<String, dynamic> toJson() => _$PersonToJson(this);
 
   Person fromDefault({
     String name = 'First',
@@ -134,7 +159,7 @@ class Person extends HiveObject {
       this.treatmentList});
 
   Person copy() {
-    final _json = toJson(treatment: '');
+    final _json = toJson();
     final _jsonEncode = jsonEncode(_json);
     final _jsonDecode = jsonDecode(_jsonEncode);
     final person = Person.fromJson(_jsonDecode as Map<String, dynamic>);
@@ -146,8 +171,7 @@ class Person extends HiveObject {
       other is Person && other.userId == userId && other.id == id;
 
   bool isEqual(Person other) {
-    return jsonEncode(toJson(treatment: '')) ==
-        jsonEncode(other.toJson(treatment: ''));
+    return jsonEncode(toJson()) == jsonEncode(other.toJson());
   }
 
   @override
@@ -173,7 +197,7 @@ class Person extends HiveObject {
         isFirstUser.hashCode;
   }
 }
-
+/* 
 Person _$PersonFromJson(Map<String, dynamic> json) => Person(
     id: json['entegration_id'] as int,
     imageURL: json['image_url'] as String,
@@ -235,100 +259,4 @@ Map<String, dynamic> _$PersonToJson(Person instance, String? treatment) {
     map['treatment'] = treatment;
   }
   return map;
-}
-
-class PersonAdapter extends TypeAdapter<Person> {
-  @override
-  final int typeId = 2;
-
-  @override
-  Person read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return Person(
-      id: fields[1] as int,
-      imageURL: fields[2] as String,
-      name: fields[3] as String,
-      gender: fields[5] as String,
-      birthDate: fields[4] as String,
-      weight: fields[7] as String,
-      height: fields[6] as String,
-      diabetesType: fields[8] as String,
-      rangeMin: fields[10] as int,
-      rangeMax: fields[12] as int,
-      hyper: fields[13] as int,
-      hypo: fields[9] as int,
-      target: fields[11] as int,
-      userId: fields[0] as int,
-      deviceUUID: fields[14] as String,
-      manufacturerId: fields[15] as int,
-      yearOfDiagnosis: fields[16] as int,
-      smoker: fields[17] as bool,
-      isFirstUser: fields[18] as bool,
-      treatmentList: (fields[19] as List<String>)
-          .map(
-            (e) =>
-                TreatmentModel.fromJson(jsonDecode(e) as Map<String, dynamic>),
-          )
-          .toList(),
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, Person obj) {
-    writer
-      ..writeByte(20)
-      ..writeByte(0)
-      ..write(obj.userId)
-      ..writeByte(1)
-      ..write(obj.id)
-      ..writeByte(2)
-      ..write(obj.imageURL)
-      ..writeByte(3)
-      ..write(obj.name)
-      ..writeByte(4)
-      ..write(obj.birthDate)
-      ..writeByte(5)
-      ..write(obj.gender)
-      ..writeByte(6)
-      ..write(obj.height)
-      ..writeByte(7)
-      ..write(obj.weight)
-      ..writeByte(8)
-      ..write(obj.diabetesType)
-      ..writeByte(9)
-      ..write(obj.hypo)
-      ..writeByte(10)
-      ..write(obj.rangeMin)
-      ..writeByte(11)
-      ..write(obj.target)
-      ..writeByte(12)
-      ..write(obj.rangeMax)
-      ..writeByte(13)
-      ..write(obj.hyper)
-      ..writeByte(14)
-      ..write(obj.deviceUUID)
-      ..writeByte(15)
-      ..write(obj.manufacturerId)
-      ..writeByte(16)
-      ..write(obj.yearOfDiagnosis)
-      ..writeByte(17)
-      ..write(obj.smoker)
-      ..writeByte(18)
-      ..write(obj.isFirstUser)
-      ..writeByte(19)
-      ..write(obj.treatmentList?.map((e) => jsonEncode(e.toJson())).toList());
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PersonAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
+} */

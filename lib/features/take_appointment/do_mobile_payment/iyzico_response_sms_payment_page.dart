@@ -19,7 +19,7 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
 
   IyzicoResponseSmsPaymentScreen({
     Key? key,
-     this.uid,
+    this.uid,
     required this.html,
     this.departmentName,
     this.doctorName,
@@ -50,13 +50,15 @@ class _IyzicoResponseSmsPaymentScreenState
 
   @override
   Widget build(BuildContext context) {
+    LoggerUtils.instance.d(Atom.isWeb);
     return ChangeNotifierProvider<IyzicoResponseVm>(
       create: (context) => IyzicoResponseVm(widget.uid),
       child: Consumer<IyzicoResponseVm>(
         builder: (context, vm, child) {
           return RbioScaffold(
             appbar: RbioAppBar(),
-            body: kIsWeb
+            body: Container(),
+            /* body: Atom.isWeb
                 ? const HtmlElementView(
                     viewType: "PayPalButtons",
                   )
@@ -66,7 +68,7 @@ class _IyzicoResponseSmsPaymentScreenState
                       mimeType: 'text/html',
                     ).toString(),
                     javascriptMode: JavascriptMode.unrestricted,
-                  ),
+                  ), */
           );
         },
       ),

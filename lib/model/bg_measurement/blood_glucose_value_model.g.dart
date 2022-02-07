@@ -6,20 +6,19 @@ part of 'blood_glucose_value_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BloodGlucoseValue _$BloodGlucoseValueFromJson(Map<String, dynamic> json) {
-  return BloodGlucoseValue(
-    value: json['value'] as String?,
-    valueType: json['value_type'] as String?,
-    valueNote: json['value_note'] as String?,
-    detail: json['detail'] == null
-        ? null
-        : BloodGlucoseValueDetail.fromJson(
-            json['detail'] as Map<String, dynamic>),
-    id: json['entegration_id'] as int?,
-    isManual: json['is_manuel'] as bool?,
-    deviceUUID: json['device_uuid'] as String?,
-  );
-}
+BloodGlucoseValue _$BloodGlucoseValueFromJson(Map<String, dynamic> json) =>
+    BloodGlucoseValue(
+      value: json['value'] as String?,
+      valueType: json['value_type'] as String? ?? "mg",
+      valueNote: json['value_note'] as String? ?? "",
+      detail: json['detail'] == null
+          ? null
+          : BloodGlucoseValueDetail.fromJson(
+              json['detail'] as Map<String, dynamic>),
+      id: json['entegration_id'] as int?,
+      isManual: json['is_manuel'] as bool?,
+      deviceUUID: json['device_uuid'] as String?,
+    );
 
 Map<String, dynamic> _$BloodGlucoseValueToJson(BloodGlucoseValue instance) =>
     <String, dynamic>{

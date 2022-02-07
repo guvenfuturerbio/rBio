@@ -156,7 +156,7 @@ class _BgProgressPage extends State<BgProgressPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        getIt<ProfileStorageImpl>().getFirst().name,
+                        getIt<ProfileStorageImpl>().getFirst().name ?? 'Name',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline5.copyWith(

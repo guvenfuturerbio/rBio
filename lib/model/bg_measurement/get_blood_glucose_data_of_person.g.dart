@@ -7,14 +7,13 @@ part of 'get_blood_glucose_data_of_person.dart';
 // **************************************************************************
 
 GetBloodGlucoseDataOfPerson _$GetBloodGlucoseDataOfPersonFromJson(
-    Map<String, dynamic> json) {
-  return GetBloodGlucoseDataOfPerson(
-    id: json['entegration_id'] as int?,
-    start: json['start'] as String?,
-    end: json['end'] as String?,
-    count: json['count'] as int?,
-  );
-}
+        Map<String, dynamic> json) =>
+    GetBloodGlucoseDataOfPerson(
+      id: json['entegration_id'] as int?,
+      start: json['start'] as String?,
+      end: json['end'] as String?,
+      count: json['count'] as int?,
+    );
 
 Map<String, dynamic> _$GetBloodGlucoseDataOfPersonToJson(
         GetBloodGlucoseDataOfPerson instance) =>

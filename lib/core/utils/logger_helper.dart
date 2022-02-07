@@ -18,11 +18,11 @@ class LoggerUtils {
     );
   }
 
-  static late LoggerUtils _instance;
+  static LoggerUtils? _instance;
 
   static LoggerUtils get instance {
-    _instance;
-    return _instance;
+    _instance ??= LoggerUtils._();
+    return _instance!;
   }
 
   // ************************** **************************

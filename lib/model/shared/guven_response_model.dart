@@ -1,4 +1,5 @@
 import 'package:onedosehealth/core/exception/model_cast_exception.dart';
+import 'package:onedosehealth/core/utils/logger_helper.dart';
 
 import '../../core/core.dart';
 
@@ -53,8 +54,12 @@ extension MapCastExtension on GuvenResponseModel {
   }
 
   List<Map<String, dynamic>> get xGetMapList {
-    if (this is List<Map<String, dynamic>>) {
-      return this as List<Map<String, dynamic>>;
+    if (datum is List<Map<String, dynamic>>) {
+      return datum as List<Map<String, dynamic>>;
+    } else if (datum is List) {
+      if (datum[0] is Map) {
+        return (datum as List).cast<Map<String, dynamic>>();
+      }
     }
 
     throw RbioModelCastException("Dynamic cast exception");

@@ -62,8 +62,8 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                     upperValue,
                   ],
                   rangeSlider: true,
-                  max: getIt<ProfileStorageImpl>().getFirst().hyper.toDouble(),
-                  min: getIt<ProfileStorageImpl>().getFirst().hypo.toDouble(),
+                  max: getIt<ProfileStorageImpl>().getFirst().hyper!.toDouble(),
+                  min: getIt<ProfileStorageImpl>().getFirst().hypo!.toDouble(),
                   tooltip: FlutterSliderTooltip(
                     boxStyle: FlutterSliderTooltipBox(
                       decoration: BoxDecoration(

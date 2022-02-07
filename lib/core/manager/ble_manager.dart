@@ -69,7 +69,7 @@ class BleDeviceManager extends ChangeNotifier {
           )
           .toList();
     } else {
-      throw "Paired devices list is null!";
+      return [];
     }
     return pairedDevices;
   }

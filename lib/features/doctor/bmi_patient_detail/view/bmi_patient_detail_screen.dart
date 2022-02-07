@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -83,7 +82,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
     return ChangeNotifierProvider(
       create: (ctx) => BmiPatientDetailVm(ctx, patientId),
       child: Consumer<BmiPatientDetailVm>(
-        builder: (_, vm, __) => DropdownBanner(
+        builder: (_, vm, __) => AtomDropdownBanner(
           navigatorKey: _dropdownBannerKey,
           child: !vm.isDataLoading &&
                   MediaQuery.of(context).orientation == Orientation.landscape

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:hive_flutter/adapters.dart';
 
+part 'blood_pressure_model.g.dart';
+
 @HiveType(typeId: 3)
 class BloodPressureModel extends HiveObject {
   @HiveField(0)
@@ -36,10 +38,10 @@ class BloodPressureModel extends HiveObject {
       BloodPressureModel(
         dateTime: DateTime.parse(map['occurrence_time'] as String),
         deviceUUID: map['device_uuid'] as String? ?? "",
-        dia: map['dia_value']as int?,
-        isManual: map['is_manuel']as bool? ?? false,
+        dia: map['dia_value'] as int?,
+        isManual: map['is_manuel'] as bool? ?? false,
         measurementId: map['measurement_id'] as int? ?? 0,
-        note: map['note']as String? ?? "",
+        note: map['note'] as String? ?? "",
         pulse: map['pulse_value'] as int?,
         sys: map['sys_value'] as int?,
       );
@@ -57,7 +59,7 @@ class BloodPressureModel extends HiveObject {
 
   @override
   String toString() {
-    return "Time: ${dateTime} - Sys: ${sys} - Dia: ${dia} - Pulse: ${pulse} ";
+    return "Time: $dateTime - Sys: $sys - Dia: $dia - Pulse: $pulse ";
   }
 
   @override
@@ -75,66 +77,11 @@ class BloodPressureModel extends HiveObject {
   }
 
   bool isEqual(BloodPressureModel other) {
-    return jsonEncode(this.toJson()) == jsonEncode(other.toJson());
+    return jsonEncode(toJson()) == jsonEncode(other.toJson());
   }
 
   BloodPressureModel copy() {
-    return BloodPressureModel.fromJson(jsonDecode(jsonEncode(toJson()))as Map<String,dynamic>);
+    return BloodPressureModel.fromJson(
+        jsonDecode(jsonEncode(toJson())) as Map<String, dynamic>);
   }
-}
-
-class BloodPressureModelAdapter extends TypeAdapter<BloodPressureModel> {
-  @override
-  BloodPressureModel read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-
-    return BloodPressureModel(
-      dateTime: DateTime.parse(fields[0] as String),
-      deviceUUID: fields[1] as String,
-      dia: fields[2] as int,
-      isManual: fields[3] as bool,
-      measurementId: fields[4] as int,
-      note: fields[5] as String,
-      pulse: fields[6] as int,
-      sys: fields[7] as int,
-    );
-  }
-
-  @override
-  int get typeId => 3;
-
-  @override
-  void write(BinaryWriter writer, BloodPressureModel obj) {
-    writer
-      ..writeByte(8)
-      ..writeByte(0)
-      ..write(obj.dateTime?.toIso8601String())
-      ..writeByte(1)
-      ..write(obj.deviceUUID)
-      ..writeByte(2)
-      ..write(obj.dia)
-      ..writeByte(3)
-      ..write(obj.isManual)
-      ..writeByte(4)
-      ..write(obj.measurementId)
-      ..writeByte(5)
-      ..write(obj.note)
-      ..writeByte(6)
-      ..write(obj.pulse)
-      ..writeByte(7)
-      ..write(obj.sys);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BloodPressureModelAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
 }

@@ -191,13 +191,13 @@ class BgProgressPageViewModel
 
   Map<int, List<ChartData>> get chartVeryHighTagged => _chartVeryHighTagged;
 
-  int get targetMin => getIt<ProfileStorageImpl>().getFirst().rangeMin;
+  int get targetMin => getIt<ProfileStorageImpl>().getFirst().rangeMin!;
 
-  int get targetMax => getIt<ProfileStorageImpl>().getFirst().rangeMax;
+  int get targetMax => getIt<ProfileStorageImpl>().getFirst().rangeMax!;
 
-  int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo;
+  int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo!;
 
-  int get criticMax => getIt<ProfileStorageImpl>().getFirst().hyper;
+  int get criticMax => getIt<ProfileStorageImpl>().getFirst().hyper!;
 
   int get dailyHighestValue {
     int highest = bgMeasurementsDailyData.isNotEmpty

@@ -128,7 +128,7 @@ class UserNotifier extends ChangeNotifier {
     final sharedData =
         sharedPreferencesManager.getString(SharedPreferencesKeys.allUsers);
     if (sharedData == null) {
-      throw Exception("allUser null");
+      return null;
     } else {
       final sharedMap = jsonDecode(sharedData) as Map<String, dynamic>;
       final userExist = sharedMap.containsKey(tcEmailPassport);

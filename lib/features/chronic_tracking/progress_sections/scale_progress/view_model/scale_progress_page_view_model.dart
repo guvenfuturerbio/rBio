@@ -149,9 +149,9 @@ class ScaleProgressPageViewModel extends ChangeNotifier
       ? 0
       : scaleMeasurements[0].maxRange(currentScaleType);
 
-  int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo;
+  int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo!;
 
-  int get criticMax => getIt<ProfileStorageImpl>().getFirst().hyper;
+  int get criticMax => getIt<ProfileStorageImpl>().getFirst().hyper!;
 
   int get dailyHighestValue {
     int highest = scaleMeasurementsDailyData.isNotEmpty &&

@@ -8,7 +8,7 @@ class TreatmentEditVm extends ChangeNotifier {
   TreatmentModel selectedModel;
   late String patientName;
   TreatmentEditVm(this.selectedModel) {
-    patientName = getIt<ProfileStorageImpl>().getFirst().name;
+    patientName = getIt<ProfileStorageImpl>().getFirst().name ?? 'Name';
   }
 
   save(String treatment) async {

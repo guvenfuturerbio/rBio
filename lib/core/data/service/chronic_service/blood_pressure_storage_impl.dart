@@ -225,7 +225,7 @@ class BloodPressureStorageImpl
   }
 
   @override
-  BloodPressureModel getLatestMeasurement() {
+  BloodPressureModel? getLatestMeasurement() {
     try {
       if (checkBox(true)) {
         final List<BloodPressureModel> list = getAll();
@@ -249,7 +249,7 @@ class BloodPressureStorageImpl
 
   @override
   Future sendToServer(BloodPressureModel data) async {
-    final int userId = getIt<ProfileStorageImpl>().getFirst().id;
+    final int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
 
     final AddBpWithDetail addBpWithDetail = AddBpWithDetail(
       deviceUuid: data.deviceUUID,
@@ -288,7 +288,7 @@ class BloodPressureStorageImpl
 
   @override
   Future updateServer(BloodPressureModel data) async {
-    final int userId = getIt<ProfileStorageImpl>().getFirst().id;
+    final int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
 
     final UpdateBpMeasurements updateBpMeasurements = UpdateBpMeasurements(
       deviceUuid: data.deviceUUID,
@@ -356,7 +356,7 @@ class BloodPressureStorageImpl
       final lastData = list.last;
       if (getLatestMeasurement() == null ||
           box.values.length < 5 ||
-          !lastData.isEqual(getLatestMeasurement())) {
+          !lastData.isEqual(getLatestMeasurement()!)) {
         box.clear();
         getAndWriteBpData();
       }

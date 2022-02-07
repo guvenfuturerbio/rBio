@@ -1,4 +1,3 @@
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -86,7 +85,7 @@ class _BloodPressurePatientDetailScreenState
           BloodPressurePatientDetailVm vm,
           Widget? child,
         ) {
-          return DropdownBanner(
+          return AtomDropdownBanner(
             navigatorKey: _dropdownBannerKey,
             child: !vm.isDataLoading! &&
                     MediaQuery.of(context).orientation == Orientation.landscape

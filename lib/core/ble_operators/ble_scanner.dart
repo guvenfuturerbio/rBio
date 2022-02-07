@@ -12,9 +12,13 @@ class BleScannerOps extends ChangeNotifier {
 
   BleScannerOps(this._ble) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-      final List<PairedDevice> pairedDevice =
-          await getIt<BleDeviceManager>().getPairedDevices();
-      pairedDevices = pairedDevice.map((e) => e.deviceId!).toList();
+      try {
+        final List<PairedDevice> pairedDevice =
+            await getIt<BleDeviceManager>().getPairedDevices();
+        pairedDevices = pairedDevice.map((e) => e.deviceId!).toList();
+      } catch (e) {
+        LoggerUtils.instance.e('Paired device coming null');
+      }
     });
   }
 
@@ -58,7 +62,7 @@ class BleScannerOps extends ChangeNotifier {
       } else if (bleStatus == BleStatus.poweredOff) {
         await Future.delayed(Duration(seconds: 1));
 
-        await SystemShortcuts.bluetooth();
+        // await SystemShortcuts.bluetooth();
       }
     });
   }

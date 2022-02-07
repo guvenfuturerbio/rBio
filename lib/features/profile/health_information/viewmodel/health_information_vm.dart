@@ -42,7 +42,7 @@ class HealthInformationVm extends RbioVm {
       person.userId = -1;
       final response = await getIt<ChronicTrackingRepository>().updateProfile(
         person,
-        person.id,
+        person.id!,
       );
       if (response.xIsSuccessful) {
         getIt<ProfileStorageImpl>().update(selection, key);
@@ -176,8 +176,8 @@ class HealthInformationVm extends RbioVm {
 
   // #region changeMaxRange
   void changeMaxRange(int selectedHyper) async {
-    selection.hyper = selectedHyper < selection.rangeMax
-        ? selection.rangeMax + 1
+    selection.hyper = selectedHyper < selection.rangeMax!
+        ? selection.rangeMax! + 1
         : selectedHyper;
     notifyListeners();
   }
@@ -204,7 +204,7 @@ class HealthInformationVm extends RbioVm {
     if (selectedMinRange != null) {
       var _tempHypo = selectedMinRange * 10;
       selection.hypo =
-          _tempHypo > selection.rangeMin ? selection.rangeMin - 1 : _tempHypo;
+          _tempHypo > selection.rangeMin! ? selection.rangeMin! - 1 : _tempHypo;
       notifyListeners();
     }
   }
@@ -221,7 +221,7 @@ class HealthInformationVm extends RbioVm {
         if (value != null) {
           selectedType = selection.smoker == null
               ? 0
-              : selection.smoker
+              : selection.smoker ?? false
                   ? 0
                   : 1;
         } else {
@@ -289,19 +289,19 @@ class HealthInformationVm extends RbioVm {
 
       case HealthInformationType.height:
         {
-          return int.tryParse(selection.height) ?? 150;
+          return int.tryParse(selection.height ?? '170') ?? 150;
         }
 
       case HealthInformationType.weight:
         return selection.weight == 'null'
             ? 0
-            : int.tryParse(selection.weight) ?? 50;
+            : int.tryParse(selection.weight ?? '70') ?? 50;
 
       case HealthInformationType.smoker:
         {
           return selection.smoker == null
               ? 0
-              : selection.smoker
+              : selection.smoker ?? false
                   ? 1
                   : 0;
         }
@@ -309,18 +309,18 @@ class HealthInformationVm extends RbioVm {
       case HealthInformationType.yearofDiagnosis:
         {
           return selection.yearOfDiagnosis != null
-              ? DateTime.now().year - selection.yearOfDiagnosis
+              ? DateTime.now().year - (selection.yearOfDiagnosis ?? 2001)
               : 0;
         }
 
       case HealthInformationType.maxRange:
         {
-          return _getMaxRangeList().indexOf(selection.hyper);
+          return _getMaxRangeList().indexOf(selection.hyper!);
         }
 
       case HealthInformationType.minRange:
         {
-          return selection.hypo ~/ 10;
+          return selection.hypo! ~/ 10;
         }
 
       default:
@@ -432,7 +432,7 @@ class HealthInformationVm extends RbioVm {
       case HealthInformationType.minRange:
         {
           return List.generate(
-            (selection.rangeMin + 10) ~/ 10,
+            (selection.rangeMin ?? 50 + 10) ~/ 10,
             (index) => Center(
               child: Text(
                 (index * 10).toString() + " mg/dL.",
@@ -451,7 +451,7 @@ class HealthInformationVm extends RbioVm {
   // #region _getMaxRangeList
   List<int> _getMaxRangeList() {
     List<int> hyperWidget = [];
-    for (int i = selection.rangeMax; i < 1000; i = i + 10) {
+    for (int i = selection.rangeMax ?? 50; i < 1000; i = i + 10) {
       hyperWidget.add(i);
     }
     return hyperWidget;
@@ -496,14 +496,14 @@ class HealthInformationVm extends RbioVm {
     required TextEditingController smokerController,
     required TextEditingController yearofDiagnosisController,
   }) {
-    diabetTypeController.text = selection.diabetesType;
+    diabetTypeController.text = selection.diabetesType ?? '';
     weightController.text = "${selection.weight} kg";
     normalRangeController.text =
         "${selection.rangeMin}-${selection.rangeMax} mg/dl";
     heightController.text = "${selection.height} cm";
     maxRangeController.text = "${selection.hyper} mg/dl";
     minRangeController.text = "${selection.hypo} mg/dl";
-    smokerController.text = selection.smoker
+    smokerController.text = selection.smoker ?? false
         ? LocaleProvider.current.smoker
         : LocaleProvider.current.non_smoker;
     yearofDiagnosisController.text = "${selection.yearOfDiagnosis}";

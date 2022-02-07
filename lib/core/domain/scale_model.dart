@@ -4,6 +4,8 @@ import 'package:hive/hive.dart';
 
 import '../core.dart';
 
+part 'scale_model.g.dart';
+
 @HiveType(typeId: 1)
 class ScaleModel extends HiveObject {
   /// const DB Parameters
@@ -157,10 +159,11 @@ class ScaleModel extends HiveObject {
             getIt<ProfileStorageImpl>().getFirst().gender == 'Erkek'
         ? 1
         : 0;
-    height = int.parse(getIt<ProfileStorageImpl>().getFirst().height);
+    height =
+        int.tryParse(getIt<ProfileStorageImpl>().getFirst().height ?? '170');
 
     final List<String> nums =
-        getIt<ProfileStorageImpl>().getFirst().birthDate.split(".");
+        getIt<ProfileStorageImpl>().getFirst().birthDate!.split(".");
 
     final yearOfBirth = int.parse(nums[2]);
 
@@ -320,98 +323,4 @@ extension ScalUnitString on String {
         return ScaleUnit.kg;
     }
   }
-}
-
-class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
-  @override
-  final int typeId = 1;
-
-  @override
-  ScaleModel read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return ScaleModel(
-      device: jsonDecode(fields[0] as String) as Map<String, dynamic>,
-      weight: fields[1] as double,
-      unit: (fields[2] as String).fromStr,
-      dateTime: DateTime.parse(fields[19] as String),
-      impedance: fields[14] as int,
-      isManuel: fields[12] as bool,
-      images: (fields[13] as List).cast<String>(),
-      note: fields[11] as String,
-      bmi: fields[3] as double,
-      bodyFat: fields[5] as double,
-      boneMass: fields[7] as double,
-      isDeleted: fields[10] as bool,
-      muscle: fields[8] as double,
-      time: fields[18] as int,
-      visceralFat: fields[6] as double,
-      gender: fields[16] as int,
-      height: fields[15] as int,
-      bmh: fields[9] as double,
-      age: fields[17] as int,
-      water: fields[4] as double,
-      measurementId: fields[20] as int,
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, ScaleModel obj) {
-    writer
-      ..writeByte(21)
-      ..writeByte(0)
-      ..write(jsonEncode(obj.device))
-      ..writeByte(1)
-      ..write(obj.weight)
-      ..writeByte(2)
-      ..write(obj.unit?.toStr)
-      ..writeByte(3)
-      ..write(obj.bmi)
-      ..writeByte(4)
-      ..write(obj.water)
-      ..writeByte(5)
-      ..write(obj.bodyFat)
-      ..writeByte(6)
-      ..write(obj.visceralFat)
-      ..writeByte(7)
-      ..write(obj.boneMass)
-      ..writeByte(8)
-      ..write(obj.muscle)
-      ..writeByte(9)
-      ..write(obj.bmh)
-      ..writeByte(10)
-      ..write(obj.isDeleted)
-      ..writeByte(11)
-      ..write(obj.note)
-      ..writeByte(12)
-      ..write(obj.isManuel)
-      ..writeByte(13)
-      ..write(obj.images)
-      ..writeByte(14)
-      ..write(obj.impedance)
-      ..writeByte(15)
-      ..write(obj.height)
-      ..writeByte(16)
-      ..write(obj.gender)
-      ..writeByte(17)
-      ..write(obj.age)
-      ..writeByte(18)
-      ..write(obj.time)
-      ..writeByte(19)
-      ..write(obj.dateTime?.toIso8601String())
-      ..writeByte(20)
-      ..write(obj.measurementId);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ScaleModelAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
 }

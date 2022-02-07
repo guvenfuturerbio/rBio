@@ -96,7 +96,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
   @override
   Future sendToServer(ScaleModel data) async {
-    int userId = getIt<ProfileStorageImpl>().getFirst().id;
+    int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
 
     AddScaleMasurementBody addScaleMasurementBody = AddScaleMasurementBody(
       bmh: data.bmh,
@@ -146,7 +146,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
   @override
   Future updateServer(ScaleModel data) async {
-    int userId = getIt<ProfileStorageImpl>().getFirst().id;
+    int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
 
     UpdateScaleMasurementBody updateScaleMasurementBody =
         UpdateScaleMasurementBody(

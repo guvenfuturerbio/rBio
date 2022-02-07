@@ -9,7 +9,6 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:onedosehealth/core/manager/local_notification_manager.dart';
 import 'package:onedosehealth/features/mediminder/mediminder.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:system_shortcuts/system_shortcuts.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/ble_models/DeviceTypes.dart';

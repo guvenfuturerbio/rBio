@@ -21,10 +21,10 @@ import '../core.dart';
 class Utils {
   Utils._();
 
-  static late Utils _instance;
+  static Utils? _instance;
 
   static Utils get instance {
-    return _instance;
+    return _instance ??= Utils._();
   }
 
   String get getCurrentUserNameAndSurname =>
@@ -267,7 +267,7 @@ class Utils {
 
   GradientButton button({
     text: String,
-    required Function onPressed,
+    required Function() onPressed,
     double height = 16,
     double width = 200,
   }) =>
@@ -283,7 +283,7 @@ class Utils {
         ),
         textStyle: TextStyle(
             fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
-        callback: onPressed(),
+        callback: onPressed,
         gradient: appGradient(),
         shadowColor: Colors.black,
       );
@@ -653,16 +653,16 @@ class UtilityManager {
   Color getGlucoseMeasurementColor(int result) {
     Person activeProfile = getIt<ProfileStorageImpl>().getFirst();
 
-    if (result < activeProfile.hypo) {
+    if (result < activeProfile.hypo!) {
       return R.color.very_low;
-    } else if (result >= activeProfile.hypo &&
-        result < activeProfile.rangeMin) {
+    } else if (result >= activeProfile.hypo! &&
+        result < activeProfile.rangeMin!) {
       return R.color.low;
-    } else if (result >= activeProfile.rangeMin &&
-        result < activeProfile.rangeMax) {
+    } else if (result >= activeProfile.rangeMin! &&
+        result < activeProfile.rangeMax!) {
       return R.color.target;
-    } else if (result >= activeProfile.rangeMax &&
-        result < activeProfile.hyper) {
+    } else if (result >= activeProfile.rangeMax! &&
+        result < activeProfile.hyper!) {
       return R.color.high;
     } else {
       return R.color.very_high;

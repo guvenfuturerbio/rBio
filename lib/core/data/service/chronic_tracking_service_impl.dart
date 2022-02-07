@@ -43,16 +43,20 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<StripDetailModel> getUserStrip(
     int entegrationId,
-    String deviceUUID,
+    String? deviceUUID,
   ) async {
-    final response = await helper.getGuven(
-      R.endpoints.ctGetUserStrip(entegrationId, deviceUUID),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return StripDetailModel.fromJson(response.xGetMap);
+    if (deviceUUID != null) {
+      final response = await helper.getGuven(
+        R.endpoints.ctGetUserStrip(entegrationId, deviceUUID),
+        options: authOptions,
+      );
+      if (response.xIsSuccessful) {
+        return StripDetailModel.fromJson(response.xGetMap);
+      } else {
+        throw Exception('/getUserStrip : ${response.isSuccessful}');
+      }
     } else {
-      throw Exception('/getUserStrip : ${response.isSuccessful}');
+      throw Exception('Device id must not be null');
     }
   }
 
@@ -168,10 +172,16 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       options: authOptions,
     );
     if (response.xIsSuccessful) {
-      return response.xGetMapList
-          .map((e) => Person.fromJson(e))
-          .cast<Person>()
-          .toList();
+      try {
+        return response.xGetMapList
+            .map((e) => Person.fromJson(e))
+            .cast<Person>()
+            .toList();
+      } catch (e, stk) {
+        debugPrintStack(stackTrace: stk);
+        LoggerUtils.instance.e(e);
+        throw Exception('/getAllProfiles : $e');
+      }
     } else {
       throw Exception('/getAllProfiles : ${response.isSuccessful}');
     }
@@ -255,7 +265,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   ) async {
     final response = await helper.patchGuven(
       R.endpoints.ctUpdateProfile(person.id),
-      data: person.toJson(treatment: treatment),
+      data: person.toJson()..addEntries([MapEntry('treatment', treatment)]),
       options: authOptions,
     );
     if (response.xIsSuccessful) {

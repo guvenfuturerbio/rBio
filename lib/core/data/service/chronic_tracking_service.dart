@@ -8,7 +8,7 @@ abstract class ChronicTrackingApiService {
     SaveAndRetrieveTokenModel saveAndRetrieveToken,
     String token,
   );
-  Future<StripDetailModel> getUserStrip(int entegrationId, String deviceUUID);
+  Future<StripDetailModel> getUserStrip(int entegrationId, String? deviceUUID);
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
     BloodGlucoseValue bodyPages,
   );

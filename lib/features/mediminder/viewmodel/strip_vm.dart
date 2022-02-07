@@ -42,10 +42,10 @@ class StripVm with ChangeNotifier {
       userLocal = getIt<ProfileStorageImpl>().getFirst();
       if (userLocal != null) {
         stripDetailModel = (await getIt<ChronicTrackingRepository>()
-            .getUserStrip(userLocal!.id, userLocal!.deviceUUID));
-        stripDetailModel.deviceUUID = userLocal!.deviceUUID;
+            .getUserStrip(userLocal!.id ?? 0, userLocal!.deviceUUID));
+        stripDetailModel.deviceUUID = userLocal!.deviceUUID!;
         alarmCount = stripDetailModel.alarmCount;
-        stripDetailModel.entegrationId = userLocal!.id;
+        stripDetailModel.entegrationId = userLocal!.id!;
         stripCount = stripDetailModel.currentCount;
         initCount = stripDetailModel.currentCount;
       }
@@ -96,8 +96,8 @@ class StripVm with ChangeNotifier {
 
     stripDetailModel.alarmCount = alarmCount;
     stripDetailModel.currentCount = stripCount;
-    stripDetailModel.deviceUUID = userLocal!.deviceUUID;
-    stripDetailModel.entegrationId = userLocal!.id;
+    stripDetailModel.deviceUUID = userLocal!.deviceUUID!;
+    stripDetailModel.entegrationId = userLocal!.id!;
 
     await getIt<ChronicTrackingRepository>().updateUserStrip(stripDetailModel);
 
@@ -155,9 +155,9 @@ class StripVm with ChangeNotifier {
     final userLocal = getIt<ProfileStorageImpl>().getFirst();
     final sharedPrefs = getIt<ISharedPreferencesManager>();
     final stripDetailModel = await getIt<ChronicTrackingRepository>()
-        .getUserStrip(userLocal.id, userLocal.deviceUUID);
-    stripDetailModel.deviceUUID = userLocal.deviceUUID;
-    stripDetailModel.entegrationId = userLocal.id;
+        .getUserStrip(userLocal.id!, userLocal.deviceUUID);
+    stripDetailModel.deviceUUID = userLocal.deviceUUID!;
+    stripDetailModel.entegrationId = userLocal.id!;
     if (stripDetailModel.currentCount - value > 0) {
       stripDetailModel.currentCount = stripDetailModel.currentCount - value;
     } else {

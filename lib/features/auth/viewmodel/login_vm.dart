@@ -2,6 +2,7 @@ import 'dart:io' as platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/ble_models/paired_device.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -62,17 +63,17 @@ class LoginScreenVm extends ChangeNotifier {
     _password = text;
   }
 
-  bool _passwordVisibility = false;
-  bool get passwordVisibility => _passwordVisibility;
+  bool? _passwordVisibility;
+  bool get passwordVisibility => _passwordVisibility ??= false;
   void togglePasswordVisibility() {
-    _passwordVisibility = !_passwordVisibility;
+    _passwordVisibility = !(_passwordVisibility ??= false);
     notifyListeners();
   }
 
   bool _clickedGeneralForm = false;
   bool get clickedGeneralForm => _clickedGeneralForm;
   set clickedGeneralForm(bool value) {
-    clickedGeneralForm = value;
+    _clickedGeneralForm = value;
     notifyListeners();
   }
 
@@ -241,9 +242,14 @@ class LoginScreenVm extends ChangeNotifier {
           }
         }
 
-        if (!Atom.isWeb) {
-          var devices = await getIt<BleDeviceManager>().getPairedDevices();
-          if (devices.isNotEmpty) {
+        if (!Atom.isWeb && getIt<UserNotifier>().isCronic) {
+          try {
+            List<PairedDevice>? devices =
+                await getIt<BleDeviceManager>().getPairedDevices();
+            if (devices.isNotEmpty) {
+              getIt<BleScannerOps>().startScan();
+            }
+          } catch (_) {
             getIt<BleScannerOps>().startScan();
           }
         }

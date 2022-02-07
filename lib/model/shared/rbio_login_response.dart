@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'rbio_login_response.g.dart';
+
+@JsonSerializable()
 class RbioLoginResponse {
   RbioLoginResponse({
     this.token,
@@ -12,17 +16,9 @@ class RbioLoginResponse {
   List<String>? roles;
 
   factory RbioLoginResponse.fromJson(Map<String, dynamic> json) =>
-      RbioLoginResponse(
-        token: Token.fromJson(json["token"] as Map<String, dynamic>),
-        roles: List<String>.from(json["roles"].map((x) => x) as List<String>),
-        firebase_user_email: json['firebase_user_email'] as String?,
-        firebase_user_salt: json['firebase_user_salt'] as String?,
-      );
+      _$RbioLoginResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "token": token?.toJson(),
-        "roles": List<dynamic>.from(roles!.map((x) => x)),
-      };
+  Map<String, dynamic> toJson() => _$RbioLoginResponseToJson(this);
 }
 
 class Token {

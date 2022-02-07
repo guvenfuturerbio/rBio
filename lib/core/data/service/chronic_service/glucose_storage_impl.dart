@@ -202,7 +202,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   Future<int> sendToServer(GlucoseData data) async {
     final DateTime dt = DateTime.fromMillisecondsSinceEpoch(data.time);
-    final int userId = getIt<ProfileStorageImpl>().getFirst().id;
+    final int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
     final String dtFrmt = dt.toString();
     final BloodGlucoseValue bloodGlucoseValue = BloodGlucoseValue(
       deviceUUID: data.deviceUUID,
@@ -255,7 +255,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     try {
       await getIt<ChronicTrackingRepository>().uploadMeasurementImage(
         imagePath,
-        getIt<ProfileStorageImpl>().getFirst().id,
+        getIt<ProfileStorageImpl>().getFirst().id ?? 0,
         measurementId,
       );
     } catch (_) {

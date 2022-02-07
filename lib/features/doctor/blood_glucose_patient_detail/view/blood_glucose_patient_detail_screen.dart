@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:countup/countup.dart';
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +100,7 @@ class _BloodGlucosePatientDetailScreenState
           BloodGlucosePatientDetailVm vm,
           Widget? child,
         ) {
-          return DropdownBanner(
+          return AtomDropdownBanner(
             navigatorKey: _dropdownBannerKey,
             child: !vm.isDataLoading &&
                     MediaQuery.of(context).orientation == Orientation.landscape

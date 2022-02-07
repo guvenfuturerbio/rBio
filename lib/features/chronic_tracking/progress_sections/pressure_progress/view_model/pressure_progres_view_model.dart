@@ -287,7 +287,7 @@ class BpProgressPageVm
     BpMeasurementViewModel? lastMeasurement;
     if (bpMeasurements.isNotEmpty) {
       lastMeasurement = BpMeasurementViewModel(
-          bpModel: getIt<BloodPressureStorageImpl>().getLatestMeasurement());
+          bpModel: getIt<BloodPressureStorageImpl>().getLatestMeasurement()!);
     }
 
     return RbioSmallChronicWidget(

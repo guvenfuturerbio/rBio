@@ -567,7 +567,7 @@ class CreateAppointmentVm extends ChangeNotifier {
 
       await holderListFillFunc();
       for (var element in holderForFavorites) {
-        final doctorId = Slugify(Utils.instance.clearDoctorTitle(element
+        final doctorId = slugify(Utils.instance.clearDoctorTitle(element
             .resources!.first.resource!
             .toLowerCase()
             .xTurkishCharacterToEnglish));

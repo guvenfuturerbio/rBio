@@ -5,11 +5,11 @@ import '../core.dart';
 class SecretUtils {
   SecretUtils._();
 
-  static late SecretUtils _instance;
+  static SecretUtils? _instance;
 
   static SecretUtils get instance {
-    _instance;
-    return _instance;
+    _instance ??= SecretUtils._();
+    return _instance!;
   }
 
   // ************************** **************************

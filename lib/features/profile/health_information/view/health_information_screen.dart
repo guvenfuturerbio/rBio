@@ -246,9 +246,9 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
               {
                 final result = await Atom.show(
                   RangeSelectionSlider(
-                    id: vm.selection.id,
-                    lowerValue: vm.selection.rangeMin.toDouble(),
-                    upperValue: vm.selection.rangeMax.toDouble(),
+                    id: vm.selection.id!,
+                    lowerValue: vm.selection.rangeMin!.toDouble(),
+                    upperValue: vm.selection.rangeMax!.toDouble(),
                   ),
                 );
                 if (result != null) {
