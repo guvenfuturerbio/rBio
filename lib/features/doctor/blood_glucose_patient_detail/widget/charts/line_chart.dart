@@ -1,26 +1,26 @@
 part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// Renders the line sample with dynamically updated data points.
-class BloodGlucosePatientLine extends BloodGlucoseSampleView {
+class BloodGlucosePatientLine extends StatefulWidget {
   /// Renders the line chart sample with dynamically upd
   @override
   BloodGlucosePatientLineState createState() => BloodGlucosePatientLineState();
 }
 
-class BloodGlucosePatientLineState extends BloodGlucoseSampleViewState {
-  List<ChartData> _chartData;
+class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
+  List<ChartData> _chartData = [];
 
-  int _targetMin, _targetMax, _maxValue, _minValue;
+  late int _targetMin, _targetMax, _maxValue, _minValue;
 
-  DateTime _startDate, _endDate;
+  DateTime? _startDate, _endDate;
 
   double markerSize = 10;
 
-  String _selected;
+  String? _selected;
 
-  ZoomMode _zoomModeType = ZoomMode.x;
+  final ZoomMode _zoomModeType = ZoomMode.x;
 
-  ZoomPanBehavior _zoomingBehavior;
+  ZoomPanBehavior? _zoomingBehavior;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class BloodGlucosePatientLineState extends BloodGlucoseSampleViewState {
         enablePinching: true,
         zoomMode: _zoomModeType,
         enablePanning: true,
-        enableMouseWheelZooming: model.isWeb ? true : false);
+        enableMouseWheelZooming: Atom.isWeb ? true : false);
     return Consumer<BloodGlucosePatientDetailVm>(
         builder: (context, value, child) {
       _selected = value.selected;
@@ -63,7 +63,7 @@ class BloodGlucosePatientLineState extends BloodGlucoseSampleViewState {
               _selected == LocaleProvider.current.specific
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: MajorGridLines(color: Colors.black12),
+              majorGridLines: const MajorGridLines(color: Colors.black12),
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
@@ -72,19 +72,19 @@ class BloodGlucosePatientLineState extends BloodGlucoseSampleViewState {
           : _selected == LocaleProvider.current.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                   dateFormat: DateFormat("EEE"),
                   intervalType: DateTimeIntervalType.days,
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                 ),
       primaryYAxis: NumericAxis(
-        majorTickLines: MajorTickLines(color: Colors.transparent),
-        majorGridLines: MajorGridLines(color: Colors.black12),
-        axisLine: AxisLine(width: 0),
+        majorTickLines: const MajorTickLines(color: Colors.transparent),
+        majorGridLines: const MajorGridLines(color: Colors.black12),
+        axisLine: const AxisLine(width: 0),
         labelFormat: '{value}',
         title: AxisTitle(
             text: "mg/dL",
@@ -124,12 +124,12 @@ class BloodGlucosePatientLineState extends BloodGlucoseSampleViewState {
           markerSettings: MarkerSettings(
               height: 4,
               width: 4,
-              isVisible: _chartData?.length == 1 ? true : false,
+              isVisible: _chartData.length == 1 ? true : false,
               color: Colors.black)),
       _selected == LocaleProvider.current.daily ||
               _selected == LocaleProvider.current.specific
           ? LineSeries<ChartData, DateTime>(
-              dataSource: _chartData != null && _chartData.length > 0
+              dataSource: _chartData.isNotEmpty
                   ? [
                       ChartData(
                           DateTime(_chartData[0].x.year, _chartData[0].x.month,
@@ -153,11 +153,11 @@ class BloodGlucosePatientLineState extends BloodGlucoseSampleViewState {
               color: Colors.red,
               xAxisName: "Time",
               markerSettings:
-                  MarkerSettings(height: 15, width: 15, isVisible: true))
+                  const MarkerSettings(height: 15, width: 15, isVisible: true))
           : LineSeries<ChartData, DateTime>(
               dataSource: [
-                  ChartData(_startDate, -50, Colors.transparent),
-                  ChartData(_endDate, -50, Colors.transparent),
+                  ChartData(_startDate!, -50, Colors.transparent),
+                  ChartData(_endDate!, -50, Colors.transparent),
                 ],
               xValueMapper: (ChartData sales, _) => sales.x,
               yValueMapper: (ChartData sales, _) => sales.y,

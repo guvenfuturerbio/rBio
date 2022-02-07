@@ -7,11 +7,11 @@ class _UserDetailCard extends StatelessWidget {
   final VoidCallback hyperEdit;
 
   const _UserDetailCard({
-    Key key,
-    @required this.patientDetail,
-    @required this.targetRangePresses,
-    @required this.hypoEdit,
-    @required this.hyperEdit,
+    Key? key,
+    required this.patientDetail,
+    required this.targetRangePresses,
+    required this.hypoEdit,
+    required this.hyperEdit,
   }) : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class _UserDetailCard extends StatelessWidget {
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -39,7 +39,7 @@ class _UserDetailCard extends StatelessWidget {
             _buildValueRow(
               context,
               leftValue: patientDetail.identification_number ?? "",
-              rightValue: patientDetail?.birthDay ?? "-",
+              rightValue: patientDetail.birthDay ?? "-",
             ),
 
             //
@@ -50,8 +50,8 @@ class _UserDetailCard extends StatelessWidget {
             ),
             _buildValueRow(
               context,
-              leftValue: patientDetail?.diabetType?.name ?? "-",
-              rightValue: patientDetail?.height ?? "-",
+              leftValue: patientDetail.diabetType?.name ?? "-",
+              rightValue: patientDetail.height ?? "-",
             ),
 
             //
@@ -62,11 +62,11 @@ class _UserDetailCard extends StatelessWidget {
             ),
             _buildEditableValueRow(
               context,
-              leftValue: (patientDetail?.rangeMin ?? "").toString() +
+              leftValue: (patientDetail.rangeMin ?? "").toString() +
                   "-" +
-                  (patientDetail?.rangeMax ?? "").toString() +
+                  (patientDetail.rangeMax ?? "").toString() +
                   (" mg/dL"),
-              rightValue: patientDetail?.weight ?? "-",
+              rightValue: patientDetail.weight ?? "-",
               onTap: () {
                 targetRangePresses();
               },
@@ -80,7 +80,7 @@ class _UserDetailCard extends StatelessWidget {
             ),
             _buildEditableValueRow(
               context,
-              leftValue: (patientDetail?.hypo ?? "-").toString() + " mg/dL",
+              leftValue: (patientDetail.hypo ?? "-").toString() + " mg/dL",
               rightValue: "-",
               onTap: () {
                 hypoEdit();
@@ -95,8 +95,8 @@ class _UserDetailCard extends StatelessWidget {
             ),
             _buildEditableValueRow(
               context,
-              leftValue: (patientDetail?.hyper ?? "-").toString() + " mg/dL",
-              rightValue: (patientDetail?.yearOfDiagnosis ?? "-").toString(),
+              leftValue: (patientDetail.hyper ?? "-").toString() + " mg/dL",
+              rightValue: (patientDetail.yearOfDiagnosis ?? "-").toString(),
               onTap: () {
                 hyperEdit();
               },
@@ -111,8 +111,8 @@ class _UserDetailCard extends StatelessWidget {
             _buildValueRow(
               context,
               leftValue: patientDetail.phoneNumber ?? "",
-              rightValue: patientDetail?.smoker != null
-                  ? patientDetail.smoker
+              rightValue: patientDetail.smoker != null
+                  ? patientDetail.smoker!
                       ? LocaleProvider.current.yes
                       : LocaleProvider.current.no
                   : "-",
@@ -127,8 +127,9 @@ class _UserDetailCard extends StatelessWidget {
               leftValue: "200",
               rightValue: '',
               rightOnTap: () {
-                if (patientDetail.phoneNumber != null)
+                if (patientDetail.phoneNumber != null) {
                   launch("tel://${patientDetail.phoneNumber}");
+                }
               },
             ),
           ],
@@ -139,8 +140,8 @@ class _UserDetailCard extends StatelessWidget {
 
   Widget _buildTitleRow(
     BuildContext context, {
-    @required String leftTitle,
-    @required String rightTitle,
+    required String leftTitle,
+    required String rightTitle,
     bool topPadding = true,
   }) {
     return Padding(
@@ -179,9 +180,9 @@ class _UserDetailCard extends StatelessWidget {
   }
 
   Widget _buildValueRow(BuildContext context,
-      {@required String leftValue,
-      @required String rightValue,
-      VoidCallback rightOnTap}) {
+      {required String leftValue,
+      required String rightValue,
+      VoidCallback? rightOnTap}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -215,9 +216,9 @@ class _UserDetailCard extends StatelessWidget {
 
   Widget _buildEditableValueRow(
     BuildContext context, {
-    @required String leftValue,
-    @required String rightValue,
-    @required void Function() onTap,
+    required String leftValue,
+    required String rightValue,
+    required void Function() onTap,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,7 +240,7 @@ class _UserDetailCard extends StatelessWidget {
                   style: context.xHeadline5,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               InkWell(

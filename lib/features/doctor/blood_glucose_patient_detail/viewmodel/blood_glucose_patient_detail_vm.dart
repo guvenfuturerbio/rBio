@@ -1,29 +1,29 @@
 part of '../view/blood_glucose_patient_detail_screen.dart';
 
-enum GraphType { BUBBLE, LINE }
+enum GraphType { bubble, line }
 
 class BloodGlucosePatientDetailVm extends RbioVm
     with IBaseBottomActionsOfGraph {
   @override
-  BuildContext mContext;
+  late BuildContext mContext;
 
-  LoadingProgress _stateProcessPatientDetail;
-  LoadingProgress _stateProcessPatientMeasurements;
-  DoctorPatientDetailModel _patientDetail;
-  int _patientId;
+  LoadingProgress? _stateProcessPatientDetail;
+  LoadingProgress? _stateProcessPatientMeasurements;
+  late DoctorPatientDetailModel _patientDetail;
+  late int _patientId;
   get patientid => _patientId;
   bool _disposed = false;
   bool isDataLoading = false;
-  DateTime _scrolledDate;
+  DateTime? _scrolledDate;
 
   final controller = ScrollController();
 
   BloodGlucosePatientDetailVm({
-    @required BuildContext context,
-    @required int patientId,
+    required BuildContext context,
+    required int patientId,
   }) {
-    this.mContext = context;
-    this._patientId = patientId;
+    mContext = context;
+    _patientId = patientId;
     isChartShow = false;
     update();
 
@@ -65,7 +65,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
   getNewItems() async {
     await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .getMoreData(
-            patientId: patientDetail.id, date: bgMeasurements.last.date);
+            patientId: patientDetail.id!, date: bgMeasurements.last.date);
     filterDatas();
   }
 
@@ -88,20 +88,20 @@ class BloodGlucosePatientDetailVm extends RbioVm
     notifyListeners();
   }
 
-  void fetchScrolledData(DateTime date) {
+  void fetchScrolledData(DateTime? date) {
     if (date != null && selected == LocaleProvider.current.daily) {
       var _temp = DateTime(_scrolledDate?.year ?? 2000,
           _scrolledDate?.month ?? 01, _scrolledDate?.day ?? 01);
       var _cross = DateTime(date.year, date.month, date.day);
       if (_scrolledDate == null || (_temp != _cross)) {
         _scrolledDate = date;
-        this.bgMeasurementsDailyData.clear();
+        bgMeasurementsDailyData.clear();
 
         //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
         for (var data in bgMeasurements) {
           if (DateTime(data.date.year, data.date.month, data.date.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
-            this.bgMeasurementsDailyData.add(data);
+            bgMeasurementsDailyData.add(data);
           }
         }
 
@@ -124,39 +124,39 @@ class BloodGlucosePatientDetailVm extends RbioVm
   }
 
   LoadingProgress get stateProcessPatientDetail =>
-      this._stateProcessPatientDetail;
+      _stateProcessPatientDetail ?? LoadingProgress.loading;
 
   LoadingProgress get stateProcessPatientMeasurements =>
-      this._stateProcessPatientMeasurements;
+      _stateProcessPatientMeasurements ?? LoadingProgress.loading;
 
   Future<void> fetchPatientDetail() async {
-    _stateProcessPatientDetail = LoadingProgress.LOADING;
+    _stateProcessPatientDetail = LoadingProgress.loading;
     notifyListeners();
     try {
       await Provider.of<PatientNotifiers>(mContext, listen: false)
           .fetchPatientDetail(patientId: _patientId);
-      this._patientDetail =
+      _patientDetail =
           Provider.of<PatientNotifiers>(mContext, listen: false).patientDetail;
-      LoggerUtils.instance.e(this.patientDetail.toJson());
-      _stateProcessPatientDetail = LoadingProgress.DONE;
+      LoggerUtils.instance.e(patientDetail.toJson());
+      _stateProcessPatientDetail = LoadingProgress.done;
       notifyListeners();
     } catch (e, stk) {
       LoggerUtils.instance.e(e.toString());
       debugPrintStack(stackTrace: stk);
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
       dispose(); //Dispose if patient detail is not available.
-      _stateProcessPatientDetail = LoadingProgress.ERROR;
+      _stateProcessPatientDetail = LoadingProgress.error;
       notifyListeners();
     }
   }
 
-  DoctorPatientDetailModel get patientDetail => this._patientDetail;
+  DoctorPatientDetailModel get patientDetail => _patientDetail;
 
-  List<int> _tags = [1, 2, 3];
+  final List<int> _tags = [1, 2, 3];
 
-  Widget _currentGraph;
+  Widget? _currentGraph;
 
-  GraphType _currentGlucoseGraphType;
+  GraphType? _currentGlucoseGraphType;
 
   List<String> get items => [
         LocaleProvider.current.daily,
@@ -172,57 +172,60 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   List<BgMeasurementViewModel> bgMeasurements = [];
 
-  List<ChartData> _chartData;
+  List<ChartData> _chartData = [];
 
-  List<ChartData> _chartVeryLow;
+  List<ChartData> _chartVeryLow = [];
 
-  List<ChartData> _chartLow;
+  List<ChartData> _chartLow = [];
 
-  List<ChartData> _chartTarget;
+  List<ChartData> _chartTarget = [];
 
-  List<ChartData> _chartHigh;
+  List<ChartData> _chartHigh = [];
 
-  List<ChartData> _chartVeryHigh;
+  List<ChartData> _chartVeryHigh = [];
 
-  int _scrolledListIndex;
+  int? _scrolledListIndex;
 
-  int _listLastIndex;
+  int? _listLastIndex;
 
-  String _selectedItem;
+  String? _selectedItem;
 
-  DateTime _startDate, _endDate;
+  DateTime? _startDate, _endDate;
 
   int _currentDateIndex = 0;
 
-  Map<int, List<ChartData>> _chartDataTagged = Map<int, List<ChartData>>();
+  final Map<int, List<ChartData>> _chartDataTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartVeryLowTagged = Map<int, List<ChartData>>();
+  final Map<int, List<ChartData>> _chartVeryLowTagged =
+      <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartLowTagged = Map<int, List<ChartData>>();
+  final Map<int, List<ChartData>> _chartLowTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartTargetTagged = Map<int, List<ChartData>>();
+  final Map<int, List<ChartData>> _chartTargetTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartHighTagged = Map<int, List<ChartData>>();
+  final Map<int, List<ChartData>> _chartHighTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartVeryHighTagged = Map<int, List<ChartData>>();
+  final Map<int, List<ChartData>> _chartVeryHighTagged =
+      <int, List<ChartData>>{};
 
-  Map<Color, GlucoseMarginsFilter> _colorInfo = <Color, GlucoseMarginsFilter>{};
+  final Map<Color, GlucoseMarginsFilter> _colorInfo =
+      <Color, GlucoseMarginsFilter>{};
 
   Map<Color, GlucoseMarginsFilter> get colorInfo {
     _colorInfo.putIfAbsent(
-        R.color.very_low, () => GlucoseMarginsFilter.VERY_LOW);
-    _colorInfo.putIfAbsent(R.color.low, () => GlucoseMarginsFilter.LOW);
-    _colorInfo.putIfAbsent(R.color.target, () => GlucoseMarginsFilter.TARGET);
-    _colorInfo.putIfAbsent(R.color.high, () => GlucoseMarginsFilter.HIGH);
+        R.color.very_low, () => GlucoseMarginsFilter.veryLow);
+    _colorInfo.putIfAbsent(R.color.low, () => GlucoseMarginsFilter.low);
+    _colorInfo.putIfAbsent(R.color.target, () => GlucoseMarginsFilter.target);
+    _colorInfo.putIfAbsent(R.color.high, () => GlucoseMarginsFilter.high);
     _colorInfo.putIfAbsent(
-        R.color.very_high, () => GlucoseMarginsFilter.VERY_HIGH);
-    return this._colorInfo;
+        R.color.very_high, () => GlucoseMarginsFilter.veryHigh);
+    return _colorInfo;
   }
 
   List<GlucoseMarginsFilter> get states => [
-        GlucoseMarginsFilter.HUNGRY,
-        GlucoseMarginsFilter.FULL,
-        GlucoseMarginsFilter.OTHER
+        GlucoseMarginsFilter.hungry,
+        GlucoseMarginsFilter.full,
+        GlucoseMarginsFilter.other
       ];
 
   Map<GlucoseMarginsFilter, bool> _filterState = <GlucoseMarginsFilter, bool>{};
@@ -230,20 +233,20 @@ class BloodGlucosePatientDetailVm extends RbioVm
       <GlucoseMarginsFilter, bool>{};
 
   Map<GlucoseMarginsFilter, bool> get filterState {
-    _filterState.putIfAbsent(GlucoseMarginsFilter.VERY_LOW, () => true);
-    _filterState.putIfAbsent(GlucoseMarginsFilter.LOW, () => true);
-    _filterState.putIfAbsent(GlucoseMarginsFilter.TARGET, () => true);
-    _filterState.putIfAbsent(GlucoseMarginsFilter.HIGH, () => true);
-    _filterState.putIfAbsent(GlucoseMarginsFilter.VERY_HIGH, () => true);
-    _filterState.putIfAbsent(GlucoseMarginsFilter.HUNGRY, () => true);
-    _filterState.putIfAbsent(GlucoseMarginsFilter.FULL, () => true);
-    _filterState.putIfAbsent(GlucoseMarginsFilter.OTHER, () => true);
-    return this._filterState;
+    _filterState.putIfAbsent(GlucoseMarginsFilter.veryLow, () => true);
+    _filterState.putIfAbsent(GlucoseMarginsFilter.low, () => true);
+    _filterState.putIfAbsent(GlucoseMarginsFilter.target, () => true);
+    _filterState.putIfAbsent(GlucoseMarginsFilter.high, () => true);
+    _filterState.putIfAbsent(GlucoseMarginsFilter.veryHigh, () => true);
+    _filterState.putIfAbsent(GlucoseMarginsFilter.hungry, () => true);
+    _filterState.putIfAbsent(GlucoseMarginsFilter.full, () => true);
+    _filterState.putIfAbsent(GlucoseMarginsFilter.other, () => true);
+    return _filterState;
   }
 
   Future<void> setFilterState(GlucoseMarginsFilter key) async {
     try {
-      _filterState.update(key, (value) => !filterState[key]);
+      _filterState.update(key, (value) => !(filterState[key]!));
       updateBgMeasurement();
       notifyListeners();
     } catch (e, stk) {
@@ -253,7 +256,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   void updateFilterState() {
     try {
-      _lastFilterStateBeforeEdit = Map<GlucoseMarginsFilter, bool>();
+      _lastFilterStateBeforeEdit = <GlucoseMarginsFilter, bool>{};
       updateBgMeasurement();
       notifyListeners();
     } catch (e, stk) {
@@ -263,7 +266,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   cancelSelections() {
     _filterState = _lastFilterStateBeforeEdit;
-    _lastFilterStateBeforeEdit = Map<GlucoseMarginsFilter, bool>();
+    _lastFilterStateBeforeEdit = <GlucoseMarginsFilter, bool>{};
     notifyListeners();
   }
 
@@ -281,23 +284,22 @@ class BloodGlucosePatientDetailVm extends RbioVm
   }
 
   bool isFilterSelected(GlucoseMarginsFilter filter) {
-    return filterState[filter];
+    return filterState[filter]!;
   }
 
-  List<int> get tags => this._tags;
+  List<int> get tags => _tags;
 
-  Map<int, List<ChartData>> get chartDataTagged => this._chartDataTagged;
+  Map<int, List<ChartData>> get chartDataTagged => _chartDataTagged;
 
-  Map<int, List<ChartData>> get chartVeryLowTagged => this._chartVeryLowTagged;
+  Map<int, List<ChartData>> get chartVeryLowTagged => _chartVeryLowTagged;
 
-  Map<int, List<ChartData>> get chartLowTagged => this._chartLowTagged;
+  Map<int, List<ChartData>> get chartLowTagged => _chartLowTagged;
 
-  Map<int, List<ChartData>> get chartTargetTagged => this._chartTargetTagged;
+  Map<int, List<ChartData>> get chartTargetTagged => _chartTargetTagged;
 
-  Map<int, List<ChartData>> get chartHighTagged => this._chartHighTagged;
+  Map<int, List<ChartData>> get chartHighTagged => _chartHighTagged;
 
-  Map<int, List<ChartData>> get chartVeryHighTagged =>
-      this._chartVeryHighTagged;
+  Map<int, List<ChartData>> get chartVeryHighTagged => _chartVeryHighTagged;
 
   int get targetMin => PatientNotifiers()?.patientDetail?.rangeMin ?? 0;
 
@@ -309,11 +311,11 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   int get dailyHighestValue {
     int highest = bgMeasurementsDailyData.isNotEmpty
-        ? int.parse(bgMeasurementsDailyData[0].result)
+        ? int.parse(bgMeasurementsDailyData[0].result!)
         : 300;
     for (var data in bgMeasurementsDailyData) {
-      if (int.parse(data.result) > highest) {
-        highest = int.parse(data.result);
+      if (int.parse(data.result!) > highest) {
+        highest = int.parse(data.result!);
       }
     }
     return highest > targetMax ? highest + 50 : targetMax + 50;
@@ -321,11 +323,11 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   int get dailyLowestValue {
     int lowest = bgMeasurementsDailyData.isNotEmpty
-        ? int.parse(bgMeasurementsDailyData[0].result)
+        ? int.parse(bgMeasurementsDailyData[0].result!)
         : 50;
     for (var data in bgMeasurementsDailyData) {
-      if (int.parse(data.result) < lowest) {
-        lowest = int.parse(data.result);
+      if (int.parse(data.result!) < lowest) {
+        lowest = int.parse(data.result!);
       }
     }
     return 0; //lowest < targetMin ?  targetMin - 50 : lowest;
@@ -333,10 +335,10 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   int get highestValue {
     int highest =
-        bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result) : 300;
+        bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result!) : 300;
     for (var data in bgMeasurements) {
-      if (int.parse(data.result) > highest) {
-        highest = int.parse(data.result);
+      if (int.parse(data.result!) > highest) {
+        highest = int.parse(data.result!);
       }
     }
     return 300;
@@ -345,10 +347,10 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   int get lowestValue {
     int lowest =
-        bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result) : 50;
+        bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result!) : 50;
     for (var data in bgMeasurements) {
-      if (int.parse(data.result) < lowest) {
-        lowest = int.parse(data.result);
+      if (int.parse(data.result!) < lowest) {
+        lowest = int.parse(data.result!);
       }
     }
     return 0;
@@ -357,8 +359,8 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   int get totalValuableCount {
     int totalCount = 0;
-    if (this._chartData != null) {
-      for (var data in this._chartData) {
+    if (_chartData.isNotEmpty) {
+      for (var data in _chartData) {
         if (data.y > 0) {
           totalCount++;
         }
@@ -370,22 +372,23 @@ class BloodGlucosePatientDetailVm extends RbioVm
   Widget get currentGraph => _currentGraph ?? BloodGlucosePatientScatter();
 
   void setCurrentGraph() {
-    if (currentGlucoseGraphType == GraphType.BUBBLE) {
-      this._currentGraph = BloodGlucosePatientScatter();
+    if (currentGlucoseGraphType == GraphType.bubble) {
+      _currentGraph = BloodGlucosePatientScatter();
     } else {
-      this._currentGraph = BloodGlucosePatientLine();
+      _currentGraph = BloodGlucosePatientLine();
     }
     notifyListeners();
   }
 
   GraphType get currentGlucoseGraphType =>
-      _currentGlucoseGraphType ?? GraphType.BUBBLE;
+      _currentGlucoseGraphType ?? GraphType.bubble;
 
+  @override
   void changeGraphType() {
-    if (currentGlucoseGraphType == GraphType.BUBBLE) {
-      this._currentGlucoseGraphType = GraphType.LINE;
+    if (currentGlucoseGraphType == GraphType.bubble) {
+      _currentGlucoseGraphType = GraphType.line;
     } else {
-      this._currentGlucoseGraphType = GraphType.BUBBLE;
+      _currentGlucoseGraphType = GraphType.bubble;
     }
     setCurrentGraph();
     notifyListeners();
@@ -395,9 +398,9 @@ class BloodGlucosePatientDetailVm extends RbioVm
     LoggerUtils.instance.i('data-----------> $s');
     if (s != _selectedItem) {
       resetFilterState();
-      this._currentDateIndex = 0;
+      _currentDateIndex = 0;
       notifyListeners();
-      this._selectedItem = s;
+      _selectedItem = s;
       setCurrentGraph();
       notifyListeners();
       if (s == LocaleProvider.current.specific) {
@@ -412,7 +415,8 @@ class BloodGlucosePatientDetailVm extends RbioVm
         DateTime currentDateStart = DateTime(DateTime.now().year,
             DateTime.now().month, DateTime.now().day, 00, 00);
         s == LocaleProvider.current.weekly
-            ? await setStartDate(currentDateStart.subtract(Duration(days: 7)))
+            ? await setStartDate(
+                currentDateStart.subtract(const Duration(days: 7)))
             : s == LocaleProvider.current.monthly
                 ? await setStartDate(currentDateStart
                     .subtract(Duration(days: currentDateStart.day - 1)))
@@ -434,16 +438,16 @@ class BloodGlucosePatientDetailVm extends RbioVm
   }
 
   DateTime get startDate => _startDate != null
-      ? DateTime(_startDate.year, _startDate.month, _startDate.day)
+      ? DateTime(_startDate!.year, _startDate!.month, _startDate!.day)
       : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   Future<void> setStartDate(DateTime d) async {
-    this._startDate = d;
-    this._currentDateIndex = 0;
+    _startDate = d;
+    _currentDateIndex = 0;
     await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsInDateRange(
-            startDate, endDate.add(Duration(days: 1)));
-    this.bgMeasurements =
+            startDate, endDate.add(const Duration(days: 1)));
+    bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
     LoggerUtils.instance.i(bgMeasurements.length);
@@ -452,33 +456,33 @@ class BloodGlucosePatientDetailVm extends RbioVm
   }
 
   DateTime get endDate => _endDate != null
-      ? DateTime(_endDate.year, _endDate.month, _endDate.day)
+      ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day)
       : DateTime(
-          DateTime.now().add(Duration(days: 1)).year,
-          DateTime.now().add(Duration(days: 1)).month,
-          DateTime.now().add(Duration(days: 1)).day);
+          DateTime.now().add(const Duration(days: 1)).year,
+          DateTime.now().add(const Duration(days: 1)).month,
+          DateTime.now().add(const Duration(days: 1)).day);
 
   Future<void> setEndDate(DateTime d) async {
-    this._endDate = d;
-    this._currentDateIndex = 0;
+    _endDate = d;
+    _currentDateIndex = 0;
     await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsInDateRange(
-            startDate, endDate.add(Duration(days: 1)));
-    this.bgMeasurements =
+            startDate, endDate.add(const Duration(days: 1)));
+    bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
     //fetchScrolledDailyData();
     notifyListeners();
   }
 
-  int get scrolledIndex => _scrolledListIndex;
+  int get scrolledIndex => _scrolledListIndex ?? 0;
 
   void setScrolledIndex(int index) {
     setListLastIndex(_scrolledListIndex ?? index);
     _scrolledListIndex = index;
-    _scrolledListIndex > listLastIndex
+    _scrolledListIndex! > listLastIndex
         ? setCurrentDateIndex(1)
-        : _scrolledListIndex < listLastIndex
+        : _scrolledListIndex! < listLastIndex
             ? setCurrentDateIndex(-1)
             : setCurrentDateIndex(1);
     if (selected == LocaleProvider.current.daily ||
@@ -488,7 +492,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
     notifyListeners();
   }
 
-  int get listLastIndex => _listLastIndex;
+  int get listLastIndex => _listLastIndex ?? 0;
 
   void setListLastIndex(int index) {
     _listLastIndex = index;
@@ -497,14 +501,14 @@ class BloodGlucosePatientDetailVm extends RbioVm
   int get currentDateIndex => _currentDateIndex ?? 0;
 
   void setCurrentDateIndex(int value) {
-    this._currentDateIndex += value;
-    if (this._currentDateIndex < 0) {
-      this._currentDateIndex = 0;
+    _currentDateIndex += value;
+    if (_currentDateIndex < 0) {
+      _currentDateIndex = 0;
     }
   }
 
   void fetchScrolledDailyData() {
-    this.bgMeasurementsDailyData.clear();
+    bgMeasurementsDailyData.clear();
     List<DateTime> dateList =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurementDates;
@@ -517,7 +521,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
         if (DateTime(data.date.year, data.date.month, data.date.day)
             .isAtSameMomentAs(DateTime(
                 currentDate.year, currentDate.month, currentDate.day))) {
-          this.bgMeasurementsDailyData.add(data);
+          bgMeasurementsDailyData.add(data);
         }
       }
     }
@@ -528,16 +532,16 @@ class BloodGlucosePatientDetailVm extends RbioVm
 
   void setChartDailyData() {
     List<ChartData> chartData = [];
-    for (var data in this.bgMeasurementsDailyData) {
-      chartData
-          .add(ChartData(data.date, int.parse(data.result), data.resultColor));
+    for (var data in bgMeasurementsDailyData) {
+      chartData.add(
+          ChartData(data.date, int.parse(data.result!), data.resultColor!));
     }
-    this._chartData = chartData;
-    this._chartVeryHighTagged.clear();
-    this._chartHighTagged.clear();
-    this._chartTargetTagged.clear();
-    this._chartLowTagged.clear();
-    this._chartVeryLowTagged.clear();
+    _chartData = chartData;
+    _chartVeryHighTagged.clear();
+    _chartHighTagged.clear();
+    _chartTargetTagged.clear();
+    _chartLowTagged.clear();
+    _chartVeryLowTagged.clear();
     setChartGroupData();
     notifyListeners();
   }
@@ -558,26 +562,26 @@ class BloodGlucosePatientDetailVm extends RbioVm
     List<ChartData> chartDataTok = [];
     List<ChartData> chartDataUnTagged = [];
 
-    for (var data in this.bgMeasurementsDailyData) {
+    for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.very_low) {
         chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+            ChartData(data.date, int.parse(data.result!), data.resultColor!));
         if (data.tag == 1) {
           chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else if (data.tag == 2) {
           chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else {
           chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         }
       }
     }
-    this._chartVeryLow = chartData;
-    this._chartVeryLowTagged.putIfAbsent(1, () => chartDataAc);
-    this._chartVeryLowTagged.putIfAbsent(2, () => chartDataTok);
-    this._chartVeryLowTagged.putIfAbsent(3, () => chartDataUnTagged);
+    _chartVeryLow = chartData;
+    _chartVeryLowTagged.putIfAbsent(1, () => chartDataAc);
+    _chartVeryLowTagged.putIfAbsent(2, () => chartDataTok);
+    _chartVeryLowTagged.putIfAbsent(3, () => chartDataUnTagged);
     notifyListeners();
   }
 
@@ -589,26 +593,26 @@ class BloodGlucosePatientDetailVm extends RbioVm
     List<ChartData> chartDataTok = [];
     List<ChartData> chartDataUnTagged = [];
 
-    for (var data in this.bgMeasurementsDailyData) {
+    for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.low) {
         chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+            ChartData(data.date, int.parse(data.result!), data.resultColor!));
         if (data.tag == 1) {
           chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else if (data.tag == 2) {
           chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else {
           chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         }
       }
     }
-    this._chartLow = chartData;
-    this._chartLowTagged.putIfAbsent(1, () => chartDataAc);
-    this._chartLowTagged.putIfAbsent(2, () => chartDataTok);
-    this._chartLowTagged.putIfAbsent(3, () => chartDataUnTagged);
+    _chartLow = chartData;
+    _chartLowTagged.putIfAbsent(1, () => chartDataAc);
+    _chartLowTagged.putIfAbsent(2, () => chartDataTok);
+    _chartLowTagged.putIfAbsent(3, () => chartDataUnTagged);
     notifyListeners();
   }
 
@@ -620,26 +624,26 @@ class BloodGlucosePatientDetailVm extends RbioVm
     List<ChartData> chartDataTok = [];
     List<ChartData> chartDataUnTagged = [];
 
-    for (var data in this.bgMeasurementsDailyData) {
+    for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.target) {
         chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+            ChartData(data.date, int.parse(data.result!), data.resultColor!));
         if (data.tag == 1) {
           chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else if (data.tag == 2) {
           chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else {
           chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         }
       }
     }
-    this._chartTarget = chartData;
-    this._chartTargetTagged.putIfAbsent(1, () => chartDataAc);
-    this._chartTargetTagged.putIfAbsent(2, () => chartDataTok);
-    this._chartTargetTagged.putIfAbsent(3, () => chartDataUnTagged);
+    _chartTarget = chartData;
+    _chartTargetTagged.putIfAbsent(1, () => chartDataAc);
+    _chartTargetTagged.putIfAbsent(2, () => chartDataTok);
+    _chartTargetTagged.putIfAbsent(3, () => chartDataUnTagged);
     notifyListeners();
   }
 
@@ -651,26 +655,26 @@ class BloodGlucosePatientDetailVm extends RbioVm
     List<ChartData> chartDataTok = [];
     List<ChartData> chartDataUnTagged = [];
 
-    for (var data in this.bgMeasurementsDailyData) {
+    for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.high) {
         chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+            ChartData(data.date, int.parse(data.result!), data.resultColor!));
         if (data.tag == 1) {
           chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else if (data.tag == 2) {
           chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else {
           chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         }
       }
     }
-    this._chartHigh = chartData;
-    this._chartHighTagged.putIfAbsent(1, () => chartDataAc);
-    this._chartHighTagged.putIfAbsent(2, () => chartDataTok);
-    this._chartHighTagged.putIfAbsent(3, () => chartDataUnTagged);
+    _chartHigh = chartData;
+    _chartHighTagged.putIfAbsent(1, () => chartDataAc);
+    _chartHighTagged.putIfAbsent(2, () => chartDataTok);
+    _chartHighTagged.putIfAbsent(3, () => chartDataUnTagged);
     notifyListeners();
   }
 
@@ -682,26 +686,26 @@ class BloodGlucosePatientDetailVm extends RbioVm
     List<ChartData> chartDataTok = [];
     List<ChartData> chartDataUnTagged = [];
 
-    for (var data in this.bgMeasurementsDailyData) {
+    for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.very_high) {
         chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+            ChartData(data.date, int.parse(data.result!), data.resultColor!));
         if (data.tag == 1) {
           chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else if (data.tag == 2) {
           chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         } else {
           chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+              ChartData(data.date, int.parse(data.result!), data.resultColor!));
         }
       }
     }
-    this._chartVeryHigh = chartData;
-    this._chartVeryHighTagged.putIfAbsent(1, () => chartDataAc);
-    this._chartVeryHighTagged.putIfAbsent(2, () => chartDataTok);
-    this._chartVeryHighTagged.putIfAbsent(3, () => chartDataUnTagged);
+    _chartVeryHigh = chartData;
+    _chartVeryHighTagged.putIfAbsent(1, () => chartDataAc);
+    _chartVeryHighTagged.putIfAbsent(2, () => chartDataTok);
+    _chartVeryHighTagged.putIfAbsent(3, () => chartDataUnTagged);
     notifyListeners();
   }
 
@@ -710,26 +714,26 @@ class BloodGlucosePatientDetailVm extends RbioVm
   Future<void> fetchBgMeasurements() async {
     await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurements(patientId: _patientId);
-    this.bgMeasurements =
+    bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
     notifyListeners();
   }
 
   void setChartDataPerData() {
-    this.bgMeasurementsDailyData = this.bgMeasurements;
+    bgMeasurementsDailyData = bgMeasurements;
     setChartGroupData();
   }
 
   void setChartAverageDataPerDay() {
-    this.bgMeasurementsDailyData = bgMeasurements;
+    bgMeasurementsDailyData = bgMeasurements;
     setChartDailyData();
   }
 
   Future<void> nextDate() async {
     await setStartDate(endDate);
     if (selected == LocaleProvider.current.weekly) {
-      await setEndDate(endDate.add(Duration(days: 7)));
+      await setEndDate(endDate.add(const Duration(days: 7)));
     } else if (selected == LocaleProvider.current.monthly) {
       await setEndDate(DateTime(endDate.year, endDate.month + 1, 1));
     } else if (selected == LocaleProvider.current.three_months) {
@@ -742,7 +746,7 @@ class BloodGlucosePatientDetailVm extends RbioVm
   Future<void> previousDate() async {
     await setEndDate(startDate);
     if (selected == LocaleProvider.current.weekly) {
-      await setStartDate(startDate.subtract(Duration(days: 7)));
+      await setStartDate(startDate.subtract(const Duration(days: 7)));
     } else if (selected == LocaleProvider.current.monthly) {
       await setStartDate(DateTime(startDate.year, startDate.month - 1, 1));
     } else if (selected == LocaleProvider.current.three_months) {
@@ -760,47 +764,47 @@ class BloodGlucosePatientDetailVm extends RbioVm
     } else {
       await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
           .fetchBgMeasurementsInDateRange(
-              startDate, endDate.add(Duration(days: 1)));
+              startDate, endDate.add(const Duration(days: 1)));
     }
     filterDatas();
   }
 
   filterDatas() {
-    this.bgMeasurements =
+    bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
-    this.bgMeasurements.removeWhere((element) =>
-        (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
+    bgMeasurements.removeWhere((element) =>
+        (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
             element.resultColor == R.color.very_high) ||
-        (!isFilterSelected(GlucoseMarginsFilter.HIGH) &&
+        (!isFilterSelected(GlucoseMarginsFilter.high) &&
             element.resultColor == R.color.high) ||
-        (!isFilterSelected(GlucoseMarginsFilter.TARGET) &&
+        (!isFilterSelected(GlucoseMarginsFilter.target) &&
             element.resultColor == R.color.target) ||
-        (!isFilterSelected(GlucoseMarginsFilter.LOW) &&
+        (!isFilterSelected(GlucoseMarginsFilter.low) &&
             element.resultColor == R.color.low) ||
-        (!isFilterSelected(GlucoseMarginsFilter.VERY_LOW) &&
+        (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
             element.resultColor == R.color.very_low) ||
-        (!isFilterSelected(GlucoseMarginsFilter.HUNGRY) && element.tag == 1) ||
-        (!isFilterSelected(GlucoseMarginsFilter.FULL) && element.tag == 2) ||
-        (!isFilterSelected(GlucoseMarginsFilter.OTHER) &&
+        (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
+        (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
+        (!isFilterSelected(GlucoseMarginsFilter.other) &&
             element.tag != 1 &&
             element.tag != 2));
     Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsDateList(bgMeasurements);
-    this.bgMeasurementsDailyData.removeWhere((element) =>
-        (!isFilterSelected(GlucoseMarginsFilter.VERY_HIGH) &&
+    bgMeasurementsDailyData.removeWhere((element) =>
+        (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
             element.resultColor == R.color.very_high) ||
-        (!isFilterSelected(GlucoseMarginsFilter.HIGH) &&
+        (!isFilterSelected(GlucoseMarginsFilter.high) &&
             element.resultColor == R.color.high) ||
-        (!isFilterSelected(GlucoseMarginsFilter.TARGET) &&
+        (!isFilterSelected(GlucoseMarginsFilter.target) &&
             element.resultColor == R.color.target) ||
-        (!isFilterSelected(GlucoseMarginsFilter.LOW) &&
+        (!isFilterSelected(GlucoseMarginsFilter.low) &&
             element.resultColor == R.color.low) ||
-        (!isFilterSelected(GlucoseMarginsFilter.VERY_LOW) &&
+        (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
             element.resultColor == R.color.very_low) ||
-        (!isFilterSelected(GlucoseMarginsFilter.HUNGRY) && element.tag == 1) ||
-        (!isFilterSelected(GlucoseMarginsFilter.FULL) && element.tag == 2) ||
-        (!isFilterSelected(GlucoseMarginsFilter.OTHER) &&
+        (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
+        (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
+        (!isFilterSelected(GlucoseMarginsFilter.other) &&
             element.tag != 1 &&
             element.tag != 2));
     if (selected == LocaleProvider.current.daily ||
@@ -831,20 +835,21 @@ class BloodGlucosePatientDetailVm extends RbioVm
       barrierDismissible: true,
       builder: (BuildContext context) {
         return GradientDialog(
-          LocaleProvider.current.warning,
-          text,
+          title: LocaleProvider.current.warning,
+          text: text,
         );
       },
     ).then((value) => Navigator.pop(mContext));
   }
 
-  void showFilter(BuildContext tcontext) {
+  @override
+  void showFilter(BuildContext context) {
     Atom.show(
       ChangeNotifierProvider<BloodGlucosePatientDetailVm>.value(
         value: this,
         child: _ChartFilter(
-          height: tcontext.HEIGHT * .52,
-          width: tcontext.WIDTH * .6,
+          height: context.height * .52,
+          width: context.width * .6,
         ),
       ),
       barrierColor: Colors.black12,

@@ -7,11 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/core/utils/stacked_widget/stacked_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/core.dart';
-import '../../../chronic_tracking/lib/core/utils/stacked_widget/stacked_widget.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
 import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
@@ -24,7 +24,7 @@ part '../widget/graph_header_section.dart';
 part '../widget/measurement_list.dart';
 
 class BmiPatientDetailScreen extends StatefulWidget {
-  const BmiPatientDetailScreen({Key key}) : super(key: key);
+  const BmiPatientDetailScreen({Key? key}) : super(key: key);
 
   @override
   State<BmiPatientDetailScreen> createState() => _BmiPatientDetailScreenState();
@@ -33,12 +33,12 @@ class BmiPatientDetailScreen extends StatefulWidget {
 class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
     with SingleTickerProviderStateMixin {
   // Page Params Section
-  int patientId;
-  String patientName;
+  late int patientId;
+  late String patientName;
   // #Page Params Section End
 
-  AnimationController animationController;
-  Animation<double> sizeAnimation;
+  late AnimationController animationController;
+  late Animation<double> sizeAnimation;
 
   final _controller = ScrollController();
   final _dropdownBannerKey = GlobalKey<NavigatorState>();
@@ -70,10 +70,10 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
   @override
   Widget build(BuildContext context) {
     try {
-      patientName = Atom.queryParameters['patientName'];
-      patientId = int.parse(Atom.queryParameters['patientId']);
+      patientName = Atom.queryParameters['patientName']!;
+      patientId = int.parse(Atom.queryParameters['patientId']!);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     MediaQuery.of(context).orientation == Orientation.landscape
@@ -112,7 +112,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
               isDark: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
         ],
@@ -121,7 +121,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
   Widget _buildBody(BmiPatientDetailVm vm) => SingleChildScrollView(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -131,7 +131,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
             _buildExpandedUser(),
 
             //
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
 
             //
             if (!vm.isDataLoading) ...[
@@ -142,7 +142,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
                     )
                   : Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
+                          EdgeInsets.symmetric(vertical: context.height * .02),
                       child: RbioElevatedButton(
                         title: LocaleProvider.current.open_chart,
                         onTap: vm.changeChartShowStatus,
@@ -153,15 +153,15 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
               if (MediaQuery.of(context).orientation == Orientation.portrait)
                 SizedBox(
                   height: vm.isChartShow
-                      ? context.HEIGHT * .5
-                      : context.HEIGHT * .8,
+                      ? context.height * .5
+                      : context.height * .8,
                   child: _MeasurementList(
                     scaleMeasurements: vm.scaleMeasurement,
                     fetchScrolledData: vm.fetchScrolledData,
                     scrollController: vm.controller,
                     useStickyGroupSeparatorsValue:
-                        vm.selected == LocaleProvider.current.daily ||
-                                vm.selected == LocaleProvider.current.specific
+                        vm.selected == TimePeriodFilter.daily ||
+                                vm.selected == TimePeriodFilter.spesific
                             ? true
                             : false,
                     selected: vm.currentScaleType,
@@ -170,11 +170,11 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
             ] else ...[
               Shimmer.fromColors(
                 child: SizedBox(
-                  height: context.HEIGHT * .3,
+                  height: context.height * .3,
                   width: double.infinity,
                 ),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[100],
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
               ),
             ],
           ],
@@ -182,7 +182,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
       );
 
   Widget _buildExpandedUser() {
-    return Container(
+    return SizedBox(
       height: 50,
       width: double.infinity,
       child: Row(
@@ -203,7 +203,7 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
               },
               child: Container(
                 height: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: getIt<ITheme>().cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
@@ -219,9 +219,9 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
                     //
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          patientName ?? '',
+                          patientName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(
@@ -243,16 +243,16 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
           ),
 
           //
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
 
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.DOCTOR_TREATMENT_PROCESS);
+              Atom.to(PagePaths.doctorTreatmentProgress);
             },
             child: Container(
               height: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,

@@ -3,8 +3,9 @@
 part of '../view/blood_glucose_patient_detail_screen.dart';
 
 class _HyperPicker extends StatelessWidget {
-  int hyper;
+  late int hyper;
 
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BloodGlucosePatientPickerVm>(
       create: (BuildContext context) => BloodGlucosePatientPickerVm(context),
@@ -12,7 +13,7 @@ class _HyperPicker extends StatelessWidget {
         builder: (
           BuildContext context,
           BloodGlucosePatientPickerVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return _buildDialog(vm, context);
         },
@@ -22,7 +23,7 @@ class _HyperPicker extends StatelessWidget {
 
   Dialog _buildDialog(BloodGlucosePatientPickerVm value, BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
       ),
       child: Column(
@@ -32,7 +33,7 @@ class _HyperPicker extends StatelessWidget {
         children: [
           //
           ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
             child: SizedBox(
               height: 300,
               child: CupertinoPicker(
@@ -54,10 +55,10 @@ class _HyperPicker extends StatelessWidget {
           InkWell(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
                 color: getIt<ITheme>().mainColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(12.0),
                   bottomRight: Radius.circular(12.0),
                 ),
@@ -76,7 +77,7 @@ class _HyperPicker extends StatelessWidget {
               value.updatePatientLimit(
                 id: Provider.of<PatientNotifiers>(context, listen: false)
                     .patientDetail
-                    .id,
+                    .id!,
               );
             },
           ),

@@ -4,9 +4,9 @@ class _CustomBarPie extends StatelessWidget {
   final double width;
   final double height;
 
-  _CustomBarPie({
-    @required this.width,
-    @required this.height,
+  const _CustomBarPie({
+    required this.width,
+    required this.height,
   });
 
   @override
@@ -14,14 +14,14 @@ class _CustomBarPie extends StatelessWidget {
     return Consumer<BloodGlucosePatientDetailVm>(builder: (
       BuildContext context,
       BloodGlucosePatientDetailVm value,
-      Widget child,
+      Widget? child,
     ) {
       return _buildContainer(value);
     });
   }
 
   Widget _buildContainer(BloodGlucosePatientDetailVm value) {
-    return Container(
+    return SizedBox(
       width: width,
       child: value.totalValuableCount == 0
           ? SizedBox(
@@ -34,7 +34,7 @@ class _CustomBarPie extends StatelessWidget {
               children: [
                 //
                 AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   height: height,
                   width: value.totalValuableCount == 0
                       ? 0
@@ -55,7 +55,7 @@ class _CustomBarPie extends StatelessWidget {
 
                 //
                 AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   height: height,
                   width: value.totalValuableCount == 0
                       ? 0
@@ -76,7 +76,7 @@ class _CustomBarPie extends StatelessWidget {
 
                 //
                 AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   height: height,
                   width: value.totalValuableCount == 0
                       ? 0
@@ -97,7 +97,7 @@ class _CustomBarPie extends StatelessWidget {
 
                 //
                 AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   height: height,
                   width: value.totalValuableCount == 0
                       ? 0
@@ -118,7 +118,7 @@ class _CustomBarPie extends StatelessWidget {
 
                 //
                 AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   height: height,
                   width: value.totalValuableCount == 0
                       ? 0
@@ -151,13 +151,13 @@ class _CustomBarPie extends StatelessWidget {
                 fit: BoxFit.fitWidth,
                 child: Column(
                   children: [
-                    Text("%"),
+                    const Text("%"),
                     Countup(
                       begin: 0.0,
                       end: count,
                       precision: 1,
-                      duration: Duration(seconds: 1),
-                      style: TextStyle(
+                      duration: const Duration(seconds: 1),
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.black54,
                         fontWeight: FontWeight.bold,

@@ -2,10 +2,10 @@ part of '../view/blood_glucose_patient_detail_screen.dart';
 
 class BloodGlucosePatientPickerVm extends ChangeNotifier {
   BuildContext context;
-  int _startValue, _endValue;
-  LoadingProgress _stateProcess;
-  ProgressDialog progressDialog;
-  var _lowerValue, _higherValue, _hypoValue, _hyperValue;
+  int? _startValue, _endValue;
+  LoadingProgress? _stateProcess;
+  ProgressDialog? progressDialog;
+  double? _lowerValue, _higherValue, _hypoValue, _hyperValue;
 
   List<int> min = [];
   List<int> max = [];
@@ -23,56 +23,55 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
   }
 
   setThumbStartValue(int startValue) {
-    this._startValue = _startValue;
+    _startValue = _startValue;
     notifyListeners();
   }
 
-  int get thumbStartValue => this._startValue;
+  int get thumbStartValue => _startValue ?? 0;
 
-  LoadingProgress get stateProcess => _stateProcess;
+  LoadingProgress get stateProcess => _stateProcess ?? LoadingProgress.loading;
 
   setThumbEndValue(int endValue) {
-    this._endValue = _endValue;
+    _endValue = _endValue;
     notifyListeners();
   }
 
-  int get thumbEndValue => this.thumbEndValue;
   get hypoValue =>
-      this._hypoValue ??
+      _hypoValue ??
       Provider.of<PatientNotifiers>(context, listen: false).patientDetail.hypo;
 
   get lowerValue =>
-      this._lowerValue ??
+      _lowerValue ??
       Provider.of<PatientNotifiers>(context, listen: false)
           .patientDetail
           .rangeMin;
 
   get higherValue =>
-      this._higherValue ??
+      _higherValue ??
       Provider.of<PatientNotifiers>(context, listen: false)
           .patientDetail
           .rangeMax;
 
   get hyperValue =>
-      this._hyperValue ??
+      _hyperValue ??
       Provider.of<PatientNotifiers>(context, listen: false).patientDetail.hyper;
 
   setTargetRange(var lowerValue, var higherValue) {
-    this._lowerValue = lowerValue;
-    this._higherValue = higherValue;
+    _lowerValue = lowerValue;
+    _higherValue = higherValue;
 
     notifyListeners();
   }
 
   setHypoValue(var value) {
-    this._hypoValue = value;
+    _hypoValue = value;
 
     buildHypoRange();
     notifyListeners();
   }
 
   setHyperValue(var value) {
-    this._hyperValue = value;
+    _hyperValue = value;
     buildHyperRange();
   }
 
@@ -82,9 +81,9 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
     for (int i = 0; i < lowerValue; i = i + 10) {
       hypoRange.add(i);
     }
-    hypoRange.forEach((number) {
+    for (var number in hypoRange) {
       hypoRangeWidget.add(Center(child: Text(number.toString())));
-    });
+    }
     return hypoRange;
   }
 
@@ -94,9 +93,9 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
     for (int i = higherValue; i < 1000; i = i + 10) {
       hyperRange.add(i);
     }
-    hyperRange.forEach((number) {
+    for (var number in hyperRange) {
       hyperRangeWidget.add(Center(child: Text(number.toString())));
-    });
+    }
     return hyperRange;
   }
 
@@ -111,19 +110,19 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
     for (int i = lowerValue + 10; i <= hyperValue; i = i + 10) {
       max.add(i);
     }
-    min.forEach((number) {
+    for (var number in min) {
       minWidget.add(Text(number.toString()));
-    });
-    max.forEach((number) {
+    }
+    for (var number in max) {
       maxWidget.add(Text(number.toString()));
-    });
+    }
     notifyListeners();
   }
 
-  updatePatientLimit({@required int id}) async {
-    this._stateProcess = LoadingProgress.LOADING;
+  updatePatientLimit({required int id}) async {
+    _stateProcess = LoadingProgress.loading;
     showLoadingDialog();
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     try {
       await Provider.of<PatientNotifiers>(context, listen: false)
           .updatePatientLimit(
@@ -138,15 +137,15 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
                   ));
       await Provider.of<PatientNotifiers>(context, listen: false)
           .fetchPatientDetail(patientId: id);
-      this._stateProcess = LoadingProgress.DONE;
+      _stateProcess = LoadingProgress.done;
       hideDialog(context);
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 300));
       Navigator.pop(context, true);
     } catch (e) {
       LoggerUtils.instance.i(e);
       hideDialog(context);
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
-      this._stateProcess = LoadingProgress.ERROR;
+      _stateProcess = LoadingProgress.error;
     }
   }
 
@@ -155,12 +154,12 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) =>
-          progressDialog = progressDialog ?? ProgressDialog(),
+          progressDialog = progressDialog ?? const ProgressDialog(),
     );
   }
 
   void hideDialog(BuildContext context) {
-    if (progressDialog != null && progressDialog.isShowing()) {
+    if (progressDialog != null && progressDialog!.isShowing()) {
       Navigator.of(context).pop();
       progressDialog = null;
     }
@@ -171,7 +170,8 @@ class BloodGlucosePatientPickerVm extends ChangeNotifier {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return GradientDialog(LocaleProvider.current.warning, text);
+        return GradientDialog(
+            title: LocaleProvider.current.warning, text: text);
       },
     ).then((value) => Navigator.pop(context));
   }
