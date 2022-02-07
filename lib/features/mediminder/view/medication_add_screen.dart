@@ -821,7 +821,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
     String title = '';
     final list = widget.vm.days;
     for (var element in list) {
-      if (element.selected ?? false) {
+      if (element.selected) {
         title += (title.isEmpty ? '' : ', ') + (element.shortName ?? '');
       }
     }
