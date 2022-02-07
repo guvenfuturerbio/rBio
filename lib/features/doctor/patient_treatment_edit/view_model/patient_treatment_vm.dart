@@ -7,14 +7,14 @@ import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
 
 class PatientTreatmentEditVm extends ChangeNotifier {
   TreatmentModel selectedModel;
-  String patientName;
+  late String patientName;
   PatientTreatmentEditVm(this.selectedModel) {
-    patientName = PatientNotifiers().patientDetail.name;
+    patientName = PatientNotifiers().patientDetail.name!;
   }
 
   save(String treatment) async {
     await getIt<DoctorRepository>().updateMyPatientLimit(
-        PatientNotifiers().patientDetail.id,
+        PatientNotifiers().patientDetail.id!,
         UpdateMyPatientLimit(
             rangeMax: PatientNotifiers().patientDetail.rangeMax,
             rangeMin: PatientNotifiers().patientDetail.rangeMin,
@@ -22,7 +22,7 @@ class PatientTreatmentEditVm extends ChangeNotifier {
             hypo: PatientNotifiers().patientDetail.hypo,
             treatment: treatment));
     await PatientNotifiers()
-        .fetchPatientDetail(patientId: PatientNotifiers().patientDetail.id);
+        .fetchPatientDetail(patientId: PatientNotifiers().patientDetail.id!);
     Atom.historyBack();
   }
 }

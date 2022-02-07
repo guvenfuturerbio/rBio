@@ -22,28 +22,21 @@ class DoctorPatientListVm extends RbioVm {
   BuildContext mContext;
   PatientType type;
 
-  PatientListModel listModel;
+  late PatientListModel listModel;
 
   DoctorPatientListVm(this.mContext, this.type) {
     fetchAll();
   }
 
-  LoadingProgress _progress;
-  LoadingProgress get progress => _progress;
-  set progress(LoadingProgress value) {
-    _progress = value;
-    notifyListeners();
-  }
-
   Future<void> fetchAll() async {
     try {
-      progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       listModel = await _getAllByType();
-      progress = LoadingProgress.DONE;
+      progress = LoadingProgress.done;
     } catch (e, stackTrace) {
       log(e.toString());
       debugPrintStack(stackTrace: stackTrace);
-      progress = LoadingProgress.ERROR;
+      progress = LoadingProgress.error;
       Sentry.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         LocaleProvider.current.warning,
@@ -69,7 +62,7 @@ class DoctorPatientListVm extends RbioVm {
           );
         }
 
-      case PatientType.BMI:
+      case PatientType.bmi:
         {
           return PatientBMIListModel(
             mContext,
@@ -82,7 +75,7 @@ class DoctorPatientListVm extends RbioVm {
           );
         }
 
-      case PatientType.Bp:
+      case PatientType.bp:
         {
           return PatientBloodPressureListModel(
             mContext,

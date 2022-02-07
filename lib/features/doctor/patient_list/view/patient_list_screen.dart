@@ -11,10 +11,9 @@ import '../viewmodel/patient_list_vm.dart';
 
 // ignore: must_be_immutable
 class DoctorPatientListScreen extends StatelessWidget {
-  DoctorPatientListScreen({Key key}) : super(key: key);
 
   // #region AtomParams
-  PatientType type;
+  late PatientType type;
   // #endregion
 
   final bigFlex = 40;
@@ -22,13 +21,15 @@ class DoctorPatientListScreen extends StatelessWidget {
 
   final FocusNode _searchfocusNode = FocusNode();
 
+  DoctorPatientListScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     try {
-      type = Atom.queryParameters['type'].xPatientType;
+      type = Atom.queryParameters['type']!.xPatientType as PatientType;
     } catch (e) {
-      log(e);
-      return RbioRouteError();
+      log(e.toString());
+      return const RbioRouteError();
     }
 
     return KeyboardDismissOnTap(
@@ -40,7 +41,7 @@ class DoctorPatientListScreen extends StatelessWidget {
             builder: (
               BuildContext context,
               DoctorPatientListVm vm,
-              Widget child,
+              Widget? child,
             ) {
               return _buildBody(context, vm);
             },
@@ -60,7 +61,7 @@ class DoctorPatientListScreen extends StatelessWidget {
               isDark: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
         ],
@@ -70,17 +71,17 @@ class DoctorPatientListScreen extends StatelessWidget {
   // #region _buildBody
   Widget _buildBody(BuildContext context, DoctorPatientListVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return _buildPatients(context, vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
   // #endregion
@@ -100,7 +101,7 @@ class DoctorPatientListScreen extends StatelessWidget {
             _buildSearchFilterBar(context, vm),
 
             //
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             //
             Expanded(
@@ -113,7 +114,7 @@ class DoctorPatientListScreen extends StatelessWidget {
 
   // #region _buildSearchFilterBar
   Widget _buildSearchFilterBar(BuildContext context, DoctorPatientListVm vm) {
-    return Container(
+    return SizedBox(
       height: 50,
       width: double.infinity,
       child: Row(
@@ -139,7 +140,7 @@ class DoctorPatientListScreen extends StatelessWidget {
           ),
 
           //
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
 
           //
           Theme(
@@ -153,7 +154,7 @@ class DoctorPatientListScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: Container(
                 height: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 32),
+                padding: const EdgeInsets.symmetric(horizontal: 32),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: getIt<ITheme>().cardBackgroundColor,
@@ -201,7 +202,7 @@ class DoctorPatientListScreen extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemCount: vm.getitemCount,
       itemBuilder: (BuildContext context, int index) {
         return R.sizes.textScaleBuilder(
@@ -219,29 +220,29 @@ class DoctorPatientListScreen extends StatelessWidget {
     BuildContext context,
     DoctorPatientListVm vm,
     PatientListItemModel model, {
-    @required bool isLarge,
+    required bool isLarge,
   }) {
     if (isLarge) {
       return _buildLargeCard(
         context,
         onTap: () => vm.itemOnTap(model.data),
-        name: model.patientName,
+        name: model.patientName ?? "",
         dates: model.dates
-            .map(
+            !.map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
         times: model.times
-            .map(
+            !.map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
         values: model.values
-            .map(
+            !.map(
               (e) => _buildSmallExpanded(
                 child: _buildColorfulText(
                   true,
@@ -257,23 +258,23 @@ class DoctorPatientListScreen extends StatelessWidget {
       return _buildSmallCard(
         context,
         onTap: () => vm.itemOnTap(model.data),
-        name: model.patientName,
+        name: model.patientName ??"",
         dates: model.dates
-            .map(
+            !.map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
         times: model.times
-            .map(
+            !.map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
         values: model.values
-            .map(
+           ! .map(
               (e) => _buildSmallExpanded(
                 child: _buildColorfulText(
                   true,
@@ -290,18 +291,18 @@ class DoctorPatientListScreen extends StatelessWidget {
   // #endregion
 
   // #region _buildSmallExpanded
-  Widget _buildSmallExpanded({@required Widget child}) =>
+  Widget _buildSmallExpanded({required Widget child}) =>
       Expanded(flex: smallFlex, child: child);
   // #endregion
 
   // #region _buildLargeCard
   Widget _buildLargeCard(
     BuildContext context, {
-    @required void Function() onTap,
-    @required String name,
-    @required List<Widget> dates,
-    @required List<Widget> times,
-    @required List<Widget> values,
+    required void Function() onTap,
+    required String name,
+    required List<Widget> dates,
+    required List<Widget> times,
+    required List<Widget> values,
   }) {
     return InkWell(
       onTap: onTap,
@@ -355,7 +356,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                       ),
 
                       //
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
 
                       //
                       RbioBadge(
@@ -368,7 +369,7 @@ class DoctorPatientListScreen extends StatelessWidget {
               ),
 
               //
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
 
               //
               Row(
@@ -395,11 +396,11 @@ class DoctorPatientListScreen extends StatelessWidget {
   // #region _buildSmallCard
   Widget _buildSmallCard(
     BuildContext context, {
-    @required void Function() onTap,
-    @required String name,
-    @required List<Widget> dates,
-    @required List<Widget> times,
-    @required List<Widget> values,
+    required void Function() onTap,
+    required String name,
+    required List<Widget> dates,
+    required List<Widget> times,
+    required List<Widget> values,
   }) {
     return InkWell(
       onTap: onTap,
@@ -485,7 +486,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                               ),
 
                               //
-                              Spacer(),
+                              const Spacer(),
 
                               //
                               Expanded(
@@ -496,7 +497,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                               ),
 
                               //
-                              Spacer(),
+                              const Spacer(),
                             ],
                           ),
                         ),
@@ -591,9 +592,9 @@ class DoctorPatientListScreen extends StatelessWidget {
   }
 
   String getTitle() {
-    if (type == PatientType.Bp) {
+    if (type == PatientType.bp) {
       return LocaleProvider.current.blood_pressure_tracking;
-    } else if (type == PatientType.BMI) {
+    } else if (type == PatientType.bmi) {
       return LocaleProvider.current.bmi_tracking;
     } else if (type == PatientType.sugar) {
       return LocaleProvider.current.bg_measurement_tracking;

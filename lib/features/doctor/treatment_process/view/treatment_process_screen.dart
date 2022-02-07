@@ -11,7 +11,8 @@ import '../../../../core/core.dart';
 part '../model/treatment_process_model.dart';
 
 class DoctorTreatmentProcessScreen extends StatefulWidget {
-  DoctorTreatmentProcessScreen({Key key}) : super(key: key);
+  const DoctorTreatmentProcessScreen({Key? key}) : super(key: key);
+
 
   @override
   _DoctorTreatmentProcessScreenState createState() =>
@@ -36,11 +37,11 @@ class _DoctorTreatmentProcessScreenState
               image: R.image.chat_icon,
               isDark: false,
               onTap: () {
-                Atom.to(PagePaths.DOCTOR_CONSULTATION);
+                Atom.to(PagePaths.doctorCosultation);
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
         ],
@@ -54,22 +55,21 @@ class _DoctorTreatmentProcessScreenState
     return ListView.builder(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemCount: context
           .watch<PatientNotifiers>()
           .patientDetail
-          .treatmentModelList
-          .length,
+          .treatmentModelList?.length,
       itemBuilder: (BuildContext context, int index) {
         var _item = context
             .watch<PatientNotifiers>()
             .patientDetail
-            .treatmentModelList[index];
+            .treatmentModelList?[index];
         TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
-            id: _item.id,
-            title: _item.createDate.xFormatTime9(),
-            description: _item.treatment,
-            dateTime: _item.createDate);
+            id: _item?.id,
+            title: _item?.createDate?.xFormatTime9(),
+            description: _item?.treatment,
+            dateTime: _item?.createDate);
         return _buildCard(_tempItem, index == 0 ? true : false);
       },
     );
@@ -78,7 +78,7 @@ class _DoctorTreatmentProcessScreenState
   Widget _buildCard(TreatmentProcessItemModel item, bool newModel) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.DOCTOR_TREATMENT_EDIT, queryParameters: {
+        Atom.to(PagePaths.doctorTreatmentEdit, queryParameters: {
           'treatment_model': jsonEncode(item.toJson()),
           'newModel': newModel.toString()
         });
@@ -111,7 +111,7 @@ class _DoctorTreatmentProcessScreenState
                         //
                         Expanded(
                           child: Text(
-                            item.title ?? '',
+                            item.title ??"",
                             style: context.xHeadline4.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -130,7 +130,7 @@ class _DoctorTreatmentProcessScreenState
 
                     //
                     Text(
-                      item.description ?? '',
+                      item.description??"" ,
                       style: context.xHeadline5.copyWith(
                         color: getIt<ITheme>().textColorPassive,
                       ),
@@ -141,7 +141,7 @@ class _DoctorTreatmentProcessScreenState
 
               //
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 10,
                 ),
                 child: SvgPicture.asset(

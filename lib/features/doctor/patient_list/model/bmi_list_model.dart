@@ -18,16 +18,16 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
       data: e,
       patientName: e.name,
       dates: e.bmiMeasurements
-          .map((item) => item.occurrenceTime != null
+          !.map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
               : '')
           .toList(),
       times: e.bmiMeasurements
-          .map((item) => item.occurrenceTime != null
+          !.map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: e.bmiMeasurements.map((item) => '${item.weight}').toList(),
+      values: e.bmiMeasurements!.map((item) => '${item.weight}').toList(),
     );
   }
 
@@ -38,7 +38,7 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
 
   @override
   List<Widget> getPopupWidgets({
-    @required void Function(DoctorPatientListSortType sortType) onSelect,
+    required void Function(DoctorPatientListSortType sortType)? onSelect,
   }) {
     return [
       getPopupItem(
@@ -55,7 +55,7 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
       _filterList = _list;
     } else {
       _filterList = _list
-          .where((item) => item.name.toLowerCase().contains(text.toLowerCase()))
+          .where((item) => item.name!.toLowerCase().contains(text.toLowerCase()))
           .toList();
     }
   }
@@ -78,10 +78,10 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
     LoggerUtils.instance.i('$model');
 
     Atom.to(
-      PagePaths.BMI_PATIENT_DETAIL,
+      PagePaths.doctorBmiPatientDetail,
       queryParameters: {
         'patientId': model.id.toString(),
-        'patientName': model.name,
+        'patientName': model.name??"",
       },
     );
   }

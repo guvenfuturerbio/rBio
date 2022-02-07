@@ -19,16 +19,16 @@ class PatientBloodGlucoseListModel
       data: e,
       patientName: e.name,
       dates: e.measurements
-          .map((item) => item.measurementTime != null
+          !.map((item) => item.measurementTime != null
               ? DateTime.parse(item.measurementTime ?? '').xFormatTime7()
               : '')
           .toList(),
       times: e.measurements
-          .map((item) => item.measurementTime != null
+          !.map((item) => item.measurementTime != null
               ? DateTime.parse(item.measurementTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: e.measurements.map((item) => '${item.measurement}').toList(),
+      values: e.measurements!.map((item) => '${item.measurement}').toList(),
     );
   }
 
@@ -37,23 +37,23 @@ class PatientBloodGlucoseListModel
     return text == '' || text == null
         ? getIt<ITheme>().cardBackgroundColor
         : Utils.instance.fetchMeasurementColor(
-            measurement: _textToInt(text ?? ""),
-            criticMin: model?.alertMin?.toInt() ?? 0,
-            criticMax: model?.alertMax?.toInt() ?? 0,
-            targetMax: model?.normalMax?.toInt() ?? 0,
-            targetMin: model?.normalMin?.toInt() ?? 0,
+            measurement: _textToInt(text),
+            criticMin: model.alertMin?.toInt() ?? 0,
+            criticMax: model.alertMax?.toInt() ?? 0,
+            targetMax: model.normalMax?.toInt() ?? 0,
+            targetMin: model.normalMin?.toInt() ?? 0,
           );
   }
 
   @override
   List<Widget> getPopupWidgets({
-    @required void Function(DoctorPatientListSortType sortType) onSelect,
+    @required void Function(DoctorPatientListSortType sortType)? onSelect,
   }) {
     return [
       getPopupItem(
         LocaleProvider.of(context).critical_metrics,
         DoctorPatientListSortType.criticalMetrics,
-        onSelect,
+        onSelect!,
       ),
       getPopupItem(
         LocaleProvider.of(context).from_newest,
@@ -74,7 +74,7 @@ class PatientBloodGlucoseListModel
       _filterList = _list;
     } else {
       _filterList = _list
-          .where((item) => item.name.toLowerCase().contains(text.toLowerCase()))
+          .where((item) => item.name?.toLowerCase().contains(text.toLowerCase() )as bool)
           .toList();
     }
   }
@@ -102,10 +102,10 @@ class PatientBloodGlucoseListModel
   @override
   void itemOnTap(DoctorGlucosePatientModel model) {
     Atom.to(
-      PagePaths.BLOOD_GLUCOSE_PATIENT_DETAIL,
+      PagePaths.doctorGlucosePatientDetailL,
       queryParameters: {
         'patientId': model.id.toString(),
-        'patientName': model.name,
+        'patientName': model.name ??"",
       },
     );
   }
@@ -114,7 +114,7 @@ class PatientBloodGlucoseListModel
   int _textToInt(String text) {
     if (text == null) {
       return 0;
-    } else if (text.length > 0) {
+    } else if (text.isNotEmpty) {
       return int.parse(text);
     } else {
       return 0;

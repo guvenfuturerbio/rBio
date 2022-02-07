@@ -9,7 +9,8 @@ import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
 import 'package:provider/provider.dart';
 
 class PatientTreatmentEditView extends StatefulWidget {
-  const PatientTreatmentEditView({Key key}) : super(key: key);
+  const PatientTreatmentEditView({Key? key}) : super(key: key);
+
 
   @override
   State<PatientTreatmentEditView> createState() =>
@@ -17,9 +18,9 @@ class PatientTreatmentEditView extends StatefulWidget {
 }
 
 class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
-  TextEditingController textEditingController;
-  TreatmentModel _treatmentModel;
-  bool newModel;
+  late TextEditingController textEditingController;
+  late TreatmentModel _treatmentModel;
+  late bool newModel;
 
   @override
   void initState() {
@@ -40,12 +41,12 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
     try {
       newModel = Atom.queryParameters['newModel'] == 'true';
       _treatmentModel = TreatmentModel.fromJson(
-          jsonDecode(Atom.queryParameters['treatment_model']));
-      textEditingController.text = _treatmentModel.treatment;
+          jsonDecode(Atom.queryParameters['treatment_model']!));
+      textEditingController.text = _treatmentModel.treatment!;
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
       LoggerUtils.instance.e(e.toString());
-      return RbioRouteError();
+      return const RbioRouteError();
     }
     return KeyboardDismissOnTap(
       child: ChangeNotifierProvider<PatientTreatmentEditVm>(
@@ -72,7 +73,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
               isDark: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
         ],
@@ -91,7 +92,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
 
           //
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 8,
               left: 16,
               right: 8,
@@ -126,7 +127,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
           ),
 
           //
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
 
@@ -162,7 +163,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
             ],
           );
         } else {
-          return SizedBox();
+          return const SizedBox();
         }
       },
     );
@@ -172,7 +173,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
     return Container(
       height: 50,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
@@ -188,9 +189,9 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
           //
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Text(
-                ctx.watch<PatientTreatmentEditVm>().patientName ?? '',
+                ctx.watch<PatientTreatmentEditVm>().patientName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: context.xHeadline5.copyWith(
@@ -218,7 +219,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
               ctx
                       .read<PatientTreatmentEditVm>()
                       .selectedModel
-                      ?.createDate
+                      .createDate
                       ?.xFormatTime9() ??
                   DateTime.now().xFormatTime9(),
               textAlign: TextAlign.end,

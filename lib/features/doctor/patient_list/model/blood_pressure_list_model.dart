@@ -19,16 +19,16 @@ class PatientBloodPressureListModel
       data: e,
       patientName: e.name,
       dates: e.bpMeasurements
-          .map((item) => item.occurrenceTime != null
+          !.map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
               : '')
           .toList(),
       times: e.bpMeasurements
-          .map((item) => item.occurrenceTime != null
+          !.map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: e.bpMeasurements.map((item) => '${item.sysValue}').toList(),
+      values: e.bpMeasurements!.map((item) => '${item.sysValue}').toList(),
     );
   }
 
@@ -39,13 +39,13 @@ class PatientBloodPressureListModel
 
   @override
   List<Widget> getPopupWidgets({
-    @required void Function(DoctorPatientListSortType sortType) onSelect,
+    @required void Function(DoctorPatientListSortType sortType)? onSelect,
   }) {
     return [
       getPopupItem(
         LocaleProvider.of(context).from_newest,
         DoctorPatientListSortType.fromNewest,
-        onSelect,
+        onSelect!,
       ),
       getPopupItem(
         LocaleProvider.of(context).from_oldest,
@@ -61,7 +61,7 @@ class PatientBloodPressureListModel
       _filterList = _list;
     } else {
       _filterList = _list
-          .where((item) => item.name.toLowerCase().contains(text.toLowerCase()))
+          .where((item) => item.name?.toLowerCase().contains(text.toLowerCase()) as bool)
           .toList();
     }
   }
@@ -85,9 +85,9 @@ class PatientBloodPressureListModel
   @override
   void itemOnTap(DoctorBloodPressurePatientModel model) {
     LoggerUtils.instance.i('OnTap : ${model.id}');
-    Atom.to(PagePaths.BLOOD_PRESSURE_PATIENT_DETAIL, queryParameters: {
+    Atom.to(PagePaths.doctorPressurePatientDetail, queryParameters: {
       'patientId': model.id.toString(),
-      'patientName': model.name,
+      'patientName': model.name!,
     });
   }
 }
