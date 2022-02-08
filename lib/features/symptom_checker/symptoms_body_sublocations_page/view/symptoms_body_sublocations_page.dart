@@ -138,7 +138,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 8),
                           child: Text(
-                            '${value.bodySubLocations[index].name}',
+                            '${value.bodySubLocations[index]!.name}',
                             style: context.xHeadline3
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -152,13 +152,13 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                               : ListView.builder(
                                   padding: const EdgeInsets.all(8),
                                   itemCount:
-                                      value.allBodySymptoms[index].length,
+                                      value.allBodySymptoms[index]!.length,
                                   itemBuilder:
                                       (BuildContext context, int indx) {
                                     return GestureDetector(
                                       onTap: () {
-                                        value.addSemptomToList(
-                                            value.allBodySymptoms[index][indx]);
+                                        value.addSemptomToList(value
+                                            .allBodySymptoms[index]![indx]);
                                       },
                                       child: Column(
                                         crossAxisAlignment:
@@ -175,8 +175,8 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                     0.70,
                                                 child: Text(
                                                     value
-                                                        .allBodySymptoms[index]
-                                                            [indx]
+                                                        .allBodySymptoms[
+                                                            index]![indx]
                                                         .name!,
                                                     softWrap: true,
                                                     maxLines: 2,
@@ -184,11 +184,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                         TextOverflow.ellipsis,
                                                     style: context.xHeadline3.copyWith(
                                                         color: value
-                                                                .selectedSymptoms
-                                                                .contains(
-                                                                    value.allBodySymptoms[
-                                                                            index]
-                                                                        [indx])
+                                                                .selectedSymptoms!
+                                                                .contains(value
+                                                                            .allBodySymptoms[
+                                                                        index]![
+                                                                    indx])
                                                             ? getIt<ITheme>()
                                                                 .mainColor
                                                             : getIt<ITheme>()
@@ -198,14 +198,14 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                 onTap: () {
                                                   value.removeSemptomFromList(
                                                       value.allBodySymptoms[
-                                                          index][indx]);
+                                                          index]![indx]);
                                                 },
                                                 child: Visibility(
                                                     visible: value
-                                                            .selectedSymptoms
+                                                            .selectedSymptoms!
                                                             .contains(value
                                                                     .allBodySymptoms[
-                                                                index][indx])
+                                                                index]![indx])
                                                         ? true
                                                         : false,
                                                     child: const Icon(
@@ -229,11 +229,13 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
+              padding: EdgeInsets.only(
+                bottom: Atom.safeBottom + 16,
+              ),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
                 child: RbioElevatedButton(
-                    onTap: value.selectedSymptoms.isNotEmpty
+                    onTap: value.selectedSymptoms?.isNotEmpty ?? false
                         ? () async {
                             RbioConfig.of(context)?.bodyLocationRsp =
                                 widget.selectedBodyLocation;

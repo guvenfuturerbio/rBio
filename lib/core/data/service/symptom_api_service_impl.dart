@@ -57,9 +57,8 @@ class SymptomApiServiceImpl extends SymptomApiService {
         throw Exception("/getProposedSymptoms data null");
       }
 
-      if (response is List<Map<String, dynamic>>) {
-        return response
-            .map((e) => GetBodySymptomsResponse.fromJson(e))
+      if (response is List<dynamic>) {
+        return (response.map((e) => GetBodySymptomsResponse.fromJson(e)))
             .toList();
       } else {
         throw RbioNotListException(
@@ -67,7 +66,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         );
       }
     } catch (e) {
-      throw Exception('/getSymtptomsApiToken: $e');
+      throw Exception('/getProposedSymptoms: $e');
     }
   }
   // #endregion
@@ -98,7 +97,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         throw Exception("/getSpeacialisations data null");
       }
 
-      if (response is List<Map<String, dynamic>>) {
+      if (response is List<dynamic>) {
         return response
             .map((e) => GetSpecialisationsResponse.fromJson(e))
             .toList();
@@ -131,7 +130,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         throw Exception("/getBodyLocations data null");
       }
 
-      if (response is List<Map<String, dynamic>>) {
+      if (response is List<dynamic>) {
         return response
             .map((e) => GetBodyLocationResponse.fromJson(e))
             .toList();
@@ -165,7 +164,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         throw Exception("/getBodySubLocations data null");
       }
 
-      if (response is List<Map<String, dynamic>>) {
+      if (response is List<dynamic>) {
         return response
             .map((e) => GetBodySublocationResponse.fromJson(e))
             .toList();
@@ -200,7 +199,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
         throw Exception("/getBodySymptoms data null");
       }
 
-      if (response is List<Map<String, dynamic>>) {
+      if (response is List<dynamic>) {
         return response
             .map((e) => GetBodySymptomsResponse.fromJson(e))
             .toList();

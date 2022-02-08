@@ -11,7 +11,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
   late List<String> proposedSymptomsNamesList = [];
   late List<String> selectedBodySymptomNamesList = [];
   late LoadingProgress progress;
-  late LoadingProgress proposedProgress;
+  late LoadingProgress proposedProgress = LoadingProgress.loading;
   late BodySublocationsVm myPv;
   late String propSymp;
   late bool isFromVoice;

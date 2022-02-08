@@ -171,7 +171,9 @@ class _SymptomsBodyLocationsScreenState
                     ? true
                     : false,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: EdgeInsets.only(
+                    bottom: Atom.safeBottom + 16,
+                  ),
                   child: Container(
                     width: MediaQuery.of(context).size.width / 2,
                     decoration:

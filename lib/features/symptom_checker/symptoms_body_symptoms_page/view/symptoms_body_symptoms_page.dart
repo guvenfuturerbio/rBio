@@ -34,7 +34,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
   void dispose() {
     try {
       RbioConfig.of(context)?.bodyLocationRsp = null;
-      RbioConfig.of(context)?.listBodySympRsp = null;
+      RbioConfig.of(context)?.listBodySympRsp = [];
     } catch (e) {
       LoggerUtils.instance.i(e);
     }
@@ -46,7 +46,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
     try {
       widget.selectedBodyLocation = RbioConfig.of(context)?.bodyLocationRsp;
       widget.myPv = RbioConfig.of(context)?.sublocationVm;
-      widget.selectedBodySymptoms = RbioConfig.of(context)?.listBodySympRsp;
+      widget.selectedBodySymptoms =
+          RbioConfig.of(context)?.listBodySympRsp ?? [];
       widget.selectedGenderId =
           int.parse(Atom.queryParameters['selectedGenderId'] as String);
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'] as String;
@@ -58,7 +59,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
       create: (context) => BodySymptomSelectionVm(
           context: context,
           genderId: widget.selectedGenderId!,
-          symptomList: widget.myPv!.selectedSymptoms,
+          symptomList:
+              widget.myPv!.selectedSymptoms as List<GetBodySymptomsResponse>,
           year_of_birth: widget.yearOfBirth!,
           isFromVoice: widget.isFromVoice,
           myPv: widget.myPv),
@@ -166,7 +168,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                           await widget.myPv!
                                               .removeSemptomFromList(widget
                                                   .myPv!
-                                                  .selectedSymptoms[index]);
+                                                  .selectedSymptoms![index]);
                                           await value.fetchProposedSymptoms(
                                               value.selectedBodySymptoms,
                                               widget.selectedGenderId,
@@ -203,7 +205,9 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
+          padding: EdgeInsets.only(
+            bottom: Atom.safeBottom + 16,
+          ),
           child: SizedBox(
             width: MediaQuery.of(context).size.width / 1.5,
             child: RbioElevatedButton(

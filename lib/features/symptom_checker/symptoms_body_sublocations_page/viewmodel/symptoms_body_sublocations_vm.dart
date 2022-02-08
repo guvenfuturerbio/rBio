@@ -5,18 +5,18 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
 class BodySublocationsVm extends ChangeNotifier {
-  late BuildContext mContext;
-  late List<GetBodySublocationResponse> bodySubLocations;
-  late GetBodySublocationResponse selectedBodySubLocation;
-  late LoadingProgress progress;
-  late LoadingProgress symptomControl;
+  BuildContext? mContext;
+  List<GetBodySublocationResponse?> bodySubLocations = [];
+  GetBodySublocationResponse? selectedBodySubLocation;
+  LoadingProgress progress = LoadingProgress.loading;
+  LoadingProgress? symptomControl;
   List<ExpandableController> expControllerList = [];
-  List<List<GetBodySymptomsResponse>> allBodySymptoms = [];
-  late List<GetBodySymptomsResponse> selectedSymptoms;
-  List<GetBodySymptomsResponse> tmpSelectedSymptoms = [];
-  late int selectedGenderId;
-  late String yearOfBirth;
-  String bodyLocNames = "";
+  List<List<GetBodySymptomsResponse>?> allBodySymptoms = [];
+  List<GetBodySymptomsResponse>? selectedSymptoms = [];
+  List<GetBodySymptomsResponse>? tmpSelectedSymptoms = [];
+  int? selectedGenderId;
+  String? yearOfBirth;
+  String? bodyLocNames = "";
   List<String> bodyLocNamesList = [];
   late GetBodyLocationResponse selectedBodyLocation;
 
@@ -52,18 +52,24 @@ class BodySublocationsVm extends ChangeNotifier {
     expControllerList = tmpList;
   }
 
+  disposeController() {
+    for (var item in expControllerList) {
+      item.dispose();
+    }
+  }
+
   //Vücudun alt bölgelerini çeken method.
   fetchBodySubLocations(int id, int genderId) async {
     progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      List<GetBodySublocationResponse> bodySubLocations =
+      List<GetBodySublocationResponse> bodySubLocationsList =
           await getIt<SymptomRepository>().getBodySubLocations(id);
-      bodySubLocations = bodySubLocations;
+      bodySubLocations = bodySubLocationsList;
       progress = LoadingProgress.done;
       await expControllerCreator();
       notifyListeners();
-      await fetchBodySymptoms(bodySubLocations, genderId);
+      await fetchBodySymptoms(bodySubLocationsList, genderId);
     } catch (e) {
       LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
@@ -95,10 +101,10 @@ class BodySublocationsVm extends ChangeNotifier {
   }
 
   addSemptomToList(GetBodySymptomsResponse symptom) async {
-    if (!tmpSelectedSymptoms.contains(symptom)) {
-      tmpSelectedSymptoms.add(symptom);
+    if (!(tmpSelectedSymptoms?.contains(symptom) ?? false)) {
+      tmpSelectedSymptoms?.add(symptom);
       if (symptom.hasRedFlag ?? false) {
-        showGradientDialog(mContext, LocaleProvider.current.emergency_lbl,
+        showGradientDialog(mContext!, LocaleProvider.current.emergency_lbl,
             LocaleProvider.current.emergency);
       }
     }
@@ -108,8 +114,8 @@ class BodySublocationsVm extends ChangeNotifier {
 
   //Seçilen semptommları listeden silen metod.
   removeSemptomFromList(GetBodySymptomsResponse? symptom) async {
-    if (tmpSelectedSymptoms.contains(symptom)) {
-      tmpSelectedSymptoms.remove(symptom);
+    if (tmpSelectedSymptoms?.contains(symptom) ?? false) {
+      tmpSelectedSymptoms?.remove(symptom);
     }
     selectedSymptoms = tmpSelectedSymptoms;
     notifyListeners();

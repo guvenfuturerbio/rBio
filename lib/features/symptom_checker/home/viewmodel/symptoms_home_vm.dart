@@ -6,7 +6,7 @@ class SymptomsHomeVm extends ChangeNotifier {
   BuildContext? mContext;
   LoadingProgress? progress = LoadingProgress.loading;
   String? tokenOfSymptom;
-  int? genderIdHolder;
+  int? genderIdHolder = 0;
   String? yearOfBirth = '2000';
   bool? selectionsIsCompleted = false;
 

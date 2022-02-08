@@ -23,6 +23,7 @@ class RbioConfig extends InheritedWidget {
 
   RbioConfig({
     Key? key,
+    this.listBodySympRsp,
     required this.child,
   }) : super(key: key, child: child);
 

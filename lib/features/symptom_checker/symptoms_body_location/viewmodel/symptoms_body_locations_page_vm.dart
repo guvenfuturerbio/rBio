@@ -48,9 +48,9 @@ class SymptomsBodyLocationsVm extends ChangeNotifier {
     notifyListeners();
 
     try {
-      List<GetBodyLocationResponse> bodyLocations =
+      List<GetBodyLocationResponse> bodyLocationList =
           await getIt<SymptomRepository>().getBodyLocations();
-      bodyLocations = bodyLocations;
+      bodyLocations = bodyLocationList;
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {

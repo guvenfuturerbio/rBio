@@ -52,10 +52,10 @@ class SymptomsResultPageVm extends ChangeNotifier {
       } else {
         LoggerUtils.instance.i("Symptoms null!");
       }
-      List<GetSpecialisationsResponse> specialisations =
+      List<GetSpecialisationsResponse> specialisationsList =
           await getIt<SymptomRepository>().getSpeacialisations(
               symptomsIds.toString(), gender, year_of_birth, R.bodyDatas.json);
-      specialisations = specialisations;
+      specialisations = specialisationsList;
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {

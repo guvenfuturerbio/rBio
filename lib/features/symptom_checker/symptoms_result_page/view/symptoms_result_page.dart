@@ -34,7 +34,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.symptoms = RbioConfig.of(context)?.listBodySympRsp;
+      widget.symptoms = RbioConfig.of(context)?.listBodySympRsp
+          as List<GetBodySymptomsResponse>;
       widget.gender = Atom.queryParameters['gender'];
       widget.year_of_birth = Atom.queryParameters['year_of_birth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
@@ -86,19 +87,64 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(LocaleProvider.of(context).free_counseling),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Text(
+                                LocaleProvider.of(context).free_counseling,
+                                style: context.xHeadline2,
+                              ),
+                            ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 LinearPercentIndicator(
                                   animation: true,
-                                  progressColor: R.color.online_appointment,
+                                  progressColor: getIt<ITheme>().mainColor,
                                   backgroundColor:
                                       R.color.grey.withOpacity(0.2),
                                   lineHeight: 20,
+                                  barRadius: const Radius.circular(25),
                                   animationDuration: 1100,
-                                  linearStrokeCap: LinearStrokeCap.roundAll,
                                   percent: 0.95,
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: getIt<ITheme>().mainColor,
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      width:
+                                          MediaQuery.of(context).size.width / 4,
+                                      //
+                                      child: FlatButton(
+                                        onPressed: () {
+                                          Atom.to(
+                                            PagePaths.createAppointment,
+                                            queryParameters: {
+                                              'forOnline': true.toString(),
+                                              'fromSearch': false.toString(),
+                                              'fromSymptom': true.toString(),
+                                              'tenantId': '256',
+                                              'departmentId': '132',
+                                              'departmentName': LocaleProvider
+                                                      .of(context)
+                                                  .free_consultation_appointment,
+                                            },
+                                          );
+                                        },
+                                        child: Text(
+                                          LocaleProvider.of(context)
+                                              .create_appo,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: context.xHeadline4.copyWith(
+                                              color: getIt<ITheme>().textColor),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 Text(
                                   '% 95.0',
@@ -159,7 +205,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                         R.color.grey.withOpacity(0.2),
                                     lineHeight: 20,
                                     animationDuration: 1100,
-                                    linearStrokeCap: LinearStrokeCap.roundAll,
+                                    barRadius: const Radius.circular(25),
                                     percent:
                                         (value.specialisations[index].accuracy /
                                             100),

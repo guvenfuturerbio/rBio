@@ -194,7 +194,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+              bottom: Atom.safeBottom + 16,
             ),
             child: RbioElevatedButton(
               onTap: () async {
