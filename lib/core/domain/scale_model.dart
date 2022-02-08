@@ -121,7 +121,7 @@ class ScaleModel extends HiveObject {
   /// Note that this value must only be considered valid if [weightRemoved] is `false` and [weightStabilized] is `true`.
   /// This can also be checked by calling dateTimeValid
   @HiveField(19)
-  DateTime? dateTime;
+  DateTime dateTime;
 
   /// this value provided by server.
   /// So can be return null.
@@ -137,7 +137,7 @@ class ScaleModel extends HiveObject {
     this.measurementComplete,
     this.weightRemoved,
     this.unit,
-    this.dateTime,
+    required this.dateTime,
     this.impedance,
     this.isManuel = false,
     this.images = const <String>[],
@@ -182,8 +182,8 @@ class ScaleModel extends HiveObject {
           DateTime.parse(map['occurrence_time'] as String)
               .millisecondsSinceEpoch,
       weight: map[weightConst] as double?,
-      unit: (map[scaleUnitConst] as String).fromStr,
       isManuel: map[manualConst] != 0,
+      unit: ((map[scaleUnitConst] as String?) ?? 'kg').fromStr,
       images: map[imagesConst] == null
           ? []
           : (map[imagesConst] as List).cast<String>(),
@@ -287,7 +287,7 @@ class ScaleModel extends HiveObject {
       visceralFatConst: visceralFat,
       isDeletedConst: isDeleted ?? false ? 1 : 0,
       userIdConst: 0,
-      dateTimeConst: dateTime?.toIso8601String(),
+      dateTimeConst: dateTime.toIso8601String(),
     };
   }
 
@@ -296,7 +296,13 @@ class ScaleModel extends HiveObject {
   }
 }
 
-enum ScaleUnit { kg, lbs }
+@HiveType(typeId: 5)
+enum ScaleUnit {
+  @HiveField(0)
+  kg,
+  @HiveField(1)
+  lbs
+}
 enum StripMode { add, subtract, none }
 
 extension SUE on ScaleUnit {

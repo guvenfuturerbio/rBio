@@ -259,7 +259,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       for (var data in bmiMeasurementsDailyData) {
         if (data.getMeasurement(currentScaleType) != null) {
           tempChartData.add(ChartData(
-              data.date!,
+              data.dateTime,
               data.getMeasurement(currentScaleType)!.toInt(),
               data.getColor(currentScaleType)));
         }
@@ -288,7 +288,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.very_low) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -305,7 +305,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.low) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -322,7 +322,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.target) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -339,7 +339,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.high) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -356,7 +356,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.very_high) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -394,7 +394,8 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
         bmiMeasurementsDailyData.clear();
 
         for (var data in scaleMeasurement) {
-          if (DateTime(data.date!.year, data.date!.month, data.date!.day)
+          if (DateTime(
+                  data.dateTime.year, data.dateTime.month, data.dateTime.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
             bmiMeasurementsDailyData.add(data);
           }
@@ -412,7 +413,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
       for (var data in scaleMeasurement) {
-        if (DateTime(data.date!.year, data.date!.month, data.date!.day)
+        if (DateTime(data.dateTime.year, data.dateTime.month, data.dateTime.day)
             .isAtSameMomentAs(DateTime(
                 currentDate.year, currentDate.month, currentDate.day))) {
           bmiMeasurementsDailyData.add(data);
@@ -563,7 +564,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var item in scaleMeasurement) {
       item.age = year < 10 ? 15 : year;
     }
-    scaleMeasurement.sort((a, b) => a.date!.compareTo(b.date!));
+    scaleMeasurement.sort((a, b) => a.dateTime.compareTo(b.dateTime));
 
     fetchBmiMeasurementsDateList();
   }
@@ -573,7 +574,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     final result = await getIt<DoctorRepository>().getMyPatientScale(
       patientId,
       GetMyPatientFilter(
-          end: scaleMeasurement.first.date!.toIso8601String(), start: null),
+          end: scaleMeasurement.first.dateTime.toIso8601String(), start: null),
     );
     for (var item in result) {
       bool alreadyInList = false;
@@ -600,7 +601,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var item in scaleMeasurement) {
       item.age = year < 10 ? 15 : year;
     }
-    scaleMeasurement.sort((a, b) => a.date!.compareTo(b.date!));
+    scaleMeasurement.sort((a, b) => a.dateTime.compareTo(b.dateTime));
 
     fetchBmiMeasurementsDateList();
   }
@@ -611,13 +612,13 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var e in scaleData) {
       if (!scaleData.contains(e)) {
         DateTime measurementDate =
-            ScaleMeasurementViewModel(scaleModel: e).date!;
+            ScaleMeasurementViewModel(scaleModel: e).dateTime;
         if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
           scaleMeasurement.add(ScaleMeasurementViewModel(scaleModel: e));
         }
       }
     }
-    scaleMeasurement.sort((a, b) => a.date!.compareTo(b.date!));
+    scaleMeasurement.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     fetchBmiMeasurementsDateList();
   }
 
@@ -626,14 +627,14 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     scaleMeasurmentDates.clear();
     for (var data in scaleMeasurement) {
       for (var data2 in scaleMeasurmentDates) {
-        if (DateTime(data.date!.year, data.date!.month, data.date!.day)
+        if (DateTime(data.dateTime.year, data.dateTime.month, data.dateTime.day)
             .isAtSameMomentAs(DateTime(data2.year, data2.month, data2.day))) {
           isInclude = true;
         }
       }
       if (!isInclude) {
-        scaleMeasurmentDates
-            .add(DateTime(data.date!.year, data.date!.month, data.date!.day));
+        scaleMeasurmentDates.add(DateTime(
+            data.dateTime.year, data.dateTime.month, data.dateTime.day));
       }
       isInclude = false;
       scaleMeasurmentDates.sort((a, b) => a.compareTo(b));

@@ -1,5 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
@@ -35,8 +36,28 @@ class _BpProgressPageState extends State<BpProgressPage> {
                   appbar: RbioAppBar(
                     title: RbioAppBar.textTitle(
                       context,
-                      LocaleProvider.current.bg_measurement_tracking,
+                      LocaleProvider.current.bp_tracking,
                     ),
+                  ),
+                  floatingActionButton: FloatingActionButton(
+                    heroTag: 'adder',
+                    onPressed: () => value.manuelEntry(context),
+                    child: Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: getIt<ITheme>().mainColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: SvgPicture.asset(
+                          R.image.add,
+                          color: R.color.white,
+                        ),
+                      ),
+                    ),
+                    backgroundColor: R.color.white,
                   ),
                   body: SingleChildScrollView(
                     physics: const NeverScrollableScrollPhysics(),
@@ -169,25 +190,6 @@ class _BpProgressPageState extends State<BpProgressPage> {
               ),
               child: AutoSizeText(
                 LocaleProvider.current.filter_graphs,
-                maxLines: 1,
-                style: context.xHeadline5.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => value.changeChartShowStatus(),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                shadowColor: Colors.black.withAlpha(50),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(context.height),
-                ),
-              ),
-              child: AutoSizeText(
-                LocaleProvider.current.close_chart,
                 maxLines: 1,
                 style: context.xHeadline5.copyWith(
                   fontWeight: FontWeight.bold,

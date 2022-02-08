@@ -29,8 +29,8 @@ String? selectedNotificationPayload;
 
 abstract class LocalNotificationManager {
   bool get didNotificationLaunchApp;
-  late BehaviorSubject<String> selectNotificationSubject;
-  late BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject;
+  BehaviorSubject<String>? selectNotificationSubject;
+  BehaviorSubject<ReceivedNotification>? didReceiveLocalNotificationSubject;
 
   Future<NotificationAppLaunchDetails?> init();
   void requestPermissions();
@@ -131,11 +131,11 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
       _notificationAppLaunchDetails?.didNotificationLaunchApp ?? false;
 
   @override
-  final BehaviorSubject<String> selectNotificationSubject =
+  final BehaviorSubject<String>? selectNotificationSubject =
       BehaviorSubject<String>();
 
   @override
-  final BehaviorSubject<ReceivedNotification>
+  final BehaviorSubject<ReceivedNotification>?
       didReceiveLocalNotificationSubject =
       BehaviorSubject<ReceivedNotification>();
 
@@ -145,12 +145,12 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
     await _configureLocalTimeZone();
     await _configureLaunchDetails();
     await _configurePlugin();
-    await _printPendingNotifications();
+    if (!Atom.isWeb) await _printPendingNotifications();
     return _notificationAppLaunchDetails;
   }
 
   Future<void> _configureLocalTimeZone() async {
-    if (kIsWeb || Platform.isLinux) {
+    if (Atom.isWeb || Platform.isLinux) {
       return;
     }
     tz.initializeTimeZones();
@@ -160,7 +160,7 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
   }
 
   Future<void> _configureLaunchDetails() async {
-    _notificationAppLaunchDetails = !kIsWeb && Platform.isLinux
+    _notificationAppLaunchDetails = !Atom.isWeb && Platform.isLinux
         ? null
         : await flutterLocalNotificationsPlugin
             .getNotificationAppLaunchDetails();
@@ -183,7 +183,7 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
       requestSoundPermission: false,
       onDidReceiveLocalNotification:
           (int id, String? title, String? body, String? payload) async {
-        didReceiveLocalNotificationSubject.add(
+        didReceiveLocalNotificationSubject!.add(
           ReceivedNotification(
             id: id,
             title: title ?? '',
@@ -206,7 +206,7 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
       onSelectNotification: (String? payload) async {
         if (payload != null) {
           debugPrint('Notification Payload: $payload');
-          selectNotificationSubject.add(payload);
+          selectNotificationSubject!.add(payload);
         }
       },
       // backgroundHandler: _notificationTapBackground,

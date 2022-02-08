@@ -58,7 +58,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   ScaleModel? get(key) {
     try {
       if (checkBox(true)) {
-        box.get(key);
+        return box.get(key);
       } else {
         return null;
       }
@@ -85,7 +85,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     try {
       if (checkBox(true)) {
         List<ScaleModel> list = box.values.toList();
-        list.sort((a, b) => b.dateTime!.compareTo(a.dateTime!));
+        list.sort((a, b) => b.dateTime.compareTo(a.dateTime));
         return list[0];
       }
       return null;
@@ -213,7 +213,9 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
         scaleDataList.add(ScaleModel.fromMap(scaleMeasurement));
       }
       return scaleDataList;
-    } catch (e) {
+    } catch (e, stk) {
+      LoggerUtils.instance.e(e);
+      debugPrintStack(stackTrace: stk);
       rethrow;
     }
   }

@@ -27,7 +27,7 @@ class ScaleTaggerVm extends ChangeNotifier {
   late TextEditingController noteController;
 
   late ScrollController scrollController;
-  Key? key;
+  int? key;
 
   String errorMessage = '';
 
@@ -42,6 +42,7 @@ class ScaleTaggerVm extends ChangeNotifier {
     scaleModel ??= ScaleMeasurementViewModel(
       scaleModel: ScaleModel(
         isManuel: isManuel,
+        dateTime: DateTime.now(),
         device: PairedDevice(
           deviceId: 'manuel',
           deviceType: DeviceType.manuel,
@@ -297,7 +298,7 @@ class ScaleTaggerVm extends ChangeNotifier {
       if (weightController.text == '') {
         throw Exception(LocaleProvider.current.required_area);
       }
-
+      scaleModel!.dateTime = DateTime.now();
       getIt<ScaleStorageImpl>()
           .write(scaleModel!.scaleModel, shouldSendToServer: true);
       Atom.dismiss();

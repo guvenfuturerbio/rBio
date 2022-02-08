@@ -47,26 +47,12 @@ class _AnimatedPulseChartState extends State<AnimatedPulseChart> {
       sys.sort((a, b) => a.x.compareTo(b.x));
       dia.sort((a, b) => a.x.compareTo(b.x));
       pulse.sort((a, b) => a.x.compareTo(b.x));
-      if (sys.isNotEmpty) {
-        beginDate = sys.first.x;
-        endDate = sys.last.x;
-      }
-      if (dia.isNotEmpty) {
-        if (beginDate != null && beginDate!.isBefore(dia.first.x)) {
-          beginDate = dia.first.x;
-        }
-        if (endDate != null && endDate!.isAfter(dia.last.x)) {
-          endDate = dia.last.x;
-        }
-      }
-      if (pulse.isNotEmpty) {
-        if (beginDate != null && beginDate!.isBefore(pulse.first.x)) {
-          beginDate = pulse.first.x;
-        }
-        if (endDate != null && endDate!.isAfter(pulse.last.x)) {
-          endDate = pulse.last.x;
-        }
-      }
+      DateTime n = DateTime.now();
+      beginDate = DateTime(
+          pulse.first.x.year, pulse.first.x.month, pulse.first.x.day, 00, 00);
+
+      endDate = DateTime(
+          pulse.first.x.year, pulse.first.x.month, pulse.first.x.day, 24, 00);
 
       map = val.measurements;
 
@@ -83,6 +69,9 @@ class _AnimatedPulseChartState extends State<AnimatedPulseChart> {
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
+              interval: 1,
+              minimum: beginDate,
+              maximum: endDate,
             )
           : val.selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
