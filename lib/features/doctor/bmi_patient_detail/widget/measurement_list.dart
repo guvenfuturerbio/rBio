@@ -46,9 +46,9 @@ class __MeasurementListState extends State<_MeasurementList> {
                   groupBy:
                       (ScaleMeasurementViewModel scaleMeasurementViewModel) =>
                           DateTime(
-                              scaleMeasurementViewModel.date!.year,
-                              scaleMeasurementViewModel.date!.month,
-                              scaleMeasurementViewModel.date!.day),
+                              scaleMeasurementViewModel.dateTime.year,
+                              scaleMeasurementViewModel.dateTime.month,
+                              scaleMeasurementViewModel.dateTime.day),
                   groupHeaderBuilder:
                       (ScaleMeasurementViewModel bgMeasurementViewModel) {
                     return Container(
@@ -72,7 +72,7 @@ class __MeasurementListState extends State<_MeasurementList> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
-                                .format(bgMeasurementViewModel.date!),
+                                .format(bgMeasurementViewModel.dateTime),
                           ),
                         ),
                       ),
@@ -83,7 +83,7 @@ class __MeasurementListState extends State<_MeasurementList> {
                     return measurementList(scaleMeasurementViewModel, context);
                   },
                   callback: (ScaleMeasurementViewModel data) {
-                    widget.fetchScrolledData(data.date!);
+                    widget.fetchScrolledData(data.dateTime);
                   },
                 ),
         ),
@@ -105,7 +105,7 @@ class __MeasurementListState extends State<_MeasurementList> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date!),
+          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.dateTime),
               style: context.xBodyText1),
           Expanded(
             child: Container(

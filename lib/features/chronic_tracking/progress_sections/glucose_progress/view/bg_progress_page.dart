@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
@@ -33,7 +34,26 @@ class _BgProgressPage extends State<BgProgressPage> {
                 LocaleProvider.current.bg_measurement_tracking,
               ),
             ),
-
+            floatingActionButton: FloatingActionButton(
+              heroTag: 'adder',
+              onPressed: () => value.manuelEntry(context),
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: getIt<ITheme>().mainColor,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: SvgPicture.asset(
+                    R.image.add,
+                    color: R.color.white,
+                  ),
+                ),
+              ),
+              backgroundColor: R.color.white,
+            ),
             //
             body: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),

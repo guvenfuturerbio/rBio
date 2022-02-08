@@ -8,7 +8,7 @@ class PressureTaggerVm extends ChangeNotifier {
   final BuildContext context;
   BpMeasurementViewModel? bpModel;
   final bool? isManuel;
-  final Key? key;
+  final int? key;
 
   double height = 0;
   double width = 0;

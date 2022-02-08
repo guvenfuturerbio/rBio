@@ -19,7 +19,7 @@ GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerSingleton<AppConfig>(appConfig);
-  late String directory;
+  String? directory;
 
   if (!Atom.isWeb) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -89,10 +89,13 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerLazySingleton(() => ChronicTrackingRepository(
       apiService: getIt<ChronicTrackingApiService>(),
       localCacheService: getIt<LocalCacheService>()));
+
   getIt.registerLazySingleton<LocalNotificationManager>(
       () => LocalNotificationManagerImpl());
 
-//  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
+  await getIt<LocalNotificationManager>().init();
+
+  //  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
   // getIt<PushedNotificationHandlerNew>().initializeGCM();
 
   if (!Atom.isWeb) {
@@ -112,18 +115,20 @@ class GuvenSettings {
   String packageName;
   String version;
   String buildNumber;
-  String appDocDirectory;
+  String? appDocDirectory;
 
   GuvenSettings(
       {required this.appName,
       required this.packageName,
       required this.version,
       required this.buildNumber,
-      required this.appDocDirectory});
+      this.appDocDirectory});
 }
 
 Future<void> registerStorage() async {
   Hive.registerAdapter<TreatmentModel>(TreatmentModelAdapter());
+  Hive.registerAdapter<ScaleUnit>(ScaleUnitAdapter());
+
   Hive.registerAdapter<Person>(PersonAdapter());
   Hive.registerAdapter<GlucoseData>(GlucoseDataAdapter());
   Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());

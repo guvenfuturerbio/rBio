@@ -63,11 +63,11 @@ class _ScaleMeasurementListWidgetState
                   groupBy:
                       (ScaleMeasurementViewModel scaleMeasurementViewModel) =>
                           DateTime(
-                              scaleMeasurementViewModel.date!.year,
-                              scaleMeasurementViewModel.date!.month,
-                              scaleMeasurementViewModel.date!.day),
+                              scaleMeasurementViewModel.dateTime.year,
+                              scaleMeasurementViewModel.dateTime.month,
+                              scaleMeasurementViewModel.dateTime.day),
                   groupHeaderBuilder:
-                      (ScaleMeasurementViewModel bgMeasurementViewModel) {
+                      (ScaleMeasurementViewModel scaleMeasurementViewModel) {
                     return Container(
                       alignment: Alignment.center,
                       width: double.infinity,
@@ -89,7 +89,7 @@ class _ScaleMeasurementListWidgetState
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
-                                .format(bgMeasurementViewModel.date!),
+                                .format(scaleMeasurementViewModel.dateTime),
                           ),
                         ),
                       ),
@@ -105,7 +105,7 @@ class _ScaleMeasurementListWidgetState
                         .isChartShow) {
                       Provider.of<ScaleProgressPageViewModel>(context,
                               listen: false)
-                          .fetchScrolledData(data.date!);
+                          .fetchScrolledData(data.dateTime);
                     }
                   },
                 ),
@@ -132,7 +132,7 @@ Widget measurementList(
       },
       child: Row(
         children: [
-          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.date!),
+          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.dateTime),
               style: context.xBodyText1),
           Expanded(
             child: Container(

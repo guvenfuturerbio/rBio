@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:onedosehealth/core/utils/logger_helper.dart';
 
 import '../../model/treatment_model/treatment_model.dart';
 
@@ -15,7 +16,7 @@ class Person extends HiveObject {
   static const USER_ID = 'entegration_id';
   static const IMAGE_URL = "image_url";
   static const NAME = "name";
-  static const BIRTH_DATE = "birth_date";
+  static const BIRTH_DATE = "birth_day";
   static const GENDER = "gender";
   static const HEIGHT = "height";
   static const WEIGHT = "weight";

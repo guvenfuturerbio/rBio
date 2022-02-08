@@ -15,8 +15,6 @@ class ScaleMeasurementViewModel {
 
   int? get measurementId => scaleModel.measurementId;
 
-  DateTime? get date => scaleModel.dateTime;
-
   double? get weight => scaleModel.weight;
 
   set weight(rhs) => scaleModel.weight = rhs;
@@ -64,7 +62,7 @@ class ScaleMeasurementViewModel {
   List<String> get images => scaleModel.images ?? [];
   set images(List<String> rhs) => scaleModel.images = rhs;
 
-  DateTime get dateTime => scaleModel.dateTime ?? DateTime.now();
+  DateTime get dateTime => scaleModel.dateTime;
 
   set dateTime(rhs) => scaleModel.dateTime = rhs;
 

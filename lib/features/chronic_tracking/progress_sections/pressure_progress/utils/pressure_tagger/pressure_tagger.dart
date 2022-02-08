@@ -45,38 +45,42 @@ class PressureTagger extends StatelessWidget {
                       value.height = context.height;
                       value.width = context.width;
                     }
-                    return Card(
-                      color: R.color.background,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: value.height * .03,
-                                  right: value.width * .02,
-                                  left: value.width * .02,
-                                ),
-                                child: SingleChildScrollView(
-                                  controller: value.scrollController,
-                                  child: Column(
-                                    children: [
-                                      _inputSection(value),
-                                      _dateTimeSection(context, value),
-                                      _noteSection(value, context),
-                                    ],
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: context.xMediaQuery.padding.vertical),
+                      child: Card(
+                        color: R.color.background,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: value.height * .03,
+                                    right: value.width * .02,
+                                    left: value.width * .02,
+                                  ),
+                                  child: SingleChildScrollView(
+                                    controller: value.scrollController,
+                                    child: Column(
+                                      children: [
+                                        _inputSection(value),
+                                        _dateTimeSection(context, value),
+                                        _noteSection(value, context),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            getAction(Atom.dismiss,
-                                isEdit ? value.update : value.save)
-                          ],
+                              getAction(Atom.dismiss,
+                                  isEdit ? value.update : value.save)
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -93,7 +97,12 @@ class PressureTagger extends StatelessWidget {
   getAction(VoidCallback leftButtonAction, VoidCallback rightButtonAction) {
     return Wrap(
       children: [
-        GestureDetector(onTap: leftButtonAction, child: actionButton(false)),
+        GestureDetector(
+            onTap: () {
+              LoggerUtils.instance.w(bpModel?.toJson());
+              leftButtonAction();
+            },
+            child: actionButton(false)),
         GestureDetector(onTap: rightButtonAction, child: actionButton(true)),
       ],
     );
@@ -161,7 +170,7 @@ class PressureTagger extends StatelessWidget {
           showModalBottomSheet(
               context: context,
               builder: (context) {
-                return Container(
+                return SizedBox(
                     height: 260,
                     child: CupertinoDatePicker(
                       initialDateTime: value.bpModel!.date,
@@ -261,6 +270,7 @@ class PressureTagger extends StatelessWidget {
                     child: TextField(
                       controller: controller,
                       onChanged: onChanged,
+                      enabled: (bpModel?.isManual ?? true),
                       maxLength: 3,
                       keyboardType: TextInputType.number,
                       style: style,

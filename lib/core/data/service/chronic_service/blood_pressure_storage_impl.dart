@@ -240,7 +240,7 @@ class BloodPressureStorageImpl
         });
         return list[0];
       } else {
-        throw Exception("box checkBox");
+        return null;
       }
     } catch (e) {
       rethrow;

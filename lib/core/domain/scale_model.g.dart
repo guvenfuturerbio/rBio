@@ -21,7 +21,7 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
       measurementId: fields[20] as int?,
       weight: fields[1] as double?,
       unit: fields[2] as ScaleUnit?,
-      dateTime: fields[19] as DateTime?,
+      dateTime: fields[19] as DateTime,
       impedance: fields[14] as int?,
       isManuel: fields[12] as bool?,
       images: (fields[13] as List?)?.cast<String>(),
@@ -96,6 +96,45 @@ class ScaleModelAdapter extends TypeAdapter<ScaleModel> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ScaleModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ScaleUnitAdapter extends TypeAdapter<ScaleUnit> {
+  @override
+  final int typeId = 5;
+
+  @override
+  ScaleUnit read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return ScaleUnit.kg;
+      case 1:
+        return ScaleUnit.lbs;
+      default:
+        return ScaleUnit.kg;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, ScaleUnit obj) {
+    switch (obj) {
+      case ScaleUnit.kg:
+        writer.writeByte(0);
+        break;
+      case ScaleUnit.lbs:
+        writer.writeByte(1);
+        break;
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ScaleUnitAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

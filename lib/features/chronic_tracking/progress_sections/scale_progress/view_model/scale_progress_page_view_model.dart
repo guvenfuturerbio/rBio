@@ -343,7 +343,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
         scaleMeasurementsDailyData.clear();
 
         for (var data in scaleMeasurements) {
-          if (DateTime(data.date!.year, data.date!.month, data.date!.day)
+          if (DateTime(
+                  data.dateTime.year, data.dateTime.month, data.dateTime.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
             scaleMeasurementsDailyData.add(data);
           }
@@ -363,7 +364,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
       DateTime currentDate = reversedList[currentDateIndex];
       //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
       for (var data in scaleMeasurements) {
-        if (DateTime(data.date!.year, data.date!.month, data.date!.day)
+        if (DateTime(data.dateTime.year, data.dateTime.month, data.dateTime.day)
             .isAtSameMomentAs(DateTime(
                 currentDate.year, currentDate.month, currentDate.day))) {
           scaleMeasurementsDailyData.add(data);
@@ -380,7 +381,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     for (var data in scaleMeasurementsDailyData) {
       if (data.getMeasurement(currentScaleType) != null) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -406,7 +407,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     for (var data in scaleMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.very_low) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -423,7 +424,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     for (var data in scaleMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.low) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -440,7 +441,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     for (var data in scaleMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.target) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -457,7 +458,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     for (var data in scaleMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.high) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -474,7 +475,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     for (var data in scaleMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.very_high) {
         tempChartData.add(ChartData(
-            data.date!,
+            data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
@@ -649,8 +650,8 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   void fetchSpesificData() {
     scaleMeasurementsDailyData.clear();
     for (var data in scaleMeasurements) {
-      if (data.date!.difference(_startDate!).inDays >= 0 &&
-          data.date!.difference(_endDate!).inDays <= 0) {
+      if (data.dateTime.difference(_startDate!).inDays >= 0 &&
+          data.dateTime.difference(_endDate!).inDays <= 0) {
         scaleMeasurementsDailyData.add(data);
       }
     }
@@ -662,7 +663,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     scaleMeasurements.clear();
     scaleMeasurements =
         result.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
-    scaleMeasurements.sort((a, b) => a.date!.compareTo(b.date!));
+    scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));
   }
 
   List<DateTime> fetchScaleMeasurementsDateList() {
@@ -670,14 +671,14 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     List<DateTime> scaleMeasurementDates = <DateTime>[];
     for (var data in scaleMeasurements) {
       for (var data2 in scaleMeasurementDates) {
-        if (DateTime(data.date!.year, data.date!.month, data.date!.day)
+        if (DateTime(data.dateTime.year, data.dateTime.month, data.dateTime.day)
             .isAtSameMomentAs(DateTime(data2.year, data2.month, data2.day))) {
           isInclude = true;
         }
       }
       if (!isInclude) {
-        scaleMeasurementDates
-            .add(DateTime(data.date!.year, data.date!.month, data.date!.day));
+        scaleMeasurementDates.add(DateTime(
+            data.dateTime.year, data.dateTime.month, data.dateTime.day));
       }
       isInclude = false;
       scaleMeasurementDates.sort((a, b) => a.compareTo(b));
@@ -689,12 +690,13 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     final result = getIt<ScaleStorageImpl>().getAll();
     scaleMeasurements.clear();
     for (var e in result) {
-      DateTime measurementDate = ScaleMeasurementViewModel(scaleModel: e).date!;
+      DateTime measurementDate =
+          ScaleMeasurementViewModel(scaleModel: e).dateTime;
       if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
         scaleMeasurements.add(ScaleMeasurementViewModel(scaleModel: e));
       }
     }
-    scaleMeasurements.sort((a, b) => a.date!.compareTo(b.date!));
+    scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));
   }
 
   @override
@@ -725,7 +727,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
       lastMeasurement: lastMeasurement == null
           ? LocaleProvider.current.no_measurement
           : '${lastMeasurement.weight ?? ''} ${lastMeasurement.unit.toStr}',
-      lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
+      lastMeasurementDate: lastMeasurement?.dateTime ?? DateTime.now(),
       imageUrl: rbio.R.image.bodyScale,
     );
   }
@@ -738,10 +740,10 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   getNewItems() {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
-        scaleMeasurements.sort((a, b) => b.date!.compareTo(a.date!));
+        scaleMeasurements.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
         getIt<ScaleStorageImpl>()
-            .getAndWriteScaleData(endDate: scaleMeasurements.last.date)
+            .getAndWriteScaleData(endDate: scaleMeasurements.last.dateTime)
             .then((value) => hasReachEnd = value);
       }
     });

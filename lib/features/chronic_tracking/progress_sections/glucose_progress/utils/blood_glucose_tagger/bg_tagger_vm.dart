@@ -20,7 +20,7 @@ class BgTaggerVm extends ChangeNotifier {
     noteController.text = data.note;
   }
 
-  final Key key;
+  final int? key;
   final BuildContext context;
   final GlucoseData data;
   final bool isEdit;

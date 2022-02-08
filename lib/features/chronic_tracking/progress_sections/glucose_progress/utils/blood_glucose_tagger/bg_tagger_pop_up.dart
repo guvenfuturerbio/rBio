@@ -135,7 +135,7 @@ class BgTaggerPopUp extends StatelessWidget {
   Widget getBgInputWidget(TextEditingController controller, bool isFill,
       Function(String) onChanged) {
     return TextFormField(
-      enabled: data == null,
+      enabled: data?.manual ?? true,
       controller: controller,
       style: TextStyle(
           fontSize: 25,

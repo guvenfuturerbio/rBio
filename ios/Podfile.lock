@@ -567,9 +567,9 @@ PODS:
     - Flutter
     - Protobuf (~> 3.5)
     - SwiftProtobuf (~> 1.0)
-  - SDWebImage (5.12.2):
-    - SDWebImage/Core (= 5.12.2)
-  - SDWebImage/Core (5.12.2)
+  - SDWebImage (5.12.1):
+    - SDWebImage/Core (= 5.12.1)
+  - SDWebImage/Core (5.12.1)
   - Sentry (7.5.4):
     - Sentry/Core (= 7.5.4)
   - Sentry/Core (7.5.4)
@@ -784,7 +784,7 @@ SPEC CHECKSUMS:
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c
-  SDWebImage: 240e5c12b592fb1268c1d03b8c90d90e8c2ffe82
+  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   Sentry: 5c5dd4005f3b7b9765d5a8871232cddbd0d888b7
   sentry_flutter: 4cd99764f9fe01c9415790d1f3fb1c7fd3a5cbe9
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410

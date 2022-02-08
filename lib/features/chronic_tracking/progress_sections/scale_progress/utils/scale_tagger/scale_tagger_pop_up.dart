@@ -69,37 +69,42 @@ class ScaleTagger extends StatelessWidget {
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Consumer<ScaleTaggerVm>(
                   builder: (_, value, __) {
-                    return Card(
-                      color: R.color.background,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                top: height * .03,
-                                right: width * .02,
-                                left: width * .02,
-                              ),
-                              child: SingleChildScrollView(
-                                controller: value.scrollController,
-                                child: Column(
-                                  children: [
-                                    weightInputSection(value, context),
-                                    _dateTimeSection(context, value),
-                                    otherBodyParameterMeasurementSection(value),
-                                    _imageSection(value, context),
-                                    _noteSection(value, context),
-                                  ],
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: context.xMediaQuery.padding.vertical),
+                      child: Card(
+                        color: R.color.background,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: height * .03,
+                                  right: width * .02,
+                                  left: width * .02,
+                                ),
+                                child: SingleChildScrollView(
+                                  controller: value.scrollController,
+                                  child: Column(
+                                    children: [
+                                      weightInputSection(value, context),
+                                      _dateTimeSection(context, value),
+                                      otherBodyParameterMeasurementSection(
+                                          value),
+                                      _imageSection(value, context),
+                                      _noteSection(value, context),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          getAction(Atom.dismiss,
-                              isUpdate ? value.update : value.save)
-                        ],
+                            getAction(Atom.dismiss,
+                                isUpdate ? value.update : value.save)
+                          ],
+                        ),
                       ),
                     );
                   },
