@@ -21,15 +21,16 @@ class ForUSubCategoriesScreenVm extends ChangeNotifier {
     try {
       progress = LoadingProgress.loading;
       notifyListeners();
-      List<ForYouCategoryResponse> categories =
-          await getIt<Repository>().getAllSubCategories(id);
-      categories = categories;
+      categories = await getIt<Repository>().getAllSubCategories(id);
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
       progress = LoadingProgress.error;
-      showGradientDialog(mContext!, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showGradientDialog(
+        mContext!,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       notifyListeners();
     }
   }

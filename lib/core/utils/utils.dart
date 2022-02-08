@@ -258,9 +258,9 @@ class Utils {
         hintStyle: hintStyle(),
       );
 
-  TextStyle inputTextStyle() => TextStyle(
+  TextStyle inputTextStyle([Color? textColor]) => TextStyle(
         fontSize: 16,
-        color: R.color.dark_black,
+        color: textColor ?? R.color.dark_black,
       );
 
   TextStyle hintStyle() => TextStyle(fontSize: 16, color: R.color.gray);

@@ -98,8 +98,6 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerLazySingleton<LocalNotificationManager>(
       () => LocalNotificationManagerImpl());
 
-  await getIt<LocalNotificationManager>().init();
-
   //  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
   // getIt<PushedNotificationHandlerNew>().initializeGCM();
 

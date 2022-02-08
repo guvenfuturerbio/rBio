@@ -24,6 +24,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   late String registerGender;
   late String registerDateOfBirth;
   late String registerPhoneNumber;
+  late String registerCountryCode;
   // #endregion
 
   List genderList = ["E", "K"];
@@ -79,9 +80,12 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       registerPhoneNumber = Atom.queryParameters['registerPhoneNumber']!;
       registerGender = Atom.queryParameters['registerGender']!;
       registerDateOfBirth = Atom.queryParameters['registerDateOfBirth']!;
+      registerCountryCode =
+          Uri.decodeFull(Atom.queryParameters['registerCountryCode']!);
     } catch (_) {
       return const RbioRouteError();
     }
+
     return ChangeNotifierProvider<RegisterStep2ScreenVm>(
       create: (_) => RegisterStep2ScreenVm(context),
       child: Consumer<RegisterStep2ScreenVm>(builder: (
@@ -362,10 +366,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                   if (checkedValueForTc) {
                     RegisterStep1PusulaModel userRegisterStep1 =
                         RegisterStep1PusulaModel();
-
                     userRegisterStep1.firstName = registerName;
                     userRegisterStep1.lastName = registerSurname;
-                    //TODO : Düzenlenecek
                     userRegisterStep1.nationalityId = vm.isTcCitizen ? 213 : 38;
                     vm.isTcCitizen
                         ? userRegisterStep1.identityNumber =
@@ -377,6 +379,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     userRegisterStep1.gsm = registerPhoneNumber;
                     userRegisterStep1.birthDate = registerDateOfBirth;
                     userRegisterStep1.email = _emailEditingController.text;
+                    userRegisterStep1.countryCode =
+                        registerCountryCode.substring(1);
                     //-------------------------------------
                     UserRegistrationStep1Model userRegisterStep1Model =
                         UserRegistrationStep1Model();
@@ -389,15 +393,21 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     userRegisterStep1Model.phoneNumber = registerPhoneNumber;
                     userRegisterStep1Model.electronicMail =
                         _emailEditingController.text;
+                    userRegisterStep1Model.countryCode =
+                        registerCountryCode.substring(1);
 
                     if (_identityEditingController.text.isNotEmpty &&
                         _emailEditingController.text.isNotEmpty) {
                       vm.registerStep1(
-                          userRegisterStep1, userRegisterStep1Model);
+                        userRegisterStep1,
+                        userRegisterStep1Model,
+                      );
                     } else if ((_identityEditingController.text.isEmpty) &&
                         _emailEditingController.text.isNotEmpty) {
                       vm.registerStep1(
-                          userRegisterStep1, userRegisterStep1Model);
+                        userRegisterStep1,
+                        userRegisterStep1Model,
+                      );
                     } else {
                       vm.showInfoDialog(
                         LocaleProvider.of(context).warning,

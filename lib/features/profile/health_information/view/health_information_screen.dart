@@ -284,7 +284,6 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
           absorbing: true,
           child: RbioTextFormField(
             controller: controller,
-            border: RbioTextFormField.activeBorder(),
           ),
         ),
       );

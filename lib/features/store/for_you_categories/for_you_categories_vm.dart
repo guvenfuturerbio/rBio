@@ -15,15 +15,13 @@ class ForYouCategoriesPageVm extends ChangeNotifier {
 
   LoadingProgress? progress;
 
-  List<ForYouCategoryResponse>? categories = <ForYouCategoryResponse>[];
+  List<ForYouCategoryResponse> categories = <ForYouCategoryResponse>[];
 
   Future fetchCategories() async {
     try {
       progress = LoadingProgress.loading;
       notifyListeners();
-      List<ForYouCategoryResponse> categories =
-          await getIt<Repository>().getAllPackage();
-      categories = categories;
+      categories = await getIt<Repository>().getAllPackage();
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {

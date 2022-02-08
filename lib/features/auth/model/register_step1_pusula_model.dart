@@ -4,6 +4,7 @@ class RegisterStep1PusulaModel {
   String? firstName;
   String? gender;
   String? gsm;
+  String? countryCode;
   bool? hasETKApproval;
   bool? hasKVKKApproval;
   int? id;
@@ -19,6 +20,7 @@ class RegisterStep1PusulaModel {
     this.firstName,
     this.gender,
     this.gsm,
+    this.countryCode,
     this.hasETKApproval = false,
     this.hasKVKKApproval = false,
     this.id,
@@ -35,6 +37,7 @@ class RegisterStep1PusulaModel {
     firstName = json['firstName'] as String;
     gender = json['gender'] as String;
     gsm = json['gsm'] as String;
+    countryCode = json['countryCode'] as String;
     hasETKApproval = json['hasETKApproval'] as bool;
     hasKVKKApproval = json['hasKVKKApproval'] as bool;
     id = json['id'] as int;
@@ -52,6 +55,7 @@ class RegisterStep1PusulaModel {
     data['firstName'] = firstName;
     data['gender'] = gender;
     data['gsm'] = gsm;
+    data['countryCode'] = countryCode;
     data['hasETKApproval'] = hasETKApproval;
     data['hasKVKKApproval'] = hasKVKKApproval;
     data['identityNumber'] = identityNumber;

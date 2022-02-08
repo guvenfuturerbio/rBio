@@ -208,7 +208,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.forYouCategories,
-      widget: const ForYouCategoriesScreen(key: Key('ForYouCategoriesScreen')),
+      widget: const ForYouCategoriesScreen(),
     ),
 
     VWidget(

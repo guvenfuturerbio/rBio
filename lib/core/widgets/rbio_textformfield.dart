@@ -25,6 +25,7 @@ class RbioTextFormField extends StatelessWidget {
   final bool? enabled;
   final Widget? suffixIcon;
   final Color? backColor;
+  final Color? textColor;
 
   const RbioTextFormField({
     Key? key,
@@ -50,6 +51,7 @@ class RbioTextFormField extends StatelessWidget {
     this.maxLines = 1,
     this.suffixIcon,
     this.backColor,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -58,7 +60,7 @@ class RbioTextFormField extends StatelessWidget {
       maxLength: maxLength,
       maxLines: maxLines,
       initialValue: initialValue,
-      style: Utils.instance.inputTextStyle(),
+      style: Utils.instance.inputTextStyle(textColor),
       focusNode: focusNode,
       controller: controller,
       autocorrect: autocorrect ?? true,

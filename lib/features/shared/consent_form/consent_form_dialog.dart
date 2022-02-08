@@ -27,7 +27,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
       backgroundColor: Colors.white,
       title: GuvenAlert.buildTitle(widget.title!),
       content: SingleChildScrollView(
-        child: ChangeNotifierProvider(
+        child: ChangeNotifierProvider<ConsentFormDialogVm>(
           create: (context) => ConsentFormDialogVm(
             context: context,
             alwaysAsk: widget.alwaysAsk ?? false,
@@ -56,7 +56,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                         Container(
                           alignment: Alignment.bottomLeft,
                           child: Checkbox(
-                            value: value.clickedConsentForm,
+                            value: value.clickedConsentForm ?? false,
                             checkColor: Colors.white,
                             onChanged: (newValue) {
                               value.toggleConsentFormState();

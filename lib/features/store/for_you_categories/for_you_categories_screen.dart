@@ -24,16 +24,20 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
           ForYouCategoriesPageVm vm,
           Widget? child,
         ) {
-          return RbioScaffold(
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                LocaleProvider.of(context).for_you,
-              ),
-            ),
+          return RbioStackedScaffold(
+            appbar: _buildAppBar(context),
             body: _buildBody(vm),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).for_you,
       ),
     );
   }
@@ -45,7 +49,9 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
 
       case LoadingProgress.done:
         return GridView.builder(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.only(
+            top: R.sizes.stackedTopPaddingValue(context) + 8,
+          ),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: MediaQuery.of(context).size.width < 800
                 ? MediaQuery.of(context).size.width * 0.45
@@ -54,15 +60,15 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
             crossAxisSpacing: 20,
             mainAxisSpacing: 25,
           ),
-          itemCount: vm.categories!.length,
-          itemBuilder: (BuildContext ctx, int index) {
+          itemCount: vm.categories.length,
+          itemBuilder: (BuildContext context, int index) {
+            final item = vm.categories[index];
             return Utils.instance.forYouCategoryCard(
               context: context,
-              title: vm.categories![index].text,
-              id: vm.categories![index].id,
-              icon: vm.categories![index].icon != null
-                  ? Image.memory(
-                      base64Decode(vm.categories![index].icon as String))
+              title: item.text,
+              id: item.id,
+              icon: item.icon != null
+                  ? Image.memory(base64Decode(item.icon ?? ''))
                   : Image.asset(R.image.covidCat),
               isSubCat: false,
             );

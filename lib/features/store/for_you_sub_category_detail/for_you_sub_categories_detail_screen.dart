@@ -15,11 +15,7 @@ class ForYouSubCategoriesDetailScreen extends StatefulWidget {
   var itemId;
   String? title;
 
-  ForYouSubCategoriesDetailScreen({
-    Key? key,
-    this.itemId,
-    this.title,
-  }) : super(key: key);
+  ForYouSubCategoriesDetailScreen({Key? key}) : super(key: key);
 
   @override
   _ForYouSubCategoriesDetailScreenState createState() =>

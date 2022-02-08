@@ -76,7 +76,7 @@ class RegisterStep2ScreenVm extends RbioVm {
   ) async {
     try {
       showLoadingDialog(mContext);
-      GuvenResponseModel response;
+      late GuvenResponseModel response;
       if ((userRegistrationStep1.identityNumber ?? '').trim().isEmpty ||
           (registerStep1Model.identificationNumber ?? '').trim().isEmpty) {
         isWithOutTCKN = true;
@@ -87,8 +87,8 @@ class RegisterStep2ScreenVm extends RbioVm {
         response =
             await getIt<Repository>().registerStep1Ui(userRegistrationStep1);
       }
-
       hideDialog(mContext);
+
       if (response.datum == 18 ||
           response.datum == 19 ||
           response.datum == 21 ||
@@ -196,10 +196,10 @@ class RegisterStep2ScreenVm extends RbioVm {
     UserRegistrationStep2Model userRegistrationStep2Model,
     bool isWithoutTCKN,
   ) async {
-    if (checkPasswordCapabilityForAll((isWithoutTCKN
-            ? userRegistrationStep2Model.password
-            : userRegistrationStep2.password) ??
-        '')) {
+    final checkValue = isWithoutTCKN
+        ? userRegistrationStep2Model.password
+        : userRegistrationStep2.password;
+    if (checkPasswordCapabilityForAll(checkValue ?? '')) {
       try {
         showLoadingDialog(mContext);
         GuvenResponseModel response;
@@ -236,11 +236,17 @@ class RegisterStep2ScreenVm extends RbioVm {
           () => hideDialog(mContext),
         );
       }
+    } else {
+      showInfoDialog(
+        LocaleProvider.of(mContext).warning,
+        LocaleProvider.current.password_wrong,
+      );
     }
   }
 
-  bool checkPasswordCapabilityForAll(String password) =>
-      PasswordAdvisor().validateStructureByPattern(password);
+  bool checkPasswordCapabilityForAll(String password) {
+    return PasswordAdvisor().validateStructureByPattern(password);
+  }
 
   void toggleCitizen() {
     isTcCitizen = !isTcCitizen;

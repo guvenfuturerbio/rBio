@@ -26,10 +26,10 @@ class NotificationInboxStateScreen extends State<NotificationInboxScreen> {
     );
   }
 
-  Widget _buildBody() => Center(
-        child: Text(
-          LocaleProvider.current.notification_inbox_empty,
-          style: context.xHeadline3,
-        ),
+  Widget _buildBody() => Column(
+        children: [
+          R.sizes.stackedTopPadding(context),
+          RbioEmptyText(title: LocaleProvider.current.notification_inbox_empty),
+        ],
       );
 }

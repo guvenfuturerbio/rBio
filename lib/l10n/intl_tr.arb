@@ -252,6 +252,7 @@
   "guven_journal": "GÜVENin",
   "guven_journal_url": "https://www.guvenin.com.tr",
   "error_old_password_wrong": "Eski şifre hatalı! Lütfen tekrar deneyiniz.",
+  "password_wrong": "Geçerli bir şifre giriniz.",
   "error_password_mismatch": "Şifreler birbiriyle uyuşmuyor! Lütfen tekrar deneyiniz.",
   "error_system_malfunction": "Sistem bir hata ile karşılaştı! Lütfen daha sonra tekrar deneyiniz.",
   "youtube_stream": "Youtube Yayını",

@@ -228,9 +228,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         //
-                        const RbioCountryCodePicker(
-                          isActiveBorder: true,
-                        ),
+                        const RbioCountryCodePicker(),
 
                         //
                         const SizedBox(
@@ -242,7 +240,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           child: RbioTextFormField(
                             focusNode: _phoneNumberFocus,
                             controller: _phoneNumberEditingController,
-                            border: RbioTextFormField.activeBorder(),
                             keyboardType: TextInputType.phone,
                             textInputAction: TextInputAction.done,
                             hintText:
@@ -267,7 +264,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     RbioTextFormField(
                       focusNode: _emailFocus,
                       controller: _emailEditingController,
-                      border: RbioTextFormField.activeBorder(),
                       textInputAction: TextInputAction.done,
                       hintText: LocaleProvider.of(context).hint_input_password,
                       inputFormatters: <TextInputFormatter>[
@@ -303,6 +299,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   backColor: getIt<ITheme>().cardBackgroundColor,
                   textColor: getIt<ITheme>().textColorSecondary,
                   fontWeight: FontWeight.bold,
+                  showElevation: false,
                 ),
               ),
 
@@ -320,6 +317,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     );
                   },
                   fontWeight: FontWeight.bold,
+                  showElevation: false,
                 ),
               ),
             ],
@@ -339,7 +337,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         child: Text(
           title,
           style: context.xHeadline4.copyWith(
-            color: getIt<ITheme>().textColorPassive,
+            fontWeight: FontWeight.bold,
           ),
         ),
       );
@@ -351,6 +349,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         absorbing: true,
         child: RbioTextFormField(
           controller: controller,
+          textColor: getIt<ITheme>().textColorPassive,
         ),
       );
 

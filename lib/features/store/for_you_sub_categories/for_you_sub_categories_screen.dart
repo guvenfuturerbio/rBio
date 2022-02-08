@@ -10,11 +10,7 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
   int? categoryId;
   String? title;
 
-  ForYouSubCategoriesScreen({
-    Key? key,
-    this.categoryId,
-    this.title,
-  }) : super(key: key);
+  ForYouSubCategoriesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +31,7 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
         ) {
           return RbioScaffold(
             appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                title ?? "No title",
-              ),
+              title: RbioAppBar.textTitle(context, title!),
             ),
             body: _buildBody(vm),
           );
@@ -65,13 +58,13 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
           ),
           itemCount: vm.categories.length,
           itemBuilder: (BuildContext context, int index) {
+            final item = vm.categories[index];
             return Utils.instance.forYouCategoryCard(
               context: context,
-              title: vm.categories[index].text,
-              id: vm.categories[index].id,
-              icon: (vm.categories[index].icon != null)
-                  ? Image.memory(
-                      base64Decode(vm.categories[index].icon as String))
+              title: item.text,
+              id: item.id,
+              icon: (item.icon != null)
+                  ? Image.memory(base64Decode(item.icon ?? ''))
                   : Image.asset(R.image.covidCat),
               isSubCat: true,
             );

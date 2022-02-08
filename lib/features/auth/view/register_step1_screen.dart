@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -18,6 +19,8 @@ class RegisterStep1Screen extends StatefulWidget {
 }
 
 class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
+  CountryCode countryCode = CountryCode(dialCode: '+90');
+
   List genderList = ["E", "K"];
 
   late TextEditingController _nameEditingController;
@@ -309,7 +312,11 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //
-                      const RbioCountryCodePicker(),
+                      RbioCountryCodePicker(
+                        onChanged: (value) {
+                          countryCode = value;
+                        },
+                      ),
 
                       //
                       const SizedBox(
@@ -370,7 +377,9 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                         'registerGender': gender!.toString(),
                         'registerDateOfBirth': vm.selectedDate.toString(),
                         'registerPhoneNumber':
-                            _phoneNumberEditingController.text
+                            _phoneNumberEditingController.text,
+                        'registerCountryCode':
+                            Uri.encodeFull(countryCode.dialCode.toString()),
                       },
                     );
                   } else {

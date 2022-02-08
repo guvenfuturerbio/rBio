@@ -249,6 +249,7 @@
   "guven_journal": "GÜVENin",
   "guven_journal_url": "https://www.guvenin.com.tr",
   "error_old_password_wrong": "Old password is wrong! Please try again.",
+  "password_wrong": "Please enter valid password.",
   "error_password_mismatch": "Passwords mismatch! Please try again.",
   "error_system_malfunction": "System has encountered a problem! Please try again later.",
   "youtube_stream": "Youtube Stream",

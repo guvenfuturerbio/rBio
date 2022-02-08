@@ -96,16 +96,13 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
             padding: const EdgeInsets.only(top: 8),
             height: MediaQuery.of(context).size.height * 0.40,
             child: Card(
-              elevation: 4,
-              color: getIt<ITheme>().textColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
+              elevation: 0,
               child: RbioTextFormField(
                 controller: textEditingController,
                 keyboardType: TextInputType.multiline,
+                border: RbioTextFormField.noneBorder(),
                 maxLines: null,
-                textInputAction: TextInputAction.done,
+                textInputAction: TextInputAction.newline,
                 onChanged: (text) {
                   vm.setText(text);
                 },

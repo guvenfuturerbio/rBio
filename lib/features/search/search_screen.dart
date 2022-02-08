@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/core.dart';
 import '../../model/dashboard/search/social_posts_response.dart';
@@ -18,21 +20,30 @@ class SearchScreen extends StatelessWidget {
     return BlocProvider<SearchBloc>(
       create: (ctx) =>
           SearchBloc(getIt<UserManager>())..add(const SearchFetched()),
-      child: const SearchView(),
+      child: SearchView(),
     );
   }
 }
 
 class SearchView extends StatelessWidget {
-  const SearchView({Key? key}) : super(key: key);
+  SearchView({Key? key}) : super(key: key);
+
+  final focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-      resizeToAvoidBottomInset: false,
-      appbar: _buildAppBar(context),
-      body: BlocBuilder<SearchBloc, SearchState>(
-        builder: (context, state) => _buildBody(context, state),
+    return KeyboardDismissOnTap(
+      child: RbioKeyboardActions(
+        focusList: [
+          focusNode,
+        ],
+        child: RbioScaffold(
+          resizeToAvoidBottomInset: false,
+          appbar: _buildAppBar(context),
+          body: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) => _buildBody(context, state),
+          ),
+        ),
       ),
     );
   }
@@ -44,6 +55,7 @@ class SearchView extends StatelessWidget {
       title: SizedBox(
         width: double.infinity,
         child: RbioTextFormField(
+          focusNode: focusNode,
           hintText: LocaleProvider.of(context).search_hint,
           onChanged: (text) {
             context.read<SearchBloc>().add(SearchTextFiltered(text));
@@ -112,9 +124,9 @@ class RbioFilterChip extends StatelessWidget {
       label: Text(
         type.xGetTitle,
         style: isSelected
-            ? context.xBodyText1
+            ? context.xHeadline3
                 .copyWith(color: getIt<ITheme>().cardBackgroundColor)
-            : context.xBodyText1,
+            : context.xHeadline3,
       ),
       onSelected: (val) {
         context.read<SearchBloc>().add(SearchEvent.platformFilter(type));
@@ -204,11 +216,16 @@ class _SocialCard extends StatelessWidget {
           final itemId = item.id;
           final itemUrl = item.url;
           if (itemId != null && itemUrl != null) {
-            // value.clickPost(itemId, itemUrl);
+            clickPost(itemId, itemUrl);
           }
         },
       ),
     );
+  }
+
+  Future<void> clickPost(int postId, String url) async {
+    getIt<UserManager>().clickPost(postId);
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 }
 
