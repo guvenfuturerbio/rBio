@@ -1,8 +1,18 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import '../../core/core.dart';
 
+part 'filter_tenants_response.g.dart';
+
+@JsonSerializable()
 class FilterTenantsResponse extends IBaseModel<FilterTenantsResponse> {
+  @JsonKey(name: "enabled")
   bool? enabled;
+
+  @JsonKey(name: "id")
   int? id;
+
+  @JsonKey(name: "title")
   String? title;
 
   FilterTenantsResponse({
@@ -11,20 +21,11 @@ class FilterTenantsResponse extends IBaseModel<FilterTenantsResponse> {
     this.title,
   });
 
-  FilterTenantsResponse.fromJson(Map<String, dynamic> json) {
-    enabled = json['enabled'] as bool?;
-    id = json['id'] as int?;
-    title = json['title'] as String?;
-  }
+  factory FilterTenantsResponse.fromJson(Map<String, dynamic> json) =>
+      _$FilterTenantsResponseFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['enabled'] = enabled;
-    data['id'] = id;
-    data['title'] = title;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$FilterTenantsResponseToJson(this);
 
   @override
   FilterTenantsResponse fromJson(Map<String, dynamic> json) {

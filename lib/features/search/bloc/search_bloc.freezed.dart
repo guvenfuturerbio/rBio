@@ -647,8 +647,10 @@ class _$SearchStateTearOff {
     return const SearchInitial();
   }
 
-  SearchLoadInProgress loadInProgress() {
-    return const SearchLoadInProgress();
+  SearchLoadInProgress loadInProgress(List<SearchSocialType>? socialTypes) {
+    return SearchLoadInProgress(
+      socialTypes,
+    );
   }
 
   SearchSuccess success(
@@ -672,7 +674,8 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loadInProgress,
+    required TResult Function(List<SearchSocialType>? socialTypes)
+        loadInProgress,
     required TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)
         success,
@@ -682,7 +685,7 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -692,7 +695,7 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -784,7 +787,8 @@ class _$SearchInitial implements SearchInitial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loadInProgress,
+    required TResult Function(List<SearchSocialType>? socialTypes)
+        loadInProgress,
     required TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)
         success,
@@ -797,7 +801,7 @@ class _$SearchInitial implements SearchInitial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -810,7 +814,7 @@ class _$SearchInitial implements SearchInitial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -870,6 +874,7 @@ abstract class $SearchLoadInProgressCopyWith<$Res> {
   factory $SearchLoadInProgressCopyWith(SearchLoadInProgress value,
           $Res Function(SearchLoadInProgress) then) =
       _$SearchLoadInProgressCopyWithImpl<$Res>;
+  $Res call({List<SearchSocialType>? socialTypes});
 }
 
 /// @nodoc
@@ -882,58 +887,84 @@ class _$SearchLoadInProgressCopyWithImpl<$Res>
 
   @override
   SearchLoadInProgress get _value => super._value as SearchLoadInProgress;
+
+  @override
+  $Res call({
+    Object? socialTypes = freezed,
+  }) {
+    return _then(SearchLoadInProgress(
+      socialTypes == freezed
+          ? _value.socialTypes
+          : socialTypes // ignore: cast_nullable_to_non_nullable
+              as List<SearchSocialType>?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SearchLoadInProgress implements SearchLoadInProgress {
-  const _$SearchLoadInProgress();
+  const _$SearchLoadInProgress(this.socialTypes);
+
+  @override
+  final List<SearchSocialType>? socialTypes;
 
   @override
   String toString() {
-    return 'SearchState.loadInProgress()';
+    return 'SearchState.loadInProgress(socialTypes: $socialTypes)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SearchLoadInProgress);
+        (other.runtimeType == runtimeType &&
+            other is SearchLoadInProgress &&
+            const DeepCollectionEquality()
+                .equals(other.socialTypes, socialTypes));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(socialTypes));
+
+  @JsonKey(ignore: true)
+  @override
+  $SearchLoadInProgressCopyWith<SearchLoadInProgress> get copyWith =>
+      _$SearchLoadInProgressCopyWithImpl<SearchLoadInProgress>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loadInProgress,
+    required TResult Function(List<SearchSocialType>? socialTypes)
+        loadInProgress,
     required TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)
         success,
     required TResult Function() failure,
   }) {
-    return loadInProgress();
+    return loadInProgress(socialTypes);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
     TResult Function()? failure,
   }) {
-    return loadInProgress?.call();
+    return loadInProgress?.call(socialTypes);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -941,7 +972,7 @@ class _$SearchLoadInProgress implements SearchLoadInProgress {
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
-      return loadInProgress();
+      return loadInProgress(socialTypes);
     }
     return orElse();
   }
@@ -985,7 +1016,13 @@ class _$SearchLoadInProgress implements SearchLoadInProgress {
 }
 
 abstract class SearchLoadInProgress implements SearchState {
-  const factory SearchLoadInProgress() = _$SearchLoadInProgress;
+  const factory SearchLoadInProgress(List<SearchSocialType>? socialTypes) =
+      _$SearchLoadInProgress;
+
+  List<SearchSocialType>? get socialTypes;
+  @JsonKey(ignore: true)
+  $SearchLoadInProgressCopyWith<SearchLoadInProgress> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1064,7 +1101,8 @@ class _$SearchSuccess implements SearchSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loadInProgress,
+    required TResult Function(List<SearchSocialType>? socialTypes)
+        loadInProgress,
     required TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)
         success,
@@ -1077,7 +1115,7 @@ class _$SearchSuccess implements SearchSuccess {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -1090,7 +1128,7 @@ class _$SearchSuccess implements SearchSuccess {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -1194,7 +1232,8 @@ class _$SearchFailure implements SearchFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loadInProgress,
+    required TResult Function(List<SearchSocialType>? socialTypes)
+        loadInProgress,
     required TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)
         success,
@@ -1207,7 +1246,7 @@ class _$SearchFailure implements SearchFailure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,
@@ -1220,7 +1259,7 @@ class _$SearchFailure implements SearchFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loadInProgress,
+    TResult Function(List<SearchSocialType>? socialTypes)? loadInProgress,
     TResult Function(
             List<SearchModel> list, List<SearchSocialType> socialTypes)?
         success,

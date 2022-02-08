@@ -16,6 +16,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final UserManager userManager;
 
   var socialTypes = <SearchSocialType>[];
+  List<SocialPostsResponse> allSocialList = [];
 
   SearchBloc(this.userManager) : super(const SearchState.initial()) {
     on<SearchFetched>(onFetched);
@@ -28,10 +29,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchFetched event,
     Emitter<SearchState> emit,
   ) async {
-    emit(const SearchState.loadInProgress());
+    emit(const SearchState.loadInProgress(null));
     try {
-      final result = await userManager.getAllSocialResources();
-      emit(SearchState.success(result, socialTypes));
+      allSocialList = await userManager.getAllSocialResources();
+      emit(SearchState.success(allSocialList, socialTypes));
     } catch (error) {
       LoggerUtils.instance.e(error);
       emit(const SearchState.failure());
@@ -43,7 +44,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     Emitter<SearchState> emit,
   ) async {
     if (event.input.length >= 3) {
-      emit(const SearchState.loadInProgress());
+      emit(SearchState.loadInProgress(socialTypes));
       try {
         final futureList = await Future.wait(
           [
@@ -76,8 +77,22 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       } else {
         socialTypes.add(event.type);
       }
-      emit(currentState.copyWith(socialTypes: socialTypes));
-      add(const SearchEvent.filterRetrieved());
+
+      if (socialTypes.isEmpty) {
+        emit(
+          currentState.copyWith(
+            socialTypes: socialTypes,
+            list: allSocialList,
+          ),
+        );
+      } else {
+        emit(
+          currentState.copyWith(
+            socialTypes: socialTypes,
+          ),
+        );
+        add(const SearchEvent.filterRetrieved());
+      }
     }
   }
 
@@ -85,7 +100,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchFilterRetrieved event,
     Emitter<SearchState> emit,
   ) async {
-    emit(const SearchState.loadInProgress());
+    emit(SearchState.loadInProgress(socialTypes));
     var result = <SearchModel>[];
     for (var item in socialTypes) {
       try {

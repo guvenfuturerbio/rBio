@@ -156,7 +156,7 @@ class CreateAppointmentScreen extends StatelessWidget {
             hint: forOnline
                 ? LocaleProvider.current.get_online_appointment
                 : LocaleProvider.current.pls_select_hosp,
-            itemList: vm.tenantsFilterResponse!,
+            itemList: vm.tenantsFilterResponse ?? [],
             val: vm,
             whichField: Fields.tenant,
             progress: vm.progress,

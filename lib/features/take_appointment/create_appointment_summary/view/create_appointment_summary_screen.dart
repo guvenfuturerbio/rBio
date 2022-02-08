@@ -115,15 +115,49 @@ class _CreateAppointmentSummaryScreenState
           children: [
             //
             R.sizes.stackedTopPadding(context),
+
+            //
+            if (vm.appointmentSuccess) ...[
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //
+                    R.sizes.hSizer8,
+
+                    //
+                    SvgPicture.asset(
+                      R.image.successAppointment,
+                      width: Atom.width * 0.4,
+                    ),
+
+                    //
+                    R.sizes.hSizer4,
+
+                    //
+                    Text(
+                      LocaleProvider.current.appo_created,
+                      textAlign: TextAlign.center,
+                      style: context.xHeadline3.copyWith(
+                        color: getIt<ITheme>().mainColor,
+                      ),
+                    ),
+
+                    //
+                    R.sizes.hSizer12,
+                  ],
+                ),
+              ),
+            ],
+
+            //
             R.sizes.hSizer16,
 
             //
             Text(
               LocaleProvider.current.appointment_details,
               textAlign: TextAlign.start,
-              style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: context.xHeadline3,
             ),
 
             //
@@ -287,50 +321,78 @@ class _CreateAppointmentSummaryScreenState
               ],
 
               //
-              if (!isKeyboardVisible) ...[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    //
-                    Expanded(
-                      child: _buildSummaryButton(vm),
-                    ),
-
-                    //
-                    const SizedBox(width: 8),
-
-                    //
-                    Expanded(
-                      child: RbioElevatedButton(
-                        showElevation: false,
-                        onTap: () {
-                          vm.saveAppointment(
-                            price: vm.orgVideoCallPriceResponse?.patientPrice
-                                ?.toString() as String,
-                            forOnline: forOnline,
-                            forFree:
-                                (vm.orgVideoCallPriceResponse?.patientPrice ??
-                                            0) <
-                                        1
-                                    ? true
-                                    : false,
-                          );
-                        },
-                        title: forOnline
-                            ? LocaleProvider.current.pay
-                            : LocaleProvider.current.done,
-                        fontWeight: FontWeight.w600,
+              if (!forOnline) ...[
+                RbioElevatedButton(
+                  infinityWidth: true,
+                  showElevation: false,
+                  onTap: () {
+                    if (vm.appointmentSuccess) {
+                      Atom.to(PagePaths.main, isReplacement: true);
+                    } else {
+                      vm.saveAppointment(
+                        price: vm.orgVideoCallPriceResponse?.patientPrice
+                            ?.toString(),
+                        forOnline: forOnline,
+                        forFree:
+                            (vm.orgVideoCallPriceResponse?.patientPrice ?? 0) <
+                                    1
+                                ? true
+                                : false,
+                      );
+                    }
+                  },
+                  title: vm.appointmentSuccess
+                      ? LocaleProvider.current.Ok
+                      : LocaleProvider.current.confirm,
+                  fontWeight: FontWeight.w600,
+                ),
+                R.sizes.defaultBottomPadding,
+              ] else ...[
+                if (!isKeyboardVisible) ...[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //
+                      Expanded(
+                        child: _buildSummaryButton(vm),
                       ),
-                    ),
-                  ],
-                ),
 
-                //
-                SizedBox(
-                  height: Atom.safeBottom + 10,
-                ),
+                      //
+                      const SizedBox(width: 8),
+
+                      //
+                      Expanded(
+                        child: RbioElevatedButton(
+                          showElevation: false,
+                          onTap: () {
+                            vm.saveAppointment(
+                              price: vm.orgVideoCallPriceResponse?.patientPrice
+                                  ?.toString() as String,
+                              forOnline: forOnline,
+                              forFree:
+                                  (vm.orgVideoCallPriceResponse?.patientPrice ??
+                                              0) <
+                                          1
+                                      ? true
+                                      : false,
+                            );
+                          },
+                          title: forOnline
+                              ? LocaleProvider.current.pay
+                              : LocaleProvider.current.done,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  //
+                  SizedBox(
+                    height: Atom.safeBottom + 10,
+                  ),
+                ],
               ],
             ],
           ),
@@ -392,8 +454,8 @@ class _CreateAppointmentSummaryScreenState
   }
 
   Widget _buildSummaryButton(CreateAppointmentSummaryVm vm) {
-    String? title;
-    VoidCallback onTap;
+    late String title;
+    late VoidCallback onTap;
 
     switch (vm.summaryButton) {
       case SummaryButtons.add:

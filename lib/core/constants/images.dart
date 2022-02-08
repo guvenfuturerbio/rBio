@@ -116,6 +116,7 @@ class _Images {
   final weight = 'assets/images/weight_icon.svg';
   final search = 'assets/images/search_icon.svg';
   final menu = 'assets/images/menu_icon.svg';
+  final successAppointment = 'assets/images/success_appointment.svg';
 
   final bottomNavigationChatGreen =
       'assets/images/bottom_navigation/chat_icon_green.svg';

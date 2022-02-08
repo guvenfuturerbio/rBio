@@ -138,7 +138,10 @@ class CreateAppointmentVm extends ChangeNotifier {
   }
 
   Future<void> fillFromSearch(
-      int tenantId, int departmentId, int resourceId) async {
+    int tenantId,
+    int departmentId,
+    int resourceId,
+  ) async {
     try {
       if (tenantsFilterResponse != null) {
         for (var tenant in tenantsFilterResponse!) {
@@ -292,15 +295,13 @@ class CreateAppointmentVm extends ChangeNotifier {
       progress = LoadingProgress.loading;
       departmentProgress = LoadingProgress.loading;
       notifyListeners();
-
       filterDepartmentResponse = await getIt<Repository>()
           .fetchOnlineDepartments(filterOnlineDepartmentsRequest);
-      List<String?> string = [];
+      List<String> string = [];
       for (var element in filterDepartmentResponse!) {
-        string.add(element.title);
+        string.add(element.title ?? '');
       }
-      string = string
-        ..sort(turkish.comparator as int Function(String?, String?));
+      string = string..sort(turkish.comparator);
       List<FilterDepartmentsResponse> temp = [];
       for (var element in string) {
         for (var element2 in filterDepartmentResponse!) {
@@ -582,7 +583,7 @@ class CreateAppointmentVm extends ChangeNotifier {
           doctorsImageUrls.add(R.image.circlevatar);
         }
       }
-      ;
+
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {

@@ -20,8 +20,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   late String filterFromDate;
   late String filterToDate;
 
-  late LoadingProgress slotsProgress;
-  late LoadingProgress availableDatesProgress;
+  LoadingProgress? slotsProgress;
+  LoadingProgress? availableDatesProgress;
   List<ResourcesRequest> resourceRequestList = [];
   late Map<String, List<ResourcesRequest>> availableSlots;
 
@@ -51,7 +51,6 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       }
 
       await getAvailableDates(DateTime.now());
- 
     });
   }
 
@@ -209,7 +208,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
             tmp.add(element);
           }
 
-          for (var event in data.events) {
+          for (var event in (data.events ?? [])) {
             for (var element in availableSlotsList) {
               DateTime dateFrom = DateTime(
                 DateTime.parse(filterFromDate).year,
@@ -218,7 +217,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
                 int.parse(event.from.substring(0, 2)),
                 int.parse(event.from.substring(3, 5)),
                 int.parse(event.from.substring(6, 8)),
-              ).addMinutes(-data.serviceTime);
+              ).addMinutes(-(data.serviceTime ?? 0));
 
               DateTime dateTo = DateTime(
                 DateTime.parse(filterFromDate).year,
@@ -238,7 +237,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           availableSlotsList = tmp;
           List<DateTime> removedList = [];
           for (var item in availableSlotsList) {
-            final stopTime = item.add(Duration(minutes: data.serviceTime));
+            final stopTime =
+                item.add(Duration(minutes: (data.serviceTime ?? 0)));
             if (!removedList.contains(item)) {
               for (var item2 in availableSlotsList) {
                 if (item2.isAfter(item) && item2.isBefore(stopTime)) {
@@ -253,18 +253,18 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
               .difference(removedList.toSet())
               .toList();
 
-          if (!availableSlotsList.isEmpty) {
+          if (availableSlotsList.isNotEmpty) {
             for (var element in availableSlotsList) {
-                appointments.add(
-                  ResourcesRequest(
-                    from: convertDatetime(element),
-                    to: convertDatetime(
-                      element.addMinutes(data.serviceTime),
-                    ),
-                    tenantId: data.resource.tenantId,
+              appointments.add(
+                ResourcesRequest(
+                  from: convertDatetime(element),
+                  to: convertDatetime(
+                    element.addMinutes(data.serviceTime ?? 0),
                   ),
-                );
-              }
+                  tenantId: data.resource?.tenantId,
+                ),
+              );
+            }
           }
         }
       }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/widgets/rbio_animated_cliprect.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../../../core/enums/remindable.dart';
+import '../../../core/widgets/rbio_animated_cliprect.dart';
 import '../mediminder.dart';
 
 // ignore: must_be_immutable
@@ -50,24 +50,22 @@ class ReminderListScreen extends StatelessWidget {
         Widget? child,
       ) {
         final medicineList = vm.medicineForScheduled;
-        if (medicineList.isNotEmpty &&
-            medicineList.any(
-              (element) => element.remindable != null
-                  ? element.remindable!.xRemindableKeys == remindable
-                  : false,
-            )) {
-          final filterList = medicineList.groupBy((item) => item.createdDate);
-          return _buildList(vm, filterList);
+        if (medicineList.isNotEmpty) {
+          final filterList = medicineList
+              .where((element) =>
+                  element.remindable?.xRemindableKeys == remindable)
+              .toList();
+          if (filterList.isEmpty) {
+            return RbioEmptyText(
+              title: LocaleProvider.current.there_are_no_reminders,
+            );
+          }
+
+          final filterMapList = filterList.groupBy((item) => item.createdDate);
+          return _buildList(vm, filterMapList);
         } else {
-          return Center(
-            heightFactor: 5,
-            child: Text(
-              LocaleProvider.current.there_are_no_reminders,
-              textAlign: TextAlign.center,
-              style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          return RbioEmptyText(
+            title: LocaleProvider.current.there_are_no_reminders,
           );
         }
       },

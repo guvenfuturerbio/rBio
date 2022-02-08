@@ -56,7 +56,14 @@ class SearchView extends StatelessWidget {
   Widget _buildBody(BuildContext context, SearchState state) {
     return state.when(
       initial: () => const SizedBox(),
-      loadInProgress: () => const RbioLoading(),
+      loadInProgress: (socialTypes) => Column(
+        children: [
+          if (socialTypes != null) ...[
+            Wrap(spacing: 8, children: _chips(socialTypes)),
+          ],
+          const Expanded(child: RbioLoading()),
+        ],
+      ),
       success: (list, socialTypes) => Column(
         children: [
           Wrap(spacing: 8, children: _chips(socialTypes)),

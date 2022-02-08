@@ -365,9 +365,10 @@ class ApiServiceImpl extends ApiService {
     if (response.xIsSuccessful) {
       final getEventsResponseList = <GetEventsResponse>[];
       final mapDatum = response.xGetMap;
-      final resourceEvents = mapDatum['resourceEvents'];
-      if (resourceEvents is List<Map<String, dynamic>>) {
-        for (final data in resourceEvents) {
+      final resourceEvents = mapDatum['resourceEvents'] as List<dynamic>?;
+      final resourceMapEvents = resourceEvents?.map((e) => e).cast<Map<String, dynamic>>().toList();
+      if (resourceMapEvents is List<Map<String, dynamic>>) {
+        for (final data in resourceMapEvents) {
           final getEventsResponse = GetEventsResponse.fromJson(data);
           getEventsResponseList.add(getEventsResponse);
         }

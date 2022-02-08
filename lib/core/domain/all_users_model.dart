@@ -1,11 +1,21 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../core.dart';
-
+part 'all_users_model.freezed.dart';
 part 'all_users_model.g.dart';
 
-// Cihaz üzerinde uygulamaya giriş yapan tüm kullanıcıları tuttuğumuz model.
-// Her kullanıcının home widget listesini saklıyoruz.
+@freezed
+class AllUsersModel with _$AllUsersModel {
+  /// Cihaz üzerinde uygulamaya giriş yapan tüm kullanıcıları tuttuğumuz model.
+  /// Her kullanıcının home widget listesini saklıyoruz.
+  const factory AllUsersModel({
+    @JsonKey(name: 'useWidgets') List<String>? useWidgets,
+  }) = _AllUsersModel;
+
+  factory AllUsersModel.fromJson(Map<String, dynamic> json) =>
+      _$AllUsersModelFromJson(json);
+}
+
+/*
 @JsonSerializable()
 class AllUsersModel extends IBaseModel<AllUsersModel> {
   @JsonKey(name: "useWidgets")
@@ -26,3 +36,4 @@ class AllUsersModel extends IBaseModel<AllUsersModel> {
     return AllUsersModel.fromJson(json);
   }
 }
+*/

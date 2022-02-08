@@ -10,14 +10,14 @@ import 'do_mobile_payment_vm.dart';
 class DoMobilePaymentScreen extends StatefulWidget {
   final AppointmentRequest appointment;
   final int appointmentId;
-  final String price;
+  final String? price;
   final String? voucherCode;
 
   const DoMobilePaymentScreen({
     Key? key,
     required this.appointment,
     required this.appointmentId,
-    required this.price,
+    this.price,
     this.voucherCode,
   }) : super(key: key);
 
@@ -280,7 +280,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                           onTap: () {
                             value.showDistanceSaleContract(
                               packageName: LocaleProvider.current.online_appo,
-                              price: widget.price,
+                              price: widget.price ?? '',
                             );
                           },
                           child: Text(
@@ -318,7 +318,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                           onTap: () => {
                             value.showCancellationAndRefund(
                               packageName: LocaleProvider.current.online_appo,
-                              price: widget.price,
+                              price: widget.price ?? '',
                             ),
                           },
                           child: Text(

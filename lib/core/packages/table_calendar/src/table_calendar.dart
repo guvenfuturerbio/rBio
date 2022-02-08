@@ -576,8 +576,8 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
             widget.rangeEndDay != null &&
             _isWithinRange(day, widget.rangeStartDay!, widget.rangeEndDay!);
 
-        final isRangeStart = isSameDay(day, widget.rangeStartDay!);
-        final isRangeEnd = isSameDay(day, widget.rangeEndDay!);
+        final isRangeStart = isSameDay(day, widget.rangeStartDay);
+        final isRangeEnd = isSameDay(day, widget.rangeEndDay);
 
         Widget? rangeHighlight = widget.calendarBuilders.rangeHighlightBuilder
             ?.call(context, day, isWithinRange);

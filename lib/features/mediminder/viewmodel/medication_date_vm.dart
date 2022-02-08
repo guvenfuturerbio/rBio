@@ -3,29 +3,26 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onedosehealth/core/utils/tz_helper.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../core/core.dart';
 import '../../../core/enums/medicine_period.dart';
 import '../../../core/enums/remindable.dart';
 import '../../../core/enums/usage_type.dart';
+import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
 class MedicationDateVm extends RbioVm {
   @override
   late BuildContext mContext;
   late Remindable mRemindable;
-  late ReminderNotificationsManager notificationManager;
+  late ReminderNotificationsManager mRotificationManager;
 
   MedicationDateVm({
-    required BuildContext context,
-    required Remindable remindable,
-    required ReminderNotificationsManager notificationManager,
+    required this.mContext,
+    required this.mRemindable,
+    required this.mRotificationManager,
   }) {
-    mContext = context;
-    mRemindable = remindable;
-    notificationManager = notificationManager;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       _createDays();
       await _generateUniqueIdForSchedule();
@@ -349,7 +346,7 @@ class MedicationDateVm extends RbioVm {
   ) async {
     if (mMedicinePeriod == null) return;
 
-    await notificationManager.createMedinicine(
+    await mRotificationManager.createMedinicine(
       id,
       _getNotificationTitle(),
       _getNotificationBody(),

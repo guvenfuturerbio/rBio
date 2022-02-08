@@ -26,6 +26,8 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   final String to;
   final String from;
 
+  bool appointmentSuccess = false;
+
   SummaryButtons _summaryButton = SummaryButtons.none;
   SummaryButtons get summaryButton => _summaryButton;
   set summaryButton(SummaryButtons val) {
@@ -119,7 +121,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     required bool forOnline,
     required bool forFree,
     int? appointmentId,
-    required String price,
+    String? price,
   }) async {
     showOverlayLoading = true;
 
@@ -166,17 +168,33 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       } else {
         try {
           int datum = await getIt<Repository>().saveAppointment(
-              AppointmentRequest(
-                  saveAppointmentsRequest: saveAppointmentsRequest));
+            AppointmentRequest(
+              saveAppointmentsRequest: saveAppointmentsRequest,
+            ),
+          );
+
           _showOverlayLoading = false;
-          notifyListeners();
           if (datum == 1) {
-            showGradientDialog(mContext, LocaleProvider.current.info,
-                LocaleProvider.current.appo_created, true);
+            appointmentSuccess = true;
+
+            // showGradientDialog(
+            //   mContext,
+            //   LocaleProvider.current.info,
+            //   LocaleProvider.current.appo_created,
+            //   true,
+            // );
           } else if (datum == 2) {
-            showGradientDialog(mContext, LocaleProvider.current.info,
-                LocaleProvider.current.appointment_created_but_error, true);
+            _showOverlayLoading = false;
+
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.info,
+              LocaleProvider.current.appointment_created_but_error,
+              true,
+            );
           }
+
+          notifyListeners();
         } catch (error, stackTrace) {
           LoggerUtils.instance.e(error);
           Sentry.captureException(error, stackTrace: stackTrace);

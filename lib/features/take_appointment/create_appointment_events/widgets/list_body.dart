@@ -92,8 +92,7 @@ class _ListBodyState extends State<ListBody>
             builder: (BuildContext context, _EventSelectedModel? selectedModel,
                 Widget? child) {
               return RbioSwitcher(
-                showFirstChild:
-                    selectedModel?.selected != null,
+                showFirstChild: selectedModel?.selected != null,
                 child1: child!,
                 child2: const SizedBox(),
               );
@@ -179,7 +178,7 @@ class _ListBodyState extends State<ListBody>
     );
   }
 
-  late _EventSelectedModel oldModel;
+  _EventSelectedModel? oldModel;
   Widget _buildRightList() {
     return ValueListenableBuilder(
       valueListenable: widget.completeNotifier,
@@ -188,13 +187,11 @@ class _ListBodyState extends State<ListBody>
         _EventSelectedModel? selectedModel,
         Widget? child,
       ) {
-
-
-        if (oldModel.value != selectedModel?.value) {
+        if (oldModel?.value != selectedModel?.value) {
           controller.reset();
           controller.forward();
         }
-        oldModel = selectedModel!;
+        oldModel = selectedModel;
 
         return SlideTransition(
           position: offset,
@@ -203,9 +200,9 @@ class _ListBodyState extends State<ListBody>
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: selectedModel.items
-                  ?.map((e) => _buildRightCard(context, e))
-                  .toList() as List<Widget>,
+              children: (selectedModel?.items ?? [])
+                  .map((e) => _buildRightCard(context, e))
+                  .toList(),
             ),
           ),
         );

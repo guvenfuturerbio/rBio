@@ -59,9 +59,9 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
     return ChangeNotifierProvider<MedicationDateVm>(
       create: (_) => MedicationDateVm(
-        context: context,
-        remindable: widget.remindable!,
-        notificationManager: getIt<ReminderNotificationsManager>(),
+        mContext: context,
+        mRemindable: widget.remindable!,
+        mRotificationManager: getIt<ReminderNotificationsManager>(),
       ),
       child: Consumer<MedicationDateVm>(
         builder: (

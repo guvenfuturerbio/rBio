@@ -1,10 +1,22 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import '../../../core/core.dart';
 import '../filter_tenants_response.dart';
 
+part 'filter_departments_response.g.dart';
+
+@JsonSerializable()
 class FilterDepartmentsResponse extends IBaseModel<FilterDepartmentsResponse> {
+  @JsonKey(name: "enabled")
   bool? enabled;
+
+  @JsonKey(name: "id")
   int? id;
+
+  @JsonKey(name: "tenants")
   List<FilterTenantsResponse>? tenants;
+
+  @JsonKey(name: "title")
   String? title;
 
   FilterDepartmentsResponse({
@@ -14,29 +26,11 @@ class FilterDepartmentsResponse extends IBaseModel<FilterDepartmentsResponse> {
     this.title,
   });
 
-  FilterDepartmentsResponse.fromJson(Map<String, dynamic> json) {
-    enabled = json['enabled'] as bool?;
-    id = json['id'] as int?;
-    if (json['tenants'] != null) {
-      tenants = <FilterTenantsResponse>[];
-      json['tenants'].forEach((v) {
-        tenants?.add(FilterTenantsResponse.fromJson(v as Map<String, dynamic>));
-      });
-    }
-    title = json['title'] as String?;
-  }
+  factory FilterDepartmentsResponse.fromJson(Map<String, dynamic> json) =>
+      _$FilterDepartmentsResponseFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['enabled'] = enabled;
-    data['id'] = id;
-    if (tenants != null) {
-      data['tenants'] = tenants?.map((v) => v.toJson()).toList();
-    }
-    data['title'] = title;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$FilterDepartmentsResponseToJson(this);
 
   @override
   FilterDepartmentsResponse fromJson(Map<String, dynamic> json) {

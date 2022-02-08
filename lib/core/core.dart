@@ -90,4 +90,5 @@ export 'widgets/rbio_switcher.dart';
 export 'widgets/rbio_textformfield.dart';
 export 'widgets/rbio_user_tile.dart';
 export 'widgets/rbio_visibility_suffix_icon.dart';
+export 'widgets/rbio_empty_text.dart';
 export 'widgets/warning_dialog.dart';

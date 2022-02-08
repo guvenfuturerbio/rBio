@@ -85,14 +85,8 @@ class EResultScreen extends StatelessWidget {
         {
           return vm.visits.isNotEmpty
               ? _buildListView(vm)
-              : Center(
-                  child: Text(
-                    LocaleProvider.current.no_result_selected_date,
-                    textAlign: TextAlign.center,
-                    style: context.xHeadline1.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+              : RbioEmptyText(
+                  title: LocaleProvider.current.no_result_selected_date,
                 );
         }
 

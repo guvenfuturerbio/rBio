@@ -34,16 +34,16 @@ extension ParseToString on Remindable {
   String toRouteString() {
     switch (this) {
       case Remindable.bloodGlucose:
-        return 'BloodGlucose';
+        return 'bloodGlucose';
 
       case Remindable.hbA1c:
-        return 'HbA1c';
+        return 'hbA1c';
 
       case Remindable.strip:
-        return 'Strip';
+        return 'strip';
 
       case Remindable.medication:
-        return 'Medication';
+        return 'medication';
 
       default:
         return LocaleProvider.current.error;
@@ -57,16 +57,16 @@ extension ParseToRemindable on String {
 
   Remindable toRouteToRemindable() {
     switch (this) {
-      case 'BloodGlucose':
+      case 'bloodGlucose':
         return Remindable.bloodGlucose;
 
-      case 'HbA1c':
+      case 'hbA1c':
         return Remindable.hbA1c;
 
-      case 'Strip':
+      case 'strip':
         return Remindable.strip;
 
-      case 'Medication':
+      case 'medication':
         return Remindable.medication;
 
       default:
