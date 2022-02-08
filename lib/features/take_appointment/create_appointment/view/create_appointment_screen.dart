@@ -12,14 +12,11 @@ class CreateAppointmentScreen extends StatelessWidget {
   late bool forOnline;
   late bool fromSearch = false;
   late bool fromSymptom = false;
-  late int departmentId;
-  //String departmentName;
-  //String doctorName;
-  late int resourceId;
-  late int tenantId;
+  int? departmentId;
+  int? resourceId;
+  int? tenantId;
 
   CreateAppointmentScreen({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +25,16 @@ class CreateAppointmentScreen extends StatelessWidget {
       if (Atom.queryParameters['fromSearch'] == 'true') {
         fromSearch = true;
         tenantId = int.parse(Atom.queryParameters['tenantId']!);
-        departmentId =
-            int.parse(Atom.queryParameters['departmentId']!) ;
-        resourceId = int.parse(Atom.queryParameters['resourceId']!) ;
+        departmentId = int.parse(Atom.queryParameters['departmentId']!);
+        resourceId = int.parse(Atom.queryParameters['resourceId']!);
       } else {
         fromSearch = false;
       }
 
       if (Atom.queryParameters['fromSymptom'] == 'true') {
         fromSymptom = true;
-        tenantId = int.parse(Atom.queryParameters['tenantId']!) ;
-        departmentId =
-            int.parse(Atom.queryParameters['departmentId']!) ;
+        tenantId = int.parse(Atom.queryParameters['tenantId']!);
+        departmentId = int.parse(Atom.queryParameters['departmentId']!);
       } else {
         fromSymptom = false;
       }
@@ -49,13 +44,14 @@ class CreateAppointmentScreen extends StatelessWidget {
 
     return ChangeNotifierProvider<CreateAppointmentVm>(
       create: (context) => CreateAppointmentVm(
-          mContext: context,
-          forOnline: forOnline,
-          fromSearch: fromSearch,
-          fromSymptom: fromSymptom,
-          tenantId: tenantId,
-          departmentId: departmentId,
-          resourceId: resourceId),
+        mContext: context,
+        forOnline: forOnline,
+        fromSearch: fromSearch,
+        fromSymptom: fromSymptom,
+        tenantId: tenantId,
+        departmentId: departmentId,
+        resourceId: resourceId,
+      ),
       child: Consumer<CreateAppointmentVm>(
         builder: (
           BuildContext context,
@@ -160,7 +156,7 @@ class CreateAppointmentScreen extends StatelessWidget {
             hint: forOnline
                 ? LocaleProvider.current.get_online_appointment
                 : LocaleProvider.current.pls_select_hosp,
-            itemList: vm.tenantsFilterResponse! ,
+            itemList: vm.tenantsFilterResponse!,
             val: vm,
             whichField: Fields.tenant,
             progress: vm.progress,
@@ -201,7 +197,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       context: context,
                       header: LocaleProvider.current.doctor_selection,
                       hint: LocaleProvider.current.pls_select_doctor,
-                      itemList: vm.filterResourceResponse !,
+                      itemList: vm.filterResourceResponse!,
                       val: vm,
                       whichField: Fields.doctors,
                       progress: vm.doctorProgress,

@@ -43,6 +43,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
     clearStorage();
     await registerStorage();
   }
+
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   GuvenSettings settings = GuvenSettings(
       appName: packageInfo.appName,

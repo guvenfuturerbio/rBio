@@ -44,7 +44,7 @@ class DashboardNavigation extends VRouteElementBuilder {
           VWidget(
             path: search,
             name: search,
-            widget: SearchScreen(fromBottomBar: true),
+            widget: const SearchScreen(),
           ),
 
           //
