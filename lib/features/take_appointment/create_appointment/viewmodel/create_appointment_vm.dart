@@ -64,14 +64,15 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   // #endregion
 
-  CreateAppointmentVm(
-      {required this.mContext,
-      required this.forOnline,
-      required this.fromSearch,
-      required this.fromSymptom,
-      int? tenantId,
-      int? departmentId,
-      int? resourceId}) {
+  CreateAppointmentVm({
+    required this.mContext,
+    required this.forOnline,
+    required this.fromSearch,
+    required this.fromSymptom,
+    int? tenantId,
+    int? departmentId,
+    int? resourceId,
+  }) {
     _patientId = getIt<UserNotifier>().getPatient().id;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       fetchRelatives();

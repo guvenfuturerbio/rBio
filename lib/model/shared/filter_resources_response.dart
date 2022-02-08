@@ -1,8 +1,10 @@
+import 'package:onedosehealth/features/search/search_vm.dart';
+
 import '../../core/domain/base_model.dart';
 
 import '../model.dart';
 
-class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse> {
+class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse> with SearchModel {
   List<FilterTenantsResponse>? departments;
   bool? enabled;
   String? gender;

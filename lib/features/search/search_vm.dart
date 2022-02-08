@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/data/repository/repository.dart';
-import 'package:onedosehealth/core/enums/loading_progress.dart';
-import 'package:onedosehealth/core/extension/string_extension.dart';
-import 'package:onedosehealth/core/locator.dart';
-import 'package:onedosehealth/core/manager/user_manager.dart';
-import 'package:onedosehealth/core/utils/logger_helper.dart';
-import 'package:onedosehealth/core/widgets/loading_dialog.dart';
-import 'package:onedosehealth/core/widgets/warning_dialog.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/model.dart';
+import '../../core/data/repository/repository.dart';
+import '../../core/enums/loading_progress.dart';
+import '../../core/extension/string_extension.dart';
+import '../../core/locator.dart';
+import '../../core/manager/user_manager.dart';
+import '../../core/utils/logger_helper.dart';
+import '../../core/widgets/loading_dialog.dart';
+import '../../core/widgets/warning_dialog.dart';
+import '../../generated/l10n.dart';
+
+class SearchModel {}
 
 class SearchScreenVm extends ChangeNotifier {
   BuildContext mContext;
@@ -36,11 +38,13 @@ class SearchScreenVm extends ChangeNotifier {
     searchText = "";
     allSocialResources.clear();
     notifyListeners();
+
     if (filterTitleList.contains(filterTitle)) {
       filterTitleList.remove(filterTitle);
     } else {
       filterTitleList.add(filterTitle);
     }
+
     if (filterTitleList.isNotEmpty) {
       for (var item in filterTitleList) {
         if (item == 'Doctor') {
