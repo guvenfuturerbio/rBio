@@ -61,6 +61,8 @@ class GlucoseData extends HiveObject {
   @HiveField(11)
   int? userId;
 
+  bool isFromHealth;
+
   PickedFile imageFile = PickedFile("");
 
   // BG
@@ -68,20 +70,20 @@ class GlucoseData extends HiveObject {
   Color get color =>
       UtilityManager().getGlucoseMeasurementColor(int.parse(level));
 
-  GlucoseData({
-    required this.level,
-    this.tag,
-    required this.note,
-    required this.time,
-    required this.device,
-    this.manual = false,
-    this.deviceUUID = "",
-    this.deviceName = "",
-    this.imageURL = "",
-    this.isDeleted = false,
-    this.userId,
-    this.measurementId,
-  });
+  GlucoseData(
+      {required this.level,
+      this.tag,
+      required this.note,
+      required this.time,
+      required this.device,
+      this.manual = false,
+      this.deviceUUID = "",
+      this.deviceName = "",
+      this.imageURL = "",
+      this.isDeleted = false,
+      this.userId,
+      this.measurementId,
+      this.isFromHealth = false});
 
   GlucoseData fromGlucoseData(GlucoseData glucoseData) {
     return GlucoseData(
@@ -173,6 +175,9 @@ class GlucoseData extends HiveObject {
   }
 
   bool isEqual(GlucoseData other) {
+    if (other.isFromHealth) {
+      return level == other.level && date == other.date;
+    }
     return jsonEncode(toMap()) == jsonEncode(other.toMap());
   }
 }

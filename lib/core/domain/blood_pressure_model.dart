@@ -23,16 +23,18 @@ class BloodPressureModel extends HiveObject {
   @HiveField(7)
   int? sys;
 
-  BloodPressureModel({
-    this.dateTime,
-    this.deviceUUID,
-    this.dia,
-    this.isManual,
-    this.measurementId,
-    this.note,
-    this.pulse,
-    this.sys,
-  });
+  bool isFromHealth;
+
+  BloodPressureModel(
+      {this.dateTime,
+      this.deviceUUID,
+      this.dia,
+      this.isManual,
+      this.measurementId,
+      this.note,
+      this.pulse,
+      this.sys,
+      this.isFromHealth = false});
 
   factory BloodPressureModel.fromJson(Map<String, dynamic> map) =>
       BloodPressureModel(
@@ -77,6 +79,12 @@ class BloodPressureModel extends HiveObject {
   }
 
   bool isEqual(BloodPressureModel other) {
+    if (other.isFromHealth) {
+      return sys == other.sys &&
+          dia == other.dia &&
+          pulse == other.pulse &&
+          dateTime == other.dateTime;
+    }
     return jsonEncode(toJson()) == jsonEncode(other.toJson());
   }
 

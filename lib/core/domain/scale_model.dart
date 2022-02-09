@@ -127,34 +127,35 @@ class ScaleModel extends HiveObject {
   /// So can be return null.
   @HiveField(20)
   int? measurementId;
+  bool isFromHealth;
 
   @override
-  ScaleModel({
-    this.device,
-    this.measurementId,
-    this.weight,
-    this.weightStabilized,
-    this.measurementComplete,
-    this.weightRemoved,
-    this.unit,
-    required this.dateTime,
-    this.impedance,
-    this.isManuel = false,
-    this.images = const <String>[],
-    this.note = '',
-    this.bmi,
-    this.bodyFat,
-    this.boneMass,
-    this.isDeleted = false,
-    this.muscle,
-    this.time,
-    this.visceralFat,
-    this.water,
-    this.bmh,
-    this.gender,
-    this.height,
-    this.age,
-  }) {
+  ScaleModel(
+      {this.device,
+      this.measurementId,
+      this.weight,
+      this.weightStabilized,
+      this.measurementComplete,
+      this.weightRemoved,
+      this.unit,
+      required this.dateTime,
+      this.impedance,
+      this.isManuel = false,
+      this.images = const <String>[],
+      this.note = '',
+      this.bmi,
+      this.bodyFat,
+      this.boneMass,
+      this.isDeleted = false,
+      this.muscle,
+      this.time,
+      this.visceralFat,
+      this.water,
+      this.bmh,
+      this.gender,
+      this.height,
+      this.age,
+      this.isFromHealth = false}) {
     gender = getIt<ProfileStorageImpl>().getFirst().gender == 'Male' ||
             getIt<ProfileStorageImpl>().getFirst().gender == 'Erkek'
         ? 1
@@ -292,6 +293,12 @@ class ScaleModel extends HiveObject {
   }
 
   bool isEqual(ScaleModel other) {
+    if (other.isFromHealth) {
+      return bmi == other.bmi &&
+          weight == other.weight &&
+          bodyFat == other.bodyFat &&
+          dateTime == other.dateTime;
+    }
     return jsonEncode(toMap()) == jsonEncode(other.toMap());
   }
 }

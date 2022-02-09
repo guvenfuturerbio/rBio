@@ -5,11 +5,27 @@ part of 'chronic_storage_service.dart';
 class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   final String boxKey = 'GlucoseBox';
+
+  HealthFactory? health;
+
   bool _hasProgress = false;
+
+  List<HealthDataType> types = [];
+
+  /// Types uzunluğu kadar
+  List<HealthDataAccess> perm = [
+    HealthDataAccess.READ_WRITE,
+  ];
 
   @override
   Future<void> init() async {
     box = await Hive.openBox<GlucoseData>(boxKey);
+
+    health = HealthFactory();
+
+    types = [
+      HealthDataType.BLOOD_GLUCOSE,
+    ];
   }
 
   @override
@@ -72,6 +88,16 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     bool shouldSendToServer = false,
   }) async {
     if (box.isOpen && !doesExist(data)) {
+      if (!data.isFromHealth) {
+        health!.requestAuthorization(types, permissions: perm);
+
+        health!.writeHealthData(
+          double.parse(data.level),
+          HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
+          DateTime.fromMillisecondsSinceEpoch(data.time),
+          DateTime.fromMillisecondsSinceEpoch(data.time),
+        );
+      }
       if (shouldSendToServer) {
         var id = await sendToServer(data);
         data.measurementId = id;
@@ -85,22 +111,31 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future<bool> writeAll(List<GlucoseData> data) async {
+  Future<bool> writeAll(List<GlucoseData> data,
+      {bool isFromHealth = false}) async {
     try {
       if (box.isOpen) {
-        List<GlucoseData> _glucoseDataList = <GlucoseData>[];
-        for (var item in data) {
-          if (!doesExist(item)) {
-            _glucoseDataList.add(item);
-          }
-        }
-        await box.addAll(_glucoseDataList);
+        // TODO: bu alan dart async metodları ile threadler üzerinden halledilebilir (bkz. Dart isolate). Geçici olarak bilerek foreach yapıldı kullanıcı arkaplanda rahat bir şekilde işlem yapabilmeye devam edebilsin diye.
+        data.forEach(
+          (item) async {
+            if (!doesExist(item)) {
+              if (isFromHealth) {
+                var id = await sendToServer(item);
+                item.measurementId = id;
+              }
+
+              box.add(item);
+            }
+          },
+        );
+
         return true;
       } else {
         return false;
       }
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
+      LoggerUtils.instance.e(e);
       rethrow;
     }
   }
@@ -184,7 +219,14 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   bool doesExist(GlucoseData data) {
-    return box.values.contains(data);
+    bool isContains = false;
+    for (var item in box.values) {
+      if (item.isEqual(data)) {
+        isContains = true;
+        break;
+      }
+    }
+    return isContains;
   }
 
   @override

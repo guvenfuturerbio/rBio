@@ -39,15 +39,16 @@ dependencies:
   expandable: ^5.0.1
   file_picker: ^3.0.0 # ^4.3.3
   firebase: 9.0.2
-  firebase_auth: 3.2.0 # ^3.3.6
-  firebase_core: 1.10.0 # ^1.12.0
-  firebase_dynamic_links: 3.0.1 # ^4.0.5
-  firebase_messaging: 11.2.4 # ^11.2.6
-  firebase_storage: 10.1.0 # ^10.2.7
+  firebase_auth: 3.2.0
+  firebase_core: 1.10.0
+  firebase_dynamic_links: 3.0.1
+  firebase_messaging: 11.2.4
+  firebase_storage: 10.1.0
   flutter:
     sdk: flutter
   flutter_app_badger: ^1.3.0
   flutter_bloc: ^8.0.1
+  flutter_calendar_carousel: ^2.0.1
   flutter_datetime_picker:
     git: https://github.com/tushardubey121/flutter_datetime_picker.git
   flutter_dotenv: ^5.0.2
@@ -73,6 +74,7 @@ dependencies:
   gradient_widgets: ^0.6.0
   grouped_list:
     path: ./packages/grouped_list
+  health: ^3.4.3
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.2
   http: ^0.13.4

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:health/health.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/domain/blood_pressure_model.dart';
+import '../../../../model/ble_models/paired_device.dart';
 import '../../../dashboard/not_chronic_screen.dart';
 import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import '../../progress_sections/pressure_progress/view/pressure_progres_page.dart';
+import '../../progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import '../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
 import '../model/page_model.dart';
 import '../utils/card_widget.dart';
