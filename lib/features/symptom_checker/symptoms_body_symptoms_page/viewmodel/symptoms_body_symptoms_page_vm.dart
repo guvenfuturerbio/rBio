@@ -66,7 +66,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
               tmpSymptomIdHolder.toString(),
               gender == 0 || gender == 2 ? 'male' : 'female',
               year_of_birth!);
-      proposedSymptomList = proposedSymptoms;
+      proposedSymptomList = changeNamesOfSymps(proposedSymptoms);
       proposedProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
@@ -102,5 +102,37 @@ class BodySymptomSelectionVm extends ChangeNotifier {
     }
     selectedBodySymptoms = tmpSelectedSymptoms;
     notifyListeners();
+  }
+
+  List<GetBodySymptomsResponse> changeNamesOfSymps(
+      List<GetBodySymptomsResponse> bodySymps) {
+    for (var element in bodySymps) {
+      if (element.id == 996) {
+        element.name = "Ayak bileğinde şekil bozukluğu";
+      } else if (element.id == 997) {
+        element.name = "Ayak parmağında şekil bozukluğu";
+      } else if (element.id == 25) {
+        element.name = "Deride yumru (Nodül)";
+      } else if (element.id == 128) {
+        element.name = "Zaman ve yer konusunda karışıklık";
+      } else if (element.id == 994) {
+        element.name = "Dizde şekil bozukluğu";
+      } else if (element.id == 172) {
+        element.name = "İdrar yollarında akıntı";
+      } else if (element.id == 72) {
+        element.name = "Işık halkaları görmek";
+      } else if (element.id == 993) {
+        element.name = "Kalçada şekil bozukluğu";
+      } else if (element.id == 995) {
+        element.name = "Parmakta şekil bozukluğu";
+      } else if (element.id == 191) {
+        element.name = "Karına bastırıp çekince ağrı";
+      } else if (element.id == 983) {
+        element.name = "Sabah katılığı";
+      } else if (element.id == 998) {
+        element.name = "Sırtta şekil bozukluğu";
+      }
+    }
+    return bodySymps;
   }
 }
