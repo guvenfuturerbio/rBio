@@ -6,7 +6,7 @@ class BleScannerOps extends ChangeNotifier {
   final FlutterReactiveBle _ble;
 
   String? _deviceId;
-  List<String?>? pairedDevices;
+  List<String>? pairedDevices;
 
   StreamSubscription? _subscription;
 

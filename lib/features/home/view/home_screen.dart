@@ -338,6 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             //
             R.sizes.defaultBottomPadding,
+            R.sizes.hSizer12,
           ],
         ),
       ),

@@ -44,7 +44,7 @@ class HomeVm extends ChangeNotifier {
   static const keyResults = ValueKey('results');
   static const keySymptomChecker = ValueKey('symptomChecker');
   static const keyDetailedSymptom = ValueKey('detailedSymptom');
-  static const keyHealthcareEmployee = ValueKey('healthcare_employee');
+  static const keyHealthcareEmployee = ValueKey('healthcareEmployee');
 
   final Map<HomeWidgets, Key> keys = {
     HomeWidgets.hospitalAppointment: keyHospitalAppointment,
@@ -276,8 +276,7 @@ class HomeVm extends ChangeNotifier {
       Widget row = widgetsInUse.removeAt(oldIndex);
       widgetsInUse.insert(newIndex, row);
       List<String?> setList = widgetsInUse.map((Widget element) {
-        final _widget =
-            ((element.key as ValueKey).value as String).xHomeWidgets;
+        final _widget = ((element.key as ValueKey).value as String).xHomeWidgets;
         if (_widget != null) {
           return _widget.xRawValue;
         }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/domain/blood_pressure_model.dart';
+
+import '../../../../../core/core.dart';
 
 class BpMeasurementViewModel {
   final BloodPressureModel bpModel;

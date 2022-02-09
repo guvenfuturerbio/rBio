@@ -1,7 +1,13 @@
 part of '../devices.dart';
 
 class DevicesVm extends ChangeNotifier {
-  LoadingProgress state = LoadingProgress.loading;
+  LoadingProgress _state = LoadingProgress.loading;
+  LoadingProgress get state => _state;
+  set state(LoadingProgress value) {
+    _state = value;
+    notifyListeners();
+  }
+
   List<PairedDevice> devices = [];
 
   DevicesVm() {

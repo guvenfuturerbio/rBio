@@ -536,6 +536,8 @@ PODS:
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
   - GTMSessionFetcher/Core (1.7.0)
+  - health (1.0.4):
+    - Flutter
   - image_picker (0.0.1):
     - Flutter
   - jitsi_meet_wrapper (0.0.1):
@@ -606,6 +608,7 @@ DEPENDENCIES:
   - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
   - flutter_share (from `.symlinks/plugins/flutter_share/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - health (from `.symlinks/plugins/health/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - jitsi_meet_wrapper (from `.symlinks/plugins/jitsi_meet_wrapper/ios`)
   - move_to_background (from `.symlinks/plugins/move_to_background/ios`)
@@ -691,6 +694,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_share/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  health:
+    :path: ".symlinks/plugins/health/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   jitsi_meet_wrapper:
@@ -758,6 +763,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  health: e7a5807e45ec58fe6b89a730c97abc6caafe94a0
   image_picker: 541dcbb3b9cf32d87eacbd957845d8651d6c62c3
   jitsi_meet_wrapper: 1f304e5e3ec5276f5c163367840133ee7097ec14
   JitsiMeetSDK: 0716f9a49278330a57d8b28304f78c25ae5ab963

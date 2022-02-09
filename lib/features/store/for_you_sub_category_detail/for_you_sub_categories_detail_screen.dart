@@ -109,8 +109,8 @@ class _ForYouSubCategoriesDetailScreenState
                             Atom.to(
                               PagePaths.orderSummary,
                               queryParameters: {
-                                'subCategoryId': widget.itemId.toString(),
-                                'categoryName': widget.title!,
+                                'subCategoryId': (widget.itemId ?? '').toString(),
+                                'categoryName': widget.title ?? '',
                               },
                             );
                           },

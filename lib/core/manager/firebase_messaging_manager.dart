@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/chat/model/chat_person.dart';
 import '../../model/model.dart';
 import '../core.dart';
-import '../notifiers/notification_badge_notifier.dart';
 
 // #region Top Level Variabled and Functions
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -86,6 +85,7 @@ class FirebaseMessagingManager {
         },
       );
     }
+
     final initialPayload =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
     if (initialPayload?.payload != null) {
@@ -230,10 +230,10 @@ class FirebaseMessagingManager {
     );
   }
 
-  static NotificationType? getNotificationType(Map<String, dynamic> data) {
-    //if (data == null) return null;
-    final type = data['type'] as String;
-    //if (type == null) return null;
+  static NotificationType? getNotificationType(Map<String, dynamic>? data) {
+    if (data == null) return null;
+    final type = data['type'] as String?;
+    if (type == null) return null;
     return type.xNotificationTypeKeys;
   }
 

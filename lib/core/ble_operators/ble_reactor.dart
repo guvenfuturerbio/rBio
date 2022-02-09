@@ -261,13 +261,14 @@ class BleReactorOps extends ChangeNotifier {
         LoggerUtils.instance.d("done");
       },
     );
+
     try {
       _ble.writeCharacteristicWithResponse(
         writeCharacteristic,
         value: [0x01, 0x01],
       ).then(
         (value) {
-          LoggerUtils.instance.d("deneme");
+          LoggerUtils.instance.d("deneme 270 ble_reactor.dart");
           WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
             getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
           });

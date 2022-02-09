@@ -6,22 +6,30 @@ import '../../../../core/core.dart';
 import 'order_summary_vm.dart';
 
 class OrderSummaryScreen extends StatefulWidget {
-  var subCategoryId;
-  var categoryName;
+  String? subCategoryId;
+  String? categoryName;
 
-  OrderSummaryScreen({
-    Key? key,
-    this.subCategoryId,
-    this.categoryName,
-  }) : super(key: key);
+  OrderSummaryScreen({Key? key}) : super(key: key);
 
   @override
   _OrderSummaryScreenState createState() => _OrderSummaryScreenState();
 }
 
 class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
-  final ExpandableController _expandableController = ExpandableController();
+  late ExpandableController _expandableController;
   int selectedPacket = 0;
+
+  @override
+  void initState() {
+    _expandableController = ExpandableController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _expandableController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,17 +43,27 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
     return ChangeNotifierProvider<OrderSummaryScreenVm>(
       create: (context) => OrderSummaryScreenVm(context, widget.subCategoryId),
       child: Consumer<OrderSummaryScreenVm>(
-        builder: (context, value, child) {
-          selectedPacket = value.selectedIndex!;
+        builder: (
+          BuildContext context,
+          OrderSummaryScreenVm value,
+          Widget? child,
+        ) {
+          selectedPacket = value.selectedIndex ?? 0;
+
           return RbioScaffold(
-              appbar: RbioAppBar(
-                title:
-                    RbioAppBar.textTitle(context, widget.categoryName ?? "-"),
-              ),
-              body: value.progress == LoadingProgress.loading
-                  ? const RbioLoading()
-                  : _buildBody(context, value));
+            appbar: _buildAppBar(context),
+            body: _buildBody(context, value),
+          );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        widget.categoryName ?? "-",
       ),
     );
   }
@@ -60,95 +78,89 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
+                //
                 Material(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 7,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: R.sizes.borderRadiusCircular,
                   ),
-                  child: Material(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 7,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ExpandablePanel(
-                                controller: _expandableController,
-                                header: Text(
-                                  LocaleProvider.current.select_package,
-                                  style: context.xHeadline3.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                collapsed: ListTile(
-                                  title: Text(
-                                    value.selectedItem!.title ?? "",
-                                    softWrap: true,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: context.xHeadline3.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                expanded: ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: value.subCategoryItems!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return index == value.selectedIndex
-                                        ? GestureDetector(
-                                            onTap: () {
-                                              value.setSelectedIndex(index);
-                                            },
-                                            child: ListTile(
-                                              title: Text(
-                                                  value.subCategoryItems![index]
-                                                          .title ??
-                                                      "No title",
-                                                  style: context.xHeadline3
-                                                      .copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ))
-                                        : GestureDetector(
-                                            onTap: () {
-                                              _expandableController.toggle();
-                                              value.setSelectedItem(value
-                                                  .subCategoryItems![index]);
-                                              value.setSelectedIndex(index);
-                                            },
-                                            child: ListTile(
-                                              title: Text(
-                                                value.subCategoryItems![index]
-                                                        .title ??
-                                                    "No title",
-                                                style: context.xHeadline4,
-                                              ),
-                                            ));
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return const Divider();
-                                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ExpandablePanel(
+                            controller: _expandableController,
+                            header: Text(
+                              LocaleProvider.current.select_package,
+                              style: context.xHeadline3.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            collapsed: ListTile(
+                              title: Text(
+                                value.selectedItem!.title ?? "",
+                                softWrap: true,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: context.xHeadline3.copyWith(
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                          ],
+                            expanded: ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: value.subCategoryItems!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return index == value.selectedIndex
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          value.setSelectedIndex(index);
+                                        },
+                                        child: ListTile(
+                                          title: Text(
+                                            value.subCategoryItems![index]
+                                                    .title ??
+                                                "No title",
+                                            style: context.xHeadline3.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          _expandableController.toggle();
+                                          value.setSelectedItem(
+                                              value.subCategoryItems![index]);
+                                          value.setSelectedIndex(index);
+                                        },
+                                        child: ListTile(
+                                          title: Text(
+                                            value.subCategoryItems![index]
+                                                    .title ??
+                                                "No title",
+                                            style: context.xHeadline4,
+                                          ),
+                                        ),
+                                      );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const Divider();
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
@@ -160,56 +172,52 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
 
                 //
                 Material(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 7,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: R.sizes.borderRadiusCircular,
                   ),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //
-                          Text(
-                            LocaleProvider.current.package_description,
-                            style: context.xHeadline3.copyWith(
-                              fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //
+                        Text(
+                          LocaleProvider.current.package_description,
+                          style: context.xHeadline3.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        //
+                        const Divider(),
+
+                        //
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            value.selectedItem!.text!,
+                            style: context.xHeadline4,
+                          ),
+                        ),
+
+                        //
+                        Visibility(
+                          visible:
+                              value.selectedItem!.url != null ? true : false,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Utils.instance.button(
+                              text: LocaleProvider.current.package_detail,
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              height: 10,
+                              onPressed: () {
+                                value.showWebViewPage();
+                              },
                             ),
                           ),
-
-                          //
-                          const Divider(),
-
-                          //
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              value.selectedItem!.text!,
-                              style: context.xHeadline4,
-                            ),
-                          ),
-
-                          //
-                          Visibility(
-                            visible:
-                                value.selectedItem!.url != null ? true : false,
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Utils.instance.button(
-                                text: LocaleProvider.current.package_detail,
-                                width: MediaQuery.of(context).size.width * 0.1,
-                                height: 10,
-                                onPressed: () {
-                                  value.showWebViewPage();
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -221,10 +229,9 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
 
                 //
                 Material(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 7,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: R.sizes.borderRadiusCircular,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -323,7 +330,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
         );
 
       case LoadingProgress.error:
-        return const Center(child: Text("Error!"));
+        return const RbioBodyError();
 
       default:
         return const SizedBox();

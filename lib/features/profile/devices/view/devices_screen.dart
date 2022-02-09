@@ -32,15 +32,7 @@ class DevicesScreen extends StatelessWidget {
       case LoadingProgress.done:
         return vm.devices.isNotEmpty
             ? _buildListView(vm)
-            : Center(
-                child: Text(
-                  LocaleProvider.current.add_new_device,
-                  textAlign: TextAlign.center,
-                  style: context.xHeadline1.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              );
+            : RbioEmptyText(title: LocaleProvider.current.add_new_device);
 
       case LoadingProgress.error:
         return const RbioBodyError();
@@ -51,79 +43,71 @@ class DevicesScreen extends StatelessWidget {
   }
 
   Widget _buildListView(DevicesVm vm) {
-    return ListView(
+    return ListView.builder(
       shrinkWrap: true,
-      children: [
-        ...vm.devices
-            .map(
-              (device) => Column(
+      padding: EdgeInsets.zero,
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
+      itemCount: vm.devices.length,
+      itemBuilder: (context, index) {
+        final device = vm.devices[index];
+
+        return Column(
+          children: [
+            DeviceCard(
+              background: getIt<ITheme>().cardBackgroundColor,
+              image: device.deviceType == null
+                  ? const SizedBox()
+                  : UtilityManager()
+                          .getDeviceImageFromType(device.deviceType!) ??
+                      const SizedBox(),
+              name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
+              trailing: Row(
                 children: [
-                  DeviceCard(
-                    background: getIt<ITheme>().cardBackgroundColor,
-                    image: device.deviceType == null
-                        ? const SizedBox()
-                        : UtilityManager()
-                                .getDeviceImageFromType(device.deviceType!) ??
-                            const SizedBox(),
-                    name:
-                        '${device.manufacturerName}\n${device.serialNumber ?? ''}',
-                    trailing: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.info,
-                            size: R.sizes.iconSize,
+                  InkWell(
+                    onTap: () {
+                      Atom.show(
+                        GuvenAlert(
+                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 25,
+                            vertical: 25,
                           ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Atom.show(
-                              GuvenAlert(
-                                backgroundColor:
-                                    getIt<ITheme>().cardBackgroundColor,
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 25,
-                                  vertical: 25,
-                                ),
-                                title: GuvenAlert.buildTitle(
-                                  LocaleProvider.current.warning,
-                                ),
-                                content: GuvenAlert.buildDescription(
-                                    LocaleProvider.current
-                                        .ble_delete_paired_device_approv),
-                                actions: [
-                                  GuvenAlert.buildBigMaterialAction(
-                                    LocaleProvider.current.cancel,
-                                    () => Atom.dismiss(),
-                                  ),
-                                  GuvenAlert.buildBigMaterialAction(
-                                    LocaleProvider.current.yes,
-                                    () => vm.deletePairedDevice(
-                                      device.deviceId ?? '',
-                                    ),
-                                  )
-                                ],
+                          title: GuvenAlert.buildTitle(
+                            LocaleProvider.current.warning,
+                          ),
+                          content: GuvenAlert.buildDescription(LocaleProvider
+                              .current.ble_delete_paired_device_approv),
+                          actions: [
+                            GuvenAlert.buildBigMaterialAction(
+                              LocaleProvider.current.cancel,
+                              () => Atom.dismiss(),
+                            ),
+                            GuvenAlert.buildBigMaterialAction(
+                              LocaleProvider.current.yes,
+                              () => vm.deletePairedDevice(
+                                device.deviceId ?? '',
                               ),
-                            );
-                          },
-                          child: Icon(
-                            Icons.cancel,
-                            color: R.color.darkRed,
-                            size: R.sizes.iconSize,
-                          ),
+                            )
+                          ],
                         ),
-                      ],
+                      );
+                    },
+                    child: Icon(
+                      Icons.cancel,
+                      color: R.color.darkRed,
+                      size: R.sizes.iconSize,
                     ),
                   ),
-
-                  //
-                  _buildVerticalGap()
                 ],
               ),
-            )
-            .toList()
-      ],
+            ),
+
+            //
+            _buildVerticalGap()
+          ],
+        );
+      },
     );
   }
 

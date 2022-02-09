@@ -45,7 +45,7 @@ class BleDeviceManager extends ChangeNotifier {
     if (selectedDeviceIndex != -1) {
       response.removeAt(selectedDeviceIndex);
       getIt<BleScannerOps>().pairedDevices =
-          response.map((e) => e.deviceId).toList() as List<String>;
+          response.map((e) => e.deviceId ?? '').toList();
       getIt<BleConnectorOps>().removePairedDevice();
       final List<String> _pairedDeviceOnLocal =
           response.map((device) => jsonEncode(device.toJson())).toList();

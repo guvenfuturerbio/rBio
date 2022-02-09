@@ -23,6 +23,8 @@ class SelectedDevicesScreen extends StatelessWidget {
           LocaleProvider.current.device_connections,
         ),
       ),
+
+      //
       body: ChangeNotifierProvider(
         create: (BuildContext context) => SelectedDeviceVm(deviceType!),
         child: Consumer4<BleScannerOps, BleConnectorOps, BleReactorOps,
@@ -38,7 +40,9 @@ class SelectedDevicesScreen extends StatelessWidget {
             return ListView(
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(top: 95),
+              padding: EdgeInsets.only(
+                top: R.sizes.stackedTopPaddingValue(context),
+              ),
               children: [
                 //
                 Card(
@@ -56,6 +60,8 @@ class SelectedDevicesScreen extends StatelessWidget {
                                 .copyWith(color: getIt<ITheme>().mainColor),
                           ),
                         ),
+
+                        //
                         ..._selectedDeviceVm
                             .getPairOrder()
                             .entries

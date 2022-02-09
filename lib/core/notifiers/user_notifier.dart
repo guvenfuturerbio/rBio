@@ -130,12 +130,12 @@ class UserNotifier extends ChangeNotifier {
     if (sharedData == null) {
       return null;
     } else {
-      final sharedMap = jsonDecode(sharedData) as Map<String, dynamic>;
-      final userExist = sharedMap.containsKey(tcEmailPassport);
-      if (userExist) {
-        return AllUsersModel.fromJson(sharedMap[tcEmailPassport]);
+      final sharedMap = jsonDecode(sharedData) as Map<String, dynamic>?;
+      final userExist = sharedMap?.containsKey(tcEmailPassport);
+      if (userExist ?? false) {
+        return AllUsersModel.fromJson(sharedMap?[tcEmailPassport]);
       } else {
-        throw Exception("user doesnt exist");
+        return null;
       }
     }
   }
@@ -150,12 +150,13 @@ class UserNotifier extends ChangeNotifier {
     if (currentUserName == null) return;
     final sharedData =
         sharedPreferencesManager.getString(SharedPreferencesKeys.allUsers);
-    Map<String, dynamic> sharedMap;
+    late Map<String, dynamic> sharedMap;
     if (sharedData == null) {
       sharedMap = {};
     } else {
       sharedMap = jsonDecode(sharedData);
     }
+
     sharedMap.addAll(
       {
         currentUserName: AllUsersModel(

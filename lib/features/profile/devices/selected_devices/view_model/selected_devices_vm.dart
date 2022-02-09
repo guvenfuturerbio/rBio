@@ -10,6 +10,7 @@ class SelectedDeviceVm extends ChangeNotifier {
         if (devices.isEmpty) {
           getIt<BleScannerOps>().startScan();
         }
+
         if (!_disposed) {
           getIt<BleReactorOps>().addListener(
             () {
@@ -155,7 +156,7 @@ class SelectedDeviceVm extends ChangeNotifier {
   void connectDevice(
     BleConnectorOps _bleConnectorOps,
     BleScannerOps _bleScannerOps,
-    device,
+    DiscoveredDevice device,
   ) async {
     switch (deviceType) {
       case DeviceType.accuChek:
@@ -164,12 +165,11 @@ class SelectedDeviceVm extends ChangeNotifier {
                         DeviceConnectionState.connecting &&
                     _bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
+            ? _bleConnectorOps.connect(device)
             : null;
         connectClicked();
         break;
+
       case DeviceType.contourPlusOne:
         connectIsActive &&
                 (_bleConnectorOps.deviceConnectionState !=
@@ -182,6 +182,7 @@ class SelectedDeviceVm extends ChangeNotifier {
             : null;
         connectClicked();
         break;
+
       case DeviceType.omronBloodPressureArm:
         // TODO: Handle this case.
         break;
