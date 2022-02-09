@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
 import '../model/model.dart';
 
-// ignore: must_be_immutable
 class RbioConfig extends InheritedWidget {
   @override
   final Widget child;

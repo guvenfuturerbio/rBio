@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -58,20 +57,17 @@ class _Covid19ScreenState extends State<Covid19Screen> {
       child: Column(
         children: <Widget>[
           //
-          FadeInUp(
-            duration: const Duration(milliseconds: 1000),
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(
-                  top: 20, right: 10, left: 10, bottom: 10),
-              child: InkWell(
-                child: _ItemTakeCovid(
-                    title: LocaleProvider.current.take_covid_19,
-                    image: R.image.test,
-                    number: LocaleProvider.current.lbl_number_hospital,
-                    context: context),
-                onTap: () {},
-              ),
+          Container(
+            width: double.infinity,
+            margin:
+                const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
+            child: InkWell(
+              child: _ItemTakeCovid(
+                  title: LocaleProvider.current.take_covid_19,
+                  image: R.image.test,
+                  number: LocaleProvider.current.lbl_number_hospital,
+                  context: context),
+              onTap: () {},
             ),
           ),
 
@@ -173,7 +169,6 @@ class _Covid19ScreenState extends State<Covid19Screen> {
   }
 }
 
-// ignore: must_be_immutable
 class MopItem extends StatelessWidget {
   String image = "";
   String text = "";

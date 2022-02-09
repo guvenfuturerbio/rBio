@@ -197,6 +197,10 @@ class HomeVm extends ChangeNotifier {
     springController = SpringController(initialAnim: Motion.mirror);
     await fetchWidgets(allUsersModel);
     await fetchBanners();
+    if (bannerTabsModel.isEmpty) {
+      removeItemWidgetList(HomeWidgets.slider);
+    }
+
     notifyListeners();
   }
   // #endregion
@@ -234,12 +238,20 @@ class HomeVm extends ChangeNotifier {
 
   // #region removeWidget
   Future<void> removeWidget(HomeWidgets widgetType) async {
+    removeItemWidgetList(widgetType);
+    await removeWidgetLocalStorage(widgetType);
+    notifyListeners();
+  }
+
+  void removeItemWidgetList(HomeWidgets widgetType) {
     widgetsInUse.removeWhere((element) =>
         ((element.key as ValueKey).value as String).xHomeWidgets == widgetType);
+  }
+
+  Future<void> removeWidgetLocalStorage(HomeWidgets widgetType) async {
     var sharedUserList = getUserWidgets ?? [];
     sharedUserList.remove(widgetType.xRawValue);
     await saveWidgetList(sharedUserList);
-    notifyListeners();
   }
   // #endregion
 

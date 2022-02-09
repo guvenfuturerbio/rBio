@@ -272,20 +272,18 @@ class AppointmentListVm extends RbioVm {
     });
   }
 
-  void showNecessary() {
-    showDialog(
-        context: mContext,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const NecessaryIdentityScreen();
-        }).then((value) async {
-      if ((value ?? false) == true) {
-        await fetchAllTranslator();
-        await fetchPatientAppointments();
-      } else {
-        Navigator.of(mContext).pop();
-      }
-    });
+  Future<void> showNecessary() async {
+    final result = await Atom.show(
+      const NecessaryIdentityScreen(),
+      barrierDismissible: false,
+    );
+
+    if ((result ?? false) == true) {
+      await fetchAllTranslator();
+      await fetchPatientAppointments();
+    } else {
+      Atom.historyBack();
+    }
   }
 
   Future<bool> isOnlineAppointmentPaid(int id) async {

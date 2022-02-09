@@ -12,7 +12,6 @@ import '../../../core/enums/usage_type.dart';
 import '../../../core/widgets/rbio_animated_cliprect.dart';
 import '../mediminder.dart';
 
-// ignore: must_be_immutable
 class MedicationAddScreen extends StatefulWidget {
   Remindable? remindable;
 

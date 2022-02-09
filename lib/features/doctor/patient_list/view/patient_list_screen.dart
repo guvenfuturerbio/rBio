@@ -9,9 +9,7 @@ import '../../../../core/core.dart';
 import '../model/patient_list_model.dart';
 import '../viewmodel/patient_list_vm.dart';
 
-// ignore: must_be_immutable
 class DoctorPatientListScreen extends StatelessWidget {
-
   // #region AtomParams
   late PatientType type;
   // #endregion
@@ -227,22 +225,22 @@ class DoctorPatientListScreen extends StatelessWidget {
         context,
         onTap: () => vm.itemOnTap(model.data),
         name: model.patientName ?? "",
-        dates: model.dates
-            !.map(
+        dates: model.dates!
+            .map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        times: model.times
-            !.map(
+        times: model.times!
+            .map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        values: model.values
-            !.map(
+        values: model.values!
+            .map(
               (e) => _buildSmallExpanded(
                 child: _buildColorfulText(
                   true,
@@ -258,23 +256,23 @@ class DoctorPatientListScreen extends StatelessWidget {
       return _buildSmallCard(
         context,
         onTap: () => vm.itemOnTap(model.data),
-        name: model.patientName ??"",
-        dates: model.dates
-            !.map(
+        name: model.patientName ?? "",
+        dates: model.dates!
+            .map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        times: model.times
-            !.map(
+        times: model.times!
+            .map(
               (e) => _buildSmallExpanded(
                 child: _buildSmallCardText(context, e),
               ),
             )
             .toList(),
-        values: model.values
-           ! .map(
+        values: model.values!
+            .map(
               (e) => _buildSmallExpanded(
                 child: _buildColorfulText(
                   true,

@@ -63,8 +63,8 @@ class UserManagerImpl extends UserManager {
   }
 
   Future<void> loginToFirebase(RbioLoginResponse? response) async {
-    getIt<UserNotifier>().firebaseEmail = response?.firebase_user_email;
-    getIt<UserNotifier>().firebasePassword = response?.firebase_user_salt;
+    getIt<UserNotifier>().firebaseEmail = response?.firebaseUserEmail;
+    getIt<UserNotifier>().firebasePassword = response?.firebaseUserSalt;
     await getIt<FirestoreManager>().loginFirebase();
   }
 

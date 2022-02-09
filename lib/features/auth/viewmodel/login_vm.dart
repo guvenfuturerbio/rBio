@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
@@ -127,8 +126,7 @@ class LoginScreenVm extends ChangeNotifier {
       }
       _versionCheckProgress = VersionCheckProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -147,7 +145,6 @@ class LoginScreenVm extends ChangeNotifier {
           await getIt<Repository>().getCurrentApplicationVersion();
       notifyListeners();
     } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
       notifyListeners();
     }
   }
@@ -278,7 +275,6 @@ class LoginScreenVm extends ChangeNotifier {
         notifyListeners();
         Atom.to(PagePaths.main, isReplacement: true);
       } catch (e, stackTrace) {
-        Sentry.captureException(e, stackTrace: stackTrace);
         debugPrintStack(stackTrace: stackTrace);
         hideDialog(mContext);
         notifyListeners();

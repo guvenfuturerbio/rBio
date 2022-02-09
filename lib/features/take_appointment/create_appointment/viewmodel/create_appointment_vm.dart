@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:slugify/slugify.dart';
 import 'package:turkish/turkish.dart';
 
@@ -209,8 +208,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       tenantsFilterResponse = removeOtherTenants(tenantsFilterResponse!);
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -274,8 +272,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       dropdownValueRelative = relativeResponse!.patientRelatives.first;
       relativeProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -323,8 +320,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       progress = LoadingProgress.done;
       departmentProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -374,8 +370,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       filterDepartmentResponse = temp;
       departmentProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -415,8 +410,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       );
       doctorProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -536,8 +530,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
       //removedTenants.add(onlineAppoTenant);
       return removedTenants;
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       progress = LoadingProgress.error;
     }
   }

@@ -1,6 +1,5 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -71,8 +70,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       await setSelectedDate(initDate, true);
       availableDatesProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       availableDatesProgress = LoadingProgress.error;
       notifyListeners();
     }
@@ -177,8 +175,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
 
       slotsProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       slotsProgress = LoadingProgress.error;
       notifyListeners();
     }
@@ -273,8 +270,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         (m) => m.from!.substring(11, 16).substring(0, 2),
       );
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 

@@ -9,7 +9,7 @@ class DashboardScreen extends StatefulWidget {
   final Widget child;
   final int currentIndex;
 
-  DashboardScreen(
+  const DashboardScreen(
     this.child,
     this.currentIndex, {
     Key? key,
@@ -52,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomPaint(
               size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
-                 getIt<ITheme>().cardBackgroundColor,
+                getIt<ITheme>().cardBackgroundColor,
               ),
             ),
 

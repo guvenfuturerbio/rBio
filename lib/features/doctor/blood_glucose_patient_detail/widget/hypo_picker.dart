@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 part of '../view/blood_glucose_patient_detail_screen.dart';
 
 class _HypoPicker extends StatelessWidget {

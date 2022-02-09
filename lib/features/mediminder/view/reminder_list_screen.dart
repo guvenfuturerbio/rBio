@@ -8,7 +8,6 @@ import '../../../core/enums/remindable.dart';
 import '../../../core/widgets/rbio_animated_cliprect.dart';
 import '../mediminder.dart';
 
-// ignore: must_be_immutable
 class ReminderListScreen extends StatelessWidget {
   Remindable? remindable;
 

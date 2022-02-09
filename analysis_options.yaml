@@ -10,14 +10,15 @@ include: package:flutter_lints/flutter.yaml
 # You might want to exclude auto-generated files from dart analysis
 analyzer:
   exclude:
-    - "lib/src/localization_gen/**"
     - "**/*.mocks.dart"
     - "**/*.freezed.dart"
     - packages/
+    - lib/generated/
 
   errors:
     undefined_prefixed_name: ignore
     invalid_annotation_target: ignore
+    must_be_immutable: ignore
 
 linter:
   # The lint rules applied to this project can be customized in the

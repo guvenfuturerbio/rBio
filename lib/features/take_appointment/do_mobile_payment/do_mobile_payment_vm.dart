@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -56,8 +55,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
         );
         _showOverlay = false;
         notifyListeners();
-      } catch (e, stackTrace) {
-        Sentry.captureException(e, stackTrace: stackTrace);
+      } catch (e) {
         showGradientDialog(LocaleProvider.current.warning,
             LocaleProvider.current.sorry_dont_transaction);
         _showOverlay = false;

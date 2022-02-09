@@ -7,7 +7,6 @@ import '../widgets/create_appo_widget.dart';
 
 part '../widgets/history_doctor_card.dart';
 
-// ignore: must_be_immutable
 class CreateAppointmentScreen extends StatelessWidget {
   late bool forOnline;
   late bool fromSearch = false;

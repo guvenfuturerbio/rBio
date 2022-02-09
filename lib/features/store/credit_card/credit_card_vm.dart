@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -93,8 +92,7 @@ class CreditCardScreenVm extends ChangeNotifier {
               const RouteSettings(name: PagePaths.iyzicoResponseSmsPayment),
         ),
       );
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       progress = LoadingProgress.error;
       notifyListeners();
       showGradientDialog(mContext!, LocaleProvider.current.warning,

@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../../../../core/core.dart';
@@ -95,8 +94,7 @@ class VisitDetailScreenVm extends RbioVm {
       pathologyResults =
           await getIt<Repository>().getPathologyResults(visitDetailRequest);
       progress = LoadingProgress.done;
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       progress = LoadingProgress.error;
     }
   }
@@ -108,8 +106,7 @@ class VisitDetailScreenVm extends RbioVm {
       radiologyResults =
           await getIt<Repository>().getRadiologyResults(visitDetailRequest);
       progress = LoadingProgress.done;
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       progress = LoadingProgress.error;
     }
   }
@@ -152,8 +149,8 @@ class VisitDetailScreenVm extends RbioVm {
         html.document.body?.children.remove(anchor);
         html.Url.revokeObjectUrl(url);
       }
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 
@@ -165,9 +162,9 @@ class VisitDetailScreenVm extends RbioVm {
           await getIt<Repository>().getLaboratoryResults(visitDetailRequest);
       setLaboratoryPdfResultRequest();
       progress = LoadingProgress.done;
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       progress = LoadingProgress.error;
+      LoggerUtils.instance.e(e);
     }
   }
 
@@ -210,9 +207,8 @@ class VisitDetailScreenVm extends RbioVm {
 
       kIsWeb ? downloadPdf(pdfByte, false) : goPdfPage(pdfByte);
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-
+    } catch (e) {
+      LoggerUtils.instance.e(e);
       notifyListeners();
     }
   }
@@ -230,8 +226,8 @@ class VisitDetailScreenVm extends RbioVm {
           },
         );
       }
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 
@@ -264,8 +260,8 @@ class VisitDetailScreenVm extends RbioVm {
           'pdfPath': Uri.encodeFull(tempDocumentPath),
         },
       );
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 }

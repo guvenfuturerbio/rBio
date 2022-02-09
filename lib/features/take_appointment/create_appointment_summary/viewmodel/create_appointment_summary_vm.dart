@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -103,8 +102,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       _priceLoading = false;
       _showOverlayLoading = false;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       _priceLoading = false;
       _showOverlayLoading = false;
       notifyListeners();
@@ -195,9 +193,8 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           }
 
           notifyListeners();
-        } catch (error, stackTrace) {
+        } catch (error) {
           LoggerUtils.instance.e(error);
-          Sentry.captureException(error, stackTrace: stackTrace);
           _showOverlayLoading = false;
           notifyListeners();
           showPossibleProblemsDialog(
@@ -209,8 +206,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           );
         }
       }
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showPossibleProblemsDialog(
         mContext,
         LocaleProvider.current.warning,

@@ -54,11 +54,11 @@ extension MapCastExtension on GuvenResponseModel {
   }
 
   List<Map<String, dynamic>> get xGetMapList {
-    if (datum is List<Map<String, dynamic>>) {
-      return datum as List<Map<String, dynamic>>;
-    } else if (datum is List) {
-      if (datum[0] is Map) {
-        return (datum as List).cast<Map<String, dynamic>>();
+    if (datum is List<dynamic>) {
+      if (datum.isEmpty) {
+        return <Map<String, dynamic>>[];
+      } else {
+        return datum?.cast<Map<String, dynamic>>().toList();
       }
     }
 

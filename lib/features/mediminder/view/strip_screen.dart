@@ -395,8 +395,9 @@ class _StripScreenState extends State<StripScreen> {
               if (value != '') {
                 try {
                   stripCount.setAlarmCount((int.tryParse(value) ?? 30));
-                  // ignore: empty_catches
-                } catch (e) {}
+                } catch (e) {
+                  LoggerUtils.instance.e(e);
+                }
               }
             },
           ),

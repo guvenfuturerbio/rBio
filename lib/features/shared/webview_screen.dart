@@ -57,7 +57,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
             onWebViewCreated: (WebViewController webViewController) {
               _controller.complete(webViewController);
             },
-            // ignore: prefer_collection_literals
             navigationDelegate: (NavigationRequest request) {
               if (request.url.startsWith('https://www.youtube.com/')) {
                 LoggerUtils.instance.i('blocking navigation to $request}');

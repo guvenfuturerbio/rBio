@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../core/data/repository/doctor_repository.dart';
@@ -37,7 +36,6 @@ class DoctorPatientListVm extends RbioVm {
       log(e.toString());
       debugPrintStack(stackTrace: stackTrace);
       progress = LoadingProgress.error;
-      Sentry.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,

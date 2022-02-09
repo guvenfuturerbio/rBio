@@ -14,7 +14,6 @@ class MyReorderableWidget extends StatelessWidget {
   final bool isVerticalCard;
   final VoidCallback? onTap;
   final bool isRemovedWidgets;
-
   const MyReorderableWidget({
     Key? key,
     required this.body,

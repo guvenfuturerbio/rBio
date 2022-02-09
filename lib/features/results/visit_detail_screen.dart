@@ -8,7 +8,6 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../../../core/core.dart';
 import 'visit_detail_vm.dart';
 
-// ignore: must_be_immutable
 class VisitDetailScreen extends StatefulWidget {
   int? countOfRadiologyResults;
   int? countOfPathologyResults;

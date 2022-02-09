@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../core/core.dart';
@@ -32,9 +31,8 @@ class DoctorConsultationVm extends RbioVm {
       apiUserList = await getChatContactsFirebaseId();
       stream = getIt<FirestoreManager>().getContactsAndMessages();
       progress = LoadingProgress.done;
-    } catch (e, stackTrace) {
+    } catch (e) {
       progress = LoadingProgress.error;
-      Sentry.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,

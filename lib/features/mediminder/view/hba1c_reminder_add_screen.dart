@@ -10,7 +10,6 @@ import '../../../core/my_flutter_app_icons.dart';
 import '../../../core/widgets/guven_date_picker.dart';
 import '../viewmodel/hba1c_reminder_add_vm.dart';
 
-// ignore: must_be_immutable
 class Hba1cReminderAddScreen extends StatefulWidget {
   int? hba1cIdForNotification;
   Remindable? remindable;

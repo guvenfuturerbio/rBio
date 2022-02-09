@@ -15,13 +15,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.0"
-  animate_do:
-    dependency: "direct main"
-    description:
-      name: animate_do
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
   animated_widgets:
     dependency: "direct main"
     description:
@@ -151,7 +144,7 @@ packages:
     source: hosted
     version: "5.1.1"
   built_value:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: built_value
       url: "https://pub.dartlang.org"
@@ -598,13 +591,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_calendar_carousel:
-    dependency: "direct main"
-    description:
-      name: flutter_calendar_carousel
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
   flutter_datetime_picker:
     dependency: "direct main"
     description:
@@ -903,7 +889,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.4+5"
+    version: "0.8.4+7"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1375,20 +1361,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
-  sentry:
-    dependency: transitive
-    description:
-      name: sentry
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.2.2"
-  sentry_flutter:
-    dependency: "direct main"
-    description:
-      name: sentry_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.2.2"
   share:
     dependency: "direct main"
     description:
@@ -1402,7 +1374,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   shared_preferences_android:
     dependency: transitive
     description:
@@ -1589,56 +1561,56 @@ packages:
       name: syncfusion_flutter_charts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48"
+    version: "19.4.50"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48"
+    version: "19.4.50"
   syncfusion_flutter_gauges:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_gauges
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48"
+    version: "19.4.50"
   syncfusion_flutter_pdf:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48-beta"
+    version: "19.4.50-beta"
   syncfusion_flutter_pdfviewer:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_pdfviewer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48-beta"
+    version: "19.4.50-beta"
   syncfusion_flutter_pdfviewer_macos:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdfviewer_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48-beta"
+    version: "19.4.50-beta"
   syncfusion_flutter_pdfviewer_platform_interface:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdfviewer_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48-beta"
+    version: "19.4.50-beta"
   syncfusion_flutter_pdfviewer_web:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdfviewer_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.48-beta"
+    version: "19.4.50-beta"
   synchronized:
     dependency: transitive
     description:
@@ -1680,7 +1652,7 @@ packages:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.1"
+    version: "3.2.2"
   timezone:
     dependency: transitive
     description:

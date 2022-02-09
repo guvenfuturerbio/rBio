@@ -97,7 +97,6 @@ class BleConnectorOps extends ChangeNotifier {
     }
   }
 
-  // ignore: must_call_super
   @override
   Future<void> dispose() async {
     await _deviceConnectionController.close();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/core.dart';
 import '../../../model/model.dart';
@@ -41,8 +40,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
       countryList = CountryListResponse.fromMap(response.toJson());
       status = LoadingProgress.done;
       notifyListeners();
-    } catch (error, stackTrace) {
-      Sentry.captureException(error, stackTrace: stackTrace);
+    } catch (error) {
       status = LoadingProgress.error;
     }
   }
@@ -78,8 +76,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
           responseMessage,
         );
       }
-    } catch (error, stackTrace) {
-      Sentry.captureException(error, stackTrace: stackTrace);
+    } catch (error) {
       Future.delayed(const Duration(milliseconds: 500), () {
         hideDialog(context);
         showInfoDialog(

@@ -29,7 +29,7 @@ class _HomeSliderState extends State<HomeSlider> {
         Widget? child,
       ) {
         return Container(
-          height: getHeight(context),
+          height: vm.bannerTabsModel.isEmpty ? 0 : getHeight(context),
           width: Atom.width,
           margin: const EdgeInsets.symmetric(
             horizontal: 7,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:slugify/slugify.dart';
 
 import '../../../../core/core.dart';
@@ -41,7 +40,6 @@ class DoctorCvScreenVm extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
       debugPrintStack(stackTrace: stackTrace);
       _progress = LoadingProgress.error;
       _imageUrl = "";

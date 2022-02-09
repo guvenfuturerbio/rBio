@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/features/chronic_tracking/lib/helper/workers.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/core.dart';
@@ -253,7 +252,6 @@ class UserService {
       //await ScaleRepository().getLatestMeasurement();
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
-      Sentry.captureException(e, stackTrace: stk);
       if (e.toString().contains('SignUp')) {
         await handleCredential(userCredential, isSignUp: true);
       } else {

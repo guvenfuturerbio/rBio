@@ -8,7 +8,6 @@ import '../../../core/core.dart';
 import '../../../core/enums/remindable.dart';
 import '../mediminder.dart';
 
-// ignore: must_be_immutable
 class Hba1cReminderListScreen extends StatelessWidget {
   Remindable? remindable;
 

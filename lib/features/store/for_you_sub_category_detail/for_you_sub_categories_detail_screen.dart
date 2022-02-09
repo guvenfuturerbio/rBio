@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
-import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -215,19 +214,16 @@ class _ForYouSubCategoriesDetailScreenState
     VoidCallback onTap,
     String title,
   ) {
-    return FadeInUp(
-      duration: const Duration(milliseconds: 1000),
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
-        child: InkWell(
-          child: _ItemTakeCovid(
-            context: context,
-            title: title,
-            image: R.image.test,
-          ),
-          onTap: onTap,
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
+      child: InkWell(
+        child: _ItemTakeCovid(
+          context: context,
+          title: title,
+          image: R.image.test,
         ),
+        onTap: onTap,
       ),
     );
   }

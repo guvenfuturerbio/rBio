@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -45,14 +44,10 @@ class EResultScreenVm extends RbioVm {
   EResultScreenVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       try {
-        if (getIt<UserNotifier>().canAccessHospital()) {
-          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-            await fetchVisits();
-          });
+        if (!getIt<UserNotifier>().canAccessHospital()) {
+          await fetchVisits();
         } else {
-          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-            await showNecessary();
-          });
+          await showNecessary();
         }
       } catch (e) {
         LoggerUtils.instance.wtf(e);
@@ -60,20 +55,17 @@ class EResultScreenVm extends RbioVm {
     });
   }
 
-  showNecessary() async {
-    await showDialog(
-      context: mContext,
+  Future<void> showNecessary() async {
+    final result = await Atom.show(
+      const NecessaryIdentityScreen(),
       barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const NecessaryIdentityScreen();
-      },
-    ).then((value) async {
-      if ((value ?? false) == true) {
-        fetchVisits();
-      } else {
-        Navigator.of(mContext).pop();
-      }
-    });
+    );
+
+    if ((result ?? false) == true) {
+      fetchVisits();
+    } else {
+      Atom.historyBack();
+    }
   }
 
   VisitRequest get visitRequestBody =>
@@ -111,8 +103,7 @@ class EResultScreenVm extends RbioVm {
 
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       progress = LoadingProgress.error;
       showInfoDialog(
         LocaleProvider.current.warning,

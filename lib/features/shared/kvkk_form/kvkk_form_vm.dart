@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../core/core.dart';
 
 class KvkkFormScreenVm extends ChangeNotifier {
   BuildContext? mContext;
   bool? clickedConsentForm;
+
   KvkkFormScreenVm({BuildContext? context, bool? alwaysAsk}) {
     mContext = context!;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
@@ -16,12 +16,12 @@ class KvkkFormScreenVm extends ChangeNotifier {
     });
   }
 
-  fetchClickedConsentForm() async {
+  Future<void> fetchClickedConsentForm() async {
     try {
       clickedConsentForm = await getIt<UserManager>().getKvkkFormState();
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 

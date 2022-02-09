@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../core.dart';
 
@@ -19,7 +18,6 @@ abstract class RbioVm extends ChangeNotifier {
     String? title,
     String? description,
   ]) {
-    Sentry.captureException(throwable, stackTrace: stackTrace);
     showGradientDialog(
       title ?? LocaleProvider.current.warning,
       description ?? LocaleProvider.current.sorry_dont_transaction,
@@ -34,7 +32,6 @@ abstract class RbioVm extends ChangeNotifier {
     String? title,
     String? description,
   ]) {
-    Sentry.captureException(throwable, stackTrace: stackTrace);
     Future.delayed(
       const Duration(milliseconds: 500),
       () {

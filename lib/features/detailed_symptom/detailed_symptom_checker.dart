@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../core/core.dart';
 
 class DetailedSymptomChecker extends StatefulWidget {
   const DetailedSymptomChecker({Key? key}) : super(key: key);
@@ -33,7 +34,6 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
             _controller.complete(webViewController);
             myWebController = webViewController;
           },
-          // ignore: prefer_collection_literals
           navigationDelegate: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
               LoggerUtils.instance.d('blocking navigation to $request}');
