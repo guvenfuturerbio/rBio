@@ -8,7 +8,6 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
-import '../../../core/data/imports/cronic_tracking.dart';
 import '../../../model/ble_models/paired_device.dart';
 import '../../../model/model.dart';
 import '../../home/viewmodel/home_vm.dart';

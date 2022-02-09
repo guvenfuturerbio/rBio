@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:onedosehealth/core/manager/local_notification_manager.dart';
 
 import '../../../core/core.dart';
-import '../../../core/data/imports/cronic_tracking.dart';
 import '../mediminder.dart';
 
 class StripVm with ChangeNotifier {

@@ -1,4 +1,4 @@
-part of '../repository/doctor_repository.dart';
+part of 'doctor_service.dart';
 
 class DoctorApiServiceImpl extends DoctorApiService {
   DoctorApiServiceImpl(IDioHelper helper) : super(helper);

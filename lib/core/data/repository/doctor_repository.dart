@@ -1,12 +1,6 @@
-import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
-
 import '../../../model/model.dart';
 import '../../core.dart';
 import '../../domain/blood_pressure_model.dart';
-
-part '../service/doctor_service.dart';
-part '../service/doctor_service_impl.dart';
 
 class DoctorRepository {
   final DoctorApiService apiService;

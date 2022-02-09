@@ -1,6 +1,4 @@
-import 'package:onedosehealth/core/exception/model_cast_exception.dart';
-import 'package:onedosehealth/core/utils/logger_helper.dart';
-
+import '../../core/exception/model_cast_exception.dart';
 import '../../core/core.dart';
 
 class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {

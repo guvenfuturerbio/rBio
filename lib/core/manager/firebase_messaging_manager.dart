@@ -33,8 +33,6 @@ Future<void> checkChatNotification(RemoteMessage message) async {
   }
 }
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
 const AndroidNotificationChannel androidNotificationChannel =
     AndroidNotificationChannel(
   'high_importance_channel',

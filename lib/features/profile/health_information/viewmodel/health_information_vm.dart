@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/model/shared/guven_response_model.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/imports/cronic_tracking.dart';
+import '../../../../model/shared/guven_response_model.dart';
 
 enum HealthInformationType {
   diabetType,

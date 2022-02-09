@@ -16,7 +16,6 @@ import '../../../../model/scale_measurement/get_scale_measurement.dart';
 import '../../../../model/scale_measurement/update_scale_measurement.dart';
 import '../../../core.dart';
 import '../../../domain/blood_pressure_model.dart';
-import '../../imports/cronic_tracking.dart';
 
 part 'blood_pressure_storage_impl.dart';
 part 'glucose_storage_impl.dart';

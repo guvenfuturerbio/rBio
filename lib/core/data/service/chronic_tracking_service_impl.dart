@@ -1,4 +1,4 @@
-part of '../imports/cronic_tracking.dart';
+part of 'chronic_tracking_service.dart';
 
 class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   ChronicTrackingApiServiceImpl(IDioHelper helper) : super(helper);

@@ -6,20 +6,32 @@ class _Images {
   final circlevatar =
       'https://www.pinclipart.com/picdir/middle/148-1486972_mystery-man-avatar-circle-clipart.png';
 
-  final trFlag = 'assets/images/language_tr-01.png';
-  final engFlag = 'assets/images/language_eng-01.png';
   final accuCheckPng = "assets/images/accu_check.png";
+  final add = 'assets/images/add_icon.svg';
   final addphotoIcon = "assets/images/addphoto_icon.svg";
   final afterMeal = "assets/images/after_meal_black.svg";
   final aftermealIconBlack = 'assets/images/aftermeal_icon_black.svg';
   final allFilesGrey = "assets/images/all_files_grey.svg";
   final androidShare = "assets/images/androidshare.svg";
   final apple = "assets/images/apple.svg";
+  final appointment = 'assets/images/appointment_icon.svg';
+  final arrowDown = 'assets/images/arrow_down_icon.svg';
+  final arrowLeft = 'assets/images/arrow_left_icon.svg';
+  final arrowRightIcon = 'assets/images/arrow_right_icon.svg';
+  final attentionSvg = 'assets/images/attention_icon.svg';
+  final back = 'assets/images/back_icon.svg';
   final beforeMeal = "assets/images/before_meal_black.svg";
   final beforeMealIconBlack = 'assets/images/beforemeal_icon_black.svg';
   final bloodIconBlack = "assets/images/blood_icon_black.svg";
+  final blood = 'assets/images/blood_icon.svg';
   final boyChild = "assets/images/boy_child_icon.svg";
+  final cancel = 'assets/images/cancel_icon.svg';
   final changeGraph = "assets/images/change_graph.svg";
+  final changeSize = 'assets/images/change_size_icon.svg';
+  final chat = 'assets/images/chat_icon.svg';
+  final checkup = 'assets/images/checkup_icon.svg';
+  final clockGreen = 'assets/images/clock_green_icon.svg';
+  final clock = 'assets/images/clock_icon.svg';
   final contour = "assets/images/contour.png";
   final covid_1 = "assets/images/covid_1.png";
   final covid_2 = "assets/images/covid_2.png";
@@ -28,13 +40,20 @@ class _Images {
   final covid_5 = "assets/images/covid_5.png";
   final covid_6 = "assets/images/covid_6.png";
   final covid_7 = "assets/images/covid_7.png";
-  final covidCat = "assets/images/covid_cat_icon.jpg";
   final creditCardNumber = "assets/images/credit_card.svg";
   final bloodGlucose = "assets/images/ct_blood_glucose.svg";
   final bloodPressure = "assets/images/ct_blood_pressure.svg";
   final bodyScale = "assets/images/ct_body_scale.svg";
   final defaultIcon = "assets/images/defaulticon.svg";
   final deleteWhiteGarbage = "assets/images/delete_white_garbage.svg";
+
+  // ------
+
+  final trFlag = 'assets/images/language_tr-01.png';
+  final engFlag = 'assets/images/language_eng-01.png';
+
+  final covidCat = "assets/images/covid_cat_icon.jpg";
+
   final eyeSeen = "assets/images/eyeseen_icon.svg";
   final doctorAvatar = "assets/images/doctor_avatar.svg";
   final done = 'assets/images/done_icon.svg';
@@ -85,20 +104,6 @@ class _Images {
 
   // -------------------------------------------------------------------------------------
 
-  final add = 'assets/images/add_icon.svg';
-  final appointment = 'assets/images/appointment_icon.svg';
-  final arrowDown = 'assets/images/arrow_down_icon.svg';
-  final arrowLeft = 'assets/images/arrow_left_icon.svg';
-  final arrowRightIcon = 'assets/images/arrow_right_icon.svg';
-  final attentionSvg = 'assets/images/attention_icon.svg';
-  final back = 'assets/images/back_icon.svg';
-  final blood = 'assets/images/blood_icon.svg';
-  final cancel = 'assets/images/cancel_icon.svg';
-  final changeSize = 'assets/images/change_size_icon.svg';
-  final chat = 'assets/images/chat_icon.svg';
-  final checkup = 'assets/images/checkup_icon.svg';
-  final clockGreen = 'assets/images/clock_green_icon.svg';
-  final clock = 'assets/images/clock_icon.svg';
   final deviceConnect = 'assets/images/deviceconnect_icon.svg';
   final doctor = 'assets/images/doctor_icon.svg';
   final error = 'assets/images/error_icon.svg';
@@ -118,6 +123,7 @@ class _Images {
   final menu = 'assets/images/menu_icon.svg';
   final successAppointment = 'assets/images/success_appointment.svg';
 
+  // #region bottom_navigation
   final bottomNavigationChatGreen =
       'assets/images/bottom_navigation/chat_icon_green.svg';
   final bottomNavigationChat = 'assets/images/bottom_navigation/chat_icon.svg';
@@ -134,10 +140,13 @@ class _Images {
       'assets/images/bottom_navigation/search_icon_green.svg';
   final bottomNavigationSearch =
       'assets/images/bottom_navigation/search_icon.svg';
+  // #endregion
 
+  // #region reminders
   final reminderBloodGlucose = 'assets/images/reminders/bloodglucose_icon.svg';
   final reminderHba1c = 'assets/images/reminders/hba1c_icon.svg';
   final reminderMedication = 'assets/images/reminders/medication_icon.svg';
   final reminderStrip = 'assets/images/reminders/strip_icon.svg';
   final water = 'assets/images/reminders/water_icon.svg';
+  // #endregion
 }

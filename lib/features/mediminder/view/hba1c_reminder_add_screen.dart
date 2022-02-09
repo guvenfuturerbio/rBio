@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../../../core/enums/remindable.dart';
-import '../../../core/my_flutter_app_icons.dart';
+import '../../../core/rbio_custom_icons.dart';
 import '../../../core/widgets/guven_date_picker.dart';
 import '../viewmodel/hba1c_reminder_add_vm.dart';
 
@@ -200,7 +200,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
               }
             },
             icon: Icon(
-              MyFlutterApp.calendar,
+              RbioCustomIcons.calendar,
               size: R.sizes.iconSize,
             ),
           ),
@@ -283,7 +283,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
               }
             },
             icon: Icon(
-              MyFlutterApp.calendar,
+              RbioCustomIcons.calendar,
               size: R.sizes.iconSize,
             ),
           ),

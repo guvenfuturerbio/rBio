@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/data/imports/cronic_tracking.dart';
 import '../../../../../model/treatment_model/treatment_model.dart';
 
 class TreatmentEditVm extends ChangeNotifier {

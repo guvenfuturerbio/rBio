@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'core/core.dart';
-import 'core/manager/local_notification_manager.dart';
-import 'core/notifiers/notification_badge_notifier.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
