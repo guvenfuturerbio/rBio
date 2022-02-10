@@ -79,12 +79,13 @@ class MeasurementTrackingVm with ChangeNotifier {
     });
   }
 
-  getHealthDataFromDevice() async {
+  Future<void> getHealthDataFromDevice() async {
     await Permission.activityRecognition.request();
 
     bool succes = await health.requestAuthorization(
       _healthDataTypes,
     );
+
     if (succes) {
       List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(
           DateTime(1997, 11, 9), DateTime.now(), _healthDataTypes);

@@ -136,7 +136,7 @@ class BleReactorOps extends ChangeNotifier {
     );
   }
 
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final flutterLocalNotificationsPlugin = ln.FlutterLocalNotificationsPlugin();
 
   /// MG2
   Future<void> write(DiscoveredDevice device) async {
@@ -218,10 +218,8 @@ class BleReactorOps extends ChangeNotifier {
     _ble.subscribeToCharacteristic(subsCharacteristic).listen(
       (measurementData) {
         _measurements.add(measurementData);
-
         _gData
             .add(parseGlucoseDataFromReadingInstance(measurementData, device));
-
         notifyListeners();
       },
       onError: (dynamic error) {
@@ -233,19 +231,35 @@ class BleReactorOps extends ChangeNotifier {
       },
     );
 
+    bool _lock = false;
     _ble.subscribeToCharacteristic(writeCharacteristic).listen(
       (recordAccessData) async {
-        LoggerUtils.instance.d("record access data $recordAccessData");
+        LoggerUtils.instance
+            .i("record access data " + recordAccessData.toString());
 
-        WidgetsBinding.instance?.addPostFrameCallback((_) async {
-          getIt<BleDeviceManager>()
-              .savePairedDevices(pairedDevice)
-              .then((value) {
-            value
-                ? _controlPointResponse = recordAccessData
-                : _controlPointResponse.clear();
-          });
-        });
+        LoggerUtils.instance.i("LOCK :$_lock");
+
+        if (!_lock) {
+          _lock = true;
+          bool isSucces =
+              await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+          isSucces
+              ? _controlPointResponse = recordAccessData
+              : _controlPointResponse.clear();
+
+          if (isSucces) {
+            var localUser = getIt<ProfileStorageImpl>().getFirst();
+            var newPerson = Person.fromJson(localUser.toJson());
+            newPerson.deviceUUID = pairedDevice.deviceId;
+            await getIt<ProfileStorageImpl>().update(
+              newPerson,
+              localUser.key,
+            );
+          }
+
+          _lock = false;
+        }
+
         _bleReactorState = BleReactorState.done;
         await saveGlucoseDatas();
 
@@ -254,11 +268,12 @@ class BleReactorOps extends ChangeNotifier {
       onError: (dynamic error) {
         _bleReactorState = BleReactorState.error;
         notifyListeners();
-        LoggerUtils.instance.d("write characteristic error $error");
+        LoggerUtils.instance
+            .i("write characteristic error " + error.toString());
         //user need to press device button for 3 seconds to pairing operation.
       },
       onDone: () {
-        LoggerUtils.instance.d("done");
+        LoggerUtils.instance.i("done");
       },
     );
 
@@ -266,23 +281,20 @@ class BleReactorOps extends ChangeNotifier {
       _ble.writeCharacteristicWithResponse(
         writeCharacteristic,
         value: [0x01, 0x01],
-      ).then(
-        (value) {
-          LoggerUtils.instance.d("deneme 270 ble_reactor.dart");
-          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-            getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
-          });
-        },
-        onError: (e) {
-          _bleReactorState = BleReactorState.error;
-          notifyListeners();
-          LoggerUtils.instance.d("write errorrrrrrrr$e");
-        },
-      );
+      ).then((value) {
+        // print("deneme");
+        // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        //   getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+        // });
+      }, onError: (e) {
+        _bleReactorState = BleReactorState.error;
+        notifyListeners();
+        LoggerUtils.instance.i("write errorrrrrrrr" + e.toString());
+      });
     } catch (e) {
       _bleReactorState = BleReactorState.error;
       notifyListeners();
-      LoggerUtils.instance.d("write characterisctic error $e");
+      LoggerUtils.instance.i("write characterisctic error " + e.toString());
     }
   }
 

@@ -23,7 +23,9 @@
     <uses-permission
             android:name="android.permission.BLUETOOTH_SCAN"
             android:usesPermissionFlags="neverForLocation" />
-            
+
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>

@@ -739,7 +739,7 @@ class BgProgressPageViewModel
   List<ScatterSeries<ChartData, DateTime>> getDataScatterSeries() {
     return <ScatterSeries<ChartData, DateTime>>[
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[-1]!,
+          dataSource: _chartVeryHighTagged[-1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_high,

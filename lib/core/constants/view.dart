@@ -90,7 +90,7 @@ class _Sizes {
       54 + MediaQuery.of(context).viewPadding.top;
   Widget stackedTopPadding(BuildContext context) =>
       SizedBox(height: 54 + MediaQuery.of(context).viewPadding.top);
-  final double bottomNavigationBarHeight = Atom.safeBottom + 62;
+  double get bottomNavigationBarHeight => Atom.safeBottom + 65;
 
   final Widget hSizer4 = const SizedBox(height: 4);
   final Widget hSizer8 = const SizedBox(height: 8);

@@ -87,26 +87,37 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     GlucoseData data, {
     bool shouldSendToServer = false,
   }) async {
-    if (box.isOpen && !doesExist(data)) {
-      if (!data.isFromHealth) {
-        health!.requestAuthorization(types, permissions: perm);
+    try {
+      if (box.isOpen && !doesExist(data)) {
+        if (!data.isFromHealth) {
+          await health!.requestAuthorization(types, permissions: perm);
 
-        health!.writeHealthData(
-          double.parse(data.level),
-          HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
-          DateTime.fromMillisecondsSinceEpoch(data.time),
-          DateTime.fromMillisecondsSinceEpoch(data.time),
-        );
+          health!
+              .writeHealthData(
+            double.parse(data.level),
+            HealthDataType.BLOOD_GLUCOSE,
+            DateTime.fromMillisecondsSinceEpoch(data.time),
+            DateTime.fromMillisecondsSinceEpoch(data.time),
+          )
+              .then((value) {
+            LoggerUtils.instance.i("Health Response : $value");
+          });
+        }
+
+        if (shouldSendToServer) {
+          var id = await sendToServer(data);
+          data.measurementId = id;
+          await box.add(data);
+        }
+
+        notifyListeners();
+        return true;
+      } else {
+        return false;
       }
-      if (shouldSendToServer) {
-        var id = await sendToServer(data);
-        data.measurementId = id;
-        await box.add(data);
-      }
-      notifyListeners();
-      return true;
-    } else {
-      return false;
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+      rethrow;
     }
   }
 

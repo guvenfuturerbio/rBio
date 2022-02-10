@@ -45,67 +45,71 @@ class DevicesScreen extends StatelessWidget {
   Widget _buildListView(DevicesVm vm) {
     return ListView.builder(
       shrinkWrap: true,
-      padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue,
+      ),
       itemCount: vm.devices.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         final device = vm.devices[index];
 
-        return Column(
-          children: [
-            DeviceCard(
-              background: getIt<ITheme>().cardBackgroundColor,
-              image: device.deviceType == null
-                  ? const SizedBox()
-                  : UtilityManager()
-                          .getDeviceImageFromType(device.deviceType!) ??
-                      const SizedBox(),
-              name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
-              trailing: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Atom.show(
-                        GuvenAlert(
-                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 25,
-                            vertical: 25,
-                          ),
-                          title: GuvenAlert.buildTitle(
-                            LocaleProvider.current.warning,
-                          ),
-                          content: GuvenAlert.buildDescription(LocaleProvider
-                              .current.ble_delete_paired_device_approv),
-                          actions: [
-                            GuvenAlert.buildBigMaterialAction(
-                              LocaleProvider.current.cancel,
-                              () => Atom.dismiss(),
-                            ),
-                            GuvenAlert.buildBigMaterialAction(
-                              LocaleProvider.current.yes,
-                              () => vm.deletePairedDevice(
-                                device.deviceId ?? '',
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                    child: Icon(
-                      Icons.cancel,
-                      color: R.color.darkRed,
-                      size: R.sizes.iconSize,
-                    ),
-                  ),
-                ],
+        return DeviceCard(
+          background: getIt<ITheme>().cardBackgroundColor,
+          image: UtilityManager().getDeviceImageFromType(device.deviceType!) ??
+              const SizedBox(),
+          name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
+          trailing: Row(
+            children: [
+              //
+              IconButton(
+                onPressed: () {
+                  LoggerUtils.instance.i(device.toJson());
+                },
+                icon: Icon(
+                  Icons.info,
+                  size: R.sizes.iconSize * 1.25,
+                ),
               ),
-            ),
 
-            //
-            _buildVerticalGap()
-          ],
+              //
+              IconButton(
+                onPressed: () {
+                  Atom.show(
+                    GuvenAlert(
+                      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 25,
+                        vertical: 25,
+                      ),
+                      title: GuvenAlert.buildTitle(
+                        LocaleProvider.current.warning,
+                      ),
+                      content: GuvenAlert.buildDescription(
+                        LocaleProvider.current.ble_delete_paired_device_approv,
+                      ),
+                      actions: [
+                        GuvenAlert.buildBigMaterialAction(
+                          LocaleProvider.current.cancel,
+                          () => Atom.dismiss(),
+                        ),
+                        GuvenAlert.buildBigMaterialAction(
+                          LocaleProvider.current.yes,
+                          () => vm.deletePairedDevice(
+                            device.deviceId ?? '',
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.cancel,
+                  color: R.color.darkRed,
+                  size: R.sizes.iconSize * 1.25,
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

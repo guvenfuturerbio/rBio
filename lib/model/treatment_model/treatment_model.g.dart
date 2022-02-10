@@ -45,3 +45,23 @@ class TreatmentModelAdapter extends TypeAdapter<TreatmentModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+TreatmentModel _$TreatmentModelFromJson(Map<String, dynamic> json) =>
+    TreatmentModel(
+      treatment: json['treatment'] as String?,
+      createDate: json['create_date'] == null
+          ? null
+          : DateTime.parse(json['create_date'] as String),
+      id: json['id'] as int?,
+    );
+
+Map<String, dynamic> _$TreatmentModelToJson(TreatmentModel instance) =>
+    <String, dynamic>{
+      'treatment': instance.treatment,
+      'create_date': instance.createDate?.toIso8601String(),
+      'id': instance.id,
+    };
