@@ -496,7 +496,7 @@ class VRouterRoutes {
               widget: const BloodGlucosePatientDetailScreen(),
             ),
             VWidget(
-              path: PagePaths.doctorPatientList,
+              path: PagePaths.doctorPressurePatientDetail,
               widget: const BloodPressurePatientDetailScreen(),
             ),
             VWidget(

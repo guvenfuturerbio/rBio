@@ -18,13 +18,13 @@ class PatientBloodPressureListModel
     return PatientListItemModel(
       data: e,
       patientName: e.name,
-      dates: e.bpMeasurements
-          !.map((item) => item.occurrenceTime != null
+      dates: e.bpMeasurements!
+          .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
               : '')
           .toList(),
-      times: e.bpMeasurements
-          !.map((item) => item.occurrenceTime != null
+      times: e.bpMeasurements!
+          .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
               : '')
           .toList(),
@@ -61,7 +61,8 @@ class PatientBloodPressureListModel
       _filterList = _list;
     } else {
       _filterList = _list
-          .where((item) => item.name?.toLowerCase().contains(text.toLowerCase()) as bool)
+          .where((item) =>
+              item.name?.toLowerCase().contains(text.toLowerCase()) as bool)
           .toList();
     }
   }
@@ -85,6 +86,8 @@ class PatientBloodPressureListModel
   @override
   void itemOnTap(DoctorBloodPressurePatientModel model) {
     LoggerUtils.instance.i('OnTap : ${model.id}');
+    LoggerUtils.instance.i('OnTap Name : ${model.name}');
+
     Atom.to(PagePaths.doctorPressurePatientDetail, queryParameters: {
       'patientId': model.id.toString(),
       'patientName': model.name!,

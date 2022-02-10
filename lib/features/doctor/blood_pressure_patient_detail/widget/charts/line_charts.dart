@@ -149,8 +149,8 @@ class _AnimatedPulseChartState extends State<AnimatedPatientPulseChart> {
                     height: 10, width: 10, isVisible: false))
             : LineSeries<ChartData, DateTime>(
                 dataSource: [
-                    ChartData(val.startDate!, 0, Colors.transparent),
-                    ChartData(val.endDate!, 0, Colors.transparent),
+                    ChartData(val.startDate, 0, Colors.transparent),
+                    ChartData(val.endDate, 0, Colors.transparent),
                   ],
                 xValueMapper: (ChartData sales, _) => sales.x,
                 yValueMapper: (ChartData sales, _) => sales.y,

@@ -62,12 +62,8 @@ class _BloodPressurePatientDetailScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      if (patientId != null) {
-        patientId = int.parse(Atom.queryParameters['patientId'] as String);
-      }
-      if (patientName != null) {
-        patientName = Atom.queryParameters['patientName'];
-      }
+      patientId = int.parse(Atom.queryParameters['patientId'] as String);
+      patientName = Atom.queryParameters['patientName'];
     } catch (_) {
       return const RbioRouteError();
     }

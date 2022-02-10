@@ -109,13 +109,16 @@ class _BloodGlucosePatientDetailScreenState
                 : RbioScaffold(
                     appbar: _buildAppBar(),
                     body: _buildBody(vm),
-                    floatingActionButton: FloatingActionButton(
+
+                    // ? Doktorda floating action button olmayacak. Bu yüzden kapatıldı.
+                    /*floatingActionButton: FloatingActionButton(
+                      backgroundColor: getIt<ITheme>().mainColor,
                       onPressed: () {
                         LoggerUtils.instance.i(vm.bgMeasurements.last.date);
                         LoggerUtils.instance.i(vm.bgMeasurements.first.date);
                       },
                       child: const Icon(Icons.add),
-                    ),
+                    ),*/
                   ),
           );
         },
@@ -208,8 +211,9 @@ class _BloodGlucosePatientDetailScreenState
               if (MediaQuery.of(context).orientation == Orientation.portrait)
                 //
                 SizedBox(
-                  height:
-                      vm.isChartShow ? context.height * .5 : context.width * .8,
+                  height: vm.isChartShow
+                      ? context.height * .5
+                      : context.height * .8,
                   child: _MeasurementList(
                     bgMeasurements: vm.bgMeasurements,
                     scrollController: vm.controller,

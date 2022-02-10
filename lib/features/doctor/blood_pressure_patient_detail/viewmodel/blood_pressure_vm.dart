@@ -65,7 +65,7 @@ class BloodPressurePatientDetailVm extends RbioVm
   Widget get currentGraph => const AnimatedPatientPulseChart();
 
   ScrollController? controller = ScrollController();
-  TimePeriodFilter? selected;
+  TimePeriodFilter? selected = TimePeriodFilter.daily;
   bool allDataLoaded = false;
 
   Map<String, bool>? measurementFilters;
@@ -197,31 +197,39 @@ class BloodPressurePatientDetailVm extends RbioVm
     bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
 
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime? _startDate;
+  DateTime? _endDate;
 
-  /*DateTime get startDate => _startDate != null
+  DateTime get startDate => _startDate != null
       ? DateTime(_startDate!.year, _startDate!.month, _startDate!.day)
-      : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);*/
+      : DateTime(
+          DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+
+  DateTime get endDate => _endDate != null
+      ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day)
+      : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   Future<void> setStartDate(DateTime d) async {
-    startDate = d;
+    _startDate = d;
     _currentDateIndex = 0;
     await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
-        beginDate: startDate, endDate: endDate!.add(const Duration(days: 1)));
+        beginDate: startDate, endDate: endDate.add(const Duration(days: 1)));
     fetchBpMeasurementsInDateRange(
-        startDate!, endDate!.add(const Duration(days: 1)));
+        _startDate ??
+            DateTime(
+                DateTime.now().year, DateTime.now().month, DateTime.now().day),
+        endDate.add(const Duration(days: 1)));
 
     notifyListeners();
   }
 
   changeStartDate(DateTime date) {
-    startDate = date;
+    _startDate = date;
     setSelectedItem(selected!);
   }
 
   changeEndDate(DateTime date) {
-    endDate = date;
+    _endDate = date;
     setSelectedItem(selected!);
   }
 
@@ -233,12 +241,12 @@ class BloodPressurePatientDetailVm extends RbioVm
           DateTime.now().add(const Duration(days: 1)).day);*/
 
   Future<void> setEndDate(DateTime d) async {
-    endDate = d;
+    _endDate = d;
     _currentDateIndex = 0;
     await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
-        beginDate: startDate, endDate: endDate!.add(const Duration(days: 1)));
+        beginDate: startDate, endDate: endDate.add(const Duration(days: 1)));
     fetchBpMeasurementsInDateRange(
-        startDate!, endDate!.add(const Duration(days: 1)));
+        startDate, endDate.add(const Duration(days: 1)));
 
     notifyListeners();
   }
@@ -275,8 +283,8 @@ class BloodPressurePatientDetailVm extends RbioVm
   void fetchSpesificData() {
     bpMeasurementsDailyData.clear();
     for (var data in bpMeasurements) {
-      if (data.date.difference(startDate!).inDays >= 0 &&
-          data.date.difference(endDate!).inDays <= 0) {
+      if (data.date.difference(startDate).inDays >= 0 &&
+          data.date.difference(endDate).inDays <= 0) {
         bpMeasurementsDailyData.add(data);
       }
     }
@@ -288,25 +296,25 @@ class BloodPressurePatientDetailVm extends RbioVm
   }
 
   Future<void> nextDate() async {
-    await setStartDate(endDate!);
+    await setStartDate(endDate);
     if (selected == TimePeriodFilter.weekly) {
-      await setEndDate(endDate!.add(const Duration(days: 7)));
+      await setEndDate(endDate.add(const Duration(days: 7)));
     } else if (selected == TimePeriodFilter.monthly) {
-      await setEndDate(DateTime(endDate!.year, endDate!.month + 1, 1));
+      await setEndDate(DateTime(endDate.year, endDate.month + 1, 1));
     } else if (selected == TimePeriodFilter.monthlyThree) {
-      await setEndDate(DateTime(endDate!.year, endDate!.month + 3, 1));
+      await setEndDate(DateTime(endDate.year, endDate.month + 3, 1));
     }
     setChartAverageDataPerDay();
   }
 
   Future<void> previousDate() async {
-    await setEndDate(startDate!);
+    await setEndDate(startDate);
     if (selected == TimePeriodFilter.weekly) {
-      await setStartDate(startDate!.subtract(const Duration(days: 7)));
+      await setStartDate(startDate.subtract(const Duration(days: 7)));
     } else if (selected == TimePeriodFilter.monthly) {
-      await setStartDate(DateTime(startDate!.year, startDate!.month - 1, 1));
+      await setStartDate(DateTime(startDate.year, startDate.month - 1, 1));
     } else if (selected == TimePeriodFilter.monthlyThree) {
-      await setStartDate(DateTime(startDate!.year, startDate!.month - 3, 1));
+      await setStartDate(DateTime(startDate.year, startDate.month - 3, 1));
     }
     setChartAverageDataPerDay();
   }

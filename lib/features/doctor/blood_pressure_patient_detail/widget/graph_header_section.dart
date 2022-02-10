@@ -1,12 +1,12 @@
 part of '../view/blood_pressure_detail_screen.dart';
 
 class _GraphHeaderSection extends StatelessWidget {
-  final BloodPressurePatientDetailVm? value;
+  final BloodPressurePatientDetailVm value;
   final ScrollController? controller;
 
   const _GraphHeaderSection({
     Key? key,
-    this.value,
+    required this.value,
     this.controller,
   }) : super(key: key);
 
@@ -21,16 +21,16 @@ class _GraphHeaderSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: DateRangePicker(
-            endDate: value!.endDate!,
-            startDate: value!.startDate!,
-            nextDate: value!.nextDate,
-            previousDate: value!.previousDate,
-            selected: value!.selected!,
+            endDate: value.endDate,
+            startDate: value.startDate,
+            nextDate: value.nextDate,
+            previousDate: value.previousDate,
+            selected: value.selected!,
             setSelectedItem: (val) {
-              return value!.setSelectedItem(val);
+              return value.setSelectedItem(val);
             },
-            setEndDate: value!.setStartDate,
-            setStartDate: value!.setEndDate,
+            setEndDate: value.setStartDate,
+            setStartDate: value.setEndDate,
           ),
         ),
 
@@ -48,7 +48,7 @@ class _GraphHeaderSection extends StatelessWidget {
             alignment: Alignment.bottomRight,
             children: [
               //
-              value!.currentGraph,
+              value.currentGraph,
 
               //
               IgnorePointer(
@@ -81,7 +81,7 @@ class _GraphHeaderSection extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           _infoSection(context),
           ElevatedButton(
-            onPressed: () => value!.showFilter(context),
+            onPressed: () => value.showFilter(context),
             style: ElevatedButton.styleFrom(
               primary: Colors.white,
               shadowColor: Colors.black.withAlpha(50),
