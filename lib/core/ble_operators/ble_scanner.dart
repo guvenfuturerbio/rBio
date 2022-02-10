@@ -34,6 +34,9 @@ class BleScannerOps extends ChangeNotifier {
 
   Future<void> startScan() async {
     _ble.statusStream.listen((bleStatus) async {
+      LoggerUtils.instance.wtf('DENEME');
+      LoggerUtils.instance.w(bleStatus);
+
       if (bleStatus == BleStatus.ready) {
         _devices.clear();
         _subscription?.cancel();
@@ -55,7 +58,9 @@ class BleScannerOps extends ChangeNotifier {
             } */
             notifyListeners();
           }
-        }, onError: (e) => log(e.toString()));
+        }, onError: (e) {
+          log(e.toString());
+        });
       } else if (bleStatus == BleStatus.unauthorized) {
         await Future.delayed(const Duration(seconds: 1));
         await Permission.location.request();
@@ -63,6 +68,10 @@ class BleScannerOps extends ChangeNotifier {
         await Future.delayed(const Duration(seconds: 1));
 
         // await SystemShortcuts.bluetooth();
+      } else if (bleStatus == BleStatus.locationServicesDisabled) {
+        await Future.delayed(const Duration(seconds: 1));
+        await Permission.location.request();
+        LoggerUtils.instance.i("DOĞAN");
       }
     });
   }
