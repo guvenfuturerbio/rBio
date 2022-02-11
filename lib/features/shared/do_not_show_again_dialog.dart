@@ -25,15 +25,18 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
   bool doNotAskAgain = false;
 
   Future<void> _updateDoNotShowAgain() async {
-    await getIt<ISharedPreferencesManager>()
-        .setBool(SharedPreferencesKeys.updateDialog, false);
+    await getIt<ISharedPreferencesManager>().setBool(
+      SharedPreferencesKeys.updateDialog,
+      false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return GuvenAlert(
-      backgroundColor: Colors.white,
+      backgroundColor: getIt<ITheme>().cardBackgroundColor,
       title: GuvenAlert.buildTitle(widget.title),
+      contentPadding: const EdgeInsets.all(8),
       content: FittedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,6 +45,9 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
             GuvenAlert.buildDescription(
               widget.subTitle,
             ),
+
+            //
+            R.sizes.hSizer8,
 
             //
             Row(
@@ -74,7 +80,6 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                   },
                   child: GuvenAlert.buildDescription(
                     widget.doNotAskAgainText,
-                    color: Colors.grey,
                   ),
                 ),
               ],

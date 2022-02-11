@@ -275,7 +275,6 @@ class FirebaseMessagingManager {
 
   Future<void> getToken() async {
     token = await FirebaseMessaging.instance.getToken();
-
     setTokenToServer(token as String);
     LoggerUtils.instance.i('FirebaseToken : $token');
   }

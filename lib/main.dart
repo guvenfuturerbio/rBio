@@ -36,11 +36,6 @@ Future<void> main() async {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-
-  LoggerUtils.instance
-      .i(await Permission.bluetooth.status); // PermissionStatus.granted
-  LoggerUtils.instance.i(FlutterReactiveBle().status); // BleStatus.unknown
-
   runApp(
     RbioConfig(
       child: const MyApp(),

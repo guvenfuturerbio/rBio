@@ -354,12 +354,15 @@ class UserManagerImpl extends UserManager {
 
   @override
   bool getApplicationConsentFormState() {
-    if (getIt<ISharedPreferencesManager>()
-            .getBool(SharedPreferencesKeys.applicationConsentForm) !=
-        null) {
-      return getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.applicationConsentForm)!;
-    } else {
+    try {
+      final sharedValue = getIt<ISharedPreferencesManager>()
+          .getBool(SharedPreferencesKeys.applicationConsentForm);
+      if (sharedValue != null) {
+        return sharedValue;
+      } else {
+        return false;
+      }
+    } catch (e) {
       return false;
     }
   }

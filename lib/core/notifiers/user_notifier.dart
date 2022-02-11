@@ -181,6 +181,7 @@ class UserNotifier extends ChangeNotifier {
       await getIt<ISharedPreferencesManager>().reload();
       await getIt<Repository>().localCacheService.removeAll();
       getIt<UserNotifier>().clear();
+      await getIt<LocalNotificationManager>().cancelAllNotifications();
       FirebaseMessagingManager.handleLogout();
       getIt<GlucoseStorageImpl>().clear();
       getIt<ScaleStorageImpl>().clear();

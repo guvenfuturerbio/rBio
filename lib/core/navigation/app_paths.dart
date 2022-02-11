@@ -58,7 +58,6 @@ import '../../features/take_appointment/create_appointment_summary/view/create_a
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
 import '../../model/ble_models/DeviceTypes.dart';
 import '../core.dart';
-import '../widgets/chronic_error_alert.dart';
 
 class VRouterRoutes {
   static var routes = [
@@ -505,8 +504,7 @@ class VRouterRoutes {
               stackedRoutes: [
                 VWidget(
                   path: PagePaths.doctorTreatmentEdit,
-                  widget: const PatientTreatmentEditView(
-                      key: Key('PatientTreatmentEditView')),
+                  widget: const PatientTreatmentEditView(),
                 ),
               ],
             ),

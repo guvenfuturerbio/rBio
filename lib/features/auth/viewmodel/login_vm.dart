@@ -102,20 +102,16 @@ class LoginScreenVm extends ChangeNotifier {
         (userLoginInfo.password?.length ?? 0) > 0) {
       _rememberMeChecked = true;
     }
-
     setUserIdText(userLoginInfo.username ?? '');
     setPasswordText(userLoginInfo.password ?? '');
     notifyListeners();
-
-    if ((userLoginInfo.username ?? "").isNotEmpty &&
-        (userLoginInfo.password ?? "").isNotEmpty) {
-      await login(userLoginInfo.username ?? '', userLoginInfo.password ?? '');
-    }
+    await fetchAppVersion(userLoginInfo);
   }
 
   Future<void> startAppVersionOperation() async {
     _versionCheckProgress = VersionCheckProgress.loading;
     notifyListeners();
+
     try {
       if (!kIsWeb) {
         //await fetchAppVersion();
@@ -136,30 +132,29 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchAppVersion() async {
-    notifyListeners();
+  Future<void> fetchAppVersion(UserLoginInfo userLoginInfo) async {
     try {
-      await Future.delayed(const Duration(seconds: 2));
       _applicationVersionResponse =
           await getIt<Repository>().getCurrentApplicationVersion();
-      notifyListeners();
-    } catch (e, stackTrace) {
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+    } finally {
       notifyListeners();
     }
+
+    checkAppVersion(userLoginInfo);
   }
 
-  Future<void> checkAppVersion() async {
-    Version requiredMinVersion =
-        Version.parse(applicationVersion?.minimum ?? '');
-    Version latestVersion = Version.parse(applicationVersion?.latest ?? '');
+  Future<void> checkAppVersion(UserLoginInfo userLoginInfo) async {
+    final requiredMinVersion = Version.parse(applicationVersion?.minimum ?? '');
+    final latestVersion = Version.parse(applicationVersion?.latest ?? '');
 
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    Version currentVersion = Version.parse(packageInfo.version);
+    final packageInfo = await PackageInfo.fromPlatform();
+    final currentVersion = Version.parse(packageInfo.version);
 
     if (requiredMinVersion > currentVersion) {
       _needForceUpdate = true;
       notifyListeners();
-      // force Update
       showCompulsoryUpdateDialog(
         context: mContext,
         onPressed: () {
@@ -171,7 +166,6 @@ class LoginScreenVm extends ChangeNotifier {
     } else if (latestVersion > currentVersion) {
       _needForceUpdate = false;
       notifyListeners();
-      // optional update
       bool check = isShowOptional();
       if (check) {
         showOptionalUpdateDialog(
@@ -184,14 +178,11 @@ class LoginScreenVm extends ChangeNotifier {
         );
       }
     } else {
-      autoLogin();
+      if ((userLoginInfo.username ?? "").isNotEmpty &&
+          (userLoginInfo.password ?? "").isNotEmpty) {
+        await login(userLoginInfo.username ?? '', userLoginInfo.password ?? '');
+      }
     }
-  }
-
-  Future<void> autoLogin() async {
-    _needForceUpdate = false;
-    notifyListeners();
-    getIt<UserManager>().getSavedLoginInfo();
   }
 
   Future<void> login(String username, String password) async {

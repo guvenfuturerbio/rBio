@@ -30,7 +30,7 @@ class _Endpoints {
   final getActiveStreamPath = '/profile/get-active-stream'.xBasePath;
   final getProfilePicturePath = '/file/retrieve-user-profile-image'.xBasePath;
   final getCurrentApplicationVersionPath =
-      '/applicationmobilecheckversion/get-current'.xBasePath;
+      '/api/v1/ApplicationMobileCheckVersion/get-current'.xDoctorBaseUrl;
   final getPatientDetailPath = '/Pusula/getPatientByToken'.xBasePath;
 
   String getDoctorCvDetailsPath(String doctorWebID) =>

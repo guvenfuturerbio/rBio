@@ -2,17 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/doctor/notifiers/patient_notifiers.dart';
-import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../../../model/treatment_model/treatment_model.dart';
+import '../../notifiers/patient_notifiers.dart';
 
 part '../model/treatment_process_model.dart';
 
 class DoctorTreatmentProcessScreen extends StatefulWidget {
   const DoctorTreatmentProcessScreen({Key? key}) : super(key: key);
-
 
   @override
   _DoctorTreatmentProcessScreenState createState() =>
@@ -23,7 +22,10 @@ class _DoctorTreatmentProcessScreenState
     extends State<DoctorTreatmentProcessScreen> {
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(appbar: _buildAppBar(), body: _buildBody());
+    return RbioScaffold(
+      appbar: _buildAppBar(),
+      body: _buildBody(),
+    );
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
@@ -52,25 +54,25 @@ class _DoctorTreatmentProcessScreenState
   }
 
   Widget _buildSuccess() {
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      scrollDirection: Axis.vertical,
-      physics: const BouncingScrollPhysics(),
-      itemCount: context
-          .watch<PatientNotifiers>()
-          .patientDetail
-          .treatmentModelList?.length,
-      itemBuilder: (BuildContext context, int index) {
-        var _item = context
-            .watch<PatientNotifiers>()
-            .patientDetail
-            .treatmentModelList?[index];
-        TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
-            id: _item?.id,
-            title: _item?.createDate?.xFormatTime9(),
-            description: _item?.treatment,
-            dateTime: _item?.createDate);
-        return _buildCard(_tempItem, index == 0 ? true : false);
+    return Consumer<PatientNotifiers>(
+      builder: (context, value, child) {
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          scrollDirection: Axis.vertical,
+          physics: const BouncingScrollPhysics(),
+          itemCount: value.patientDetail.treatmentModelList?.length ?? 0,
+          itemBuilder: (BuildContext context, int index) {
+            var _item = value.patientDetail.treatmentModelList?[index];
+            TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
+              id: _item?.id,
+              title: _item?.createDate?.xFormatTime9(),
+              description: _item?.treatment,
+              dateTime: _item?.createDate,
+            );
+
+            return _buildCard(_tempItem, index == 0 ? true : false);
+          },
+        );
       },
     );
   }
@@ -78,10 +80,13 @@ class _DoctorTreatmentProcessScreenState
   Widget _buildCard(TreatmentProcessItemModel item, bool newModel) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.doctorTreatmentEdit, queryParameters: {
-          'treatment_model': jsonEncode(item.toJson()),
-          'newModel': newModel.toString()
-        });
+        Atom.to(
+          PagePaths.doctorTreatmentEdit,
+          queryParameters: {
+            'treatment_model': jsonEncode(item.toJson()),
+            'newModel': newModel.toString()
+          },
+        );
       },
       child: Card(
         elevation: 0,
@@ -111,7 +116,7 @@ class _DoctorTreatmentProcessScreenState
                         //
                         Expanded(
                           child: Text(
-                            item.title ??"",
+                            item.title ?? "",
                             style: context.xHeadline4.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -130,7 +135,7 @@ class _DoctorTreatmentProcessScreenState
 
                     //
                     Text(
-                      item.description??"" ,
+                      item.description ?? "",
                       style: context.xHeadline5.copyWith(
                         color: getIt<ITheme>().textColorPassive,
                       ),

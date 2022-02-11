@@ -775,8 +775,8 @@ class TabToNextFieldTextInputFormatter extends TextInputFormatter {
 
 Future<void> showCompulsoryUpdateDialog({
   required Function onPressed,
-  context,
-  String? message,
+  required BuildContext context,
+  required String message,
 }) async {
   await showDialog<String>(
     context: context,
@@ -786,9 +786,9 @@ Future<void> showCompulsoryUpdateDialog({
       String btnLabel = LocaleProvider.of(context).update_now;
 
       return GuvenAlert(
-        backgroundColor: Colors.white,
+        backgroundColor: getIt<ITheme>().cardBackgroundColor,
         title: GuvenAlert.buildTitle(title),
-        content: GuvenAlert.buildDescription(message ?? "No message"),
+        content: GuvenAlert.buildDescription(message),
         actions: <Widget>[
           GuvenAlert.buildMaterialAction(btnLabel, onPressed()),
         ],
@@ -810,6 +810,7 @@ Future<void> showOptionalUpdateDialog({
       String btnLabel = LocaleProvider.of(context).update_now;
       String btnLabelCancel = LocaleProvider.of(context).later;
       String btnLabelDontAskAgain = LocaleProvider.of(context).dont_ask_again;
+
       return DoNotAskAgainDialog(
         title: title,
         subTitle: message ?? "No message",
