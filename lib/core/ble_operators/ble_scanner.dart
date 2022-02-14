@@ -23,7 +23,9 @@ class BleScannerOps extends ChangeNotifier {
   }
 
   final List<Uuid> _supported = [
+    //Blood glucosea ait verileri kontrol eden kod. (Diğer cihazlar için farklı kodlar var).
     Uuid.parse("1808"),
+    //Kan şekeri ve tartılar karşımıza çıksın diye alttaki kodları kullanıyoruz. Bu kodlara sahip servislerin hepsini tarıyor ve gösteriyor.
     Uuid([0x18, 0x1B])
   ];
 
@@ -33,6 +35,7 @@ class BleScannerOps extends ChangeNotifier {
   String get deviceId => _deviceId ?? '';
 
   Future<void> startScan() async {
+    //Cihaz açık mı kontrolü yapılıyor.
     _ble.statusStream.listen((bleStatus) async {
       LoggerUtils.instance.wtf('DENEME');
       LoggerUtils.instance.w(bleStatus);
@@ -40,6 +43,7 @@ class BleScannerOps extends ChangeNotifier {
       if (bleStatus == BleStatus.ready) {
         _devices.clear();
         _subscription?.cancel();
+        //Alttaki satır arama yapıyor ve stream olduğu için sürekli olarak dinliyor.
         _subscription = _ble.scanForDevices(withServices: _supported).listen(
             (device) async {
           final knownDeviceIndex =
@@ -49,7 +53,7 @@ class BleScannerOps extends ChangeNotifier {
           } else {
             _devices.add(device);
 
-            /// AutoConnector Methode caller
+            /// AutoConnector method caller
             if (pairedDevices != null && pairedDevices!.contains(device.id)) {
               getIt<BleConnectorOps>().connect(device);
             }

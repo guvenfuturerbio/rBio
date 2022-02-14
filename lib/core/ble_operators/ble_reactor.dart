@@ -167,6 +167,8 @@ class BleReactorOps extends ChangeNotifier {
         priority: ConnectionPriority.highPerformance,
       );
     }
+
+    //read ilgili unique id içerisindeki değeri okumamızı sağlayan parametre. byteArray - List<int> olarak döner.
     _ble
         .readCharacteristic(
       QualifiedCharacteristic(
@@ -278,6 +280,7 @@ class BleReactorOps extends ChangeNotifier {
     );
 
     try {
+      //Cihazının servis karakteristiklerinin içerisine veri yazmamızı sağlayan metod.
       _ble.writeCharacteristicWithResponse(
         writeCharacteristic,
         value: [0x01, 0x01],
@@ -360,7 +363,7 @@ class BleReactorOps extends ChangeNotifier {
           if (scaleDevice.scaleData == null ||
               !scaleDevice.scaleData!.scaleModel.measurementComplete!) {
             final Uint8List data = Uint8List.fromList(event);
-
+            //TODO: BURADA KALDIK !!!
             scaleDevice.parseScaleData(pairedDevice, data);
             if (scaleDevice.scaleData!.scaleModel.measurementComplete! &&
                 deviceAlreadyPaired) {
