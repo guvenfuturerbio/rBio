@@ -97,14 +97,21 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   }
 
   Future<String> fillAllFormFields(
-      String formContext,
-      String userNameAndSurname,
-      String userEmail,
-      String phoneNumber,
-      String packageName,
-      String currentDate) async {
-    String tmpContexHolder = await fillAllFields(formContext,
-        userNameAndSurname, userEmail, phoneNumber, currentDate, packageName);
+    String formContext,
+    String userNameAndSurname,
+    String userEmail,
+    String phoneNumber,
+    String packageName,
+    String currentDate,
+  ) async {
+    final tmpContexHolder = fillAllFields(
+      formContext,
+      userNameAndSurname,
+      userEmail,
+      phoneNumber,
+      currentDate,
+      packageName,
+    );
     return tmpContexHolder;
   }
 

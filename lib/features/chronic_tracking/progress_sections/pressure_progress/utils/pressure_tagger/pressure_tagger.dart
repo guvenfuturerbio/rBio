@@ -2,11 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../../core/domain/blood_pressure_model.dart';
 import '../../view_model/pressure_measurement_view_model.dart';
 import 'pressure_tagger_vm.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/data/repository/doctor_repository.dart';
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 import 'patient_notifiers.dart';
@@ -27,7 +26,8 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
             notes: e.bloodGlucoseMeasurement?.valueNote,
             id: e.id,
             color: Utils.instance.fetchMeasurementColor(
-                measurement: int.parse(e.bloodGlucoseMeasurement?.value as String),
+                measurement:
+                    int.parse(e.bloodGlucoseMeasurement?.value as String),
                 criticMin: PatientNotifiers.instace.patientDetail.hypo!,
                 criticMax: PatientNotifiers().patientDetail.hyper!,
                 targetMax: PatientNotifiers().patientDetail.rangeMax!,
@@ -39,9 +39,8 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
         .toList();
     bgMeasurements.clear();
 
-    bgMeasurements =
-        bgMeasure.map((e) => BgMeasurementViewModel( e)).toList();
-      bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
+    bgMeasurements = bgMeasure.map((e) => BgMeasurementViewModel(e)).toList();
+    bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
 
     fetchBgMeasurementsDateList(bgMeasurements);
 
@@ -57,7 +56,8 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
             notes: e.bloodGlucoseMeasurement?.valueNote,
             id: e.id,
             color: Utils.instance.fetchMeasurementColor(
-                measurement: int.parse(e.bloodGlucoseMeasurement?.value as String),
+                measurement:
+                    int.parse(e.bloodGlucoseMeasurement?.value as String),
                 criticMin: PatientNotifiers().patientDetail.hypo!,
                 criticMax: PatientNotifiers().patientDetail.hyper!,
                 targetMax: PatientNotifiers().patientDetail.rangeMax!,
@@ -71,11 +71,10 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
         .toList();
     bgMeasurements.clear();
     for (var e in bgMeasure) {
-      if (!bgMeasurements.contains(BgMeasurementViewModel( e))) {
-        DateTime measurementDate =
-            BgMeasurementViewModel( e).date;
+      if (!bgMeasurements.contains(BgMeasurementViewModel(e))) {
+        DateTime measurementDate = BgMeasurementViewModel(e).date;
         if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
-          bgMeasurements.add(BgMeasurementViewModel( e));
+          bgMeasurements.add(BgMeasurementViewModel(e));
         }
       }
     }
@@ -84,7 +83,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
     notifyListeners();
   }
 
-  getMoreData({required int patientId,required DateTime date}) async {
+  getMoreData({required int patientId, required DateTime date}) async {
     final result = await getIt<DoctorRepository>().getMyPatientBloodGlucose(
       patientId,
       GetMyPatientFilter(end: date.toIso8601String(), start: null),
@@ -93,11 +92,12 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
     bloodGlucoseList = result;
     List<BgMeasurementViewModel> bgMeasure = bloodGlucoseList
         .map((e) => BgMeasurementViewModel(
-           BgMeasurement(
+              BgMeasurement(
                 notes: e.bloodGlucoseMeasurement?.valueNote,
                 id: e.id,
                 color: Utils.instance.fetchMeasurementColor(
-                    measurement: int.parse(e.bloodGlucoseMeasurement?.value as String),
+                    measurement:
+                        int.parse(e.bloodGlucoseMeasurement?.value as String),
                     criticMin: PatientNotifiers().patientDetail.hypo!,
                     criticMax: PatientNotifiers().patientDetail.hyper!,
                     targetMax: PatientNotifiers().patientDetail.rangeMax!,

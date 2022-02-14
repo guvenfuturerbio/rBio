@@ -26,12 +26,13 @@ class SymptomsResultPageVm extends ChangeNotifier {
   bool isStart = false;
   bool isSaved = false;
 
-  SymptomsResultPageVm(
-      {BuildContext? context,
-      List<GetBodySymptomsResponse>? selectedSymptoms,
-      String? gender,
-      String? year_of_birth,
-      bool? isFromVoice}) {
+  SymptomsResultPageVm({
+    BuildContext? context,
+    List<GetBodySymptomsResponse>? selectedSymptoms,
+    String? gender,
+    String? year_of_birth,
+    bool? isFromVoice,
+  }) {
     mContext = context;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchSpecialisations(selectedSymptoms!, gender!, year_of_birth!);

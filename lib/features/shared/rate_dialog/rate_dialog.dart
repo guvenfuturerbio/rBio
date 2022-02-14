@@ -138,7 +138,7 @@ class _RateDialogState extends State<RateDialog> {
                             //  when the TextFormField in unfocused
                           ),
                           focusedBorder: const UnderlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Colors.black),
                             //  when the TextFormField in focused
                           ),
                           border: const UnderlineInputBorder(),

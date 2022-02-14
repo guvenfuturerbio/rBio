@@ -75,7 +75,7 @@ class SocialPostsResponse with SearchModel {
     if (socialPlatform != null) {
       data['social_platform'] = socialPlatform?.toJson();
     }
-    if (this.blogPostTags != null) {
+    if (blogPostTags != null) {
       data['blog_post_tags'] =
           blogPostTags?.map((v) => v.toJson()).toList() as Map<String, dynamic>;
     }

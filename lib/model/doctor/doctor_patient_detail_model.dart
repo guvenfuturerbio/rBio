@@ -26,8 +26,9 @@ class DoctorPatientDetailModel {
   int? stripCount;
   int? id;
   String? phoneNumber;
-  String? identification_number;
+  String? identificationNumber;
   List<TreatmentModel>? treatmentModelList;
+
   DoctorPatientDetailModel({
     this.name,
     this.birthDay,
@@ -48,7 +49,7 @@ class DoctorPatientDetailModel {
     this.stripCount,
     this.id,
     this.phoneNumber,
-    this.identification_number,
+    this.identificationNumber,
     this.treatmentModelList,
   });
 
@@ -72,7 +73,7 @@ class DoctorPatientDetailModel {
     int? stripCount,
     int? id,
     String? phoneNumber,
-    String? identification_number,
+    String? identificationNumber,
     List<TreatmentModel>? treatmentModelList,
   }) {
     return DoctorPatientDetailModel(
@@ -95,8 +96,8 @@ class DoctorPatientDetailModel {
       stripCount: stripCount ?? this.stripCount,
       id: id ?? this.id,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      identification_number:
-          identification_number ?? this.identification_number,
+      identificationNumber:
+          identificationNumber ?? this.identificationNumber,
       treatmentModelList: treatmentModelList ?? this.treatmentModelList,
     );
   }
@@ -122,7 +123,7 @@ class DoctorPatientDetailModel {
       'strip_count': stripCount,
       'id': id,
       'phone_number': phoneNumber,
-      'identification_number': identification_number,
+      'identification_number': identificationNumber,
       'treatment_List': treatmentModelList?.map((x) => x.toJson()).toList(),
     };
   }
@@ -149,7 +150,7 @@ class DoctorPatientDetailModel {
       stripCount: map['strip_count'] as int?,
       id: map['id'] as int?,
       phoneNumber: map['phone_number'] as String?,
-      identification_number: map['identification_number'] as String?,
+      identificationNumber: map['identification_number'] as String?,
       treatmentModelList: List<TreatmentModel>.from(
         map['treatment_list']
                 ?.map((x) => TreatmentModel.fromJson(x as Map<String, dynamic>))
@@ -165,7 +166,7 @@ class DoctorPatientDetailModel {
 
   @override
   String toString() {
-    return 'DoctorPatientDetailModel(name: $name, birthDay: $birthDay, gender: $gender, height: $height, weight: $weight, diabetType: $diabetType, rangeMin: $rangeMin, rangeMax: $rangeMax, hyper: $hyper, hypo: $hypo, target: $target, imageUrl: $imageUrl, deviceUuid: $deviceUuid, entegrationId: $entegrationId, smoker: $smoker, yearOfDiagnosis: $yearOfDiagnosis, stripCount: $stripCount, id: $id, phoneNumber: $phoneNumber, identification_number: $identification_number, treatmentModelList: $treatmentModelList)';
+    return 'DoctorPatientDetailModel(name: $name, birthDay: $birthDay, gender: $gender, height: $height, weight: $weight, diabetType: $diabetType, rangeMin: $rangeMin, rangeMax: $rangeMax, hyper: $hyper, hypo: $hypo, target: $target, imageUrl: $imageUrl, deviceUuid: $deviceUuid, entegrationId: $entegrationId, smoker: $smoker, yearOfDiagnosis: $yearOfDiagnosis, stripCount: $stripCount, id: $id, phoneNumber: $phoneNumber, identification_number: $identificationNumber, treatmentModelList: $treatmentModelList)';
   }
 
   @override
@@ -192,7 +193,7 @@ class DoctorPatientDetailModel {
         other.stripCount == stripCount &&
         other.id == id &&
         other.phoneNumber == phoneNumber &&
-        other.identification_number == identification_number &&
+        other.identificationNumber == identificationNumber &&
         listEquals(other.treatmentModelList, treatmentModelList);
   }
 
@@ -217,7 +218,7 @@ class DoctorPatientDetailModel {
         stripCount.hashCode ^
         id.hashCode ^
         phoneNumber.hashCode ^
-        identification_number.hashCode ^
+        identificationNumber.hashCode ^
         treatmentModelList.hashCode;
   }
 }

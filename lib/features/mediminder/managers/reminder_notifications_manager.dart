@@ -4,8 +4,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart';
 
 import '../../../core/core.dart';
-import '../../../core/enums/medicine_period.dart';
-import '../../../core/manager/local_notification_manager.dart';
 import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 

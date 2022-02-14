@@ -36,9 +36,11 @@ class _UserDetailCard extends StatelessWidget {
               rightTitle: LocaleProvider.current.date_of_birth,
               topPadding: false,
             ),
+
+            //æ
             _buildValueRow(
               context,
-              leftValue: patientDetail.identification_number ?? "",
+              leftValue: patientDetail.identificationNumber ?? "",
               rightValue: patientDetail.birthDay ?? "-",
             ),
 

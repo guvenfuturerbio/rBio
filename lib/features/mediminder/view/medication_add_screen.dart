@@ -6,10 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../../core/enums/medicine_period.dart';
-import '../../../core/enums/remindable.dart';
-import '../../../core/enums/usage_type.dart';
-import '../../../core/widgets/rbio_animated_cliprect.dart';
 import '../mediminder.dart';
 
 class MedicationAddScreen extends StatefulWidget {

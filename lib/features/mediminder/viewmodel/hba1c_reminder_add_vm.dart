@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/utils/tz_helper.dart';
 
 import '../../../core/core.dart';
-import '../../../core/enums/remindable.dart';
+import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
 class Hba1cReminderAddVm extends ChangeNotifier {

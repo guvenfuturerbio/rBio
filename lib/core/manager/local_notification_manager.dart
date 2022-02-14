@@ -1,6 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars, overridden_fields, close_sinks, unused_element
 
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -11,7 +10,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../features/mediminder/model/medicine_for_schedule_model.dart';
 import '../core.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

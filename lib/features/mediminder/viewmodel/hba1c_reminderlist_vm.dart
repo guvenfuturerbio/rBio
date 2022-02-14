@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/manager/local_notification_manager.dart';
-import 'package:onedosehealth/core/utils/tz_helper.dart';
 
 import '../../../core/core.dart';
+import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
 class Hba1cReminderListVm extends ChangeNotifier {

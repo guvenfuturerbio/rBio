@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';

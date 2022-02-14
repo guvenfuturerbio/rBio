@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/repository/doctor_repository.dart';
-import 'package:onedosehealth/features/doctor/notifiers/patient_notifiers.dart';
-import 'package:onedosehealth/model/doctor/doctor.dart';
-import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
+
+import '../../../../core/core.dart';
+import '../../../../model/doctor/doctor.dart';
+import '../../../../model/treatment_model/treatment_model.dart';
+import '../../notifiers/patient_notifiers.dart';
 
 class PatientTreatmentEditVm extends ChangeNotifier {
   TreatmentModel selectedModel;

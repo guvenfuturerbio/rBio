@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:onedosehealth/core/manager/local_notification_manager.dart';
 
 import '../../../core/core.dart';
 import '../mediminder.dart';

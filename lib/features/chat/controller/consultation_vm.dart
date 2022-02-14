@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../core/core.dart';
-import '../../../core/notifiers/notification_badge_notifier.dart';
 import '../model/chat_person.dart';
 import '../model/get_chat_contacts_response.dart';
 

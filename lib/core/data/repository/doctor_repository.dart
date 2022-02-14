@@ -1,6 +1,5 @@
 import '../../../model/model.dart';
 import '../../core.dart';
-import '../../domain/blood_pressure_model.dart';
 
 class DoctorRepository {
   final DoctorApiService apiService;

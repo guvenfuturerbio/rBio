@@ -8,12 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import '../features/mediminder/managers/reminder_notifications_manager.dart';
 import '../model/treatment_model/treatment_model.dart';
 import 'core.dart';
-import 'data/service/chronic_tracking_service.dart';
-import 'data/service/symptom_api_service.dart';
-import 'domain/blood_pressure_model.dart';
-import 'manager/local_notification_manager.dart';
 import 'manager/firebase_messaging_manager.dart';
-import 'notifiers/notification_badge_notifier.dart';
 
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;

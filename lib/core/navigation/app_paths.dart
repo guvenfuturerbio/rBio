@@ -289,7 +289,7 @@ class VRouterRoutes {
         if (!(getIt<UserNotifier>().isCronic ||
             getIt<UserNotifier>().isDoctor)) {
           vRedirector.stopRedirection();
-          Atom.show(NotChronicWarning());
+          Atom.show(const NotChronicWarning());
         } else {
           FlutterAppBadger.removeBadge();
         }
@@ -346,7 +346,7 @@ class VRouterRoutes {
       beforeEnter: (vRedirector) async {
         if (!getIt<UserNotifier>().isCronic) {
           vRedirector.stopRedirection();
-          Atom.show(NotChronicWarning());
+          Atom.show(const NotChronicWarning());
         }
       },
       stackedRoutes: [
@@ -375,7 +375,7 @@ class VRouterRoutes {
       beforeEnter: (vRedirector) async {
         if (!getIt<UserNotifier>().isCronic) {
           vRedirector.stopRedirection();
-          Atom.show(NotChronicWarning());
+          Atom.show(const NotChronicWarning());
         }
       },
       stackedRoutes: [
@@ -390,7 +390,7 @@ class VRouterRoutes {
       beforeEnter: (vRedirector) async {
         if (!getIt<UserNotifier>().isCronic) {
           vRedirector.stopRedirection();
-          Atom.show(NotChronicWarning());
+          Atom.show(const NotChronicWarning());
         }
       },
       stackedRoutes: [
@@ -518,11 +518,13 @@ class VRouterRoutes {
         //
       ],
     ),
+
+    //
     VGuard(
         beforeEnter: (vRedirector) async {
           if (!getIt<UserNotifier>().isCronic) {
             vRedirector.stopRedirection();
-            Atom.show(NotChronicWarning());
+            Atom.show(const NotChronicWarning());
           }
         },
         stackedRoutes: [

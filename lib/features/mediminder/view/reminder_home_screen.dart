@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../core/core.dart';
-import '../../../core/enums/remindable.dart';
 
 class ReminderHomeScreen extends StatelessWidget {
   const ReminderHomeScreen({Key? key}) : super(key: key);

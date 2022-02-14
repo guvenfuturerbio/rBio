@@ -6,9 +6,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../core/core.dart';
-import '../../../core/enums/medicine_period.dart';
-import '../../../core/enums/remindable.dart';
-import '../../../core/enums/usage_type.dart';
 import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 

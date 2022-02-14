@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
 import '../../../chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
 import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
 import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../widget/charts/line_charts.dart';
 
 class BloodPressurePatientDetailVm extends RbioVm

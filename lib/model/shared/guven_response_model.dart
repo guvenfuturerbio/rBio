@@ -1,4 +1,3 @@
-import '../../core/exception/model_cast_exception.dart';
 import '../../core/core.dart';
 
 class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {

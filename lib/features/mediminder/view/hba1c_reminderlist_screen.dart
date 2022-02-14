@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/utils/tz_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../../core/enums/remindable.dart';
+import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
 class Hba1cReminderListScreen extends StatelessWidget {

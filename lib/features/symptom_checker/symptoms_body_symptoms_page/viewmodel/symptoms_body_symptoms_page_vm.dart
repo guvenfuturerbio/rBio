@@ -18,14 +18,15 @@ class BodySymptomSelectionVm extends ChangeNotifier {
 
   late int removeIndexHolder;
 
-  BodySymptomSelectionVm(
-      {BuildContext? context,
-      required int genderId,
-      List<GetBodySymptomsResponse>? symptomList,
-      bool? accessedFromSubLocationPage,
-      required String year_of_birth,
-      bool? isFromVoice,
-      BodySublocationsVm? myPv}) {
+  BodySymptomSelectionVm({
+    BuildContext? context,
+    required int genderId,
+    List<GetBodySymptomsResponse>? symptomList,
+    bool? accessedFromSubLocationPage,
+    required String year_of_birth,
+    bool? isFromVoice,
+    BodySublocationsVm? myPv,
+  }) {
     mContext = context!;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       myPv = myPv;

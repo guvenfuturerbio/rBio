@@ -43,19 +43,19 @@ class RadiologyResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> RadiologyResult = <String, dynamic>{};
-    RadiologyResult['approvedAt'] = approvedAt;
-    RadiologyResult['group'] = group;
-    RadiologyResult['id'] = id;
-    RadiologyResult['name'] = name;
-    RadiologyResult['patient'] = patient;
-    RadiologyResult['patientId'] = patientId;
-    RadiologyResult['report'] = report;
-    RadiologyResult['reportLink'] = reportLink;
-    RadiologyResult['reportState'] = reportState;
-    RadiologyResult['requestedAt'] = requestedAt;
-    RadiologyResult['takenAt'] = takenAt;
-    RadiologyResult['visitId'] = visitId;
-    return RadiologyResult;
+    final Map<String, dynamic> radiologyResult = <String, dynamic>{};
+    radiologyResult['approvedAt'] = approvedAt;
+    radiologyResult['group'] = group;
+    radiologyResult['id'] = id;
+    radiologyResult['name'] = name;
+    radiologyResult['patient'] = patient;
+    radiologyResult['patientId'] = patientId;
+    radiologyResult['report'] = report;
+    radiologyResult['reportLink'] = reportLink;
+    radiologyResult['reportState'] = reportState;
+    radiologyResult['requestedAt'] = requestedAt;
+    radiologyResult['takenAt'] = takenAt;
+    radiologyResult['visitId'] = visitId;
+    return radiologyResult;
   }
 }

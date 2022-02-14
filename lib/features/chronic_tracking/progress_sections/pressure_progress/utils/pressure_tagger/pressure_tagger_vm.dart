@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../../../core/domain/blood_pressure_model.dart';
 import '../../view_model/pressure_measurement_view_model.dart';
 
 class PressureTaggerVm extends ChangeNotifier {

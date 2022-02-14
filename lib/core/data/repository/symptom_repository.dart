@@ -1,6 +1,5 @@
 import '../../../model/model.dart';
 import '../../core.dart';
-import '../service/symptom_api_service.dart';
 
 class SymptomRepository {
   final SymptomApiService service;

@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -83,12 +82,19 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                           maxLines: 2,
                                         ),
                                       ),
+
+                                      //
                                       Row(
                                         children: [
-                                          QuantityDropdownWidget(),
+                                          //
+                                          const QuantityDropdownWidget(),
+
+                                          //
                                           const SizedBox(
                                             width: 8,
                                           ),
+
+                                          //
                                           Utils.instance.button(
                                               text: "Delete",
                                               width: 30,

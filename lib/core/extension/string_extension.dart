@@ -1,7 +1,6 @@
 extension TurkishStringExtension on String {
   String get xTurkishCharacterToEnglish {
-    return this
-        .replaceAll("ı", "i")
+    return replaceAll("ı", "i")
         .replaceAll("ğ", "g")
         .replaceAll("İ", "I")
         .replaceAll("Ğ", "G")

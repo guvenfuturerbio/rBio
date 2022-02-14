@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
 import '../model/patient_list_model.dart';
 
