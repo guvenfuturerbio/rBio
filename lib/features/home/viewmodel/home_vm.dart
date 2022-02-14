@@ -134,7 +134,7 @@ class HomeVm extends ChangeNotifier {
           },
         ),
         DrawerModel(
-          title: LocaleProvider.current.appointments,
+          title: LocaleProvider.current.my_appointments,
           onTap: () {
             Atom.to(PagePaths.appointment);
           },
@@ -276,7 +276,8 @@ class HomeVm extends ChangeNotifier {
       Widget row = widgetsInUse.removeAt(oldIndex);
       widgetsInUse.insert(newIndex, row);
       List<String?> setList = widgetsInUse.map((Widget element) {
-        final _widget = ((element.key as ValueKey).value as String).xHomeWidgets;
+        final _widget =
+            ((element.key as ValueKey).value as String).xHomeWidgets;
         if (_widget != null) {
           return _widget.xRawValue;
         }

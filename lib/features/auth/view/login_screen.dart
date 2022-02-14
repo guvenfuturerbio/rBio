@@ -75,8 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  RbioAppBarLogin _buildAppBar() {
-    return RbioAppBarLogin(
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
       leading: const SizedBox(),
     );
   }

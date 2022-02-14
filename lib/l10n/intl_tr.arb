@@ -728,7 +728,7 @@
   "strip_count_low": "Strip sayısı az",
   "you_have_strip": "<stripCount> stripiniz kaldı",
   "strpCnt": "<stripCount>",
-  "sign_in_keys": "E-Mail / T.C. no / Passport no",
+  "sign_in_keys": "E-Mail / T.C. no / Pasaport no",
   "login": "Giriş",
   "login_page_text": "Sağlık sektörünün geleceği!",
   "sign_up_text": "Seni daha iyi tanıyalım!",
@@ -776,5 +776,6 @@
   "how_often": "Ne sıklıkla",
   "alert": "Alarm",
   "how_many_times_a_day": "Günde kaç kere?",
-  "days": "Günler"
+  "days": "Günler",
+  "appointment_datepicker_warning": "Gün seçimi yapmadığınız için tarihte değişiklik olmadı."
 }

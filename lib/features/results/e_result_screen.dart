@@ -46,11 +46,15 @@ class EResultScreen extends StatelessWidget {
           child: GuvenDateRange(
             startCurrentDate: vm.startDate,
             onStartDateChange: (date) {
-              vm.setStartDate(date);
+              if (!vm.startDate.xIsSameDate(date)) {
+                vm.setStartDate(date);
+              }
             },
             endCurrentDate: vm.endDate,
             onEndDateChange: (date) {
-              vm.setEndDate(date);
+              if (!vm.endDate.xIsSameDate(date)) {
+                vm.setEndDate(date);
+              }
             },
           ),
         ),

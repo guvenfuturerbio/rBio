@@ -96,7 +96,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         return KeyboardDismissOnTap(
           child: RbioScaffold(
             resizeToAvoidBottomInset: true,
-            appbar: RbioAppBarLogin(),
+            appbar: RbioAppBar(),
             body: _buildBody(vm),
           ),
         );

@@ -7,18 +7,20 @@ import '../../../../model/home/take_appointment/doctor_cv_response.dart';
 class DoctorCvScreenVm extends ChangeNotifier {
   late DoctorCvResponse _doctorCvResponse;
   late BuildContext mContext;
-  late LoadingProgress _progress;
   late String _imageUrl;
 
-  DoctorCvScreenVm(
-      {required BuildContext context, required String doctorNameNotTitle}) {
+  LoadingProgress _progress = LoadingProgress.loading;
+  LoadingProgress get progress => _progress;
+
+  DoctorCvScreenVm({
+    required BuildContext context,
+    required String doctorNameNotTitle,
+  }) {
     mContext = context;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchDoctorCv(doctorNameNotTitle);
     });
   }
-
-  LoadingProgress get progress => _progress;
 
   Future<void> fetchDoctorCv(String doctorName) async {
     _progress = LoadingProgress.loading;

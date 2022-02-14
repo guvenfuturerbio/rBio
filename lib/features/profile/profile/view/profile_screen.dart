@@ -161,8 +161,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       () {
                         Atom.to(PagePaths.suggestResult);
                       },
-                      isDivider: false,
                     ),
+
+                    //
                     _buildListItem(
                       LocaleProvider.current.terms_and_privacy,
                       () {

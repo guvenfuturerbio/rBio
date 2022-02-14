@@ -393,6 +393,10 @@ class CreateAppointmentVm extends ChangeNotifier {
       filterResourceResponse =
           await getIt<Repository>().filterResources(filterResourcesRequest);
 
+      filterResourceResponse!.sort((a, b) {
+        return (a.title ?? '').compareTo((b.title ?? ''));
+      });
+
       filterResourceResponse!.insert(
         0,
         FilterResourcesResponse(

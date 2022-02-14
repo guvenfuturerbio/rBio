@@ -10,7 +10,7 @@ Future<DateTime?> showGuvenDatePicker(
   DateTime initialDate,
   String helpText,
 ) async {
-  return await showDatePicker(
+  final result = await showDatePicker(
     context: context,
     initialDate: initialDate,
     firstDate: firstDate,
@@ -32,6 +32,23 @@ Future<DateTime?> showGuvenDatePicker(
       );
     },
   );
+
+  if (result != null) {
+    if (initialDate.xIsSameDate(result)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            LocaleProvider.current.appointment_datepicker_warning,
+            style: context.xHeadline3.copyWith(
+              color: getIt<ITheme>().textColor,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  return result;
 }
 
 void showCupertinoGuvenDatePicker({

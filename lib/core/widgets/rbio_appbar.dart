@@ -67,16 +67,12 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                       opacity: 0,
                       child: AbsorbPointer(
                         absorbing: true,
-                        child: InkWell(
-                          child: Container(
-                            color: Colors.transparent,
-                            padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
-                            child: SvgPicture.asset(
-                              R.image.back,
-                              width: R.sizes.iconSize,
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 14, 8),
+                          child: SvgPicture.asset(
+                            R.image.back,
+                            width: R.sizes.iconSize,
                           ),
-                          onTap: () {},
                         ),
                       ),
                     ),
@@ -113,54 +109,4 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
       ),
     );
   }
-}
-
-class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
-  final List<Widget>? actions;
-  final Widget? leading;
-
-  RbioAppBarLogin({
-    Key? key,
-    this.actions,
-    this.leading,
-  }) : super(
-          key: key,
-          preferredSize: const Size.fromHeight(64),
-          child: AppBar(
-            backgroundColor: getIt<ITheme>().mainColor,
-            toolbarHeight: 64,
-            centerTitle: false,
-            elevation: 0,
-            leading: leading ??
-                Align(
-                  alignment: Alignment.center,
-                  child: InkWell(
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
-                      child: SvgPicture.asset(
-                        R.image.back,
-                        width: R.sizes.iconSize,
-                      ),
-                    ),
-                    onTap: () {
-                      Atom.historyBack();
-                    },
-                  ),
-                ),
-            actions: actions ??
-                [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(
-                      R.image.oneDoseHealth,
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                ],
-          ),
-        );
 }

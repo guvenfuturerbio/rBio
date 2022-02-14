@@ -55,7 +55,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
           return KeyboardDismissOnTap(
             child: RbioScaffold(
               resizeToAvoidBottomInset: true,
-              appbar: RbioAppBarLogin(),
+              appbar: RbioAppBar(),
               body: _buildBody(context, value),
             ),
           );

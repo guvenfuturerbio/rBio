@@ -51,7 +51,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
             ) {
               return RbioScaffold(
                 resizeToAvoidBottomInset: true,
-                appbar: RbioAppBarLogin(),
+                appbar: RbioAppBar(),
                 body: _buildBody(context, vm),
               );
             },
