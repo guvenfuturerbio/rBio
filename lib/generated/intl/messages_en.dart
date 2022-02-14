@@ -657,7 +657,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "show_report" : MessageLookupByLibrary.simpleMessage("Show Report"),
     "show_result" : MessageLookupByLibrary.simpleMessage("Show Result"),
     "sign_in" : MessageLookupByLibrary.simpleMessage("SIGN IN"),
-    "sign_in_keys" : MessageLookupByLibrary.simpleMessage("E-Mail / T.C. no / Passport no"),
+    "sign_in_keys" : MessageLookupByLibrary.simpleMessage("T.C. no / Passport no"),
     "sign_up" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "sign_up_text" : MessageLookupByLibrary.simpleMessage("Let\'s know you better!"),
     "sign_with_apple" : MessageLookupByLibrary.simpleMessage("Sign in with Apple"),

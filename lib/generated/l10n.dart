@@ -14,22 +14,23 @@ import 'intl/messages_all.dart';
 
 class LocaleProvider {
   LocaleProvider();
-  
+
   static late LocaleProvider current;
-  
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<LocaleProvider> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       LocaleProvider.current = LocaleProvider();
-      
+
       return LocaleProvider.current;
     });
-  } 
+  }
 
   static LocaleProvider of(BuildContext context) {
     return Localizations.of<LocaleProvider>(context, LocaleProvider)!;
@@ -7355,10 +7356,10 @@ class LocaleProvider {
     );
   }
 
-  /// `E-Mail / T.C. no / Passport no`
+  /// `T.C. no / Passport no`
   String get sign_in_keys {
     return Intl.message(
-      'E-Mail / T.C. no / Passport no',
+      'T.C. no / Passport no',
       name: 'sign_in_keys',
       desc: '',
       args: [],

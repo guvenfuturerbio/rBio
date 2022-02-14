@@ -653,7 +653,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "show_report" : MessageLookupByLibrary.simpleMessage("RAPOR GÖRÜNTÜLE"),
     "show_result" : MessageLookupByLibrary.simpleMessage("SONUÇ GÖRÜNTÜLE"),
     "sign_in" : MessageLookupByLibrary.simpleMessage("GİRİŞ YAP"),
-    "sign_in_keys" : MessageLookupByLibrary.simpleMessage("E-Mail / T.C. no / Pasaport no"),
+    "sign_in_keys" : MessageLookupByLibrary.simpleMessage("T.C. no / Pasaport no"),
     "sign_up" : MessageLookupByLibrary.simpleMessage("Kayıt ol"),
     "sign_up_text" : MessageLookupByLibrary.simpleMessage("Seni daha iyi tanıyalım!"),
     "sign_with_apple" : MessageLookupByLibrary.simpleMessage("Apple ile Giriş Yap"),

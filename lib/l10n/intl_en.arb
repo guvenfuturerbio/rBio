@@ -731,7 +731,7 @@
   "strip_count_low": "Strip count is low",
   "you_have_strip": "You have <stripCount> strips left",
   "strpCnt": "<stripCount>",
-  "sign_in_keys": "E-Mail / T.C. no / Passport no",
+  "sign_in_keys": "T.C. no / Passport no",
   "login": "Login",
   "login_page_text": "The future of healthcare!",
   "sign_up_text": "Let's know you better!",

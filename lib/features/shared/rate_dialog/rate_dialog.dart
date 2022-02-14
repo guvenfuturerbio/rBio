@@ -26,17 +26,20 @@ class _RateDialogState extends State<RateDialog> {
       ),
       content: ChangeNotifierProvider(
         create: (context) => RateDialogVm(
-            context: context, availabilityId: widget.availabilityId),
+          context: context,
+          availabilityId: widget.availabilityId,
+        ),
         child: Consumer<RateDialogVm>(
           builder: (context, value, child) {
             textEditingController.text =
                 value.getAvailabilityRateResponse?.suggestion ?? "";
             textEditingController.selection = TextSelection.collapsed(
-                offset:
-                    value.getAvailabilityRateResponse!.suggestion?.length ?? 0);
+              offset:
+                  value.getAvailabilityRateResponse?.suggestion?.length ?? 0,
+            );
 
             return RbioLoadingOverlay(
-              isLoading: value.showLoadingOverLay ?? true,
+              isLoading: value.showLoadingOverLay ?? false,
               progressIndicator: const RbioLoading(),
               opacity: 0,
               child: SingleChildScrollView(
