@@ -3,12 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'core/core.dart';
+import 'core/manager/firebase_messaging_manager.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
@@ -21,9 +20,9 @@ Future<void> main() async {
   final appConfig = DefaultConfig();
   await SecretUtils.instance.setup(Environment.prod);
   await Firebase.initializeApp();
-  FirebaseMessagingManager.mainInit();
   await setupLocator(appConfig);
   await getIt<LocalNotificationManager>().init();
+  await getIt<FirebaseMessagingManager>().init();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(
@@ -87,14 +86,19 @@ class _MyAppState extends State<MyApp> {
             create: (context) => ThemeNotifier(),
           ),
           ChangeNotifierProvider<UserNotifier>(
-              create: (context) => getIt<UserNotifier>()),
+            create: (context) => getIt<UserNotifier>(),
+          ),
           ChangeNotifierProvider<ScaleProgressPageViewModel>(
             create: (ctx) => ScaleProgressPageViewModel(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
-              value: BgProgressPageViewModel(context: context)),
+            value: BgProgressPageViewModel(context: context),
+          ),
           ChangeNotifierProvider<BpProgressPageVm>.value(
-              value: BpProgressPageVm()),
+            value: BpProgressPageVm(),
+          ),
+
+          //
           if (!Atom.isWeb) ...[
             ChangeNotifierProvider<BleScannerOps>.value(
               value: getIt<BleScannerOps>(),

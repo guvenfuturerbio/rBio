@@ -14,6 +14,8 @@ class DeepLinkHandler {
 
   DeepLinkHandler._internal();
 
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
   String deepLinkPath = "";
   Future<void> initDynamicLinks(BuildContext context) async {
     this.context = context;
@@ -22,15 +24,12 @@ class DeepLinkHandler {
         await FirebaseDynamicLinks.instance.getInitialLink();
     deepLink = data?.link;
 
-    FirebaseDynamicLinks.instance.onLink(
-      onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-        deepLink = dynamicLink?.link;
-        checkDeepLink(deepLink);
-      },
-      onError: (OnLinkErrorException e) async {
-        LoggerUtils.instance.w(e.message);
-      },
-    );
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      deepLink = dynamicLinkData.link;
+      checkDeepLink(deepLink);
+    }).onError((error) {
+      LoggerUtils.instance.w(error.message);
+    });
 
     LoggerUtils.instance.d("Deep Link : " + deepLink.toString());
     return checkDeepLink(deepLink);

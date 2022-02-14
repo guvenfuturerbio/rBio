@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/manager/firebase_messaging_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -39,7 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
         id: getIt<UserNotifier>().firebaseID,
         name: Utils.instance.getCurrentUserNameAndSurname,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
-        firebaseToken: FirebaseMessagingManager.instance.token,
+        firebaseToken: getIt<FirebaseMessagingManager>().getToken,
       );
   final topPadding = 64 + Atom.safeTop;
 

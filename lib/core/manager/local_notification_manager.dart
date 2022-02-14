@@ -43,6 +43,16 @@ abstract class LocalNotificationManager {
     String title,
     String body, {
     String? payload,
+    NotificationDetails? notificationDetails,
+  });
+
+  /// Bildirim hemen gösterilir.
+  Future<void> showWithId(
+    int id,
+    String title,
+    String body, {
+    String? payload,
+    NotificationDetails? notificationDetails,
   });
 
   /// Örnek1 : Bildirimi yerel saat dilimine (local time zone) göre 5 saniye içinde görünecek şekilde planlayın
@@ -282,16 +292,12 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
     String title,
     String body, {
     String? payload,
+    NotificationDetails? notificationDetails,
   }) async {
-    final sharedList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.medicines);
     var notificationIds = <int>[];
-    if (sharedList != null) {
-      for (String jsonMedicine in sharedList) {
-        Map<String, dynamic> map = jsonDecode(jsonMedicine);
-        notificationIds
-            .add(MedicineForScheduledModel.fromJson(map).notificationId ?? 0);
-      }
+    final pendingNotifications = await pendingNotificationRequests();
+    for (var item in pendingNotifications) {
+      notificationIds.add(item.id);
     }
 
     var id = 0;
@@ -303,7 +309,7 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
     }
 
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      id.toString(),
+      "android_channel",
       title,
       channelDescription: body,
       importance: Importance.max,
@@ -326,6 +332,23 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
     );
   }
   // #endregion
+
+  @override
+  Future<void> showWithId(
+    int id,
+    String title,
+    String body, {
+    String? payload,
+    NotificationDetails? notificationDetails,
+  }) async {
+    await flutterLocalNotificationsPlugin.show(
+      id,
+      title,
+      body,
+      notificationDetails,
+      payload: payload,
+    );
+  }
 
   // #region zonedSchedule
   @override

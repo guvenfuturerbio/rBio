@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/manager/firebase_messaging_manager.dart';
 
 import '../../model/model.dart';
 import '../core.dart';
@@ -176,13 +177,13 @@ class UserNotifier extends ChangeNotifier {
   Future<void> logout() async {
     try {
       Atom.show(RbioLoading.progressIndicator());
-      await FirebaseMessagingManager.instance.setTokenToServer("");
+      await getIt<FirebaseMessagingManager>().saveTokenServer("");
       await getIt<UserNotifier>().widgetsSave();
       await getIt<ISharedPreferencesManager>().reload();
       await getIt<Repository>().localCacheService.removeAll();
       getIt<UserNotifier>().clear();
       await getIt<LocalNotificationManager>().cancelAllNotifications();
-      FirebaseMessagingManager.handleLogout();
+      await getIt<FirebaseMessagingManager>().userLogout();
       getIt<GlucoseStorageImpl>().clear();
       getIt<ScaleStorageImpl>().clear();
       getIt<BloodPressureStorageImpl>().clear();

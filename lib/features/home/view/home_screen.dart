@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/core/manager/firebase_messaging_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!Atom.isWeb) {
       Utils.instance.forcePortraitOrientation();
       DeepLinkHandler().initDynamicLinks(context);
-      FirebaseMessagingManager.instance;
+      getIt<FirebaseMessagingManager>().userInit();
     }
     super.initState();
   }

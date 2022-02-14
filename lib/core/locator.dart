@@ -12,6 +12,7 @@ import 'data/service/chronic_tracking_service.dart';
 import 'data/service/symptom_api_service.dart';
 import 'domain/blood_pressure_model.dart';
 import 'manager/local_notification_manager.dart';
+import 'manager/firebase_messaging_manager.dart';
 import 'notifiers/notification_badge_notifier.dart';
 
 // This is our global ServiceLocator
@@ -110,6 +111,14 @@ Future<void> setupLocator(AppConfig appConfig) async {
         () => BleScannerOps(getIt<FlutterReactiveBle>()));
     getIt.registerLazySingleton<BleDeviceManager>(() => BleDeviceManager());
   }
+
+  getIt.registerSingleton<FirebaseMessagingManager>(
+    FirebaseMessagingManagerImpl(
+      localNotificationManager: getIt<LocalNotificationManager>(),
+      notificationBadgeNotifier: getIt<NotificationBadgeNotifier>(),
+      repository: getIt<Repository>(),
+    ),
+  );
 }
 
 class GuvenSettings {

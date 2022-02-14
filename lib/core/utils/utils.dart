@@ -774,7 +774,7 @@ class TabToNextFieldTextInputFormatter extends TextInputFormatter {
 }
 
 Future<void> showCompulsoryUpdateDialog({
-  required Function onPressed,
+  required VoidCallback onPressed,
   required BuildContext context,
   required String message,
 }) async {
@@ -790,7 +790,7 @@ Future<void> showCompulsoryUpdateDialog({
         title: GuvenAlert.buildTitle(title),
         content: GuvenAlert.buildDescription(message),
         actions: <Widget>[
-          GuvenAlert.buildMaterialAction(btnLabel, onPressed()),
+          GuvenAlert.buildMaterialAction(btnLabel, onPressed),
         ],
       );
     },
