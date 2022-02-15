@@ -9,7 +9,7 @@ import '../../../../../model/treatment_model/treatment_model.dart';
 part '../model/treatment_process_model.dart';
 
 class TreatmentProcessScreen extends StatefulWidget {
-  TreatmentProcessScreen({Key key}) : super(key: key);
+  const TreatmentProcessScreen({Key? key}) : super(key: key);
 
   @override
   _TreatmentProcessScreenState createState() => _TreatmentProcessScreenState();
@@ -36,13 +36,14 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
     return ListView.builder(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
-      itemCount: getIt<ProfileStorageImpl>().getFirst().treatmentList.length,
+      physics: const BouncingScrollPhysics(),
+      itemCount: getIt<ProfileStorageImpl>().getFirst().treatmentList!.length,
       itemBuilder: (BuildContext context, int index) {
-        var _item = getIt<ProfileStorageImpl>().getFirst().treatmentList[index];
+        var _item =
+            getIt<ProfileStorageImpl>().getFirst().treatmentList![index];
         TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
             id: _item.id,
-            title: _item.createDate.xFormatTime9(),
+            title: _item.createDate!.xFormatTime9(),
             description: _item.treatment,
             dateTime: _item.createDate);
         return _buildCard(_tempItem, newModel: index == 0 ? true : false);
@@ -53,7 +54,7 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
   Widget _buildCard(TreatmentProcessItemModel item, {bool newModel = false}) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.TREATMENT_EDIT_PROGRESS, queryParameters: {
+        Atom.to(PagePaths.treatmentEditProgress, queryParameters: {
           'treatment_model': jsonEncode(item.toJson()),
           'newModel': newModel.toString()
         });
@@ -116,11 +117,11 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
 
               //
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 10,
                 ),
                 child: SvgPicture.asset(
-                  R.image.arrow_right_icon,
+                  R.image.arrowRightIcon,
                   height: 15,
                 ),
               ),

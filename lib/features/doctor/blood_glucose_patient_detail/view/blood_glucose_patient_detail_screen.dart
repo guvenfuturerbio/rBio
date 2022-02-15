@@ -1,10 +1,7 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:countup/countup.dart';
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,7 +15,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
 import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
 import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../../chronic_tracking/utils/glucose_margins_filter.dart';
@@ -29,8 +25,6 @@ part '../viewmodel/blood_glucose_patient_detail_vm.dart';
 part '../viewmodel/blood_glucose_patient_picker_vm.dart';
 part '../widget/chart_filter.dart';
 part '../widget/charts/line_chart.dart';
-part '../widget/charts/sample_model.dart';
-part '../widget/charts/sample_view.dart';
 part '../widget/charts/scatter_chart.dart';
 part '../widget/custom_bar_pie.dart';
 part '../widget/graph_header_section.dart';
@@ -42,10 +36,7 @@ part '../widget/tagger_popup.dart';
 part '../widget/user_detail_card.dart';
 
 class BloodGlucosePatientDetailScreen extends StatefulWidget {
-  int patientId;
-  String patientName;
-
-  BloodGlucosePatientDetailScreen({Key key}) : super(key: key);
+  const BloodGlucosePatientDetailScreen({Key? key}) : super(key: key);
 
   @override
   _BloodGlucosePatientDetailScreenState createState() =>
@@ -55,10 +46,12 @@ class BloodGlucosePatientDetailScreen extends StatefulWidget {
 class _BloodGlucosePatientDetailScreenState
     extends State<BloodGlucosePatientDetailScreen>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> sizeAnimation;
+  late AnimationController animationController;
+  late Animation<double> sizeAnimation;
 
   final _dropdownBannerKey = GlobalKey<NavigatorState>();
+  late String patientName;
+  late int patientId;
 
   @override
   void initState() {
@@ -87,25 +80,25 @@ class _BloodGlucosePatientDetailScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      widget.patientName = Atom.queryParameters['patientName'];
-      widget.patientId = int.parse(Atom.queryParameters['patientId']);
+      patientName = Atom.queryParameters['patientName']!;
+      patientId = int.parse(Atom.queryParameters['patientId']!);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
     MediaQuery.of(context).orientation == Orientation.landscape
         ? SystemChrome.setEnabledSystemUIOverlays([])
         : SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return ChangeNotifierProvider<BloodGlucosePatientDetailVm>(
-      create: (context) => BloodGlucosePatientDetailVm(
-          context: context, patientId: widget.patientId),
+      create: (context) =>
+          BloodGlucosePatientDetailVm(context: context, patientId: patientId),
       child: Consumer<BloodGlucosePatientDetailVm>(
         builder: (
           BuildContext context,
           BloodGlucosePatientDetailVm vm,
-          Widget child,
+          Widget? child,
         ) {
-          return DropdownBanner(
+          return AtomDropdownBanner(
             navigatorKey: _dropdownBannerKey,
             child: !vm.isDataLoading &&
                     MediaQuery.of(context).orientation == Orientation.landscape
@@ -116,13 +109,16 @@ class _BloodGlucosePatientDetailScreenState
                 : RbioScaffold(
                     appbar: _buildAppBar(),
                     body: _buildBody(vm),
-                    floatingActionButton: FloatingActionButton(
+
+                    // ? Doktorda floating action button olmayacak. Bu yüzden kapatıldı.
+                    /*floatingActionButton: FloatingActionButton(
+                      backgroundColor: getIt<ITheme>().mainColor,
                       onPressed: () {
                         LoggerUtils.instance.i(vm.bgMeasurements.last.date);
                         LoggerUtils.instance.i(vm.bgMeasurements.first.date);
                       },
-                      child: Icon(Icons.add),
-                    ),
+                      child: const Icon(Icons.add),
+                    ),*/
                   ),
           );
         },
@@ -138,11 +134,11 @@ class _BloodGlucosePatientDetailScreenState
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
         ],
@@ -151,7 +147,7 @@ class _BloodGlucosePatientDetailScreenState
   Widget _buildBody(BloodGlucosePatientDetailVm vm) => SingleChildScrollView(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -161,8 +157,8 @@ class _BloodGlucosePatientDetailScreenState
             _buildExpandedUser(),
 
             //
-            if (vm.stateProcessPatientDetail == LoadingProgress.LOADING) ...[
-              SizedBox(height: 12),
+            if (vm.stateProcessPatientDetail == LoadingProgress.loading) ...[
+              const SizedBox(height: 12),
               Shimmer.fromColors(
                 child: _UserDetailCard(
                   patientDetail: DoctorPatientDetailModel(),
@@ -170,8 +166,8 @@ class _BloodGlucosePatientDetailScreenState
                   hypoEdit: () {},
                   hyperEdit: () {},
                 ),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[100],
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
               ),
             ] else ...[
               ClipRRect(
@@ -195,7 +191,7 @@ class _BloodGlucosePatientDetailScreenState
             ],
 
             //
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
 
             //
             if (!vm.isDataLoading) ...[
@@ -206,7 +202,7 @@ class _BloodGlucosePatientDetailScreenState
                     )
                   : Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
+                          EdgeInsets.symmetric(vertical: context.height * .02),
                       child: RbioElevatedButton(
                         title: LocaleProvider.current.open_chart,
                         onTap: vm.changeChartShowStatus,
@@ -216,8 +212,8 @@ class _BloodGlucosePatientDetailScreenState
                 //
                 SizedBox(
                   height: vm.isChartShow
-                      ? context.HEIGHT * .5
-                      : context.HEIGHT * .8,
+                      ? context.height * .5
+                      : context.height * .8,
                   child: _MeasurementList(
                     bgMeasurements: vm.bgMeasurements,
                     scrollController: vm.controller,
@@ -236,8 +232,8 @@ class _BloodGlucosePatientDetailScreenState
                   hypoEdit: () {},
                   hyperEdit: () {},
                 ),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[100],
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
               ),
             ],
           ],
@@ -245,7 +241,7 @@ class _BloodGlucosePatientDetailScreenState
       );
 
   Widget _buildExpandedUser() {
-    return Container(
+    return SizedBox(
       height: 50,
       width: double.infinity,
       child: Row(
@@ -266,7 +262,7 @@ class _BloodGlucosePatientDetailScreenState
               },
               child: Container(
                 height: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: getIt<ITheme>().cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
@@ -282,9 +278,9 @@ class _BloodGlucosePatientDetailScreenState
                     //
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          widget.patientName ?? '',
+                          patientName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(
@@ -296,7 +292,7 @@ class _BloodGlucosePatientDetailScreenState
 
                     //
                     SvgPicture.asset(
-                      R.image.arrow_down_icon,
+                      R.image.arrowDown,
                       height: 10,
                     ),
                   ],
@@ -306,16 +302,16 @@ class _BloodGlucosePatientDetailScreenState
           ),
 
           //
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
 
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.DOCTOR_TREATMENT_PROCESS);
+              Atom.to(PagePaths.doctorTreatmentProgress);
             },
             child: Container(
               height: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,

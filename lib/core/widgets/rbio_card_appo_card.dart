@@ -10,35 +10,35 @@ class RbioCardAppoCard extends StatelessWidget {
   final String departmentName;
   final String doctorName;
   final String date;
-  final String time;
-  final VoidCallback openDetailTap;
+  final String? time;
+  final VoidCallback? openDetailTap;
   final bool isActiveHeader;
-  final Widget suffix;
-  final Widget footer;
+  final Widget? suffix;
+  final Widget? footer;
 
-  RbioCardAppoCard({
-    Key key,
-    this.type,
-    this.tenantName,
-    this.departmentName,
-    this.doctorName,
-    this.date,
+  const RbioCardAppoCard({
+    Key? key,
+    required this.type,
+    required this.tenantName,
+    required this.departmentName,
+    required this.doctorName,
+    required this.date,
     this.time,
     this.openDetailTap,
-    this.isActiveHeader,
+    required this.isActiveHeader,
     this.suffix,
     this.footer,
   }) : super(key: key);
 
   factory RbioCardAppoCard.appointment({
-    String tenantName,
-    String departmentName,
-    String doctorName,
-    String date,
-    String time,
-    bool isActiveHeader,
-    Widget suffix,
-    Widget footer,
+    required String tenantName,
+    required String departmentName,
+    required String doctorName,
+    required String date,
+    required String time,
+    required bool isActiveHeader,
+    required Widget suffix,
+    required Widget footer,
   }) {
     return RbioCardAppoCard(
       type: RbioCardAppoType.appointment,
@@ -54,11 +54,11 @@ class RbioCardAppoCard extends StatelessWidget {
   }
 
   factory RbioCardAppoCard.result({
-    String tenantName,
-    String departmentName,
-    String doctorName,
-    String date,
-    VoidCallback openDetailTap,
+    required String tenantName,
+    required String departmentName,
+    required String doctorName,
+    required String date,
+    required VoidCallback openDetailTap,
   }) {
     return RbioCardAppoCard(
       type: RbioCardAppoType.result,
@@ -74,7 +74,7 @@ class RbioCardAppoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 14),
+      margin: const EdgeInsets.only(top: 14),
       child: Column(
         children: [
           //
@@ -116,7 +116,7 @@ class RbioCardAppoCard extends StatelessWidget {
                   ),
 
                   //
-                  suffix ?? SizedBox(),
+                  suffix ?? const SizedBox(),
                 ],
               ),
             ),
@@ -126,7 +126,7 @@ class RbioCardAppoCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: getIt<ITheme>().cardBackgroundColor,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(15),
                 bottomRight: Radius.circular(15),
               ),
@@ -137,7 +137,7 @@ class RbioCardAppoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
 
                 //
                 Column(
@@ -159,7 +159,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 ),
 
                 //
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
 
                 //
                 Column(
@@ -181,7 +181,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 ),
 
                 //
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
 
                 //
                 Row(
@@ -225,7 +225,7 @@ class RbioCardAppoCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              time,
+                              time ?? '',
                               style: context.xHeadline3,
                             ),
                           ],
@@ -236,7 +236,7 @@ class RbioCardAppoCard extends StatelessWidget {
                         title: openDetailTap != null
                             ? LocaleProvider.current.show
                             : LocaleProvider.current.waiting,
-                        onTap: openDetailTap != null ? openDetailTap : null,
+                        onTap: openDetailTap,
                         padding: RbioElevatedButton.minPadding(),
                       ),
                     ],
@@ -252,9 +252,9 @@ class RbioCardAppoCard extends StatelessWidget {
 
                 //
                 if (footer != null) ...[
-                  footer,
+                  footer!,
                 ] else ...[
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                 ],

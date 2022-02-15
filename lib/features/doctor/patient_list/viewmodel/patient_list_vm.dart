@@ -1,10 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
 import '../model/patient_list_model.dart';
 
@@ -22,29 +20,21 @@ class DoctorPatientListVm extends RbioVm {
   BuildContext mContext;
   PatientType type;
 
-  PatientListModel listModel;
+  late PatientListModel listModel;
 
   DoctorPatientListVm(this.mContext, this.type) {
     fetchAll();
   }
 
-  LoadingProgress _progress;
-  LoadingProgress get progress => _progress;
-  set progress(LoadingProgress value) {
-    _progress = value;
-    notifyListeners();
-  }
-
   Future<void> fetchAll() async {
     try {
-      progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       listModel = await _getAllByType();
-      progress = LoadingProgress.DONE;
+      progress = LoadingProgress.done;
     } catch (e, stackTrace) {
       log(e.toString());
       debugPrintStack(stackTrace: stackTrace);
-      progress = LoadingProgress.ERROR;
-      Sentry.captureException(e, stackTrace: stackTrace);
+      progress = LoadingProgress.error;
       showGradientDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
@@ -56,7 +46,7 @@ class DoctorPatientListVm extends RbioVm {
   // #region _getAllByType
   Future<PatientListModel<dynamic>> _getAllByType() async {
     switch (type) {
-      case PatientType.Sugar:
+      case PatientType.sugar:
         {
           return PatientBloodGlucoseListModel(
             mContext,
@@ -69,7 +59,7 @@ class DoctorPatientListVm extends RbioVm {
           );
         }
 
-      case PatientType.BMI:
+      case PatientType.bmi:
         {
           return PatientBMIListModel(
             mContext,
@@ -82,7 +72,7 @@ class DoctorPatientListVm extends RbioVm {
           );
         }
 
-      case PatientType.Bp:
+      case PatientType.bp:
         {
           return PatientBloodPressureListModel(
             mContext,

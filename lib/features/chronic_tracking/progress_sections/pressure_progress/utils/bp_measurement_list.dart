@@ -10,14 +10,15 @@ import '../view_model/pressure_measurement_view_model.dart';
 import 'pressure_tagger/pressure_tagger.dart';
 
 class BpMeasurementList extends StatelessWidget {
-  final List<BpMeasurementViewModel> bpMeasurements;
-  final ScrollController scrollController;
-  const BpMeasurementList({Key key, this.bpMeasurements, this.scrollController})
+  final List<BpMeasurementViewModel>? bpMeasurements;
+  final ScrollController? scrollController;
+  const BpMeasurementList(
+      {Key? key, this.bpMeasurements, this.scrollController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return bpMeasurements.isEmpty
+    return bpMeasurements == null || bpMeasurements!.isEmpty
         ? Center(
             child: Text(LocaleProvider.current.no_measurement),
           )
@@ -29,7 +30,7 @@ class BpMeasurementList extends StatelessWidget {
             floatingHeader: true,
             shrinkWrap: true,
             padding: EdgeInsets.only(
-                bottom: context.HEIGHT * .28 * context.TEXTSCALE),
+                bottom: context.height * .28 * context.textScale),
             useStickyGroupSeparators: true,
             groupBy: (BpMeasurementViewModel bgMeasurementViewModel) =>
                 DateTime(
@@ -41,9 +42,9 @@ class BpMeasurementList extends StatelessWidget {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: (context.HEIGHT * .07) * context.TEXTSCALE,
+                height: (context.height * .07) * context.textScale,
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 8),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
@@ -51,14 +52,15 @@ class BpMeasurementList extends StatelessWidget {
                           color: Colors.black.withAlpha(50),
                           blurRadius: 5,
                           spreadRadius: 0,
-                          offset: Offset(5, 5))
+                          offset: const Offset(5, 5))
                     ],
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
+                      DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
+                          .format(bgMeasurementViewModel.date),
                     ),
                   ),
                 ),
@@ -79,7 +81,7 @@ class BpMeasurementList extends StatelessWidget {
 
   Widget measurementList(BpMeasurementViewModel item, BuildContext context) {
     return Slidable(
-      actionPane: SlidableDrawerActionPane(),
+      actionPane: const SlidableDrawerActionPane(),
       actionExtentRatio: 0.40,
       child: GestureDetector(
         onTap: () {
@@ -126,11 +128,11 @@ class BpMeasurementList extends StatelessWidget {
               await getIt<BloodPressureStorageImpl>().delete(item.bpModel.key);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
-                      '${LocaleProvider.current.delete_measurement_succesfull}')));
+                      LocaleProvider.current.delete_measurement_succesfull)));
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
-                    '${LocaleProvider.current.delete_measurement_un_succesfull}'),
+                    LocaleProvider.current.delete_measurement_un_succesfull),
                 backgroundColor: Colors.red,
               ));
             }
@@ -143,7 +145,7 @@ class BpMeasurementList extends StatelessWidget {
   Container _listItem(BuildContext context, BpMeasurementViewModel item) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-      height: context.HEIGHT * .08 * context.TEXTSCALE,
+      height: context.height * .08 * context.textScale,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -151,7 +153,7 @@ class BpMeasurementList extends StatelessWidget {
               color: Colors.black.withAlpha(50),
               blurRadius: 5,
               spreadRadius: 0,
-              offset: Offset(5, 5))
+              offset: const Offset(5, 5))
         ],
         borderRadius: const BorderRadius.all(Radius.circular(30.0)),
       ),
@@ -162,12 +164,12 @@ class BpMeasurementList extends StatelessWidget {
             child: _listItemChild(context, LocaleProvider.current.sys,
                 item.sys.toString(), 'mm/Hg'),
           ),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: _listItemChild(context, LocaleProvider.current.dia,
                 item.dia.toString(), 'mm/Hg'),
           ),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: _listItemChild(context, LocaleProvider.current.pulse,
                 item.pulse.toString(), 'bpm'),

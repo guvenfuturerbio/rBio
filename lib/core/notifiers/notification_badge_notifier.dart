@@ -7,7 +7,7 @@ class NotificationBadgeNotifier extends ChangeNotifier {
 
   void init() {
     final initValue = getIt<ISharedPreferencesManager>()
-            .getBool(SharedPreferencesKeys.CHAT_NOTIFICATION) ??
+            .getBool(SharedPreferencesKeys.chatNotification) ??
         false;
     changeValue(initValue);
   }
@@ -15,7 +15,7 @@ class NotificationBadgeNotifier extends ChangeNotifier {
   Future<void> changeValue(bool newValue) async {
     value = newValue;
     await getIt<ISharedPreferencesManager>()
-        .setBool(SharedPreferencesKeys.CHAT_NOTIFICATION, value);
+        .setBool(SharedPreferencesKeys.chatNotification, value);
     notifyListeners();
   }
 }

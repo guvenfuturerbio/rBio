@@ -5,7 +5,7 @@ class DrawerModel {
   final VoidCallback onTap;
 
   DrawerModel({
-    this.title,
-    this.onTap,
+    required this.title,
+    required this.onTap,
   });
 }

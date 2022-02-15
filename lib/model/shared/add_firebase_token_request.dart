@@ -1,6 +1,6 @@
 class AddFirebaseTokenRequest {
-  String firebaseId;
-  String phoneInfo;
+  String? firebaseId;
+  String? phoneInfo;
 
   AddFirebaseTokenRequest({
     this.firebaseId,

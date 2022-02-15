@@ -7,7 +7,7 @@ import '../body_parts_paint.dart';
 import '../viewmodel/symptoms_body_locations_page_vm.dart';
 
 class SymptomsBodyLocationsScreen extends StatefulWidget {
-  SymptomsBodyLocationsScreen({Key key}) : super(key: key);
+  const SymptomsBodyLocationsScreen({Key? key}) : super(key: key);
 
   @override
   _SymptomsBodyLocationsScreenState createState() =>
@@ -16,28 +16,28 @@ class SymptomsBodyLocationsScreen extends StatefulWidget {
 
 class _SymptomsBodyLocationsScreenState
     extends State<SymptomsBodyLocationsScreen> {
-  int selectedGenderId;
-  String yearOfBirth;
-  bool isFromVoice;
+  int? selectedGenderId;
+  String? yearOfBirth;
+  bool? isFromVoice;
 
-  State state;
+  State? state;
   final notifier = ValueNotifier(Offset.zero);
-  String bodyPart = '';
+  String? bodyPart = '';
 
   @override
   Widget build(BuildContext context) {
     try {
-      selectedGenderId = int.parse(Atom.queryParameters['selectedGenderId']);
+      selectedGenderId =
+          int.parse(Atom.queryParameters['selectedGenderId'] as String);
       yearOfBirth = Atom.queryParameters['yearOfBirth'];
       isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<SymptomsBodyLocationsVm>(
       create: (context) => SymptomsBodyLocationsVm(
         context: context,
-        isFromVoice: isFromVoice,
         notifierFromPage: notifier,
         selectedGenderIdFromPage: selectedGenderId,
         yearOfBirth: yearOfBirth,
@@ -46,7 +46,7 @@ class _SymptomsBodyLocationsScreenState
         builder: (
           BuildContext context,
           SymptomsBodyLocationsVm value,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: RbioAppBar(
@@ -64,10 +64,10 @@ class _SymptomsBodyLocationsScreenState
 
   Widget _buildBody(BuildContext context, SymptomsBodyLocationsVm value) {
     switch (value.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return Stack(
           children: [
             SingleChildScrollView(
@@ -80,7 +80,7 @@ class _SymptomsBodyLocationsScreenState
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 25, top: 25),
+                        margin: const EdgeInsets.only(left: 25, top: 25),
                         child: Text(
                           selectedGenderId == 0
                               ? LocaleProvider.of(context).gender_male
@@ -108,24 +108,25 @@ class _SymptomsBodyLocationsScreenState
 
                   //
                   value.selectedBodyLocation == null ||
-                          value.selectedBodyLocation.name == ''
+                          value.selectedBodyLocation!.name == ''
                       ? Container(
-                          margin: EdgeInsets.only(top: 20), child: Text(' '))
+                          margin: const EdgeInsets.only(top: 20),
+                          child: const Text(' '))
                       : Container(
-                          margin: EdgeInsets.only(top: 20),
+                          margin: const EdgeInsets.only(top: 20),
                           child: Text(
                               LocaleProvider.of(context).choice +
-                                  value.selectedBodyLocation.name,
+                                  value.selectedBodyLocation!.name!,
                               style: context.xHeadline3),
                         ),
                   Center(
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
                       height: MediaQuery.of(context).size.height / 2,
                       child: GestureDetector(
                         onTapDown: (e) {
-                          value.notifier.value = e.localPosition;
-                          print(e.localPosition);
+                          value.notifier!.value = e.localPosition;
+                          LoggerUtils.instance.i(e.localPosition);
                         },
                         child: CustomPaint(
                           painter: BodyPartsPainter(
@@ -134,12 +135,12 @@ class _SymptomsBodyLocationsScreenState
                                     ? true
                                     : false,
                             clickedPathFunc: (myValue) {
-                              //print(myValue);
-                              WidgetsBinding.instance
+                              //LoggerUtils.instance.i(myValue);
+                              WidgetsBinding.instance!
                                   .addPostFrameCallback((timeStamp) async {
                                 if (myValue != null) {
                                   await value.selectedBodyLocationFetch(
-                                      value.getLocationsName(myValue));
+                                      value.getLocationsName(myValue)!);
                                 } else {
                                   await value.selectedBodyLocationFetch(null);
                                 }
@@ -166,38 +167,29 @@ class _SymptomsBodyLocationsScreenState
               alignment: Alignment.bottomCenter,
               child: Visibility(
                 visible: value.selectedBodyLocation != null &&
-                        value.selectedBodyLocation.name != ''
+                        value.selectedBodyLocation!.name != ''
                     ? true
                     : false,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: EdgeInsets.only(
+                    bottom: Atom.safeBottom + 16,
+                  ),
                   child: Container(
                     width: MediaQuery.of(context).size.width / 2,
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(40)),
                     child: RbioElevatedButton(
                       onTap: () async {
-                        RbioConfig.of(context).bodyLocationRsp =
+                        RbioConfig.of(context)?.bodyLocationRsp =
                             value.selectedBodyLocation;
                         Atom.to(
-                          PagePaths.SYMPTOM_SUB_BODY_LOCATIONS,
+                          PagePaths.symptomSubBodyLocations,
                           queryParameters: {
                             'selectedGenderId': selectedGenderId.toString(),
-                            'yearOfBirth': yearOfBirth,
+                            'yearOfBirth': yearOfBirth!,
                             'isFromVoice': false.toString(),
                           },
-                        ); /*
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BodySubLocationsPage(
-                                  selectedBodyLocation: value.selectedBodyLocation,
-                                  selectedGenderId: widget.selectedGenderId,
-                                  yearOfBirth: widget.yearOfBirth,
-                                  isFromVoice: widget.isFromVoice,
-                                ),
-                              ),
-                            );*/
+                        );
                       },
                       title: LocaleProvider.of(context).continue_lbl,
                     ),
@@ -208,11 +200,11 @@ class _SymptomsBodyLocationsScreenState
           ],
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }

@@ -5,48 +5,49 @@ import 'bg_measurement.dart';
 class BgMeasurementViewModel {
   final BgMeasurement bgMeasurement;
 
-  BgMeasurementViewModel({this.bgMeasurement});
+  BgMeasurementViewModel(this.bgMeasurement);
 
   DateTime get date {
-    DateTime dateTime = new DateTime(
-        int.parse(bgMeasurement.date.substring(0, 4)),
-        int.parse(bgMeasurement.date.substring(5, 7)),
-        int.parse(bgMeasurement.date.substring(8, 10)),
-        int.parse(bgMeasurement.date.substring(11, 13)),
-        int.parse(bgMeasurement.date.substring(14, 16)),
-        int.parse(bgMeasurement.date.substring(17, 19)));
+    final DateTime dateTime = DateTime(
+      int.parse(bgMeasurement.date!.substring(0, 4)),
+      int.parse(bgMeasurement.date!.substring(5, 7)),
+      int.parse(bgMeasurement.date!.substring(8, 10)),
+      int.parse(bgMeasurement.date!.substring(11, 13)),
+      int.parse(bgMeasurement.date!.substring(14, 16)),
+      int.parse(bgMeasurement.date!.substring(17, 19)),
+    );
     return dateTime;
   }
 
-  bool get isDeleted {
-    return this.bgMeasurement.isDeleted;
+  bool? get isDeleted {
+    return bgMeasurement.isDeleted;
   }
 
-  int get id {
-    return this.bgMeasurement.id;
+  int? get id {
+    return bgMeasurement.id;
   }
 
-  String get imageURL {
-    return this.bgMeasurement.imageURL;
+  String? get imageURL {
+    return bgMeasurement.imageURL;
   }
 
-  String get result {
-    return this.bgMeasurement.result;
+  String? get result {
+    return bgMeasurement.result;
   }
 
-  Color get resultColor {
-    return this.bgMeasurement.color;
+  Color? get resultColor {
+    return bgMeasurement.color;
   }
 
-  int get tag {
-    return this.bgMeasurement.tag;
+  int? get tag {
+    return bgMeasurement.tag;
   }
 
-  String get note {
-    return this.bgMeasurement.notes;
+  String? get note {
+    return bgMeasurement.notes;
   }
 
-  bool get isManual {
-    return this.bgMeasurement.isManual;
+  bool? get isManual {
+    return bgMeasurement.isManual;
   }
 }

@@ -7,7 +7,7 @@ import '../../../../core/core.dart';
 import '../viewmodel/request_suggestions_vm.dart';
 
 class RequestSuggestionsScreen extends StatefulWidget {
-  const RequestSuggestionsScreen({Key key}) : super(key: key);
+  const RequestSuggestionsScreen({Key? key}) : super(key: key);
 
   @override
   _RequestSuggestionsScreenState createState() =>
@@ -15,7 +15,7 @@ class RequestSuggestionsScreen extends StatefulWidget {
 }
 
 class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
-  TextEditingController textEditingController;
+  late TextEditingController textEditingController;
 
   @override
   void initState() {
@@ -32,12 +32,12 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RequestSuggestionsScreenVm>(
-      create: (context) => RequestSuggestionsScreenVm(context: context),
+      create: (context) => RequestSuggestionsScreenVm(context),
       child: Consumer<RequestSuggestionsScreenVm>(
         builder: (
           BuildContext context,
           RequestSuggestionsScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioStackedScaffold(
@@ -66,7 +66,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
   ) {
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -93,19 +93,16 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
 
           //
           Container(
-            padding: EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(top: 8),
             height: MediaQuery.of(context).size.height * 0.40,
             child: Card(
-              elevation: 4,
-              color: getIt<ITheme>().textColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
+              elevation: 0,
               child: RbioTextFormField(
                 controller: textEditingController,
                 keyboardType: TextInputType.multiline,
+                border: RbioTextFormField.noneBorder(),
                 maxLines: null,
-                textInputAction: TextInputAction.done,
+                textInputAction: TextInputAction.newline,
                 onChanged: (text) {
                   vm.setText(text);
                 },

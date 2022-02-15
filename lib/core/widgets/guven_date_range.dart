@@ -2,30 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../core.dart';
-import 'guven_date_picker.dart';
 
-// ignore: must_be_immutable
 class GuvenDateRange extends StatelessWidget {
   DateTime startCurrentDate;
-  DateTime startMinDate;
-  DateTime startMaxDate;
+  DateTime? startMinDate;
+  DateTime? startMaxDate;
   final void Function(DateTime date) onStartDateChange;
 
   DateTime endCurrentDate;
-  DateTime endMinDate;
-  DateTime endMaxDate;
+  DateTime? endMinDate;
+  DateTime? endMaxDate;
   final void Function(DateTime date) onEndDateChange;
 
   GuvenDateRange({
-    @required this.startCurrentDate,
+    Key? key,
+    required this.startCurrentDate,
     this.startMinDate,
     this.startMaxDate,
-    @required this.onStartDateChange,
-    @required this.endCurrentDate,
+    required this.onStartDateChange,
+    required this.endCurrentDate,
     this.endMinDate,
     this.endMaxDate,
-    @required this.onEndDateChange,
-  });
+    required this.onEndDateChange,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

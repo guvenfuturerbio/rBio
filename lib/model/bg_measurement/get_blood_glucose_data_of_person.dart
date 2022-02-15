@@ -5,14 +5,19 @@ part 'get_blood_glucose_data_of_person.g.dart';
 @JsonSerializable()
 class GetBloodGlucoseDataOfPerson {
   @JsonKey(name: 'entegration_id')
-  int id;
+  int? id;
   @JsonKey(name: 'start')
-  String start;
+  String? start;
   @JsonKey(name: 'end')
-  String end;
-  int count;
+  String? end;
+  int? count;
 
-  GetBloodGlucoseDataOfPerson({this.id, this.start, this.end, this.count});
+  GetBloodGlucoseDataOfPerson({
+    this.id,
+    this.start,
+    this.end,
+    this.count,
+  });
 
   factory GetBloodGlucoseDataOfPerson.fromJson(Map<String, dynamic> json) =>
       _$GetBloodGlucoseDataOfPersonFromJson(json);

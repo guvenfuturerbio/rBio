@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 
 class NotificationInboxScreen extends StatefulWidget {
-  NotificationInboxScreen({Key key}) : super(key: key);
+  const NotificationInboxScreen({Key? key}) : super(key: key);
 
   @override
   State<NotificationInboxScreen> createState() =>
@@ -22,14 +22,14 @@ class NotificationInboxStateScreen extends State<NotificationInboxScreen> {
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
       leadingWidth: 0,
-      leading: SizedBox(),
+      leading: const SizedBox(),
     );
   }
 
-  Widget _buildBody() => Center(
-        child: Text(
-          LocaleProvider.current.notification_inbox_empty,
-          style: context.xHeadline3,
-        ),
+  Widget _buildBody() => Column(
+        children: [
+          R.sizes.stackedTopPadding(context),
+          RbioEmptyText(title: LocaleProvider.current.notification_inbox_empty),
+        ],
       );
 }

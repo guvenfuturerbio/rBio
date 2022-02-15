@@ -1,6 +1,5 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -8,47 +7,46 @@ import '../../create_appointment/model/find_resource_available_days_request.dart
 import '../../create_appointment/model/resource_request.dart';
 
 class CreateAppointmentEventsVm extends ChangeNotifier {
-  BuildContext mContext;
-  int tenantId;
-  int resourceId;
-  int departmentId;
-  bool forOnline;
+  final BuildContext mContext;
+  final int tenantId;
+  final int resourceId;
+  final int departmentId;
+  final bool forOnline;
 
-  int patientId = getIt<UserNotifier>().getPatient().id;
+  int? patientId = getIt<UserNotifier>().getPatient().id;
 
   DateTime selectedDate = DateTime.now();
-  String filterFromDate;
-  String filterToDate;
+  late String filterFromDate;
+  late String filterToDate;
 
-  LoadingProgress slotsProgress;
-  LoadingProgress availableDatesProgress;
+  LoadingProgress? slotsProgress;
+  LoadingProgress? availableDatesProgress;
   List<ResourcesRequest> resourceRequestList = [];
-  Map<String, List<ResourcesRequest>> availableSlots;
+  late Map<String, List<ResourcesRequest>> availableSlots;
 
   List<DateTime> availableDates = [];
 
-  DateTime initDate;
+  late DateTime initDate;
 
   CreateAppointmentEventsVm({
-    @required BuildContext context,
-    @required this.tenantId,
-    @required this.departmentId,
-    @required this.resourceId,
-    @required this.forOnline,
+    required this.mContext,
+    required this.tenantId,
+    required this.departmentId,
+    required this.resourceId,
+    required this.forOnline,
   }) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       setFilterRangeDate(DateTime.now());
 
       if (!forOnline) {
         if (tenantId == 1) {
-          this.resourceRequestList.add(getAyranciResource());
+          resourceRequestList.add(getAyranciResource());
         } else if (tenantId == 7) {
-          this.resourceRequestList.add(getCayyoluResource());
+          resourceRequestList.add(getCayyoluResource());
         }
       } else {
-        this.resourceRequestList.add(getAyranciResource());
-        this.resourceRequestList.add(getCayyoluResource());
+        resourceRequestList.add(getAyranciResource());
+        resourceRequestList.add(getCayyoluResource());
       }
 
       await getAvailableDates(DateTime.now());
@@ -57,14 +55,13 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
 
   Future<void> getAvailableDates(DateTime date) async {
     initDate = date;
-    availableDatesProgress = LoadingProgress.LOADING;
-    slotsProgress = null;
+    availableDatesProgress = LoadingProgress.loading;
     notifyListeners();
 
     try {
       if (forOnline) {
-        availableDates..addAll(await getAvailableLists(date, true, 1));
-        availableDates..addAll(await getAvailableLists(date, true, 7));
+        availableDates.addAll(await getAvailableLists(date, true, 1));
+        availableDates.addAll(await getAvailableLists(date, true, 7));
       } else {
         availableDates = await getAvailableLists(date, false, tenantId);
       }
@@ -72,11 +69,10 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       initDate = availableDates.first;
 
       await setSelectedDate(initDate, true);
-      availableDatesProgress = LoadingProgress.DONE;
+      availableDatesProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      availableDatesProgress = LoadingProgress.ERROR;
+    } catch (e) {
+      availableDatesProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -95,14 +91,14 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         ),
       ),
     ))
-        .map((e) => DateTime.parse(e.day).toLocal())
+        .map((e) => DateTime.parse(e.day!).toLocal())
         .toList();
   }
 
   Future<void> setSelectedDate(DateTime date, bool fetchData) async {
-    this.selectedDate = date;
+    selectedDate = date;
     setFilterRangeDate(date);
-    for (var data in this.resourceRequestList) {
+    for (var data in resourceRequestList) {
       data.from = filterFromDate;
       data.to = filterToDate;
     }
@@ -148,11 +144,11 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       );
 
   Future<void> fetchEventsForSelected() async {
-    if (availableDatesProgress == LoadingProgress.ERROR) {
+    if (availableDatesProgress == LoadingProgress.error) {
       return;
     }
 
-    this.slotsProgress = LoadingProgress.LOADING;
+    slotsProgress = LoadingProgress.loading;
     notifyListeners();
 
     try {
@@ -178,11 +174,10 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         }
       }
 
-      this.slotsProgress = LoadingProgress.DONE;
+      slotsProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      this.slotsProgress = LoadingProgress.ERROR;
+    } catch (e) {
+      slotsProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -207,12 +202,12 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           }
 
           List<DateTime> tmp = [];
-          availableSlotsList.forEach((element) {
+          for (var element in availableSlotsList) {
             tmp.add(element);
-          });
+          }
 
-          data.events.forEach((event) {
-            availableSlotsList.forEach((element) {
+          for (var event in (data.events ?? [])) {
+            for (var element in availableSlotsList) {
               DateTime dateFrom = DateTime(
                 DateTime.parse(filterFromDate).year,
                 DateTime.parse(filterFromDate).month,
@@ -220,7 +215,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
                 int.parse(event.from.substring(0, 2)),
                 int.parse(event.from.substring(3, 5)),
                 int.parse(event.from.substring(6, 8)),
-              ).addMinutes(-data.serviceTime);
+              ).addMinutes(-(data.serviceTime ?? 0));
 
               DateTime dateTo = DateTime(
                 DateTime.parse(filterFromDate).year,
@@ -234,51 +229,50 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
               if (element.isAfter(dateFrom) && element.isBefore(dateTo)) {
                 tmp.remove(element);
               }
-            });
-          });
+            }
+          }
 
           availableSlotsList = tmp;
           List<DateTime> removedList = [];
-          availableSlotsList.forEach((item) {
-            final stopTime = item.add(Duration(minutes: data.serviceTime));
+          for (var item in availableSlotsList) {
+            final stopTime =
+                item.add(Duration(minutes: (data.serviceTime ?? 0)));
             if (!removedList.contains(item)) {
-              availableSlotsList.forEach((item2) {
+              for (var item2 in availableSlotsList) {
                 if (item2.isAfter(item) && item2.isBefore(stopTime)) {
                   removedList.add(item2);
                 }
-              });
+              }
             }
-          });
+          }
 
           availableSlotsList = availableSlotsList
               .toSet()
               .difference(removedList.toSet())
               .toList();
 
-          if (!availableSlotsList.isEmpty) {
-            availableSlotsList.forEach(
-              (element) {
-                appointments.add(
-                  ResourcesRequest(
-                    from: convertDatetime(element),
-                    to: convertDatetime(
-                      element.addMinutes(data.serviceTime),
-                    ),
-                    tenantId: data.resource.tenantId,
+          if (availableSlotsList.isNotEmpty) {
+            for (var element in availableSlotsList) {
+              appointments.add(
+                ResourcesRequest(
+                  from: convertDatetime(element),
+                  to: convertDatetime(
+                    element.addMinutes(data.serviceTime ?? 0),
                   ),
-                );
-              },
-            );
+                  tenantId: data.resource?.tenantId,
+                ),
+              );
+            }
           }
         }
       }
 
       availableSlots = appointments.groupBy(
-        (m) => m.from.substring(11, 16).substring(0, 2),
+        (m) => m.from!.substring(11, 16).substring(0, 2),
       );
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 

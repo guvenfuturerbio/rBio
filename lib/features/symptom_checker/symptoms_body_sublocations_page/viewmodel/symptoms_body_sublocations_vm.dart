@@ -4,84 +4,75 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
-enum Mode { PARTSELECTION, SYMPTOMADD, SYMPTOMSUBSTRACT }
-
 class BodySublocationsVm extends ChangeNotifier {
-  BuildContext mContext;
-  List<GetBodySublocationResponse> _bodySubLocations;
-  GetBodySublocationResponse _selectedBodySubLocation;
-  LoadingProgress _progress;
-  LoadingProgress _symptomControl;
-  List<ExpandableController> _expControllerList = [];
-  List<List<GetBodySymptomsResponse>> _allBodySymptoms = [];
-  List<GetBodySymptomsResponse> _selectedSymptoms;
-  List<GetBodySymptomsResponse> tmpSelectedSymptoms = [];
-  int _selectedGenderId;
-  String _yearOfBirth;
-  String bodyLocNames = "";
+  BuildContext? mContext;
+  List<GetBodySublocationResponse?> bodySubLocations = [];
+  GetBodySublocationResponse? selectedBodySubLocation;
+  LoadingProgress progress = LoadingProgress.loading;
+  LoadingProgress? symptomControl;
+  List<ExpandableController> expControllerList = [];
+  List<List<GetBodySymptomsResponse>?> allBodySymptoms = [];
+  List<GetBodySymptomsResponse>? selectedSymptoms = [];
+  List<GetBodySymptomsResponse>? tmpSelectedSymptoms = [];
+  int? selectedGenderId;
+  String? yearOfBirth;
+  String? bodyLocNames = "";
   List<String> bodyLocNamesList = [];
-  GetBodyLocationResponse _selectedBodyLocation;
+  late GetBodyLocationResponse selectedBodyLocation;
 
   //Add and remove symptom variables for voice command
   bool didToggle = false;
-  Mode mode = Mode.PARTSELECTION;
-  int partIndexHolder;
+  late int partIndexHolder;
   List<String> symptomNamesList = [];
   List<String> selectedPartSymptomList = [];
 
   BodySublocationsVm(
-      {BuildContext context,
-      int bodyLocationId,
-      int genderId,
-      bool isFromVoicePage,
-      String yearOfBirth,
-      GetBodyLocationResponse selectedBodyLocation}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await fetchBodySubLocations(bodyLocationId, genderId);
+      {BuildContext? context,
+      int? bodyLocationId,
+      int? genderId,
+      bool? isFromVoicePage,
+      String? yearOfBirth,
+      GetBodyLocationResponse? selectedBodyLocation}) {
+    mContext = context!;
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      await fetchBodySubLocations(bodyLocationId!, genderId!);
       //initializeRecord();
-      _selectedGenderId = genderId;
-      _yearOfBirth = yearOfBirth;
-      _selectedBodyLocation = selectedBodyLocation;
+      selectedGenderId = genderId;
+      yearOfBirth = yearOfBirth;
+      selectedBodyLocation = selectedBodyLocation;
     });
   }
 
-  GetBodySublocationResponse get selectedBodySubLocation =>
-      this._selectedBodySubLocation;
-  List<GetBodySublocationResponse> get bodySubLocations =>
-      this._bodySubLocations ?? [];
-  LoadingProgress get progress => this._progress;
-  LoadingProgress get symptomControl => this._symptomControl;
-  List<ExpandableController> get expControllerList => this._expControllerList;
-  List<List<GetBodySymptomsResponse>> get allBodySymptoms =>
-      this._allBodySymptoms;
-  List<GetBodySymptomsResponse> get selectedSymptoms =>
-      this._selectedSymptoms ?? [];
-
   expControllerCreator() {
     List<ExpandableController> tmpList = [];
-    for (int i = 0; i < this._bodySubLocations.length; i++) {
+    for (int i = 0; i < bodySubLocations.length; i++) {
       //initialExpanded true olursa ExpandablePanel kapalı geliyor.
       tmpList.add(ExpandableController(initialExpanded: true));
     }
-    this._expControllerList = tmpList;
+    expControllerList = tmpList;
+  }
+
+  disposeController() {
+    for (var item in expControllerList) {
+      item.dispose();
+    }
   }
 
   //Vücudun alt bölgelerini çeken method.
   fetchBodySubLocations(int id, int genderId) async {
-    this._progress = LoadingProgress.LOADING;
+    progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      List<GetBodySublocationResponse> bodySubLocations =
+      List<GetBodySublocationResponse> bodySubLocationsList =
           await getIt<SymptomRepository>().getBodySubLocations(id);
-      this._bodySubLocations = bodySubLocations;
-      this._progress = LoadingProgress.DONE;
+      bodySubLocations = bodySubLocationsList;
+      progress = LoadingProgress.done;
       await expControllerCreator();
       notifyListeners();
-      await fetchBodySymptoms(bodySubLocations, genderId);
+      await fetchBodySymptoms(bodySubLocationsList, genderId);
     } catch (e) {
-      print(e);
-      this._progress = LoadingProgress.ERROR;
+      LoggerUtils.instance.i(e);
+      progress = LoadingProgress.error;
       notifyListeners();
     }
   }
@@ -89,44 +80,45 @@ class BodySublocationsVm extends ChangeNotifier {
   //Vücudun semptomlarını çeken method.
   fetchBodySymptoms(
       List<GetBodySublocationResponse> subLocObjects, int genderId) async {
-    this._symptomControl = LoadingProgress.LOADING;
+    symptomControl = LoadingProgress.loading;
     notifyListeners();
     try {
-      List<List<GetBodySymptomsResponse>> tmpAllSymp = List();
+      List<List<GetBodySymptomsResponse>> tmpAllSymp = [];
       for (int i = 0; i < subLocObjects.length; i++) {
         List<GetBodySymptomsResponse> bodySymptoms =
             await getIt<SymptomRepository>()
-                .getBodySymptoms(subLocObjects[i].id, genderId);
+                .getBodySymptoms(subLocObjects[i].id!, genderId);
+        bodySymptoms = changeNamesOfSymps(bodySymptoms);
         tmpAllSymp.add(bodySymptoms);
       }
-      this._allBodySymptoms = tmpAllSymp;
-      this._symptomControl = LoadingProgress.DONE;
+      allBodySymptoms = tmpAllSymp;
+      symptomControl = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      this._symptomControl = LoadingProgress.ERROR;
+      symptomControl = LoadingProgress.error;
       notifyListeners();
-      print(e);
+      LoggerUtils.instance.i(e);
     }
   }
 
   addSemptomToList(GetBodySymptomsResponse symptom) async {
-    if (!tmpSelectedSymptoms.contains(symptom)) {
-      tmpSelectedSymptoms.add(symptom);
+    if (!(tmpSelectedSymptoms?.contains(symptom) ?? false)) {
+      tmpSelectedSymptoms?.add(symptom);
       if (symptom.hasRedFlag ?? false) {
-        showGradientDialog(mContext, LocaleProvider.current.emergency_lbl,
+        showGradientDialog(mContext!, LocaleProvider.current.emergency_lbl,
             LocaleProvider.current.emergency);
       }
     }
-    this._selectedSymptoms = tmpSelectedSymptoms;
+    selectedSymptoms = tmpSelectedSymptoms;
     notifyListeners();
   }
 
   //Seçilen semptommları listeden silen metod.
-  removeSemptomFromList(GetBodySymptomsResponse symptom) async {
-    if (tmpSelectedSymptoms.contains(symptom)) {
-      tmpSelectedSymptoms.remove(symptom);
+  removeSemptomFromList(GetBodySymptomsResponse? symptom) async {
+    if (tmpSelectedSymptoms?.contains(symptom) ?? false) {
+      tmpSelectedSymptoms?.remove(symptom);
     }
-    this._selectedSymptoms = tmpSelectedSymptoms;
+    selectedSymptoms = tmpSelectedSymptoms;
     notifyListeners();
   }
 
@@ -137,5 +129,37 @@ class BodySublocationsVm extends ChangeNotifier {
         builder: (BuildContext context) {
           return WarningDialog(title, text);
         });
+  }
+
+  List<GetBodySymptomsResponse> changeNamesOfSymps(
+      List<GetBodySymptomsResponse> bodySymps) {
+    for (var element in bodySymps) {
+      if (element.id == 996) {
+        element.name = "Ayak bileğinde şekil bozukluğu";
+      } else if (element.id == 997) {
+        element.name = "Ayak parmağında şekil bozukluğu";
+      } else if (element.id == 25) {
+        element.name = "Deride yumru (Nodül)";
+      } else if (element.id == 128) {
+        element.name = "Zaman ve yer konusunda karışıklık";
+      } else if (element.id == 994) {
+        element.name = "Dizde şekil bozukluğu";
+      } else if (element.id == 172) {
+        element.name = "İdrar yollarında akıntı";
+      } else if (element.id == 72) {
+        element.name = "Işık halkaları görmek";
+      } else if (element.id == 993) {
+        element.name = "Kalçada şekil bozukluğu";
+      } else if (element.id == 995) {
+        element.name = "Parmakta şekil bozukluğu";
+      } else if (element.id == 191) {
+        element.name = "Karına bastırıp çekince ağrı";
+      } else if (element.id == 983) {
+        element.name = "Sabah katılığı";
+      } else if (element.id == 998) {
+        element.name = "Sırtta şekil bozukluğu";
+      }
+    }
+    return bodySymps;
   }
 }

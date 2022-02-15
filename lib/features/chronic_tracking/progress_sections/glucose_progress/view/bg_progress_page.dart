@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../utils/bg_filter_pop_up/bg_filter_pop_up.dart';
 import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../utils/chart_filter_pop_up.dart';
 import '../../utils/graph_header_widget.dart';
 import '../../utils/landscape_graph_widget.dart';
 import '../utils/bg_measurement_list.dart';
@@ -13,14 +13,12 @@ import '../view_model/bg_progress_page_view_model.dart';
 
 /// MG19
 class BgProgressPage extends StatefulWidget {
-  final Function() callBack;
+  final void Function()? callBack;
 
-  const BgProgressPage({Key key, this.callBack}) : super(key: key);
+  const BgProgressPage({Key? key, this.callBack}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _BgProgressPage();
-  }
+  State<StatefulWidget> createState() => _BgProgressPage();
 }
 
 class _BgProgressPage extends State<BgProgressPage> {
@@ -38,9 +36,7 @@ class _BgProgressPage extends State<BgProgressPage> {
             ),
             floatingActionButton: FloatingActionButton(
               heroTag: 'adder',
-              onPressed: () {
-                value.manuelEntry(context);
-              },
+              onPressed: () => value.manuelEntry(context),
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -49,7 +45,7 @@ class _BgProgressPage extends State<BgProgressPage> {
                   color: getIt<ITheme>().mainColor,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: SvgPicture.asset(
                     R.image.add,
                     color: R.color.white,
@@ -58,51 +54,66 @@ class _BgProgressPage extends State<BgProgressPage> {
               ),
               backgroundColor: R.color.white,
             ),
+            //
             body: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  //
                   SizedBox(
                     height: R.sizes.stackedTopPaddingValue(context) + 8,
                   ),
+
+                  //
                   _buildExpandedUser(),
+
+                  //
                   if (value.isChartShow) ...[
                     SizedBox(
-                        height: (context.HEIGHT * .4) * context.TEXTSCALE,
-                        child: GraphHeader(
-                          value: value,
-                          callBack: () => context
-                              .read<BgProgressPageViewModel>()
-                              .changeChartShowStatus(),
-                        )),
+                      height: (context.height * .4) * context.textScale,
+                      child: GraphHeader(
+                        value: value,
+                        callBack: () => context
+                            .read<BgProgressPageViewModel>()
+                            .changeChartShowStatus(),
+                      ),
+                    ),
                     BottomActionsOfGraph(
                       value: value,
                     ),
-                    LayoutBuilder(builder: (context, constraints) {
-                      return Container(
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withAlpha(20),
-                              blurRadius: 5,
-                              spreadRadius: 0,
-                              offset: Offset(5, 5))
-                        ]),
-                        padding: EdgeInsets.symmetric(vertical: 4),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: CustomBarPie(
-                            width: constraints.maxWidth,
-                            height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha(20),
+                                blurRadius: 5,
+                                spreadRadius: 0,
+                                offset: const Offset(5, 5),
+                              ),
+                            ],
                           ),
-                        ),
-                      );
-                    }),
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: CustomBarPie(
+                              width: constraints.maxWidth,
+                              height:
+                                  (context.height * .05) * context.textScale,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
+
+                  //
                   if (!value.isChartShow)
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
+                          EdgeInsets.symmetric(vertical: context.height * .02),
                       child: RbioElevatedButton(
                         title: LocaleProvider.current.open_chart,
                         onTap: value.changeChartShowStatus,
@@ -110,8 +121,8 @@ class _BgProgressPage extends State<BgProgressPage> {
                     ),
                   SizedBox(
                     height: value.isChartShow
-                        ? context.HEIGHT * .4
-                        : context.HEIGHT * .8,
+                        ? context.height * .4
+                        : context.height * .8,
                     child: BgMeasurementListWidget(
                       bgMeasurements: value.bgMeasurements,
                       scrollController: value.controller,
@@ -127,18 +138,15 @@ class _BgProgressPage extends State<BgProgressPage> {
             value: value,
             filterAction: () {
               Atom.show(
-                  BGChartFilterPopUp(
-                    height: context.HEIGHT * .9,
-                    width: context.WIDTH * .3,
-                  ),
+                  BgFilterPopUp(
+                      width: context.height * .9, height: context.width * .3),
                   barrierColor: Colors.black12);
             },
-            changeGraphAction: () => value.changeGraphType(),
           );
   }
 
   Widget _buildExpandedUser() {
-    return Container(
+    return SizedBox(
       height: 50,
       width: double.infinity,
       child: Row(
@@ -150,7 +158,7 @@ class _BgProgressPage extends State<BgProgressPage> {
           Expanded(
             child: Container(
               height: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
@@ -166,9 +174,9 @@ class _BgProgressPage extends State<BgProgressPage> {
                   //
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        getIt<ProfileStorageImpl>().getFirst().name ?? '',
+                        getIt<ProfileStorageImpl>().getFirst().name ?? 'Name',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline5.copyWith(
@@ -183,16 +191,16 @@ class _BgProgressPage extends State<BgProgressPage> {
           ),
 
           //
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
 
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.TREATMENT_PROGRESS);
+              Atom.to(PagePaths.treatmentProgress);
             },
             child: Container(
               height: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,

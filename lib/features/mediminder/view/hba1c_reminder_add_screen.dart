@@ -1,441 +1,509 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/mediminder/model/hba1c_for_schedule_model.dart';
-import '../../../core/core.dart';
-import '../../../core/enums/remindable.dart';
-import '../viewmodel/hba1c_reminder_add_vm.dart';
 import 'package:provider/provider.dart';
 
-class Hba1cReminderAddScreen extends StatelessWidget {
-  int hba1cIdForNotification;
-  Remindable remindable;
+import '../../../core/core.dart';
+import '../viewmodel/hba1c_reminder_add_vm.dart';
 
-  Hba1cReminderAddScreen({
-    Key key,
-    this.hba1cIdForNotification,
-    this.remindable,
-  }) : super(key: key);
+class Hba1cReminderAddScreen extends StatefulWidget {
+  int? hba1cIdForNotification;
+  Remindable? remindable;
 
-  static ProgressDialog progressDialog;
-  TextEditingController controller = TextEditingController();
-  Hba1CForScheduleModel currentHbaModel;
+  Hba1cReminderAddScreen({Key? key}) : super(key: key);
 
+  @override
+  State<Hba1cReminderAddScreen> createState() => _Hba1cReminderAddScreenState();
+}
+
+class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
+  @override
   Widget build(BuildContext context) {
     try {
-      this.remindable = Atom.queryParameters['remindable'].toRemindable();
-      this.hba1cIdForNotification =
-          int.parse(Atom.queryParameters['hba1cIdForNotification']);
+      widget.remindable =
+          Atom.queryParameters['remindable']?.toRouteToRemindable();
+      widget.hba1cIdForNotification =
+          int.parse(Atom.queryParameters['hba1cIdForNotification']!);
     } catch (e) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<Hba1cReminderAddVm>(
-      create: (context) => Hba1cReminderAddVm(context, this.remindable),
-      child: Consumer<Hba1cReminderAddVm>(
-        builder: (
-          BuildContext context,
-          Hba1cReminderAddVm hba1cVM,
-          Widget child,
-        ) {
-          return RbioScaffold(
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                LocaleProvider.current.hbA1c_measurement,
-              ),
-            ),
-            body: _buildBody(context, hba1cVM),
-          );
-        },
+      create: (context) => Hba1cReminderAddVm(
+        context,
+        widget.remindable!,
+      ),
+      child: RbioScaffold(
+        appbar: _buildAppBar(context),
+        body: _buildBody(context),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, Hba1cReminderAddVm hba1cVM) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        _buildLastTestDate(context, hba1cVM),
-
-        //
-        _buildLastTestValue(context, hba1cVM),
-
-        //
-        _buildDescription(context),
-
-        //
-        _buildReminderDate(context, hba1cVM),
-
-        //
-        _buildSubmitButton(hba1cVM, context),
-      ],
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.hbA1c_measurement,
+      ),
     );
   }
+
+  Widget _buildBody(BuildContext context) {
+    return Consumer<Hba1cReminderAddVm>(
+      builder: (
+        BuildContext context,
+        Hba1cReminderAddVm vm,
+        Widget? child,
+      ) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    _buildBoldTitle(LocaleProvider.current.last_test_date),
+                    _buildLastTestDate(context, vm),
+
+                    //
+                    _buildGap(),
+
+                    //
+                    _buildBoldTitle(LocaleProvider.current.last_result),
+                    _buildLastTestValue(context, vm),
+
+                    //
+                    _buildGap(),
+
+                    //
+                    _buildBoldTitle(LocaleProvider.current.reminder_date),
+                    _buildReminderDate(context, vm),
+
+                    //
+                    _buildGap(),
+
+                    //
+                    _buildBoldTitle(LocaleProvider.current.reminder_hour),
+                    _buildReminderHour(context, vm),
+
+                    //
+                    _buildGap(),
+                  ],
+                ),
+              ),
+            ),
+
+            //
+            _buildGap(),
+
+            //
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                Expanded(
+                  child: RbioElevatedButton(
+                    backColor: getIt<ITheme>().cardBackgroundColor,
+                    textColor: getIt<ITheme>().textColorSecondary,
+                    title: LocaleProvider.current.btn_cancel,
+                    onTap: () {
+                      Atom.historyBack();
+                    },
+                    showElevation: false,
+                  ),
+                ),
+
+                //
+                R.sizes.wSizer8,
+
+                //
+                Expanded(
+                  child: RbioElevatedButton(
+                    title: LocaleProvider.current.btn_create,
+                    onTap: () {
+                      vm.createNotification(widget.hba1cIdForNotification!);
+                    },
+                    showElevation: false,
+                  ),
+                ),
+              ],
+            ),
+
+            //
+            R.sizes.defaultBottomPadding,
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildGap() => R.sizes.hSizer16;
 
   Widget _buildLastTestDate(BuildContext context, Hba1cReminderAddVm hba1cVM) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.WIDTH * .03,
+    return Container(
+      decoration: BoxDecoration(
+        color: getIt<ITheme>().cardBackgroundColor,
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      child: Container(
-        height: 50,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: getIt<ITheme>().cardBackgroundColor,
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+      padding: const EdgeInsets.symmetric(
+        vertical: 4,
+        horizontal: 12,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: Text(
+              (hba1cVM.lastMeasurementDate == "")
+                  ? ""
+                  : DateTime.parse(hba1cVM.lastMeasurementDate).xFormatTime10(),
+              style: context.xHeadline3,
             ),
           ),
-          onPressed: () {
-            hba1cVM.setLastMeasurementDate(DateTime.now().toString());
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext builder) {
-                return Container(
-                  height: 300,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 40,
-                        child: Card(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    LocaleProvider.of(context).cancel,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    LocaleProvider.of(context).pick,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 260,
-                        child: CupertinoDatePicker(
-                          mode: CupertinoDatePickerMode.date,
-                          initialDateTime:
-                              DateTime.now().add(Duration(minutes: 5)),
-                          onDateTimeChanged: (DateTime newDate) {
-                            hba1cVM.setLastMeasurementDate(newDate.toString());
-                          },
-                          use24hFormat: true,
-                          maximumDate: DateTime.now().add(Duration(minutes: 5)),
-                          minuteInterval: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(LocaleProvider.current.last_test_date,
-                  style:
-                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
-              Text(
-                hba1cVM.lastMeasurementDate == ""
-                    ? ""
-                    : hba1cVM.lastMeasurementDate.substring(0, 10),
-                style: context.xHeadline3
-                    .copyWith(color: getIt<ITheme>().textColorSecondary),
-              ),
-            ],
+
+          //
+          IconButton(
+            onPressed: () async {
+              final initialDate = hba1cVM.lastMeasurementDate;
+              final result = await showGuvenDatePicker(
+                context,
+                DateTime.now(),
+                DateTime.now().add(const Duration(days: 365)),
+                (initialDate == '')
+                    ? DateTime.now()
+                    : DateTime.parse(initialDate),
+                LocaleProvider.of(context).select_day_from,
+              );
+
+              if (result != null) {
+                hba1cVM.setLastMeasurementDate(result.toString());
+              }
+            },
+            icon: Icon(
+              RbioCustomIcons.calendar,
+              size: R.sizes.iconSize,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 
   Widget _buildLastTestValue(BuildContext context, Hba1cReminderAddVm hba1cVM) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: context.HEIGHT * .03,
-        horizontal: context.WIDTH * .03,
-      ),
+    return GestureDetector(
+      onTap: () async {
+        final result = await Atom.show<String?>(const _LastTestDialog());
+        if (result != null) {
+          hba1cVM.setPreviousResult(double.parse(result));
+        }
+      },
       child: Container(
-        height: 50,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: getIt<ITheme>().cardBackgroundColor,
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-          ),
-          onPressed: () {
-            controller = TextEditingController(text: "");
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) => AlertDialog(
-                title: Text('${LocaleProvider.current.test_result}'),
-                content: TextFormField(
-                  controller: controller,
-                  style:
-                      context.xHeadline1.copyWith(fontWeight: FontWeight.bold),
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,2}'))
-                  ],
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                ),
-                actions: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        color: getIt<ITheme>().mainColor),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SvgPicture.asset(
-                            R.image.done_icon,
-                            height: 30,
-                            width: 30,
-                            //      height: 300,
-                          ),
-                          Text(LocaleProvider.current.done,
-                              style: context.xHeadline3
-                                  .copyWith(color: getIt<ITheme>().textColor)),
-                        ],
-                      ),
-                      onPressed: () {
-                        if (controller.text.length > 0)
-                          hba1cVM
-                              .setPreviousResult(double.parse(controller.text));
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(LocaleProvider.current.last_result,
-                  style:
-                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
-              Text(
-                (Intl.getCurrentLocale() == "tr"
-                        ? "% ${hba1cVM.previousResult.toString()}"
-                        : "${hba1cVM.previousResult.toString()} %") ??
-                    LocaleProvider.current.unspecified,
-                style: context.xHeadline3
-                    .copyWith(color: getIt<ITheme>().textColorSecondary),
-              ),
-            ],
-          ),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: getIt<ITheme>().cardBackgroundColor,
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-      ),
-    );
-  }
-
-  Widget _buildDescription(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.WIDTH * .03,
-      ),
-      child: Container(
-        child: Text(LocaleProvider.current.if_want_to_be_reminded),
+        padding: const EdgeInsets.symmetric(
+          vertical: 18,
+          horizontal: 12,
+        ),
+        child: Text(
+          (Intl.getCurrentLocale() == "tr"
+              ? "% ${hba1cVM.previousResult.toString()}"
+              : "${hba1cVM.previousResult.toString()} %"),
+          style: context.xHeadline3,
+        ),
       ),
     );
   }
 
   Widget _buildReminderDate(BuildContext context, Hba1cReminderAddVm hba1cVM) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: context.HEIGHT * .03,
-        horizontal: context.WIDTH * .03,
+    return Container(
+      decoration: BoxDecoration(
+        color: getIt<ITheme>().cardBackgroundColor,
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      child: Container(
-        height: 50,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: getIt<ITheme>().cardBackgroundColor,
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+      padding: const EdgeInsets.symmetric(
+        vertical: 4,
+        horizontal: 12,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: Text(
+              (hba1cVM.remindDate == "")
+                  ? ""
+                  : DateTime.parse(hba1cVM.remindDate).xFormatTime10(),
+              style: context.xHeadline3.copyWith(
+                color: getIt<ITheme>().textColorSecondary,
+              ),
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(LocaleProvider.current.reminder_date,
-                  style:
-                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
-              Text(
-                  (hba1cVM.remindDate == "")
-                      ? ""
-                      : hba1cVM.remindDate.toString().substring(0, 16),
-                  style: context.xHeadline3
-                      .copyWith(color: getIt<ITheme>().textColorSecondary))
-            ],
-          ),
-          onPressed: () {
-            hba1cVM.setRemindDate(
-                (DateTime.now().add(Duration(minutes: 5)).toString()));
 
-            ///MG11
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext builder) {
-                return Container(
-                  height: 300,
-                  child: Column(
+          //
+          IconButton(
+            onPressed: () async {
+              final initialDate = hba1cVM.remindDate;
+              final result = await showGuvenDatePicker(
+                context,
+                DateTime.now(),
+                DateTime.now().add(const Duration(days: 365)),
+                (initialDate == '')
+                    ? DateTime.now()
+                    : DateTime.parse(initialDate),
+                LocaleProvider.of(context).select_day_from,
+              );
+
+              if (result != null) {
+                hba1cVM.setRemindDate(result.toString());
+              }
+            },
+            icon: Icon(
+              RbioCustomIcons.calendar,
+              size: R.sizes.iconSize,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReminderHour(BuildContext context, Hba1cReminderAddVm hba1cVM) {
+    return Container(
+      decoration: BoxDecoration(
+        color: getIt<ITheme>().cardBackgroundColor,
+        borderRadius: R.sizes.borderRadiusCircular,
+      ),
+      padding: const EdgeInsets.symmetric(
+        vertical: 4,
+        horizontal: 12,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: Text(
+              hba1cVM.remindHour == null
+                  ? ''
+                  : "${hba1cVM.remindHour?.hour}:${hba1cVM.remindHour?.minute}",
+              style: context.xHeadline3.copyWith(
+                color: getIt<ITheme>().textColorSecondary,
+              ),
+            ),
+          ),
+
+          //
+          IconButton(
+            onPressed: () async {
+              final now = DateTime.now();
+              var nowTimeOfDay = TimeOfDay(
+                hour: now.hour,
+                minute: now.minute,
+              );
+              if (hba1cVM.remindHour != null) {
+                nowTimeOfDay = hba1cVM.remindHour!;
+              }
+
+              var timeOfDay = await Utils.instance.openMaterialTimePicker(
+                context,
+                nowTimeOfDay,
+              );
+              if (timeOfDay != null) {
+                hba1cVM.setRemindHour(timeOfDay);
+              }
+            },
+            icon: SvgPicture.asset(
+              R.image.otherIcon,
+              width: R.sizes.iconSize2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // #region _buildBoldTitle
+  Widget _buildBoldTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 16,
+        bottom: 8,
+      ),
+      child: Text(
+        title,
+        textAlign: TextAlign.left,
+        style: context.xHeadline3.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+  // #endregion
+}
+
+class _LastTestDialog extends StatefulWidget {
+  const _LastTestDialog({Key? key}) : super(key: key);
+
+  @override
+  State<_LastTestDialog> createState() => _LastTestDialogState();
+}
+
+class _LastTestDialogState extends State<_LastTestDialog> {
+  late TextEditingController textEditingController;
+
+  @override
+  void initState() {
+    textEditingController = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GuvenAlert(
+      elevation: 0,
+      insetPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      backgroundColor: Colors.transparent,
+      content: SafeArea(
+        child: Container(
+          width: Atom.width > 350 ? 350 : Atom.width,
+          decoration: BoxDecoration(
+            color: getIt<ITheme>().cardBackgroundColor,
+            borderRadius: R.sizes.borderRadiusCircular,
+          ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //
+                R.sizes.hSizer8,
+
+                //
+                Text(
+                  LocaleProvider.current.test_result,
+                  style: context.xHeadline1.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                //
+                R.sizes.hSizer8,
+
+                //
+                RbioTextFormField(
+                  backColor: getIt<ITheme>().grayColor,
+                  controller: textEditingController,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'^(\d+)?\.?\d{0,2}'))
+                  ],
+                  keyboardType: TextInputType.number,
+                ),
+
+                //
+                R.sizes.hSizer16,
+
+                //
+                if (context.xTextScaleType == TextScaleType.small) ...[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        height: 40,
-                        child: Card(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(LocaleProvider.of(context).cancel,
-                                      style: context.xHeadline5),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    LocaleProvider.of(context).pick,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      //
+                      Expanded(
+                        child: _buildCancelButton(infinityWidth: false),
                       ),
-                      Container(
-                        height: 260,
-                        child: CupertinoDatePicker(
-                          mode: CupertinoDatePickerMode.dateAndTime,
-                          initialDateTime:
-                              DateTime.now().add(Duration(minutes: 6)),
-                          onDateTimeChanged: (DateTime newdate) {
-                            if (newdate != null) {
-                              hba1cVM.setRemindDate(newdate.toString());
-                            }
-                          },
-                          use24hFormat: true,
-                          minimumDate: DateTime.now().add(Duration(minutes: 5)),
-                          maximumDate:
-                              DateTime.now().add(new Duration(days: 1500)),
-                          minuteInterval: 1,
-                        ),
+
+                      //
+                      R.sizes.wSizer8,
+
+                      //
+                      Expanded(
+                        child: _buildConfirmButton(infinityWidth: false),
                       ),
                     ],
                   ),
-                );
-              },
-            );
-          },
-        ),
-      ),
-    );
-  }
+                ] else ...[
+                  _buildCancelButton(infinityWidth: true),
+                  R.sizes.hSizer12,
+                  _buildConfirmButton(infinityWidth: true),
+                ],
 
-  Widget _buildSubmitButton(Hba1cReminderAddVm hba1cVM, BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          color: getIt<ITheme>().mainColor),
-      child: TextButton(
-        style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.0),
+                //
+                R.sizes.hSizer4,
+              ],
+            ),
           ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset(
-              R.image.done_icon,
-              height: 30,
-              width: 30,
-            ),
-            Text(
-              LocaleProvider.current.done,
-              style:
-                  context.xHeadline3.copyWith(color: getIt<ITheme>().textColor),
-            ),
-          ],
-        ),
-        onPressed: () {
-          if (hba1cVM.remindDate == null ||
-              hba1cVM.lastMeasurementDate == null) {
-            showInformationDialog(
-              LocaleProvider.current.fill_all_field,
-              context,
-            );
-          } else {
-            currentHbaModel = Hba1CForScheduleModel(
-              id: hba1cIdForNotification,
-              lastTestDate: hba1cVM.lastMeasurementDate.toString(),
-              lastTestValue: controller.text,
-              reminderDate: hba1cVM.remindDate.toString(),
-            );
-            hba1cVM.createNotification(currentHbaModel);
-          }
-        },
       ),
     );
   }
 
-  void showInformationDialog(String text, BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return GradientDialog(LocaleProvider.current.warning, text);
+  RbioElevatedButton _buildConfirmButton({
+    required bool infinityWidth,
+  }) {
+    return RbioElevatedButton(
+      title: LocaleProvider.current.btn_confirm,
+      onTap: () {
+        if (textEditingController.text.isNotEmpty) {
+          Atom.dismiss(textEditingController.text.trim());
+        }
       },
+      showElevation: false,
+      fontWeight: FontWeight.bold,
+      infinityWidth: infinityWidth,
+    );
+  }
+
+  RbioElevatedButton _buildCancelButton({
+    required bool infinityWidth,
+  }) {
+    return RbioElevatedButton(
+      backColor: getIt<ITheme>().grayColor,
+      textColor: getIt<ITheme>().textColorSecondary,
+      title: LocaleProvider.current.btn_cancel,
+      onTap: () {
+        Atom.dismiss();
+      },
+      showElevation: false,
+      fontWeight: FontWeight.bold,
+      infinityWidth: infinityWidth,
     );
   }
 }

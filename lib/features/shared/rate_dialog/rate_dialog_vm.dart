@@ -4,85 +4,87 @@ import '../../../core/core.dart';
 import '../../../model/model.dart';
 
 class RateDialogVm extends ChangeNotifier {
-  BuildContext mContext;
-  int _availabilityId;
-  int _videoQuality;
-  int _doctorQuality;
-  bool _showLoadingOverLay;
-  LoadingDialog loadingDialog;
-  GetAvailabilityRateResponse _getAvailabilityRateResponse;
+  BuildContext? mContext;
+  int? availabilityIdVm;
+  int? videoQuality;
+  int? doctorQuality;
+  bool? showLoadingOverLay;
+  LoadingDialog? loadingDialog;
+  GetAvailabilityRateResponse? getAvailabilityRateResponse;
 
-  RateDialogVm({BuildContext context, int availabilityId}) {
-    this.mContext = context;
-    this._availabilityId = availabilityId;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  RateDialogVm({required BuildContext context, required int availabilityId}) {
+    mContext = context;
+    availabilityIdVm = availabilityId;
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchAvailabilityRate(availabilityId);
     });
   }
 
   fetchAvailabilityRate(int availabilityId) async {
-    showLoadingDialog(mContext);
+    showLoadingDialog(mContext!);
     try {
-      this._getAvailabilityRateResponse = await getIt<Repository>()
+      getAvailabilityRateResponse = await getIt<Repository>()
           .getAvailabilityRate(
               GetAvailabilityRateRequest(availabilityId: availabilityId));
       notifyListeners();
-      hideDialog(mContext);
+      hideDialog(mContext!);
     } catch (e) {
-      hideDialog(mContext);
+      hideDialog(mContext!);
     }
   }
 
   setVideoQuality(int value) {
-    this._videoQuality = value;
+    videoQuality = value;
     notifyListeners();
   }
 
   setDoctorQuality(int value) {
-    this._doctorQuality = value;
+    doctorQuality = value;
     notifyListeners();
   }
 
-  int get videoQuality => this._videoQuality ?? 1;
+/*
+  int get videoQuality => _videoQuality;
 
-  int get doctorQuality => this._doctorQuality ?? 1;
+  int get doctorQuality => _doctorQuality;
 
-  bool get showLoadingOverlay => this._showLoadingOverLay ?? false;
+  bool get showLoadingOverlay => _showLoadingOverLay;
 
-  int get availabilityId => this._availabilityId;
+  int get availabilityId => _availabilityId;
 
   GetAvailabilityRateResponse get getAvailabilityRateResponse =>
-      this._getAvailabilityRateResponse;
+      _getAvailabilityRateResponse;
 
+*/
   Future rateAppointment(String comment) async {
-    showLoadingDialog(mContext);
-    await Future.delayed(Duration(milliseconds: 300));
+    showLoadingDialog(mContext!);
+    await Future.delayed(const Duration(milliseconds: 300));
     try {
       await getIt<Repository>().rateOnlineCall(CallRateRequest(
-          availabilityId: availabilityId,
+          availabilityId: availabilityIdVm,
           suggestionAndRequest: comment,
           doctorRate: doctorQuality,
           videoConferanceRate: videoQuality));
-      hideDialog(mContext);
+      hideDialog(mContext!);
       showGradientDialog(LocaleProvider.current.info,
           LocaleProvider.current.suggestion_thanks_message);
     } catch (e) {
-      hideDialog(mContext);
-      print("rateAppointment Error " + e.toString());
-      Navigator.pop(mContext);
-      this._showLoadingOverLay = false;
+      hideDialog(mContext!);
+      LoggerUtils.instance.i("rateAppointment Error " + e.toString());
+      Navigator.pop(mContext!);
+      showLoadingOverLay = false;
       notifyListeners();
     }
   }
 
   void showGradientDialog(String title, String text) {
     showDialog(
-        context: mContext,
+        context: mContext!,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return WarningDialog(title, text);
         }).then((value) {
-      Atom.to(PagePaths.MAIN, isReplacement: true);
+      Atom.to(PagePaths.main, isReplacement: true);
     });
   }
 
@@ -95,7 +97,7 @@ class RateDialogVm extends ChangeNotifier {
   }
 
   void hideDialog(BuildContext context) {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
+    if (loadingDialog != null && loadingDialog!.isShowing()) {
       Navigator.of(context).pop();
       loadingDialog = null;
     }

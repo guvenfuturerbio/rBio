@@ -12,7 +12,7 @@ class MobileWebInterface {
     return BrowserHttpClientAdapter();
   }
 
-  static HttpClientAdapter onHttpClientCreate(
+  static HttpClientAdapter? onHttpClientCreate(
       HttpClientAdapter httpClientAdapter) {
     return null;
   }

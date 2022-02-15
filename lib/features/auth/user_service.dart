@@ -5,45 +5,40 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/helper/workers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/core.dart';
-import '../../core/data/imports/cronic_tracking.dart';
 import '../../model/firebase/add_firebase_body.dart';
 import '../../model/user/usermodel.dart';
 import '../../model/user_profiles/save_and_retrieve_token_model.dart';
 import '../../model/user_profiles/token_user_text_body.dart';
-import '../chronic_tracking/lib/helper/workers.dart';
-import '../chronic_tracking/lib/notifiers/shared_preferences_handler.dart';
-import '../chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
 
 class UserService {
-  String get token => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.JWT_TOKEN);
-  Person person;
-  static const String APPLICATION_CONSENT_FORM = "APPLICATION_CONSENT_FORM";
+  static const String applicationConsentForm = "APPLICATION_CONSENT_FORM";
 
-  setApplicationConsentFormState(bool isChecked) async {
+  Future<void> setApplicationConsentFormState(bool isChecked) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (isChecked) {
-      prefs.setBool(APPLICATION_CONSENT_FORM, true);
+      await prefs.setBool(applicationConsentForm, true);
     } else {
-      prefs.setBool(APPLICATION_CONSENT_FORM, false);
+      await prefs.setBool(applicationConsentForm, false);
     }
   }
 
-  getApplicationConsentFormState() async {
+  Future<bool> getApplicationConsentFormState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool(APPLICATION_CONSENT_FORM) != null) {
-      return prefs.getBool(APPLICATION_CONSENT_FORM);
+    if (prefs.getBool(applicationConsentForm) != null) {
+      return prefs.getBool(applicationConsentForm) ?? false;
     } else {
       return false;
     }
   }
 
   Future<UserCredential> signInWithEmailAndPasswordFirebase(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
       UserCredential userCred = await auth.signInWithEmailAndPassword(
@@ -55,7 +50,8 @@ class UserService {
   }
 
   Future<UserCredential> signInWithCredentialFirebase(
-      AuthCredential credential) async {
+    AuthCredential credential,
+  ) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
       UserCredential userCred = await auth.signInWithCredential(credential);
@@ -67,7 +63,7 @@ class UserService {
 
   Future<void> saveAndRetrieveToken(User userCred, String from) async {
     String token = userCred.uid;
-    String mailBase = userCred.email;
+    String mailBase = userCred.email ?? '';
 
     TokenUserTextBody textBody = TokenUserTextBody(
       id: 'gWTiiCR81Ib9a3p2UZWTCvAbRbc2',
@@ -96,7 +92,9 @@ class UserService {
     );
 
     await getIt<ISharedPreferencesManager>().setString(
-        SharedPreferencesKeys.JWT_TOKEN, response.datum["access_token"]);
+      SharedPreferencesKeys.jwtToken,
+      response.datum["access_token"],
+    );
   }
 
   /*Future<AuthCredential> googleSignInService() async {
@@ -108,10 +106,10 @@ class UserService {
 
       final GoogleSignInAccount googleSignInAccount =
           await GoogleSignIn().signIn();
-      print('hree');
+      LoggerUtils.instance.i('hree');
 
       if (googleSignInAccount == null) {
-        print("null googleSignInAccount");
+        LoggerUtils.instance.i("null googleSignInAccount");
         throw Exception("null googleSignInAccount");
       }
 
@@ -119,7 +117,7 @@ class UserService {
           await googleSignInAccount.authentication;
 
       if (googleSignInAuthentication == null) {
-        print("null googleSignInAuthentication");
+        LoggerUtils.instance.i("null googleSignInAuthentication");
         throw Exception("null googleSignInAuthentication");
       }
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -169,11 +167,7 @@ class UserService {
 
   OAuthCredential facebookSignInService(String result) {
     final credential = FacebookAuthProvider.credential(result);
-    if (credential == null) {
-      throw Exception("null credential");
-    } else {
-      return credential;
-    }
+    return credential;
   }
 
   void addFirebaseToken() {
@@ -201,32 +195,8 @@ class UserService {
     }
   }
 
-  createUserWithEmailAndPassword(
-      String email, String password, String name) async {
-    try {
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      UserCredential credential = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      if (credential == null)
-        throw Exception("null credential");
-      else {
-        User user = FirebaseAuth.instance.currentUser;
-        if (!user.emailVerified) {
-          await user.sendEmailVerification();
-        }
-      }
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
-  }
-
-  User checkFirebaseUser() {
-    return FirebaseAuth.instance.currentUser;
-  }
-
   handleAutoLogin(context) async {
-    var userCred = checkFirebaseUser();
+    var userCred = FirebaseAuth.instance.currentUser;
 
     if (userCred != null) {
       FirebaseAuth.instance.signOut();
@@ -240,19 +210,19 @@ class UserService {
     try {
       await saveAndRetrieveToken(userCred, 'handleCred');
       if (isSignUp) {
-        //TODO: this section will be refactored !!!
+        final displayName = FirebaseAuth.instance.currentUser?.displayName;
         await getIt<ProfileStorageImpl>().write(
-            new Person().fromDefault(
-                name: FirebaseAuth.instance.currentUser.displayName),
-            shouldSendToServer: true);
+          Person().fromDefault(name: displayName ?? ''),
+          shouldSendToServer: true,
+        );
       }
       await handleSuccessfulLogin(userCred);
-
       return UserModel(
-          displayName: userCred.displayName,
-          email: userCred.email,
-          imageUrl: userCred.photoURL,
-          userID: userCred.uid);
+        displayName: userCred.displayName,
+        email: userCred.email,
+        imageUrl: userCred.photoURL,
+        userID: userCred.uid,
+      );
     } catch (e) {
       rethrow;
     }
@@ -265,9 +235,9 @@ class UserService {
         throw Exception('SignUp');
       }
 
-      person = profiles.last;
+      Person person = profiles.last;
       await getIt<ProfileStorageImpl>().write(person, shouldSendToServer: true);
-      UserProfilesNotifier().selection = profiles[0];
+      // UserProfilesNotifier().selection = profiles[0];
       saveInformationForAutoLogin(userCredential);
 
       // token save process
@@ -281,9 +251,6 @@ class UserService {
       //await ScaleRepository().getLatestMeasurement();
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
-      Sentry.captureException(e, stackTrace: stk);
-      print(e);
-      print(e.toString().contains('SignUp'));
       if (e.toString().contains('SignUp')) {
         await handleCredential(userCredential, isSignUp: true);
       } else {
@@ -292,29 +259,21 @@ class UserService {
     }
   }
 
-  changeGender(String val) {}
-
-  signOut() {
-    FirebaseAuth _auth = FirebaseAuth.instance;
-
-    _auth.signOut();
+  void saveInformationForAutoLogin(User user) async {
+    // SharedPreferencesHandler().saveLastLoggedUserUid(user.uid);
+    // SharedPreferencesHandler().saveLastDisplayName(user.displayName ?? "");
+    // SharedPreferencesHandler().saveLastEmail(user.email ?? '');
   }
 
-  saveInformationForAutoLogin(User user) async {
-    SharedPreferencesHandler().saveLastLoggedUserUid(user.uid);
-    SharedPreferencesHandler().saveLastDisplayName(user.displayName ?? "");
-    SharedPreferencesHandler().saveLastEmail(user.email);
-  }
-
-  deleteInformationForAutoLogin() async {
+  Future<void> deleteInformationForAutoLogin() async {
     //SharedPreferencesHandler().saveLastLoggedUserUid(null); // Algorithm works by detecting change so never remove uid
-    SharedPreferencesHandler().deleteAutoLoginInfo();
+    // SharedPreferencesHandler().deleteAutoLoginInfo();
   }
 }
 
 extension on AndroidDeviceInfo {
   String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
+    Map<String, dynamic> jsonMap = {};
     jsonMap.addAll({
       "android_id": androidId,
       "is_physical_device": isPhysicalDevice,
@@ -340,7 +299,7 @@ extension on AndroidDeviceInfo {
 
 extension on IosDeviceInfo {
   String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
+    Map<String, dynamic> jsonMap = {};
     jsonMap.addAll({
       "name": name,
       "systemName": systemName,

@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,13 +7,13 @@ import '../../../../features/store/quntitydropdown_widget.dart';
 import 'shopping_cart_vm.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
-  const ShoppingCartScreen({Key key}) : super(key: key);
+  const ShoppingCartScreen({Key? key}) : super(key: key);
 
+  @override
   _ShoppingCartScreenState createState() => _ShoppingCartScreenState();
 }
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
-  ExpandableController _expandableController = ExpandableController();
   int selectedPacket = 0;
 
   @override
@@ -23,10 +22,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       create: (context) => ShoppingCartScreenVm(context),
       child: Consumer<ShoppingCartScreenVm>(
         builder:
-            (BuildContext context, ShoppingCartScreenVm value, Widget child) {
+            (BuildContext context, ShoppingCartScreenVm value, Widget? child) {
           return RbioScaffold(
               appbar: RbioAppBar(
-                title: TitleAppBarWhite(title: "Shopping Cart"),
+                title: RbioAppBar.textTitle(context, "Shopping Cart"),
               ),
               body: _buildBody(context, value));
         },
@@ -36,10 +35,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   Widget _buildBody(BuildContext context, ShoppingCartScreenVm value) {
     switch (value.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
-        break;
-      case LoadingProgress.DONE:
+      case LoadingProgress.loading:
+        return const RbioLoading();
+      case LoadingProgress.done:
         return SingleChildScrollView(
           child: Padding(
             padding: kIsWeb
@@ -51,7 +49,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     right: Atom.size.width < 800
                         ? Atom.size.width * 0.03
                         : Atom.size.width * 0.10)
-                : EdgeInsets.all(15.0),
+                : const EdgeInsets.all(15.0),
             child: Column(
               children: [
                 Material(
@@ -68,7 +66,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                             Text(LocaleProvider.current.fee_information,
                                 style: context.xHeadline3
                                     .copyWith(fontWeight: FontWeight.bold)),
-                            Divider(),
+                            const Divider(),
                             ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: 1,
@@ -77,52 +75,63 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Flexible(
+                                      const Flexible(
                                         child: Text(
                                           "Covid test",
                                           style: TextStyle(),
                                           maxLines: 2,
                                         ),
                                       ),
+
+                                      //
                                       Row(
                                         children: [
-                                          QuantityDropdownWidget(),
-                                          SizedBox(
+                                          //
+                                          const QuantityDropdownWidget(),
+
+                                          //
+                                          const SizedBox(
                                             width: 8,
                                           ),
+
+                                          //
                                           Utils.instance.button(
-                                            text: "Delete",
-                                            width: 30,
-                                            height: 12,
-                                          ),
+                                              text: "Delete",
+                                              width: 30,
+                                              height: 12,
+                                              onPressed: () {
+                                                LoggerUtils.instance
+                                                    .i("Delete worked");
+                                              }),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 8,
                                       ),
-                                      Text(("200") + " TL", style: TextStyle()),
+                                      const Text(("200") + " TL",
+                                          style: TextStyle()),
                                     ],
                                   );
                                 }),
                           ])),
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(LocaleProvider.current.total,
                         style: context.xHeadline3
                             .copyWith(fontWeight: FontWeight.bold)),
-                    Text(("sdasd" ?? "-") + " TL",
+                    Text(("0") + " TL",
                         style: context.xHeadline3
                             .copyWith(fontWeight: FontWeight.bold))
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  margin: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Utils.instance.button(
                     width: 260,
                     text: LocaleProvider.current.payment,
@@ -139,13 +148,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             ),
           ),
         );
-        break;
-      case LoadingProgress.ERROR:
-        return Center(
+      case LoadingProgress.error:
+        return const Center(
           child: Text("Error!"),
         );
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }

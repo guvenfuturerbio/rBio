@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 class RbioScrollbar extends StatelessWidget {
   final Widget child;
-  final ScrollController controller;
-  final bool isAlwaysShown;
-  final bool showTrackOnHover;
-  final double hoverThickness;
-  final double thickness;
-  final Radius radius;
-  final bool Function(ScrollNotification) notificationPredicate;
-  final bool interactive;
-  final ScrollbarOrientation scrollbarOrientation;
+  final ScrollController? controller;
+  final bool? isAlwaysShown;
+  final bool? showTrackOnHover;
+  final double? hoverThickness;
+  final double? thickness;
+  final Radius? radius;
+  final bool Function(ScrollNotification)? notificationPredicate;
+  final bool? interactive;
+  final ScrollbarOrientation? scrollbarOrientation;
 
   const RbioScrollbar({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.controller,
     this.isAlwaysShown,
     this.showTrackOnHover,

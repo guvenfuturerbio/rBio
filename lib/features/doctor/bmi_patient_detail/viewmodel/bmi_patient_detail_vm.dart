@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
-import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
@@ -44,17 +40,17 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     notifyListeners();
   }
 
-  int patientId;
+  late int patientId;
 
   bool _disposed = false;
   bool isDataLoading = false;
-  DateTime _scrolledDate;
+  DateTime? _scrolledDate;
 
   final controller = ScrollController();
 
-  LoadingProgress _stateProcessPatientDetail;
-  LoadingProgress _stateProcessPatientMeasurements;
-  DoctorPatientDetailModel _patientDetail;
+  LoadingProgress? _stateProcessPatientDetail;
+  LoadingProgress? _stateProcessPatientMeasurements;
+  late DoctorPatientDetailModel _patientDetail;
 
   List<ScaleModel> scaleData = <ScaleModel>[];
   List<DateTime> scaleMeasurmentDates = <DateTime>[];
@@ -66,49 +62,49 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       <ScaleMeasurementViewModel>[];
 
   LoadingProgress get stateProcessPatientDetail =>
-      this._stateProcessPatientDetail;
+      _stateProcessPatientDetail ?? LoadingProgress.loading;
 
   LoadingProgress get stateProcessPatientMeasurements =>
-      this._stateProcessPatientMeasurements;
+      _stateProcessPatientMeasurements ?? LoadingProgress.loading;
 
   List<TimePeriodFilter> get items => [
-        TimePeriodFilter.DAILY,
-        TimePeriodFilter.WEEKLY,
-        TimePeriodFilter.MONTHLY,
-        TimePeriodFilter.MONTHLY_THREE,
-        TimePeriodFilter.SPECIFIC
+        TimePeriodFilter.daily,
+        TimePeriodFilter.weekly,
+        TimePeriodFilter.monthly,
+        TimePeriodFilter.monthlyThree,
+        TimePeriodFilter.spesific
       ];
 
-  List<ChartData> _chartData;
+  List<ChartData> _chartData = [];
 
-  List<ChartData> _chartVeryLow;
+  List<ChartData> _chartVeryLow = [];
 
-  List<ChartData> _chartLow;
+  List<ChartData> _chartLow = [];
 
-  List<ChartData> _chartTarget;
+  List<ChartData> _chartTarget = [];
 
-  List<ChartData> _chartHigh;
+  List<ChartData> _chartHigh = [];
 
-  List<ChartData> _chartVeryHigh;
+  List<ChartData> _chartVeryHigh = [];
 
   List<ChartData> get chartData => _chartData;
 
   int get targetMin => scaleMeasurement.isEmpty
       ? 0
-      : scaleMeasurement[0].minRange(currentScaleType);
+      : scaleMeasurement[0].minRange(currentScaleType)!;
 
   int get targetMax => scaleMeasurement.isEmpty
       ? 0
-      : scaleMeasurement[0].maxRange(currentScaleType);
+      : scaleMeasurement[0].maxRange(currentScaleType)!;
 
   int get dailyHighestValue {
     int highest = bmiMeasurementsDailyData.isNotEmpty &&
             scaleMeasurement[0].getMeasurement(currentScaleType) != null
-        ? bmiMeasurementsDailyData[0].getMeasurement(currentScaleType).toInt()
+        ? bmiMeasurementsDailyData[0].getMeasurement(currentScaleType)!.toInt()
         : 70;
     for (var data in bmiMeasurementsDailyData) {
       if (data.getMeasurement(currentScaleType) != null) {
-        var _currentValue = data.getMeasurement(currentScaleType).toInt();
+        var _currentValue = data.getMeasurement(currentScaleType)!.toInt();
         if (_currentValue > highest) {
           highest = _currentValue;
         }
@@ -120,11 +116,11 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   int get dailyLowestValue {
     int lowest = bmiMeasurementsDailyData.isNotEmpty &&
             scaleMeasurement[0].getMeasurement(currentScaleType) != null
-        ? bmiMeasurementsDailyData[0].getMeasurement(currentScaleType).toInt()
+        ? bmiMeasurementsDailyData[0].getMeasurement(currentScaleType)!.toInt()
         : 50;
     for (var data in bmiMeasurementsDailyData) {
       if (data.getMeasurement(currentScaleType) != null) {
-        var _currentValue = data.getMeasurement(currentScaleType).toInt();
+        var _currentValue = data.getMeasurement(currentScaleType)!.toInt();
         if (_currentValue < lowest) {
           lowest = _currentValue;
         }
@@ -136,11 +132,11 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   int get highestValue {
     int highest = scaleMeasurement.isNotEmpty &&
             scaleMeasurement[0].getMeasurement(currentScaleType) != null
-        ? scaleMeasurement[0].getMeasurement(currentScaleType).toInt()
+        ? scaleMeasurement[0].getMeasurement(currentScaleType)!.toInt()
         : 300;
     for (var data in scaleMeasurement) {
       if (data.getMeasurement(currentScaleType) != null) {
-        var _currentValue = data.getMeasurement(currentScaleType).toInt();
+        var _currentValue = data.getMeasurement(currentScaleType)!.toInt();
         if (_currentValue > highest) {
           highest = _currentValue;
         }
@@ -152,11 +148,11 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   int get lowestValue {
     int lowest = scaleMeasurement.isNotEmpty &&
             scaleMeasurement[0].getMeasurement(currentScaleType) != null
-        ? scaleMeasurement[0].getMeasurement(currentScaleType).toInt()
+        ? scaleMeasurement[0].getMeasurement(currentScaleType)!.toInt()
         : 50;
     for (var data in scaleMeasurement) {
       if (data.getMeasurement(currentScaleType) != null) {
-        var _currentValue = data.getMeasurement(currentScaleType).toInt();
+        var _currentValue = data.getMeasurement(currentScaleType)!.toInt();
         if (_currentValue < lowest) {
           lowest = _currentValue;
         }
@@ -170,15 +166,15 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     setSelectedItem(selected);
   }
 
-  TimePeriodFilter _selected;
+  TimePeriodFilter? _selected;
   TimePeriodFilter get selected => _selected ?? items[0];
 
-  SelectedScaleType _selectedItem;
+  SelectedScaleType? _selectedItem;
 
   SelectedScaleType get currentScaleType =>
-      _selectedItem ?? SelectedScaleType.WEIGHT;
+      _selectedItem ?? SelectedScaleType.weight;
 
-  int _currentDateIndex;
+  int? _currentDateIndex;
 
   int get currentDateIndex => _currentDateIndex ?? 0;
 
@@ -194,43 +190,44 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     notifyListeners();
   }
 
-  DateTime _startDate, _endDate;
+  DateTime? _startDate, _endDate;
 
   DateTime get startDate => _startDate != null
-      ? DateTime(_startDate.year, _startDate.month, _startDate.day)
+      ? DateTime(_startDate!.year, _startDate!.month, _startDate!.day)
       : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   Future<void> setStartDate(DateTime d) async {
-    this._startDate = d;
-    this._currentDateIndex = 0;
-    await fetchBpMeasurementsInDateRange(
-        startDate, endDate.add(Duration(days: 1)));
+    _startDate = d;
+    _currentDateIndex = 0;
+    await fetchBMIMeasurementsInDateRange(
+        startDate, endDate.add(const Duration(days: 1)));
 
     notifyListeners();
   }
 
   DateTime get endDate => _endDate != null
-      ? DateTime(_endDate.year, _endDate.month, _endDate.day)
+      ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day)
       : DateTime(
-          DateTime.now().add(Duration(days: 1)).year,
-          DateTime.now().add(Duration(days: 1)).month,
-          DateTime.now().add(Duration(days: 1)).day);
+          DateTime.now().add(const Duration(days: 1)).year,
+          DateTime.now().add(const Duration(days: 1)).month,
+          DateTime.now().add(const Duration(days: 1)).day);
 
   Future<void> setEndDate(DateTime d) async {
-    this._endDate = d;
-    this._currentDateIndex = 0;
-    fetchBpMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
+    _endDate = d;
+    _currentDateIndex = 0;
+    fetchBMIMeasurementsInDateRange(
+        startDate, endDate.add(const Duration(days: 1)));
 
     notifyListeners();
   }
 
   Future<void> nextDate() async {
     await setStartDate(endDate);
-    if (selected == LocaleProvider.current.weekly) {
-      await setEndDate(endDate.add(Duration(days: 7)));
-    } else if (selected == LocaleProvider.current.monthly) {
+    if (selected == TimePeriodFilter.weekly) {
+      await setEndDate(endDate.add(const Duration(days: 7)));
+    } else if (selected == TimePeriodFilter.monthly) {
       await setEndDate(DateTime(endDate.year, endDate.month + 1, 1));
-    } else if (selected == LocaleProvider.current.three_months) {
+    } else if (selected == TimePeriodFilter.monthlyThree) {
       await setEndDate(DateTime(endDate.year, endDate.month + 3, 1));
     }
     setChartAverageDataPerDay();
@@ -239,11 +236,11 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   Future<void> previousDate() async {
     await setEndDate(startDate);
-    if (selected == LocaleProvider.current.weekly) {
-      await setStartDate(startDate.subtract(Duration(days: 7)));
-    } else if (selected == LocaleProvider.current.monthly) {
+    if (selected == TimePeriodFilter.weekly) {
+      await setStartDate(startDate.subtract(const Duration(days: 7)));
+    } else if (selected == TimePeriodFilter.monthly) {
       await setStartDate(DateTime(startDate.year, startDate.month - 1, 1));
-    } else if (selected == LocaleProvider.current.three_months) {
+    } else if (selected == TimePeriodFilter.monthlyThree) {
       await setStartDate(DateTime(startDate.year, startDate.month - 3, 1));
     }
     setChartAverageDataPerDay();
@@ -251,26 +248,26 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   }
 
   void setChartAverageDataPerDay() {
-    this.bmiMeasurementsDailyData = scaleMeasurement;
+    bmiMeasurementsDailyData = scaleMeasurement;
     setChartDailyData();
   }
 
   void setChartDailyData() {
     try {
       List<ChartData> tempChartData = <ChartData>[];
-      for (var data in this.bmiMeasurementsDailyData) {
+      for (var data in bmiMeasurementsDailyData) {
         if (data.getMeasurement(currentScaleType) != null) {
           tempChartData.add(ChartData(
-              data.date,
-              data.getMeasurement(currentScaleType).toInt(),
+              data.dateTime,
+              data.getMeasurement(currentScaleType)!.toInt(),
               data.getColor(currentScaleType)));
         }
       }
-      this._chartData = tempChartData;
+      _chartData = tempChartData;
       setChartGroupData();
       notifyListeners();
     } catch (e) {
-      log(e);
+      LoggerUtils.instance.e(e);
     }
   }
 
@@ -287,15 +284,15 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   void setChartVeryLow() {
     List<ChartData> tempChartData = <ChartData>[];
 
-    for (var data in this.bmiMeasurementsDailyData) {
+    for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.very_low) {
         tempChartData.add(ChartData(
-            data.date,
-            data.getMeasurement(currentScaleType).toInt(),
+            data.dateTime,
+            data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
     }
-    this._chartVeryLow = tempChartData;
+    _chartVeryLow = tempChartData;
     notifyListeners();
   }
 
@@ -304,15 +301,15 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   void setChartLow() {
     List<ChartData> tempChartData = <ChartData>[];
 
-    for (var data in this.bmiMeasurementsDailyData) {
+    for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.low) {
         tempChartData.add(ChartData(
-            data.date,
-            data.getMeasurement(currentScaleType).toInt(),
+            data.dateTime,
+            data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
     }
-    this._chartLow = tempChartData;
+    _chartLow = tempChartData;
     notifyListeners();
   }
 
@@ -321,15 +318,15 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   void setChartTarget() {
     List<ChartData> tempChartData = <ChartData>[];
 
-    for (var data in this.bmiMeasurementsDailyData) {
+    for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.target) {
         tempChartData.add(ChartData(
-            data.date,
-            data.getMeasurement(currentScaleType).toInt(),
+            data.dateTime,
+            data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
     }
-    this._chartTarget = tempChartData;
+    _chartTarget = tempChartData;
     notifyListeners();
   }
 
@@ -338,15 +335,15 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   void setChartHigh() {
     List<ChartData> tempChartData = <ChartData>[];
 
-    for (var data in this.bmiMeasurementsDailyData) {
+    for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.high) {
         tempChartData.add(ChartData(
-            data.date,
-            data.getMeasurement(currentScaleType).toInt(),
+            data.dateTime,
+            data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
     }
-    this._chartHigh = tempChartData;
+    _chartHigh = tempChartData;
     notifyListeners();
   }
 
@@ -355,50 +352,51 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   void setChartVeryHigh() {
     List<ChartData> tempChartData = <ChartData>[];
 
-    for (var data in this.bmiMeasurementsDailyData) {
+    for (var data in bmiMeasurementsDailyData) {
       if (data.getColor(currentScaleType) == R.color.very_high) {
         tempChartData.add(ChartData(
-            data.date,
-            data.getMeasurement(currentScaleType).toInt(),
+            data.dateTime,
+            data.getMeasurement(currentScaleType)!.toInt(),
             data.getColor(currentScaleType)));
       }
     }
-    this._chartVeryHigh = tempChartData;
+    _chartVeryHigh = tempChartData;
     notifyListeners();
   }
 
   Future<void> fetchPatientDetail() async {
-    _stateProcessPatientDetail = LoadingProgress.LOADING;
+    _stateProcessPatientDetail = LoadingProgress.loading;
     notifyListeners();
     try {
       await Provider.of<PatientNotifiers>(mContext, listen: false)
           .fetchPatientDetail(patientId: patientId);
-      this._patientDetail =
+      _patientDetail =
           Provider.of<PatientNotifiers>(mContext, listen: false).patientDetail;
-      _stateProcessPatientDetail = LoadingProgress.DONE;
+      _stateProcessPatientDetail = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
       dispose(); //Dispose if patient detail is not available.
-      _stateProcessPatientDetail = LoadingProgress.ERROR;
+      _stateProcessPatientDetail = LoadingProgress.error;
       notifyListeners();
     }
   }
 
-  void fetchScrolledData(DateTime date) {
-    print(date);
-    if (date != null && selected == TimePeriodFilter.DAILY) {
+  void fetchScrolledData(DateTime? date) {
+    LoggerUtils.instance.i(date);
+    if (date != null && selected == TimePeriodFilter.daily) {
       var _temp = DateTime(_scrolledDate?.year ?? 2000,
           _scrolledDate?.month ?? 01, _scrolledDate?.day ?? 01);
       var _cross = DateTime(date.year, date.month, date.day);
       if (_scrolledDate == null || (_temp != _cross)) {
         _scrolledDate = date;
-        this.bmiMeasurementsDailyData.clear();
+        bmiMeasurementsDailyData.clear();
 
         for (var data in scaleMeasurement) {
-          if (DateTime(data.date.year, data.date.month, data.date.day)
+          if (DateTime(
+                  data.dateTime.year, data.dateTime.month, data.dateTime.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
-            this.bmiMeasurementsDailyData.add(data);
+            bmiMeasurementsDailyData.add(data);
           }
         }
 
@@ -408,16 +406,16 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   }
 
   void fetchScrolledDailyData() {
-    this.bmiMeasurementsDailyData.clear();
+    bmiMeasurementsDailyData.clear();
     List<DateTime> dateList = scaleMeasurmentDates;
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
       for (var data in scaleMeasurement) {
-        if (DateTime(data.date.year, data.date.month, data.date.day)
+        if (DateTime(data.dateTime.year, data.dateTime.month, data.dateTime.day)
             .isAtSameMomentAs(DateTime(
                 currentDate.year, currentDate.month, currentDate.day))) {
-          this.bmiMeasurementsDailyData.add(data);
+          bmiMeasurementsDailyData.add(data);
         }
       }
     }
@@ -425,16 +423,16 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   }
 
   Future<void> setSelectedItem(TimePeriodFilter s) async {
-    print('data-----------> $s');
+    LoggerUtils.instance.i('data-----------> $s');
 
-    this._currentDateIndex = 0;
+    _currentDateIndex = 0;
     notifyListeners();
-    this._selected = s;
+    _selected = s;
     notifyListeners();
-    if (s == TimePeriodFilter.SPECIFIC) {
+    if (s == TimePeriodFilter.spesific) {
       await fetchBmiMeasurements();
       fetchScrolledDailyData();
-    } else if (s == TimePeriodFilter.DAILY) {
+    } else if (s == TimePeriodFilter.daily) {
       await fetchBmiMeasurements();
       fetchScrolledDailyData();
     } else {
@@ -442,54 +440,55 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
           DateTime.now().month, DateTime.now().day, 23, 59, 00);
       DateTime currentDateStart = DateTime(DateTime.now().year,
           DateTime.now().month, DateTime.now().day, 00, 00);
-      s == TimePeriodFilter.WEEKLY
-          ? await setStartDate(currentDateStart.subtract(Duration(days: 7)))
-          : s == TimePeriodFilter.MONTHLY
+      s == TimePeriodFilter.weekly
+          ? await setStartDate(
+              currentDateStart.subtract(const Duration(days: 7)))
+          : s == TimePeriodFilter.monthly
               ? await setStartDate(currentDateStart
                   .subtract(Duration(days: currentDateStart.day - 1)))
-              : s == TimePeriodFilter.MONTHLY_THREE
+              : s == TimePeriodFilter.monthlyThree
                   ? await setStartDate(DateTime(
                       currentDateStart.year, currentDateStart.month - 3, 1))
                   : await setStartDate(currentDateStart);
       await setEndDate(currentDateEnd);
     }
-    if (s == LocaleProvider.current.weekly) {
+    if (s == TimePeriodFilter.weekly) {
       setChartAverageDataPerDay();
-    } else if (s == LocaleProvider.current.monthly) {
+    } else if (s == TimePeriodFilter.monthly) {
       setChartAverageDataPerDay();
-    } else if (s == LocaleProvider.current.three_months) {
+    } else if (s == TimePeriodFilter.monthlyThree) {
       setChartAverageDataPerDay();
     }
     notifyListeners();
   }
 
-  Widget _currentGraph;
+  Widget? _currentGraph;
   Widget get currentGraph =>
-      _currentGraph ?? AnimationPatientScaleScatterDefault();
+      _currentGraph ?? const AnimationPatientScaleScatterDefault();
 
-  GraphType _currentGraphType;
+  GraphType? _currentGraphType;
 
-  GraphType get currentGraphType => _currentGraphType ?? GraphType.BUBBLE;
+  GraphType get currentGraphType => _currentGraphType ?? GraphType.bubble;
 
   @override
   void changeGraphType() {
-    if (currentGraphType == GraphType.BUBBLE) {
-      this._currentGraphType = GraphType.LINE;
+    if (currentGraphType == GraphType.bubble) {
+      _currentGraphType = GraphType.line;
     } else {
-      this._currentGraphType = GraphType.BUBBLE;
+      _currentGraphType = GraphType.bubble;
     }
     setCurrentGraph();
     notifyListeners();
   }
 
   setCurrentGraph() {
-    currentGraphType == GraphType.BUBBLE
-        ? this._currentGraph = AnimationPatientScaleScatterDefault()
-        : this._currentGraph = AnimationPatientScaleLineDefaultState();
+    currentGraphType == GraphType.bubble
+        ? _currentGraph = const AnimationPatientScaleScatterDefault()
+        : _currentGraph = const AnimationPatientScaleLineDefaultState();
   }
 
   @override
-  BuildContext mContext;
+  late BuildContext mContext;
 
   @override
   void notifyListeners() {
@@ -519,22 +518,22 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return GradientDialog(
-          LocaleProvider.current.warning,
-          text,
+          title: LocaleProvider.current.warning,
+          text: text,
         );
       },
     ).then((value) => Navigator.pop(mContext));
   }
 
   @override
-  void showFilter(BuildContext tcontext) {
+  void showFilter(BuildContext context) {
     Atom.show(
       ChangeNotifierProvider<BmiPatientDetailVm>.value(
         value: this,
         child: ScaleChartFilterPopup(
           selected: _selectedItem,
-          height: tcontext.HEIGHT * .52,
-          width: tcontext.WIDTH * .6,
+          height: context.height * .52,
+          width: context.width * .6,
           isDoctor: true,
           changeScaleType: (p0) {
             _selectedItem = p0;
@@ -552,19 +551,19 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       GetMyPatientFilter(end: null, start: null),
     );
 
-    this.scaleData = result;
+    scaleData = result;
 
-    this.scaleMeasurement.clear();
+    scaleMeasurement.clear();
 
-    this.scaleMeasurement =
+    scaleMeasurement =
         scaleData.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
     scaleMeasurement.removeWhere(
         (element) => element.getMeasurement(currentScaleType) == null);
-    var year = int.parse(_patientDetail.birthDay.split('.')[2]);
+    var year = int.parse(_patientDetail.birthDay!.split('.')[2]);
     for (var item in scaleMeasurement) {
       item.age = year < 10 ? 15 : year;
     }
-    this.scaleMeasurement.sort((a, b) => a.date.compareTo(b.date));
+    scaleMeasurement.sort((a, b) => a.dateTime.compareTo(b.dateTime));
 
     fetchBmiMeasurementsDateList();
   }
@@ -574,7 +573,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     final result = await getIt<DoctorRepository>().getMyPatientScale(
       patientId,
       GetMyPatientFilter(
-          end: scaleMeasurement.first.date.toIso8601String(), start: null),
+          end: scaleMeasurement.first.dateTime.toIso8601String(), start: null),
     );
     for (var item in result) {
       bool alreadyInList = false;
@@ -593,52 +592,51 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       allDataLoaded = true;
     }
 
-    this.scaleMeasurement =
+    scaleMeasurement =
         scaleData.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
     scaleMeasurement.removeWhere(
         (element) => element.getMeasurement(currentScaleType) == null);
-    var year = int.parse(_patientDetail.birthDay.split('.')[2]);
+    var year = int.parse(_patientDetail.birthDay!.split('.')[2]);
     for (var item in scaleMeasurement) {
       item.age = year < 10 ? 15 : year;
     }
-    this.scaleMeasurement.sort((a, b) => a.date.compareTo(b.date));
+    scaleMeasurement.sort((a, b) => a.dateTime.compareTo(b.dateTime));
 
     fetchBmiMeasurementsDateList();
   }
 
-  Future<void> fetchBpMeasurementsInDateRange(
+  Future<void> fetchBMIMeasurementsInDateRange(
       DateTime start, DateTime end) async {
     scaleMeasurement.clear();
     for (var e in scaleData) {
-      if (!scaleData.contains(ScaleMeasurementViewModel(scaleModel: e))) {
+      if (!scaleData.contains(e)) {
         DateTime measurementDate =
-            ScaleMeasurementViewModel(scaleModel: e).date;
+            ScaleMeasurementViewModel(scaleModel: e).dateTime;
         if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
           scaleMeasurement.add(ScaleMeasurementViewModel(scaleModel: e));
         }
       }
     }
-    this.scaleMeasurement.sort((a, b) => a.date.compareTo(b.date));
+    scaleMeasurement.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     fetchBmiMeasurementsDateList();
   }
 
   void fetchBmiMeasurementsDateList() {
     bool isInclude = false;
-    this.scaleMeasurmentDates.clear();
+    scaleMeasurmentDates.clear();
     for (var data in scaleMeasurement) {
       for (var data2 in scaleMeasurmentDates) {
-        if (DateTime(data.date.year, data.date.month, data.date.day)
+        if (DateTime(data.dateTime.year, data.dateTime.month, data.dateTime.day)
             .isAtSameMomentAs(DateTime(data2.year, data2.month, data2.day))) {
           isInclude = true;
         }
       }
       if (!isInclude) {
-        this
-            .scaleMeasurmentDates
-            .add(DateTime(data.date.year, data.date.month, data.date.day));
+        scaleMeasurmentDates.add(DateTime(
+            data.dateTime.year, data.dateTime.month, data.dateTime.day));
       }
       isInclude = false;
-      this.scaleMeasurmentDates.sort((a, b) => a.compareTo(b));
+      scaleMeasurmentDates.sort((a, b) => a.compareTo(b));
     }
     notifyListeners();
   }
@@ -651,7 +649,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_low,
           xAxisName: "Time",
-          markerSettings: MarkerSettings(
+          markerSettings: const MarkerSettings(
               height: 15,
               width: 15,
               isVisible: true,
@@ -663,7 +661,7 @@ class BmiPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
           color: R.color.low,
           borderWidth: 3,
           xAxisName: "Time",
-          markerSettings: MarkerSettings(
+          markerSettings: const MarkerSettings(
               height: 15,
               width: 15,
               shape: DataMarkerType.circle,

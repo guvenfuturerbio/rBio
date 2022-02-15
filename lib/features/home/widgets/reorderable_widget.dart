@@ -12,14 +12,13 @@ class MyReorderableWidget extends StatelessWidget {
   final HomeWidgets type;
   final bool showDeleteIcon;
   final bool isVerticalCard;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final bool isRemovedWidgets;
-
   const MyReorderableWidget({
-    Key key,
-    @required this.body,
-    @required this.type,
-    @required this.isRemovedWidgets,
+    Key? key,
+    required this.body,
+    required this.type,
+    required this.isRemovedWidgets,
     this.onTap,
     this.isVerticalCard = true,
     this.showDeleteIcon = true,
@@ -31,9 +30,9 @@ class MyReorderableWidget extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Orientation> snapshot) {
         if (snapshot.hasData) {
           return Consumer<HomeVm>(
-            builder: (BuildContext context, HomeVm vm, Widget child) {
+            builder: (BuildContext context, HomeVm vm, Widget? child) {
               final Widget child = ReorderableWidget(
-                key: key,
+                key: key!,
                 reorderable: vm.status.isShaken,
                 child: Stack(
                   alignment: Alignment.topRight,
@@ -55,7 +54,7 @@ class MyReorderableWidget extends StatelessWidget {
                                   vm.addWidget(type);
                                 } else if (vm.status == ShakeMod.notShaken) {
                                   if (onTap != null) {
-                                    onTap();
+                                    onTap!();
                                   }
                                 }
                               },
@@ -106,7 +105,7 @@ class MyReorderableWidget extends StatelessWidget {
           );
         }
 
-        return SizedBox();
+        return const SizedBox();
       },
     );
   }

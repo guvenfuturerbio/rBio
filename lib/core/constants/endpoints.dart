@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 part of 'constants.dart';
 
 class _Endpoints {
@@ -28,11 +30,11 @@ class _Endpoints {
   final getActiveStreamPath = '/profile/get-active-stream'.xBasePath;
   final getProfilePicturePath = '/file/retrieve-user-profile-image'.xBasePath;
   final getCurrentApplicationVersionPath =
-      '/applicationmobilecheckversion/get-current'.xBasePath;
+      '/api/v1/ApplicationMobileCheckVersion/get-current'.xDoctorBaseUrl;
   final getPatientDetailPath = '/Pusula/getPatientByToken'.xBasePath;
 
   String getDoctorCvDetailsPath(String doctorWebID) =>
-      '/api/doctor/${doctorWebID}'.xGuvenPath;
+      '/api/doctor/$doctorWebID'.xGuvenPath;
 
   final filterTenantsPath = '/Pusula/filterTenants'.xBasePath;
   final filterDepartmentsPath = '/Pusula/FilterDepartments'.xBasePath;
@@ -135,109 +137,153 @@ class _Endpoints {
       '/diagnosis/specialisations'.xSymptomCheckerRequest;
   final symptomGetBodyLocations = '/body/locations'.xSymptomCheckerRequest;
   String symptomGetBodySubLocations(int locationID) =>
-      '/body/locations/${locationID}'.xSymptomCheckerRequest;
+      '/body/locations/$locationID'.xSymptomCheckerRequest;
   String symptomGetBodySymptoms(int locationID, int gender) =>
       '/symptoms/${locationID}/${gender}'.xSymptomCheckerRequest;
 
-  String ct_saveAndRetrieveToken =
+  String ctSaveAndRetrieveToken =
       '/AccessToken/validate-remote-token'.xBasePath;
-  String ct_getUserStrip(int entegrationId, String deviceuuid) =>
+  String ctGetUserStrip(int entegrationId, String deviceuuid) =>
       '/user/get-user-strip/${entegrationId}/${deviceuuid}'.xCronicTracking;
-  String ct_insertNewBloodGlucoseValue =
+  String ctInsertNewBloodGlucoseValue =
       '/Measurement/add-blood-glucose-with-detail'.xCronicTracking;
-  String ct_deleteBloodGlucoseValue =
+  String ctDeleteBloodGlucoseValue =
       '/Measurement/delete-blood-glucose-with-detail'.xCronicTracking;
-  String ct_updateBloodGlucoseValue =
+  String ctUpdateBloodGlucoseValue =
       '/Measurement/update-blood-glucose-with-detail'.xCronicTracking;
-  String ct_uploadMeasurementImage(var entegrationId, var measurementId) =>
+  String ctUploadMeasurementImage(var entegrationId, var measurementId) =>
       '/Measurement/upload-measurement-image/${entegrationId}/${measurementId}'
           .xCronicTracking;
-  String ct_getBloodGlucoseReport =
+  String ctGetBloodGlucoseReport =
       '/Measurement/get-my-blood-glucose-report'.xCronicTracking;
-  String ct_getBloodGlucoseDataOfPerson =
+  String ctGetBloodGlucoseDataOfPerson =
       '/Measurement/get-my-blood-glucose-with-detail-and-limit-value'
           .xCronicTracking;
-  String ct_getAllProfiles = '/profile/get-all'.xCronicTracking;
-  String ct_addProfile = '/profile/add'.xCronicTracking;
-  String ct_changeProfile(entegration_id) =>
-      '/profile/set-profile/${entegration_id}'.xCronicTracking;
-  String ct_deleteProfile(var userId) =>
+  String ctGetAllProfiles = '/profile/get-all'.xCronicTracking;
+  String ctAddProfile = '/profile/add'.xCronicTracking;
+  String ctChangeProfile(entegrationId) =>
+      '/profile/set-profile/${entegrationId}'.xCronicTracking;
+  String ctDeleteProfile(var userId) =>
       '/profile/delete/$userId'.xCronicTracking;
-  String ct_addFirebaseToken = '/user/add-user-firebaseId'.xCronicTracking;
-  String ct_updateProfile(var id) =>
+  String ctAddFirebaseToken = '/user/add-user-firebaseId'.xCronicTracking;
+  String ctUpdateProfile(var id) =>
       '/user/user-profile-update/${id}'.xCronicTracking;
-  String ct_setDefaultProfile =
+  String ctSetDefaultProfile =
       '/user/set-user-profile-default-value'.xCronicTracking;
-  String ct_updateUserStrip = '/user/add-update-user-strip'.xCronicTracking;
-  String ct_deleteUserStrip(var id, var entegrationId) =>
+  String ctUpdateUserStrip = '/user/add-update-user-strip'.xCronicTracking;
+  String ctDeleteUserStrip(var id, var entegrationId) =>
       '/user/delete-user-strip/${id}/${entegrationId}'.xCronicTracking;
-  String ct_isDeviceIdRegisteredForSomeUser(var deviceId, var entegrationId) =>
+  String ctIsDeviceIdRegisteredForSomeUser(var deviceId, var entegrationId) =>
       '/SugarDevice/is-device-id-registered-for-some-user/${deviceId}/${entegrationId}'
           .xCronicTracking;
-  String ct_addHospitalHba1cMeasurement(var entegrationId) =>
+  String ctAddHospitalHba1cMeasurement(var entegrationId) =>
       '/Measurement/add-hospital-hba1c-measurement/${entegrationId}'
           .xCronicTracking;
-  String ct_getHba1cMeasurementList(var entegrationId) =>
+  String ctGetHba1cMeasurementList(var entegrationId) =>
       '/Measurement/get-list-hospital-hba1c-measurement/${entegrationId}'
           .xCronicTracking;
-  String ct_getMedicineByFilter(String text) =>
+  String ctGetMedicineByFilter(String text) =>
       '/Medicine/get-by-filter/${text}'.xCronicTracking;
-  String ct_insertNewScaleValue =
+  String ctInsertNewScaleValue =
       '/Measurement/add-bmi-with-detail'.xCronicTracking;
-  String ct_deleteScaleMeasurement =
+  String ctDeleteScaleMeasurement =
       '/Measurement/delete-bmi-with-detail'.xCronicTracking;
-  String ct_getScaleMeasurement =
+  String ctGetScaleMeasurement =
       '/Measurement/get-bmi-measurements'.xCronicTracking;
-  String ct_updateScaleMeasurement =
+  String ctUpdateScaleMeasurement =
       '/Measurement/update-bmi-measurement'.xCronicTracking;
 
-  String ct_insertNewBpValue =
-      '/Measurement/add-bp-with-detail'.xCronicTracking;
-  String ct_deleteBpMeasurement =
+  String ctInsertNewBpValue = '/Measurement/add-bp-with-detail'.xCronicTracking;
+  String ctDeleteBpMeasurement =
       '/Measurement/delete-bp-with-detail'.xCronicTracking;
-  String ct_getBpMeasurement =
+  String ctGetBpMeasurement =
       '/Measurement/get-bp-measurements'.xCronicTracking;
-  String ct_updateBpMeasurement =
+  String ctUpdateBpMeasurement =
       '/Measurement/update-bp-measurement'.xCronicTracking;
 
-  String dc_Login(String userName, String password) =>
+  String dcLogin(String userName, String password) =>
       '/AccessToken/get-token-for-rbio?userName=$userName&password=$password'
           .xBasePath;
-  String dc_getAllAppointment =
+  String dcGetAllAppointment =
       '/mobileapi/v1/MobileDoctor/all-appointment'.xDoctorBaseUrl;
-  String dc_getMySugarPatient =
+  String dcGetMySugarPatient =
       '/api/v1/DoctorPatient/get-my-sugar-patient'.xDoctorBaseUrl;
-  String dc_getMyScalePatient =
+  String dcGetMyScalePatient =
       '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
-  String dc_getMyBpPatient =
+  String dcGetMyBpPatient =
       '/api/v1/DoctorPatient/get-my-bp-patient'.xDoctorBaseUrl;
-  String dc_getMyBMIPatient =
+  String dcGetMyBMIPatient =
       '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
-  String dc_getMyPatientDetail(int patientId) =>
+  String dcGetMyPatientDetail(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-profile-detail/${patientId}'
           .xDoctorBaseUrl;
-  String dc_updateMyPatientLimit(int patientId) =>
+  String dcUpdateMyPatientLimit(int patientId) =>
       '/api/v1/doctorpatient/update-my-patient-limit-detail/$patientId'
           .xDoctorBaseUrl;
-  String dc_getMyPatientBloodGlucose(int patientId) =>
+  String dcGetMyPatientBloodGlucose(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-blood-glucose-with-detail/$patientId'
           .xDoctorBaseUrl;
-  String dc_getMyPatientScale(int patientId) =>
+  String dcGetMyPatientScale(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-bmi/$patientId'.xDoctorBaseUrl;
-  String dc_getMyPatientPressure(int patientId) =>
+  String dcGetMyPatientPressure(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-bp/$patientId'.xDoctorBaseUrl;
 }
 
 extension _EndpointsExtension on String {
-  String get xBasePath => SecretUtils.instance.get(SecretKeys.BASE_URL) + this;
-  String get xGuvenPath =>
-      SecretUtils.instance.get(SecretKeys.DEV_4_GUVEN) + this;
-  String get xSymptomCheckerLogin =>
-      SecretUtils.instance.get(SecretKeys.SYMPTOM_CHECKER_LOGIN) + this;
-  String get xSymptomCheckerRequest =>
-      SecretUtils.instance.get(SecretKeys.SYMPTOM_REQUEST_URL) + this;
-  String get xCronicTracking =>
-      SecretUtils.instance.get(SecretKeys.CHRONIC_TRACKING_BASE_URL) + this;
-  String get xDoctorBaseUrl =>
-      SecretUtils.instance.get(SecretKeys.DOCTOR_BASE_URL) + this;
+  String get xBasePath {
+    final String? path = SecretUtils.instance.get(SecretKeys.baseUrl);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('xBasePath null');
+    }
+  }
+
+  String get xGuvenPath {
+    final String? path = SecretUtils.instance.get(SecretKeys.dev4Guven);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('xGuvenPath null');
+    }
+  }
+
+  String get xSymptomCheckerLogin {
+    final String? path =
+        SecretUtils.instance.get(SecretKeys.symtonCheckerLogin);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('xSymptomCheckerLogin null');
+    }
+  }
+
+  String get xSymptomCheckerRequest {
+    final String? path =
+        SecretUtils.instance.get(SecretKeys.symtomRequestLogin);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('xSymptomCheckerRequest null');
+    }
+  }
+
+  String get xCronicTracking {
+    final String? path =
+        SecretUtils.instance.get(SecretKeys.chronicTrackingBaseUrl);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('xCronicTracking null');
+    }
+  }
+
+  String get xDoctorBaseUrl {
+    final String? path = SecretUtils.instance.get(SecretKeys.doctorBaseUrl);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('xDoctorBaseUrl null');
+    }
+  }
 }

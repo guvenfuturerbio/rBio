@@ -7,19 +7,19 @@ part 'blood_glucose_value_model.g.dart';
 @JsonSerializable()
 class BloodGlucoseValue {
   @JsonKey(name: 'entegration_id')
-  int id;
+  int? id;
   @JsonKey(name: 'value')
-  String value;
+  String? value;
   @JsonKey(name: 'value_type')
-  String valueType;
+  String? valueType;
   @JsonKey(name: 'value_note')
-  String valueNote;
+  String? valueNote;
   @JsonKey(name: 'detail')
-  BloodGlucoseValueDetail detail;
+  BloodGlucoseValueDetail? detail;
   @JsonKey(name: 'is_manuel')
-  bool isManual;
+  bool? isManual;
   @JsonKey(name: 'device_uuid')
-  String deviceUUID;
+  String? deviceUUID;
 
   BloodGlucoseValue(
       {this.value,
@@ -28,7 +28,7 @@ class BloodGlucoseValue {
       this.detail,
       this.id,
       this.isManual,
-      this.deviceUUID});
+      this.deviceUUID,});
 
   factory BloodGlucoseValue.fromJson(Map<String, dynamic> json) =>
       _$BloodGlucoseValueFromJson(json);

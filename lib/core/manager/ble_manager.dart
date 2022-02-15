@@ -13,56 +13,64 @@ class BleDeviceManager extends ChangeNotifier {
   /// or else do nothing.
   Future<bool> savePairedDevices(PairedDevice pairedDevice) async {
     if (!await hasDeviceAlreadyPaired(pairedDevice)) {
-      var _pairedDevices = await getPairedDevices() ?? [];
+      final _pairedDevices = await getPairedDevices();
       _pairedDevices.add(pairedDevice);
-      List<String> _pairedDeviceOnLocal =
+      final List<String> _pairedDeviceOnLocal =
           _pairedDevices.map((device) => jsonEncode(device.toJson())).toList();
-      var response = await sharedPrefs.setStringList(
-          SharedPreferencesKeys.PAIRED_DEVICES, _pairedDeviceOnLocal);
-      getIt<BleScannerOps>()
-          .addDeviceId(_pairedDevices.map((e) => e.deviceId).toList());
+      final response = await sharedPrefs.setStringList(
+        SharedPreferencesKeys.pairedDevices,
+        _pairedDeviceOnLocal,
+      );
+      getIt<BleScannerOps>().pairedDevices =
+          _pairedDevices.map((e) => e.deviceId!).toList();
       notifyListeners();
       return response;
-    } else
+    } else {
       return false;
+    }
   }
 
   Future<bool> hasDeviceAlreadyPaired(PairedDevice device) async {
-    var _pairedDevices = await getPairedDevices() ?? [];
-    var pairedDeviceIndex = _pairedDevices
+    final _pairedDevices = await getPairedDevices();
+    final pairedDeviceIndex = _pairedDevices
         .indexWhere((element) => element.deviceId == device.deviceId);
     return pairedDeviceIndex != -1;
   }
 
   Future<void> deletePairedDevice(String id) async {
-    var response = await getPairedDevices() ?? [];
-    var selectedDeviceIndex =
+    final response = await getPairedDevices();
+    final selectedDeviceIndex =
         response.indexWhere((element) => element.deviceId == id);
-    print(selectedDeviceIndex);
+    LoggerUtils.instance.d(selectedDeviceIndex);
     if (selectedDeviceIndex != -1) {
       response.removeAt(selectedDeviceIndex);
       getIt<BleScannerOps>().pairedDevices =
-          response.map((e) => e.deviceId).toList();
+          response.map((e) => e.deviceId ?? '').toList();
       getIt<BleConnectorOps>().removePairedDevice();
-      List<String> _pairedDeviceOnLocal =
+      final List<String> _pairedDeviceOnLocal =
           response.map((device) => jsonEncode(device.toJson())).toList();
       await sharedPrefs.setStringList(
-          SharedPreferencesKeys.PAIRED_DEVICES, _pairedDeviceOnLocal);
+        SharedPreferencesKeys.pairedDevices,
+        _pairedDeviceOnLocal,
+      );
     }
     notifyListeners();
   }
 
   /// multiple Paired device can be associated. So This method getting all [PairedDevice] as a [List<PairedDevice>]
   Future<List<PairedDevice>> getPairedDevices() async {
-    if (sharedPrefs.getStringList(SharedPreferencesKeys.PAIRED_DEVICES) !=
-        null) {
-      List<String> paired =
-          sharedPrefs?.getStringList(SharedPreferencesKeys.PAIRED_DEVICES);
-      List<PairedDevice> pairedDevices =
-          paired.map((e) => PairedDevice.fromJson(jsonDecode(e))).toList();
-      return pairedDevices;
+    final List<String>? paired =
+        sharedPrefs.getStringList(SharedPreferencesKeys.pairedDevices);
+    List<PairedDevice> pairedDevices = [];
+    if (paired != null) {
+      pairedDevices = paired
+          .map(
+            (e) => PairedDevice.fromJson(jsonDecode(e) as Map<String, dynamic>),
+          )
+          .toList();
     } else {
       return [];
     }
+    return pairedDevices;
   }
 }

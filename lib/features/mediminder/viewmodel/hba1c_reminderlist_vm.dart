@@ -4,12 +4,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
+import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
 class Hba1cReminderListVm extends ChangeNotifier {
-  BuildContext mContext;
+  late BuildContext mContext;
   Hba1cReminderListVm(this.mContext) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchAll();
       await generateUniqueIdForSchedule();
     });
@@ -17,31 +18,30 @@ class Hba1cReminderListVm extends ChangeNotifier {
 
   final random = Random();
 
-  List<Hba1CForScheduleModel> _hba1cForScheduled;
-  List<Hba1CForScheduleModel> get hba1cForScheduled =>
-      this._hba1cForScheduled ?? [];
-
-  List<int> _generatedIdForSchedule;
-  List<int> get generatedIdForSchedule => this._generatedIdForSchedule;
+  List<Hba1CForScheduleModel> hba1cForScheduled = [];
+  List<int>? generatedIdForSchedule;
 
   Future<void> fetchAll() async {
-    List<String> jsonList = getIt<ISharedPreferencesManager>()
+    final jsonList = getIt<ISharedPreferencesManager>()
         .getStringList(SharedPreferencesKeys.hba1cList);
-    List<Hba1CForScheduleModel> prefList = [];
-    if (jsonList == null) {
-      return;
-    } else {
+
+    if (jsonList != null) {
+      hba1cForScheduled = [];
+      final tzNow = TZHelper.instance.now();
+
       for (String jsonMedicine in jsonList) {
         final tempHba1cElement =
             Hba1CForScheduleModel.fromJson(jsonDecode(jsonMedicine));
-        if (DateTime.parse(tempHba1cElement.reminderDate)
-            .isAfter(DateTime.now())) {
-          prefList.add(tempHba1cElement);
+        final itemReminderDate = TZHelper.instance.fromMillisecondsSinceEpoch(
+            int.tryParse(tempHba1cElement.reminderDate ?? '') ?? 0);
+
+        if (itemReminderDate.isAfter(tzNow)) {
+          hba1cForScheduled.add(tempHba1cElement);
         } else {
           removeScheduledHba1c(tempHba1cElement);
         }
       }
-      this._hba1cForScheduled = prefList;
+
       notifyListeners();
     }
   }
@@ -49,30 +49,33 @@ class Hba1cReminderListVm extends ChangeNotifier {
   Future<void> removeScheduledHba1c(
       Hba1CForScheduleModel hba1cForSchedule) async {
     // Vm'de ki listeden item'ı sil
-    this
-        ._hba1cForScheduled
-        .removeWhere((hba1c) => hba1c.id == hba1cForSchedule.id);
+    hba1cForScheduled.removeWhere((hba1c) => hba1c.id == hba1cForSchedule.id);
 
     // Notification'ı iptal et
-    await getIt<LocalNotificationsManager>().cancel(hba1cForSchedule.id);
+    if (hba1cForSchedule.id != null) {
+      await getIt<LocalNotificationManager>()
+          .cancelNotification(hba1cForSchedule.id!);
+    }
 
     // Shared Preferences'da ki listeyi güncelle
     List<String> hba1cJsonList = [];
-    if (this._hba1cForScheduled.length != 0) {
-      for (var hba1cElement in this._hba1cForScheduled) {
+    if (hba1cForScheduled.isNotEmpty) {
+      for (var hba1cElement in hba1cForScheduled) {
         String hba1cJson = jsonEncode(hba1cElement.toJson());
         hba1cJsonList.add(hba1cJson);
       }
     }
-    await getIt<ISharedPreferencesManager>()
-        .setStringList(SharedPreferencesKeys.hba1cList, hba1cJsonList);
+    await getIt<ISharedPreferencesManager>().setStringList(
+      SharedPreferencesKeys.hba1cList,
+      hba1cJsonList,
+    );
 
     notifyListeners();
   }
 
   Future<void> generateUniqueIdForSchedule() async {
     List<int> numberList = [];
-    List<String> jsonList = getIt<ISharedPreferencesManager>()
+    List<String>? jsonList = getIt<ISharedPreferencesManager>()
         .getStringList(SharedPreferencesKeys.hba1cList);
 
     List<int> prefList = [];
@@ -80,7 +83,9 @@ class Hba1cReminderListVm extends ChangeNotifier {
       for (String jsonHba1c in jsonList) {
         Map<String, dynamic> userMap = jsonDecode(jsonHba1c);
         final tempHba1c = Hba1CForScheduleModel.fromJson(userMap);
-        prefList.add(tempHba1c.id);
+        if (tempHba1c.id != null) {
+          prefList.add(tempHba1c.id!);
+        }
       }
     }
 
@@ -95,7 +100,7 @@ class Hba1cReminderListVm extends ChangeNotifier {
       }
     }
 
-    this._generatedIdForSchedule = numberList;
+    generatedIdForSchedule = numberList;
     notifyListeners();
   }
 }

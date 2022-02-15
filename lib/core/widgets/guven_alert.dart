@@ -4,29 +4,36 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import '../core.dart';
 
 class GuvenAlert extends StatelessWidget {
-  final Color backgroundColor;
-  final EdgeInsetsGeometry contentPadding;
-  final Widget title;
-  final ShapeBorder shape;
-  final List<Widget> actions;
-  final Widget content;
+  final Color? backgroundColor;
+  final EdgeInsets? insetPadding;
+  final EdgeInsetsGeometry? contentPadding;
+  final Widget? title;
+  final ShapeBorder? shape;
+  final List<Widget>? actions;
+  final Widget? content;
+  final double? elevation;
 
-  GuvenAlert({
-    Key key,
+  const GuvenAlert({
+    Key? key,
     this.backgroundColor,
+    this.insetPadding,
     this.contentPadding,
     this.title,
     this.shape,
     this.actions,
     this.content,
+    this.elevation,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      elevation: elevation,
+      insetPadding: insetPadding ??
+          const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
       backgroundColor: backgroundColor ?? getIt<ITheme>().mainColor,
       contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
-      title: context.xTextScaleType == TextScaleType.Large
+      title: context.xTextScaleType == TextScaleType.large
           ? Container(
               constraints: BoxConstraints(
                 maxHeight: Atom.height * 0.4,
@@ -37,7 +44,7 @@ class GuvenAlert extends StatelessWidget {
             )
           : title,
       shape: shape ??
-          RoundedRectangleBorder(
+          const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(20.0),
             ),
@@ -66,7 +73,7 @@ class GuvenAlert extends StatelessWidget {
     );
   }
 
-  static Widget buildDescription(String text, {Color color}) {
+  static Widget buildDescription(String text, {Color? color}) {
     return Text(
       text,
       textAlign: TextAlign.center,
@@ -80,8 +87,8 @@ class GuvenAlert extends StatelessWidget {
 
   static Widget buildSmallDescription(
     String text, {
-    TextAlign textAlign,
-    TextDecoration decoration,
+    TextAlign? textAlign,
+    TextDecoration? decoration,
   }) {
     return Text(
       text,
@@ -96,21 +103,21 @@ class GuvenAlert extends StatelessWidget {
   }
 
   static GradientButton buildWhiteAction({
-    text: String,
-    Function onPressed,
-    double height,
-    double width,
+    required String text,
+    required void Function() onPressed,
+    double? height,
+    double? width,
   }) =>
       GradientButton(
         increaseHeightBy: height ?? 16,
         increaseWidthBy: width ?? 50,
-        shapeRadius: BorderRadius.all(Radius.zero),
+        shapeRadius: const BorderRadius.all(Radius.zero),
         child: Text(
           text,
           textAlign: TextAlign.center,
           style: TextStyle(color: getIt<ITheme>().mainColor),
         ),
-        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         callback: onPressed,
         gradient: LinearGradient(
             colors: [getIt<ITheme>().textColor, getIt<ITheme>().textColor],
@@ -126,7 +133,7 @@ class GuvenAlert extends StatelessWidget {
     return buildMaterialAction(
       title,
       onPressed,
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 12,
         horizontal: 48,
       ),
@@ -136,18 +143,18 @@ class GuvenAlert extends StatelessWidget {
   static Widget buildMaterialAction(
     String title,
     void Function() onPressed, {
-    EdgeInsetsGeometry padding,
+    EdgeInsetsGeometry? padding,
   }) {
     return Container(
       decoration: BoxDecoration(
-        gradient: AppGradient(),
+        gradient: appGradient(),
         borderRadius: BorderRadius.circular(8),
       ),
       child: FlatButton(
         color: Colors.transparent,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 8),
+        padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           title,
           style: TextStyle(

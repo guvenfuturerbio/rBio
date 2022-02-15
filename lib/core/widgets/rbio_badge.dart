@@ -5,15 +5,15 @@ import '../core.dart';
 
 class RbioBadge extends StatelessWidget {
   final String image;
-  final int count;
+  final int? count;
   final bool isDark;
   final bool isBigSize;
-  final String path;
-  final VoidCallback onTap;
+  final String? path;
+  final void Function()? onTap;
 
   const RbioBadge({
-    Key key,
-    @required this.image,
+    Key? key,
+    required this.image,
     this.count,
     this.isDark = true,
     this.isBigSize = true,
@@ -25,7 +25,7 @@ class RbioBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: SizedBox(
         height: isBigSize ? 40 : 30,
         width: isBigSize ? 40 : 30,
         child: Stack(

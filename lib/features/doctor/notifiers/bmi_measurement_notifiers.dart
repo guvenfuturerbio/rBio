@@ -5,7 +5,7 @@ import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_
 enum BmiMeasurementState { loading, loaded, error }
 
 class BmiMesaurementDoc extends ChangeNotifier {
-  BmiMeasurementState state;
+  BmiMeasurementState? state;
 
   List<ScaleMeasurementViewModel> bgMeasurements =
       <ScaleMeasurementViewModel>[];

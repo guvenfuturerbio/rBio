@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
-import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -13,13 +12,9 @@ import 'for_you_sub_categories_detail_vm.dart';
 
 class ForYouSubCategoriesDetailScreen extends StatefulWidget {
   var itemId;
-  String title;
+  String? title;
 
-  ForYouSubCategoriesDetailScreen({
-    Key key,
-    this.itemId,
-    this.title,
-  }) : super(key: key);
+  ForYouSubCategoriesDetailScreen({Key? key}) : super(key: key);
 
   @override
   _ForYouSubCategoriesDetailScreenState createState() =>
@@ -45,10 +40,11 @@ class _ForYouSubCategoriesDetailScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      widget.itemId = int.parse(Atom.queryParameters['subCategoryId']);
-      widget.title = Uri.decodeFull(Atom.queryParameters['title']);
+      widget.itemId =
+          int.parse(Atom.queryParameters['subCategoryId'] as String);
+      widget.title = Uri.decodeFull(Atom.queryParameters['title'] as String);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<ForYouSubCategoriesDetailScreenVm>(
@@ -60,13 +56,13 @@ class _ForYouSubCategoriesDetailScreenState
         builder: (
           BuildContext context,
           ForYouSubCategoriesDetailScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             appbar: RbioAppBar(
               title: RbioAppBar.textTitle(
                 context,
-                widget.title,
+                widget.title!,
               ),
             ),
             body: _buildBody(vm),
@@ -78,13 +74,13 @@ class _ForYouSubCategoriesDetailScreenState
 
   Widget _buildBody(ForYouSubCategoriesDetailScreenVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return RbioLoadingOverlay(
           isLoading: vm.showLoadingOverlay,
-          progressIndicator: RbioLoading(),
+          progressIndicator: const RbioLoading(),
           opacity: 0.26,
           color: Colors.black,
           child: Padding(
@@ -111,10 +107,10 @@ class _ForYouSubCategoriesDetailScreenState
                           context,
                           () {
                             Atom.to(
-                              PagePaths.ORDER_SUMMARY,
+                              PagePaths.orderSummary,
                               queryParameters: {
-                                'subCategoryId': widget.itemId.toString(),
-                                'categoryName': widget.title,
+                                'subCategoryId': (widget.itemId ?? '').toString(),
+                                'categoryName': widget.title ?? '',
                               },
                             );
                           },
@@ -141,11 +137,11 @@ class _ForYouSubCategoriesDetailScreenState
                               })
                             },
                           ),
-                          items: vm.cardList.map(
+                          items: vm.cardList?.map(
                             (card) {
                               return Builder(
                                 builder: (BuildContext context) {
-                                  return Container(
+                                  return SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.30,
                                     width: MediaQuery.of(context).size.width,
@@ -161,12 +157,12 @@ class _ForYouSubCategoriesDetailScreenState
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: map<Widget>(
-                            vm.cardList,
+                            vm.cardList ?? [],
                             (index, url) {
                               return Container(
                                 width: 10.0,
                                 height: 10.0,
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 2.0),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
@@ -184,12 +180,12 @@ class _ForYouSubCategoriesDetailScreenState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconButton(
-                                icon: Icon(Icons.arrow_left),
+                                icon: const Icon(Icons.arrow_left),
                                 onPressed: () {
                                   controller.previousPage();
                                 }),
                             IconButton(
-                              icon: Icon(Icons.arrow_right),
+                              icon: const Icon(Icons.arrow_right),
                               onPressed: () {
                                 controller.nextPage();
                               },
@@ -205,11 +201,11 @@ class _ForYouSubCategoriesDetailScreenState
           ),
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -218,53 +214,53 @@ class _ForYouSubCategoriesDetailScreenState
     VoidCallback onTap,
     String title,
   ) {
-    return FadeInUp(
-      duration: Duration(milliseconds: 1000),
-      child: Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
-        child: InkWell(
-          child: _ItemTakeCovid(
-            context: context,
-            title: title,
-            image: R.image.ic_test_icon,
-          ),
-          onTap: onTap,
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
+      child: InkWell(
+        child: _ItemTakeCovid(
+          context: context,
+          title: title,
+          image: R.image.test,
         ),
+        onTap: onTap,
       ),
     );
   }
 }
 
-class mopItem extends StatelessWidget {
+class ListCard extends StatelessWidget {
   String image = "";
   String text = "";
   String title = "";
 
-  mopItem(
-    this.image,
-    this.title,
-    this.text,
-  );
+  ListCard({
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             //
             Container(
-              constraints: BoxConstraints(maxHeight: 300, maxWidth: 300),
+              constraints: const BoxConstraints(maxHeight: 300, maxWidth: 300),
               child: image != null
                   ? Image.memory(base64Decode(image))
-                  : Image.asset(R.image.covid_cat_icon),
-              margin: EdgeInsets.all(30),
+                  : Image.asset(R.image.covidCat),
+              margin: const EdgeInsets.all(30),
             ),
 
             //
             Container(
-              margin: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 8),
+              margin: const EdgeInsets.only(
+                  left: 30, right: 30, top: 10, bottom: 8),
               child: Text(
                 title,
                 style: context.xHeadline3.copyWith(
@@ -277,7 +273,7 @@ class mopItem extends StatelessWidget {
 
             //
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 left: 30,
                 right: 30,
                 top: 8,
@@ -300,19 +296,17 @@ class mopItem extends StatelessWidget {
 }
 
 Widget _ItemTakeCovid({
-  String title,
-  String image,
-  String number,
-  bool isFocused = false,
-  EdgeInsets margin,
-  BuildContext context,
+  String? title,
+  String? image,
+  EdgeInsets? margin,
+  required BuildContext context,
 }) =>
     Container(
       margin: margin,
       alignment: Alignment.center,
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
         gradient: LinearGradient(
           colors: [
             getIt<ITheme>().mainColor,
@@ -326,7 +320,7 @@ Widget _ItemTakeCovid({
             color: getIt<ITheme>().textColorSecondary.withAlpha(50),
             blurRadius: 15,
             spreadRadius: 0,
-            offset: Offset(5, 10),
+            offset: const Offset(5, 10),
           ),
         ],
       ),
@@ -336,7 +330,7 @@ Widget _ItemTakeCovid({
             child: title == null
                 ? Container()
                 : Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
                       title,
                       maxLines: 2,
@@ -348,13 +342,15 @@ Widget _ItemTakeCovid({
                     ),
                   ),
           ),
+
+          //
           Positioned(
             child: Container(
               child: Transform.rotate(
                 angle: -math.pi / 1.0,
-                child: SvgPicture.asset(R.image.ic_back_white),
+                child: SvgPicture.asset(R.image.backWhite),
               ),
-              margin: EdgeInsets.only(left: 15, right: 5),
+              margin: const EdgeInsets.only(left: 15, right: 5),
             ),
             right: 0,
           ),

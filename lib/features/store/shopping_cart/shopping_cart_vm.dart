@@ -4,24 +4,22 @@ import '../../../../core/core.dart';
 
 class ShoppingCartScreenVm extends ChangeNotifier {
   ShoppingCartScreenVm(BuildContext context) {
-    this.mContext = context;
+    mContext = context;
   }
 
-  BuildContext mContext;
+  BuildContext? mContext;
 
-  LoadingProgress _progress;
-
-  LoadingProgress get progress => this._progress;
+  LoadingProgress? progress;
 
   getCartItems() async {
     try {
-      this._progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       notifyListeners();
-      this._progress = LoadingProgress.DONE;
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      this._progress = LoadingProgress.ERROR;
-      showGradientDialog(mContext, LocaleProvider.current.warning,
+      progress = LoadingProgress.error;
+      showGradientDialog(mContext!, LocaleProvider.current.warning,
           LocaleProvider.current.sorry_dont_transaction);
       notifyListeners();
     }

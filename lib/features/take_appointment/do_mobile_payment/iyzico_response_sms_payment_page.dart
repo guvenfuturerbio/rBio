@@ -1,26 +1,24 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/core.dart';
 import 'iyzico_response_vm.dart';
 
 class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
   final String html;
-  final String uid;
+  final String? uid;
   bool fromDeepLink;
-  final String departmentName;
-  final String doctorName;
-  final String appointmentType;
-  final String hospitalName;
-  final String appointmentFee;
+  final String? departmentName;
+  final String? doctorName;
+  final String? appointmentType;
+  final String? hospitalName;
+  final String? appointmentFee;
   final bool fromCovidPcr;
 
   IyzicoResponseSmsPaymentScreen({
-    Key key,
+    Key? key,
     this.uid,
-    this.html,
+    required this.html,
     this.departmentName,
     this.doctorName,
     this.appointmentType,
@@ -38,8 +36,6 @@ class IyzicoResponseSmsPaymentScreen extends StatefulWidget {
 @override
 class _IyzicoResponseSmsPaymentScreenState
     extends State<IyzicoResponseSmsPaymentScreen> {
-  bool answer;
-
   final String html;
 
   _IyzicoResponseSmsPaymentScreenState(String formHtml)
@@ -52,14 +48,16 @@ class _IyzicoResponseSmsPaymentScreenState
 
   @override
   Widget build(BuildContext context) {
+    LoggerUtils.instance.d(Atom.isWeb);
     return ChangeNotifierProvider<IyzicoResponseVm>(
       create: (context) => IyzicoResponseVm(widget.uid),
       child: Consumer<IyzicoResponseVm>(
         builder: (context, vm, child) {
           return RbioScaffold(
             appbar: RbioAppBar(),
-            body: kIsWeb
-                ? HtmlElementView(
+            body: Container(),
+            /* body: Atom.isWeb
+                ? const HtmlElementView(
                     viewType: "PayPalButtons",
                   )
                 : WebView(
@@ -68,7 +66,7 @@ class _IyzicoResponseSmsPaymentScreenState
                       mimeType: 'text/html',
                     ).toString(),
                     javascriptMode: JavascriptMode.unrestricted,
-                  ),
+                  ), */
           );
         },
       ),

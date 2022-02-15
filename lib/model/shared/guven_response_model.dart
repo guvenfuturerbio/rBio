@@ -1,8 +1,8 @@
 import '../../core/core.dart';
 
 class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
-  bool isSuccessful;
-  String message;
+  bool? isSuccessful;
+  String? message;
   dynamic datum;
 
   GuvenResponseModel({
@@ -16,17 +16,49 @@ class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
       GuvenResponseModel.fromJson(json);
 
   GuvenResponseModel.fromJson(Map<String, dynamic> json) {
-    isSuccessful = json['is_successful'];
-    message = json['message'];
-    datum = json['datum'];
+    isSuccessful = json['is_successful'] as bool?;
+    message = json['message'] as String?;
+    datum = json['datum'] as dynamic;
   }
 
   @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['is_successful'] = this.isSuccessful;
-    data['message'] = this.message;
-    data['datum'] = this.datum;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['is_successful'] = isSuccessful;
+    data['message'] = message;
+    data['datum'] = datum;
     return data;
+  }
+}
+
+extension MapCastExtension on GuvenResponseModel {
+  bool get xIsSuccessful => isSuccessful ?? false;
+
+  Map<String, dynamic> get xGetMap {
+    if (datum is Map<String, dynamic>) {
+      return datum as Map<String, dynamic>;
+    }
+
+    throw RbioModelCastException("Model cast exception");
+  }
+
+  bool get xGetBool {
+    if (datum is bool) {
+      return datum as bool;
+    }
+
+    throw RbioModelCastException("Model cast exception");
+  }
+
+  List<Map<String, dynamic>> get xGetMapList {
+    if (datum is List<dynamic>) {
+      if (datum.isEmpty) {
+        return <Map<String, dynamic>>[];
+      } else {
+        return datum?.cast<Map<String, dynamic>>().toList();
+      }
+    }
+
+    throw RbioModelCastException("Dynamic cast exception");
   }
 }

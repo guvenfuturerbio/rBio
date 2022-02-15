@@ -1,6 +1,6 @@
 class KvkkApproveResponse {
-  bool isKVKKAprovved;
-  String kVKKAprovvedDate;
+  bool? isKVKKAprovved;
+  String? kVKKAprovvedDate;
 
   KvkkApproveResponse({
     this.isKVKKAprovved,
@@ -8,14 +8,14 @@ class KvkkApproveResponse {
   });
 
   KvkkApproveResponse.fromJson(Map<String, dynamic> json) {
-    isKVKKAprovved = json['isKVKKAprovved'];
-    kVKKAprovvedDate = json['KVKKAprovvedDate'];
+    isKVKKAprovved = json['isKVKKAprovved'] as bool?;
+    kVKKAprovvedDate = json['KVKKAprovvedDate'] as String?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['isKVKKAprovved'] = this.isKVKKAprovved;
-    data['KVKKAprovvedDate'] = this.kVKKAprovvedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['isKVKKAprovved'] = isKVKKAprovved;
+    data['KVKKAprovvedDate'] = kVKKAprovvedDate;
     return data;
   }
 }

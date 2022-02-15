@@ -1,9 +1,9 @@
 class PaymentCCRequest {
-  String cardHolder;
-  String cardNumber;
-  String cvv;
-  String expirationMonth;
-  String expirationYear;
+  String? cardHolder;
+  String? cardNumber;
+  String? cvv;
+  String? expirationMonth;
+  String? expirationYear;
 
   PaymentCCRequest({
     this.cardHolder,
@@ -13,12 +13,13 @@ class PaymentCCRequest {
     this.expirationYear,
   });
 
-  factory PaymentCCRequest.fromJson(Map<String, dynamic> json) => PaymentCCRequest(
-        cardHolder: json['card_holder'] as String,
-        cardNumber: json['card_number'] as String,
-        cvv: json['ccv'] as String,
-        expirationMonth: json['expiration_month'] as String,
-        expirationYear: json['expiration_year'] as String,
+  factory PaymentCCRequest.fromJson(Map<String, dynamic> json) =>
+      PaymentCCRequest(
+        cardHolder: json['card_holder'] as String?,
+        cardNumber: json['card_number'] as String?,
+        cvv: json['ccv'] as String?,
+        expirationMonth: json['expiration_month'] as String?,
+        expirationYear: json['expiration_year'] as String?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

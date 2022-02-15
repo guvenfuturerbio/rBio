@@ -8,7 +8,7 @@ import '../viewmodel/symptoms_body_symptoms_page_vm.dart';
 
 class BodySymptomsSelectionPage extends StatefulWidget {
   BodySymptomsSelectionPage({
-    Key key,
+    Key? key,
     this.selectedBodySymptoms,
     this.selectedGenderId,
     this.yearOfBirth,
@@ -17,12 +17,12 @@ class BodySymptomsSelectionPage extends StatefulWidget {
     this.myPv,
   }) : super(key: key);
 
-  List<GetBodySymptomsResponse> selectedBodySymptoms;
-  int selectedGenderId;
-  String yearOfBirth;
-  GetBodyLocationResponse selectedBodyLocation;
-  bool isFromVoice;
-  BodySublocationsVm myPv;
+  List<GetBodySymptomsResponse>? selectedBodySymptoms;
+  late int? selectedGenderId;
+  late String? yearOfBirth;
+  GetBodyLocationResponse? selectedBodyLocation;
+  late bool? isFromVoice;
+  BodySublocationsVm? myPv;
 
   @override
   _BodySymptomsSelectionPageState createState() =>
@@ -33,31 +33,35 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
   @override
   void dispose() {
     try {
-      RbioConfig.of(context).bodyLocationRsp = null;
-      RbioConfig.of(context).listBodySympRsp = null;
-    } catch (e) {}
+      RbioConfig.of(context)?.bodyLocationRsp = null;
+      RbioConfig.of(context)?.listBodySympRsp = [];
+    } catch (e) {
+      LoggerUtils.instance.i(e);
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     try {
-      widget.selectedBodyLocation = RbioConfig.of(context).bodyLocationRsp;
-      widget.myPv = RbioConfig.of(context).sublocationVm;
-      widget.selectedBodySymptoms = RbioConfig.of(context).listBodySympRsp;
+      widget.selectedBodyLocation = RbioConfig.of(context)?.bodyLocationRsp;
+      widget.myPv = RbioConfig.of(context)?.sublocationVm;
+      widget.selectedBodySymptoms =
+          RbioConfig.of(context)?.listBodySympRsp ?? [];
       widget.selectedGenderId =
-          int.parse(Atom.queryParameters['selectedGenderId']);
-      widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
+          int.parse(Atom.queryParameters['selectedGenderId'] as String);
+      widget.yearOfBirth = Atom.queryParameters['yearOfBirth'] as String;
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
     return ChangeNotifierProvider(
       create: (context) => BodySymptomSelectionVm(
           context: context,
-          genderId: widget.selectedGenderId,
-          symptomList: widget.myPv.selectedSymptoms,
-          year_of_birth: widget.yearOfBirth,
+          genderId: widget.selectedGenderId!,
+          symptomList:
+              widget.myPv!.selectedSymptoms as List<GetBodySymptomsResponse>,
+          year_of_birth: widget.yearOfBirth!,
           isFromVoice: widget.isFromVoice,
           myPv: widget.myPv),
       child: Consumer<BodySymptomSelectionVm>(builder: (context, value, child) {
@@ -84,7 +88,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(left: 25, top: 15),
+                      margin: const EdgeInsets.only(left: 25, top: 15),
                       child: Text(
                         widget.selectedGenderId == 0
                             ? LocaleProvider.of(context).gender_male
@@ -100,11 +104,11 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 35),
+                      margin: const EdgeInsets.only(left: 35),
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.selectedBodyLocation.name,
+                          widget.selectedBodyLocation!.name!,
                           style: context.xHeadline3.copyWith(
                               fontWeight: FontWeight.bold,
                               color: getIt<ITheme>().mainColor),
@@ -113,7 +117,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 35),
+                      margin: const EdgeInsets.only(left: 35),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 0, 8, 30.0),
                         child: Text(
@@ -131,7 +135,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                 ),
                 Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: value.selectedBodySymptoms.length * 35.0 >
                               MediaQuery.of(context).size.height * 0.25
                           ? MediaQuery.of(context).size.height * 0.25
@@ -161,18 +165,19 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                           await value.removeSemptomFromList(
                                               value
                                                   .selectedBodySymptoms[index]);
-                                          await widget.myPv
-                                              .removeSemptomFromList(widget.myPv
-                                                  .selectedSymptoms[index]);
+                                          await widget.myPv!
+                                              .removeSemptomFromList(widget
+                                                  .myPv!
+                                                  .selectedSymptoms![index]);
                                           await value.fetchProposedSymptoms(
                                               value.selectedBodySymptoms,
                                               widget.selectedGenderId,
                                               widget.yearOfBirth);
                                         },
-                                        child: Icon(Icons.close)),
+                                        child: const Icon(Icons.close)),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   thickness: 1,
                                 )
                               ],
@@ -190,8 +195,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                             title: LocaleProvider.of(context).add_symptom),
                       ),
                     ),
-                    value.proposedProgress == LoadingProgress.LOADING
-                        ? RbioLoading()
+                    value.proposedProgress == LoadingProgress.loading
+                        ? const RbioLoading()
                         : _buildProposedList(value, context),
                   ],
                 ),
@@ -200,22 +205,24 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
+          padding: EdgeInsets.only(
+            bottom: Atom.safeBottom + 16,
+          ),
           child: SizedBox(
             width: MediaQuery.of(context).size.width / 1.5,
             child: RbioElevatedButton(
-              onTap: value.selectedBodySymptoms.length != 0
+              onTap: value.selectedBodySymptoms.isNotEmpty
                   ? () async {
-                      RbioConfig.of(context).listBodySympRsp =
+                      RbioConfig.of(context)?.listBodySympRsp =
                           value.selectedBodySymptoms;
                       Atom.to(
-                        PagePaths.SYMPTOM_RESULT_PAGE,
+                        PagePaths.symptomResultPage,
                         queryParameters: {
                           'gender': widget.selectedGenderId == 0 ||
                                   widget.selectedGenderId == 2
                               ? 'male'
                               : 'female',
-                          'year_of_birth': widget.yearOfBirth,
+                          'year_of_birth': widget.yearOfBirth!,
                           'isFromVoice': false.toString(),
                         },
                       );
@@ -232,12 +239,11 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
   Widget _buildProposedList(
       BodySymptomSelectionVm value, BuildContext context) {
     switch (value.proposedProgress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
-        break;
-      case LoadingProgress.DONE:
+      case LoadingProgress.loading:
+        return const RbioLoading();
+      case LoadingProgress.done:
         return Visibility(
-          visible: value.proposedSymptomList.length != 0 ? true : false,
+          visible: value.proposedSymptomList.isNotEmpty ? true : false,
           child: Column(
             children: [
               Padding(
@@ -248,7 +254,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                       .copyWith(color: getIt<ITheme>().textColorSecondary),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: value.proposedSymptomList.length * 35.0 >
                         MediaQuery.of(context).size.height * 0.25
                     ? MediaQuery.of(context).size.height * 0.25
@@ -279,7 +285,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                 flex: 1,
                                 child: GestureDetector(
                                     onTap: () async {
-                                      widget.myPv.addSemptomToList(
+                                      widget.myPv!.addSemptomToList(
                                           value.proposedSymptomList[index]);
                                       await value.addSemptomToList(
                                           value.proposedSymptomList[index]);
@@ -288,11 +294,11 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                           widget.selectedGenderId,
                                           widget.yearOfBirth);
                                     },
-                                    child: Icon(Icons.add)),
+                                    child: const Icon(Icons.add)),
                               ),
                             ],
                           ),
-                          Divider(
+                          const Divider(
                             thickness: 1,
                           )
                         ],
@@ -303,11 +309,11 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
           ),
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }

@@ -1,9 +1,9 @@
 import 'resources_request.dart';
 
 class GetEventsRequest {
-  int patientId;
-  int appointmentType;
-  List<ResourcesRequest> resourcesRequestList;
+  int? patientId;
+  int? appointmentType;
+  List<ResourcesRequest>? resourcesRequestList;
 
   GetEventsRequest({
     this.patientId,

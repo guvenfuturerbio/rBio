@@ -5,9 +5,9 @@ class _GraphHeaderSection extends StatelessWidget {
   final ScrollController controller;
 
   const _GraphHeaderSection({
-    Key key,
-    this.value,
-    this.controller,
+    Key? key,
+    required this.value,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -37,9 +37,9 @@ class _GraphHeaderSection extends StatelessWidget {
         //
         Container(
           height: MediaQuery.of(context).orientation == Orientation.portrait
-              ? context.HEIGHT * 0.25
-              : context.HEIGHT * 0.7,
-          margin: EdgeInsets.all(8),
+              ? context.height * 0.25
+              : context.height * 0.7,
+          margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: getIt<ITheme>().cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
@@ -53,9 +53,9 @@ class _GraphHeaderSection extends StatelessWidget {
               //
               IgnorePointer(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 40, top: 45),
+                  padding: const EdgeInsets.only(left: 40, top: 45),
                   child: SvgPicture.asset(
-                    R.image.grafik_arkasi,
+                    R.image.grafikArkasi,
                     alignment: Alignment.centerRight,
                   ),
                 ),
@@ -72,7 +72,7 @@ class _GraphHeaderSection extends StatelessWidget {
                           .changeChartShowStatus(),
                       child: Icon(
                         Icons.keyboard_arrow_up,
-                        size: 52 * context.TEXTSCALE,
+                        size: 52 * context.textScale,
                       ),
                     ))
             ],

@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'core/core.dart';
-import 'core/notifiers/notification_badge_notifier.dart';
-import 'features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
+import 'core/manager/firebase_messaging_manager.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
@@ -19,14 +18,15 @@ import 'features/home/viewmodel/home_vm.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appConfig = DefaultConfig();
-  await SecretUtils.instance.setup(Environment.PROD);
+  await SecretUtils.instance.setup(Environment.prod);
   await Firebase.initializeApp();
-  FirebaseMessagingManager.mainInit();
   await setupLocator(appConfig);
+  await getIt<LocalNotificationManager>().init();
+  await getIt<FirebaseMessagingManager>().init();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.dark,
@@ -37,14 +37,16 @@ Future<void> main() async {
   );
   runApp(
     RbioConfig(
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -78,23 +80,25 @@ class _MyAppState extends State<MyApp> {
             create: (context) => BgMeasurementsNotifierDoc(),
           ),
           ChangeNotifierProvider<HomeVm>(
-            create: (context) => HomeVm(),
+            create: (context) => HomeVm(context),
           ),
           ChangeNotifierProvider<ThemeNotifier>(
             create: (context) => ThemeNotifier(),
           ),
           ChangeNotifierProvider<UserNotifier>(
-              create: (context) => getIt<UserNotifier>()),
-          ChangeNotifierProvider<UserProfilesNotifier>(
-            create: (context) => UserProfilesNotifier(),
+            create: (context) => getIt<UserNotifier>(),
           ),
           ChangeNotifierProvider<ScaleProgressPageViewModel>(
             create: (ctx) => ScaleProgressPageViewModel(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
-              value: BgProgressPageViewModel()),
+            value: BgProgressPageViewModel(context: context),
+          ),
           ChangeNotifierProvider<BpProgressPageVm>.value(
-              value: BpProgressPageVm()),
+            value: BpProgressPageVm(),
+          ),
+
+          //
           if (!Atom.isWeb) ...[
             ChangeNotifierProvider<BleScannerOps>.value(
               value: getIt<BleScannerOps>(),
@@ -113,23 +117,25 @@ class _MyAppState extends State<MyApp> {
           builder: (
             BuildContext context,
             ThemeNotifier themeNotifier,
-            Widget child,
+            Widget? child,
           ) {
             return OrientationBuilder(
               builder: (BuildContext context, Orientation orientation) {
-                RbioConfig.of(context).changeOrientation(orientation);
+                RbioConfig.of(context)?.changeOrientation(orientation);
 
                 return AtomMaterialApp(
-                  initialUrl: PagePaths.LOGIN,
+                  initialUrl: PagePaths.login,
                   routes: VRouterRoutes.routes,
                   onSystemPop: (data) async {
-                    if (Atom.isDialogShow ?? false) {
+                    if (Atom.isDialogShow) {
                       try {
                         Atom.dismiss();
                         data.stopRedirection();
-                      } catch (e) {}
+                      } catch (e) {
+                        LoggerUtils.instance.i(e);
+                      }
                     } else {
-                      final currentUrl = data.fromUrl;
+                      final currentUrl = data.fromUrl ?? "";
                       if (currentUrl.contains('/home')) {
                         SystemNavigator.pop();
                       } else if (data.historyCanBack()) {
@@ -141,17 +147,17 @@ class _MyAppState extends State<MyApp> {
                   //
                   title: 'Güven Online',
                   debugShowCheckedModeBanner: false,
-                  navigatorObservers: [],
+                  navigatorObservers: const [],
 
                   //
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return Directionality(
                       textDirection: TextDirection.ltr,
                       child: MediaQuery(
                         data: MediaQuery.of(context).copyWith(
                           textScaleFactor: themeNotifier.textScale.getValue(),
                         ),
-                        child: child,
+                        child: child!,
                       ),
                     );
                   },
@@ -182,6 +188,7 @@ class _MyAppState extends State<MyApp> {
                   ],
                   supportedLocales:
                       context.read<LocaleNotifier>().supportedLocales,
+                  onPop: (vRedirector) async {},
                 );
               },
             );

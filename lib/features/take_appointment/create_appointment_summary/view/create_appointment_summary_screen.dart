@@ -8,7 +8,7 @@ import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
 
 class CreateAppointmentSummaryScreen extends StatefulWidget {
-  CreateAppointmentSummaryScreen({Key key}) : super(key: key);
+  const CreateAppointmentSummaryScreen({Key? key}) : super(key: key);
 
   @override
   _CreateAppointmentSummaryScreenState createState() =>
@@ -17,21 +17,21 @@ class CreateAppointmentSummaryScreen extends StatefulWidget {
 
 class _CreateAppointmentSummaryScreenState
     extends State<CreateAppointmentSummaryScreen> {
-  String patientId;
-  String patientName;
-  int tenantId;
-  String tenantName;
-  int departmentId;
-  String departmentName;
-  int resourceId;
-  String resourceName;
-  String date;
-  String from;
-  String to;
-  bool forOnline;
+  late String patientId;
+  late String patientName;
+  late int tenantId;
+  late String tenantName;
+  late int departmentId;
+  late String departmentName;
+  late int resourceId;
+  late String resourceName;
+  late String date;
+  late String from;
+  late String to;
+  late bool forOnline;
 
-  TextEditingController codeEditingController;
-  FocusNode codeFocusNode;
+  late TextEditingController codeEditingController;
+  late FocusNode codeFocusNode;
 
   @override
   void initState() {
@@ -52,26 +52,26 @@ class _CreateAppointmentSummaryScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      patientId = Uri.decodeFull(Atom.queryParameters['patientId']);
-      patientName = Uri.decodeFull(Atom.queryParameters['patientName']);
-      tenantId = int.parse(Atom.queryParameters['tenantId']);
-      tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']);
-      departmentId = int.parse(Atom.queryParameters['departmentId']);
-      departmentName = Uri.decodeFull(Atom.queryParameters['departmentName']);
-      resourceId = int.parse(Atom.queryParameters['resourceId']);
-      resourceName = Uri.decodeFull(Atom.queryParameters['resourceName']);
-      date = Atom.queryParameters['date'];
-      from = Atom.queryParameters['from'];
-      to = Atom.queryParameters['to'];
+      patientId = Uri.decodeFull(Atom.queryParameters['patientId']!);
+      patientName = Uri.decodeFull(Atom.queryParameters['patientName']!);
+      tenantId = int.parse(Atom.queryParameters['tenantId']!);
+      tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']!);
+      departmentId = int.parse(Atom.queryParameters['departmentId']!);
+      departmentName = Uri.decodeFull(Atom.queryParameters['departmentName']!);
+      resourceId = int.parse(Atom.queryParameters['resourceId']!);
+      resourceName = Uri.decodeFull(Atom.queryParameters['resourceName']!);
+      date = Atom.queryParameters['date']!;
+      from = Atom.queryParameters['from'] as String;
+      to = Atom.queryParameters['to'] as String;
       forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<CreateAppointmentSummaryVm>(
       create: (context) => CreateAppointmentSummaryVm(
         mContext: context,
-        patientId: getIt<UserNotifier>().getPatient().id,
+        patientId: getIt<UserNotifier>().getPatient().id!,
         tenantId: tenantId,
         departmentId: departmentId,
         resourceId: resourceId,
@@ -83,7 +83,7 @@ class _CreateAppointmentSummaryScreenState
         builder: (
           BuildContext context,
           CreateAppointmentSummaryVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioStackedScaffold(
@@ -115,19 +115,53 @@ class _CreateAppointmentSummaryScreenState
           children: [
             //
             R.sizes.stackedTopPadding(context),
+
+            //
+            if (vm.appointmentSuccess) ...[
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //
+                    R.sizes.hSizer8,
+
+                    //
+                    SvgPicture.asset(
+                      R.image.successAppointment,
+                      width: Atom.width * 0.4,
+                    ),
+
+                    //
+                    R.sizes.hSizer4,
+
+                    //
+                    Text(
+                      LocaleProvider.current.appo_created,
+                      textAlign: TextAlign.center,
+                      style: context.xHeadline3.copyWith(
+                        color: getIt<ITheme>().mainColor,
+                      ),
+                    ),
+
+                    //
+                    R.sizes.hSizer12,
+                  ],
+                ),
+              ),
+            ],
+
+            //
             R.sizes.hSizer16,
 
             //
             Text(
               LocaleProvider.current.appointment_details,
               textAlign: TextAlign.start,
-              style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: context.xHeadline3,
             ),
 
             //
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
 
@@ -185,17 +219,17 @@ class _CreateAppointmentSummaryScreenState
                             hintText: LocaleProvider.current.discount_code,
                             border: RbioTextFormField.noneBorder(),
                             textInputAction: TextInputAction.done,
-                            contentPadding: EdgeInsets.only(
+                            contentPadding: const EdgeInsets.only(
                               left: 0,
                               right: 20,
                               top: 10,
                               bottom: 13,
                             ),
                             onChanged: (term) {
-                              if (term != null && term != '') {
-                                vm.summaryButton = SummaryButtons.ApplyActive;
+                              if (term != '') {
+                                vm.summaryButton = SummaryButtons.applyActive;
                               } else {
-                                vm.summaryButton = SummaryButtons.ApplyPassive;
+                                vm.summaryButton = SummaryButtons.applyPassive;
                               }
                             },
                           ),
@@ -208,17 +242,17 @@ class _CreateAppointmentSummaryScreenState
                               final code = await Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return QRCodeScannerScreen();
+                                    return const QRCodeScannerScreen();
                                   },
                                 ),
                               );
                               if (code != null) {
                                 codeEditingController.text = code;
-                                vm.summaryButton = SummaryButtons.ApplyActive;
+                                vm.summaryButton = SummaryButtons.applyActive;
                               }
                             },
                             child: SvgPicture.asset(
-                              R.image.qr_icon,
+                              R.image.qr,
                               width: 28,
                             ),
                           ),
@@ -287,50 +321,78 @@ class _CreateAppointmentSummaryScreenState
               ],
 
               //
-              if (!isKeyboardVisible) ...[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    //
-                    Expanded(
-                      child: _buildSummaryButton(vm),
-                    ),
-
-                    //
-                    SizedBox(width: 8),
-
-                    //
-                    Expanded(
-                      child: RbioElevatedButton(
-                        showElevation: false,
-                        onTap: () {
-                          vm.saveAppointment(
-                            price: vm?.orgVideoCallPriceResponse?.patientPrice
-                                ?.toString(),
-                            forOnline: forOnline,
-                            forFree:
-                                (vm?.orgVideoCallPriceResponse?.patientPrice ??
-                                            0) <
-                                        1
-                                    ? true
-                                    : false,
-                          );
-                        },
-                        title: forOnline
-                            ? LocaleProvider.current.pay
-                            : LocaleProvider.current.done,
-                        fontWeight: FontWeight.w600,
+              if (!forOnline) ...[
+                RbioElevatedButton(
+                  infinityWidth: true,
+                  showElevation: false,
+                  onTap: () {
+                    if (vm.appointmentSuccess) {
+                      Atom.to(PagePaths.main, isReplacement: true);
+                    } else {
+                      vm.saveAppointment(
+                        price: vm.orgVideoCallPriceResponse?.patientPrice
+                            ?.toString(),
+                        forOnline: forOnline,
+                        forFree:
+                            (vm.orgVideoCallPriceResponse?.patientPrice ?? 0) <
+                                    1
+                                ? true
+                                : false,
+                      );
+                    }
+                  },
+                  title: vm.appointmentSuccess
+                      ? LocaleProvider.current.Ok
+                      : LocaleProvider.current.confirm,
+                  fontWeight: FontWeight.w600,
+                ),
+                R.sizes.defaultBottomPadding,
+              ] else ...[
+                if (!isKeyboardVisible) ...[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //
+                      Expanded(
+                        child: _buildSummaryButton(vm),
                       ),
-                    ),
-                  ],
-                ),
 
-                //
-                SizedBox(
-                  height: Atom.safeBottom + 10,
-                ),
+                      //
+                      const SizedBox(width: 8),
+
+                      //
+                      Expanded(
+                        child: RbioElevatedButton(
+                          showElevation: false,
+                          onTap: () {
+                            vm.saveAppointment(
+                              price: vm.orgVideoCallPriceResponse?.patientPrice
+                                  ?.toString() as String,
+                              forOnline: forOnline,
+                              forFree:
+                                  (vm.orgVideoCallPriceResponse?.patientPrice ??
+                                              0) <
+                                          1
+                                      ? true
+                                      : false,
+                            );
+                          },
+                          title: forOnline
+                              ? LocaleProvider.current.pay
+                              : LocaleProvider.current.done,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  //
+                  SizedBox(
+                    height: Atom.safeBottom + 10,
+                  ),
+                ],
               ],
             ],
           ),
@@ -340,15 +402,16 @@ class _CreateAppointmentSummaryScreenState
   }
 
   Widget _buildPrice(CreateAppointmentSummaryVm vm) {
-    var _newPrice;
+    String? _newPrice;
     if (vm.orgVideoCallPriceResponse != null &&
-        vm.orgVideoCallPriceResponse.patientPrice != null) {
-      String _price = '${vm.orgVideoCallPriceResponse.patientPrice} TL';
+        vm.orgVideoCallPriceResponse?.patientPrice != null) {
+      String _price = '${vm.orgVideoCallPriceResponse!.patientPrice!} TL';
 
       if (vm.newVideoCallPriceResponse != null &&
-          vm.newVideoCallPriceResponse.patientPrice != null) {
-        _newPrice = '${vm.newVideoCallPriceResponse.patientPrice} TL';
+          vm.newVideoCallPriceResponse?.patientPrice != null) {
+        _newPrice = '${vm.newVideoCallPriceResponse!.patientPrice!} TL';
       }
+
       return _newPrice != null
           ? Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -386,60 +449,58 @@ class _CreateAppointmentSummaryScreenState
               ),
             );
     } else {
-      return RbioLoading();
+      return const RbioLoading();
     }
   }
 
   Widget _buildSummaryButton(CreateAppointmentSummaryVm vm) {
-    String title;
-    VoidCallback onTap;
+    late String title;
+    late VoidCallback onTap;
 
     switch (vm.summaryButton) {
-      case SummaryButtons.Add:
+      case SummaryButtons.add:
         title = LocaleProvider.current.add_discount_code;
         onTap = () {
           vm.showCodeField = true;
-          vm.summaryButton = SummaryButtons.ApplyPassive;
+          vm.summaryButton = SummaryButtons.applyPassive;
         };
         break;
 
-      case SummaryButtons.ApplyPassive:
+      case SummaryButtons.applyPassive:
         title = LocaleProvider.current.apply_discount;
-        onTap = null;
+        onTap = () {};
         break;
 
-      case SummaryButtons.ApplyActive:
+      case SummaryButtons.applyActive:
         title = LocaleProvider.current.apply_discount;
         onTap = () {
           vm.applyCode(codeEditingController.text.trim());
-          vm.summaryButton = SummaryButtons.Cancel;
+          vm.summaryButton = SummaryButtons.cancel;
         };
         break;
 
-      case SummaryButtons.Cancel:
+      case SummaryButtons.cancel:
         title = LocaleProvider.current.cancel_discount;
         onTap = () {
           codeEditingController.text = '';
           vm.codeCancel();
-          vm.summaryButton = SummaryButtons.ApplyPassive;
+          vm.summaryButton = SummaryButtons.applyPassive;
         };
         break;
 
-      case SummaryButtons.None:
-        title = null;
-        onTap = null;
+      case SummaryButtons.none:
+        title = "";
+        onTap = () {};
         break;
     }
-
-    if (title == null) return SizedBox();
 
     return RbioElevatedButton(
       onTap: onTap,
       title: title,
-      backColor: vm.summaryButton == SummaryButtons.Add
+      backColor: vm.summaryButton == SummaryButtons.add
           ? getIt<ITheme>().cardBackgroundColor
           : getIt<ITheme>().mainColor,
-      textColor: vm.summaryButton == SummaryButtons.Add
+      textColor: vm.summaryButton == SummaryButtons.add
           ? getIt<ITheme>().textColorSecondary
           : getIt<ITheme>().textColor,
       fontWeight: FontWeight.w600,
@@ -450,7 +511,7 @@ class _CreateAppointmentSummaryScreenState
   Widget _buildInfoCard(CreateAppointmentSummaryVm vm) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
@@ -549,9 +610,9 @@ class _CreateAppointmentSummaryScreenState
     );
   }
 
-  Widget _buildVerticalGap() => SizedBox(height: 8);
+  Widget _buildVerticalGap() => const SizedBox(height: 8);
 
-  Widget _buildHorizontalGap() => SizedBox(width: 12);
+  Widget _buildHorizontalGap() => const SizedBox(width: 12);
 
   Widget _buildActiveText(String text) => Text(
         text,

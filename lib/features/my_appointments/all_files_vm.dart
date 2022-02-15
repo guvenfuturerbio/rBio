@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import '../../core/core.dart';
 
 class ServerFile {
-  String folder;
-  String file;
-  String fileType;
+  String? folder;
+  String? file;
+  String? fileType;
 
   ServerFile({
     this.folder,
@@ -41,7 +41,7 @@ class AllFilesVm extends RbioVm {
 
   Future<void> fetchAllFiles() async {
     try {
-      progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       final response = await getIt<Repository>().getAllFiles();
       final datum = response.datum;
       if (datum != null && datum is List<dynamic>) {
@@ -58,10 +58,10 @@ class AllFilesVm extends RbioVm {
           );
         }
       }
-      progress = LoadingProgress.DONE;
+      progress = LoadingProgress.done;
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
-      progress = LoadingProgress.ERROR;
+      progress = LoadingProgress.error;
     }
   }
 
@@ -73,21 +73,23 @@ class AllFilesVm extends RbioVm {
   void onFileTapped(ServerFile serverFile) async {
     try {
       showProgressOverlay = true;
-      final response = await getIt<Repository>()
-          .downloadAppointmentSingleFile(serverFile.folder, serverFile.file);
+      final response = await getIt<Repository>().downloadAppointmentSingleFile(
+        serverFile.folder ?? '',
+        serverFile.file ?? '',
+      );
       final bytes = base64.decode(response.datum);
       var file = File("");
       file =
           File('${getIt<GuvenSettings>().appDocDirectory}/${serverFile.file}');
       await file.writeAsBytes(bytes);
-      final fileNameSplit = serverFile.file.split(".");
-      final mimeType = fileNameSplit[fileNameSplit.length - 1];
+      final fileNameSplit = serverFile.file?.split(".");
+      final mimeType = fileNameSplit?[fileNameSplit.length - 1];
       showProgressOverlay = false;
       if (mimeType == "pdf") {
         Atom.to(
-          PagePaths.FULLPDFVIEWER,
+          PagePaths.fullPdfViewer,
           queryParameters: {
-            'title': Uri.encodeFull(serverFile.file),
+            'title': Uri.encodeFull(serverFile.file ?? ''),
             'pdfPath': Uri.encodeFull(file.path),
           },
         );

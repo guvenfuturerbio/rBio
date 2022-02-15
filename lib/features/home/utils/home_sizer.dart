@@ -5,11 +5,11 @@ import '../../../core/core.dart';
 class HomeSizer {
   HomeSizer._();
 
-  static HomeSizer _instance;
+  static HomeSizer? _instance;
 
   static HomeSizer get instance {
     _instance ??= HomeSizer._();
-    return _instance;
+    return _instance!;
   }
 
   double _getBodyHeight() =>

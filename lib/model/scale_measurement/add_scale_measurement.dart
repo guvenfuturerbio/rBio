@@ -4,40 +4,41 @@ String addScaleMasurementBodyToJson(AddScaleMasurementBody data) =>
     json.encode(data.toJson());
 
 class AddScaleMasurementBody {
-  AddScaleMasurementBody(
-      {this.entegrationId,
-      this.occurrenceTime,
-      this.weight,
-      this.bmi,
-      this.water,
-      this.bodyFat,
-      this.visceralFat,
-      this.boneMass,
-      this.muscle,
-      this.bmh,
-      this.scaleUnit,
-      this.note,
-      this.isManuel,
-      this.deviceUUID});
+  AddScaleMasurementBody({
+    this.entegrationId,
+    this.occurrenceTime,
+    this.weight,
+    this.bmi,
+    this.water,
+    this.bodyFat,
+    this.visceralFat,
+    this.boneMass,
+    this.muscle,
+    this.bmh,
+    this.scaleUnit,
+    this.note,
+    this.isManuel,
+    this.deviceUUID,
+  });
 
-  int entegrationId;
-  DateTime occurrenceTime;
-  double weight;
-  double bmi;
-  double water;
-  double bodyFat;
-  double visceralFat;
-  double boneMass;
-  double muscle;
-  double bmh;
-  int scaleUnit;
-  String note;
-  bool isManuel;
-  String deviceUUID;
+  int? entegrationId;
+  DateTime? occurrenceTime;
+  double? weight;
+  double? bmi;
+  double? water;
+  double? bodyFat;
+  double? visceralFat;
+  double? boneMass;
+  double? muscle;
+  double? bmh;
+  int? scaleUnit;
+  String? note;
+  bool? isManuel;
+  String? deviceUUID;
 
   Map<String, dynamic> toJson() => {
         "entegration_id": entegrationId,
-        "occurrence_time": occurrenceTime.toIso8601String(),
+        "occurrence_time": occurrenceTime?.toIso8601String(),
         "weight": weight,
         "bmi": bmi,
         "water": water,

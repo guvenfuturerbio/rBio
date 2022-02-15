@@ -7,7 +7,7 @@ import '../viewmodel/health_information_vm.dart';
 import '../widget/range_selection_slider.dart';
 
 class HealthInformationScreen extends StatefulWidget {
-  const HealthInformationScreen({Key key}) : super(key: key);
+  const HealthInformationScreen({Key? key}) : super(key: key);
 
   @override
   _HealthInformationScreenState createState() =>
@@ -15,14 +15,14 @@ class HealthInformationScreen extends StatefulWidget {
 }
 
 class _HealthInformationScreenState extends State<HealthInformationScreen> {
-  TextEditingController diabetTypeController;
-  TextEditingController weightController;
-  TextEditingController normalRangeController;
-  TextEditingController heightController;
-  TextEditingController maxRangeController;
-  TextEditingController minRangeController;
-  TextEditingController smokerController;
-  TextEditingController yearofDiagnosisController;
+  late TextEditingController diabetTypeController;
+  late TextEditingController weightController;
+  late TextEditingController normalRangeController;
+  late TextEditingController heightController;
+  late TextEditingController maxRangeController;
+  late TextEditingController minRangeController;
+  late TextEditingController smokerController;
+  late TextEditingController yearofDiagnosisController;
 
   @override
   void initState() {
@@ -55,12 +55,12 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HealthInformationVm>(
-      create: (context) => HealthInformationVm(context: context),
+      create: (context) => HealthInformationVm(context),
       child: Consumer<HealthInformationVm>(
         builder: (
           BuildContext context,
           HealthInformationVm vm,
-          Widget child,
+          Widget? child,
         ) {
           vm.changeTextFiels(
             diabetTypeController: diabetTypeController,
@@ -110,7 +110,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
               child: SingleChildScrollView(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -123,7 +123,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       diabetTypeController,
-                      HealthInformationType.DiabetType,
+                      HealthInformationType.diabetType,
                     ),
 
                     // Height
@@ -132,7 +132,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       heightController,
-                      HealthInformationType.Height,
+                      HealthInformationType.height,
                     ),
 
                     // Weight
@@ -141,7 +141,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       weightController,
-                      HealthInformationType.Weight,
+                      HealthInformationType.weight,
                     ),
 
                     // Normal Range
@@ -150,7 +150,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       normalRangeController,
-                      HealthInformationType.NormalRange,
+                      HealthInformationType.normalRange,
                     ),
 
                     // Max Range
@@ -159,7 +159,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       maxRangeController,
-                      HealthInformationType.MaxRange,
+                      HealthInformationType.maxRange,
                     ),
 
                     // Min Range
@@ -168,7 +168,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       minRangeController,
-                      HealthInformationType.MinRange,
+                      HealthInformationType.minRange,
                     ),
 
                     // Smoke
@@ -177,7 +177,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       smokerController,
-                      HealthInformationType.Smoker,
+                      HealthInformationType.smoker,
                     ),
 
                     // Year of Diagnosis
@@ -186,7 +186,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildTextField(
                       vm,
                       yearofDiagnosisController,
-                      HealthInformationType.YearofDiagnosis,
+                      HealthInformationType.yearofDiagnosis,
                     ),
                   ],
                 ),
@@ -197,7 +197,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
 
         //
         Container(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 8,
           ),
           child: Center(
@@ -216,10 +216,10 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
     );
   }
 
-  Widget _buildSpacer() => SizedBox(height: 8);
+  Widget _buildSpacer() => const SizedBox(height: 8);
 
   Widget _buildTitle(String title) => Padding(
-        padding: EdgeInsets.only(bottom: 4),
+        padding: const EdgeInsets.only(bottom: 4),
         child: Text(
           title,
           style: context.xHeadline4,
@@ -234,21 +234,21 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
       GestureDetector(
         onTap: () async {
           switch (type) {
-            case HealthInformationType.DiabetType:
+            case HealthInformationType.diabetType:
               vm.showDiabetsSheet();
               break;
 
-            case HealthInformationType.Weight:
+            case HealthInformationType.weight:
               vm.showWeightSheet();
               break;
 
-            case HealthInformationType.NormalRange:
+            case HealthInformationType.normalRange:
               {
                 final result = await Atom.show(
                   RangeSelectionSlider(
-                    id: vm.selection.id,
-                    lowerValue: vm.selection.rangeMin.toDouble(),
-                    upperValue: vm.selection.rangeMax.toDouble(),
+                    id: vm.selection.id!,
+                    lowerValue: vm.selection.rangeMin!.toDouble(),
+                    upperValue: vm.selection.rangeMax!.toDouble(),
                   ),
                 );
                 if (result != null) {
@@ -259,23 +259,23 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                 break;
               }
 
-            case HealthInformationType.Height:
+            case HealthInformationType.height:
               vm.showHeightSheet();
               break;
 
-            case HealthInformationType.MaxRange:
+            case HealthInformationType.maxRange:
               vm.showMaxRangeSheet();
               break;
 
-            case HealthInformationType.MinRange:
+            case HealthInformationType.minRange:
               vm.showMinRangeSheet();
               break;
 
-            case HealthInformationType.Smoker:
+            case HealthInformationType.smoker:
               vm.showSmokerSheet();
               break;
 
-            case HealthInformationType.YearofDiagnosis:
+            case HealthInformationType.yearofDiagnosis:
               vm.showDiagnosisSheet();
               break;
           }
@@ -284,7 +284,6 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
           absorbing: true,
           child: RbioTextFormField(
             controller: controller,
-            border: RbioTextFormField.activeBorder(),
           ),
         ),
       );

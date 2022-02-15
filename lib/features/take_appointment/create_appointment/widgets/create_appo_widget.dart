@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 import '../viewmodel/create_appointment_vm.dart';
 
-Widget CreateAppoWidget({
-  @required CreateAppointmentVm val,
-  @required BuildContext context,
-  @required String header,
-  @required String hint,
-  @required Fields whichField,
-  @required LoadingProgress progress,
-  @required List<dynamic> itemList,
+Widget createAppoWidget({
+  required CreateAppointmentVm val,
+  required BuildContext context,
+  required String header,
+  required String hint,
+  required Fields whichField,
+  required LoadingProgress progress,
+  required List<dynamic> itemList,
   bool isOnline = false,
 }) {
   return Column(
@@ -18,7 +18,7 @@ Widget CreateAppoWidget({
     children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(header, style: TextStyle(fontSize: 15)),
+        child: Text(header, style: const TextStyle(fontSize: 15)),
       ),
 
       //
@@ -29,8 +29,8 @@ Widget CreateAppoWidget({
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: progress == LoadingProgress.LOADING
-                ? RbioLoading()
+            child: progress == LoadingProgress.loading
+                ? const RbioLoading()
                 : _buildDropdown(
                     isOnline, whichField, val, context, itemList, hint),
           ),
@@ -50,15 +50,15 @@ Widget _buildDropdown(
 ) {
   return Center(
     child: DropdownButton<dynamic>(
-      icon: isOnline ? Icon(Icons.close, size: 0) : null,
+      icon: isOnline ? const Icon(Icons.close, size: 0) : null,
       isExpanded: true,
-      underline: SizedBox(),
+      underline: const SizedBox(),
       focusColor: Colors.white,
-      value: whichField == Fields.DEPARTMENT
+      value: whichField == Fields.department
           ? val.dropdownValueDepartment
-          : whichField == Fields.TENANTS
+          : whichField == Fields.tenant
               ? val.dropdownValueTenant
-              : whichField == Fields.RELATIVE
+              : whichField == Fields.relative
                   ? val.dropdownValueRelative
                   : val.dropdownValueDoctor,
       style: context.xHeadline5,
@@ -68,7 +68,7 @@ Widget _buildDropdown(
           return DropdownMenuItem<dynamic>(
             value: value,
             child: Text(
-              whichField == Fields.RELATIVE
+              whichField == Fields.relative
                   ? '${value.name} ${value.surname}'
                   : value.title,
               style: context.xHeadline5,
@@ -81,17 +81,17 @@ Widget _buildDropdown(
         style: context.xHeadline5,
       ),
       onChanged: (dynamic value) {
-        if (whichField == Fields.DEPARTMENT) {
+        if (whichField == Fields.department) {
           val.departmentSelection(value);
-        } else if (whichField == Fields.TENANTS) {
+        } else if (whichField == Fields.tenant) {
           val.hospitalSelection(value);
-        } else if (whichField == Fields.DOCTORS) {
+        } else if (whichField == Fields.doctors) {
           val.doctorSelection(value);
-        } else if (whichField == Fields.RELATIVE) {
+        } else if (whichField == Fields.relative) {
           val.relativeSelection(value);
         }
       },
-      itemHeight: context.xTextScaleType == TextScaleType.Small ? 50 : 70,
+      itemHeight: context.xTextScaleType == TextScaleType.small ? 50 : 70,
     ),
   );
 }

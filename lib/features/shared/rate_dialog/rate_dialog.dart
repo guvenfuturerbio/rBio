@@ -8,7 +8,7 @@ import 'rate_dialog_vm.dart';
 class RateDialog extends StatefulWidget {
   final int availabilityId;
 
-  const RateDialog({this.availabilityId});
+  const RateDialog({Key? key, required this.availabilityId}) : super(key: key);
 
   @override
   _RateDialogState createState() => _RateDialogState();
@@ -26,24 +26,26 @@ class _RateDialogState extends State<RateDialog> {
       ),
       content: ChangeNotifierProvider(
         create: (context) => RateDialogVm(
-            context: context, availabilityId: widget.availabilityId),
+          context: context,
+          availabilityId: widget.availabilityId,
+        ),
         child: Consumer<RateDialogVm>(
           builder: (context, value, child) {
             textEditingController.text =
-                value?.getAvailabilityRateResponse?.suggestion ?? "";
+                value.getAvailabilityRateResponse?.suggestion ?? "";
             textEditingController.selection = TextSelection.collapsed(
-                offset:
-                    value?.getAvailabilityRateResponse?.suggestion?.length ??
-                        0);
+              offset:
+                  value.getAvailabilityRateResponse?.suggestion?.length ?? 0,
+            );
 
             return RbioLoadingOverlay(
-              isLoading: value.showLoadingOverlay,
-              progressIndicator: RbioLoading(),
+              isLoading: value.showLoadingOverLay ?? false,
+              progressIndicator: const RbioLoading(),
               opacity: 0,
               child: SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
-                  child: new Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -54,7 +56,7 @@ class _RateDialogState extends State<RateDialog> {
 
                       //
                       RatingBar.builder(
-                        initialRating: value?.getAvailabilityRateResponse
+                        initialRating: value.getAvailabilityRateResponse
                                 ?.videoConferanceRate
                                 ?.toDouble() ??
                             1,
@@ -62,7 +64,8 @@ class _RateDialogState extends State<RateDialog> {
                         direction: Axis.horizontal,
                         allowHalfRating: false,
                         itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
                           color: getIt<ITheme>().mainColor,
@@ -78,7 +81,7 @@ class _RateDialogState extends State<RateDialog> {
                       ),
 
                       //
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
 
@@ -90,14 +93,15 @@ class _RateDialogState extends State<RateDialog> {
                       //
                       RatingBar.builder(
                         initialRating: value
-                                ?.getAvailabilityRateResponse?.doctorRate
+                                .getAvailabilityRateResponse?.doctorRate
                                 ?.toDouble() ??
                             1,
                         minRating: 1,
                         direction: Axis.horizontal,
                         allowHalfRating: false,
                         itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
                           color: getIt<ITheme>().mainColor,
@@ -113,7 +117,7 @@ class _RateDialogState extends State<RateDialog> {
                       ),
 
                       //
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
 
@@ -123,28 +127,29 @@ class _RateDialogState extends State<RateDialog> {
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         textInputAction: TextInputAction.done,
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         maxLength: 256,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 12, right: 12),
-                          hintStyle:
-                              TextStyle(fontSize: 12, color: Colors.black),
+                          contentPadding:
+                              const EdgeInsets.only(left: 12, right: 12),
+                          hintStyle: const TextStyle(
+                              fontSize: 12, color: Colors.black),
                           labelText: LocaleProvider.of(context)
                               .comments_and_suggestion,
-                          enabledBorder: UnderlineInputBorder(
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                             //  when the TextFormField in unfocused
                           ),
-                          focusedBorder: UnderlineInputBorder(
+                          focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                             //  when the TextFormField in focused
                           ),
-                          border: UnderlineInputBorder(),
+                          border: const UnderlineInputBorder(),
                         ),
                       ),
 
                       //
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
 
                       //
                       Utils.instance.button(

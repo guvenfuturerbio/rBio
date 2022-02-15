@@ -1,10 +1,10 @@
 class DetailModel {
-  String occurrenceTime;
-  int normalMin;
-  int normalMax;
-  int alertMin;
-  int alertMax;
-  int target;
+  String? occurrenceTime;
+  int? normalMin;
+  int? normalMax;
+  int? alertMin;
+  int? alertMax;
+  int? target;
   //bool isSmoker;
 
   DetailModel({
@@ -18,7 +18,7 @@ class DetailModel {
   });
 
   DetailModel.fromJson(Map<String, dynamic> json) {
-    occurrenceTime = json['occurrence_time'];
+    occurrenceTime = json['occurrence_time'] as String?;
     normalMin = (json['normal_min'] as double).toInt();
     normalMax = (json['normal_max'] as double).toInt();
     alertMin = (json['alert_min'] as double).toInt();
@@ -28,13 +28,13 @@ class DetailModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['occurrence_time'] = this.occurrenceTime;
-    data['normal_min'] = this.normalMin;
-    data['normal_max'] = this.normalMax;
-    data['alert_min'] = this.alertMin;
-    data['alert_max'] = this.alertMax;
-    data['target'] = this.target;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['occurrence_time'] = occurrenceTime;
+    data['normal_min'] = normalMin;
+    data['normal_max'] = normalMax;
+    data['alert_min'] = alertMin;
+    data['alert_max'] = alertMax;
+    data['target'] = target;
     //data['is_smoker'] = this.isSmoker;
     return data;
   }

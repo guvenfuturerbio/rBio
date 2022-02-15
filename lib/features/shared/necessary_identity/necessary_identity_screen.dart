@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import 'necessary_identity_vm.dart';
 
 class NecessaryIdentityScreen extends StatefulWidget {
-  const NecessaryIdentityScreen({Key key}) : super(key: key);
+  const NecessaryIdentityScreen({Key? key}) : super(key: key);
 
   @override
   _NecessaryIdentityScreenState createState() =>
@@ -13,15 +14,30 @@ class NecessaryIdentityScreen extends StatefulWidget {
 }
 
 class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
-  TextEditingController _identityController = TextEditingController();
+  late TextEditingController _identityController;
+
+  @override
+  void initState() {
+    _identityController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _identityController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<NecessaryIdentityScreenVm>(
       create: (context) => NecessaryIdentityScreenVm(context),
       child: Consumer<NecessaryIdentityScreenVm>(
-        builder: (BuildContext context, NecessaryIdentityScreenVm value,
-            Widget child) {
+        builder: (
+          BuildContext context,
+          NecessaryIdentityScreenVm value,
+          Widget? child,
+        ) {
           return GuvenAlert(
             backgroundColor: Colors.white,
             title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
@@ -37,7 +53,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
               GuvenAlert.buildMaterialAction(
                 LocaleProvider.of(context).btn_cancel,
                 () {
-                  Navigator.pop(context, false);
+                  Atom.dismiss(false);
                 },
               ),
             ],
@@ -54,17 +70,18 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
 
                   //
                   Container(
-                    child: TextFormField(
+                    child: RbioTextFormField(
                       controller: _identityController,
                       textInputAction: TextInputAction.next,
                       obscureText: false,
-                      style: Utils.instance.inputTextStyle(),
-                      decoration: Utils.instance.inputImageDecorationRed(
-                        hintText: LocaleProvider.of(context).tc_or_passport,
-                        image: R.image.ic_user,
+                      hintText: LocaleProvider.of(context).tc_or_passport,
+                      prefixIcon: SvgPicture.asset(
+                        R.image.user,
+                        fit: BoxFit.none,
+                        color: R.color.light_blue,
                       ),
                     ),
-                    margin: EdgeInsets.only(bottom: 10, top: 20),
+                    margin: const EdgeInsets.only(bottom: 10, top: 20),
                   ),
                 ],
               ),

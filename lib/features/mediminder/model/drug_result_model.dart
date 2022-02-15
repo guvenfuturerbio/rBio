@@ -1,6 +1,6 @@
 class DrugResultModel {
-  String name;
-  int id;
+  String? name;
+  int? id;
 
   DrugResultModel({
     this.name,

@@ -1,4 +1,10 @@
-part of '../repository/doctor_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
+
+import '../../../model/model.dart';
+import '../../core.dart';
+
+part 'doctor_service_impl.dart';
 
 abstract class DoctorApiService {
   final IDioHelper helper;

@@ -3,27 +3,24 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import '../../../core/core.dart';
-import '../../../core/enums/medicine_period.dart';
-import '../../../core/enums/remindable.dart';
-import '../../../core/enums/usage_type.dart';
+import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
-class MedicationDateVm extends ChangeNotifier {
-  BuildContext mContext;
-  MedicinePeriod mMedicinePeriod;
-  Remindable mRemindable;
+class MedicationDateVm extends RbioVm {
+  @override
+  late BuildContext mContext;
+  late Remindable mRemindable;
+  late ReminderNotificationsManager mRotificationManager;
 
   MedicationDateVm({
-    BuildContext context,
-    MedicinePeriod medicinePeriod,
-    Remindable remindable,
+    required this.mContext,
+    required this.mRemindable,
+    required this.mRotificationManager,
   }) {
-    this.mContext = context;
-    this.mMedicinePeriod = medicinePeriod;
-    this.mRemindable = remindable;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       _createDays();
       await _generateUniqueIdForSchedule();
     });
@@ -35,60 +32,80 @@ class MedicationDateVm extends ChangeNotifier {
         {
           'name': LocaleProvider.of(mContext).weekdays_monday,
           'day': Day.monday,
+          'shortName': LocaleProvider.of(mContext).weekdays_monday_short,
         },
         {
           'name': LocaleProvider.of(mContext).weekdays_tuesday,
           'day': Day.tuesday,
+          'shortName': LocaleProvider.of(mContext).weekdays_tuesday_short,
         },
         {
           'name': LocaleProvider.of(mContext).weekdays_wednesday,
           'day': Day.wednesday,
+          'shortName': LocaleProvider.of(mContext).weekdays_wednesday_short,
         },
         {
           'name': LocaleProvider.of(mContext).weekdays_thursday,
           'day': Day.thursday,
+          'shortName': LocaleProvider.of(mContext).weekdays_thursday_short,
         },
         {
           'name': LocaleProvider.of(mContext).weekdays_friday,
           'day': Day.friday,
+          'shortName': LocaleProvider.of(mContext).weekdays_friday_short,
         },
         {
           'name': LocaleProvider.of(mContext).weekdays_saturday,
           'day': Day.saturday,
+          'shortName': LocaleProvider.of(mContext).weekdays_saturday_short,
         },
         {
           'name': LocaleProvider.of(mContext).weekdays_sunday,
           'day': Day.sunday,
+          'shortName': LocaleProvider.of(mContext).weekdays_sunday_short,
         }
       ];
 
-  List<DateTime> _doseTimes;
-  List<DateTime> get doseTimes => this._doseTimes ?? [];
-  void set doseTimes(List<DateTime> value) {
-    this._doseTimes = value;
+  MedicinePeriod? mMedicinePeriod;
+  void setMedicinePeriod(MedicinePeriod? value) {
+    mMedicinePeriod = value;
     notifyListeners();
   }
 
-  int _dailyDose;
-  int get dailyDose => this._dailyDose ?? 1;
+  List<tz.TZDateTime>? _doseTimes;
+  List<tz.TZDateTime> get doseTimes => _doseTimes ?? [];
+  set doseTimes(List<tz.TZDateTime> value) {
+    _doseTimes = value;
+    notifyListeners();
+  }
+
+  int? _dailyDose;
+  int get dailyDose => _dailyDose ?? 1;
   setDailyDose(int dose) {
-    this._dailyDose = dose;
+    _dailyDose = dose;
     notifyListeners();
   }
 
-  int _dailyCount;
-  int get dailyCount => this._dailyCount ?? 0;
+  int? _dailyCount;
+  int get dailyCount => _dailyCount ?? 0;
   Future<void> setDailyCount(int count) async {
-    this._dailyCount = count;
+    _dailyCount = count;
     notifyListeners();
     calculateDoseTimes();
     await _generateUniqueIdForSchedule();
   }
 
-  String _drugName;
-  String get drugName => this._drugName ?? "-";
+  String? _drugName;
+  String get drugName => _drugName ?? "-";
   void setDrugName(String drugName) {
-    this._drugName = drugName;
+    _drugName = drugName;
+    notifyListeners();
+  }
+
+  UsageType? _selectedUsageType;
+  UsageType get selectedUsageType => _selectedUsageType ?? UsageType.irrelevant;
+  void setSelectedUsageType(UsageType usageType) {
+    _selectedUsageType = usageType;
     notifyListeners();
   }
 
@@ -98,27 +115,36 @@ class MedicationDateVm extends ChangeNotifier {
     await _generateUniqueIdForSchedule();
   }
 
-  List<SelectableDay> _days;
-  List<SelectableDay> get days => this._days;
+  List<SelectableDay>? _days;
+  List<SelectableDay> get days => _days ?? [];
   void _createDays() {
     _days = [];
     final _kTempList = kDays(mContext);
     for (var i = 0; i < _kTempList.length; i++) {
-      _days.add(
+      _days!.add(
         SelectableDay(
           name: _kTempList[i]['name'],
           selected: false,
           day: _kTempList[i]['day'],
           dayIndex: i,
+          shortName: _kTempList[i]['shortName'],
         ),
       );
     }
     notifyListeners();
   }
 
+  void daysReset() {
+    for (var item in days) {
+      item.selected = false;
+    }
+  }
+
+  List<int>? _generatedIdForSchedule;
+  List<int> get generatedIdForSchedule => _generatedIdForSchedule ?? [];
   Future<void> _generateUniqueIdForSchedule() async {
     List<int> numberList = [];
-    List<String> jsonList = getIt<ISharedPreferencesManager>()
+    List<String>? jsonList = getIt<ISharedPreferencesManager>()
         .getStringList(SharedPreferencesKeys.medicines);
 
     List<int> prefList = [];
@@ -126,15 +152,22 @@ class MedicationDateVm extends ChangeNotifier {
       for (String jsonMedicine in jsonList) {
         Map<String, dynamic> userMap = jsonDecode(jsonMedicine);
         final tempMedicine = MedicineForScheduledModel.fromJson(userMap);
-        prefList.add(tempMedicine.notificationId);
+        if (tempMedicine.notificationId != null) {
+          prefList.add(tempMedicine.notificationId!);
+        }
       }
     }
 
-    int requiredIdCount = mMedicinePeriod == MedicinePeriod.SPECIFIC_DAYS
-        ? days.length * dailyCount
-        : mMedicinePeriod == MedicinePeriod.EVERY_DAY
-            ? dailyCount
-            : 1;
+    int requiredIdCount = 0;
+    if (mMedicinePeriod == MedicinePeriod.oneTime) {
+      requiredIdCount = dailyCount;
+    } else if (mMedicinePeriod == MedicinePeriod.everyDay) {
+      requiredIdCount = dailyCount;
+    } else if (mMedicinePeriod == MedicinePeriod.specificDays) {
+      requiredIdCount = days.length * dailyCount;
+    } else {
+      requiredIdCount = 1;
+    }
 
     while (numberList.length < requiredIdCount) {
       int randomNumber = 10000 + random.nextInt(1000);
@@ -145,44 +178,40 @@ class MedicationDateVm extends ChangeNotifier {
       }
     }
 
-    this._generatedIdForSchedule = numberList;
+    _generatedIdForSchedule = numberList;
     notifyListeners();
   }
-
-  UsageType _selectedUsageType;
-  UsageType get selectedUsageType =>
-      this._selectedUsageType ?? UsageType.IRRELEVANT;
-  void setSelectedUsageType(UsageType usageType) {
-    this._selectedUsageType = usageType;
-    notifyListeners();
-  }
-
-  List<int> _generatedIdForSchedule;
-  List<int> get generatedIdForSchedule => this._generatedIdForSchedule;
-
-  int get intermittentDrugPerDay => 2;
 
   void calculateDoseTimes() {
-    int perMinute = ((24 * 60) / dailyCount).round();
-    int hour = perMinute < 60 ? perMinute : (perMinute / 60).round();
-    int minute = perMinute < 60 ? 0 : perMinute - hour * 60;
-    List<DateTime> doseTimeList = [];
-    doseTimeList.add(DateTime.now());
+    if (dailyCount == 0) return;
+
+    // dailyCount : 3
+    int perMinute = ((24 * 60) / dailyCount).round(); // 480
+    int hour = perMinute < 60 ? perMinute : (perMinute / 60).round(); // 8
+    int minute = perMinute < 60 ? 0 : perMinute - hour * 60; // 0
+    List<tz.TZDateTime> doseTimeList = [];
+    doseTimeList.add(TZHelper.instance.now().add(const Duration(
+        hours: 1))); // TZDateTime (2022-01-31 12:08:12.034435+0300)
     for (var i = 1; i < dailyCount; i++) {
       doseTimeList.add(
-        DateTime.now().add(
-          new Duration(hours: i * hour, minutes: i * minute),
+        doseTimeList.first.add(
+          Duration(hours: i * hour, minutes: i * minute),
         ),
       );
     }
+    /*
+      TZDateTime (2022-01-31 12:08:12.034435+0300)
+      TZDateTime (2022-02-01 00:08:12.034435+0300)
+    */
     doseTimes = doseTimeList;
   }
 
   void setSelectedDoseDate(TimeOfDay timeOfDay, int index) {
-    this._doseTimes[index] = DateTime(
-      this._doseTimes[index].year,
-      this._doseTimes[index].month,
-      this._doseTimes[index].day,
+    _doseTimes?[index] = tz.TZDateTime(
+      tz.local,
+      _doseTimes?[index].year ?? 2022,
+      _doseTimes?[index].month ?? 1,
+      _doseTimes?[index].day ?? 1,
       timeOfDay.hour,
       timeOfDay.minute,
     );
@@ -190,92 +219,163 @@ class MedicationDateVm extends ChangeNotifier {
   }
 
   void createReminderPlan(Remindable selectedRemindable) {
-    if (mMedicinePeriod == MedicinePeriod.EVERY_DAY) {
-      _scheduleForEveryDay(selectedRemindable);
-    } else if (mMedicinePeriod == MedicinePeriod.SPECIFIC_DAYS) {
-      _scheduleForSpecific(selectedRemindable);
+    final isValid = checkValidation(selectedRemindable, mMedicinePeriod);
+    if (!isValid) return;
+
+    switch (mMedicinePeriod) {
+      case MedicinePeriod.oneTime:
+        _scheduleForOneTime(selectedRemindable);
+        break;
+
+      case MedicinePeriod.everyDay:
+        _scheduleForEveryDay(selectedRemindable);
+        break;
+
+      case MedicinePeriod.specificDays:
+        _scheduleForSpecificDays(selectedRemindable);
+        break;
+
+      case MedicinePeriod.intermittentDays:
+        break;
+
+      default:
+        break;
     }
+  }
+
+  bool checkValidation(
+    Remindable selectedRemindable,
+    MedicinePeriod? medicinePeriod,
+  ) {
+    // İlaç ismi kontrolü
+    if (selectedRemindable == Remindable.medication) {
+      if (_drugName == null || _drugName == '') {
+        showInfoDialog(
+          LocaleProvider.current.warning,
+          LocaleProvider.current.error_empty_medicine_name,
+        );
+        return false;
+      }
+    }
+
+    // Belirli Günler seçiminde gün kontrolü
+    if (medicinePeriod == MedicinePeriod.specificDays) {
+      final anyDateSelected = days.any((item) => item.selected);
+      if (!anyDateSelected) {
+        showInfoDialog(
+          LocaleProvider.current.warning,
+          LocaleProvider.current.error_empty_specific_day_selected,
+        );
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  Future<void> _scheduleForOneTime(Remindable selectedRemindable) async {
+    final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+
+    for (int i = 0; i < doseTimes.length; i++) {
+      await _createBGNotificationAndSaved(
+        generatedIdForSchedule[i],
+        doseTimes[i],
+        MedicinePeriod.oneTime,
+        doseTimes[i].xTimeFormat,
+        null,
+        dateTimeNow,
+      );
+    }
+
+    _popAndPushRemindersScreen();
   }
 
   Future<void> _scheduleForEveryDay(Remindable selectedRemindable) async {
+    final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+
     for (int i = 0; i < doseTimes.length; i++) {
-      await getIt<LocalNotificationsManager>().createMedicineEveryDay(
+      await _createBGNotificationAndSaved(
         generatedIdForSchedule[i],
-        _getNotificationTitle(),
-        _getNotificationBody(),
-        Time(doseTimes[i].hour, doseTimes[i].minute, 0),
-      );
-
-      String time = ((doseTimes[i].hour) < 10
-              ? "0" + doseTimes[i].hour.toString()
-              : doseTimes[i].hour.toString()) +
-          ":" +
-          ((doseTimes[i].minute) < 10
-              ? "0" + doseTimes[i].minute.toString()
-              : doseTimes[i].minute.toString());
-
-      saveScheduledMedicine(
-        MedicineForScheduledModel(
-          remindable: mRemindable.toString(),
-          dosage: dailyDose,
-          medicinePeriod: mMedicinePeriod.toString(),
-          time: time.toString(),
-          dayIndex: null,
-          name: drugName,
-          notificationId: generatedIdForSchedule[i],
-          usageType: selectedUsageType.toString(),
-        ),
+        doseTimes[i],
+        MedicinePeriod.everyDay,
+        doseTimes[i].xTimeFormat,
+        null,
+        dateTimeNow,
       );
     }
-    Atom.historyBack();
 
-    Atom.to(PagePaths.MEDICATION_SCREEN,
-        queryParameters: {'remindable': mRemindable.toParseableString()},
-        isReplacement: true);
+    _popAndPushRemindersScreen();
   }
 
-  Future<void> _scheduleForSpecific(Remindable selectedRemindable) async {
+  Future<void> _scheduleForSpecificDays(Remindable selectedRemindable) async {
     int idIndex = 0;
+    final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+
     for (int i = 0; i < days.length; i++) {
       if (days[i].selected) {
         for (int y = 0; y < doseTimes.length; y++) {
-          await getIt<LocalNotificationsManager>().createMedicineSpecificDays(
-            generatedIdForSchedule[idIndex],
-            _getNotificationTitle(),
-            _getNotificationBody(),
-            days[i].day,
-            Time(doseTimes[y].hour, doseTimes[y].minute, 0),
-          );
+          if (days[i].dayIndex != null) {
+            await _createBGNotificationAndSaved(
+              generatedIdForSchedule[idIndex],
+              TZHelper.instance.nextInstanceOfDay(i + 1, doseTimes[y]),
+              MedicinePeriod.specificDays,
+              doseTimes[y].xTimeFormat,
+              days[i].dayIndex!,
+              dateTimeNow,
+            );
 
-          String time = ((doseTimes[y].hour) < 10
-                  ? "0" + doseTimes[y].hour.toString()
-                  : doseTimes[y].hour.toString()) +
-              ":" +
-              ((doseTimes[y].minute) < 10
-                  ? "0" + doseTimes[y].minute.toString()
-                  : doseTimes[y].minute.toString());
-
-          saveScheduledMedicine(
-            MedicineForScheduledModel(
-              remindable: mRemindable.toString(),
-              dosage: dailyDose,
-              medicinePeriod: mMedicinePeriod.toString(),
-              time: time.toString(),
-              dayIndex: days[i].dayIndex,
-              name: drugName,
-              notificationId: generatedIdForSchedule[idIndex],
-              usageType: selectedUsageType.toString(),
-            ),
-          );
-
-          idIndex++;
+            idIndex++;
+          }
         }
       }
     }
+
+    _popAndPushRemindersScreen();
+  }
+
+  Future<void> _createBGNotificationAndSaved(
+    int id,
+    tz.TZDateTime scheduledDate,
+    MedicinePeriod period,
+    String time,
+    int? dayIndex,
+    int createdDate,
+  ) async {
+    if (mMedicinePeriod == null) return;
+
+    await mRotificationManager.createMedinicine(
+      id,
+      _getNotificationTitle(),
+      _getNotificationBody(),
+      scheduledDate,
+      period,
+    );
+
+    saveScheduledMedicine(
+      MedicineForScheduledModel(
+        notificationId: id,
+        remindable: mRemindable.xRawValue,
+        dosage: dailyDose,
+        medicinePeriod: mMedicinePeriod!.xRawValue,
+        time: time,
+        dayIndex: dayIndex,
+        name: drugName,
+        usageType: selectedUsageType.xRawValue,
+        scheduledDate: scheduledDate.millisecondsSinceEpoch,
+        createdDate: createdDate,
+      ),
+    );
+  }
+
+  void _popAndPushRemindersScreen() {
     Atom.historyBack();
-    Atom.to(PagePaths.MEDICATION_SCREEN,
-        queryParameters: {'remindable': mRemindable.toParseableString()},
-        isReplacement: true);
+    Atom.to(
+      PagePaths.reminderList,
+      queryParameters: {
+        'remindable': mRemindable.toRouteString(),
+      },
+      isReplacement: true,
+    );
   }
 
   Future<void> saveScheduledMedicine(MedicineForScheduledModel medicine) async {
@@ -294,11 +394,11 @@ class MedicationDateVm extends ChangeNotifier {
   }
 
   String _getNotificationTitle() {
-    if (mRemindable == Remindable.Medication) {
+    if (mRemindable == Remindable.medication) {
       return drugName;
-    } else if (mRemindable == Remindable.BloodGlucose) {
+    } else if (mRemindable == Remindable.bloodGlucose) {
       return LocaleProvider.of(mContext).blood_glucose_measurement;
-    } else if (mRemindable == Remindable.HbA1c) {
+    } else if (mRemindable == Remindable.hbA1c) {
       return LocaleProvider.of(mContext).hbA1c_measurement;
     } else {
       return "";
@@ -306,11 +406,11 @@ class MedicationDateVm extends ChangeNotifier {
   }
 
   String _getNotificationBody() {
-    if (mRemindable == Remindable.Medication) {
+    if (mRemindable == Remindable.medication) {
       return LocaleProvider.of(mContext).time_take_medicine;
-    } else if (mRemindable == Remindable.BloodGlucose) {
+    } else if (mRemindable == Remindable.bloodGlucose) {
       return LocaleProvider.of(mContext).bg_measurement_time;
-    } else if (mRemindable == Remindable.HbA1c) {
+    } else if (mRemindable == Remindable.hbA1c) {
       return LocaleProvider.of(mContext).time_hba1c;
     } else {
       return "";

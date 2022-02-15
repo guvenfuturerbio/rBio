@@ -1,7 +1,7 @@
 class AppointmentFilter {
-  String type;
-  String start;
-  String end;
+  String? type;
+  String? start;
+  String? end;
 
   AppointmentFilter({
     this.type,
@@ -11,9 +11,9 @@ class AppointmentFilter {
 
   factory AppointmentFilter.fromJson(Map<String, dynamic> json) =>
       AppointmentFilter(
-        type: json['type'] as String,
-        start: json['start'] as String,
-        end: json['end'] as String,
+        type: json['type'] as String?,
+        start: json['start'] as String?,
+        end: json['end'] as String?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

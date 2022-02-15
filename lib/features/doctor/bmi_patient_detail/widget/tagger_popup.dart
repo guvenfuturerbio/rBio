@@ -8,7 +8,7 @@ import '../../../chronic_tracking/utils/selected_scale_type.dart';
 
 class ScaleTagger extends StatelessWidget {
   final ScaleMeasurementViewModel scaleModel;
-  ScaleTagger({Key key, this.scaleModel}) : super(key: key);
+  ScaleTagger({Key? key, required this.scaleModel}) : super(key: key);
   final ScrollController scrollController = ScrollController();
 
   BoxDecoration boxDeco(int index, int gridViewCrossAxisCount) {
@@ -39,11 +39,11 @@ class ScaleTagger extends StatelessWidget {
     return OrientationBuilder(
       builder: (_, orientation) {
         if (orientation == Orientation.landscape) {
-          height = context.WIDTH;
-          width = context.HEIGHT;
+          height = context.width;
+          width = context.height;
         } else {
-          height = context.HEIGHT;
-          width = context.WIDTH;
+          height = context.height;
+          width = context.width;
         }
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -102,23 +102,21 @@ class ScaleTagger extends StatelessWidget {
                   shrinkWrap: true,
                   children: [
                     _itemOfColorInfoDialog(context, R.color.very_low,
-                        '${LocaleProvider.current.very_low}'),
+                        LocaleProvider.current.very_low),
                     _itemOfColorInfoDialog(
-                        context, R.color.low, '${LocaleProvider.current.low}'),
-                    _itemOfColorInfoDialog(context, R.color.target,
-                        '${LocaleProvider.current.target}'),
-                    _itemOfColorInfoDialog(context, R.color.high,
-                        '${LocaleProvider.current.high}'),
+                        context, R.color.low, LocaleProvider.current.low),
+                    _itemOfColorInfoDialog(
+                        context, R.color.target, LocaleProvider.current.target),
+                    _itemOfColorInfoDialog(
+                        context, R.color.high, LocaleProvider.current.high),
                     _itemOfColorInfoDialog(context, R.color.very_high,
-                        '${LocaleProvider.current.very_high}'),
+                        LocaleProvider.current.very_high),
                   ],
                 )),
               )),
-      child: Container(
-        child: Icon(
-          Icons.info,
-          size: 40 * context.TEXTSCALE,
-        ),
+      child: Icon(
+        Icons.info,
+        size: 40 * context.textScale,
       ),
     );
   }
@@ -127,14 +125,14 @@ class ScaleTagger extends StatelessWidget {
     return Row(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           child: Container(
             decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-            height: 18 * context.TEXTSCALE,
-            width: 18 * context.TEXTSCALE,
+            height: 18 * context.textScale,
+            width: 18 * context.textScale,
           ),
         ),
-        Expanded(child: Text('$title'))
+        Expanded(child: Text(title))
       ],
     );
   }
@@ -158,7 +156,7 @@ class ScaleTagger extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color: getIt<ITheme>().mainColor),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           LocaleProvider.current.done,
           style: context.xButton.copyWith(color: Colors.white),
@@ -167,111 +165,9 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-/*   Widget _imageSection(ScaleTaggerVm value, BuildContext context) {
-    return SizedBox(
-      height: height * .1,
-      child: Row(
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: value.scaleModel.images.length == 3
-                ? 3
-                : value.scaleModel.images.length + 1,
-            itemBuilder: (_, index) => Stack(
-              children: [
-                Container(
-                    width: height * .1,
-                    height: height * .1,
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Container(
-                        height: height * .1,
-                        width: height * .1,
-                        child: value.scaleModel.images.isEmpty ||
-                                index >= value.scaleModel.images.length
-                            ? GestureDetector(
-                                onTap: () {
-                                  value.getImage(context);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SvgPicture.asset(
-                                    R.image.addphoto_icon,
-                                  ),
-                                ),
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: GestureDetector(
-                                  onTap: () => _galeryView(context, value),
-                                  child: Image(
-                                    image: FileImage(File(
-                                        getIt<ScaleStorageImpl>()
-                                            .getImagePathOfImageURL(value
-                                                .scaleModel.images[index]))),
-                                  ),
-                                ),
-                              ),
-                      ),
-                    )),
-                Visibility(
-                  visible: !(value.scaleModel.images.isEmpty ||
-                      index >= value.scaleModel.images.length),
-                  child: Positioned(
-                    top: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () => value.deleteImageFromIndex(index),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: R.color.very_low,
-                        ),
-                        height: height * .03,
-                        width: height * .03,
-                        child: Icon(
-                          Icons.close,
-                          size: height * .02,
-                          color: R.color.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          if (value.scaleModel.images.length < 3)
-            Expanded(
-              child: Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text(LocaleProvider.current.add_photo)),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Future<dynamic> _galeryView(BuildContext context, ScaleTaggerVm value) {
-    return showDialog(
-        context: context,
-        barrierColor: Colors.transparent,
-        barrierDismissible: false,
-        builder: (_) => GalleryView(images: [
-              ...value.scaleModel.images
-                  .map((e) =>
-                      getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
-                  .toList()
-            ]));
-  }
- */
   Container _noteSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: Card(
           color: R.color.white,
           shape: RoundedRectangleBorder(
@@ -280,15 +176,15 @@ class ScaleTagger extends StatelessWidget {
           elevation: 4,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-                width: double.infinity, child: Text(scaleModel.note ?? '')),
+            child:
+                SizedBox(width: double.infinity, child: Text(scaleModel.note)),
           )),
     );
   }
 
   Padding _dateTimeSection(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 16, top: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
         color: R.color.white,
         shape: RoundedRectangleBorder(
@@ -297,14 +193,13 @@ class ScaleTagger extends StatelessWidget {
         elevation: 4,
         child: Container(
             width: double.infinity,
-            padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                    "${UtilityManager().getReadableDate(scaleModel.dateTime ?? DateTime.now())}"),
-                Text(
-                    "${UtilityManager().getReadableHour(scaleModel.dateTime ?? DateTime.now())}")
+                Text(UtilityManager().getReadableDate(scaleModel.dateTime)),
+                Text(UtilityManager().getReadableHour(scaleModel.dateTime))
               ],
             )),
       ),
@@ -314,10 +209,10 @@ class ScaleTagger extends StatelessWidget {
   GridView otherBodyParameterMeasurementSection(BuildContext context) {
     return GridView.count(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       childAspectRatio: 5 / 4,
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       children: _sectionItems(context),
     );
   }
@@ -325,54 +220,59 @@ class ScaleTagger extends StatelessWidget {
   List<Widget> _sectionItems(BuildContext context) {
     return [
       scaleSection(
-          measurement: scaleModel.bmi,
-          name: LocaleProvider.current.scale_data_bmi,
-          color: scaleModel.getColor(SelectedScaleType.BMI),
-          type: '',
-          index: 1,
-          crossAxisCount: 1,
-          context: context),
+        measurement: scaleModel.bmi,
+        name: LocaleProvider.current.scale_data_bmi,
+        color: scaleModel.getColor(SelectedScaleType.bmi),
+        type: '',
+        index: 1,
+        crossAxisCount: 1,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.bodyFat,
-          name: LocaleProvider.current.scale_data_body_fat,
-          color: scaleModel.getColor(SelectedScaleType.BODY_FAT),
-          type: '%',
-          index: 2,
-          crossAxisCount: 1,
-          context: context),
+        measurement: scaleModel.bodyFat,
+        name: LocaleProvider.current.scale_data_body_fat,
+        color: scaleModel.getColor(SelectedScaleType.bodyFat),
+        type: '%',
+        index: 2,
+        crossAxisCount: 1,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.boneMass,
-          name: LocaleProvider.current.scale_data_bone_mass,
-          color: scaleModel.getColor(SelectedScaleType.BONE_MASS),
-          type:
-              '${scaleModel.scaleModel.unit == null ? ScaleUnit.KG.toStr : scaleModel.scaleModel.unit}',
-          index: 3,
-          crossAxisCount: 2,
-          context: context),
+        measurement: scaleModel.boneMass,
+        name: LocaleProvider.current.scale_data_bone_mass,
+        color: scaleModel.getColor(SelectedScaleType.boneMass),
+        type: '${scaleModel.scaleModel.unit ?? ScaleUnit.kg.toStr}',
+        index: 3,
+        crossAxisCount: 2,
+        context: context,
+      ),
       scaleSection(
-          name: LocaleProvider.current.scale_data_muscle,
-          measurement: scaleModel.boneMass,
-          color: scaleModel.getColor(SelectedScaleType.MUSCLE),
-          type: '%',
-          index: 4,
-          crossAxisCount: 2,
-          context: context),
+        name: LocaleProvider.current.scale_data_muscle,
+        measurement: scaleModel.muscle,
+        color: scaleModel.getColor(SelectedScaleType.muscle),
+        type: '%',
+        index: 4,
+        crossAxisCount: 2,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.boneMass,
-          name: LocaleProvider.current.scale_data_visceral_fat,
-          color: scaleModel.getColor(SelectedScaleType.VISCERAL_FAT),
-          type: '',
-          index: 5,
-          crossAxisCount: 3,
-          context: context),
+        measurement: scaleModel.visceralFat,
+        name: LocaleProvider.current.scale_data_visceral_fat,
+        color: scaleModel.getColor(SelectedScaleType.visceralFat),
+        type: '',
+        index: 5,
+        crossAxisCount: 3,
+        context: context,
+      ),
       scaleSection(
-          measurement: scaleModel.boneMass,
-          name: LocaleProvider.current.scale_data_water,
-          color: scaleModel.getColor(SelectedScaleType.WATER),
-          type: '%',
-          index: 6,
-          crossAxisCount: 3,
-          context: context),
+        measurement: scaleModel.water,
+        name: LocaleProvider.current.scale_data_water,
+        color: scaleModel.getColor(SelectedScaleType.water),
+        type: '%',
+        index: 6,
+        crossAxisCount: 3,
+        context: context,
+      ),
     ];
   }
 
@@ -385,28 +285,36 @@ class ScaleTagger extends StatelessWidget {
             child: Container(
               height: height * .2,
               width: height * .2,
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withAlpha(50),
-                        blurRadius: 5,
-                        spreadRadius: 0,
-                        offset: Offset(3, 3))
-                  ],
-                  border: Border.all(
-                      width: 13,
-                      color: scaleModel.getColor(SelectedScaleType.WEIGHT)),
-                  shape: BoxShape.circle,
-                  color: R.color.white),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(50),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: const Offset(3, 3))
+                ],
+                border: Border.all(
+                  width: 13,
+                  color: scaleModel.getColor(
+                    SelectedScaleType.weight,
+                  ),
+                ),
+                shape: BoxShape.circle,
+                color: R.color.white,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _inputSection(
-                      measurement: scaleModel.weight, context: context),
+                    measurement: scaleModel.weight!,
+                    context: context,
+                  ),
+
+                  //
                   Text(
-                    "${scaleModel.unit?.toStr ?? ScaleUnit.KG.toStr}",
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+                    scaleModel.unit.toStr,
+                    style: const TextStyle(color: Colors.black, fontSize: 14),
                   ),
                 ],
               ),
@@ -418,7 +326,7 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  Theme _inputSection({double measurement, @required BuildContext context}) {
+  Theme _inputSection({double? measurement, required BuildContext context}) {
     return Theme(
         data: ThemeData(primaryColor: Colors.black),
         child: Text(
@@ -428,13 +336,13 @@ class ScaleTagger extends StatelessWidget {
   }
 
   scaleSection({
-    @required BuildContext context,
-    double measurement,
-    String name,
-    Color color,
-    String type,
-    int index,
-    int crossAxisCount,
+    required BuildContext context,
+    double? measurement,
+    required String name,
+    Color? color,
+    required String type,
+    required int index,
+    required int crossAxisCount,
   }) {
     return Container(
       decoration: boxDeco(index, crossAxisCount),

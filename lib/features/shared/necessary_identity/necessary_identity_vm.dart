@@ -7,7 +7,7 @@ class NecessaryIdentityScreenVm extends RbioVm {
   BuildContext mContext;
   NecessaryIdentityScreenVm(this.mContext);
 
-  LoadingDialog loadingDialog;
+  LoadingDialog? loadingDialog;
 
   Future<void> updateIdentity(String identityNumber) async {
     if (identityNumber.isNotEmpty) {
@@ -15,19 +15,27 @@ class NecessaryIdentityScreenVm extends RbioVm {
         showLoadingDialog();
         await getIt<UserManager>().updateIdentityOps(identityNumber);
         hideDialog();
-        Navigator.pop(mContext, true);
-      } catch (e, stackTrace) {
+        Atom.dismiss();
+      } catch (e) {
         hideDialog();
-        showDefaultErrorDialog(
-          e,
-          stackTrace,
-          LocaleProvider.current.warning,
-          e == 5
+        showWarningDialog(e);
+      }
+    }
+  }
+
+  void showWarningDialog(Object? e) {
+    showDialog(
+      context: mContext,
+      barrierDismissible: true,
+      builder: (context) {
+        return RbioContextInfoDialog(
+          title: LocaleProvider.current.warning,
+          text: e == 5
               ? LocaleProvider.current.doesnt_match_tc
               : LocaleProvider.current.sorry_dont_transaction,
         );
-      }
-    }
+      },
+    );
   }
 
   void showLoadingDialog() async {
@@ -40,7 +48,7 @@ class NecessaryIdentityScreenVm extends RbioVm {
   }
 
   void hideDialog() {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
+    if (loadingDialog != null && loadingDialog!.isShowing()) {
       Navigator.of(mContext).pop();
       loadingDialog = null;
     }

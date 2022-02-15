@@ -1,11 +1,11 @@
 class BannerTabsModel {
-  String name;
-  int index;
-  String imageUrl;
-  String destinationUrl;
-  String applicationName;
-  String groupName;
-  int id;
+  String? name;
+  int? index;
+  String? imageUrl;
+  String? destinationUrl;
+  String? applicationName;
+  String? groupName;
+  int? id;
 
   BannerTabsModel({
     this.name,
@@ -18,24 +18,24 @@ class BannerTabsModel {
   });
 
   BannerTabsModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    index = json['index'];
-    imageUrl = json['image_url'];
-    destinationUrl = json['destination_url'];
-    applicationName = json['application_name'];
-    groupName = json['group_name'];
-    id = json['id'];
+    name = json['name'] as String?;
+    index = json['index'] as int?;
+    imageUrl = json['image_url'] as String?;
+    destinationUrl = json['destination_url']as String?;
+    applicationName = json['application_name']as String?;
+    groupName = json['group_name']as String?;
+    id = json['id']as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['index'] = this.index;
-    data['image_url'] = this.imageUrl;
-    data['destination_url'] = this.destinationUrl;
-    data['application_name'] = this.applicationName;
-    data['group_name'] = this.groupName;
-    data['id'] = this.id;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['name'] = name;
+    data['index'] = index;
+    data['image_url'] = imageUrl;
+    data['destination_url'] = destinationUrl;
+    data['application_name'] = applicationName;
+    data['group_name'] = groupName;
+    data['id'] = id;
     return data;
   }
 }

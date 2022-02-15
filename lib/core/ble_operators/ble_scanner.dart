@@ -3,42 +3,47 @@ part of 'ble_operators.dart';
 class BleScannerOps extends ChangeNotifier {
   final _devices = <DiscoveredDevice>[];
 
-  FlutterReactiveBle _ble;
+  final FlutterReactiveBle _ble;
 
-  String deviceId;
-  List<String> pairedDevices;
+  String? _deviceId;
+  List<String>? pairedDevices;
 
-  StreamSubscription _subscription;
+  StreamSubscription? _subscription;
 
-  BleScannerOps({FlutterReactiveBle ble}) {
-    this._ble = ble;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      List<PairedDevice> pairedDevice =
-          await getIt<BleDeviceManager>().getPairedDevices();
-      pairedDevices = pairedDevice?.map((e) => e.deviceId)?.toList() ?? [];
+  BleScannerOps(this._ble) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      try {
+        final List<PairedDevice> pairedDevice =
+            await getIt<BleDeviceManager>().getPairedDevices();
+        pairedDevices = pairedDevice.map((e) => e.deviceId!).toList();
+      } catch (e) {
+        LoggerUtils.instance.e('Paired device coming null');
+      }
     });
   }
 
   final List<Uuid> _supported = [
+    //Blood glucosea ait verileri kontrol eden kod. (Diğer cihazlar için farklı kodlar var).
     Uuid.parse("1808"),
+    //Kan şekeri ve tartılar karşımıza çıksın diye alttaki kodları kullanıyoruz. Bu kodlara sahip servislerin hepsini tarıyor ve gösteriyor.
     Uuid([0x18, 0x1B])
   ];
 
-  List<DiscoveredDevice> get discoveredDevices => this._devices;
+  List<DiscoveredDevice> get discoveredDevices => _devices;
 
-  setDeviceId(String deviceId) {
-    this.deviceId = deviceId;
-  }
+  set deviceId(String rhsDeviceId) => _deviceId = rhsDeviceId;
+  String get deviceId => _deviceId ?? '';
 
-  addDeviceId(List<String> deviceIds) {
-    pairedDevices = deviceIds;
-  }
-
-  startScan() {
+  Future<void> startScan() async {
+    //Cihaz açık mı kontrolü yapılıyor.
     _ble.statusStream.listen((bleStatus) async {
+      LoggerUtils.instance.wtf('DENEME');
+      LoggerUtils.instance.w(bleStatus);
+
       if (bleStatus == BleStatus.ready) {
-        _devices?.clear();
+        _devices.clear();
         _subscription?.cancel();
+        //Alttaki satır arama yapıyor ve stream olduğu için sürekli olarak dinliyor.
         _subscription = _ble.scanForDevices(withServices: _supported).listen(
             (device) async {
           final knownDeviceIndex =
@@ -48,8 +53,8 @@ class BleScannerOps extends ChangeNotifier {
           } else {
             _devices.add(device);
 
-            /// AutoConnector Methode caller
-            if (pairedDevices != null && pairedDevices.contains(device.id)) {
+            /// AutoConnector method caller
+            if (pairedDevices != null && pairedDevices!.contains(device.id)) {
               getIt<BleConnectorOps>().connect(device);
             }
             /*  if (device.id == deviceId) {
@@ -57,26 +62,32 @@ class BleScannerOps extends ChangeNotifier {
             } */
             notifyListeners();
           }
-        }, onError: (e) => log(e.toString()));
+        }, onError: (e) {
+          log(e.toString());
+        });
       } else if (bleStatus == BleStatus.unauthorized) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         await Permission.location.request();
       } else if (bleStatus == BleStatus.poweredOff) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
 
-        await SystemShortcuts.bluetooth();
+        // await SystemShortcuts.bluetooth();
+      } else if (bleStatus == BleStatus.locationServicesDisabled) {
+        await Future.delayed(const Duration(seconds: 1));
+        await Permission.location.request();
+        LoggerUtils.instance.i("DOĞAN");
       }
     });
   }
 
-  stopScan() async {
+  Future<void> stopScan() async {
     await _subscription?.cancel();
     _subscription = null;
     notifyListeners();
   }
 
-  refreshDeviceList() {
-    _devices?.clear();
+  void refreshDeviceList() {
+    _devices.clear();
     notifyListeners();
   }
 }

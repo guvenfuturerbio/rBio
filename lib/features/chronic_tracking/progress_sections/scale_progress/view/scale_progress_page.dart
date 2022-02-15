@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +11,9 @@ import '../utils/scale_measurement_list.dart';
 import '../view_model/scale_progress_page_view_model.dart';
 
 class ScaleProgressPage extends StatefulWidget {
-  final Function() callBack;
+  final Function()? callBack;
 
-  const ScaleProgressPage({Key key, this.callBack}) : super(key: key);
+  const ScaleProgressPage({Key? key, this.callBack}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ScaleProgressPage();
@@ -37,9 +36,7 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                 ),
                 floatingActionButton: FloatingActionButton(
                   heroTag: 'adder',
-                  onPressed: () {
-                    value.manuelEntry(context);
-                  },
+                  onPressed: () => value.manuelEntry(context),
                   child: Container(
                     height: double.infinity,
                     width: double.infinity,
@@ -48,7 +45,7 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                       color: getIt<ITheme>().mainColor,
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       child: SvgPicture.asset(
                         R.image.add,
                         color: R.color.white,
@@ -58,7 +55,7 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                   backgroundColor: R.color.white,
                 ),
                 body: SingleChildScrollView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -67,7 +64,7 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                       ),
                       if (value.isChartShow) ...[
                         SizedBox(
-                          height: (context.HEIGHT * .4) * context.TEXTSCALE,
+                          height: (context.height * .4) * context.textScale,
                           child: GraphHeader(
                             value: value,
                             callBack: () => context
@@ -82,7 +79,7 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                       if (!value.isChartShow)
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: context.HEIGHT * .02),
+                              vertical: context.height * .02),
                           child: RbioElevatedButton(
                             title: LocaleProvider.current.open_chart,
                             onTap: value.changeChartShowStatus,
@@ -90,9 +87,9 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                         ),
                       Container(
                         height: value.isChartShow
-                            ? (context.HEIGHT * .4) * context.TEXTSCALE
-                            : (context.HEIGHT * .8),
-                        margin: EdgeInsets.only(top: 8),
+                            ? (context.height * .4) * context.textScale
+                            : (context.height * .8),
+                        margin: const EdgeInsets.only(top: 8),
                         child: ScaleMeasurementListWidget(
                           scaleMeasurements: value.scaleMeasurements,
                           scrollController: value.controller,
@@ -108,11 +105,11 @@ class _ScaleProgressPage extends State<ScaleProgressPage> {
                 value: value,
                 filterAction: () {
                   Atom.show(ScaleChartFilterPopup(
-                    height: context.HEIGHT * .9,
-                    width: context.WIDTH * .3,
+                    height: context.height * .9,
+                    width: context.width * .3,
+                    changeScaleType: value.changeScaleType,
                   ));
                 },
-                changeGraphAction: () => value.changeGraphType(),
               );
       },
     );

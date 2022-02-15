@@ -3,33 +3,40 @@ part of '../../devices.dart';
 class SelectedDeviceVm extends ChangeNotifier {
   final DeviceType deviceType;
 
-  SelectedDeviceVm({this.deviceType}) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var devices = await getIt<BleDeviceManager>().getPairedDevices();
-      if (devices.isEmpty) {
-        getIt<BleScannerOps>().startScan();
-      }
-      if (!_disposed) {
-        getIt<BleReactorOps>().addListener(() {
-          if (getIt<BleReactorOps>().controlPointResponse.isNotEmpty) {
-            if (!Atom.isDialogShow) {
-              showLoadingDialog();
-            }
-            getIt<BleConnectorOps>()
-                .disconnect(getIt<BleConnectorOps>().device.id);
-          }
-        });
-      }
-    });
+  SelectedDeviceVm(this.deviceType) {
+    WidgetsBinding.instance?.addPostFrameCallback(
+      (_) async {
+        var devices = await getIt<BleDeviceManager>().getPairedDevices();
+        if (devices.isEmpty) {
+          getIt<BleScannerOps>().startScan();
+        }
+
+        if (!_disposed) {
+          getIt<BleReactorOps>().addListener(
+            () {
+              if (getIt<BleReactorOps>().controlPointResponse.isNotEmpty) {
+                if (!Atom.isDialogShow) {
+                  showLoadingDialog();
+                }
+
+                final deviceId = getIt<BleConnectorOps>().device?.id;
+                if (deviceId != null) {
+                  getIt<BleConnectorOps>().disconnect(deviceId);
+                }
+              }
+            },
+          );
+        }
+      },
+    );
   }
 
   bool _disposed = false;
-  bool _connectIsActive = true;
-  bool get connectIsActive => this._connectIsActive;
+  bool connectIsActive = true;
 
   Map<String, String> getPairOrder() {
     switch (deviceType) {
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         Map<String, String> map = <String, String>{
           '1': LocaleProvider.current.device_connection_step_1,
           '2': LocaleProvider.current.device_connection_step_2_Roche,
@@ -38,7 +45,7 @@ class SelectedDeviceVm extends ChangeNotifier {
 
         return map;
 
-      case DeviceType.CONTOUR_PLUS_ONE:
+      case DeviceType.contourPlusOne:
         Map<String, String> map = <String, String>{
           '1': LocaleProvider.current.device_connection_step_1,
           '2': LocaleProvider.current.device_connection_step_2_Contour,
@@ -50,7 +57,7 @@ class SelectedDeviceVm extends ChangeNotifier {
         }
         return map;
 
-      case DeviceType.MI_SCALE:
+      case DeviceType.miScale:
         return <String, String>{
           '1': LocaleProvider.current.device_scale_connection_step_1_mi_scale,
           '2': LocaleProvider.current.device_scale_connection_step_2_mi_scale,
@@ -63,89 +70,106 @@ class SelectedDeviceVm extends ChangeNotifier {
 
   bool isFocusedDevice(DiscoveredDevice device) {
     switch (deviceType) {
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
         return device.manufacturerData[0] == 112;
-        break;
-      case DeviceType.CONTOUR_PLUS_ONE:
+
+      case DeviceType.contourPlusOne:
         return device.manufacturerData[0] == 103;
-        break;
-      case DeviceType.OMRON_BLOOD_PRESSURE_ARM:
+
+      case DeviceType.omronBloodPressureArm:
         return false;
-        break;
-      case DeviceType.OMRON_BLOOD_PRESSURE_WRIST:
+
+      case DeviceType.omronBloodPressureWrist:
         return false;
-        break;
-      case DeviceType.OMRON_SCALE:
+
+      case DeviceType.omronScale:
         return false;
-        break;
-      case DeviceType.MI_SCALE:
+
+      case DeviceType.miScale:
         return device.name == 'MIBFS' &&
             device.serviceData.length == 1 &&
             device.serviceData.values.first.length == 13;
-        break;
+
       default:
         throw Exception('Undefined Device Type');
     }
   }
 
-  showLoadingDialog() {
-    Atom.show(GuvenAlert(
-      backgroundColor: getIt<ITheme>().cardBackgroundColor,
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            child: ShakeAnimatedWidget(
-              enabled: true,
-              duration: Duration(milliseconds: 1500),
-              shakeAngle: Rotation.deg(z: 10),
-              curve: Curves.linear,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                width: Atom.context.WIDTH * .04,
-                height: Atom.context.WIDTH * .04,
-                child: SvgPicture.asset(
-                  R.image.logo,
-                  color: R.color.dark_blue,
+  void showLoadingDialog() {
+    Atom.show(
+      GuvenAlert(
+        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              child: ShakeAnimatedWidget(
+                enabled: true,
+                duration: const Duration(milliseconds: 1500),
+                shakeAngle: Rotation.deg(z: 10),
+                curve: Curves.linear,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  width: Atom.context.width * .04,
+                  height: Atom.context.width * .04,
+                  child: SvgPicture.asset(
+                    R.image.logo,
+                    color: R.color.dark_blue,
+                  ),
                 ),
               ),
+              decoration: BoxDecoration(
+                  border: Border.all(color: R.color.main_color, width: 10),
+                  borderRadius:
+                      const BorderRadius.all(const Radius.circular(200))),
             ),
-            decoration: BoxDecoration(
-                border: Border.all(color: R.color.main_color, width: 10),
-                borderRadius: BorderRadius.all(Radius.circular(200))),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          Text(
-            LocaleProvider.current.pair_successful,
-            style: TextStyle(color: R.color.black, fontSize: 20),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          GuvenAlert.buildWhiteAction(
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              LocaleProvider.current.pair_successful,
+              style: TextStyle(color: R.color.black, fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            GuvenAlert.buildWhiteAction(
               text: LocaleProvider.current.ok,
               onPressed: () {
                 getIt<BleReactorOps>().clearControlPointResponse();
-
                 Atom.dismiss();
-
                 Atom.historyBack();
                 Atom.historyBack();
-                Atom.to(PagePaths.DEVICES, isReplacement: true);
-              })
-        ],
+                Atom.to(PagePaths.devices, isReplacement: true);
+              },
+            ),
+          ],
+        ),
       ),
-    ));
+      barrierDismissible: false,
+    );
   }
 
-  void connectDevice(BleConnectorOps _bleConnectorOps,
-      BleScannerOps _bleScannerOps, device) async {
+  void connectDevice(
+    BleConnectorOps _bleConnectorOps,
+    BleScannerOps _bleScannerOps,
+    DiscoveredDevice device,
+  ) async {
     switch (deviceType) {
-      case DeviceType.ACCU_CHEK:
+      case DeviceType.accuChek:
+        connectIsActive &&
+                (_bleConnectorOps.deviceConnectionState !=
+                        DeviceConnectionState.connecting &&
+                    _bleConnectorOps.deviceConnectionState !=
+                        DeviceConnectionState.connected)
+            ? _bleConnectorOps.connect(device)
+            : null;
+        connectClicked();
+        break;
+
+      case DeviceType.contourPlusOne:
         connectIsActive &&
                 (_bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
@@ -157,28 +181,17 @@ class SelectedDeviceVm extends ChangeNotifier {
             : null;
         connectClicked();
         break;
-      case DeviceType.CONTOUR_PLUS_ONE:
-        connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
-            : null;
-        connectClicked();
-        break;
-      case DeviceType.OMRON_BLOOD_PRESSURE_ARM:
+
+      case DeviceType.omronBloodPressureArm:
         // TODO: Handle this case.
         break;
-      case DeviceType.OMRON_BLOOD_PRESSURE_WRIST:
+      case DeviceType.omronBloodPressureWrist:
         // TODO: Handle this case.
         break;
-      case DeviceType.OMRON_SCALE:
+      case DeviceType.omronScale:
         // TODO: Handle this case.
         break;
-      case DeviceType.MI_SCALE:
+      case DeviceType.miScale:
         connectIsActive &&
                 (_bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
@@ -196,10 +209,10 @@ class SelectedDeviceVm extends ChangeNotifier {
   }
 
   connectClicked() async {
-    this._connectIsActive = false;
+    connectIsActive = false;
     notifyListeners();
-    await Future.delayed(Duration(seconds: 1));
-    this._connectIsActive = true;
+    await Future.delayed(const Duration(seconds: 1));
+    connectIsActive = true;
     notifyListeners();
   }
 

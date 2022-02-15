@@ -15,7 +15,7 @@ import '../../../features/chat/model/notification_model.dart';
 import '../../core.dart';
 
 class FirestoreManager {
-  PickedFile imageFile;
+  XFile? imageFile;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseDB = FirebaseFirestore.instance;
 
@@ -26,29 +26,44 @@ class FirestoreManager {
   final keyUsersLastSeenDate = 'users_lastSeenDate';
 
   final firestoreNotFoundException = "not-found";
-  String getChatId(String first, String second) => first + " - " + second;
+  String getChatId(String first, String second) => "$first - $second";
 
   Future<void> loginFirebase() async {
-    final userCredential = await _auth.signInWithEmailAndPassword(
-      email: getIt<UserNotifier>().firebaseEmail,
-      password: getIt<UserNotifier>().firebasePassword,
-    );
-    final User user = userCredential.user;
-    getIt<UserNotifier>().firebaseID = user.uid;
+    if (getIt<UserNotifier>().firebaseEmail != null &&
+        getIt<UserNotifier>().firebasePassword != null) {
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: getIt<UserNotifier>().firebaseEmail!,
+        password: getIt<UserNotifier>().firebasePassword!,
+      );
+      final User? user = userCredential.user;
+      if (user != null) {
+        getIt<UserNotifier>().firebaseID = user.uid;
+      }
+    } else {
+      throw Exception('Firebase email or password null');
+    }
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getContactsAndMessages() {
-    return _firebaseDB
-        .collection(keyConversations)
-        .where(keyUsersDot + _auth.currentUser.uid, isNull: false)
-        .snapshots();
+    final currentUserId = _auth.currentUser?.uid;
+    if (currentUserId != null) {
+      return _firebaseDB
+          .collection(keyConversations)
+          .where(keyUsersDot + currentUserId, isNull: false)
+          .snapshots();
+    }
+
+    throw Exception("currentUserId null");
   }
 
   Future<void> writeMessageToFirebase(
-    String first,
-    String second,
+    String? first,
+    String? second,
     Message message,
   ) async {
+    if (first == null) return;
+    if (second == null) return;
+
     Map<String, dynamic> usersMap = {};
     if (message.sentFrom != second) {
       usersMap = {first: true, second: false};
@@ -94,8 +109,12 @@ class FirestoreManager {
     );
   }
 
-  Future<bool> sendMessage(Message message, String sendTo,
-      ChatPerson currentPerson, String otherNotiToken) async {
+  Future<bool> sendMessage(
+    Message message,
+    String sendTo,
+    ChatPerson currentPerson,
+    String otherNotiToken,
+  ) async {
     if (sortUid(message, sendTo) == -1) {
       await writeMessageToFirebase(message.sentFrom, sendTo, message);
     } else {
@@ -135,41 +154,59 @@ class FirestoreManager {
   int sortUid(
     Message message,
     String sendTo,
-  ) =>
-      message.sentFrom.compareTo(sendTo);
+  ) {
+    final compare = message.sentFrom?.compareTo(sendTo);
+    if (compare == null) {
+      throw Exception("compare null");
+    }
 
-  Future<void> getImage(int index, String sender, String reciever,
-      ChatPerson currentPerson, String otherNotiToken) async {
-    ImagePicker imagePicker = new ImagePicker();
+    return compare;
+  }
+
+  Future<void> getImage(
+    int index,
+    String sender,
+    String reciever,
+    ChatPerson currentPerson,
+    String otherNotiToken,
+  ) async {
+    final ImagePicker imagePicker = ImagePicker();
     imageFile = index == 0
-        ? await imagePicker.getImage(source: ImageSource.gallery)
-        : await imagePicker.getImage(source: ImageSource.camera);
+        ? await imagePicker.pickImage(source: ImageSource.gallery)
+        : await imagePicker.pickImage(source: ImageSource.camera);
 
     if (imageFile != null) {
       uploadFile(sender, reciever, currentPerson, otherNotiToken);
     }
   }
 
-  Future<void> uploadFile(String sender, String reciever,
-      ChatPerson currentPerson, String otherNotiToken) async {
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    Reference reference = FirebaseStorage.instance.ref().child(fileName);
+  Future<void> uploadFile(
+    String sender,
+    String reciever,
+    ChatPerson currentPerson,
+    String otherNotiToken,
+  ) async {
+    if (imageFile == null) return;
+
+    final String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final Reference reference = FirebaseStorage.instance.ref().child(fileName);
     await FlutterNativeImage.compressImage(
-      imageFile.path,
+      imageFile!.path,
       quality: 80,
       percentage: 90,
     );
-    await reference.putFile(File(imageFile.path));
+    await reference.putFile(File(imageFile!.path));
     sendMessage(
-        Message(
-          sentFrom: sender,
-          message: await reference.getDownloadURL(),
-          date: DateTime.now().millisecondsSinceEpoch,
-          type: 1,
-        ),
-        reciever,
-        currentPerson,
-        otherNotiToken);
+      Message(
+        sentFrom: sender,
+        message: await reference.getDownloadURL(),
+        date: DateTime.now().millisecondsSinceEpoch,
+        type: 1,
+      ),
+      reciever,
+      currentPerson,
+      otherNotiToken,
+    );
   }
 
   Future<void> sendNotification(

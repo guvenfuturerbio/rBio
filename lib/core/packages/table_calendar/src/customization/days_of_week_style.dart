@@ -15,7 +15,7 @@ class DaysOfWeekStyle {
   /// ```dart
   /// dowTextFormatter: (date, locale) => DateFormat.E(locale).format(date)[0],
   /// ```
-  final TextFormatter dowTextFormatter;
+  final TextFormatter? dowTextFormatter;
 
   /// Decoration for the top row of the table
   final Decoration decoration;
@@ -30,7 +30,7 @@ class DaysOfWeekStyle {
   const DaysOfWeekStyle({
     this.dowTextFormatter,
     this.decoration = const BoxDecoration(),
-    this.weekdayStyle = const TextStyle(color: const Color(0xFF4F4F4F)),
-    this.weekendStyle = const TextStyle(color: const Color(0xFF6A6A6A)),
+    this.weekdayStyle = const TextStyle(color: Color(0xFF4F4F4F)),
+    this.weekendStyle = const TextStyle(color: Color(0xFF6A6A6A)),
   });
 }

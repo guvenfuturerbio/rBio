@@ -13,9 +13,9 @@ import '../scale_measurements/scale_measurement_vm.dart';
 import 'scale_tagger_vm.dart';
 
 class ScaleTagger extends StatelessWidget {
-  final ScaleModel scaleModel;
+  final ScaleModel? scaleModel;
   final bool isUpdate;
-  ScaleTagger({Key key, this.scaleModel, this.isUpdate = false})
+  const ScaleTagger({Key? key, this.scaleModel, this.isUpdate = false})
       : super(key: key);
 
   BoxDecoration boxDeco(int index, int gridViewCrossAxisCount) {
@@ -46,11 +46,11 @@ class ScaleTagger extends StatelessWidget {
     return OrientationBuilder(
       builder: (_, orientation) {
         if (orientation == Orientation.landscape) {
-          height = context.WIDTH;
-          width = context.HEIGHT;
+          height = context.width;
+          width = context.height;
         } else {
-          height = context.HEIGHT;
-          width = context.WIDTH;
+          height = context.height;
+          width = context.width;
         }
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -62,46 +62,49 @@ class ScaleTagger extends StatelessWidget {
                   scaleModel: scaleModel == null
                       ? null
                       : ScaleMeasurementViewModel(
-                          scaleModel: scaleModel.copy()),
+                          scaleModel: scaleModel!.copy()),
                   isManuel: scaleModel == null,
                   key: scaleModel?.key),
               child: GestureDetector(
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Consumer<ScaleTaggerVm>(
                   builder: (_, value, __) {
-                    print(value.key);
-                    print(value.scaleModel.scaleModel.key);
-                    return Card(
-                      color: R.color.background,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                top: height * .03,
-                                right: width * .02,
-                                left: width * .02,
-                              ),
-                              child: SingleChildScrollView(
-                                controller: value.scrollController,
-                                child: Column(
-                                  children: [
-                                    weightInputSection(value, context),
-                                    _dateTimeSection(context, value),
-                                    otherBodyParameterMeasurementSection(value),
-                                    _imageSection(value, context),
-                                    _noteSection(value, context),
-                                  ],
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: context.xMediaQuery.padding.vertical),
+                      child: Card(
+                        color: R.color.background,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: height * .03,
+                                  right: width * .02,
+                                  left: width * .02,
+                                ),
+                                child: SingleChildScrollView(
+                                  controller: value.scrollController,
+                                  child: Column(
+                                    children: [
+                                      weightInputSection(value, context),
+                                      _dateTimeSection(context, value),
+                                      otherBodyParameterMeasurementSection(
+                                          value),
+                                      _imageSection(value, context),
+                                      _noteSection(value, context),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          getAction(Atom.dismiss,
-                              isUpdate ? value.update : value.save)
-                        ],
+                            getAction(Atom.dismiss,
+                                isUpdate ? value.update : value.save)
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -127,23 +130,21 @@ class ScaleTagger extends StatelessWidget {
                   shrinkWrap: true,
                   children: [
                     _itemOfColorInfoDialog(context, R.color.very_low,
-                        '${LocaleProvider.current.very_low}'),
+                        LocaleProvider.current.very_low),
                     _itemOfColorInfoDialog(
-                        context, R.color.low, '${LocaleProvider.current.low}'),
-                    _itemOfColorInfoDialog(context, R.color.target,
-                        '${LocaleProvider.current.target}'),
-                    _itemOfColorInfoDialog(context, R.color.high,
-                        '${LocaleProvider.current.high}'),
+                        context, R.color.low, LocaleProvider.current.low),
+                    _itemOfColorInfoDialog(
+                        context, R.color.target, LocaleProvider.current.target),
+                    _itemOfColorInfoDialog(
+                        context, R.color.high, LocaleProvider.current.high),
                     _itemOfColorInfoDialog(context, R.color.very_high,
-                        '${LocaleProvider.current.very_high}'),
+                        LocaleProvider.current.very_high),
                   ],
                 )),
               )),
-      child: Container(
-        child: Icon(
-          Icons.info,
-          size: 40 * context.TEXTSCALE,
-        ),
+      child: Icon(
+        Icons.info,
+        size: 40 * context.textScale,
       ),
     );
   }
@@ -152,14 +153,14 @@ class ScaleTagger extends StatelessWidget {
     return Row(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           child: Container(
             decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-            height: 18 * context.TEXTSCALE,
-            width: 18 * context.TEXTSCALE,
+            height: 18 * context.textScale,
+            width: 18 * context.textScale,
           ),
         ),
-        Expanded(child: Text('$title'))
+        Expanded(child: Text(title))
       ],
     );
   }
@@ -185,7 +186,7 @@ class ScaleTagger extends StatelessWidget {
             color: isSave
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
           style: TextStyle(
@@ -204,12 +205,12 @@ class ScaleTagger extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: value.scaleModel.images.length == 3
+            itemCount: value.scaleModel?.images.length == 3
                 ? 3
-                : value.scaleModel.images.length + 1,
+                : value.scaleModel!.images.length + 1,
             itemBuilder: (_, index) => Stack(
               children: [
-                Container(
+                SizedBox(
                     width: height * .1,
                     height: height * .1,
                     child: Card(
@@ -217,11 +218,11 @@ class ScaleTagger extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: height * .1,
                         width: height * .1,
-                        child: value.scaleModel.images.isEmpty ||
-                                index >= value.scaleModel.images.length
+                        child: value.scaleModel!.images.isEmpty ||
+                                index >= value.scaleModel!.images.length
                             ? GestureDetector(
                                 onTap: () {
                                   value.getImage(context);
@@ -229,7 +230,7 @@ class ScaleTagger extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: SvgPicture.asset(
-                                    R.image.addphoto_icon,
+                                    R.image.addphotoIcon,
                                   ),
                                 ),
                               )
@@ -241,15 +242,15 @@ class ScaleTagger extends StatelessWidget {
                                     image: FileImage(File(
                                         getIt<ScaleStorageImpl>()
                                             .getImagePathOfImageURL(value
-                                                .scaleModel.images[index]))),
+                                                .scaleModel!.images[index]))),
                                   ),
                                 ),
                               ),
                       ),
                     )),
                 Visibility(
-                  visible: !(value.scaleModel.images.isEmpty ||
-                      index >= value.scaleModel.images.length),
+                  visible: !(value.scaleModel!.images.isEmpty ||
+                      index >= value.scaleModel!.images.length),
                   child: Positioned(
                     top: 0,
                     right: 0,
@@ -274,10 +275,10 @@ class ScaleTagger extends StatelessWidget {
               ],
             ),
           ),
-          if (value.scaleModel.images.length < 3)
+          if (value.scaleModel!.images.length < 3)
             Expanded(
               child: Padding(
-                  padding: EdgeInsets.only(left: 8),
+                  padding: const EdgeInsets.only(left: 8),
                   child: Text(LocaleProvider.current.add_photo)),
             ),
         ],
@@ -291,7 +292,7 @@ class ScaleTagger extends StatelessWidget {
         barrierColor: Colors.transparent,
         barrierDismissible: false,
         builder: (_) => GalleryView(images: [
-              ...value.scaleModel.images
+              ...value.scaleModel!.images
                   .map((e) =>
                       getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
                   .toList()
@@ -300,7 +301,7 @@ class ScaleTagger extends StatelessWidget {
 
   Container _noteSection(ScaleTaggerVm value, BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: Card(
         color: R.color.white,
         shape: RoundedRectangleBorder(
@@ -313,19 +314,19 @@ class ScaleTagger extends StatelessWidget {
             maxLines: null,
             onChanged: value.addNote,
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 12, right: 12),
+                contentPadding: const EdgeInsets.only(left: 12, right: 12),
                 hintText: LocaleProvider.current.notes,
-                hintStyle: TextStyle(fontSize: 12),
+                hintStyle: const TextStyle(fontSize: 12),
                 labelText: LocaleProvider.current.notes,
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.transparent),
                   //  when the TextFormField in unfocused
                 ),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.transparent),
                   //  when the TextFormField in focused
                 ),
-                border: UnderlineInputBorder())),
+                border: const UnderlineInputBorder())),
       ),
     );
   }
@@ -336,7 +337,7 @@ class ScaleTagger extends StatelessWidget {
           showModalBottomSheet(
               context: context,
               builder: (context) {
-                return Container(
+                return SizedBox(
                     height: 260,
                     child: CupertinoDatePicker(
                       initialDateTime: DateTime.now(),
@@ -351,7 +352,7 @@ class ScaleTagger extends StatelessWidget {
               });
         },
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16, top: 16),
+          padding: const EdgeInsets.only(bottom: 16, top: 16),
           child: Card(
             color: R.color.white,
             shape: RoundedRectangleBorder(
@@ -360,15 +361,15 @@ class ScaleTagger extends StatelessWidget {
             elevation: 4,
             child: Container(
                 width: double.infinity,
-                padding:
-                    EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 10, bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                        "${UtilityManager().getReadableDate(value.scaleModel?.dateTime ?? DateTime.now())}"),
-                    Text(
-                        "${UtilityManager().getReadableHour(value.scaleModel?.dateTime ?? DateTime.now())}")
+                    Text(UtilityManager()
+                        .getReadableDate(value.scaleModel!.dateTime)),
+                    Text(UtilityManager()
+                        .getReadableHour(value.scaleModel!.dateTime))
                   ],
                 )),
           ),
@@ -378,10 +379,10 @@ class ScaleTagger extends StatelessWidget {
   GridView otherBodyParameterMeasurementSection(ScaleTaggerVm value) {
     return GridView.count(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       childAspectRatio: 5 / 4,
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       children: _sectionItems(value),
     );
   }
@@ -389,54 +390,60 @@ class ScaleTagger extends StatelessWidget {
   List<Widget> _sectionItems(ScaleTaggerVm value) {
     return [
       scaleSection(
-          controller: value.bmiController,
-          name: LocaleProvider.current.scale_data_bmi,
-          color: value.scaleModel.getColor(SelectedScaleType.BMI),
-          type: '',
-          index: 1,
-          isBmi: true,
-          crossAxisCount: 1,
-          onChanged: value.changeBmi),
+        controller: value.bmiController,
+        name: LocaleProvider.current.scale_data_bmi,
+        color: value.scaleModel!.getColor(SelectedScaleType.bmi),
+        type: '',
+        index: 1,
+        isBmi: true,
+        crossAxisCount: 1,
+        onChanged: value.changeBmi,
+      ),
       scaleSection(
-          controller: value.bodyFatController,
-          name: LocaleProvider.current.scale_data_body_fat,
-          color: value.scaleModel.getColor(SelectedScaleType.BODY_FAT),
-          type: '%',
-          index: 2,
-          crossAxisCount: 1,
-          onChanged: value.changeBodyFat),
+        controller: value.bodyFatController,
+        name: LocaleProvider.current.scale_data_body_fat,
+        color: value.scaleModel!.getColor(SelectedScaleType.bodyFat),
+        type: '%',
+        index: 2,
+        crossAxisCount: 1,
+        onChanged: value.changeBodyFat,
+      ),
       scaleSection(
-          controller: value.boneMassController,
-          name: LocaleProvider.current.scale_data_bone_mass,
-          color: value.scaleModel.getColor(SelectedScaleType.BONE_MASS),
-          type: '${value.scaleModel.unit ?? ScaleUnit.KG.toStr}',
-          index: 3,
-          crossAxisCount: 2,
-          onChanged: value.changeBoneMass),
+        controller: value.boneMassController,
+        name: LocaleProvider.current.scale_data_bone_mass,
+        color: value.scaleModel!.getColor(SelectedScaleType.boneMass),
+        type: '${value.scaleModel!.unit}',
+        index: 3,
+        crossAxisCount: 2,
+        onChanged: value.changeBoneMass,
+      ),
       scaleSection(
-          name: LocaleProvider.current.scale_data_muscle,
-          controller: value.muscleController,
-          color: value.scaleModel.getColor(SelectedScaleType.MUSCLE),
-          type: '%',
-          index: 4,
-          crossAxisCount: 2,
-          onChanged: value.changeMuscle),
+        name: LocaleProvider.current.scale_data_muscle,
+        controller: value.muscleController,
+        color: value.scaleModel!.getColor(SelectedScaleType.muscle),
+        type: '%',
+        index: 4,
+        crossAxisCount: 2,
+        onChanged: value.changeMuscle,
+      ),
       scaleSection(
-          controller: value.visceralController,
-          name: LocaleProvider.current.scale_data_visceral_fat,
-          color: value.scaleModel.getColor(SelectedScaleType.VISCERAL_FAT),
-          type: '',
-          index: 5,
-          crossAxisCount: 3,
-          onChanged: value.changeVisceral),
+        controller: value.visceralController,
+        name: LocaleProvider.current.scale_data_visceral_fat,
+        color: value.scaleModel!.getColor(SelectedScaleType.visceralFat),
+        type: '',
+        index: 5,
+        crossAxisCount: 3,
+        onChanged: value.changeVisceral,
+      ),
       scaleSection(
-          controller: value.waterController,
-          name: LocaleProvider.current.scale_data_water,
-          color: value.scaleModel.getColor(SelectedScaleType.WATER),
-          type: '%',
-          index: 6,
-          crossAxisCount: 3,
-          onChanged: value.changeWater),
+        controller: value.waterController,
+        name: LocaleProvider.current.scale_data_water,
+        color: value.scaleModel!.getColor(SelectedScaleType.water),
+        type: '%',
+        index: 6,
+        crossAxisCount: 3,
+        onChanged: value.changeWater,
+      ),
     ];
   }
 
@@ -449,35 +456,39 @@ class ScaleTagger extends StatelessWidget {
             child: Container(
               height: height * .2,
               width: height * .2,
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withAlpha(50),
-                        blurRadius: 5,
-                        spreadRadius: 0,
-                        offset: Offset(3, 3))
-                  ],
-                  border: Border.all(
-                      width: 13,
-                      color:
-                          value.scaleModel.getColor(SelectedScaleType.WEIGHT)),
-                  shape: BoxShape.circle,
-                  color: isUpdate || scaleModel == null
-                      ? R.color.white
-                      : R.color.background),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(50),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: const Offset(3, 3))
+                ],
+                border: Border.all(
+                  width: 13,
+                  color: value.scaleModel!.getColor(
+                    SelectedScaleType.weight,
+                  ),
+                ),
+                shape: BoxShape.circle,
+                color: isUpdate || scaleModel == null
+                    ? R.color.white
+                    : R.color.background,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _inputSection(value.weightController, validator: (input) {
-                    if (input.isNotEmpty)
-                      return null;
-                    else
+                    if (input?.isNotEmpty ?? false) {
                       return "";
+                    } else {
+                      return "";
+                    }
                   }, onChanged: value.changeWeight),
                   Text(
-                    "${value.scaleModel?.unit?.toStr ?? ScaleUnit.KG.toStr}",
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+                    value.scaleModel!.unit.toStr,
+                    style: const TextStyle(color: Colors.black, fontSize: 14),
                   ),
                 ],
               ),
@@ -490,22 +501,22 @@ class ScaleTagger extends StatelessWidget {
   }
 
   Theme _inputSection(TextEditingController controller,
-      {String Function(String) validator,
-      void Function(String) onChanged,
+      {String Function(String?)? validator,
+      required void Function(String) onChanged,
       bool isBmi = false}) {
     return Theme(
         data: ThemeData(primaryColor: Colors.black),
         child: TextFormField(
             enabled: !isBmi &&
                 (scaleModel == null || (scaleModel?.isManuel ?? true)),
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
             controller: controller,
             maxLength: 5,
             maxLines: 1,
             textAlign: TextAlign.center,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: onChanged,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               counterText: '',
               errorStyle: TextStyle(height: 0),
@@ -514,13 +525,13 @@ class ScaleTagger extends StatelessWidget {
   }
 
   scaleSection(
-      {TextEditingController controller,
-      String name,
-      Color color,
-      String type,
-      int index,
-      int crossAxisCount,
-      void Function(String) onChanged,
+      {required TextEditingController controller,
+      required String name,
+      required Color color,
+      required String type,
+      required int index,
+      required int crossAxisCount,
+      required void Function(String) onChanged,
       bool isBmi = false}) {
     return Container(
       decoration: boxDeco(index, crossAxisCount),
@@ -540,8 +551,7 @@ class ScaleTagger extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(17),
-                  border: Border.all(
-                      width: 6, color: color ?? R.color.grey.withOpacity(.2)),
+                  border: Border.all(width: 6, color: color),
                   shape: BoxShape.rectangle,
                   color: !isBmi &&
                           (scaleModel == null || (scaleModel?.isManuel ?? true))

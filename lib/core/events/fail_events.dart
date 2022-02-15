@@ -1,9 +1,8 @@
-
 import 'base_event.dart';
 
 class RegisterStep1FailEvent extends BaseEvent {
   @override
-  String name;
+  String? name;
 
   RegisterStep1FailEvent(String param1, int param2)
       : super("RegisterStep1FailEvent", {
@@ -27,15 +26,13 @@ class RegisterStep2FailEvent extends BaseEvent {
 }
 
 class OAPaymentFailureEvent extends BaseEvent {
-  OAPaymentFailureEvent(String errorMessage) : super("OnlineRandevu_OdemeHata", {
-    'hata_mesaji': errorMessage
-  });
+  OAPaymentFailureEvent(String errorMessage)
+      : super("OnlineRandevu_OdemeHata", {'hata_mesaji': errorMessage});
 }
 
 class PcrPaymentFailureEvent extends BaseEvent {
-  PcrPaymentFailureEvent(String errorMessage) : super("pcrTesti_OdemeHata", {
-    'hata_mesaji': errorMessage
-  });
+  PcrPaymentFailureEvent(String errorMessage)
+      : super("pcrTesti_OdemeHata", {'hata_mesaji': errorMessage});
 }
 
 // Profile Page
@@ -44,9 +41,9 @@ class ChangeMyPasswordFailEvent extends BaseEvent {
 }
 
 class ChangeToRelativeFailEvent extends BaseEvent {
-  ChangeToRelativeFailEvent(String relativeNameAndSurname) : super("yakinDegistirme_Basarisiz", {
-    'yakin_ismi': relativeNameAndSurname
-  });
+  ChangeToRelativeFailEvent(String relativeNameAndSurname)
+      : super("yakinDegistirme_Basarisiz",
+            {'yakin_ismi': relativeNameAndSurname});
 }
 
 class AddPatientRelativeFailEvent extends BaseEvent {
@@ -54,11 +51,11 @@ class AddPatientRelativeFailEvent extends BaseEvent {
 }
 
 class ChangeToDefaultFromRelativeFailEvent extends BaseEvent {
-  ChangeToDefaultFromRelativeFailEvent() : super("yakinlarimAnaHesapGecis_Basarisiz", null);
+  ChangeToDefaultFromRelativeFailEvent()
+      : super("yakinlarimAnaHesapGecis_Basarisiz", null);
 }
 
 class DeleteRelativeFailEvent extends BaseEvent {
-  DeleteRelativeFailEvent(String relativeNameAndSurname) : super("yakinSilme_Basarisiz", {
-    'yakin_ismi': relativeNameAndSurname
-  });
+  DeleteRelativeFailEvent(String relativeNameAndSurname)
+      : super("yakinSilme_Basarisiz", {'yakin_ismi': relativeNameAndSurname});
 }

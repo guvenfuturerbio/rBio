@@ -5,16 +5,16 @@ part 'get_hba1c_measurement_list.g.dart';
 @JsonSerializable()
 class GetHba1cMeasurementListModel {
   @JsonKey(name: 'start')
-  double start;
+  double? start;
   @JsonKey(name: 'end')
-  String end;
+  String? end;
   @JsonKey(name: 'skip')
-  int skip;
+  int? skip;
   @JsonKey(name: 'take')
-  int take;
+  int? take;
 
   GetHba1cMeasurementListModel(
-      {this.start, this.end, this.skip, this.take});
+      {this.start, this.end, this.skip, this.take,});
 
   factory GetHba1cMeasurementListModel.fromJson(Map<String, dynamic> json) => _$GetHba1cMeasurementListModelFromJson(json);
 

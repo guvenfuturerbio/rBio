@@ -2,20 +2,18 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../../core/domain/blood_pressure_model.dart';
 import '../../view_model/pressure_measurement_view_model.dart';
 import 'pressure_tagger_vm.dart';
 
 class PressureTagger extends StatelessWidget {
-  final BloodPressureModel bpModel;
+  final BloodPressureModel? bpModel;
   final bool isUpdate;
   final bool isEdit;
-  PressureTagger(
-      {Key key, this.bpModel, this.isUpdate = false, this.isEdit = false})
+  const PressureTagger(
+      {Key? key, this.bpModel, this.isUpdate = false, this.isEdit = false})
       : super(key: key);
 
   @override
@@ -33,50 +31,54 @@ class PressureTagger extends StatelessWidget {
                     context: context,
                     bpModel: bpModel == null
                         ? null
-                        : BpMeasurementViewModel(bpModel: bpModel.copy()),
+                        : BpMeasurementViewModel(bpModel: bpModel!.copy()),
                     isManuel: bpModel == null,
                     key: bpModel?.key),
                 child: Consumer<PressureTaggerVm>(
                   builder: (_, value, __) {
                     if (orientation == Orientation.landscape) {
-                      value.height = context.WIDTH;
-                      value.width = context.HEIGHT;
+                      value.height = context.width;
+                      value.width = context.height;
                     } else {
-                      value.height = context.HEIGHT;
-                      value.width = context.WIDTH;
+                      value.height = context.height;
+                      value.width = context.width;
                     }
-                    return Card(
-                      color: R.color.background,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: value.height * .03,
-                                  right: value.width * .02,
-                                  left: value.width * .02,
-                                ),
-                                child: SingleChildScrollView(
-                                  controller: value.scrollController,
-                                  child: Column(
-                                    children: [
-                                      _inputSection(value),
-                                      _dateTimeSection(context, value),
-                                      _noteSection(value, context),
-                                    ],
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: context.xMediaQuery.padding.vertical),
+                      child: Card(
+                        color: R.color.background,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: value.height * .03,
+                                    right: value.width * .02,
+                                    left: value.width * .02,
+                                  ),
+                                  child: SingleChildScrollView(
+                                    controller: value.scrollController,
+                                    child: Column(
+                                      children: [
+                                        _inputSection(value),
+                                        _dateTimeSection(context, value),
+                                        _noteSection(value, context),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            getAction(Atom.dismiss,
-                                isEdit ? value.update : value.save)
-                          ],
+                              getAction(Atom.dismiss,
+                                  isEdit ? value.update : value.save)
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -93,7 +95,12 @@ class PressureTagger extends StatelessWidget {
   getAction(VoidCallback leftButtonAction, VoidCallback rightButtonAction) {
     return Wrap(
       children: [
-        GestureDetector(onTap: leftButtonAction, child: actionButton(false)),
+        GestureDetector(
+            onTap: () {
+              LoggerUtils.instance.w(bpModel?.toJson());
+              leftButtonAction();
+            },
+            child: actionButton(false)),
         GestureDetector(onTap: rightButtonAction, child: actionButton(true)),
       ],
     );
@@ -111,7 +118,7 @@ class PressureTagger extends StatelessWidget {
             color: isSave
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
           style: TextStyle(
@@ -124,7 +131,7 @@ class PressureTagger extends StatelessWidget {
 
   Container _noteSection(PressureTaggerVm value, BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: Card(
         color: R.color.white,
         shape: RoundedRectangleBorder(
@@ -137,19 +144,19 @@ class PressureTagger extends StatelessWidget {
             maxLines: null,
             onChanged: value.addNote,
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 12, right: 12),
+                contentPadding: const EdgeInsets.only(left: 12, right: 12),
                 hintText: LocaleProvider.current.notes,
-                hintStyle: TextStyle(fontSize: 12),
+                hintStyle: const TextStyle(fontSize: 12),
                 labelText: LocaleProvider.current.notes,
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.transparent),
                   //  when the TextFormField in unfocused
                 ),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.transparent),
                   //  when the TextFormField in focused
                 ),
-                border: UnderlineInputBorder())),
+                border: const UnderlineInputBorder())),
       ),
     );
   }
@@ -161,10 +168,10 @@ class PressureTagger extends StatelessWidget {
           showModalBottomSheet(
               context: context,
               builder: (context) {
-                return Container(
+                return SizedBox(
                     height: 260,
                     child: CupertinoDatePicker(
-                      initialDateTime: value.bpModel.date ?? DateTime.now(),
+                      initialDateTime: value.bpModel!.date,
                       onDateTimeChanged: value.changeDate,
                       use24hFormat: true,
                       maximumDate: DateTime.now(),
@@ -176,7 +183,7 @@ class PressureTagger extends StatelessWidget {
               });
         },
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16, top: 16),
+          padding: const EdgeInsets.only(bottom: 16, top: 16),
           child: Card(
             color: R.color.white,
             shape: RoundedRectangleBorder(
@@ -185,15 +192,15 @@ class PressureTagger extends StatelessWidget {
             elevation: 4,
             child: Container(
                 width: double.infinity,
-                padding:
-                    EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 10, bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                        "${UtilityManager().getReadableDate(value.bpModel?.date ?? DateTime.now())}"),
-                    Text(
-                        "${UtilityManager().getReadableHour(value.bpModel?.date ?? DateTime.now())}")
+                    Text(UtilityManager().getReadableDate(
+                        value.bpModel?.date ?? DateTime.now())),
+                    Text(UtilityManager()
+                        .getReadableHour(value.bpModel?.date ?? DateTime.now()))
                   ],
                 )),
           ),
@@ -208,25 +215,25 @@ class PressureTagger extends StatelessWidget {
             LocaleProvider.current.sys,
             value.changeSys,
             value.context.xHeadline1,
-            value.bpModel.systolicColor,
+            value.bpModel!.systolicColor,
             value.sysController,
-            value.context.TEXTSCALE * (value.height * .1),
+            value.context.textScale * (value.height * .1),
             value.context),
         _inputInsideSection(
             LocaleProvider.current.dia,
             value.changeDia,
             value.context.xHeadline1,
-            value.bpModel.diastolicColor,
+            value.bpModel!.diastolicColor,
             value.diaController,
-            value.context.TEXTSCALE * (value.height * .1),
+            value.context.textScale * (value.height * .1),
             value.context),
         _inputInsideSection(
             LocaleProvider.current.pulse,
             value.changePulse,
             value.context.xHeadline1,
-            value.bpModel.pulseColor,
+            value.bpModel!.pulseColor,
             value.pulseController,
-            value.context.TEXTSCALE * (value.height * .1),
+            value.context.textScale * (value.height * .1),
             value.context)
       ],
     );
@@ -245,15 +252,15 @@ class PressureTagger extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
             side: BorderSide(width: 7, color: color)),
         child: SizedBox(
-          height: context.HEIGHT * .2 * context.TEXTSCALE,
-          width: context.WIDTH * .30 * context.TEXTSCALE,
+          height: context.height * .2 * context.textScale,
+          width: context.width * .30 * context.textScale,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '$title',
+                  title,
                   style: style,
                 ),
                 Expanded(
@@ -261,11 +268,12 @@ class PressureTagger extends StatelessWidget {
                     child: TextField(
                       controller: controller,
                       onChanged: onChanged,
+                      enabled: (bpModel?.isManual ?? true),
                       maxLength: 3,
                       keyboardType: TextInputType.number,
                       style: style,
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: UnderlineInputBorder(
                               borderSide: BorderSide.none)),
                     ),

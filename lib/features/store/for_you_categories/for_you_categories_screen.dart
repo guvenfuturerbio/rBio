@@ -7,7 +7,7 @@ import '../../../../core/core.dart';
 import 'for_you_categories_vm.dart';
 
 class ForYouCategoriesScreen extends StatefulWidget {
-  const ForYouCategoriesScreen({Key key}) : super(key: key);
+  const ForYouCategoriesScreen({Key? key}) : super(key: key);
 
   @override
   _ForYouCategoriesScreenState createState() => _ForYouCategoriesScreenState();
@@ -22,15 +22,10 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
         builder: (
           BuildContext context,
           ForYouCategoriesPageVm vm,
-          Widget child,
+          Widget? child,
         ) {
-          return RbioScaffold(
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                LocaleProvider.of(context).for_you,
-              ),
-            ),
+          return RbioStackedScaffold(
+            appbar: _buildAppBar(context),
             body: _buildBody(vm),
           );
         },
@@ -38,14 +33,25 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
     );
   }
 
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).for_you,
+      ),
+    );
+  }
+
   Widget _buildBody(ForYouCategoriesPageVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return GridView.builder(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.only(
+            top: R.sizes.stackedTopPaddingValue(context) + 8,
+          ),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: MediaQuery.of(context).size.width < 800
                 ? MediaQuery.of(context).size.width * 0.45
@@ -55,24 +61,25 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
             mainAxisSpacing: 25,
           ),
           itemCount: vm.categories.length,
-          itemBuilder: (BuildContext ctx, int index) {
-            return Utils.instance.ForYouCategoryCard(
+          itemBuilder: (BuildContext context, int index) {
+            final item = vm.categories[index];
+            return Utils.instance.forYouCategoryCard(
               context: context,
-              title: vm.categories[index].text,
-              id: vm.categories[index].id,
-              icon: vm.categories[index].icon != null
-                  ? Image.memory(base64Decode(vm.categories[index].icon))
-                  : Image.asset(R.image.covid_cat_icon),
+              title: item.text,
+              id: item.id,
+              icon: item.icon != null
+                  ? Image.memory(base64Decode(item.icon ?? ''))
+                  : Image.asset(R.image.covidCat),
               isSubCat: false,
             );
           },
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }

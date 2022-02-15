@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health/health.dart';
 import 'package:hive/hive.dart';
 
 import '../../../../model/bg_measurement/blood_glucose_value_detail_model.dart';
@@ -15,8 +16,6 @@ import '../../../../model/scale_measurement/delete_scale_measurement.dart';
 import '../../../../model/scale_measurement/get_scale_measurement.dart';
 import '../../../../model/scale_measurement/update_scale_measurement.dart';
 import '../../../core.dart';
-import '../../../domain/blood_pressure_model.dart';
-import '../../imports/cronic_tracking.dart';
 
 part 'blood_pressure_storage_impl.dart';
 part 'glucose_storage_impl.dart';
@@ -25,16 +24,16 @@ part 'scale_storage_impl.dart';
 
 abstract class ChronicStorageService<T extends HiveObject>
     extends ChangeNotifier {
-  String boxKey;
-  Box<T> box;
+  late String boxKey;
+  late Box<T> box;
 
   Future<void> init();
 
-  T get(key);
+  T? get(key);
 
   List<T> getAll();
 
-  T getLatestMeasurement();
+  T? getLatestMeasurement();
 
   Future<bool> write(T data, {bool shouldSendToServer = false});
 

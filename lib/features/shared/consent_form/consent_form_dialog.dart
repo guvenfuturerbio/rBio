@@ -5,12 +5,12 @@ import '../../../core/core.dart';
 import 'consent_form_dialog_vm.dart';
 
 class ConsentFormDialog extends StatefulWidget {
-  final String title;
-  final String text;
+  final String? title;
+  final String? text;
   final alwaysAsk;
 
-  ConsentFormDialog({
-    Key key,
+  const ConsentFormDialog({
+    Key? key,
     this.title,
     this.text,
     this.alwaysAsk,
@@ -25,16 +25,16 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
   Widget build(BuildContext context) {
     return GuvenAlert(
       backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title),
+      title: GuvenAlert.buildTitle(widget.title!),
       content: SingleChildScrollView(
-        child: ChangeNotifierProvider(
+        child: ChangeNotifierProvider<ConsentFormDialogVm>(
           create: (context) => ConsentFormDialogVm(
             context: context,
-            alwaysAsk: widget?.alwaysAsk ?? false,
+            alwaysAsk: widget.alwaysAsk ?? false,
           ),
           child: Consumer<ConsentFormDialogVm>(
             builder: (BuildContext context, ConsentFormDialogVm value,
-                Widget child) {
+                Widget? child) {
               return Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -43,10 +43,10 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     //
-                    GuvenAlert.buildSmallDescription(widget.text),
+                    GuvenAlert.buildSmallDescription(widget.text!),
 
                     //
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
 
@@ -56,7 +56,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                         Container(
                           alignment: Alignment.bottomLeft,
                           child: Checkbox(
-                            value: value.clickedConsentForm,
+                            value: value.clickedConsentForm ?? false,
                             checkColor: Colors.white,
                             onChanged: (newValue) {
                               value.toggleConsentFormState();

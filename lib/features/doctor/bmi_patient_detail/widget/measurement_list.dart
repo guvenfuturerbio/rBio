@@ -3,15 +3,18 @@ part of '../view/bmi_patient_detail_screen.dart';
 class _MeasurementList extends StatefulWidget {
   final List<ScaleMeasurementViewModel> scaleMeasurements;
   final ScrollController scrollController;
-  final bool useStickyGroupSeparatorsValue;
+  final bool? useStickyGroupSeparatorsValue;
   final SelectedScaleType selected;
   final Function(DateTime) fetchScrolledData;
-  _MeasurementList(
-      {this.scaleMeasurements,
-      this.selected = SelectedScaleType.WEIGHT,
-      this.scrollController,
-      this.useStickyGroupSeparatorsValue,
-      this.fetchScrolledData});
+
+  const _MeasurementList({
+    required this.scaleMeasurements,
+    this.selected = SelectedScaleType.weight,
+    required this.scrollController,
+    this.useStickyGroupSeparatorsValue,
+    required this.fetchScrolledData,
+  });
+
   @override
   __MeasurementListState createState() => __MeasurementListState();
 }
@@ -21,15 +24,16 @@ class __MeasurementListState extends State<_MeasurementList> {
   Widget build(BuildContext context) {
     log(widget.selected.toStr);
     var list = <ScaleMeasurementViewModel>[];
-    if (widget.scaleMeasurements != null)
+    if (widget.scaleMeasurements.isNotEmpty) {
       list = widget.scaleMeasurements
           .where((element) => element.getMeasurement(widget.selected) != null)
           .toList();
+    }
     return Column(
       children: [
         Expanded(
           child: list.isEmpty
-              ? Center(child: Text('${LocaleProvider.current.no_measurement}'))
+              ? Center(child: Text(LocaleProvider.current.no_measurement))
               : GroupedListView<ScaleMeasurementViewModel, DateTime>(
                   elements: list,
                   scrollDirection: Axis.vertical,
@@ -37,22 +41,22 @@ class __MeasurementListState extends State<_MeasurementList> {
                   controller: widget.scrollController,
                   floatingHeader: true,
                   padding: EdgeInsets.only(
-                      bottom: 2 * (context.HEIGHT * .1) * context.TEXTSCALE),
+                      bottom: 2 * (context.height * .1) * context.textScale),
                   useStickyGroupSeparators: true,
                   groupBy:
                       (ScaleMeasurementViewModel scaleMeasurementViewModel) =>
                           DateTime(
-                              scaleMeasurementViewModel.date.year,
-                              scaleMeasurementViewModel.date.month,
-                              scaleMeasurementViewModel.date.day),
+                              scaleMeasurementViewModel.dateTime.year,
+                              scaleMeasurementViewModel.dateTime.month,
+                              scaleMeasurementViewModel.dateTime.day),
                   groupHeaderBuilder:
                       (ScaleMeasurementViewModel bgMeasurementViewModel) {
                     return Container(
                       alignment: Alignment.center,
                       width: double.infinity,
-                      height: (context.HEIGHT * .07) * context.TEXTSCALE,
+                      height: (context.height * .07) * context.textScale,
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 8),
+                        margin: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -60,14 +64,15 @@ class __MeasurementListState extends State<_MeasurementList> {
                                 color: Colors.black.withAlpha(50),
                                 blurRadius: 5,
                                 spreadRadius: 0,
-                                offset: Offset(5, 5))
+                                offset: const Offset(5, 5))
                           ],
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
+                            DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
+                                .format(bgMeasurementViewModel.dateTime),
                           ),
                         ),
                       ),
@@ -78,7 +83,7 @@ class __MeasurementListState extends State<_MeasurementList> {
                     return measurementList(scaleMeasurementViewModel, context);
                   },
                   callback: (ScaleMeasurementViewModel data) {
-                    widget.fetchScrolledData(data.date);
+                    widget.fetchScrolledData(data.dateTime);
                   },
                 ),
         ),
@@ -100,19 +105,16 @@ class __MeasurementListState extends State<_MeasurementList> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            child: Text(
-                DateFormat("kk : mm").format(scaleMeasurementViewModel.date),
-                style: context.xBodyText1),
-          ),
+          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.dateTime),
+              style: context.xBodyText1),
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              height: (context.HEIGHT * .08) * context.TEXTSCALE,
-              margin: EdgeInsets.only(left: 8, right: 8, top: 8),
+              height: (context.height * .08) * context.textScale,
+              margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
               decoration: BoxDecoration(
                 color: Colors.green,
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                     colors: [Colors.white, Colors.white],
                     begin: Alignment.bottomLeft,
                     end: Alignment.centerRight),
@@ -121,11 +123,11 @@ class __MeasurementListState extends State<_MeasurementList> {
                       color: Colors.black.withAlpha(50),
                       blurRadius: 5,
                       spreadRadius: 0,
-                      offset: Offset(5, 5))
+                      offset: const Offset(5, 5))
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(30.0)),
               ),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,7 +150,7 @@ class __MeasurementListState extends State<_MeasurementList> {
         children: <Widget>[
           if (scaleMeasurementViewModel.isManuel)
             Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               child: Text(
                 "M",
                 style: context.xHeadline3.copyWith(
@@ -156,30 +158,31 @@ class __MeasurementListState extends State<_MeasurementList> {
                 ),
               ),
             ),
-          (scaleMeasurementViewModel.imageUrl == null ||
-                  scaleMeasurementViewModel.imageUrl.isEmpty)
-              ? Container(
-                  width: 60 * context.TEXTSCALE,
-                  height: 60 * context.TEXTSCALE,
+          scaleMeasurementViewModel.imageUrl.isEmpty
+              ? SizedBox(
+                  width: 60 * context.textScale,
+                  height: 60 * context.textScale,
                   child: Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Container(
-                        padding: EdgeInsets.all(8),
-                        height: 25,
-                        width: 25,
-                        child: SvgPicture.asset(
-                          R.image.addphoto_icon,
-                        )),
-                  ))
+                      padding: const EdgeInsets.all(8),
+                      height: 25,
+                      width: 25,
+                      child: SvgPicture.asset(
+                        R.image.addphotoIcon,
+                      ),
+                    ),
+                  ),
+                )
               : GestureDetector(
                   onTap: () =>
                       _galeryView(context, scaleMeasurementViewModel.imageUrl),
                   child: SizedBox(
-                    width: 60 * context.TEXTSCALE,
-                    height: 60 * context.TEXTSCALE,
+                    width: 60 * context.textScale,
+                    height: 60 * context.textScale,
                     child: StackOfCards(
                       children: [
                         ...scaleMeasurementViewModel.imageUrl.map(
@@ -221,7 +224,7 @@ class __MeasurementListState extends State<_MeasurementList> {
               children: [
                 Text(
                     scaleMeasurementViewModel
-                        .getMeasurement(widget.selected)
+                        .getMeasurement(widget.selected)!
                         .toStringAsFixed(2),
                     style: context.xHeadline1),
               ],
@@ -229,7 +232,7 @@ class __MeasurementListState extends State<_MeasurementList> {
           ),
           Expanded(
             flex: 4,
-            child: Text(scaleMeasurementViewModel.note ?? ''),
+            child: Text(scaleMeasurementViewModel.note),
           ),
         ],
       ),

@@ -1,8 +1,8 @@
 class Hba1CForScheduleModel {
-  int id;
-  String lastTestDate;
-  String lastTestValue;
-  String reminderDate;
+  int? id;
+  String? lastTestDate;
+  String? lastTestValue;
+  String? reminderDate;
 
   Hba1CForScheduleModel({
     this.id,

@@ -1,18 +1,18 @@
 class PatientResponse {
-  String patientType;
-  String birthDate;
-  String email;
-  String firstName;
-  String gender;
-  String gsm;
-  bool hasETKApproval;
-  bool hasKVKKApproval;
-  int id;
-  String identityNumber;
-  String lastName;
-  String nationalityCode;
-  int nationalityId;
-  String passportNumber;
+  String? patientType;
+  String? birthDate;
+  String? email;
+  String? firstName;
+  String? gender;
+  String? gsm;
+  bool? hasETKApproval;
+  bool? hasKVKKApproval;
+  int? id;
+  String? identityNumber;
+  String? lastName;
+  String? nationalityCode;
+  int? nationalityId;
+  String? passportNumber;
 
   PatientResponse({
     this.patientType,
@@ -32,38 +32,38 @@ class PatientResponse {
   });
 
   PatientResponse.fromJson(Map<String, dynamic> json) {
-    patientType = json['patientType'];
-    birthDate = json['birthDate'];
-    email = json['email'];
-    firstName = json['firstName'];
-    gender = json['gender'];
-    gsm = json['gsm'];
-    hasETKApproval = json['hasETKApproval'];
-    hasKVKKApproval = json['hasKVKKApproval'];
+    patientType = json['patientType'] as String?;
+    birthDate = json['birthDate'] as String?;
+    email = json['email'] as String?;
+    firstName = json['firstName'] as String?;
+    gender = json['gender'] as String?;
+    gsm = json['gsm'] as String?;
+    hasETKApproval = json['hasETKApproval'] as bool?;
+    hasKVKKApproval = json['hasKVKKApproval'] as bool?;
     id = int.parse(json['id'].toString());
-    identityNumber = json['identityNumber'];
-    lastName = json['lastName'];
-    nationalityCode = json['nationalityCode'];
+    identityNumber = json['identityNumber'] as String?;
+    lastName = json['lastName'] as String?;
+    nationalityCode = json['nationalityCode'] as String?;
     nationalityId = int.parse(json['nationalityId'].toString());
-    passportNumber = json['passportNumber'];
+    passportNumber = json['passportNumber'] as String?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['patientType'] = this.patientType;
-    data['birthDate'] = this.birthDate;
-    data['email'] = this.email;
-    data['firstName'] = this.firstName;
-    data['gender'] = this.gender;
-    data['gsm'] = this.gsm;
-    data['hasETKApproval'] = this.hasETKApproval;
-    data['hasKVKKApproval'] = this.hasKVKKApproval;
-    data['id'] = this.id;
-    data['identityNumber'] = this.identityNumber;
-    data['lastName'] = this.lastName;
-    data['nationalityCode'] = this.nationalityCode;
-    data['nationalityId'] = this.nationalityId;
-    data['passportNumber'] = this.passportNumber;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['patientType'] = patientType;
+    data['birthDate'] = birthDate;
+    data['email'] = email;
+    data['firstName'] = firstName;
+    data['gender'] = gender;
+    data['gsm'] = gsm;
+    data['hasETKApproval'] = hasETKApproval;
+    data['hasKVKKApproval'] = hasKVKKApproval;
+    data['id'] = id;
+    data['identityNumber'] = identityNumber;
+    data['lastName'] = lastName;
+    data['nationalityCode'] = nationalityCode;
+    data['nationalityId'] = nationalityId;
+    data['passportNumber'] = passportNumber;
     return data;
   }
 

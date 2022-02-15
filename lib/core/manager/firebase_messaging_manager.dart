@@ -13,98 +13,115 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/chat/model/chat_person.dart';
 import '../../model/model.dart';
 import '../core.dart';
-import '../notifiers/notification_badge_notifier.dart';
 
 // #region Top Level Variabled and Functions
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  await checkChatNotification(message);
+  await _checkChatNotification(message);
 }
 
-Future<void> checkChatNotification(RemoteMessage message) async {
-  final messageData = message?.data;
-  if (messageData != null) {
-    final type = messageData['type'];
-    if (type == NotificationType.chat.xRawValue) {
-      final sharedPreferences = await SharedPreferences.getInstance();
-      await sharedPreferences.setBool(
-        SharedPreferencesKeys.CHAT_NOTIFICATION.xRawValue,
-        true,
-      );
-    }
+Future<void> _checkChatNotification(RemoteMessage message) async {
+  final messageData = message.data;
+  final type = messageData['type'];
+  if (type == NotificationType.chat.xRawValue) {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setBool(
+      SharedPreferencesKeys.chatNotification.xRawValue,
+      true,
+    );
   }
 }
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-const AndroidNotificationChannel androidNotificationChannel =
-    AndroidNotificationChannel(
-  'high_importance_channel',
-  'High Importance Notifications',
-  description: 'This channel is used for important notifications.',
-  importance: Importance.high,
-  sound: RawResourceAndroidNotificationSound('chat_bildirim'),
-  playSound: true,
-);
+/// Create a [AndroidNotificationChannel] for heads up notifications
+late AndroidNotificationChannel _channel;
 
-class FirebaseMessagingManager {
-  String token;
+abstract class FirebaseMessagingManager {
+  late LocalNotificationManager localNotificationManager;
+  late NotificationBadgeNotifier notificationBadgeNotifier;
+  late Repository repository;
+  FirebaseMessagingManager({
+    required this.localNotificationManager,
+    required this.notificationBadgeNotifier,
+    required this.repository,
+  });
 
-  FirebaseMessagingManager._();
+  Future<void> init();
+  Future<void> userInit();
+  Future<void> userLogout();
+  Future<void> saveTokenServer(String token);
+  String? get getToken;
+}
 
-  static FirebaseMessagingManager _instance;
+class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
+  FirebaseMessagingManagerImpl({
+    required LocalNotificationManager localNotificationManager,
+    required NotificationBadgeNotifier notificationBadgeNotifier,
+    required Repository repository,
+  }) : super(
+          localNotificationManager: localNotificationManager,
+          notificationBadgeNotifier: notificationBadgeNotifier,
+          repository: repository,
+        );
 
-  static FirebaseMessagingManager get instance {
-    _instance ??= FirebaseMessagingManager._()..init();
-    return _instance;
-  }
+  final firebaseMessaging = FirebaseMessaging.instance;
 
-  static handleLogout() {
-    _instance = null;
-  }
+  bool isUserInit = false;
 
-  static void mainInit() {
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  }
- 
+  String? token;
+  StreamSubscription<String>? _tokenStream;
+  StreamSubscription<RemoteMessage>? _onMessageOpenedAppStream;
+  StreamSubscription<RemoteMessage>? _onMessageStream;
+  StreamSubscription<String>? _selectNotificationStream;
+
+  @override
+  String? get getToken => token;
+
+  @override
   Future<void> init() async {
+    // Set the background messaging handler early on, as a named top-level function
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
     if (!kIsWeb) {
-      const AndroidInitializationSettings initializationSettingsAndroid =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
-      final IOSInitializationSettings initializationSettingsIOS =
-          IOSInitializationSettings(
-        requestAlertPermission: true,
-        requestBadgePermission: true,
-        requestSoundPermission: true,
+      _channel = const AndroidNotificationChannel(
+        'high_importance_channel',
+        'High Importance Notifications',
+        description: 'This channel is used for important notifications.',
+        importance: Importance.high,
+        sound: RawResourceAndroidNotificationSound('chat_bildirim'),
+        playSound: true,
       );
-      final InitializationSettings initializationSettings =
-          InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: initializationSettingsIOS,
-      );
-      await flutterLocalNotificationsPlugin.initialize(
-        initializationSettings,
-        onSelectNotification: (payload) {
-          clickDataHandler(jsonDecode(payload));
-        },
+
+      /// Create an Android Notification Channel.
+      ///
+      /// We use this channel in the `AndroidManifest.xml` file to override the
+      /// default FCM channel to enable heads up notifications.
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.createNotificationChannel(_channel);
+
+      /// Update the iOS foreground notification presentation options to allow
+      /// heads up notifications.
+      await firebaseMessaging.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
       );
     }
-    final initialPayload =
-        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-    if (initialPayload?.payload != null) {
-      clickDataHandler(json.decode(initialPayload.payload));
-    }
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(androidNotificationChannel);
+  }
+
+  @override
+  Future<void> userInit() async {
+    // HomeScreen ilk açıldığından, kullanıcı logout olana kadar çalışacak.
+    if (isUserInit) return;
+    isUserInit = true;
 
     // Android always AuthorizationStatus.authorized.
     var notificationSettings =
-        await FirebaseMessaging.instance.getNotificationSettings();
+        await firebaseMessaging.getNotificationSettings();
     if (notificationSettings.authorizationStatus ==
         AuthorizationStatus.notDetermined) {
-      notificationSettings = await FirebaseMessaging.instance.requestPermission(
+      notificationSettings = await firebaseMessaging.requestPermission(
         alert: true,
         announcement: true,
         badge: true,
@@ -118,46 +135,35 @@ class FirebaseMessagingManager {
     switch (notificationSettings.authorizationStatus) {
       case AuthorizationStatus.authorized:
         {
-          getToken();
+          _getToken();
 
-          // User granted permission
-          await FirebaseMessaging.instance
-              .setForegroundNotificationPresentationOptions(
-            alert: true, // Required to display a heads up notification
-            badge: true,
-            sound: true,
-          );
-
-          // Uygulama Ekranda Açıkken
-          FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-            if (!kIsWeb && message != null) {
-              if (Atom.isAndroid) {
-                ChatPerson otherPerson =
-                    ChatPerson.fromMap(json.decode(message.data['chatPerson']));
-
-                if (!(Atom.url.contains(PagePaths.CHAT) &&
-                    Atom.url.contains(otherPerson.id)))
-                  showNotification(message);
-              }
-
-              await checkChatNotification(message);
-              await getIt<NotificationBadgeNotifier>().changeValue(true);
-            }
-          });
-
-          // Uygulama Arkaplanda Açıkken
-          FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-            if (message != null) {
-              clickDataHandler(message.data);
-            }
-          });
+          _selectNotificationStream = localNotificationManager
+              .selectNotificationSubject
+              ?.listen(_selectNotification);
 
           // Uygulama Kapalı İken.
           await FirebaseMessaging.instance
               .getInitialMessage()
-              .then((RemoteMessage message) {
+              .then((RemoteMessage? message) {
             if (message != null) {
               clickDataHandler(message.data);
+            }
+          });
+
+          // Uygulama Arkaplanda Açıkken
+          _onMessageOpenedAppStream = FirebaseMessaging.onMessageOpenedApp
+              .listen((RemoteMessage message) {
+            clickDataHandler(message.data);
+          });
+
+          // Uygulama Ekranda Açıkken
+          _onMessageStream =
+              FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+            RemoteNotification? notification = message.notification;
+            if (notification != null && !kIsWeb) {
+              showNotification(message);
+              await _checkChatNotification(message);
+              await notificationBadgeNotifier.changeValue(true);
             }
           });
 
@@ -176,67 +182,57 @@ class FirebaseMessagingManager {
           break;
         }
     }
-
-    // setupInteractedMessage();
   }
 
-  static void showNotification(RemoteMessage message) {
-    if (Atom.isAndroid) {
-      final notificationType = getNotificationType(message.data);
-      if (notificationType == null) return;
+  @override
+  Future<void> userLogout() async {
+    isUserInit = false;
+    token = null;
+    _tokenStream?.cancel();
+    _tokenStream = null;
+    _onMessageOpenedAppStream?.cancel();
+    _onMessageOpenedAppStream = null;
+    _onMessageStream?.cancel();
+    _onMessageStream = null;
+    _selectNotificationStream?.cancel();
+    _selectNotificationStream = null;
+  }
 
-      switch (notificationType) {
-        case NotificationType.chat:
+  void showNotification(RemoteMessage message) {
+    final notificationType = getNotificationType(message.data);
+    if (notificationType == null) return;
+
+    switch (notificationType) {
+      case NotificationType.chat:
+        {
           {
-            {
-              flutterLocalNotificationsShow(
-                message.hashCode,
-                message.notification?.title ?? '',
-                message.notification?.body ?? '',
-                jsonEncode(message.data),
-              );
-            }
-
-            break;
+            localNotificationManager.showWithId(
+              message.hashCode,
+              message.notification?.title ?? '',
+              message.notification?.body ?? '',
+              notificationDetails: NotificationDetails(
+                iOS: const IOSNotificationDetails(
+                  sound: 'chat_bildirim.aiff',
+                ),
+                android: AndroidNotificationDetails(
+                  _channel.id,
+                  _channel.name,
+                  channelDescription: _channel.description,
+                  sound: _channel.sound,
+                ),
+              ),
+              payload: jsonEncode(message.data),
+            );
           }
 
-        case NotificationType.route:
-          {
-            break;
-          }
-      }
+          break;
+        }
+
+      case NotificationType.route:
+        {
+          break;
+        }
     }
-  }
-
-  static void flutterLocalNotificationsShow(
-    int id,
-    String title,
-    String body,
-    String payload,
-  ) {
-    flutterLocalNotificationsPlugin.show(
-      id,
-      title,
-      body,
-      NotificationDetails(
-        iOS: IOSNotificationDetails(sound: 'chat_bildirim.aiff'),
-        android: AndroidNotificationDetails(
-          androidNotificationChannel.id,
-          androidNotificationChannel.name,
-          channelDescription: androidNotificationChannel.description,
-          sound: androidNotificationChannel.sound,
-          icon: 'launch_background',
-        ),
-      ),
-      payload: payload,
-    );
-  }
-
-  static NotificationType getNotificationType(Map<String, dynamic> data) {
-    if (data == null) return null;
-    final type = data['type'] as String;
-    if (type == null) return null;
-    return type.xNotificationTypeKeys;
   }
 
   Future<void> clickDataHandler(Map<String, dynamic> data) async {
@@ -246,25 +242,39 @@ class FirebaseMessagingManager {
     switch (notificationType) {
       case NotificationType.chat:
         {
-          ChatPerson otherPerson =
-              ChatPerson.fromMap(json.decode(data['chatPerson']));
-          if (Atom.url.contains(PagePaths.CHAT)) {
-            Atom.historyBack();
-            await Future.delayed(Duration(milliseconds: 100));
+          final chatPersonData = data['chatPerson'];
+          if (chatPersonData != null) {
+            try {
+              final chatPersonModel =
+                  ChatPerson.fromMap(json.decode(chatPersonData));
+              if (Atom.url.contains(PagePaths.chat)) {
+                Atom.historyBack();
+                await Future.delayed(const Duration(milliseconds: 100));
+              }
+              Atom.to(
+                PagePaths.chat,
+                queryParameters: {
+                  'otherPerson': chatPersonModel.toJson(),
+                },
+              );
+            } catch (e) {
+              LoggerUtils.instance
+                  .e("FirebaseMessagingManager - clickDataHandler() - $e");
+            }
           }
-          Atom.to(PagePaths.CHAT,
-              queryParameters: {'otherPerson': (otherPerson.toJson())});
+
           break;
         }
 
       case NotificationType.route:
         {
-          final parameters = data['parameters'];
+          final parameters = data['parameters'] ?? {};
           final route = data['route'];
-          if (parameters != null) {
-            Atom.to(route, queryParameters: parameters);
-          } else {
-            Atom.to(route);
+          if (route != null) {
+            Atom.to(
+              route,
+              queryParameters: parameters,
+            );
           }
 
           break;
@@ -272,21 +282,45 @@ class FirebaseMessagingManager {
     }
   }
 
-  Future<void> getToken() async {
-    token = await FirebaseMessaging.instance.getToken();
-
-    setTokenToServer(token);
-    LoggerUtils.instance.i('FirebaseToken :: ' + token);
+  NotificationType? getNotificationType(Map<String, dynamic>? data) {
+    if (data == null) return null;
+    final type = data['type'] as String?;
+    if (type == null) return null;
+    return type.xNotificationTypeKeys;
   }
 
-  Future<void> setTokenToServer(String token) async {
+  void _selectNotification(String value) {
+    try {
+      if (value.isEmpty) return;
+      final notificationPayload = jsonDecode(value);
+      clickDataHandler(notificationPayload);
+    } catch (e) {
+      LoggerUtils.instance
+          .e("FirebaseMessagingManager - _selectNotification() - $e");
+    }
+  }
+
+  Future<void> _getToken() async {
+    FirebaseMessaging.instance.getToken().then(_setToken);
+    _tokenStream = FirebaseMessaging.instance.onTokenRefresh.listen(_setToken);
+  }
+
+  void _setToken(String? token) {
+    LoggerUtils.instance.w('FCM Token: $token');
+    if (token != null) {
+      saveTokenServer(token);
+    }
+  }
+
+  @override
+  Future<void> saveTokenServer(String token) async {
     AddFirebaseTokenRequest addFirebaseToken = AddFirebaseTokenRequest();
     addFirebaseToken.firebaseId = token;
-    if (!kIsWeb) addFirebaseToken.phoneInfo = await getDeviceInformation();
-    await getIt<Repository>().addFirebaseTokenUi(addFirebaseToken);
+    if (!kIsWeb) addFirebaseToken.phoneInfo = await _getDeviceInformation();
+    await repository.addFirebaseTokenUi(addFirebaseToken);
   }
 
-  Future<String> getDeviceInformation() async {
+  Future<String> _getDeviceInformation() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     if (Platform.isAndroid) {
@@ -303,7 +337,7 @@ class FirebaseMessagingManager {
 
 extension on AndroidDeviceInfo {
   String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
+    Map<String, dynamic> jsonMap = {};
     jsonMap.addAll({
       "android_id": androidId,
       "is_physical_device": isPhysicalDevice,
@@ -329,7 +363,7 @@ extension on AndroidDeviceInfo {
 
 extension on IosDeviceInfo {
   String toJsonString() {
-    Map<String, dynamic> jsonMap = new Map();
+    Map<String, dynamic> jsonMap = {};
     jsonMap.addAll({
       "name": name,
       "systemName": systemName,
@@ -355,10 +389,10 @@ enum NotificationType {
 }
 
 extension NotificationTypeStringExt on String {
-  NotificationType get xNotificationTypeKeys => NotificationType.values
+  NotificationType? get xNotificationTypeKeys => NotificationType.values
       .firstWhereOrNull((element) => element.xRawValue == this);
 }
 
 extension NotificationTypeExt on NotificationType {
-  String get xRawValue => GetEnumValue(this);
+  String get xRawValue => getEnumValue(this);
 }

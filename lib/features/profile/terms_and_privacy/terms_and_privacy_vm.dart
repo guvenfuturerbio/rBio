@@ -1,47 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/shared/consent_form/consent_form_dialog.dart';
-import 'package:onedosehealth/features/shared/kvkk_form/kvkk_form_screen.dart';
+
+import '../../../core/core.dart';
+import '../../shared/consent_form/consent_form_dialog.dart';
+import '../../shared/kvkk_form/kvkk_form_screen.dart';
 
 class TermsAndPrivacyVm extends ChangeNotifier {
-  bool _checkedKvkk;
-  bool get checkedKvkkForm => this._checkedKvkk ?? false;
-  bool _clickedGeneralForm;
   TermsAndPrivacyVm() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       Atom.show(RbioLoading.progressIndicator());
       await fetchKvkkFormState();
       notifyListeners();
       Atom.dismiss();
     });
   }
-  set checkedKvkkForm(bool value) {
-    this._checkedKvkk = value;
+
+  bool checkedKvkk = false;
+  void setCheckedKvkk(bool value) {
+    checkedKvkk = value;
     notifyListeners();
   }
 
-  set clickedGeneralForm(bool value) {
-    this._clickedGeneralForm = value;
+  bool clickedGeneralForm = false;
+  void setClickedGeneralForm(bool value) {
+    clickedGeneralForm = value;
     notifyListeners();
   }
 
-  bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
   Future<void> fetchKvkkFormState() async {
-    this._checkedKvkk = await getIt<UserManager>().getKvkkFormState();
+    checkedKvkk = await getIt<UserManager>().getKvkkFormState();
   }
 
-  showApplicationContestForm() {
+  void showApplicationContestForm() {
     Atom.show(ConsentFormDialog(
       title: LocaleProvider.current.approve_consent_form,
       text: LocaleProvider.current.application_consent_form_text,
       alwaysAsk: false,
     )).then((value) async {
       if (value != null && value) {
-        this._clickedGeneralForm = true;
-        notifyListeners();
+        setClickedGeneralForm(true);
       } else if (value != null && !value) {
-        this._clickedGeneralForm = false;
-        notifyListeners();
+        setClickedGeneralForm(false);
       }
     });
   }
@@ -53,11 +51,9 @@ class TermsAndPrivacyVm extends ChangeNotifier {
       alwaysAsk: true,
     )).then((value) async {
       if (value != null && value) {
-        this._checkedKvkk = true;
-        notifyListeners();
+        setCheckedKvkk(true);
       } else if (value != null && !value) {
-        this._checkedKvkk = false;
-        notifyListeners();
+        setCheckedKvkk(false);
       }
     });
   }

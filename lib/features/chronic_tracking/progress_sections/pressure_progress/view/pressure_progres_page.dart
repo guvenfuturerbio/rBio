@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../lib/widgets/utils/time_period_filters.dart';
 import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../utils/graph_header_widget.dart';
 import '../../utils/landscape_graph_widget.dart';
@@ -19,8 +18,8 @@ import '../view_model/pressure_measurement_view_model.dart';
 part '../view_model/pressure_progres_view_model.dart';
 
 class BpProgressPage extends StatefulWidget {
-  const BpProgressPage({Key key, this.callback}) : super(key: key);
-  final Function() callback;
+  const BpProgressPage({Key? key, this.callback}) : super(key: key);
+  final Function()? callback;
 
   @override
   State<BpProgressPage> createState() => _BpProgressPageState();
@@ -37,14 +36,12 @@ class _BpProgressPageState extends State<BpProgressPage> {
                   appbar: RbioAppBar(
                     title: RbioAppBar.textTitle(
                       context,
-                      LocaleProvider.current.blood_pressure_tracking,
+                      LocaleProvider.current.bp_tracking,
                     ),
                   ),
                   floatingActionButton: FloatingActionButton(
                     heroTag: 'adder',
-                    onPressed: () {
-                      value.manuelEntry(context);
-                    },
+                    onPressed: () => value.manuelEntry(context),
                     child: Container(
                       height: double.infinity,
                       width: double.infinity,
@@ -53,7 +50,7 @@ class _BpProgressPageState extends State<BpProgressPage> {
                         color: getIt<ITheme>().mainColor,
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: SvgPicture.asset(
                           R.image.add,
                           color: R.color.white,
@@ -63,7 +60,7 @@ class _BpProgressPageState extends State<BpProgressPage> {
                     backgroundColor: R.color.white,
                   ),
                   body: SingleChildScrollView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -74,7 +71,7 @@ class _BpProgressPageState extends State<BpProgressPage> {
                         if (!value.isChartShow)
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: context.HEIGHT * .02),
+                                vertical: context.height * .02),
                             child: RbioElevatedButton(
                               title: LocaleProvider.current.open_chart,
                               onTap: () => context
@@ -84,8 +81,8 @@ class _BpProgressPageState extends State<BpProgressPage> {
                           ),
                         SizedBox(
                           height: value.isChartShow
-                              ? (context.HEIGHT * .4) * context.TEXTSCALE
-                              : (context.HEIGHT * .8),
+                              ? (context.height * .4) * context.textScale
+                              : (context.height * .8),
                           child: BpMeasurementList(
                             bpMeasurements: value.bpMeasurements,
                             scrollController: value.controller,
@@ -99,8 +96,7 @@ class _BpProgressPageState extends State<BpProgressPage> {
                   graph: value.currentGraph,
                   value: value,
                   filterAction: () => Atom.show(BpChartFilterPopUp(
-                    height: context.HEIGHT * .9,
-                    width: context.WIDTH * .3,
+                    width: context.width * .3,
                   )),
                 ),
     );
@@ -108,7 +104,7 @@ class _BpProgressPageState extends State<BpProgressPage> {
 
   SizedBox _infoSection(BuildContext context) {
     return SizedBox(
-      width: context.WIDTH * .3 * context.TEXTSCALE,
+      width: context.width * .3 * context.textScale,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -117,13 +113,13 @@ class _BpProgressPageState extends State<BpProgressPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: context.WIDTH * .06,
+                width: context.width * .06,
                 child: Divider(
                   thickness: 3,
                   color: Colors.red[900],
                 ),
               ),
-              SizedBox(width: context.WIDTH * .02),
+              SizedBox(width: context.width * .02),
               Text(LocaleProvider.current.sys)
             ],
           ),
@@ -131,13 +127,13 @@ class _BpProgressPageState extends State<BpProgressPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: context.WIDTH * .06,
-                child: Divider(
+                width: context.width * .06,
+                child: const Divider(
                   thickness: 3,
                   color: Colors.amber,
                 ),
               ),
-              SizedBox(width: context.WIDTH * .02),
+              SizedBox(width: context.width * .02),
               Text(LocaleProvider.current.dia)
             ],
           ),
@@ -145,13 +141,13 @@ class _BpProgressPageState extends State<BpProgressPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: context.WIDTH * .06,
+                width: context.width * .06,
                 child: Divider(
                   thickness: 3,
                   color: Colors.lime[800],
                 ),
               ),
-              SizedBox(width: context.WIDTH * .02),
+              SizedBox(width: context.width * .02),
               Text(LocaleProvider.current.pulse)
             ],
           ),
@@ -160,17 +156,20 @@ class _BpProgressPageState extends State<BpProgressPage> {
     );
   }
 
-  List<Widget> getGraph(BuildContext context, value) {
+  List<Widget> getGraph(BuildContext context, BpProgressPageVm value) {
     return [
       SizedBox(
-        height: (context.HEIGHT * .4) * context.TEXTSCALE,
+        height: (context.height * .4) * context.textScale,
         child: GraphHeader(
           value: value,
-          callBack: widget.callback,
+          callBack: widget.callback ??
+              () {
+                LoggerUtils.instance.i('Graph');
+              },
         ),
       ),
       SizedBox(
-        height: context.HEIGHT * .1,
+        height: context.height * .1,
         child: Wrap(
           alignment: WrapAlignment.center,
           runAlignment: WrapAlignment.center,
@@ -183,31 +182,14 @@ class _BpProgressPageState extends State<BpProgressPage> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 shadowColor: Colors.black.withAlpha(50),
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(context.HEIGHT),
+                  borderRadius: BorderRadius.circular(context.height),
                 ),
               ),
               child: AutoSizeText(
-                '${LocaleProvider.current.filter_graphs}',
-                maxLines: 1,
-                style: context.xHeadline5.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => value.changeChartShowStatus(),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                shadowColor: Colors.black.withAlpha(50),
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(context.HEIGHT),
-                ),
-              ),
-              child: AutoSizeText(
-                '${LocaleProvider.current.close_chart}',
+                LocaleProvider.current.filter_graphs,
                 maxLines: 1,
                 style: context.xHeadline5.copyWith(
                   fontWeight: FontWeight.bold,

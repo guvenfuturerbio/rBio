@@ -17,11 +17,12 @@ import 'blood_glucose_tagger/bg_tagger_pop_up.dart';
 class BgMeasurementListWidget extends StatefulWidget {
   final List<BgMeasurementGlucoseViewModel> bgMeasurements;
   final ScrollController scrollController;
-  final bool useStickyGroupSeparatorsValue;
+  final bool? useStickyGroupSeparatorsValue;
 
-  BgMeasurementListWidget({
-    this.bgMeasurements,
-    this.scrollController,
+  const BgMeasurementListWidget({
+    Key? key,
+    required this.bgMeasurements,
+    required this.scrollController,
     this.useStickyGroupSeparatorsValue,
   });
 
@@ -34,7 +35,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
   @override
   Widget build(BuildContext context) {
     return GroupedListView<BgMeasurementGlucoseViewModel, DateTime>(
-      elements: widget.bgMeasurements ?? <BgMeasurementGlucoseViewModel>[],
+      elements: widget.bgMeasurements,
       order: GroupedListOrder.DESC,
       controller: widget.scrollController,
       scrollDirection: Axis.vertical,
@@ -51,7 +52,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
         return Container(
           alignment: Alignment.center,
           width: double.infinity,
-          height: (context.HEIGHT * .07) * context.TEXTSCALE,
+          height: (context.height * .07) * context.textScale,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -60,7 +61,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
                     color: Colors.black.withAlpha(50),
                     blurRadius: 5,
                     spreadRadius: 0,
-                    offset: Offset(5, 5))
+                    offset: const Offset(5, 5))
               ],
               borderRadius: BorderRadius.circular(20),
             ),
@@ -68,7 +69,8 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: Text(
-                '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
+                DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
+                    .format(bgMeasurementViewModel.date),
               ),
             ),
           ),
@@ -91,7 +93,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
 Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
     BuildContext context) {
   return Slidable(
-    actionPane: SlidableDrawerActionPane(),
+    actionPane: const SlidableDrawerActionPane(),
     actionExtentRatio: 0.25,
     child: GestureDetector(
       onTap: () {
@@ -107,7 +109,7 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
         margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
         decoration: BoxDecoration(
           color: Colors.green,
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
               colors: [Colors.white, Colors.white],
               begin: Alignment.bottomLeft,
               end: Alignment.centerRight),
@@ -116,12 +118,12 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                 color: Colors.black.withAlpha(50),
                 blurRadius: 5,
                 spreadRadius: 0,
-                offset: Offset(5, 5))
+                offset: const Offset(5, 5))
           ],
           borderRadius: const BorderRadius.all(Radius.circular(30.0)),
         ),
         padding: const EdgeInsets.all(10),
-        height: context.HEIGHT * .1 * context.TEXTSCALE,
+        height: context.height * .1 * context.textScale,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,8 +133,8 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    width: (context.HEIGHT * .1) * context.TEXTSCALE,
-                    height: (context.HEIGHT * .1) * context.TEXTSCALE,
+                    width: (context.height * .1) * context.textScale,
+                    height: (context.height * .1) * context.textScale,
                     decoration: measurementListBoxDecoration(
                         bgMeasurementViewModel), //             <--- BoxDecoration here
                     child: Column(
@@ -156,23 +158,24 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 8, right: 16),
-                          width: (context.HEIGHT * .05) * context.TEXTSCALE,
-                          height: (context.HEIGHT * .05) * context.TEXTSCALE,
-                          child:
-                              SvgPicture.asset(bgMeasurementViewModel.tag == 1
-                                  ? R.image.beforemeal_icon_black
-                                  : bgMeasurementViewModel.tag == 2
-                                      ? R.image.aftermeal_icon_black
-                                      : R.image.other_icon),
+                          margin: const EdgeInsets.only(left: 8, right: 16),
+                          width: (context.height * .05) * context.textScale,
+                          height: (context.height * .05) * context.textScale,
+                          child: SvgPicture.asset(
+                            bgMeasurementViewModel.tag == 1
+                                ? R.image.beforeMealIconBlack
+                                : bgMeasurementViewModel.tag == 2
+                                    ? R.image.aftermealIconBlack
+                                    : R.image.otherIcon,
+                          ),
                         ),
                         Expanded(
-                          child: Text(bgMeasurementViewModel.note == null
-                              ? ""
-                              : (bgMeasurementViewModel.note.length > 10
-                                  ? "${bgMeasurementViewModel.note.substring(0, 10)}..."
-                                  : bgMeasurementViewModel.note)),
-                        )
+                          child: Text(
+                            (bgMeasurementViewModel.note.length > 10
+                                ? "${bgMeasurementViewModel.note.substring(0, 10)}..."
+                                : bgMeasurementViewModel.note),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -180,10 +183,9 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
               ),
             ),
             Row(children: <Widget>[
-              (bgMeasurementViewModel.imageURL == null ||
-                      bgMeasurementViewModel.imageURL == "")
+              (bgMeasurementViewModel.imageURL == "")
                   ? Container()
-                  : Container(
+                  : SizedBox(
                       width: 60,
                       height: 60,
                       child: Card(
@@ -192,20 +194,21 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           height: 25,
                           width: 25,
-                          child: bgMeasurementViewModel.imageURL == "" ||
+                          child: bgMeasurementViewModel.imageURL == null ||
+                                  bgMeasurementViewModel.imageURL == "" ||
                                   Atom.isWeb
                               ? SvgPicture.asset(
-                                  R.image.addphoto_icon,
+                                  R.image.addphotoIcon,
                                 )
                               : PhotoView(
                                   imageProvider: FileImage(File(
                                       getIt<GlucoseStorageImpl>()
                                           .getImagePathOfImageURL(
                                               bgMeasurementViewModel
-                                                  .imageURL))),
+                                                  .imageURL!))),
                                 ),
                         ),
                       )),

@@ -4,16 +4,16 @@ import '../../../../../../core/core.dart';
 
 class Stepper extends StatelessWidget {
   const Stepper(
-      {Key key,
-      this.length,
-      this.currentIndex,
+      {Key? key,
+      required this.length,
+      required this.currentIndex,
       this.activeColor,
       this.deactiveColor})
       : super(key: key);
   final int length;
   final int currentIndex;
-  final Color activeColor;
-  final Color deactiveColor;
+  final Color? activeColor;
+  final Color? deactiveColor;
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +24,17 @@ class Stepper extends StatelessWidget {
             length,
             (index) => Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: context.WIDTH * .008,
+                    horizontal: context.width * .008,
                   ),
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 150),
-                    height: context.HEIGHT * .017,
+                    height: context.height * .017,
                     width: currentIndex == index
-                        ? (context.HEIGHT * .017) * 2
-                        : context.HEIGHT * .017,
+                        ? (context.height * .017) * 2
+                        : context.height * .017,
                     decoration: BoxDecoration(
                         borderRadius:
-                            BorderRadius.circular(context.ASPECTRATIO * 45),
+                            BorderRadius.circular(context.aspectRatio * 45),
                         color: currentIndex == index
                             ? activeColor ?? R.color.grey
                             : deactiveColor ?? R.color.grey.withOpacity(.3)),

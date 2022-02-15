@@ -7,51 +7,57 @@ import 'for_you_sub_categories_detail_screen.dart';
 
 class ForYouSubCategoriesDetailScreenVm extends ChangeNotifier {
   ForYouSubCategoriesDetailScreenVm(BuildContext context, var id) {
-    this.mContext = context;
+    mContext = context;
     fetchSubCategoryDetail(id);
   }
 
-  BuildContext mContext;
+  BuildContext? mContext;
 
-  LoadingProgress _progress;
+  LoadingProgress? progress;
 
   bool showLoadingOverlay = false;
 
-  List<ForYouSubCategoryDetailResponse> _subCategoryDetail = <ForYouSubCategoryDetailResponse>[];
+  List<ForYouSubCategoryDetailResponse> _subCategoryDetail =
+      <ForYouSubCategoryDetailResponse>[];
 
-  List<ForYouSubCategoryDetailResponse> get subCategoryDetail => this._subCategoryDetail;
+  List<ForYouSubCategoryDetailResponse> get subCategoryDetail =>
+      _subCategoryDetail;
 
-  LoadingProgress get progress => this._progress;
+  List? cardList;
 
-  List _cardList;
-
-  List get cardList => this._cardList;
-
-  setCardList() {
-    this._progress = LoadingProgress.LOADING;
+  void setCardList() {
+    progress = LoadingProgress.loading;
     notifyListeners();
+
     List list = [];
     for (var data in subCategoryDetail) {
-      list.add(mopItem(data.image, data.title, data.text));
+      list.add(
+        ListCard(
+          image: data.image!,
+          title: data.title!,
+          text: data.text!,
+        ),
+      );
     }
-    this._cardList = list;
-    this._progress = LoadingProgress.DONE;
+
+    cardList = list;
+    progress = LoadingProgress.done;
     notifyListeners();
   }
 
   Future<void> fetchSubCategoryDetail(var id) async {
     try {
-      this._progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       notifyListeners();
       List<ForYouSubCategoryDetailResponse> subCategoryDetail =
           await getIt<Repository>().getSubCategoryDetail(id);
-      this._subCategoryDetail = subCategoryDetail;
-      this._progress = LoadingProgress.DONE;
+      _subCategoryDetail = subCategoryDetail;
+      progress = LoadingProgress.done;
       notifyListeners();
       setCardList();
     } catch (e) {
-      this._progress = LoadingProgress.ERROR;
-      showGradientDialog(mContext, LocaleProvider.current.warning,
+      progress = LoadingProgress.error;
+      showGradientDialog(mContext!, LocaleProvider.current.warning,
           LocaleProvider.current.sorry_dont_transaction);
       notifyListeners();
     }
@@ -62,7 +68,7 @@ class ForYouSubCategoriesDetailScreenVm extends ChangeNotifier {
       showLoadingOverlay = true;
       notifyListeners();
       // TODO: API'ye bilgiler gönderilecek.
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       showLoadingOverlay = false;
       notifyListeners();
 

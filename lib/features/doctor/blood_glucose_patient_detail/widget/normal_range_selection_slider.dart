@@ -9,7 +9,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
         builder: (
           BuildContext context,
           BloodGlucosePatientPickerVm value,
-          Widget child,
+          Widget? child,
         ) {
           return _buildAlertDialog(context, value);
         },
@@ -35,14 +35,14 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
 
             //
             Expanded(
-              child: Container(
+              child: SizedBox(
                 width: Atom.width * 0.9,
                 child: FlutterSlider(
-                  step: FlutterSliderStep(step: 10),
+                  step: const FlutterSliderStep(step: 10),
                   handlerWidth: 32,
                   handlerHeight: 32,
                   values: [
@@ -56,7 +56,8 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                     boxStyle: FlutterSliderTooltipBox(
                       decoration: BoxDecoration(
                         color: getIt<ITheme>().mainColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
                       ),
                     ),
                     alwaysShowTooltip: true,
@@ -92,10 +93,10 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
             InkWell(
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
                   color: getIt<ITheme>().mainColor,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(12.0),
                     bottomRight: Radius.circular(12.0),
                   ),
@@ -113,7 +114,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                 value.updatePatientLimit(
                   id: Provider.of<PatientNotifiers>(context, listen: false)
                       .patientDetail
-                      .id,
+                      .id!,
                 );
               },
             ),

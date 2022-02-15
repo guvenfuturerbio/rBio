@@ -2,24 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:onedosehealth/core/notifiers/notification_badge_notifier.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../features/chronic_tracking/lib/notifiers/user_profiles_notifier.dart';
-import '../features/mediminder/mediminder.dart';
+import '../features/mediminder/managers/reminder_notifications_manager.dart';
+import '../model/treatment_model/treatment_model.dart';
 import 'core.dart';
-import 'data/imports/cronic_tracking.dart';
-import 'data/repository/doctor_repository.dart';
-import 'data/service/symptom_api_service.dart';
-import 'domain/blood_pressure_model.dart';
+import 'manager/firebase_messaging_manager.dart';
 
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerSingleton<AppConfig>(appConfig);
-  String directory;
+  String? directory;
 
   if (!Atom.isWeb) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -37,12 +33,16 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerLazySingleton(() => ScaleStorageImpl());
   getIt.registerLazySingleton(() => BloodPressureStorageImpl());
 
+  getIt.registerLazySingleton<ReminderNotificationsManager>(() =>
+      ReminderNotificationsManagerImpl(getIt<LocalNotificationManager>()));
+
   try {
     await registerStorage();
   } catch (_) {
     clearStorage();
     await registerStorage();
   }
+
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   GuvenSettings settings = GuvenSettings(
       appName: packageInfo.appName,
@@ -86,27 +86,34 @@ Future<void> setupLocator(AppConfig appConfig) async {
   await getIt<LocalCacheService>().init();
   await getIt<LocaleNotifier>().init();
 
-  getIt.registerLazySingleton(() => UserProfilesNotifier());
-
   getIt.registerLazySingleton(() => ChronicTrackingRepository(
       apiService: getIt<ChronicTrackingApiService>(),
       localCacheService: getIt<LocalCacheService>()));
-  getIt.registerLazySingleton<LocalNotificationsManager>(
-      () => LocalNotificationsManagerImpl());
 
-//  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
+  getIt.registerLazySingleton<LocalNotificationManager>(
+      () => LocalNotificationManagerImpl());
+
+  //  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
   // getIt<PushedNotificationHandlerNew>().initializeGCM();
 
   if (!Atom.isWeb) {
     getIt.registerSingleton<FlutterReactiveBle>(FlutterReactiveBle());
     getIt.registerLazySingleton<BleReactorOps>(
-        () => BleReactorOps(ble: getIt<FlutterReactiveBle>()));
+        () => BleReactorOps(getIt<FlutterReactiveBle>()));
     getIt.registerLazySingleton<BleConnectorOps>(
-        () => BleConnectorOps(ble: getIt<FlutterReactiveBle>()));
+        () => BleConnectorOps(getIt<FlutterReactiveBle>()));
     getIt.registerLazySingleton<BleScannerOps>(
-        () => BleScannerOps(ble: getIt<FlutterReactiveBle>()));
+        () => BleScannerOps(getIt<FlutterReactiveBle>()));
     getIt.registerLazySingleton<BleDeviceManager>(() => BleDeviceManager());
   }
+
+  getIt.registerSingleton<FirebaseMessagingManager>(
+    FirebaseMessagingManagerImpl(
+      localNotificationManager: getIt<LocalNotificationManager>(),
+      notificationBadgeNotifier: getIt<NotificationBadgeNotifier>(),
+      repository: getIt<Repository>(),
+    ),
+  );
 }
 
 class GuvenSettings {
@@ -114,17 +121,20 @@ class GuvenSettings {
   String packageName;
   String version;
   String buildNumber;
-  String appDocDirectory;
+  String? appDocDirectory;
 
   GuvenSettings(
-      {@required this.appName,
-      @required this.packageName,
-      @required this.version,
-      @required this.buildNumber,
-      @required this.appDocDirectory});
+      {required this.appName,
+      required this.packageName,
+      required this.version,
+      required this.buildNumber,
+      this.appDocDirectory});
 }
 
 Future<void> registerStorage() async {
+  Hive.registerAdapter<TreatmentModel>(TreatmentModelAdapter());
+  Hive.registerAdapter<ScaleUnit>(ScaleUnitAdapter());
+
   Hive.registerAdapter<Person>(PersonAdapter());
   Hive.registerAdapter<GlucoseData>(GlucoseDataAdapter());
   Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());

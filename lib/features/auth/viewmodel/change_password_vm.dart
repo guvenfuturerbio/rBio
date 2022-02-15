@@ -9,8 +9,8 @@ class ChangePasswordScreenVm extends RbioVm {
   BuildContext mContext;
   ChangePasswordScreenVm(this.mContext);
 
-  bool _showProgressOverlay;
-  bool get showProgressOverlay => this._showProgressOverlay ?? false;
+  bool _showProgressOverlay = false;
+  bool get showProgressOverlay => _showProgressOverlay;
   set showProgressOverlay(bool value) {
     _showProgressOverlay = value;
     notifyListeners();
@@ -48,13 +48,13 @@ class ChangePasswordScreenVm extends RbioVm {
   }
 
   Future<void> changePassword({
-    @required String oldPassword,
-    @required String password,
-    @required String passwordAgain,
+    required String oldPassword,
+    required String password,
+    required String passwordAgain,
   }) async {
-    if (passwordAgain.length > 0 &&
-        password.length > 0 &&
-        oldPassword.length > 0) {
+    if (passwordAgain.isNotEmpty &&
+        password.isNotEmpty &&
+        oldPassword.isNotEmpty) {
       if (password != passwordAgain) {
         showInfoDialog(
           LocaleProvider.of(mContext).warning,
@@ -79,20 +79,21 @@ class ChangePasswordScreenVm extends RbioVm {
 
         if (response.isSuccessful == true) {
           UserLoginInfo userLoginInfo =
-              await getIt<UserManager>().getSavedLoginInfo();
+              getIt<UserManager>().getSavedLoginInfo();
           await getIt<ISharedPreferencesManager>()
-              .setString(SharedPreferencesKeys.LOGIN_PASSWORD, password);
+              .setString(SharedPreferencesKeys.loginPassword, password);
           bool rememberChecked = userLoginInfo.password != "" ? true : false;
           await getIt<UserManager>().saveLoginInfo(
-            userLoginInfo.username,
-            userLoginInfo.password,
+            userLoginInfo.username ?? '',
+            userLoginInfo.password ?? '',
             rememberChecked,
             getIt<ISharedPreferencesManager>()
-                .getString(SharedPreferencesKeys.JWT_TOKEN),
+                    .getString(SharedPreferencesKeys.jwtToken) ??
+                '',
           );
           showInfoDialog(
-            LocaleProvider.of(this.mContext).success_message_title,
-            LocaleProvider.of(this.mContext).succefully_created_pass,
+            LocaleProvider.of(mContext).success_message_title,
+            LocaleProvider.of(mContext).succefully_created_pass,
           );
         } else {
           errorParse(response);
@@ -112,8 +113,8 @@ class ChangePasswordScreenVm extends RbioVm {
         case 1:
           {
             showInfoDialog(
-              LocaleProvider.of(this.mContext).warning,
-              LocaleProvider.of(this.mContext).error_old_password_wrong,
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.of(mContext).error_old_password_wrong,
             );
             break;
           }
@@ -121,8 +122,8 @@ class ChangePasswordScreenVm extends RbioVm {
         case 2:
           {
             showInfoDialog(
-              LocaleProvider.of(this.mContext).warning,
-              LocaleProvider.of(this.mContext).error_password_mismatch,
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.of(mContext).error_password_mismatch,
             );
             break;
           }
@@ -130,8 +131,8 @@ class ChangePasswordScreenVm extends RbioVm {
         case 4:
           {
             showInfoDialog(
-              LocaleProvider.of(this.mContext).warning,
-              LocaleProvider.of(this.mContext).error_system_malfunction,
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.of(mContext).error_system_malfunction,
             );
             break;
           }
@@ -139,8 +140,8 @@ class ChangePasswordScreenVm extends RbioVm {
         default:
           {
             showInfoDialog(
-              LocaleProvider.of(this.mContext).warning,
-              LocaleProvider.of(this.mContext).sorry_dont_transaction,
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.of(mContext).sorry_dont_transaction,
             );
             break;
           }

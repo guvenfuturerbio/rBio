@@ -1,13 +1,13 @@
-
 class BaseEvent {
-  String name;
-  Map<String, dynamic> parameters;
+  String? name;
+  Map<String, dynamic>? parameters;
 
-  BaseEvent(String name, Map<String, dynamic> parameters) {
-    this.name = name;
-    this.parameters = parameters;
+  BaseEvent(String name, Map<String, dynamic>? parameters) {
+    name = name;
+    parameters = parameters;
   }
 
-  String toString() => "Event_Name: ${name.toString()}\nEvent_Parameters: ${parameters.toString()}";
-
+  @override
+  String toString() =>
+      "Event_Name: ${name.toString()}\nEvent_Parameters: ${parameters.toString()}";
 }

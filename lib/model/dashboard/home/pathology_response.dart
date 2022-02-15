@@ -1,8 +1,8 @@
 class PathologyResponse {
-  int patientId;
-  String procedures;
-  String status;
-  int visitId;
+  int? patientId;
+  String? procedures;
+  String? status;
+  int? visitId;
 
   PathologyResponse({
     this.patientId,
@@ -12,18 +12,18 @@ class PathologyResponse {
   });
 
   PathologyResponse.fromJson(Map<String, dynamic> json) {
-    patientId = json['patientId'];
-    procedures = json['procedures'];
-    status = json['status'];
-    visitId = json['visitId'];
+    patientId = json['patientId'] as int?;
+    procedures = json['procedures'] as String?;
+    status = json['status'] as String?;
+    visitId = json['visitId'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['patientId'] = this.patientId;
-    data['procedures'] = this.procedures;
-    data['status'] = this.status;
-    data['visitId'] = this.visitId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['patientId'] = patientId;
+    data['procedures'] = procedures;
+    data['status'] = status;
+    data['visitId'] = visitId;
     return data;
   }
 }

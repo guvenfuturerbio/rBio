@@ -5,34 +5,32 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../lib/widgets/utils/time_period_filters.dart';
-import '../../../utils/charts/sample_view.dart';
 import '../../view_model/scale_progress_page_view_model.dart';
 
 /// Renders the line sample with dynamically updated data points.
-class AnimationScaleLineDefault extends SampleView {
+class AnimationScaleLineDefault extends StatefulWidget {
+  const AnimationScaleLineDefault({Key? key}) : super(key: key);
+
   /// Renders the line chart sample with dynamically upd
   @override
   _AnimationScaleLineDefaultState createState() =>
       _AnimationScaleLineDefaultState();
 }
 
-class _AnimationScaleLineDefaultState extends SampleViewState {
-  List<ChartData> _chartData;
+class _AnimationScaleLineDefaultState extends State<AnimationScaleLineDefault> {
+  List<ChartData>? _chartData;
 
-  int _targetMin, _targetMax, _maxValue, _minValue;
+  late int _targetMin, _targetMax, _maxValue, _minValue;
 
-  DateTime _startDate, _endDate;
+  late DateTime _startDate, _endDate;
 
   double markerSize = 10;
 
-  TimePeriodFilter _selected;
+  TimePeriodFilter? _selected;
 
-  ZoomPanBehavior _zoomingBehavior;
+  late ZoomPanBehavior _zoomingBehavior;
 
-  ZoomMode _zoomModeType = ZoomMode.x;
-
-  String _unit;
+  final ZoomMode _zoomModeType = ZoomMode.x;
 
   @override
   Widget build(BuildContext context) {
@@ -40,22 +38,18 @@ class _AnimationScaleLineDefaultState extends SampleViewState {
         enablePinching: true,
         zoomMode: _zoomModeType,
         enablePanning: true,
-        enableMouseWheelZooming: model.isWeb ? true : false);
+        enableMouseWheelZooming: Atom.isWeb ? true : false);
     return Consumer<ScaleProgressPageViewModel>(
         builder: (context, value, child) {
       _selected = value.selected;
       _startDate = value.startDate;
       _endDate = value.endDate;
       _chartData = value.chartData;
-      _targetMax = value.targetMax;
-      _targetMin = value.targetMin;
+      _targetMax = value.targetMax!;
+      _targetMin = value.targetMin!;
       _maxValue = value.dailyHighestValue;
       _minValue = value.dailyLowestValue;
-      try {
-        _unit = value?.scaleMeasurementsDailyData?.elementAt(0)?.unit?.toStr;
-      } catch (_) {
-        _unit = ScaleUnit.KG.toStr;
-      }
+
       return _getAnimationLineChart();
     });
   }
@@ -64,45 +58,33 @@ class _AnimationScaleLineDefaultState extends SampleViewState {
   SfCartesianChart _getAnimationLineChart() {
     return SfCartesianChart(
       onActualRangeChanged: (ActualRangeChangedArgs args) {},
-      onZoomEnd: (ZoomPanArgs args) {
-        if (args.currentZoomFactor < 1) {
-          // setState(() {
-          //   _visible = true;
-
-          //   refreshSetState(() {});
-          // });
-        }
-      },
       plotAreaBorderWidth: 0,
-      primaryXAxis: _selected == TimePeriodFilter.DAILY
+      primaryXAxis: _selected == TimePeriodFilter.daily
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: MajorGridLines(color: Colors.black12),
+              majorGridLines: const MajorGridLines(color: Colors.black12),
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
               labelStyle: TextStyle(color: R.color.black),
               interval: 6)
-          : _selected == TimePeriodFilter.WEEKLY
+          : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   dateFormat: DateFormat("EEE"),
                   intervalType: DateTimeIntervalType.days,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                 ),
       primaryYAxis: NumericAxis(
-        majorGridLines: MajorGridLines(color: Colors.black12),
-        majorTickLines: MajorTickLines(color: Colors.transparent),
-        axisLine: AxisLine(width: 0),
+        majorGridLines: const MajorGridLines(color: Colors.black12),
+        majorTickLines: const MajorTickLines(color: Colors.transparent),
+        axisLine: const AxisLine(width: 0),
         labelFormat: '{value}',
-        title: AxisTitle(
-            text: _unit,
-            textStyle: TextStyle(fontSize: 10, color: R.color.black)),
         labelStyle: TextStyle(color: R.color.black),
         plotBands: [
           PlotBand(
@@ -120,7 +102,7 @@ class _AnimationScaleLineDefaultState extends SampleViewState {
       zoomPanBehavior: _zoomingBehavior,
       enableAxisAnimation: true,
       enableSideBySideSeriesPlacement: true,
-      series: _getDefaultLineSeries(),
+      series: _chartData != null ? _getDefaultLineSeries() : [],
       tooltipBehavior:
           TooltipBehavior(enable: true, header: '', canShowMarker: true),
     );
@@ -130,7 +112,7 @@ class _AnimationScaleLineDefaultState extends SampleViewState {
   List<LineSeries<ChartData, DateTime>> _getDefaultLineSeries() {
     return <LineSeries<ChartData, DateTime>>[
       LineSeries<ChartData, DateTime>(
-          dataSource: _chartData,
+          dataSource: _chartData!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.black,
@@ -138,21 +120,29 @@ class _AnimationScaleLineDefaultState extends SampleViewState {
           markerSettings: MarkerSettings(
               height: 4,
               width: 4,
-              isVisible: _chartData.length == 1 ? true : false,
+              isVisible: _chartData!.length == 1 ? true : false,
               color: Colors.black)),
-      _selected == TimePeriodFilter.DAILY ||
-              _selected == TimePeriodFilter.SPECIFIC
+      _selected == TimePeriodFilter.daily ||
+              _selected == TimePeriodFilter.spesific
           ? LineSeries<ChartData, DateTime>(
-              dataSource: _chartData != null && _chartData.length > 0
+              dataSource: _chartData != null && _chartData!.isNotEmpty
                   ? [
                       ChartData(
-                          DateTime(_chartData[0].x.year, _chartData[0].x.month,
-                              _chartData[0].x.day, 24, 00),
+                          DateTime(
+                              _chartData![0].x.year,
+                              _chartData![0].x.month,
+                              _chartData![0].x.day,
+                              24,
+                              00),
                           -50,
                           Colors.transparent),
                       ChartData(
-                          DateTime(_chartData[0].x.year, _chartData[0].x.month,
-                              _chartData[0].x.day, 00, 00),
+                          DateTime(
+                              _chartData![0].x.year,
+                              _chartData![0].x.month,
+                              _chartData![0].x.day,
+                              00,
+                              00),
                           -50,
                           Colors.transparent),
                     ]
@@ -167,7 +157,7 @@ class _AnimationScaleLineDefaultState extends SampleViewState {
               color: Colors.red,
               xAxisName: "Time",
               markerSettings:
-                  MarkerSettings(height: 15, width: 15, isVisible: true))
+                  const MarkerSettings(height: 15, width: 15, isVisible: true))
           : LineSeries<ChartData, DateTime>(
               dataSource: [
                   ChartData(_startDate, -50, Colors.transparent),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 
 class ForYouInformationDialog extends StatelessWidget {
-  const ForYouInformationDialog({Key key}) : super(key: key);
+  const ForYouInformationDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +11,8 @@ class ForYouInformationDialog extends StatelessWidget {
       backgroundColor: Colors.black26,
       body: Center(
         child: Container(
-          margin: EdgeInsets.all(20),
-          padding: EdgeInsets.symmetric(
+          margin: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(
             horizontal: 10,
             vertical: 10,
           ),
@@ -27,7 +27,7 @@ class ForYouInformationDialog extends StatelessWidget {
               //
               Text(
                 LocaleProvider.current.information,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontFamily: 'Roboto',
                   color: Colors.white,
@@ -37,15 +37,15 @@ class ForYouInformationDialog extends StatelessWidget {
               ),
 
               //
-              Divider(),
+              const Divider(),
 
               //
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               //
               Text(
                 LocaleProvider.current.addcart_success_message,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18.0,
                   fontFamily: 'Roboto',
                   color: Colors.white,
@@ -54,7 +54,7 @@ class ForYouInformationDialog extends StatelessWidget {
               ),
 
               //
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               //
               Row(
@@ -67,19 +67,19 @@ class ForYouInformationDialog extends StatelessWidget {
                     child: FlatButton(
                       child: Text(
                         LocaleProvider.current.yes,
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       textColor: Colors.green,
                       color: Colors.white,
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Atom.to(PagePaths.SHOPPING_CART);
+                        Atom.to(PagePaths.shoppingChart);
                       },
                     ),
                   ),
 
                   //
-                  SizedBox(
+                  const SizedBox(
                     width: 6,
                   ),
 
@@ -88,7 +88,7 @@ class ForYouInformationDialog extends StatelessWidget {
                     child: FlatButton(
                       child: Text(
                         LocaleProvider.current.no,
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       textColor: Colors.red,
                       color: Colors.white,

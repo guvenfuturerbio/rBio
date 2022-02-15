@@ -10,7 +10,7 @@ class MobileWebInterface {
     return DefaultHttpClientAdapter();
   }
 
-  static HttpClientAdapter onHttpClientCreate(
+  static HttpClientAdapter? onHttpClientCreate(
       HttpClientAdapter httpClientAdapter) {
     (httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {

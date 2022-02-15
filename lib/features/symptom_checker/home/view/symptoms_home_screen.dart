@@ -7,19 +7,18 @@ import '../../../../core/core.dart';
 import '../viewmodel/symptoms_home_vm.dart';
 
 class SymptomsHomeScreen extends StatefulWidget {
-  const SymptomsHomeScreen({Key key}) : super(key: key);
+  const SymptomsHomeScreen({Key? key}) : super(key: key);
 
   @override
   _SymptomsHomeScreenState createState() => _SymptomsHomeScreenState();
 }
 
 class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
   @override
   void initState() {
     _controller = TextEditingController();
-
     super.initState();
   }
 
@@ -60,17 +59,17 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
   // #region _buildBody
   Widget _buildBody(SymptomsHomeVm value) {
     switch (value.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return _buildSuccess(context, value);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
   // #endregion
@@ -94,7 +93,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 true,
                 LocaleProvider.of(context).gender_male,
-                R.image.man_icon,
+                R.image.manIcon,
                 0,
               ),
 
@@ -104,7 +103,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 true,
                 LocaleProvider.of(context).gender_female,
-                R.image.women_icon,
+                R.image.women,
                 1,
               ),
 
@@ -114,7 +113,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 false,
                 LocaleProvider.of(context).boy,
-                R.image.boy_child_icon,
+                R.image.boyChild,
                 2,
               ),
 
@@ -124,7 +123,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                 value,
                 false,
                 LocaleProvider.of(context).girl,
-                R.image.girl_child_icon,
+                R.image.girlChild,
                 3,
               ),
 
@@ -143,7 +142,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                       elevation: 6,
                       child: Center(
                         child: Text(
-                          value.yearOfBirth,
+                          value.yearOfBirth!,
                           style: context.xHeadline3,
                         ),
                       ),
@@ -151,24 +150,24 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                   ),
 
                   //
-                  Divider(),
+                  const Divider(),
 
                   //
                   Container(
                     width: MediaQuery.of(context).size.width - 20,
                     alignment: Alignment.center,
                     child: NumberPicker(
-                      value: int.parse(value.yearOfBirth),
+                      value: int.parse(value.yearOfBirth!),
                       minValue: 1900,
                       maxValue: DateTime.now().year.toInt(),
                       step: 1,
-                      itemHeight: context.xTextScaleType == TextScaleType.Small
+                      itemHeight: context.xTextScaleType == TextScaleType.small
                           ? 25
                           : 50,
                       axis: Axis.vertical,
                       onChanged: (newValue) {
                         value.yearOfBirthHandle(
-                            newValue.toString(), value.genderIdHolder);
+                            newValue.toString(), value.genderIdHolder!);
                       },
                       textStyle: context.xHeadline3,
                       selectedTextStyle: context.xHeadline1.copyWith(
@@ -178,7 +177,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                   ),
 
                   //
-                  Divider(),
+                  const Divider(),
 
                   //
                   SizedBox(
@@ -195,15 +194,15 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+              bottom: Atom.safeBottom + 16,
             ),
             child: RbioElevatedButton(
               onTap: () async {
                 Atom.to(
-                  PagePaths.SYMPTOM_BODY_LOCATIONS,
+                  PagePaths.symptomBodyLocations,
                   queryParameters: {
                     'selectedGenderId': value.genderIdHolder.toString(),
-                    'yearOfBirth': value.yearOfBirth,
+                    'yearOfBirth': value.yearOfBirth!,
                     'isFromVoice': false.toString(),
                   },
                 );
@@ -229,21 +228,21 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
     return GestureDetector(
       onTap: () {
         if (isOld) {
-          DateTime.now().year - int.parse(value.yearOfBirth) < 18
+          DateTime.now().year - int.parse(value.yearOfBirth!) < 18
               ? null
               : value.fetchGenderSelection(index);
         } else {
-          DateTime.now().year - int.parse(value.yearOfBirth) < 18
+          DateTime.now().year - int.parse(value.yearOfBirth!) < 18
               ? value.fetchGenderSelection(index)
               : null;
         }
       },
       child: Opacity(
         opacity: isOld
-            ? (DateTime.now().year - int.parse(value.yearOfBirth) < 18
+            ? (DateTime.now().year - int.parse(value.yearOfBirth!) < 18
                 ? 0.1
                 : 1)
-            : (DateTime.now().year - int.parse(value.yearOfBirth) < 18
+            : (DateTime.now().year - int.parse(value.yearOfBirth!) < 18
                 ? 1
                 : 0.1),
         child: Padding(

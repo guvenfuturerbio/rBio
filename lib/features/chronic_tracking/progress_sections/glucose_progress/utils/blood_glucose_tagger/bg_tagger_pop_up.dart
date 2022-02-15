@@ -13,8 +13,9 @@ import '../../../../../../../core/core.dart';
 import 'bg_tagger_vm.dart';
 
 class BgTaggerPopUp extends StatelessWidget {
-  BgTaggerPopUp({Key key, this.data, this.isEdit}) : super(key: key);
-  final GlucoseData data;
+  const BgTaggerPopUp({Key? key, this.data, this.isEdit = false})
+      : super(key: key);
+  final GlucoseData? data;
   final bool isEdit;
 
   @override
@@ -29,7 +30,7 @@ class BgTaggerPopUp extends StatelessWidget {
               isEdit: isEdit,
               isManual: data == null,
               data: data != null
-                  ? data.copy()
+                  ? data!.copy()
                   : GlucoseData(
                       level: "0",
                       tag: null,
@@ -46,7 +47,7 @@ class BgTaggerPopUp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(40),
                 child: SingleChildScrollView(
                   child: Column(
-                    key: Key('bgTagger'),
+                    key: const Key('bgTagger'),
                     children: [
                       value.data.tag == 3 || value.data.tag == null
                           ? getSquareBg(value)
@@ -57,7 +58,7 @@ class BgTaggerPopUp extends StatelessWidget {
                       getImage(value),
                       getNote(value.noteController),
                       getAction(value.leftAction,
-                          isEdit ?? false ? value.update : value.rightAction)
+                          isEdit ? value.update : value.rightAction)
                     ],
                   ),
                 ),
@@ -72,8 +73,8 @@ class BgTaggerPopUp extends StatelessWidget {
   // InputSection #start
   Widget getSquareBg(BgTaggerVm value) {
     return Container(
-        height: 130 * value.context.TEXTSCALE,
-        width: 130 * value.context.TEXTSCALE,
+        height: 130 * value.context.textScale,
+        width: 130 * value.context.textScale,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
@@ -91,8 +92,8 @@ class BgTaggerPopUp extends StatelessWidget {
   Widget getCircleBg(BgTaggerVm value) {
     return Container(
       alignment: Alignment.center,
-      width: 130 * value.context.TEXTSCALE,
-      height: 130 * value.context.TEXTSCALE,
+      width: 130 * value.context.textScale,
+      height: 130 * value.context.textScale,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: value.data.tag == 2
@@ -120,10 +121,10 @@ class BgTaggerPopUp extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: getBgInputWidget(
                       value.controller, isFill, value.onChanged))),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
-          Text(
+          const Text(
             "mg/dL",
           ),
         ],
@@ -134,30 +135,25 @@ class BgTaggerPopUp extends StatelessWidget {
   Widget getBgInputWidget(TextEditingController controller, bool isFill,
       Function(String) onChanged) {
     return TextFormField(
-        enabled: data == null,
-        controller: controller,
-        style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: isFill ? Colors.white : Colors.black),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.digitsOnly
-        ],
-        maxLength: 3,
-        textAlignVertical: TextAlignVertical.bottom,
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          counterText: '',
-          errorStyle: TextStyle(height: 0),
-        ),
-        validator: (input) {
-          if (input.isNotEmpty)
-            return null;
-          else
-            return "";
-        });
+      enabled: data?.manual ?? true,
+      controller: controller,
+      style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          color: isFill ? Colors.white : Colors.black),
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ],
+      maxLength: 3,
+      textAlignVertical: TextAlignVertical.bottom,
+      textAlign: TextAlign.center,
+      keyboardType: TextInputType.number,
+      onChanged: onChanged,
+      decoration: const InputDecoration(
+        counterText: '',
+        errorStyle: TextStyle(height: 0),
+      ),
+    );
   } // InputSection #end
 
   // DateTimePickerSection #start
@@ -168,7 +164,7 @@ class BgTaggerPopUp extends StatelessWidget {
           showModalBottomSheet(
               context: context,
               builder: (BuildContext builder) {
-                return Container(
+                return SizedBox(
                     height: 260,
                     child: CupertinoDatePicker(
                       initialDateTime: DateTime.now(),
@@ -183,7 +179,7 @@ class BgTaggerPopUp extends StatelessWidget {
               });
         },
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16, top: 16),
+          padding: const EdgeInsets.only(bottom: 16, top: 16),
           child: Card(
             color: R.color.white,
             shape: RoundedRectangleBorder(
@@ -191,8 +187,8 @@ class BgTaggerPopUp extends StatelessWidget {
             ),
             elevation: 4,
             child: Container(
-                padding:
-                    EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 10, bottom: 10),
                 child: readableDateTime(date)),
           ),
         ));
@@ -204,17 +200,17 @@ class BgTaggerPopUp extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 2,
-          child: Text("${UtilityManager().getReadableDate(date)}"),
+          child: Text(UtilityManager().getReadableDate(date)),
         ),
         Expanded(
-          child: Text("${UtilityManager().getReadableHour(date)}"),
+          child: Text(UtilityManager().getReadableHour(date)),
         )
       ],
     );
   } // DateTimePickerSection #end
 
   // TagSection #begin
-  Wrap getTagState(int currentTag, Function(int) changeTag) {
+  Wrap getTagState(int? currentTag, Function(int) changeTag) {
     return Wrap(
       alignment: WrapAlignment.center,
       children: <Widget>[
@@ -222,7 +218,7 @@ class BgTaggerPopUp extends StatelessWidget {
           onTap: () => changeTag(1),
           child: getTagElement(
             currentTag == 1,
-            R.image.beforemeal_icon_black,
+            R.image.beforeMealIconBlack,
             LocaleProvider.current.hungry,
           ),
         ),
@@ -230,7 +226,7 @@ class BgTaggerPopUp extends StatelessWidget {
           onTap: () => changeTag(2),
           child: getTagElement(
             currentTag == 2,
-            R.image.aftermeal_icon_black,
+            R.image.aftermealIconBlack,
             LocaleProvider.current.full,
           ),
         ),
@@ -238,7 +234,7 @@ class BgTaggerPopUp extends StatelessWidget {
           onTap: () => changeTag(3),
           child: getTagElement(
             currentTag == null || currentTag == 3,
-            R.image.other_icon,
+            R.image.otherIcon,
             LocaleProvider.current.other,
           ),
         ),
@@ -257,11 +253,12 @@ class BgTaggerPopUp extends StatelessWidget {
       elevation: 4,
       child: Container(
         decoration: getTagElementDeco(isCurrent),
-        padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+        padding:
+            const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Container(
+            SizedBox(
               height: 20,
               width: 20,
               child: SvgPicture.asset(
@@ -296,10 +293,10 @@ class BgTaggerPopUp extends StatelessWidget {
           takeImage(value.context, value);
         },
         child: Padding(
-            padding: EdgeInsets.only(left: 8, top: 16),
+            padding: const EdgeInsets.only(left: 8, top: 16),
             child: Row(
               children: <Widget>[
-                Container(
+                SizedBox(
                     width: 60,
                     height: 60,
                     child: Card(
@@ -308,23 +305,25 @@ class BgTaggerPopUp extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         height: 25,
                         width: 25,
-                        child: value.data.imageURL == "" || Atom.isWeb
+                        child: (value.data.imageURL != null &&
+                                    value.data.imageURL == "") ||
+                                Atom.isWeb
                             ? SvgPicture.asset(
-                                R.image.addphoto_icon,
+                                R.image.addphotoIcon,
                               )
                             : PhotoView(
                                 imageProvider: FileImage(File(
                                     getIt<GlucoseStorageImpl>()
                                         .getImagePathOfImageURL(
-                                            value.data.imageURL))),
+                                            value.data.imageURL!))),
                               ),
                       ),
                     )),
                 Padding(
-                    padding: EdgeInsets.only(left: 8),
+                    padding: const EdgeInsets.only(left: 8),
                     child: Text(LocaleProvider.current.add_photo)),
               ],
             )));
@@ -334,7 +333,7 @@ class BgTaggerPopUp extends StatelessWidget {
     String title = LocaleProvider.current.how_to_get_photo;
 
     Atom.show(Platform.isIOS
-        ? new CupertinoAlertDialog(
+        ? CupertinoAlertDialog(
             title: Text(title),
             content: Text(LocaleProvider.current.pick_a_photo_option),
             actions: <Widget>[
@@ -358,10 +357,10 @@ class BgTaggerPopUp extends StatelessWidget {
               ),
             ],
           )
-        : new AlertDialog(
+        : AlertDialog(
             title: Text(
               title,
-              style: TextStyle(fontSize: 22),
+              style: const TextStyle(fontSize: 22),
             ),
             actions: <Widget>[
               TextButton(
@@ -384,7 +383,7 @@ class BgTaggerPopUp extends StatelessWidget {
   // NoteSection #begin
   Container getNote(TextEditingController controller) {
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       height: 120,
       child: Card(
         color: R.color.white,
@@ -397,19 +396,19 @@ class BgTaggerPopUp extends StatelessWidget {
           keyboardType: TextInputType.multiline,
           maxLines: null,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(left: 12, right: 12),
+            contentPadding: const EdgeInsets.only(left: 12, right: 12),
             hintText: LocaleProvider.current.notes,
-            hintStyle: TextStyle(fontSize: 12),
+            hintStyle: const TextStyle(fontSize: 12),
             labelText: LocaleProvider.current.notes,
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.transparent),
               //  when the TextFormField in unfocused
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.transparent),
               //  when the TextFormField in focused
             ),
-            border: UnderlineInputBorder(),
+            border: const UnderlineInputBorder(),
           ),
         ),
       ),
@@ -438,7 +437,7 @@ class BgTaggerPopUp extends StatelessWidget {
             color: isSave
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
           style: TextStyle(

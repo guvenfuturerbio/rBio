@@ -1,15 +1,15 @@
 part of '../view/create_appointment_events_screen.dart';
 
 class ListBody extends StatefulWidget {
-  final ValueNotifier<_EventSelectedModel> completeNotifier;
+  final ValueNotifier<_EventSelectedModel?> completeNotifier;
   final CreateAppointmentEventsVm vm;
   final void Function() onSubmit;
 
   const ListBody({
-    Key key,
-    @required this.completeNotifier,
-    @required this.vm,
-    @required this.onSubmit,
+    Key? key,
+    required this.completeNotifier,
+    required this.vm,
+    required this.onSubmit,
   }) : super(key: key);
 
   @override
@@ -18,19 +18,19 @@ class ListBody extends StatefulWidget {
 
 class _ListBodyState extends State<ListBody>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<Offset> offset;
+  late AnimationController controller;
+  late Animation<Offset> offset;
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
     );
     offset = Tween<Offset>(
-      begin: Offset(0.0, -0.3),
-      end: Offset(0.0, 0.0),
+      begin: const Offset(0.0, -0.3),
+      end: const Offset(0.0, 0.0),
     ).animate(controller);
   }
 
@@ -46,7 +46,7 @@ class _ListBodyState extends State<ListBody>
       fit: StackFit.expand,
       children: [
         //
-        if (widget.vm.availableSlots?.keys?.isEmpty) ...[
+        if (widget.vm.availableSlots.keys.isEmpty) ...[
           Positioned.fill(
             child: Center(
               child: Text(
@@ -69,7 +69,7 @@ class _ListBodyState extends State<ListBody>
                 ),
 
                 //
-                Expanded(
+                const Expanded(
                   flex: 3,
                   child: SizedBox(),
                 ),
@@ -89,13 +89,12 @@ class _ListBodyState extends State<ListBody>
           alignment: Alignment.bottomRight,
           child: ValueListenableBuilder(
             valueListenable: widget.completeNotifier,
-            builder: (BuildContext context, _EventSelectedModel selectedModel,
-                Widget child) {
+            builder: (BuildContext context, _EventSelectedModel? selectedModel,
+                Widget? child) {
               return RbioSwitcher(
-                showFirstChild:
-                    selectedModel != null && selectedModel.selected != null,
-                child1: child,
-                child2: SizedBox(),
+                showFirstChild: selectedModel?.selected != null,
+                child1: child!,
+                child2: const SizedBox(),
               );
             },
             child: RbioElevatedButton(
@@ -114,20 +113,20 @@ class _ListBodyState extends State<ListBody>
       valueListenable: widget.completeNotifier,
       builder: (
         BuildContext context,
-        _EventSelectedModel selectedModel,
-        Widget child,
+        _EventSelectedModel? selectedModel,
+        Widget? child,
       ) {
         return SingleChildScrollView(
           padding: EdgeInsets.zero,
           scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              for (var item in widget.vm.availableSlots?.keys ?? []) ...[
+              for (var item in widget.vm.availableSlots.keys) ...[
                 _buildLeftCard(
                   context,
                   item,
-                  widget.vm.availableSlots[item],
+                  widget.vm.availableSlots[item]!,
                 ),
               ],
             ],
@@ -153,8 +152,8 @@ class _ListBodyState extends State<ListBody>
         },
         child: Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: 8),
-          padding: EdgeInsets.symmetric(
+          margin: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.symmetric(
             vertical: 7,
           ),
           alignment: Alignment.center,
@@ -165,7 +164,7 @@ class _ListBodyState extends State<ListBody>
             borderRadius: BorderRadius.circular(15),
           ),
           child: Text(
-            '${value}:00',
+            '$value:00',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
@@ -179,20 +178,16 @@ class _ListBodyState extends State<ListBody>
     );
   }
 
-  _EventSelectedModel oldModel;
+  _EventSelectedModel? oldModel;
   Widget _buildRightList() {
     return ValueListenableBuilder(
       valueListenable: widget.completeNotifier,
       builder: (
         BuildContext context,
-        _EventSelectedModel selectedModel,
-        Widget child,
+        _EventSelectedModel? selectedModel,
+        Widget? child,
       ) {
-        if (selectedModel == null) {
-          return SizedBox();
-        }
-
-        if (oldModel?.value != selectedModel.value) {
+        if (oldModel?.value != selectedModel?.value) {
           controller.reset();
           controller.forward();
         }
@@ -202,10 +197,10 @@ class _ListBodyState extends State<ListBody>
           position: offset,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: selectedModel.items
+              children: (selectedModel?.items ?? [])
                   .map((e) => _buildRightCard(context, e))
                   .toList(),
             ),
@@ -222,30 +217,30 @@ class _ListBodyState extends State<ListBody>
         onTap: () {
           final notifierValue = widget.completeNotifier.value;
           widget.completeNotifier.value = _EventSelectedModel(
-            items: notifierValue.items,
-            value: notifierValue.value,
+            items: notifierValue?.items,
+            value: notifierValue?.value,
             selected: item,
           );
         },
         child: Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: 8),
-          padding: EdgeInsets.symmetric(
+          margin: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.symmetric(
             vertical: 7,
           ),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: widget.completeNotifier.value.selected?.from == item.from
+            color: widget.completeNotifier.value?.selected?.from == item.from
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Text(
-            '${item.from.substring(11, 16)} : ${item.to.substring(11, 16)}',
+            '${item.from?.substring(11, 16)} : ${item.to?.substring(11, 16)}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
-              color: widget.completeNotifier.value.selected?.from == item.from
+              color: widget.completeNotifier.value?.selected?.from == item.from
                   ? getIt<ITheme>().textColor
                   : getIt<ITheme>().textColorSecondary,
             ),

@@ -13,17 +13,17 @@ class GetScaleMasurementBody {
     this.count,
   });
 
-  int entegrationId;
-  DateTime beginDate;
-  DateTime endDate;
-  int count;
+  int? entegrationId;
+  DateTime? beginDate;
+  DateTime? endDate;
+  int? count;
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> map = <String, dynamic>{};
+    final Map<String, dynamic> map = <String, dynamic>{};
 
     map['entegration_id'] = entegrationId;
-    if (beginDate != null) map['begin_date'] = beginDate.toIso8601String();
-    if (endDate != null) map['end_date'] = endDate.toIso8601String();
+    if (beginDate != null) map['begin_date'] = beginDate?.toIso8601String();
+    if (endDate != null) map['end_date'] = endDate?.toIso8601String();
     if (count != null) map['count'] = count;
 
     return map;

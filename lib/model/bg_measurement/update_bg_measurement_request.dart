@@ -4,23 +4,23 @@ part 'update_bg_measurement_request.g.dart';
 @JsonSerializable()
 class UpdateBloodGlucoseMeasurementRequest {
   @JsonKey(name: 'entegration_id')
-  int entegrationId;
+  int? entegrationId;
   @JsonKey(name: 'measurement_id')
-  int measurementId;
+  int? measurementId;
   @JsonKey(name: 'measurement_tag')
-  int tag;
+  int? tag;
   @JsonKey(name: 'measurement_value')
-  int value;
+  int? value;
   @JsonKey(name: 'measurement_type')
-  String type;
+  String? type;
   @JsonKey(name: 'measurement_note')
-  String note;
+  String? note;
   @JsonKey(name: 'occurrence')
-  String date;
+  String? date;
 
 
   UpdateBloodGlucoseMeasurementRequest(
-      {this.entegrationId, this.measurementId, this.tag, this.value, this.type, this.note, this.date});
+      {this.entegrationId, this.measurementId, this.tag, this.value, this.type, this.note, this.date,});
 
   factory UpdateBloodGlucoseMeasurementRequest.fromJson(Map<String, dynamic> json) => _$UpdateBloodGlucoseMeasurementRequestFromJson(json);
 

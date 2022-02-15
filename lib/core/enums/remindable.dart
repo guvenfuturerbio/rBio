@@ -1,25 +1,29 @@
+import 'package:collection/collection.dart';
+
 import '../core.dart';
 
 enum Remindable {
-  BloodGlucose,
-  Strip,
-  Medication,
-  HbA1c,
+  bloodGlucose,
+  strip,
+  medication,
+  hbA1c,
 }
 
 extension ParseToString on Remindable {
-  String toShortString() {
+  String get xRawValue => getEnumValue(this);
+
+  String toShortTitle() {
     switch (this) {
-      case Remindable.BloodGlucose:
+      case Remindable.bloodGlucose:
         return LocaleProvider.current.blood_glucose_measurement;
 
-      case Remindable.HbA1c:
+      case Remindable.hbA1c:
         return LocaleProvider.current.hbA1c_measurement;
 
-      case Remindable.Strip:
+      case Remindable.strip:
         return LocaleProvider.current.strip_tracker;
 
-      case Remindable.Medication:
+      case Remindable.medication:
         return LocaleProvider.current.medication_reminder;
 
       default:
@@ -27,19 +31,19 @@ extension ParseToString on Remindable {
     }
   }
 
-  String toParseableString() {
+  String toRouteString() {
     switch (this) {
-      case Remindable.BloodGlucose:
-        return 'BloodGlucose';
+      case Remindable.bloodGlucose:
+        return 'bloodGlucose';
 
-      case Remindable.HbA1c:
-        return 'HbA1c';
+      case Remindable.hbA1c:
+        return 'hbA1c';
 
-      case Remindable.Strip:
-        return 'Strip';
+      case Remindable.strip:
+        return 'strip';
 
-      case Remindable.Medication:
-        return 'Medication';
+      case Remindable.medication:
+        return 'medication';
 
       default:
         return LocaleProvider.current.error;
@@ -48,22 +52,25 @@ extension ParseToString on Remindable {
 }
 
 extension ParseToRemindable on String {
-  Remindable toRemindable() {
+  Remindable? get xRemindableKeys => Remindable.values
+      .firstWhereOrNull((element) => element.xRawValue == this);
+
+  Remindable toRouteToRemindable() {
     switch (this) {
-      case 'BloodGlucose':
-        return Remindable.BloodGlucose;
+      case 'bloodGlucose':
+        return Remindable.bloodGlucose;
 
-      case 'HbA1c':
-        return Remindable.HbA1c;
+      case 'hbA1c':
+        return Remindable.hbA1c;
 
-      case 'Strip':
-        return Remindable.Strip;
+      case 'strip':
+        return Remindable.strip;
 
-      case 'Medication':
-        return Remindable.Medication;
+      case 'medication':
+        return Remindable.medication;
 
       default:
-        return Remindable.BloodGlucose;
+        return Remindable.bloodGlucose;
     }
   }
 }

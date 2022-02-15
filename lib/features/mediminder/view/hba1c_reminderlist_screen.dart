@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../../core/enums/remindable.dart';
+import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
 class Hba1cReminderListScreen extends StatelessWidget {
-  Remindable remindable;
+  Remindable? remindable;
 
-  Hba1cReminderListScreen({Key key, this.remindable}) : super(key: key);
+  Hba1cReminderListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     try {
-      this.remindable = Atom.queryParameters['remindable'].toRemindable();
+      remindable = Atom.queryParameters['remindable']!.toRouteToRemindable();
     } catch (e) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return ChangeNotifierProvider<Hba1cReminderListVm>(
@@ -25,16 +26,11 @@ class Hba1cReminderListScreen extends StatelessWidget {
         builder: (
           BuildContext context,
           Hba1cReminderListVm value,
-          Widget child,
+          Widget? child,
         ) {
           return RbioScaffold(
             extendBodyBehindAppBar: true,
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                remindable.toShortString(),
-              ),
-            ),
+            appbar: _buildAppBar(context),
             body: _buildBody(context, value),
             floatingActionButton: _buildFab(context, value),
           );
@@ -43,181 +39,187 @@ class Hba1cReminderListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(BuildContext context, Hba1cReminderListVm value) {
-    return value.hba1cForScheduled.length != 0
-        ? ListView(
-            shrinkWrap: true,
-            children: [
-              ...value.hba1cForScheduled
-                  .map(
-                    (item) => Padding(
-                      padding: const EdgeInsets.only(
-                        left: 30,
-                        right: 30,
-                        top: 15,
-                        bottom: 15,
-                      ),
-                      child: HbaCard(
-                        hbaReminder: item,
-                        hbaScheduledVm: value,
-                      ),
-                    ),
-                  )
-                  .toList()
-            ],
-          )
-        : Center(
-            child: Text(
-              LocaleProvider.current.there_are_no_reminders,
-              textAlign: TextAlign.center,
-              style: context.xHeadline3.copyWith(color: getIt<ITheme>().grey),
-            ),
-          );
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        remindable!.toShortTitle(),
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, Hba1cReminderListVm vm) {
+    if (vm.hba1cForScheduled.isNotEmpty) {
+      return _buildList(context, vm, vm.hba1cForScheduled);
+    } else {
+      return Center(
+        heightFactor: 5,
+        child: Text(
+          LocaleProvider.current.there_are_no_reminders,
+          textAlign: TextAlign.center,
+          style: context.xHeadline3.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget _buildList(
+    BuildContext context,
+    Hba1cReminderListVm vm,
+    List<Hba1CForScheduleModel> list,
+  ) {
+    return ListView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue,
+      ),
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
+      itemCount: list.length,
+      itemBuilder: (BuildContext context, int index) {
+        return HbaCard(
+          index: index,
+          hbaReminder: list[index],
+          hbaScheduledVm: vm,
+        );
+      },
+    );
   }
 
   Widget _buildFab(BuildContext context, Hba1cReminderListVm value) {
     return FloatingActionButton(
+      backgroundColor: getIt<ITheme>().mainColor,
       onPressed: () {
-        Atom.to(PagePaths.HBA1C_REMINDER_ADD, queryParameters: {
-          'remindable': remindable.toParseableString(),
-          'hba1cIdForNotification': value.generatedIdForSchedule.last.toString()
-        });
+        Atom.to(
+          PagePaths.hba1cReminderAdd,
+          queryParameters: {
+            'remindable': remindable!.toRouteString(),
+            'hba1cIdForNotification':
+                value.generatedIdForSchedule?.last.toString() ?? '',
+          },
+        );
       },
-      child: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle, color: getIt<ITheme>().mainColor),
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: SvgPicture.asset(
-            R.image.add,
-            color: getIt<ITheme>().cardBackgroundColor,
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: SvgPicture.asset(
+          R.image.add,
+          color: getIt<ITheme>().iconSecondaryColor,
         ),
       ),
-      backgroundColor: getIt<ITheme>().cardBackgroundColor,
     );
   }
 }
 
 class HbaCard extends StatelessWidget {
+  final int index;
   final Hba1CForScheduleModel hbaReminder;
   final Hba1cReminderListVm hbaScheduledVm;
 
-  HbaCard({
-    Key key,
-    this.hbaReminder,
-    this.hbaScheduledVm,
+  const HbaCard({
+    Key? key,
+    required this.index,
+    required this.hbaReminder,
+    required this.hbaScheduledVm,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        elevation: 5,
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
+    return Slidable(
+      key: ValueKey(index),
+      actionPane: const SlidableDrawerActionPane(),
+      actionExtentRatio: 0.3,
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: LocaleProvider.current.delete,
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () => showConfirmationAlertDialog(context),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    hbaReminder.reminderDate.substring(0, 10),
-                    style: context.xHeadline3
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    (DateTime.parse(hbaReminder.reminderDate).hour.toString() +
-                        ':' +
-                        DateTime.parse(hbaReminder.reminderDate)
-                            .minute
-                            .toString()),
-                    style: context.xHeadline4
-                        .copyWith(color: getIt<ITheme>().grey),
-                  ),
-                ],
+      ],
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(
+          top: index != 0 ? 8 : 0,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 20,
+        ),
+        decoration: BoxDecoration(
+          color: getIt<ITheme>().cardBackgroundColor,
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            Text(
+              TZHelper.instance
+                  .fromMillisecondsSinceEpoch(
+                      int.parse(hbaReminder.reminderDate ?? ''))
+                  .xFormatTime10(),
+              style: context.xHeadline3.copyWith(
+                fontWeight: FontWeight.bold,
               ),
-              GestureDetector(
-                onTap: () => showConfirmationAlertDialog(
-                    context,
-                    LocaleProvider.current.delete_medicine_title,
-                    LocaleProvider.current.delete_medicine_confirm_message,
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          primary: getIt<ITheme>().cardBackgroundColor),
-                      child: Text(LocaleProvider.current.Ok),
-                      onPressed: () {
-                        hbaScheduledVm.removeScheduledHba1c(hbaReminder);
-                        Navigator.of(context).pop();
-                      },
-                    )),
-                child: Container(
-                  height: 32,
-                  width: 32,
-                  margin: EdgeInsets.only(right: 5),
-                  decoration: new BoxDecoration(
-                    color: getIt<ITheme>().mainColor,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: SvgPicture.asset(R.image.delete_white_garbage),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
+            ),
+
+            //
+            Text(
+              TZHelper.instance
+                  .fromMillisecondsSinceEpoch(
+                      int.parse(hbaReminder.reminderDate ?? ''))
+                  .xFormatTime8(),
+              style: context.xHeadline4.copyWith(
+                color: getIt<ITheme>().grey,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  void showConfirmationAlertDialog(
-    BuildContext context,
-    String title,
-    String text,
-    Widget okButton,
-  ) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: getIt<ITheme>().mainColor,
-            title: Text(
-              title,
-              style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColor,
-                  fontWeight: FontWeight.w700),
+  void showConfirmationAlertDialog(BuildContext context) {
+    Atom.show(
+      AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        backgroundColor: getIt<ITheme>().mainColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        title: Text(
+          LocaleProvider.current.delete_medicine_title,
+          style: context.xHeadline1.copyWith(
+            color: getIt<ITheme>().textColor,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        content: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            LocaleProvider.current.delete_medicine_confirm_message,
+            style: context.xHeadline3.copyWith(
+              color: getIt<ITheme>().textColor,
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(20.0),
-              ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: getIt<ITheme>().cardBackgroundColor,
             ),
-            actions: [
-              okButton,
-            ],
-            content: Container(
-              padding: const EdgeInsets.all(16.0),
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  new Text(text,
-                      style: context.xHeadline3
-                          .copyWith(color: getIt<ITheme>().textColor)),
-                ],
-              ),
-            ),
-            contentPadding: EdgeInsets.all(0.0),
-          );
-        });
+            child: Text(LocaleProvider.current.Ok),
+            onPressed: () {
+              hbaScheduledVm.removeScheduledHba1c(hbaReminder);
+              Atom.dismiss();
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,50 +1,55 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import '../../../model/model.dart';
 import '../../core.dart';
-import '../../domain/blood_pressure_model.dart';
-
-part '../service/doctor_service.dart';
-part '../service/doctor_service_impl.dart';
 
 class DoctorRepository {
   final DoctorApiService apiService;
   final LocalCacheService localCacheService;
 
   DoctorRepository({
-    @required this.apiService,
-    @required this.localCacheService,
+    required this.apiService,
+    required this.localCacheService,
   });
 
   Future<List<Appointment>> getAllAppointment(
-          AppointmentFilter appointmentFilter) =>
+    AppointmentFilter appointmentFilter,
+  ) =>
       apiService.getAllAppointment(appointmentFilter);
   Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
-          GetMyPatientFilter getMyPatientFilter) =>
+    GetMyPatientFilter getMyPatientFilter,
+  ) =>
       apiService.getMySugarPatient(getMyPatientFilter);
   Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
-          GetMyPatientFilter getMyPatientFilter) =>
+    GetMyPatientFilter getMyPatientFilter,
+  ) =>
       apiService.getMyScalePatient(getMyPatientFilter);
   Future<List<DoctorBloodPressurePatientModel>> getMyBpPatient(
-          GetMyPatientFilter getMyPatientFilter) =>
+    GetMyPatientFilter getMyPatientFilter,
+  ) =>
       apiService.getMyBpPatient(getMyPatientFilter);
   Future<List<DoctorBMIPatientModel>> getMyBMIPatient(
-          GetMyPatientFilter getMyPatientFilter) =>
+    GetMyPatientFilter getMyPatientFilter,
+  ) =>
       apiService.getMyBMIPatient(getMyPatientFilter);
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId) =>
       apiService.getMyPatientDetail(patientId);
   Future<bool> updateMyPatientLimit(
-          int patientId, UpdateMyPatientLimit updateMyPatientLimit) =>
+    int patientId,
+    UpdateMyPatientLimit updateMyPatientLimit,
+  ) =>
       apiService.updateMyPatientLimit(patientId, updateMyPatientLimit);
   Future<List<BloodGlucose>> getMyPatientBloodGlucose(
-          int patientId, GetMyPatientFilter getMyPatientFilter) =>
+    int patientId,
+    GetMyPatientFilter getMyPatientFilter,
+  ) =>
       apiService.getMyPatientBloodGlucose(patientId, getMyPatientFilter);
   Future<List<ScaleModel>> getMyPatientScale(
-          int patientId, GetMyPatientFilter getMyPatientFilter) =>
+    int patientId,
+    GetMyPatientFilter getMyPatientFilter,
+  ) =>
       apiService.getMyPatientScale(patientId, getMyPatientFilter);
   Future<List<BloodPressureModel>> getMyPatientBloodPressure(
-          int patientId, GetMyPatientFilter getMyPatientFilter) =>
+    int patientId,
+    GetMyPatientFilter getMyPatientFilter,
+  ) =>
       apiService.getMyPatientBloodPressure(patientId, getMyPatientFilter);
 }

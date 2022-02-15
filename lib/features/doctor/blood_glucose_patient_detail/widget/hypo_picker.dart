@@ -1,9 +1,7 @@
-// ignore_for_file: must_be_immutable
-
 part of '../view/blood_glucose_patient_detail_screen.dart';
 
 class _HypoPicker extends StatelessWidget {
-  int hypo;
+  late int hypo;
 
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BloodGlucosePatientPickerVm>(
@@ -12,7 +10,7 @@ class _HypoPicker extends StatelessWidget {
         builder: (
           BuildContext context,
           BloodGlucosePatientPickerVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return _buildDialog(vm, context);
         },
@@ -22,7 +20,7 @@ class _HypoPicker extends StatelessWidget {
 
   Dialog _buildDialog(BloodGlucosePatientPickerVm vm, BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
       ),
       child: Column(
@@ -32,7 +30,7 @@ class _HypoPicker extends StatelessWidget {
         children: [
           //
           ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
             child: SizedBox(
               height: 300,
               child: CupertinoPicker(
@@ -53,10 +51,10 @@ class _HypoPicker extends StatelessWidget {
           InkWell(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
                 color: getIt<ITheme>().mainColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(12.0),
                   bottomRight: Radius.circular(12.0),
                 ),
@@ -75,7 +73,7 @@ class _HypoPicker extends StatelessWidget {
               vm.updatePatientLimit(
                 id: Provider.of<PatientNotifiers>(context, listen: false)
                     .patientDetail
-                    .id,
+                    .id!,
               );
             },
           ),

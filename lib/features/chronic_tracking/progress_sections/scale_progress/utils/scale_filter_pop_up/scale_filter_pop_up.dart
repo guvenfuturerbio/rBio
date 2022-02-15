@@ -12,16 +12,16 @@ class ScaleChartFilterPopup extends StatelessWidget {
   final double width;
   final double height;
   final bool isDoctor;
-  final SelectedScaleType selected;
+  final SelectedScaleType? selected;
   final Function(SelectedScaleType) changeScaleType;
-  const ScaleChartFilterPopup(
-      {Key key,
-      @required this.width,
-      @required this.height,
-      this.isDoctor = false,
-      this.selected,
-      this.changeScaleType})
-      : super(key: key);
+  const ScaleChartFilterPopup({
+    Key? key,
+    required this.changeScaleType,
+    required this.width,
+    required this.height,
+    this.isDoctor = false,
+    this.selected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,10 @@ class ScaleChartFilterPopup extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(10),
+        insetPadding: const EdgeInsets.all(10),
         elevation: 0,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.WIDTH * .03),
+          padding: EdgeInsets.symmetric(horizontal: context.width * .03),
           child: SizedBox(
             width: width,
             child: Card(
@@ -48,21 +48,21 @@ class ScaleChartFilterPopup extends StatelessWidget {
                             .currentScaleType),
                 child: Consumer<ScaleFilterPopupVm>(
                   builder: (_, value, __) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: context.HEIGHT * .01),
+                              vertical: context.height * .01),
                           child: ListView(shrinkWrap: true, children: [
                             ...value.filterList
                                 .map((e) => RadioListTile<SelectedScaleType>(
                                       title: Text(e.toStr),
                                       value: e,
                                       groupValue: value.selectedScaleType,
-                                      onChanged: (SelectedScaleType type) =>
+                                      onChanged: (SelectedScaleType? type) =>
                                           value.changeScaleType(type),
                                       dense: true,
                                     ))
@@ -90,11 +90,11 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                           R.color.white
                                         ]),
                                   ),
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 16, right: 16, top: 10, bottom: 10),
                                   child: Text(
                                     LocaleProvider.current.cancel,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
@@ -129,7 +129,7 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                           R.color.btnDarkBlue
                                         ]),
                                   ),
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 16, right: 16, top: 10, bottom: 10),
                                   child: Text(
                                     LocaleProvider.current.save,

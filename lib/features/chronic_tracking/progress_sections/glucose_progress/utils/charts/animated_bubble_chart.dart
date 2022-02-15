@@ -5,34 +5,34 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../../model/model.dart';
-import '../../../../lib/widgets/utils/time_period_filters.dart';
-import '../../../utils/charts/sample_view.dart';
 import '../../view_model/bg_progress_page_view_model.dart';
 
 /// Renders the Scatter chart sample with dynamically updated data points.
-class AnimationScatterDefault extends SampleView {
+class AnimationScatterDefault extends StatefulWidget {
+  const AnimationScatterDefault({Key? key}) : super(key: key);
+
   /// Creates the Scatter chart sample with dynamically updated data points.
   @override
   _AnimationScatterDefaultState createState() =>
       _AnimationScatterDefaultState();
 }
 
-class _AnimationScatterDefaultState extends SampleViewState {
-  List<ChartData> _chartData;
+class _AnimationScatterDefaultState extends State<AnimationScatterDefault> {
+  List<ChartData>? _chartData;
 
-  int _minimum, _maximum, _targetMin, _targetMax;
+  late int _minimum, _maximum, _targetMin, _targetMax;
 
-  TimePeriodFilter _selected;
+  late TimePeriodFilter _selected;
 
-  DateTime _startDate, _endDate;
+  late DateTime _startDate, _endDate;
 
-  double markerSize = 10;
+  late double markerSize = 10;
 
-  ZoomMode _zoomModeType = ZoomMode.x;
+  final ZoomMode _zoomModeType = ZoomMode.x;
 
-  ZoomPanBehavior _zoomingBehavior;
+  late ZoomPanBehavior _zoomingBehavior;
 
-  List<ScatterSeries<ChartData, DateTime>> _defaultScatterDataList;
+  late List<ScatterSeries<ChartData, DateTime>> _defaultScatterDataList;
   _AnimationScatterDefaultState();
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _AnimationScatterDefaultState extends SampleViewState {
         enablePinching: true,
         zoomMode: _zoomModeType,
         enablePanning: true,
-        enableMouseWheelZooming: model.isWeb ? true : false);
+        enableMouseWheelZooming: Atom.isWeb ? true : false);
     return Consumer<BgProgressPageViewModel>(builder: (context, value, child) {
       _selected = value.selected;
       _chartData = value.chartData;
@@ -60,26 +60,26 @@ class _AnimationScatterDefaultState extends SampleViewState {
   /// Get the Scatter chart sample with dynamically updated data points.
   SfCartesianChart _getAnimationScatterChart() {
     return SfCartesianChart(
-      primaryXAxis: _selected == TimePeriodFilter.DAILY
+      primaryXAxis: _selected == TimePeriodFilter.daily
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: MajorGridLines(color: Colors.black12),
+              majorGridLines: const MajorGridLines(color: Colors.black12),
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
               labelStyle: TextStyle(color: R.color.black),
               interval: 6)
-          : _selected == TimePeriodFilter.WEEKLY
+          : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   dateFormat: DateFormat("EEE"),
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                   intervalType: DateTimeIntervalType.days,
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                 ),
       primaryYAxis: NumericAxis(
           labelFormat: '{value}',
@@ -98,7 +98,7 @@ class _AnimationScatterDefaultState extends SampleViewState {
                 shouldRenderAboveSeries: false,
                 color: R.color.graph_plot_range),
           ],
-          majorGridLines: MajorGridLines(color: Colors.black12)),
+          majorGridLines: const MajorGridLines(color: Colors.black12)),
       enableAxisAnimation: true,
       zoomPanBehavior: _zoomingBehavior,
       series: getDefaultScatterSeries(),
@@ -112,19 +112,19 @@ class _AnimationScatterDefaultState extends SampleViewState {
     List<ScatterSeries<ChartData, DateTime>> list = [];
     list.addAll(_defaultScatterDataList);
     list.addAll(<ScatterSeries<ChartData, DateTime>>[]);
-    _selected == TimePeriodFilter.DAILY ||
-            _selected == TimePeriodFilter.SPECIFIC
+    _selected == TimePeriodFilter.daily ||
+            _selected == TimePeriodFilter.spesific
         ? list.add(ScatterSeries<ChartData, DateTime>(
-            dataSource: (_chartData != null && _chartData.length > 0)
+            dataSource: (_chartData != null && _chartData!.isNotEmpty)
                 ? [
                     ChartData(
-                        DateTime(_chartData[0].x.year, _chartData[0].x.month,
-                            _chartData[0].x.day, 24, 00),
+                        DateTime(_chartData![0].x.year, _chartData![0].x.month,
+                            _chartData![0].x.day, 24, 00),
                         -50,
                         Colors.transparent),
                     ChartData(
-                        DateTime(_chartData[0].x.year, _chartData[0].x.month,
-                            _chartData[0].x.day, 00, 00),
+                        DateTime(_chartData![0].x.year, _chartData![0].x.month,
+                            _chartData![0].x.day, 00, 00),
                         -50,
                         Colors.transparent),
                   ]
@@ -139,7 +139,7 @@ class _AnimationScatterDefaultState extends SampleViewState {
             color: Colors.red,
             xAxisName: "Time",
             markerSettings:
-                MarkerSettings(height: 15, width: 15, isVisible: true)))
+                const MarkerSettings(height: 15, width: 15, isVisible: true)))
         : list.add(ScatterSeries<ChartData, DateTime>(
             dataSource: [
                 ChartData(_startDate, -50, Colors.transparent),
@@ -152,10 +152,5 @@ class _AnimationScatterDefaultState extends SampleViewState {
             markerSettings: MarkerSettings(
                 height: markerSize, width: markerSize, isVisible: true)));
     return list;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

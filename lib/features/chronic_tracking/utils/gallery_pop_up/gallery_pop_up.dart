@@ -10,9 +10,7 @@ import 'gallery_pop_up_vm.dart';
 import 'stepper/stepper.dart' as core;
 
 class GalleryView extends StatelessWidget {
-  const GalleryView({Key key, this.images})
-      : assert(images != null),
-        super(key: key);
+  const GalleryView({Key? key, required this.images}) : super(key: key);
   final List<String> images;
 
   final String urlDetect =
@@ -23,47 +21,57 @@ class GalleryView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => GalleryPopUpVm(context),
       child: Consumer<GalleryPopUpVm>(
-        builder: (_, value, __) => Dialog(
-          child: Stack(
-            children: [
-              PhotoViewGallery(
-                gaplessPlayback: true,
-                scrollPhysics: ClampingScrollPhysics(),
-                onPageChanged: value.changeIndex,
-                pageOptions: [
-                  ...images.map((e) => PhotoViewGalleryPageOptions(
-                      scaleStateController: value.controller,
-                      minScale: PhotoViewComputedScale.contained,
-                      imageProvider: e.contains(RegExp(urlDetect))
-                          ? NetworkImage(e)
-                          : FileImage(File(e))))
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                    padding: EdgeInsets.only(bottom: context.HEIGHT * .03),
-                    child: core.Stepper(
-                      length: images.length,
-                      currentIndex: value.currentIndex,
-                    )),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                    onTap: () {
-                      value.close();
-                    },
-                    child: Icon(
-                      Icons.close,
-                      size: context.ASPECTRATIO * 75,
-                      color: R.color.white,
-                    )),
-              )
-            ],
-          ),
-        ),
+        builder: (_, value, __) {
+          return Dialog(
+            child: Stack(
+              children: [
+                PhotoViewGallery(
+                  gaplessPlayback: true,
+                  scrollPhysics: const ClampingScrollPhysics(),
+                  onPageChanged: value.changeIndex,
+                  pageOptions: [
+                    ...images.map((e) {
+                      return PhotoViewGalleryPageOptions(
+                          scaleStateController: value.controller,
+                          minScale: PhotoViewComputedScale.contained,
+                          imageProvider: getImageProvider(e));
+                    })
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                      padding: EdgeInsets.only(bottom: context.height * .03),
+                      child: core.Stepper(
+                        length: images.length,
+                        currentIndex: value.currentIndex,
+                      )),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                      onTap: () {
+                        value.close();
+                      },
+                      child: Icon(
+                        Icons.close,
+                        size: context.aspectRatio * 75,
+                        color: R.color.white,
+                      )),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
+  }
+
+  ImageProvider<Object>? getImageProvider(String e) {
+    if (e.contains(RegExp(urlDetect))) {
+      return NetworkImage(e);
+    } else {
+      return FileImage(File(e));
+    }
   }
 }

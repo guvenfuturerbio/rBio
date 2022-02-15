@@ -4,8 +4,8 @@ class _TaggerPopUp extends StatelessWidget {
   final BgMeasurementViewModel data;
 
   _TaggerPopUp({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -20,14 +20,14 @@ class _TaggerPopUp extends StatelessWidget {
             borderRadius: BorderRadius.circular(40),
             child: SingleChildScrollView(
               child: Column(
-                key: Key('bgTagger'),
+                key: const Key('bgTagger'),
                 children: [
                   data.tag == 3 || data.tag == null
                       ? getSquareBg(context)
                       : getCircleBg(context),
                   getDateTimePicker(context, data.date),
-                  getTagState(data.tag),
-                  getNote(data.note),
+                  getTagState(data.tag!),
+                  getNote(data.note!),
                   getAction(() => Navigator.of(context).pop())
                 ],
               ),
@@ -40,10 +40,10 @@ class _TaggerPopUp extends StatelessWidget {
 
   // InputSection #start
   Widget getSquareBg(BuildContext context) {
-    var level = int.parse(data.result == '' ? '0' : data.result);
+    var level = int.parse((data.result == '' ? '0' : data.result)!);
     return Container(
-      height: 130 * context.TEXTSCALE,
-      width: 130 * context.TEXTSCALE,
+      height: 130 * context.textScale,
+      width: 130 * context.textScale,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
@@ -58,12 +58,12 @@ class _TaggerPopUp extends StatelessWidget {
   }
 
   Widget getCircleBg(BuildContext context) {
-    var level = int.parse(data.result == '' ? '0' : data.result);
+    var level = int.parse((data.result == '' ? '0' : data.result)!);
 
     return Container(
       alignment: Alignment.center,
-      width: 130 * context.TEXTSCALE,
-      height: 130 * context.TEXTSCALE,
+      width: 130 * context.textScale,
+      height: 130 * context.textScale,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: data.tag == 2
@@ -90,10 +90,10 @@ class _TaggerPopUp extends StatelessWidget {
               child: getBgInputWidget(isFill),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
-          Text(
+          const Text(
             "mg/dL",
           ),
         ],
@@ -103,7 +103,7 @@ class _TaggerPopUp extends StatelessWidget {
 
   Widget getBgInputWidget(bool isFill) {
     return Text(
-      data.result,
+      data.result!,
       style: TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class _TaggerPopUp extends StatelessWidget {
   // DateTimePickerSection #start
   Widget getDateTimePicker(BuildContext context, DateTime date) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 16, top: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
         color: R.color.white,
         shape: RoundedRectangleBorder(
@@ -123,7 +123,7 @@ class _TaggerPopUp extends StatelessWidget {
         ),
         elevation: 4,
         child: Container(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 16,
             right: 16,
             top: 10,
@@ -141,10 +141,10 @@ class _TaggerPopUp extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 2,
-          child: Text("${UtilityManager().getReadableDate(date)}"),
+          child: Text(UtilityManager().getReadableDate(date)),
         ),
         Expanded(
-          child: Text("${UtilityManager().getReadableHour(date)}"),
+          child: Text(UtilityManager().getReadableHour(date)),
         )
       ],
     );
@@ -158,17 +158,17 @@ class _TaggerPopUp extends StatelessWidget {
       children: <Widget>[
         getTagElement(
           currentTag == 1,
-          R.image.beforemeal_icon_black,
+          R.image.beforeMealIconBlack,
           LocaleProvider.current.hungry,
         ),
         getTagElement(
           currentTag == 2,
-          R.image.aftermeal_icon_black,
+          R.image.aftermealIconBlack,
           LocaleProvider.current.full,
         ),
         getTagElement(
-          currentTag == null || currentTag == 3,
-          R.image.other_icon,
+          currentTag == 3,
+          R.image.otherIcon,
           LocaleProvider.current.other,
         ),
       ],
@@ -184,11 +184,12 @@ class _TaggerPopUp extends StatelessWidget {
       elevation: 4,
       child: Container(
         decoration: getTagElementDeco(isCurrent),
-        padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+        padding:
+            const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Container(
+            SizedBox(
               height: 20,
               width: 20,
               child: SvgPicture.asset(
@@ -223,7 +224,7 @@ class _TaggerPopUp extends StatelessWidget {
 
   Container getNote(String note) {
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       height: 120,
       width: double.infinity,
       child: Card(
@@ -259,10 +260,10 @@ class _TaggerPopUp extends StatelessWidget {
               end: Alignment.topLeft,
               colors: <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]),
         ),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           LocaleProvider.current.done,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
           ),
         ),
