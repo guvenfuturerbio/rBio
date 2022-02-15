@@ -25,8 +25,10 @@ Widget createAppoWidget({
       AbsorbPointer(
         absorbing: isOnline,
         child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          elevation: R.sizes.defaultElevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: R.sizes.borderRadiusCircular,
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: progress == LoadingProgress.loading

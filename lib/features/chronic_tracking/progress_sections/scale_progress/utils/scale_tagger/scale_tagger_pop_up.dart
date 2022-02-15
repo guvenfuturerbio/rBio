@@ -71,11 +71,14 @@ class ScaleTagger extends StatelessWidget {
                   builder: (_, value, __) {
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: context.xMediaQuery.padding.vertical),
+                        vertical: context.xMediaQuery.padding.vertical,
+                      ),
                       child: Card(
+                        elevation: R.sizes.defaultElevation,
                         color: R.color.background,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
+                          borderRadius: R.sizes.borderRadiusCircular,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -176,16 +179,17 @@ class ScaleTagger extends StatelessWidget {
 
   Widget actionButton(bool isSave) {
     return Card(
+      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      elevation: 4,
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: isSave
-                ? getIt<ITheme>().mainColor
-                : getIt<ITheme>().cardBackgroundColor),
+          borderRadius: R.sizes.borderRadiusCircular,
+          color: isSave
+              ? getIt<ITheme>().mainColor
+              : getIt<ITheme>().cardBackgroundColor,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
@@ -214,9 +218,9 @@ class ScaleTagger extends StatelessWidget {
                     width: height * .1,
                     height: height * .1,
                     child: Card(
-                      elevation: 4,
+                      elevation: R.sizes.defaultElevation,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: SizedBox(
                         height: height * .1,
@@ -303,11 +307,11 @@ class ScaleTagger extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
+        elevation: R.sizes.defaultElevation,
         color: R.color.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        elevation: 4,
         child: TextField(
             controller: value.noteController,
             keyboardType: TextInputType.multiline,
@@ -335,30 +339,32 @@ class ScaleTagger extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return SizedBox(
-                    height: 260,
-                    child: CupertinoDatePicker(
-                      initialDateTime: DateTime.now(),
-                      onDateTimeChanged: value.changeDate,
-                      use24hFormat: true,
-                      maximumDate: DateTime.now(),
-                      minimumYear: DateTime.now().year,
-                      maximumYear: DateTime.now().year,
-                      minuteInterval: 1,
-                      mode: CupertinoDatePickerMode.dateAndTime,
-                    ));
-              });
+            context: context,
+            builder: (context) {
+              return SizedBox(
+                height: 260,
+                child: CupertinoDatePicker(
+                  initialDateTime: DateTime.now(),
+                  onDateTimeChanged: value.changeDate,
+                  use24hFormat: true,
+                  maximumDate: DateTime.now(),
+                  minimumYear: DateTime.now().year,
+                  maximumYear: DateTime.now().year,
+                  minuteInterval: 1,
+                  mode: CupertinoDatePickerMode.dateAndTime,
+                ),
+              );
+            },
+          );
         },
         child: Padding(
           padding: const EdgeInsets.only(bottom: 16, top: 16),
           child: Card(
+            elevation: R.sizes.defaultElevation,
             color: R.color.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
-            elevation: 4,
             child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(

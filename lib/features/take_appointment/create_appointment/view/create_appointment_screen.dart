@@ -96,167 +96,167 @@ class CreateAppointmentScreen extends StatelessWidget {
   // #endregion
 
   Widget _buildSuccess(BuildContext context, CreateAppointmentVm vm) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.zero,
-      scrollDirection: Axis.vertical,
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              LocaleProvider.current.recent_appointments,
-              style: context.xHeadline3,
-            ),
-          ),
-
-          //
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: vm.holderForFavorites
-                  .map(
-                    (item) => _buildHistoryDoctorCard(
-                      context,
-                      item.resources?.first.resource,
-                      vm,
-                      vm.holderForFavorites.indexOf(item),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-
-          //
-          vm.relativeProgress == LoadingProgress.loading
-              ? const RbioLoading()
-              : createAppoWidget(
-                  context: context,
-                  header: LocaleProvider.current.appo_for,
-                  hint: LocaleProvider.current.pls_select_person,
-                  itemList: vm.relativeResponse == null
-                      ? []
-                      : vm.relativeResponse!.patientRelatives,
-                  val: vm,
-                  whichField: Fields.relative,
-                  progress: vm.relativeProgress,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    LocaleProvider.current.recent_appointments,
+                    style: context.xHeadline3,
+                  ),
                 ),
 
-          //
-          createAppoWidget(
-            context: context,
-            header: LocaleProvider.current.hosp_selection,
-            hint: forOnline
-                ? LocaleProvider.current.get_online_appointment
-                : LocaleProvider.current.pls_select_hosp,
-            itemList: vm.tenantsFilterResponse ?? [],
-            val: vm,
-            whichField: Fields.tenant,
-            progress: vm.progress,
-            isOnline: forOnline,
-          ),
+                //
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: vm.holderForFavorites
+                        .map(
+                          (item) => _buildHistoryDoctorCard(
+                            context,
+                            item.resources?.first.resource,
+                            vm,
+                            vm.holderForFavorites.indexOf(item),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
 
-          //
-          IgnorePointer(
-            ignoring: !vm.hospitalSelected,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 1300),
-              curve: Curves.ease,
-              opacity: vm.hospitalSelected ? 1 : 0,
-              child: vm.departmentProgress == LoadingProgress.loading
-                  ? const RbioLoading()
-                  : createAppoWidget(
-                      context: context,
-                      header: LocaleProvider.current.depart_selection,
-                      hint: LocaleProvider.current.pls_select_depart,
-                      itemList: vm.filterDepartmentResponse!,
-                      val: vm,
-                      whichField: Fields.department,
-                      progress: vm.departmentProgress,
-                    ),
+                //
+                vm.relativeProgress == LoadingProgress.loading
+                    ? const RbioLoading()
+                    : createAppoWidget(
+                        context: context,
+                        header: LocaleProvider.current.appo_for,
+                        hint: LocaleProvider.current.pls_select_person,
+                        itemList: vm.relativeResponse == null
+                            ? []
+                            : vm.relativeResponse!.patientRelatives,
+                        val: vm,
+                        whichField: Fields.relative,
+                        progress: vm.relativeProgress,
+                      ),
+
+                //
+                createAppoWidget(
+                  context: context,
+                  header: LocaleProvider.current.hosp_selection,
+                  hint: forOnline
+                      ? LocaleProvider.current.get_online_appointment
+                      : LocaleProvider.current.pls_select_hosp,
+                  itemList: vm.tenantsFilterResponse ?? [],
+                  val: vm,
+                  whichField: Fields.tenant,
+                  progress: vm.progress,
+                  isOnline: forOnline,
+                ),
+
+                //
+                IgnorePointer(
+                  ignoring: !vm.hospitalSelected,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 1300),
+                    curve: Curves.ease,
+                    opacity: vm.hospitalSelected ? 1 : 0,
+                    child: vm.departmentProgress == LoadingProgress.loading
+                        ? const RbioLoading()
+                        : createAppoWidget(
+                            context: context,
+                            header: LocaleProvider.current.depart_selection,
+                            hint: LocaleProvider.current.pls_select_depart,
+                            itemList: vm.filterDepartmentResponse!,
+                            val: vm,
+                            whichField: Fields.department,
+                            progress: vm.departmentProgress,
+                          ),
+                  ),
+                ),
+
+                //
+                IgnorePointer(
+                  ignoring: !vm.departmentSelected || !vm.hospitalSelected,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 1300),
+                    curve: Curves.ease,
+                    opacity:
+                        vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
+                    child: vm.doctorProgress == LoadingProgress.loading
+                        ? const RbioLoading()
+                        : createAppoWidget(
+                            context: context,
+                            header: LocaleProvider.current.doctor_selection,
+                            hint: LocaleProvider.current.pls_select_doctor,
+                            itemList: vm.filterResourceResponse!,
+                            val: vm,
+                            whichField: Fields.doctors,
+                            progress: vm.doctorProgress,
+                          ),
+                  ),
+                ),
+              ],
             ),
           ),
+        ),
 
-          //
-          IgnorePointer(
-            ignoring: !vm.departmentSelected || !vm.hospitalSelected,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 1300),
-              curve: Curves.ease,
-              opacity: vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
-              child: vm.doctorProgress == LoadingProgress.loading
-                  ? const RbioLoading()
-                  : createAppoWidget(
-                      context: context,
-                      header: LocaleProvider.current.doctor_selection,
-                      hint: LocaleProvider.current.pls_select_doctor,
-                      itemList: vm.filterResourceResponse!,
-                      val: vm,
-                      whichField: Fields.doctors,
-                      progress: vm.doctorProgress,
-                    ),
-            ),
-          ),
-
-          //
-          vm.doctorSelected
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Center(
-                      child: RbioElevatedButton(
+        //
+        Container(
+          color: Colors.transparent,
+          width: double.infinity,
+          child: Column(
+            children: [
+              //
+              ...vm.doctorSelected
+                  ? [
+                      RbioElevatedButton(
                         title: LocaleProvider.current.create_appo,
                         onTap: () {
                           _openCreateAppointmentsEvents(vm);
                         },
+                        infinityWidth: true,
                       ),
-                    ),
-                    R.sizes.defaultBottomPadding,
-                  ],
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Center(
-                        child: Text(
-                          LocaleProvider.current.which_depart_i_go,
-                          style: context.xHeadline3,
+                      R.sizes.defaultBottomPadding,
+                    ]
+                  : [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: Center(
+                          child: Text(
+                            LocaleProvider.current.which_depart_i_go,
+                            style: context.xHeadline3,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      //height: Atom.height * .05,
-                      child: Center(
-                        child: RbioElevatedButton(
-                          onTap: () {
-                            Atom.to(PagePaths.symptomMainMenu);
-                          },
-                          title: LocaleProvider.current.depart_analyse,
-                        ),
+                      RbioElevatedButton(
+                        onTap: () {
+                          Atom.to(PagePaths.symptomMainMenu);
+                        },
+                        title: LocaleProvider.current.depart_analyse,
+                        infinityWidth: true,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 70,
-                    ),
-                  ],
-                ),
-        ],
-      ),
+                      R.sizes.defaultBottomPadding,
+                    ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 

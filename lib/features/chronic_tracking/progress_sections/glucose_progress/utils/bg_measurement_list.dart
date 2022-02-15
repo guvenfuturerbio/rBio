@@ -182,56 +182,60 @@ Widget measurementList(BgMeasurementGlucoseViewModel bgMeasurementViewModel,
                 ],
               ),
             ),
-            Row(children: <Widget>[
-              (bgMeasurementViewModel.imageURL == "")
-                  ? Container()
-                  : SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          height: 25,
-                          width: 25,
-                          child: bgMeasurementViewModel.imageURL == null ||
-                                  bgMeasurementViewModel.imageURL == "" ||
-                                  Atom.isWeb
-                              ? SvgPicture.asset(
-                                  R.image.addphotoIcon,
-                                )
-                              : PhotoView(
-                                  imageProvider: FileImage(File(
-                                      getIt<GlucoseStorageImpl>()
-                                          .getImagePathOfImageURL(
-                                              bgMeasurementViewModel
-                                                  .imageURL!))),
-                                ),
-                        ),
-                      )),
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (bgMeasurementViewModel.isManual)
-                      Text(
-                        "M",
-                        style: context.xHeadline3.copyWith(
-                          fontWeight: FontWeight.w900,
+            Row(
+              children: <Widget>[
+                (bgMeasurementViewModel.imageURL == "")
+                    ? Container()
+                    : SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: Card(
+                          elevation: R.sizes.defaultElevation,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            height: 25,
+                            width: 25,
+                            child: bgMeasurementViewModel.imageURL == null ||
+                                    bgMeasurementViewModel.imageURL == "" ||
+                                    Atom.isWeb
+                                ? SvgPicture.asset(
+                                    R.image.addphotoIcon,
+                                  )
+                                : PhotoView(
+                                    imageProvider: FileImage(File(
+                                        getIt<GlucoseStorageImpl>()
+                                            .getImagePathOfImageURL(
+                                                bgMeasurementViewModel
+                                                    .imageURL!))),
+                                  ),
+                          ),
                         ),
                       ),
-                    Text(
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (bgMeasurementViewModel.isManual)
+                        Text(
+                          "M",
+                          style: context.xHeadline3.copyWith(
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      Text(
                         DateFormat("kk : mm")
                             .format(bgMeasurementViewModel.date),
-                        style: context.xBodyText1),
-                  ],
+                        style: context.xBodyText1,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ])
+              ],
+            ),
           ],
         ),
       ),

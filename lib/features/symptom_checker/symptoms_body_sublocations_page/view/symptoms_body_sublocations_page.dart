@@ -123,10 +123,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                 itemCount: value.bodySubLocations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    elevation: 10,
+                    elevation: R.sizes.defaultElevation,
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                      borderRadius: R.sizes.borderRadiusCircular,
+                    ),
                     child: ExpandablePanel(
                       controller: value.expControllerList[index],
                       //iconColor: R.color.online_appointment,

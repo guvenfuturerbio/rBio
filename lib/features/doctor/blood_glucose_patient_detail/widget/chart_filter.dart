@@ -40,6 +40,7 @@ class _ChartFilter extends StatelessWidget {
       child: SizedBox(
         width: width,
         child: Card(
+          elevation: R.sizes.defaultElevation,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),

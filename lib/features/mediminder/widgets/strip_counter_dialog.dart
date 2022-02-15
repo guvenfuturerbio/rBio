@@ -49,8 +49,8 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
     return AlertDialog(
       backgroundColor: getIt<ITheme>().grey,
       contentPadding: const EdgeInsets.all(0.0),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       title: Text(
         widget.title,
@@ -69,7 +69,7 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
               elevation: 15,
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25.0),
+                borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: SizedBox(
                 width: 350,

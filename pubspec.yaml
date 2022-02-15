@@ -160,7 +160,9 @@ flutter_icons:
 flutter_intl:
   enabled: true
   class_name: LocaleProvider
-  default_locale: en
+  main_locale: en
+  arb_dir: lib/l10n
+  output_dir: lib/generated
 
 flutter_native_splash:
   color: "00A147"

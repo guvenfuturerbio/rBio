@@ -82,7 +82,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
     return InkWell(
       onTap: () => vm.onFileTapped(file),
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),

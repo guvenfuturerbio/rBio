@@ -130,11 +130,11 @@ class _StripScreenState extends State<StripScreen> {
       child: Column(
         children: <Widget>[
           Card(
+            elevation: R.sizes.defaultElevation,
             color: getIt<ITheme>().cardBackgroundColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
-            elevation: 4,
             child: Container(
               padding: const EdgeInsets.only(
                 left: 16,
@@ -255,7 +255,7 @@ class _StripScreenState extends State<StripScreen> {
                   width: MediaQuery.of(context).size.width / 2.5,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: R.sizes.borderRadiusCircular,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
@@ -299,7 +299,7 @@ class _StripScreenState extends State<StripScreen> {
                   width: MediaQuery.of(context).size.width / 2.5,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: R.sizes.borderRadiusCircular,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
@@ -365,7 +365,7 @@ class _StripScreenState extends State<StripScreen> {
         elevation: 15,
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: SizedBox(
           width: 350,
@@ -420,13 +420,13 @@ class _StripScreenState extends State<StripScreen> {
               getIt<ITheme>().mainColor
             ],
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.transparent,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
           ),
           child: Row(

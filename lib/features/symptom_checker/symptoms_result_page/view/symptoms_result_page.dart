@@ -78,9 +78,10 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      elevation: 9,
+                      elevation: R.sizes.defaultElevation,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                        borderRadius: R.sizes.borderRadiusCircular,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -111,9 +112,10 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: getIt<ITheme>().mainColor,
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                        color: getIt<ITheme>().mainColor,
+                                        borderRadius:
+                                            R.sizes.borderRadiusCircular,
+                                      ),
                                       width:
                                           MediaQuery.of(context).size.width / 4,
                                       //
@@ -179,9 +181,10 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Card(
-                        elevation: 9,
+                        elevation: R.sizes.defaultElevation,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
+                          borderRadius: R.sizes.borderRadiusCircular,
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -213,9 +216,10 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: getIt<ITheme>().mainColor,
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
+                                          color: getIt<ITheme>().mainColor,
+                                          borderRadius:
+                                              R.sizes.borderRadiusCircular,
+                                        ),
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 4,

@@ -117,11 +117,11 @@ class _TaggerPopUp extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
+        elevation: R.sizes.defaultElevation,
         color: R.color.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        elevation: 4,
         child: Container(
           padding: const EdgeInsets.only(
             left: 16,
@@ -175,13 +175,13 @@ class _TaggerPopUp extends StatelessWidget {
     );
   }
 
-  Card getTagElement(bool isCurrent, String icon, String title) {
+  Widget getTagElement(bool isCurrent, String icon, String title) {
     return Card(
+      elevation: R.sizes.defaultElevation,
       color: isCurrent ? R.color.btnDarkBlue : R.color.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      elevation: 4,
       child: Container(
         decoration: getTagElementDeco(isCurrent),
         padding:
@@ -222,18 +222,22 @@ class _TaggerPopUp extends StatelessWidget {
   }
   // TagSection #end
 
-  Container getNote(String note) {
+  Widget getNote(String note) {
     return Container(
       padding: const EdgeInsets.only(top: 16),
       height: 120,
       width: double.infinity,
       child: Card(
+        elevation: R.sizes.defaultElevation,
         color: R.color.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        elevation: 4,
-        child: Center(child: Text(note)),
+        child: Center(
+          child: Text(
+            note,
+          ),
+        ),
       ),
     );
   }
@@ -248,10 +252,10 @@ class _TaggerPopUp extends StatelessWidget {
 
   Widget actionButton() {
     return Card(
+      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      elevation: 4,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),

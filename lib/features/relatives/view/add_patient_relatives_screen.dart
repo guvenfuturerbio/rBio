@@ -323,9 +323,11 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
         vm.setGender(vm.genderList[btnValue]);
       },
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         color: getIt<ITheme>().cardBackgroundColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shape: RoundedRectangleBorder(
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

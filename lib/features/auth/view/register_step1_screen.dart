@@ -478,7 +478,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
   Widget addRadioButton(int btnValue, String title) {
     return Expanded(
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

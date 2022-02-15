@@ -14,25 +14,26 @@ import 'intl/messages_all.dart';
 
 class LocaleProvider {
   LocaleProvider();
-  
-  static LocaleProvider current;
-  
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+
+  static late LocaleProvider current;
+
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<LocaleProvider> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       LocaleProvider.current = LocaleProvider();
-      
+
       return LocaleProvider.current;
     });
-  } 
+  }
 
   static LocaleProvider of(BuildContext context) {
-    return Localizations.of<LocaleProvider>(context, LocaleProvider);
+    return Localizations.of<LocaleProvider>(context, LocaleProvider)!;
   }
 
   /// `Create`
@@ -7933,7 +7934,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
   @override
   bool shouldReload(AppLocalizationDelegate old) => false;
 
-  bool _isSupported(Locale locale) {
+  bool _isSupported(Locale? locale) {
     if (locale != null) {
       for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {

@@ -36,16 +36,19 @@ class ScaleChartFilterPopup extends StatelessWidget {
           child: SizedBox(
             width: width,
             child: Card(
+              elevation: R.sizes.defaultElevation,
               color: R.color.bg_gray,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
               child: ChangeNotifierProvider(
                 create: (_) => ScaleFilterPopupVm(
-                    scaleType: isDoctor
-                        ? selected
-                        : Provider.of<ScaleProgressPageViewModel>(context,
-                                listen: false)
-                            .currentScaleType),
+                  scaleType: isDoctor
+                      ? selected
+                      : Provider.of<ScaleProgressPageViewModel>(context,
+                              listen: false)
+                          .currentScaleType,
+                ),
                 child: Consumer<ScaleFilterPopupVm>(
                   builder: (_, value, __) => Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
@@ -75,13 +78,13 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                 Atom.dismiss();
                               },
                               child: Card(
+                                elevation: R.sizes.defaultElevation,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: R.sizes.borderRadiusCircular,
                                     gradient: LinearGradient(
                                         begin: Alignment.bottomRight,
                                         end: Alignment.topLeft,
@@ -114,13 +117,13 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                 Atom.dismiss();
                               },
                               child: Card(
+                                elevation: R.sizes.defaultElevation,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: R.sizes.borderRadiusCircular,
                                     gradient: LinearGradient(
                                         begin: Alignment.bottomRight,
                                         end: Alignment.topLeft,

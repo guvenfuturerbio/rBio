@@ -68,8 +68,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                     boxStyle: FlutterSliderTooltipBox(
                       decoration: BoxDecoration(
                         color: getIt<ITheme>().mainColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
+                        borderRadius: R.sizes.borderRadiusCircular,
                       ),
                     ),
                     alwaysShowTooltip: true,
@@ -81,7 +80,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                     inactiveTrackBarHeight: 14,
                     activeTrackBarHeight: 10,
                     inactiveTrackBar: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: R.sizes.borderRadiusCircular,
                       color: Colors.black12,
                       border: Border.all(
                         width: 3,
@@ -89,7 +88,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                       ),
                     ),
                     activeTrackBar: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: R.sizes.borderRadiusCircular,
                       color: getIt<ITheme>().mainColor,
                     ),
                   ),

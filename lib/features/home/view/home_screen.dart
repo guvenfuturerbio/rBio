@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/manager/firebase_messaging_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -338,8 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildVersion(),
 
             //
-            R.sizes.defaultBottomPadding,
-            R.sizes.hSizer32,
+            const SizedBox(height: 65),
           ],
         ),
       ),

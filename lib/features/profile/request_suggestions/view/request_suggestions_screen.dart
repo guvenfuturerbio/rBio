@@ -96,7 +96,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
             padding: const EdgeInsets.only(top: 8),
             height: MediaQuery.of(context).size.height * 0.40,
             child: Card(
-              elevation: 0,
+              elevation: R.sizes.defaultElevation,
               child: RbioTextFormField(
                 controller: textEditingController,
                 keyboardType: TextInputType.multiline,

@@ -160,38 +160,46 @@ class BgTaggerPopUp extends StatelessWidget {
   Widget getDateTimePicker(
       BuildContext context, DateTime date, Function(DateTime) onChange) {
     return GestureDetector(
-        onTap: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (BuildContext builder) {
-                return SizedBox(
-                    height: 260,
-                    child: CupertinoDatePicker(
-                      initialDateTime: DateTime.now(),
-                      onDateTimeChanged: onChange,
-                      use24hFormat: true,
-                      maximumDate: DateTime.now(),
-                      minimumYear: DateTime.now().year,
-                      maximumYear: DateTime.now().year,
-                      minuteInterval: 1,
-                      mode: CupertinoDatePickerMode.dateAndTime,
-                    ));
-              });
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 16, top: 16),
-          child: Card(
-            color: R.color.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-            elevation: 4,
-            child: Container(
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 10, bottom: 10),
-                child: readableDateTime(date)),
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext builder) {
+            return SizedBox(
+              height: 260,
+              child: CupertinoDatePicker(
+                initialDateTime: DateTime.now(),
+                onDateTimeChanged: onChange,
+                use24hFormat: true,
+                maximumDate: DateTime.now(),
+                minimumYear: DateTime.now().year,
+                maximumYear: DateTime.now().year,
+                minuteInterval: 1,
+                mode: CupertinoDatePickerMode.dateAndTime,
+              ),
+            );
+          },
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16, top: 16),
+        child: Card(
+          elevation: R.sizes.defaultElevation,
+          color: R.color.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
           ),
-        ));
+          child: Container(
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 10,
+              bottom: 10,
+            ),
+            child: readableDateTime(date),
+          ),
+        ),
+      ),
+    );
   }
 
   Row readableDateTime(DateTime date) {
@@ -244,13 +252,13 @@ class BgTaggerPopUp extends StatelessWidget {
 
   Card getTagElement(bool isCurrent, String icon, String title) {
     return Card(
+      elevation: R.sizes.defaultElevation,
       color: isCurrent
           ? getIt<ITheme>().mainColor
           : getIt<ITheme>().cardBackgroundColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      elevation: 4,
       child: Container(
         decoration: getTagElementDeco(isCurrent),
         padding:
@@ -300,9 +308,9 @@ class BgTaggerPopUp extends StatelessWidget {
                     width: 60,
                     height: 60,
                     child: Card(
-                      elevation: 4,
+                      elevation: R.sizes.defaultElevation,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: Container(
                         padding: const EdgeInsets.all(8),
@@ -386,11 +394,11 @@ class BgTaggerPopUp extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16),
       height: 120,
       child: Card(
+        elevation: R.sizes.defaultElevation,
         color: R.color.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        elevation: 4,
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.multiline,
@@ -427,10 +435,10 @@ class BgTaggerPopUp extends StatelessWidget {
 
   Widget actionButton(bool isSave) {
     return Card(
+      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      elevation: 4,
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),

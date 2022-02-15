@@ -45,11 +45,14 @@ class PressureTagger extends StatelessWidget {
                     }
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: context.xMediaQuery.padding.vertical),
+                        vertical: context.xMediaQuery.padding.vertical,
+                      ),
                       child: Card(
+                        elevation: R.sizes.defaultElevation,
                         color: R.color.background,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
+                          borderRadius: R.sizes.borderRadiusCircular,
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
@@ -108,16 +111,17 @@ class PressureTagger extends StatelessWidget {
 
   Widget actionButton(bool isSave) {
     return Card(
+      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      elevation: 4,
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: isSave
-                ? getIt<ITheme>().mainColor
-                : getIt<ITheme>().cardBackgroundColor),
+          borderRadius: R.sizes.borderRadiusCircular,
+          color: isSave
+              ? getIt<ITheme>().mainColor
+              : getIt<ITheme>().cardBackgroundColor,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
@@ -133,11 +137,11 @@ class PressureTagger extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
+        elevation: R.sizes.defaultElevation,
         color: R.color.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        elevation: 4,
         child: TextField(
             controller: value.noteController,
             keyboardType: TextInputType.multiline,
@@ -185,15 +189,19 @@ class PressureTagger extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(bottom: 16, top: 16),
           child: Card(
+            elevation: R.sizes.defaultElevation,
             color: R.color.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
-            elevation: 4,
             child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 10, bottom: 10),
+                  left: 16,
+                  right: 16,
+                  top: 10,
+                  bottom: 10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -248,9 +256,11 @@ class PressureTagger extends StatelessWidget {
       double height,
       BuildContext context) {
     return Card(
+        elevation: R.sizes.defaultElevation,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-            side: BorderSide(width: 7, color: color)),
+          borderRadius: R.sizes.borderRadiusCircular,
+          side: BorderSide(width: 7, color: color),
+        ),
         child: SizedBox(
           height: context.height * .2 * context.textScale,
           width: context.width * .30 * context.textScale,

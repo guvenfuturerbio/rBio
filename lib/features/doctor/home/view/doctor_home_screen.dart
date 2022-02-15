@@ -86,7 +86,7 @@ class DoctorHomeScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,

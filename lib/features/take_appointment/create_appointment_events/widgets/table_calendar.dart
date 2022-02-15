@@ -102,7 +102,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             decoration: BoxDecoration(
               color: getIt<ITheme>().secondaryColor,
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(15),
+                top: Radius.circular(12),
               ),
             ),
 

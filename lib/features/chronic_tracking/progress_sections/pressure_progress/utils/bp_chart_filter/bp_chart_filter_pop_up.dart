@@ -11,9 +11,13 @@ class BpChartFilterPopUp extends StatelessWidget {
   final double width;
   final Map<String, bool>? measurements;
   final Function(Map<String, bool>)? callback;
-  const BpChartFilterPopUp(
-      {Key? key, this.measurements, this.callback, required this.width})
-      : super(key: key);
+
+  const BpChartFilterPopUp({
+    Key? key,
+    this.measurements,
+    this.callback,
+    required this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +32,17 @@ class BpChartFilterPopUp extends StatelessWidget {
           child: SizedBox(
             width: width,
             child: Card(
+              elevation: R.sizes.defaultElevation,
               color: R.color.bg_gray,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
               child: ChangeNotifierProvider(
                 create: (_) => BpChartFilterPopUpVm(
-                    measurements: measurements ??
-                        Provider.of<BpProgressPageVm>(context, listen: false)
-                            .measurements),
+                  measurements: measurements ??
+                      Provider.of<BpProgressPageVm>(context, listen: false)
+                          .measurements,
+                ),
                 child: Consumer<BpChartFilterPopUpVm>(
                   builder: (_, value, __) => Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
@@ -43,21 +50,30 @@ class BpChartFilterPopUp extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        //
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: context.height * .01),
-                          child: ListView(shrinkWrap: true, children: [
-                            ...value.measurements.keys
-                                .map((key) => CheckboxListTile(
-                                    value: value.measurements[key],
-                                    activeColor: getIt<ITheme>().mainColor,
-                                    title: Text(
-                                      key,
-                                      style: context.xHeadline2,
-                                    ),
-                                    onChanged: (_) => value.changeFilter(key)))
-                          ]),
+                            vertical: context.height * .01,
+                          ),
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: [
+                              ...value.measurements.keys.map(
+                                (key) => CheckboxListTile(
+                                  value: value.measurements[key],
+                                  activeColor: getIt<ITheme>().mainColor,
+                                  title: Text(
+                                    key,
+                                    style: context.xHeadline2,
+                                  ),
+                                  onChanged: (_) => value.changeFilter(key),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
+
+                        //
                         Wrap(
                           children: [
                             GestureDetector(
@@ -65,10 +81,10 @@ class BpChartFilterPopUp extends StatelessWidget {
                                 Atom.dismiss();
                               },
                               child: Card(
+                                elevation: R.sizes.defaultElevation,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
@@ -83,6 +99,8 @@ class BpChartFilterPopUp extends StatelessWidget {
                                 ),
                               ),
                             ),
+
+                            //
                             GestureDetector(
                               onTap: () {
                                 if (callback == null) {
@@ -95,17 +113,21 @@ class BpChartFilterPopUp extends StatelessWidget {
                                 Atom.dismiss();
                               },
                               child: Card(
+                                elevation: R.sizes.defaultElevation,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: getIt<ITheme>().mainColor,
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: R.sizes.borderRadiusCircular,
                                   ),
                                   padding: const EdgeInsets.only(
-                                      left: 16, right: 16, top: 10, bottom: 10),
+                                    left: 16,
+                                    right: 16,
+                                    top: 10,
+                                    bottom: 10,
+                                  ),
                                   child: Text(
                                     LocaleProvider.current.save,
                                     style: context.xHeadline3.copyWith(

@@ -146,6 +146,7 @@ class _ForYouSubCategoriesDetailScreenState
                                       MediaQuery.of(context).size.height * 0.30,
                                   width: MediaQuery.of(context).size.width,
                                   child: Card(
+                                    elevation: R.sizes.defaultElevation,
                                     child: card,
                                   ),
                                 );
@@ -154,6 +155,8 @@ class _ForYouSubCategoriesDetailScreenState
                           },
                         ).toList(),
                       ),
+
+                      //
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: map<Widget>(
@@ -217,7 +220,7 @@ class _ForYouSubCategoriesDetailScreenState
       width: double.infinity,
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
       child: InkWell(
-        child: _ItemTakeCovid(
+        child: _itemTakeCovid(
           context: context,
           title: title,
           image: R.image.test,
@@ -294,7 +297,7 @@ class ListCard extends StatelessWidget {
   }
 }
 
-Widget _ItemTakeCovid({
+Widget _itemTakeCovid({
   String? title,
   String? image,
   EdgeInsets? margin,
@@ -305,7 +308,7 @@ Widget _ItemTakeCovid({
       alignment: Alignment.center,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: R.sizes.borderRadiusCircular,
         gradient: LinearGradient(
           colors: [
             getIt<ITheme>().mainColor,

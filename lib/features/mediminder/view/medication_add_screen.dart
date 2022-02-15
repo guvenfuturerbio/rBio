@@ -355,7 +355,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
               //
               SvgPicture.asset(
                 icon,
-                width: R.sizes.iconSize4,
+                height: R.sizes.iconSize2,
                 color: usageType == value.selectedUsageType
                     ? Colors.white
                     : Colors.black,

@@ -297,7 +297,7 @@ class VRouterRoutes {
       stackedRoutes: [
         VWidget(
           path: PagePaths.consultation,
-          widget: ConsultationScreen(),
+          widget: const ConsultationScreen(),
           stackedRoutes: [
             VWidget(
               path: PagePaths.chat,
@@ -510,7 +510,7 @@ class VRouterRoutes {
             ),
             VWidget(
               path: PagePaths.doctorCosultation,
-              widget: ConsultationScreen(),
+              widget: const ConsultationScreen(),
             ),
           ],
         ),

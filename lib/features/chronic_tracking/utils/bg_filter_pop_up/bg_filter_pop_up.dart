@@ -32,9 +32,11 @@ class BgFilterPopUp extends StatelessWidget {
             child: SizedBox(
               width: width,
               child: Card(
+                elevation: R.sizes.defaultElevation,
                 color: R.color.bg_gray,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
                 child: Consumer<BgFilterPopUpVm>(
                   builder: (_, value, __) => SingleChildScrollView(
                     child: Column(
@@ -89,10 +91,10 @@ class BgFilterPopUp extends StatelessWidget {
                                 Atom.dismiss();
                               },
                               child: Card(
+                                elevation: R.sizes.defaultElevation,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25),
@@ -123,10 +125,10 @@ class BgFilterPopUp extends StatelessWidget {
                                 Atom.dismiss();
                               },
                               child: Card(
+                                elevation: R.sizes.defaultElevation,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                elevation: 4,
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25),

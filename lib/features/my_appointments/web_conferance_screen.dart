@@ -46,9 +46,10 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
     return SizedBox(
       width: Atom.size.width,
       height: Atom.size.height,
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Card(
+          elevation: R.sizes.defaultElevation,
           color: Colors.white54,
         ),
       ),

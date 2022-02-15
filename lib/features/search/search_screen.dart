@@ -187,7 +187,7 @@ class _SocialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -242,7 +242,7 @@ class _ResourceCard extends StatelessWidget {
     final departmentTitle = item.departments?.first.title ?? '';
 
     return Card(
-      elevation: 0,
+      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),

@@ -129,6 +129,4 @@ class DevicesScreen extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildVerticalGap() => SizedBox(height: Atom.height * 0.015);
 }

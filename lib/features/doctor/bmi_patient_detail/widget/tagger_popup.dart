@@ -52,9 +52,11 @@ class ScaleTagger extends StatelessWidget {
             child: GestureDetector(
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Card(
+                  elevation: R.sizes.defaultElevation,
                   color: R.color.background,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -148,10 +150,10 @@ class ScaleTagger extends StatelessWidget {
 
   Widget actionButton(bool isSave, BuildContext context) {
     return Card(
+      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      elevation: 4,
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
@@ -169,11 +171,11 @@ class ScaleTagger extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
+          elevation: R.sizes.defaultElevation,
           color: R.color.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: R.sizes.borderRadiusCircular,
           ),
-          elevation: 4,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child:
@@ -186,11 +188,11 @@ class ScaleTagger extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
+        elevation: R.sizes.defaultElevation,
         color: R.color.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        elevation: 4,
         child: Container(
             width: double.infinity,
             padding:

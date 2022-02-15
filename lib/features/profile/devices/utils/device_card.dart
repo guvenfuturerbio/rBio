@@ -23,8 +23,8 @@ class DeviceCard extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Card(
+            elevation: R.sizes.defaultElevation,
             color: background,
-            elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: R.sizes.borderRadiusCircular,
             ),

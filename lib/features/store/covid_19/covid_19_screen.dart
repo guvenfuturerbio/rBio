@@ -36,6 +36,7 @@ class _Covid19ScreenState extends State<Covid19Screen> {
       LocaleProvider.current.covid_title_6,
       LocaleProvider.current.covid_title_7
     ];
+
     List cardList = [
       MopItem(R.image.covid_1, LocaleProvider.current.covid_text_1),
       MopItem(R.image.covid_2, LocaleProvider.current.covid_text_2),
@@ -44,16 +45,34 @@ class _Covid19ScreenState extends State<Covid19Screen> {
       MopItem(R.image.covid_6, LocaleProvider.current.covid_text_6),
       MopItem(R.image.covid_7, LocaleProvider.current.covid_text_7),
     ];
+
     return RbioScaffold(
-        appbar: RbioAppBar(
-          title: getTitleBar(context),
-        ),
-        body: _buildBody(context, covidTitles, cardList));
+      appbar: _buildAppBar(context),
+      body: _buildBody(
+        context,
+        covidTitles,
+        cardList,
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.whats_covid,
+      ),
+    );
   }
 
   Widget _buildBody(
-      BuildContext context, List<String> covidTitles, List<dynamic> cardList) {
+    BuildContext context,
+    List<String> covidTitles,
+    List<dynamic> cardList,
+  ) {
     return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
       child: Column(
         children: <Widget>[
           //
@@ -62,11 +81,12 @@ class _Covid19ScreenState extends State<Covid19Screen> {
             margin:
                 const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
             child: InkWell(
-              child: _ItemTakeCovid(
-                  title: LocaleProvider.current.take_covid_19,
-                  image: R.image.test,
-                  number: LocaleProvider.current.lbl_number_hospital,
-                  context: context),
+              child: _itemTakeCovid(
+                title: LocaleProvider.current.take_covid_19,
+                image: R.image.test,
+                number: LocaleProvider.current.lbl_number_hospital,
+                context: context,
+              ),
               onTap: () {},
             ),
           ),
@@ -103,15 +123,18 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                   },
                 ),
                 items: cardList.map((card) {
-                  return Builder(builder: (BuildContext context) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.30,
-                      width: MediaQuery.of(context).size.width,
-                      child: Card(
-                        child: card,
-                      ),
-                    );
-                  });
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.30,
+                        width: MediaQuery.of(context).size.width,
+                        child: Card(
+                          elevation: R.sizes.defaultElevation,
+                          child: card,
+                        ),
+                      );
+                    },
+                  );
                 }).toList(),
               ),
 
@@ -163,17 +186,17 @@ class _Covid19ScreenState extends State<Covid19Screen> {
       ),
     );
   }
-
-  Widget getTitleBar(BuildContext context) {
-    return RbioAppBar.textTitle(context, LocaleProvider.current.whats_covid);
-  }
 }
 
 class MopItem extends StatelessWidget {
   String image = "";
   String text = "";
 
-  MopItem(this.image, this.text, {Key? key}) : super(key: key);
+  MopItem(
+    this.image,
+    this.text, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,13 +205,20 @@ class MopItem extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            //
             Container(
               child: Image.asset(image),
               margin: const EdgeInsets.all(30),
             ),
+
+            //
             Container(
               margin: const EdgeInsets.only(
-                  left: 30, right: 30, top: 10, bottom: 30),
+                left: 30,
+                right: 30,
+                top: 10,
+                bottom: 30,
+              ),
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(fontStyle: FontStyle.italic),
@@ -202,7 +232,7 @@ class MopItem extends StatelessWidget {
   }
 }
 
-Widget _ItemTakeCovid({
+Widget _itemTakeCovid({
   required String title,
   required String image,
   String? number,
@@ -216,31 +246,42 @@ Widget _ItemTakeCovid({
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          //
           Container(
             child: SvgPicture.asset(image),
             margin: const EdgeInsets.only(left: 15, right: 15),
           ),
+
+          //
           Text(
             title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.bold, color: getIt<ITheme>().textColor),
+              fontWeight: FontWeight.bold,
+              color: getIt<ITheme>().textColor,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
       ),
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
-          gradient: LinearGradient(colors: [
+        borderRadius: R.sizes.borderRadiusCircular,
+        gradient: LinearGradient(
+          colors: [
             getIt<ITheme>().textColorSecondary.withOpacity(0.7),
             getIt<ITheme>().textColorSecondary.withOpacity(0.5),
-          ], begin: Alignment.topLeft, end: Alignment.topRight),
-          boxShadow: [
-            BoxShadow(
-                color: R.color.dark_black.withAlpha(50),
-                blurRadius: 15,
-                spreadRadius: 0,
-                offset: const Offset(5, 10))
-          ]),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.topRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: R.color.dark_black.withAlpha(50),
+            blurRadius: 15,
+            spreadRadius: 0,
+            offset: const Offset(5, 10),
+          ),
+        ],
+      ),
     );

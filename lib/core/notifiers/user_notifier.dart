@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/manager/firebase_messaging_manager.dart';
 
 import '../../model/model.dart';
 import '../core.dart';

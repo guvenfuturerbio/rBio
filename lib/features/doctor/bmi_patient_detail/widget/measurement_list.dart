@@ -163,9 +163,9 @@ class __MeasurementListState extends State<_MeasurementList> {
                   width: 60 * context.textScale,
                   height: 60 * context.textScale,
                   child: Card(
-                    elevation: 4,
+                    elevation: R.sizes.defaultElevation,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: R.sizes.borderRadiusCircular,
                     ),
                     child: Container(
                       padding: const EdgeInsets.all(8),
@@ -187,8 +187,10 @@ class __MeasurementListState extends State<_MeasurementList> {
                       children: [
                         ...scaleMeasurementViewModel.imageUrl.map(
                           (e) => Card(
+                            elevation: R.sizes.defaultElevation,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
+                              borderRadius: R.sizes.borderRadiusCircular,
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: ClipRRect(

@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import '../features/mediminder/managers/reminder_notifications_manager.dart';
 import '../model/treatment_model/treatment_model.dart';
 import 'core.dart';
-import 'manager/firebase_messaging_manager.dart';
 
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;

@@ -176,8 +176,9 @@ class _SymptomsBodyLocationsScreenState
                   ),
                   child: Container(
                     width: MediaQuery.of(context).size.width / 2,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(40)),
+                    decoration: BoxDecoration(
+                      borderRadius: R.sizes.borderRadiusCircular,
+                    ),
                     child: RbioElevatedButton(
                       onTap: () async {
                         RbioConfig.of(context)?.bodyLocationRsp =

@@ -98,7 +98,7 @@ class ReminderHomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,

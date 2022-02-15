@@ -89,7 +89,7 @@ class _DoctorTreatmentProcessScreenState
         );
       },
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 8,

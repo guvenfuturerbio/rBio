@@ -171,7 +171,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   BoxDecoration _getTabButtonDecoration(bool isActive) {
     return BoxDecoration(
       color: isActive ? getIt<ITheme>().mainColor : Colors.white,
-      borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+      borderRadius: R.sizes.borderRadiusCircular,
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
@@ -373,7 +373,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
               color: getIt<ITheme>().cardBackgroundColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -434,7 +434,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
               color: getIt<ITheme>().cardBackgroundColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -58,6 +58,7 @@ export "exception/not_list_exception.dart";
 export "extension/extension.dart";
 
 export "manager/ble_manager.dart";
+export 'manager/firebase_messaging_manager.dart';
 export "manager/local_notification_manager.dart";
 export "manager/shared_preferences_manager.dart";
 export "manager/user_manager.dart";

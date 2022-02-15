@@ -18,7 +18,7 @@ class ForYouInformationDialog extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             color: getIt<ITheme>().mainColor,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

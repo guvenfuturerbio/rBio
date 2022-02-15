@@ -161,7 +161,7 @@ class _ListBodyState extends State<ListBody>
             color: widget.completeNotifier.value?.value == value
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
             '$value:00',
@@ -233,7 +233,7 @@ class _ListBodyState extends State<ListBody>
             color: widget.completeNotifier.value?.selected?.from == item.from
                 ? getIt<ITheme>().mainColor
                 : getIt<ITheme>().cardBackgroundColor,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
             '${item.from?.substring(11, 16)} : ${item.to?.substring(11, 16)}',

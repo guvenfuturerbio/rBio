@@ -92,6 +92,8 @@ class _Sizes {
       SizedBox(height: 54 + MediaQuery.of(context).viewPadding.top);
   double get bottomNavigationBarHeight => Atom.safeBottom + 65;
 
+  final double defaultElevation = 0.0;
+
   final Widget hSizer4 = const SizedBox(height: 4);
   final Widget hSizer8 = const SizedBox(height: 8);
   final Widget hSizer12 = const SizedBox(height: 12);

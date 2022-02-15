@@ -305,7 +305,7 @@ class DoctorPatientListScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         color: getIt<ITheme>().cardBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -403,7 +403,7 @@ class DoctorPatientListScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         color: getIt<ITheme>().cardBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(8.0),

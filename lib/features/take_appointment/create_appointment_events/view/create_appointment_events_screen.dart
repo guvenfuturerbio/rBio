@@ -24,7 +24,6 @@ class CreateAppointmentEventsScreen extends StatefulWidget {
 
   CreateAppointmentEventsScreen({Key? key}) : super(key: key);
 
-
   @override
   _CreateAppointmentEventsScreenState createState() =>
       _CreateAppointmentEventsScreenState();
@@ -32,7 +31,8 @@ class CreateAppointmentEventsScreen extends StatefulWidget {
 
 class _CreateAppointmentEventsScreenState
     extends State<CreateAppointmentEventsScreen> {
-  late ValueNotifier<_EventSelectedModel?> completeNotifier = ValueNotifier(null);
+  late ValueNotifier<_EventSelectedModel?> completeNotifier =
+      ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +157,7 @@ class _CreateAppointmentEventsScreenState
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(15),
+          top: Radius.circular(12),
         ),
       ),
       padding: const EdgeInsets.all(10),
@@ -181,38 +181,14 @@ class _CreateAppointmentEventsScreenState
           _buildHeaderVerticalGap(),
 
           //
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    _buildHeaderPassiveText(LocaleProvider.current.doctor_name),
-                    _buildHeaderActiveText(widget.resourceName),
-                  ],
-                ),
-              ),
+          _buildHeaderPassiveText(LocaleProvider.current.doctor_name),
+          _buildHeaderActiveText(widget.resourceName),
 
-              //
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    _buildHeaderPassiveText(LocaleProvider.current.depart_name),
-                    _buildHeaderActiveText(widget.departmentName),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          _buildHeaderVerticalGap(),
+
+          //
+          _buildHeaderPassiveText(LocaleProvider.current.depart_name),
+          _buildHeaderActiveText(widget.departmentName),
         ],
       ),
     );
@@ -221,7 +197,7 @@ class _CreateAppointmentEventsScreenState
   Widget _buildHeaderVerticalGap() => const SizedBox(height: 8);
 
   Widget _buildHeaderActiveText(String text) => Text(
-        text ,
+        text,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline3,

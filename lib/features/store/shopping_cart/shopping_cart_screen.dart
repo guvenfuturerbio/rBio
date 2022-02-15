@@ -56,7 +56,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   clipBehavior: Clip.antiAlias,
                   elevation: 7,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: R.sizes.borderRadiusCircular,
                   ),
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
