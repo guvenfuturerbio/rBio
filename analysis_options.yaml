@@ -10,6 +10,7 @@ include: package:flutter_lints/flutter.yaml
 # You might want to exclude auto-generated files from dart analysis
 analyzer:
   exclude:
+    - "**/*.g.dart"
     - "**/*.mocks.dart"
     - "**/*.freezed.dart"
     - packages/

@@ -84,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 name: Utils.instance.getCurrentUserNameAndSurname,
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.profileImage),
-                leadingImage: UserLeadingImage.Circle,
+                leadingImage: UserLeadingImage.circle,
                 onTap: () {},
                 width: Atom.width,
               ),

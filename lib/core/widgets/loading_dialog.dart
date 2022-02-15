@@ -5,6 +5,8 @@ import '../core.dart';
 class LoadingDialog extends StatefulWidget {
   LoadingDialogState? state;
 
+  LoadingDialog({Key? key}) : super(key: key);
+
   bool isShowing() {
     if (state != null) {
       if (state!.mounted) {

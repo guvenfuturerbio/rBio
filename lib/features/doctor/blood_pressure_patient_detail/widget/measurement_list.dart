@@ -54,7 +54,8 @@ class _MeasurementList extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
+                      DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
+                          .format(bgMeasurementViewModel.date),
                     ),
                   ),
                 ),

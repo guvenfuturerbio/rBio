@@ -120,9 +120,11 @@ class SelectedDeviceVm extends ChangeNotifier {
                 ),
               ),
               decoration: BoxDecoration(
-                  border: Border.all(color: R.color.main_color, width: 10),
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(200))),
+                border: Border.all(color: R.color.main_color, width: 10),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(200),
+                ),
+              ),
             ),
             const SizedBox(
               height: 16,

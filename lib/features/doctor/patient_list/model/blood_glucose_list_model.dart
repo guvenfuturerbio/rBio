@@ -14,17 +14,18 @@ class PatientBloodGlucoseListModel
       .toList();
 
   @override
+  // ignore: avoid_renaming_method_parameters
   PatientListItemModel convertTo(DoctorGlucosePatientModel e) {
     return PatientListItemModel(
       data: e,
       patientName: e.name,
-      dates: e.measurements
-          !.map((item) => item.measurementTime != null
+      dates: e.measurements!
+          .map((item) => item.measurementTime != null
               ? DateTime.parse(item.measurementTime ?? '').xFormatTime7()
               : '')
           .toList(),
-      times: e.measurements
-          !.map((item) => item.measurementTime != null
+      times: e.measurements!
+          .map((item) => item.measurementTime != null
               ? DateTime.parse(item.measurementTime ?? '').xFormatTime8()
               : '')
           .toList(),
@@ -74,7 +75,8 @@ class PatientBloodGlucoseListModel
       _filterList = _list;
     } else {
       _filterList = _list
-          .where((item) => item.name?.toLowerCase().contains(text.toLowerCase() )as bool)
+          .where((item) =>
+              item.name?.toLowerCase().contains(text.toLowerCase()) as bool)
           .toList();
     }
   }
@@ -105,7 +107,7 @@ class PatientBloodGlucoseListModel
       PagePaths.doctorGlucosePatientDetailL,
       queryParameters: {
         'patientId': model.id.toString(),
-        'patientName': model.name ??"",
+        'patientName': model.name ?? "",
       },
     );
   }

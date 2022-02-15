@@ -70,8 +70,8 @@ class _RelativesScreenState extends State<RelativesScreen> {
                   name:
                       '${vm.response.patientRelatives[index].name} ${vm.response.patientRelatives[index].surname}',
                   onTap: () {},
-                  leadingImage: UserLeadingImage.Circle,
-                  trailingIcon: UserTrailingIcons.RightArrow,
+                  leadingImage: UserLeadingImage.circle,
+                  trailingIcon: UserTrailingIcons.rightArrow,
                   width: Atom.width,
                 ),
 

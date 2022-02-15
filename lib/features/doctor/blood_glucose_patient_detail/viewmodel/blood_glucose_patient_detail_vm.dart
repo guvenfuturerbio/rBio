@@ -369,13 +369,14 @@ class BloodGlucosePatientDetailVm extends RbioVm
     return totalCount;
   }
 
-  Widget get currentGraph => _currentGraph ?? BloodGlucosePatientScatter();
+  Widget get currentGraph =>
+      _currentGraph ?? const BloodGlucosePatientScatter();
 
   void setCurrentGraph() {
     if (currentGlucoseGraphType == GraphType.bubble) {
-      _currentGraph = BloodGlucosePatientScatter();
+      _currentGraph = const BloodGlucosePatientScatter();
     } else {
-      _currentGraph = BloodGlucosePatientLine();
+      _currentGraph = const BloodGlucosePatientLine();
     }
     notifyListeners();
   }

@@ -204,8 +204,8 @@ class BgProgressPageViewModel
         ? int.parse(bgMeasurementsDailyData[0].result)
         : 300;
     for (var data in bgMeasurementsDailyData) {
-      if (int.parse(data.result) > highest) {
-        highest = int.parse(data.result);
+      if (double.parse(data.result).toInt() > highest) {
+        highest = double.parse(data.result).toInt();
       }
     }
     return highest > targetMax ? highest + 50 : targetMax + 50;
@@ -216,8 +216,8 @@ class BgProgressPageViewModel
         ? int.parse(bgMeasurementsDailyData[0].result)
         : 50;
     for (var data in bgMeasurementsDailyData) {
-      if (int.parse(data.result) < lowest) {
-        lowest = int.parse(data.result);
+      if (double.parse(data.result).toInt() < lowest) {
+        lowest = double.parse(data.result).toInt();
       }
     }
     return 0; //lowest < targetMin ?  targetMin - 50 : lowest;
@@ -227,8 +227,8 @@ class BgProgressPageViewModel
     int highest =
         bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result) : 300;
     for (var data in bgMeasurements) {
-      if (int.parse(data.result) > highest) {
-        highest = int.parse(data.result);
+      if (double.parse(data.result).toInt() > highest) {
+        highest = double.parse(data.result).toInt();
       }
     }
     return 300;
@@ -239,8 +239,8 @@ class BgProgressPageViewModel
     int lowest =
         bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result) : 50;
     for (var data in bgMeasurements) {
-      if (int.parse(data.result) < lowest) {
-        lowest = int.parse(data.result);
+      if (double.parse(data.result).toInt() < lowest) {
+        lowest = double.parse(data.result).toInt();
       }
     }
     return 0;
@@ -448,8 +448,8 @@ class BgProgressPageViewModel
   void setChartDailyData() {
     List<ChartData> chartData = <ChartData>[];
     for (var data in bgMeasurementsDailyData) {
-      chartData
-          .add(ChartData(data.date, int.parse(data.result), data.resultColor));
+      chartData.add(ChartData(
+          data.date, double.parse(data.result).toInt(), data.resultColor));
     }
     _chartData = chartData;
     _chartVeryHighTagged.clear();
@@ -480,20 +480,20 @@ class BgProgressPageViewModel
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.very_low) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result).toInt(), data.resultColor));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataAc.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataTok.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 3) {
-          chartDataFasting.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataFasting.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataUnTagged.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         }
       }
     }
@@ -515,20 +515,20 @@ class BgProgressPageViewModel
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.low) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result).toInt(), data.resultColor));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataAc.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataTok.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 3) {
-          chartDataFasting.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataFasting.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataUnTagged.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         }
       }
     }
@@ -550,20 +550,20 @@ class BgProgressPageViewModel
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.target) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result).toInt(), data.resultColor));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataAc.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataTok.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 3) {
-          chartDataFasting.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataFasting.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataUnTagged.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         }
       }
     }
@@ -585,20 +585,20 @@ class BgProgressPageViewModel
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.high) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result).toInt(), data.resultColor));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataAc.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataTok.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 3) {
-          chartDataFasting.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataFasting.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataUnTagged.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         }
       }
     }
@@ -620,20 +620,20 @@ class BgProgressPageViewModel
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.very_high) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result), data.resultColor));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result).toInt(), data.resultColor));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataAc.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataTok.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else if (data.tag == 3) {
-          chartDataFasting.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataFasting.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result), data.resultColor));
+          chartDataUnTagged.add(ChartData(
+              data.date, double.parse(data.result).toInt(), data.resultColor));
         }
       }
     }
@@ -750,7 +750,7 @@ class BgProgressPageViewModel
               isVisible: true,
               shape: DataMarkerType.rectangle)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[1]!,
+          dataSource: _chartVeryHighTagged[1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -763,7 +763,7 @@ class BgProgressPageViewModel
               borderColor: R.color.very_high,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[2]!,
+          dataSource: _chartVeryHighTagged[2] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_high,
@@ -771,7 +771,7 @@ class BgProgressPageViewModel
           markerSettings:
               const MarkerSettings(height: 15, width: 15, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[3]!,
+          dataSource: _chartVeryHighTagged[3] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_high,
@@ -784,7 +784,7 @@ class BgProgressPageViewModel
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[-1]!,
+          dataSource: _chartHighTagged[-1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.high,
@@ -795,7 +795,7 @@ class BgProgressPageViewModel
               isVisible: true,
               shape: DataMarkerType.rectangle)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[1]!,
+          dataSource: _chartHighTagged[1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -808,7 +808,7 @@ class BgProgressPageViewModel
               borderColor: R.color.high,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[2]!,
+          dataSource: _chartHighTagged[2] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.high,
@@ -816,7 +816,7 @@ class BgProgressPageViewModel
           markerSettings:
               const MarkerSettings(height: 15, width: 15, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[3]!,
+          dataSource: _chartHighTagged[3] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.high,
@@ -829,7 +829,7 @@ class BgProgressPageViewModel
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[-1]!,
+          dataSource: _chartTargetTagged[-1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.target,
@@ -840,7 +840,7 @@ class BgProgressPageViewModel
               isVisible: true,
               shape: DataMarkerType.rectangle)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[1]!,
+          dataSource: _chartTargetTagged[1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -853,7 +853,7 @@ class BgProgressPageViewModel
               borderColor: R.color.target,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[2]!,
+          dataSource: _chartTargetTagged[2] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.target,
@@ -861,7 +861,7 @@ class BgProgressPageViewModel
           markerSettings:
               const MarkerSettings(height: 15, width: 15, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[3]!,
+          dataSource: _chartTargetTagged[3] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.target,
@@ -874,7 +874,7 @@ class BgProgressPageViewModel
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[-1]!,
+          dataSource: _chartLowTagged[-1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.low,
@@ -885,7 +885,7 @@ class BgProgressPageViewModel
               isVisible: true,
               shape: DataMarkerType.rectangle)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[1]!,
+          dataSource: _chartLowTagged[1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -898,7 +898,7 @@ class BgProgressPageViewModel
               borderColor: R.color.low,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[2]!,
+          dataSource: _chartLowTagged[2] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.low,
@@ -906,7 +906,7 @@ class BgProgressPageViewModel
           markerSettings:
               const MarkerSettings(height: 15, width: 15, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[3]!,
+          dataSource: _chartLowTagged[3] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.low,
@@ -919,7 +919,7 @@ class BgProgressPageViewModel
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[-1]!,
+          dataSource: _chartVeryLowTagged[-1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_low,
@@ -930,7 +930,7 @@ class BgProgressPageViewModel
               isVisible: true,
               shape: DataMarkerType.rectangle)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[1]!,
+          dataSource: _chartVeryLowTagged[1] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -943,7 +943,7 @@ class BgProgressPageViewModel
               borderColor: R.color.very_low,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[2]!,
+          dataSource: _chartVeryLowTagged[2] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_low,
@@ -951,7 +951,7 @@ class BgProgressPageViewModel
           markerSettings:
               const MarkerSettings(height: 15, width: 15, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[3]!,
+          dataSource: _chartVeryLowTagged[3] ?? [],
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_low,

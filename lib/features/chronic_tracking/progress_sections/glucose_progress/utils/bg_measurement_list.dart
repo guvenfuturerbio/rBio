@@ -24,7 +24,7 @@ class BgMeasurementListWidget extends StatefulWidget {
     required this.bgMeasurements,
     required this.scrollController,
     this.useStickyGroupSeparatorsValue,
-  });
+  }) : super(key: key);
 
   @override
   _BgMeasurementListWidgetState createState() =>

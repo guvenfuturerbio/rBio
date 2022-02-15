@@ -70,7 +70,7 @@ class RbioUserTile extends StatelessWidget {
 
   Widget _getLeadingImage(UserLeadingImage type) {
     switch (type) {
-      case UserLeadingImage.Circle:
+      case UserLeadingImage.circle:
         return CircleAvatar(
           backgroundColor: getIt<ITheme>().mainColor,
           backgroundImage: imageBytes != null
@@ -81,7 +81,7 @@ class RbioUserTile extends StatelessWidget {
           radius: Atom.width * 0.06,
         );
 
-      case UserLeadingImage.Rectangle:
+      case UserLeadingImage.rectangle:
         return Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -102,13 +102,13 @@ class RbioUserTile extends StatelessWidget {
 
   Widget _getTrailingIcon(UserTrailingIcons? type) {
     switch (type) {
-      case UserTrailingIcons.RightArrow:
+      case UserTrailingIcons.rightArrow:
         return SvgPicture.asset(
           R.image.arrowRightIcon,
           width: R.sizes.iconSize5,
         );
 
-      case UserTrailingIcons.Cancel:
+      case UserTrailingIcons.cancel:
         return SvgPicture.asset(
           R.image.cancel,
           color: Colors.black,
@@ -122,11 +122,11 @@ class RbioUserTile extends StatelessWidget {
 }
 
 enum UserTrailingIcons {
-  RightArrow,
-  Cancel,
+  rightArrow,
+  cancel,
 }
 
 enum UserLeadingImage {
-  Rectangle,
-  Circle,
+  rectangle,
+  circle,
 }

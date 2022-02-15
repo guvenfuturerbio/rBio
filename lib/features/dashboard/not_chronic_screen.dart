@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
+
+import '../../core/core.dart';
 
 class NotChronicScreen extends StatelessWidget {
   final String title;
-  NotChronicScreen(this.title);
+
+  const NotChronicScreen({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
-        leading: SizedBox(
+        leading: const SizedBox(
           width: 0,
           height: 0,
         ),

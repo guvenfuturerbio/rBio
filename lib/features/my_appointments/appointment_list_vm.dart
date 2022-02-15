@@ -264,7 +264,10 @@ class AppointmentListVm extends RbioVm {
         context: mContext,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return QuestionDialog(title, text);
+          return QuestionDialog(
+            title: title,
+            text: text,
+          );
         }).then((value) async {
       if (value) {
         await cancelAppointment();

@@ -47,7 +47,7 @@ class _AnimatedPulseChartState extends State<AnimatedPulseChart> {
       sys.sort((a, b) => a.x.compareTo(b.x));
       dia.sort((a, b) => a.x.compareTo(b.x));
       pulse.sort((a, b) => a.x.compareTo(b.x));
-      DateTime n = DateTime.now();
+      // DateTime n = DateTime.now();
       beginDate = DateTime(
           pulse.first.x.year, pulse.first.x.month, pulse.first.x.day, 00, 00);
 

@@ -30,18 +30,21 @@ class SymptomsResultPageVm extends ChangeNotifier {
     BuildContext? context,
     List<GetBodySymptomsResponse>? selectedSymptoms,
     String? gender,
-    String? year_of_birth,
+    String? yearOfBirth,
     bool? isFromVoice,
   }) {
     mContext = context;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-      await fetchSpecialisations(selectedSymptoms!, gender!, year_of_birth!);
+      await fetchSpecialisations(selectedSymptoms!, gender!, yearOfBirth!);
       await loadJsonData();
     });
   }
 
-  fetchSpecialisations(List<GetBodySymptomsResponse> symptoms, String gender,
-      String year_of_birth) async {
+  fetchSpecialisations(
+    List<GetBodySymptomsResponse> symptoms,
+    String gender,
+    String yearOfBirth,
+  ) async {
     List<int> symptomsIds = [];
     progress = LoadingProgress.loading;
     notifyListeners();
@@ -55,7 +58,11 @@ class SymptomsResultPageVm extends ChangeNotifier {
       }
       List<GetSpecialisationsResponse> specialisationsList =
           await getIt<SymptomRepository>().getSpeacialisations(
-              symptomsIds.toString(), gender, year_of_birth, R.bodyDatas.json);
+        symptomsIds.toString(),
+        gender,
+        yearOfBirth,
+        R.bodyDatas.json,
+      );
       specialisations = specialisationsList;
       progress = LoadingProgress.done;
       notifyListeners();

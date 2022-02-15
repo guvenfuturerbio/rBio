@@ -3,7 +3,7 @@ part of '../view/blood_glucose_patient_detail_screen.dart';
 class _TaggerPopUp extends StatelessWidget {
   final BgMeasurementViewModel data;
 
-  _TaggerPopUp({
+  const _TaggerPopUp({
     Key? key,
     required this.data,
   }) : super(key: key);

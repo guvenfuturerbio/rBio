@@ -53,7 +53,7 @@ abstract class PatientListModel<T> {
 }
 
 class PatientListItemModel {
-  final dynamic? data;
+  final dynamic data;
   final String? patientName;
   final List<String>? dates;
   final List<String>? times;

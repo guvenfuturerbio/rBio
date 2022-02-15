@@ -263,11 +263,13 @@ class BloodPressureStorageImpl
   }
 
   @override
-  Future<bool> writeAll(List<BloodPressureModel> data,
-      {bool isFromHealth = false}) async {
+  Future<bool> writeAll(
+    List<BloodPressureModel> data, {
+    bool isFromHealth = false,
+  }) async {
     try {
       if (checkBox()) {
-        data.forEach((item) async {
+        for (var item in data) {
           if (!doesExist(item)) {
             if (isFromHealth) {
               var id = await sendToServer(item);
@@ -275,7 +277,7 @@ class BloodPressureStorageImpl
             }
             box.add(item);
           }
-        });
+        }
 
         return true;
       } else {

@@ -74,7 +74,7 @@ class ChatVm with ChangeNotifier {
 
         if (!firstLoadNotifier.value) {
           Future.delayed(
-            Duration(seconds: 1),
+            const Duration(seconds: 1),
             () {
               firstLoadNotifier.value = true;
             },

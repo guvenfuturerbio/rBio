@@ -41,8 +41,8 @@ class _FollowersScreenState extends State<FollowersScreen> {
           //
           RbioUserTile(
             name: "Endokronoloji Cüneyt Akın",
-            leadingImage: UserLeadingImage.Circle,
-            trailingIcon: UserTrailingIcons.Cancel,
+            leadingImage: UserLeadingImage.circle,
+            trailingIcon: UserTrailingIcons.cancel,
             onTap: () {},
             width: Atom.width,
           ),
@@ -53,8 +53,8 @@ class _FollowersScreenState extends State<FollowersScreen> {
           //
           RbioUserTile(
             name: "İnsan Kaynakları Müdürü",
-            leadingImage: UserLeadingImage.Circle,
-            trailingIcon: UserTrailingIcons.Cancel,
+            leadingImage: UserLeadingImage.circle,
+            trailingIcon: UserTrailingIcons.cancel,
             onTap: () {},
             width: Atom.width,
           ),

@@ -11,7 +11,7 @@ import '../model/chat_person.dart';
 class ConsultationScreen extends StatelessWidget {
   final bool fromBottomBar;
 
-  ConsultationScreen({
+  const ConsultationScreen({
     Key? key,
     this.fromBottomBar = true,
   }) : super(key: key);
@@ -20,7 +20,7 @@ class ConsultationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return !(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)
         ? NotChronicScreen(
-            LocaleProvider.current.consultation,
+            title: LocaleProvider.current.consultation,
           )
         : ChangeNotifierProvider<DoctorConsultationVm>(
             create: (context) => DoctorConsultationVm(context),

@@ -47,7 +47,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
         context: context,
         gender: widget.gender as String,
         selectedSymptoms: widget.symptoms as List<GetBodySymptomsResponse>,
-        year_of_birth: widget.year_of_birth as String,
+        yearOfBirth: widget.year_of_birth as String,
         isFromVoice: widget.isFromVoice as bool,
       ),
       child: Consumer<SymptomsResultPageVm>(

@@ -320,11 +320,13 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   }
 
   @override
-  Future<bool> writeAll(List<ScaleModel> data,
-      {bool isFromHealth = false}) async {
+  Future<bool> writeAll(
+    List<ScaleModel> data, {
+    bool isFromHealth = false,
+  }) async {
     try {
       if (box.isOpen) {
-        data.forEach((item) async {
+        for (var item in data) {
           if (!doesExist(item)) {
             if (isFromHealth) {
               var id = await sendToServer(item);
@@ -332,7 +334,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
             }
             box.add(item);
           }
-        });
+        }
 
         return true;
       } else {

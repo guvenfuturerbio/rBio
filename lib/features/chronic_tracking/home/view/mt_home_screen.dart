@@ -5,7 +5,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/domain/blood_pressure_model.dart';
 import '../../../../model/ble_models/paired_device.dart';
 import '../../../dashboard/not_chronic_screen.dart';
 import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
@@ -39,7 +38,9 @@ class _MeasurementTrackingHomeScreenState
   @override
   Widget build(BuildContext context) {
     return !getIt<UserNotifier>().isCronic
-        ? NotChronicScreen(LocaleProvider.current.chronic_track_home)
+        ? NotChronicScreen(
+            title: LocaleProvider.current.chronic_track_home,
+          )
         : ChangeNotifierProvider(
             create: (_) => MeasurementTrackingVm(),
             child: Consumer<MeasurementTrackingVm>(

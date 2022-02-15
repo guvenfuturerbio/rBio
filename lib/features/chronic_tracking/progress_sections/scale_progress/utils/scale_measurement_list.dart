@@ -6,10 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/chronic_tracking/lib/core/utils/stacked_widget/stacked_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../lib/core/utils/stacked_widget/stacked_widget.dart';
 import '../../../utils/gallery_pop_up/gallery_pop_up.dart';
 import '../view_model/scale_progress_page_view_model.dart';
 import 'scale_measurements/scale_measurement_vm.dart';
@@ -19,12 +19,14 @@ class ScaleMeasurementListWidget extends StatefulWidget {
   final List<ScaleMeasurementViewModel>? scaleMeasurements;
   final ScrollController scrollController;
   final bool? useStickyGroupSeparatorsValue;
+
   const ScaleMeasurementListWidget({
     Key? key,
     this.scaleMeasurements,
     required this.scrollController,
     this.useStickyGroupSeparatorsValue,
-  });
+  }) : super(key: key);
+
   @override
   _ScaleMeasurementListWidgetState createState() =>
       _ScaleMeasurementListWidgetState();

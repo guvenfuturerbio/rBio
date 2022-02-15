@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -68,7 +70,7 @@ class GlucoseData extends HiveObject {
   // BG
   String get date => DateTime.fromMillisecondsSinceEpoch(time).toString();
   Color get color =>
-      UtilityManager().getGlucoseMeasurementColor(int.parse(level));
+      UtilityManager().getGlucoseMeasurementColor(double.parse(level).toInt());
 
   GlucoseData(
       {required this.level,

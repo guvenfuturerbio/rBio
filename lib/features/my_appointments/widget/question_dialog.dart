@@ -6,10 +6,11 @@ class QuestionDialog extends StatefulWidget {
   final String title;
   final String text;
 
-  QuestionDialog(
-    this.title,
-    this.text,
-  );
+  const QuestionDialog({
+    Key? key,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
 
   @override
   _QuestionDialogState createState() => _QuestionDialogState();

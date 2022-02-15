@@ -1,9 +1,10 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:onedosehealth/core/utils/logger_helper.dart';
 
 import '../../model/treatment_model/treatment_model.dart';
 

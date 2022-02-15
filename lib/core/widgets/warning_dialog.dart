@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 import '../core.dart';
@@ -7,7 +9,7 @@ class WarningDialog extends StatefulWidget {
   final String text;
   final bool hasScrollable;
 
-  WarningDialog(
+  const WarningDialog(
     this.title,
     this.text, {
     this.hasScrollable = false,

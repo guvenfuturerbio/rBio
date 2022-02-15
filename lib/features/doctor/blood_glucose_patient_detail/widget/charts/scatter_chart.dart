@@ -2,6 +2,8 @@ part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// Renders the Scatter chart sample with dynamically updated data points.
 class BloodGlucosePatientScatter extends StatefulWidget {
+  const BloodGlucosePatientScatter({Key? key}) : super(key: key);
+
   /// Creates the Scatter chart sample with dynamically updated data points.
   @override
   BloodGlucosePatientScatterState createState() =>

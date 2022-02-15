@@ -2,6 +2,8 @@ part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// Renders the line sample with dynamically updated data points.
 class BloodGlucosePatientLine extends StatefulWidget {
+  const BloodGlucosePatientLine({Key? key}) : super(key: key);
+
   /// Renders the line chart sample with dynamically upd
   @override
   BloodGlucosePatientLineState createState() => BloodGlucosePatientLineState();

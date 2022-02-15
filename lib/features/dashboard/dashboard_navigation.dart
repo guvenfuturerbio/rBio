@@ -51,7 +51,7 @@ class DashboardNavigation extends VRouteElementBuilder {
           VWidget(
               path: chat,
               name: chat,
-              widget: ConsultationScreen(fromBottomBar: true)),
+              widget: const ConsultationScreen(fromBottomBar: true)),
 
           //
           VWidget(
@@ -70,7 +70,7 @@ class DashboardNavigation extends VRouteElementBuilder {
           VWidget(
             path: notifications,
             name: notifications,
-            widget: NotificationInboxScreen(),
+            widget: const NotificationInboxScreen(),
           ),
         ],
       ),

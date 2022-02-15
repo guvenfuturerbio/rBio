@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum HungarState { Empty, Fasting, Before, After }
+enum HungarState { empty, fasting, before, after }
 
 class BgMeasurement {
   final HungarState? hungarState;

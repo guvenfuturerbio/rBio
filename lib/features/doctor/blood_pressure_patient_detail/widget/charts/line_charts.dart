@@ -122,7 +122,7 @@ class _AnimatedPulseChartState extends State<AnimatedPatientPulseChart> {
         val.selected == TimePeriodFilter.daily ||
                 val.selected == TimePeriodFilter.spesific
             ? LineSeries<ChartData, DateTime>(
-                dataSource: sys != null && sys.length > 0
+                dataSource: sys.isNotEmpty
                     ? [
                         ChartData(
                             DateTime(sys[0].x.year, sys[0].x.month,

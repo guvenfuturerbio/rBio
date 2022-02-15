@@ -109,7 +109,8 @@ class _ForYouSubCategoriesDetailScreenState
                             Atom.to(
                               PagePaths.orderSummary,
                               queryParameters: {
-                                'subCategoryId': (widget.itemId ?? '').toString(),
+                                'subCategoryId':
+                                    (widget.itemId ?? '').toString(),
                                 'categoryName': widget.title ?? '',
                               },
                             );
@@ -121,79 +122,77 @@ class _ForYouSubCategoriesDetailScreenState
                   ),
 
                   //
-                  Container(
-                    child: Column(
-                      children: [
-                        CarouselSlider(
-                          carouselController: controller,
-                          options: CarouselOptions(
-                            enlargeCenterPage: true,
-                            enableInfiniteScroll: false,
-                            height: MediaQuery.of(context).size.height * 0.68,
-                            aspectRatio: 2.0,
-                            onPageChanged: (index, reason) => {
-                              setState(() {
-                                _currentIndex = index;
-                              })
-                            },
-                          ),
-                          items: vm.cardList?.map(
-                            (card) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.30,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Card(
-                                      child: card,
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ).toList(),
+                  Column(
+                    children: [
+                      CarouselSlider(
+                        carouselController: controller,
+                        options: CarouselOptions(
+                          enlargeCenterPage: true,
+                          enableInfiniteScroll: false,
+                          height: MediaQuery.of(context).size.height * 0.68,
+                          aspectRatio: 2.0,
+                          onPageChanged: (index, reason) => {
+                            setState(() {
+                              _currentIndex = index;
+                            })
+                          },
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: map<Widget>(
-                            vm.cardList ?? [],
-                            (index, url) {
-                              return Container(
-                                width: 10.0,
-                                height: 10.0,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 2.0),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: _currentIndex == index
-                                      ? getIt<ITheme>().mainColor
-                                      : getIt<ITheme>()
-                                          .textColorSecondary
-                                          .withOpacity(0.5),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                                icon: const Icon(Icons.arrow_left),
-                                onPressed: () {
-                                  controller.previousPage();
-                                }),
-                            IconButton(
-                              icon: const Icon(Icons.arrow_right),
-                              onPressed: () {
-                                controller.nextPage();
+                        items: vm.cardList?.map(
+                          (card) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.30,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Card(
+                                    child: card,
+                                  ),
+                                );
                               },
-                            ),
-                          ],
+                            );
+                          },
+                        ).toList(),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: map<Widget>(
+                          vm.cardList ?? [],
+                          (index, url) {
+                            return Container(
+                              width: 10.0,
+                              height: 10.0,
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 2.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: _currentIndex == index
+                                    ? getIt<ITheme>().mainColor
+                                    : getIt<ITheme>()
+                                        .textColorSecondary
+                                        .withOpacity(0.5),
+                              ),
+                            );
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              icon: const Icon(Icons.arrow_left),
+                              onPressed: () {
+                                controller.previousPage();
+                              }),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_right),
+                            onPressed: () {
+                              controller.nextPage();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
