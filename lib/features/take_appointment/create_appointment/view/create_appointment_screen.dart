@@ -250,6 +250,9 @@ class CreateAppointmentScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 70,
+                    ),
                   ],
                 ),
         ],
