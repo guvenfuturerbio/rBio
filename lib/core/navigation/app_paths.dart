@@ -321,23 +321,31 @@ class VRouterRoutes {
       stackedRoutes: [
         VWidget(
           path: PagePaths.symptomMainMenu,
-          widget: const SymptomsHomeScreen(key: Key('SymptomsHomeScreen')),
-        ),
-        VWidget(
-          path: PagePaths.symptomBodyLocations,
-          widget: const SymptomsBodyLocationsScreen(),
-        ),
-        VWidget(
-          path: PagePaths.symptomSubBodyLocations,
-          widget: BodySubLocationsPage(),
-        ),
-        VWidget(
-          path: PagePaths.symptomSelectPage,
-          widget: BodySymptomsSelectionPage(),
-        ),
-        VWidget(
-          path: PagePaths.symptomResultPage,
-          widget: SymptomsResultPage(),
+          widget: const SymptomsHomeScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.symptomBodyLocations,
+              widget: const SymptomsBodyLocationsScreen(),
+              stackedRoutes: [
+                VWidget(
+                  path: PagePaths.symptomSubBodyLocations,
+                  widget: BodySubLocationsPage(),
+                  stackedRoutes: [
+                    VWidget(
+                      path: PagePaths.symptomSelectPage,
+                      widget: BodySymptomsSelectionPage(),
+                      stackedRoutes: [
+                        VWidget(
+                          path: PagePaths.symptomResultPage,
+                          widget: SymptomsResultPage(),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),

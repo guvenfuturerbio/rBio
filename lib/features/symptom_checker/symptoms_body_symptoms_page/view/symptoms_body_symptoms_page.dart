@@ -7,6 +7,13 @@ import '../../symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocatio
 import '../viewmodel/symptoms_body_symptoms_page_vm.dart';
 
 class BodySymptomsSelectionPage extends StatefulWidget {
+  List<GetBodySymptomsResponse>? selectedBodySymptoms;
+  late int? selectedGenderId;
+  late String? yearOfBirth;
+  GetBodyLocationResponse? selectedBodyLocation;
+  late bool? isFromVoice;
+  BodySublocationsVm? myPv;
+
   BodySymptomsSelectionPage({
     Key? key,
     this.selectedBodySymptoms,
@@ -16,13 +23,6 @@ class BodySymptomsSelectionPage extends StatefulWidget {
     this.isFromVoice,
     this.myPv,
   }) : super(key: key);
-
-  List<GetBodySymptomsResponse>? selectedBodySymptoms;
-  late int? selectedGenderId;
-  late String? yearOfBirth;
-  GetBodyLocationResponse? selectedBodyLocation;
-  late bool? isFromVoice;
-  BodySublocationsVm? myPv;
 
   @override
   _BodySymptomsSelectionPageState createState() =>
@@ -55,32 +55,46 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
     } catch (_) {
       return const RbioRouteError();
     }
+
     return ChangeNotifierProvider(
       create: (context) => BodySymptomSelectionVm(
-          context: context,
-          genderId: widget.selectedGenderId!,
-          symptomList:
-              widget.myPv!.selectedSymptoms as List<GetBodySymptomsResponse>,
-          year_of_birth: widget.yearOfBirth!,
-          isFromVoice: widget.isFromVoice,
-          myPv: widget.myPv),
-      child: Consumer<BodySymptomSelectionVm>(builder: (context, value, child) {
-        return RbioScaffold(
-          appbar: RbioAppBar(
-            title: RbioAppBar.textTitle(
-                context, LocaleProvider.of(context).my_symptoms),
-          ),
-          body: _buildBody(context, value),
-        );
-      }),
+        context: context,
+        genderId: widget.selectedGenderId!,
+        symptomList:
+            widget.myPv!.selectedSymptoms as List<GetBodySymptomsResponse>,
+        year_of_birth: widget.yearOfBirth!,
+        isFromVoice: widget.isFromVoice,
+        myPv: widget.myPv,
+      ),
+      child: Consumer<BodySymptomSelectionVm>(
+        builder: (context, value, child) {
+          return RbioScaffold(
+            appbar: _buildAppBar(context),
+            body: _buildBody(context, value),
+          );
+        },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).my_symptoms,
+      ),
     );
   }
 
   Widget _buildBody(BuildContext context, BodySymptomSelectionVm value) {
     return Column(
       children: [
+        //
         Expanded(
           child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 Column(
@@ -204,34 +218,32 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(
-            bottom: Atom.safeBottom + 16,
-          ),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width / 1.5,
-            child: RbioElevatedButton(
-              onTap: value.selectedBodySymptoms.isNotEmpty
-                  ? () async {
-                      RbioConfig.of(context)?.listBodySympRsp =
-                          value.selectedBodySymptoms;
-                      Atom.to(
-                        PagePaths.symptomResultPage,
-                        queryParameters: {
-                          'gender': widget.selectedGenderId == 0 ||
-                                  widget.selectedGenderId == 2
-                              ? 'male'
-                              : 'female',
-                          'year_of_birth': widget.yearOfBirth!,
-                          'isFromVoice': false.toString(),
-                        },
-                      );
-                    }
-                  : null,
-              title: LocaleProvider.of(context).analyze_department,
-            ),
-          ),
+
+        //
+        RbioElevatedButton(
+          onTap: value.selectedBodySymptoms.isNotEmpty
+              ? () async {
+                  RbioConfig.of(context)?.listBodySympRsp =
+                      value.selectedBodySymptoms;
+                  Atom.to(
+                    PagePaths.symptomResultPage,
+                    queryParameters: {
+                      'gender': widget.selectedGenderId == 0 ||
+                              widget.selectedGenderId == 2
+                          ? 'male'
+                          : 'female',
+                      'year_of_birth': widget.yearOfBirth!,
+                      'isFromVoice': false.toString(),
+                    },
+                  );
+                }
+              : null,
+          title: LocaleProvider.of(context).analyze_department,
+          infinityWidth: true,
         ),
+
+        //
+        R.sizes.defaultBottomPadding,
       ],
     );
   }

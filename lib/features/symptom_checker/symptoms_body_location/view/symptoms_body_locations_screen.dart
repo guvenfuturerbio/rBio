@@ -49,15 +49,19 @@ class _SymptomsBodyLocationsScreenState
           Widget? child,
         ) {
           return RbioScaffold(
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                LocaleProvider.of(context).my_symptoms,
-              ),
-            ),
+            appbar: _buildAppBar(context),
             body: _buildBody(context, value),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).my_symptoms,
       ),
     );
   }
@@ -68,136 +72,129 @@ class _SymptomsBodyLocationsScreenState
         return const RbioLoading();
 
       case LoadingProgress.done:
-        return Stack(
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  //
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 25, top: 25),
-                        child: Text(
-                          selectedGenderId == 0
-                              ? LocaleProvider.of(context).gender_male
-                              : selectedGenderId == 1
-                                  ? LocaleProvider.of(context).gender_female
-                                  : selectedGenderId == 2
-                                      ? LocaleProvider.of(context).boy
-                                      : LocaleProvider.of(context).girl,
-                          style: context.xHeadline1.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: getIt<ITheme>().mainColor),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          LocaleProvider.of(context).complaint_body_part,
-                          style: context.xHeadline3,
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    ],
-                  ),
-
-                  //
-                  value.selectedBodyLocation == null ||
-                          value.selectedBodyLocation!.name == ''
-                      ? Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          child: const Text(' '))
-                      : Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          child: Text(
-                              LocaleProvider.of(context).choice +
-                                  value.selectedBodyLocation!.name!,
-                              style: context.xHeadline3),
-                        ),
-                  Center(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.height / 2,
-                      child: GestureDetector(
-                        onTapDown: (e) {
-                          value.notifier!.value = e.localPosition;
-                          LoggerUtils.instance.i(e.localPosition);
-                        },
-                        child: CustomPaint(
-                          painter: BodyPartsPainter(
-                            isGenderMale:
-                                selectedGenderId == 0 || selectedGenderId == 2
-                                    ? true
-                                    : false,
-                            clickedPathFunc: (myValue) {
-                              //LoggerUtils.instance.i(myValue);
-                              WidgetsBinding.instance!
-                                  .addPostFrameCallback((timeStamp) async {
-                                if (myValue != null) {
-                                  await value.selectedBodyLocationFetch(
-                                      value.getLocationsName(myValue)!);
-                                } else {
-                                  await value.selectedBodyLocationFetch(null);
-                                }
-                              });
-                            },
-                            notifier: value.notifier,
-                            bodyLocations: value.bodyLocations,
-                          ),
-                          child: SizedBox(
-                            height: Atom.height * 0.4,
-                          ),
-                        ),
+            //
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(left: 25, top: 25),
+                      child: Text(
+                        selectedGenderId == 0
+                            ? LocaleProvider.of(context).gender_male
+                            : selectedGenderId == 1
+                                ? LocaleProvider.of(context).gender_female
+                                : selectedGenderId == 2
+                                    ? LocaleProvider.of(context).boy
+                                    : LocaleProvider.of(context).girl,
+                        style: context.xHeadline1.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: getIt<ITheme>().mainColor),
+                        textAlign: TextAlign.start,
                       ),
                     ),
-                  ),
 
-                  //
-
-                  //
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Visibility(
-                visible: value.selectedBodyLocation != null &&
-                        value.selectedBodyLocation!.name != ''
-                    ? true
-                    : false,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: Atom.safeBottom + 16,
-                  ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    decoration: BoxDecoration(
-                      borderRadius: R.sizes.borderRadiusCircular,
+                    //
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        LocaleProvider.of(context).complaint_body_part,
+                        style: context.xHeadline3,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    child: RbioElevatedButton(
-                      onTap: () async {
-                        RbioConfig.of(context)?.bodyLocationRsp =
-                            value.selectedBodyLocation;
-                        Atom.to(
-                          PagePaths.symptomSubBodyLocations,
-                          queryParameters: {
-                            'selectedGenderId': selectedGenderId.toString(),
-                            'yearOfBirth': yearOfBirth!,
-                            'isFromVoice': false.toString(),
+
+                    //
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        (value.selectedBodyLocation == null ||
+                                value.selectedBodyLocation!.name == '')
+                            ? ''
+                            : LocaleProvider.of(context).choice +
+                                value.selectedBodyLocation!.name!,
+                        style: context.xHeadline3,
+                      ),
+                    ),
+
+                    //
+                    Center(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.height / 2,
+                        child: GestureDetector(
+                          onTapDown: (e) {
+                            value.notifier!.value = e.localPosition;
+                            LoggerUtils.instance.i(e.localPosition);
                           },
-                        );
-                      },
-                      title: LocaleProvider.of(context).continue_lbl,
+                          child: CustomPaint(
+                            painter: BodyPartsPainter(
+                              isGenderMale:
+                                  selectedGenderId == 0 || selectedGenderId == 2
+                                      ? true
+                                      : false,
+                              clickedPathFunc: (myValue) {
+                                //LoggerUtils.instance.i(myValue);
+                                WidgetsBinding.instance!
+                                    .addPostFrameCallback((timeStamp) async {
+                                  if (myValue != null) {
+                                    await value.selectedBodyLocationFetch(
+                                        value.getLocationsName(myValue)!);
+                                  } else {
+                                    await value.selectedBodyLocationFetch(null);
+                                  }
+                                });
+                              },
+                              notifier: value.notifier,
+                              bodyLocations: value.bodyLocations,
+                            ),
+                            child: SizedBox(
+                              height: Atom.height * 0.4,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
+
+            //
+            Visibility(
+              visible: value.selectedBodyLocation != null &&
+                      value.selectedBodyLocation!.name != ''
+                  ? true
+                  : false,
+              child: RbioElevatedButton(
+                onTap: () async {
+                  RbioConfig.of(context)?.bodyLocationRsp =
+                      value.selectedBodyLocation;
+                  Atom.to(
+                    PagePaths.symptomSubBodyLocations,
+                    queryParameters: {
+                      'selectedGenderId': selectedGenderId.toString(),
+                      'yearOfBirth': yearOfBirth!,
+                      'isFromVoice': false.toString(),
+                    },
+                  );
+                },
+                title: LocaleProvider.of(context).continue_lbl,
+                infinityWidth: true,
+              ),
+            ),
+            R.sizes.defaultBottomPadding,
           ],
         );
 

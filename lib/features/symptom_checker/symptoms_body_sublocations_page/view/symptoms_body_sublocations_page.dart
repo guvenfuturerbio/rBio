@@ -46,16 +46,18 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
     } catch (_) {
       return const RbioRouteError();
     }
+
     return ChangeNotifierProvider(
       create: (context) => BodySublocationsVm(
-          context: context,
-          bodyLocationId: widget.selectedBodyLocation!.id,
-          genderId: widget.selectedGenderId == 0 || widget.selectedGenderId == 2
-              ? 0
-              : 1,
-          isFromVoicePage: widget.isFromVoice,
-          selectedBodyLocation: widget.selectedBodyLocation,
-          yearOfBirth: widget.yearOfBirth),
+        context: context,
+        bodyLocationId: widget.selectedBodyLocation!.id,
+        genderId: widget.selectedGenderId == 0 || widget.selectedGenderId == 2
+            ? 0
+            : 1,
+        isFromVoicePage: widget.isFromVoice,
+        selectedBodyLocation: widget.selectedBodyLocation,
+        yearOfBirth: widget.yearOfBirth,
+      ),
       child: Consumer<BodySublocationsVm>(
         builder: (
           BuildContext context,
@@ -63,15 +65,19 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
           Widget? child,
         ) {
           return RbioScaffold(
-            appbar: RbioAppBar(
-              title: RbioAppBar.textTitle(
-                context,
-                LocaleProvider.of(context).my_symptoms,
-              ),
-            ),
+            appbar: _buildAppBar(context),
             body: _buildBody(context, value),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).my_symptoms,
       ),
     );
   }
@@ -83,40 +89,40 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
 
       case LoadingProgress.done:
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(left: 25, top: 25),
-                  child: Text(
-                    widget.selectedGenderId == 0
-                        ? LocaleProvider.of(context).gender_male
-                        : widget.selectedGenderId == 1
-                            ? LocaleProvider.of(context).gender_female
-                            : widget.selectedGenderId == 2
-                                ? LocaleProvider.of(context).boy
-                                : LocaleProvider.of(context).girl,
-                    style: context.xHeadline3
-                        .copyWith(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 35),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      widget.selectedBodyLocation!.name!,
-                      style: context.xHeadline3
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                )
-              ],
+            //
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 25, top: 25),
+              child: Text(
+                widget.selectedGenderId == 0
+                    ? LocaleProvider.of(context).gender_male
+                    : widget.selectedGenderId == 1
+                        ? LocaleProvider.of(context).gender_female
+                        : widget.selectedGenderId == 2
+                            ? LocaleProvider.of(context).boy
+                            : LocaleProvider.of(context).girl,
+                style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
             ),
+
+            //
+            Container(
+              margin: const EdgeInsets.only(left: 35),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.selectedBodyLocation!.name!,
+                  style:
+                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+
+            //
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(12),
@@ -229,34 +235,31 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                 },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: Atom.safeBottom + 16,
-              ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width / 2,
-                child: RbioElevatedButton(
-                    onTap: value.selectedSymptoms?.isNotEmpty ?? false
-                        ? () async {
-                            RbioConfig.of(context)?.bodyLocationRsp =
-                                widget.selectedBodyLocation;
-                            RbioConfig.of(context)?.listBodySympRsp =
-                                value.selectedSymptoms;
-                            RbioConfig.of(context)?.sublocationVm = value;
-                            Atom.to(
-                              PagePaths.symptomSelectPage,
-                              queryParameters: {
-                                'selectedGenderId':
-                                    widget.selectedGenderId.toString(),
-                                'yearOfBirth': widget.yearOfBirth!,
-                                'isFromVoice': false.toString(),
-                              },
-                            );
-                          }
-                        : null,
-                    title: LocaleProvider.of(context).continue_lbl),
-              ),
+
+            //
+            RbioElevatedButton(
+              onTap: value.selectedSymptoms?.isNotEmpty ?? false
+                  ? () async {
+                      RbioConfig.of(context)?.bodyLocationRsp =
+                          widget.selectedBodyLocation;
+                      RbioConfig.of(context)?.listBodySympRsp =
+                          value.selectedSymptoms;
+                      RbioConfig.of(context)?.sublocationVm = value;
+                      Atom.to(
+                        PagePaths.symptomSelectPage,
+                        queryParameters: {
+                          'selectedGenderId':
+                              widget.selectedGenderId.toString(),
+                          'yearOfBirth': widget.yearOfBirth!,
+                          'isFromVoice': false.toString(),
+                        },
+                      );
+                    }
+                  : null,
+              title: LocaleProvider.of(context).continue_lbl,
+              infinityWidth: true,
             ),
+            R.sizes.defaultBottomPadding,
           ],
         );
 
