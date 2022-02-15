@@ -3686,10 +3686,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Create Appointment`
+  /// `Search Appointment`
   String get create_appo {
     return Intl.message(
-      'Create Appointment',
+      'Search Appointment',
       name: 'create_appo',
       desc: '',
       args: [],
@@ -7934,7 +7934,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
   @override
   bool shouldReload(AppLocalizationDelegate old) => false;
 
-  bool _isSupported(Locale? locale) {
+  bool _isSupported(Locale locale) {
     if (locale != null) {
       for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {

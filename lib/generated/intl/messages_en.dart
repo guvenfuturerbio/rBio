@@ -185,7 +185,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "covid_title_5" : MessageLookupByLibrary.simpleMessage("Who is at higher risk for COVID-19 (New Coronavirus) transmission?"),
     "covid_title_6" : MessageLookupByLibrary.simpleMessage("How is COVID-19 (New Coronavirus) diagnosed?"),
     "covid_title_7" : MessageLookupByLibrary.simpleMessage("What are the symptoms of COVID-19 (New Coronavirus)?"),
-    "create_appo" : MessageLookupByLibrary.simpleMessage("Create Appointment"),
+    "create_appo" : MessageLookupByLibrary.simpleMessage("Search Appointment"),
     "create_appointment_events" : MessageLookupByLibrary.simpleMessage("Create Appointment"),
     "create_password" : MessageLookupByLibrary.simpleMessage("Create Password"),
     "credential_already_exist" : MessageLookupByLibrary.simpleMessage("Credentials already exist linked to an account. First of all, it must be deleted from the account it is linked to"),
