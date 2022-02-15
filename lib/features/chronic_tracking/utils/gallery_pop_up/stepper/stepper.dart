@@ -27,7 +27,7 @@ class Stepper extends StatelessWidget {
                     horizontal: context.width * .008,
                   ),
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 150),
+                    duration: const Duration(milliseconds: 150),
                     height: context.height * .017,
                     width: currentIndex == index
                         ? (context.height * .017) * 2

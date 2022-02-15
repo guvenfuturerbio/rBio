@@ -1,4 +1,4 @@
-import 'DeviceTypes.dart';
+import 'device_type.dart';
 
 class PairedDevice {
   String? deviceId;

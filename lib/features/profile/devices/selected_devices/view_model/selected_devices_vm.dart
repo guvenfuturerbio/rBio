@@ -183,13 +183,10 @@ class SelectedDeviceVm extends ChangeNotifier {
         break;
 
       case DeviceType.omronBloodPressureArm:
-        // TODO: Handle this case.
         break;
       case DeviceType.omronBloodPressureWrist:
-        // TODO: Handle this case.
         break;
       case DeviceType.omronScale:
-        // TODO: Handle this case.
         break;
       case DeviceType.miScale:
         connectIsActive &&

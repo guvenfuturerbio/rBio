@@ -76,7 +76,7 @@ class ForYouSubCategoriesDetailScreenVm extends ChangeNotifier {
         context: context,
         barrierColor: Colors.black26,
         builder: (BuildContext context) {
-          return ForYouInformationDialog();
+          return const ForYouInformationDialog();
         },
       );
       //

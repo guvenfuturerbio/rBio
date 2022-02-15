@@ -363,7 +363,6 @@ class BleReactorOps extends ChangeNotifier {
           if (scaleDevice.scaleData == null ||
               !scaleDevice.scaleData!.scaleModel.measurementComplete!) {
             final Uint8List data = Uint8List.fromList(event);
-            //TODO: BURADA KALDIK !!!
             scaleDevice.parseScaleData(pairedDevice, data);
             if (scaleDevice.scaleData!.scaleModel.measurementComplete! &&
                 deviceAlreadyPaired) {

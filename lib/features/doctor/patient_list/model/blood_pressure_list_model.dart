@@ -14,21 +14,21 @@ class PatientBloodPressureListModel
       .toList();
 
   @override
-  PatientListItemModel convertTo(DoctorBloodPressurePatientModel e) {
+  PatientListItemModel convertTo(DoctorBloodPressurePatientModel model) {
     return PatientListItemModel(
-      data: e,
-      patientName: e.name,
-      dates: e.bpMeasurements!
+      data: model,
+      patientName: model.name,
+      dates: model.bpMeasurements!
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
               : '')
           .toList(),
-      times: e.bpMeasurements!
+      times: model.bpMeasurements!
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: e.bpMeasurements!.map((item) => '${item.sysValue}').toList(),
+      values: model.bpMeasurements!.map((item) => '${item.sysValue}').toList(),
     );
   }
 
@@ -56,7 +56,7 @@ class PatientBloodPressureListModel
   }
 
   @override
-  void textOnChanged(String text) {
+  void textOnChanged(String? text) {
     if (text == null || text == '') {
       _filterList = _list;
     } else {

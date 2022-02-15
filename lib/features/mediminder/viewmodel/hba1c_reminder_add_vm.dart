@@ -70,7 +70,7 @@ class Hba1cReminderAddVm extends ChangeNotifier {
   bool _checkValidation() {
     if ((lastMeasurementDate == '') ||
         (remindDate == '') ||
-        (remindHour == null || remindHour == '')) {
+        (remindHour == null)) {
       showInformationDialog();
       return false;
     }

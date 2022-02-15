@@ -34,7 +34,7 @@ class PatientBloodGlucoseListModel
   }
 
   @override
-  Color getBackColor(String text, DoctorGlucosePatientModel model) {
+  Color getBackColor(String? text, DoctorGlucosePatientModel model) {
     return text == '' || text == null
         ? getIt<ITheme>().cardBackgroundColor
         : Utils.instance.fetchMeasurementColor(
@@ -70,7 +70,7 @@ class PatientBloodGlucoseListModel
   }
 
   @override
-  void textOnChanged(String text) {
+  void textOnChanged(String? text) {
     if (text == null || text == '') {
       _filterList = _list;
     } else {
@@ -113,7 +113,7 @@ class PatientBloodGlucoseListModel
   }
 
   // #region _textToInt
-  int _textToInt(String text) {
+  int _textToInt(String? text) {
     if (text == null) {
       return 0;
     } else if (text.isNotEmpty) {

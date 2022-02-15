@@ -1,5 +1,5 @@
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:onedosehealth/model/ble_models/DeviceTypes.dart';
+import 'package:onedosehealth/model/ble_models/device_type.dart';
 
 DeviceType getDeviceType(DiscoveredDevice device) {
   if (device.name == 'MIBFS' &&

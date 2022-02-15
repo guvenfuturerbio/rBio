@@ -56,7 +56,7 @@ import '../../features/take_appointment/create_appointment/view/create_appointme
 import '../../features/take_appointment/create_appointment_events/view/create_appointment_events_screen.dart';
 import '../../features/take_appointment/create_appointment_summary/view/create_appointment_summary_screen.dart';
 import '../../features/take_appointment/doctor_cv/doctor_cv_screen.dart';
-import '../../model/ble_models/DeviceTypes.dart';
+import '../../model/ble_models/device_type.dart';
 import '../core.dart';
 
 class VRouterRoutes {

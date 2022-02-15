@@ -7,7 +7,7 @@ import 'consent_form_dialog_vm.dart';
 class ConsentFormDialog extends StatefulWidget {
   final String? title;
   final String? text;
-  final alwaysAsk;
+  final bool? alwaysAsk;
 
   const ConsentFormDialog({
     Key? key,

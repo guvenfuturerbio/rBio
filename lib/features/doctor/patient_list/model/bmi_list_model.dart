@@ -13,21 +13,21 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
       .toList();
 
   @override
-  PatientListItemModel convertTo(DoctorBMIPatientModel e) {
+  PatientListItemModel convertTo(DoctorBMIPatientModel model) {
     return PatientListItemModel(
-      data: e,
-      patientName: e.name,
-      dates: e.bmiMeasurements!
+      data: model,
+      patientName: model.name,
+      dates: model.bmiMeasurements!
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
               : '')
           .toList(),
-      times: e.bmiMeasurements!
+      times: model.bmiMeasurements!
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: e.bmiMeasurements!.map((item) => '${item.weight}').toList(),
+      values: model.bmiMeasurements!.map((item) => '${item.weight}').toList(),
     );
   }
 
@@ -51,7 +51,7 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
 
   @override
   void textOnChanged(String text) {
-    if ( text == '') {
+    if (text == '') {
       _filterList = _list;
     } else {
       _filterList = _list

@@ -14,7 +14,7 @@ import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../features/shared/do_not_show_again_dialog.dart';
-import '../../model/ble_models/DeviceTypes.dart';
+import '../../model/ble_models/device_type.dart';
 import '../../model/model.dart';
 import '../core.dart';
 

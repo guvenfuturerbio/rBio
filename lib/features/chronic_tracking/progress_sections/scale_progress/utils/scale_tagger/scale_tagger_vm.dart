@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../core/core.dart';
-import '../../../../../../model/ble_models/DeviceTypes.dart';
+import '../../../../../../model/ble_models/device_type.dart';
 import '../../../../../../model/ble_models/paired_device.dart';
 import '../scale_measurements/scale_measurement_vm.dart';
 

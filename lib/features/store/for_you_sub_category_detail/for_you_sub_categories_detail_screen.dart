@@ -232,7 +232,7 @@ class _ForYouSubCategoriesDetailScreenState
 }
 
 class ListCard extends StatelessWidget {
-  String image = "";
+  String? image;
   String text = "";
   String title = "";
 
@@ -254,7 +254,7 @@ class ListCard extends StatelessWidget {
             Container(
               constraints: const BoxConstraints(maxHeight: 300, maxWidth: 300),
               child: image != null
-                  ? Image.memory(base64Decode(image))
+                  ? Image.memory(base64Decode(image!))
                   : Image.asset(R.image.covidCat),
               margin: const EdgeInsets.all(30),
             ),
