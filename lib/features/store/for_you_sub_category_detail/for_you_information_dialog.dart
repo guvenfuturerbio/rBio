@@ -64,13 +64,14 @@ class ForYouInformationDialog extends StatelessWidget {
                 children: [
                   //
                   Expanded(
-                    child: FlatButton(
+                    child: RbioTextButton(
                       child: Text(
                         LocaleProvider.current.yes,
-                        style: const TextStyle(fontSize: 18),
+                        style: context.xHeadline3.copyWith(
+                          color: Colors.green,
+                        ),
                       ),
-                      textColor: Colors.green,
-                      color: Colors.white,
+                      backgroundColor: Colors.white,
                       onPressed: () {
                         Navigator.of(context).pop();
                         Atom.to(PagePaths.shoppingChart);
@@ -85,13 +86,14 @@ class ForYouInformationDialog extends StatelessWidget {
 
                   //
                   Expanded(
-                    child: FlatButton(
+                    child: RbioTextButton(
                       child: Text(
                         LocaleProvider.current.no,
-                        style: const TextStyle(fontSize: 18),
+                        style: context.xHeadline3.copyWith(
+                          color: Colors.red,
+                        ),
                       ),
-                      textColor: Colors.red,
-                      color: Colors.white,
+                      backgroundColor: Colors.white,
                       onPressed: () {
                         Navigator.of(context).pop();
                       },

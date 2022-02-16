@@ -33,6 +33,7 @@ export 'rbio_scrollbar.dart';
 export 'rbio_select_bottom_sheet.dart';
 export 'rbio_stacked_scaffold.dart';
 export 'rbio_switcher.dart';
+export 'rbio_text_button.dart';
 export 'rbio_textformfield.dart';
 export 'rbio_user_tile.dart';
 export 'rbio_visibility_suffix_icon.dart';

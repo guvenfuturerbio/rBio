@@ -86,8 +86,8 @@ class _BloodGlucosePatientDetailScreenState
       return const RbioRouteError();
     }
     MediaQuery.of(context).orientation == Orientation.landscape
-        ? SystemChrome.setEnabledSystemUIOverlays([])
-        : SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+        ? SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [])
+        : SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
 
     return ChangeNotifierProvider<BloodGlucosePatientDetailVm>(
       create: (context) =>

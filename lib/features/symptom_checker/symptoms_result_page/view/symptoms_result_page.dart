@@ -7,37 +7,31 @@ import '../../../../model/model.dart';
 import '../viewmodel/symptoms_result_page_vm.dart';
 
 class SymptomsResultPage extends StatefulWidget {
-  SymptomsResultPage(
-      {Key? key,
-      this.symptoms,
-      this.gender,
-      this.year_of_birth,
-      this.isFromVoice})
-      : super(key: key);
-
   late List<GetBodySymptomsResponse>? symptoms;
   late String? gender;
-  late String? year_of_birth;
+  late String? yearOfBirth;
   late bool? isFromVoice;
+
+  SymptomsResultPage({
+    Key? key,
+    this.symptoms,
+    this.gender,
+    this.yearOfBirth,
+    this.isFromVoice,
+  }) : super(key: key);
 
   @override
   State<SymptomsResultPage> createState() => _SymptomsResultPageState();
 }
 
 class _SymptomsResultPageState extends State<SymptomsResultPage> {
-  /*@override
-  void dispose() {
-    RbioConfig.of(context).listBodySympRsp = null;
-    super.dispose();
-  }*/
-
   @override
   Widget build(BuildContext context) {
     try {
       widget.symptoms = RbioConfig.of(context)?.listBodySympRsp
           as List<GetBodySymptomsResponse>;
       widget.gender = Atom.queryParameters['gender'];
-      widget.year_of_birth = Atom.queryParameters['year_of_birth'];
+      widget.yearOfBirth = Atom.queryParameters['year_of_birth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
       return const RbioRouteError();
@@ -48,7 +42,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
         context: context,
         gender: widget.gender as String,
         selectedSymptoms: widget.symptoms as List<GetBodySymptomsResponse>,
-        yearOfBirth: widget.year_of_birth as String,
+        yearOfBirth: widget.yearOfBirth as String,
         isFromVoice: widget.isFromVoice as bool,
       ),
       child: Consumer<SymptomsResultPageVm>(
@@ -124,7 +118,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                       width:
                                           MediaQuery.of(context).size.width / 4,
                                       //
-                                      child: FlatButton(
+                                      child: RbioTextButton(
                                         onPressed: () {
                                           Atom.to(
                                             PagePaths.createAppointment,
@@ -226,7 +220,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     ),
                                     width:
                                         MediaQuery.of(context).size.width / 4,
-                                    child: FlatButton(
+                                    child: RbioTextButton(
                                       onPressed: () async {
                                         await value.loadNavigationData(value
                                             .specialisations[index].id as int);

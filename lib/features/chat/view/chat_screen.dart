@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/manager/firebase_messaging_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -197,7 +196,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildInputArea(ChatVm chatVm) {
     return IconTheme(
-      data: IconThemeData(color: Theme.of(context).accentColor),
+      data: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       child: Container(
         padding: const EdgeInsets.only(top: 6),
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -420,7 +419,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            FlatButton(
+            RbioTextButton(
               padding: const EdgeInsets.all(0),
               child: Material(
                 child: widgetShowImages(message.message!),
@@ -463,7 +462,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            FlatButton(
+            RbioTextButton(
               padding: const EdgeInsets.all(0),
               child: Material(
                 child: widgetShowImages(message.message!),

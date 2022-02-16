@@ -62,7 +62,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
         genderId: widget.selectedGenderId!,
         symptomList:
             widget.myPv!.selectedSymptoms as List<GetBodySymptomsResponse>,
-        year_of_birth: widget.yearOfBirth!,
+        yearOfBirth: widget.yearOfBirth!,
         isFromVoice: widget.isFromVoice,
         myPv: widget.myPv,
       ),

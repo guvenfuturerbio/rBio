@@ -46,7 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         width: size.width,
         height: R.sizes.bottomNavigationBarHeight,
         child: Stack(
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: [
             //
             CustomPaint(

@@ -52,9 +52,9 @@ class RegisterStep2ScreenVm extends RbioVm {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: getIt<ITheme>().secondaryColor,
-            accentColor: getIt<ITheme>().mainColor,
             colorScheme: ColorScheme.light(
               primary: getIt<ITheme>().mainColor,
+              secondary: getIt<ITheme>().mainColor,
             ),
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),

@@ -200,13 +200,13 @@ class ScaleTaggerVm extends ChangeNotifier {
                     style: const TextStyle(fontSize: 22),
                   ),
                   actions: <Widget>[
-                    FlatButton(
+                    RbioTextButton(
                       child: Text(LocaleProvider.current.camera),
                       onPressed: () {
                         getPhotoFromSource(context, ImageSource.camera);
                       },
                     ),
-                    FlatButton(
+                    RbioTextButton(
                       child: Text(LocaleProvider.current.gallery),
                       onPressed: () {
                         getPhotoFromSource(context, ImageSource.gallery);
@@ -241,32 +241,42 @@ class ScaleTaggerVm extends ChangeNotifier {
       if (photoPerm == PermissionStatus.denied ||
           photoPerm == PermissionStatus.permanentlyDenied) {
         UtilityManager().showConfirmationAlertDialog(
-            context,
-            LocaleProvider.current.warning,
-            LocaleProvider.current.allow_permission_gallery,
-            FlatButton(
-              child: Text(LocaleProvider.current.confirm),
-              textColor: Colors.white,
-              onPressed: () async {
-                Navigator.of(context).pop();
-                AppSettings.openAppSettings();
-              },
-            ));
+          context,
+          LocaleProvider.current.warning,
+          LocaleProvider.current.allow_permission_gallery,
+          RbioTextButton(
+            child: Text(
+              LocaleProvider.current.confirm,
+              style: context.xHeadline3.copyWith(
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () async {
+              Navigator.of(context).pop();
+              AppSettings.openAppSettings();
+            },
+          ),
+        );
         return;
       } else if (cameraPerm == PermissionStatus.denied ||
           cameraPerm == PermissionStatus.permanentlyDenied) {
         UtilityManager().showConfirmationAlertDialog(
-            context,
-            LocaleProvider.current.warning,
-            LocaleProvider.current.allow_permission_gallery,
-            FlatButton(
-              child: Text(LocaleProvider.current.confirm),
-              textColor: Colors.white,
-              onPressed: () async {
-                Navigator.of(context).pop();
-                AppSettings.openAppSettings();
-              },
-            ));
+          context,
+          LocaleProvider.current.warning,
+          LocaleProvider.current.allow_permission_gallery,
+          RbioTextButton(
+            child: Text(
+              LocaleProvider.current.confirm,
+              style: context.xHeadline3.copyWith(
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () async {
+              Navigator.of(context).pop();
+              AppSettings.openAppSettings();
+            },
+          ),
+        );
         return;
       }
       final XFile? pickedFile = await picker.pickImage(source: imageSource);
