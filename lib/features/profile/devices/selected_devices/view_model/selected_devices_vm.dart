@@ -68,30 +68,39 @@ class SelectedDeviceVm extends ChangeNotifier {
     }
   }
 
+  Stream<List<int>> isOmronFocused(DiscoveredDevice device) {
+    return getIt<BleReactorOps>().getDeviceModelName(device);
+  }
+
   bool isFocusedDevice(DiscoveredDevice device) {
-    switch (deviceType) {
-      case DeviceType.accuChek:
-        return device.manufacturerData[0] == 112;
+    try {
+      switch (deviceType) {
+        case DeviceType.accuChek:
+          return device.manufacturerData[0] == 112;
 
-      case DeviceType.contourPlusOne:
-        return device.manufacturerData[0] == 103;
+        case DeviceType.contourPlusOne:
+          return device.manufacturerData[0] == 103;
 
-      case DeviceType.omronBloodPressureArm:
-        return false;
+        case DeviceType.omronBloodPressureArm:
+          return false;
 
-      case DeviceType.omronBloodPressureWrist:
-        return false;
+        case DeviceType.omronBloodPressureWrist:
+          return false;
 
-      case DeviceType.omronScale:
-        return false;
+        case DeviceType.omronScale:
+          return false;
 
-      case DeviceType.miScale:
-        return device.name == 'MIBFS' &&
-            device.serviceData.length == 1 &&
-            device.serviceData.values.first.length == 13;
+        case DeviceType.miScale:
+          return device.name == 'MIBFS' &&
+              device.serviceData.length == 1 &&
+              device.serviceData.values.first.length == 13;
 
-      default:
-        throw Exception('Undefined Device Type');
+        default:
+          throw Exception('Undefined Device Type');
+      }
+    } catch (e) {
+      LoggerUtils.instance.e(e.toString());
+      rethrow;
     }
   }
 
@@ -157,27 +166,37 @@ class SelectedDeviceVm extends ChangeNotifier {
     BleScannerOps _bleScannerOps,
     DiscoveredDevice device,
   ) async {
+    /// Checking has device in the ConnectionState
+    bool isDeviceHasConnectionState = _bleConnectorOps.deviceConnectionState
+        .any((element) => element.deviceId == device.id);
+
+    ConnectionStateUpdate? deviceConnectionState = isDeviceHasConnectionState
+        ? _bleConnectorOps.deviceConnectionState
+            .firstWhere((element) => element.deviceId == device.id)
+        : null;
+
+    late bool hasComingDeviceIsConnectingOrConnected;
+
+    if (deviceConnectionState != null) {
+      deviceConnectionState.connectionState !=
+              DeviceConnectionState.connecting &&
+          deviceConnectionState.connectionState !=
+              DeviceConnectionState.connected;
+    } else {
+      hasComingDeviceIsConnectingOrConnected = false;
+    }
+
     switch (deviceType) {
       case DeviceType.accuChek:
-        connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connected)
+        connectIsActive && hasComingDeviceIsConnectingOrConnected
             ? _bleConnectorOps.connect(device)
             : null;
         connectClicked();
         break;
 
       case DeviceType.contourPlusOne:
-        connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
+        connectIsActive && hasComingDeviceIsConnectingOrConnected
+            ? _bleConnectorOps.connect(device)
             : null;
         connectClicked();
         break;
@@ -189,14 +208,8 @@ class SelectedDeviceVm extends ChangeNotifier {
       case DeviceType.omronScale:
         break;
       case DeviceType.miScale:
-        connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
-                        DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
+        connectIsActive && hasComingDeviceIsConnectingOrConnected
+            ? _bleConnectorOps.connect(device)
             : null;
         connectClicked();
         break;
@@ -216,6 +229,7 @@ class SelectedDeviceVm extends ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
+    LoggerUtils.instance.w('amk');
     super.dispose();
   }
 

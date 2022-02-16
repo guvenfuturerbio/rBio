@@ -26,6 +26,7 @@ class BleConnectorOps extends ChangeNotifier {
   void listenConnectedDeviceStream() {
     //Telefonla cihaz arasındaki bağlantı durumu dinleyen stream
     _ble.connectedDeviceStream.listen((event) {
+      LoggerUtils.instance.w(event);
       if (event.deviceId == device?.id) {
         final deviceIndex = _deviceConnectionStateUpdate
             .indexWhere((element) => element.deviceId == event.deviceId);

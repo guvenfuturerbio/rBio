@@ -743,6 +743,7 @@
   "add_discount_code": "İndirim kodu ekle",
   "apply_discount": "İndirim uygula",
   "cancel_discount": "İndirimi iptal et",
+  "device_not_found":"Cihaz bulunamadı!",
   "not_found": "Bulunamadı",
   "something_went_wrong": "Bir şeyler ters gitti",
   "turn_back": "Geriye Dön",

@@ -23,10 +23,14 @@ class BleScannerOps extends ChangeNotifier {
   }
 
   final List<Uuid> _supported = [
-    //Blood glucosea ait verileri kontrol eden kod. (Diğer cihazlar için farklı kodlar var).
+    // Blood Glucose Services
     Uuid.parse("1808"),
-    //Kan şekeri ve tartılar karşımıza çıksın diye alttaki kodları kullanıyoruz. Bu kodlara sahip servislerin hepsini tarıyor ve gösteriyor.
-    Uuid([0x18, 0x1B])
+
+    // Scale Services
+    Uuid.parse("181B"),
+
+    // BloodPressure Services
+    Uuid.parse("1810"),
   ];
 
   List<DiscoveredDevice> get discoveredDevices => _devices;
@@ -46,25 +50,26 @@ class BleScannerOps extends ChangeNotifier {
         //Alttaki satır arama yapıyor ve stream olduğu için sürekli olarak dinliyor.
         _subscription = _ble.scanForDevices(withServices: _supported).listen(
             (device) async {
-          final knownDeviceIndex =
-              _devices.indexWhere((d) => d.id == device.id);
-          if (knownDeviceIndex >= 0) {
-            _devices[knownDeviceIndex] = device;
-          } else {
-            _devices.add(device);
+              final knownDeviceIndex =
+                  _devices.indexWhere((d) => d.id == device.id);
+              if (knownDeviceIndex >= 0) {
+                _devices[knownDeviceIndex] = device;
+              } else {
+                _devices.add(device);
 
-            /// AutoConnector method caller
-            if (pairedDevices != null && pairedDevices!.contains(device.id)) {
-              getIt<BleConnectorOps>().connect(device);
-            }
-            /*  if (device.id == deviceId) {
-              locator<BleConnectorOps>().connect(device);
-            } */
-            notifyListeners();
-          }
-        }, onError: (e) {
-          log(e.toString());
-        });
+                /// AutoConnector method caller
+                if (pairedDevices != null &&
+                    pairedDevices!.contains(device.id)) {
+                  getIt<BleConnectorOps>().connect(device);
+                }
+
+                notifyListeners();
+              }
+            },
+            cancelOnError: true,
+            onError: (e) {
+              LoggerUtils.instance.e(e);
+            });
       } else if (bleStatus == BleStatus.unauthorized) {
         await Future.delayed(const Duration(seconds: 1));
         await Permission.location.request();

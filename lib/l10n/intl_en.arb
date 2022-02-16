@@ -746,6 +746,8 @@
   "add_discount_code": "Add discount code",
   "apply_discount": "Apply discount",
   "cancel_discount": "Cancel discount",
+  "device_not_found":"Device not found!",
+
   "not_found": "Not Found",
   "something_went_wrong": "Oops. Something went wrong!",
   "turn_back": "Turn Back",

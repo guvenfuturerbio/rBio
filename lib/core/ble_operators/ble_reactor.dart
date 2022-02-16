@@ -413,4 +413,19 @@ class BleReactorOps extends ChangeNotifier {
   void clearControlPointResponse() {
     _controlPointResponse = <int>[];
   }
+
+  Stream<List<int>> getDeviceModelName(DiscoveredDevice device) {
+    _ble
+        .readCharacteristic(QualifiedCharacteristic(
+            characteristicId: Uuid.parse('2a24'),
+            serviceId: Uuid.parse('180a'),
+            deviceId: device.id))
+        .then((value) {
+      LoggerUtils.instance.w(value);
+    });
+    return _ble.subscribeToCharacteristic(QualifiedCharacteristic(
+        characteristicId: Uuid.parse('2a24'),
+        serviceId: Uuid.parse('180a'),
+        deviceId: device.id));
+  }
 }
