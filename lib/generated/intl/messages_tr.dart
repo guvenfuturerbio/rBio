@@ -795,6 +795,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "which_depart_i_go" : MessageLookupByLibrary.simpleMessage("Hangi bölüme gideceğimi bilmiyorum"),
     "widgets_add_message" : MessageLookupByLibrary.simpleMessage("Şu anda kullanımda olan 7 widget\'ınız var. Yeni widget eklemek için bunlardan birini kaldırın."),
     "wrong_password" : MessageLookupByLibrary.simpleMessage("Hatalı şifre"),
+    "wrong_tc_number" : MessageLookupByLibrary.simpleMessage("Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate"),
     "wrong_temporary_pass" : MessageLookupByLibrary.simpleMessage("Geçici şifrenizi hatalı girdiniz"),
     "wrong_user_credential" : MessageLookupByLibrary.simpleMessage("Hatalı Kullanıcı Adı ya da Şifre"),
     "wrong_username_password" : MessageLookupByLibrary.simpleMessage("Hatalı kullanıcı adı ya da Şifre !"),

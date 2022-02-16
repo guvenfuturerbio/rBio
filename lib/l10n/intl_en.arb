@@ -371,6 +371,8 @@
   "info_report": "Complaint Declaration",
   "symptom_checker_welcome": "Detaylı Sağlık Kontrolüne hoşgeldiniz, lütfen cinsiyetinizi ve doğum yılınızı sesli bir şekilde söyler misiniz? Örneğin, Erkek, 1980",
   "voice_nlp": "Voice Health Assistant",
+  "wrong_tc_number":"Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate",
+
   "favorites": "Favorites",
   "appo_for": "Person to make an appointment :",
   "pls_select_person": "Please select a person",

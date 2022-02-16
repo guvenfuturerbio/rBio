@@ -3755,6 +3755,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate`
+  String get wrong_tc_number {
+    return Intl.message(
+      'Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate',
+      name: 'wrong_tc_number',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Favorites`
   String get favorites {
     return Intl.message(

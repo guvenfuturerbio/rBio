@@ -360,6 +360,8 @@
   "complaint_body_part": "Şikayetiniz vücudunuzun hangi bölgesinde bulunmaktadır?",
   "preselection": "Ön seçiminizi belirleyin:",
   "create_appo": "Randevu Ara",
+  "wrong_tc_number":"Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate",
+
   "mars_hosp": "Güven Hastanesi Ayrancı",
   "neptune_hosp": "Güven Çayyolu Kampüsü",
   "digitalcheckup": "Dijital Checkup",

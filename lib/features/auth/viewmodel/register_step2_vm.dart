@@ -122,7 +122,7 @@ class RegisterStep2ScreenVm extends RbioVm {
       } else if (response.datum == 5 || response.datum == 2) {
         showInfoDialog(
           LocaleProvider.of(mContext).warning,
-          "TC Kimlik numarası hatalı",
+          LocaleProvider.current.wrong_tc_number,
         );
       } else if (response.datum == 4) {
         showInfoDialog(

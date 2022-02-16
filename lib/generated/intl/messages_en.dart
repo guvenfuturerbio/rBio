@@ -801,6 +801,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "which_depart_i_go" : MessageLookupByLibrary.simpleMessage("Department finder"),
     "widgets_add_message" : MessageLookupByLibrary.simpleMessage("You have 7 widgets currently in use. Remove one of them to add new widget"),
     "wrong_password" : MessageLookupByLibrary.simpleMessage("Wrong password"),
+    "wrong_tc_number" : MessageLookupByLibrary.simpleMessage("Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate"),
     "wrong_temporary_pass" : MessageLookupByLibrary.simpleMessage("You entered your temporary password incorrectly"),
     "wrong_user_credential" : MessageLookupByLibrary.simpleMessage("Wrong User ID or Password"),
     "wrong_username_password" : MessageLookupByLibrary.simpleMessage("Wrong Username or Password!"),
