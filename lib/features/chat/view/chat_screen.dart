@@ -200,7 +200,6 @@ class _ChatScreenState extends State<ChatScreen> {
       data: IconThemeData(color: Theme.of(context).accentColor),
       child: Container(
         padding: const EdgeInsets.only(top: 6),
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -213,13 +212,22 @@ class _ChatScreenState extends State<ChatScreen> {
                 width: 25,
               ),
               onPressed: () {
-                chatVm.getImage(0, getCurrentUserId, otherPerson.id!,
+                chatVm.getImage(1, getCurrentUserId, otherPerson.id!,
                     getCurrentPerson, otherPerson.firebaseToken!);
               },
             ),
 
+            IconButton(
+              icon: Icon(
+                Icons.image_outlined,
+                color: getIt<ITheme>().mainColor,
+              ),
+              onPressed: () {
+                chatVm.getImage(0, getCurrentUserId, otherPerson.id!,
+                    getCurrentPerson, otherPerson.firebaseToken!);
+              },
+            ),
             //
-            const SizedBox(width: 6),
 
             //
             Expanded(

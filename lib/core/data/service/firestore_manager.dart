@@ -176,7 +176,9 @@ class FirestoreManager {
         : await imagePicker.pickImage(source: ImageSource.camera);
 
     if (imageFile != null) {
-      uploadFile(sender, reciever, currentPerson, otherNotiToken);
+      Atom.show(const RbioLoading(), barrierDismissible: false);
+      await uploadFile(sender, reciever, currentPerson, otherNotiToken);
+      Atom.dismiss();
     }
   }
 
