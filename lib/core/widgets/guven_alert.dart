@@ -150,9 +150,9 @@ class GuvenAlert extends StatelessWidget {
         gradient: appGradient(),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: FlatButton(
-        color: Colors.transparent,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      child: RbioTextButton(
+        backgroundColor: Colors.transparent,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
         child: Text(

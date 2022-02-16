@@ -76,8 +76,9 @@ class _BmiPatientDetailScreenState extends State<BmiPatientDetailScreen>
     }
 
     MediaQuery.of(context).orientation == Orientation.landscape
-        ? SystemChrome.setEnabledSystemUIOverlays([])
-        : SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+        ? SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [])
+        : SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+            overlays: SystemUiOverlay.values);
 
     return ChangeNotifierProvider(
       create: (ctx) => BmiPatientDetailVm(ctx, patientId),

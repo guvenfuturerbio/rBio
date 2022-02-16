@@ -31,15 +31,10 @@ class DoctorCvScreenVm extends ChangeNotifier {
           doctorName.toLowerCase().xTurkishCharacterToEnglish));
       _doctorCvResponse =
           await getIt<Repository>().getDoctorCvDetails(doctorId);
-      if (_doctorCvResponse != null) {
-        _progress = LoadingProgress.done;
-        _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven) +
-            "/storage/app/media/" +
-            _doctorCvResponse.image1!;
-      } else {
-        _progress = LoadingProgress.error;
-        _imageUrl = "";
-      }
+      _progress = LoadingProgress.done;
+      _imageUrl = SecretUtils.instance.get(SecretKeys.dev4Guven) +
+          "/storage/app/media/" +
+          _doctorCvResponse.image1!;
       notifyListeners();
     } catch (e, stackTrace) {
       debugPrintStack(stackTrace: stackTrace);

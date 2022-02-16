@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../../symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
@@ -23,7 +24,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
     required int genderId,
     List<GetBodySymptomsResponse>? symptomList,
     bool? accessedFromSubLocationPage,
-    required String year_of_birth,
+    required String yearOfBirth,
     bool? isFromVoice,
     BodySublocationsVm? myPv,
   }) {
@@ -32,13 +33,13 @@ class BodySymptomSelectionVm extends ChangeNotifier {
       myPv = myPv;
       isFromVoice = isFromVoice;
       await fetchBodySymptoms(symptomList);
-      await fetchProposedSymptoms(
-          selectedBodySymptoms, genderId, year_of_birth);
+      await fetchProposedSymptoms(selectedBodySymptoms, genderId, yearOfBirth);
     });
   }
 
   //Symptom equalizer
-  fetchBodySymptoms(List<GetBodySymptomsResponse>? symptomsList) async {
+  Future<void> fetchBodySymptoms(
+      List<GetBodySymptomsResponse>? symptomsList) async {
     try {
       symptomsList?.forEach((element) {
         if (!selectedBodySymptoms.contains(element)) {
@@ -53,8 +54,11 @@ class BodySymptomSelectionVm extends ChangeNotifier {
     }
   }
 
-  fetchProposedSymptoms(List<GetBodySymptomsResponse>? symptoms, int? gender,
-      String? year_of_birth) async {
+  Future<void> fetchProposedSymptoms(
+    List<GetBodySymptomsResponse>? symptoms,
+    int? gender,
+    String? yearOfBirth,
+  ) async {
     proposedProgress = LoadingProgress.loading;
     notifyListeners();
     try {
@@ -64,9 +68,10 @@ class BodySymptomSelectionVm extends ChangeNotifier {
       }
       List<GetBodySymptomsResponse> proposedSymptoms =
           await getIt<SymptomRepository>().getProposedSymptoms(
-              tmpSymptomIdHolder.toString(),
-              gender == 0 || gender == 2 ? 'male' : 'female',
-              year_of_birth!);
+        tmpSymptomIdHolder.toString(),
+        gender == 0 || gender == 2 ? 'male' : 'female',
+        yearOfBirth!,
+      );
       proposedSymptomList = changeNamesOfSymps(proposedSymptoms);
       proposedProgress = LoadingProgress.done;
       notifyListeners();
@@ -77,7 +82,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
     }
   }
 
-  removeSemptomFromList(GetBodySymptomsResponse symptom) async {
+  Future<void> removeSemptomFromList(GetBodySymptomsResponse symptom) async {
     selectedBodySymptomNamesList.clear();
     tmpSelectedSymptoms = selectedBodySymptoms;
     if (tmpSelectedSymptoms.contains(symptom)) {
@@ -92,7 +97,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  addSemptomToList(GetBodySymptomsResponse symptom) async {
+  Future<void> addSemptomToList(GetBodySymptomsResponse symptom) async {
     selectedBodySymptomNamesList.clear();
     tmpSelectedSymptoms = selectedBodySymptoms;
     if (!tmpSelectedSymptoms.contains(symptom)) {

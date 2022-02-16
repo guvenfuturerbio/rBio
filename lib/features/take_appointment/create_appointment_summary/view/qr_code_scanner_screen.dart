@@ -87,11 +87,9 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
     });
 
     streamSubscription = controller.scannedDataStream.listen((scanData) {
-      if (scanData != null) {
-        if (scanData.code != null && code != scanData.code) {
-          code = scanData.code!;
-          Navigator.of(context).pop(scanData.code);
-        }
+      if (scanData.code != null && code != scanData.code) {
+        code = scanData.code!;
+        Navigator.of(context).pop(scanData.code);
       }
     });
   }
