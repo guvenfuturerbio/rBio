@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -14,26 +13,157 @@ GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerSingleton<AppConfig>(appConfig);
+
+  // #region !isWeb
   String? directory;
-
   if (!Atom.isWeb) {
-    WidgetsFlutterBinding.ensureInitialized();
     final appDocumentDirectory = await getApplicationDocumentsDirectory();
-
     directory = appDocumentDirectory.path;
     Hive.init(directory);
+
+    getIt.registerLazySingleton<FlutterReactiveBle>(
+      () => FlutterReactiveBle(),
+    );
+    getIt.registerLazySingleton<BleReactorOps>(
+      () => BleReactorOps(
+        getIt<FlutterReactiveBle>(),
+      ),
+    );
+    getIt.registerLazySingleton<BleConnectorOps>(
+      () => BleConnectorOps(
+        getIt<FlutterReactiveBle>(),
+      ),
+    );
+    getIt.registerLazySingleton<BleScannerOps>(
+      () => BleScannerOps(
+        getIt<FlutterReactiveBle>(),
+      ),
+    );
+    getIt.registerLazySingleton<BleDeviceManager>(
+      () => BleDeviceManager(),
+    );
   }
+  // #endregion
 
-  getIt.registerSingleton<NotificationBadgeNotifier>(
-      NotificationBadgeNotifier());
+  // #region GuvenSettings
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  GuvenSettings settings = GuvenSettings(
+    appName: packageInfo.appName,
+    buildNumber: packageInfo.buildNumber,
+    packageName: packageInfo.packageName,
+    version: packageInfo.version,
+    appDocDirectory: directory,
+  );
+  getIt.registerLazySingleton<GuvenSettings>(
+    () => settings,
+  );
+  // #endregion
 
-  getIt.registerLazySingleton(() => ProfileStorageImpl());
-  getIt.registerLazySingleton(() => GlucoseStorageImpl());
-  getIt.registerLazySingleton(() => ScaleStorageImpl());
-  getIt.registerLazySingleton(() => BloodPressureStorageImpl());
+  // #region Manager
+  getIt.registerLazySingleton<ReminderNotificationsManager>(
+    () => ReminderNotificationsManagerImpl(
+      getIt<LocalNotificationManager>(),
+    ),
+  );
+  getIt.registerLazySingleton<FirebaseMessagingManager>(
+    () => FirebaseMessagingManagerImpl(
+      localNotificationManager: getIt<LocalNotificationManager>(),
+      notificationBadgeNotifier: getIt<NotificationBadgeNotifier>(),
+      repository: getIt<Repository>(),
+    ),
+  );
+  getIt.registerLazySingleton<LocalNotificationManager>(
+    () => LocalNotificationManagerImpl(),
+  );
+  getIt.registerLazySingleton<ISharedPreferencesManager>(
+    () => SharedPreferencesManager(),
+  );
+  getIt.registerLazySingleton<UserManager>(
+    () => UserManagerImpl(),
+  );
+  // #endregion
 
-  getIt.registerLazySingleton<ReminderNotificationsManager>(() =>
-      ReminderNotificationsManagerImpl(getIt<LocalNotificationManager>()));
+  // #region Helper
+  getIt.registerSingleton<IDioHelper>(DioHelper());
+  // #endregion
+
+  // #region Service
+  getIt.registerLazySingleton<ProfileStorageImpl>(
+    () => ProfileStorageImpl(),
+  );
+  getIt.registerLazySingleton<GlucoseStorageImpl>(
+    () => GlucoseStorageImpl(),
+  );
+  getIt.registerLazySingleton<ScaleStorageImpl>(
+    () => ScaleStorageImpl(),
+  );
+  getIt.registerLazySingleton<BloodPressureStorageImpl>(
+    () => BloodPressureStorageImpl(),
+  );
+
+  getIt.registerLazySingleton<ApiService>(
+    () => ApiServiceImpl(getIt<IDioHelper>()),
+  );
+  getIt.registerLazySingleton<ChronicTrackingApiService>(
+    () => ChronicTrackingApiServiceImpl(
+      getIt<IDioHelper>(),
+    ),
+  );
+  getIt.registerLazySingleton<DoctorApiService>(
+    () => DoctorApiServiceImpl(
+      getIt<IDioHelper>(),
+    ),
+  );
+  getIt.registerLazySingleton<FirestoreManager>(
+    () => FirestoreManager(),
+  );
+  getIt.registerLazySingleton<LocalCacheService>(
+    () => LocalCacheServiceImpl(),
+  );
+  getIt.registerLazySingleton<SymptomApiService>(
+    () => SymptomApiServiceImpl(
+      getIt<IDioHelper>(),
+    ),
+  );
+  // #endregion
+
+  // #region Repository
+  getIt.registerLazySingleton(
+    () => ChronicTrackingRepository(
+      apiService: getIt<ChronicTrackingApiService>(),
+      localCacheService: getIt<LocalCacheService>(),
+    ),
+  );
+  getIt.registerSingleton<DoctorRepository>(
+    DoctorRepository(
+      apiService: getIt<DoctorApiService>(),
+      localCacheService: getIt<LocalCacheService>(),
+    ),
+  );
+  getIt.registerSingleton<Repository>(
+    Repository(
+      apiService: getIt<ApiService>(),
+      localCacheService: getIt<LocalCacheService>(),
+    ),
+  );
+  getIt.registerSingleton<SymptomRepository>(
+    SymptomRepository(
+      getIt<SymptomApiService>(),
+    ),
+  );
+  // #endregion
+
+  // #region Notifiers
+  getIt.registerLazySingleton<LocaleNotifier>(
+    () => LocaleNotifier(),
+  );
+  getIt.registerLazySingleton<NotificationBadgeNotifier>(
+    () => NotificationBadgeNotifier(),
+  );
+  getIt.registerLazySingleton<UserNotifier>(
+    () => UserNotifier(),
+  );
+  // #endregion
 
   try {
     await registerStorage();
@@ -42,77 +172,13 @@ Future<void> setupLocator(AppConfig appConfig) async {
     await registerStorage();
   }
 
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  GuvenSettings settings = GuvenSettings(
-      appName: packageInfo.appName,
-      buildNumber: packageInfo.buildNumber,
-      packageName: packageInfo.packageName,
-      version: packageInfo.version,
-      appDocDirectory: directory);
-
-  getIt.registerSingleton<GuvenSettings>(settings);
-  getIt.registerSingleton<FirestoreManager>(FirestoreManager());
-  getIt.registerSingleton<IDioHelper>(DioHelper());
-  getIt
-      .registerSingleton<ISharedPreferencesManager>(SharedPreferencesManager());
-  getIt.registerSingleton<UserManager>(UserManagerImpl());
-  getIt.registerSingleton<UserNotifier>(UserNotifier());
-  getIt.registerSingleton<LocaleNotifier>(LocaleNotifier());
-
-  getIt.registerSingleton<LocalCacheService>(LocalCacheServiceImpl());
-  getIt.registerSingleton<ApiService>(ApiServiceImpl(getIt<IDioHelper>()));
-  getIt.registerSingleton<ChronicTrackingApiService>(
-      ChronicTrackingApiServiceImpl(getIt<IDioHelper>()));
-  getIt.registerSingleton<Repository>(Repository(
-      apiService: getIt<ApiService>(),
-      localCacheService: getIt<LocalCacheService>()));
-
-  getIt.registerSingleton<DoctorApiService>(
-      DoctorApiServiceImpl(getIt<IDioHelper>()));
-  getIt.registerSingleton<DoctorRepository>(
-    DoctorRepository(
-      apiService: getIt<DoctorApiService>(),
-      localCacheService: getIt<LocalCacheService>(),
-    ),
-  );
-
-  getIt.registerSingleton<SymptomApiService>(
-      SymptomApiServiceImpl(getIt<IDioHelper>()));
-  getIt.registerSingleton<SymptomRepository>(
-      SymptomRepository(getIt<SymptomApiService>()));
-
+  // #region Init
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
   await getIt<LocaleNotifier>().init();
-
-  getIt.registerLazySingleton(() => ChronicTrackingRepository(
-      apiService: getIt<ChronicTrackingApiService>(),
-      localCacheService: getIt<LocalCacheService>()));
-
-  getIt.registerLazySingleton<LocalNotificationManager>(
-      () => LocalNotificationManagerImpl());
-
-  //  getIt.registerLazySingleton(() => PushedNotificationHandlerNew());
-  // getIt<PushedNotificationHandlerNew>().initializeGCM();
-
-  if (!Atom.isWeb) {
-    getIt.registerSingleton<FlutterReactiveBle>(FlutterReactiveBle());
-    getIt.registerLazySingleton<BleReactorOps>(
-        () => BleReactorOps(getIt<FlutterReactiveBle>()));
-    getIt.registerLazySingleton<BleConnectorOps>(
-        () => BleConnectorOps(getIt<FlutterReactiveBle>()));
-    getIt.registerLazySingleton<BleScannerOps>(
-        () => BleScannerOps(getIt<FlutterReactiveBle>()));
-    getIt.registerLazySingleton<BleDeviceManager>(() => BleDeviceManager());
-  }
-
-  getIt.registerSingleton<FirebaseMessagingManager>(
-    FirebaseMessagingManagerImpl(
-      localNotificationManager: getIt<LocalNotificationManager>(),
-      notificationBadgeNotifier: getIt<NotificationBadgeNotifier>(),
-      repository: getIt<Repository>(),
-    ),
-  );
+  await getIt<LocalNotificationManager>().init();
+  await getIt<FirebaseMessagingManager>().init();
+  // #endregion
 }
 
 class GuvenSettings {
@@ -122,12 +188,13 @@ class GuvenSettings {
   String buildNumber;
   String? appDocDirectory;
 
-  GuvenSettings(
-      {required this.appName,
-      required this.packageName,
-      required this.version,
-      required this.buildNumber,
-      this.appDocDirectory});
+  GuvenSettings({
+    required this.appName,
+    required this.packageName,
+    required this.version,
+    required this.buildNumber,
+    this.appDocDirectory,
+  });
 }
 
 Future<void> registerStorage() async {
