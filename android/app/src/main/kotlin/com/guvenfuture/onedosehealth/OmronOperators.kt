@@ -20,12 +20,12 @@ import java.util.*
 class OmronOperators(private val context: Context) {
     private val TAG: String = "OmronOperators"
     var bloodPressureData = MutableLiveData<ArrayList<HashMap<String, Any>>?>()
-    fun startOmronPeripheralManager(isHistoricDataRead: Boolean, hashId: String) {
+    fun startOmronPeripheralManager(isHistoricDataRead: Boolean, hashId: String, type:Int) {
 
 
         var deviceSettings: ArrayList<HashMap<*, *>?>? = ArrayList()
         // Blood pressure settings (optional)
-        deviceSettings = getBloodPressureSettings(deviceSettings)
+        deviceSettings = getBloodPressureSettings(deviceSettings ,type)
 
         OmronPeripheralManagerConfig.userHashId = hashId
 
@@ -47,14 +47,10 @@ class OmronOperators(private val context: Context) {
         OmronPeripheralManager.sharedManager(context).startManager()
     }
 
-    fun getBloodPressureSettings(deviceSettings: ArrayList<HashMap<*, *>?>?): ArrayList<HashMap<*, *>?>? {
-        val map: HashMap<String, String> = Gson().fromJson(
-            OmronDevices.RS7_INTELLI_IT,
-            HashMap::class.java
-        ) as HashMap<String, String>
+    fun getBloodPressureSettings(deviceSettings: ArrayList<HashMap<*, *>?>?, type:Int): ArrayList<HashMap<*, *>?>? {
+
         // Blood Pressure
-        if (map.get(OmronConstants.OMRONBLEConfigDevice.Category)
-                ?.toInt() == OmronConstants.OMRONBLEDeviceCategory.BLOODPRESSURE
+        if (type == OmronConstants.OMRONBLEDeviceCategory.BLOODPRESSURE
         ) {
             val bloodPressurePersonalSettings = HashMap<String, Any>()
             bloodPressurePersonalSettings[OmronConstants.OMRONDevicePersonalSettings.BloodPressureTruReadEnableKey] =
@@ -107,8 +103,9 @@ class OmronOperators(private val context: Context) {
             }
     }
 
-    fun transferData(device: OmronPeripheral, hashId: String, selectedUser: Int) {
-        startOmronPeripheralManager(true, hashId)
+    fun transferData(device: OmronPeripheral, hashId: String, selectedUser: Int,
+     type:Int) {
+        startOmronPeripheralManager(true, hashId ,type)
         performDataTransfer(device, selectedUser)
     }
 

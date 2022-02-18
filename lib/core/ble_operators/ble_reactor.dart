@@ -414,18 +414,44 @@ class BleReactorOps extends ChangeNotifier {
     _controlPointResponse = <int>[];
   }
 
-  Stream<List<int>> getDeviceModelName(DiscoveredDevice device) {
-    _ble
-        .readCharacteristic(QualifiedCharacteristic(
-            characteristicId: Uuid.parse('2a24'),
-            serviceId: Uuid.parse('180a'),
-            deviceId: device.id))
-        .then((value) {
-      LoggerUtils.instance.w(value);
-    });
-    return _ble.subscribeToCharacteristic(QualifiedCharacteristic(
-        characteristicId: Uuid.parse('2a24'),
-        serviceId: Uuid.parse('180a'),
-        deviceId: device.id));
+  void connectOmronWristPressureDevice(DiscoveredDevice device) async {
+    try {
+      getIt<BleScannerOps>().stopScan();
+      OmronDeviceConnectionRequestModel omronDeviceConnectionRequestModel =
+          OmronDeviceConnectionRequestModel(
+              deviceName: device.name,
+              uuid: device.id,
+              userIndex: getIt<ISharedPreferencesManager>()
+                      .getInt(SharedPreferencesKeys.omronPressureWristUser) ??
+                  1,
+              hashId: getIt<UserNotifier>().patient!.identityNumber!);
+      LoggerUtils.instance.w(omronDeviceConnectionRequestModel.toJson());
+      bool isOmronDeviceHasAlreadyPaired = await getIt<BleDeviceManager>()
+          .hasDeviceAlreadyPaired(PairedDevice(deviceId: device.id));
+      if (!isOmronDeviceHasAlreadyPaired) {
+        await OmronConnector.instance
+            .connectDevice(omronDeviceConnectionRequestModel);
+        await OmronConnector.instance
+            .continueToConnection(omronDeviceConnectionRequestModel);
+      } else {
+        await OmronConnector.instance
+            .startTransferProcess(omronDeviceConnectionRequestModel);
+        if (getIt<BleConnectorOps>().omronDeviceState['deviceName'] ==
+                device.name &&
+            getIt<BleConnectorOps>().omronDeviceState['state'] ==
+                OmronConstants.instance.connState.connected) {
+          OmronConnector.instance.transferData((msg) {
+            LoggerUtils.instance.w(msg);
+          });
+        }
+      }
+      if (getIt<BleConnectorOps>().omronConnectionListener != null) {
+        getIt<BleConnectorOps>().omronConnectionListener!.call();
+      }
+      getIt<BleScannerOps>().startScan();
+    } catch (e) {
+      LoggerUtils.instance.e(e);
+      getIt<BleScannerOps>().startScan();
+    }
   }
 }

@@ -78,112 +78,28 @@ class SelectedDevicesScreen extends StatelessWidget {
                   (DiscoveredDevice device) {
                     final pairedDevices = _bleScannerOps.pairedDevices;
                     if (pairedDevices == null) return const SizedBox();
-                    switch (_selectedDeviceVm.deviceType) {
-                      case DeviceType.accuChek:
-                      case DeviceType.contourPlusOne:
-                      case DeviceType.miScale:
-                      case DeviceType.manuel:
-                        return _selectedDeviceVm.isFocusedDevice(device) &&
-                                !pairedDevices.contains(device.id)
-                            ? DeviceCard(
-                                onTap: () => _selectedDeviceVm.connectDevice(
-                                    _bleConnectorOps, _bleScannerOps, device),
-                                background: _bleConnectorOps
+                    return _selectedDeviceVm.isFocusedDevice(device) &&
+                            !pairedDevices.contains(device.id)
+                        ? DeviceCard(
+                            onTap: () => _selectedDeviceVm.connectDevice(
+                                _bleConnectorOps, _bleScannerOps, device),
+                            background: _bleConnectorOps
+                                        .getStatus(device.id)
+                                        ?.connectionState ==
+                                    DeviceConnectionState.connected
+                                ? getIt<ITheme>().mainColor
+                                : _bleConnectorOps
                                             .getStatus(device.id)
                                             ?.connectionState ==
-                                        DeviceConnectionState.connected
-                                    ? getIt<ITheme>().mainColor
-                                    : _bleConnectorOps
-                                                .getStatus(device.id)
-                                                ?.connectionState ==
-                                            DeviceConnectionState.connecting
-                                        ? R.color.high
-                                        : Colors.white,
-                                image: UtilityManager().getDeviceImageFromType(
-                                        _selectedDeviceVm.deviceType) ??
-                                    const SizedBox(),
-                                name: device.name,
-                              )
-                            : const SizedBox();
-                      case DeviceType.omronBloodPressureArm:
-                      case DeviceType.omronBloodPressureWrist:
-                      case DeviceType.omronScale:
-                        return StreamBuilder<List<int>>(
-                            stream: _selectedDeviceVm.isOmronFocused(device),
-                            builder: (_, value) {
-                              LoggerUtils.instance.w(value.connectionState);
-                              if (value.connectionState ==
-                                  ConnectionState.waiting) {
-                                return FractionallySizedBox(
-                                  widthFactor: 1,
-                                  child: Card(
-                                    elevation: R.sizes.defaultElevation,
-                                    color: getIt<ITheme>().cardBackgroundColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          R.sizes.borderRadiusCircular,
-                                    ),
-                                    child: SizedBox(
-                                      height: context.height * .1,
-                                      child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: RbioLoading()),
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                if (value.hasData &&
-                                    String.fromCharCodes(value.data!) ==
-                                        'RS7 Intelli IT') {
-                                  return DeviceCard(
-                                    onTap: () =>
-                                        _selectedDeviceVm.connectDevice(
-                                            _bleConnectorOps,
-                                            _bleScannerOps,
-                                            device),
-                                    background: _bleConnectorOps
-                                                .getStatus(device.id)
-                                                ?.connectionState ==
-                                            DeviceConnectionState.connected
-                                        ? getIt<ITheme>().mainColor
-                                        : _bleConnectorOps
-                                                    .getStatus(device.id)
-                                                    ?.connectionState ==
-                                                DeviceConnectionState.connecting
-                                            ? R.color.high
-                                            : Colors.white,
-                                    image: UtilityManager()
-                                            .getDeviceImageFromType(
-                                                _selectedDeviceVm.deviceType) ??
-                                        const SizedBox(),
-                                    name: device.name,
-                                  );
-                                } else if (value.hasError) {
-                                  return FractionallySizedBox(
-                                    widthFactor: 1,
-                                    child: Card(
-                                      elevation: R.sizes.defaultElevation,
-                                      color:
-                                          getIt<ITheme>().cardBackgroundColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            R.sizes.borderRadiusCircular,
-                                      ),
-                                      child: SizedBox(
-                                        height: context.height * .1,
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child:
-                                                Text(value.error.toString())),
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return const SizedBox();
-                                }
-                              }
-                            });
-                    }
+                                        DeviceConnectionState.connecting
+                                    ? R.color.high
+                                    : Colors.white,
+                            image: UtilityManager().getDeviceImageFromType(
+                                    _selectedDeviceVm.deviceType) ??
+                                const SizedBox(),
+                            name: device.name,
+                          )
+                        : const SizedBox();
                   },
                 ).toList()
               ],

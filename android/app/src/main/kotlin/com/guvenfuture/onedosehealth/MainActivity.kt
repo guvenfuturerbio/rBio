@@ -1,6 +1,7 @@
 package com.guvenfuture.onedosehealth
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import com.polidea.rxandroidble2.exceptions.BleException
@@ -58,9 +59,11 @@ class MainActivity: FlutterActivity(), FlutterPlugin, MethodCallHandler {
     }
 
 
+
     companion object{
         lateinit var owner: LifecycleOwner
 
+        @SuppressLint("StaticFieldLeak")
         private lateinit var pluginController: PluginController
 
         // this enables support for apps that are using the legacy implementation of the app

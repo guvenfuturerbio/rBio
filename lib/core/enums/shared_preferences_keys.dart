@@ -24,6 +24,8 @@ enum SharedPreferencesKeys {
   hba1cList,
   medicines,
   usedStripCount,
+
+  omronPressureWristUser,
 }
 
 extension SharedPreferencesKeysStringExt on String {

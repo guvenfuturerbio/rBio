@@ -39,6 +39,8 @@ class BleScannerOps extends ChangeNotifier {
   String get deviceId => _deviceId ?? '';
 
   Future<void> startScan() async {
+    /// Setting api key for omron sdk
+    OmronConnector.instance;
     //Cihaz açık mı kontrolü yapılıyor.
     _ble.statusStream.listen((bleStatus) async {
       LoggerUtils.instance.wtf('DENEME');
@@ -50,8 +52,10 @@ class BleScannerOps extends ChangeNotifier {
         //Alttaki satır arama yapıyor ve stream olduğu için sürekli olarak dinliyor.
         _subscription = _ble.scanForDevices(withServices: _supported).listen(
             (device) async {
+              LoggerUtils.instance.w(device);
               final knownDeviceIndex =
                   _devices.indexWhere((d) => d.id == device.id);
+              LoggerUtils.instance.e(knownDeviceIndex);
               if (knownDeviceIndex >= 0) {
                 _devices[knownDeviceIndex] = device;
               } else {
@@ -92,6 +96,7 @@ class BleScannerOps extends ChangeNotifier {
   }
 
   void refreshDeviceList() {
+    LoggerUtils.instance.w("RefreshList");
     _devices.clear();
     notifyListeners();
   }

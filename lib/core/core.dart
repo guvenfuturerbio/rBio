@@ -11,6 +11,8 @@ export 'rbio_custom_icons.dart';
 export 'ble_operators/ble_operators.dart';
 export 'ble_operators/ble_operators.dart';
 
+export 'ble_operators/omron/omron.dart';
+
 export "constants/constants.dart";
 
 export "data/helper/dio_helper.dart";

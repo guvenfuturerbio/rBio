@@ -37,7 +37,8 @@ class PluginController {
             ChannelConstant.StartTransferProcess to this::startTransferDataProcess,
             ChannelConstant.SetKey to this::setApiKey,
             ChannelConstant.ConnectDevice to this::connectDevice,
-            ChannelConstant.ContinueToConnection to this::continueConnection
+            ChannelConstant.ContinueToConnection to this::continueConnection,
+
         )
 
     internal fun initialize(
@@ -57,6 +58,54 @@ class PluginController {
             mMessageReceiver,
             IntentFilter(OmronConstants.OMRONBLECentralManagerDidUpdateStateNotification)
         )
+
+        val scanSpecificOmronPeripheral = EventChannel(
+            messenger,
+            ChannelConstant.searchOmronPeripheral
+        )
+
+        scanSpecificOmronPeripheral.setStreamHandler(
+            object : EventChannel.StreamHandler{
+                override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+                    var categoryType = 0
+
+                    if((arguments as HashMap<*, *>)["categoryType"] != null){
+                        categoryType = (arguments as HashMap<*, *>)["categoryType"] as Int
+                    }
+                    omronOperators.startOmronPeripheralManager(
+                        true,
+                        (arguments as HashMap<*, *>)["hashId"] as String, categoryType
+                    )
+
+                    OmronPeripheralManager.sharedManager(context).startScanPeripherals{
+                            peripheralList, omronErrorInfo ->
+                        if(omronErrorInfo !=null&&peripheralList != null && peripheralList.isNotEmpty() ){
+                            val list = ArrayList<java.util.HashMap<*, *>>()
+                            for (item in peripheralList){
+                                list.add(item.deviceInformation)
+                            }
+                            uiThreadHandler.post {  events?.success(list)}
+                        }else{
+                            val isNotNull = omronErrorInfo.messageInfo!=null
+                            var errorInfo = ""
+                            errorInfo = if(isNotNull){
+                                omronErrorInfo.messageInfo
+                            }else{
+                                omronErrorInfo.toString()
+                            }
+                            uiThreadHandler.post {
+                            events?.error(ChannelConstant.searchOmronPeripheral, errorInfo,"" )}
+                        }
+                    }
+                }
+
+                override fun onCancel(arguments: Any?) {
+                    OmronPeripheralManager.sharedManager(context).stopScanPeripherals()
+                }
+            }
+        )
+
+
 
         val transferChannel = EventChannel(
             messenger,
@@ -109,11 +158,19 @@ class PluginController {
                     (call.arguments as HashMap<*, *>)["device"].toString(),
                     (call.arguments as HashMap<*, *>)["uuid"].toString()
                 )
+            var deviceType = 0
+
+            if((call.arguments as HashMap<*, *>)["deviceType"] != null){
+                deviceType = (call.arguments as HashMap<*, *>)["deviceType"] as Int
+            }
+
 
             omronOperators.transferData(
                 connectDeviceMessage,
                 (call.arguments as HashMap<*, *>)["hashId"] as String,
-                (call.arguments as HashMap<*, *>)["userType"] as Int
+                (call.arguments as HashMap<*, *>)["userType"] as Int,
+                deviceType ,
+
             )
 
             // Listen to Device state changes using OmronPeripheralManager
@@ -132,6 +189,9 @@ class PluginController {
                 connectionState.postValue(state)
             }
     }
+
+
+
 
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -168,33 +228,42 @@ class PluginController {
                 for (device in fullDeviceList) {
                     val gson = Gson()
                     val json: String = gson.toJson(device)
-                    Log.d(TAG, json)
+                    //Log.d(TAG, json)
                 }
             }
         }
     }
 
     private fun connectDevice(call: MethodCall, result: MethodChannel.Result) {
+        var deviceType = 0
+
+        if((call.arguments as HashMap<*, *>)["deviceType"] != null){
+            deviceType = (call.arguments as HashMap<*, *>)["deviceType"] as Int
+        }
+
         omronOperators.startOmronPeripheralManager(
             true,
-            (call.arguments as HashMap<*, *>)["hashId"] as String
+            (call.arguments as HashMap<*, *>)["hashId"] as String,deviceType
         )
         val connectDeviceMessage: OmronPeripheral =
             OmronPeripheral(
-                (call.arguments as HashMap<*, *>)["name"].toString(),
+                (call.arguments as HashMap<*, *>)["device"].toString(),
                 (call.arguments as HashMap<*, *>)["uuid"].toString()
             )
 
-        OmronPeripheralManager.sharedManager(context).startScanPeripherals { list, info ->
+        OmronPeripheralManager.sharedManager(context).startScanPeripherals { arrayList, omronErrorInfo ->
+
             try {
                 var data: OmronPeripheral? = null
-                println(info.messageInfo)
 
-                if (data == null && (list != null && list.isNotEmpty())) {
-                    /// Bu satır refactor edilecek. sadece tek bir cihaz aktifken çalışmakta.
-                    ///
+
+
+                if(omronErrorInfo != null) {
+                    Log.e("Error", omronErrorInfo.toString())
+                }
+                if (data == null && (arrayList != null && arrayList.isNotEmpty())) {
                     data = try {
-                        list.first { it.uuid == connectDeviceMessage.uuid }
+                       arrayList.find { it.uuid == connectDeviceMessage.uuid }
                     }catch (e: NoSuchElementException){
                         null
                     }
@@ -212,16 +281,19 @@ class PluginController {
                     }
                 }
             } catch (event: IllegalStateException) {
+                Log.d("Error","Hataburdaaaa")
 
                 Log.e("Error", event.message.toString())
             }
         }
     }
 
+
+
     private fun continueConnection(call: MethodCall, result: MethodChannel.Result) {
         val connectDeviceMessage: OmronPeripheral =
             OmronPeripheral(
-                (call.arguments as HashMap<*, *>)["name"].toString(),
+                (call.arguments as HashMap<*, *>)["device"].toString(),
                 (call.arguments as HashMap<*, *>)["uuid"].toString()
             )
         OmronPeripheralManager.sharedManager(context).resumeConnectPeripheral(

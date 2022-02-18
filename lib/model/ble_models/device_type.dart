@@ -95,3 +95,31 @@ extension TypeExtensionOnDevice on String {
     }
   }
 }
+
+extension IndexOmronExtension on DeviceType {
+  int get getIndex {
+    switch (this) {
+      case DeviceType.omronBloodPressureArm:
+        return 1;
+      case DeviceType.omronBloodPressureWrist:
+        return 2;
+      case DeviceType.omronScale:
+        return 3;
+      default:
+        throw Exception('Not Omron Device');
+    }
+  }
+
+  int get category {
+    switch (this) {
+      case DeviceType.omronBloodPressureArm:
+        return 0;
+      case DeviceType.omronBloodPressureWrist:
+        return 0;
+      case DeviceType.omronScale:
+        return 2;
+      default:
+        throw Exception('Not Omron Device');
+    }
+  }
+}

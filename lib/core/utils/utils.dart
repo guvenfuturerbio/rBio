@@ -695,6 +695,10 @@ class UtilityManager {
 
       case DeviceType.accuChek:
         return Image.asset(R.image.accuCheckPng);
+      case DeviceType.omronBloodPressureWrist:
+        return Image.asset(R.image.omronBloodPressureWrist);
+      case DeviceType.omronBloodPressureArm:
+        return Image.asset(R.image.omronBloodPressureArm);
 
       default:
         return null;

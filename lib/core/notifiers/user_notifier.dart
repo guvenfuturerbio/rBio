@@ -25,6 +25,7 @@ class UserNotifier extends ChangeNotifier {
     final stringData = jsonEncode(patient.toJson());
     await getIt<ISharedPreferencesManager>()
         .setString(SharedPreferencesKeys.patient, stringData);
+    this.patient = patient;
   }
 
   PatientResponse getPatient() {

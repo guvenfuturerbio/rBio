@@ -1,6 +1,7 @@
 package com.guvenfuture.onedosehealth.constants
 
 object ChannelConstant {
+    const val searchOmronPeripheral: String ="com.seniorturkmen/omron/searchOmronPeripherals"
     const val MethodeChannel:String = "com.seniorturkmen/omron"
     const val ConnectDevice:String= "ConnectDevice"
     const val StartTransferProcess:String= "StartTransferProcess"

@@ -20,7 +20,7 @@ class AvailableDevicesVm extends ChangeNotifier {
       deviceType: DeviceType.omronBloodPressureArm,
       name: LocaleProvider.current.omron_blood_pressure_arm,
       imagePath: R.image.omronBloodPressureArm,
-      enable: false,
+      enable: true,
       usesBLE: true,
     ),
     DeviceConnectionType(

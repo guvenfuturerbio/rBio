@@ -7,25 +7,39 @@ class SelectedDeviceVm extends ChangeNotifier {
     WidgetsBinding.instance?.addPostFrameCallback(
       (_) async {
         var devices = await getIt<BleDeviceManager>().getPairedDevices();
-        if (devices.isEmpty) {
-          getIt<BleScannerOps>().startScan();
-        }
+        if (!(deviceType.name ?? '').toUpperCase().contains('OMRON')) {
+          if (devices.isEmpty) {
+            getIt<BleScannerOps>().startScan();
+          }
 
-        if (!_disposed) {
-          getIt<BleReactorOps>().addListener(
-            () {
-              if (getIt<BleReactorOps>().controlPointResponse.isNotEmpty) {
-                if (!Atom.isDialogShow) {
-                  showLoadingDialog();
-                }
+          if (!_disposed) {
+            getIt<BleReactorOps>().addListener(
+              () {
+                if (getIt<BleReactorOps>().controlPointResponse.isNotEmpty) {
+                  if (!Atom.isDialogShow) {
+                    showLoadingDialog();
+                  }
 
-                final deviceId = getIt<BleConnectorOps>().device?.id;
-                if (deviceId != null) {
-                  getIt<BleConnectorOps>().disconnect(deviceId);
+                  final deviceId = getIt<BleConnectorOps>().device?.id;
+                  if (deviceId != null) {
+                    getIt<BleConnectorOps>().disconnect(deviceId);
+                  }
                 }
-              }
-            },
-          );
+              },
+            );
+          }
+        } else {
+          StartOmronManagerModel startOmronManagerModel =
+              StartOmronManagerModel(
+                  device: deviceType.getIndex,
+                  categoryType: deviceType.category,
+                  hashId: (getIt<UserNotifier>().patient!.identityNumber) ??
+                      getIt<UserNotifier>().patient!.email!);
+
+          OmronConnector.instance.scanSpesificPeripheral(startOmronManagerModel,
+              (value) {
+            LoggerUtils.instance.i(value);
+          });
         }
       },
     );
@@ -68,10 +82,6 @@ class SelectedDeviceVm extends ChangeNotifier {
     }
   }
 
-  Stream<List<int>> isOmronFocused(DiscoveredDevice device) {
-    return getIt<BleReactorOps>().getDeviceModelName(device);
-  }
-
   bool isFocusedDevice(DiscoveredDevice device) {
     try {
       switch (deviceType) {
@@ -82,10 +92,20 @@ class SelectedDeviceVm extends ChangeNotifier {
           return device.manufacturerData[0] == 103;
 
         case DeviceType.omronBloodPressureArm:
-          return false;
+          if (device.id.substring(0, 8) == '28:FF:B2' &&
+              device.name.substring(0, 17) == 'BLEsmart_00000264') {
+            return true;
+          } else {
+            return false;
+          }
 
         case DeviceType.omronBloodPressureWrist:
-          return false;
+          if (device.id.substring(0, 8) == '28:FF:B2' &&
+              device.name.substring(0, 17) == 'BLEsmart_00000244') {
+            return true;
+          } else {
+            return false;
+          }
 
         case DeviceType.omronScale:
           return false;
@@ -166,6 +186,8 @@ class SelectedDeviceVm extends ChangeNotifier {
     BleScannerOps _bleScannerOps,
     DiscoveredDevice device,
   ) async {
+    LoggerUtils.instance.w('clicked');
+
     /// Checking has device in the ConnectionState
     bool isDeviceHasConnectionState = _bleConnectorOps.deviceConnectionState
         .any((element) => element.deviceId == device.id);
@@ -182,6 +204,7 @@ class SelectedDeviceVm extends ChangeNotifier {
               DeviceConnectionState.connecting &&
           deviceConnectionState.connectionState !=
               DeviceConnectionState.connected;
+      hasComingDeviceIsConnectingOrConnected = true;
     } else {
       hasComingDeviceIsConnectingOrConnected = false;
     }
@@ -204,6 +227,10 @@ class SelectedDeviceVm extends ChangeNotifier {
       case DeviceType.omronBloodPressureArm:
         break;
       case DeviceType.omronBloodPressureWrist:
+        connectIsActive && !hasComingDeviceIsConnectingOrConnected
+            ? _bleConnectorOps.connect(device)
+            : null;
+        connectClicked();
         break;
       case DeviceType.omronScale:
         break;
@@ -229,7 +256,6 @@ class SelectedDeviceVm extends ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
-    LoggerUtils.instance.w('amk');
     super.dispose();
   }
 

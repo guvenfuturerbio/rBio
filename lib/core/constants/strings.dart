@@ -7,6 +7,7 @@ class _Strings {
   final zoomAppKey = "m8h1pr7xovxPCHgKGo4I6wBqTz8S2MmvsW5i";
   final zoomAppSecret = "phfFqbluB0zJFr3yTB6yP2aJyWcSTH3wC3gw";
   final zoomMeetingRoomPass = "?3/=dL,2/G";
+  final omronAuthKey = "A055ACB2-2C4B-445B-A47C-C0EB77B5E7CC";
 
   final tawktoScript = "<script type="
       "text/javascript"

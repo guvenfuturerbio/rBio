@@ -15,6 +15,12 @@ class BleConnectorOps extends ChangeNotifier {
 
   StreamSubscription<ConnectionStateUpdate>? _connection;
 
+  Map<String, dynamic> omronDeviceState = {
+    'deviceId': 'UnKnown',
+    'state': 0,
+  };
+  OmronCancelListening? omronConnectionListener;
+
   // ignore: close_sinks
   final _deviceConnectionController = StreamController<ConnectionStateUpdate>();
 
@@ -49,6 +55,19 @@ class BleConnectorOps extends ChangeNotifier {
             case DeviceType.miScale:
               getIt<BleReactorOps>().subscribeScaleDevice(device!);
               break;
+            case DeviceType.omronBloodPressureWrist:
+
+              /// Omron cihazın bağlantı durumu dinleniyor.
+              omronConnectionListener =
+                  OmronConnector.instance.connectionStateChecker((val) {
+                omronDeviceState = {
+                  'deviceId': device!.name,
+                  'state': val,
+                };
+                notifyListeners();
+              });
+              getIt<BleReactorOps>().connectOmronWristPressureDevice(device!);
+              break;
             default:
               break;
           }
@@ -60,18 +79,44 @@ class BleConnectorOps extends ChangeNotifier {
     });
   }
 
-  Future<void> connect(DiscoveredDevice device) async {
-    _device = device;
-    notifyListeners();
-    //Herhangi bir connection varsa connection silme işlemi yapıyoruz.
-    if (_connection != null) {
-      await _connection!.cancel();
-    }
+  Future<void> connect(DiscoveredDevice device,
+      {DeviceType? deviceType, int? userIndex}) async {
+    if (deviceType != null) {
+      OmronDeviceConnectionRequestModel omronDeviceConnectionRequestModel =
+          OmronDeviceConnectionRequestModel(
+              deviceName: device.name,
+              uuid: device.id,
+              userIndex: userIndex!,
+              hashId: getIt<UserNotifier>().patient!.identityNumber!);
 
-    //Gerekli cihazı gönderip bağlantı kuruluyor.
-    _connection = _ble.connectToDevice(id: device.id).listen(
-          _deviceConnectionController.add,
-        );
+      /// Omron cihazın bağlantı durumu dinleniyor.
+      var connListener = OmronConnector.instance.connectionStateChecker((val) {
+        omronDeviceState = {
+          'deviceId': device.id,
+          'state': val,
+        };
+
+        notifyListeners();
+      });
+
+      await OmronConnector.instance
+          .connectDevice(omronDeviceConnectionRequestModel);
+      await OmronConnector.instance
+          .continueToConnection(omronDeviceConnectionRequestModel);
+      connListener();
+    } else {
+      _device = device;
+      notifyListeners();
+      //Herhangi bir connection varsa connection silme işlemi yapıyoruz.
+      if (_connection != null) {
+        await _connection!.cancel();
+      }
+
+      //Gerekli cihazı gönderip bağlantı kuruluyor.
+      _connection = _ble.connectToDevice(id: device.id).listen(
+            _deviceConnectionController.add,
+          );
+    }
   }
 
   Future<void> disconnect(String deviceId) async {
