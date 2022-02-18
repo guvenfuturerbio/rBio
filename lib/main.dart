@@ -20,8 +20,6 @@ Future<void> main() async {
   await SecretUtils.instance.setup(Environment.prod);
   await Firebase.initializeApp();
   await setupLocator(appConfig);
-  await getIt<LocalNotificationManager>().init();
-  await getIt<FirebaseMessagingManager>().init();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(
