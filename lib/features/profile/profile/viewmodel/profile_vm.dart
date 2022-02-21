@@ -33,6 +33,6 @@ class ProfileVm extends ChangeNotifier {
   }
 
   Future<void> logout(BuildContext context) async {
-    await getIt<UserNotifier>().logout();
+    await getIt<UserNotifier>().logout(context);
   }
 }

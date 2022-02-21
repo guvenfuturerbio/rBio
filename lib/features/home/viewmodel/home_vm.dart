@@ -186,7 +186,7 @@ class HomeVm extends ChangeNotifier {
         DrawerModel(
           title: LocaleProvider.current.log_out,
           onTap: () async {
-            await getIt<UserNotifier>().logout();
+            await getIt<UserNotifier>().logout(mContext);
           },
         ),
       ];

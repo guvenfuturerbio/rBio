@@ -782,5 +782,6 @@
   "alert": "Alarm",
   "how_many_times_a_day": "Günde kaç kere?",
   "days": "Günler",
-  "appointment_datepicker_warning": "Gün seçimi yapmadığınız için tarihte değişiklik olmadı."
+  "appointment_datepicker_warning": "Gün seçimi yapmadığınız için tarihte değişiklik olmadı.",
+  "logout_confirmation_description": "Uygulamadan çıkış yapmak istiyor musunuz?"
 }

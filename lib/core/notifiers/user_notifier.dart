@@ -173,7 +173,10 @@ class UserNotifier extends ChangeNotifier {
     );
   }
 
-  Future<void> logout() async {
+  Future<void> logout(BuildContext context) async {
+    final hasLogout = await _showConfirmationDialog(context) ?? false;
+    if (!hasLogout) return;
+
     try {
       Atom.show(RbioLoading.progressIndicator());
       await getIt<FirebaseMessagingManager>().saveTokenServer("");
@@ -193,6 +196,69 @@ class UserNotifier extends ChangeNotifier {
       Atom.dismiss();
       Atom.to(PagePaths.login, isReplacement: true);
     }
+  }
+
+  Future<bool?> _showConfirmationDialog(BuildContext context) async {
+    final result = await Atom.show(
+      AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        title: GuvenAlert.buildTitle(
+          LocaleProvider.current.warning,
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            R.sizes.hSizer12,
+
+            //
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GuvenAlert.buildDescription(
+                LocaleProvider.current.logout_confirmation_description,
+              ),
+            ),
+
+            //
+            R.sizes.hSizer16,
+
+            //
+            Row(
+              children: [
+                R.sizes.wSizer12,
+                Expanded(
+                  child: GuvenAlert.buildMaterialAction(
+                    LocaleProvider.current.Ok,
+                    () {
+                      Atom.dismiss(true);
+                    },
+                  ),
+                ),
+                R.sizes.wSizer8,
+                Expanded(
+                  child: GuvenAlert.buildMaterialAction(
+                    LocaleProvider.current.btn_cancel,
+                    () {
+                      Atom.dismiss(false);
+                    },
+                  ),
+                ),
+                R.sizes.wSizer12,
+              ],
+            ),
+          ],
+        ),
+        actions: const [],
+      ),
+    );
+
+    return result ?? false;
   }
 
   //
