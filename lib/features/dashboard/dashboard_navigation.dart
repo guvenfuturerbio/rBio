@@ -25,6 +25,8 @@ class DashboardNavigation extends VRouteElementBuilder {
   static void toNotifications(BuildContext context) =>
       Atom.to('/home/$notifications');
 
+  final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
+
   @override
   List<VRouteElement> buildRoutes() {
     return [
@@ -38,39 +40,42 @@ class DashboardNavigation extends VRouteElementBuilder {
           return DashboardScreen(
             child,
             getCurrent(state),
+            drawerKey,
           );
         },
         nestedRoutes: [
           VWidget(
             path: search,
             name: search,
-            widget: const SearchScreen(),
+            widget: SearchScreen(drawerKey: drawerKey),
           ),
 
           //
           VWidget(
-              path: chat,
-              name: chat,
-              widget: const ConsultationScreen(fromBottomBar: true)),
+            path: chat,
+            name: chat,
+            widget: ConsultationScreen(drawerKey: drawerKey),
+          ),
 
           //
           VWidget(
             path: home,
             name: home,
-            widget: const HomeScreen(),
+            widget: HomeScreen(drawerKey: drawerKey),
           ),
 
           //
           VWidget(
-              path: graph,
-              name: graph,
-              widget: const MeasurementTrackingHomeScreen(fromBottomBar: true)),
+            path: graph,
+            name: graph,
+            widget: MeasurementTrackingHomeScreen(drawerKey: drawerKey),
+          ),
 
           //
           VWidget(
             path: notifications,
             name: notifications,
-            widget: const NotificationInboxScreen(),
+            widget: NotificationInboxScreen(drawerKey: drawerKey),
           ),
         ],
       ),

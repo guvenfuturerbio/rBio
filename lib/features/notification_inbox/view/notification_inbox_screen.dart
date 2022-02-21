@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 
 class NotificationInboxScreen extends StatefulWidget {
-  const NotificationInboxScreen({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? drawerKey;
+
+  const NotificationInboxScreen({
+    Key? key,
+    this.drawerKey,
+  }) : super(key: key);
 
   @override
   State<NotificationInboxScreen> createState() =>
@@ -21,8 +26,9 @@ class NotificationInboxStateScreen extends State<NotificationInboxScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
-      leadingWidth: 0,
-      leading: const SizedBox(),
+      leading: widget.drawerKey != null
+          ? RbioLeadingMenu(drawerKey: widget.drawerKey)
+          : null,
     );
   }
 

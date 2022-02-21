@@ -9,11 +9,11 @@ import '../controller/consultation_vm.dart';
 import '../model/chat_person.dart';
 
 class ConsultationScreen extends StatelessWidget {
-  final bool fromBottomBar;
+  final GlobalKey<ScaffoldState>? drawerKey;
 
   const ConsultationScreen({
     Key? key,
-    this.fromBottomBar = true,
+    this.drawerKey,
   }) : super(key: key);
 
   @override
@@ -38,8 +38,8 @@ class ConsultationScreen extends StatelessWidget {
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
-        leadingWidth: !fromBottomBar ? null : 0,
-        leading: !fromBottomBar ? null : const SizedBox(width: 0, height: 0),
+        leading:
+            drawerKey != null ? RbioLeadingMenu(drawerKey: drawerKey) : null,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.consultation,
@@ -76,7 +76,7 @@ class ConsultationScreen extends StatelessWidget {
           final list = vm.getChatPersonListWithStream(streamList.data!);
           return ListView.builder(
             padding: EdgeInsets.only(
-              bottom: !fromBottomBar ? 0 : R.sizes.bottomNavigationBarHeight,
+              bottom: drawerKey == null ? 0 : R.sizes.bottomNavigationBarHeight,
             ),
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),

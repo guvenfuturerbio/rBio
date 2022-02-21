@@ -12,15 +12,18 @@ part '../enum/home_widgets.dart';
 part '../enum/shake_mod.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? drawerKey;
+
+  const HomeScreen({
+    Key? key,
+    this.drawerKey,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     if (!Atom.isWeb) {
@@ -40,9 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Widget? child,
       ) {
         return RbioScaffold(
-          scaffoldKey: scaffoldKey,
           drawerEnableOpenDragGesture: true,
-          drawer: _buildDrawer(vm),
           appbar: _buildAppBar(vm),
           body: _buildBody(vm),
         );
@@ -67,19 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             child2: SizedBox(
-              child: InkWell(
-                child: Container(
-                  color: Colors.transparent,
-                  padding: const EdgeInsets.all(8),
-                  child: SvgPicture.asset(
-                    R.image.menu,
-                    color: Colors.white,
-                    width: R.sizes.iconSize2,
-                  ),
-                ),
-                onTap: () {
-                  scaffoldKey.currentState?.openDrawer();
-                },
+              child: RbioLeadingMenu(
+                drawerKey: widget.drawerKey,
+                isHome: true,
               ),
             ),
           ),
@@ -99,14 +90,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: SizedBox(
               child: IconButton(
-                  onPressed: () {
-                    vm.changeStatus();
-                  },
-                  icon: Icon(
-                    Icons.done,
-                    size: R.sizes.iconSize,
-                    color: getIt<ITheme>().cardBackgroundColor,
-                  )),
+                onPressed: () {
+                  vm.changeStatus();
+                },
+                icon: Icon(
+                  Icons.done,
+                  size: R.sizes.iconSize,
+                  color: getIt<ITheme>().cardBackgroundColor,
+                ),
+              ),
             ),
           )
         ]
@@ -197,164 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
         R.sizes.wSizer8,
       ],*/
         );
-  }
-
-  Drawer _buildDrawer(HomeVm vm) {
-    return Drawer(
-      backgroundColor: getIt<ITheme>().mainColor,
-      child: SafeArea(
-        top: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            //
-            R.sizes.hSizer8,
-
-            //
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 6,
-                      horizontal: 4,
-                    ),
-                    margin: const EdgeInsets.only(
-                      left: 15,
-                      right: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: getIt<ITheme>().secondaryColor,
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        //
-                        CircleAvatar(
-                          backgroundImage: Utils.instance.getCacheProfileImage,
-                          radius: R.sizes.iconSize2,
-                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                        ),
-
-                        //
-                        R.sizes.wSizer12,
-
-                        //
-                        Expanded(
-                          child: Text(
-                            Utils.instance.getCurrentUserNameAndSurname,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: context.xHeadline4,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                //
-                IconButton(
-                  icon: Container(
-                    color: Colors.transparent,
-                    child: SvgPicture.asset(
-                      R.image.cancel,
-                      color: Colors.white,
-                      width: R.sizes.iconSize2,
-                    ),
-                  ),
-                  onPressed: () {
-                    if (scaffoldKey.currentState?.isDrawerOpen ?? false) {
-                      scaffoldKey.currentState?.openEndDrawer();
-                    }
-                  },
-                ),
-
-                //
-                R.sizes.wSizer4,
-              ],
-            ),
-
-            //
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.only(left: 15, top: 12),
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                itemCount: vm.drawerList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      scaffoldKey.currentState?.openDrawer();
-                      vm.drawerList[index].onTap();
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          //
-                          R.sizes.hSizer8,
-
-                          //
-                          Text(
-                            vm.drawerList[index].title,
-                            style: context.xHeadline4.copyWith(
-                              color: getIt<ITheme>().textColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-
-                          //
-                          R.sizes.hSizer8,
-
-                          //
-                          Divider(
-                            color: getIt<ITheme>().textColor,
-                            endIndent: 15,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            //
-            _buildVersion(),
-
-            //
-            const SizedBox(height: 65),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildVersion() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        "v" + getIt<GuvenSettings>().version,
-        textAlign: TextAlign.left,
-        style: context.xHeadline5.copyWith(
-          color: getIt<ITheme>().textColor,
-        ),
-      ),
-    );
   }
 
   Widget _buildBody(HomeVm vm) {

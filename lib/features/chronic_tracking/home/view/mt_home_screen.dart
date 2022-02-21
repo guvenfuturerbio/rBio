@@ -17,10 +17,12 @@ import '../utils/card_widget.dart';
 part '../vm/mt_home_vm.dart';
 
 class MeasurementTrackingHomeScreen extends StatefulWidget {
-  final bool fromBottomBar;
+  final GlobalKey<ScaffoldState>? drawerKey;
 
-  const MeasurementTrackingHomeScreen({Key? key, this.fromBottomBar = false})
-      : super(key: key);
+  const MeasurementTrackingHomeScreen({
+    Key? key,
+    this.drawerKey,
+  }) : super(key: key);
 
   @override
   State<MeasurementTrackingHomeScreen> createState() =>
@@ -67,10 +69,8 @@ class _MeasurementTrackingHomeScreenState
     return isLandscape
         ? null
         : RbioAppBar(
-            leadingWidth: !widget.fromBottomBar ? null : 0,
-            leading: !widget.fromBottomBar
-                ? null
-                : const SizedBox(width: 0, height: 0),
+                leading:
+            widget.drawerKey != null ? RbioLeadingMenu(drawerKey: widget.drawerKey) : null,
             title: RbioAppBar.textTitle(
               context,
               LocaleProvider.current.chronic_track_home,
