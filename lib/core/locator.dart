@@ -178,6 +178,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
   await getIt<LocaleNotifier>().init();
   await getIt<LocalNotificationManager>().init();
   await getIt<FirebaseMessagingManager>().init();
+  await getIt<ReminderNotificationsManager>().checkOneTimeNotifications();
   // #endregion
 }
 

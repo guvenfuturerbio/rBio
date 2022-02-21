@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class TZHelper {
@@ -18,6 +20,21 @@ class TZHelper {
   tz.TZDateTime fromMillisecondsSinceEpoch(int millisecondsSinceEpoch) =>
       tz.TZDateTime.fromMillisecondsSinceEpoch(
           tz.local, millisecondsSinceEpoch);
+
+  tz.TZDateTime changeOnlyHourMinutes(
+      tz.TZDateTime dateTime, TimeOfDay timeOfDay) {
+    return tz.TZDateTime(
+      tz.local,
+      dateTime.year,
+      dateTime.month,
+      dateTime.day,
+      timeOfDay.hour,
+      timeOfDay.minute,
+      dateTime.second,
+      dateTime.millisecond,
+      dateTime.microsecond,
+    );
+  }
 
   tz.TZDateTime now() => tz.TZDateTime.now(tz.local);
 
@@ -59,4 +76,7 @@ extension TZDateTimeExtensions on tz.TZDateTime {
     result += minute < 10 ? "0$minute" : "$minute";
     return result;
   }
+
+  String xFormatTime1([dynamic locale]) =>
+      DateFormat("dd-MM-yyyy", locale).format(this);
 }

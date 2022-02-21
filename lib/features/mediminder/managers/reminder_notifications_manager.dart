@@ -29,9 +29,7 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
   final notificationDetails = _NotificationDetails();
 
   ReminderNotificationsManagerImpl(LocalNotificationManager notificationManager)
-      : super(notificationManager) {
-    checkOneTimeNotifications();
-  }
+      : super(notificationManager);
 
   @override
   Future<void> checkOneTimeNotifications() async {

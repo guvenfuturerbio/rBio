@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/utils/tz_helper.dart';
 
 import '../../../core/core.dart';
 import '../mediminder.dart';
 
-class MedicationVm extends ChangeNotifier {
+class ReminderListVm extends ChangeNotifier {
   late BuildContext mContext;
-  MedicationVm(this.mContext) {
+  ReminderListVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchAll();
     });
@@ -174,6 +175,55 @@ class MedicationVm extends ChangeNotifier {
 
       default:
         return '';
+    }
+  }
+
+  Future<void> updateMedicineForScheduledModel(
+    TimeOfDay newTimeOfDay,
+    MedicineForScheduledModel selectedItem,
+  ) async {
+    // Bildirimin Title ve Body değerlerine erişmek için, pending listeyi getir
+    final pendingNotifications =
+        await getIt<LocalNotificationManager>().pendingNotificationRequests();
+    final pendingItem = pendingNotifications
+        .firstWhere((element) => element.id == selectedItem.notificationId);
+
+    // Geçerli bildirim saatinin sadece saat ve dakikaasını güncelle
+    final oldScheduledDate = TZHelper.instance
+        .fromMillisecondsSinceEpoch(selectedItem.scheduledDate ?? 0);
+    final newScheduledDate =
+        TZHelper.instance.changeOnlyHourMinutes(oldScheduledDate, newTimeOfDay);
+
+    if (selectedItem.notificationId != null) {
+      // Geçerli bildirimi iptal et
+      await getIt<LocalNotificationManager>()
+          .cancelNotification(selectedItem.notificationId!);
+
+      // Yeni bildirim oluştur
+      await getIt<ReminderNotificationsManager>().createMedinicine(
+        selectedItem.notificationId!,
+        pendingItem.title ?? '',
+        pendingItem.body ?? '',
+        newScheduledDate,
+        selectedItem.medicinePeriod?.xMedicinePeriodKeys ??
+            MedicinePeriod.oneTime,
+      );
+
+      // View modelde ki listeyi güncelle
+      final medicineIndex = medicineForScheduled.indexWhere(
+          (element) => element.notificationId == selectedItem.notificationId);
+      medicineForScheduled = medicineForScheduled.update(
+        medicineIndex,
+        medicineForScheduled[medicineIndex].copyWith(
+          scheduledDate: newScheduledDate.millisecondsSinceEpoch,
+          time: newScheduledDate.xTimeFormat,
+        ),
+      );
+
+      // Shared Preferences'da ki listeyi güncelle
+      await _saveList();
+
+      notifyListeners();
     }
   }
 }

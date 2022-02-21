@@ -52,4 +52,61 @@ class MedicineForScheduledModel {
       "createdDate": createdDate,
     };
   }
+
+  MedicineForScheduledModel copyWith({
+    int? notificationId,
+    String? name,
+    int? dayIndex,
+    String? time,
+    int? dosage,
+    String? medicinePeriod,
+    String? remindable,
+    String? usageType,
+    int? scheduledDate,
+    int? createdDate,
+  }) {
+    return MedicineForScheduledModel(
+      notificationId: notificationId ?? this.notificationId,
+      name: name ?? this.name,
+      dayIndex: dayIndex ?? this.dayIndex,
+      time: time ?? this.time,
+      dosage: dosage ?? this.dosage,
+      medicinePeriod: medicinePeriod ?? this.medicinePeriod,
+      remindable: remindable ?? this.remindable,
+      usageType: usageType ?? this.usageType,
+      scheduledDate: scheduledDate ?? this.scheduledDate,
+      createdDate: createdDate ?? this.createdDate,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is MedicineForScheduledModel &&
+      other.notificationId == notificationId &&
+      other.name == name &&
+      other.dayIndex == dayIndex &&
+      other.time == time &&
+      other.dosage == dosage &&
+      other.medicinePeriod == medicinePeriod &&
+      other.remindable == remindable &&
+      other.usageType == usageType &&
+      other.scheduledDate == scheduledDate &&
+      other.createdDate == createdDate;
+  }
+
+  @override
+  int get hashCode {
+    return notificationId.hashCode ^
+      name.hashCode ^
+      dayIndex.hashCode ^
+      time.hashCode ^
+      dosage.hashCode ^
+      medicinePeriod.hashCode ^
+      remindable.hashCode ^
+      usageType.hashCode ^
+      scheduledDate.hashCode ^
+      createdDate.hashCode;
+  }
 }
