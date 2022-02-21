@@ -22,7 +22,7 @@ abstract class PatientListModel<T> {
   PatientListItemModel convertTo(T model);
   Color getBackColor(String text, T model);
   List<Widget> getPopupWidgets({
-    @required void Function(DoctorPatientListSortType sortType) onSelect,
+    required void Function(DoctorPatientListSortType sortType) onSelect,
   });
   void textOnChanged(String text);
   void filterList(DoctorPatientListSortType sortType);

@@ -6,8 +6,8 @@ class ProfileNumbers {
   int? relatives;
 
   ProfileNumbers({
-    @required this.followers,
-    @required this.subscriptions,
-    @required this.relatives,
+    required this.followers,
+    required this.subscriptions,
+    required this.relatives,
   });
 }

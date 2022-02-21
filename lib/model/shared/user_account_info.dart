@@ -65,8 +65,8 @@ class UserAccount {
   }
 
   UserAccount copyWith({
-    @required String? phoneNumber,
-    @required String? electronicMail,
+    required String? phoneNumber,
+    required String? electronicMail,
   }) {
     return UserAccount(
       phoneNumber: phoneNumber,
