@@ -15,6 +15,7 @@ enum SecretKeys {
   doctorBaseUrl,
   doctorClientId,
   doctorClientSecret,
+  apiGuven,
 }
 
 extension SecretKeysStringExt on String {

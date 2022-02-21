@@ -144,5 +144,5 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'manufacturer_id': instance.manufacturerId,
       'year_of_diagnosis': instance.yearOfDiagnosis,
       'smoker': instance.smoker,
-      'treatment_list': instance.treatmentList?.map((e) => e.toJson()).toList(),
+      'treatment_list': instance.treatmentList,
     };
