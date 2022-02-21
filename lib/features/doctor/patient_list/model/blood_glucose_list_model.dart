@@ -19,17 +19,18 @@ class PatientBloodGlucoseListModel
     return PatientListItemModel(
       data: e,
       patientName: e.name,
-      dates: e.measurements!
+      dates: (e.measurements ?? [])
           .map((item) => item.measurementTime != null
               ? DateTime.parse(item.measurementTime ?? '').xFormatTime7()
               : '')
           .toList(),
-      times: e.measurements!
+      times: (e.measurements ?? [])
           .map((item) => item.measurementTime != null
               ? DateTime.parse(item.measurementTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: e.measurements!.map((item) => '${item.measurement}').toList(),
+      values:
+          (e.measurements ?? []).map((item) => '${item.measurement}').toList(),
     );
   }
 
@@ -48,13 +49,13 @@ class PatientBloodGlucoseListModel
 
   @override
   List<Widget> getPopupWidgets({
-    @required void Function(DoctorPatientListSortType sortType)? onSelect,
+    required void Function(DoctorPatientListSortType sortType) onSelect,
   }) {
     return [
       getPopupItem(
         LocaleProvider.of(context).critical_metrics,
         DoctorPatientListSortType.criticalMetrics,
-        onSelect!,
+        onSelect,
       ),
       getPopupItem(
         LocaleProvider.of(context).from_newest,
@@ -76,7 +77,7 @@ class PatientBloodGlucoseListModel
     } else {
       _filterList = _list
           .where((item) =>
-              item.name?.toLowerCase().contains(text.toLowerCase()) as bool)
+              item.name?.toLowerCase().contains(text.toLowerCase()) ?? false)
           .toList();
     }
   }
@@ -85,15 +86,15 @@ class PatientBloodGlucoseListModel
   void filterList(DoctorPatientListSortType sortType) {
     switch (sortType) {
       case DoctorPatientListSortType.criticalMetrics:
-        _filterList = _list.sortedBy((i) => i.name!).toList();
+        _filterList = _list.sortedBy((i) => i.name ?? '').toList();
         break;
 
       case DoctorPatientListSortType.fromNewest:
-        _filterList = _list.sortedBy((i) => i.alertMin!).toList();
+        _filterList = _list.sortedBy((i) => i.alertMin ?? 0).toList();
         break;
 
       case DoctorPatientListSortType.fromOldest:
-        _filterList = _list.sortedBy((i) => i.alertMax!).toList();
+        _filterList = _list.sortedBy((i) => i.alertMax ?? 0).toList();
         break;
 
       default:
@@ -117,7 +118,7 @@ class PatientBloodGlucoseListModel
     if (text == null) {
       return 0;
     } else if (text.isNotEmpty) {
-      return int.parse(text);
+      return (double.tryParse(text) ?? 0).toInt();
     } else {
       return 0;
     }

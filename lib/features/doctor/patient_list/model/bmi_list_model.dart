@@ -17,17 +17,19 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
     return PatientListItemModel(
       data: model,
       patientName: model.name,
-      dates: model.bmiMeasurements!
+      dates: (model.bmiMeasurements ?? [])
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
               : '')
           .toList(),
-      times: model.bmiMeasurements!
+      times: (model.bmiMeasurements ?? [])
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: model.bmiMeasurements!.map((item) => '${item.weight}').toList(),
+      values: (model.bmiMeasurements ?? [])
+          .map((item) => '${item.weight}')
+          .toList(),
     );
   }
 
@@ -38,13 +40,13 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
 
   @override
   List<Widget> getPopupWidgets({
-    void Function(DoctorPatientListSortType sortType)? onSelect,
+    required void Function(DoctorPatientListSortType sortType) onSelect,
   }) {
     return [
       getPopupItem(
         LocaleProvider.of(context).from_newest,
         DoctorPatientListSortType.fromNewest,
-        onSelect!,
+        onSelect,
       ),
     ];
   }
@@ -65,7 +67,7 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
   void filterList(DoctorPatientListSortType sortType) {
     switch (sortType) {
       case DoctorPatientListSortType.fromNewest:
-        _filterList = _list.sortedBy((i) => i.name!).toList();
+        _filterList = _list.sortedBy((i) => i.name ?? '').toList();
         break;
 
       default:
@@ -75,9 +77,6 @@ class PatientBMIListModel extends PatientListModel<DoctorBMIPatientModel> {
 
   @override
   void itemOnTap(DoctorBMIPatientModel model) {
-    LoggerUtils.instance.i('OnTap : ${model.id}');
-    LoggerUtils.instance.i('$model');
-
     Atom.to(
       PagePaths.doctorBmiPatientDetail,
       queryParameters: {

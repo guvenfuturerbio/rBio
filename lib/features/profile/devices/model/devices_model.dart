@@ -6,8 +6,8 @@ class DevicesModel {
   final String? title;
 
   DevicesModel({
-    @required this.id,
-    @required this.image,
-    @required this.title,
+    required this.id,
+    required this.image,
+    required this.title,
   });
 }
