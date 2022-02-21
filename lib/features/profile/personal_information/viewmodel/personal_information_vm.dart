@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -88,10 +89,19 @@ class PersonalInformationScreenVm extends RbioVm {
     ImageSource imageSource,
   ) async {
     Navigator.of(actionSheetContext).pop();
-    final imageFile = await imagePicker.getImage(source: imageSource);
-    if (imageFile != null) {
-      newProfileFile = File(imageFile.path);
-      notifyListeners();
+    try {
+      final imageFile = await imagePicker.pickImage(
+        source: imageSource,
+        maxHeight: 1080,
+        maxWidth: 1920,
+        imageQuality: 50,
+      );
+      if (imageFile != null) {
+        newProfileFile = File(imageFile.path);
+        notifyListeners();
+      }
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 
