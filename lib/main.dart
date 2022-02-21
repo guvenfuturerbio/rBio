@@ -1,10 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 import 'core/core.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
@@ -13,30 +11,13 @@ import 'features/chronic_tracking/progress_sections/scale_progress/view_model/sc
 import 'features/doctor/notifiers/bg_measurements_notifiers.dart';
 import 'features/doctor/notifiers/patient_notifiers.dart';
 import 'features/home/viewmodel/home_vm.dart';
+import 'init.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final appConfig = DefaultConfig();
-  await SecretUtils.instance.setup(Environment.prod);
-  await Firebase.initializeApp();
-  await setupLocator(appConfig);
-  timeago.setLocaleMessages('tr', timeago.TrMessages());
-  RegisterViews.instance.init();
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.black,
-      systemNavigationBarDividerColor: Colors.grey,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
-  runApp(
-    RbioConfig(
-      child: const MyApp(),
-    ),
-  );
+  final config = DefaultConfig();
+  await AppInit.initialize(config);
+  runApp(RbioConfig(child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
