@@ -49,11 +49,11 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         resourceRequestList.add(getCayyoluResource());
       }
 
-      await getAvailableDates(DateTime.now());
+      await getAvailableDates(DateTime.now(), true);
     });
   }
 
-  Future<void> getAvailableDates(DateTime date) async {
+  Future<void> getAvailableDates(DateTime date, bool isFirstLaunch) async {
     initDate = date;
     availableDatesProgress = LoadingProgress.loading;
     notifyListeners();
@@ -63,10 +63,23 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         availableDates.addAll(await getAvailableLists(date, true, 1));
         availableDates.addAll(await getAvailableLists(date, true, 7));
       } else {
-        availableDates = await getAvailableLists(date, false, tenantId);
+        if (availableDates.isNotEmpty) {
+          LoggerUtils.instance.w(availableDates.length);
+          var tmpList = await getAvailableLists(date, false, tenantId);
+          for (var item in tmpList) {
+            if (!(availableDates.any((element) => element.xIsSameDate(item)))) {
+              availableDates.add(item);
+            }
+          }
+          //availableDates = await getAvailableLists(date, false, tenantId);
+        } else {
+          availableDates = await getAvailableLists(date, false, tenantId);
+        }
       }
       availableDates.sort();
-      initDate = availableDates.first;
+      if (isFirstLaunch) {
+        initDate = availableDates.first;
+      }
 
       await setSelectedDate(initDate, true);
       availableDatesProgress = LoadingProgress.done;
@@ -87,7 +100,10 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           departmentId: departmentId,
           resourceId: resourceId,
           from: date.toIso8601String(),
-          to: date.xLastDayOfMonth.toIso8601String(),
+          to: date
+              .add(const Duration(days: 30))
+              .xLastDayOfMonth
+              .toIso8601String(),
         ),
       ),
     ))
