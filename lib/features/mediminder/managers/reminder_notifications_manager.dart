@@ -7,8 +7,6 @@ import '../../../core/core.dart';
 import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
-// ignore_for_file: deprecated_member_use
-
 abstract class ReminderNotificationsManager {
   final LocalNotificationManager notificationManager;
   ReminderNotificationsManager(this.notificationManager);
@@ -31,9 +29,7 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
   final notificationDetails = _NotificationDetails();
 
   ReminderNotificationsManagerImpl(LocalNotificationManager notificationManager)
-      : super(notificationManager) {
-    checkOneTimeNotifications();
-  }
+      : super(notificationManager);
 
   @override
   Future<void> checkOneTimeNotifications() async {

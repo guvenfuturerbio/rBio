@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 part of 'constants.dart';
 
 class _Endpoints {
@@ -139,12 +137,12 @@ class _Endpoints {
   String symptomGetBodySubLocations(int locationID) =>
       '/body/locations/$locationID'.xSymptomCheckerRequest;
   String symptomGetBodySymptoms(int locationID, int gender) =>
-      '/symptoms/${locationID}/${gender}'.xSymptomCheckerRequest;
+      '/symptoms/$locationID/$gender'.xSymptomCheckerRequest;
 
   String ctSaveAndRetrieveToken =
       '/AccessToken/validate-remote-token'.xBasePath;
   String ctGetUserStrip(int entegrationId, String deviceuuid) =>
-      '/user/get-user-strip/${entegrationId}/${deviceuuid}'.xCronicTracking;
+      '/user/get-user-strip/$entegrationId/$deviceuuid'.xCronicTracking;
   String ctInsertNewBloodGlucoseValue =
       '/Measurement/add-blood-glucose-with-detail'.xCronicTracking;
   String ctDeleteBloodGlucoseValue =
@@ -152,7 +150,7 @@ class _Endpoints {
   String ctUpdateBloodGlucoseValue =
       '/Measurement/update-blood-glucose-with-detail'.xCronicTracking;
   String ctUploadMeasurementImage(var entegrationId, var measurementId) =>
-      '/Measurement/upload-measurement-image/${entegrationId}/${measurementId}'
+      '/Measurement/upload-measurement-image/$entegrationId/$measurementId'
           .xCronicTracking;
   String ctGetBloodGlucoseReport =
       '/Measurement/get-my-blood-glucose-report'.xCronicTracking;
@@ -162,28 +160,28 @@ class _Endpoints {
   String ctGetAllProfiles = '/profile/get-all'.xCronicTracking;
   String ctAddProfile = '/profile/add'.xCronicTracking;
   String ctChangeProfile(entegrationId) =>
-      '/profile/set-profile/${entegrationId}'.xCronicTracking;
+      '/profile/set-profile/$entegrationId'.xCronicTracking;
   String ctDeleteProfile(var userId) =>
       '/profile/delete/$userId'.xCronicTracking;
   String ctAddFirebaseToken = '/user/add-user-firebaseId'.xCronicTracking;
   String ctUpdateProfile(var id) =>
-      '/user/user-profile-update/${id}'.xCronicTracking;
+      '/user/user-profile-update/$id'.xCronicTracking;
   String ctSetDefaultProfile =
       '/user/set-user-profile-default-value'.xCronicTracking;
   String ctUpdateUserStrip = '/user/add-update-user-strip'.xCronicTracking;
   String ctDeleteUserStrip(var id, var entegrationId) =>
-      '/user/delete-user-strip/${id}/${entegrationId}'.xCronicTracking;
+      '/user/delete-user-strip/$id/$entegrationId'.xCronicTracking;
   String ctIsDeviceIdRegisteredForSomeUser(var deviceId, var entegrationId) =>
-      '/SugarDevice/is-device-id-registered-for-some-user/${deviceId}/${entegrationId}'
+      '/SugarDevice/is-device-id-registered-for-some-user/$deviceId/$entegrationId'
           .xCronicTracking;
   String ctAddHospitalHba1cMeasurement(var entegrationId) =>
-      '/Measurement/add-hospital-hba1c-measurement/${entegrationId}'
+      '/Measurement/add-hospital-hba1c-measurement/$entegrationId'
           .xCronicTracking;
   String ctGetHba1cMeasurementList(var entegrationId) =>
-      '/Measurement/get-list-hospital-hba1c-measurement/${entegrationId}'
+      '/Measurement/get-list-hospital-hba1c-measurement/$entegrationId'
           .xCronicTracking;
   String ctGetMedicineByFilter(String text) =>
-      '/Medicine/get-by-filter/${text}'.xCronicTracking;
+      '/Medicine/get-by-filter/$text'.xCronicTracking;
   String ctInsertNewScaleValue =
       '/Measurement/add-bmi-with-detail'.xCronicTracking;
   String ctDeleteScaleMeasurement =
@@ -215,7 +213,7 @@ class _Endpoints {
   String dcGetMyBMIPatient =
       '/api/v1/DoctorPatient/get-my-bmi-patient'.xDoctorBaseUrl;
   String dcGetMyPatientDetail(int patientId) =>
-      '/api/v1/doctorpatient/get-my-patient-profile-detail/${patientId}'
+      '/api/v1/doctorpatient/get-my-patient-profile-detail/$patientId'
           .xDoctorBaseUrl;
   String dcUpdateMyPatientLimit(int patientId) =>
       '/api/v1/doctorpatient/update-my-patient-limit-detail/$patientId'

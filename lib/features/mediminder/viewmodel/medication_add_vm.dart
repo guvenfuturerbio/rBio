@@ -9,13 +9,13 @@ import '../../../core/core.dart';
 import '../../../core/utils/tz_helper.dart';
 import '../mediminder.dart';
 
-class MedicationDateVm extends RbioVm {
+class MedicationAddVm extends RbioVm {
   @override
   late BuildContext mContext;
   late Remindable mRemindable;
   late ReminderNotificationsManager mRotificationManager;
 
-  MedicationDateVm({
+  MedicationAddVm({
     required this.mContext,
     required this.mRemindable,
     required this.mRotificationManager,

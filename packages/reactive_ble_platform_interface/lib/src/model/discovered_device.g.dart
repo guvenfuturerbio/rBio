@@ -32,14 +32,12 @@ abstract class $ScanResult {
   String toString() => "ScanResult(result: $result)";
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) =>
       other is ScanResult &&
       other.runtimeType == runtimeType &&
       result == other.result;
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
     return result.hashCode;
   }
@@ -53,7 +51,6 @@ class ScanResult$Change {
   Result<DiscoveredDevice, GenericFailure<ScanFailure>?> result;
 }
 
-// ignore: avoid_classes_with_only_static_members
 class ScanResult$ {
   static final result =
       Lens<ScanResult, Result<DiscoveredDevice, GenericFailure<ScanFailure>?>>(
@@ -115,7 +112,6 @@ abstract class $DiscoveredDevice {
       "DiscoveredDevice(id: $id, name: $name, serviceData: $serviceData, serviceUuids: $serviceUuids, manufacturerData: $manufacturerData, rssi: $rssi)";
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) =>
       other is DiscoveredDevice &&
       other.runtimeType == runtimeType &&
@@ -128,7 +124,6 @@ abstract class $DiscoveredDevice {
       rssi == other.rssi;
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
     var result = 17;
     result = 37 * result + id.hashCode;
@@ -160,7 +155,6 @@ class DiscoveredDevice$Change {
   int rssi;
 }
 
-// ignore: avoid_classes_with_only_static_members
 class DiscoveredDevice$ {
   static final id = Lens<DiscoveredDevice, String>(
     (idContainer) => idContainer.id,

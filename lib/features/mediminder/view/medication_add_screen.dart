@@ -52,16 +52,16 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
       return const RbioRouteError();
     }
 
-    return ChangeNotifierProvider<MedicationDateVm>(
-      create: (_) => MedicationDateVm(
+    return ChangeNotifierProvider<MedicationAddVm>(
+      create: (_) => MedicationAddVm(
         mContext: context,
         mRemindable: widget.remindable!,
         mRotificationManager: getIt<ReminderNotificationsManager>(),
       ),
-      child: Consumer<MedicationDateVm>(
+      child: Consumer<MedicationAddVm>(
         builder: (
           BuildContext context,
-          MedicationDateVm vm,
+          MedicationAddVm vm,
           Widget? child,
         ) {
           return KeyboardDismissOnTap(
@@ -82,7 +82,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   }
 
   // #region _buildBody
-  Widget _buildBody(MedicationDateVm vm) {
+  Widget _buildBody(MedicationAddVm vm) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -227,7 +227,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   // #endregion
 
   // #region _buildMedicineName
-  Widget _buildMedicineName(MedicationDateVm value) {
+  Widget _buildMedicineName(MedicationAddVm value) {
     return Visibility(
       visible: widget.remindable == Remindable.medication,
       child: Column(
@@ -257,7 +257,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   // #endregion
 
   // #region _buildTags
-  Widget _buildTags(MedicationDateVm value) {
+  Widget _buildTags(MedicationAddVm value) {
     if (context.xTextScaleType == TextScaleType.small) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -320,7 +320,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
   // #region _buildTagCard
   Widget _buildTagCard(
-    MedicationDateVm value,
+    MedicationAddVm value,
     String icon,
     UsageType usageType,
     bool isWrap,
@@ -377,7 +377,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   // #endregion
 
   // #region _buildHowManyTimes
-  RbioTextFormField _buildHowManyTimes(MedicationDateVm vm) {
+  RbioTextFormField _buildHowManyTimes(MedicationAddVm vm) {
     return RbioTextFormField(
       controller: drugDailyCountController,
       textInputAction: TextInputAction.next,
@@ -431,7 +431,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   // #endregion
 
   // #region _buildTimeAndDoseSection
-  Widget _buildTimeAndDoseSection(MedicationDateVm value) {
+  Widget _buildTimeAndDoseSection(MedicationAddVm value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -457,7 +457,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   Widget _buildTimeCard(
     int index,
     DateTime dateTime,
-    MedicationDateVm value,
+    MedicationAddVm value,
   ) {
     return Container(
       width: double.infinity,
@@ -718,7 +718,7 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
 }
 
 class ExpandableSpecificDays extends StatefulWidget {
-  final MedicationDateVm vm;
+  final MedicationAddVm vm;
 
   const ExpandableSpecificDays({
     Key? key,

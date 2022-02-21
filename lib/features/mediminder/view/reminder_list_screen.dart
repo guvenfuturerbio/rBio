@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/core/utils/tz_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../mediminder.dart';
+import '../widgets/reminder_edit_dialog.dart';
 
 class ReminderListScreen extends StatelessWidget {
   Remindable? remindable;
@@ -19,8 +21,8 @@ class ReminderListScreen extends StatelessWidget {
       return const RbioRouteError();
     }
 
-    return ChangeNotifierProvider<MedicationVm>(
-      create: (context) => MedicationVm(context),
+    return ChangeNotifierProvider<ReminderListVm>(
+      create: (context) => ReminderListVm(context),
       child: RbioScaffold(
         extendBodyBehindAppBar: true,
         appbar: _buildAppBar(context),
@@ -40,10 +42,10 @@ class ReminderListScreen extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return Consumer<MedicationVm>(
+    return Consumer<ReminderListVm>(
       builder: (
         BuildContext context,
-        MedicationVm vm,
+        ReminderListVm vm,
         Widget? child,
       ) {
         final medicineList = vm.medicineForScheduled;
@@ -70,7 +72,7 @@ class ReminderListScreen extends StatelessWidget {
   }
 
   Widget _buildList(
-    MedicationVm vm,
+    ReminderListVm vm,
     Map<int?, List<MedicineForScheduledModel>> filterList,
   ) {
     return ListView.builder(
@@ -89,7 +91,7 @@ class ReminderListScreen extends StatelessWidget {
           index: index,
           createdDate: key,
           medicineList: filterList[key],
-          medicationVm: vm,
+          reminderListVm: vm,
           remindable: remindable!,
         );
       },
@@ -120,7 +122,7 @@ class MedicineCard extends StatefulWidget {
   final int index;
   final int createdDate;
   final List<MedicineForScheduledModel>? medicineList;
-  final MedicationVm medicationVm;
+  final ReminderListVm reminderListVm;
   final Remindable remindable;
 
   const MedicineCard({
@@ -128,7 +130,7 @@ class MedicineCard extends StatefulWidget {
     required this.index,
     required this.createdDate,
     required this.medicineList,
-    required this.medicationVm,
+    required this.reminderListVm,
     required this.remindable,
   }) : super(key: key);
 
@@ -138,10 +140,21 @@ class MedicineCard extends StatefulWidget {
 
 class _MedicineCardState extends State<MedicineCard> {
   bool _isExpanded = false;
+  late String title;
+
+  @override
+  void initState() {
+    title = widget.remindable == Remindable.bloodGlucose
+        ? "${widget.remindable.toShortTitle()} - ${widget.index + 1}"
+        : widget.medicineList?.first.name ?? '';
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
+    return ClipRRect(
+      borderRadius: R.sizes.borderRadiusCircular,
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.only(
@@ -181,7 +194,7 @@ class _MedicineCardState extends State<MedicineCard> {
                         LocaleProvider
                             .current.delete_medicine_confirm_all_message,
                         () {
-                          widget.medicationVm
+                          widget.reminderListVm
                               .removeAllMedicines(widget.createdDate);
                           Atom.dismiss();
                         },
@@ -207,9 +220,7 @@ class _MedicineCardState extends State<MedicineCard> {
                             left: 6,
                           ),
                           child: Text(
-                            widget.remindable == Remindable.bloodGlucose
-                                ? "${widget.remindable.toShortTitle()} - ${widget.index + 1}"
-                                : widget.medicineList?.first.name ?? '',
+                            title,
                             style: context.xHeadline4,
                           ),
                         ),
@@ -272,6 +283,16 @@ class _MedicineCardState extends State<MedicineCard> {
           key: ValueKey(item.notificationId),
           actionPane: const SlidableDrawerActionPane(),
           actionExtentRatio: 0.3,
+          actions: <Widget>[
+            IconSlideAction(
+              caption: LocaleProvider.current.edit,
+              color: Colors.green,
+              icon: Icons.edit,
+              onTap: () {
+                showEditDialog(title, item);
+              },
+            ),
+          ],
           secondaryActions: <Widget>[
             IconSlideAction(
               caption: LocaleProvider.current.delete,
@@ -283,7 +304,7 @@ class _MedicineCardState extends State<MedicineCard> {
                   LocaleProvider.current.delete_medicine_title,
                   LocaleProvider.current.delete_medicine_confirm_message,
                   () {
-                    widget.medicationVm.removeMedicine(item);
+                    widget.reminderListVm.removeMedicine(item);
                     Atom.dismiss();
                   },
                 );
@@ -305,22 +326,32 @@ class _MedicineCardState extends State<MedicineCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //
-                    Text(
-                      widget.remindable == Remindable.bloodGlucose
-                          ? "${item.time}" +
-                              (item.remindable!.xRemindableKeys ==
-                                      Remindable.medication
-                                  ? " " "${item.name}"
-                                  : " ")
-                          : "${item.time}",
-                      style: context.xHeadline1.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        //
+                        Flexible(
+                          child: Text(
+                            widget.remindable == Remindable.bloodGlucose
+                                ? "${item.time}" +
+                                    (item.remindable!.xRemindableKeys ==
+                                            Remindable.medication
+                                        ? " " "${item.name}"
+                                        : " ")
+                                : "${item.time}",
+                            style: context.xHeadline1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        //
+                        _getPeriodTitle(item),
+                      ],
                     ),
 
                     //
                     Text(
-                      widget.medicationVm.getSubTitle(item),
+                      widget.reminderListVm.getSubTitle(item),
                       style: context.xHeadline4.copyWith(
                         color: getIt<ITheme>().textColorPassive,
                       ),
@@ -417,5 +448,39 @@ class _MedicineCardState extends State<MedicineCard> {
         ],
       ),
     );
+  }
+
+  Future<void> showEditDialog(
+    String title,
+    MedicineForScheduledModel item,
+  ) async {
+    final result = await Atom.show(
+      ReminderEditDialog(
+        title: title,
+        item: item,
+      ),
+    );
+
+    if (result != null) {
+      if (result is TimeOfDay) {
+        final itemTimeOfDay = item.time.xToTimeOfDay;
+        if (!result.xIsEqual(itemTimeOfDay)) {
+          widget.reminderListVm.updateMedicineForScheduledModel(result, item);
+        }
+      }
+    }
+  }
+
+  Widget _getPeriodTitle(MedicineForScheduledModel item) {
+    if (item.medicinePeriod!.xMedicinePeriodKeys == MedicinePeriod.oneTime) {
+      return Text(
+        TZHelper.instance
+            .fromMillisecondsSinceEpoch(item.scheduledDate ?? 0)
+            .xFormatTime1(),
+        style: context.xHeadline5,
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }

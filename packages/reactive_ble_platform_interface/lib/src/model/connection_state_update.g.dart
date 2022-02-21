@@ -44,7 +44,6 @@ abstract class $ConnectionStateUpdate {
       "ConnectionStateUpdate(deviceId: $deviceId, connectionState: $connectionState, failure: $failure)";
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) =>
       other is ConnectionStateUpdate &&
       other.runtimeType == runtimeType &&
@@ -53,7 +52,6 @@ abstract class $ConnectionStateUpdate {
       failure == other.failure;
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
     var result = 17;
     result = 37 * result + deviceId.hashCode;
@@ -75,7 +73,6 @@ class ConnectionStateUpdate$Change {
   GenericFailure<ConnectionError>? failure;
 }
 
-// ignore: avoid_classes_with_only_static_members
 class ConnectionStateUpdate$ {
   static final deviceId = Lens<ConnectionStateUpdate, String>(
     (deviceIdContainer) => deviceIdContainer.deviceId,

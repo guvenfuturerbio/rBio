@@ -13,20 +13,30 @@ import 'model/search_social_type.dart';
 import 'search_vm.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? drawerKey;
+
+  const SearchScreen({
+    Key? key,
+    this.drawerKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SearchBloc>(
       create: (ctx) =>
           SearchBloc(getIt<UserManager>())..add(const SearchFetched()),
-      child: SearchView(),
+      child: SearchView(drawerKey: drawerKey),
     );
   }
 }
 
 class SearchView extends StatelessWidget {
-  SearchView({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? drawerKey;
+
+  SearchView({
+    Key? key,
+    this.drawerKey,
+  }) : super(key: key);
 
   final focusNode = FocusNode();
 
@@ -50,8 +60,9 @@ class SearchView extends StatelessWidget {
 
   IRbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
-      leadingWidth: 0,
-      leading: const SizedBox(width: 0, height: 0),
+      leading: drawerKey != null
+          ? RbioLeadingMenu(drawerKey: drawerKey)
+          : const SizedBox(width: 0, height: 0),
       title: SizedBox(
         width: double.infinity,
         child: RbioTextFormField(

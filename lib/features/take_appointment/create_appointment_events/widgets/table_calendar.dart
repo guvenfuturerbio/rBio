@@ -168,7 +168,9 @@ class _TableCalendarState extends State<_TableCalendar> {
                 child: Text(
                   '${day.day}',
                   style: textStyle.copyWith(
-                    color: Colors.black.withOpacity(0.25),
+                    color: widget.val.dateContains(day)
+                        ? getIt<ITheme>().textColorSecondary
+                        : getIt<ITheme>().textColorPassive,
                   ),
                 ),
               );
@@ -248,7 +250,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           onFormatChanged: (format) {},
           onPageChanged: (focusedDay) {
             LoggerUtils.instance.i('Month Change : $focusedDay');
-            widget.val.getAvailableDates(focusedDay);
+            widget.val.getAvailableDates(focusedDay, false);
 
             _focusedDay = focusedDay;
           },

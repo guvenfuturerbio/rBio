@@ -23,6 +23,7 @@ export 'rbio_empty_text.dart';
 export 'rbio_errors.dart';
 export 'rbio_image_preview_dialog.dart';
 export 'rbio_keyboard_actions.dart';
+export 'rbio_leading_menu.dart';
 export 'rbio_loading_overlay.dart';
 export 'rbio_loading.dart';
 export 'rbio_locale_dropdown.dart';

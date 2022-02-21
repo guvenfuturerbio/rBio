@@ -15,6 +15,6 @@ export 'model/strip_detail_model.dart';
 
 export 'viewmodel/hba1c_reminder_add_vm.dart';
 export 'viewmodel/hba1c_reminderlist_vm.dart';
-export 'viewmodel/medication_date_vm.dart';
-export 'viewmodel/medication_vm.dart';
+export 'viewmodel/medication_add_vm.dart';
+export 'viewmodel/reminder_list_vm.dart';
 export 'viewmodel/strip_vm.dart';

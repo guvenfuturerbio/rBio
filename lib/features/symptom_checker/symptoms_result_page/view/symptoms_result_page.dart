@@ -88,8 +88,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 LocaleProvider.of(context).free_counseling,
                                 style: context.xHeadline2,
@@ -109,49 +108,51 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                   percent: 0.95,
                                   trailing: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: getIt<ITheme>().mainColor,
-                                        borderRadius:
-                                            R.sizes.borderRadiusCircular,
-                                      ),
-                                      width:
-                                          MediaQuery.of(context).size.width / 4,
-                                      //
-                                      child: RbioTextButton(
-                                        onPressed: () {
-                                          Atom.to(
-                                            PagePaths.createAppointment,
-                                            queryParameters: {
-                                              'forOnline': true.toString(),
-                                              'fromSearch': false.toString(),
-                                              'fromSymptom': true.toString(),
-                                              'tenantId': '256',
-                                              'departmentId': '132',
-                                              'departmentName': LocaleProvider
-                                                      .of(context)
-                                                  .free_consultation_appointment,
-                                            },
-                                          );
-                                        },
-                                        child: Text(
-                                          LocaleProvider.of(context)
-                                              .create_appo,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: context.xHeadline4.copyWith(
-                                              color: getIt<ITheme>().textColor),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
+                                    child: Text(
+                                      '% 95.0',
+                                      style: context.xHeadline2.copyWith(
+                                          color: getIt<ITheme>().mainColor,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  '% 95.0',
-                                  style: context.xHeadline2.copyWith(
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
                                       color: getIt<ITheme>().mainColor,
-                                      fontWeight: FontWeight.bold),
+                                      borderRadius:
+                                          R.sizes.borderRadiusCircular,
+                                    ),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.6,
+                                    //
+                                    child: RbioTextButton(
+                                      onPressed: () {
+                                        Atom.to(
+                                          PagePaths.createAppointment,
+                                          queryParameters: {
+                                            'forOnline': true.toString(),
+                                            'fromSearch': false.toString(),
+                                            'fromSymptom': true.toString(),
+                                            'tenantId': '256',
+                                            'departmentId': '132',
+                                            'departmentName': LocaleProvider.of(
+                                                    context)
+                                                .free_consultation_appointment,
+                                          },
+                                        );
+                                      },
+                                      child: Text(
+                                        LocaleProvider.of(context).create_appo,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: context.xHeadline4.copyWith(
+                                            color: getIt<ITheme>().textColor),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ],
                             )
@@ -188,12 +189,16 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //
-                          Text(
-                            value.specialisations[index].id == 15
-                                ? LocaleProvider
-                                    .current.free_consultation_appointment
-                                : '${value.specialisations[index].name}',
-                            style: context.xHeadline2,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 4),
+                            child: Text(
+                              value.specialisations[index].id == 15
+                                  ? LocaleProvider
+                                      .current.free_consultation_appointment
+                                  : '${value.specialisations[index].name}',
+                              style: context.xHeadline2,
+                            ),
                           ),
 
                           //
@@ -210,54 +215,35 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                 percent:
                                     (value.specialisations[index].accuracy /
                                         100),
-                                trailing: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
+                                trailing: Text(
+                                  '%' +
+                                      value.specialisations[index].accuracy
+                                          .toStringAsFixed(1),
+                                  style: context.xHeadline1.copyWith(
                                       color: getIt<ITheme>().mainColor,
-                                      borderRadius:
-                                          R.sizes.borderRadiusCircular,
-                                    ),
-                                    width:
-                                        MediaQuery.of(context).size.width / 4,
-                                    child: RbioTextButton(
-                                      onPressed: () async {
-                                        await value.loadNavigationData(value
-                                            .specialisations[index].id as int);
-                                        if (value.toNavigateDoctorsPageId !=
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+
+                              //
+
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: getIt<ITheme>().mainColor,
+                                    borderRadius: R.sizes.borderRadiusCircular,
+                                  ),
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.6,
+                                  child: RbioTextButton(
+                                    onPressed: () async {
+                                      await value.loadNavigationData(value
+                                          .specialisations[index].id as int);
+                                      if (value.toNavigateDoctorsPageId !=
+                                          null) {
+                                        if (value.specialisations[index].id ==
                                             null) {
-                                          if (value.specialisations[index].id ==
-                                              null) {
-                                            Atom.to(
-                                              PagePaths.createAppointment,
-                                              queryParameters: {
-                                                'forOnline': true.toString(),
-                                                'fromSearch': false.toString(),
-                                                'fromSymptom': true.toString(),
-                                                'tenantId': '256',
-                                                'departmentId': '132',
-                                                'departmentName': LocaleProvider
-                                                        .of(context)
-                                                    .free_consultation_appointment,
-                                              },
-                                            );
-                                          } else {
-                                            Atom.to(PagePaths.createAppointment,
-                                                queryParameters: {
-                                                  'forOnline': false.toString(),
-                                                  'fromSearch':
-                                                      false.toString(),
-                                                  'fromSymptom':
-                                                      true.toString(),
-                                                  'tenantId': '1',
-                                                  'departmentId':
-                                                      '${value.toNavigateDoctorsPageId}',
-                                                  'departmentName': value
-                                                      .specialisations[index]
-                                                      .name as String,
-                                                });
-                                          }
-                                        } else {
                                           Atom.to(
                                             PagePaths.createAppointment,
                                             queryParameters: {
@@ -271,30 +257,47 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                                   .free_consultation_appointment,
                                             },
                                           );
+                                        } else {
+                                          Atom.to(PagePaths.createAppointment,
+                                              queryParameters: {
+                                                'forOnline': false.toString(),
+                                                'fromSearch': false.toString(),
+                                                'fromSymptom': true.toString(),
+                                                'tenantId': '1',
+                                                'departmentId':
+                                                    '${value.toNavigateDoctorsPageId}',
+                                                'departmentName': value
+                                                    .specialisations[index]
+                                                    .name as String,
+                                              });
                                         }
-                                      },
-                                      child: Text(
-                                        LocaleProvider.of(context).create_appo,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: context.xHeadline4.copyWith(
-                                          color: getIt<ITheme>().textColor,
-                                        ),
+                                      } else {
+                                        Atom.to(
+                                          PagePaths.createAppointment,
+                                          queryParameters: {
+                                            'forOnline': true.toString(),
+                                            'fromSearch': false.toString(),
+                                            'fromSymptom': true.toString(),
+                                            'tenantId': '256',
+                                            'departmentId': '132',
+                                            'departmentName': LocaleProvider.of(
+                                                    context)
+                                                .free_consultation_appointment,
+                                          },
+                                        );
+                                      }
+                                    },
+                                    child: Text(
+                                      LocaleProvider.of(context).create_appo,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: context.xHeadline4.copyWith(
+                                        color: getIt<ITheme>().textColor,
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-
-                              //
-                              Text(
-                                '%' +
-                                    value.specialisations[index].accuracy
-                                        .toStringAsFixed(1),
-                                style: context.xHeadline1.copyWith(
-                                    color: getIt<ITheme>().mainColor,
-                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),

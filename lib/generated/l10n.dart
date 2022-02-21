@@ -14,30 +14,22 @@ import 'intl/messages_all.dart';
 
 class LocaleProvider {
   LocaleProvider();
-
-  static LocaleProvider? _current;
-
-  static LocaleProvider get current {
-    assert(_current != null,
-        'No instance of LocaleProvider was loaded. Try to initialize the LocaleProvider delegate before accessing LocaleProvider.current.');
-    return _current!;
-  }
-
-  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+  
+  static late LocaleProvider current;
+  
+  static const AppLocalizationDelegate delegate =
+    AppLocalizationDelegate();
 
   static Future<LocaleProvider> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name);
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      final instance = LocaleProvider();
-      LocaleProvider._current = instance;
-
-      return instance;
+      LocaleProvider.current = LocaleProvider();
+      
+      return LocaleProvider.current;
     });
-  }
+  } 
 
   static LocaleProvider of(BuildContext context) {
     final instance = LocaleProvider.maybeOf(context);
@@ -3520,10 +3512,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Which department should I go to?`
+  /// `Which Department Should I Go To?`
   String get symptom_checker {
     return Intl.message(
-      'Which department should I go to?',
+      'Which Department Should I Go To?',
       name: 'symptom_checker',
       desc: '',
       args: [],
@@ -7935,6 +7927,16 @@ class LocaleProvider {
     return Intl.message(
       'Since you did not select a day, the date has not changed.',
       name: 'appointment_datepicker_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to exit the application?`
+  String get logout_confirmation_description {
+    return Intl.message(
+      'Do you want to exit the application?',
+      name: 'logout_confirmation_description',
       desc: '',
       args: [],
     );
