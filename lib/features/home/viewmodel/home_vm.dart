@@ -160,11 +160,61 @@ class HomeVm extends ChangeNotifier {
   // #region addWidget
   Future<void> addWidget(HomeWidgets widgetType) async {
     var sharedUserList = getUserWidgets ?? [];
-    sharedUserList.add(widgetType.xRawValue);
-    await saveWidgetList(sharedUserList);
     final newWidget = _getWidgetByType(widgetType, false);
     if (newWidget != null) {
-      widgetsInUse.add(newWidget);
+      if (!(widgetsInUse
+          .any((element) => element.key == keys[HomeWidgets.slider]))) {
+        if (newWidget.key == keys[HomeWidgets.slider]) {
+          widgetsInUse.insert(2, newWidget);
+          sharedUserList.insert(2, widgetType.xRawValue);
+        } else {
+          widgetsInUse.add(newWidget);
+          sharedUserList.add(widgetType.xRawValue);
+        }
+      } else {
+        if (widgetsInUse
+                .indexOf(widgetsInUse.singleWhere(
+                    (element) => element.key == keys[HomeWidgets.slider]))
+                .isEven &&
+            widgetsInUse.last.key != keys[HomeWidgets.slider]) {
+          addAfterSlider(newWidget);
+          sharedUserList.insert(
+              widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                      (element) => element.key == keys[HomeWidgets.slider])) +
+                  1,
+              widgetType.xRawValue);
+        } else if (widgetsInUse
+                .indexOf(widgetsInUse.singleWhere(
+                    (element) => element.key == keys[HomeWidgets.slider]))
+                .isEven &&
+            widgetsInUse.last.key == keys[HomeWidgets.slider]) {
+          addBeforeSlider(newWidget);
+          sharedUserList.insert(
+              widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                      (element) => element.key == keys[HomeWidgets.slider])) -
+                  1,
+              widgetType.xRawValue);
+        } else if (widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                (element) => element.key == keys[HomeWidgets.slider])) ==
+            1) {
+          sharedUserList.insert(1, widgetType.xRawValue);
+          widgetsInUse.insert(1, newWidget);
+        } else if (widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                (element) => element.key == keys[HomeWidgets.slider])) ==
+            3) {
+          widgetsInUse.insert(3, newWidget);
+          sharedUserList.insert(3, widgetType.xRawValue);
+        } else if (widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                (element) => element.key == keys[HomeWidgets.slider])) ==
+            5) {
+          widgetsInUse.insert(5, newWidget);
+          sharedUserList.insert(5, widgetType.xRawValue);
+        } else {
+          widgetsInUse.add(newWidget);
+          sharedUserList.add(widgetType.xRawValue);
+        }
+      }
+      await saveWidgetList(sharedUserList);
       closeAddAlert();
       notifyListeners();
       Atom.dismiss();
@@ -521,6 +571,22 @@ class HomeVm extends ChangeNotifier {
     }
 
     return null;
+  }
+
+  void addAfterSlider(Widget newWidget) {
+    widgetsInUse.insert(
+        widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                (element) => element.key == keys[HomeWidgets.slider])) +
+            1,
+        newWidget);
+  }
+
+  void addBeforeSlider(Widget newWidget) {
+    widgetsInUse.insert(
+        widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                (element) => element.key == keys[HomeWidgets.slider])) -
+            1,
+        newWidget);
   }
   // #endregion
 }
