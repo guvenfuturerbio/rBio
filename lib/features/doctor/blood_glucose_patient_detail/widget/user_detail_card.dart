@@ -234,6 +234,7 @@ class _UserDetailCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
+              //
               Flexible(
                 child: Text(
                   leftValue,
@@ -242,14 +243,18 @@ class _UserDetailCard extends StatelessWidget {
                   style: context.xHeadline5,
                 ),
               ),
+
+              //
               const SizedBox(
                 width: 8,
               ),
+
+              //
               InkWell(
                 onTap: onTap,
                 child: SvgPicture.asset(
                   R.image.other,
-                  color: R.color.mainColor,
+                  color: getIt<ITheme>().mainColor,
                   width: 20,
                   height: 20,
                 ),

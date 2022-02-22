@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import '../../features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
 
+import '../../features/chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../ble_models/paired_device.dart';
 
 abstract class ScaleDevice<T> {

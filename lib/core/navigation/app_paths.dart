@@ -8,9 +8,9 @@ import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
-import '../../features/chronic_tracking/progress_sections/glucose_progress/view/bg_progress_page.dart';
-import '../../features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
-import '../../features/chronic_tracking/progress_sections/scale_progress/view/scale_progress_screen.dart';
+import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_progress_screen.dart';
+import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
+import '../../features/chronic_tracking/progress_sections/scale/view/scale_progress_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/dashboard_navigation.dart';
@@ -368,11 +368,11 @@ class VRouterRoutes {
             ),
             VWidget(
               path: PagePaths.bpProgress,
-              widget: const BpProgressPage(),
+              widget: const BpProgressScreen(),
             ),
             VWidget(
               path: PagePaths.bloodGlucoseProgress,
-              widget: const BgProgressPage(),
+              widget: const BgProgressScreen(),
             ),
           ],
         ),

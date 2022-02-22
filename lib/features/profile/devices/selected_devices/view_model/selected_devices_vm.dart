@@ -103,6 +103,7 @@ class SelectedDeviceVm extends ChangeNotifier {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            //
             Container(
               child: ShakeAnimatedWidget(
                 enabled: true,
@@ -115,26 +116,34 @@ class SelectedDeviceVm extends ChangeNotifier {
                   height: Atom.context.width * .04,
                   child: SvgPicture.asset(
                     R.image.logo,
-                    color: R.color.dark_blue,
+                    color: getIt<ITheme>().mainColor,
                   ),
                 ),
               ),
               decoration: BoxDecoration(
-                border: Border.all(color: R.color.main_color, width: 10),
+                border: Border.all(color: getIt<ITheme>().mainColor, width: 10),
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
             ),
+
+            //
             const SizedBox(
               height: 16,
             ),
+
+            //
             Text(
               LocaleProvider.current.pair_successful,
               style: TextStyle(color: R.color.black, fontSize: 20),
               textAlign: TextAlign.center,
             ),
+
+            //
             const SizedBox(
               height: 16,
             ),
+
+            //
             GuvenAlert.buildWhiteAction(
               text: LocaleProvider.current.ok,
               onPressed: () {

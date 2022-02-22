@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import '../../../../core/core.dart';
 import '../../../../model/ble_models/paired_device.dart';
 import '../../../dashboard/not_chronic_screen.dart';
-import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
-import '../../progress_sections/pressure_progress/view/pressure_progres_page.dart';
-import '../../progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
-import '../../progress_sections/scale_progress/viewmodel/scale_progress_vm.dart';
+import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
+import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
+import '../../progress_sections/scale/viewmodel/scale_measurement_vm.dart';
+import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import '../model/page_model.dart';
 import '../utils/card_widget.dart';
 
@@ -69,8 +69,9 @@ class _MeasurementTrackingHomeScreenState
     return isLandscape
         ? null
         : RbioAppBar(
-                leading:
-            widget.drawerKey != null ? RbioLeadingMenu(drawerKey: widget.drawerKey) : null,
+            leading: widget.drawerKey != null
+                ? RbioLeadingMenu(drawerKey: widget.drawerKey)
+                : null,
             title: RbioAppBar.textTitle(
               context,
               LocaleProvider.current.chronic_track_home,
@@ -204,7 +205,7 @@ class _MeasurementTrackingHomeScreenState
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    foregroundImage: NetworkImage(R.image.circlevatar),
+                    foregroundImage: Utils.instance.getCacheProfileImage,
                     backgroundColor: getIt<ITheme>().cardBackgroundColor,
                   ),
 

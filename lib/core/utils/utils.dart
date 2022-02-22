@@ -175,40 +175,6 @@ class Utils {
     throw Exception('Nondefined device');
   }
 
-  Widget guidePopUpContextWidget(List<String> currentDeviceInfos) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: currentDeviceInfos.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: SizedBox(
-            width: Atom.width * .8,
-            child: RichText(
-              textScaleFactor: context.xMediaQuery.textScaleFactor,
-              text: TextSpan(
-                text: (index + 1).toString() + ".",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: R.color.dark_blue,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: currentDeviceInfos[index],
-                    style: TextStyle(
-                      color: R.color.black,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   InputDecoration inputImageDecoration({
     String? image,
     String? hintText,
@@ -239,21 +205,6 @@ class Utils {
           ),
         ),
         enabledBorder: _borderTextField(),
-        hintText: hintText,
-        hintStyle: hintStyle(),
-      );
-
-  InputDecoration inputImageDecorationRed({image: String, hintText: String}) =>
-      InputDecoration(
-        contentPadding: EdgeInsets.zero,
-        prefixIcon: SvgPicture.asset(
-          image,
-          fit: BoxFit.none,
-          color: R.color.light_blue,
-        ),
-        focusedBorder: _borderTextFieldRed(),
-        border: _borderTextFieldRed(),
-        enabledBorder: _borderTextFieldRed(),
         hintText: hintText,
         hintStyle: hintStyle(),
       );
@@ -486,13 +437,10 @@ class Utils {
   InputBorder _borderTextField() => OutlineInputBorder(
         borderRadius: BorderRadius.circular(200),
         borderSide: BorderSide(
-            width: 0, style: BorderStyle.solid, color: R.color.dark_white),
-      );
-
-  InputBorder _borderTextFieldRed() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(200),
-        borderSide: BorderSide(
-            width: 0, style: BorderStyle.solid, color: R.color.light_blue),
+          width: 0,
+          style: BorderStyle.solid,
+          color: R.color.dark_white,
+        ),
       );
 
   Widget titleAppBarWhite({String? title}) => Container(

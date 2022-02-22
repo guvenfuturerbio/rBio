@@ -78,7 +78,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       prefixIcon: SvgPicture.asset(
                         R.image.user,
                         fit: BoxFit.none,
-                        color: R.color.light_blue,
+                        color: getIt<ITheme>().mainColor,
                       ),
                     ),
                     margin: const EdgeInsets.only(bottom: 10, top: 20),

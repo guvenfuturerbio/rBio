@@ -372,7 +372,7 @@ class BleReactorOps extends ChangeNotifier {
               }
               await Future.delayed(const Duration(milliseconds: 350));
               await Atom.show(
-                ScaleTagger(
+                ScaleTaggerPopUp(
                   scaleModel: scaleDevice.scaleData!.scaleModel
                     ..isManuel = false,
                 ),

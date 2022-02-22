@@ -8,8 +8,8 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../core/core.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_measurement_vm.dart';
 import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
 import '../viewmodel/blood_pressure_vm.dart';
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_measurement_vm.dart';
 import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../widget/charts/line_charts.dart';
 
@@ -318,27 +318,32 @@ class BloodPressurePatientDetailVm extends RbioVm
     setChartAverageDataPerDay();
   }
 
-  getNewItems() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      try {
-        if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
-          getIt<BloodPressureStorageImpl>()
-              .getAndWriteBpData(endDate: bpMeasurements.first.date)
-              .then((value) {
-            LoggerUtils.instance.i(value);
-            hasReachEnd = value;
-          });
+  void getNewItems() {
+    WidgetsBinding.instance?.addPostFrameCallback(
+      (_) {
+        try {
+          if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
+            getIt<BloodPressureStorageImpl>()
+                .getAndWriteBpData(endDate: bpMeasurements.first.date)
+                .then((value) {
+              LoggerUtils.instance.i(value);
+              hasReachEnd = value;
+            });
+          }
+        } catch (e, stk) {
+          LoggerUtils.instance.i(e);
+          debugPrintStack(stackTrace: stk);
         }
-      } catch (e, stk) {
-        LoggerUtils.instance.i(e);
-        debugPrintStack(stackTrace: stk);
-      }
-    });
+      },
+    );
   }
 
-  showPressureTagger(_) {
-    Atom.show(const PressureTagger(),
-        barrierDismissible: false, barrierColor: Colors.transparent);
+  void showPressureTagger(_) {
+    Atom.show(
+      const BpTaggerPopUp(),
+      barrierDismissible: false,
+      barrierColor: Colors.transparent,
+    );
   }
 
   @override

@@ -178,7 +178,7 @@ class _TaggerPopUp extends StatelessWidget {
   Widget getTagElement(bool isCurrent, String icon, String title) {
     return Card(
       elevation: R.sizes.defaultElevation,
-      color: isCurrent ? R.color.btnDarkBlue : R.color.white,
+      color: isCurrent ? getIt<ITheme>().mainColor : R.color.white,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -210,14 +210,8 @@ class _TaggerPopUp extends StatelessWidget {
 
   BoxDecoration getTagElementDeco(bool isCurrent) {
     return BoxDecoration(
-      borderRadius: BorderRadius.circular(25),
-      gradient: LinearGradient(
-        begin: Alignment.bottomRight,
-        end: Alignment.topLeft,
-        colors: isCurrent
-            ? <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]
-            : <Color>[Colors.white, Colors.white],
-      ),
+      borderRadius: R.sizes.borderRadiusCircular,
+      color: isCurrent ? getIt<ITheme>().mainColor : Colors.white,
     );
   }
   // TagSection #end
@@ -258,13 +252,13 @@ class _TaggerPopUp extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          gradient: LinearGradient(
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
-              colors: <Color>[R.color.btnLightBlue, R.color.btnDarkBlue]),
+          borderRadius: R.sizes.borderRadiusCircular,
+          color: getIt<ITheme>().mainColor,
         ),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 16,
+        ),
         child: Text(
           LocaleProvider.current.done,
           style: const TextStyle(

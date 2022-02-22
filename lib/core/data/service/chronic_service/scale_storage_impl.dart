@@ -351,10 +351,11 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     return imageURL;
   }
 
-  checkBox([bool checkIsEmpty = false]) {
+  bool checkBox([bool checkIsEmpty = false]) {
     if (!box.isOpen) {
       throw Exception('Box can\'t open please check your box!!!');
     }
+
     if (checkIsEmpty) {
       return box.isNotEmpty;
     } else {

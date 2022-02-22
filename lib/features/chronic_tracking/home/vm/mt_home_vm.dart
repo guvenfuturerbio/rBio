@@ -283,7 +283,7 @@ class MeasurementTrackingVm with ChangeNotifier {
         await getIt<BloodPressureStorageImpl>().checkLastBp();
 
         items = [
-          HomePageModel<BgProgressPageViewModel>(
+          HomePageModel<BgProgressVm>(
             title: LocaleProvider.current.blood_glucose_progress,
             key: const Key('Glucose'),
             activateCallBack: (key) => setActiveItem(key),
@@ -293,7 +293,7 @@ class MeasurementTrackingVm with ChangeNotifier {
             key: const Key('Scale'),
             activateCallBack: (key) => setActiveItem(key),
           ),
-          HomePageModel<BpProgressPageVm>(
+          HomePageModel<BpProgressVm>(
             title: LocaleProvider.current.scale_progress,
             key: const Key('Pressure'),
             activateCallBack: (key) => setActiveItem(key),

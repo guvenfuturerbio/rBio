@@ -19,6 +19,7 @@ export 'rbio_buttons.dart';
 export 'rbio_card_appo_card.dart';
 export 'rbio_context_info_dialog.dart';
 export 'rbio_country_code_picker.dart';
+export 'rbio_dark_status_bar.dart';
 export 'rbio_empty_text.dart';
 export 'rbio_errors.dart';
 export 'rbio_image_preview_dialog.dart';

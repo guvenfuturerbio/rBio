@@ -104,7 +104,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
             primaryColor: getIt<ITheme>().mainColor,
             colorScheme: ColorScheme.light(
               primary: getIt<ITheme>().mainColor,
-              secondary: R.color.dark_blue,
+              secondary: getIt<ITheme>().mainColor,
             ),
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),

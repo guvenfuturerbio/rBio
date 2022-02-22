@@ -74,7 +74,7 @@ class _MeasurementList extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Atom.show(
-          PressureTagger(
+          BpTaggerPopUp(
             bpModel: item.bpModel,
             isEdit: true,
           ),

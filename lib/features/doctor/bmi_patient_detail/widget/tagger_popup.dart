@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+import '../../../chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../../../chronic_tracking/utils/selected_scale_type.dart';
 
 class ScaleTagger extends StatelessWidget {
@@ -53,7 +53,7 @@ class ScaleTagger extends StatelessWidget {
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Card(
                   elevation: R.sizes.defaultElevation,
-                  color: R.color.background,
+                  color: context.scaffoldBackgroundColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),

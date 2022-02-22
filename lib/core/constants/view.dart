@@ -133,30 +133,8 @@ class _Color {
   final black = const Color(0xFF131313);
   final white = const Color(0xFFFFFFFF);
   final dark_black = const Color(0xFF000000);
-  final blue = getIt<ITheme>().mainColor; // Color(0xFFC74852);
-  final light_blue = const Color(0xFFE18B94);
-  final dark_blue = const Color(0xFF862634);
   final dark_white = const Color(0xFFE5E5E5);
-  final online_appointment = const Color(0xFF100A9F);
-  final light_online_appointment = const Color(0xFF648DE5);
-  final online_appointment_text = const Color(0xFFFFFFFF);
-  final ayranci = const Color(0xFF63C1B8);
-  final light_ayranci = const Color(0xFFB7DBD8);
-  final ayranci_text = const Color(0xFF000000);
-  final cayyolu = const Color(0xFFFF6F59);
-  final light_cayyolu = const Color(0xFFF0B7AB);
-  final cayyolu_text = const Color(0xFFFFFFFF);
-  final danisma = const Color(0xff65c0b8);
-  final danisma_light = const Color(0xffafdfdb);
 
-  final text = const Color(0xFF333333);
-  final title = const Color(0xFFa5a5a5);
-  final mainColor = const Color.fromRGBO(37, 48, 133, 1);
-  final graphRangeColor = const Color(0xFFCBEBD9);
-  final btnDarkBlue = const Color.fromRGBO(37, 48, 133, 1);
-  final btnLightBlue = const Color.fromRGBO(0, 0, 255, 1);
-
-  // from OneDoseRepo
   final very_high = const Color(0xFFf4bb44);
   final high = const Color(0xFFf7ec57);
   final target = const Color(0xFF66c791);
@@ -164,24 +142,8 @@ class _Color {
   final very_low = const Color(0xFFe2605b);
   final graph_plot_range = const Color(0xFFCBEBD9);
   final state_color = const Color(0xFF7a7a7a);
-  final defaultBlue = const Color.fromRGBO(0, 104, 255, 1);
-  final light_dark_blue = const Color.fromRGBO(0, 0, 255, 1);
-  final background = const Color(0xFFF0F0F0);
-  final green_dashboard = const Color(0xFFc2e9d1);
-  final color = const Color.fromRGBO(51, 51, 51, 1);
-  final main_color = const Color.fromRGBO(37, 48, 133, 1);
-  final border_color = const Color.fromRGBO(51, 51, 51, 1);
   final bg_gray = const Color(0xFFF3F3F3);
   final chart_gray = const Color(0xffDDDEDE);
-  final darkBlue = const Color.fromRGBO(37, 48, 133, 1);
-  final backgroundColor = const Color.fromRGBO(240, 240, 240, 1);
-  final darkYellow = const Color.fromRGBO(255, 182, 0, 1);
-  final lightYellow = const Color.fromRGBO(255, 220, 133, 1);
-  final circleBlue = const Color.fromRGBO(133, 214, 255, 1);
   final darkRed = const Color.fromRGBO(219, 56, 50, 1);
-  final lightRed = const Color.fromRGBO(232, 128, 124, 1);
-  final drawerBgLightBlue = const Color.fromRGBO(133, 214, 255, 1);
-  final regularBlue = const Color.fromRGBO(0, 104, 255, 1);
-
-  final darkGreen = const Color.fromRGBO(255, 102, 198, 143);
+  final graphRangeColor = const Color(0xFFCBEBD9);
 }

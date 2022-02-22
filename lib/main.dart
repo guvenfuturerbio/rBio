@@ -5,9 +5,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'core/core.dart';
-import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
-import 'features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
-import 'features/chronic_tracking/progress_sections/scale_progress/viewmodel/scale_progress_vm.dart';
+import 'features/chronic_tracking/progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
+import 'features/chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
+import 'features/chronic_tracking/progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import 'features/doctor/notifiers/bg_measurements_notifiers.dart';
 import 'features/doctor/notifiers/patient_notifiers.dart';
 import 'features/home/viewmodel/home_vm.dart';
@@ -69,11 +69,11 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<ScaleProgressVm>(
             create: (ctx) => ScaleProgressVm(),
           ),
-          ChangeNotifierProvider<BgProgressPageViewModel>.value(
-            value: BgProgressPageViewModel(context: context),
+          ChangeNotifierProvider<BgProgressVm>.value(
+            value: BgProgressVm(context: context),
           ),
-          ChangeNotifierProvider<BpProgressPageVm>.value(
-            value: BpProgressPageVm(),
+          ChangeNotifierProvider<BpProgressVm>.value(
+            value: BpProgressVm(),
           ),
 
           //
@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
                   },
 
                   //
-                  title: 'Güven Online',
+                  title: 'One Dose Health',
                   debugShowCheckedModeBanner: false,
                   navigatorObservers: const [],
 

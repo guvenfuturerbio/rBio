@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 import '../../core/core.dart';
-import '../../features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+import '../../features/chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../ble_models/paired_device.dart';
 import 'scale_device_model.dart';
 

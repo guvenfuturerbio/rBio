@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/core.dart';
-import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+import '../../../chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
 import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
