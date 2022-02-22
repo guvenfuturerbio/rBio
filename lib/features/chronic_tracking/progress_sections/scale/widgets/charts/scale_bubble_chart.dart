@@ -40,19 +40,21 @@ class _ScaleBubbleChartState extends State<ScaleBubbleChart> {
       enableMouseWheelZooming: Atom.isWeb ? true : false,
     );
 
-    return Consumer<ScaleProgressVm>(builder: (context, value, child) {
-      _selected = value.selected;
-      _chartData = value.chartData;
-      _minimum = value.dailyLowestValue;
-      _maximum = value.dailyHighestValue;
-      _targetMin = value.targetMin!;
-      _targetMax = value.targetMax!;
-      _startDate = value.startDate;
-      _endDate = value.endDate;
-      _defaultScatterDataList = value.getDataScatterSeries();
+    return Consumer<ScaleProgressVm>(
+      builder: (context, value, child) {
+        _selected = value.selected;
+        _chartData = value.chartData;
+        _minimum = value.dailyLowestValue;
+        _maximum = value.dailyHighestValue;
+        _targetMin = value.targetMin!;
+        _targetMax = value.targetMax!;
+        _startDate = value.startDate;
+        _endDate = value.endDate;
+        _defaultScatterDataList = value.getDataScatterSeries();
 
-      return _getAnimationScatterChart();
-    });
+        return _getAnimationScatterChart();
+      },
+    );
   }
 
   /// Get the Scatter chart sample with dynamically updated data points.

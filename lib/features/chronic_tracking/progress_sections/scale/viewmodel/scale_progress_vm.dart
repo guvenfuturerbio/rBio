@@ -157,8 +157,7 @@ class ScaleProgressVm extends ChangeNotifier
   int get dailyHighestValue {
     int highest = scaleMeasurementsDailyData.isNotEmpty &&
             scaleMeasurements[0].getMeasurement(currentScaleType) != null
-        ? scaleMeasurementsDailyData[0]
-            .getMeasurement(currentScaleType)!
+        ? (scaleMeasurementsDailyData[0].getMeasurement(currentScaleType) ?? 0)
             .toInt()
         : 70;
     for (var data in scaleMeasurementsDailyData) {
@@ -180,10 +179,10 @@ class ScaleProgressVm extends ChangeNotifier
   int get dailyLowestValue {
     int lowest = scaleMeasurementsDailyData.isNotEmpty &&
             scaleMeasurements[0].getMeasurement(currentScaleType) != null
-        ? scaleMeasurementsDailyData[0]
-            .getMeasurement(currentScaleType)!
+        ? (scaleMeasurementsDailyData[0].getMeasurement(currentScaleType) ?? 0)
             .toInt()
         : 50;
+
     for (var data in scaleMeasurementsDailyData) {
       if (data.getMeasurement(currentScaleType) != null) {
         var _currentValue = data.getMeasurement(currentScaleType)!.toInt();
