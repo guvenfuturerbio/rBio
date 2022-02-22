@@ -10,7 +10,7 @@ import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/chronic_tracking/progress_sections/glucose_progress/view/bg_progress_page.dart';
 import '../../features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
-import '../../features/chronic_tracking/progress_sections/scale_progress/view/scale_progress_page.dart';
+import '../../features/chronic_tracking/progress_sections/scale_progress/view/scale_progress_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/dashboard_navigation.dart';
@@ -364,15 +364,15 @@ class VRouterRoutes {
           stackedRoutes: [
             VWidget(
               path: PagePaths.bmiProgress,
-              widget: const ScaleProgressPage(key: Key('ScaleProgressPage')),
+              widget: const ScaleProgressScreen(),
             ),
             VWidget(
               path: PagePaths.bpProgress,
-              widget: const BpProgressPage(key: Key('BpProgressPage')),
+              widget: const BpProgressPage(),
             ),
             VWidget(
               path: PagePaths.bloodGlucoseProgress,
-              widget: const BgProgressPage(key: Key('BgProgressPage')),
+              widget: const BgProgressPage(),
             ),
           ],
         ),

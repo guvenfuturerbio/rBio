@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../utils/gallery_pop_up/gallery_pop_up.dart';
-import '../view_model/scale_progress_page_view_model.dart';
+import '../viewmodel/scale_progress_vm.dart';
 import 'scale_measurements/scale_measurement_vm.dart';
 import 'scale_tagger/scale_tagger_pop_up.dart';
 
@@ -40,7 +40,7 @@ class _ScaleMeasurementListWidgetState
     if (widget.scaleMeasurements != null) {
       list = widget.scaleMeasurements!
           .where((element) =>
-              element.getMeasurement(Provider.of<ScaleProgressPageViewModel>(
+              element.getMeasurement(Provider.of<ScaleProgressVm>(
                       context,
                       listen: false)
                   .currentScaleType) !=
@@ -102,10 +102,10 @@ class _ScaleMeasurementListWidgetState
                     return measurementList(scaleMeasurementViewModel, context);
                   },
                   callback: (ScaleMeasurementViewModel data) {
-                    if (Provider.of<ScaleProgressPageViewModel>(context,
+                    if (Provider.of<ScaleProgressVm>(context,
                             listen: false)
                         .isChartShow) {
-                      Provider.of<ScaleProgressPageViewModel>(context,
+                      Provider.of<ScaleProgressVm>(context,
                               listen: false)
                           .fetchScrolledData(data.dateTime);
                     }
@@ -276,7 +276,7 @@ Expanded _textAndScaleSection(
               Text(
                   scaleMeasurementViewModel
                           .getMeasurement(
-                              Provider.of<ScaleProgressPageViewModel>(context)
+                              Provider.of<ScaleProgressVm>(context)
                                   .currentScaleType)
                           ?.toStringAsFixed(2) ??
                       '',

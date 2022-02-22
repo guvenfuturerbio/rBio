@@ -14,7 +14,8 @@ import '../../../../../../model/ble_models/paired_device.dart';
 import '../scale_measurements/scale_measurement_vm.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
-  ScaleMeasurementViewModel? scaleModel;
+  late ScaleMeasurementViewModel scaleModel;
+
   final bool isManuel;
   final BuildContext context;
   late TextEditingController weightController;
@@ -35,186 +36,192 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   ScaleTaggerVm({
     required this.context,
-    this.scaleModel,
+    ScaleMeasurementViewModel? scale,
     this.isManuel = false,
     this.key,
   }) {
-    scaleModel ??= ScaleMeasurementViewModel(
-      scaleModel: ScaleModel(
-        isManuel: isManuel,
-        dateTime: DateTime.now(),
-        device: PairedDevice(
-          deviceId: 'manuel',
-          deviceType: DeviceType.manuel,
-          manufacturerName: 'manuel',
-          modelName: 'manuel',
-          serialNumber: 'manuel',
-        ).toJson(),
-        unit: ScaleUnit.kg,
-      ),
-    );
+    scaleModel = scale ??
+        ScaleMeasurementViewModel(
+          scaleModel: ScaleModel(
+            isManuel: isManuel,
+            dateTime: DateTime.now(),
+            device: PairedDevice(
+              deviceId: 'manuel',
+              deviceType: DeviceType.manuel,
+              manufacturerName: 'manuel',
+              modelName: 'manuel',
+              serialNumber: 'manuel',
+            ).toJson(),
+            unit: ScaleUnit.kg,
+          ),
+        );
+
     _fillControllers(isInit: true);
     scrollController = ScrollController();
   }
 
-  _fillControllers({bool isInit = false}) {
+  void _fillControllers({bool isInit = false}) {
     if (isInit) {
       weightController = TextEditingController(
-          text: scaleModel!.weight != null
-              ? scaleModel!.weight!.toStringAsFixed(1)
+          text: scaleModel.weight != null
+              ? scaleModel.weight!.toStringAsFixed(1)
               : '');
-      noteController = TextEditingController(text: scaleModel!.note);
+      noteController = TextEditingController(text: scaleModel.note);
     }
+
     _fillbodyScale();
   }
 
-  _fillbodyScale() {
+  void _fillbodyScale() {
     bodyFatController = TextEditingController(
-        text: scaleModel!.bodyFat != null
-            ? scaleModel!.bodyFat!.toStringAsFixed(1)
-            : '');
+      text: scaleModel.bodyFat != null
+          ? scaleModel.bodyFat!.toStringAsFixed(1)
+          : '',
+    );
     boneMassController = TextEditingController(
-        text: scaleModel!.boneMass != null
-            ? scaleModel!.boneMass!.toStringAsFixed(1)
-            : '');
+      text: scaleModel.boneMass != null
+          ? scaleModel.boneMass!.toStringAsFixed(1)
+          : '',
+    );
     muscleController = TextEditingController(
-        text: scaleModel!.muscle != null
-            ? scaleModel!.muscle!.toStringAsFixed(1)
-            : '');
+      text: scaleModel.muscle != null
+          ? scaleModel.muscle!.toStringAsFixed(1)
+          : '',
+    );
     visceralController = TextEditingController(
-        text: scaleModel!.visceralFat != null
-            ? scaleModel!.visceralFat!.toStringAsFixed(1)
-            : '');
+      text: scaleModel.visceralFat != null
+          ? scaleModel.visceralFat!.toStringAsFixed(1)
+          : '',
+    );
     waterController = TextEditingController(
-        text: scaleModel!.water != null
-            ? scaleModel!.water!.toStringAsFixed(1)
-            : '');
+      text:
+          scaleModel.water != null ? scaleModel.water!.toStringAsFixed(1) : '',
+    );
     bmiController = TextEditingController(
-        text:
-            scaleModel!.bmi != null ? scaleModel!.bmi!.toStringAsFixed(0) : '');
+      text: scaleModel.bmi != null ? scaleModel.bmi!.toStringAsFixed(0) : '',
+    );
   }
 
-  changeWeight(String val) {
-    try {
-      val != ''
-          ? scaleModel!.weight = double.parse(val)
-          : scaleModel!.weight = null;
-      if (scaleModel!.weight != null) {
-        scaleModel!.calculateVariables();
-      } else {
-        scaleModel!.bmi = null;
-      }
-      _fillControllers();
-      notifyListeners();
-    } catch (e) {
-      LoggerUtils.instance.e(e);
+  void changeWeight(String val) {
+    val = val[val.length - 1] == ',' ? val + "0" : val;
+    val = val.replaceAll(",", ".");
+
+    val != ''
+        ? scaleModel.weight = (double.tryParse(val) ?? 0)
+        : scaleModel.weight = null;
+
+    if (scaleModel.weight != null) {
+      scaleModel.calculateVariables();
+    } else {
+      scaleModel.bmi = null;
     }
-  }
 
-  changeBmi(String val) {
-    val != '' ? scaleModel!.bmi = double.parse(val) : scaleModel!.bmi = null;
+    _fillControllers();
     notifyListeners();
   }
 
-  changeBodyFat(String val) {
+  void changeBmi(String val) {
+    val != '' ? scaleModel.bmi = double.parse(val) : scaleModel.bmi = null;
+    notifyListeners();
+  }
+
+  void changeBodyFat(String val) {
     val != ''
-        ? scaleModel!.bodyFat = double.parse(val)
-        : scaleModel!.bodyFat = null;
+        ? scaleModel.bodyFat = double.parse(val)
+        : scaleModel.bodyFat = null;
     notifyListeners();
   }
 
-  changeBoneMass(String val) {
+  void changeBoneMass(String val) {
     val != ''
-        ? scaleModel!.boneMass = double.parse(val)
-        : scaleModel!.boneMass = null;
+        ? scaleModel.boneMass = double.parse(val)
+        : scaleModel.boneMass = null;
     notifyListeners();
   }
 
-  changeMuscle(String val) {
+  void changeMuscle(String val) {
     val != ''
-        ? scaleModel!.muscle = double.parse(val)
-        : scaleModel!.muscle = null;
+        ? scaleModel.muscle = double.parse(val)
+        : scaleModel.muscle = null;
     notifyListeners();
   }
 
-  changeVisceral(String val) {
+  void changeVisceral(String val) {
     val != ''
-        ? scaleModel!.visceralFat = double.parse(val)
-        : scaleModel!.visceralFat = null;
+        ? scaleModel.visceralFat = double.parse(val)
+        : scaleModel.visceralFat = null;
     notifyListeners();
   }
 
-  changeWater(String val) {
-    val != ''
-        ? scaleModel!.water = double.parse(val)
-        : scaleModel!.water = null;
+  void changeWater(String val) {
+    val != '' ? scaleModel.water = double.parse(val) : scaleModel.water = null;
     notifyListeners();
   }
 
-  changeDate(DateTime val) {
-    scaleModel!.dateTime = val;
+  void changeDate(DateTime val) {
+    scaleModel.dateTime = val;
     notifyListeners();
   }
 
-  addNote(String val) {
-    scaleModel!.note = val;
+  void addNote(String val) {
+    scaleModel.note = val;
     notifyListeners();
   }
 
   Future getImage(BuildContext context) async {
-    // Don't Touch this show dialog this workin fine!!!!
-
     await showDialog<String>(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          String title = LocaleProvider.current.how_to_get_photo;
-          return Platform.isIOS
-              ? CupertinoAlertDialog(
-                  title: Text(title),
-                  content: Text(LocaleProvider.current.pick_a_photo_option),
-                  actions: <Widget>[
-                    CupertinoDialogAction(
-                      child: Text(
-                        LocaleProvider.current.camera,
-                      ),
-                      isDefaultAction: true,
-                      onPressed: () {
-                        getPhotoFromSource(context, ImageSource.camera);
-                      },
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        String title = LocaleProvider.current.how_to_get_photo;
+
+        return Platform.isIOS
+            ? CupertinoAlertDialog(
+                title: Text(title),
+                content: Text(LocaleProvider.current.pick_a_photo_option),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text(
+                      LocaleProvider.current.camera,
                     ),
-                    CupertinoDialogAction(
-                      child: Text(
-                        LocaleProvider.current.gallery,
-                      ),
-                      isDefaultAction: true,
-                      onPressed: () {
-                        getPhotoFromSource(context, ImageSource.gallery);
-                      },
-                    ),
-                  ],
-                )
-              : AlertDialog(
-                  title: Text(
-                    title,
-                    style: const TextStyle(fontSize: 22),
+                    isDefaultAction: true,
+                    onPressed: () {
+                      getPhotoFromSource(context, ImageSource.camera);
+                    },
                   ),
-                  actions: <Widget>[
-                    RbioTextButton(
-                      child: Text(LocaleProvider.current.camera),
-                      onPressed: () {
-                        getPhotoFromSource(context, ImageSource.camera);
-                      },
+                  CupertinoDialogAction(
+                    child: Text(
+                      LocaleProvider.current.gallery,
                     ),
-                    RbioTextButton(
-                      child: Text(LocaleProvider.current.gallery),
-                      onPressed: () {
-                        getPhotoFromSource(context, ImageSource.gallery);
-                      },
-                    )
-                  ],
-                );
-        });
+                    isDefaultAction: true,
+                    onPressed: () {
+                      getPhotoFromSource(context, ImageSource.gallery);
+                    },
+                  ),
+                ],
+              )
+            : AlertDialog(
+                title: Text(
+                  title,
+                  style: const TextStyle(fontSize: 22),
+                ),
+                actions: <Widget>[
+                  RbioTextButton(
+                    child: Text(LocaleProvider.current.camera),
+                    onPressed: () {
+                      getPhotoFromSource(context, ImageSource.camera);
+                    },
+                  ),
+                  RbioTextButton(
+                    child: Text(LocaleProvider.current.gallery),
+                    onPressed: () {
+                      getPhotoFromSource(context, ImageSource.gallery);
+                    },
+                  ),
+                ],
+              );
+      },
+    );
   }
 
   void getPhotoFromSource(
@@ -289,10 +296,10 @@ class ScaleTaggerVm extends ChangeNotifier {
         final fileName = basename(pickedFile.path);
         await pickedFile
             .saveTo(('${getIt<GuvenSettings>().appDocDirectory}/$fileName'));
-        if (scaleModel!.images.isNotEmpty) {
-          scaleModel!.images.add(pickedFile.path);
+        if (scaleModel.images.isNotEmpty) {
+          scaleModel.images.add(pickedFile.path);
         } else {
-          scaleModel!.images = [pickedFile.path];
+          scaleModel.images = [pickedFile.path];
         }
       }
 
@@ -303,27 +310,28 @@ class ScaleTaggerVm extends ChangeNotifier {
     }
   }
 
-  void save() {
+  Future<void> save() async {
     try {
       if (weightController.text == '') {
         throw Exception(LocaleProvider.current.required_area);
       }
-      scaleModel!.dateTime = DateTime.now();
-      getIt<ScaleStorageImpl>()
-          .write(scaleModel!.scaleModel, shouldSendToServer: true);
+
+      scaleModel.dateTime = DateTime.now();
+      await getIt<ScaleStorageImpl>()
+          .write(scaleModel.scaleModel, shouldSendToServer: true);
       Atom.dismiss();
     } catch (e) {
       LoggerUtils.instance.e(e);
     }
   }
 
-  update() {
-    getIt<ScaleStorageImpl>().update(scaleModel!.scaleModel, key);
+  void update() {
+    getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
     Atom.dismiss();
   }
 
   void deleteImageFromIndex(int index) {
-    scaleModel!.images.removeAt(index);
+    scaleModel.images.removeAt(index);
     notifyListeners();
   }
 }

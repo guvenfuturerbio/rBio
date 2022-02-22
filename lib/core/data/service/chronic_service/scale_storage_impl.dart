@@ -232,10 +232,12 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
             );
           }
         }
+
         if (shouldSendToServer) {
           var id = await sendToServer(data);
           data.measurementId = id;
         }
+
         await box.add(data);
         notifyListeners();
         return true;

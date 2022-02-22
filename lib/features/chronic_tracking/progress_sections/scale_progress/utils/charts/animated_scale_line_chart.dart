@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
-import '../../view_model/scale_progress_page_view_model.dart';
+import '../../viewmodel/scale_progress_vm.dart';
 
 /// Renders the line sample with dynamically updated data points.
 class AnimationScaleLineDefault extends StatefulWidget {
@@ -35,12 +35,13 @@ class _AnimationScaleLineDefaultState extends State<AnimationScaleLineDefault> {
   @override
   Widget build(BuildContext context) {
     _zoomingBehavior = ZoomPanBehavior(
-        enablePinching: true,
-        zoomMode: _zoomModeType,
-        enablePanning: true,
-        enableMouseWheelZooming: Atom.isWeb ? true : false);
-    return Consumer<ScaleProgressPageViewModel>(
-        builder: (context, value, child) {
+      enablePinching: true,
+      zoomMode: _zoomModeType,
+      enablePanning: true,
+      enableMouseWheelZooming: Atom.isWeb ? true : false,
+    );
+
+    return Consumer<ScaleProgressVm>(builder: (context, value, child) {
       _selected = value.selected;
       _startDate = value.startDate;
       _endDate = value.endDate;

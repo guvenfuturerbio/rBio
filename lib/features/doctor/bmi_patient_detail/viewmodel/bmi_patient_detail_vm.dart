@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../../../chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
-import '../../../chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import '../../../chronic_tracking/progress_sections/scale_progress/viewmodel/scale_progress_vm.dart';
 import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../../../chronic_tracking/utils/selected_scale_type.dart';
 import '../../notifiers/patient_notifiers.dart';

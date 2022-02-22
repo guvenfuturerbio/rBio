@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chronic_tracking/utils/selected_scale_type.dart';
+import '../../../../../../core/core.dart';
+import '../../../../utils/selected_scale_type.dart';
 
 class ScaleMeasurementViewModel {
   final ScaleModel scaleModel;

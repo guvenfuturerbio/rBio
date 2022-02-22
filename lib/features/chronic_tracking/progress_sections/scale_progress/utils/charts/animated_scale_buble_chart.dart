@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
-import '../../view_model/scale_progress_page_view_model.dart';
+import '../../viewmodel/scale_progress_vm.dart';
 
 /// Renders the Scatter chart sample with dynamically updated data points.
 class AnimationScaleScatterDefault extends StatefulWidget {
@@ -37,14 +37,14 @@ class _AnimationScaleScatterDefaultState
   @override
   Widget build(BuildContext context) {
     _zoomingBehavior = ZoomPanBehavior(
+      /// To enable the pinch zooming as true.
+      enablePinching: true,
+      zoomMode: _zoomModeType,
+      enablePanning: true,
+      enableMouseWheelZooming: Atom.isWeb ? true : false,
+    );
 
-        /// To enable the pinch zooming as true.
-        enablePinching: true,
-        zoomMode: _zoomModeType,
-        enablePanning: true,
-        enableMouseWheelZooming: Atom.isWeb ? true : false);
-    return Consumer<ScaleProgressPageViewModel>(
-        builder: (context, value, child) {
+    return Consumer<ScaleProgressVm>(builder: (context, value, child) {
       _selected = value.selected;
       _chartData = value.chartData;
       _minimum = value.dailyLowestValue;
