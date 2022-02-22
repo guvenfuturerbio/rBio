@@ -43,8 +43,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-  device_info_plus:
+  cupertino_icons:
     dependency: "direct main"
+    description:
+      name: cupertino_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
+  device_info_plus:
+    dependency: transitive
     description:
       name: device_info_plus
       url: "https://pub.dartlang.org"
@@ -121,8 +128,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  health:
+    dependency: "direct dev"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "3.4.3"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       url: "https://pub.dartlang.org"
