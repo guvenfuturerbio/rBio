@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'core/core.dart';
 import 'features/chronic_tracking/progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import 'features/chronic_tracking/progress_sections/pressure_progress/view/pressure_progres_page.dart';
-import 'features/chronic_tracking/progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import 'features/chronic_tracking/progress_sections/scale_progress/viewmodel/scale_progress_vm.dart';
 import 'features/doctor/notifiers/bg_measurements_notifiers.dart';
 import 'features/doctor/notifiers/patient_notifiers.dart';
 import 'features/home/viewmodel/home_vm.dart';
@@ -66,8 +66,8 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<UserNotifier>(
             create: (context) => getIt<UserNotifier>(),
           ),
-          ChangeNotifierProvider<ScaleProgressPageViewModel>(
-            create: (ctx) => ScaleProgressPageViewModel(),
+          ChangeNotifierProvider<ScaleProgressVm>(
+            create: (ctx) => ScaleProgressVm(),
           ),
           ChangeNotifierProvider<BgProgressPageViewModel>.value(
             value: BgProgressPageViewModel(context: context),

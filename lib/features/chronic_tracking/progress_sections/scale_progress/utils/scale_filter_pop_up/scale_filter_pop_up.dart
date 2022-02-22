@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import '../../viewmodel/scale_progress_vm.dart';
 import '../../../../utils/selected_scale_type.dart';
 import 'scale_filter_pop_up_vm.dart';
 
@@ -45,7 +45,7 @@ class ScaleChartFilterPopup extends StatelessWidget {
                 create: (_) => ScaleFilterPopupVm(
                   scaleType: isDoctor
                       ? selected
-                      : Provider.of<ScaleProgressPageViewModel>(context,
+                      : Provider.of<ScaleProgressVm>(context,
                               listen: false)
                           .currentScaleType,
                 ),
@@ -109,7 +109,7 @@ class ScaleChartFilterPopup extends StatelessWidget {
                                 if (isDoctor) {
                                   changeScaleType(value.selectedScaleType);
                                 } else {
-                                  Provider.of<ScaleProgressPageViewModel>(
+                                  Provider.of<ScaleProgressVm>(
                                           context,
                                           listen: false)
                                       .changeScaleType(value.selectedScaleType);

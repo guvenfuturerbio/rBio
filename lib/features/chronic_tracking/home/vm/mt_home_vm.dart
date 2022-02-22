@@ -288,7 +288,7 @@ class MeasurementTrackingVm with ChangeNotifier {
             key: const Key('Glucose'),
             activateCallBack: (key) => setActiveItem(key),
           ),
-          HomePageModel<ScaleProgressPageViewModel>(
+          HomePageModel<ScaleProgressVm>(
             title: LocaleProvider.current.scale_progress,
             key: const Key('Scale'),
             activateCallBack: (key) => setActiveItem(key),

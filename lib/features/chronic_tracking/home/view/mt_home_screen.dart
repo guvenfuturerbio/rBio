@@ -10,7 +10,7 @@ import '../../../dashboard/not_chronic_screen.dart';
 import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
 import '../../progress_sections/pressure_progress/view/pressure_progres_page.dart';
 import '../../progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
-import '../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import '../../progress_sections/scale_progress/viewmodel/scale_progress_vm.dart';
 import '../model/page_model.dart';
 import '../utils/card_widget.dart';
 

@@ -13,16 +13,17 @@ import '../utils/charts/animated_scale_line_chart.dart';
 import '../utils/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../utils/scale_measurements/scale_measurement_vm.dart';
 import '../utils/scale_tagger/scale_tagger_pop_up.dart';
-import '../view/scale_progress_page.dart';
+import '../view/scale_progress_screen.dart';
 
 enum GraphType { bubble, line }
 
-class ScaleProgressPageViewModel extends ChangeNotifier
+class ScaleProgressVm extends ChangeNotifier
     with IBaseBottomActionsOfGraph
     implements ProgressPage {
   final controller = ScrollController();
   bool hasReachEnd = false;
-  ScaleProgressPageViewModel() {
+
+  ScaleProgressVm() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       isChartShow = true;
 
@@ -515,7 +516,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     notifyListeners();
   }
 
-  updateScaleMeasurement() async {
+  Future<void> updateScaleMeasurement() async {
     if (selected == TimePeriodFilter.daily) {
       fetchScaleMeasurements();
     } else {
@@ -531,7 +532,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     }
   }
 
-  resetFilterState() {
+  void resetFilterState() {
     _colorFilterState = <ScaleMarginsFilter, bool>{};
     notifyListeners();
   }
@@ -539,81 +540,96 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   List<ScatterSeries<ChartData, DateTime>> getDataScatterSeries() {
     return <ScatterSeries<ChartData, DateTime>>[
       ScatterSeries<ChartData, DateTime>(
-          dataSource: chartVeryLow,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
+        dataSource: chartVeryLow,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: R.color.very_low,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+          shape: DataMarkerType.circle,
+        ),
+      ),
+      ScatterSeries<ChartData, DateTime>(
+        dataSource: chartLow,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: R.color.low,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          shape: DataMarkerType.circle,
+          isVisible: true,
+        ),
+      ),
+      ScatterSeries<ChartData, DateTime>(
+        dataSource: chartTarget,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: R.color.target,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
           color: R.color.very_low,
-          xAxisName: "Time",
-          markerSettings: const MarkerSettings(
-              height: 15,
-              width: 15,
-              isVisible: true,
-              shape: DataMarkerType.circle)),
+          height: 15,
+          width: 15,
+          shape: DataMarkerType.circle,
+          isVisible: true,
+        ),
+      ),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: chartLow,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.low,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: const MarkerSettings(
-              height: 15,
-              width: 15,
-              shape: DataMarkerType.circle,
-              isVisible: true)),
-      ScatterSeries<ChartData, DateTime>(
-          dataSource: chartTarget,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.target,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              color: R.color.very_low,
-              height: 15,
-              width: 15,
-              shape: DataMarkerType.circle,
-              isVisible: true)),
-      ScatterSeries<ChartData, DateTime>(
-          dataSource: chartHigh,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
+        dataSource: chartHigh,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: R.color.high,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
           color: R.color.high,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              color: R.color.high,
-              height: 15,
-              width: 15,
-              borderColor: R.color.very_high,
-              shape: DataMarkerType.circle,
-              isVisible: true)),
+          height: 15,
+          width: 15,
+          borderColor: R.color.very_high,
+          shape: DataMarkerType.circle,
+          isVisible: true,
+        ),
+      ),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: chartVeryHigh,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
+        dataSource: chartVeryHigh,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: R.color.very_high,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
           color: R.color.very_high,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              color: R.color.very_high,
-              height: 15,
-              width: 15,
-              isVisible: true,
-              shape: DataMarkerType.circle)),
+          height: 15,
+          width: 15,
+          isVisible: true,
+          shape: DataMarkerType.circle,
+        ),
+      ),
     ];
   }
 
-  showScaleTagger(BuildContext context) {
-    Atom.show(const ScaleTagger(),
-        barrierDismissible: false, barrierColor: Colors.transparent);
+  void showScaleTagger(BuildContext context) {
+    Atom.show(
+      const ScaleTagger(),
+      barrierDismissible: false,
+      barrierColor: Colors.transparent,
+    );
   }
 
   Future<void> setSelectedItem(TimePeriodFilter s) async {
     resetFilterState();
     _currentDateIndex = 0;
     notifyListeners();
+
     _selectedItem = s;
     setCurrentGraph();
     notifyListeners();
+
     if (s == TimePeriodFilter.spesific) {
       fetchScaleMeasurements();
       fetchSpesificData();
@@ -711,9 +727,7 @@ class ScaleProgressPageViewModel extends ChangeNotifier
   }
 
   @override
-  Widget largeWidget() {
-    return ScaleProgressPage(callBack: changeChartShowStatus);
-  }
+  Widget largeWidget() => ScaleProgressScreen(callBack: changeChartShowStatus);
 
   @override
   Widget smallWidget(Function() callBack) {
@@ -737,15 +751,17 @@ class ScaleProgressPageViewModel extends ChangeNotifier
     showScaleTagger(context);
   }
 
-  getNewItems() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
-        scaleMeasurements.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+  void getNewItems() {
+    WidgetsBinding.instance?.addPostFrameCallback(
+      (_) {
+        if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
+          scaleMeasurements.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
-        getIt<ScaleStorageImpl>()
-            .getAndWriteScaleData(endDate: scaleMeasurements.last.dateTime)
-            .then((value) => hasReachEnd = value);
-      }
-    });
+          getIt<ScaleStorageImpl>()
+              .getAndWriteScaleData(endDate: scaleMeasurements.last.dateTime)
+              .then((value) => hasReachEnd = value);
+        }
+      },
+    );
   }
 }

@@ -15,13 +15,7 @@ import 'intl/messages_all.dart';
 class LocaleProvider {
   LocaleProvider();
 
-  static LocaleProvider? _current;
-
-  static LocaleProvider get current {
-    assert(_current != null,
-        'No instance of LocaleProvider was loaded. Try to initialize the LocaleProvider delegate before accessing LocaleProvider.current.');
-    return _current!;
-  }
+  static late LocaleProvider current;
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
@@ -32,10 +26,9 @@ class LocaleProvider {
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      final instance = LocaleProvider();
-      LocaleProvider._current = instance;
+      LocaleProvider.current = LocaleProvider();
 
-      return instance;
+      return LocaleProvider.current;
     });
   }
 

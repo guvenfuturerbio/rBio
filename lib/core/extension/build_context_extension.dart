@@ -8,6 +8,9 @@ import '../core.dart';
 extension BuildContextThemeExtensions on BuildContext {
   TextScaleType get xTextScaleType => read<ThemeNotifier>().textScale;
 
+  bool get xIsPortrait =>
+      MediaQuery.of(this).orientation == Orientation.portrait;
+
   MediaQueryData get xMediaQuery => MediaQuery.of(this);
   Color get xAccentColor => Theme.of(this).colorScheme.secondary;
 
