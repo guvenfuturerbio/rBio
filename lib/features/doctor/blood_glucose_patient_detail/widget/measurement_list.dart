@@ -3,11 +3,11 @@ part of '../view/blood_glucose_patient_detail_screen.dart';
 class _MeasurementList extends StatefulWidget {
   final List<BgMeasurementViewModel> bgMeasurements;
   final ScrollController scrollController;
-  final bool useStickyGroupSeparatorsValue;
+  final bool? useStickyGroupSeparatorsValue;
 
-  _MeasurementList({
-    this.bgMeasurements,
-    this.scrollController,
+  const _MeasurementList({
+    required this.bgMeasurements,
+    required this.scrollController,
     this.useStickyGroupSeparatorsValue,
   });
 
@@ -19,7 +19,7 @@ class __MeasurementListState extends State<_MeasurementList> {
   @override
   Widget build(BuildContext context) {
     return GroupedListView<BgMeasurementViewModel, DateTime>(
-      elements: widget.bgMeasurements ?? <BgMeasurementViewModel>[],
+      elements: widget.bgMeasurements,
       order: GroupedListOrder.DESC,
       controller: widget.scrollController,
       scrollDirection: Axis.vertical,
@@ -35,9 +35,9 @@ class __MeasurementListState extends State<_MeasurementList> {
         return Container(
           width: double.infinity,
           alignment: Alignment.center,
-          height: (context.HEIGHT * .1) * context.TEXTSCALE,
+          height: (context.height * .1) * context.textScale,
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 2),
+            margin: const EdgeInsets.symmetric(vertical: 2),
             decoration: BoxDecoration(
               color: getIt<ITheme>().cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
@@ -45,7 +45,8 @@ class __MeasurementListState extends State<_MeasurementList> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(bgMeasurementViewModel.date)}',
+                DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
+                    .format(bgMeasurementViewModel.date),
                 style: context.xBodyText1.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -62,7 +63,7 @@ class __MeasurementListState extends State<_MeasurementList> {
         var prov =
             Provider.of<BloodGlucosePatientDetailVm>(context, listen: false);
 
-        if (prov.selected == TimePeriodFilter.DAILY.toShortString()) {
+        if (prov.selected == TimePeriodFilter.daily.toShortString()) {
           prov.fetchScrolledData(data.date);
         }
       },
@@ -100,7 +101,7 @@ Widget _buildCard(
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(10),
-            height: (context.HEIGHT * .08) * context.TEXTSCALE,
+            height: (context.height * .08) * context.textScale,
             margin: const EdgeInsets.only(left: 4, right: 8, top: 8),
             decoration: BoxDecoration(
               color: getIt<ITheme>().cardBackgroundColor,
@@ -121,12 +122,12 @@ Widget _buildCard(
                       //
                       Container(
                         alignment: Alignment.center,
-                        width: (context.HEIGHT * .05) * context.TEXTSCALE,
-                        height: (context.HEIGHT * .05) * context.TEXTSCALE,
+                        width: (context.height * .05) * context.textScale,
+                        height: (context.height * .05) * context.textScale,
                         decoration: measurementListBoxDecoration(
                             bgMeasurementViewModel),
                         child: Text(
-                          bgMeasurementViewModel.result,
+                          bgMeasurementViewModel.result!,
                           maxLines: 2,
                           style: context.xHeadline5,
                           overflow: TextOverflow.ellipsis,
@@ -134,14 +135,14 @@ Widget _buildCard(
                       ),
 
                       //
-                      SizedBox(
+                      const SizedBox(
                         width: 12,
                       ),
 
                       //
                       SizedBox(
-                        width: (context.HEIGHT * .02),
-                        height: (context.HEIGHT * .02),
+                        width: (context.height * .02),
+                        height: (context.height * .02),
                         child: SvgPicture.asset(
                           bgMeasurementViewModel.tag == 1
                               ? R.image.beforeMeal
@@ -163,9 +164,10 @@ Widget _buildCard(
                               child: Text(
                                 bgMeasurementViewModel.note == null
                                     ? ""
-                                    : (bgMeasurementViewModel.note.length > 10
-                                        ? "${bgMeasurementViewModel.note.substring(0, 10)}..."
-                                        : bgMeasurementViewModel.note),
+                                    : ((bgMeasurementViewModel.note!).length >
+                                            10
+                                        ? "${(bgMeasurementViewModel.note!).substring(0, 10)}..."
+                                        : bgMeasurementViewModel.note!),
                                 style: context.xHeadline5,
                               ),
                             ),
@@ -173,7 +175,7 @@ Widget _buildCard(
                             //
                             Expanded(
                               child: Text(
-                                bgMeasurementViewModel.isManual ? 'M' : 'A',
+                                bgMeasurementViewModel.isManual! ? 'M' : 'A',
                                 style: context.xHeadline5,
                                 textAlign: TextAlign.end,
                               ),
@@ -181,21 +183,6 @@ Widget _buildCard(
                           ],
                         ),
                       ),
-
-                      //
-                      SizedBox(width: 8),
-
-                      //
-                      if (bgMeasurementViewModel.imageURL != null &&
-                          bgMeasurementViewModel.imageURL != '') ...[
-                        Image.network(bgMeasurementViewModel.imageURL),
-                      ] else ...[
-                        Container(
-                          width: 50,
-                          height: 50,
-                          color: Colors.black.withOpacity(0.1),
-                        ),
-                      ],
                     ],
                   ),
                 ),
@@ -219,7 +206,7 @@ BoxDecoration measurementListBoxDecoration(
         ? Colors.transparent
         : bgMeasurementViewModel.resultColor,
     border: Border.all(
-      color: bgMeasurementViewModel.resultColor,
+      color: bgMeasurementViewModel.resultColor!,
       width: 5.0,
     ),
   );

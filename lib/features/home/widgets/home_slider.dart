@@ -10,7 +10,7 @@ import '../view/home_screen.dart';
 import '../viewmodel/home_vm.dart';
 
 class HomeSlider extends StatefulWidget {
-  const HomeSlider({Key key}) : super(key: key);
+  const HomeSlider({Key? key}) : super(key: key);
 
   @override
   _HomeSliderState createState() => _HomeSliderState();
@@ -26,16 +26,16 @@ class _HomeSliderState extends State<HomeSlider> {
       builder: (
         BuildContext context,
         HomeVm vm,
-        Widget child,
+        Widget? child,
       ) {
         return Container(
-          height: getHeight(context),
+          height: vm.bannerTabsModel.isEmpty ? 0 : getHeight(context),
           width: Atom.width,
-          margin: EdgeInsets.symmetric(
+          margin: const EdgeInsets.symmetric(
             horizontal: 7,
           ),
           child: vm.bannerTabsModel.isEmpty
-              ? SizedBox()
+              ? const SizedBox()
               : Stack(
                   fit: StackFit.expand,
                   children: [
@@ -47,7 +47,7 @@ class _HomeSliderState extends State<HomeSlider> {
                             int pageViewIndex) {
                           return Container(
                             width: double.infinity,
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
                               color: getIt<ITheme>().cardBackgroundColor,
                               borderRadius: R.sizes.borderRadiusCircular,
@@ -57,14 +57,15 @@ class _HomeSliderState extends State<HomeSlider> {
                                 if (vm.showDeletedAlert) {
                                   vm.addWidget(HomeWidgets.slider);
                                 } else {
-                                  if (vm
-                                      .bannerTabsModel[itemIndex].destinationUrl
-                                      .contains('http')) {
-                                    launch(vm.bannerTabsModel[itemIndex]
-                                        .destinationUrl);
-                                  } else {
-                                    Atom.to(vm.bannerTabsModel[itemIndex]
-                                        .destinationUrl);
+                                  final destinationUrl = vm
+                                      .bannerTabsModel[itemIndex]
+                                      .destinationUrl;
+                                  if (destinationUrl != null) {
+                                    if (destinationUrl.contains('http')) {
+                                      launch(destinationUrl);
+                                    } else {
+                                      Atom.to(destinationUrl);
+                                    }
                                   }
                                 }
                               },
@@ -72,9 +73,10 @@ class _HomeSliderState extends State<HomeSlider> {
                                 borderRadius: R.sizes.borderRadiusCircular,
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      vm.bannerTabsModel[itemIndex].imageUrl,
+                                      vm.bannerTabsModel[itemIndex].imageUrl ??
+                                          '',
                                   errorWidget: (context, url, error) =>
-                                      Center(child: Icon(Icons.error)),
+                                      const Center(child: Icon(Icons.error)),
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -110,7 +112,7 @@ class _HomeSliderState extends State<HomeSlider> {
                                 child: Container(
                                   width: 10.0,
                                   height: 10.0,
-                                  margin: EdgeInsets.symmetric(
+                                  margin: const EdgeInsets.symmetric(
                                     vertical: 8.0,
                                     horizontal: 4.0,
                                   ),

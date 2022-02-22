@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 
 import '../../../core/core.dart';
 import '../auth.dart';
 import '../viewmodel/forgot_password_step1_vm.dart';
 
 class ForgotPasswordStep1Screen extends StatefulWidget {
-  const ForgotPasswordStep1Screen({Key key}) : super(key: key);
+  const ForgotPasswordStep1Screen({Key? key}) : super(key: key);
 
   @override
   _ForgotPasswordStep1ScreenState createState() =>
@@ -18,16 +17,15 @@ class ForgotPasswordStep1Screen extends StatefulWidget {
 }
 
 class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
-  TextEditingController _tcIdentityEditingController;
-  masked.MaskedTextController _tcPhoneNumberEditingController;
-  FocusNode tcNoFNode;
-  FocusNode phoneNumberFNode;
+  late TextEditingController _tcIdentityEditingController;
+  late TextEditingController _tcPhoneNumberEditingController;
+  late FocusNode tcNoFNode;
+  late FocusNode phoneNumberFNode;
 
   @override
   void initState() {
     _tcIdentityEditingController = TextEditingController();
-    _tcPhoneNumberEditingController =
-        masked.MaskedTextController(mask: '(000) 000-0000');
+    _tcPhoneNumberEditingController = TextEditingController();
     tcNoFNode = FocusNode();
     phoneNumberFNode = FocusNode();
 
@@ -52,12 +50,12 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
         builder: (
           BuildContext context,
           ForgotPasswordStep1ScreenVm value,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
             child: RbioScaffold(
               resizeToAvoidBottomInset: true,
-              appbar: RbioAppBarLogin(),
+              appbar: RbioAppBar(),
               body: _buildBody(context, value),
             ),
           );
@@ -80,36 +78,25 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             //
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
             //
             Padding(
               padding: const EdgeInsets.only(bottom: 15.0, left: 25, top: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      "Recover your password",
-                      style: context.xHeadline1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: context.TEXTSCALE * 30),
-                    ),
-                  ),
-                  Text(
-                    "Select the way for recovery.",
-                    style: context.xHeadline3,
-                  ),
-                ],
+              child: Text(
+                LocaleProvider.current.recover_your_password,
+                style: context.xHeadline1.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: context.textScale * 30),
               ),
             ),
 
             //
             Padding(
-              padding: EdgeInsets.only(bottom: 30, top: 5, right: 15, left: 15),
+              padding: const EdgeInsets.only(
+                  bottom: 30, top: 5, right: 15, left: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -148,7 +135,8 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
 
             //
             Padding(
-              padding: EdgeInsets.only(bottom: 30, top: 5, right: 15, left: 15),
+              padding: const EdgeInsets.only(
+                  bottom: 30, top: 5, right: 15, left: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -173,7 +161,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                       ),
 
                       //
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
 
@@ -209,7 +197,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
 
             //
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 30,
                 left: 30,
               ),
@@ -219,7 +207,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                   //
                   Center(
                     child: Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                         bottom: 20,
                         right: 30,
                         left: 30,
@@ -237,8 +225,8 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                           userRegisterStep1.identificationNumber =
                               _tcIdentityEditingController.text;
 
-                          if (_tcPhoneNumberEditingController.text.length > 0 &&
-                              _tcIdentityEditingController.text.length > 0) {
+                          if (_tcPhoneNumberEditingController.text.isNotEmpty &&
+                              _tcIdentityEditingController.text.isNotEmpty) {
                             value.forgotPassStep1(userRegisterStep1);
                           } else {
                             value.showInfoDialog(
@@ -273,7 +261,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                             ),
                           ),
                           onTap: () {
-                            Atom.to(PagePaths.REGISTER_STEP_2);
+                            Atom.to(PagePaths.registerStep2);
                           },
                         )
                       ],

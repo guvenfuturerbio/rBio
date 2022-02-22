@@ -4,36 +4,33 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
 class ForUSubCategoriesScreenVm extends ChangeNotifier {
-  BuildContext mContext;
-  
+  BuildContext? mContext;
+
   ForUSubCategoriesScreenVm(BuildContext context, var id) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      this.mContext = context;
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      mContext = context;
       await fetchCategories(id);
     });
   }
 
-  LoadingProgress _progress;
+  LoadingProgress? progress;
 
-  List<ForYouCategoryResponse> _categories = <ForYouCategoryResponse>[];
-
-  List<ForYouCategoryResponse> get categories => this._categories;
-
-  LoadingProgress get progress => this._progress;
+  List<ForYouCategoryResponse> categories = <ForYouCategoryResponse>[];
 
   Future<void> fetchCategories(int id) async {
     try {
-      this._progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       notifyListeners();
-      List<ForYouCategoryResponse> categories =
-          await getIt<Repository>().getAllSubCategories(id);
-      this._categories = categories;
-      this._progress = LoadingProgress.DONE;
+      categories = await getIt<Repository>().getAllSubCategories(id);
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      this._progress = LoadingProgress.ERROR;
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      progress = LoadingProgress.error;
+      showGradientDialog(
+        mContext!,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
       notifyListeners();
     }
   }

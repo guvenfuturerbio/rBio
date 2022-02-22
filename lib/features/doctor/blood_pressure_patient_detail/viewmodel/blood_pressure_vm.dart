@@ -1,71 +1,82 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/data/repository/doctor_repository.dart';
 import '../../../../model/model.dart';
-import '../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/utils/bp_chart_filter/bp_chart_filter_pop_up.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_measurement_vm.dart';
+import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
 import '../widget/charts/line_charts.dart';
 
-class BloodPressurePatientDetailVm extends ChangeNotifier {
+class BloodPressurePatientDetailVm extends RbioVm
+    with IBaseBottomActionsOfGraph {
   List<BpMeasurementViewModel> bpMeasurements = [];
   List<BpMeasurementViewModel> bpMeasurementsDailyData = [];
 
+  Map<String, bool>? _measurementFilters;
+  Map<String, bool> get measurements =>
+      _measurementFilters ??
+      {
+        LocaleProvider.current.sys: true,
+        LocaleProvider.current.dia: true,
+        LocaleProvider.current.pulse: true,
+      };
+
   int _currentDateIndex = 0;
-  int get currentDateIndex => _currentDateIndex ?? 0;
+  int get currentDateIndex => _currentDateIndex;
 
   bool hasReachEnd = false;
 
-  final BuildContext context;
+  @override
+  final BuildContext mContext;
   final int patientId;
 
-  BloodPressurePatientDetailVm({this.context, this.patientId}) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  BloodPressurePatientDetailVm(
+      {required this.mContext, required this.patientId}) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       isChartShow = false;
       update();
+      controller!.addListener(() async {
+        if (controller!.position.atEdge && controller!.position.pixels != 0) {
+          await getMoreData();
+          fetchScrolledDailyData();
+        }
+      });
     });
   }
   bool isChartShow = false;
+  @override
   changeChartShowStatus() {
     isChartShow = !isChartShow;
     notifyListeners();
   }
 
   update() async {
-    _isDataLoading = true;
+    isDataLoading = true;
     notifyListeners();
     await fetchBpMeasurement();
     await fetchScrolledDailyData();
 
-    controller.addListener(() {
-      if (controller.position.atEdge && controller.position.pixels != 0) {
-        getNewItems();
-      }
-    });
-    _isDataLoading = false;
+    isDataLoading = false;
     notifyListeners();
   }
 
-  Widget get currentGraph => AnimatedPatientPulseChart();
+  Widget get currentGraph => const AnimatedPatientPulseChart();
 
-  ScrollController controller = ScrollController();
-  TimePeriodFilter _selected;
-  TimePeriodFilter get selected => _selected ?? TimePeriodFilter.DAILY;
+  ScrollController? controller = ScrollController();
+  TimePeriodFilter? selected = TimePeriodFilter.daily;
+  bool allDataLoaded = false;
 
-  Map<String, bool> _measurementFilters;
+  Map<String, bool>? measurementFilters;
 
-  Map<String, bool> get measurements =>
-      _measurementFilters ??
+  /* ??
       {
-        '${LocaleProvider.current.sys}': true,
-        '${LocaleProvider.current.dia}': true,
-        '${LocaleProvider.current.pulse}': true,
-      };
+        LocaleProvider.current.sys: true,
+        LocaleProvider.current.dia: true,
+        LocaleProvider.current.pulse: true,
+      };*/
 
-  bool _isDataLoading;
-  bool get isDataLoading => _isDataLoading ?? false;
+  bool? isDataLoading;
 
   fetchBpMeasurement() async {
     final result = await getIt<DoctorRepository>().getMyPatientBloodPressure(
@@ -79,19 +90,49 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
     bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
 
-  void fetchScrolledDailyData() {
-    this.bpMeasurementsDailyData.clear();
+  Future<void> getMoreData() async {
+    int addedItem = 0;
+    final result = await getIt<DoctorRepository>().getMyPatientBloodPressure(
+      patientId,
+      GetMyPatientFilter(
+          end: bpMeasurements.first.date.toIso8601String(), start: null),
+    );
+
+    for (var item in result) {
+      bool alreadyInList = false;
+      for (var localItem in bpMeasurements) {
+        if (item.isEqual(localItem.bpModel)) {
+          alreadyInList = true;
+          break;
+        }
+      }
+      if (!alreadyInList) {
+        bpMeasurements.add(BpMeasurementViewModel(bpModel: item));
+        addedItem++;
+      }
+    }
+    if (addedItem == 0) {
+      allDataLoaded = true;
+    }
+    bpMeasurements =
+        result.map((e) => BpMeasurementViewModel(bpModel: e)).toList();
+
+    bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
+  }
+
+  fetchScrolledDailyData() {
+    bpMeasurementsDailyData.clear();
     List<DateTime> dateList = fetchBpMeasurementDates();
-    //print(dateList.toString());
+    //LoggerUtils.instance.i(dateList.toString());
     List<DateTime> reversedList = dateList.reversed.toList();
     if (reversedList.isNotEmpty) {
       DateTime currentDate = reversedList[currentDateIndex];
-      //print("current Date " + reversedList[currentDateIndex].toString());
+      //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
       for (var data in bpMeasurements) {
         if (DateTime(data.date.year, data.date.month, data.date.day)
             .isAtSameMomentAs(DateTime(
                 currentDate.year, currentDate.month, currentDate.day))) {
-          this.bpMeasurementsDailyData.add(data);
+          bpMeasurementsDailyData.add(data);
         }
       }
     }
@@ -99,21 +140,21 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  DateTime _scrolledDate;
+  DateTime? _scrolledDate;
   void fetchScrolledData(DateTime date) {
-    if (date != null && selected == TimePeriodFilter.DAILY) {
-      var _temp = DateTime(_scrolledDate?.year ?? 2000,
-          _scrolledDate?.month ?? 01, _scrolledDate?.day ?? 01);
+    if (selected == TimePeriodFilter.daily) {
+      var _temp = DateTime(
+          _scrolledDate!.year, _scrolledDate!.month, _scrolledDate!.day);
       var _cross = DateTime(date.year, date.month, date.day);
-      if (_scrolledDate == null || (_temp != _cross)) {
+      if ((_temp != _cross)) {
         _scrolledDate = date;
-        this.bpMeasurementsDailyData.clear();
+        bpMeasurementsDailyData.clear();
 
-        //print("current Date " + reversedList[currentDateIndex].toString());
+        //LoggerUtils.instance.i("current Date " + reversedList[currentDateIndex].toString());
         for (var data in bpMeasurements) {
           if (DateTime(data.date.year, data.date.month, data.date.day)
               .isAtSameMomentAs(DateTime(date.year, date.month, date.day))) {
-            this.bpMeasurementsDailyData.add(data);
+            bpMeasurementsDailyData.add(data);
           }
         }
         notifyListeners();
@@ -144,7 +185,7 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   Future<void> fetchBpMeasurementsInDateRange(
       DateTime start, DateTime end) async {
     final result = getIt<BloodPressureStorageImpl>().getAll();
-    this.bpMeasurements.clear();
+    bpMeasurements.clear();
     for (var e in result) {
       DateTime measurementDate = BpMeasurementViewModel(bpModel: e).date;
 
@@ -152,60 +193,70 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
         bpMeasurements.add(BpMeasurementViewModel(bpModel: e));
       }
     }
-    this.bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
+    bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
   }
 
-  DateTime _startDate;
-  DateTime _endDate;
+  DateTime? _startDate;
+  DateTime? _endDate;
 
   DateTime get startDate => _startDate != null
-      ? DateTime(_startDate.year, _startDate.month, _startDate.day)
+      ? DateTime(_startDate!.year, _startDate!.month, _startDate!.day)
+      : DateTime(
+          DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+
+  DateTime get endDate => _endDate != null
+      ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day)
       : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   Future<void> setStartDate(DateTime d) async {
-    this._startDate = d;
-    this._currentDateIndex = 0;
+    _startDate = d;
+    _currentDateIndex = 0;
     await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
-        beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
-    fetchBpMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
+        beginDate: startDate, endDate: endDate.add(const Duration(days: 1)));
+    fetchBpMeasurementsInDateRange(
+        _startDate ??
+            DateTime(
+                DateTime.now().year, DateTime.now().month, DateTime.now().day),
+        endDate.add(const Duration(days: 1)));
 
     notifyListeners();
   }
 
   changeStartDate(DateTime date) {
     _startDate = date;
-    setSelectedItem(selected);
+    setSelectedItem(selected!);
   }
 
   changeEndDate(DateTime date) {
     _endDate = date;
-    setSelectedItem(selected);
+    setSelectedItem(selected!);
   }
 
-  DateTime get endDate => _endDate != null
-      ? DateTime(_endDate.year, _endDate.month, _endDate.day)
+  /*DateTime get endDate => _endDate != null
+      ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day)
       : DateTime(
-          DateTime.now().add(Duration(days: 1)).year,
-          DateTime.now().add(Duration(days: 1)).month,
-          DateTime.now().add(Duration(days: 1)).day);
+          DateTime.now().add(const Duration(days: 1)).year,
+          DateTime.now().add(const Duration(days: 1)).month,
+          DateTime.now().add(const Duration(days: 1)).day);*/
 
   Future<void> setEndDate(DateTime d) async {
-    this._endDate = d;
-    this._currentDateIndex = 0;
+    _endDate = d;
+    _currentDateIndex = 0;
     await getIt<GlucoseStorageImpl>().getAndWriteGlucoseData(
-        beginDate: _startDate, endDate: endDate.add(Duration(days: 1)));
-    fetchBpMeasurementsInDateRange(startDate, endDate.add(Duration(days: 1)));
+        beginDate: startDate, endDate: endDate.add(const Duration(days: 1)));
+    fetchBpMeasurementsInDateRange(
+        startDate, endDate.add(const Duration(days: 1)));
 
     notifyListeners();
   }
 
   Future<void> setSelectedItem(TimePeriodFilter timePeriod) async {
-    this._currentDateIndex = 0;
-    this._selected = timePeriod;
-    if (timePeriod == TimePeriodFilter.SPECIFIC) {
+    _currentDateIndex = 0;
+    selected = timePeriod;
+    if (timePeriod == TimePeriodFilter.spesific) {
       fetchBpMeasurement();
       fetchSpesificData();
-    } else if (timePeriod == TimePeriodFilter.DAILY) {
+    } else if (timePeriod == TimePeriodFilter.daily) {
       fetchBpMeasurement();
       fetchScrolledDailyData();
     } else {
@@ -213,12 +264,13 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
           DateTime.now().month, DateTime.now().day, 23, 59, 00);
       DateTime currentDateStart = DateTime(DateTime.now().year,
           DateTime.now().month, DateTime.now().day, 00, 00);
-      timePeriod == TimePeriodFilter.WEEKLY
-          ? await setStartDate(currentDateStart.subtract(Duration(days: 7)))
-          : timePeriod == TimePeriodFilter.MONTHLY
+      timePeriod == TimePeriodFilter.weekly
+          ? await setStartDate(
+              currentDateStart.subtract(const Duration(days: 7)))
+          : timePeriod == TimePeriodFilter.monthly
               ? await setStartDate(currentDateStart
                   .subtract(Duration(days: currentDateStart.day - 1)))
-              : timePeriod == TimePeriodFilter.MONTHLY_THREE
+              : timePeriod == TimePeriodFilter.monthlyThree
                   ? await setStartDate(DateTime(
                       currentDateStart.year, currentDateStart.month - 3, 1))
                   : await setStartDate(currentDateStart);
@@ -228,27 +280,27 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
   }
 
   void fetchSpesificData() {
-    this.bpMeasurementsDailyData.clear();
+    bpMeasurementsDailyData.clear();
     for (var data in bpMeasurements) {
-      if (data.date.difference(_startDate).inDays >= 0 &&
-          data.date.difference(_endDate).inDays <= 0) {
-        this.bpMeasurementsDailyData.add(data);
+      if (data.date.difference(startDate).inDays >= 0 &&
+          data.date.difference(endDate).inDays <= 0) {
+        bpMeasurementsDailyData.add(data);
       }
     }
     notifyListeners();
   }
 
   void setChartAverageDataPerDay() {
-    this.bpMeasurementsDailyData = bpMeasurements;
+    bpMeasurementsDailyData = bpMeasurements;
   }
 
   Future<void> nextDate() async {
     await setStartDate(endDate);
-    if (selected == TimePeriodFilter.WEEKLY) {
-      await setEndDate(endDate.add(Duration(days: 7)));
-    } else if (selected == TimePeriodFilter.MONTHLY) {
+    if (selected == TimePeriodFilter.weekly) {
+      await setEndDate(endDate.add(const Duration(days: 7)));
+    } else if (selected == TimePeriodFilter.monthly) {
       await setEndDate(DateTime(endDate.year, endDate.month + 1, 1));
-    } else if (selected == TimePeriodFilter.MONTHLY_THREE) {
+    } else if (selected == TimePeriodFilter.monthlyThree) {
       await setEndDate(DateTime(endDate.year, endDate.month + 3, 1));
     }
     setChartAverageDataPerDay();
@@ -256,51 +308,59 @@ class BloodPressurePatientDetailVm extends ChangeNotifier {
 
   Future<void> previousDate() async {
     await setEndDate(startDate);
-    if (selected == TimePeriodFilter.WEEKLY) {
-      await setStartDate(startDate.subtract(Duration(days: 7)));
-    } else if (selected == TimePeriodFilter.MONTHLY) {
+    if (selected == TimePeriodFilter.weekly) {
+      await setStartDate(startDate.subtract(const Duration(days: 7)));
+    } else if (selected == TimePeriodFilter.monthly) {
       await setStartDate(DateTime(startDate.year, startDate.month - 1, 1));
-    } else if (selected == TimePeriodFilter.MONTHLY_THREE) {
+    } else if (selected == TimePeriodFilter.monthlyThree) {
       await setStartDate(DateTime(startDate.year, startDate.month - 3, 1));
     }
     setChartAverageDataPerDay();
   }
 
-  getNewItems() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      try {
-        if ((selected == TimePeriodFilter.DAILY) && !hasReachEnd) {
-          getIt<BloodPressureStorageImpl>()
-              .getAndWriteBpData(endDate: bpMeasurements.first.date)
-              .then((value) {
-            print(value);
-            hasReachEnd = value;
-          });
+  void getNewItems() {
+    WidgetsBinding.instance?.addPostFrameCallback(
+      (_) {
+        try {
+          if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
+            getIt<BloodPressureStorageImpl>()
+                .getAndWriteBpData(endDate: bpMeasurements.first.date)
+                .then((value) {
+              LoggerUtils.instance.i(value);
+              hasReachEnd = value;
+            });
+          }
+        } catch (e, stk) {
+          LoggerUtils.instance.i(e);
+          debugPrintStack(stackTrace: stk);
         }
-      } catch (e, stk) {
-        print(e);
-        debugPrintStack(stackTrace: stk);
-      }
-    });
+      },
+    );
   }
 
-  showPressureTagger(_) {
-    Atom.show(PressureTagger(),
-        barrierDismissible: false, barrierColor: Colors.transparent);
+  void showPressureTagger(_) {
+    Atom.show(
+      const BpTaggerPopUp(),
+      barrierDismissible: false,
+      barrierColor: Colors.transparent,
+    );
   }
 
   @override
-  void changeGraphType() => null;
+  void changeGraphType() {
+    throw UnimplementedError(
+        'Error: Just one graph type for blood pressure graph type!!!!');
+  }
 
-  void showFilter(_) => Atom.show(BpChartFilterPopUp(
-        height: context.HEIGHT * .52,
-        width: context.WIDTH * .6,
-        measurements: measurements,
+  @override
+  void showFilter(BuildContext context) => Atom.show(BpChartFilterPopUp(
+        width: context.width * .6,
+        measurements: measurementFilters!,
         callback: changeFilterType,
       ));
 
   void changeFilterType(Map<String, bool> selectedMeasurement) {
-    _measurementFilters = selectedMeasurement;
+    measurementFilters = selectedMeasurement;
     notifyListeners();
   }
 }

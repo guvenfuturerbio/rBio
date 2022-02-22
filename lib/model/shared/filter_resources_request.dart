@@ -1,8 +1,8 @@
 class FilterResourcesRequest {
-  int departmentId;
-  int tenantId;
-  String search;
-  int appointmentType;
+  int? departmentId;
+  int? tenantId;
+  String? search;
+  int? appointmentType;
 
   FilterResourcesRequest({
     this.departmentId,

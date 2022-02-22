@@ -1,19 +1,28 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:health/health.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
-import '../../progress_sections/pressure_progress/view/pressure_progres_page.dart';
-import '../../progress_sections/scale_progress/view_model/scale_progress_page_view_model.dart';
+import '../../../../model/ble_models/paired_device.dart';
+import '../../../dashboard/not_chronic_screen.dart';
+import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
+import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
+import '../../progress_sections/scale/viewmodel/scale_measurement_vm.dart';
+import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import '../model/page_model.dart';
 import '../utils/card_widget.dart';
 
 part '../vm/mt_home_vm.dart';
 
 class MeasurementTrackingHomeScreen extends StatefulWidget {
-  const MeasurementTrackingHomeScreen({Key key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? drawerKey;
+
+  const MeasurementTrackingHomeScreen({
+    Key? key,
+    this.drawerKey,
+  }) : super(key: key);
 
   @override
   State<MeasurementTrackingHomeScreen> createState() =>
@@ -30,28 +39,39 @@ class _MeasurementTrackingHomeScreenState
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => MeasurementTrackingVm(),
-      child: Consumer<MeasurementTrackingVm>(
-        builder: (BuildContext context, MeasurementTrackingVm vm, Widget chil) {
-          bool isLandscape =
-              context.xMediaQuery.orientation == Orientation.landscape &&
-                  !Atom.isWeb;
+    return !getIt<UserNotifier>().isCronic
+        ? NotChronicScreen(
+            title: LocaleProvider.current.chronic_track_home,
+          )
+        : ChangeNotifierProvider(
+            create: (_) => MeasurementTrackingVm(),
+            child: Consumer<MeasurementTrackingVm>(
+              builder: (
+                BuildContext context,
+                MeasurementTrackingVm vm,
+                Widget? child,
+              ) {
+                bool isLandscape =
+                    context.xMediaQuery.orientation == Orientation.landscape &&
+                        !Atom.isWeb;
 
-          return RbioStackedScaffold(
-            appbar: _buildAppBar(isLandscape, context),
-            body: _buildBody(context, vm, isLandscape),
-            floatingActionButton: _buildFAB(vm),
+                return RbioStackedScaffold(
+                  appbar: _buildAppBar(isLandscape, context),
+                  body: _buildBody(context, vm, isLandscape),
+                  floatingActionButton: _buildFAB(vm),
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 
-  RbioAppBar _buildAppBar(bool isLandscape, BuildContext context) {
+  RbioAppBar? _buildAppBar(bool isLandscape, BuildContext context) {
     return isLandscape
         ? null
         : RbioAppBar(
+            leading: widget.drawerKey != null
+                ? RbioLeadingMenu(drawerKey: widget.drawerKey)
+                : null,
             title: RbioAppBar.textTitle(
               context,
               LocaleProvider.current.chronic_track_home,
@@ -65,17 +85,17 @@ class _MeasurementTrackingHomeScreenState
     bool isLandscape,
   ) {
     switch (vm.state) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return _buildList(context, vm, isLandscape);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -85,7 +105,7 @@ class _MeasurementTrackingHomeScreenState
     bool isLandscape,
   ) {
     return ListView(
-      physics: ClampingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       padding: isLandscape
           ? null
           : EdgeInsets.only(top: RbioStackedScaffold.kHeight(context)),
@@ -95,12 +115,17 @@ class _MeasurementTrackingHomeScreenState
           _buildExpandedUser(),
 
         //
+        R.sizes.hSizer12,
+
+        //
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(17),
             color: vm.activeItem != null ? Colors.transparent : Colors.white,
             boxShadow: vm.activeItem != null
-                ? [BoxShadow(color: Colors.transparent)]
+                ? [
+                    const BoxShadow(color: Colors.transparent),
+                  ]
                 : null,
           ),
           child: ClipRRect(
@@ -110,10 +135,10 @@ class _MeasurementTrackingHomeScreenState
                   .map(
                     (parentElement) => SectionCard(
                       isActive: vm.activeItem != null &&
-                          vm.activeItem.key == parentElement.key,
+                          vm.activeItem!.key == parentElement.key,
                       isVisible: vm.activeItem == null,
-                      smallChild: parentElement.smallChild,
-                      largeChild: parentElement.largeChild,
+                      smallChild: parentElement.smallChild ?? const SizedBox(),
+                      largeChild: parentElement.largeChild ?? const SizedBox(),
                       hasDivider: vm.activeItem == null &&
                           vm.items.indexWhere((element) =>
                                   element.key == parentElement.key) <
@@ -128,12 +153,15 @@ class _MeasurementTrackingHomeScreenState
     );
   }
 
-  FloatingActionButton _buildFAB(MeasurementTrackingVm val) {
+  FloatingActionButton? _buildFAB(MeasurementTrackingVm val) {
     return val.activeItem != null
         ? FloatingActionButton(
             heroTag: 'adder',
             onPressed: () {
-              val.activeItem.manuelEntry();
+              final manuelEntry = val.activeItem?.manuelEntry;
+              if (manuelEntry != null) {
+                manuelEntry();
+              }
             },
             child: Container(
               height: double.infinity,
@@ -143,7 +171,7 @@ class _MeasurementTrackingHomeScreenState
                 color: getIt<ITheme>().mainColor,
               ),
               child: Padding(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: SvgPicture.asset(
                   R.image.add,
                   color: R.color.white,
@@ -156,7 +184,7 @@ class _MeasurementTrackingHomeScreenState
   }
 
   Widget _buildExpandedUser() {
-    return Container(
+    return SizedBox(
       height: 50,
       width: double.infinity,
       child: Row(
@@ -168,7 +196,7 @@ class _MeasurementTrackingHomeScreenState
           Expanded(
             child: Container(
               height: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
@@ -177,16 +205,16 @@ class _MeasurementTrackingHomeScreenState
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    foregroundImage: NetworkImage(R.image.circlevatar),
+                    foregroundImage: Utils.instance.getCacheProfileImage,
                     backgroundColor: getIt<ITheme>().cardBackgroundColor,
                   ),
 
                   //
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        getIt<ProfileStorageImpl>().getFirst().name ?? '',
+                        getIt<ProfileStorageImpl>().getFirst().name ?? 'Name',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline5.copyWith(
@@ -201,16 +229,16 @@ class _MeasurementTrackingHomeScreenState
           ),
 
           //
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
 
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.TREATMENT_PROGRESS);
+              Atom.to(PagePaths.treatmentProgress);
             },
             child: Container(
               height: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,

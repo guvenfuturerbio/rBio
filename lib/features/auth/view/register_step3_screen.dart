@@ -9,33 +9,27 @@ import '../auth.dart';
 import '../viewmodel/register_step3_vm.dart';
 
 class RegisterStep3Screen extends StatefulWidget {
-  UserRegistrationStep2Model userRegistrationStep2Model;
-  bool isWithoutTCKN;
-
-  RegisterStep3Screen({
-    Key key,
-    this.userRegistrationStep2Model,
-    this.isWithoutTCKN,
-  }) : super(key: key);
+  const RegisterStep3Screen({Key? key}) : super(key: key);
 
   @override
   _RegisterStep3ScreenState createState() => _RegisterStep3ScreenState();
 }
 
 class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
-  final TextEditingController _smsController = new TextEditingController();
-  final focus = FocusNode();
+  late UserRegistrationStep2Model userRegistrationStep2Model;
+  late bool isWithoutTCKN;
 
-  LoadingDialog loadingDialog;
+  final TextEditingController _smsController = TextEditingController();
+  final FocusNode focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     try {
-      widget.isWithoutTCKN = Atom.queryParameters['isWithoutTCKN'] == 'true';
-      widget.userRegistrationStep2Model = UserRegistrationStep2Model.fromJson(
-          jsonDecode(Atom.queryParameters['userRegistrationStep2Model']));
+      isWithoutTCKN = Atom.queryParameters['isWithoutTCKN'] == 'true';
+      userRegistrationStep2Model = UserRegistrationStep2Model.fromJson(
+          jsonDecode(Atom.queryParameters['userRegistrationStep2Model']!));
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return DefaultTabController(
@@ -53,11 +47,11 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
             builder: (
               BuildContext context,
               RegisterStep3ScreenVm vm,
-              Widget child,
+              Widget? child,
             ) {
               return RbioScaffold(
                 resizeToAvoidBottomInset: true,
-                appbar: RbioAppBarLogin(),
+                appbar: RbioAppBar(),
                 body: _buildBody(context, vm),
               );
             },
@@ -99,7 +93,8 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
 
             //
             Container(
-              margin: EdgeInsets.only(right: 15, left: 15, bottom: 20, top: 40),
+              margin: const EdgeInsets.only(
+                  right: 15, left: 15, bottom: 20, top: 40),
               child: RbioTextFormField(
                 controller: _smsController,
                 textInputAction: TextInputAction.done,
@@ -114,7 +109,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
 
             //
             Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20),
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
               child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_done.toUpperCase(),
                 onPressed: () {
@@ -124,17 +119,17 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
                   UserRegistrationStep3Model userRegisterStep3 =
                       UserRegistrationStep3Model();
 
-                  if (widget.isWithoutTCKN) {
+                  if (isWithoutTCKN) {
                     userRegisterStep3Model.userRegistrationStep2 =
-                        widget.userRegistrationStep2Model;
+                        userRegistrationStep2Model;
                     userRegisterStep3Model.sms = _smsController.text;
                   }
 
-                  if (_smsController.text.length > 0) {
+                  if (_smsController.text.isNotEmpty) {
                     vm.registerStep3(
                       userRegisterStep3,
                       userRegisterStep3Model,
-                      widget.isWithoutTCKN,
+                      isWithoutTCKN,
                     );
                   } else {
                     vm.showInfoDialog(

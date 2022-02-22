@@ -1,25 +1,39 @@
-part of '../imports/cronic_tracking.dart';
+part of 'chronic_tracking_service.dart';
 
 class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   ChronicTrackingApiServiceImpl(IDioHelper helper) : super(helper);
 
-  String get getChronicTrackingToken => getIt<ISharedPreferencesManager>()
-      .getString(SharedPreferencesKeys.JWT_TOKEN);
-  Options get authOptions => Options(headers: {
-        'Authorization': getChronicTrackingToken,
-        'Lang': Intl.getCurrentLocale()
-      });
+  String get getChronicTrackingToken {
+    final String? val = getIt<ISharedPreferencesManager>()
+        .getString(SharedPreferencesKeys.jwtToken);
+
+    if (val != null) {
+      return val;
+    } else {
+      throw Exception('ChronicTrackingApiService Token Null');
+    }
+  }
+
+  Options get authOptions => Options(
+        headers: {
+          'Authorization': getChronicTrackingToken,
+          'Lang': Intl.getCurrentLocale()
+        },
+      );
 
   @override
   Future<GuvenResponseModel> saveAndRetrieveToken(
-      SaveAndRetrieveTokenModel saveAndRetrieveToken, String token) async {
+    SaveAndRetrieveTokenModel saveAndRetrieveToken,
+    String token,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_saveAndRetrieveToken, saveAndRetrieveToken.toJson(),
-        options: Options(headers: {
-          'Authorization': token,
-          'Lang': Intl.getCurrentLocale()
-        }));
-    if (response.isSuccessful) {
+      R.endpoints.ctSaveAndRetrieveToken,
+      saveAndRetrieveToken.toJson(),
+      options: Options(
+        headers: {'Authorization': token, 'Lang': Intl.getCurrentLocale()},
+      ),
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/saveAndRetrieveToken : ${response.isSuccessful}');
@@ -28,26 +42,34 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<StripDetailModel> getUserStrip(
-      int entegrationId, String deviceUUID) async {
-    final response = await helper.getGuven(
-        R.endpoints.ct_getUserStrip(entegrationId, deviceUUID),
-        options: authOptions);
-    if (response.isSuccessful) {
-      return StripDetailModel.fromJson(response.datum);
+    int entegrationId,
+    String? deviceUUID,
+  ) async {
+    if (deviceUUID != null) {
+      final response = await helper.getGuven(
+        R.endpoints.ctGetUserStrip(entegrationId, deviceUUID),
+        options: authOptions,
+      );
+      if (response.xIsSuccessful) {
+        return StripDetailModel.fromJson(response.xGetMap);
+      } else {
+        throw Exception('/getUserStrip : ${response.isSuccessful}');
+      }
     } else {
-      throw Exception('/getUserStrip : ${response.isSuccessful}');
+      throw Exception('Device id must not be null');
     }
   }
 
   @override
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
-      BloodGlucoseValue bodyPages) async {
+    BloodGlucoseValue bodyPages,
+  ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_insertNewBloodGlucoseValue,
+      R.endpoints.ctInsertNewBloodGlucoseValue,
       bodyPages.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/insertNewBloodGlucoseValue : ${response.isSuccessful}');
@@ -56,13 +78,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> deleteBloodGlucoseValue(
-      DeleteBloodGlucoseMeasurementRequest
-          deleteBloodGlucoseMeasurementRequest) async {
+    DeleteBloodGlucoseMeasurementRequest deleteBloodGlucoseMeasurementRequest,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_deleteBloodGlucoseValue,
-        deleteBloodGlucoseMeasurementRequest.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctDeleteBloodGlucoseValue,
+      deleteBloodGlucoseMeasurementRequest.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/deleteBloodGlucoseValue : ${response.isSuccessful}');
@@ -71,13 +94,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> updateBloodGlucoseValue(
-      UpdateBloodGlucoseMeasurementRequest
-          updateBloodGlucoseMeasurementRequest) async {
+    UpdateBloodGlucoseMeasurementRequest updateBloodGlucoseMeasurementRequest,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_updateBloodGlucoseValue,
-        updateBloodGlucoseMeasurementRequest.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctUpdateBloodGlucoseValue,
+      updateBloodGlucoseMeasurementRequest.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/updateBloodGlucoseValue : ${response.isSuccessful}');
@@ -86,17 +110,21 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> uploadMeasurementImage(
-      String file, int entegrationId, int measurementId) async {
+    String file,
+    int entegrationId,
+    int measurementId,
+  ) async {
     final $headers = {'Content-Type': 'multipart/formdata'};
-    String fileName = file.split('/').last;
-    FormData formData = FormData.fromMap({
+    final String fileName = file.split('/').last;
+    final FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(file, filename: fileName),
     });
     final response = await helper.postGuven(
-        R.endpoints.ct_uploadMeasurementImage(entegrationId, measurementId),
-        formData,
-        options: authOptions..headers.addAll($headers));
-    if (response.isSuccessful) {
+      R.endpoints.ctUploadMeasurementImage(entegrationId, measurementId),
+      formData,
+      options: authOptions..headers?.addAll($headers),
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/uploadMeasurementImage : ${response.isSuccessful}');
@@ -105,13 +133,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> getBloodGlucoseReport(
-      BloodGlucoseReportBody bloodGlucoseReportBody) async {
+    BloodGlucoseReportBody bloodGlucoseReportBody,
+  ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_getBloodGlucoseReport,
+      R.endpoints.ctGetBloodGlucoseReport,
       bloodGlucoseReportBody.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/getBloodGlucoseReport : ${response.isSuccessful}');
@@ -120,28 +149,39 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
-      GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPersonData) async {
+    GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_getBloodGlucoseDataOfPerson,
-        getBloodGlucoseDataOfPersonData.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctGetBloodGlucoseDataOfPerson,
+      getBloodGlucoseDataOfPerson.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception(
-          '/getBloodGlucoseDataOfPerson : ${response.isSuccessful}');
+        '/getBloodGlucoseDataOfPerson : ${response.isSuccessful}',
+      );
     }
   }
 
   @override
   Future<List<Person>> getAllProfiles() async {
-    final response = await helper.getGuven(R.endpoints.ct_getAllProfiles,
-        options: authOptions);
-    if (response.isSuccessful) {
-      return response.datum
-          .map((e) => Person.fromJson(e))
-          .cast<Person>()
-          .toList();
+    final response = await helper.getGuven(
+      R.endpoints.ctGetAllProfiles,
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      try {
+        return response.xGetMapList
+            .map((e) => Person.fromJson(e))
+            .cast<Person>()
+            .toList();
+      } catch (e, stk) {
+        debugPrintStack(stackTrace: stk);
+        LoggerUtils.instance.e(e);
+        throw Exception('/getAllProfiles : $e');
+      }
     } else {
       throw Exception('/getAllProfiles : ${response.isSuccessful}');
     }
@@ -150,11 +190,11 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> addProfile(Person person) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_addProfile,
+      R.endpoints.ctAddProfile,
       person.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/addProfile : ${response.isSuccessful}');
@@ -162,11 +202,13 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> changeProfile(userId) async {
+  Future<GuvenResponseModel> changeProfile(int userId) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_changeProfile(userId), {},
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctChangeProfile(userId),
+      {},
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/changeProfile : ${response.isSuccessful}');
@@ -174,11 +216,12 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> deleteProfile(var userId) async {
+  Future<GuvenResponseModel> deleteProfile(int userId) async {
     final response = await helper.deleteGuven(
-        R.endpoints.ct_changeProfile(userId),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctChangeProfile(userId),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/deleteProfile : ${response.isSuccessful}');
@@ -187,11 +230,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> addFirebaseToken(
-      AddFirebaseToken addFirebaseToken) async {
+    AddFirebaseToken addFirebaseToken,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_addFirebaseToken, addFirebaseToken.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctAddFirebaseToken,
+      addFirebaseToken.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/addFirebaseToken : ${response.isSuccessful}');
@@ -201,11 +247,11 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> updateProfile(Person person, int id) async {
     final response = await helper.patchGuven(
-      R.endpoints.ct_updateProfile(id),
+      R.endpoints.ctUpdateProfile(id),
       data: person.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/updateProfile : ${response.isSuccessful}');
@@ -214,13 +260,15 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> addTreatment(
-      Person person, String treatment) async {
+    Person person,
+    String treatment,
+  ) async {
     final response = await helper.patchGuven(
-      R.endpoints.ct_updateProfile(person.id),
-      data: person.toJson(treatment: treatment),
+      R.endpoints.ctUpdateProfile(person.id),
+      data: person.toJson()..addEntries([MapEntry('treatment', treatment)]),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/addTreatment : ${response.isSuccessful}');
@@ -230,11 +278,11 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> setDefaultProfile(Person person) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_setDefaultProfile,
+      R.endpoints.ctSetDefaultProfile,
       person.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/setDefaultProfile : ${response.isSuccessful}');
@@ -243,13 +291,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> updateUserStrip(
-      StripDetailModel stripDetailModel) async {
+    StripDetailModel stripDetailModel,
+  ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_updateUserStrip,
+      R.endpoints.ctUpdateUserStrip,
       stripDetailModel.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/updateUserStrip : ${response.isSuccessful}');
@@ -257,12 +306,12 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> deleteUserStrip(var id, var entegrationId) async {
+  Future<GuvenResponseModel> deleteUserStrip(int id, int entegrationId) async {
     final response = await helper.deleteGuven(
-      R.endpoints.ct_deleteUserStrip(id, entegrationId),
+      R.endpoints.ctDeleteUserStrip(id, entegrationId),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/deleteUserStrip : ${response.isSuccessful}');
@@ -271,46 +320,52 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> isDeviceIdRegisteredForSomeUser(
-      var deviceId, var entegrationId) async {
+    String deviceId,
+    int entegrationId,
+  ) async {
     final response = await helper.getGuven(
-      R.endpoints.ct_isDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
+      R.endpoints.ctIsDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception(
-          '/isDeviceIdRegisteredForSomeUser : ${response.isSuccessful}');
+        '/isDeviceIdRegisteredForSomeUser : ${response.isSuccessful}',
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> addHospitalHba1cMeasurement(
-      HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
-      entegrationId) async {
+    HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
+    int entegrationId,
+  ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_addHospitalHba1cMeasurement(entegrationId),
+      R.endpoints.ctAddHospitalHba1cMeasurement(entegrationId),
       hospitalHba1cMeasurementModel.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception(
-          '/addHospitalHba1cMeasurement : ${response.isSuccessful}');
+        '/addHospitalHba1cMeasurement : ${response.isSuccessful}',
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getHba1cMeasurementList(
-      GetHba1cMeasurementListModel getHba1cMeasurementListModel,
-      entegrationId) async {
+    GetHba1cMeasurementListModel getHba1cMeasurementListModel,
+    int entegrationId,
+  ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_getHba1cMeasurementList(entegrationId),
+      R.endpoints.ctGetHba1cMeasurementList(entegrationId),
       getHba1cMeasurementListModel.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/getHba1cMeasurementList : ${response.isSuccessful}');
@@ -320,10 +375,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> getMedicineByFilter(String text) async {
     final response = await helper.getGuven(
-      R.endpoints.ct_getMedicineByFilter(text),
+      R.endpoints.ctGetMedicineByFilter(text),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/getMedicineByFilter : ${response.isSuccessful}');
@@ -332,13 +387,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> insertNewScaleValue(
-      AddScaleMasurementBody addScaleMasurementBody) async {
+    AddScaleMasurementBody addScaleMasurementBody,
+  ) async {
     final response = await helper.postGuven(
-      R.endpoints.ct_insertNewScaleValue,
+      R.endpoints.ctInsertNewScaleValue,
       addScaleMasurementBody.toJson(),
       options: authOptions,
     );
-    if (response.isSuccessful) {
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/insertNewScaleValue : ${response.isSuccessful}');
@@ -347,12 +403,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> deleteScaleMeasurement(
-      DeleteScaleMasurementBody deleteScaleMasurementBody) async {
+    DeleteScaleMasurementBody deleteScaleMasurementBody,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_deleteScaleMeasurement,
-        deleteScaleMasurementBody.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctDeleteScaleMeasurement,
+      deleteScaleMasurementBody.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/deleteScaleMeasurement : ${response.isSuccessful}');
@@ -361,11 +419,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> getScaleMasurement(
-      GetScaleMasurementBody getScaleMasurementBody) async {
+    GetScaleMasurementBody getScaleMasurementBody,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_getScaleMeasurement, getScaleMasurementBody.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctGetScaleMeasurement,
+      getScaleMasurementBody.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/getScaleMasurement : ${response.isSuccessful}');
@@ -374,12 +435,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> updateScaleMeasurement(
-      UpdateScaleMasurementBody updateScaleMasurementBody) async {
+    UpdateScaleMasurementBody updateScaleMasurementBody,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_updateScaleMeasurement,
-        updateScaleMasurementBody.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctUpdateScaleMeasurement,
+      updateScaleMasurementBody.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
@@ -388,11 +451,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> deleteBpMeasurement(
-      DeleteBpMeasurements deleteBpMeasurements) async {
+    DeleteBpMeasurements deleteBpMeasurements,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_deleteBpMeasurement, deleteBpMeasurements.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctDeleteBpMeasurement,
+      deleteBpMeasurements.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/deleteBpMeasurement : ${response.isSuccessful}');
@@ -401,11 +467,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> getBpMasurement(
-      GetBpMeasurements getBpMeasurements) async {
+    GetBpMeasurements getBpMeasurements,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_getBpMeasurement, getBpMeasurements.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctGetBpMeasurement,
+      getBpMeasurements.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/getBpMasurement : ${response.isSuccessful}');
@@ -414,11 +483,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> insertNewBpValue(
-      AddBpWithDetail addBpWithDetail) async {
+    AddBpWithDetail addBpWithDetail,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_insertNewBpValue, addBpWithDetail.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctInsertNewBpValue,
+      addBpWithDetail.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/insertNewBpValue : ${response.isSuccessful}');
@@ -427,11 +499,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> updateBpMeasurement(
-      UpdateBpMeasurements updateBpMeasurements) async {
+    UpdateBpMeasurements updateBpMeasurements,
+  ) async {
     final response = await helper.postGuven(
-        R.endpoints.ct_updateBpMeasurement, updateBpMeasurements.toJson(),
-        options: authOptions);
-    if (response.isSuccessful) {
+      R.endpoints.ctUpdateBpMeasurement,
+      updateBpMeasurements.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/updateBpMeasurement : ${response.isSuccessful}');

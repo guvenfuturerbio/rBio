@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
-class RequestSuggestionsScreenVm extends ChangeNotifier {
+class RequestSuggestionsScreenVm extends RbioVm {
+  @override
   BuildContext mContext;
+  RequestSuggestionsScreenVm(this.mContext);
 
   bool _progressOverlay = false;
   bool get progressOverlay => _progressOverlay;
@@ -13,19 +15,11 @@ class RequestSuggestionsScreenVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  RequestSuggestionsScreenVm({BuildContext context}) {
-    this.mContext = context;
-  }
-
-  String _text;
-  int _textLength;
-
-  int get textLength => this._textLength ?? 0;
-  String get text => this._text ?? "";
-
+  String text = '';
+  int textLength = 0;
   setText(String text) {
-    this._text = text;
-    this._textLength = text.length;
+    text = text;
+    textLength = text.length;
     notifyListeners();
   }
 
@@ -55,7 +49,7 @@ class RequestSuggestionsScreenVm extends ChangeNotifier {
         return WarningDialog(title, text);
       },
     ).then((value) {
-      Atom.to(PagePaths.MAIN, isReplacement: true);
+      Atom.to(PagePaths.main, isReplacement: true);
     });
   }
 }

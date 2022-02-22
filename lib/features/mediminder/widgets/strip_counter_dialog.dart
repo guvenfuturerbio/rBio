@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../../core/core.dart';
 
-
 class StripGradientDialog extends StatefulWidget {
   final String title;
-  final Function(int) callback;
+  final void Function(int) callback;
 
-  StripGradientDialog(
-    this.title,
-    this.callback,
-  );
+  const StripGradientDialog({
+    Key? key,
+    required this.title,
+    required this.callback,
+  }) : super(key: key);
 
   @override
   _StripGradientDialogState createState() => _StripGradientDialogState();
 }
 
 class _StripGradientDialogState extends State<StripGradientDialog> {
-  TextEditingController stripController;
+  late TextEditingController stripController;
 
   @override
   void initState() {
@@ -33,9 +33,13 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
 
   @override
   Widget build(BuildContext context) {
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(LocaleProvider.current.Ok),
-      textColor: getIt<ITheme>().textColorSecondary,
+      style: TextButton.styleFrom(
+        textStyle: context.xHeadline3.copyWith(
+          color: getIt<ITheme>().textColorSecondary,
+        ),
+      ),
       onPressed: () {
         widget.callback(int.parse(stripController.text));
         Navigator.of(context).pop();
@@ -44,9 +48,9 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
 
     return AlertDialog(
       backgroundColor: getIt<ITheme>().grey,
-      contentPadding: EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       title: Text(
         widget.title,
@@ -65,9 +69,9 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
               elevation: 15,
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25.0),
+                borderRadius: R.sizes.borderRadiusCircular,
               ),
-              child: Container(
+              child: SizedBox(
                 width: 350,
                 child: TextField(
                   controller: stripController,
@@ -79,7 +83,7 @@ class _StripGradientDialogState extends State<StripGradientDialog> {
                   textAlign: TextAlign.center,
                   maxLength: 3,
                   obscureText: false,
-                  decoration: new InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     counterText: "",
                     focusedBorder: InputBorder.none,

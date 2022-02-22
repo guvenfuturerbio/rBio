@@ -3,33 +3,30 @@ import '../../../core/manager/user_manager.dart';
 import '../../../core/locator.dart';
 
 class ConsentFormDialogVm extends ChangeNotifier {
-  BuildContext mContext;
-  bool _clickedConsentForm;
-  ConsentFormDialogVm({BuildContext context, bool alwaysAsk}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (alwaysAsk) {
+  BuildContext? mContext;
+  bool? clickedConsentForm;
+  ConsentFormDialogVm({BuildContext? context, bool? alwaysAsk}) {
+    mContext = context;
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      if (alwaysAsk!) {
       } else {
         await fetchClickedConsentForm();
       }
     });
   }
 
-  bool get clickedConsentForm => this._clickedConsentForm ?? false;
-
   fetchClickedConsentForm() async {
-    this._clickedConsentForm =
-        await getIt<UserManager>().getApplicationConsentFormState();
+    clickedConsentForm = getIt<UserManager>().getApplicationConsentFormState();
     notifyListeners();
   }
 
   toggleConsentFormState() async {
-    this._clickedConsentForm = !clickedConsentForm;
+    clickedConsentForm = !clickedConsentForm!;
     notifyListeners();
   }
 
   saveConsentFormState() async {
-    getIt<UserManager>().setApplicationConsentFormState(clickedConsentForm);
-    Navigator.pop(mContext, clickedConsentForm);
+    getIt<UserManager>().setApplicationConsentFormState(clickedConsentForm!);
+    Navigator.pop(mContext!, clickedConsentForm);
   }
 }

@@ -1,10 +1,10 @@
 class ForYouSubCategoryItemsResponse {
-  int id;
-  String text;
-  String title;
-  String icon;
-  String price;
-  String url;
+  int? id;
+  String? text;
+  String? title;
+  String? icon;
+  String? price;
+  String? url;
 
   ForYouSubCategoryItemsResponse({
     this.id,
@@ -16,22 +16,22 @@ class ForYouSubCategoryItemsResponse {
   });
 
   ForYouSubCategoryItemsResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    text = json['text'];
-    icon = json['icon'];
-    price = json['price'];
-    title = json['title'];
-    url = json['url'];
+    id = json['id'] as int?;
+    text = json['text'] as String?;
+    icon = json['icon'] as String?;
+    price = json['price'] as String?;
+    title = json['title'] as String?;
+    url = json['url'] as String?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['icon'] = this.icon;
-    data['price'] = this.price;
-    data['title'] = this.title;
-    data['url'] = this.url;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['icon'] = icon;
+    data['price'] = price;
+    data['title'] = title;
+    data['url'] = url;
     return data;
   }
 }

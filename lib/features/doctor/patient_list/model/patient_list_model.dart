@@ -16,13 +16,13 @@ abstract class PatientListModel<T> {
     _filterList = _list;
   }
 
-  List<T> _filterList;
+  late List<T> _filterList;
   List<PatientListItemModel> get getList;
   int get getitemCount => _filterList.length;
   PatientListItemModel convertTo(T model);
   Color getBackColor(String text, T model);
   List<Widget> getPopupWidgets({
-    @required void Function(DoctorPatientListSortType sortType) onSelect,
+    required void Function(DoctorPatientListSortType sortType) onSelect,
   });
   void textOnChanged(String text);
   void filterList(DoctorPatientListSortType sortType);
@@ -36,7 +36,7 @@ abstract class PatientListModel<T> {
     return GestureDetector(
       child: Container(
         color: getIt<ITheme>().scaffoldBackgroundColor,
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: Text(
           text,
           style: context.xHeadline4.copyWith(
@@ -54,10 +54,10 @@ abstract class PatientListModel<T> {
 
 class PatientListItemModel {
   final dynamic data;
-  final String patientName;
-  final List<String> dates;
-  final List<String> times;
-  final List<String> values;
+  final String? patientName;
+  final List<String>? dates;
+  final List<String>? times;
+  final List<String>? values;
 
   PatientListItemModel({
     this.data,

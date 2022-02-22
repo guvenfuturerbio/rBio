@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/core.dart';
 
 class FollowersScreen extends StatefulWidget {
-  FollowersScreen({Key key}) : super(key: key);
+  const FollowersScreen({Key? key}) : super(key: key);
 
   @override
   _FollowersScreenState createState() => _FollowersScreenState();
@@ -32,7 +32,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
   Widget _buildBody() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -41,8 +41,8 @@ class _FollowersScreenState extends State<FollowersScreen> {
           //
           RbioUserTile(
             name: "Endokronoloji Cüneyt Akın",
-            leadingImage: UserLeadingImage.Circle,
-            trailingIcon: UserTrailingIcons.Cancel,
+            leadingImage: UserLeadingImage.circle,
+            trailingIcon: UserTrailingIcons.cancel,
             onTap: () {},
             width: Atom.width,
           ),
@@ -53,8 +53,8 @@ class _FollowersScreenState extends State<FollowersScreen> {
           //
           RbioUserTile(
             name: "İnsan Kaynakları Müdürü",
-            leadingImage: UserLeadingImage.Circle,
-            trailingIcon: UserTrailingIcons.Cancel,
+            leadingImage: UserLeadingImage.circle,
+            trailingIcon: UserTrailingIcons.cancel,
             onTap: () {},
             width: Atom.width,
           ),

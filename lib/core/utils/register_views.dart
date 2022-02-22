@@ -7,11 +7,11 @@ import 'package:universal_html/html.dart';
 class RegisterViews {
   RegisterViews._();
 
-  static RegisterViews _instance;
+  static RegisterViews? _instance;
 
   static RegisterViews get instance {
     _instance ??= RegisterViews._();
-    return _instance;
+    return _instance!;
   }
 
   void init() {
@@ -38,7 +38,7 @@ class RegisterViews {
       (int viewId) => IFrameElement()
         ..width = '640'
         ..height = '360'
-        ..src = '${LocaleProvider.current.iptal_url}'
+        ..src = LocaleProvider.current.iptal_url
         ..style.border = 'none',
     );
   }

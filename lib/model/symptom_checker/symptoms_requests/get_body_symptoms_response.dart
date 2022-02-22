@@ -1,39 +1,38 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'get_body_symptoms_response.g.dart';
+
+@JsonSerializable()
 class GetBodySymptomsResponse {
-  int id;
-  String name;
-  bool hasRedFlag;
-  List<int> healthSymptomLocationIDs;
-  String profName;
-  List<String> synonyms;
+  @JsonKey(name: "ID")
+  int? id;
 
-  GetBodySymptomsResponse(
-      {this.id,
-      this.name,
-      this.hasRedFlag,
-      this.healthSymptomLocationIDs,
-      this.profName,
-      this.synonyms});
+  @JsonKey(name: "Name")
+  String? name;
 
-  GetBodySymptomsResponse.fromJson(Map<String, dynamic> json) {
-    id = json['ID'];
-    name = json['Name'];
-    hasRedFlag = json['HasRedFlag'];
-    healthSymptomLocationIDs = json['HealthSymptomLocationIDs'] != null
-        ? json['HealthSymptomLocationIDs'].cast<int>()
-        : null;
-    profName = json['ProfName'];
-    synonyms =
-        json['Synonyms'] != null ? json['Synonyms'].cast<String>() : null;
-  }
+  @JsonKey(name: "HasRedFlag")
+  bool? hasRedFlag;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.id;
-    data['Name'] = this.name;
-    data['HasRedFlag'] = this.hasRedFlag;
-    data['HealthSymptomLocationIDs'] = this.healthSymptomLocationIDs;
-    data['ProfName'] = this.profName;
-    data['Synonyms'] = this.synonyms;
-    return data;
-  }
+  @JsonKey(name: "HealthSymptomLocationIDs")
+  List<int>? healthSymptomLocationIDs;
+
+  @JsonKey(name: "ProfName")
+  String? profName;
+
+  @JsonKey(name: "Synonyms")
+  List<String>? synonyms;
+
+  GetBodySymptomsResponse({
+    this.id,
+    this.name,
+    this.hasRedFlag,
+    this.healthSymptomLocationIDs,
+    this.profName,
+    this.synonyms,
+  });
+
+  factory GetBodySymptomsResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetBodySymptomsResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetBodySymptomsResponseToJson(this);
 }

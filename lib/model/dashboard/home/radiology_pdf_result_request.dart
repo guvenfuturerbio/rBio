@@ -1,5 +1,5 @@
 class RadiologyPdfRequest {
-  int processId;
+  int? processId;
 
   RadiologyPdfRequest({
     this.processId,
@@ -7,7 +7,7 @@ class RadiologyPdfRequest {
 
   factory RadiologyPdfRequest.fromJson(Map<String, dynamic> json) =>
       RadiologyPdfRequest(
-        processId: json['processId'] as int,
+        processId: json['processId'] as int?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

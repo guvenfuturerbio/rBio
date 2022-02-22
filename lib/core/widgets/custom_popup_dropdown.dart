@@ -9,11 +9,11 @@ class CustomPopUpDropDown extends StatefulWidget {
   final ValueChanged<int> onChange;
 
   const CustomPopUpDropDown({
-    Key key,
-    this.title,
-    this.onChange,
-    this.translators,
-  });
+    Key? key,
+    required this.title,
+    required this.onChange,
+    required this.translators,
+  }) : super(key: key);
 
   @override
   _CustomPopUpDropDownState createState() => _CustomPopUpDropDownState();
@@ -37,7 +37,7 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
       //
       content: Container(
         height: 200,
-        margin: EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
         ),
@@ -52,13 +52,13 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
                     Navigator.of(context).pop();
                     widget.onChange(index);
                   },
-                  child: Container(
+                  child: SizedBox(
                     height: 50,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          widget.translators[index].language,
+                          widget.translators[index].language ?? '',
                           style: TextStyle(color: R.color.black),
                           textAlign: TextAlign.center,
                         ),

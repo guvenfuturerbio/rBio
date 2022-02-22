@@ -5,7 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/core.dart';
 
 class DoctorVideoCallEditScreen extends StatefulWidget {
-  DoctorVideoCallEditScreen({Key key}) : super(key: key);
+  const DoctorVideoCallEditScreen({Key? key}) : super(key: key);
+
 
   @override
   _DoctorVideoCallEditScreenState createState() =>
@@ -13,7 +14,7 @@ class DoctorVideoCallEditScreen extends StatefulWidget {
 }
 
 class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
-  TextEditingController textEditingController;
+  late TextEditingController textEditingController;
 
   @override
   void initState() {
@@ -47,11 +48,11 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
         ],
@@ -70,7 +71,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
 
           //
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 8,
               left: 16,
               right: 8,
@@ -104,7 +105,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
           ),
 
           //
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
 
@@ -140,7 +141,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
               ),
 
               //
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
 
               //
               Expanded(
@@ -154,7 +155,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
             ],
           );
         } else {
-          return SizedBox();
+          return const SizedBox();
         }
       },
     );
@@ -164,7 +165,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
     return Container(
       height: 50,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
@@ -180,9 +181,9 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
           //
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Text(
-                'Serkan Öztürk' ?? '',
+                'Serkan Öztürk',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: context.xHeadline5.copyWith(
@@ -194,7 +195,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
 
           //
           SvgPicture.asset(
-            R.image.arrow_down_icon,
+            R.image.arrowDown,
             height: 10,
           ),
         ],

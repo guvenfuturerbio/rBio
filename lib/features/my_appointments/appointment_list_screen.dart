@@ -10,7 +10,7 @@ import '../../../model/model.dart';
 import 'appointment_list_vm.dart';
 
 class AppointmentListScreen extends StatefulWidget {
-  AppointmentListScreen();
+  const AppointmentListScreen({Key? key}) : super(key: key);
 
   @override
   _AppointmentListScreenState createState() => _AppointmentListScreenState();
@@ -20,14 +20,15 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AppointmentListVm>(
-      create: (context) => AppointmentListVm(context: context),
+      create: (context) => AppointmentListVm(context),
       child: Consumer<AppointmentListVm>(
         builder: (
           BuildContext context,
           AppointmentListVm vm,
-          Widget child,
+          Widget? child,
         ) {
-          return RbioScaffold(
+          return RbioStackedScaffold(
+            isLoading: vm.showProgressOverlay,
             appbar: _buildAppBar(context),
             body: _buildBody(vm),
           );
@@ -50,14 +51,14 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     return [
       InkWell(
         child: SvgPicture.asset(
-          R.image.ic_all_files_grey,
+          R.image.allFilesGrey,
           color: R.color.white,
         ),
         onTap: () {
-          Atom.to(PagePaths.ALL_FILES);
+          Atom.to(PagePaths.allFiles);
         },
       ),
-      SizedBox(
+      const SizedBox(
         width: 12,
       ),
     ];
@@ -65,22 +66,17 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
   Widget _buildBody(AppointmentListVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
-        return RbioLoadingOverlay(
-          child: _buildPosts(vm.patientAppointments, vm),
-          isLoading: vm.showProgressOverlay,
-          progressIndicator: RbioLoading.progressIndicator(),
-          opacity: 0,
-        );
+      case LoadingProgress.done:
+        return _buildPosts(vm.patientAppointments ?? [], vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -94,6 +90,10 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
       mainAxisSize: MainAxisSize.min,
       children: [
         //
+        R.sizes.stackedTopPadding(context),
+        R.sizes.hSizer8,
+
+        //
         Text(
           LocaleProvider.current.date_filter,
           style: context.xHeadline1,
@@ -101,15 +101,19 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
         //
         Container(
-          margin: EdgeInsets.only(left: 8, top: 8, right: 8),
+          margin: const EdgeInsets.only(left: 8, top: 8, right: 8),
           child: GuvenDateRange(
             startCurrentDate: vm.startDate,
             onStartDateChange: (date) {
-              vm.setStartDate(date);
+              if (!vm.startDate.xIsSameDate(date)) {
+                vm.setStartDate(date);
+              }
             },
             endCurrentDate: vm.endDate,
             onEndDateChange: (date) {
-              vm.setEndDate(date);
+              if (!vm.endDate.xIsSameDate(date)) {
+                vm.setEndDate(date);
+              }
             },
             startMinDate: DateTime(1900),
             startMaxDate: DateTime.now(),
@@ -118,17 +122,17 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         ),
 
         //
-        SizedBox(height: 12.0),
+        const SizedBox(height: 12.0),
 
         //
         Expanded(
-          child: vm.patientAppointments.length > 0
+          child: (vm.patientAppointments?.isNotEmpty ?? false)
               ? ListView.builder(
                   padding: EdgeInsets.only(
                     bottom: R.sizes.defaultBottomValue,
                   ),
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: posts.length,
                   itemBuilder: (BuildContext context, int index) {
                     return _buildCard(vm, posts[index]);
@@ -153,15 +157,18 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     PatientAppointmentsResponse data,
   ) {
     return RbioCardAppoCard.appointment(
-      isActiveHeader:
-          DateTime.parse(data.from).isAfter(DateTime.now()) ? true : false,
-      tenantName: data.tenant,
-      doctorName: data.resources[0].resource,
-      departmentName: data.resources[0].department,
-      date: _getFormattedDate(data.from.substring(0, 10)),
-      time: data.from.substring(11, 16),
+      isActiveHeader: DateTime.parse(data.from ?? '').isAfter(DateTime.now())
+          ? true
+          : false,
+      tenantName: (data.tenant ?? '') == "Nba Tıp Merkezi"
+          ? "Güven Hastanesi Çayyolu"
+          : (data.tenant ?? ''),
+      doctorName: data.resources?[0].resource ?? '',
+      departmentName: data.resources?[0].department ?? '',
+      date: _getFormattedDate((data.from ?? '').substring(0, 10)),
+      time: (data.from ?? '').substring(11, 16),
       suffix: data.type != R.dynamicVar.onlineAppointmentType &&
-              DateTime.parse(data.from).isAfter(DateTime.now())
+              DateTime.parse(data.from ?? '').isAfter(DateTime.now())
           ? InkWell(
               onTap: () {
                 vm.handleAppointment(data);
@@ -169,60 +176,63 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
               child: Container(
                 color: Colors.red,
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  LocaleProvider.current.cancel,
+                  LocaleProvider.current.btn_cancel,
                   style: context.xHeadline3.copyWith(
                     color: getIt<ITheme>().textColor,
                   ),
                 ),
               ),
             )
-          : SizedBox(),
+          : const SizedBox(),
 
       //
-      footer: _buildCardFooter(vm, data),
+      footer: _buildCardFooter(vm, data) ?? const SizedBox(),
     );
   }
 
   String _getFormattedDate(String date) {
     var parsedDate = DateTime.parse(date);
-    String textDate = new DateFormat("d MMMM yyyy").format(parsedDate);
+    String textDate = DateFormat("d MMMM yyyy").format(parsedDate);
     return textDate;
   }
 
-  Widget _buildCardFooter(
+  Widget? _buildCardFooter(
     AppointmentListVm value,
     PatientAppointmentsResponse data,
   ) {
     if (data.type == R.dynamicVar.onlineAppointmentType) {
-      if (DateTime.parse(data.from).isBefore(DateTime.now())) {
+      if (DateTime.parse(data.from ?? '').isBefore(DateTime.now())) {
         return Center(
           child: RbioElevatedButton(
             title: LocaleProvider.current.rate,
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             onTap: () {
-              value.showRateDialog(data.id);
+              final itemId = data.id;
+              if (itemId != null) {
+                value.showRateDialog(itemId);
+              }
             },
           ),
         );
       } else {
         return Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            child: context.xTextScaleType == TextScaleType.Small
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: context.xTextScaleType == TextScaleType.small
                 ? Row(
                     children: [
                       Expanded(
                         child: RbioElevatedAutoButton(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
                             vertical: 2.0,
                           ),
-                          title: "Upload\nFile",
+                          title: LocaleProvider.current.uploadFile,
                           onTap: () async {
-                            Uint8List fileBytes = await value.getSelectedFile();
-
+                            Uint8List? fileBytes =
+                                await value.getSelectedFile();
                             if (fileBytes != null) {
                               showDialog(
                                 context: context,
@@ -242,7 +252,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                                         },
                                       ),
                                     ],
-                                    content: SizedBox(),
+                                    content: const SizedBox(),
                                   );
                                 },
                               );
@@ -257,11 +267,11 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                       //
                       Expanded(
                         child: RbioElevatedAutoButton(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
                             vertical: 2.0,
                           ),
-                          title: "Request\nTranslator",
+                          title: LocaleProvider.current.requestTranslator,
                           onTap: () {
                             value.showTranslatorSelector(data.id.toString());
                           },
@@ -274,11 +284,11 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                       //
                       Expanded(
                         child: RbioElevatedAutoButton(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
                             vertical: 2.0,
                           ),
-                          title: "Start\nMeeting",
+                          title: LocaleProvider.current.startMeeting,
                           onTap: () {
                             value.handleAppointment(data);
                           },
@@ -294,14 +304,13 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       RbioElevatedButton(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 2.0,
                         ),
                         title: "Upload\nFile",
                         onTap: () async {
-                          Uint8List fileBytes = await value.getSelectedFile();
-
+                          Uint8List? fileBytes = await value.getSelectedFile();
                           if (fileBytes != null) {
                             showDialog(
                               context: context,
@@ -321,7 +330,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                                       },
                                     ),
                                   ],
-                                  content: SizedBox(),
+                                  content: const SizedBox(),
                                 );
                               },
                             );
@@ -331,7 +340,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
                       //
                       RbioElevatedButton(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 2.0,
                         ),
@@ -343,7 +352,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
                       //
                       RbioElevatedButton(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 2.0,
                         ),

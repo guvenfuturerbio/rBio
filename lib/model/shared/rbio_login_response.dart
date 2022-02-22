@@ -1,38 +1,64 @@
-class RbioLoginResponse {
+import 'package:json_annotation/json_annotation.dart';
+
+import '../../core/core.dart';
+
+part 'rbio_login_response.g.dart';
+
+@JsonSerializable()
+class RbioLoginResponse extends IBaseModel<RbioLoginResponse> {
+  @JsonKey(name: 'firebase_user_email')
+  String? firebaseUserEmail;
+
+  @JsonKey(name: 'firebase_user_salt')
+  String? firebaseUserSalt;
+
+  @JsonKey(name: 'token')
+  Token? token;
+
+  @JsonKey(name: 'roles')
+  List<String>? roles;
+
   RbioLoginResponse({
     this.token,
     this.roles,
-    this.firebase_user_email,
-    this.firebase_user_salt,
+    this.firebaseUserEmail,
+    this.firebaseUserSalt,
   });
 
-  String firebase_user_email;
-  String firebase_user_salt;
-  Token token;
-  List<String> roles;
-
   factory RbioLoginResponse.fromJson(Map<String, dynamic> json) =>
-      RbioLoginResponse(
-        token: Token.fromJson(json["token"]),
-        roles: List<String>.from(json["roles"].map((x) => x)),
-        firebase_user_email: json['firebase_user_email'],
-        firebase_user_salt: json['firebase_user_salt'],
-      );
+      _$RbioLoginResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "token": token.toJson(),
-        "roles": List<dynamic>.from(roles.map((x) => x)),
-      };
+  @override
+  Map<String, dynamic> toJson() => _$RbioLoginResponseToJson(this);
+
+  @override
+  RbioLoginResponse fromJson(Map<String, dynamic> json) {
+    return RbioLoginResponse.fromJson(json);
+  }
 }
 
-class Token {
-  String accessToken;
-  int expiresIn;
-  int refreshExpiresIn;
-  String refreshToken;
-  String tokenType;
-  String sessionState;
-  String scope;
+@JsonSerializable()
+class Token extends IBaseModel<Token> {
+  @JsonKey(name: 'access_token')
+  String? accessToken;
+
+  @JsonKey(name: 'expires_in')
+  int? expiresIn;
+
+  @JsonKey(name: 'refresh_expires_in')
+  int? refreshExpiresIn;
+
+  @JsonKey(name: 'refresh_token')
+  String? refreshToken;
+
+  @JsonKey(name: 'token_type')
+  String? tokenType;
+
+  @JsonKey(name: 'session_state')
+  String? sessionState;
+
+  @JsonKey(name: 'scope')
+  String? scope;
 
   Token({
     this.accessToken,
@@ -44,23 +70,13 @@ class Token {
     this.scope,
   });
 
-  factory Token.fromJson(Map<String, dynamic> json) => Token(
-        accessToken: json["access_token"],
-        expiresIn: json["expires_in"],
-        refreshExpiresIn: json["refresh_expires_in"],
-        refreshToken: json["refresh_token"],
-        tokenType: json["token_type"],
-        sessionState: json["session_state"],
-        scope: json["scope"],
-      );
+  factory Token.fromJson(Map<String, dynamic> json) => _$TokenFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "access_token": accessToken,
-        "expires_in": expiresIn,
-        "refresh_expires_in": refreshExpiresIn,
-        "refresh_token": refreshToken,
-        "token_type": tokenType,
-        "session_state": sessionState,
-        "scope": scope,
-      };
+  @override
+  Map<String, dynamic> toJson() => _$TokenToJson(this);
+
+  @override
+  Token fromJson(Map<String, dynamic> json) {
+    return Token.fromJson(json);
+  }
 }

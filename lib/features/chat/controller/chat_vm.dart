@@ -9,13 +9,14 @@ import '../model/message.dart';
 
 class ChatVm with ChangeNotifier {
   FirestoreManager firestoreManager = getIt<FirestoreManager>();
-  Stream<DocumentSnapshot<Map<String, dynamic>>> stream;
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> streamSubscription;
+  late Stream<DocumentSnapshot<Map<String, dynamic>>> stream;
+  late StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>
+      streamSubscription;
 
-  String chatId;
-  String firstUser;
-  String otherUser;
-  int otherLastSeen;
+  late String chatId;
+  late String firstUser;
+  late String otherUser;
+  late int otherLastSeen;
 
   @override
   void dispose() {
@@ -73,7 +74,7 @@ class ChatVm with ChangeNotifier {
 
         if (!firstLoadNotifier.value) {
           Future.delayed(
-            Duration(seconds: 1),
+            const Duration(seconds: 1),
             () {
               firstLoadNotifier.value = true;
             },

@@ -7,12 +7,11 @@ part of 'delete_bg_measurement_request.dart';
 // **************************************************************************
 
 DeleteBloodGlucoseMeasurementRequest
-    _$DeleteBloodGlucoseMeasurementRequestFromJson(Map<String, dynamic> json) {
-  return DeleteBloodGlucoseMeasurementRequest(
-    entegrationId: json['entegration_id'] as int,
-    measurementId: json['measurement_id'] as int,
-  );
-}
+    _$DeleteBloodGlucoseMeasurementRequestFromJson(Map<String, dynamic> json) =>
+        DeleteBloodGlucoseMeasurementRequest(
+          entegrationId: json['entegration_id'] as int?,
+          measurementId: json['measurement_id'] as int?,
+        );
 
 Map<String, dynamic> _$DeleteBloodGlucoseMeasurementRequestToJson(
         DeleteBloodGlucoseMeasurementRequest instance) =>

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale_progress/utils/scale_measurements/scale_measurement_vm.dart';
+
+import '../../../core/core.dart';
+import '../../chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 
 enum BmiMeasurementState { loading, loaded, error }
 
 class BmiMesaurementDoc extends ChangeNotifier {
-  BmiMeasurementState state;
+  BmiMeasurementState? state;
 
   List<ScaleMeasurementViewModel> bgMeasurements =
       <ScaleMeasurementViewModel>[];

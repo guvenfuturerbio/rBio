@@ -6,6 +6,15 @@ extension Iterables<E> on Iterable<E> {
 }
 
 extension MyIterable<E> on Iterable<E> {
-  Iterable<E> sortedBy(Comparable key(E e)) =>
+  Iterable<E> sortedBy(Comparable Function(E e) key) =>
       toList()..sort((a, b) => key(a).compareTo(key(b)));
+}
+
+extension ListUpdate<T> on List<T> {
+  List<T> update(int pos, T t) {
+    List<T> list = [];
+    list.add(t);
+    replaceRange(pos, pos + 1, list);
+    return this;
+  }
 }

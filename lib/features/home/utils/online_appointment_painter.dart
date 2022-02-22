@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class HomeOnlineAppointmentCustomPainter extends CustomPainter {
@@ -57,7 +59,7 @@ class HomeOnlineAppointmentCustomPainter extends CustomPainter {
     path_0.close();
 
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Color(0xffffe57b).withOpacity(1.0);
+    paint_0_fill.color = const Color(0xffffe57b).withOpacity(1.0);
     canvas.drawPath(path_0, paint_0_fill);
 
     Path path_1 = Path();
@@ -427,7 +429,7 @@ class HomeOnlineAppointmentCustomPainter extends CustomPainter {
     path_1.close();
 
     Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
-    paint_1_fill.color = Color(0xffffffff).withOpacity(1.0);
+    paint_1_fill.color = const Color(0xffffffff).withOpacity(1.0);
     canvas.drawPath(path_1, paint_1_fill);
   }
 

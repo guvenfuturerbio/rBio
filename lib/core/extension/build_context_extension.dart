@@ -1,40 +1,54 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
 import '../core.dart';
 
 extension BuildContextThemeExtensions on BuildContext {
-  TextScaleType get xTextScaleType => this.read<ThemeNotifier>().textScale;
+  TextScaleType get xTextScaleType => read<ThemeNotifier>().textScale;
+
+  bool get xIsPortrait =>
+      MediaQuery.of(this).orientation == Orientation.portrait;
 
   MediaQueryData get xMediaQuery => MediaQuery.of(this);
   Color get xAccentColor => Theme.of(this).colorScheme.secondary;
 
   // #region Size Extension
-  double get HEIGHT => MediaQuery.of(this).size.height;
-  double get WIDTH => MediaQuery.of(this).size.width;
-  double get TEXTSCALE => MediaQuery.of(this).textScaleFactor;
-  double get ASPECTRATIO => MediaQuery.of(this).size.aspectRatio;
+  double get height => MediaQuery.of(this).size.height;
+  double get width => MediaQuery.of(this).size.width;
+  double get textScale => MediaQuery.of(this).textScaleFactor;
+  double get aspectRatio => MediaQuery.of(this).size.aspectRatio;
   // #endregion
 
   // #region Text Theme
   TextTheme get xTextTheme => Theme.of(this).textTheme;
-  TextStyle get xHeadline1 => Theme.of(this).textTheme.headline1 ?? TextStyle();
-  TextStyle get xHeadline2 => Theme.of(this).textTheme.headline2 ?? TextStyle();
-  TextStyle get xHeadline3 => Theme.of(this).textTheme.headline3 ?? TextStyle();
-  TextStyle get xHeadline4 => Theme.of(this).textTheme.headline4 ?? TextStyle();
+  TextStyle get xHeadline1 =>
+      Theme.of(this).textTheme.headline1 ?? const TextStyle();
+  TextStyle get xHeadline2 =>
+      Theme.of(this).textTheme.headline2 ?? const TextStyle();
+  TextStyle get xHeadline3 =>
+      Theme.of(this).textTheme.headline3 ?? const TextStyle();
+  TextStyle get xHeadline4 =>
+      Theme.of(this).textTheme.headline4 ?? const TextStyle();
 
-  /// sadasdasdasdasd
-  TextStyle get xHeadline5 => Theme.of(this).textTheme.headline5 ?? TextStyle();
-  TextStyle get xHeadline6 => Theme.of(this).textTheme.headline6 ?? TextStyle();
-  TextStyle get xSubtitle1 => Theme.of(this).textTheme.subtitle1 ?? TextStyle();
-  TextStyle get xSubtitle2 => Theme.of(this).textTheme.subtitle2 ?? TextStyle();
-  TextStyle get xBodyText1 => Theme.of(this).textTheme.bodyText1 ?? TextStyle();
-  TextStyle get xBodyText2 => Theme.of(this).textTheme.bodyText2 ?? TextStyle();
-  TextStyle get xCaption => Theme.of(this).textTheme.caption ?? TextStyle();
-  TextStyle get xButton => Theme.of(this).textTheme.button ?? TextStyle();
-  TextStyle get xOverline => Theme.of(this).textTheme.overline ?? TextStyle();
+  TextStyle get xHeadline5 =>
+      Theme.of(this).textTheme.headline5 ?? const TextStyle();
+  TextStyle get xHeadline6 =>
+      Theme.of(this).textTheme.headline6 ?? const TextStyle();
+  TextStyle get xSubtitle1 =>
+      Theme.of(this).textTheme.subtitle1 ?? const TextStyle();
+  TextStyle get xSubtitle2 =>
+      Theme.of(this).textTheme.subtitle2 ?? const TextStyle();
+  TextStyle get xBodyText1 =>
+      Theme.of(this).textTheme.bodyText1 ?? const TextStyle();
+  TextStyle get xBodyText2 =>
+      Theme.of(this).textTheme.bodyText2 ?? const TextStyle();
+  TextStyle get xCaption =>
+      Theme.of(this).textTheme.caption ?? const TextStyle();
+  TextStyle get xButton => Theme.of(this).textTheme.button ?? const TextStyle();
+  TextStyle get xOverline =>
+      Theme.of(this).textTheme.overline ?? const TextStyle();
   // #endregion
 
   // #region Color Scheme

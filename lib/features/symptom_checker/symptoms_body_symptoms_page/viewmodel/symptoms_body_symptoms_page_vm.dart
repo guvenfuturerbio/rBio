@@ -1,112 +1,144 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../../symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
 
 class BodySymptomSelectionVm extends ChangeNotifier {
-  BuildContext mContext;
-  List<GetBodySymptomsResponse> tmpSelectedSymptoms = [];
-  List<GetBodySymptomsResponse> _selectedBodySymptoms = [];
-  List<GetBodySymptomsResponse> _proposedSymptomList = [];
-  List<String> proposedSymptomsNamesList = [];
-  List<String> selectedBodySymptomNamesList = [];
-  LoadingProgress _progress;
-  LoadingProgress _proposedProgress;
-  BodySublocationsVm _myPv;
-  String propSymp;
-  bool _isFromVoice;
+  late BuildContext mContext;
+  late List<GetBodySymptomsResponse> tmpSelectedSymptoms = [];
+  late List<GetBodySymptomsResponse> selectedBodySymptoms = [];
+  late List<GetBodySymptomsResponse> proposedSymptomList = [];
+  late List<String> proposedSymptomsNamesList = [];
+  late List<String> selectedBodySymptomNamesList = [];
+  late LoadingProgress progress;
+  late LoadingProgress proposedProgress = LoadingProgress.loading;
+  late BodySublocationsVm myPv;
+  late String propSymp;
+  late bool isFromVoice;
 
-  int removeIndexHolder;
+  late int removeIndexHolder;
 
-  BodySymptomSelectionVm(
-      {BuildContext context,
-      int genderId,
-      List<GetBodySymptomsResponse> symptomList,
-      bool accessedFromSubLocationPage,
-      String year_of_birth,
-      bool isFromVoice,
-      BodySublocationsVm myPv}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      _myPv = myPv;
-      _isFromVoice = isFromVoice;
+  BodySymptomSelectionVm({
+    BuildContext? context,
+    required int genderId,
+    List<GetBodySymptomsResponse>? symptomList,
+    bool? accessedFromSubLocationPage,
+    required String yearOfBirth,
+    bool? isFromVoice,
+    BodySublocationsVm? myPv,
+  }) {
+    mContext = context!;
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      myPv = myPv;
+      isFromVoice = isFromVoice;
       await fetchBodySymptoms(symptomList);
-      await fetchProposedSymptoms(
-          selectedBodySymptoms, genderId, year_of_birth);
+      await fetchProposedSymptoms(selectedBodySymptoms, genderId, yearOfBirth);
     });
   }
 
-  List<GetBodySymptomsResponse> get selectedBodySymptoms =>
-      this._selectedBodySymptoms ?? [];
-  List<GetBodySymptomsResponse> get proposedSymptomList =>
-      this._proposedSymptomList ?? [];
-  LoadingProgress get progress => this._progress;
-  LoadingProgress get proposedProgress => this._proposedProgress;
-  bool get isFromVoice => this._isFromVoice;
-
   //Symptom equalizer
-  fetchBodySymptoms(List<GetBodySymptomsResponse> symptomsList) async {
+  Future<void> fetchBodySymptoms(
+      List<GetBodySymptomsResponse>? symptomsList) async {
     try {
-      symptomsList.forEach((element) {
-        if (!this._selectedBodySymptoms.contains(element)) {
-          this._selectedBodySymptoms.add(element);
+      symptomsList?.forEach((element) {
+        if (!selectedBodySymptoms.contains(element)) {
+          selectedBodySymptoms.add(element);
         }
       });
       //this._selectedBodySymptoms = symptomsList;
       notifyListeners();
     } catch (e) {
-      print(e);
+      LoggerUtils.instance.i(e);
       notifyListeners();
     }
   }
 
-  fetchProposedSymptoms(List<GetBodySymptomsResponse> symptoms, int gender,
-      String year_of_birth) async {
-    this._proposedProgress = LoadingProgress.LOADING;
+  Future<void> fetchProposedSymptoms(
+    List<GetBodySymptomsResponse>? symptoms,
+    int? gender,
+    String? yearOfBirth,
+  ) async {
+    proposedProgress = LoadingProgress.loading;
     notifyListeners();
     try {
-      List<int> tmpSymptomIdHolder = List();
-      for (var element in symptoms) {
-        tmpSymptomIdHolder.add(element.id);
+      List<int> tmpSymptomIdHolder = [];
+      for (var element in symptoms!) {
+        tmpSymptomIdHolder.add(element.id!);
       }
       List<GetBodySymptomsResponse> proposedSymptoms =
           await getIt<SymptomRepository>().getProposedSymptoms(
-              tmpSymptomIdHolder.toString(),
-              gender == 0 || gender == 2 ? 'male' : 'female',
-              year_of_birth);
-      this._proposedSymptomList = proposedSymptoms;
-      this._proposedProgress = LoadingProgress.DONE;
+        tmpSymptomIdHolder.toString(),
+        gender == 0 || gender == 2 ? 'male' : 'female',
+        yearOfBirth!,
+      );
+      proposedSymptomList = changeNamesOfSymps(proposedSymptoms);
+      proposedProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
-      print(e);
-      this._proposedProgress = LoadingProgress.ERROR;
+      LoggerUtils.instance.i(e);
+      proposedProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
 
-  removeSemptomFromList(GetBodySymptomsResponse symptom) async {
+  Future<void> removeSemptomFromList(GetBodySymptomsResponse symptom) async {
     selectedBodySymptomNamesList.clear();
-    tmpSelectedSymptoms = this._selectedBodySymptoms;
+    tmpSelectedSymptoms = selectedBodySymptoms;
     if (tmpSelectedSymptoms.contains(symptom)) {
       tmpSelectedSymptoms.remove(symptom);
     }
-    tmpSelectedSymptoms.forEach((element) {
-      selectedBodySymptomNamesList.add(element.name.toLowerCase());
-    });
-    this._selectedBodySymptoms = tmpSelectedSymptoms;
+    if (tmpSelectedSymptoms.isNotEmpty) {
+      for (var element in tmpSelectedSymptoms) {
+        selectedBodySymptomNamesList.add(element.name!.toLowerCase());
+      }
+    }
+    selectedBodySymptoms = tmpSelectedSymptoms;
     notifyListeners();
   }
 
-  addSemptomToList(GetBodySymptomsResponse symptom) async {
+  Future<void> addSemptomToList(GetBodySymptomsResponse symptom) async {
     selectedBodySymptomNamesList.clear();
-    tmpSelectedSymptoms = this._selectedBodySymptoms;
+    tmpSelectedSymptoms = selectedBodySymptoms;
     if (!tmpSelectedSymptoms.contains(symptom)) {
       tmpSelectedSymptoms.add(symptom);
     }
-    tmpSelectedSymptoms.forEach((element) {
-      selectedBodySymptomNamesList.add(element.name.toLowerCase());
-    });
-    this._selectedBodySymptoms = tmpSelectedSymptoms;
+    for (var element in tmpSelectedSymptoms) {
+      selectedBodySymptomNamesList.add(element.name!.toLowerCase());
+    }
+    selectedBodySymptoms = tmpSelectedSymptoms;
     notifyListeners();
+  }
+
+  List<GetBodySymptomsResponse> changeNamesOfSymps(
+      List<GetBodySymptomsResponse> bodySymps) {
+    for (var element in bodySymps) {
+      if (element.id == 996) {
+        element.name = "Ayak bileğinde şekil bozukluğu";
+      } else if (element.id == 997) {
+        element.name = "Ayak parmağında şekil bozukluğu";
+      } else if (element.id == 25) {
+        element.name = "Deride yumru (Nodül)";
+      } else if (element.id == 128) {
+        element.name = "Zaman ve yer konusunda karışıklık";
+      } else if (element.id == 994) {
+        element.name = "Dizde şekil bozukluğu";
+      } else if (element.id == 172) {
+        element.name = "İdrar yollarında akıntı";
+      } else if (element.id == 72) {
+        element.name = "Işık halkaları görmek";
+      } else if (element.id == 993) {
+        element.name = "Kalçada şekil bozukluğu";
+      } else if (element.id == 995) {
+        element.name = "Parmakta şekil bozukluğu";
+      } else if (element.id == 191) {
+        element.name = "Karına bastırıp çekince ağrı";
+      } else if (element.id == 983) {
+        element.name = "Sabah katılığı";
+      } else if (element.id == 998) {
+        element.name = "Sırtta şekil bozukluğu";
+      }
+    }
+    return bodySymps;
   }
 }

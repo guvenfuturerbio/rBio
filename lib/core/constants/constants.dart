@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../core.dart';
 
-part 'strings.dart';
-part 'view.dart';
-part 'endpoints.dart';
-part 'images.dart';
-part 'variables.dart';
-part 'regexp.dart';
 part 'bodydatas.dart';
 part 'device_guides.dart';
+part 'endpoints.dart';
+part 'images.dart';
+part 'regexp.dart';
+part 'strings.dart';
+part 'variables.dart';
+part 'view.dart';
 
 class R {
   static final image = _Images();

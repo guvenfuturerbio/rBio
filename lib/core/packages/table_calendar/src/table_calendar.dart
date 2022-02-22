@@ -18,7 +18,7 @@ typedef OnDaySelected = void Function(
 /// Signature for `onRangeSelected` callback.
 /// Contains start and end of the selected range, as well as currently focused day.
 typedef OnRangeSelected = void Function(
-    DateTime start, DateTime end, DateTime focusedDay);
+    DateTime? start, DateTime? end, DateTime focusedDay);
 
 /// Modes that range selection can operate in.
 enum RangeSelectionMode { disabled, toggledOff, toggledOn, enforced }
@@ -34,10 +34,10 @@ class TableCalendar<T> extends StatefulWidget {
   final dynamic locale;
 
   /// The start of the selected day range.
-  final DateTime rangeStartDay;
+  final DateTime? rangeStartDay;
 
   /// The end of the selected day range.
-  final DateTime rangeEndDay;
+  final DateTime? rangeEndDay;
 
   /// DateTime that determines which days are currently visible and focused.
   final DateTime focusedDay;
@@ -157,57 +157,57 @@ class TableCalendar<T> extends StatefulWidget {
   final RangeSelectionMode rangeSelectionMode;
 
   /// Function that assigns a list of events to a specified day.
-  final List<T> Function(DateTime day) eventLoader;
+  final List<T> Function(DateTime day)? eventLoader;
 
   /// Function deciding whether given day should be enabled or not.
   /// If `false` is returned, this day will be disabled.
-  final bool Function(DateTime day) enabledDayPredicate;
+  final bool Function(DateTime day)? enabledDayPredicate;
 
   /// Function deciding whether given day should be marked as selected.
-  final bool Function(DateTime day) selectedDayPredicate;
+  final bool Function(DateTime day)? selectedDayPredicate;
 
   /// Function deciding whether given day is treated as a holiday.
-  final bool Function(DateTime day) holidayPredicate;
+  final bool Function(DateTime day)? holidayPredicate;
 
   /// Called whenever a day range gets selected.
-  final OnRangeSelected onRangeSelected;
+  final OnRangeSelected? onRangeSelected;
 
   /// Called whenever any day gets tapped.
-  final OnDaySelected onDaySelected;
+  final OnDaySelected? onDaySelected;
 
   /// Called whenever any day gets long pressed.
-  final OnDaySelected onDayLongPressed;
+  final OnDaySelected? onDayLongPressed;
 
   /// Called whenever any disabled day gets tapped.
-  final void Function(DateTime day) onDisabledDayTapped;
+  final void Function(DateTime day)? onDisabledDayTapped;
 
   /// Called whenever any disabled day gets long pressed.
-  final void Function(DateTime day) onDisabledDayLongPressed;
+  final void Function(DateTime day)? onDisabledDayLongPressed;
 
   /// Called whenever header gets tapped.
-  final void Function(DateTime focusedDay) onHeaderTapped;
+  final void Function(DateTime focusedDay)? onHeaderTapped;
 
   /// Called whenever header gets long pressed.
-  final void Function(DateTime focusedDay) onHeaderLongPressed;
+  final void Function(DateTime focusedDay)? onHeaderLongPressed;
 
   /// Called whenever currently visible calendar page is changed.
-  final void Function(DateTime focusedDay) onPageChanged;
+  final void Function(DateTime focusedDay)? onPageChanged;
 
   /// Called whenever `calendarFormat` is changed.
-  final void Function(CalendarFormat format) onFormatChanged;
+  final void Function(CalendarFormat format)? onFormatChanged;
 
   /// Called when the calendar is created. Exposes its PageController.
-  final void Function(PageController pageController) onCalendarCreated;
+  final void Function(PageController pageController)? onCalendarCreated;
 
   /// Creates a `TableCalendar` widget.
   TableCalendar({
-    Key key,
-    @required this.daysBackgroundColor,
-    @required this.cellBackgroundColor,
-    @required DateTime focusedDay,
-    @required DateTime firstDay,
-    @required DateTime lastDay,
-    DateTime currentDay,
+    Key? key,
+    required this.daysBackgroundColor,
+    required this.cellBackgroundColor,
+    required DateTime focusedDay,
+    required DateTime firstDay,
+    required DateTime lastDay,
+    DateTime? currentDay,
     this.locale,
     this.rangeStartDay,
     this.rangeEndDay,
@@ -273,10 +273,10 @@ class TableCalendar<T> extends StatefulWidget {
 }
 
 class _TableCalendarState<T> extends State<TableCalendar<T>> {
-  PageController _pageController;
-  ValueNotifier<DateTime> _focusedDay;
-  RangeSelectionMode _rangeSelectionMode;
-  DateTime _firstSelectedDay;
+  late PageController _pageController;
+  late ValueNotifier<DateTime> _focusedDay;
+  late RangeSelectionMode _rangeSelectionMode;
+  DateTime? _firstSelectedDay;
 
   @override
   void initState() {
@@ -335,7 +335,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         id = max(0, id - 1);
       }
 
-      widget.onFormatChanged(formats[id]);
+      widget.onFormatChanged!(formats[id]);
     }
   }
 
@@ -354,13 +354,13 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     if (_isRangeSelectionOn && widget.onRangeSelected != null) {
       if (_firstSelectedDay == null) {
         _firstSelectedDay = day;
-        widget.onRangeSelected(_firstSelectedDay, null, _focusedDay.value);
+        widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
       } else {
-        if (day.isAfter(_firstSelectedDay)) {
-          widget.onRangeSelected(_firstSelectedDay, day, _focusedDay.value);
+        if (day.isAfter(_firstSelectedDay!)) {
+          widget.onRangeSelected!(_firstSelectedDay, day, _focusedDay.value);
           _firstSelectedDay = null;
-        } else if (day.isBefore(_firstSelectedDay)) {
-          widget.onRangeSelected(day, _firstSelectedDay, _focusedDay.value);
+        } else if (day.isBefore(_firstSelectedDay!)) {
+          widget.onRangeSelected!(day, _firstSelectedDay, _focusedDay.value);
           _firstSelectedDay = null;
         }
       }
@@ -381,7 +381,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
     if (widget.onDayLongPressed != null) {
       _updateFocusOnTap(day);
-      return widget.onDayLongPressed(day, _focusedDay.value);
+      return widget.onDayLongPressed!(day, _focusedDay.value);
     }
 
     if (widget.onRangeSelected != null) {
@@ -391,7 +391,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         if (_isRangeSelectionOn) {
           _firstSelectedDay = day;
-          widget.onRangeSelected(_firstSelectedDay, null, _focusedDay.value);
+          widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
         } else {
           _firstSelectedDay = null;
           widget.onDaySelected?.call(day, _focusedDay.value);
@@ -446,7 +446,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     return Container(
       decoration: BoxDecoration(
         color: getIt<ITheme>().secondaryColor,
-        borderRadius: BorderRadius.vertical(
+        borderRadius: const BorderRadius.vertical(
           top: Radius.circular(15),
         ),
       ),
@@ -517,7 +517,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                 widget.onPageChanged?.call(focusedDay);
               },
               dowBuilder: (BuildContext context, DateTime day) {
-                Widget dowCell =
+                Widget? dowCell =
                     widget.calendarBuilders.dowBuilder?.call(context, day);
 
                 if (dowCell == null) {
@@ -574,12 +574,12 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         final isWithinRange = widget.rangeStartDay != null &&
             widget.rangeEndDay != null &&
-            _isWithinRange(day, widget.rangeStartDay, widget.rangeEndDay);
+            _isWithinRange(day, widget.rangeStartDay!, widget.rangeEndDay!);
 
         final isRangeStart = isSameDay(day, widget.rangeStartDay);
         final isRangeEnd = isSameDay(day, widget.rangeEndDay);
 
-        Widget rangeHighlight = widget.calendarBuilders.rangeHighlightBuilder
+        Widget? rangeHighlight = widget.calendarBuilders.rangeHighlightBuilder
             ?.call(context, day, isWithinRange);
 
         if (rangeHighlight == null) {
@@ -630,7 +630,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         if (!isDisabled) {
           final events = widget.eventLoader?.call(day) ?? [];
-          Widget markerWidget =
+          Widget? markerWidget =
               widget.calendarBuilders.markerBuilder?.call(context, day, events);
 
           if (events.isNotEmpty && markerWidget == null) {
@@ -715,7 +715,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   bool _isDayAvailable(DateTime day) {
     return widget.enabledDayPredicate == null
         ? true
-        : widget.enabledDayPredicate(day);
+        : widget.enabledDayPredicate!(day);
   }
 
   DateTime _firstDayOfMonth(DateTime month) {

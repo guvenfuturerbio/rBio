@@ -3,14 +3,14 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/chat/model/chat_notification.dart';
-import 'package:onedosehealth/features/home/model/banner_model.dart';
-import 'package:onedosehealth/features/auth/auth.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
-import 'package:onedosehealth/model/home/take_appointment/do_mobil_payment_voucher.dart';
+
+import '../../../features/auth/auth.dart';
+import '../../../features/chat/model/chat_notification.dart';
+import '../../../features/home/model/banner_model.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
 import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
-
+import '../../../features/take_appointment/create_appointment/model/voucher_price_request.dart';
+import '../../../model/home/take_appointment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
 import '../../core.dart';
 
@@ -35,9 +35,11 @@ abstract class ApiService {
   Future<GuvenResponseModel> registerStep2WithOutTc(
       UserRegistrationStep2Model userRegistrationStep2);
   Future<GuvenResponseModel> registerStep3Ui(
-      UserRegistrationStep3Model userRegistrationStep3);
+    UserRegistrationStep3Model userRegistrationStep3,
+  );
   Future<GuvenResponseModel> registerStep3WithOutTc(
-      UserRegistrationStep3Model userRegistrationStep3);
+    UserRegistrationStep3Model userRegistrationStep3,
+  );
   Future<GuvenResponseModel> updateUserSystemName(String identityNumber);
   Future<UserAccount> getUserProfile();
   Future<Map<String, dynamic>> getActiveStream();
@@ -45,27 +47,37 @@ abstract class ApiService {
   Future<ApplicationVersionResponse> getCurrentApplicationVersion();
   Future<PatientResponse> getPatientDetail(String url);
   Future<List<BannerTabsModel>> getBannerTab(
-      String applicationName, String groupName);
+    String applicationName,
+    String groupName,
+  );
   //
   Future<List<FilterTenantsResponse>> filterTenants(
-      String path, FilterTenantsRequest filterTenantsRequest);
+    String path,
+    FilterTenantsRequest filterTenantsRequest,
+  );
   Future<List<FilterDepartmentsResponse>> filterDepartments(
-      FilterDepartmentsRequest filterDepartmentsRequest);
+    FilterDepartmentsRequest filterDepartmentsRequest,
+  );
   Future<List<FilterResourcesResponse>> filterResources(
-      FilterResourcesRequest filterResourcesRequest);
+    FilterResourcesRequest filterResourcesRequest,
+  );
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID);
   Future<List<GetEventsResponse>> getEvents(GetEventsRequest getEventsRequest);
   Future<List<GetEventsResponse>> findResourceClosestAvailablePlan(
-      ResourceForAvailablePlanRequest resourceForAvailablePlanRequest);
+    ResourceForAvailablePlanRequest resourceForAvailablePlanRequest,
+  );
   Future<int> saveAppointment(AppointmentRequest appointmentRequest);
   Future<List<AvailableDate>> findResourceAvailableDays(
-      FindResourceAvailableDaysRequest findResourceAvailableDaysRequest);
+    FindResourceAvailableDaysRequest findResourceAvailableDaysRequest,
+  );
   //
   Future<PatientRelativeInfoResponse> getAllRelatives(
-      GetAllRelativesRequest bodyPages);
+    GetAllRelativesRequest bodyPages,
+  );
   Future<GuvenResponseModel> getCountries();
   Future<GuvenResponseModel> forgotPasswordUi(
-      UserRegistrationStep1Model userRegistrationStep1);
+    UserRegistrationStep1Model userRegistrationStep1,
+  );
   Future<GuvenResponseModel> changePasswordUi(
       ChangePasswordModel changePasswordModel);
   Future<GuvenResponseModel> updateContactInfo(
@@ -75,7 +87,7 @@ abstract class ApiService {
   Future<GuvenResponseModel> addFirebaseTokenUi(
       AddFirebaseTokenRequest addFirebaseToken);
   Future<GuvenResponseModel> patientCallMeUi();
-    Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
+  Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
 
   Future<GuvenResponseModel> getRoomStatusUi(String roomId);
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId);
@@ -102,6 +114,7 @@ abstract class ApiService {
   Future<GuvenResponseModel> changeActiveUserToRelative(String id);
   Future<GuvenResponseModel> clickPost(int postId);
   Future<GuvenResponseModel> filterSocialPosts(String search);
+  Future<GuvenResponseModel> filterSocialPlatform(String search);
   Future<GuvenResponseModel> socialResource();
   Future<GuvenResponseModel> getAppointmentTypeViaWebConsultantId();
   Future<GuvenResponseModel> requestTranslator(

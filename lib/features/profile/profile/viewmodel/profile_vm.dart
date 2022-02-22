@@ -5,38 +5,34 @@ import '../../../../core/core.dart';
 part '../model/profile_numbers.dart';
 
 class ProfileVm extends ChangeNotifier {
-  LoadingProgress _state = LoadingProgress.LOADING;
+  LoadingProgress _state = LoadingProgress.loading;
   LoadingProgress get state => _state;
   set state(LoadingProgress value) {
     _state = value;
     notifyListeners();
   }
 
-  ProfileNumbers numbers;
+  bool _showProgressOverlay = false;
+  bool get showProgressOverlay => _showProgressOverlay;
+  set showProgressOverlay(bool value) {
+    _showProgressOverlay = value;
+    notifyListeners();
+  }
+
+  ProfileNumbers? numbers;
 
   Future<void> getNumbers() async {
-    state = LoadingProgress.LOADING;
-    await Future.delayed(Duration(seconds: 1));
-    numbers = ProfileNumbers(relatives: 3, followers: 10, subscriptions: 50);
-    state = LoadingProgress.DONE;
+    try {
+      state = LoadingProgress.loading;
+      await Future.delayed(const Duration(seconds: 1));
+      numbers = ProfileNumbers(relatives: 3, followers: 10, subscriptions: 50);
+      state = LoadingProgress.done;
+    } catch (e) {
+      state = LoadingProgress.error;
+    }
   }
 
   Future<void> logout(BuildContext context) async {
-    await FirebaseMessagingManager.instance.setTokenToServer("");
-    await getIt<UserNotifier>().logout();
-    await getIt<ISharedPreferencesManager>().reload();
-    await getIt<Repository>().localCacheService.removeAll();
-
-    getIt<UserNotifier>().clear();
-
-    FirebaseMessagingManager.handleLogout();
-
-    // Clear all boxes
-    getIt<GlucoseStorageImpl>().clear();
-    getIt<ScaleStorageImpl>().clear();
-    getIt<BloodPressureStorageImpl>().clear();
-    getIt<ProfileStorageImpl>().clear();
-
-    Atom.to(PagePaths.LOGIN, isReplacement: true);
+    await getIt<UserNotifier>().logout(context);
   }
 }

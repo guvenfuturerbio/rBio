@@ -8,45 +8,47 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../core/core.dart';
 
 class FullPdfViewerScreen extends StatelessWidget {
-  String title;
-  String pdfPath;
+  String? title;
+  String? pdfPath;
 
-  FullPdfViewerScreen({
-    Key key,
-    this.pdfPath,
-    this.title,
-  }) : super(key: key);
+  FullPdfViewerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     try {
-      title = Uri.decodeFull(Atom.queryParameters['title']);
-      pdfPath = Uri.decodeFull(Atom.queryParameters['pdfPath']);
+      title = Uri.decodeFull(Atom.queryParameters['title']!);
+      pdfPath = Uri.decodeFull(Atom.queryParameters['pdfPath'] as String);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     return RbioScaffold(
       appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(context, title),
+        title: RbioAppBar.textTitle(context, title ?? "No title"),
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
-              onTap: () => {shareFile(context, this.pdfPath)},
+              onTap: () {
+                if (pdfPath != null) {
+                  shareFile(context, pdfPath!);
+                }
+              },
               child: Platform.isIOS
-                  ? SvgPicture.asset(R.image.ic_ios_share)
-                  : SvgPicture.asset(R.image.ic_android_share),
+                  ? SvgPicture.asset(R.image.iosShare)
+                  : SvgPicture.asset(R.image.androidShare),
             ),
           )
         ],
       ),
 
       //
-      body: SfPdfViewer.file(
-        File(pdfPath),
-        canShowPaginationDialog: false,
-      ),
+      body: pdfPath == null
+          ? const SizedBox()
+          : SfPdfViewer.file(
+              File(pdfPath!),
+              canShowPaginationDialog: false,
+            ),
     );
   }
 

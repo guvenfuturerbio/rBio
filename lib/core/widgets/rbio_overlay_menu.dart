@@ -8,12 +8,12 @@ class RbioOverlayMenu extends StatefulWidget {
   final List<Widget> tiles;
 
   const RbioOverlayMenu({
-    Key key,
-    this.color,
-    this.separator,
-    this.borderRadius,
-    this.margin,
-    this.tiles,
+    Key? key,
+    required this.color,
+    required this.separator,
+    required this.borderRadius,
+    required this.margin,
+    required this.tiles,
   }) : super(key: key);
 
   @override
@@ -22,9 +22,9 @@ class RbioOverlayMenu extends StatefulWidget {
 
 class _RbioOverlayMenuState extends State<RbioOverlayMenu>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _fadeTransition;
-  Animation<Offset> _slideAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _fadeTransition;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _RbioOverlayMenuState extends State<RbioOverlayMenu>
     ).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Interval(
+        curve: const Interval(
           0.0,
           1.0,
           curve: Curves.easeOut,
@@ -48,12 +48,12 @@ class _RbioOverlayMenuState extends State<RbioOverlayMenu>
     );
 
     _slideAnimation = Tween(
-      begin: Offset(.5, 0),
-      end: Offset(0, 0),
+      begin: const Offset(.5, 0),
+      end: const Offset(0, 0),
     ).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Interval(
+        curve: const Interval(
           0.0,
           1.0,
           curve: Curves.easeOut,
@@ -66,7 +66,7 @@ class _RbioOverlayMenuState extends State<RbioOverlayMenu>
 
   @override
   void dispose() {
-    _animationController?.dispose();
+    _animationController.dispose();
 
     super.dispose();
   }
@@ -82,7 +82,7 @@ class _RbioOverlayMenuState extends State<RbioOverlayMenu>
       decoration: BoxDecoration(
         color: widget.color,
         borderRadius: widget.borderRadius,
-        boxShadow: <BoxShadow>[
+        boxShadow: const <BoxShadow>[
           BoxShadow(
             color: Colors.black26,
             offset: Offset(0, 2),

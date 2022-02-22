@@ -1,7 +1,7 @@
 class PartModel {
-  String startDateTime;
-  String endDateTime;
-  int interval;
+  String? startDateTime;
+  String? endDateTime;
+  int? interval;
 
   PartModel({
     this.startDateTime,
@@ -10,16 +10,16 @@ class PartModel {
   });
 
   PartModel.fromJson(Map<String, dynamic> json) {
-    startDateTime = json['start_date_time'];
-    endDateTime = json['end_date_time'];
-    interval = json['interval'];
+    startDateTime = json['start_date_time'] as String?;
+    endDateTime = json['end_date_time'] as String?;
+    interval = json['interval'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['start_date_time'] = this.startDateTime;
-    data['end_date_time'] = this.endDateTime;
-    data['interval'] = this.interval;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['start_date_time'] = startDateTime;
+    data['end_date_time'] = endDateTime;
+    data['interval'] = interval;
     return data;
   }
 }

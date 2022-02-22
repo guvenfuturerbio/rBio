@@ -4,36 +4,38 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioStackedScaffold extends StatelessWidget {
-  final RbioAppBar appbar;
+  final RbioAppBar? appbar;
   final Widget body;
+  final bool isLoading;
 
   // Optionals
-  final Color backgroundColor;
-  final Widget bottomNavigationBar;
-  final Widget bottomSheet;
-  final Widget drawer;
-  final DragStartBehavior drawerDragStartBehavior;
-  final double drawerEdgeDragWidth;
-  final bool drawerEnableOpenDragGesture;
-  final Color drawerScrimColor;
-  final Widget endDrawer;
-  final bool endDrawerEnableOpenDragGesture;
-  final bool extendBody;
-  final bool extendBodyBehindAppBar;
-  final Widget floatingActionButton;
-  final FloatingActionButtonAnimator floatingActionButtonAnimator;
-  final FloatingActionButtonLocation floatingActionButtonLocation;
-  final void Function(bool) onDrawerChanged;
-  final void Function(bool) onEndDrawerChanged;
-  final List<Widget> persistentFooterButtons;
-  final bool primary;
-  final bool resizeToAvoidBottomInset;
-  final String restorationId;
+  final Color? backgroundColor;
+  final Widget? bottomNavigationBar;
+  final Widget? bottomSheet;
+  final Widget? drawer;
+  final DragStartBehavior? drawerDragStartBehavior;
+  final double? drawerEdgeDragWidth;
+  final bool? drawerEnableOpenDragGesture;
+  final Color? drawerScrimColor;
+  final Widget? endDrawer;
+  final bool? endDrawerEnableOpenDragGesture;
+  final bool? extendBody;
+  final bool? extendBodyBehindAppBar;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonAnimator? floatingActionButtonAnimator;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final void Function(bool)? onDrawerChanged;
+  final void Function(bool)? onEndDrawerChanged;
+  final List<Widget>? persistentFooterButtons;
+  final bool? primary;
+  final bool? resizeToAvoidBottomInset;
+  final String? restorationId;
 
-  RbioStackedScaffold({
-    Key key,
-    @required this.appbar,
-    @required this.body,
+  const RbioStackedScaffold({
+    Key? key,
+    this.appbar,
+    required this.body,
+    this.isLoading = false,
     this.backgroundColor,
     this.bottomNavigationBar,
     this.bottomSheet,
@@ -55,8 +57,8 @@ class RbioStackedScaffold extends StatelessWidget {
     this.primary,
     this.resizeToAvoidBottomInset,
     this.restorationId,
-  });
-  
+  }) : super(key: key);
+
   static double kHeight(BuildContext context) =>
       (64 + MediaQuery.of(context).viewPadding.top);
 
@@ -69,12 +71,13 @@ class RbioStackedScaffold extends StatelessWidget {
           //
           RbioBody(
             child: body,
+            isLoading: isLoading,
           ),
 
           //
           if (appbar != null)
             ClipRRect(
-              borderRadius: BorderRadius.vertical(
+              borderRadius: const BorderRadius.vertical(
                 bottom: Radius.circular(15),
               ),
               child: SizedBox(
@@ -95,7 +98,7 @@ class RbioStackedScaffold extends StatelessWidget {
                     Align(
                       alignment: Alignment.center,
                       child: Container(
-                        constraints: BoxConstraints(
+                        constraints: const BoxConstraints(
                           maxWidth: 1176,
                         ),
                         child: appbar,
@@ -116,10 +119,10 @@ class RbioStackedScaffold extends StatelessWidget {
       drawerDragStartBehavior:
           drawerDragStartBehavior ?? DragStartBehavior.start,
       drawerEdgeDragWidth: drawerEdgeDragWidth,
-      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture ?? true,
       drawerScrimColor: drawerScrimColor,
       endDrawer: endDrawer,
-      endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+      endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture ?? true,
       extendBody: extendBody ?? false,
       extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
       floatingActionButton: floatingActionButton,

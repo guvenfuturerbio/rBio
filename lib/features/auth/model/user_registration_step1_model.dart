@@ -1,10 +1,11 @@
 class UserRegistrationStep1Model {
-  String name;
-  String surname;
-  String phoneNumber;
-  String identificationNumber;
-  String electronicMail;
-  String userNationality;
+  String? name;
+  String? surname;
+  String? phoneNumber;
+  String? identificationNumber;
+  String? electronicMail;
+  String? userNationality;
+  String? countryCode;
 
   UserRegistrationStep1Model({
     this.name,
@@ -13,6 +14,7 @@ class UserRegistrationStep1Model {
     this.identificationNumber,
     this.electronicMail,
     this.userNationality,
+    this.countryCode,
   });
 
   factory UserRegistrationStep1Model.fromJson(Map<String, dynamic> json) =>
@@ -23,6 +25,7 @@ class UserRegistrationStep1Model {
         identificationNumber: json['identification_number'] as String,
         electronicMail: json['electronic_mail'] as String,
         userNationality: json['user_nationality'] as String,
+        countryCode: json['countryCode'] as String,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -32,5 +35,6 @@ class UserRegistrationStep1Model {
         'identification_number': identificationNumber,
         'electronic_mail': electronicMail,
         'user_nationality': userNationality,
+        "countryCode": countryCode,
       };
 }

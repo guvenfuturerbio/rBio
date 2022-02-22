@@ -1,37 +1,40 @@
 part of '../../view/blood_glucose_patient_detail_screen.dart';
 
 /// Renders the Scatter chart sample with dynamically updated data points.
-class BloodGlucosePatientScatter extends BloodGlucoseSampleView {
+class BloodGlucosePatientScatter extends StatefulWidget {
+  const BloodGlucosePatientScatter({Key? key}) : super(key: key);
+
   /// Creates the Scatter chart sample with dynamically updated data points.
   @override
   BloodGlucosePatientScatterState createState() =>
       BloodGlucosePatientScatterState();
 }
 
-class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
-  List<ChartData> _chartData;
+class BloodGlucosePatientScatterState
+    extends State<BloodGlucosePatientScatter> {
+  List<ChartData> _chartData = [];
 
-  int _minimum, _maximum, _targetMin, _targetMax;
+  late int _minimum, _maximum, _targetMin, _targetMax;
 
-  Map<int, List<ChartData>> _chartVeryLowTagged = Map<int, List<ChartData>>();
+  Map<int, List<ChartData>> _chartVeryLowTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartLowTagged = Map<int, List<ChartData>>();
+  Map<int, List<ChartData>> _chartLowTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartTargetTagged = Map<int, List<ChartData>>();
+  Map<int, List<ChartData>> _chartTargetTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartHighTagged = Map<int, List<ChartData>>();
+  Map<int, List<ChartData>> _chartHighTagged = <int, List<ChartData>>{};
 
-  Map<int, List<ChartData>> _chartVeryHighTagged = Map<int, List<ChartData>>();
+  Map<int, List<ChartData>> _chartVeryHighTagged = <int, List<ChartData>>{};
 
-  DateTime _startDate, _endDate;
+  DateTime? _startDate, _endDate;
 
   double markerSize = 10;
 
-  String _selected;
+  String? _selected;
 
-  ZoomMode _zoomModeType = ZoomMode.x;
+  final ZoomMode _zoomModeType = ZoomMode.x;
 
-  ZoomPanBehavior _zoomingBehavior;
+  ZoomPanBehavior? _zoomingBehavior;
 
   BloodGlucosePatientScatterState();
 
@@ -41,7 +44,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
       enablePinching: true,
       zoomMode: _zoomModeType,
       enablePanning: true,
-      enableMouseWheelZooming: model.isWeb ? true : false,
+      enableMouseWheelZooming: Atom.isWeb ? true : false,
     );
 
     return Consumer<BloodGlucosePatientDetailVm>(
@@ -80,7 +83,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               _selected == LocaleProvider.current.specific
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: MajorGridLines(color: Colors.black12),
+              majorGridLines: const MajorGridLines(color: Colors.black12),
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
@@ -89,13 +92,13 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
           : _selected == LocaleProvider.current.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                   dateFormat: DateFormat("EEE"),
                   intervalType: DateTimeIntervalType.days,
                   interval: 1,
                 )
               : DateTimeAxis(
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                 ),
       primaryYAxis: NumericAxis(
@@ -116,7 +119,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
                 textStyle: const TextStyle(color: Colors.black, fontSize: 13),
                 color: R.color.graphRangeColor),
           ],
-          majorGridLines: MajorGridLines(color: Colors.black12)),
+          majorGridLines: const MajorGridLines(color: Colors.black12)),
       enableAxisAnimation: true,
       zoomPanBehavior: _zoomingBehavior,
       series: getDefaultScatterSeries(),
@@ -129,7 +132,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
   List<ScatterSeries<ChartData, DateTime>> getDefaultScatterSeries() {
     return <ScatterSeries<ChartData, DateTime>>[
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[1],
+          dataSource: _chartVeryHighTagged[1]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -142,7 +145,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               borderColor: R.color.very_high,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[2],
+          dataSource: _chartVeryHighTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_high,
@@ -150,7 +153,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[3],
+          dataSource: _chartVeryHighTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_high,
@@ -163,7 +166,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[1],
+          dataSource: _chartHighTagged[1]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -176,7 +179,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               borderColor: R.color.high,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[2],
+          dataSource: _chartHighTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.high,
@@ -184,7 +187,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[3],
+          dataSource: _chartHighTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.high,
@@ -197,7 +200,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[1],
+          dataSource: _chartTargetTagged[1]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -210,7 +213,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               borderColor: R.color.target,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[2],
+          dataSource: _chartTargetTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.target,
@@ -218,7 +221,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[3],
+          dataSource: _chartTargetTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.target,
@@ -231,7 +234,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[1],
+          dataSource: _chartLowTagged[1]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -244,7 +247,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               borderColor: R.color.low,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[2],
+          dataSource: _chartLowTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.low,
@@ -252,7 +255,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[3],
+          dataSource: _chartLowTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.low,
@@ -265,7 +268,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[1],
+          dataSource: _chartVeryLowTagged[1]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: Colors.white,
@@ -278,7 +281,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               borderColor: R.color.very_low,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[2],
+          dataSource: _chartVeryLowTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_low,
@@ -286,7 +289,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[3],
+          dataSource: _chartVeryLowTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
           color: R.color.very_low,
@@ -301,7 +304,7 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
       _selected == LocaleProvider.current.daily ||
               _selected == LocaleProvider.current.specific
           ? ScatterSeries<ChartData, DateTime>(
-              dataSource: (_chartData != null && _chartData.length > 0)
+              dataSource: _chartData.isNotEmpty
                   ? [
                       ChartData(
                           DateTime(_chartData[0].x.year, _chartData[0].x.month,
@@ -325,11 +328,11 @@ class BloodGlucosePatientScatterState extends BloodGlucoseSampleViewState {
               color: Colors.red,
               xAxisName: "Time",
               markerSettings:
-                  MarkerSettings(height: 15, width: 15, isVisible: true))
+                  const MarkerSettings(height: 15, width: 15, isVisible: true))
           : ScatterSeries<ChartData, DateTime>(
               dataSource: [
-                  ChartData(_startDate, -50, Colors.transparent),
-                  ChartData(_endDate, -50, Colors.transparent),
+                  ChartData(_startDate!, -50, Colors.transparent),
+                  ChartData(_endDate!, -50, Colors.transparent),
                 ],
               xValueMapper: (ChartData sales, _) => sales.x,
               yValueMapper: (ChartData sales, _) => sales.y,

@@ -11,11 +11,11 @@ class RbioSmallChronicWidget extends StatelessWidget {
   final Function() callback;
 
   const RbioSmallChronicWidget(
-      {Key key,
-      this.imageUrl,
-      this.lastMeasurementDate,
-      this.lastMeasurement,
-      this.callback})
+      {Key? key,
+      required this.imageUrl,
+      required this.lastMeasurementDate,
+      required this.lastMeasurement,
+      required this.callback})
       : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class RbioSmallChronicWidget extends StatelessWidget {
         children: [
           //
           Padding(
-            padding: EdgeInsets.only(right: 25),
+            padding: const EdgeInsets.only(right: 25),
             child: SvgPicture.asset(
               imageUrl,
               alignment: Alignment.centerLeft,
@@ -50,7 +50,9 @@ class RbioSmallChronicWidget extends StatelessWidget {
                     style: context.xHeadline3,
                   ),
                   Text(
-                    '${lastMeasurement.length == 1 ? LocaleProvider.current.no_measurement : lastMeasurement}',
+                    lastMeasurement.length == 1
+                        ? LocaleProvider.current.no_measurement
+                        : lastMeasurement,
                     style: context.xHeadline4,
                   )
                 ],

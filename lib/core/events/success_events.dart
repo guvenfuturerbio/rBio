@@ -220,7 +220,7 @@ class DeleteRelativeSuccessEvent extends BaseEvent {
 
 class YoutubeSurveyCompleteEvent extends BaseEvent {
   YoutubeSurveyCompleteEvent(
-      {String name, String surname, String phone, String courseId})
+      {String? name, String? surname, String? phone, String? courseId})
       : super("youtubeAnket_Tamamlandi", {
           'isim': name,
           'soyisim': surname,
@@ -230,7 +230,7 @@ class YoutubeSurveyCompleteEvent extends BaseEvent {
 }
 
 class YoutubeSurveySkipEvent extends BaseEvent {
-  YoutubeSurveySkipEvent({String courseId})
+  YoutubeSurveySkipEvent({String? courseId})
       : super("youtubeAnket_Atlandi", {'egitim': courseId});
 }
 
@@ -239,22 +239,22 @@ class ForUClicked extends BaseEvent {
 }
 
 class CategoryClicked extends BaseEvent {
-  CategoryClicked({String categoryName})
+  CategoryClicked({String? categoryName})
       : super("category_clicked", {"categoryName": categoryName});
 }
 
 class SubCategoryClicked extends BaseEvent {
-  SubCategoryClicked({String subCategoryName})
+  SubCategoryClicked({String? subCategoryName})
       : super("sub_category_clicked", {"subCategoryName": subCategoryName});
 }
 
 class SubCategorySummaryClicked extends BaseEvent {
-  SubCategorySummaryClicked({String subCategoryName})
+  SubCategorySummaryClicked({String? subCategoryName})
       : super("sub_category_summary_clicked",
             {"subCategoryName": subCategoryName});
 }
 
 class ItemPaymentClicked extends BaseEvent {
-  ItemPaymentClicked({String itemName})
+  ItemPaymentClicked({String? itemName})
       : super("item_payment_clicked", {"itemName": itemName});
 }

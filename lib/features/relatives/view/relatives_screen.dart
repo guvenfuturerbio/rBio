@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../viewmodel/relatives_vm.dart';
 
 class RelativesScreen extends StatefulWidget {
-  RelativesScreen({Key key}) : super(key: key);
+  const RelativesScreen({Key? key}) : super(key: key);
 
   @override
   _RelativesScreenState createState() => _RelativesScreenState();
@@ -39,7 +39,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
         builder: (
           BuildContext context,
           RelativesVm value,
-          Widget child,
+          Widget? child,
         ) {
           return _buildBody(value);
         },
@@ -50,14 +50,14 @@ class _RelativesScreenState extends State<RelativesScreen> {
 
   Widget _buildBody(RelativesVm vm) {
     switch (vm.state) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return ListView.builder(
           padding: EdgeInsets.zero,
           scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: vm.response.patientRelatives.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
@@ -70,8 +70,8 @@ class _RelativesScreenState extends State<RelativesScreen> {
                   name:
                       '${vm.response.patientRelatives[index].name} ${vm.response.patientRelatives[index].surname}',
                   onTap: () {},
-                  leadingImage: UserLeadingImage.Circle,
-                  trailingIcon: UserTrailingIcons.RightArrow,
+                  leadingImage: UserLeadingImage.circle,
+                  trailingIcon: UserTrailingIcons.rightArrow,
                   width: Atom.width,
                 ),
 
@@ -82,11 +82,11 @@ class _RelativesScreenState extends State<RelativesScreen> {
           },
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -94,7 +94,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
     return FloatingActionButton(
       backgroundColor: getIt<ITheme>().mainColor,
       onPressed: () {
-        Atom.to(PagePaths.ADDPATIENTRELATIVES);
+        Atom.to(PagePaths.addPatientRelatives);
       },
       child: Center(
         child: SvgPicture.asset(

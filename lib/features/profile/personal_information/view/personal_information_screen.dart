@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart' as masked;
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +10,7 @@ import '../../../../model/shared/user_account_info.dart';
 import '../viewmodel/personal_information_vm.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  PersonalInformationScreen({Key key}) : super(key: key);
+  const PersonalInformationScreen({Key? key}) : super(key: key);
 
   @override
   _PersonalInformationScreenState createState() =>
@@ -19,28 +18,27 @@ class PersonalInformationScreen extends StatefulWidget {
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
-  UserAccount userAccount;
+  late UserAccount userAccount;
 
-  TextEditingController _identityEditingController;
-  TextEditingController _nameEditingController;
-  TextEditingController _birthdayEditingController;
-  TextEditingController _phoneNumberEditingController;
-  TextEditingController _emailEditingController;
+  late TextEditingController _identityEditingController;
+  late TextEditingController _nameEditingController;
+  late TextEditingController _birthdayEditingController;
+  late TextEditingController _phoneNumberEditingController;
+  late TextEditingController _emailEditingController;
 
-  FocusNode phoneNumberFocus;
-  FocusNode emailFocus;
+  late FocusNode _phoneNumberFocus;
+  late FocusNode _emailFocus;
 
   @override
   void initState() {
     _identityEditingController = TextEditingController();
     _nameEditingController = TextEditingController();
     _birthdayEditingController = TextEditingController();
-    _phoneNumberEditingController =
-        masked.MaskedTextController(mask: '(000) 000-0000');
+    _phoneNumberEditingController = TextEditingController();
     _emailEditingController = TextEditingController();
 
-    phoneNumberFocus = FocusNode();
-    emailFocus = FocusNode();
+    _phoneNumberFocus = FocusNode();
+    _emailFocus = FocusNode();
 
     super.initState();
   }
@@ -53,8 +51,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     _phoneNumberEditingController.dispose();
     _emailEditingController.dispose();
 
-    phoneNumberFocus.dispose();
-    emailFocus.dispose();
+    _phoneNumberFocus.dispose();
+    _emailFocus.dispose();
 
     super.dispose();
   }
@@ -64,56 +62,64 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     try {
       userAccount = getIt<UserNotifier>().getUserAccount();
     } catch (e) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
-    _identityEditingController.text = userAccount.nationality.xIsTCNationality
-        ? userAccount.identificationNumber
-        : userAccount.passaportNumber;
-    _nameEditingController.text = userAccount.name + " " + userAccount.surname;
+    final xIsTCNationality = userAccount.nationality?.xIsTCNationality;
+    if (xIsTCNationality != null) {
+      _identityEditingController.text = xIsTCNationality
+          ? userAccount.identificationNumber ?? ''
+          : userAccount.passaportNumber ?? '';
+    }
 
-    _birthdayEditingController.text = userAccount.patients.length > 0
-        ? userAccount.patients.first.birthDate.replaceAll('.', '/')
-        : "-";
+    final userName = userAccount.name ?? '';
+    final userSurname = userAccount.surname ?? '';
+    _nameEditingController.text = userName + " " + userSurname;
 
-    _phoneNumberEditingController.text = userAccount.phoneNumber;
-    _emailEditingController.text =
-        userAccount.electronicMail.contains("@mailyok.com")
-            ? "-"
-            : userAccount.electronicMail;
+    final patientsLength = userAccount.patients?.length ?? 0;
+    final patientsFirstBirthDate =
+        userAccount.patients?.first.birthDate?.replaceAll('.', '/') ?? '';
+    _birthdayEditingController.text =
+        patientsLength > 0 ? patientsFirstBirthDate : "-";
+
+    _phoneNumberEditingController.text = userAccount.phoneNumber ?? '';
+
+    final isEMail =
+        userAccount.electronicMail?.contains("@mailyok.com") ?? false;
+    if (isEMail) {
+      _emailEditingController.text = userAccount.electronicMail ?? '';
+    }
 
     return ChangeNotifierProvider<PersonalInformationScreenVm>(
       create: (context) => PersonalInformationScreenVm(
         mContext: context,
-        email: userAccount.electronicMail.contains("@mailyok.com")
-            ? "-"
-            : userAccount.electronicMail,
-        phoneNumber: userAccount.phoneNumber,
+        email: isEMail ? "-" : (userAccount.electronicMail ?? ''),
+        phoneNumber: userAccount.phoneNumber ?? '',
       ),
       child: Consumer<PersonalInformationScreenVm>(
         builder: (
           BuildContext context,
           PersonalInformationScreenVm vm,
-          Widget child,
+          Widget? child,
         ) {
           return KeyboardDismissOnTap(
-            child: RbioLoadingOverlay(
+            child: RbioStackedScaffold(
               isLoading: vm.showLoadingOverlay,
-              progressIndicator: RbioLoading.progressIndicator(),
-              opacity: 0,
-              child: RbioScaffold(
-                resizeToAvoidBottomInset: true,
-                appbar: RbioAppBar(
-                  title: RbioAppBar.textTitle(
-                    context,
-                    LocaleProvider.of(context).lbl_personal_information,
-                  ),
-                ),
-                body: _builBody(context, vm),
-              ),
+              resizeToAvoidBottomInset: true,
+              appbar: _buildAppBar(context),
+              body: _builBody(context, vm),
             ),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.of(context).lbl_personal_information,
       ),
     );
   }
@@ -128,18 +134,22 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         Expanded(
           child: MediaQuery.removePadding(
             context: context,
-            removeTop: true,
+            removeTop: false,
             removeBottom: true,
             child: Scrollbar(
               child: SingleChildScrollView(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    //
+                    R.sizes.stackedTopPadding(context),
+                    R.sizes.hSizer16,
+
                     //
                     Center(
                       child: Column(
@@ -176,11 +186,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         ],
                       ),
                     ),
+
                     _buildSpacer(),
 
                     // Identity Number
                     _buildTitle(
-                      userAccount.nationality.xIsTCNationality
+                      (userAccount.nationality?.xIsTCNationality ?? false)
                           ? LocaleProvider.of(context).tc_identity_number
                           : LocaleProvider.of(context).passport_number,
                     ),
@@ -217,17 +228,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         //
-                        RbioCountryCodePicker(),
+                        const RbioCountryCodePicker(),
 
                         //
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
 
                         //
                         Expanded(
                           child: RbioTextFormField(
-                            focusNode: phoneNumberFocus,
+                            focusNode: _phoneNumberFocus,
                             controller: _phoneNumberEditingController,
                             keyboardType: TextInputType.phone,
                             textInputAction: TextInputAction.done,
@@ -236,8 +247,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             inputFormatters: <TextInputFormatter>[
                               TabToNextFieldTextInputFormatter(
                                 context,
-                                phoneNumberFocus,
-                                emailFocus,
+                                _phoneNumberFocus,
+                                _emailFocus,
                               ),
                             ],
                           ),
@@ -251,15 +262,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       LocaleProvider.of(context).email_address,
                     ),
                     RbioTextFormField(
-                      focusNode: emailFocus,
+                      focusNode: _emailFocus,
                       controller: _emailEditingController,
                       textInputAction: TextInputAction.done,
                       hintText: LocaleProvider.of(context).hint_input_password,
                       inputFormatters: <TextInputFormatter>[
                         TabToNextFieldTextInputFormatter(
                           context,
-                          emailFocus,
-                          phoneNumberFocus,
+                          _emailFocus,
+                          _phoneNumberFocus,
                         ),
                       ],
                     ),
@@ -272,9 +283,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
         //
         Container(
-          padding: EdgeInsets.only(
-            top: 8,
-          ),
+          padding: const EdgeInsets.only(top: 8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -290,6 +299,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   backColor: getIt<ITheme>().cardBackgroundColor,
                   textColor: getIt<ITheme>().textColorSecondary,
                   fontWeight: FontWeight.bold,
+                  showElevation: false,
                 ),
               ),
 
@@ -307,6 +317,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     );
                   },
                   fontWeight: FontWeight.bold,
+                  showElevation: false,
                 ),
               ),
             ],
@@ -319,14 +330,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     );
   }
 
-  Widget _buildSpacer() => SizedBox(height: 16);
+  Widget _buildSpacer() => const SizedBox(height: 16);
 
   Widget _buildTitle(String title) => Padding(
-        padding: EdgeInsets.only(bottom: 8, left: 14),
+        padding: const EdgeInsets.only(bottom: 8, left: 14),
         child: Text(
           title,
           style: context.xHeadline4.copyWith(
-            color: getIt<ITheme>().textColorPassive,
+            fontWeight: FontWeight.bold,
           ),
         ),
       );
@@ -338,6 +349,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         absorbing: true,
         child: RbioTextFormField(
           controller: controller,
+          textColor: getIt<ITheme>().textColorPassive,
         ),
       );
 

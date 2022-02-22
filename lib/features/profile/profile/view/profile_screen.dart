@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../viewmodel/profile_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -26,58 +26,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-      appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          LocaleProvider.current.profile,
-        ),
-        actions: [
-          //
-          IconButton(
-            onPressed: () {
-              context.read<ThemeNotifier>().changeTextScale();
-            },
-            icon: SvgPicture.asset(
-              R.image.change_size_icon,
-              color: getIt<ITheme>().iconSecondaryColor,
-            ),
-          ),
-        ],
-      ),
+    return Consumer<ProfileVm>(
+      builder: (BuildContext context, ProfileVm vm, Widget? child) {
+        return RbioStackedScaffold(
+          isLoading: vm.showProgressOverlay,
+          appbar: _buildAppBar(),
+          body: _buildBody(vm),
+        );
+      },
+    );
+  }
 
-      //
-      body: Consumer<ProfileVm>(
-        builder: (context, value, child) {
-          return _buildBody(value);
-        },
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.profile,
       ),
+      actions: [
+        //
+        IconButton(
+          onPressed: () {
+            context.read<ThemeNotifier>().changeTextScale();
+          },
+          icon: SvgPicture.asset(
+            R.image.changeSize,
+            color: getIt<ITheme>().iconSecondaryColor,
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildBody(ProfileVm vm) {
     switch (vm.state) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
               //
-              RbioLocaleDropdown(),
+              R.sizes.stackedTopPadding(context),
+              R.sizes.hSizer8,
+
+              //
+              const RbioLocaleDropdown(),
 
               //
               RbioUserTile(
                 name: Utils.instance.getCurrentUserNameAndSurname,
                 imageBytes: getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.PROFILE_IMAGE),
-                leadingImage: UserLeadingImage.Circle,
+                    .getString(SharedPreferencesKeys.profileImage),
+                leadingImage: UserLeadingImage.circle,
                 onTap: () {},
                 width: Atom.width,
               ),
@@ -101,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _buildListItem(
                         LocaleProvider.current.healthcare_employee,
                         () {
-                          Atom.to(PagePaths.DOCTOR_HOME);
+                          Atom.to(PagePaths.doctorHome);
                         },
                       ),
                     ],
@@ -110,15 +117,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _buildListItem(
                       LocaleProvider.current.lbl_personal_information,
                       () {
-                        Atom.to(PagePaths.PERSONAL_INFORMATION);
+                        Atom.to(PagePaths.personalInformation);
                       },
                     ),
+                    //
 
                     //
                     _buildListItem(
                       LocaleProvider.current.health_information,
                       () {
-                        Atom.to(PagePaths.HEALTH_INFORMATION);
+                        Atom.to(PagePaths.healthInformation);
                       },
                     ),
 
@@ -126,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _buildListItem(
                         LocaleProvider.current.devices,
                         () {
-                          Atom.to(PagePaths.DEVICES);
+                          Atom.to(PagePaths.devices);
                         },
                       ),
 
@@ -135,17 +143,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _buildListItem(
                         LocaleProvider.current.reminders,
                         () {
-                          Atom.to(PagePaths.MEDIMINDER_INITIAL);
+                          Atom.to(PagePaths.reminder);
                         },
                       ),
 
                     //
                     _buildListItem(
+                      LocaleProvider.current.change_password,
+                      () {
+                        Atom.to(PagePaths.changePassword);
+                      },
+                    ),
+
+                    //
+                    _buildListItem(
                       LocaleProvider.current.request_and_suggestions,
                       () {
-                        Atom.to(PagePaths.SUGGEST_REQUEST);
+                        Atom.to(PagePaths.suggestResult);
                       },
-                      isDivider: false,
+                    ),
+
+                    //
+                    _buildListItem(
+                      LocaleProvider.current.terms_and_privacy,
+                      () {
+                        Atom.to(PagePaths.termsAndPrivacy);
+                      },
                     ),
                   ],
                 ),
@@ -166,11 +189,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         );
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -189,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onTap: onTap,
           child: Container(
             color: Colors.transparent,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 20.0,
               horizontal: 16.0,
             ),
@@ -208,7 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 //
                 SvgPicture.asset(
-                  R.image.ic_arrow_right,
+                  R.image.arrowRight,
                   width: R.sizes.iconSize5,
                 ),
               ],
@@ -218,7 +241,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         //
         if (isDivider)
-          Divider(
+          const Divider(
             thickness: 0,
             indent: 10,
             endIndent: 10,

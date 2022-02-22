@@ -26,7 +26,7 @@ class CalendarStyle {
   /// The size of single event marker dot.
   ///
   /// By default `markerSizeScale` is used. To use `markerSize` instead, simply provide a non-null value.
-  final double markerSize;
+  final double? markerSize;
 
   /// Proportion of single event marker dot size in relation to day cell size.
   ///
@@ -164,55 +164,55 @@ class CalendarStyle {
     this.markersOffset = const PositionedOffset(),
     this.rangeHighlightColor = const Color(0xFFBBDDFF),
     this.markerDecoration = const BoxDecoration(
-      color: const Color(0xFF263238),
+      color: Color(0xFF263238),
       shape: BoxShape.circle,
     ),
     this.todayTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ), //
     this.todayDecoration = const BoxDecoration(
-      color: const Color(0xFF9FA8DA),
+      color: Color(0xFF9FA8DA),
       shape: BoxShape.circle,
     ),
     this.selectedTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
     this.selectedDecoration = const BoxDecoration(
-      color: const Color(0xFF5C6BC0),
+      color: Color(0xFF5C6BC0),
       shape: BoxShape.circle,
     ),
     this.rangeStartTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
     this.rangeStartDecoration = const BoxDecoration(
-      color: const Color(0xFF6699FF),
+      color: Color(0xFF6699FF),
       shape: BoxShape.circle,
     ),
     this.rangeEndTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
     this.rangeEndDecoration = const BoxDecoration(
-      color: const Color(0xFF6699FF),
+      color: Color(0xFF6699FF),
       shape: BoxShape.circle,
     ),
     this.withinRangeTextStyle = const TextStyle(),
     this.withinRangeDecoration = const BoxDecoration(shape: BoxShape.circle),
-    this.outsideTextStyle = const TextStyle(color: const Color(0xFFAEAEAE)),
+    this.outsideTextStyle = const TextStyle(color: Color(0xFFAEAEAE)),
     this.outsideDecoration = const BoxDecoration(shape: BoxShape.circle),
-    this.disabledTextStyle = const TextStyle(color: const Color(0xFFBFBFBF)),
+    this.disabledTextStyle = const TextStyle(color: Color(0xFFBFBFBF)),
     this.disabledDecoration = const BoxDecoration(shape: BoxShape.circle),
-    this.holidayTextStyle = const TextStyle(color: const Color(0xFF5C6BC0)),
+    this.holidayTextStyle = const TextStyle(color: Color(0xFF5C6BC0)),
     this.holidayDecoration = const BoxDecoration(
-      border: const Border.fromBorderSide(
-        const BorderSide(color: const Color(0xFF9FA8DA), width: 1.4),
+      border: Border.fromBorderSide(
+        BorderSide(color: Color(0xFF9FA8DA), width: 1.4),
       ),
       shape: BoxShape.circle,
     ),
-    this.weekendTextStyle = const TextStyle(color: const Color(0xFF5A5A5A)),
+    this.weekendTextStyle = const TextStyle(color: Color(0xFF5A5A5A)),
     this.weekendDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.defaultTextStyle = const TextStyle(),
     this.defaultDecoration = const BoxDecoration(shape: BoxShape.circle),
@@ -224,16 +224,16 @@ class CalendarStyle {
 /// Helper class containing data for internal `Positioned` widget.
 class PositionedOffset {
   /// Distance from the top edge.
-  final double top;
+  final double? top;
 
   /// Distance from the bottom edge.
-  final double bottom;
+  final double? bottom;
 
   /// Distance from the leading edge.
-  final double start;
+  final double? start;
 
   /// Distance from the trailing edge.
-  final double end;
+  final double? end;
 
   /// Creates a `PositionedOffset`. Values are set to `null` by default.
   const PositionedOffset({this.top, this.bottom, this.start, this.end});

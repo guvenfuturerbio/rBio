@@ -1,7 +1,7 @@
 class HospitalModel {
-  String name;
-  int provinceId;
-  int id;
+  String? name;
+  int? provinceId;
+  int? id;
 
   HospitalModel({
     this.name,
@@ -10,16 +10,16 @@ class HospitalModel {
   });
 
   HospitalModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    provinceId = json['province_id'];
-    id = json['id'];
+    name = json['name'] as String?;
+    provinceId = json['province_id'] as int?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['province_id'] = this.provinceId;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['province_id'] = provinceId;
+    data['id'] = id;
     return data;
   }
 }

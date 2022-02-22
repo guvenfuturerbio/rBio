@@ -1,7 +1,7 @@
 part of '../../devices.dart';
 
 class AvailableDevices extends StatelessWidget {
-  const AvailableDevices({Key key}) : super(key: key);
+  const AvailableDevices({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class AvailableDevices extends StatelessWidget {
         builder: (
           BuildContext context,
           AvailableDevicesVm vm,
-          Widget child,
+          Widget? child,
         ) {
-          return context.xTextScaleType == TextScaleType.Small
+          return context.xTextScaleType == TextScaleType.small
               ? GridView.count(
                   padding: EdgeInsets.only(
                     top: RbioStackedScaffold.kHeight(context),
@@ -45,7 +45,7 @@ class AvailableDevices extends StatelessWidget {
                 )
               : ListView(
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.only(
                     top: RbioStackedScaffold.kHeight(context),
                     bottom: R.sizes.defaultBottomValue,
@@ -65,26 +65,28 @@ class AvailableDevices extends StatelessWidget {
     bool isGridItem,
   ) {
     return GestureDetector(
-      onTap: device.enable
+      onTap: (device.enable ?? false)
           ? () {
               Atom.to(
-                PagePaths.SELECTED_DEVICE,
-                queryParameters: {'device_type': device.deviceType.name},
+                PagePaths.selectedDevice,
+                queryParameters: {
+                  'device_type': device.deviceType?.name ?? '',
+                },
               );
             }
           : null,
       child: Container(
         padding: isGridItem
-            ? EdgeInsets.symmetric(horizontal: 4)
-            : EdgeInsets.symmetric(horizontal: 8),
+            ? const EdgeInsets.symmetric(horizontal: 4)
+            : const EdgeInsets.symmetric(horizontal: 8),
         child: Card(
-          elevation: 4,
-          color: device.enable ? null : R.color.bg_gray,
+          elevation: R.sizes.defaultElevation,
+          color: (device.enable ?? false) ? null : R.color.bg_gray,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Padding(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -94,7 +96,7 @@ class AvailableDevices extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Image.asset(
-                    device.imagePath,
+                    device.imagePath ?? '',
                   ),
                 ),
 

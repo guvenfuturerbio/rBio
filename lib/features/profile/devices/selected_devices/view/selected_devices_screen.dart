@@ -1,105 +1,141 @@
 part of '../../devices.dart';
 
 class SelectedDevicesScreen extends StatelessWidget {
-  const SelectedDevicesScreen({Key key, this.deviceType}) : super(key: key);
-  final DeviceType deviceType;
+  DeviceType? deviceType;
+
+  SelectedDevicesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    try {
+      final deviceTypeStr = Atom.queryParameters['device_type'];
+      if (deviceTypeStr != null) {
+        deviceType = deviceTypeStr.toType;
+      }
+    } catch (e) {
+      return const RbioRouteError();
+    }
+
     return RbioStackedScaffold(
-        appbar: RbioAppBar(
-          title: TitleAppBarWhite(
-              title: LocaleProvider.current.device_connections),
+      appbar: RbioAppBar(
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.current.device_connections,
         ),
-        body: ChangeNotifierProvider(
-          create: (_) => SelectedDeviceVm(
-              deviceType: Atom.queryParameters['device_type'].toType),
-          child: Consumer4<BleScannerOps, BleConnectorOps, BleReactorOps,
-                  SelectedDeviceVm>(
-              builder: (_, _bleScannerOps, _bleConnectorOps, _bleReactorOps,
-                  _selectedDeviceVm, __) {
+      ),
+
+      //
+      body: ChangeNotifierProvider(
+        create: (BuildContext context) => SelectedDeviceVm(deviceType!),
+        child: Consumer4<BleScannerOps, BleConnectorOps, BleReactorOps,
+            SelectedDeviceVm>(
+          builder: (
+            _,
+            _bleScannerOps,
+            _bleConnectorOps,
+            _bleReactorOps,
+            _selectedDeviceVm,
+            __,
+          ) {
             return ListView(
-              padding: EdgeInsets.only(top: 95),
-              physics: BouncingScrollPhysics(),
               shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(
+                top: R.sizes.stackedTopPaddingValue(context),
+              ),
               children: [
+                //
                 Card(
+                  elevation: R.sizes.defaultElevation,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25)),
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(25.0),
-                    child: Column(children: [
-                      Center(
-                        child: Text(
-                          LocaleProvider.current.pair_steps,
-                          style: Atom.context.xHeadline1
-                              .copyWith(color: getIt<ITheme>().mainColor),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            LocaleProvider.current.pair_steps,
+                            style: Atom.context.xHeadline1
+                                .copyWith(color: getIt<ITheme>().mainColor),
+                          ),
                         ),
-                      ),
-                      ..._selectedDeviceVm
-                          .getPairOrder()
-                          .entries
-                          .map((data) => pairOrder(data.key, data.value))
-                          .toList()
-                    ]),
+
+                        //
+                        ..._selectedDeviceVm
+                            .getPairOrder()
+                            .entries
+                            .map((data) => pairOrder(data.key, data.value))
+                            .toList()
+                      ],
+                    ),
                   ),
                 ),
-                ..._bleScannerOps.discoveredDevices
-                    .map((device) => _selectedDeviceVm
-                                .isFocusedDevice(device) &&
-                            !_bleScannerOps.pairedDevices.contains(device.id)
+
+                //
+                ..._bleScannerOps.discoveredDevices.map(
+                  (DiscoveredDevice device) {
+                    final pairedDevices = _bleScannerOps.pairedDevices;
+                    if (pairedDevices == null) return const SizedBox();
+
+                    return _selectedDeviceVm.isFocusedDevice(device) &&
+                            !pairedDevices.contains(device.id)
                         ? DeviceCard(
                             onTap: () => _selectedDeviceVm.connectDevice(
                                 _bleConnectorOps, _bleScannerOps, device),
                             background: _bleConnectorOps
-                                        ?.getStatus(device.id)
+                                        .getStatus(device.id)
                                         ?.connectionState ==
                                     DeviceConnectionState.connected
                                 ? getIt<ITheme>().mainColor
                                 : _bleConnectorOps
-                                            ?.getStatus(device.id)
+                                            .getStatus(device.id)
                                             ?.connectionState ==
                                         DeviceConnectionState.connecting
                                     ? R.color.high
                                     : Colors.white,
                             image: UtilityManager().getDeviceImageFromType(
-                                _selectedDeviceVm.deviceType),
+                                    _selectedDeviceVm.deviceType) ??
+                                const SizedBox(),
                             name: device.name,
                           )
-                        : SizedBox())
-                    .toList()
+                        : const SizedBox();
+                  },
+                ).toList()
               ],
             );
-          }),
-        ));
+          },
+        ),
+      ),
+    );
   }
 
   Widget pairOrder(String sequence, String text) {
     return Padding(
-        padding: EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Text(sequence,
-                  style: Atom.context.xHeadline1
-                      .copyWith(color: getIt<ITheme>().mainColor)),
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          //
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Text(
+              sequence,
+              style: Atom.context.xHeadline1.copyWith(
+                color: getIt<ITheme>().mainColor,
+              ),
             ),
-            Expanded(child: Text(text, style: Atom.context.xHeadline3))
-          ],
-        )
-
-        /* RichText(
-          textScaleFactor: Atom.context.TEXTSCALE,
-          text: TextSpan(
-            text: '$sequence - ',
-            style: Atom.context.xHeadline1
-                .copyWith(color: getIt<ITheme>().mainColor),
-            children: <TextSpan>[
-              TextSpan(text: text, style: Atom.context.xHeadline3),
-            ],
           ),
-        ) */
-        );
+
+          //
+          Expanded(
+            child: Text(
+              text,
+              style: Atom.context.xHeadline3,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

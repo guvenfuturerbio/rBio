@@ -7,98 +7,78 @@ import '../../../model/model.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../auth.dart';
 
-class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
+class RegisterStep2ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   RegisterStep2ScreenVm(this.mContext) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await fetchConsentFormState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      fetchConsentFormState();
     });
   }
 
-  LoadingDialog loadingDialog;
-  CountryListResponse countryList;
-  DateTime selectedDate;
-  bool isWithOutTCKN;
-  bool _clickedGeneralForm;
+  late bool isWithOutTCKN;
+  String textFromPass = '';
+  String textFromPassAgain = '';
+
+  DateTime? selectedDate;
   bool isTcCitizen = true;
-  String textFromPassController;
-  String textFromPassAgainController;
+  LoadingDialog? loadingDialog;
 
-  // Fields
-  bool _checkLowerCase;
-  bool _checkNumeric;
-  bool _checkSpecial;
-  bool _checkUpperCase;
-  bool _checkLength;
-
-  // Getters
-  bool get checkLowerCase => this._checkLowerCase ?? false;
-  bool get checkUpperCase => this._checkUpperCase ?? false;
-  bool get checkNumeric => this._checkNumeric ?? false;
-  bool get checkSpecial => this._checkSpecial ?? false;
-  bool get checkLength => this._checkLength ?? false;
-  bool get clickedGeneralForm => this._clickedGeneralForm ?? false;
+  bool _clickedGeneralForm = false;
+  bool get clickedGeneralForm => _clickedGeneralForm;
 
   void passwordFetcher(String fromPwController) {
-    textFromPassController = fromPwController;
+    textFromPass = fromPwController;
   }
 
   void passwordAgainFetcher(String fromPwAgainController) {
-    textFromPassAgainController = fromPwAgainController;
-  }
-
-  Future<void> getCountries() async {
-    try {
-      showLoadingDialog(mContext);
-      final response = await getIt<Repository>().getCountries();
-      countryList = CountryListResponse.fromMap(response.toJson());
-      notifyListeners();
-      hideDialog(mContext);
-    } catch (error) {
-      //
-    }
+    textFromPassAgain = fromPwAgainController;
   }
 
   Future<void> selectDate(BuildContext context) async {
-    if (selectedDate == null) {
-      selectedDate = DateTime.now();
-    }
+    selectedDate ??= DateTime.now();
 
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(selectedDate.year - 150),
-        lastDate: DateTime(selectedDate.year + 1),
-        helpText: LocaleProvider.of(context)
-            .select_birth_date, // Can be used as title
-        cancelText: LocaleProvider.of(context).btn_cancel,
-        confirmText: LocaleProvider.of(context).btn_confirm,
-        // locale: new Locale(Intl.getCurrentLocale().toLowerCase()),
-        builder: (context, child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              primaryColor: getIt<ITheme>().secondaryColor,
-              accentColor: getIt<ITheme>().mainColor,
-              colorScheme: ColorScheme.light(
-                primary: getIt<ITheme>().mainColor,
-              ),
-              buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-            ), // This will change to light theme.
-            child: child,
-          );
-        });
-    if (picked != null && picked != selectedDate) selectedDate = picked;
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate!,
+      firstDate: DateTime(selectedDate!.year - 150),
+      lastDate: DateTime(selectedDate!.year + 1),
+      helpText:
+          LocaleProvider.of(context).select_birth_date, // Can be used as title
+      cancelText: LocaleProvider.of(context).btn_cancel,
+      confirmText: LocaleProvider.of(context).btn_confirm,
+      // locale: new Locale(Intl.getCurrentLocale().toLowerCase()),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: getIt<ITheme>().secondaryColor,
+            colorScheme: ColorScheme.light(
+              primary: getIt<ITheme>().mainColor,
+              secondary: getIt<ITheme>().mainColor,
+            ),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null && picked != selectedDate) {
+      selectedDate = picked;
+    }
     notifyListeners();
   }
 
-  Future<void> registerStep1(RegisterStep1PusulaModel userRegistrationStep1,
-      UserRegistrationStep1Model registerStep1Model) async {
+  Future<void> registerStep1(
+    RegisterStep1PusulaModel userRegistrationStep1,
+    UserRegistrationStep1Model registerStep1Model,
+  ) async {
     try {
       showLoadingDialog(mContext);
-      GuvenResponseModel response;
-      if (userRegistrationStep1.identityNumber.trim().isEmpty ||
-          registerStep1Model.identificationNumber.trim().isEmpty) {
+      late GuvenResponseModel response;
+      if ((userRegistrationStep1.identityNumber ?? '').trim().isEmpty ||
+          (registerStep1Model.identificationNumber ?? '').trim().isEmpty) {
         isWithOutTCKN = true;
         response = await getIt<Repository>()
             .registerStep1WithOutTc(registerStep1Model);
@@ -107,8 +87,8 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
         response =
             await getIt<Repository>().registerStep1Ui(userRegistrationStep1);
       }
-
       hideDialog(mContext);
+
       if (response.datum == 18 ||
           response.datum == 19 ||
           response.datum == 21 ||
@@ -117,18 +97,17 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
         UserRegistrationStep2Model userRegisterStep2 =
             UserRegistrationStep2Model();
         userRegisterStep2.userRegistrationStep1 = registerStep1Model;
-        userRegisterStep2.password = textFromPassController;
-        userRegisterStep2.repassword = textFromPassAgainController;
+        userRegisterStep2.password = textFromPass;
+        userRegisterStep2.repassword = textFromPassAgain;
 
         // Burada old modele dönüştürülmeyecek ikinci bir model oluşturuyoruz.
         UserRegistrationStep2Model userRegisterStep2Model =
             UserRegistrationStep2Model();
         userRegisterStep2Model.userRegistrationStep1 = registerStep1Model;
-        userRegisterStep2Model.password = textFromPassController;
-        userRegisterStep2Model.repassword = textFromPassAgainController;
+        userRegisterStep2Model.password = textFromPass;
+        userRegisterStep2Model.repassword = textFromPassAgain;
 
-        if (textFromPassController.length > 0 &&
-            textFromPassAgainController.length > 0) {
+        if (textFromPass.isNotEmpty && textFromPassAgain.isNotEmpty) {
           registerStep2(
             userRegisterStep2,
             userRegisterStep2Model,
@@ -143,7 +122,7 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
       } else if (response.datum == 5 || response.datum == 2) {
         showInfoDialog(
           LocaleProvider.of(mContext).warning,
-          "TC Kimlik numarası hatalı",
+          LocaleProvider.current.wrong_tc_number,
         );
       } else if (response.datum == 4) {
         showInfoDialog(
@@ -170,21 +149,20 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
       showDelayedErrorDialog(
         error,
         stackTrace,
-        () => hideDialog(this.mContext),
+        () => hideDialog(mContext),
       );
     } finally {
       notifyListeners();
     }
   }
 
-  Future<void> fetchConsentFormState() async {
-    this._clickedGeneralForm =
-        await getIt<UserManager>().getApplicationConsentFormState();
+  void fetchConsentFormState() {
+    _clickedGeneralForm = getIt<UserManager>().getApplicationConsentFormState();
     notifyListeners();
   }
 
   void toggleGeneralFormClick() {
-    this._clickedGeneralForm = !clickedGeneralForm;
+    _clickedGeneralForm = !clickedGeneralForm;
     if (clickedGeneralForm) {}
     notifyListeners();
   }
@@ -203,10 +181,10 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
     ).then(
       (value) async {
         if (value != null && value) {
-          this._clickedGeneralForm = true;
+          _clickedGeneralForm = true;
           notifyListeners();
         } else if (value != null && !value) {
-          this._clickedGeneralForm = false;
+          _clickedGeneralForm = false;
           notifyListeners();
         }
       },
@@ -218,9 +196,10 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
     UserRegistrationStep2Model userRegistrationStep2Model,
     bool isWithoutTCKN,
   ) async {
-    if (checkPasswordCapabilityForAll(isWithoutTCKN
+    final checkValue = isWithoutTCKN
         ? userRegistrationStep2Model.password
-        : userRegistrationStep2.password)) {
+        : userRegistrationStep2.password;
+    if (checkPasswordCapabilityForAll(checkValue ?? '')) {
       try {
         showLoadingDialog(mContext);
         GuvenResponseModel response;
@@ -236,7 +215,7 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
         if (response.isSuccessful == true) {
           if (response.datum == 6) {
             Atom.to(
-              PagePaths.REGISTER_STEP_3,
+              PagePaths.registerStep3,
               queryParameters: {
                 'isWithoutTCKN': isWithoutTCKN.toString(),
                 'userRegistrationStep2Model':
@@ -254,23 +233,20 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
         showDelayedErrorDialog(
           error,
           stackTrace,
-          () => hideDialog(this.mContext),
+          () => hideDialog(mContext),
         );
       }
+    } else {
+      showInfoDialog(
+        LocaleProvider.of(mContext).warning,
+        LocaleProvider.current.password_wrong,
+      );
     }
   }
 
-  void checkPasswordCapability(String password) {
-    this._checkLowerCase = PasswordAdvisor().checkLowercase(password);
-    this._checkUpperCase = PasswordAdvisor().checkUpperCase(password);
-    this._checkSpecial = PasswordAdvisor().checkSpecialCharacter(password);
-    this._checkNumeric = PasswordAdvisor().checkNumberInclude(password);
-    this._checkLength = PasswordAdvisor().checkRequiredPasswordLength(password);
-    notifyListeners();
+  bool checkPasswordCapabilityForAll(String password) {
+    return PasswordAdvisor().validateStructureByPattern(password);
   }
-
-  bool checkPasswordCapabilityForAll(String password) =>
-      PasswordAdvisor().validateStructure(password);
 
   void toggleCitizen() {
     isTcCitizen = !isTcCitizen;
@@ -287,9 +263,11 @@ class RegisterStep2ScreenVm extends ChangeNotifier with RbioVm {
   }
 
   void hideDialog(BuildContext context) {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
-      Navigator.of(context).pop();
-      loadingDialog = null;
+    if (loadingDialog != null) {
+      if (loadingDialog!.isShowing()) {
+        Navigator.of(context).pop();
+        loadingDialog = null;
+      }
     }
   }
 }

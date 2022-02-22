@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
+
+import '../core.dart';
 
 class LoadingDialog extends StatefulWidget {
-  LoadingDialogState state;
+  LoadingDialogState? state;
+
+  LoadingDialog({Key? key}) : super(key: key);
 
   bool isShowing() {
-    return state != null && state.mounted;
+    if (state != null) {
+      if (state!.mounted) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -15,7 +24,7 @@ class LoadingDialog extends StatefulWidget {
 class LoadingDialogState extends State<LoadingDialog> {
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return const Align(
       alignment: Alignment.center,
       child: RbioLoading(),
     );

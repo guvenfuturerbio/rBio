@@ -1,81 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/data/repository/repository.dart';
-import 'package:onedosehealth/core/enums/loading_progress.dart';
-import 'package:onedosehealth/core/extension/string_extension.dart';
-import 'package:onedosehealth/core/locator.dart';
-import 'package:onedosehealth/core/manager/user_manager.dart';
-import 'package:onedosehealth/core/utils/logger_helper.dart';
-import 'package:onedosehealth/core/widgets/loading_dialog.dart';
-import 'package:onedosehealth/core/widgets/warning_dialog.dart';
-import 'package:onedosehealth/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/model.dart';
+import '../../core/data/repository/repository.dart';
+import '../../core/enums/loading_progress.dart';
+import '../../core/extension/string_extension.dart';
+import '../../core/locator.dart';
+import '../../core/manager/user_manager.dart';
+import '../../core/utils/logger_helper.dart';
+import '../../core/widgets/loading_dialog.dart';
+import '../../core/widgets/warning_dialog.dart';
+import '../../generated/l10n.dart';
+
+class SearchModel {}
 
 class SearchScreenVm extends ChangeNotifier {
-  List<FilterResourcesResponse> _filterResources;
-  LoadingProgress _progress;
   BuildContext mContext;
-  String _searchText;
 
-  List<SocialPostsResponse> _allSocialResources;
-  List<SocialPostsResponse> _filteredSocialResources;
-  LoadingProgress _socialPostProgress;
-  LoadingDialog loadingDialog;
-  bool fromOnlineAppo;
-  String _token = "";
-  List _names = [];
+  LoadingProgress? progress;
+  LoadingDialog? loadingDialog;
 
-  SearchScreenVm({BuildContext context}) {
-    this.mContext = context;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  String searchText = "";
+  List<String> filterTitleList = [];
+  List<FilterResourcesResponse> filterResources = [];
+  List<SocialPostsResponse> allSocialResources = [];
+  List<SocialPostsResponse> filteredSocialResources = [];
+
+  List names = [];
+
+  SearchScreenVm(this.mContext) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchAllPosts();
     });
   }
 
-  List<FilterResourcesResponse> get filterResources =>
-      this._filterResources ?? [];
+  Future<void> toggleFilter(String filterTitle) async {
+    searchText = "";
+    allSocialResources.clear();
+    notifyListeners();
 
-  LoadingProgress get progress => this._progress;
+    if (filterTitleList.contains(filterTitle)) {
+      filterTitleList.remove(filterTitle);
+    } else {
+      filterTitleList.add(filterTitle);
+    }
 
-  String get searchText => this._searchText ?? "";
-
-  List<SocialPostsResponse> get allSocialResources =>
-      this._allSocialResources ?? [];
-
-  List<SocialPostsResponse> get filteredSocialResources =>
-      this._filteredSocialResources ?? [];
-
-  String get token => this._token;
-
-  LoadingProgress get socialPostProgress => this._socialPostProgress;
-
-  List get names => this._names;
+    if (filterTitleList.isNotEmpty) {
+      for (var item in filterTitleList) {
+        if (item == 'Doctor') {
+          fetchResources("   ");
+        } else {
+          progress = LoadingProgress.loading;
+          notifyListeners();
+          try {
+            var tmpList =
+                await getIt<UserManager>().getPostsWithByTagsByPlatform(item);
+            allSocialResources.addAll(tmpList);
+            progress = LoadingProgress.done;
+            notifyListeners();
+          } catch (error) {
+            LoggerUtils.instance.e(error);
+            progress = LoadingProgress.error;
+            notifyListeners();
+            showGradientDialog(mContext, LocaleProvider.current.warning,
+                LocaleProvider.current.sorry_dont_transaction);
+          }
+        }
+      }
+    } else {
+      await fetchAllPosts();
+    }
+    notifyListeners();
+  }
 
   Future<void> setSearchText(String text) async {
     try {
-      this._progress = LoadingProgress.LOADING;
+      progress = LoadingProgress.loading;
       notifyListeners();
-      this._searchText = text;
+      searchText = text;
       await fetchResources(text);
       await fetchPostsByText(text);
-      this._progress = LoadingProgress.DONE;
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (error) {
       LoggerUtils.instance.e(error);
-      this._progress = LoadingProgress.ERROR;
+      progress = LoadingProgress.error;
       notifyListeners();
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
     }
   }
 
   Future<void> fetchResources(String text) async {
-    if ((text?.length ?? 0) >= 3) {
+    if ((text.length) >= 3) {
       text = text.xTurkishCharacterToEnglish;
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 300));
       try {
-        this._filterResources = await getIt<Repository>().filterResources(
+        filterResources = await getIt<Repository>().filterResources(
           FilterResourcesRequest(
             tenantId: null,
             departmentId: null,
@@ -87,16 +111,16 @@ class SearchScreenVm extends ChangeNotifier {
         rethrow;
       }
     } else {
-      this._filterResources?.clear();
+      filterResources.clear();
     }
   }
 
   Future<void> fetchPostsByText(String text) async {
-    if ((text?.length ?? 0) >= 3) {
+    if ((text.length) >= 3) {
       text = text.xTurkishCharacterToEnglish;
 
       try {
-        this._filteredSocialResources =
+        filteredSocialResources =
             await getIt<UserManager>().getSocialPostWithTagsByText(text);
       } catch (e) {
         rethrow;
@@ -105,26 +129,28 @@ class SearchScreenVm extends ChangeNotifier {
   }
 
   Future<void> fetchAllPosts() async {
-    this._progress = LoadingProgress.LOADING;
+    progress = LoadingProgress.loading;
     notifyListeners();
 
     try {
-      this._allSocialResources =
-          await getIt<UserManager>().getAllSocialResources();
-      this._progress = LoadingProgress.DONE;
+      allSocialResources = await getIt<UserManager>().getAllSocialResources();
+      progress = LoadingProgress.done;
       notifyListeners();
     } catch (error) {
       LoggerUtils.instance.e(error);
-      this._progress = LoadingProgress.ERROR;
+      progress = LoadingProgress.error;
       notifyListeners();
-      showGradientDialog(mContext, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.sorry_dont_transaction,
+      );
     }
   }
 
   Future<void> clickPost(int postId, String url) async {
     getIt<UserManager>().clickPost(postId);
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch ${url}';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
   void showGradientDialog(BuildContext context, String title, String text) {
@@ -139,17 +165,19 @@ class SearchScreenVm extends ChangeNotifier {
 
   void showLoadingDialog(BuildContext context) async {
     await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
-    //builder: (BuildContext context) => WillPopScope(child:loadingDialog = LoadingDialog() , onWillPop:  () async => false,));
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
   }
 
   void hideDialog(BuildContext context) {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
-      Navigator.of(context).pop();
-      loadingDialog = null;
+    if (loadingDialog != null) {
+      if (loadingDialog!.isShowing()) {
+        Navigator.of(context).pop();
+        loadingDialog = null;
+      }
     }
   }
 }

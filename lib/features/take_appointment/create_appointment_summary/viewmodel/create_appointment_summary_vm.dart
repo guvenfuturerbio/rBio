@@ -1,19 +1,18 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment/model/voucher_price_request.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../create_appointment/model/voucher_price_request.dart';
 import '../../do_mobile_payment/do_mobile_payment_screen.dart';
 
 enum SummaryButtons {
-  Add,
-  ApplyPassive,
-  ApplyActive,
-  Cancel,
-  None,
+  add,
+  applyPassive,
+  applyActive,
+  cancel,
+  none,
 }
 
 class CreateAppointmentSummaryVm extends ChangeNotifier {
@@ -26,7 +25,9 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   final String to;
   final String from;
 
-  SummaryButtons _summaryButton = SummaryButtons.None;
+  bool appointmentSuccess = false;
+
+  SummaryButtons _summaryButton = SummaryButtons.none;
   SummaryButtons get summaryButton => _summaryButton;
   set summaryButton(SummaryButtons val) {
     _summaryButton = val;
@@ -40,44 +41,40 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  String voucherCode;
-  String _appointmentRange;
-  String _textDate;
-  String _hospitalName;
-  GetVideoCallPriceResponse orgVideoCallPriceResponse;
-  GetVideoCallPriceResponse newVideoCallPriceResponse;
-  bool _priceLoading;
+  String? voucherCode;
+  String? appointmentRange;
+  String? textDate;
+  late String hospitalName;
+  GetVideoCallPriceResponse? orgVideoCallPriceResponse;
+  GetVideoCallPriceResponse? newVideoCallPriceResponse;
+  bool? _priceLoading;
 
-  String get hospitalName => this._hospitalName;
-  String get textDate => this._textDate;
-  String get appointmentRange => this._appointmentRange;
-  bool get priceLoading => this._priceLoading ?? false;
+  bool get priceLoading => _priceLoading ?? false;
 
   CreateAppointmentSummaryVm({
-    @required this.mContext,
-    @required this.tenantId,
-    @required this.departmentId,
-    @required this.resourceId,
-    @required this.patientId,
-    @required this.forOnline,
-    @required this.to,
-    @required this.from,
+    required this.mContext,
+    required this.tenantId,
+    required this.departmentId,
+    required this.resourceId,
+    required this.patientId,
+    required this.forOnline,
+    required this.to,
+    required this.from,
   }) {
     if (forOnline) {
-      summaryButton = SummaryButtons.Add;
-      this._hospitalName = LocaleProvider.current.online_appo;
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      summaryButton = SummaryButtons.add;
+      hospitalName = LocaleProvider.current.online_appo;
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
         await getResourceVideoCallPrice();
       });
     } else if (tenantId == 1) {
-      this._hospitalName = LocaleProvider.current.guven_hospital_ayranci;
+      hospitalName = LocaleProvider.current.guven_hospital_ayranci;
     } else if (tenantId == 7) {
-      this._hospitalName = LocaleProvider.current.guven_cayyolu_campus;
+      hospitalName = LocaleProvider.current.guven_cayyolu_campus;
     }
-    this._textDate = DateTime.parse(from).xFormatTime2();
+    textDate = DateTime.parse(from).xFormatTime2();
 
-    this._appointmentRange =
-        from.substring(11, 16) + " - " + to.substring(11, 16);
+    appointmentRange = from.substring(11, 16) + " - " + to.substring(11, 16);
   }
 
   bool _showOverlayLoading = false;
@@ -88,27 +85,26 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   }
 
   Future getResourceVideoCallPrice() async {
-    this._priceLoading = true;
-    this._showOverlayLoading = true;
+    _priceLoading = true;
+    _showOverlayLoading = true;
     notifyListeners();
 
     try {
       orgVideoCallPriceResponse =
           await getIt<Repository>().getResourceVideoCallPrice(
         GetVideoCallPriceRequest(
-          resourceId: this.resourceId,
-          departmentId: this.departmentId,
-          tenantId: this.tenantId,
+          resourceId: resourceId,
+          departmentId: departmentId,
+          tenantId: tenantId,
         ),
       );
 
-      this._priceLoading = false;
-      this._showOverlayLoading = false;
+      _priceLoading = false;
+      _showOverlayLoading = false;
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      this._priceLoading = false;
-      this._showOverlayLoading = false;
+    } catch (e) {
+      _priceLoading = false;
+      _showOverlayLoading = false;
       notifyListeners();
       showGradientDialog(
         mContext,
@@ -120,10 +116,10 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   }
 
   Future<void> saveAppointment({
-    bool forOnline,
-    bool forFree,
-    int appointmentId,
-    String price,
+    required bool forOnline,
+    required bool forFree,
+    int? appointmentId,
+    String? price,
   }) async {
     showOverlayLoading = true;
 
@@ -159,32 +155,47 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
               appointment: AppointmentRequest(
                 saveAppointmentsRequest: saveAppointmentsRequest,
               ),
-              appointmentId: appointmentId,
+              appointmentId: appointmentId ?? 0,
               voucherCode: voucherCode,
             ),
-            settings: RouteSettings(name: PagePaths.DOMOBILEPAYMENT),
+            settings: const RouteSettings(name: PagePaths.doMobilePayment),
           ),
         );
-        this._showOverlayLoading = false;
+        _showOverlayLoading = false;
         notifyListeners();
       } else {
         try {
           int datum = await getIt<Repository>().saveAppointment(
-              AppointmentRequest(
-                  saveAppointmentsRequest: saveAppointmentsRequest));
-          this._showOverlayLoading = false;
-          notifyListeners();
+            AppointmentRequest(
+              saveAppointmentsRequest: saveAppointmentsRequest,
+            ),
+          );
+
+          _showOverlayLoading = false;
           if (datum == 1) {
-            showGradientDialog(mContext, LocaleProvider.current.info,
-                LocaleProvider.current.appo_created, true);
+            appointmentSuccess = true;
+
+            // showGradientDialog(
+            //   mContext,
+            //   LocaleProvider.current.info,
+            //   LocaleProvider.current.appo_created,
+            //   true,
+            // );
           } else if (datum == 2) {
-            showGradientDialog(mContext, LocaleProvider.current.info,
-                LocaleProvider.current.appointment_created_but_error, true);
+            _showOverlayLoading = false;
+
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.info,
+              LocaleProvider.current.appointment_created_but_error,
+              true,
+            );
           }
-        } catch (error, stackTrace) {
+
+          notifyListeners();
+        } catch (error) {
           LoggerUtils.instance.e(error);
-          Sentry.captureException(error, stackTrace: stackTrace);
-          this._showOverlayLoading = false;
+          _showOverlayLoading = false;
           notifyListeners();
           showPossibleProblemsDialog(
             mContext,
@@ -195,8 +206,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           );
         }
       }
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showPossibleProblemsDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -220,7 +230,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
             departmentId: departmentId.toString(),
             voucherCode: message));
     voucherCode = message;
-    newVideoCallPriceResponse = orgVideoCallPriceResponse.copyWith(
+    newVideoCallPriceResponse = orgVideoCallPriceResponse?.copyWith(
       patientPrice: response.datum,
     );
     showOverlayLoading = false;
@@ -245,7 +255,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
         }).then(
       (value) async {
         if (closeAfter) {
-          Atom.to(PagePaths.MAIN, isReplacement: true);
+          Atom.to(PagePaths.main, isReplacement: true);
         }
       },
     );
@@ -266,7 +276,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     ).then(
       (value) async {
         if (closeAfter) {
-          Atom.to(PagePaths.MAIN, isReplacement: true);
+          Atom.to(PagePaths.main, isReplacement: true);
         }
       },
     );

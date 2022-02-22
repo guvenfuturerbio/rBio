@@ -3,13 +3,13 @@ part of '../view/create_appointment_events_screen.dart';
 class _TableCalendar extends StatefulWidget {
   final DateTime focusedDay;
   final CreateAppointmentEventsVm val;
-  final ValueNotifier<_EventSelectedModel> completeNotifier;
+  final ValueNotifier<_EventSelectedModel?> completeNotifier;
 
   const _TableCalendar({
-    Key key,
-    @required this.focusedDay,
-    @required this.val,
-    @required this.completeNotifier,
+    Key? key,
+    required this.focusedDay,
+    required this.val,
+    required this.completeNotifier,
   }) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class _TableCalendar extends StatefulWidget {
 class _TableCalendarState extends State<_TableCalendar> {
   static const Color borderColor = Color.fromARGB(255, 238, 238, 238);
 
-  BoxBorder get boxBorder => Border(
+  BoxBorder get boxBorder => const Border(
         right: BorderSide(
           color: borderColor,
         ),
@@ -32,8 +32,8 @@ class _TableCalendarState extends State<_TableCalendar> {
         color: Colors.black,
       );
 
-  DateTime _focusedDay;
-  DateTime _selectedDay;
+  late DateTime _focusedDay;
+  late DateTime _selectedDay;
 
   void _onDaySelected(
     CreateAppointmentEventsVm value,
@@ -85,7 +85,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           calendarFormat: CalendarFormat.twoWeeks,
           rangeSelectionMode: RangeSelectionMode.toggledOff,
           startingDayOfWeek: StartingDayOfWeek.monday,
-          calendarStyle: CalendarStyle(
+          calendarStyle: const CalendarStyle(
             // Use `CalendarStyle` to customize the UI
             outsideDaysVisible: true,
           ),
@@ -101,13 +101,13 @@ class _TableCalendarState extends State<_TableCalendar> {
             headerPadding: EdgeInsets.zero,
             decoration: BoxDecoration(
               color: getIt<ITheme>().secondaryColor,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(15),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
               ),
             ),
 
             //
-            leftChevronMargin: EdgeInsets.only(
+            leftChevronMargin: const EdgeInsets.only(
               top: 8,
               left: 12,
               bottom: 8,
@@ -115,13 +115,13 @@ class _TableCalendarState extends State<_TableCalendar> {
             leftChevronPadding: EdgeInsets.zero,
             leftChevronVisible: true,
             leftChevronIcon: SvgPicture.asset(
-              R.image.arrow_left_icon,
+              R.image.arrowLeft,
               color: Colors.black,
               width: R.sizes.iconSize5,
             ),
 
             //
-            rightChevronMargin: EdgeInsets.only(
+            rightChevronMargin: const EdgeInsets.only(
               top: 8,
               right: 12,
               bottom: 8,
@@ -129,7 +129,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             rightChevronPadding: EdgeInsets.zero,
             rightChevronVisible: true,
             rightChevronIcon: SvgPicture.asset(
-              R.image.arrow_right_icon,
+              R.image.arrowRightIcon,
               color: Colors.black,
               width: R.sizes.iconSize5,
             ),
@@ -168,7 +168,9 @@ class _TableCalendarState extends State<_TableCalendar> {
                 child: Text(
                   '${day.day}',
                   style: textStyle.copyWith(
-                    color: Colors.black.withOpacity(0.25),
+                    color: widget.val.dateContains(day)
+                        ? getIt<ITheme>().textColorSecondary
+                        : getIt<ITheme>().textColorPassive,
                   ),
                 ),
               );
@@ -204,7 +206,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                   border: boxBorder,
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: getIt<ITheme>().mainColor,
                     shape: BoxShape.circle,
@@ -248,7 +250,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           onFormatChanged: (format) {},
           onPageChanged: (focusedDay) {
             LoggerUtils.instance.i('Month Change : $focusedDay');
-            widget.val.getAvailableDates(focusedDay);
+            widget.val.getAvailableDates(focusedDay, false);
 
             _focusedDay = focusedDay;
           },

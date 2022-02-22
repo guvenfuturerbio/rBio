@@ -1,25 +1,26 @@
 part of 'date_range_picker.dart';
 
-enum _SelectionState { FOCUSED, UN_FOCUSED }
+enum _SelectionState { focused, unFocused }
 
 class DateRangePickerVm extends ChangeNotifier {
-  DateRangePickerVm({this.context, this.selected, this.items}) {
-    if (selected != TimePeriodFilter.DAILY) {
-      focusType = _SelectionState.FOCUSED;
+  DateRangePickerVm(
+      {required this.context, required this.selected, required this.items}) {
+    if (selected != TimePeriodFilter.daily) {
+      focusType = _SelectionState.focused;
     }
   }
   final BuildContext context;
   final List<TimePeriodFilter> items;
-  _SelectionState focusType = _SelectionState.UN_FOCUSED;
+  _SelectionState focusType = _SelectionState.unFocused;
 
   final TimePeriodFilter selected;
   changeFocusedType() {
     switch (focusType) {
-      case _SelectionState.FOCUSED:
-        focusType = _SelectionState.UN_FOCUSED;
+      case _SelectionState.focused:
+        focusType = _SelectionState.unFocused;
         break;
-      case _SelectionState.UN_FOCUSED:
-        focusType = _SelectionState.FOCUSED;
+      case _SelectionState.unFocused:
+        focusType = _SelectionState.focused;
 
         break;
     }

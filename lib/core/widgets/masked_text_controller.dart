@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class MaskedTextController extends TextEditingController {
-  MaskedTextController({String text, this.mask, Map<String, RegExp> translator})
-      : super(text: text) {
+  MaskedTextController({
+    String? text,
+    required this.mask,
+    Map<String, RegExp>? translator,
+  }) : super(text: text) {
     this.translator = translator ?? MaskedTextController.getDefaultTranslator();
 
     addListener(() {
       final String previous = _lastUpdatedText;
-      if (this.beforeChange(previous, this.text)) {
+      if (beforeChange(previous, this.text)) {
         updateText(this.text);
-        this.afterChange(previous, this.text);
+        afterChange(previous, this.text);
       } else {
         updateText(_lastUpdatedText);
       }
@@ -20,7 +23,7 @@ class MaskedTextController extends TextEditingController {
 
   String mask;
 
-  Map<String, RegExp> translator;
+  Map<String, RegExp>? translator;
 
   Function afterChange = (String previous, String next) {};
   Function beforeChange = (String previous, String next) {
@@ -29,7 +32,7 @@ class MaskedTextController extends TextEditingController {
 
   String _lastUpdatedText = '';
 
-  void updateText(String text) {
+  void updateText(String? text) {
     if (text != null) {
       this.text = _applyMask(mask, text);
     } else {
@@ -50,8 +53,7 @@ class MaskedTextController extends TextEditingController {
 
   void moveCursorToEnd() {
     final String text = _lastUpdatedText;
-    selection =
-        TextSelection.fromPosition(TextPosition(offset: (text ?? '').length));
+    selection = TextSelection.fromPosition(TextPosition(offset: (text).length));
   }
 
   @override
@@ -100,10 +102,13 @@ class MaskedTextController extends TextEditingController {
       }
 
       // apply translator if match
-      if (translator.containsKey(maskChar)) {
-        if (translator[maskChar].hasMatch(valueChar)) {
-          result += valueChar;
-          maskCharIndex += 1;
+      if (translator?.containsKey(maskChar) ?? false) {
+        final _char = translator![maskChar];
+        if (_char != null) {
+          if (_char.hasMatch(valueChar)) {
+            result += valueChar;
+            maskCharIndex += 1;
+          }
         }
 
         valueCharIndex += 1;

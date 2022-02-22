@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class LocaleNotifier with ChangeNotifier {
-  Locale current;
+  late Locale current;
 
   Future<void> init() async {
     final sharedValue = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.SELECTED_LOCALE);
+        .getString(SharedPreferencesKeys.selectedLocale);
     if (sharedValue == null) {
       current = supportedLocales.first;
     } else {
@@ -20,15 +20,15 @@ class LocaleNotifier with ChangeNotifier {
   Future<void> changeLocale(Locale locale) async {
     await LocaleProvider.delegate.load(locale);
     await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.SELECTED_LOCALE, locale.languageCode);
+        .setString(SharedPreferencesKeys.selectedLocale, locale.languageCode);
     current = locale;
     notifyListeners();
   }
 
   // -------- -------- -------- --------
 
-  static const _trLocal = const Locale('tr', 'TR');
-  static const _enLocal = const Locale('en', 'US');
+  static const _trLocal = Locale('tr', 'TR');
+  static const _enLocal = Locale('en', 'US');
   final List<Locale> supportedLocales = [_trLocal, _enLocal];
   Locale getLocaleByLanguageCode(String value) {
     if (value == _trLocal.languageCode) {

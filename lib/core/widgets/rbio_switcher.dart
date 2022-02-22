@@ -6,10 +6,10 @@ class RbioSwitcher extends StatelessWidget {
   final Widget child2;
 
   const RbioSwitcher({
-    Key key,
-    @required this.showFirstChild,
-    @required this.child1,
-    @required this.child2,
+    Key? key,
+    required this.showFirstChild,
+    required this.child1,
+    required this.child2,
   }) : super(key: key);
 
   @override

@@ -1,41 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/core.dart';
-import '../../../../chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import '../../../../chronic_tracking/progress_sections/utils/charts/sample_view.dart';
 import '../../viewmodel/blood_pressure_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class AnimatedPatientPulseChart extends SampleView {
+class AnimatedPatientPulseChart extends StatefulWidget {
+  const AnimatedPatientPulseChart({Key? key}) : super(key: key);
+
   /// Creates the Scatter chart sample with dynamically updated data points.
   @override
   _AnimatedPulseChartState createState() => _AnimatedPulseChartState();
 }
 
-class _AnimatedPulseChartState extends SampleViewState {
-  List<ChartData> sys;
-  List<ChartData> dia;
-  List<ChartData> pulse;
+class _AnimatedPulseChartState extends State<AnimatedPatientPulseChart> {
+  List<ChartData> sys = [];
+  List<ChartData> dia = [];
+  List<ChartData> pulse = [];
 
-  Color sysColor = Colors.red[900];
+  Color sysColor = Colors.red[900]!;
   Color diaColor = Colors.amber;
-  Color pulseColor = Colors.lime[800];
+  Color pulseColor = Colors.lime[800]!;
 
   double markerSize = 10;
 
-  Map<String, bool> map;
+  Map<String, bool> map = {};
   @override
   Widget build(BuildContext context) {
     return Consumer<BloodPressurePatientDetailVm>(builder: (_, val, __) {
       sys = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.sys, sysColor))
+          .where((element) => element.sys != null)
+          .map((item) => ChartData(item.date, item.sys!, sysColor))
           .toList();
       dia = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.dia, diaColor))
+          .where((element) => element.dia != null)
+          .map((item) => ChartData(item.date, item.dia!, diaColor))
           .toList();
       pulse = val.bpMeasurementsDailyData
-          .map((item) => ChartData(item.date, item.pulse, pulseColor))
+          .where((element) => element.pulse != null)
+          .map((item) => ChartData(item.date, item.pulse!, pulseColor))
           .toList();
 
       map = val.measurements;
@@ -46,30 +49,30 @@ class _AnimatedPulseChartState extends SampleViewState {
 
   SfCartesianChart _buildChartBody(BloodPressurePatientDetailVm val) {
     return SfCartesianChart(
-      primaryXAxis: val.selected == TimePeriodFilter.DAILY
+      primaryXAxis: val.selected == TimePeriodFilter.daily
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: MajorGridLines(color: Colors.black12),
+              majorGridLines: const MajorGridLines(color: Colors.black12),
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
             )
-          : val.selected == TimePeriodFilter.WEEKLY
+          : val.selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   dateFormat: DateFormat("EEE"),
                   intervalType: DateTimeIntervalType.days,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                 ),
       enableAxisAnimation: false,
       series: <LineSeries>[
         //Sys Line
-        if (map[LocaleProvider.current.sys])
+        if (map[LocaleProvider.current.sys]!)
           LineSeries<ChartData, DateTime>(
             dataSource: sys,
             xValueMapper: (ChartData model, _) => (model).x,
@@ -85,7 +88,7 @@ class _AnimatedPulseChartState extends SampleViewState {
           ),
 
         //Dia Line
-        if (map[LocaleProvider.current.dia])
+        if (map[LocaleProvider.current.dia]!)
           LineSeries<ChartData, DateTime>(
             dataSource: dia,
             xValueMapper: (ChartData model, _) => (model).x,
@@ -100,7 +103,7 @@ class _AnimatedPulseChartState extends SampleViewState {
             color: diaColor,
           ),
         //Pulse Line
-        if (map[LocaleProvider.current.pulse])
+        if (map[LocaleProvider.current.pulse]!)
           LineSeries<ChartData, DateTime>(
             dataSource: pulse,
             xValueMapper: (ChartData model, _) => (model).x,
@@ -116,10 +119,10 @@ class _AnimatedPulseChartState extends SampleViewState {
             color: pulseColor,
           ),
 
-        val.selected == TimePeriodFilter.DAILY ||
-                val.selected == TimePeriodFilter.SPECIFIC
+        val.selected == TimePeriodFilter.daily ||
+                val.selected == TimePeriodFilter.spesific
             ? LineSeries<ChartData, DateTime>(
-                dataSource: sys != null && sys.length > 0
+                dataSource: sys.isNotEmpty
                     ? [
                         ChartData(
                             DateTime(sys[0].x.year, sys[0].x.month,
@@ -142,8 +145,8 @@ class _AnimatedPulseChartState extends SampleViewState {
                 yValueMapper: (ChartData sales, _) => sales.y,
                 xAxisName: "Time",
                 color: Colors.transparent,
-                markerSettings:
-                    MarkerSettings(height: 10, width: 10, isVisible: false))
+                markerSettings: const MarkerSettings(
+                    height: 10, width: 10, isVisible: false))
             : LineSeries<ChartData, DateTime>(
                 dataSource: [
                     ChartData(val.startDate, 0, Colors.transparent),

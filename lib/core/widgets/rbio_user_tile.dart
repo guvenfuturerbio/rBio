@@ -7,21 +7,21 @@ import '../core.dart';
 
 class RbioUserTile extends StatelessWidget {
   final double width;
-  final String name;
-  final String imageBytes;
-  final String imageUrl;
+  final String? name;
+  final String? imageBytes;
+  final String? imageUrl;
   final void Function() onTap;
   final UserLeadingImage leadingImage;
-  final UserTrailingIcons trailingIcon;
+  final UserTrailingIcons? trailingIcon;
 
-  RbioUserTile({
-    Key key,
-    @required this.width,
-    @required this.name,
+  const RbioUserTile({
+    Key? key,
+    required this.width,
+    required this.name,
     this.imageBytes,
     this.imageUrl,
-    @required this.onTap,
-    @required this.leadingImage,
+    required this.onTap,
+    required this.leadingImage,
     this.trailingIcon,
   }) : super(key: key);
 
@@ -41,7 +41,7 @@ class RbioUserTile extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
-          contentPadding: EdgeInsets.symmetric(
+          contentPadding: const EdgeInsets.symmetric(
             horizontal: 16.0,
             vertical: 6.0,
           ),
@@ -70,63 +70,63 @@ class RbioUserTile extends StatelessWidget {
 
   Widget _getLeadingImage(UserLeadingImage type) {
     switch (type) {
-      case UserLeadingImage.Circle:
+      case UserLeadingImage.circle:
         return CircleAvatar(
           backgroundColor: getIt<ITheme>().mainColor,
           backgroundImage: imageBytes != null
-              ? MemoryImage(base64.decode(imageBytes))
+              ? MemoryImage(base64.decode(imageBytes!))
               : imageUrl == null
                   ? NetworkImage(R.image.circlevatar)
-                  : NetworkImage(imageUrl),
+                  : NetworkImage(imageUrl!) as ImageProvider<Object>?,
           radius: Atom.width * 0.06,
         );
 
-      case UserLeadingImage.Rectangle:
+      case UserLeadingImage.rectangle:
         return Container(
           decoration: BoxDecoration(
             image: DecorationImage(
               image: imageBytes != null
-                  ? MemoryImage(base64.decode(imageBytes))
+                  ? MemoryImage(base64.decode(imageBytes!))
                   : imageUrl == null
                       ? NetworkImage(R.image.circlevatar)
-                      : NetworkImage(imageUrl),
+                      : NetworkImage(imageUrl!) as ImageProvider<Object>,
             ),
           ),
           width: Atom.width * 0.12,
         );
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
-  Widget _getTrailingIcon(UserTrailingIcons type) {
+  Widget _getTrailingIcon(UserTrailingIcons? type) {
     switch (type) {
-      case UserTrailingIcons.RightArrow:
+      case UserTrailingIcons.rightArrow:
         return SvgPicture.asset(
-          R.image.arrow_right_icon,
+          R.image.arrowRightIcon,
           width: R.sizes.iconSize5,
         );
 
-      case UserTrailingIcons.Cancel:
+      case UserTrailingIcons.cancel:
         return SvgPicture.asset(
-          R.image.cancel_icon,
+          R.image.cancel,
           color: Colors.black,
           width: R.sizes.iconSize3,
         );
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 }
 
 enum UserTrailingIcons {
-  RightArrow,
-  Cancel,
+  rightArrow,
+  cancel,
 }
 
 enum UserLeadingImage {
-  Rectangle,
-  Circle,
+  rectangle,
+  circle,
 }

@@ -7,13 +7,13 @@ import 'kvkk_form_vm.dart';
 class KvkkFormScreen extends StatefulWidget {
   final String title;
   final String text;
-  final alwaysAsk;
+  final bool alwaysAsk;
 
-  KvkkFormScreen({
-    Key key,
-    this.title,
-    this.text,
-    this.alwaysAsk,
+  const KvkkFormScreen({
+    Key? key,
+    required this.title,
+    required this.text,
+    required this.alwaysAsk,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
         child: ChangeNotifierProvider<KvkkFormScreenVm>(
           create: (context) => KvkkFormScreenVm(
             context: context,
-            alwaysAsk: widget?.alwaysAsk ?? false,
+            alwaysAsk: widget.alwaysAsk,
           ),
           child: Consumer<KvkkFormScreenVm>(
             builder: (context, value, child) {
@@ -44,7 +44,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                     GuvenAlert.buildSmallDescription(widget.text),
 
                     //
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
 

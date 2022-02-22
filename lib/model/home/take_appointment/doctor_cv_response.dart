@@ -1,35 +1,35 @@
 import '../../../core/core.dart';
 
 class DoctorCvResponse extends IBaseModel<DoctorCvResponse> {
-  int id;
-  String title;
-  String firstName;
-  String lastName;
-  String birthplace;
-  String birthdate;
-  List<Specialties> specialties;
-  List<Treatments> treatments;
-  List<Experiences> experiences;
-  List<Educations> educations;
-  List<Publications> publications;
-  List<Memberships> memberships;
-  List<Trainings> trainings;
-  List<Awards> awards;
-  String identity;
-  String location;
-  String email;
-  String emailPersonal;
-  String phone;
-  String slug;
-  String image1;
-  String image2;
-  String image3;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  String foreign;
-  int isCompleted;
-  String notes;
+  int? id;
+  String? title;
+  String? firstName;
+  String? lastName;
+  String? birthplace;
+  String? birthdate;
+  List<Specialties>? specialties;
+  List<Treatments>? treatments;
+  List<Experiences>? experiences;
+  List<Educations>? educations;
+  List<Publications>? publications;
+  List<Memberships>? memberships;
+  List<Trainings>? trainings;
+  List<Awards>? awards;
+  String? identity;
+  String? location;
+  String? email;
+  String? emailPersonal;
+  String? phone;
+  String? slug;
+  String? image1;
+  String? image2;
+  String? image3;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  String? foreign;
+  int? isCompleted;
+  String? notes;
 
   DoctorCvResponse({
     this.id,
@@ -64,123 +64,125 @@ class DoctorCvResponse extends IBaseModel<DoctorCvResponse> {
   });
 
   DoctorCvResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    birthplace = json['birthplace'];
-    birthdate = json['birthdate'];
+    id = json['id'] as int?;
+    title = json['title'] as String?;
+    firstName = json['first_name'] as String?;
+    lastName = json['last_name'] as String?;
+    birthplace = json['birthplace'] as String?;
+    birthdate = json['birthdate'] as String?;
     if (json['specialties'] != null) {
       specialties = <Specialties>[];
       json['specialties'].forEach((v) {
-        specialties.add(new Specialties.fromJson(v));
+        specialties?.add(Specialties.fromJson(v as Map<String, dynamic>));
       });
     }
     if (json['treatments'] != null) {
       treatments = <Treatments>[];
       json['treatments'].forEach((v) {
-        treatments.add(new Treatments.fromJson(v));
+        treatments?.add(Treatments.fromJson(v as Map<String, dynamic>));
       });
     }
     if (json['experiences'] != null) {
       experiences = <Experiences>[];
       json['experiences'].forEach((v) {
-        experiences.add(new Experiences.fromJson(v));
+        experiences?.add(Experiences.fromJson(v as Map<String, dynamic>));
       });
     }
     if (json['educations'] != null) {
       educations = <Educations>[];
       json['educations'].forEach((v) {
-        educations.add(new Educations.fromJson(v));
+        educations?.add(Educations.fromJson(v as Map<String, dynamic>));
       });
     }
     if (json['publications'] != null) {
       publications = <Publications>[];
       json['publications'].forEach((v) {
-        publications.add(new Publications.fromJson(v));
+        publications?.add(Publications.fromJson(v as Map<String, dynamic>));
       });
     }
     if (json['memberships'] != null) {
       memberships = <Memberships>[];
       json['memberships'].forEach((v) {
-        memberships.add(new Memberships.fromJson(v));
+        memberships?.add(Memberships.fromJson(v as Map<String, dynamic>));
       });
     }
     if (json['trainings'] != null) {
       trainings = <Trainings>[];
       json['trainings'].forEach((v) {
-        trainings.add(new Trainings.fromJson(v));
+        trainings?.add(Trainings.fromJson(v as Map<String, dynamic>));
       });
     }
     if (json['awards'] != null) {
       awards = <Awards>[];
       json['awards'].forEach((v) {
-        awards.add(new Awards.fromJson(v));
+        awards?.add(Awards.fromJson(v as Map<String, dynamic>));
       });
     }
-    identity = json['identity'];
-    location = json['location'];
-    email = json['email'];
-    emailPersonal = json['email_personal'];
-    phone = json['phone'];
-    slug = json['slug'];
-    image1 = json['image_1'];
-    image2 = json['image_2'];
-    image3 = json['image_3'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
-    foreign = json['foreign'];
-    isCompleted = json['is_completed'];
-    notes = json['notes'];
+    identity = json['identity'] as String?;
+    location = json['location'] as String?;
+    email = json['email'] as String?;
+    emailPersonal = json['email_personal'] as String?;
+    phone = json['phone'] as String?;
+    slug = json['slug'] as String?;
+    image1 = json['image_1'] as String?;
+    image2 = json['image_2'] as String?;
+    image3 = json['image_3'] as String?;
+    createdAt = json['created_at'] as String?;
+    updatedAt = json['updated_at'] as String?;
+    deletedAt = json['deleted_at'] as String?;
+    foreign = json['foreign'] as String?;
+    isCompleted = json['is_completed'] as int?;
+    notes = json['notes'] as String?;
   }
+
+  @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['birthplace'] = this.birthplace;
-    data['birthdate'] = this.birthdate;
-    if (this.specialties != null) {
-      data['specialties'] = this.specialties.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['birthplace'] = birthplace;
+    data['birthdate'] = birthdate;
+    if (specialties != null) {
+      data['specialties'] = specialties?.map((v) => v.toJson()).toList();
     }
-    if (this.treatments != null) {
-      data['treatments'] = this.treatments.map((v) => v.toJson()).toList();
+    if (treatments != null) {
+      data['treatments'] = treatments?.map((v) => v.toJson()).toList();
     }
-    if (this.experiences != null) {
-      data['experiences'] = this.experiences.map((v) => v.toJson()).toList();
+    if (experiences != null) {
+      data['experiences'] = experiences?.map((v) => v.toJson()).toList();
     }
-    if (this.educations != null) {
-      data['educations'] = this.educations.map((v) => v.toJson()).toList();
+    if (educations != null) {
+      data['educations'] = educations?.map((v) => v.toJson()).toList();
     }
-    if (this.publications != null) {
-      data['publications'] = this.publications.map((v) => v.toJson()).toList();
+    if (publications != null) {
+      data['publications'] = publications?.map((v) => v.toJson()).toList();
     }
-    if (this.memberships != null) {
-      data['memberships'] = this.memberships.map((v) => v.toJson()).toList();
+    if (memberships != null) {
+      data['memberships'] = memberships?.map((v) => v.toJson()).toList();
     }
-    if (this.trainings != null) {
-      data['trainings'] = this.trainings.map((v) => v.toJson()).toList();
+    if (trainings != null) {
+      data['trainings'] = trainings?.map((v) => v.toJson()).toList();
     }
-    if (this.awards != null) {
-      data['awards'] = this.awards.map((v) => v.toJson()).toList();
+    if (awards != null) {
+      data['awards'] = awards?.map((v) => v.toJson()).toList();
     }
-    data['identity'] = this.identity;
-    data['location'] = this.location;
-    data['email'] = this.email;
-    data['email_personal'] = this.emailPersonal;
-    data['phone'] = this.phone;
-    data['slug'] = this.slug;
-    data['image_1'] = this.image1;
-    data['image_2'] = this.image2;
-    data['image_3'] = this.image3;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    data['foreign'] = this.foreign;
-    data['is_completed'] = this.isCompleted;
-    data['notes'] = this.notes;
+    data['identity'] = identity;
+    data['location'] = location;
+    data['email'] = email;
+    data['email_personal'] = emailPersonal;
+    data['phone'] = phone;
+    data['slug'] = slug;
+    data['image_1'] = image1;
+    data['image_2'] = image2;
+    data['image_3'] = image3;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['deleted_at'] = deletedAt;
+    data['foreign'] = foreign;
+    data['is_completed'] = isCompleted;
+    data['notes'] = notes;
     return data;
   }
 
@@ -191,105 +193,105 @@ class DoctorCvResponse extends IBaseModel<DoctorCvResponse> {
 }
 
 class Awards {
-  String text;
+  String? text;
   Awards({this.text});
   Awards.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String?;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
 
 class Trainings {
-  String text;
+  String? text;
   Trainings({this.text});
   Trainings.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String?;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
 
 class Memberships {
-  String text;
+  String? text;
   Memberships({this.text});
   Memberships.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String?;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
 
 class Publications {
-  String text;
+  String? text;
   Publications({this.text});
   Publications.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String?;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
 
 class Educations {
-  String text;
+  String? text;
   Educations({this.text});
   Educations.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
 
 class Experiences {
-  String text;
+  String? text;
   Experiences({this.text});
   Experiences.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String?;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
 
 class Treatments {
-  String text;
+  String? text;
   Treatments({this.text});
   Treatments.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String?;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
 
 class Specialties {
-  String text;
+  String? text;
   Specialties({this.text});
   Specialties.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
+    text = json['text'] as String?;
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }

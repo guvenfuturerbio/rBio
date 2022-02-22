@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/core.dart';
 
 class Covid19Screen extends StatefulWidget {
-  const Covid19Screen({Key key}) : super(key: key);
+  const Covid19Screen({Key? key}) : super(key: key);
 
   @override
   _Covid19ScreenState createState() => _Covid19ScreenState();
@@ -37,159 +36,189 @@ class _Covid19ScreenState extends State<Covid19Screen> {
       LocaleProvider.current.covid_title_6,
       LocaleProvider.current.covid_title_7
     ];
+
     List cardList = [
-      mopItem(R.image.covid_1, LocaleProvider.current.covid_text_1),
-      mopItem(R.image.covid_2, LocaleProvider.current.covid_text_2),
-      mopItem(R.image.covid_3, LocaleProvider.current.covid_text_3),
-      mopItem(R.image.covid_5, LocaleProvider.current.covid_text_5),
-      mopItem(R.image.covid_6, LocaleProvider.current.covid_text_6),
-      mopItem(R.image.covid_7, LocaleProvider.current.covid_text_7),
+      MopItem(R.image.covid_1, LocaleProvider.current.covid_text_1),
+      MopItem(R.image.covid_2, LocaleProvider.current.covid_text_2),
+      MopItem(R.image.covid_3, LocaleProvider.current.covid_text_3),
+      MopItem(R.image.covid_5, LocaleProvider.current.covid_text_5),
+      MopItem(R.image.covid_6, LocaleProvider.current.covid_text_6),
+      MopItem(R.image.covid_7, LocaleProvider.current.covid_text_7),
     ];
+
     return RbioScaffold(
-        appbar: RbioAppBar(
-          title: getTitleBar(context),
-        ),
-        body: _buildBody(context, covidTitles, cardList));
+      appbar: _buildAppBar(context),
+      body: _buildBody(
+        context,
+        covidTitles,
+        cardList,
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.whats_covid,
+      ),
+    );
   }
 
   Widget _buildBody(
-      BuildContext context, List<String> covidTitles, List<dynamic> cardList) {
+    BuildContext context,
+    List<String> covidTitles,
+    List<dynamic> cardList,
+  ) {
     return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
       child: Column(
         children: <Widget>[
           //
-          FadeInUp(
-            duration: Duration(milliseconds: 1000),
-            child: Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
-              child: InkWell(
-                child: _ItemTakeCovid(
-                    title: LocaleProvider.current.take_covid_19,
-                    image: R.image.ic_test_icon,
-                    number: LocaleProvider.current.lbl_number_hospital,
-                    context: context),
-                onTap: () {},
+          Container(
+            width: double.infinity,
+            margin:
+                const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
+            child: InkWell(
+              child: _itemTakeCovid(
+                title: LocaleProvider.current.take_covid_19,
+                image: R.image.test,
+                number: LocaleProvider.current.lbl_number_hospital,
+                context: context,
               ),
+              onTap: () {},
             ),
           ),
 
           //
-          Container(
-            child: Column(
-              children: [
-                //
-                Container(
-                  margin: EdgeInsets.only(left: 30, right: 30),
-                  height: 30,
-                  alignment: Alignment.center,
-                  child: Text(
-                    title == "" ? covidTitles[0] : title,
-                    style: context.xHeadline3.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: getIt<ITheme>().mainColor),
-                    textAlign: TextAlign.center,
-                  ),
+          Column(
+            children: [
+              //
+              Container(
+                margin: const EdgeInsets.only(left: 30, right: 30),
+                height: 30,
+                alignment: Alignment.center,
+                child: Text(
+                  title == "" ? covidTitles[0] : title,
+                  style: context.xHeadline3.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: getIt<ITheme>().mainColor),
+                  textAlign: TextAlign.center,
                 ),
+              ),
 
-                //
-                CarouselSlider(
-                  carouselController: controller,
-                  options: CarouselOptions(
-                    enlargeCenterPage: true,
-                    height: MediaQuery.of(context).size.height * 0.68,
-                    aspectRatio: 2.0,
-                    onPageChanged: (index, reason) => {
-                      setState(() {
-                        _currentIndex = index;
-                        title = covidTitles[index];
-                      })
-                    },
-                  ),
-                  items: cardList.map((card) {
-                    return Builder(builder: (BuildContext context) {
-                      return Container(
+              //
+              CarouselSlider(
+                carouselController: controller,
+                options: CarouselOptions(
+                  enlargeCenterPage: true,
+                  height: MediaQuery.of(context).size.height * 0.68,
+                  aspectRatio: 2.0,
+                  onPageChanged: (index, reason) => {
+                    setState(() {
+                      _currentIndex = index;
+                      title = covidTitles[index];
+                    })
+                  },
+                ),
+                items: cardList.map((card) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return SizedBox(
                         height: MediaQuery.of(context).size.height * 0.30,
                         width: MediaQuery.of(context).size.width,
                         child: Card(
+                          elevation: R.sizes.defaultElevation,
                           child: card,
                         ),
                       );
-                    });
-                  }).toList(),
-                ),
+                    },
+                  );
+                }).toList(),
+              ),
 
-                //
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: map<Widget>(
-                    cardList,
-                    (index, url) {
-                      return Container(
-                        width: 10.0,
-                        height: 10.0,
-                        margin: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 2.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _currentIndex == index
-                              ? getIt<ITheme>().mainColor
-                              : getIt<ITheme>()
-                                  .textColorSecondary
-                                  .withOpacity(0.5),
-                        ),
-                      );
+              //
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: map<Widget>(
+                  cardList,
+                  (index, url) {
+                    return Container(
+                      width: 10.0,
+                      height: 10.0,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 2.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentIndex == index
+                            ? getIt<ITheme>().mainColor
+                            : getIt<ITheme>()
+                                .textColorSecondary
+                                .withOpacity(0.5),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              //
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_left),
+                    onPressed: () {
+                      controller.previousPage();
                     },
                   ),
-                ),
-
-                //
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_left),
-                      onPressed: () {
-                        controller.previousPage();
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.arrow_right),
-                      onPressed: () {
-                        controller.nextPage();
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_right),
+                    onPressed: () {
+                      controller.nextPage();
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),
     );
   }
-
-  Widget getTitleBar(BuildContext context) {
-    return TitleAppBarWhite(title: LocaleProvider.current.whats_covid);
-  }
 }
 
-class mopItem extends StatelessWidget {
+class MopItem extends StatelessWidget {
   String image = "";
   String text = "";
-  mopItem(this.image, this.text);
+
+  MopItem(
+    this.image,
+    this.text, {
+    Key? key,
+  }) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            //
             Container(
               child: Image.asset(image),
-              margin: EdgeInsets.all(30),
+              margin: const EdgeInsets.all(30),
             ),
+
+            //
             Container(
-              margin: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
+              margin: const EdgeInsets.only(
+                left: 30,
+                right: 30,
+                top: 10,
+                bottom: 30,
+              ),
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(fontStyle: FontStyle.italic),
@@ -203,46 +232,56 @@ class mopItem extends StatelessWidget {
   }
 }
 
-Widget _ItemTakeCovid({
-  String title,
-  String image,
-  String number,
-  bool isFocused = false,
-  EdgeInsets margin,
-  BuildContext context,
+Widget _itemTakeCovid({
+  required String title,
+  required String image,
+  String? number,
+  EdgeInsets? margin,
+  required BuildContext context,
 }) =>
     Container(
       margin: margin,
       alignment: Alignment.center,
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          //
           Container(
             child: SvgPicture.asset(image),
-            margin: EdgeInsets.only(left: 15, right: 15),
+            margin: const EdgeInsets.only(left: 15, right: 15),
           ),
+
+          //
           Text(
             title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.bold, color: getIt<ITheme>().textColor),
+              fontWeight: FontWeight.bold,
+              color: getIt<ITheme>().textColor,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
       ),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          gradient: LinearGradient(colors: [
+        borderRadius: R.sizes.borderRadiusCircular,
+        gradient: LinearGradient(
+          colors: [
             getIt<ITheme>().textColorSecondary.withOpacity(0.7),
             getIt<ITheme>().textColorSecondary.withOpacity(0.5),
-          ], begin: Alignment.topLeft, end: Alignment.topRight),
-          boxShadow: [
-            BoxShadow(
-                color: R.color.dark_black.withAlpha(50),
-                blurRadius: 15,
-                spreadRadius: 0,
-                offset: Offset(5, 10))
-          ]),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.topRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: R.color.dark_black.withAlpha(50),
+            blurRadius: 15,
+            spreadRadius: 0,
+            offset: const Offset(5, 10),
+          ),
+        ],
+      ),
     );

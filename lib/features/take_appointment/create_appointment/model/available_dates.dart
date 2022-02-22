@@ -1,6 +1,6 @@
 class AvailableDate {
-  bool available;
-  String day;
+  bool? available;
+  String? day;
 
   AvailableDate({
     this.available,
@@ -13,7 +13,7 @@ class AvailableDate {
       };
 
   factory AvailableDate.fromJson(Map<String, dynamic> json) => AvailableDate(
-        available: json['available'],
-        day: json['day'],
+        available: json['available'] as bool?,
+        day: json['day'] as String?,
       );
 }

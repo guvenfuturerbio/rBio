@@ -1,5 +1,5 @@
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
@@ -8,8 +8,8 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../core/core.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/utils/pressure_tagger/pressure_tagger.dart';
-import '../../../chronic_tracking/progress_sections/pressure_progress/view_model/pressure_measurement_view_model.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
+import '../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_measurement_vm.dart';
 import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
 import '../viewmodel/blood_pressure_vm.dart';
 
@@ -17,7 +17,7 @@ part '../widget/graph_header_section.dart';
 part '../widget/measurement_list.dart';
 
 class BloodPressurePatientDetailScreen extends StatefulWidget {
-  BloodPressurePatientDetailScreen({Key key}) : super(key: key);
+  const BloodPressurePatientDetailScreen({Key? key}) : super(key: key);
 
   @override
   _BloodPressurePatientDetailScreenState createState() =>
@@ -27,10 +27,10 @@ class BloodPressurePatientDetailScreen extends StatefulWidget {
 class _BloodPressurePatientDetailScreenState
     extends State<BloodPressurePatientDetailScreen>
     with SingleTickerProviderStateMixin {
-  int patientId;
-  String patientName;
-  AnimationController animationController;
-  Animation<double> sizeAnimation;
+  int? patientId;
+  String? patientName;
+  AnimationController? animationController;
+  Animation<double>? sizeAnimation;
 
   final _controller = ScrollController();
   final _dropdownBannerKey = GlobalKey<NavigatorState>();
@@ -43,16 +43,18 @@ class _BloodPressurePatientDetailScreenState
     );
 
     sizeAnimation = CurvedAnimation(
-      parent: animationController,
+      parent: animationController!,
       curve: Curves.fastOutSlowIn,
     );
+    Utils.instance.releaseOrientation();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController?.dispose();
+    Utils.instance.forcePortraitOrientation();
 
     super.dispose();
   }
@@ -60,27 +62,37 @@ class _BloodPressurePatientDetailScreenState
   @override
   Widget build(BuildContext context) {
     try {
+      patientId = int.parse(Atom.queryParameters['patientId'] as String);
       patientName = Atom.queryParameters['patientName'];
-      patientId = int.parse(Atom.queryParameters['patientId']);
     } catch (_) {
-      return RbioRouteError();
+      return const RbioRouteError();
     }
+    MediaQuery.of(context).orientation == Orientation.landscape
+        ? SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [])
+        : SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+            overlays: SystemUiOverlay.values);
 
     return ChangeNotifierProvider<BloodPressurePatientDetailVm>(
-      create: (context) =>
-          BloodPressurePatientDetailVm(context: context, patientId: patientId),
+      create: (context) => BloodPressurePatientDetailVm(
+          mContext: context, patientId: patientId as int),
       child: Consumer<BloodPressurePatientDetailVm>(
         builder: (
           BuildContext context,
           BloodPressurePatientDetailVm vm,
-          Widget child,
+          Widget? child,
         ) {
-          return DropdownBanner(
+          return AtomDropdownBanner(
             navigatorKey: _dropdownBannerKey,
-            child: RbioScaffold(
-              appbar: _buildAppBar(),
-              body: _buildBody(vm),
-            ),
+            child: !vm.isDataLoading! &&
+                    MediaQuery.of(context).orientation == Orientation.landscape
+                ? _GraphHeaderSection(
+                    value: vm,
+                    controller: _controller,
+                  )
+                : RbioScaffold(
+                    appbar: _buildAppBar(),
+                    body: _buildBody(vm),
+                  ),
           );
         },
       ),
@@ -95,11 +107,11 @@ class _BloodPressurePatientDetailScreenState
         actions: [
           Center(
             child: RbioBadge(
-              image: R.image.chat_icon,
+              image: R.image.chat,
               isDark: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
         ],
@@ -108,20 +120,22 @@ class _BloodPressurePatientDetailScreenState
   Widget _buildBody(BloodPressurePatientDetailVm vm) => SingleChildScrollView(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            _buildExpandedUser(),
+            if (MediaQuery.of(context).orientation == Orientation.portrait)
+              _buildExpandedUser(),
 
             //
-            SizedBox(height: 12),
+            if (MediaQuery.of(context).orientation == Orientation.portrait)
+              const SizedBox(height: 12),
 
-            //
-            if (!vm.isDataLoading) ...[
+            if (!vm.isDataLoading! &&
+                MediaQuery.of(context).orientation == Orientation.portrait) ...[
               vm.isChartShow
                   ? _GraphHeaderSection(
                       value: vm,
@@ -129,7 +143,7 @@ class _BloodPressurePatientDetailScreenState
                     )
                   : Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: context.HEIGHT * .02),
+                          EdgeInsets.symmetric(vertical: context.height * .02),
                       child: RbioElevatedButton(
                         title: LocaleProvider.current.open_chart,
                         onTap: vm.changeChartShowStatus,
@@ -139,21 +153,21 @@ class _BloodPressurePatientDetailScreenState
                 //
                 SizedBox(
                   height: vm.isChartShow
-                      ? context.HEIGHT * .5
-                      : context.HEIGHT * .8,
+                      ? context.height * .5
+                      : context.height * .8,
                   child: _MeasurementList(
                       bpMeasurements: vm.bpMeasurements,
-                      scrollController: _controller,
+                      scrollController: vm.controller!,
                       fetchScrolledData: vm.fetchScrolledData),
                 ),
             ] else ...[
               Shimmer.fromColors(
                 child: SizedBox(
-                  height: context.HEIGHT * .3,
+                  height: context.height * .3,
                   width: double.infinity,
                 ),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[100],
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
               ),
             ],
           ],
@@ -161,7 +175,7 @@ class _BloodPressurePatientDetailScreenState
       );
 
   Widget _buildExpandedUser() {
-    return Container(
+    return SizedBox(
       height: 50,
       width: double.infinity,
       child: Row(
@@ -173,16 +187,16 @@ class _BloodPressurePatientDetailScreenState
           Expanded(
             child: GestureDetector(
               onTap: () {
-                if (animationController.status == AnimationStatus.completed) {
-                  animationController.reverse();
-                } else if (animationController.status ==
+                if (animationController!.status == AnimationStatus.completed) {
+                  animationController!.reverse();
+                } else if (animationController!.status ==
                     AnimationStatus.dismissed) {
-                  animationController.forward();
+                  animationController!.forward();
                 }
               },
               child: Container(
                 height: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: getIt<ITheme>().cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
@@ -198,7 +212,7 @@ class _BloodPressurePatientDetailScreenState
                     //
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           patientName ?? '',
                           maxLines: 1,
@@ -212,7 +226,7 @@ class _BloodPressurePatientDetailScreenState
 
                     //
                     SvgPicture.asset(
-                      R.image.arrow_down_icon,
+                      R.image.arrowDown,
                       height: 10,
                     ),
                   ],
@@ -222,16 +236,16 @@ class _BloodPressurePatientDetailScreenState
           ),
 
           //
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
 
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.DOCTOR_TREATMENT_PROCESS);
+              Atom.to(PagePaths.doctorTreatmentProgress);
             },
             child: Container(
               height: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,

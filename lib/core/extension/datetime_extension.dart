@@ -15,7 +15,7 @@ extension BuildContextExtensions on DateTime {
 
   /// Format : d MMMM yyyy HH:MM
   String xFormatTime3([dynamic locale]) =>
-      DateFormat("d MMMM yyyy HH:MM", locale).format(this);
+      DateFormat("d MMMM yyyy HH:mm", locale).format(this);
 
   /// Format : EEEE
   String xFormatTime4([dynamic locale]) => DateFormat.EEEE(locale).format(this);
@@ -34,12 +34,16 @@ extension BuildContextExtensions on DateTime {
 
   /// Format : HH:MM
   String xFormatTime8([dynamic locale]) =>
-      DateFormat("HH:MM", locale).format(this);
+      DateFormat("HH:mm", locale).format(this);
 
   /// Format : dd/MM/yyyy - HH:MM
   String xFormatTime9([dynamic locale]) {
-    return DateFormat("dd/MM/yy - HH:MM", locale).format(this);
+    return DateFormat("dd/MM/yy - HH:mm", locale).format(this);
   }
+
+  /// Format : dd/MM/yyyy
+  String xFormatTime10([dynamic locale]) =>
+      DateFormat("dd/MM/yyyy", locale).format(this);
 
   bool xIsSameDate(DateTime other) {
     return year == other.year && month == other.month && day == other.day;

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/dashboard/not_chronic_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -8,26 +9,37 @@ import '../controller/consultation_vm.dart';
 import '../model/chat_person.dart';
 
 class ConsultationScreen extends StatelessWidget {
-  ConsultationScreen({Key key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? drawerKey;
+
+  const ConsultationScreen({
+    Key? key,
+    this.drawerKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<DoctorConsultationVm>(
-      create: (context) => DoctorConsultationVm(context),
-      child: Consumer<DoctorConsultationVm>(builder: (
-        BuildContext context,
-        DoctorConsultationVm vm,
-        Widget child,
-      ) {
-        return RbioScaffold(
-          appbar: _buildAppBar(context),
-          body: _buildBody(context, vm),
-        );
-      }),
-    );
+    return !(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)
+        ? NotChronicScreen(
+            title: LocaleProvider.current.consultation,
+          )
+        : ChangeNotifierProvider<DoctorConsultationVm>(
+            create: (context) => DoctorConsultationVm(context),
+            child: Consumer<DoctorConsultationVm>(builder: (
+              BuildContext context,
+              DoctorConsultationVm vm,
+              Widget? child,
+            ) {
+              return RbioScaffold(
+                appbar: _buildAppBar(context),
+                body: _buildBody(context, vm),
+              );
+            }),
+          );
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        leading:
+            drawerKey != null ? RbioLeadingMenu(drawerKey: drawerKey) : null,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.consultation,
@@ -37,17 +49,17 @@ class ConsultationScreen extends StatelessWidget {
   // #region _buildBody
   Widget _buildBody(BuildContext context, DoctorConsultationVm vm) {
     switch (vm.progress) {
-      case LoadingProgress.LOADING:
-        return RbioLoading();
+      case LoadingProgress.loading:
+        return const RbioLoading();
 
-      case LoadingProgress.DONE:
+      case LoadingProgress.done:
         return _buildList(context, vm);
 
-      case LoadingProgress.ERROR:
-        return RbioBodyError();
+      case LoadingProgress.error:
+        return const RbioBodyError();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
   // #endregions
@@ -61,11 +73,13 @@ class ConsultationScreen extends StatelessWidget {
         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamList,
       ) {
         if (streamList.hasData) {
-          final list = vm.getChatPersonListWithStream(streamList.data);
+          final list = vm.getChatPersonListWithStream(streamList.data!);
           return ListView.builder(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(
+              bottom: drawerKey == null ? 0 : R.sizes.bottomNavigationBarHeight,
+            ),
             scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: list.length,
             itemBuilder: (BuildContext context, int index) {
               return _buildCard(context, list[index]);
@@ -74,10 +88,10 @@ class ConsultationScreen extends StatelessWidget {
         }
 
         if (streamList.hasError) {
-          return RbioBodyError();
+          return const RbioBodyError();
         }
 
-        return RbioLoading();
+        return const RbioLoading();
       },
     );
   }
@@ -88,7 +102,7 @@ class ConsultationScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Atom.to(
-          PagePaths.CHAT,
+          PagePaths.chat,
           queryParameters: {
             'otherPerson': item.toJson(),
           },
@@ -102,7 +116,7 @@ class ConsultationScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
 
             //
             Row(
@@ -113,12 +127,12 @@ class ConsultationScreen extends StatelessWidget {
                 //
                 CircleAvatar(
                   backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                  backgroundImage: NetworkImage(item.url),
+                  backgroundImage: NetworkImage(item.url!),
                   radius: 25,
                 ),
 
                 //
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
 
                 //
                 Expanded(
@@ -146,15 +160,15 @@ class ConsultationScreen extends StatelessWidget {
                           ),
 
                           //
-                          item.hasRead
-                              ? SizedBox()
+                          item.hasRead!
+                              ? const SizedBox()
                               : Container(
-                                  margin: EdgeInsets.only(right: 4),
+                                  margin: const EdgeInsets.only(right: 4),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: getIt<ITheme>().mainColor,
                                   ),
-                                  child: SizedBox(
+                                  child: const SizedBox(
                                     height: 10,
                                     width: 10,
                                   ),
@@ -163,7 +177,7 @@ class ConsultationScreen extends StatelessWidget {
                       ),
 
                       //
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
 
                       //
                       Row(
@@ -178,7 +192,7 @@ class ConsultationScreen extends StatelessWidget {
                                 item.lastMessage ?? '',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: item.hasRead
+                                style: item.hasRead!
                                     ? context.xHeadline5
                                     : context.xHeadline5
                                         .copyWith(fontWeight: FontWeight.bold),
@@ -186,21 +200,21 @@ class ConsultationScreen extends StatelessWidget {
                             ),
                           ] else ...[
                             Image.network(
-                              item.lastMessage,
+                              item.lastMessage ?? "",
                               height: 20,
                             ),
                           ],
 
                           //
-                          item.otherHasRead &&
-                                  item.hasRead &&
+                          item.otherHasRead! &&
+                                  item.hasRead! &&
                                   item.lastMessageSender ==
                                       getIt<UserNotifier>().firebaseID
                               ? SvgPicture.asset(
-                                  R.image.eyeseen_icon,
+                                  R.image.eyeSeen,
                                   height: 12,
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                         ],
                       ),
                     ],
@@ -219,10 +233,10 @@ class ConsultationScreen extends StatelessWidget {
             ),
 
             //
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
 
             //
-            Divider(),
+            const Divider(),
           ],
         ),
       ),

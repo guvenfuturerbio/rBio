@@ -1,40 +1,39 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/widgets/utils/time_period_filters.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/utils/charts/sample_view.dart';
-import 'package:onedosehealth/features/doctor/bmi_patient_detail/viewmodel/bmi_patient_detail_vm.dart';
-import 'package:onedosehealth/model/model.dart';
+import '../../viewmodel/bmi_patient_detail_vm.dart';
+import '../../../../../model/model.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
 
 /// Renders the line sample with dynamically updated data points.
-class AnimationPatientScaleLineDefaultState extends SampleView {
+class AnimationPatientScaleLineDefaultState extends StatefulWidget {
+  const AnimationPatientScaleLineDefaultState({Key? key}) : super(key: key);
+
   /// Renders the line chart sample with dynamically upd
   @override
   _AnimationPatientScaleLineDefaultState createState() =>
       _AnimationPatientScaleLineDefaultState();
 }
 
-class _AnimationPatientScaleLineDefaultState extends SampleViewState {
-  List<ChartData> _chartData;
+class _AnimationPatientScaleLineDefaultState
+    extends State<AnimationPatientScaleLineDefaultState> {
+  List<ChartData> _chartData = [];
 
-  int _targetMin, _targetMax, _maxValue, _minValue;
+  late int _targetMin, _targetMax, _maxValue, _minValue;
 
-  DateTime _startDate, _endDate;
+  late DateTime _startDate, _endDate;
 
   double markerSize = 10;
 
-  TimePeriodFilter _selected;
+  TimePeriodFilter? _selected;
 
-  ZoomPanBehavior _zoomingBehavior;
+  ZoomPanBehavior? _zoomingBehavior;
 
-  ZoomMode _zoomModeType = ZoomMode.x;
+  final ZoomMode _zoomModeType = ZoomMode.x;
 
-  String _unit;
+  String? _unit;
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +41,8 @@ class _AnimationPatientScaleLineDefaultState extends SampleViewState {
         enablePinching: true,
         zoomMode: _zoomModeType,
         enablePanning: true,
-        enableMouseWheelZooming: model.isWeb ? true : false);
+        enableMouseWheelZooming: Atom.isWeb ? true : false);
     return Consumer<BmiPatientDetailVm>(builder: (context, value, child) {
-      log('here');
       _selected = value.selected;
       _startDate = value.startDate;
       _endDate = value.endDate;
@@ -54,9 +52,9 @@ class _AnimationPatientScaleLineDefaultState extends SampleViewState {
       _maxValue = value.dailyHighestValue;
       _minValue = value.dailyLowestValue;
       try {
-        _unit = value?.bmiMeasurementsDailyData?.elementAt(0)?.unit?.toStr;
+        _unit = value.bmiMeasurementsDailyData.elementAt(0).unit.toStr;
       } catch (_) {
-        _unit = ScaleUnit.KG.toStr;
+        _unit = ScaleUnit.kg.toStr;
       }
       return _getAnimationLineChart();
     });
@@ -76,31 +74,31 @@ class _AnimationPatientScaleLineDefaultState extends SampleViewState {
         }
       },
       plotAreaBorderWidth: 0,
-      primaryXAxis: _selected == TimePeriodFilter.DAILY
+      primaryXAxis: _selected == TimePeriodFilter.daily
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: MajorGridLines(color: Colors.black12),
+              majorGridLines: const MajorGridLines(color: Colors.black12),
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
               labelStyle: TextStyle(color: R.color.black),
               interval: 6)
-          : _selected == TimePeriodFilter.WEEKLY
+          : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   dateFormat: DateFormat("EEE"),
                   intervalType: DateTimeIntervalType.days,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(color: Colors.black12),
                 ),
       primaryYAxis: NumericAxis(
-        majorGridLines: MajorGridLines(color: Colors.black12),
-        majorTickLines: MajorTickLines(color: Colors.transparent),
-        axisLine: AxisLine(width: 0),
+        majorGridLines: const MajorGridLines(color: Colors.black12),
+        majorTickLines: const MajorTickLines(color: Colors.transparent),
+        axisLine: const AxisLine(width: 0),
         labelFormat: '{value}',
         title: AxisTitle(
             text: _unit,
@@ -142,10 +140,10 @@ class _AnimationPatientScaleLineDefaultState extends SampleViewState {
               width: 4,
               isVisible: _chartData.length == 1 ? true : false,
               color: Colors.black)),
-      _selected == TimePeriodFilter.DAILY ||
-              _selected == TimePeriodFilter.SPECIFIC
+      _selected == TimePeriodFilter.daily ||
+              _selected == TimePeriodFilter.spesific
           ? LineSeries<ChartData, DateTime>(
-              dataSource: _chartData != null && _chartData.length > 0
+              dataSource: _chartData.isNotEmpty
                   ? [
                       ChartData(
                           DateTime(_chartData[0].x.year, _chartData[0].x.month,
@@ -169,7 +167,7 @@ class _AnimationPatientScaleLineDefaultState extends SampleViewState {
               color: Colors.red,
               xAxisName: "Time",
               markerSettings:
-                  MarkerSettings(height: 15, width: 15, isVisible: true))
+                  const MarkerSettings(height: 15, width: 15, isVisible: true))
           : LineSeries<ChartData, DateTime>(
               dataSource: [
                   ChartData(_startDate, -50, Colors.transparent),

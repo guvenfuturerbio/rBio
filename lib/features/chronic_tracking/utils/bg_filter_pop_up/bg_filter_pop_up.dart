@@ -1,199 +1,157 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../progress_sections/glucose_progress/view_model/bg_progress_page_view_model.dart';
+import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../glucose_margins_filter.dart';
 import 'bg_filter_pop_up_vm.dart';
 
 class BgFilterPopUp extends StatelessWidget {
   final double width;
   final double height;
-  const BgFilterPopUp({Key key, @required this.width, @required this.height})
-      : super(key: key);
+
+  const BgFilterPopUp({
+    Key? key,
+    required this.width,
+    required this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-      child: Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(10),
-        elevation: 0,
-        child: ChangeNotifierProvider(
-          create: (_) => BgFilterPopUpVm(
-              filters:
-                  Provider.of<BgProgressPageViewModel>(context, listen: false)
-                      .filterState),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Atom.width * .03),
-            child: SizedBox(
-              width: width,
-              child: Card(
-                color: R.color.bg_gray,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                child: Consumer<BgFilterPopUpVm>(
-                  builder: (_, value, __) => SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: Atom.height * .01),
-                          child: Column(
-                            children: value.colorInfo.keys
-                                .map((color) => _colorFilterItem(
-                                    text:
-                                        value.colorInfo[color].toShortString(),
-                                    status: value.isFilterSelected(
-                                        value.colorInfo[color]),
-                                    color: color,
-                                    size: 15,
-                                    statCallback: (_) => value
-                                        .changeFilter(value.colorInfo[color]),
-                                    isHungry: false))
-                                .toList(),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: Atom.height * .01),
-                          child: Column(
-                            children: value.states
-                                .map((state) => _colorFilterItem(
-                                    text: state.toShortString(),
-                                    status: value.isFilterSelected(state),
-                                    color: R.color.state_color,
-                                    size: 15,
-                                    style: state == GlucoseMarginsFilter.FULL ||
-                                            state == GlucoseMarginsFilter.HUNGRY
-                                        ? BoxShape.circle
-                                        : BoxShape.rectangle,
-                                    statCallback: (_) =>
-                                        value.changeFilter(state),
-                                    isHungry:
-                                        state == GlucoseMarginsFilter.HUNGRY))
-                                .toList(),
-                          ),
-                        ),
-                        Wrap(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Provider.of<BgProgressPageViewModel>(context,
-                                        listen: false)
-                                    .cancelSelections();
-                                Atom.dismiss();
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                elevation: 4,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    gradient: LinearGradient(
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.topLeft,
-                                        colors: <Color>[
-                                          R.color.white,
-                                          R.color.white
-                                        ]),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  child: Text(
-                                    LocaleProvider.current.cancel,
-                                    softWrap: false,
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 17),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Provider.of<BgProgressPageViewModel>(context,
-                                        listen: false)
-                                    .updateFilterState();
-                                Atom.dismiss();
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                elevation: 4,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    gradient: LinearGradient(
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.topLeft,
-                                        colors: <Color>[
-                                          R.color.btnLightBlue,
-                                          R.color.btnDarkBlue
-                                        ]),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  child: Text(
-                                    '${LocaleProvider.current.save}',
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
-                                    softWrap: false,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Provider.of<BgProgressPageViewModel>(context,
-                                      listen: false)
-                                  .resetFilterValues();
-                              value.resetFilterValues();
-                            },
-                            child: Text(
-                                '${LocaleProvider.current.reset_filter_value}',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline)))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+    return Dialog(
+      elevation: R.sizes.defaultElevation,
+      backgroundColor: context.scaffoldBackgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
+      ),
+      child: ChangeNotifierProvider(
+        create: (_) => BgFilterPopUpVm(
+            filters:
+                Provider.of<BgProgressVm>(context, listen: false).filterState),
+        child: _buildConsumer(),
       ),
     );
   }
 
-  Padding _colorFilterItem(
-      {double size,
-      String text,
-      Color color,
-      bool status,
-      BoxShape style,
-      Function(bool) statCallback,
-      bool isHungry}) {
+  Widget _buildConsumer() {
+    return Consumer<BgFilterPopUpVm>(
+      builder: (BuildContext context, BgFilterPopUpVm vm, Widget? child) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            R.sizes.hSizer8,
+
+            //
+            ...vm.colorInfo.keys
+                .map(
+                  (color) => _colorFilterItem(
+                    context: context,
+                    text: vm.colorInfo[color]!.toShortString(),
+                    status: vm.isFilterSelected(vm.colorInfo[color]!),
+                    color: color,
+                    statCallback: (_) => vm.changeFilter(vm.colorInfo[color]!),
+                    isHungry: false,
+                  ),
+                )
+                .toList(),
+
+            //
+            ...vm.states
+                .map(
+                  (state) => _colorFilterItem(
+                    context: context,
+                    text: state.toShortString(),
+                    status: vm.isFilterSelected(state),
+                    color: R.color.state_color,
+                    style: state == GlucoseMarginsFilter.full ||
+                            state == GlucoseMarginsFilter.hungry
+                        ? BoxShape.circle
+                        : BoxShape.rectangle,
+                    statCallback: (_) => vm.changeFilter(state),
+                    isHungry: state == GlucoseMarginsFilter.hungry,
+                  ),
+                )
+                .toList(),
+
+            //
+            Wrap(
+              children: [
+                //
+                RbioElevatedButton(
+                  title: LocaleProvider.current.cancel,
+                  onTap: () {
+                    Provider.of<BgProgressVm>(context, listen: false)
+                        .cancelSelections();
+                    Atom.dismiss();
+                  },
+                  padding: EdgeInsets.zero,
+                  backColor: getIt<ITheme>().cardBackgroundColor,
+                  textColor: getIt<ITheme>().textColorSecondary,
+                  showElevation: false,
+                ),
+
+                //
+                R.sizes.wSizer8,
+
+                //
+                RbioElevatedButton(
+                  title: LocaleProvider.current.save,
+                  onTap: () {
+                    Provider.of<BgProgressVm>(context, listen: false)
+                        .updateFilterState();
+                    Atom.dismiss();
+                  },
+                  padding: EdgeInsets.zero,
+                  showElevation: false,
+                ),
+              ],
+            ),
+
+            //
+            RbioTextButton(
+              onPressed: () {
+                Provider.of<BgProgressVm>(context, listen: false)
+                    .resetFilterValues();
+                vm.resetFilterValues();
+              },
+              child: Text(
+                LocaleProvider.current.reset_filter_value,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _colorFilterItem({
+    required BuildContext context,
+    required String text,
+    required Color color,
+    bool? status,
+    BoxShape? style,
+    Function(bool?)? statCallback,
+    required bool isHungry,
+  }) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: [
+          //
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 25),
-            height: size,
-            width: size,
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            height: 16,
+            width: 16,
             decoration: BoxDecoration(
               shape: style ?? BoxShape.circle,
               color: isHungry ? Colors.transparent : color,
@@ -203,13 +161,28 @@ class BgFilterPopUp extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(flex: 2, child: Text('$text')),
-          //TODO: will be change to Sinem's design
+
+          //
           Expanded(
-              child: SizedBox(
-                  height: size,
-                  width: size,
-                  child: Checkbox(value: status, onChanged: statCallback)))
+            flex: 2,
+            child: Text(
+              text,
+              style: context.xHeadline5,
+            ),
+          ),
+
+          //
+          Expanded(
+            child: SizedBox(
+              height: 16,
+              width: 16,
+              child: Checkbox(
+                value: status,
+                onChanged: statCallback,
+                activeColor: getIt<ITheme>().mainColor,
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 class FilterOnlineDepartmentsRequest {
-  int tenantId;
-  String appointmentType;
+  int? tenantId;
+  String? appointmentType;
 
   FilterOnlineDepartmentsRequest({
     this.tenantId,
@@ -9,8 +9,8 @@ class FilterOnlineDepartmentsRequest {
 
   factory FilterOnlineDepartmentsRequest.fromJson(Map<String, dynamic> json) =>
       FilterOnlineDepartmentsRequest(
-        tenantId: json['tenantId'] as int,
-        appointmentType: json['appointmentType'] as String,
+        tenantId: json['tenantId'] as int?,
+        appointmentType: json['appointmentType'] as String?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

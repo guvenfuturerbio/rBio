@@ -49,7 +49,6 @@ abstract class $DiscoveredService {
       "DiscoveredService(serviceId: $serviceId, characteristicIds: $characteristicIds, characteristics: $characteristics, includedServices: $includedServices)";
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) =>
       other is DiscoveredService &&
       other.runtimeType == runtimeType &&
@@ -62,7 +61,6 @@ abstract class $DiscoveredService {
           .equals(includedServices, other.includedServices);
 
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
     var result = 17;
     result = 37 * result + serviceId.hashCode;
@@ -89,7 +87,6 @@ class DiscoveredService$Change {
   List<DiscoveredService> includedServices;
 }
 
-// ignore: avoid_classes_with_only_static_members
 class DiscoveredService$ {
   static final serviceId = Lens<DiscoveredService, Uuid>(
     (serviceIdContainer) => serviceIdContainer.serviceId,

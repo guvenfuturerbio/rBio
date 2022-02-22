@@ -1,6 +1,6 @@
 class DiabetType {
-  String name;
-  int id;
+  String? name;
+  int? id;
 
   DiabetType({
     this.name,
@@ -8,14 +8,14 @@ class DiabetType {
   });
 
   DiabetType.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    id = json['id'];
+    name = json['name'] as String?;
+    id = json['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['id'] = id;
     return data;
   }
 }

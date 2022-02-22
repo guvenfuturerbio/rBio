@@ -7,17 +7,17 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../../../../core/core.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
-  const QRCodeScannerScreen({Key key}) : super(key: key);
+  const QRCodeScannerScreen({Key? key}) : super(key: key);
 
   @override
   _QRCodeScannerScreenState createState() => _QRCodeScannerScreenState();
 }
 
 class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
-  Barcode result;
-  QRViewController controller;
+  Barcode? result;
+  late QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  StreamSubscription<Barcode> streamSubscription;
+  late StreamSubscription<Barcode> streamSubscription;
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -32,8 +32,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
 
   @override
   void dispose() {
-    controller?.dispose();
-    streamSubscription?.cancel();
+    controller.dispose();
+    streamSubscription.cancel();
 
     super.dispose();
   }
@@ -71,7 +71,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
         borderColor: getIt<ITheme>().mainColor,
-        borderRadius: 20,
+        borderRadius: 12,
         borderLength: 15,
         borderWidth: 5,
         cutOutSize: scanArea,
@@ -80,18 +80,16 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
     );
   }
 
-  String code;
+  late String code;
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       this.controller = controller;
     });
 
     streamSubscription = controller.scannedDataStream.listen((scanData) {
-      if (scanData != null) {
-        if (scanData.code != null && code != scanData.code) {
-          code = scanData.code;
-          Navigator.of(context).pop(scanData.code);
-        }
+      if (scanData.code != null && code != scanData.code) {
+        code = scanData.code!;
+        Navigator.of(context).pop(scanData.code);
       }
     });
   }

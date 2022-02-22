@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 import '../core.dart';
@@ -7,7 +9,7 @@ class WarningDialog extends StatefulWidget {
   final String text;
   final bool hasScrollable;
 
-  WarningDialog(
+  const WarningDialog(
     this.title,
     this.text, {
     this.hasScrollable = false,
@@ -24,7 +26,7 @@ class _WarningDialogState extends State<WarningDialog> {
       LocaleProvider.of(context).Ok,
       () {
         widget.text == LocaleProvider.of(context).succefully_created_pass
-            ? Atom.to(PagePaths.MAIN)
+            ? Atom.to(PagePaths.main)
             : Atom.pop();
       },
     );

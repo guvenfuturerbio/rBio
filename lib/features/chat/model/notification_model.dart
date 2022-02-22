@@ -1,18 +1,18 @@
 class NotificationModel {
-  String title;
-  String body;
+  String? title;
+  String? body;
 
   NotificationModel({this.title, this.body});
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    body = json['body'];
+    title = json['title'] as String;
+    body = json['body'] as String;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['body'] = this.body;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['body'] = body;
     return data;
   }
 }

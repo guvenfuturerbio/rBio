@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
-
 import '../../../features/auth/auth.dart';
 import '../../../features/chat/model/chat_notification.dart';
 import '../../../features/chat/model/get_chat_contacts_response.dart';
@@ -20,19 +18,20 @@ class Repository {
   final LocalCacheService localCacheService;
 
   Repository({
-    @required this.apiService,
-    @required this.localCacheService,
+    required this.apiService,
+    required this.localCacheService,
   });
 
-  Future<RbioLoginResponse> login(String username, String password) =>
-      apiService.login(username, password);
+  Future<RbioLoginResponse> login(String username, String password) {
+    return apiService.login(username, password);
+  }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = R.endpoints.getAllPackagePath;
-    return await Utils.instance.getCacheApiCallList(
+    return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllPackage(url),
-      Duration(days: 1),
+      const Duration(days: 1),
       ForYouCategoryResponse(),
       localCacheService,
     );
@@ -40,10 +39,10 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
     final url = R.endpoints.getAllSubCategoriesPath(id);
-    return await Utils.instance.getCacheApiCallList(
+    return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllSubCategories(url),
-      Duration(days: 1),
+      const Duration(days: 1),
       ForYouCategoryResponse(),
       localCacheService,
     );
@@ -63,7 +62,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getSubCategoryDetail(url),
-      Duration(days: 1),
+      const Duration(days: 1),
       ForYouSubCategoryDetailResponse(),
       localCacheService,
     );
@@ -126,7 +125,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterTenantsResponse>(
       url,
       () => apiService.filterTenants(url, filterTenantsRequest),
-      Duration(days: 10),
+      const Duration(days: 10),
       FilterTenantsResponse(),
       localCacheService,
     );
@@ -139,7 +138,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url + bodyString,
       () => apiService.filterDepartments(filterDepartmentsRequest),
-      Duration(days: 1),
+      const Duration(days: 1),
       FilterDepartmentsResponse(),
       localCacheService,
       localeHandle: true,
@@ -153,7 +152,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterResourcesResponse>(
       url + bodyString,
       () => apiService.filterResources(filterResourcesRequest),
-      Duration(days: 1),
+      const Duration(days: 1),
       FilterResourcesResponse(),
       localCacheService,
     );
@@ -164,7 +163,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
       url,
       () => apiService.getDoctorCvDetails(doctorWebID),
-      Duration(days: 1),
+      const Duration(days: 1),
       DoctorCvResponse(),
       localCacheService,
     );
@@ -273,12 +272,15 @@ class Repository {
   Future<GuvenResponseModel> filterSocialPosts(String search) =>
       apiService.filterSocialPosts(search);
 
+  Future<GuvenResponseModel> filterSocialPlatform(String search) =>
+      apiService.filterSocialPlatform(search);
+
   Future<GuvenResponseModel> socialResource() async {
     final url = R.endpoints.socialResourcePath;
     return await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
       url,
       () => apiService.socialResource(),
-      Duration(days: 1),
+      const Duration(days: 1),
       GuvenResponseModel(),
       localCacheService,
     );
@@ -358,7 +360,7 @@ class Repository {
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url,
       () => apiService.fetchOnlineDepartments(filterOnlineDepartmentsRequest),
-      Duration(days: 1),
+      const Duration(days: 1),
       FilterDepartmentsResponse(),
       localCacheService,
       localeHandle: true,

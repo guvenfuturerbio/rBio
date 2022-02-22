@@ -7,14 +7,13 @@ part of 'blood_glucose_report_body.dart';
 // **************************************************************************
 
 BloodGlucoseReportBody _$BloodGlucoseReportBodyFromJson(
-    Map<String, dynamic> json) {
-  return BloodGlucoseReportBody(
-    start: json['start'] as String,
-    end: json['end'] as String,
-    reportType: json['report_type'] as int,
-    userId: json['entegration_id'] as int,
-  );
-}
+        Map<String, dynamic> json) =>
+    BloodGlucoseReportBody(
+      start: json['start'] as String?,
+      end: json['end'] as String?,
+      reportType: json['report_type'] as int?,
+      userId: json['entegration_id'] as int?,
+    );
 
 Map<String, dynamic> _$BloodGlucoseReportBodyToJson(
         BloodGlucoseReportBody instance) =>

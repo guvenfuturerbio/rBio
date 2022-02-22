@@ -4,38 +4,38 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioScaffold extends StatelessWidget {
-  final Key scaffoldKey;
+  final Key? scaffoldKey;
   final IRbioAppBar appbar;
   final Widget body;
 
   // Optionals
-  final Color backgroundColor;
-  final Widget bottomNavigationBar;
-  final Widget bottomSheet;
-  final Widget drawer;
-  final DragStartBehavior drawerDragStartBehavior;
-  final double drawerEdgeDragWidth;
-  final bool drawerEnableOpenDragGesture;
-  final Color drawerScrimColor;
-  final Widget endDrawer;
-  final bool endDrawerEnableOpenDragGesture;
-  final bool extendBody;
-  final bool extendBodyBehindAppBar;
-  final Widget floatingActionButton;
-  final FloatingActionButtonAnimator floatingActionButtonAnimator;
-  final FloatingActionButtonLocation floatingActionButtonLocation;
-  final void Function(bool) onDrawerChanged;
-  final void Function(bool) onEndDrawerChanged;
-  final List<Widget> persistentFooterButtons;
-  final bool primary;
-  final bool resizeToAvoidBottomInset;
-  final String restorationId;
+  final Color? backgroundColor;
+  final Widget? bottomNavigationBar;
+  final Widget? bottomSheet;
+  final Widget? drawer;
+  final DragStartBehavior? drawerDragStartBehavior;
+  final double? drawerEdgeDragWidth;
+  final bool? drawerEnableOpenDragGesture;
+  final Color? drawerScrimColor;
+  final Widget? endDrawer;
+  final bool? endDrawerEnableOpenDragGesture;
+  final bool? extendBody;
+  final bool? extendBodyBehindAppBar;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonAnimator? floatingActionButtonAnimator;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final void Function(bool)? onDrawerChanged;
+  final void Function(bool)? onEndDrawerChanged;
+  final List<Widget>? persistentFooterButtons;
+  final bool? primary;
+  final bool? resizeToAvoidBottomInset;
+  final String? restorationId;
 
-  RbioScaffold({
-    Key key,
+  const RbioScaffold({
+    Key? key,
     this.scaffoldKey,
-    @required this.appbar,
-    @required this.body,
+    required this.appbar,
+    required this.body,
     this.backgroundColor,
     this.bottomNavigationBar,
     this.bottomSheet,
@@ -57,7 +57,7 @@ class RbioScaffold extends StatelessWidget {
     this.primary,
     this.resizeToAvoidBottomInset,
     this.restorationId,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class RbioScaffold extends StatelessWidget {
         children: [
           //
           ClipRRect(
-            borderRadius: BorderRadius.vertical(
+            borderRadius: const BorderRadius.vertical(
               bottom: Radius.circular(15),
             ),
             child: SizedBox(
@@ -88,7 +88,7 @@ class RbioScaffold extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: Container(
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         maxWidth: 1176,
                       ),
                       child: appbar,
@@ -116,10 +116,10 @@ class RbioScaffold extends StatelessWidget {
       drawerDragStartBehavior:
           drawerDragStartBehavior ?? DragStartBehavior.start,
       drawerEdgeDragWidth: drawerEdgeDragWidth,
-      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture ?? true,
       drawerScrimColor: drawerScrimColor,
       endDrawer: endDrawer,
-      endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+      endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture ?? true,
       extendBody: extendBody ?? false,
       extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
       floatingActionButton: floatingActionButton,
@@ -137,19 +137,26 @@ class RbioScaffold extends StatelessWidget {
 
 class RbioBody extends StatelessWidget {
   final Widget child;
+  final bool isLoading;
 
   const RbioBody({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: 1200),
-      child: Padding(
-        padding: R.sizes.screenPadding(context),
-        child: child,
+      constraints: const BoxConstraints(maxWidth: 1200),
+      child: RbioLoadingOverlay(
+        child: Padding(
+          padding: R.sizes.screenPadding(context),
+          child: child,
+        ),
+        isLoading: isLoading,
+        progressIndicator: RbioLoading.progressIndicator(),
+        opacity: 0,
       ),
     );
   }

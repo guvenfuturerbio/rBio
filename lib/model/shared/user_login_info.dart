@@ -1,9 +1,9 @@
 import '../../core/domain/base_model.dart';
 
 class UserLoginInfo extends IBaseModel<UserLoginInfo> {
-  String username;
-  String password;
-  String token;
+  String? username;
+  String? password;
+  String? token;
 
   UserLoginInfo({
     this.username,
@@ -14,9 +14,9 @@ class UserLoginInfo extends IBaseModel<UserLoginInfo> {
   @override
   UserLoginInfo fromJson(Map<String, dynamic> json) {
     return UserLoginInfo(
-      username: json['username'],
-      password: json['password'],
-      token: json['token'],
+      username: json['username'] as String?,
+      password: json['password'] as String?,
+      token: json['token'] as String?,
     );
   }
 

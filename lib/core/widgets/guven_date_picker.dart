@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../core.dart';
 
-Future<DateTime> showGuvenDatePicker(
+Future<DateTime?> showGuvenDatePicker(
   BuildContext context,
   DateTime firstDate,
   DateTime lastDate,
   DateTime initialDate,
   String helpText,
 ) async {
-  return await showDatePicker(
+  final result = await showDatePicker(
     context: context,
     initialDate: initialDate,
     firstDate: firstDate,
@@ -18,26 +18,45 @@ Future<DateTime> showGuvenDatePicker(
     helpText: helpText,
     cancelText: LocaleProvider.of(context).btn_cancel,
     confirmText: LocaleProvider.of(context).btn_confirm,
-    builder: (BuildContext context, Widget child) {
+    builder: (BuildContext context, Widget? child) {
       return Theme(
         data: ThemeData.light().copyWith(
           colorScheme: ColorScheme.light(
             primary: getIt<ITheme>().mainColor,
           ),
-          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          buttonTheme: const ButtonThemeData(
+            textTheme: ButtonTextTheme.primary,
+          ),
         ),
-        child: child,
+        child: child ?? const SizedBox(),
       );
     },
   );
+
+  if (result != null) {
+    if (initialDate.xIsSameDate(result)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            LocaleProvider.current.appointment_datepicker_warning,
+            style: context.xHeadline3.copyWith(
+              color: getIt<ITheme>().textColor,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  return result;
 }
 
 void showCupertinoGuvenDatePicker({
-  @required BuildContext context,
-  @required DateTime firstDate,
-  @required DateTime lastDate,
-  @required DateTime initialDate,
-  @required void Function(DateTime date) onCompleted,
+  required BuildContext context,
+  required DateTime firstDate,
+  required DateTime lastDate,
+  required DateTime initialDate,
+  required void Function(DateTime date) onCompleted,
 }) async {
   showModalBottomSheet(
     context: context,
@@ -58,12 +77,12 @@ class RbioCupertinoPicker extends StatefulWidget {
   final DateTime initialDate;
   final void Function(DateTime date) onCompleted;
 
-  RbioCupertinoPicker({
-    Key key,
-    @required this.firstDate,
-    @required this.lastDate,
-    @required this.initialDate,
-    @required this.onCompleted,
+  const RbioCupertinoPicker({
+    Key? key,
+    required this.firstDate,
+    required this.lastDate,
+    required this.initialDate,
+    required this.onCompleted,
   }) : super(key: key);
 
   @override
@@ -71,7 +90,7 @@ class RbioCupertinoPicker extends StatefulWidget {
 }
 
 class _RbioCupertinoPickerState extends State<RbioCupertinoPicker> {
-  DateTime currentDate;
+  late DateTime currentDate;
 
   @override
   void initState() {
@@ -115,7 +134,7 @@ class _RbioCupertinoPickerState extends State<RbioCupertinoPicker> {
                 ),
 
                 //
-                Spacer(),
+                const Spacer(),
 
                 //
                 CupertinoButton(
@@ -137,7 +156,7 @@ class _RbioCupertinoPickerState extends State<RbioCupertinoPicker> {
             ),
 
             //
-            Divider(height: 0),
+            const Divider(height: 0),
 
             //
             Expanded(
@@ -150,11 +169,9 @@ class _RbioCupertinoPickerState extends State<RbioCupertinoPicker> {
                 mode: CupertinoDatePickerMode.date,
                 backgroundColor: getIt<ITheme>().cardBackgroundColor,
                 onDateTimeChanged: (DateTime date) {
-                  if (date != null) {
-                    setState(() {
-                      currentDate = date;
-                    });
-                  }
+                  setState(() {
+                    currentDate = date;
+                  });
                 },
               ),
             ),

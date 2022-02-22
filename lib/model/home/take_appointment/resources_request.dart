@@ -1,10 +1,10 @@
 class ResourcesRequest {
-  int tenantId;
-  int departmentId;
-  int resourceId;
-  String from;
-  String to;
-  int id;
+  int? tenantId;
+  int? departmentId;
+  int? resourceId;
+  String? from;
+  String? to;
+  int? id;
 
   ResourcesRequest({
     this.tenantId,
@@ -40,12 +40,12 @@ class ResourcesRequest {
   }
 
   ResourcesRequest copyWith({
-    int tenantId,
-    int departmentId,
-    int resourceId,
-    String from,
-    String to,
-    int id,
+    int? tenantId,
+    int? departmentId,
+    int? resourceId,
+    String? from,
+    String? to,
+    int? id,
   }) {
     return ResourcesRequest(
       tenantId: tenantId ?? this.tenantId,

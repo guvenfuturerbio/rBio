@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioLoading extends StatelessWidget {
-  const RbioLoading({Key key}) : super(key: key);
+  const RbioLoading({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,8 @@ class RbioLoading extends StatelessWidget {
     );
   }
 
-  static Widget progressIndicator() => Scaffold(
-        backgroundColor: Colors.black12,
+  static Widget progressIndicator() => const Scaffold(
+        backgroundColor: Colors.black38,
         body: Center(child: RbioLoading()),
       );
 }

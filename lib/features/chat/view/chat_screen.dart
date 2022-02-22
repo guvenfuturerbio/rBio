@@ -9,13 +9,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'dart:io';
-
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 
 import '../../../../../../core/core.dart';
-
 import '../../../core/core.dart';
 import '../controller/chat_vm.dart';
 import '../model/chat_person.dart';
@@ -24,27 +19,27 @@ import '../model/message.dart';
 part '../widget/image_preview_dialog.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key key}) : super(key: key);
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  ChatPerson otherPerson;
-  StreamSubscription<bool> keyboardSubscription;
+  late ChatPerson otherPerson;
+  late StreamSubscription<bool> keyboardSubscription;
 
-  FocusNode _focusNode;
-  ScrollController _scrollController;
-  TextEditingController _textEditingController;
-  ValueNotifier<bool> firstLoadNotifier;
+  late FocusNode _focusNode;
+  late ScrollController _scrollController;
+  late TextEditingController _textEditingController;
+  late ValueNotifier<bool> firstLoadNotifier;
 
-  String get getCurrentUserId => getIt<UserNotifier>().firebaseID;
+  String getCurrentUserId = getIt<UserNotifier>().firebaseID!;
   ChatPerson get getCurrentPerson => ChatPerson(
         id: getIt<UserNotifier>().firebaseID,
         name: Utils.instance.getCurrentUserNameAndSurname,
         url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
-        firebaseToken: FirebaseMessagingManager.instance.token,
+        firebaseToken: getIt<FirebaseMessagingManager>().getToken,
       );
   final topPadding = 64 + Atom.safeTop;
 
@@ -60,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
         keyboardVisibilityController.onChange.listen((bool visible) {
       if (visible) {
         Future.delayed(
-          Duration(milliseconds: 50),
+          const Duration(milliseconds: 50),
           () {
             _scrollAnimateToEnd();
           },
@@ -84,15 +79,15 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     try {
-      otherPerson = ChatPerson.fromJson(Atom.queryParameters['otherPerson']);
+      otherPerson = ChatPerson.fromJson(Atom.queryParameters['otherPerson']!);
     } catch (e, stk) {
       LoggerUtils.instance.e(e);
       LoggerUtils.instance.e(stk);
-      return RbioRouteError();
+      return const RbioRouteError();
     }
 
     final chatVm = Provider.of<ChatVm>(context)
-      ..init(getCurrentUserId, otherPerson.id, _scrollAnimateToEnd,
+      ..init(getCurrentUserId, otherPerson.id!, _scrollAnimateToEnd,
           firstLoadNotifier);
 
     return KeyboardDismissOnTap(
@@ -133,19 +128,19 @@ class _ChatScreenState extends State<ChatScreen> {
                         snapshot,
                   ) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return RbioLoading();
+                      return const RbioLoading();
                     } else if (snapshot.connectionState ==
                             ConnectionState.active ||
                         snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasError) {
-                        return RbioBodyError();
+                        return const RbioBodyError();
                       } else if (snapshot.hasData) {
-                        return _buildSuccess(snapshot.data, chatVm);
+                        return _buildSuccess(snapshot.data!, chatVm);
                       } else {
-                        return SizedBox();
+                        return const SizedBox();
                       }
                     } else {
-                      return SizedBox();
+                      return const SizedBox();
                     }
                   },
                 ),
@@ -153,15 +148,15 @@ class _ChatScreenState extends State<ChatScreen> {
                 //
                 ValueListenableBuilder(
                   valueListenable: firstLoadNotifier,
-                  builder: (BuildContext context, bool value, Widget child) {
+                  builder: (BuildContext context, bool value, Widget? child) {
                     return !value
                         ? Positioned.fill(
                             child: Container(
                               color: context.scaffoldBackgroundColor,
-                              child: RbioLoading(),
+                              child: const RbioLoading(),
                             ),
                           )
-                        : SizedBox();
+                        : const SizedBox();
                   },
                 ),
               ],
@@ -189,7 +184,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) {
         Future.delayed(
-          Duration(milliseconds: 100),
+          const Duration(milliseconds: 100),
           () {
             _scrollController.jumpTo(
                 _scrollController.position.maxScrollExtent + topPadding + 300);
@@ -201,10 +196,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildInputArea(ChatVm chatVm) {
     return IconTheme(
-      data: IconThemeData(color: Theme.of(context).accentColor),
+      data: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       child: Container(
-        padding: EdgeInsets.only(top: 6),
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.only(top: 6),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -212,18 +206,27 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             IconButton(
               icon: SvgPicture.asset(
-                R.image.photo_icon,
+                R.image.photo,
                 color: getIt<ITheme>().mainColor,
                 width: 25,
               ),
               onPressed: () {
-                chatVm.getImage(0, getCurrentUserId, otherPerson.id,
-                    getCurrentPerson, otherPerson.firebaseToken);
+                chatVm.getImage(1, getCurrentUserId, otherPerson.id!,
+                    getCurrentPerson, otherPerson.firebaseToken!);
               },
             ),
 
+            IconButton(
+              icon: Icon(
+                Icons.image_outlined,
+                color: getIt<ITheme>().mainColor,
+              ),
+              onPressed: () {
+                chatVm.getImage(0, getCurrentUserId, otherPerson.id!,
+                    getCurrentPerson, otherPerson.firebaseToken!);
+              },
+            ),
             //
-            SizedBox(width: 6),
 
             //
             Expanded(
@@ -249,7 +252,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                       color: getIt<ITheme>().mainColor,
-                      icon: SvgPicture.asset(R.image.send_icon, width: 25),
+                      icon: SvgPicture.asset(R.image.send, width: 25),
                       onPressed: () => _sendMessage(chatVm),
                     ),
                   ),
@@ -258,7 +261,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
             //
-            SizedBox(width: 6),
+            const SizedBox(width: 6),
           ],
         ),
       ),
@@ -270,9 +273,11 @@ class _ChatScreenState extends State<ChatScreen> {
     ChatVm chatVm,
   ) {
     final documentData = documentSnapshot.data();
-    if (documentData == null) return SizedBox();
-    final messages = documentData['messages'] as List;
-    if (messages == null) return SizedBox();
+    if (documentData == null) return const SizedBox();
+    final messages = documentData['messages'] as List?;
+    if (messages == null) {
+      return const SizedBox();
+    }
     final messageData =
         messages.map((item) => Message.fromMap(item)).cast<Message>().toList();
 
@@ -286,7 +291,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Scrollbar(
             thickness: 3,
             isAlwaysShown: true,
-            radius: Radius.circular(5),
+            radius: const Radius.circular(5),
             controller: _scrollController,
             child: ListView.builder(
               reverse: false,
@@ -300,7 +305,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
                 try {
                   time = DateTime.fromMillisecondsSinceEpoch(
-                    messageData[index].date,
+                    messageData[index].date!,
                     isUtc: true,
                   );
                 } catch (e) {
@@ -317,7 +322,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
                 //
                 if (time.isSameDay(DateTime.fromMillisecondsSinceEpoch(
-                        messageData[index - 1].date)) ==
+                        messageData[index - 1].date!)) ==
                     false) {
                   return Column(
                     children: [
@@ -362,13 +367,13 @@ class _ChatScreenState extends State<ChatScreen> {
       message.type == 0
           ? _buildTextBubble(
               message,
-              otherPerson.url,
+              otherPerson.url!,
               chatVm,
             )
           : _buildImageBubble(
               context,
               message,
-              otherPerson.url,
+              otherPerson.url!,
               chatVm,
             );
 
@@ -384,14 +389,14 @@ class _ChatScreenState extends State<ChatScreen> {
               color: Colors.black.withAlpha(50),
               blurRadius: 15,
               spreadRadius: 0,
-              offset: Offset(5, 10),
+              offset: const Offset(5, 10),
             ),
           ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            '${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time)}',
+            DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(time),
             textAlign: TextAlign.center,
             style: context.xHeadline5,
           ),
@@ -408,30 +413,30 @@ class _ChatScreenState extends State<ChatScreen> {
   ) {
     var time = "";
     try {
-      time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date));
+      time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date!));
     } catch (e) {
       LoggerUtils.instance.e(e);
     }
 
     if (message.sentFrom == getCurrentUserId) {
       return Padding(
-        padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
+        padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            FlatButton(
-              padding: EdgeInsets.all(0),
+            RbioTextButton(
+              padding: const EdgeInsets.all(0),
               child: Material(
-                child: widgetShowImages(message.message),
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                child: widgetShowImages(message.message!),
+                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {
                 Atom.show(
-                  ImagePreviewDialog(
+                  RbioImagePreviewDialog(
                     image: message.message,
                   ),
                 );
@@ -439,7 +444,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
             //
-            SizedBox(width: 6),
+            const SizedBox(width: 6),
 
             //
             Column(
@@ -448,7 +453,7 @@ class _ChatScreenState extends State<ChatScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 _buildTimeText(time),
-                if (chatVm.otherLastSeen > message.date) ...{
+                if (chatVm.otherLastSeen > message.date!) ...{
                   _buildEyesIcon(),
                 },
               ],
@@ -458,23 +463,23 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     } else {
       return Padding(
-        padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+        padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            FlatButton(
-              padding: EdgeInsets.all(0),
+            RbioTextButton(
+              padding: const EdgeInsets.all(0),
               child: Material(
-                child: widgetShowImages(message.message),
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                child: widgetShowImages(message.message!),
+                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {
                 Atom.show(
-                  ImagePreviewDialog(
+                  RbioImagePreviewDialog(
                     image: message.message,
                   ),
                 );
@@ -496,14 +501,14 @@ class _ChatScreenState extends State<ChatScreen> {
   ) {
     var time = "";
     try {
-      time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date));
+      time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date!));
     } catch (e) {
       LoggerUtils.instance.e(e);
     }
 
     if (message.sentFrom == getCurrentUserId) {
       return Padding(
-        padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
+        padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -512,7 +517,7 @@ class _ChatScreenState extends State<ChatScreen> {
             //
             Flexible(
               child: _buildSelectableText(
-                message.message,
+                message.message!,
                 getIt<ITheme>().textColorSecondary,
                 getIt<ITheme>().secondaryColor,
               ),
@@ -525,7 +530,7 @@ class _ChatScreenState extends State<ChatScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 _buildTimeText(time),
-                if (chatVm.otherLastSeen > message.date) ...{
+                if (chatVm.otherLastSeen > message.date!) ...{
                   _buildEyesIcon(),
                 },
               ],
@@ -535,7 +540,7 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     } else {
       return Padding(
-        padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+        padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -544,7 +549,7 @@ class _ChatScreenState extends State<ChatScreen> {
             //
             Flexible(
               child: _buildSelectableText(
-                message.message,
+                message.message!,
                 getIt<ITheme>().textColorSecondary,
                 getIt<ITheme>().cardBackgroundColor,
               ),
@@ -564,14 +569,14 @@ class _ChatScreenState extends State<ChatScreen> {
     Color backColor,
   ) {
     return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.all(4),
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: backColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: SelectableText(
-        message ?? '',
+        message,
         style: context.xHeadline5.copyWith(
           color: textColor,
           fontWeight: FontWeight.w600,
@@ -599,11 +604,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildEyesIcon() {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         bottom: 7,
       ),
       child: SvgPicture.asset(
-        R.image.eyeseen_icon,
+        R.image.eyeSeen,
         height: 12,
       ),
     );
@@ -611,7 +616,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _sendMessage(ChatVm chatVm) async {
     try {
-      if (_textEditingController.text.trim().length > 0) {
+      if (_textEditingController.text.trim().isNotEmpty) {
         final _messageSent = Message(
           sentFrom: getCurrentUserId,
           message: _textEditingController.text,
@@ -619,16 +624,16 @@ class _ChatScreenState extends State<ChatScreen> {
           type: 0,
         );
 
-        var result = await chatVm.sendMessage(_messageSent, otherPerson.id,
-            getCurrentPerson, otherPerson.firebaseToken);
+        var result = await chatVm.sendMessage(_messageSent, otherPerson.id!,
+            getCurrentPerson, otherPerson.firebaseToken!);
         if (result) {
           _focusNode.unfocus();
           _scrollController.animateTo(
             _scrollController.position.maxScrollExtent,
             curve: Curves.easeOut,
-            duration: Duration(microseconds: 10),
+            duration: const Duration(microseconds: 10),
           );
-          Future.delayed(Duration(milliseconds: 10), () {
+          Future.delayed(const Duration(milliseconds: 10), () {
             _textEditingController.clear();
           });
         }
@@ -648,10 +653,10 @@ class _ChatScreenState extends State<ChatScreen> {
           height: Atom.width * 0.25,
           width: Atom.width * 0.25,
         ),
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100],
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
       ),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 

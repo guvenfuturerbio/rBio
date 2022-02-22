@@ -4,58 +4,57 @@ import '../../../../../core/core.dart';
 class BgMeasurementGlucoseViewModel {
   final GlucoseData bgMeasurement;
 
-  BgMeasurementGlucoseViewModel({this.bgMeasurement});
+  BgMeasurementGlucoseViewModel({required this.bgMeasurement});
 
   DateTime get date {
-    DateTime dateTime = bgMeasurement?.date == null
-        ? DateTime.now()
-        : DateTime(
-            int.parse(bgMeasurement.date.substring(0, 4)),
-            int.parse(bgMeasurement.date.substring(5, 7)),
-            int.parse(bgMeasurement.date.substring(8, 10)),
-            int.parse(bgMeasurement.date.substring(11, 13)),
-            int.parse(bgMeasurement.date.substring(14, 16)),
-            int.parse(bgMeasurement.date.substring(17, 19)));
+    final DateTime dateTime = DateTime(
+      int.parse(bgMeasurement.date.substring(0, 4)),
+      int.parse(bgMeasurement.date.substring(5, 7)),
+      int.parse(bgMeasurement.date.substring(8, 10)),
+      int.parse(bgMeasurement.date.substring(11, 13)),
+      int.parse(bgMeasurement.date.substring(14, 16)),
+      int.parse(bgMeasurement.date.substring(17, 19)),
+    );
     return dateTime;
   }
 
   bool get isDeleted {
-    return this.bgMeasurement.isDeleted;
+    return bgMeasurement.isDeleted;
   }
 
   int get id {
-    return this.bgMeasurement.time;
+    return bgMeasurement.time;
   }
 
-  String get imageURL {
-    return this.bgMeasurement.imageURL;
+  String? get imageURL {
+    return bgMeasurement.imageURL;
   }
 
-  set imageURL(String url) {
-    this.bgMeasurement.imageURL = url;
+  set imageURL(String? url) {
+    bgMeasurement.imageURL = url;
   }
 
   String get result {
-    return this.bgMeasurement?.level;
+    return bgMeasurement.level;
   }
 
   Color get resultColor {
-    return this.bgMeasurement.color;
+    return bgMeasurement.color;
   }
 
-  int get tag {
-    return this.bgMeasurement.tag;
+  int? get tag {
+    return bgMeasurement.tag;
   }
 
   String get note {
-    return this.bgMeasurement.note;
+    return bgMeasurement.note;
   }
 
   bool get isManual {
-    return this.bgMeasurement.manual;
+    return bgMeasurement.manual;
   }
 
   int get measurementId {
-    return this.bgMeasurement.measurementId;
+    return bgMeasurement.measurementId!;
   }
 }

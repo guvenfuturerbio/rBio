@@ -17,11 +17,12 @@ abstract class ITheme {
   Color get blackForItem;
   Color get iconColor;
   Color get iconSecondaryColor;
+  Color get grayColor;
 }
 
 class GreenTheme extends ITheme {
   @override
-  ThemeType get type => ThemeType.Green;
+  ThemeType get type => ThemeType.green;
 
   @override
   String get fontFamily => 'SourceSans';
@@ -42,7 +43,7 @@ class GreenTheme extends ITheme {
   Color get textColorSecondary => Colors.black;
 
   @override
-  Color get textColorPassive => Color.fromARGB(255, 187, 186, 186);
+  Color get textColorPassive => const Color.fromARGB(255, 187, 186, 186);
 
   @override
   Color get grey => Colors.grey;
@@ -112,11 +113,14 @@ class GreenTheme extends ITheme {
       );
 
   double convertFontSize(double value) => value / 2.85;
+
+  @override
+  Color get grayColor => const Color.fromARGB(255, 237, 237, 237);
 }
 
 class BurgundyTheme extends ITheme {
   @override
-  ThemeType get type => ThemeType.Burgundy;
+  ThemeType get type => ThemeType.burgundy;
 
   @override
   String get fontFamily => 'SourceSans';
@@ -137,7 +141,7 @@ class BurgundyTheme extends ITheme {
   Color get textColorSecondary => Colors.black;
 
   @override
-  Color get textColorPassive => Color.fromARGB(255, 187, 186, 186);
+  Color get textColorPassive => const Color.fromARGB(255, 187, 186, 186);
 
   @override
   Color get grey => Colors.grey;
@@ -207,4 +211,7 @@ class BurgundyTheme extends ITheme {
       );
 
   double convertFontSize(double value) => value / 2.85;
+
+  @override
+  Color get grayColor => const Color.fromARGB(255, 237, 237, 237);
 }

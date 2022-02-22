@@ -2,7 +2,7 @@ part of '../view/create_appointment_screen.dart';
 
 Widget _buildHistoryDoctorCard(
   BuildContext context,
-  String doctorName,
+  String? doctorName,
   CreateAppointmentVm vm,
   int index,
 ) {
@@ -27,7 +27,7 @@ Widget _buildHistoryDoctorCard(
 
             //
             Text(
-              doctorName,
+              doctorName??"",
               maxLines: 3,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

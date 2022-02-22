@@ -12,14 +12,14 @@ abstract class SymptomApiService {
   Future<List<GetBodySymptomsResponse>> getProposedSymptoms(
     String symptoms,
     String gender,
-    String year_of_birth,
+    String yearOfBirth,
     String token,
     String language,
   );
   Future<List<GetSpecialisationsResponse>> getSpeacialisations(
     String symptoms,
     String gender,
-    String year_of_birth,
+    String yearOfBirth,
     String token,
     String format,
     String language,

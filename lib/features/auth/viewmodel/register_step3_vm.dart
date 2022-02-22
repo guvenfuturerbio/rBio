@@ -4,19 +4,18 @@ import '../auth.dart';
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 
-class RegisterStep3ScreenVm extends ChangeNotifier with RbioVm {
+class RegisterStep3ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   RegisterStep3ScreenVm(this.mContext);
 
-  LoadingDialog loadingDialog;
-  CountryListResponse countryList;
-  DateTime selectedDate;
+  LoadingDialog? loadingDialog;
 
   void registerStep3(
-      UserRegistrationStep3Model userRegistrationStep3,
-      UserRegistrationStep3Model userRegistrationStep3Model,
-      bool isWithoutTCKN) async {
+    UserRegistrationStep3Model userRegistrationStep3,
+    UserRegistrationStep3Model userRegistrationStep3Model,
+    bool isWithoutTCKN,
+  ) async {
     try {
       showLoadingDialog(mContext);
       GuvenResponseModel response;
@@ -30,7 +29,7 @@ class RegisterStep3ScreenVm extends ChangeNotifier with RbioVm {
 
       hideDialog(mContext);
       if (response.isSuccessful == true) {
-        Atom.to(PagePaths.LOGIN, isReplacement: true);
+        Atom.to(PagePaths.login, isReplacement: true);
         Atom.show(
           GuvenAlert(
             title: GuvenAlert.buildTitle(LocaleProvider.current.info),
@@ -57,7 +56,7 @@ class RegisterStep3ScreenVm extends ChangeNotifier with RbioVm {
       showDelayedErrorDialog(
         error,
         stackTrace,
-        () => hideDialog(this.mContext),
+        () => hideDialog(mContext),
       );
     }
   }
@@ -72,9 +71,11 @@ class RegisterStep3ScreenVm extends ChangeNotifier with RbioVm {
   }
 
   void hideDialog(BuildContext context) {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
-      Navigator.of(context).pop();
-      loadingDialog = null;
+    if (loadingDialog != null) {
+      if (loadingDialog!.isShowing()) {
+        Navigator.of(context).pop();
+        loadingDialog = null;
+      }
     }
   }
 }

@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)"
+options: "148e942e15cda34191dc7327ec75c3c40c6d6e844d3e8b651b8bfa3f7bea4c5a"
+build_start_time: [1640806407, 314867973]
+build_end_time: [1640806407, 467802047]
+inputs:
+  "/Users/bardram/dev/flutter-plugins/packages/health/example/ios/Runner/AppDelegate.swift": !private [1598898133, 330456256]

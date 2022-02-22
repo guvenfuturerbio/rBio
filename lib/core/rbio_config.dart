@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
 import '../model/model.dart';
 
-// ignore: must_be_immutable
 class RbioConfig extends InheritedWidget {
+  @override
   final Widget child;
 
   final Orientation defaultOrientation = Orientation.portrait;
@@ -16,16 +16,17 @@ class RbioConfig extends InheritedWidget {
     orientationController.sink.add(value);
   }
 
-  GetBodyLocationResponse bodyLocationRsp;
-  List<GetBodySymptomsResponse> listBodySympRsp;
-  BodySublocationsVm sublocationVm;
+  GetBodyLocationResponse? bodyLocationRsp;
+  List<GetBodySymptomsResponse>? listBodySympRsp;
+  BodySublocationsVm? sublocationVm;
 
   RbioConfig({
-    Key key,
-    @required this.child,
+    Key? key,
+    this.listBodySympRsp,
+    required this.child,
   }) : super(key: key, child: child);
 
-  static RbioConfig of(BuildContext context) {
+  static RbioConfig? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<RbioConfig>();
   }
 

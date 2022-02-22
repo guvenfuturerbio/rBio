@@ -1,7 +1,7 @@
 import 'save_appointment_request.dart';
 
 class AppointmentRequest {
-  SaveAppointmentsRequest saveAppointmentsRequest;
+  SaveAppointmentsRequest? saveAppointmentsRequest;
 
   AppointmentRequest({
     this.saveAppointmentsRequest,
@@ -19,5 +19,6 @@ class AppointmentRequest {
       };
 
   @override
-  String toString() => 'AppointmentRequest(saveAppointmentsRequest: $saveAppointmentsRequest)';
+  String toString() =>
+      'AppointmentRequest(saveAppointmentsRequest: $saveAppointmentsRequest)';
 }

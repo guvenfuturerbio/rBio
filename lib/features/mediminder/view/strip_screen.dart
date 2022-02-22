@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../../../core/core.dart';
-import '../../chronic_tracking/lib/widgets/strip_counter_dialog.dart';
 import '../viewmodel/strip_vm.dart';
+import '../widgets/strip_counter_dialog.dart';
 
 class StripScreen extends StatefulWidget {
-  StripScreen({Key key}) : super(key: key);
+  const StripScreen({Key? key}) : super(key: key);
 
   @override
   _StripScreenState createState() => _StripScreenState();
@@ -18,10 +18,10 @@ class StripScreen extends StatefulWidget {
 
 class _StripScreenState extends State<StripScreen> {
   final _formKey = GlobalKey<FormState>();
-  StripMode modeOfStrip = StripMode.NONE;
+  StripMode modeOfStrip = StripMode.none;
 
-  TextEditingController stripCountController;
-  TextEditingController alarmController;
+  late TextEditingController stripCountController;
+  late TextEditingController alarmController;
 
   @override
   void initState() {
@@ -46,14 +46,14 @@ class _StripScreenState extends State<StripScreen> {
         builder: (
           BuildContext context,
           StripVm stripCount,
-          Widget child,
+          Widget? child,
         ) {
           alarmController.text = stripCount.alarmCount.toString();
           stripCountController.text = stripCount.stripCount.toString();
           stripCountController.selection = TextSelection.collapsed(
-              offset: stripCount?.stripCount?.toString()?.length ?? 0);
+              offset: stripCount.stripCount.toString().length);
           alarmController.selection = TextSelection.collapsed(
-              offset: stripCount?.alarmCount?.toString()?.length ?? 0);
+              offset: stripCount.alarmCount.toString().length);
 
           return KeyboardDismissOnTap(
             child: RbioScaffold(
@@ -78,7 +78,7 @@ class _StripScreenState extends State<StripScreen> {
         mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(
-            height: context.HEIGHT * .18,
+            height: context.height * .18,
           ),
 
           //
@@ -108,7 +108,7 @@ class _StripScreenState extends State<StripScreen> {
           ),
 
           //
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
 
@@ -116,7 +116,7 @@ class _StripScreenState extends State<StripScreen> {
           _buildSaveChangesButton(stripCount),
 
           //
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
         ],
@@ -126,17 +126,17 @@ class _StripScreenState extends State<StripScreen> {
 
   Widget _buildHeaderSection(StripVm stripCount) {
     return Container(
-      padding: EdgeInsets.only(left: 24, right: 24, bottom: 16),
+      padding: const EdgeInsets.only(left: 24, right: 24, bottom: 16),
       child: Column(
         children: <Widget>[
           Card(
+            elevation: R.sizes.defaultElevation,
             color: getIt<ITheme>().cardBackgroundColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
-            elevation: 4,
             child: Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 16,
                 right: 16,
                 top: 10,
@@ -146,10 +146,10 @@ class _StripScreenState extends State<StripScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   //
-                  Container(
+                  SizedBox(
                     height: 20,
                     width: 20,
-                    child: SvgPicture.asset(R.image.mark_icon),
+                    child: SvgPicture.asset(R.image.markIcon),
                   ),
 
                   //
@@ -157,8 +157,8 @@ class _StripScreenState extends State<StripScreen> {
                     child: Text(
                       stripCount.usedStripCount == 0
                           ? LocaleProvider.current.never_used_strip
-                          : LocaleProvider.current.strips_used.format(
-                              []..add(stripCount.usedStripCount.toString())),
+                          : LocaleProvider.current.strips_used
+                              .format([stripCount.usedStripCount.toString()]),
                       textAlign: TextAlign.center,
                       style: context.xHeadline3
                           .copyWith(fontWeight: FontWeight.bold),
@@ -179,7 +179,7 @@ class _StripScreenState extends State<StripScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(
+          const SizedBox(
             width: 40,
           ),
 
@@ -195,7 +195,7 @@ class _StripScreenState extends State<StripScreen> {
                 child: Column(
                   children: [
                     //
-                    Container(
+                    SizedBox(
                       width: 70,
                       child: Theme(
                         data: ThemeData(primaryColor: Colors.black),
@@ -210,26 +210,27 @@ class _StripScreenState extends State<StripScreen> {
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            if (value != null && value != '') {
+                            if (value != '') {
                               stripCount.changeTo(int.parse(value));
                             }
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             counterText: '',
                             errorStyle: TextStyle(height: 0),
                           ),
                           validator: (input) {
-                            if (input.isNotEmpty)
+                            if (input?.isNotEmpty ?? false) {
                               return null;
-                            else
+                            } else {
                               return "";
+                            }
                           },
                         ),
                       ),
                     ),
 
                     //
-                    SizedBox(
+                    const SizedBox(
                       height: 9,
                     ),
 
@@ -254,13 +255,14 @@ class _StripScreenState extends State<StripScreen> {
                   width: MediaQuery.of(context).size.width / 2.5,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: R.sizes.borderRadiusCircular,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 1,
                         blurRadius: 5,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
@@ -275,7 +277,7 @@ class _StripScreenState extends State<StripScreen> {
                               color: getIt<ITheme>().textColorSecondary),
                         ),
                         onPressed: () {
-                          modeOfStrip = StripMode.SUBTRACT;
+                          modeOfStrip = StripMode.subtract;
                           showGradientDialog(
                             LocaleProvider.current.remove_strips,
                             stripCount,
@@ -297,13 +299,14 @@ class _StripScreenState extends State<StripScreen> {
                   width: MediaQuery.of(context).size.width / 2.5,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: R.sizes.borderRadiusCircular,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 1,
                         blurRadius: 5,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
@@ -321,7 +324,7 @@ class _StripScreenState extends State<StripScreen> {
                             style: context.xHeadline3.copyWith(
                                 color: getIt<ITheme>().textColorSecondary)),
                         onPressed: () {
-                          modeOfStrip = StripMode.ADD;
+                          modeOfStrip = StripMode.add;
                           showGradientDialog(
                             LocaleProvider.current.add_strips,
                             stripCount,
@@ -362,9 +365,9 @@ class _StripScreenState extends State<StripScreen> {
         elevation: 15,
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        child: Container(
+        child: SizedBox(
           width: 350,
           child: TextField(
             controller: alarmController,
@@ -373,14 +376,14 @@ class _StripScreenState extends State<StripScreen> {
             maxLength: 3,
             keyboardType: TextInputType.number,
             obscureText: false,
-            decoration: new InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
               counterText: "",
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
-              contentPadding: EdgeInsets.only(
+              contentPadding: const EdgeInsets.only(
                 left: 15,
                 bottom: 11,
                 top: 11,
@@ -389,10 +392,12 @@ class _StripScreenState extends State<StripScreen> {
               hintText: LocaleProvider.current.strip_number,
             ),
             onChanged: (String value) {
-              if (value != '' && value != null) {
+              if (value != '') {
                 try {
-                  stripCount.setAlarmCount((int.parse(value) ?? 30));
-                } catch (e) {}
+                  stripCount.setAlarmCount((int.tryParse(value) ?? 30));
+                } catch (e) {
+                  LoggerUtils.instance.e(e);
+                }
               }
             },
           ),
@@ -401,8 +406,8 @@ class _StripScreenState extends State<StripScreen> {
     );
   }
 
-  Container _buildSaveChangesButton(StripVm stripCount) {
-    return Container(
+  Widget _buildSaveChangesButton(StripVm stripCount) {
+    return SizedBox(
       height: 50,
       width: 150,
       child: Ink(
@@ -415,20 +420,20 @@ class _StripScreenState extends State<StripScreen> {
               getIt<ITheme>().mainColor
             ],
           ),
-          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.transparent,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                R.image.done_icon,
+                R.image.done,
                 height: 30,
                 width: 30,
               ),
@@ -440,9 +445,11 @@ class _StripScreenState extends State<StripScreen> {
             ],
           ),
           onPressed: () {
-            if (_formKey.currentState.validate()) {
-              _formKey.currentState.save();
-              stripCount.saveData();
+            if (_formKey.currentState != null) {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                stripCount.saveData();
+              }
             }
           },
         ),
@@ -456,9 +463,9 @@ class _StripScreenState extends State<StripScreen> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return StripGradientDialog(
-          title,
-          (val) {
-            if (mos == StripMode.ADD) {
+          title: title,
+          callback: (val) {
+            if (mos == StripMode.add) {
               stripCounter.incrementBy(val);
             } else {
               stripCounter.decrementBy(val);

@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 UpdateBpMeasurements updateBpMeasurementsFromJson(String str) =>
-    UpdateBpMeasurements.fromJson(json.decode(str));
+    UpdateBpMeasurements.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String updateBpMeasurementsToJson(UpdateBpMeasurements data) =>
     json.encode(data.toJson());
@@ -24,35 +24,35 @@ class UpdateBpMeasurements {
     this.measurementId,
   });
 
-  int id;
-  int entegrationId;
-  DateTime occurrenceTime;
-  int sys;
-  int dia;
-  int pulse;
-  String note;
-  String deviceUuid;
-  bool isManual;
-  int measurementId;
+  int? id;
+  int? entegrationId;
+  DateTime? occurrenceTime;
+  int? sys;
+  int? dia;
+  int? pulse;
+  String? note;
+  String? deviceUuid;
+  bool? isManual;
+  int? measurementId;
 
   factory UpdateBpMeasurements.fromJson(Map<String, dynamic> json) =>
       UpdateBpMeasurements(
-        id: json["id"],
-        entegrationId: json["entegration_id"],
-        occurrenceTime: DateTime.parse(json["occurrence_time"]),
-        sys: json["sys"],
-        dia: json["dia"],
-        pulse: json["pulse"],
-        note: json["note"],
-        deviceUuid: json["device_uuid"],
-        isManual: json["is_manual"],
-        measurementId: json["measurement_id"],
+        id: json["id"] as int?,
+        entegrationId: json["entegration_id"] as int?,
+        occurrenceTime: DateTime.parse(json["occurrence_time"] as String),
+        sys: json["sys"] as int?,
+        dia: json["dia"] as int?,
+        pulse: json["pulse"] as int?,
+        note: json["note"] as String?,
+        deviceUuid: json["device_uuid"] as String?,
+        isManual: json["is_manual"] as bool?,
+        measurementId: json["measurement_id"] as int?,
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "entegration_id": entegrationId,
-        "occurrence_time": occurrenceTime.toIso8601String(),
+        "occurrence_time": occurrenceTime?.toIso8601String(),
         "sys_value": sys,
         "dia_value": dia,
         "pulse_value": pulse,

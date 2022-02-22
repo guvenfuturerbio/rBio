@@ -4,17 +4,17 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
 class RelativesVm extends ChangeNotifier {
-  LoadingProgress _state = LoadingProgress.LOADING;
+  LoadingProgress _state = LoadingProgress.loading;
   LoadingProgress get state => _state;
   set state(LoadingProgress value) {
     _state = value;
     notifyListeners();
   }
 
-  PatientRelativeInfoResponse response;
+  late PatientRelativeInfoResponse response;
 
   Future<void> getAll() async {
-    state = LoadingProgress.LOADING;
+    state = LoadingProgress.loading;
 
     GetAllRelativesRequest bodyPages = GetAllRelativesRequest();
     bodyPages.draw = 1;
@@ -28,28 +28,28 @@ class RelativesVm extends ChangeNotifier {
     bodyPages.search = searchObject;
 
     bodyPages.columns = <ColumnsObject>[];
-    ColumnsObject columnsObject = new ColumnsObject();
+    ColumnsObject columnsObject = ColumnsObject();
     columnsObject.search = searchObject;
     columnsObject.orderable = true;
     columnsObject.name = "null";
     columnsObject.data = "patient.user.name";
     columnsObject.searchable = true;
-    bodyPages.columns.add(columnsObject);
+    bodyPages.columns?.add(columnsObject);
 
     bodyPages.order = <OrderObject>[];
-    OrderObject orderObject = new OrderObject();
+    OrderObject orderObject = OrderObject();
     orderObject.column = 0;
     orderObject.dir = "desc";
-    bodyPages.order.add(orderObject);
+    bodyPages.order?.add(orderObject);
 
     try {
       response = await getIt<Repository>().getAllRelatives(bodyPages);
-      if (response == null || response.patientRelatives == []) {
+      if (response.patientRelatives == []) {
         response = PatientRelativeInfoResponse([]);
       }
-      state = LoadingProgress.DONE;
+      state = LoadingProgress.done;
     } catch (e) {
-      state = LoadingProgress.ERROR;
+      state = LoadingProgress.error;
     }
   }
 }

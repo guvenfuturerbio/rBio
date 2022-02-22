@@ -1,7 +1,9 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 class BluetoothConstants {
-  BluetoothConstants._instance() {}
+  BluetoothConstants._instance();
   factory BluetoothConstants.instance() {
     return BluetoothConstants._instance();
   }

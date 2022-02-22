@@ -14,21 +14,23 @@ class PatientBloodPressureListModel
       .toList();
 
   @override
-  PatientListItemModel convertTo(DoctorBloodPressurePatientModel e) {
+  PatientListItemModel convertTo(DoctorBloodPressurePatientModel model) {
     return PatientListItemModel(
-      data: e,
-      patientName: e.name,
-      dates: e.bpMeasurements
+      data: model,
+      patientName: model.name,
+      dates: (model.bpMeasurements ?? [])
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime7()
               : '')
           .toList(),
-      times: e.bpMeasurements
+      times: (model.bpMeasurements ?? [])
           .map((item) => item.occurrenceTime != null
               ? DateTime.parse(item.occurrenceTime ?? '').xFormatTime8()
               : '')
           .toList(),
-      values: e.bpMeasurements.map((item) => '${item.sysValue}').toList(),
+      values: (model.bpMeasurements ?? [])
+          .map((item) => '${item.sysValue}')
+          .toList(),
     );
   }
 
@@ -39,7 +41,7 @@ class PatientBloodPressureListModel
 
   @override
   List<Widget> getPopupWidgets({
-    @required void Function(DoctorPatientListSortType sortType) onSelect,
+    required void Function(DoctorPatientListSortType sortType) onSelect,
   }) {
     return [
       getPopupItem(
@@ -56,12 +58,13 @@ class PatientBloodPressureListModel
   }
 
   @override
-  void textOnChanged(String text) {
+  void textOnChanged(String? text) {
     if (text == null || text == '') {
       _filterList = _list;
     } else {
       _filterList = _list
-          .where((item) => item.name.toLowerCase().contains(text.toLowerCase()))
+          .where((item) =>
+              item.name?.toLowerCase().contains(text.toLowerCase()) ?? false)
           .toList();
     }
   }
@@ -70,11 +73,11 @@ class PatientBloodPressureListModel
   void filterList(DoctorPatientListSortType sortType) {
     switch (sortType) {
       case DoctorPatientListSortType.fromNewest:
-        _filterList = _list.sortedBy((i) => i.name);
+        _filterList = _list.sortedBy((i) => i.name ?? '').toList();
         break;
 
       case DoctorPatientListSortType.fromOldest:
-        _filterList = _list.sortedBy((i) => i.id);
+        _filterList = _list.sortedBy((i) => i.id ?? 0).toList();
         break;
 
       default:
@@ -84,10 +87,9 @@ class PatientBloodPressureListModel
 
   @override
   void itemOnTap(DoctorBloodPressurePatientModel model) {
-    LoggerUtils.instance.i('OnTap : ${model.id}');
-    Atom.to(PagePaths.BLOOD_PRESSURE_PATIENT_DETAIL, queryParameters: {
+    Atom.to(PagePaths.doctorPressurePatientDetail, queryParameters: {
       'patientId': model.id.toString(),
-      'patientName': model.name,
+      'patientName': model.name!,
     });
   }
 }

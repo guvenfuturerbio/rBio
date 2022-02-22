@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
-class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
+class PersonalInformationScreenVm extends RbioVm {
   @override
   BuildContext mContext;
 
@@ -17,9 +17,9 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
   final imagePicker = ImagePicker();
 
   ImageProvider<Object> get getProfileImage =>
-      newProfileFile != null ? FileImage(newProfileFile) : oldProfileImage;
-  ImageProvider<Object> oldProfileImage;
-  File newProfileFile;
+      newProfileFile != null ? FileImage(newProfileFile!) : oldProfileImage;
+  late ImageProvider<Object> oldProfileImage;
+  File? newProfileFile;
 
   bool _showLoadingOverlay = false;
   bool get showLoadingOverlay => _showLoadingOverlay;
@@ -29,17 +29,17 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
   }
 
   PersonalInformationScreenVm({
-    @required this.mContext,
-    @required this.phoneNumber,
-    @required this.email,
+    required this.mContext,
+    required this.phoneNumber,
+    required this.email,
   }) {
     oldProfileImage = Utils.instance.getCacheProfileImage;
   }
 
   // serkan.ozturk@guvenfuture.com
   Future<void> updateValues({
-    @required String newPhoneNumber,
-    @required String newEmail,
+    required String newPhoneNumber,
+    required String newEmail,
   }) async {
     phoneNumber = newPhoneNumber;
     email = newEmail;
@@ -49,7 +49,7 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
       PatientResponse patient = await getIt<Repository>().getPatientDetail();
       ChangeContactInfoRequest changeInfo = ChangeContactInfoRequest();
       changeInfo.patientId = patient.id;
-      changeInfo.patientType = int.parse(patient.patientType);
+      changeInfo.patientType = int.tryParse(patient.patientType ?? '');
       changeInfo.nationalityId = patient.nationalityId;
       changeInfo.firstName = patient.firstName;
       changeInfo.lastName = patient.lastName;
@@ -88,10 +88,19 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
     ImageSource imageSource,
   ) async {
     Navigator.of(actionSheetContext).pop();
-    final imageFile = await imagePicker.getImage(source: imageSource);
-    if (imageFile != null) {
-      newProfileFile = File(imageFile.path);
-      notifyListeners();
+    try {
+      final imageFile = await imagePicker.pickImage(
+        source: imageSource,
+        maxHeight: 1080,
+        maxWidth: 1920,
+        imageQuality: 50,
+      );
+      if (imageFile != null) {
+        newProfileFile = File(imageFile.path);
+        notifyListeners();
+      }
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 
@@ -101,11 +110,11 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
 
     try {
       final guvenResponse = await getIt<Repository>().deleteProfilePicture();
-      if (guvenResponse.isSuccessful) {
+      if (guvenResponse.xIsSuccessful) {
         oldProfileImage = NetworkImage(R.image.circlevatar);
         newProfileFile = null;
         await getIt<ISharedPreferencesManager>()
-            .remove(SharedPreferencesKeys.PROFILE_IMAGE);
+            .remove(SharedPreferencesKeys.profileImage);
         notifyListeners();
       }
     } catch (e, stackTrace) {
@@ -120,10 +129,10 @@ class PersonalInformationScreenVm extends ChangeNotifier with RbioVm {
 
     try {
       final guvenResponse =
-          await getIt<Repository>().uploadProfilePicture(newProfileFile);
-      if (guvenResponse.isSuccessful && guvenResponse.datum != null) {
+          await getIt<Repository>().uploadProfilePicture(newProfileFile!);
+      if (guvenResponse.xIsSuccessful && guvenResponse.datum != null) {
         await getIt<ISharedPreferencesManager>().setString(
-          SharedPreferencesKeys.PROFILE_IMAGE,
+          SharedPreferencesKeys.profileImage,
           guvenResponse.datum,
         );
         oldProfileImage = MemoryImage(base64.decode(guvenResponse.datum));

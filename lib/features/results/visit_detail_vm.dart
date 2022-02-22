@@ -5,41 +5,43 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 
-class VisitDetailScreenVm extends ChangeNotifier {
+class VisitDetailScreenVm extends RbioVm {
+  @override
   BuildContext mContext;
 
-  LoadingDialog loadingDialog;
   static const String _documentPath = 'PDFs/Guide-v4.pdf';
-  bool _pathologySelected;
-  bool _radiologySelected;
-  bool _laboratorySelected;
-  VisitDetailRequest _visitDetailRequest;
-  List<LaboratoryResponse> _laboratoryResults;
-  List<PathologyResponse> _pathologyResults;
-  List<RadiologyResponse> _radiologyResults;
-  LaboratoryPdfResultRequest _laboratoryPdfResultRequest;
-  LoadingProgress _progress;
 
-  String laboratoryFileBytes;
-  String mobiletempDocumentPath;
+  late VisitDetailRequest visitDetailRequest;
 
-  VisitDetailScreenVm({
-    BuildContext context,
-    int countOfLaboratoryResults,
-    int countOfPathologyResults,
-    int countOfRadiologyResults,
-    int visitId,
-    int patientId,
+  String? laboratoryFileBytes;
+  String? mobiletempDocumentPath;
+
+  bool pathologySelected = false;
+  bool radiologySelected = false;
+  bool laboratorySelected = false;
+
+  List<LaboratoryResponse> laboratoryResults = [LaboratoryResponse()];
+  List<PathologyResponse> pathologyResults = [PathologyResponse()];
+  List<RadiologyResponse> radiologyResults = [RadiologyResponse()];
+  LaboratoryPdfResultRequest? laboratoryPdfResultRequest;
+
+  VisitDetailScreenVm(
+    this.mContext, {
+    required int countOfLaboratoryResults,
+    required int countOfPathologyResults,
+    required int countOfRadiologyResults,
+    required int visitId,
+    required int patientId,
   }) {
-    this.mContext = context;
-    this._visitDetailRequest =
-        VisitDetailRequest(patientId: patientId, visitId: visitId);
+    visitDetailRequest = VisitDetailRequest(
+      patientId: patientId,
+      visitId: visitId,
+    );
     if (countOfLaboratoryResults > 0) {
       toggleLaboratorySelected();
     } else if (countOfRadiologyResults > 0) {
@@ -49,31 +51,21 @@ class VisitDetailScreenVm extends ChangeNotifier {
     }
   }
 
-  LoadingProgress get progress => this._progress ?? LoadingProgress.LOADING;
-
-  get pathologySelected => this._pathologySelected ?? false;
-
-  get radiologySelected => this._radiologySelected ?? false;
-
-  get laboratorySelected => this._laboratorySelected ?? false;
-
-  VisitDetailRequest get visitDetailRequest => this._visitDetailRequest;
-
   Future<void> togglePathologySelected() async {
-    this._pathologySelected = !pathologySelected;
+    pathologySelected = !pathologySelected;
     if (pathologySelected) {
-      this._laboratorySelected = false;
-      this._radiologySelected = false;
+      laboratorySelected = false;
+      radiologySelected = false;
       await fetchPathologyResults();
     }
     notifyListeners();
   }
 
   Future<void> toggleRadiologySelected() async {
-    this._radiologySelected = !radiologySelected;
+    radiologySelected = !radiologySelected;
     if (radiologySelected) {
-      this._laboratorySelected = false;
-      this._pathologySelected = false;
+      laboratorySelected = false;
+      pathologySelected = false;
       await fetchRadiologyResults();
     }
 
@@ -81,10 +73,10 @@ class VisitDetailScreenVm extends ChangeNotifier {
   }
 
   Future<void> toggleLaboratorySelected() async {
-    this._laboratorySelected = !laboratorySelected;
+    laboratorySelected = !laboratorySelected;
     if (laboratorySelected) {
-      this._pathologySelected = false;
-      this._radiologySelected = false;
+      pathologySelected = false;
+      radiologySelected = false;
       await fetchLaboratoryResults();
       await getLaboratoryResultsAsPdf();
     } else {
@@ -95,38 +87,27 @@ class VisitDetailScreenVm extends ChangeNotifier {
   }
 
   Future<void> fetchPathologyResults() async {
-    this._progress = LoadingProgress.LOADING;
+    progress = LoadingProgress.loading;
     notifyListeners();
 
     try {
-      this._pathologyResults =
+      pathologyResults =
           await getIt<Repository>().getPathologyResults(visitDetailRequest);
-      this._progress = LoadingProgress.DONE;
-      notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      print(e.toString());
-      this._progress = LoadingProgress.ERROR;
-      notifyListeners();
+      progress = LoadingProgress.done;
+    } catch (e) {
+      progress = LoadingProgress.error;
     }
   }
 
-  List<PathologyResponse> get pathologyResults =>
-      this._pathologyResults ?? [PathologyResponse()];
-
   Future<void> fetchRadiologyResults() async {
-    this._progress = LoadingProgress.LOADING;
-    notifyListeners();
+    progress = LoadingProgress.loading;
+
     try {
-      this._radiologyResults = await await getIt<Repository>()
-          .getRadiologyResults(visitDetailRequest);
-      this._progress = LoadingProgress.DONE;
-      notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      print(e.toString());
-      this._progress = LoadingProgress.ERROR;
-      notifyListeners();
+      radiologyResults =
+          await getIt<Repository>().getRadiologyResults(visitDetailRequest);
+      progress = LoadingProgress.done;
+    } catch (e) {
+      progress = LoadingProgress.error;
     }
   }
 
@@ -134,81 +115,78 @@ class VisitDetailScreenVm extends ChangeNotifier {
     try {
       if (isLab) {
         final decodedBytes = base64Decode(pdfBytes);
-        var name = _laboratoryResults.first.patient;
-        name = name.replaceAll(' ', '_');
-        var date = _laboratoryResults.first.takenAt;
+        var name = laboratoryResults.first.patient;
+        name = name?.replaceAll(' ', '_');
+        var date = laboratoryResults.first.takenAt;
         html.Blob blob = html.Blob([decodedBytes]);
-        final url = await html.Url.createObjectUrlFromBlob(blob);
+        final url = html.Url.createObjectUrlFromBlob(blob);
         final anchor = html.AnchorElement()
           ..href = url
           ..style.display = 'none'
-          ..download = 'guven_lab_' + name + date.toIso8601String() + '.pdf';
-        html.document.body.children.add(anchor);
+          ..download = 'guven_lab_' +
+              (name ?? '') +
+              (date?.toIso8601String() ?? '') +
+              '.pdf';
+        html.document.body?.children.add(anchor);
         anchor.click();
-        html.document.body.children.remove(anchor);
+        html.document.body?.children.remove(anchor);
         html.Url.revokeObjectUrl(url);
       } else {
         final decodedBytes = base64Decode(pdfBytes);
-        var name = _radiologyResults.first.patient;
-        name = name.replaceAll(' ', '_');
+        var name = radiologyResults.first.patient;
+        name = name?.replaceAll(' ', '_');
 
-        var date = _radiologyResults.first.takenAt;
+        var date = radiologyResults.first.takenAt;
         html.Blob blob = html.Blob([decodedBytes]);
-        final url = await html.Url.createObjectUrlFromBlob(blob);
+        final url = html.Url.createObjectUrlFromBlob(blob);
         final anchor = html.AnchorElement()
           ..href = url
           ..style.display = 'none'
-          ..download = 'guven_radyoloji_' + name + date + '.pdf';
-        html.document.body.children.add(anchor);
+          ..download =
+              'guven_radyoloji_' + (name ?? '') + (date ?? '') + '.pdf';
+        html.document.body?.children.add(anchor);
         anchor.click();
-        html.document.body.children.remove(anchor);
+        html.document.body?.children.remove(anchor);
         html.Url.revokeObjectUrl(url);
       }
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
-
-  List<RadiologyResponse> get radiologyResult =>
-      this._radiologyResults ?? [RadiologyResponse()];
 
   Future<void> fetchLaboratoryResults() async {
-    this._progress = LoadingProgress.LOADING;
-    notifyListeners();
+    progress = LoadingProgress.loading;
+
     try {
-      this._laboratoryResults =
+      laboratoryResults =
           await getIt<Repository>().getLaboratoryResults(visitDetailRequest);
       setLaboratoryPdfResultRequest();
-      this._progress = LoadingProgress.DONE;
-      notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      print(e.toString());
-      this._progress = LoadingProgress.ERROR;
-      notifyListeners();
+      progress = LoadingProgress.done;
+    } catch (e) {
+      progress = LoadingProgress.error;
+      LoggerUtils.instance.e(e);
     }
   }
 
-  List<LaboratoryResponse> get laboratoryResults =>
-      this._laboratoryResults ?? [LaboratoryResponse()];
-
   Future<void> shareFile() async {
-    if (laboratoryFileBytes != null) {
+    if (laboratoryFileBytes != null && mobiletempDocumentPath != null) {
       if (kIsWeb) {
-        downloadPdf(laboratoryFileBytes, true);
+        downloadPdf(laboratoryFileBytes!, true);
       } else {
         await FlutterShare.shareFile(
           title: LocaleProvider.current.share,
           text: LocaleProvider.current.detailed_report,
-          filePath: mobiletempDocumentPath,
+          filePath: mobiletempDocumentPath!,
         );
       }
     }
   }
 
   Future<void> getLaboratoryResultsAsPdf() async {
+    if (laboratoryPdfResultRequest == null) return;
+
     String pdfByte = await getIt<Repository>()
-        .getLaboratoryPdfResult(laboratoryPdfResultRequest);
+        .getLaboratoryPdfResult(laboratoryPdfResultRequest!);
     laboratoryFileBytes = pdfByte;
     if (!kIsWeb) {
       final decodedBytes = base64Decode(pdfByte);
@@ -222,18 +200,15 @@ class VisitDetailScreenVm extends ChangeNotifier {
   }
 
   Future<void> getRadiologyResultsAsPdf(int processId) async {
-    showLoadingDialog(mContext);
     try {
       String pdfByte = await getIt<Repository>().getRadiologyPdfResult(
         RadiologyPdfRequest(processId: processId),
       );
-      hideDialog(mContext);
+
       kIsWeb ? downloadPdf(pdfByte, false) : goPdfPage(pdfByte);
       notifyListeners();
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-      hideDialog(mContext);
-      print(e.toString());
+    } catch (e) {
+      LoggerUtils.instance.e(e);
       notifyListeners();
     }
   }
@@ -244,29 +219,32 @@ class VisitDetailScreenVm extends ChangeNotifier {
         html.window.open(url, 'new tab');
       } else {
         Atom.to(
-          PagePaths.WEBVIEW,
+          PagePaths.webView,
           queryParameters: {
             'url': Uri.encodeFull(url),
             'title': Uri.encodeFull(testName),
           },
         );
       }
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 
   void setLaboratoryPdfResultRequest() {
     List<int> processList = <int>[];
     for (var data in laboratoryResults) {
-      processList.add(data.id);
+      final itemId = data.id;
+      if (itemId != null) {
+        processList.add(itemId);
+      }
     }
-    this._laboratoryPdfResultRequest = LaboratoryPdfResultRequest(
-        visitId: visitDetailRequest.visitId, processes: processList);
+    laboratoryPdfResultRequest = LaboratoryPdfResultRequest(
+      visitId: visitDetailRequest.visitId,
+      processes: processList,
+    );
     notifyListeners();
   }
-
-  get laboratoryPdfResultRequest => this._laboratoryPdfResultRequest;
 
   Future<void> goPdfPage(String img64) async {
     try {
@@ -276,30 +254,14 @@ class VisitDetailScreenVm extends ChangeNotifier {
       final file = await File(tempDocumentPath).create(recursive: true);
       file.writeAsBytesSync(decodedBytes);
       Atom.to(
-        PagePaths.FULLPDFVIEWER,
+        PagePaths.fullPdfViewer,
         queryParameters: {
           'title': Uri.encodeFull(LocaleProvider.current.detailed_report),
           'pdfPath': Uri.encodeFull(tempDocumentPath),
         },
       );
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-    }
-  }
-
-  void showLoadingDialog(BuildContext context) async {
-    await new Future.delayed(new Duration(milliseconds: 30));
-    await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
-  }
-
-  hideDialog(BuildContext context) {
-    if (loadingDialog != null && loadingDialog.isShowing()) {
-      Navigator.of(context).pop();
-      loadingDialog = null;
+    } catch (e) {
+      LoggerUtils.instance.e(e);
     }
   }
 }

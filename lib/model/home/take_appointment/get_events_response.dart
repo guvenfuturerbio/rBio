@@ -1,7 +1,19 @@
-class GetEventsResponse {
-  List<Events> events;
-  Resource resource;
-  int serviceTime;
+import 'package:json_annotation/json_annotation.dart';
+
+import 'package:onedosehealth/core/core.dart';
+
+part 'get_events_response.g.dart';
+
+@JsonSerializable()
+class GetEventsResponse extends IBaseModel<GetEventsResponse> {
+  @JsonKey(name: "events")
+  List<Events>? events;
+
+  @JsonKey(name: "resource")
+  Resource? resource;
+
+  @JsonKey(name: "serviceTime")
+  int? serviceTime;
 
   GetEventsResponse({
     this.events,
@@ -9,81 +21,82 @@ class GetEventsResponse {
     this.serviceTime,
   });
 
-  GetEventsResponse.fromJson(Map<String, dynamic> json) {
-    if (json['events'] != null) {
-      events = <Events>[];
-      json['events'].forEach((v) {
-        events.add(new Events.fromJson(v));
-      });
-    }
-    resource = json['resource'] != null
-        ? new Resource.fromJson(json['resource'])
-        : null;
-    serviceTime = json['serviceTime'];
-  }
+  factory GetEventsResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetEventsResponseFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.events != null) {
-      data['events'] = this.events.map((v) => v.toJson()).toList();
-    }
-    if (this.resource != null) {
-      data['resource'] = this.resource.toJson();
-    }
-    data['serviceTime'] = this.serviceTime;
-    return data;
+  @override
+  Map<String, dynamic> toJson() => _$GetEventsResponseToJson(this);
+
+  @override
+  GetEventsResponse fromJson(Map<String, dynamic> json) {
+    return GetEventsResponse.fromJson(json);
   }
 }
 
-class Events {
-  String date;
-  String from;
-  String to;
-  int type;
+@JsonSerializable()
+class Events extends IBaseModel<Events> {
+  @JsonKey(name: "date")
+  String? date;
 
-  Events({this.date, this.from, this.to, this.type});
+  @JsonKey(name: "from")
+  String? from;
 
-  Events.fromJson(Map<String, dynamic> json) {
-    date = json['date'];
-    from = json['from'];
-    to = json['to'];
-    type = json['type'];
-  }
+  @JsonKey(name: "to")
+  String? to;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['date'] = this.date;
-    data['from'] = this.from;
-    data['to'] = this.to;
-    data['type'] = this.type;
-    return data;
+  @JsonKey(name: "type")
+  int? type;
+
+  Events({
+    this.date,
+    this.from,
+    this.to,
+    this.type,
+  });
+
+  factory Events.fromJson(Map<String, dynamic> json) => _$EventsFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$EventsToJson(this);
+
+  @override
+  Events fromJson(Map<String, dynamic> json) {
+    return Events.fromJson(json);
   }
 }
 
-class Resource {
-  int departmentId;
-  String resource;
-  int resourceId;
-  int tenantId;
-  String eventDate;
+@JsonSerializable()
+class Resource extends IBaseModel<Resource> {
+  @JsonKey(name: "departmentId")
+  int? departmentId;
 
-  Resource({this.departmentId, this.resource, this.resourceId, this.tenantId});
+  @JsonKey(name: "resource")
+  String? resource;
 
-  Resource.fromJson(Map<String, dynamic> json) {
-    departmentId = json['departmentId'];
-    resource = json['resource'];
-    resourceId = json['resourceId'];
-    tenantId = json['tenantId'];
-    eventDate = json['eventDate'];
-  }
+  @JsonKey(name: "resourceId")
+  int? resourceId;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['departmentId'] = this.departmentId;
-    data['resource'] = this.resource;
-    data['resourceId'] = this.resourceId;
-    data['tenantId'] = this.tenantId;
-    data['eventDate'] = this.eventDate;
-    return data;
+  @JsonKey(name: "tenantId")
+  int? tenantId;
+
+  @JsonKey(name: "eventDate")
+  String? eventDate;
+
+  Resource({
+    this.departmentId,
+    this.resource,
+    this.resourceId,
+    this.tenantId,
+  });
+
+  factory Resource.fromJson(Map<String, dynamic> json) =>
+      _$ResourceFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$ResourceToJson(this);
+
+  @override
+  Resource fromJson(Map<String, dynamic> json) {
+    return Resource.fromJson(json);
   }
 }

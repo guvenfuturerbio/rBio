@@ -1,30 +1,71 @@
-enum PasswordScore { Blank, VeryWeak, Weak, Medium, Strong, VeryStrong }
-
-bool validateStructure(String value) {
-  String pattern =
-      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-  RegExp regExp = new RegExp(pattern);
-  return regExp.hasMatch(value);
+enum PasswordScore {
+  blank,
+  veryWeak,
+  weak,
+  medium,
+  strong,
+  veryStrong,
 }
 
 class PasswordAdvisor {
-  int REQUIRED_PASSWORD_LENGTH = 8;
+  static const int requiredPasswordLength = 8;
   RegExp numberInclude = RegExp("(?=.*?[0-9])");
   RegExp lowerCase = RegExp("(?=.*?[a-z])");
   RegExp upperCase = RegExp("(?=.*?[A-Z])");
   RegExp specialCharacter = RegExp(r"[$&+,:;=?@#|'<>.^*()%!-]");
 
-  bool validateStructure(String value) {
+  bool upperCaseValue = false;
+  bool lowerCaseValue = false;
+  bool numericValue = false;
+  bool specialValue = false;
+  bool lengthValue = false;
+
+  bool validateStructureByPattern(String value) {
     String pattern =
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-    RegExp regExp = new RegExp(pattern);
+    RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(value);
   }
 
-  PasswordScore CheckStrength(String password) {
+  bool validateStructure() =>
+      upperCaseValue &&
+      lowerCaseValue &&
+      numericValue &&
+      specialValue &&
+      lengthValue;
+
+  void checkPassword(String password) {
+    _checkUpperCase(password);
+    _checkLowercase(password);
+    _checkNumberInclude(password);
+    _checkSpecialCharacter(password);
+    _checkRequiredPasswordLength(password);
+  }
+
+  void _checkUpperCase(String password) {
+    upperCaseValue = upperCase.hasMatch(password);
+  }
+
+  void _checkLowercase(String password) {
+    lowerCaseValue = lowerCase.hasMatch(password);
+  }
+
+  void _checkNumberInclude(String password) {
+    numericValue = numberInclude.hasMatch(password);
+  }
+
+  void _checkSpecialCharacter(String password) {
+    specialValue = specialCharacter.hasMatch(password);
+  }
+
+  void _checkRequiredPasswordLength(String password) {
+    lengthValue = password.length < requiredPasswordLength ? false : true;
+  }
+
+  PasswordScore checkStrength(String password) {
     int score = 0;
-    if (password.length < 1) return PasswordScore.Blank;
-    if (password.length < 4) return PasswordScore.VeryWeak;
+    if (password.isEmpty) return PasswordScore.blank;
+    if (password.length < 4) return PasswordScore.veryWeak;
     if (password.length >= 8) score++;
     if (password.length >= 12) score++;
     if (numberInclude.firstMatch(password) != null) score++;
@@ -34,39 +75,19 @@ class PasswordAdvisor {
 
     switch (score) {
       case 0:
-        return PasswordScore.Blank;
+        return PasswordScore.blank;
       case 1:
-        return PasswordScore.VeryWeak;
+        return PasswordScore.veryWeak;
       case 2:
-        return PasswordScore.Weak;
+        return PasswordScore.weak;
       case 3:
-        return PasswordScore.Medium;
+        return PasswordScore.medium;
       case 4:
-        return PasswordScore.Strong;
+        return PasswordScore.strong;
       case 5:
-        return PasswordScore.VeryStrong;
+        return PasswordScore.veryStrong;
       default:
-        return PasswordScore.Blank;
+        return PasswordScore.blank;
     }
-  }
-
-  bool checkNumberInclude(String password) {
-    return numberInclude.hasMatch(password);
-  }
-
-  bool checkLowercase(String password) {
-    return lowerCase.hasMatch(password);
-  }
-
-  bool checkUpperCase(String password) {
-    return upperCase.hasMatch(password);
-  }
-
-  bool checkSpecialCharacter(String password) {
-    return specialCharacter.hasMatch(password);
-  }
-
-  bool checkRequiredPasswordLength(String password) {
-    return password.length < REQUIRED_PASSWORD_LENGTH ? false : true;
   }
 }

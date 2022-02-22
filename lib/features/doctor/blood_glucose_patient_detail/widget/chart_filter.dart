@@ -5,9 +5,9 @@ class _ChartFilter extends StatelessWidget {
   final double height;
 
   const _ChartFilter({
-    Key key,
-    @required this.width,
-    @required this.height,
+    Key? key,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -17,12 +17,12 @@ class _ChartFilter extends StatelessWidget {
       child: Dialog(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(10),
+        insetPadding: const EdgeInsets.all(10),
         child: Consumer<BloodGlucosePatientDetailVm>(
           builder: (
             BuildContext context,
             BloodGlucosePatientDetailVm value,
-            Widget child,
+            Widget? child,
           ) {
             return _buildPadding(context, value);
           },
@@ -36,17 +36,18 @@ class _ChartFilter extends StatelessWidget {
     BloodGlucosePatientDetailVm value,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.WIDTH * .03),
+      padding: EdgeInsets.symmetric(horizontal: context.width * .03),
       child: SizedBox(
         width: width,
         child: Card(
+          elevation: R.sizes.defaultElevation,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: SingleChildScrollView(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,19 +55,19 @@ class _ChartFilter extends StatelessWidget {
               children: [
                 //
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Column(
                     children: value.colorInfo.keys
                         .map(
                           (color) => _colorFilterItem(
                               context: context,
-                              text: value.colorInfo[color].toShortString(),
+                              text: value.colorInfo[color]!.toShortString(),
                               status: value
-                                  .isFilterSelected(value.colorInfo[color]),
+                                  .isFilterSelected(value.colorInfo[color]!),
                               color: color,
                               size: 15,
                               statCallback: (_) =>
-                                  value.setFilterState(value.colorInfo[color]),
+                                  value.setFilterState(value.colorInfo[color]!),
                               isHungry: false),
                         )
                         .toList(),
@@ -75,7 +76,7 @@ class _ChartFilter extends StatelessWidget {
 
                 //
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Column(
                     children: value.states
                         .map(
@@ -85,12 +86,12 @@ class _ChartFilter extends StatelessWidget {
                             status: value.isFilterSelected(state),
                             color: R.color.state_color,
                             size: 15,
-                            style: state == LocaleProvider.current.full ||
-                                    state == LocaleProvider.current.hungry
+                            style: state == GlucoseMarginsFilter.full ||
+                                    state == GlucoseMarginsFilter.hungry
                                 ? BoxShape.circle
                                 : BoxShape.rectangle,
                             statCallback: (_) => value.setFilterState(state),
-                            isHungry: state == LocaleProvider.current.hungry,
+                            isHungry: state == GlucoseMarginsFilter.hungry,
                           ),
                         )
                         .toList(),
@@ -106,7 +107,7 @@ class _ChartFilter extends StatelessWidget {
                     children: [
                       //
                       RbioElevatedButton(
-                        title: '${LocaleProvider.current.cancel}',
+                        title: LocaleProvider.current.cancel,
                         onTap: () {
                           Atom.dismiss();
                         },
@@ -116,7 +117,7 @@ class _ChartFilter extends StatelessWidget {
 
                       //
                       RbioElevatedButton(
-                        title: '${LocaleProvider.current.save}',
+                        title: LocaleProvider.current.save,
                         onTap: () {
                           Atom.dismiss();
                         },
@@ -130,8 +131,9 @@ class _ChartFilter extends StatelessWidget {
                   child: TextButton(
                     onPressed: () => value.resetFilterValues(),
                     child: Text(
-                      '${LocaleProvider.current.reset_filter_value}',
-                      style: TextStyle(decoration: TextDecoration.underline),
+                      LocaleProvider.current.reset_filter_value,
+                      style:
+                          const TextStyle(decoration: TextDecoration.underline),
                     ),
                   ),
                 ),
@@ -144,17 +146,17 @@ class _ChartFilter extends StatelessWidget {
   }
 
   Widget _colorFilterItem({
-    @required BuildContext context,
-    @required double size,
-    @required String text,
-    @required Color color,
-    @required bool status,
-    BoxShape style,
-    @required Function(bool) statCallback,
-    @required bool isHungry,
+    required BuildContext context,
+    required double size,
+    required String text,
+    required Color color,
+    required bool status,
+    BoxShape? style,
+    required void Function(bool?) statCallback,
+    required bool isHungry,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -164,7 +166,7 @@ class _ChartFilter extends StatelessWidget {
           Container(
             height: size,
             width: size,
-            margin: EdgeInsets.symmetric(horizontal: 25),
+            margin: const EdgeInsets.symmetric(horizontal: 25),
             decoration: BoxDecoration(
               shape: style ?? BoxShape.circle,
               color: isHungry ? Colors.transparent : color,
@@ -179,7 +181,7 @@ class _ChartFilter extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              '$text',
+              text,
               style: context.xHeadline4.copyWith(),
             ),
           ),

@@ -6,16 +6,20 @@ import '../core.dart';
 mixin IRbioAppBar on PreferredSize {}
 
 class RbioAppBar extends PreferredSize with IRbioAppBar {
-  final Widget title;
-  final Widget leading;
-  final List<Widget> actions;
+  final Widget? title;
+  final Widget? leading;
+  final List<Widget>? actions;
+  final double? leadingWidth;
 
   RbioAppBar({
+    Key? key,
     this.title,
     this.leading,
     this.actions,
+    this.leadingWidth,
   }) : super(
-          preferredSize: Size.fromHeight(64),
+          key: key,
+          preferredSize: const Size.fromHeight(64),
           child: AppBar(
             toolbarHeight: 64,
             centerTitle: true,
@@ -23,15 +27,16 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             backgroundColor: getIt<ITheme>().mainColor,
 
             //
+            leadingWidth: leadingWidth,
             leading: leading ??
                 Align(
                   alignment: Alignment.center,
                   child: InkWell(
                     child: Container(
                       color: Colors.transparent,
-                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+                      padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
-                        R.image.back_icon,
+                        R.image.back,
                         width: R.sizes.iconSize,
                       ),
                     ),
@@ -47,8 +52,8 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
                     height: 50,
-                    child: Image.asset(
-                      R.image.oneDoseHealthPng,
+                    child: SvgPicture.asset(
+                      R.image.oneDoseHealth,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -62,16 +67,12 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                       opacity: 0,
                       child: AbsorbPointer(
                         absorbing: true,
-                        child: InkWell(
-                          child: Container(
-                            color: Colors.transparent,
-                            padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
-                            child: SvgPicture.asset(
-                              R.image.back_icon,
-                              width: R.sizes.iconSize,
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 14, 8),
+                          child: SvgPicture.asset(
+                            R.image.back,
+                            width: R.sizes.iconSize,
                           ),
-                          onTap: () {},
                         ),
                       ),
                     ),
@@ -86,9 +87,9 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
       child: InkWell(
         child: Container(
           color: Colors.transparent,
-          padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
+          padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
           child: SvgPicture.asset(
-            R.image.back_icon,
+            R.image.back,
             width: R.sizes.iconSize,
           ),
         ),
@@ -108,52 +109,4 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
       ),
     );
   }
-}
-
-class RbioAppBarLogin extends PreferredSize with IRbioAppBar {
-  final Widget title;
-  final List<Widget> actions;
-  final Widget leading;
-
-  RbioAppBarLogin({
-    this.title,
-    this.actions,
-    this.leading,
-  }) : super(
-          preferredSize: Size.fromHeight(64),
-          child: AppBar(
-            backgroundColor: getIt<ITheme>().mainColor,
-            toolbarHeight: 64,
-            centerTitle: false,
-            elevation: 0,
-            leading: leading ??
-                Align(
-                  alignment: Alignment.center,
-                  child: InkWell(
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.fromLTRB(14, 8, 8, 8),
-                      child: SvgPicture.asset(
-                        R.image.back_icon,
-                        width: R.sizes.iconSize,
-                      ),
-                    ),
-                    onTap: () {
-                      Atom.historyBack();
-                    },
-                  ),
-                ),
-            actions: actions ??
-                [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      R.image.oneDoseHealthPng,
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                  SizedBox(width: 15,),
-                ],
-          ),
-        );
 }

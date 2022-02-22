@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../../core/extension/build_context_extension.dart';
+import '../../../../core/core.dart';
 
 class SectionCard extends StatelessWidget {
   const SectionCard(
-      {Key key,
+      {Key? key,
       this.isVisible = true,
       this.isActive = false,
-      this.smallChild,
-      this.largeChild,
-      this.hasDivider})
+      required this.smallChild,
+      required this.largeChild,
+      this.hasDivider = false})
       : super(key: key);
   final bool isVisible;
   final bool isActive;
@@ -22,22 +22,21 @@ class SectionCard extends StatelessWidget {
         ? Column(
             children: [
               AnimatedContainer(
-                duration: Duration(milliseconds: 1000),
+                duration: const Duration(milliseconds: 1000),
                 curve: Curves.easeInOutBack,
                 height: isActive
-                    ? context.HEIGHT * .9
-                    : (context.HEIGHT * .12) *
-                        (context.TEXTSCALE > 1 ? (context.TEXTSCALE / 2) : 1),
-                width: context.WIDTH,
-                onEnd: () => print('Done'),
+                    ? context.height * .9
+                    : (context.height * .12) *
+                        (context.textScale > 1 ? (context.textScale / 2) : 1),
+                width: context.width,
                 child: isActive ? largeChild : smallChild,
               ),
               if (hasDivider)
-                Divider(
+                const Divider(
                   thickness: 1,
                 )
             ],
           )
-        : SizedBox();
+        : const SizedBox();
   }
 }

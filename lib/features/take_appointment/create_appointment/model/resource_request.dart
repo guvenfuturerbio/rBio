@@ -1,9 +1,9 @@
 class ResourceRequest {
-  int resourceId;
-  int tenantId;
-  int departmentId;
-  String from;
-  String to;
+  int? resourceId;
+  int? tenantId;
+  int? departmentId;
+  String? from;
+  String? to;
 
   ResourceRequest({
     this.resourceId,
@@ -23,10 +23,10 @@ class ResourceRequest {
 
   factory ResourceRequest.fromJson(Map<String, dynamic> json) =>
       ResourceRequest(
-        resourceId: json['resourceId'],
-        tenantId: json['tenantId'],
-        departmentId: json['departmentId'],
-        from: json['from'],
-        to: json['to'],
+        resourceId: json['resourceId'] as int?,
+        tenantId: json['tenantId']as int?,
+        departmentId: json['departmentId']as int?,
+        from: json['from']as String?,
+        to: json['to']as String?,
       );
 }

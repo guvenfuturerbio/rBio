@@ -1,8 +1,8 @@
 import 'user_registration_step2_model.dart';
 
 class UserRegistrationStep3Model {
-  String sms;
-  UserRegistrationStep2Model userRegistrationStep2;
+  String? sms;
+  UserRegistrationStep2Model? userRegistrationStep2;
 
   UserRegistrationStep3Model({
     this.sms,

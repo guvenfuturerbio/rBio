@@ -1,11 +1,11 @@
-import 'DeviceTypes.dart';
+import 'device_type.dart';
 
 class PairedDevice {
-  String deviceId;
-  String manufacturerName;
-  String modelName;
-  String serialNumber;
-  DeviceType deviceType;
+  String? deviceId;
+  String? manufacturerName;
+  String? modelName;
+  String? serialNumber;
+  DeviceType? deviceType;
 
   PairedDevice(
       {this.deviceId,
@@ -15,20 +15,20 @@ class PairedDevice {
       this.deviceType});
 
   PairedDevice.fromJson(Map<String, dynamic> json) {
-    deviceId = json['deviceId'];
-    manufacturerName = json['manufacturerName'];
-    modelName = json['modelName'];
-    serialNumber = json['serialNumber'];
+    deviceId = json['deviceId'] as String?;
+    manufacturerName = json['manufacturerName'] as String?;
+    modelName = json['modelName'] as String?;
+    serialNumber = json['serialNumber'] as String?;
     deviceType = (json['deviceType'] as String).toType;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['deviceId'] = this.deviceId;
-    data['manufacturerName'] = this.manufacturerName;
-    data['modelName'] = this.modelName;
-    data['serialNumber'] = this.serialNumber;
-    data['deviceType'] = this.deviceType.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['deviceId'] = deviceId;
+    data['manufacturerName'] = manufacturerName;
+    data['modelName'] = modelName;
+    data['serialNumber'] = serialNumber;
+    data['deviceType'] = deviceType?.name;
     return data;
   }
 }

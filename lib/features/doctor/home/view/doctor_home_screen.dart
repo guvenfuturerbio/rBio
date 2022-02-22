@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/core.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
-  DoctorHomeScreen({Key key}) : super(key: key);
+  const DoctorHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +26,19 @@ class DoctorHomeScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       children: [
         //
         _buildCard(
           context,
-          R.image.ct_blood_glucose,
+          R.image.bloodGlucose,
           LocaleProvider.current.bg_measurement_tracking,
           () {
             Atom.to(
-              PagePaths.DOCTOR_PATIENT_LIST,
+              PagePaths.doctorPatientList,
               queryParameters: {
-                'type': PatientType.Sugar.xRawValue,
+                'type': PatientType.sugar.xRawValue,
               },
             );
           },
@@ -47,13 +47,13 @@ class DoctorHomeScreen extends StatelessWidget {
         //
         _buildCard(
           context,
-          R.image.ct_body_scale,
+          R.image.bodyScale,
           LocaleProvider.current.bmi_tracking,
           () {
             Atom.to(
-              PagePaths.DOCTOR_PATIENT_LIST,
+              PagePaths.doctorPatientList,
               queryParameters: {
-                'type': PatientType.BMI.xRawValue,
+                'type': PatientType.bmi.xRawValue,
               },
             );
           },
@@ -62,13 +62,13 @@ class DoctorHomeScreen extends StatelessWidget {
         //
         _buildCard(
           context,
-          R.image.ct_blood_pressure,
+          R.image.bloodPressure,
           LocaleProvider.current.blood_pressure_tracking,
           () {
             Atom.to(
-              PagePaths.DOCTOR_PATIENT_LIST,
+              PagePaths.doctorPatientList,
               queryParameters: {
-                'type': PatientType.Bp.xRawValue,
+                'type': PatientType.bp.xRawValue,
               },
             );
           },
@@ -86,13 +86,13 @@ class DoctorHomeScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        elevation: 0,
+        elevation: R.sizes.defaultElevation,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             //
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             //
             SvgPicture.asset(
@@ -102,7 +102,7 @@ class DoctorHomeScreen extends StatelessWidget {
             ),
 
             //
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
 
@@ -113,7 +113,7 @@ class DoctorHomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 //
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
 
                 //
                 Expanded(
@@ -131,20 +131,20 @@ class DoctorHomeScreen extends StatelessWidget {
                 ),
 
                 //
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
 
                 //
                 RbioBadge(
-                  image: R.image.chat_icon,
+                  image: R.image.chat,
                 ),
 
                 //
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
               ],
             ),
 
             //
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
           ],
         ),
       ),

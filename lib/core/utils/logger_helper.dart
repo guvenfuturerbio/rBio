@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class LoggerUtils {
-  Logger logger;
+  late Logger logger;
 
   LoggerUtils._() {
     logger = Logger(
@@ -12,16 +12,17 @@ class LoggerUtils {
         lineLength: 200, // width of the output
         colors: true, // Colorful log messages
         printEmojis: true, // Print an emoji for each log message
-        printTime: false, // Should each log print contain a timestamp
+        printTime:
+            false, // Should each log LoggerUtils.instance.i contain a timestamp
       ),
     );
   }
 
-  static LoggerUtils _instance;
+  static LoggerUtils? _instance;
 
   static LoggerUtils get instance {
     _instance ??= LoggerUtils._();
-    return _instance;
+    return _instance!;
   }
 
   // ************************** **************************

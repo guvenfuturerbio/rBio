@@ -4,15 +4,18 @@ part 'delete_bg_measurement_request.g.dart';
 @JsonSerializable()
 class DeleteBloodGlucoseMeasurementRequest {
   @JsonKey(name: 'entegration_id')
-  int entegrationId;
+  int? entegrationId;
   @JsonKey(name: 'measurement_id')
-  int measurementId;
+  int? measurementId;
 
-  DeleteBloodGlucoseMeasurementRequest(
-      {this.entegrationId, this.measurementId});
+  DeleteBloodGlucoseMeasurementRequest({
+    this.entegrationId,
+    this.measurementId,
+  });
 
   factory DeleteBloodGlucoseMeasurementRequest.fromJson(
-          Map<String, dynamic> json) =>
+    Map<String, dynamic> json,
+  ) =>
       _$DeleteBloodGlucoseMeasurementRequestFromJson(json);
 
   Map<String, dynamic> toJson() =>
