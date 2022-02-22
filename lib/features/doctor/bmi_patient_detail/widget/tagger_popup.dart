@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
-import '../../../chronic_tracking/utils/selected_scale_type.dart';
+import '../../../../core/enums/selected_scale_type.dart';
 
 class ScaleTagger extends StatelessWidget {
   final ScaleMeasurementViewModel scaleModel;

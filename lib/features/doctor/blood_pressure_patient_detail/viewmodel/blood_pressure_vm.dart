@@ -5,7 +5,7 @@ import '../../../../model/model.dart';
 import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
 import '../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
 import '../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_measurement_vm.dart';
-import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
+import '../../../chronic_tracking/bottom_actions_of_graph.dart';
 import '../widget/charts/line_charts.dart';
 
 class BloodPressurePatientDetailVm extends RbioVm

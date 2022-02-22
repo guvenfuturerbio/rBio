@@ -3,13 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../utils/bg_filter_pop_up/bg_filter_pop_up.dart';
-import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../utils/graph_header_widget.dart';
-import '../../utils/landscape_graph_widget.dart';
-import '../widgets/bg_measurement_list.dart';
-import '../widgets/bg_custom_bar_pie.dart';
+import '../../../bottom_actions_of_graph.dart';
+import '../../widgets/chronic_graph_header.dart';
+import '../../widgets/landscape_chronic_component.dart';
 import '../viewmodel/bg_progress_vm.dart';
+import '../widgets/bg_chart_filter/bg_chart_filter_pop_up.dart';
+import '../widgets/bg_custom_bar_pie.dart';
+import '../widgets/bg_measurement_list.dart';
 
 /// MG19
 class BgProgressScreen extends StatelessWidget {
@@ -31,12 +31,12 @@ class BgProgressScreen extends StatelessWidget {
             floatingActionButton: _buildFAB(vm, context),
           );
         } else {
-          return LandScapeGraphWidget(
+          return LandScapeChronicComponent(
             graph: vm.currentGraph,
             value: vm,
             filterAction: () {
               Atom.show(
-                BgFilterPopUp(
+                BgChartFilterPopUp(
                   width: context.height * .9,
                   height: context.width * .3,
                 ),
@@ -80,7 +80,7 @@ class BgProgressScreen extends StatelessWidget {
             //
             SizedBox(
               height: (context.height * .4) * context.textScale,
-              child: GraphHeader(
+              child: ChronicGraphHeader(
                 value: vm,
                 callBack: () =>
                     context.read<BgProgressVm>().changeChartShowStatus(),

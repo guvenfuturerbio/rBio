@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import '../../../../../core/core.dart';
-import '../../../utils/selected_scale_type.dart';
+import '../../../../../core/enums/selected_scale_type.dart';
 
 class ScaleMeasurementViewModel {
   final ScaleModel scaleModel;

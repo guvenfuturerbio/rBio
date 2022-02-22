@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../progress_sections/utils/progress_page_model.dart';
+import '../../progress_sections/widgets/i_progress_screen.dart';
 
-class HomePageModel<K extends ProgressPage> {
+class HomePageModel<K extends IProgressScreen> {
   final String? title;
   final Color? color;
   final Key? key;

@@ -5,7 +5,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/helper/workers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/core.dart';
@@ -79,7 +78,8 @@ class UserService {
     }
 
     String email = firstPart + "@" + secondPart;
-    String encryptedTextBody = encryptWithSalsa20(jsonEncode(textBody.toJson()),
+    String encryptedTextBody = Utils.instance.encryptWithSalsa20(
+        jsonEncode(textBody.toJson()),
         firstPart.substring(0, 8)); // first 8 letters of the email
 
     final response =

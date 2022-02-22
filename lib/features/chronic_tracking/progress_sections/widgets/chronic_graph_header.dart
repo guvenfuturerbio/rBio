@@ -4,11 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/core.dart';
 import 'date_range_picker/date_range_picker.dart';
 
-class GraphHeader extends StatelessWidget {
+class ChronicGraphHeader extends StatelessWidget {
   final dynamic value;
   final Function() callBack;
 
-  const GraphHeader({
+  const ChronicGraphHeader({
     Key? key,
     this.value,
     required this.callBack,

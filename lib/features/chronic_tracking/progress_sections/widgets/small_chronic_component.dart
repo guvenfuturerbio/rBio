@@ -4,19 +4,19 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/core.dart';
 
-class RbioSmallChronicWidget extends StatelessWidget {
+class SmallChronicComponent extends StatelessWidget {
   final String imageUrl;
   final String lastMeasurement;
   final DateTime lastMeasurementDate;
   final Function() callback;
 
-  const RbioSmallChronicWidget(
-      {Key? key,
-      required this.imageUrl,
-      required this.lastMeasurementDate,
-      required this.lastMeasurement,
-      required this.callback})
-      : super(key: key);
+  const SmallChronicComponent({
+    Key? key,
+    required this.imageUrl,
+    required this.lastMeasurementDate,
+    required this.lastMeasurement,
+    required this.callback,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

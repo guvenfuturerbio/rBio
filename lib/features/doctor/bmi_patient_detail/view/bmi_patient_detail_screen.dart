@@ -6,16 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/core/utils/stacked_widget/stacked_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/enums/selected_scale_type.dart';
 import '../../../chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
-import '../../../chronic_tracking/progress_sections/utils/date_range_picker/date_range_picker.dart';
-import '../../../chronic_tracking/utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../../chronic_tracking/utils/gallery_pop_up/gallery_pop_up.dart';
-import '../../../chronic_tracking/utils/selected_scale_type.dart';
+import '../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';
+import '../../../chronic_tracking/bottom_actions_of_graph.dart';
 import '../viewmodel/bmi_patient_detail_vm.dart';
 import '../widget/tagger_popup.dart';
 

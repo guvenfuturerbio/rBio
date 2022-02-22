@@ -10,8 +10,12 @@ import 'gallery_pop_up_vm.dart';
 import 'stepper/stepper.dart' as core;
 
 class GalleryView extends StatelessWidget {
-  const GalleryView({Key? key, required this.images}) : super(key: key);
   final List<String> images;
+
+  const GalleryView({
+    Key? key,
+    required this.images,
+  }) : super(key: key);
 
   final String urlDetect =
       r"((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?";
@@ -25,39 +29,49 @@ class GalleryView extends StatelessWidget {
           return Dialog(
             child: Stack(
               children: [
+                //
                 PhotoViewGallery(
                   gaplessPlayback: true,
                   scrollPhysics: const ClampingScrollPhysics(),
                   onPageChanged: value.changeIndex,
                   pageOptions: [
-                    ...images.map((e) {
-                      return PhotoViewGalleryPageOptions(
+                    ...images.map(
+                      (e) {
+                        return PhotoViewGalleryPageOptions(
                           scaleStateController: value.controller,
                           minScale: PhotoViewComputedScale.contained,
-                          imageProvider: getImageProvider(e));
-                    })
+                          imageProvider: getImageProvider(e),
+                        );
+                      },
+                    ),
                   ],
                 ),
+
+                //
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                      padding: EdgeInsets.only(bottom: context.height * .03),
-                      child: core.Stepper(
-                        length: images.length,
-                        currentIndex: value.currentIndex,
-                      )),
+                    padding: EdgeInsets.only(bottom: context.height * .03),
+                    child: core.Stepper(
+                      length: images.length,
+                      currentIndex: value.currentIndex,
+                    ),
+                  ),
                 ),
+
+                //
                 Align(
                   alignment: Alignment.topRight,
                   child: GestureDetector(
-                      onTap: () {
-                        value.close();
-                      },
-                      child: Icon(
-                        Icons.close,
-                        size: context.aspectRatio * 75,
-                        color: R.color.white,
-                      )),
+                    onTap: () {
+                      value.close();
+                    },
+                    child: Icon(
+                      Icons.close,
+                      size: context.aspectRatio * 75,
+                      color: R.color.white,
+                    ),
+                  ),
                 )
               ],
             ),

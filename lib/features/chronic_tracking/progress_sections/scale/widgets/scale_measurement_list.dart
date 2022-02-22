@@ -6,11 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/chronic_tracking/lib/core/utils/stacked_widget/stacked_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../utils/gallery_pop_up/gallery_pop_up.dart';
 import '../viewmodel/scale_progress_vm.dart';
 import '../viewmodel/scale_measurement_vm.dart';
 import 'tagger/scale_tagger_pop_up.dart';

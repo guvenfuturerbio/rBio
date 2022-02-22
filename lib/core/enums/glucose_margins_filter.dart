@@ -1,4 +1,4 @@
-import '../../../../../generated/l10n.dart';
+import '../../../../generated/l10n.dart';
 
 enum GlucoseMarginsFilter {
   veryLow,

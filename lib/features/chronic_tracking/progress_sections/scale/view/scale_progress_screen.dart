@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../utils/graph_header_widget.dart';
-import '../../utils/landscape_graph_widget.dart';
+import '../../../bottom_actions_of_graph.dart';
+import '../../widgets/chronic_graph_header.dart';
+import '../../widgets/landscape_chronic_component.dart';
 import '../widgets/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../widgets/scale_measurement_list.dart';
 import '../viewmodel/scale_progress_vm.dart';
@@ -29,7 +29,7 @@ class ScaleProgressScreen extends StatelessWidget {
             floatingActionButton: _buildFAB(vm, context),
           );
         } else {
-          return LandScapeGraphWidget(
+          return LandScapeChronicComponent(
             graph: vm.currentGraph,
             value: vm,
             filterAction: () {
@@ -73,7 +73,7 @@ class ScaleProgressScreen extends StatelessWidget {
           if (vm.isChartShow) ...[
             SizedBox(
               height: (context.height * .4) * context.textScale,
-              child: GraphHeader(
+              child: ChronicGraphHeader(
                 value: vm,
                 callBack: () =>
                     context.read<ScaleProgressVm>().changeChartShowStatus(),

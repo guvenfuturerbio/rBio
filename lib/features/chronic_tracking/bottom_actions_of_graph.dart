@@ -1,7 +1,7 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/core.dart';
+import '../../../../core/core.dart';
 
 abstract class IBaseBottomActionsOfGraph {
   void showFilter(BuildContext context);

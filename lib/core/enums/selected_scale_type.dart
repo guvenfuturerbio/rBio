@@ -1,4 +1,4 @@
-import '../../../../../../generated/l10n.dart';
+import '../core.dart';
 
 enum SelectedScaleType {
   bmi,
@@ -11,7 +11,7 @@ enum SelectedScaleType {
 }
 
 extension SclaeToStringExtension on SelectedScaleType {
-  get toStr {
+  String get toStr {
     switch (this) {
       case SelectedScaleType.bmi:
         return LocaleProvider.current.scale_data_bmi;

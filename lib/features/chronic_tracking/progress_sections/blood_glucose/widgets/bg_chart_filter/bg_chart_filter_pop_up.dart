@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
-import '../glucose_margins_filter.dart';
-import 'bg_filter_pop_up_vm.dart';
+import '../../../../../../core/enums/glucose_margins_filter.dart';
+import '../../viewmodel/bg_progress_vm.dart';
+import 'bg_chart_filter_pop_up_vm.dart';
 
-class BgFilterPopUp extends StatelessWidget {
+class BgChartFilterPopUp extends StatelessWidget {
   final double width;
   final double height;
 
-  const BgFilterPopUp({
+  const BgChartFilterPopUp({
     Key? key,
     required this.width,
     required this.height,
@@ -25,7 +25,7 @@ class BgFilterPopUp extends StatelessWidget {
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: ChangeNotifierProvider(
-        create: (_) => BgFilterPopUpVm(
+        create: (_) => BgChartFilterPopUpVm(
             filters:
                 Provider.of<BgProgressVm>(context, listen: false).filterState),
         child: _buildConsumer(),
@@ -34,8 +34,8 @@ class BgFilterPopUp extends StatelessWidget {
   }
 
   Widget _buildConsumer() {
-    return Consumer<BgFilterPopUpVm>(
-      builder: (BuildContext context, BgFilterPopUpVm vm, Widget? child) {
+    return Consumer<BgChartFilterPopUpVm>(
+      builder: (BuildContext context, BgChartFilterPopUpVm vm, Widget? child) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,

@@ -1,26 +1,24 @@
-// ignore_for_file: unnecessary_getters_setters
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../../core/enums/glucose_margins_filter.dart';
 import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
 import '../../../../../model/model.dart';
-import '../../../utils/bg_filter_pop_up/bg_filter_pop_up.dart';
-import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../../utils/glucose_margins_filter.dart';
-import '../../utils/progress_page_model.dart';
-import '../../utils/small_widget_card.dart';
-import '../widgets/tagger/bg_tagger_pop_up.dart';
+import '../../../bottom_actions_of_graph.dart';
+import '../../widgets/i_progress_screen.dart';
+import '../../widgets/small_chronic_component.dart';
+import '../view/bg_progress_screen.dart';
+import '../widgets/bg_chart_filter/bg_chart_filter_pop_up.dart';
 import '../widgets/charts/bg_bubble_chart.dart';
 import '../widgets/charts/bg_line_chart.dart';
-import '../view/bg_progress_screen.dart';
+import '../widgets/tagger/bg_tagger_pop_up.dart';
 
 enum GraphType { bubble, line }
 
 class BgProgressVm
     with ChangeNotifier, IBaseBottomActionsOfGraph
-    implements ProgressPage {
+    implements IProgressScreen {
   BgProgressVm({required BuildContext context}) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       isChartShow = true;
@@ -983,7 +981,7 @@ class BgProgressVm
     });
 
     Atom.show(
-      BgFilterPopUp(
+      BgChartFilterPopUp(
         height: context.height * .52,
         width: context.width * .6,
       ),
@@ -1003,10 +1001,11 @@ class BgProgressVm
     if (bgMeasurements.isNotEmpty &&
         getIt<GlucoseStorageImpl>().getLatestMeasurement() != null) {
       lastMeasurement = BgMeasurementGlucoseViewModel(
-          bgMeasurement: getIt<GlucoseStorageImpl>().getLatestMeasurement()!);
+        bgMeasurement: getIt<GlucoseStorageImpl>().getLatestMeasurement()!,
+      );
     }
 
-    return RbioSmallChronicWidget(
+    return SmallChronicComponent(
       callback: callBack,
       lastMeasurement: lastMeasurement == null
           ? LocaleProvider.current.no_measurement
