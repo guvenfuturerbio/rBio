@@ -18,7 +18,7 @@ enum DoctorPatientListSortType {
 class DoctorPatientListVm extends RbioVm {
   @override
   BuildContext mContext;
-  PatientType type;
+  PatientType? type;
 
   late PatientListModel listModel;
 

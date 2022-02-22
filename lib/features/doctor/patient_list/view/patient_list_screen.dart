@@ -11,7 +11,7 @@ import '../viewmodel/patient_list_vm.dart';
 
 class DoctorPatientListScreen extends StatelessWidget {
   // #region AtomParams
-  late PatientType type;
+  PatientType? type;
   // #endregion
 
   final bigFlex = 40;
@@ -24,7 +24,9 @@ class DoctorPatientListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     try {
-      type = Atom.queryParameters['type']!.xPatientType as PatientType;
+      if (Atom.queryParameters['type'] != null) {
+        type = Atom.queryParameters['type']!.xPatientType as PatientType;
+      }
     } catch (e) {
       log(e.toString());
       return const RbioRouteError();
