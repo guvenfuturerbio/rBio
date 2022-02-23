@@ -14,11 +14,13 @@ part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final UserManager userManager;
+  final Repository repository;
 
   var socialTypes = <SearchSocialType>[];
   List<SocialPostsResponse> allSocialList = [];
 
-  SearchBloc(this.userManager) : super(const SearchState.initial()) {
+  SearchBloc(this.userManager, this.repository)
+      : super(const SearchState.initial()) {
     on<SearchFetched>(onFetched);
     on<SearchTextFiltered>(onTextFiltered);
     on<SearchPlatformFiltered>(onPlatformFiltered);
@@ -116,7 +118,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Future<List<FilterResourcesResponse>> _fetchResources(String text) async {
-    return await getIt<Repository>().filterResources(
+    return await repository.filterResources(
       FilterResourcesRequest(
         tenantId: null,
         departmentId: null,

@@ -23,8 +23,10 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SearchBloc>(
-      create: (ctx) =>
-          SearchBloc(getIt<UserManager>())..add(const SearchFetched()),
+      create: (ctx) => SearchBloc(
+        getIt<UserManager>(),
+        getIt<Repository>(),
+      )..add(const SearchFetched()),
       child: SearchView(drawerKey: drawerKey),
     );
   }
