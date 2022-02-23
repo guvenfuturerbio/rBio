@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/chat/model/chat_person.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -39,12 +40,10 @@ class BgPatientDetailScreen extends StatefulWidget {
   const BgPatientDetailScreen({Key? key}) : super(key: key);
 
   @override
-  _BgPatientDetailScreenState createState() =>
-      _BgPatientDetailScreenState();
+  _BgPatientDetailScreenState createState() => _BgPatientDetailScreenState();
 }
 
-class _BgPatientDetailScreenState
-    extends State<BgPatientDetailScreen>
+class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> sizeAnimation;
@@ -85,14 +84,17 @@ class _BgPatientDetailScreenState
     } catch (_) {
       return const RbioRouteError();
     }
+
     MediaQuery.of(context).orientation == Orientation.landscape
         ? SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [])
         : SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
             overlays: SystemUiOverlay.values);
 
     return ChangeNotifierProvider<BgPatientDetailVm>(
-      create: (context) =>
-          BgPatientDetailVm(context: context, patientId: patientId),
+      create: (context) => BgPatientDetailVm(
+        context: context,
+        patientId: patientId,
+      ),
       child: Consumer<BgPatientDetailVm>(
         builder: (
           BuildContext context,
@@ -110,16 +112,6 @@ class _BgPatientDetailScreenState
                 : RbioScaffold(
                     appbar: _buildAppBar(),
                     body: _buildBody(vm),
-
-                    // ? Doktorda floating action button olmayacak. Bu yüzden kapatıldı.
-                    /*floatingActionButton: FloatingActionButton(
-                      backgroundColor: getIt<ITheme>().mainColor,
-                      onPressed: () {
-                        LoggerUtils.instance.i(vm.bgMeasurements.last.date);
-                        LoggerUtils.instance.i(vm.bgMeasurements.first.date);
-                      },
-                      child: const Icon(Icons.add),
-                    ),*/
                   ),
           );
         },
@@ -137,6 +129,19 @@ class _BgPatientDetailScreenState
             child: RbioBadge(
               image: R.image.chat,
               isDark: false,
+              onTap: () {
+                // final chatPerson = ChatPerson(
+                //   id: patientId.toString(),
+                //   name: patientName,
+                //   firebaseToken: '',
+                // );
+                // Atom.to(
+                //   PagePaths.chat,
+                //   queryParameters: {
+                //     'otherPerson': chatPerson.toJson(),
+                //   },
+                // );
+              },
             ),
           ),
           const SizedBox(

@@ -14,8 +14,8 @@ class ChatPerson {
   String? firebaseToken;
 
   ChatPerson({
-    this.name,
-    this.id,
+    required this.name,
+    required this.id,
     this.lastMessage,
     this.lastMessageSender,
     this.lastMessageType,
@@ -24,7 +24,7 @@ class ChatPerson {
     this.hasRead = true,
     this.otherHasRead = false,
     this.url = "",
-    this.firebaseToken,
+    required this.firebaseToken,
   });
 
   Map<String, dynamic> toMap() {

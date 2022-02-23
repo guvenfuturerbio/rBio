@@ -52,142 +52,54 @@ class _HomeScreenState extends State<HomeScreen> {
 
   RbioAppBar _buildAppBar(HomeVm vm) {
     return RbioAppBar(
-        leading: Center(
-          child: RbioSwitcher(
-            showFirstChild: vm.status.isShaken,
-            child1: IconButton(
+      leading: RbioSwitcher(
+        showFirstChild: vm.status.isShaken,
+        child1: IconButton(
+          onPressed: () {
+            vm.changeStatus();
+            vm.showRemovedWidgets();
+          },
+          icon: Icon(
+            Icons.add,
+            size: R.sizes.iconSize,
+            color: Colors.white,
+          ),
+        ),
+        child2: SizedBox(
+          child: RbioLeadingMenu(
+            drawerKey: widget.drawerKey,
+            isHome: true,
+          ),
+        ),
+      ),
+      actions: [
+        Visibility(
+          visible: vm.status.isShaken,
+          replacement: SizedBox.fromSize(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.done,
+                size: R.sizes.iconSize,
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          child: SizedBox(
+            child: IconButton(
               onPressed: () {
                 vm.changeStatus();
-                vm.showRemovedWidgets();
               },
               icon: Icon(
-                Icons.add,
+                Icons.done,
                 size: R.sizes.iconSize,
-                color: Colors.white,
-              ),
-            ),
-            child2: SizedBox(
-              child: RbioLeadingMenu(
-                drawerKey: widget.drawerKey,
-                isHome: true,
+                color: getIt<ITheme>().cardBackgroundColor,
               ),
             ),
           ),
         ),
-        actions: [
-          Visibility(
-            visible: vm.status.isShaken,
-            replacement: SizedBox.fromSize(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.done,
-                  size: R.sizes.iconSize,
-                  color: Colors.transparent,
-                ),
-              ),
-            ),
-            child: SizedBox(
-              child: IconButton(
-                onPressed: () {
-                  vm.changeStatus();
-                },
-                icon: Icon(
-                  Icons.done,
-                  size: R.sizes.iconSize,
-                  color: getIt<ITheme>().cardBackgroundColor,
-                ),
-              ),
-            ),
-          )
-        ]
-        /*
-        Center(
-          child: RbioSwitcher(
-            showFirstChild: vm.status.isShaken,
-            child1: SizedBox(
-              child: IconButton(
-                  onPressed: () {
-                    vm.changeStatus();
-                  },
-                  icon: Icon(
-                    Icons.done,
-                    size: R.sizes.iconSize,
-                    color: getIt<ITheme>().cardBackgroundColor,
-                  )),
-            ),
-            child2: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      //
-                      Positioned.fill(
-                        child: IconButton(
-                          icon: Container(
-                            color: Colors.transparent,
-                            child: SvgPicture.asset(
-                              R.image.chat_icon,
-                              color: Colors.white,
-                              width: R.sizes.iconSize,
-                            ),
-                          ),
-                          onPressed: () {
-                            Atom.to(PagePaths.CONSULTATION);
-                          },
-                        ),
-                      ),
-
-                      //
-                      Consumer<NotificationBadgeNotifier>(
-                        builder: (context, badgeNotifier, child) {
-                          if (badgeNotifier.value) {
-                            return Align(
-                              alignment: Alignment.topRight,
-                              child: CircleAvatar(
-                                backgroundColor: R.color.darkRed,
-                                radius: 9,
-                              ),
-                            );
-                          }
-
-                          return SizedBox();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-
-                //
-                IconButton(
-                  icon: Container(
-                    color: Colors.transparent,
-                    child: SvgPicture.asset(
-                      R.image.search_icon,
-                      color: Colors.white,
-                      width: R.sizes.iconSize,
-                    ),
-                  ),
-                  onPressed: () {
-                    Atom.to(PagePaths.SEARCH_PAGE);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        //
-        R.sizes.wSizer8,
-      ],*/
-        );
+      ],
+    );
   }
 
   Widget _buildBody(HomeVm vm) {

@@ -1,10 +1,11 @@
+import 'package:cache/cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/features/dashboard/not_chronic_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
+import '../../dashboard/not_chronic_screen.dart';
 import '../controller/consultation_vm.dart';
 import '../model/chat_person.dart';
 
@@ -21,19 +22,22 @@ class ConsultationScreen extends StatelessWidget {
     return !(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)
         ? NotChronicScreen(
             title: LocaleProvider.current.consultation,
+            drawerKey: drawerKey,
           )
         : ChangeNotifierProvider<DoctorConsultationVm>(
             create: (context) => DoctorConsultationVm(context),
-            child: Consumer<DoctorConsultationVm>(builder: (
-              BuildContext context,
-              DoctorConsultationVm vm,
-              Widget? child,
-            ) {
-              return RbioScaffold(
-                appbar: _buildAppBar(context),
-                body: _buildBody(context, vm),
-              );
-            }),
+            child: Consumer<DoctorConsultationVm>(
+              builder: (
+                BuildContext context,
+                DoctorConsultationVm vm,
+                Widget? child,
+              ) {
+                return RbioScaffold(
+                  appbar: _buildAppBar(context),
+                  body: _buildBody(context, vm),
+                );
+              },
+            ),
           );
   }
 
@@ -74,6 +78,9 @@ class ConsultationScreen extends StatelessWidget {
       ) {
         if (streamList.hasData) {
           final list = vm.getChatPersonListWithStream(streamList.data!);
+          getIt<CacheClient>().write<List<ChatPerson>>(
+              key: R.strings.chatPersonListKey, value: list);
+
           return ListView.builder(
             padding: EdgeInsets.only(
               bottom: drawerKey == null ? 0 : R.sizes.bottomNavigationBarHeight,

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:onedosehealth/features/doctor/patient_detail/blood_glucose/blood_glucose.dart';
-import 'package:onedosehealth/features/doctor/patient_detail/blood_pressure/blood_pressure.dart';
-import 'package:onedosehealth/features/doctor/patient_detail/scale/view/scale_patient_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -19,6 +16,9 @@ import '../../features/chronic_tracking/treatment/treatment_process/view/treatme
 import '../../features/dashboard/dashboard_navigation.dart';
 import '../../features/detailed_symptom/detailed_symptom_checker.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
+import '../../features/doctor/patient_detail/blood_glucose/blood_glucose.dart';
+import '../../features/doctor/patient_detail/blood_pressure/blood_pressure.dart';
+import '../../features/doctor/patient_detail/scale/view/scale_patient_detail_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';

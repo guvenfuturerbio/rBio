@@ -76,6 +76,8 @@ dependencies:
     path: ./packages/grouped_list
   health:
     path: ./packages/health
+  cache:
+    path: ./packages/cache
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.2
   http: ^0.13.4

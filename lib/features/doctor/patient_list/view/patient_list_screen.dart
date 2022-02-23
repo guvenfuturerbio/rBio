@@ -28,7 +28,6 @@ class DoctorPatientListScreen extends StatelessWidget {
         type = Atom.queryParameters['type']!.xPatientType as PatientType;
       }
     } catch (e) {
-      log(e.toString());
       return const RbioRouteError();
     }
 

@@ -8,6 +8,8 @@ class _Strings {
   final zoomAppSecret = "phfFqbluB0zJFr3yTB6yP2aJyWcSTH3wC3gw";
   final zoomMeetingRoomPass = "?3/=dL,2/G";
 
+  final chatPersonListKey = "chatPersons";
+
   final tawktoScript = "<script type="
       "text/javascript"
       ">"

@@ -695,6 +695,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "strips_used" : MessageLookupByLibrary.simpleMessage("Şimdiye kadar %1\$ adet strip kullandınız"),
     "strpCnt" : MessageLookupByLibrary.simpleMessage("<stripCount>"),
     "subscriptions" : MessageLookupByLibrary.simpleMessage("Takip Ettiklerim"),
+    "succefully_created_account" : MessageLookupByLibrary.simpleMessage("Kaydınız başarıyla tamamlanmıştır"),
     "succefully_created_pass" : MessageLookupByLibrary.simpleMessage("Yeni şifreniz başarıyla oluşturulmuştur"),
     "success_message_title" : MessageLookupByLibrary.simpleMessage("Bilgi"),
     "suggestion_thanks_message" : MessageLookupByLibrary.simpleMessage("İlginiz ve katkınız için teşekkür ederiz."),

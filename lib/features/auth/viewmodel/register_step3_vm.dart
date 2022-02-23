@@ -13,7 +13,6 @@ class RegisterStep3ScreenVm extends RbioVm {
 
   void registerStep3(
     UserRegistrationStep3Model userRegistrationStep3,
-    UserRegistrationStep3Model userRegistrationStep3Model,
     bool isWithoutTCKN,
   ) async {
     try {
@@ -21,7 +20,7 @@ class RegisterStep3ScreenVm extends RbioVm {
       GuvenResponseModel response;
       if (isWithoutTCKN) {
         response = await getIt<Repository>()
-            .registerStep3WithOutTc(userRegistrationStep3Model);
+            .registerStep3WithOutTc(userRegistrationStep3);
       } else {
         response =
             await getIt<Repository>().registerStep3Ui(userRegistrationStep3);

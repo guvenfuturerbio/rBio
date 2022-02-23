@@ -42,6 +42,7 @@ class _MeasurementTrackingHomeScreenState
     return !getIt<UserNotifier>().isCronic
         ? NotChronicScreen(
             title: LocaleProvider.current.chronic_track_home,
+            drawerKey: widget.drawerKey,
           )
         : ChangeNotifierProvider(
             create: (_) => MeasurementTrackingVm(),
