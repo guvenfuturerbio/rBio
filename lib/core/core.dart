@@ -1,10 +1,11 @@
 export 'package:atom/atom.dart';
 
-export '../app_config/app_config.dart';
+export '../app/config/app_config.dart';
+export '../app/app_bloc_observer.dart';
+export '../app/app_inherited_widget.dart';
 export '../generated/l10n.dart';
 
 export 'locator.dart';
-export 'rbio_config.dart';
 export 'rbio_custom_icons.dart';
 
 /// Core

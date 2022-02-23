@@ -1,8 +1,8 @@
-part of '../app_config.dart';
+part of 'app_config.dart';
 
-class BurgundyConfig implements AppConfig {
+class GuvenConfig implements AppConfig {
   @override
-  ITheme get theme => BurgundyTheme();
+  ITheme get theme => GuvenTheme();
 
   @override
   bool get chronicTracking => true;

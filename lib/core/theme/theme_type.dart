@@ -18,13 +18,13 @@ extension ThemeTypeExt on ThemeType {
   ITheme get xGetTheme {
     switch (this) {
       case ThemeType.green:
-        return GreenTheme();
+        return RbioTheme();
 
       case ThemeType.burgundy:
-        return BurgundyTheme();
+        return GuvenTheme();
 
       default:
-        return GreenTheme();
+        return RbioTheme();
     }
   }
 }

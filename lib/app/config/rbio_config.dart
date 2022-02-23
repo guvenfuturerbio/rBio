@@ -1,8 +1,8 @@
-part of '../app_config.dart';
+part of 'app_config.dart';
 
-class DefaultConfig implements AppConfig {
+class RbioConfig implements AppConfig {
   @override
-  ITheme get theme => GreenTheme();
+  ITheme get theme => RbioTheme();
 
   @override
   bool get chronicTracking => true;

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../features/symptom_checker/symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
 import '../model/model.dart';
 
-class RbioConfig extends InheritedWidget {
+class AppInheritedWidget extends InheritedWidget {
   @override
   final Widget child;
 
@@ -20,14 +20,14 @@ class RbioConfig extends InheritedWidget {
   List<GetBodySymptomsResponse>? listBodySympRsp;
   BodySublocationsVm? sublocationVm;
 
-  RbioConfig({
+  AppInheritedWidget({
     Key? key,
     this.listBodySympRsp,
     required this.child,
   }) : super(key: key, child: child);
 
-  static RbioConfig? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<RbioConfig>();
+  static AppInheritedWidget? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<AppInheritedWidget>();
   }
 
   @override

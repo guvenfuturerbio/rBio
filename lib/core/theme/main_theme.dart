@@ -20,7 +20,7 @@ abstract class ITheme {
   Color get grayColor;
 }
 
-class GreenTheme extends ITheme {
+class RbioTheme extends ITheme {
   @override
   ThemeType get type => ThemeType.green;
 
@@ -118,7 +118,7 @@ class GreenTheme extends ITheme {
   Color get grayColor => const Color.fromARGB(255, 237, 237, 237);
 }
 
-class BurgundyTheme extends ITheme {
+class GuvenTheme extends ITheme {
   @override
   ThemeType get type => ThemeType.burgundy;
 

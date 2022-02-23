@@ -1,7 +1,7 @@
-import '../core/core.dart';
+import '../../core/core.dart';
 
-part 'concrete/burgundy_config.dart';
-part 'concrete/default_config.dart';
+part 'guven_config.dart';
+part 'rbio_config.dart';
 
 abstract class AppConfig {
   ITheme get theme;
