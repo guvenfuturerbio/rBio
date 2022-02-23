@@ -22,7 +22,8 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
 
     bloodGlucoseList = result;
     List<BgMeasurement> bgMeasure = result
-        .map((e) => BgMeasurement(
+        .map(
+          (e) => BgMeasurement(
             notes: e.bloodGlucoseMeasurement?.valueNote,
             id: e.id,
             color: Utils.instance.fetchMeasurementColor(
@@ -35,20 +36,22 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
             date: e.detail?.occurrenceTime,
             tag: e.tag?.id,
             result: e.bloodGlucoseMeasurement?.value,
-            isManual: e.isManuel))
+            isManual: e.isManuel,
+          ),
+        )
         .toList();
-    bgMeasurements.clear();
 
+    bgMeasurements.clear();
     bgMeasurements = bgMeasure.map((e) => BgMeasurementViewModel(e)).toList();
     bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
-
     fetchBgMeasurementsDateList(bgMeasurements);
-
     notifyListeners();
   }
 
   Future<void> fetchBgMeasurementsInDateRange(
-      DateTime start, DateTime end) async {
+    DateTime start,
+    DateTime end,
+  ) async {
     //final result = await MeasurementService().fetchBgMeasurements();
     List<BgMeasurement> bgMeasure = bloodGlucoseList
         .map(
@@ -69,6 +72,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
           ),
         )
         .toList();
+
     bgMeasurements.clear();
     for (var e in bgMeasure) {
       if (!bgMeasurements.contains(BgMeasurementViewModel(e))) {
@@ -83,7 +87,10 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
     notifyListeners();
   }
 
-  getMoreData({required int patientId, required DateTime date}) async {
+  Future<void> getMoreData({
+    required int patientId,
+    required DateTime date,
+  }) async {
     final result = await getIt<DoctorRepository>().getMyPatientBloodGlucose(
       patientId,
       GetMyPatientFilter(end: date.toIso8601String(), start: null),
@@ -91,24 +98,27 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
 
     bloodGlucoseList = result;
     List<BgMeasurementViewModel> bgMeasure = bloodGlucoseList
-        .map((e) => BgMeasurementViewModel(
-              BgMeasurement(
-                notes: e.bloodGlucoseMeasurement?.valueNote,
-                id: e.id,
-                color: Utils.instance.fetchMeasurementColor(
-                    measurement:
-                        int.parse(e.bloodGlucoseMeasurement?.value as String),
-                    criticMin: PatientNotifiers().patientDetail.hypo!,
-                    criticMax: PatientNotifiers().patientDetail.hyper!,
-                    targetMax: PatientNotifiers().patientDetail.rangeMax!,
-                    targetMin: PatientNotifiers().patientDetail.rangeMin!),
-                date: e.detail?.occurrenceTime,
-                tag: e.tag?.id,
-                result: e.bloodGlucoseMeasurement?.value,
-                isManual: e.isManuel,
-              ),
-            ))
+        .map(
+          (e) => BgMeasurementViewModel(
+            BgMeasurement(
+              notes: e.bloodGlucoseMeasurement?.valueNote,
+              id: e.id,
+              color: Utils.instance.fetchMeasurementColor(
+                  measurement:
+                      int.parse(e.bloodGlucoseMeasurement?.value as String),
+                  criticMin: PatientNotifiers().patientDetail.hypo!,
+                  criticMax: PatientNotifiers().patientDetail.hyper!,
+                  targetMax: PatientNotifiers().patientDetail.rangeMax!,
+                  targetMin: PatientNotifiers().patientDetail.rangeMin!),
+              date: e.detail?.occurrenceTime,
+              tag: e.tag?.id,
+              result: e.bloodGlucoseMeasurement?.value,
+              isManual: e.isManuel,
+            ),
+          ),
+        )
         .toList();
+
     bgMeasurements.addAll(bgMeasure);
     bgMeasurements.sort((a, b) => a.date.compareTo(b.date));
     fetchBgMeasurementsDateList(bgMeasurements);
@@ -116,7 +126,8 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
   }
 
   void fetchBgMeasurementsDateList(
-      List<BgMeasurementViewModel> bgMeasurements) {
+    List<BgMeasurementViewModel> bgMeasurements,
+  ) {
     bool isInclude = false;
     bgMeasurementDates.clear();
     for (var data in bgMeasurements) {

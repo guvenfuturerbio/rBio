@@ -19,6 +19,6 @@ class R {
   static final strings = _Strings();
   static final sizes = _Sizes();
   static final regExp = _RegExp();
-  static final bodyDatas = _Constants();
+  static final constants = _Constants();
   static final deviceGuides = _DeviceGuides();
 }

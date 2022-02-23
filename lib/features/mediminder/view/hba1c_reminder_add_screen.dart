@@ -184,7 +184,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
               final initialDate = hba1cVM.lastMeasurementDate;
               final result = await showGuvenDatePicker(
                 context,
-                DateTime.now(),
+                R.constants.date2000,
                 DateTime.now().add(const Duration(days: 365)),
                 (initialDate == '')
                     ? DateTime.now()
@@ -209,9 +209,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
   Widget _buildLastTestValue(BuildContext context, Hba1cReminderAddVm hba1cVM) {
     return GestureDetector(
       onTap: () async {
-        final result = await Atom.show<String?>(const _LastTestDialog());
+        final result = await Atom.show(const _LastTestDialog());
         if (result != null) {
-          hba1cVM.setPreviousResult(double.parse(result));
+          hba1cVM.setPreviousResult(double.tryParse(result) ?? 0);
         }
       },
       child: Container(

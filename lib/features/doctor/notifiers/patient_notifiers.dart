@@ -9,6 +9,10 @@ class PatientNotifiers extends ChangeNotifier {
 
   List<DoctorGlucosePatientModel>? _patientList;
 
+  DoctorPatientDetailModel get patientDetail => _patientDetail;
+
+  List<DoctorGlucosePatientModel> get patientList => _patientList ?? [];
+
   static final PatientNotifiers _patientNotifiers =
       PatientNotifiers._internal();
 
@@ -34,8 +38,4 @@ class PatientNotifiers extends ChangeNotifier {
         .updateMyPatientLimit(patientId, updateMyPatientLimit);
     notifyListeners();
   }
-
-  DoctorPatientDetailModel get patientDetail => _patientDetail;
-
-  List<DoctorGlucosePatientModel> get patientList => _patientList??[];
 }
