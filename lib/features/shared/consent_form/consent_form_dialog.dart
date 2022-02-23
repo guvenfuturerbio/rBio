@@ -53,18 +53,20 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                     //
                     Row(
                       children: [
+                        //
                         Container(
                           alignment: Alignment.bottomLeft,
                           child: Checkbox(
-                            value: value.clickedConsentForm ?? false,
+                            value: value.clickedConsentForm,
                             checkColor: Colors.white,
                             onChanged: (newValue) {
                               value.toggleConsentFormState();
                             },
-                            activeColor: getIt<ITheme>()
-                                .mainColor, //  <-- leading Checkbox
+                            activeColor: getIt<ITheme>().mainColor,
                           ),
                         ),
+
+                        //
                         Expanded(
                           child: InkWell(
                             onTap: () {

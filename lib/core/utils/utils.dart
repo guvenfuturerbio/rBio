@@ -583,27 +583,6 @@ class UtilityManager {
     );
   }
 
-  void joinJitsiMeeting(JitsiMeetingOptions options) async {
-    await getIt<Repository>().setJitsiWebConsultantId(options.roomNameOrUrl);
-
-    await JitsiMeetWrapper.joinMeeting(
-      options: options,
-      listener: JitsiMeetingListener(
-        onConferenceWillJoin: (message) {
-          debugPrint(
-              "${options.roomNameOrUrl} will join with message: $message");
-        },
-        onConferenceJoined: (message) {
-          debugPrint("${options.roomNameOrUrl} joined with message: $message");
-        },
-        onConferenceTerminated: (message, _) {
-          debugPrint(
-              "${options.roomNameOrUrl} terminated with message: $message");
-        },
-      ),
-    );
-  }
-
   String getReadableTimeFromDateTime(DateTime measureDT) {
     return "${measureDT.hour > 9 ? measureDT.hour : "0" + measureDT.hour.toString()}:${measureDT.minute > 9 ? measureDT.minute : "0" + measureDT.minute.toString()}  ${measureDT.day}.${measureDT.month}.${measureDT.year}";
   }

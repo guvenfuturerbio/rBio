@@ -276,7 +276,9 @@ class UserManagerImpl extends UserManager {
       final String name = parseJwtPayLoad(token as String)['name'] != null
           ? parseJwtPayLoad(token)['name'] as String
           : parseJwtPayLoad(token)['fullname'] as String;
-      LoggerUtils.instance.i("toplantı başlıyooor $webConsultantId");
+
+      LoggerUtils.instance.i("Toplantı Başlıyor : $webConsultantId");
+
       final options = JitsiMeetingOptions(
         roomNameOrUrl: webConsultantId,
         serverUrl: "https://stream.guven.com.tr/",
