@@ -39,7 +39,7 @@ class UserNotifier extends ChangeNotifier {
       }
     }
 
-    throw Exception("patient null");
+    return PatientResponse();
   }
 
   void userTypeFetcher(RbioLoginResponse rsp) {
@@ -118,6 +118,7 @@ class UserNotifier extends ChangeNotifier {
       sharedPreferencesManager
           .getBool(SharedPreferencesKeys.canAccessHospitalOps) ??
       false;
+
   void clear() {
     patient = null;
     _userType = [];

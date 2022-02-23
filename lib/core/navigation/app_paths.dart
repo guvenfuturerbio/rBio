@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:onedosehealth/features/doctor/patient_detail/blood_glucose/blood_glucose.dart';
+import 'package:onedosehealth/features/doctor/patient_detail/blood_pressure/blood_pressure.dart';
+import 'package:onedosehealth/features/doctor/patient_detail/scale/view/scale_patient_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -15,9 +18,6 @@ import '../../features/chronic_tracking/treatment/treatment_detail/view/treatmen
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/dashboard_navigation.dart';
 import '../../features/detailed_symptom/detailed_symptom_checker.dart';
-import '../../features/doctor/blood_glucose_patient_detail/view/blood_glucose_patient_detail_screen.dart';
-import '../../features/doctor/blood_pressure_patient_detail/view/blood_pressure_detail_screen.dart';
-import '../../features/doctor/bmi_patient_detail/view/bmi_patient_detail_screen.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
@@ -495,16 +495,15 @@ class VRouterRoutes {
           stackedRoutes: [
             VWidget(
               path: PagePaths.doctorBmiPatientDetail,
-              widget: const BmiPatientDetailScreen(
-                  key: Key('BmiPatientDetailScreen')),
+              widget: const ScalePatientDetailScreen(),
             ),
             VWidget(
               path: PagePaths.doctorGlucosePatientDetailL,
-              widget: const BloodGlucosePatientDetailScreen(),
+              widget: const BgPatientDetailScreen(),
             ),
             VWidget(
               path: PagePaths.doctorPressurePatientDetail,
-              widget: const BloodPressurePatientDetailScreen(),
+              widget: const BpPatientDetailScreen(),
             ),
             VWidget(
               path: PagePaths.doctorTreatmentProgress,

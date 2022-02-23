@@ -46,9 +46,9 @@ class DoctorPatientListVm extends RbioVm {
   // #region _getAllByType
   Future<PatientListModel<dynamic>> _getAllByType() async {
     switch (type) {
-      case PatientType.sugar:
+      case PatientType.bg:
         {
-          return PatientBloodGlucoseListModel(
+          return BgPatientListModel(
             mContext,
             await getIt<DoctorRepository>().getMySugarPatient(
               GetMyPatientFilter(
@@ -59,9 +59,9 @@ class DoctorPatientListVm extends RbioVm {
           );
         }
 
-      case PatientType.bmi:
+      case PatientType.scale:
         {
-          return PatientBMIListModel(
+          return ScalePatientListModel(
             mContext,
             await getIt<DoctorRepository>().getMyBMIPatient(
               GetMyPatientFilter(
@@ -74,7 +74,7 @@ class DoctorPatientListVm extends RbioVm {
 
       case PatientType.bp:
         {
-          return PatientBloodPressureListModel(
+          return BpPatientListModel(
             mContext,
             await getIt<DoctorRepository>().getMyBpPatient(
               GetMyPatientFilter(

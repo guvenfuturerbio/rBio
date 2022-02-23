@@ -4,9 +4,9 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../viewmodel/patient_list_vm.dart';
 
-part 'blood_glucose_list_model.dart';
-part 'blood_pressure_list_model.dart';
-part 'bmi_list_model.dart';
+part 'bg_list_model.dart';
+part 'bp_list_model.dart';
+part 'scale_list_model.dart';
 
 abstract class PatientListModel<T> {
   final BuildContext context;
