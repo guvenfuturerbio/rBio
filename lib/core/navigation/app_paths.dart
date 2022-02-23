@@ -63,7 +63,7 @@ class VRouterRoutes {
   static var routes = [
     VWidget(
       path: PagePaths.login,
-      widget: const ReminderHomeScreen(),
+      widget: const LoginScreen(),
     ),
 
     VWidget(
