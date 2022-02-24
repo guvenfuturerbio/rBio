@@ -44,8 +44,9 @@ class _ScaleBubbleChartState extends State<ScaleBubbleChart> {
       builder: (context, value, child) {
         _selected = value.selected;
         _chartData = value.chartData;
-        _minimum = value.dailyLowestValue;
-        _maximum = value.dailyHighestValue;
+        _minimum = value.lowestValue - 10; //value.dailyLowestValue;
+        _maximum = value.highestValue + 20;
+        //value.dailyHighestValue;
         _targetMin = value.targetMin!;
         _targetMax = value.targetMax!;
         _startDate = value.startDate;
