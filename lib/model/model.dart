@@ -66,7 +66,6 @@ export 'shared/rbio_login_response.dart';
 export 'shared/user_account_info.dart';
 export 'shared/user_login_info.dart';
 export 'shared/video_call_stream_type.dart';
-export 'shared/zoom_create_meeting_response.dart';
 export 'symptom_checker/symptoms_auth/symptoms_auth_response.dart';
 export 'symptom_checker/symptoms_requests/get_body_symptoms_response.dart';
 export 'symptom_checker/symptoms_requests/get_bodylocations_response.dart';

@@ -2,7 +2,10 @@ class SymptomAuthResponse {
   String? token;
   int? validThrough;
 
-  SymptomAuthResponse({this.token, this.validThrough});
+  SymptomAuthResponse({
+    this.token,
+    this.validThrough,
+  });
 
   SymptomAuthResponse.fromJson(Map<String, dynamic> json) {
     token = json['Token'] as String?;

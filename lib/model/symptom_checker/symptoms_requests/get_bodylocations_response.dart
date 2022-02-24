@@ -2,7 +2,10 @@ class GetBodyLocationResponse {
   int? id;
   String? name;
 
-  GetBodyLocationResponse({this.id, this.name});
+  GetBodyLocationResponse({
+    this.id,
+    this.name,
+  });
 
   GetBodyLocationResponse.fromJson(Map<String, dynamic> json) {
     id = json['ID'] as int?;
