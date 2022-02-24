@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -231,8 +232,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                           ),
                           title: LocaleProvider.current.uploadFile,
                           onTap: () async {
-                            Uint8List? fileBytes =
-                                await value.getSelectedFile();
+                            File? fileBytes = await value.getSelectedFile();
                             if (fileBytes != null) {
                               showDialog(
                                 context: context,
@@ -310,7 +310,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                         ),
                         title: "Upload\nFile",
                         onTap: () async {
-                          Uint8List? fileBytes = await value.getSelectedFile();
+                          File? fileBytes = await value.getSelectedFile();
                           if (fileBytes != null) {
                             showDialog(
                               context: context,
