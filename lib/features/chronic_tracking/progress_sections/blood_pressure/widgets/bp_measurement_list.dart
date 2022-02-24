@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -129,21 +130,21 @@ class BpMeasurementList extends StatelessWidget {
           onTap: () async {
             try {
               await getIt<BloodPressureStorageImpl>().delete(item.bpModel.key);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    LocaleProvider.current.delete_measurement_succesfull,
-                  ),
+              Utils.instance.showSnackbar(
+                context,
+                LocaleProvider.current.delete_measurement_succesfull,
+                backColor: getIt<ITheme>().mainColor,
+                trailing: SvgPicture.asset(
+                  R.image.done,
+                  height: R.sizes.iconSize2,
+                  color: getIt<ITheme>().iconSecondaryColor,
                 ),
               );
             } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    LocaleProvider.current.delete_measurement_un_succesfull,
-                  ),
-                  backgroundColor: Colors.red,
-                ),
+              Utils.instance.showSnackbar(
+                context,
+                LocaleProvider.current.delete_measurement_un_succesfull,
+                backColor: Colors.red,
               );
             }
           },

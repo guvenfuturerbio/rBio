@@ -575,6 +575,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pdf_filename" : MessageLookupByLibrary.simpleMessage("MyBloodGlucoseReport.pdf"),
     "personal_data_policy" : MessageLookupByLibrary.simpleMessage("Privacy Statement and Personal Data Protection Policy"),
     "personal_info" : MessageLookupByLibrary.simpleMessage("Personal Information"),
+    "personal_update_success" : MessageLookupByLibrary.simpleMessage("Your information has been successfully updated"),
     "phone_guven" : MessageLookupByLibrary.simpleMessage("444 94 94"),
     "phone_number" : MessageLookupByLibrary.simpleMessage("Phone Number"),
     "pick" : MessageLookupByLibrary.simpleMessage("Pick"),

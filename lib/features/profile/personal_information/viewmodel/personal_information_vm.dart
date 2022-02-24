@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/core.dart';
@@ -69,6 +70,17 @@ class PersonalInformationScreenVm extends RbioVm {
       );
       await getIt<UserNotifier>().setUserAccount(sharedUserAccount);
       await savePhoto();
+      Utils.instance.showSnackbar(
+        mContext,
+        LocaleProvider.current.personal_update_success,
+        backColor: getIt<ITheme>().mainColor,
+        trailing: SvgPicture.asset(
+          R.image.done,
+          height: R.sizes.iconSize2,
+          color: getIt<ITheme>().iconSecondaryColor,
+        ),
+      );
+      Utils.instance.hideKeyboard(mContext);
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
     } finally {

@@ -571,6 +571,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pdf_filename" : MessageLookupByLibrary.simpleMessage("KanSekerOlcumRaporu.pdf"),
     "personal_data_policy" : MessageLookupByLibrary.simpleMessage("Gizlilik Bildirimi ve Kişisel Veri Koruma Politikası"),
     "personal_info" : MessageLookupByLibrary.simpleMessage("Kişisel Bilgiler"),
+    "personal_update_success" : MessageLookupByLibrary.simpleMessage("Bilgileriniz başarıyla güncellenmiştir"),
     "phone_guven" : MessageLookupByLibrary.simpleMessage("444 94 94"),
     "phone_number" : MessageLookupByLibrary.simpleMessage("Telefon Numaranız"),
     "pick" : MessageLookupByLibrary.simpleMessage("Seç"),

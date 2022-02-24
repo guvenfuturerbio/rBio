@@ -77,15 +77,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     _nameEditingController.text = userName + " " + userSurname;
 
     final patientsLength = userAccount.patients?.length ?? 0;
-    final patientsFirstBirthDate =
-        userAccount.patients?.first.birthDate?.replaceAll('.', '/') ?? '';
-    _birthdayEditingController.text =
-        patientsLength > 0 ? patientsFirstBirthDate : "-";
+    if (patientsLength > 0) {
+      final patientsFirstBirthDate =
+          userAccount.patients?.first.birthDate?.replaceAll('.', '/') ?? '';
+      _birthdayEditingController.text =
+          patientsLength > 0 ? patientsFirstBirthDate : "-";
+    }
 
     _phoneNumberEditingController.text = userAccount.phoneNumber ?? '';
 
     final isEMail =
-        userAccount.electronicMail?.contains("@mailyok.com") ?? false;
+        !(userAccount.electronicMail?.contains("@mailyok.com") ?? false);
     if (isEMail) {
       _emailEditingController.text = userAccount.electronicMail ?? '';
     }
@@ -265,7 +267,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       focusNode: _emailFocus,
                       controller: _emailEditingController,
                       textInputAction: TextInputAction.done,
-                      hintText: LocaleProvider.of(context).hint_input_password,
+                      hintText: LocaleProvider.of(context).email_address,
                       inputFormatters: <TextInputFormatter>[
                         TabToNextFieldTextInputFormatter(
                           context,

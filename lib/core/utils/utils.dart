@@ -40,6 +40,36 @@ class Utils {
     }
   }
 
+  void showSnackbar(
+    BuildContext context,
+    String text, {
+    Color? backColor,
+    Widget? trailing,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: backColor,
+        content: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //
+            Expanded(
+              child: Text(
+                text,
+                style: context.xHeadline3.copyWith(
+                  color: getIt<ITheme>().textColor,
+                ),
+              ),
+            ),
+
+            //
+            trailing ?? const SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+
   String encryptWithSalsa20(String plainText, String email) {
     //final key = encrypt.Key.fromLength(32);
     final ivMail = email.substring(0, 8);
