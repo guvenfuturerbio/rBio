@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars, overridden_fields, close_sinks, unused_element
-
 import 'dart:io';
 import 'dart:math';
 
@@ -9,8 +7,6 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
-import '../core.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -26,6 +22,9 @@ String? selectedNotificationPayload;
 // }
 
 abstract class LocalNotificationManager {
+  final void Function(dynamic message) logger;
+  LocalNotificationManager(this.logger);
+
   bool get didNotificationLaunchApp;
   BehaviorSubject<String>? selectNotificationSubject;
   BehaviorSubject<ReceivedNotification>? didReceiveLocalNotificationSubject;
@@ -132,6 +131,9 @@ abstract class LocalNotificationManager {
 }
 
 class LocalNotificationManagerImpl extends LocalNotificationManager {
+  LocalNotificationManagerImpl(void Function(dynamic message) logger)
+      : super(logger);
+
   NotificationAppLaunchDetails? _notificationAppLaunchDetails;
 
   @override
@@ -153,12 +155,12 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
     await _configureLocalTimeZone();
     await _configureLaunchDetails();
     await _configurePlugin();
-    if (!Atom.isWeb) await _printPendingNotifications();
+    if (!kIsWeb) await _printPendingNotifications();
     return _notificationAppLaunchDetails;
   }
 
   Future<void> _configureLocalTimeZone() async {
-    if (Atom.isWeb || Platform.isLinux) {
+    if (kIsWeb || Platform.isLinux) {
       return;
     }
     tz.initializeTimeZones();
@@ -168,7 +170,7 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
   }
 
   Future<void> _configureLaunchDetails() async {
-    _notificationAppLaunchDetails = !Atom.isWeb && Platform.isLinux
+    _notificationAppLaunchDetails = !kIsWeb && Platform.isLinux
         ? null
         : await flutterLocalNotificationsPlugin
             .getNotificationAppLaunchDetails();
@@ -224,7 +226,8 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
 
   // #region _printPendingNotifications
   Future<void> _printPendingNotifications() async {
-    LoggerUtils.instance.i('----------- Pending Notifications -----------');
+    logger(
+        '[LocalNotificationManager] ----------- Pending Notifications -----------');
     final pendingNotifications = await pendingNotificationRequests();
     var pendingList = <Map<String, dynamic>>[];
     for (var item in pendingNotifications) {
@@ -236,8 +239,8 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
       };
       pendingList.add(itemMap);
     }
-    LoggerUtils.instance.i(pendingList);
-    LoggerUtils.instance.i('-----------');
+    logger(pendingList);
+    logger('[LocalNotificationManager] -----------');
   }
   // #endregion
 

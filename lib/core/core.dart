@@ -1,4 +1,6 @@
 export 'package:atom/atom.dart';
+export 'package:shared_preferences_manager/shared_preferences_manager.dart';
+export 'package:local_notification_manager/local_notification_manager.dart';
 
 export '../app/config/app_config.dart';
 export '../app/app_bloc_observer.dart';
@@ -44,7 +46,6 @@ export 'enums/patient_type.dart';
 export 'enums/payment_type.dart';
 export 'enums/remindable.dart';
 export "enums/secret_keys.dart";
-export "enums/shared_preferences_keys.dart";
 export "enums/usage_type.dart";
 
 export 'exception/display_exception.dart';
@@ -56,8 +57,7 @@ export "extension/extension.dart";
 
 export "manager/ble_manager.dart";
 export 'manager/firebase_messaging_manager.dart';
-export "manager/local_notification_manager.dart";
-export "manager/shared_preferences_manager.dart";
+
 export "manager/user_manager.dart";
 
 export 'navigation/app_paths.dart';

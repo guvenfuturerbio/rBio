@@ -75,7 +75,11 @@ Future<void> setupLocator(AppConfig appConfig) async {
     ),
   );
   getIt.registerLazySingleton<LocalNotificationManager>(
-    () => LocalNotificationManagerImpl(),
+    () => LocalNotificationManagerImpl(
+      (message) {
+        LoggerUtils.instance.i(message);
+      },
+    ),
   );
   getIt.registerLazySingleton<ISharedPreferencesManager>(
     () => SharedPreferencesManager(),

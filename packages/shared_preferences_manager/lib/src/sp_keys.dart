@@ -1,6 +1,4 @@
-import 'package:collection/collection.dart';
-
-import '../core.dart';
+part of 'sp_manager.dart';
 
 enum SharedPreferencesKeys {
   updateDialog,
@@ -24,13 +22,4 @@ enum SharedPreferencesKeys {
   hba1cList,
   medicines,
   usedStripCount,
-}
-
-extension SharedPreferencesKeysStringExt on String {
-  SharedPreferencesKeys? get xSharedKeys => SharedPreferencesKeys.values
-      .firstWhereOrNull((element) => element.xRawValue == this);
-}
-
-extension SharedPreferencesKeysExt on SharedPreferencesKeys {
-  String get xRawValue => getEnumValue(this);
 }
