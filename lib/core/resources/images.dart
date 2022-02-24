@@ -1,4 +1,4 @@
-part of 'constants.dart';
+part of 'resources.dart';
 
 class _Images {
   final grayBackground =

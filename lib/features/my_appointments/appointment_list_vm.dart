@@ -306,7 +306,7 @@ class AppointmentListVm extends RbioVm {
   }
 
   Future<void> handleAppointment(PatientAppointmentsResponse data) async {
-    if (data.type == R.dynamicVar.onlineAppointmentType) {
+    if (data.type == R.constants.onlineAppointmentType) {
       try {
         late bool result;
         if (data.id != null) {

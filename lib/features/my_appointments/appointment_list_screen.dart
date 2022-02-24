@@ -167,7 +167,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
       departmentName: data.resources?[0].department ?? '',
       date: _getFormattedDate((data.from ?? '').substring(0, 10)),
       time: (data.from ?? '').substring(11, 16),
-      suffix: data.type != R.dynamicVar.onlineAppointmentType &&
+      suffix: data.type != R.constants.onlineAppointmentType &&
               DateTime.parse(data.from ?? '').isAfter(DateTime.now())
           ? InkWell(
               onTap: () {
@@ -202,7 +202,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     AppointmentListVm value,
     PatientAppointmentsResponse data,
   ) {
-    if (data.type == R.dynamicVar.onlineAppointmentType) {
+    if (data.type == R.constants.onlineAppointmentType) {
       if (DateTime.parse(data.from ?? '').isBefore(DateTime.now())) {
         return Center(
           child: RbioElevatedButton(

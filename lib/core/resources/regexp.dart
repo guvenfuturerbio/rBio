@@ -1,4 +1,4 @@
-part of 'constants.dart';
+part of 'resources.dart';
 
 class _RegExp {
   final html = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);

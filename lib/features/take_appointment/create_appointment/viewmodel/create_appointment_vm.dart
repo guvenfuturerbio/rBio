@@ -79,12 +79,12 @@ class CreateAppointmentVm extends ChangeNotifier {
         hospitalSelected = true;
         await fetchOnlineDepartments(
           FilterOnlineDepartmentsRequest(
-            appointmentType: R.dynamicVar.onlineAppointmentType.toString(),
-            tenantId: R.dynamicVar.tenantAyranciId,
+            appointmentType: R.constants.onlineAppointmentType.toString(),
+            tenantId: R.constants.tenantAyranciId,
           ),
         );
         dropdownValueTenant = FilterTenantsResponse(
-          id: R.dynamicVar.onlineAppointmentType,
+          id: R.constants.onlineAppointmentType,
           enabled: true,
           title: LocaleProvider.current.online_appo,
         );

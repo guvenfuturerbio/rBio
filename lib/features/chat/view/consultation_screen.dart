@@ -79,7 +79,9 @@ class ConsultationScreen extends StatelessWidget {
         if (streamList.hasData) {
           final list = vm.getChatPersonListWithStream(streamList.data!);
           getIt<CacheClient>().write<List<ChatPerson>>(
-              key: R.strings.chatPersonListKey, value: list);
+            key: R.constants.chatPersonListKey,
+            value: list,
+          );
 
           return ListView.builder(
             padding: EdgeInsets.only(

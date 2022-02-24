@@ -12,7 +12,7 @@ export 'rbio_custom_icons.dart';
 export 'ble_operators/ble_operators.dart';
 export 'ble_operators/ble_operators.dart';
 
-export "resources/constants.dart";
+export 'resources/resources.dart';
 
 export "data/helper/dio_helper.dart";
 

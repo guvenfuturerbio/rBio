@@ -710,11 +710,11 @@ class UtilityManager {
 }
 
 String getHospitalName(BuildContext context, PatientAppointmentsResponse data) {
-  if (data.type == R.dynamicVar.onlineAppointmentType) {
+  if (data.type == R.constants.onlineAppointmentType) {
     return (LocaleProvider.current.online_appo);
-  } else if (data.tenantId == R.dynamicVar.tenantAyranciId) {
+  } else if (data.tenantId == R.constants.tenantAyranciId) {
     return (LocaleProvider.current.guven_hospital_ayranci);
-  } else if (data.tenantId == R.dynamicVar.tenantCayyoluId) {
+  } else if (data.tenantId == R.constants.tenantCayyoluId) {
     return (LocaleProvider.current.guven_cayyolu_campus);
   }
 
@@ -811,30 +811,28 @@ String fillAllFields(String formContext, String userName, String email,
   List<String> formTmpList = formContext.split(' ').toList();
   formContext = "";
   for (var element in formTmpList) {
-    if (element.contains(R.dynamicVar.userName)) {
+    if (element.contains(R.constants.userName)) {
+      formContext += ' ' + element.replaceFirst(R.constants.userName, userName);
+    } else if (element.contains(R.constants.adress)) {
+      formContext += ' ' + element.replaceFirst(R.constants.adress, "-");
+    } else if (element.contains(R.constants.phoneNumber)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.userName, userName);
-    } else if (element.contains(R.dynamicVar.adress)) {
-      formContext += ' ' + element.replaceFirst(R.dynamicVar.adress, "-");
-    } else if (element.contains(R.dynamicVar.phoneNumber)) {
+          ' ' + element.replaceFirst(R.constants.phoneNumber, phoneNumber);
+    } else if (element.contains(R.constants.email)) {
+      formContext += ' ' + element.replaceFirst(R.constants.email, email);
+    } else if (element.contains(R.constants.paymentPlan)) {
+      formContext += ' ' + element.replaceFirst(R.constants.paymentPlan, "-");
+    } else if (element.contains(R.constants.currentDate)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.phoneNumber, phoneNumber);
-    } else if (element.contains(R.dynamicVar.email)) {
-      formContext += ' ' + element.replaceFirst(R.dynamicVar.email, email);
-    } else if (element.contains(R.dynamicVar.paymentPlan)) {
-      formContext += ' ' + element.replaceFirst(R.dynamicVar.paymentPlan, "-");
-    } else if (element.contains(R.dynamicVar.currentDate)) {
+          ' ' + element.replaceFirst(R.constants.currentDate, currentDate);
+    } else if (element.contains(R.constants.packageName)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.currentDate, currentDate);
-    } else if (element.contains(R.dynamicVar.packageName)) {
+          ' ' + element.replaceFirst(R.constants.packageName, packageName);
+    } else if (element.contains(R.constants.expirationDate)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.packageName, packageName);
-    } else if (element.contains(R.dynamicVar.expirationDate)) {
-      formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.expirationDate, "-");
-    } else if (element.contains(R.dynamicVar.hospitalEmail)) {
-      formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.hospitalEmail, "-");
+          ' ' + element.replaceFirst(R.constants.expirationDate, "-");
+    } else if (element.contains(R.constants.hospitalEmail)) {
+      formContext += ' ' + element.replaceFirst(R.constants.hospitalEmail, "-");
     } else {
       formContext += ' ' + element;
     }
