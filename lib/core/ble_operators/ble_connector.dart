@@ -59,6 +59,20 @@ class BleConnectorOps extends ChangeNotifier {
     });
   }
 
+  DeviceType getDeviceType(DiscoveredDevice device) {
+    if (device.name == 'MIBFS' &&
+        device.serviceData.length == 1 &&
+        device.serviceData.values.first.length == 13) {
+      return DeviceType.miScale;
+    } else if (device.manufacturerData[0] == 112) {
+      return DeviceType.accuChek;
+    } else if (device.manufacturerData[0] == 103) {
+      return DeviceType.contourPlusOne;
+    }
+
+    throw Exception('Nondefined device');
+  }
+
   Future<void> connect(DiscoveredDevice device) async {
     _device = device;
     notifyListeners();

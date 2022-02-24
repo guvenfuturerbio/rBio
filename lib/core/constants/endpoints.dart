@@ -229,7 +229,7 @@ class _Endpoints {
 
 extension _EndpointsExtension on String {
   String get xBasePath {
-    final String? path = SecretUtils.instance.get(SecretKeys.baseUrl);
+    final String? path = SecretHelper.instance.get(SecretKeys.baseUrl);
     if (path != null) {
       return path + this;
     } else {
@@ -238,7 +238,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xGuvenPath {
-    final String? path = SecretUtils.instance.get(SecretKeys.dev4Guven);
+    final String? path = SecretHelper.instance.get(SecretKeys.dev4Guven);
     if (path != null) {
       return path + this;
     } else {
@@ -248,7 +248,7 @@ extension _EndpointsExtension on String {
 
   String get xSymptomCheckerLogin {
     final String? path =
-        SecretUtils.instance.get(SecretKeys.symtonCheckerLogin);
+        SecretHelper.instance.get(SecretKeys.symtonCheckerLogin);
     if (path != null) {
       return path + this;
     } else {
@@ -258,7 +258,7 @@ extension _EndpointsExtension on String {
 
   String get xSymptomCheckerRequest {
     final String? path =
-        SecretUtils.instance.get(SecretKeys.symtomRequestLogin);
+        SecretHelper.instance.get(SecretKeys.symtomRequestLogin);
     if (path != null) {
       return path + this;
     } else {
@@ -268,7 +268,7 @@ extension _EndpointsExtension on String {
 
   String get xCronicTracking {
     final String? path =
-        SecretUtils.instance.get(SecretKeys.chronicTrackingBaseUrl);
+        SecretHelper.instance.get(SecretKeys.chronicTrackingBaseUrl);
     if (path != null) {
       return path + this;
     } else {
@@ -277,7 +277,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xDoctorBaseUrl {
-    final String? path = SecretUtils.instance.get(SecretKeys.doctorBaseUrl);
+    final String? path = SecretHelper.instance.get(SecretKeys.doctorBaseUrl);
     if (path != null) {
       return path + this;
     } else {

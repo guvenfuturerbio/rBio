@@ -1,16 +1,8 @@
 import 'dart:async';
 
-import 'package:atom/atom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/enums/shared_preferences_keys.dart';
-import '../../../core/locator.dart';
-import '../../../core/manager/shared_preferences_manager.dart';
-import '../../../core/navigation/app_paths.dart';
-import '../../../core/utils/jwt_token_parser.dart';
-import '../../../core/widgets/gradient_dialog_for_payment_dialog.dart';
-import '../../../generated/l10n.dart';
+import '../../../core/core.dart';
 
 class IyzicoResponseVm with ChangeNotifier {
   // Properties
@@ -37,8 +29,9 @@ class IyzicoResponseVm with ChangeNotifier {
         .snapshots()
         .listen((event) {
       if (event.data() != null && event.data()?['code'] != "99") {
-        String userName = parseJwtPayLoad(getIt<ISharedPreferencesManager>()
-            .get(SharedPreferencesKeys.jwtToken))['name'];
+        String userName = Utils.instance.parseJwtPayLoad(
+            getIt<ISharedPreferencesManager>()
+                .get(SharedPreferencesKeys.jwtToken))['name'];
         errorText = event.data()?['errorText'];
         videoId = event.data()?['videoId'];
         code = event.data()?['code'];

@@ -13,7 +13,7 @@ import 'core/core.dart';
 Future<void> bootstrap(AppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await SecretUtils.instance.setup(Environment.prod);
+  await SecretHelper.instance.setup(Environment.prod);
   await Firebase.initializeApp();
   await setupLocator(appConfig);
   timeago.setLocaleMessages('tr', timeago.TrMessages());

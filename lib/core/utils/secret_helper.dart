@@ -2,13 +2,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../core.dart';
 
-class SecretUtils {
-  SecretUtils._();
+class SecretHelper {
+  SecretHelper._();
 
-  static SecretUtils? _instance;
+  static SecretHelper? _instance;
 
-  static SecretUtils get instance {
-    _instance ??= SecretUtils._();
+  static SecretHelper get instance {
+    _instance ??= SecretHelper._();
     return _instance!;
   }
 

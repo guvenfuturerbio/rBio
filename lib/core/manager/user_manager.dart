@@ -273,9 +273,10 @@ class UserManagerImpl extends UserManager {
       // Get.rootDelegate
       //     .toNamed('MeetingPage', arguments: {meetingOptions, zoomOptions});
     } else {
-      final String name = parseJwtPayLoad(token as String)['name'] != null
-          ? parseJwtPayLoad(token)['name'] as String
-          : parseJwtPayLoad(token)['fullname'] as String;
+      final String name =
+          Utils.instance.parseJwtPayLoad(token as String)['name'] != null
+              ? Utils.instance.parseJwtPayLoad(token)['name'] as String
+              : Utils.instance.parseJwtPayLoad(token)['fullname'] as String;
 
       LoggerUtils.instance.i("Toplantı Başlıyor : $webConsultantId");
 

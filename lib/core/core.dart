@@ -78,15 +78,12 @@ export 'theme/text_scale_type.dart';
 export 'theme/theme_notifier.dart';
 export 'theme/theme_type.dart';
 
-export "utils/deep_link_handler_new.dart";
-export 'utils/get_device_type.dart';
-export "utils/jwt_token_parser.dart";
+export 'utils/deep_link_helper.dart';
 export "utils/logger_helper.dart";
 export "utils/password_advisor.dart";
 export "utils/register_views.dart";
 export 'enums/scale_margin_filter.dart';
-export "utils/scroll_behavior.dart";
-export "utils/secret_utils.dart";
+export 'utils/secret_helper.dart';
 export 'enums/time_period_filter.dart';
 export 'utils/utils.dart';
 export "widgets/widgets.dart";

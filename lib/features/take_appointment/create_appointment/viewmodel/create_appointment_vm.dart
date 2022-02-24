@@ -573,7 +573,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         try {
           DoctorCvResponse tmpResp =
               await getIt<Repository>().getDoctorCvDetails(doctorId);
-          doctorsImageUrls.add(SecretUtils.instance.get(SecretKeys.dev4Guven) +
+          doctorsImageUrls.add(SecretHelper.instance.get(SecretKeys.dev4Guven) +
               "/storage/app/media/" +
               tmpResp.image1!);
         } catch (e) {

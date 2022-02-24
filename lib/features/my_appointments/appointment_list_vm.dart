@@ -224,8 +224,9 @@ class AppointmentListVm extends RbioVm {
       showProgressOverlay = true;
       notifyListeners();
       await getIt<Repository>().uploadPatientDocuments(
-          SecretUtils.instance.get(SecretKeys.mockAppointment),
-          file.toList() as Uint8List);
+        SecretHelper.instance.get(SecretKeys.mockAppointment),
+        file.toList() as Uint8List,
+      );
       return true;
     } catch (e) {
       showInfoDialog(

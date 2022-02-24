@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     if (!Atom.isWeb) {
       Utils.instance.forcePortraitOrientation();
-      DeepLinkHandler().initDynamicLinks(context);
+      DeepLinkHelper.instance.initDynamicLinks(context);
       getIt<FirebaseMessagingManager>().userInit();
     }
     super.initState();

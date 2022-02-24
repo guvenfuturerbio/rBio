@@ -4,15 +4,17 @@ import 'package:vrouter/vrouter.dart';
 
 import '../core.dart';
 
-class DeepLinkHandler {
-  static final DeepLinkHandler _instance = DeepLinkHandler._internal();
-  late BuildContext context;
+class DeepLinkHelper {
+  DeepLinkHelper._();
 
-  factory DeepLinkHandler() {
-    return _instance;
+  static DeepLinkHelper? _instance;
+
+  static DeepLinkHelper get instance {
+    _instance ??= DeepLinkHelper._();
+    return _instance!;
   }
 
-  DeepLinkHandler._internal();
+  late BuildContext context;
 
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
