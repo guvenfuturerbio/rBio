@@ -12,7 +12,7 @@ export 'rbio_custom_icons.dart';
 export 'ble_operators/ble_operators.dart';
 export 'ble_operators/ble_operators.dart';
 
-export "constants/constants.dart";
+export "resources/constants.dart";
 
 export "data/helper/dio_helper.dart";
 
@@ -46,10 +46,6 @@ export 'enums/remindable.dart';
 export "enums/secret_keys.dart";
 export "enums/shared_preferences_keys.dart";
 export "enums/usage_type.dart";
-
-export "events/base_event.dart";
-export "events/fail_events.dart";
-export "events/success_events.dart";
 
 export 'exception/display_exception.dart';
 export 'exception/model_cast_exception.dart';

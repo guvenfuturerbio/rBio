@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../core/constants/constants.dart' as rbio;
 import '../../../../../core/core.dart';
 import '../../../../../core/enums/selected_scale_type.dart';
 import '../../../../../model/model.dart';
@@ -741,7 +740,7 @@ class ScaleProgressVm extends ChangeNotifier
           ? LocaleProvider.current.no_measurement
           : '${lastMeasurement.weight ?? ''} ${lastMeasurement.unit.toStr}',
       lastMeasurementDate: lastMeasurement?.dateTime ?? DateTime.now(),
-      imageUrl: rbio.R.image.bodyScale,
+      imageUrl: R.image.bodyScale,
     );
   }
 
