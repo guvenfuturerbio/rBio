@@ -55,7 +55,6 @@ class ScaleTaggerVm extends ChangeNotifier {
             unit: ScaleUnit.kg,
           ),
         );
-
     _fillControllers(isInit: true);
     scrollController = ScrollController();
   }
@@ -79,25 +78,30 @@ class ScaleTaggerVm extends ChangeNotifier {
           ? scaleModel.bodyFat!.toStringAsFixed(1)
           : '',
     );
+
     boneMassController = TextEditingController(
       text: scaleModel.boneMass != null
           ? scaleModel.boneMass!.toStringAsFixed(1)
           : '',
     );
+
     muscleController = TextEditingController(
       text: scaleModel.muscle != null
           ? scaleModel.muscle!.toStringAsFixed(1)
           : '',
     );
+
     visceralController = TextEditingController(
       text: scaleModel.visceralFat != null
           ? scaleModel.visceralFat!.toStringAsFixed(1)
           : '',
     );
+
     waterController = TextEditingController(
       text:
           scaleModel.water != null ? scaleModel.water!.toStringAsFixed(1) : '',
     );
+
     bmiController = TextEditingController(
       text: scaleModel.bmi != null ? scaleModel.bmi!.toStringAsFixed(2) : '',
     );
@@ -329,8 +333,8 @@ class ScaleTaggerVm extends ChangeNotifier {
     }
   }
 
-  void update() {
-    getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
+  Future<void> update() async {
+    await getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
     Atom.dismiss();
   }
 
