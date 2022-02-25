@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
@@ -207,25 +208,26 @@ class AppointmentListVm extends RbioVm {
     }
   }
 
-  Future<Uint8List?> getSelectedFile() async {
+  Future<File?> getSelectedFile() async {
     FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['svg', 'pdf', 'png', 'jpg', 'bmp']);
-    PlatformFile? file = filePickerResult?.files[0];
-    Uint8List? fileBytes;
-    if (file != null) {
-      fileBytes = file.bytes;
+    PlatformFile? platformFile = filePickerResult?.files[0];
+    File? file;
+    if (platformFile != null) {
+      file = File(platformFile.path!);
     }
-    return fileBytes;
+    return file;
   }
 
-  Future<bool> uploadFile(Uint8List file) async {
+  Future<bool> uploadFile(File file) async {
     try {
       showProgressOverlay = true;
       notifyListeners();
       await getIt<Repository>().uploadPatientDocuments(
-          SecretUtils.instance.get(SecretKeys.mockAppointment),
-          file.toList() as Uint8List);
+        SecretHelper.instance.get(SecretKeys.mockAppointment),
+        await file.readAsBytes(),
+      );
       return true;
     } catch (e) {
       showInfoDialog(
@@ -233,8 +235,10 @@ class AppointmentListVm extends RbioVm {
         LocaleProvider.current.sorry_dont_transaction,
       );
       showProgressOverlay = false;
-      notifyListeners();
       return false;
+    } finally {
+      showProgressOverlay = false;
+      notifyListeners();
     }
   }
 
@@ -305,7 +309,7 @@ class AppointmentListVm extends RbioVm {
   }
 
   Future<void> handleAppointment(PatientAppointmentsResponse data) async {
-    if (data.type == R.dynamicVar.onlineAppointmentType) {
+    if (data.type == R.constants.onlineAppointmentType) {
       try {
         late bool result;
         if (data.id != null) {

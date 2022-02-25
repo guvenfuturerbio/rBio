@@ -73,7 +73,6 @@ class DoctorConsultationVm extends RbioVm {
           chatPerson.lastMessageSender = _getLastMessageSender(fbData);
           chatPerson.messageTime = _getMessageTime(fbData);
           chatPerson.timestamp = _getTimestamp(fbData);
-
           chatPerson.hasRead = _getHasRead(fbData);
           chatPerson.otherHasRead = _getOtherHasRead(fbData, chatPerson.id!);
         }

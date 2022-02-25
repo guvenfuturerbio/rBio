@@ -7949,6 +7949,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Your information has been successfully updated`
+  String get personal_update_success {
+    return Intl.message(
+      'Your information has been successfully updated',
+      name: 'personal_update_success',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

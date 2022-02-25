@@ -1,17 +1,20 @@
 export 'package:atom/atom.dart';
+export 'package:shared_preferences_manager/shared_preferences_manager.dart';
+export 'package:local_notification_manager/local_notification_manager.dart';
 
-export '../app_config/app_config.dart';
+export '../app/config/app_config.dart';
+export '../app/app_bloc_observer.dart';
+export '../app/app_inherited_widget.dart';
 export '../generated/l10n.dart';
 
 export 'locator.dart';
-export 'rbio_config.dart';
 export 'rbio_custom_icons.dart';
 
 /// Core
 export 'ble_operators/ble_operators.dart';
 export 'ble_operators/ble_operators.dart';
 
-export "constants/constants.dart";
+export 'resources/resources.dart';
 
 export "data/helper/dio_helper.dart";
 
@@ -43,12 +46,7 @@ export 'enums/patient_type.dart';
 export 'enums/payment_type.dart';
 export 'enums/remindable.dart';
 export "enums/secret_keys.dart";
-export "enums/shared_preferences_keys.dart";
 export "enums/usage_type.dart";
-
-export "events/base_event.dart";
-export "events/fail_events.dart";
-export "events/success_events.dart";
 
 export 'exception/display_exception.dart';
 export 'exception/model_cast_exception.dart';
@@ -59,8 +57,7 @@ export "extension/extension.dart";
 
 export "manager/ble_manager.dart";
 export 'manager/firebase_messaging_manager.dart';
-export "manager/local_notification_manager.dart";
-export "manager/shared_preferences_manager.dart";
+
 export "manager/user_manager.dart";
 
 export 'navigation/app_paths.dart';
@@ -77,15 +74,12 @@ export 'theme/text_scale_type.dart';
 export 'theme/theme_notifier.dart';
 export 'theme/theme_type.dart';
 
-export "utils/deep_link_handler_new.dart";
-export 'utils/get_device_type.dart';
-export "utils/jwt_token_parser.dart";
+export 'utils/deep_link_helper.dart';
 export "utils/logger_helper.dart";
 export "utils/password_advisor.dart";
 export "utils/register_views.dart";
-export 'utils/scale_margin_filter.dart';
-export "utils/scroll_behavior.dart";
-export "utils/secret_utils.dart";
-export 'utils/time_period_filter.dart';
+export 'enums/scale_margin_filter.dart';
+export 'utils/secret_helper.dart';
+export 'enums/time_period_filter.dart';
 export 'utils/utils.dart';
 export "widgets/widgets.dart";

@@ -179,7 +179,7 @@ class _SymptomsBodyLocationsScreenState
                   : false,
               child: RbioElevatedButton(
                 onTap: () async {
-                  RbioConfig.of(context)?.bodyLocationRsp =
+                  AppInheritedWidget.of(context)?.bodyLocationRsp =
                       value.selectedBodyLocation;
                   Atom.to(
                     PagePaths.symptomSubBodyLocations,

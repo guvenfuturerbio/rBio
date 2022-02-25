@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../features/shared/do_not_show_again_dialog.dart';
@@ -38,6 +38,88 @@ class Utils {
     } else {
       return NetworkImage(R.image.circlevatar);
     }
+  }
+
+  void showSnackbar(
+    BuildContext context,
+    String text, {
+    Color? backColor,
+    Widget? trailing,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: backColor,
+        content: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //
+            Expanded(
+              child: Text(
+                text,
+                style: context.xHeadline3.copyWith(
+                  color: getIt<ITheme>().textColor,
+                ),
+              ),
+            ),
+
+            //
+            trailing ?? const SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String encryptWithSalsa20(String plainText, String email) {
+    //final key = encrypt.Key.fromLength(32);
+    final ivMail = email.substring(0, 8);
+    final key = encrypt.Key.fromUtf8("+@rzf7>5(/pP`S4<K&.=*~6=;.~**Mm=");
+    final iv = encrypt.IV.fromUtf8(ivMail);
+    final encrypter = encrypt.Encrypter(encrypt.Salsa20(key));
+
+    final encrypted = encrypter.encrypt(plainText, iv: iv);
+    final decrypted = encrypter.decrypt(encrypted, iv: iv);
+
+    LoggerUtils.instance.i(
+        decrypted); // Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    LoggerUtils.instance.i(encrypted
+        .base64); // CR+IAWBEx3sA/dLkkFM/orYr9KftrGa7lIFSAAmVPbKIOLDOzGwEi9ohstDBqDLIaXMEeulwXQ==
+    return encrypted.base64;
+    //String text = "{\"Id\":\"RiHgVRsWeNVZhpX3u9ZvZBgyD0n1\",\"NameSurname\":\"Can Avcı\",\"ElectronicMail\":\"canavci95@hotmail.com\"}"
+  }
+
+  Map<String, dynamic> parseJwtPayLoad(String token) {
+    final parts = token.split('.');
+    if (parts.length != 3) {
+      throw Exception('invalid token');
+    }
+
+    final payload = _decodeBase64(parts[1]);
+    final payloadMap = json.decode(payload);
+    if (payloadMap is! Map<String, dynamic>) {
+      throw Exception('invalid payload');
+    }
+
+    return payloadMap;
+  }
+
+  String _decodeBase64(String str) {
+    String output = str.replaceAll('-', '+').replaceAll('_', '/');
+
+    switch (output.length % 4) {
+      case 0:
+        break;
+      case 2:
+        output += '==';
+        break;
+      case 3:
+        output += '=';
+        break;
+      default:
+        throw Exception('Illegal base64url string!"');
+    }
+
+    return utf8.decode(base64Url.decode(output));
   }
 
   Future<TimeOfDay?> openMaterialTimePicker(
@@ -564,27 +646,6 @@ class UtilityManager {
     );
   }
 
-  void joinJitsiMeeting(JitsiMeetingOptions options) async {
-    await getIt<Repository>().setJitsiWebConsultantId(options.roomNameOrUrl);
-
-    await JitsiMeetWrapper.joinMeeting(
-      options: options,
-      listener: JitsiMeetingListener(
-        onConferenceWillJoin: (message) {
-          debugPrint(
-              "${options.roomNameOrUrl} will join with message: $message");
-        },
-        onConferenceJoined: (message) {
-          debugPrint("${options.roomNameOrUrl} joined with message: $message");
-        },
-        onConferenceTerminated: (message, _) {
-          debugPrint(
-              "${options.roomNameOrUrl} terminated with message: $message");
-        },
-      ),
-    );
-  }
-
   String getReadableTimeFromDateTime(DateTime measureDT) {
     return "${measureDT.hour > 9 ? measureDT.hour : "0" + measureDT.hour.toString()}:${measureDT.minute > 9 ? measureDT.minute : "0" + measureDT.minute.toString()}  ${measureDT.day}.${measureDT.month}.${measureDT.year}";
   }
@@ -679,11 +740,11 @@ class UtilityManager {
 }
 
 String getHospitalName(BuildContext context, PatientAppointmentsResponse data) {
-  if (data.type == R.dynamicVar.onlineAppointmentType) {
+  if (data.type == R.constants.onlineAppointmentType) {
     return (LocaleProvider.current.online_appo);
-  } else if (data.tenantId == R.dynamicVar.tenantAyranciId) {
+  } else if (data.tenantId == R.constants.tenantAyranciId) {
     return (LocaleProvider.current.guven_hospital_ayranci);
-  } else if (data.tenantId == R.dynamicVar.tenantCayyoluId) {
+  } else if (data.tenantId == R.constants.tenantCayyoluId) {
     return (LocaleProvider.current.guven_cayyolu_campus);
   }
 
@@ -780,30 +841,28 @@ String fillAllFields(String formContext, String userName, String email,
   List<String> formTmpList = formContext.split(' ').toList();
   formContext = "";
   for (var element in formTmpList) {
-    if (element.contains(R.dynamicVar.userName)) {
+    if (element.contains(R.constants.userName)) {
+      formContext += ' ' + element.replaceFirst(R.constants.userName, userName);
+    } else if (element.contains(R.constants.adress)) {
+      formContext += ' ' + element.replaceFirst(R.constants.adress, "-");
+    } else if (element.contains(R.constants.phoneNumber)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.userName, userName);
-    } else if (element.contains(R.dynamicVar.adress)) {
-      formContext += ' ' + element.replaceFirst(R.dynamicVar.adress, "-");
-    } else if (element.contains(R.dynamicVar.phoneNumber)) {
+          ' ' + element.replaceFirst(R.constants.phoneNumber, phoneNumber);
+    } else if (element.contains(R.constants.email)) {
+      formContext += ' ' + element.replaceFirst(R.constants.email, email);
+    } else if (element.contains(R.constants.paymentPlan)) {
+      formContext += ' ' + element.replaceFirst(R.constants.paymentPlan, "-");
+    } else if (element.contains(R.constants.currentDate)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.phoneNumber, phoneNumber);
-    } else if (element.contains(R.dynamicVar.email)) {
-      formContext += ' ' + element.replaceFirst(R.dynamicVar.email, email);
-    } else if (element.contains(R.dynamicVar.paymentPlan)) {
-      formContext += ' ' + element.replaceFirst(R.dynamicVar.paymentPlan, "-");
-    } else if (element.contains(R.dynamicVar.currentDate)) {
+          ' ' + element.replaceFirst(R.constants.currentDate, currentDate);
+    } else if (element.contains(R.constants.packageName)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.currentDate, currentDate);
-    } else if (element.contains(R.dynamicVar.packageName)) {
+          ' ' + element.replaceFirst(R.constants.packageName, packageName);
+    } else if (element.contains(R.constants.expirationDate)) {
       formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.packageName, packageName);
-    } else if (element.contains(R.dynamicVar.expirationDate)) {
-      formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.expirationDate, "-");
-    } else if (element.contains(R.dynamicVar.hospitalEmail)) {
-      formContext +=
-          ' ' + element.replaceFirst(R.dynamicVar.hospitalEmail, "-");
+          ' ' + element.replaceFirst(R.constants.expirationDate, "-");
+    } else if (element.contains(R.constants.hospitalEmail)) {
+      formContext += ' ' + element.replaceFirst(R.constants.hospitalEmail, "-");
     } else {
       formContext += ' ' + element;
     }

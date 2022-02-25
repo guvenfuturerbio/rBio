@@ -6,10 +6,13 @@ part 'get_blood_glucose_data_of_person.g.dart';
 class GetBloodGlucoseDataOfPerson {
   @JsonKey(name: 'entegration_id')
   int? id;
+
   @JsonKey(name: 'start')
   String? start;
+
   @JsonKey(name: 'end')
   String? end;
+
   int? count;
 
   GetBloodGlucoseDataOfPerson({

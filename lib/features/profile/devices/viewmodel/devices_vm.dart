@@ -31,10 +31,9 @@ class DevicesVm extends ChangeNotifier {
     devices.removeWhere((element) => element.deviceId == id);
     notifyListeners();
     Atom.dismiss();
-    ScaffoldMessenger.of(Atom.context).showSnackBar(
-      SnackBar(
-        content: Text(LocaleProvider.current.paired_devices_deleted),
-      ),
+    Utils.instance.showSnackbar(
+      Atom.context,
+      LocaleProvider.current.paired_devices_deleted,
     );
   }
 }

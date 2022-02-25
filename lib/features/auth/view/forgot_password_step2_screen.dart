@@ -177,12 +177,9 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
                     onTap: () {
                       if (_passwordController.text.trim() !=
                           _passwordAgainController.text.trim()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              LocaleProvider.current.passwords_not_match,
-                            ),
-                          ),
+                        Utils.instance.showSnackbar(
+                          context,
+                          LocaleProvider.current.passwords_not_match,
                         );
                         return;
                       }

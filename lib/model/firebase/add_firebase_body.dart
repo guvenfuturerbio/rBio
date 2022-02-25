@@ -5,6 +5,7 @@ part 'add_firebase_body.g.dart';
 class AddFirebaseToken {
   @JsonKey(name: 'fire_base_id')
   String? firebaseId;
+
   @JsonKey(name: 'phone_info')
   String? phoneInfo;
 

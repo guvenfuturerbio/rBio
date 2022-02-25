@@ -61,7 +61,7 @@ class SymptomsResultPageVm extends ChangeNotifier {
         symptomsIds.toString(),
         gender,
         yearOfBirth,
-        R.bodyDatas.json,
+        R.constants.json,
       );
       specialisations = specialisationsList;
       progress = LoadingProgress.done;

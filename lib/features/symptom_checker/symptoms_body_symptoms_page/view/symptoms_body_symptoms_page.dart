@@ -33,8 +33,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
   @override
   void dispose() {
     try {
-      RbioConfig.of(context)?.bodyLocationRsp = null;
-      RbioConfig.of(context)?.listBodySympRsp = [];
+      AppInheritedWidget.of(context)?.bodyLocationRsp = null;
+      AppInheritedWidget.of(context)?.listBodySympRsp = [];
     } catch (e) {
       LoggerUtils.instance.i(e);
     }
@@ -44,10 +44,11 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.selectedBodyLocation = RbioConfig.of(context)?.bodyLocationRsp;
-      widget.myPv = RbioConfig.of(context)?.sublocationVm;
+      widget.selectedBodyLocation =
+          AppInheritedWidget.of(context)?.bodyLocationRsp;
+      widget.myPv = AppInheritedWidget.of(context)?.sublocationVm;
       widget.selectedBodySymptoms =
-          RbioConfig.of(context)?.listBodySympRsp ?? [];
+          AppInheritedWidget.of(context)?.listBodySympRsp ?? [];
       widget.selectedGenderId =
           int.parse(Atom.queryParameters['selectedGenderId'] as String);
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'] as String;
@@ -223,7 +224,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
         RbioElevatedButton(
           onTap: value.selectedBodySymptoms.isNotEmpty
               ? () async {
-                  RbioConfig.of(context)?.listBodySympRsp =
+                  AppInheritedWidget.of(context)?.listBodySympRsp =
                       value.selectedBodySymptoms;
                   Atom.to(
                     PagePaths.symptomResultPage,

@@ -32,49 +32,49 @@ class BodyPartsPainter extends CustomPainter {
 
   List<Shape> get shapes => [
         Shape(
-            isGenderMale! ? R.bodyDatas.maleData[0] : R.bodyDatas.femaleData[0],
+            isGenderMale! ? R.constants.maleData[0] : R.constants.femaleData[0],
             'Head, throat & neck, baş, boğaz, boyun, kafa',
             6,
             isGenderMale!
                 ? const Offset(100.0, 44.0)
                 : const Offset(97.5, 70.0)),
         Shape(
-            isGenderMale! ? R.bodyDatas.maleData[1] : R.bodyDatas.femaleData[1],
+            isGenderMale! ? R.constants.maleData[1] : R.constants.femaleData[1],
             'Arms & shoulder, arm, Kol, omuz, kollar, omuzlar',
             7,
             isGenderMale!
                 ? const Offset(169.7, 136.0)
                 : const Offset(58.7, 142.1)),
         Shape(
-            isGenderMale! ? R.bodyDatas.maleData[2] : R.bodyDatas.femaleData[2],
+            isGenderMale! ? R.constants.maleData[2] : R.constants.femaleData[2],
             'Arms & shoulder, arm, Kol, omuz, kollar, omuzlar',
             7,
             isGenderMale!
                 ? const Offset(169.7, 136.0)
                 : const Offset(58.7, 142.1)),
         Shape(
-            isGenderMale! ? R.bodyDatas.maleData[3] : R.bodyDatas.femaleData[3],
+            isGenderMale! ? R.constants.maleData[3] : R.constants.femaleData[3],
             'Chest & back, Göğüs, sırt',
             15,
             isGenderMale!
                 ? const Offset(97.7, 117.0)
                 : const Offset(102.2, 140.2)),
         Shape(
-            isGenderMale! ? R.bodyDatas.maleData[4] : R.bodyDatas.femaleData[4],
+            isGenderMale! ? R.constants.maleData[4] : R.constants.femaleData[4],
             'Abdomen, pelvis & buttocks, karın, bel, kalça',
             16,
             isGenderMale!
                 ? const Offset(106.0, 199.0)
                 : const Offset(104.1, 221.3)),
         Shape(
-            isGenderMale! ? R.bodyDatas.maleData[5] : R.bodyDatas.femaleData[5],
+            isGenderMale! ? R.constants.maleData[5] : R.constants.femaleData[5],
             'Legs, Leg, bacak, bacaklar',
             10,
             isGenderMale!
                 ? const Offset(137.0, 300.0)
                 : const Offset(126.8, 281.7)),
         Shape(
-            isGenderMale! ? R.bodyDatas.maleData[6] : R.bodyDatas.femaleData[6],
+            isGenderMale! ? R.constants.maleData[6] : R.constants.femaleData[6],
             'Legs, Leg, bacak, bacaklar',
             10,
             isGenderMale!

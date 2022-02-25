@@ -366,7 +366,8 @@ class ApiServiceImpl extends ApiService {
       final getEventsResponseList = <GetEventsResponse>[];
       final mapDatum = response.xGetMap;
       final resourceEvents = mapDatum['resourceEvents'] as List<dynamic>?;
-      final resourceMapEvents = resourceEvents?.map((e) => e).cast<Map<String, dynamic>>().toList();
+      final resourceMapEvents =
+          resourceEvents?.map((e) => e).cast<Map<String, dynamic>>().toList();
       if (resourceMapEvents is List<Map<String, dynamic>>) {
         for (final data in resourceMapEvents) {
           final getEventsResponse = GetEventsResponse.fromJson(data);
@@ -1295,7 +1296,8 @@ class ApiServiceImpl extends ApiService {
   ) async {
     final $headers = {'Content-Type': 'multipart/formdata'};
     final FormData formData = FormData.fromMap({
-      "file": MultipartFile.fromBytes(file),
+      "file": MultipartFile.fromBytes(file,
+          filename: DateTime.now().xFormatTime6()),
     });
     final response = await helper.postGuven(
       R.endpoints.uploadPatientDocumentsPath(webAppoId),

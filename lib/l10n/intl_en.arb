@@ -791,5 +791,6 @@
   "how_many_times_a_day": "How many times a day?",
   "days": "Days",
   "appointment_datepicker_warning": "Since you did not select a day, the date has not changed.",
-  "logout_confirmation_description": "Do you want to exit the application?"
+  "logout_confirmation_description": "Do you want to exit the application?",
+  "personal_update_success": "Your information has been successfully updated"
 }

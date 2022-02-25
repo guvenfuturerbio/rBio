@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/core.dart';
-import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../utils/progress_page_model.dart';
-import '../../utils/small_widget_card.dart';
+import '../../../bottom_actions_of_graph.dart';
+import '../../widgets/i_progress_screen.dart';
+import '../../widgets/small_chronic_component.dart';
 import '../widgets/chart/bp_pulse_chart.dart';
 import '../widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
 import '../widgets/tagger/bp_tagger_pop_up.dart';
@@ -12,7 +12,7 @@ import 'bp_measurement_vm.dart';
 
 class BpProgressVm
     with ChangeNotifier, IBaseBottomActionsOfGraph
-    implements ProgressPage {
+    implements IProgressScreen {
   List<BpMeasurementViewModel> bpMeasurements = [];
   List<BpMeasurementViewModel> bpMeasurementsDailyData = [];
 
@@ -310,7 +310,7 @@ class BpProgressVm
       );
     }
 
-    return RbioSmallChronicWidget(
+    return SmallChronicComponent(
       callback: callBack,
       lastMeasurement: lastMeasurement == null
           ? LocaleProvider.current.no_measurement

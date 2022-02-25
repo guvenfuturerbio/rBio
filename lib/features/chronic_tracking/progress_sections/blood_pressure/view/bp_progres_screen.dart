@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../utils/graph_header_widget.dart';
-import '../../utils/landscape_graph_widget.dart';
+import '../../widgets/chronic_graph_header.dart';
+import '../../widgets/landscape_chronic_component.dart';
 import '../viewmodel/bp_progres_vm.dart';
 import '../widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
 import '../widgets/bp_measurement_list.dart';
@@ -28,7 +28,7 @@ class BpProgressScreen extends StatelessWidget {
             floatingActionButton: _buildFAB(vm, context),
           );
         } else {
-          return LandScapeGraphWidget(
+          return LandScapeChronicComponent(
             graph: vm.currentGraph,
             value: vm,
             filterAction: () => Atom.show(
@@ -70,7 +70,7 @@ class BpProgressScreen extends StatelessWidget {
             //
             SizedBox(
               height: (context.height * .4) * context.textScale,
-              child: GraphHeader(
+              child: ChronicGraphHeader(
                 value: vm,
                 callBack: () =>
                     context.read<BpProgressVm>().changeChartShowStatus(),

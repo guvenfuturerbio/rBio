@@ -11,10 +11,10 @@ import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../../progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
-import '../model/page_model.dart';
-import '../utils/card_widget.dart';
+import '../model/home_page_model.dart';
 
-part '../vm/mt_home_vm.dart';
+part '../viewmodel/mt_home_vm.dart';
+part '../widgets/section_card.dart';
 
 class MeasurementTrackingHomeScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState>? drawerKey;
@@ -42,6 +42,7 @@ class _MeasurementTrackingHomeScreenState
     return !getIt<UserNotifier>().isCronic
         ? NotChronicScreen(
             title: LocaleProvider.current.chronic_track_home,
+            drawerKey: widget.drawerKey,
           )
         : ChangeNotifierProvider(
             create: (_) => MeasurementTrackingVm(),
@@ -133,7 +134,7 @@ class _MeasurementTrackingHomeScreenState
             child: Column(
               children: vm.items
                   .map(
-                    (parentElement) => SectionCard(
+                    (parentElement) => _SectionCard(
                       isActive: vm.activeItem != null &&
                           vm.activeItem!.key == parentElement.key,
                       isVisible: vm.activeItem == null,

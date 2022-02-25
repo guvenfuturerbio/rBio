@@ -35,15 +35,9 @@ Future<DateTime?> showGuvenDatePicker(
 
   if (result != null) {
     if (initialDate.xIsSameDate(result)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            LocaleProvider.current.appointment_datepicker_warning,
-            style: context.xHeadline3.copyWith(
-              color: getIt<ITheme>().textColor,
-            ),
-          ),
-        ),
+      Utils.instance.showSnackbar(
+        context,
+        LocaleProvider.current.appointment_datepicker_warning,
       );
     }
   }

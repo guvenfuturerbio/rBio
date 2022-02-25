@@ -4,21 +4,20 @@ import '../../core/core.dart';
 
 class NotChronicScreen extends StatelessWidget {
   final String title;
+  final GlobalKey<ScaffoldState>? drawerKey;
 
   const NotChronicScreen({
     Key? key,
     required this.title,
+    this.drawerKey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
-        leading: const SizedBox(
-          width: 0,
-          height: 0,
-        ),
-        leadingWidth: 0,
+        leading:
+            drawerKey != null ? RbioLeadingMenu(drawerKey: drawerKey) : null,
         title: RbioAppBar.textTitle(context, title),
       ),
       body: Center(

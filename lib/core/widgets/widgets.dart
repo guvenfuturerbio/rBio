@@ -1,3 +1,6 @@
+export 'gallery_pop_up/gallery_pop_up.dart';
+export 'gallery_pop_up/gallery_pop_up_vm.dart';
+export 'gallery_pop_up/stepper/stepper.dart';
 export 'animated_faded_widget.dart';
 export 'arrow_clipper.dart';
 export 'chronic_error_alert.dart';
@@ -40,4 +43,5 @@ export 'rbio_textformfield.dart';
 export 'rbio_user_tile.dart';
 export 'rbio_visibility_suffix_icon.dart';
 export 'rbio_visiblity.dart';
+export 'stack_of_cards.dart';
 export 'warning_dialog.dart';

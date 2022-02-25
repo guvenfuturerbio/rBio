@@ -28,7 +28,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.symptoms = RbioConfig.of(context)?.listBodySympRsp
+      widget.symptoms = AppInheritedWidget.of(context)?.listBodySympRsp
           as List<GetBodySymptomsResponse>;
       widget.gender = Atom.queryParameters['gender'];
       widget.yearOfBirth = Atom.queryParameters['year_of_birth'];

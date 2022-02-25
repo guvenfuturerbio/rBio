@@ -143,7 +143,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
 
   ResourcesRequest getAyranciResource() => ResourcesRequest(
         departmentId: departmentId,
-        tenantId: R.dynamicVar.tenantAyranciId,
+        tenantId: R.constants.tenantAyranciId,
         resourceId: resourceId,
         id: resourceId,
         to: filterToDate,
@@ -152,7 +152,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
 
   ResourcesRequest getCayyoluResource() => ResourcesRequest(
         departmentId: departmentId,
-        tenantId: R.dynamicVar.tenantCayyoluId,
+        tenantId: R.constants.tenantCayyoluId,
         resourceId: resourceId,
         id: resourceId,
         to: filterToDate,
@@ -172,7 +172,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         final getOnlineEventsResponse = await getIt<Repository>().getEvents(
           GetEventsRequest(
             patientId: patientId,
-            appointmentType: R.dynamicVar.onlineAppointmentType,
+            appointmentType: R.constants.onlineAppointmentType,
             resourcesRequestList: resourceRequestList,
           ),
         );

@@ -2,7 +2,10 @@ class StreamType {
   String? hostId;
   String? provider;
 
-  StreamType({this.hostId, this.provider});
+  StreamType({
+    this.hostId,
+    this.provider,
+  });
 
   StreamType.fromJson(Map<String, dynamic> json) {
     hostId = json['host_id'] as String?;

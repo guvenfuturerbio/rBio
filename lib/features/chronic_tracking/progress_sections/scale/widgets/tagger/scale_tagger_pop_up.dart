@@ -8,8 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../utils/gallery_pop_up/gallery_pop_up.dart';
-import '../../../../utils/selected_scale_type.dart';
+import '../../../../../../core/enums/selected_scale_type.dart';
 import '../../viewmodel/scale_measurement_vm.dart';
 import 'scale_tagger_vm.dart';
 

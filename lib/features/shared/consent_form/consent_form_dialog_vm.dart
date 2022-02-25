@@ -4,29 +4,31 @@ import '../../../core/locator.dart';
 
 class ConsentFormDialogVm extends ChangeNotifier {
   BuildContext? mContext;
-  bool? clickedConsentForm;
+
   ConsentFormDialogVm({BuildContext? context, bool? alwaysAsk}) {
     mContext = context;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       if (alwaysAsk!) {
       } else {
-        await fetchClickedConsentForm();
+        fetchClickedConsentForm();
       }
     });
   }
 
-  fetchClickedConsentForm() async {
+  bool clickedConsentForm = false;
+
+  void fetchClickedConsentForm() {
     clickedConsentForm = getIt<UserManager>().getApplicationConsentFormState();
     notifyListeners();
   }
 
-  toggleConsentFormState() async {
-    clickedConsentForm = !clickedConsentForm!;
+  void toggleConsentFormState() {
+    clickedConsentForm = !clickedConsentForm;
     notifyListeners();
   }
 
-  saveConsentFormState() async {
-    getIt<UserManager>().setApplicationConsentFormState(clickedConsentForm!);
+  void saveConsentFormState() {
+    getIt<UserManager>().setApplicationConsentFormState(clickedConsentForm);
     Navigator.pop(mContext!, clickedConsentForm);
   }
 }

@@ -113,22 +113,16 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
               child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_done.toUpperCase(),
                 onPressed: () {
-                  // tcknsiz giriş için yeni model
-                  UserRegistrationStep3Model userRegisterStep3Model =
-                      UserRegistrationStep3Model();
                   UserRegistrationStep3Model userRegisterStep3 =
                       UserRegistrationStep3Model();
 
-                  if (isWithoutTCKN) {
-                    userRegisterStep3Model.userRegistrationStep2 =
-                        userRegistrationStep2Model;
-                    userRegisterStep3Model.sms = _smsController.text;
-                  }
+                  userRegisterStep3.userRegistrationStep2 =
+                      userRegistrationStep2Model;
+                  userRegisterStep3.sms = _smsController.text;
 
                   if (_smsController.text.isNotEmpty) {
                     vm.registerStep3(
                       userRegisterStep3,
-                      userRegisterStep3Model,
                       isWithoutTCKN,
                     );
                   } else {

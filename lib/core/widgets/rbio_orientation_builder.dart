@@ -14,7 +14,7 @@ class RbioOrientationBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<Orientation>(
       initialData: Orientation.portrait,
-      stream: RbioConfig.of(context)?.orientationController.stream,
+      stream: AppInheritedWidget.of(context)?.orientationController.stream,
       builder: builder,
     );
   }

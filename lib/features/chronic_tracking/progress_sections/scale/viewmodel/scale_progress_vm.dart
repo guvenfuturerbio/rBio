@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../core/constants/constants.dart' as rbio;
 import '../../../../../core/core.dart';
+import '../../../../../core/enums/selected_scale_type.dart';
 import '../../../../../model/model.dart';
-import '../../../utils/bottom_actions_of_graph/bottom_actions_of_graph.dart';
-import '../../../utils/selected_scale_type.dart';
-import '../../utils/progress_page_model.dart';
-import '../../utils/small_widget_card.dart';
+import '../../../bottom_actions_of_graph.dart';
+import '../../widgets/i_progress_screen.dart';
+import '../../widgets/small_chronic_component.dart';
+import '../view/scale_progress_screen.dart';
 import '../widgets/charts/scale_bubble_chart.dart';
 import '../widgets/charts/scale_line_chart.dart';
 import '../widgets/scale_filter_pop_up/scale_filter_pop_up.dart';
-import 'scale_measurement_vm.dart';
 import '../widgets/tagger/scale_tagger_pop_up.dart';
-import '../view/scale_progress_screen.dart';
+import 'scale_measurement_vm.dart';
 
 enum GraphType { bubble, line }
 
 class ScaleProgressVm extends ChangeNotifier
     with IBaseBottomActionsOfGraph
-    implements ProgressPage {
+    implements IProgressScreen {
   final controller = ScrollController();
   bool hasReachEnd = false;
 
@@ -734,13 +733,14 @@ class ScaleProgressVm extends ChangeNotifier
             ? ScaleMeasurementViewModel(
                 scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement()!)
             : null;
-    return RbioSmallChronicWidget(
+
+    return SmallChronicComponent(
       callback: callBack,
       lastMeasurement: lastMeasurement == null
           ? LocaleProvider.current.no_measurement
           : '${lastMeasurement.weight ?? ''} ${lastMeasurement.unit.toStr}',
       lastMeasurementDate: lastMeasurement?.dateTime ?? DateTime.now(),
-      imageUrl: rbio.R.image.bodyScale,
+      imageUrl: R.image.bodyScale,
     );
   }
 

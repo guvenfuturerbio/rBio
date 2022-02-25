@@ -28,7 +28,6 @@ class DoctorPatientListScreen extends StatelessWidget {
         type = Atom.queryParameters['type']!.xPatientType as PatientType;
       }
     } catch (e) {
-      log(e.toString());
       return const RbioRouteError();
     }
 
@@ -200,7 +199,9 @@ class DoctorPatientListScreen extends StatelessWidget {
     final list = vm.getList;
 
     return ListView.builder(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue,
+      ),
       scrollDirection: Axis.vertical,
       physics: const BouncingScrollPhysics(),
       itemCount: vm.getitemCount,
@@ -594,9 +595,9 @@ class DoctorPatientListScreen extends StatelessWidget {
   String getTitle() {
     if (type == PatientType.bp) {
       return LocaleProvider.current.blood_pressure_tracking;
-    } else if (type == PatientType.bmi) {
+    } else if (type == PatientType.scale) {
       return LocaleProvider.current.bmi_tracking;
-    } else if (type == PatientType.sugar) {
+    } else if (type == PatientType.bg) {
       return LocaleProvider.current.bg_measurement_tracking;
     }
     return "";

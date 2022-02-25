@@ -1,4 +1,5 @@
 {
+  "succefully_created_account": "Kaydınız başarıyla tamamlanmıştır",
   "btn_create": "Oluştur",
   "btn_cancel": "İptal",
   "btn_delete": "Sil",
@@ -783,5 +784,6 @@
   "how_many_times_a_day": "Günde kaç kere?",
   "days": "Günler",
   "appointment_datepicker_warning": "Gün seçimi yapmadığınız için tarihte değişiklik olmadı.",
-  "logout_confirmation_description": "Uygulamadan çıkış yapmak istiyor musunuz?"
+  "logout_confirmation_description": "Uygulamadan çıkış yapmak istiyor musunuz?",
+  "personal_update_success": "Bilgileriniz başarıyla güncellenmiştir"
 }

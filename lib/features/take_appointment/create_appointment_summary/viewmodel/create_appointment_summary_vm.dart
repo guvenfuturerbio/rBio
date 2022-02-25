@@ -127,7 +127,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       List<ResourcesRequest> resourcesRequest = <ResourcesRequest>[];
       resourcesRequest.add(
         ResourcesRequest(
-          tenantId: forOnline ? R.dynamicVar.tenantAyranciId : tenantId,
+          tenantId: forOnline ? R.constants.tenantAyranciId : tenantId,
           to: to,
           from: from,
           departmentId: departmentId,
@@ -137,7 +137,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
 
       SaveAppointmentsRequest saveAppointmentsRequest = SaveAppointmentsRequest(
         patientId: patientId,
-        tenantId: forOnline ? R.dynamicVar.tenantAyranciId : tenantId,
+        tenantId: forOnline ? R.constants.tenantAyranciId : tenantId,
         type: forOnline ? 256 : 1, // poliklinik
         status: 1, // bekliyor
         patientType: 0, // bilinmiyor

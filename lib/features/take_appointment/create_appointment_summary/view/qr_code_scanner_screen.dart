@@ -96,12 +96,9 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
 
   void _onPermissionSet(QRViewController ctrl, bool p) {
     if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            LocaleProvider.current.no_permission,
-          ),
-        ),
+      Utils.instance.showSnackbar(
+        Atom.context,
+        LocaleProvider.current.no_permission,
       );
     }
   }

@@ -3,8 +3,8 @@ import 'package:collection/collection.dart';
 import '../core.dart';
 
 enum PatientType {
-  sugar,
-  bmi,
+  bg,
+  scale,
   bp,
 }
 

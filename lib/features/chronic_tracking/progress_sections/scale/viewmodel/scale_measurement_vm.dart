@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import '../../../../../core/core.dart';
-import '../../../utils/selected_scale_type.dart';
+import '../../../../../core/enums/selected_scale_type.dart';
 
 class ScaleMeasurementViewModel {
   final ScaleModel scaleModel;
@@ -489,7 +489,6 @@ class ScaleMeasurementViewModel {
     lbm += weight! * 0.32 + 12.226;
     lbm -= scaleModel.impedance! * 0.0068;
     lbm -= age! * 0.0542;
-
     return lbm;
   }
 

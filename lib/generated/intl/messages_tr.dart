@@ -921,6 +921,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Gizlilik Bildirimi ve Kişisel Veri Koruma Politikası"),
         "personal_info":
             MessageLookupByLibrary.simpleMessage("Kişisel Bilgiler"),
+        "personal_update_success": MessageLookupByLibrary.simpleMessage(
+            "Bilgileriniz başarıyla güncellenmiştir"),
         "phone_guven": MessageLookupByLibrary.simpleMessage("444 94 94"),
         "phone_number":
             MessageLookupByLibrary.simpleMessage("Telefon Numaranız"),
@@ -1112,6 +1114,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "strpCnt": MessageLookupByLibrary.simpleMessage("<stripCount>"),
         "subscriptions":
             MessageLookupByLibrary.simpleMessage("Takip Ettiklerim"),
+        "succefully_created_account": MessageLookupByLibrary.simpleMessage(
+            "Kaydınız başarıyla tamamlanmıştır"),
         "succefully_created_pass": MessageLookupByLibrary.simpleMessage(
             "Yeni şifreniz başarıyla oluşturulmuştur"),
         "success_message_title": MessageLookupByLibrary.simpleMessage("Bilgi"),

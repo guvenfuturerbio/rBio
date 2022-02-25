@@ -5,8 +5,10 @@ part 'token_user_text_body.g.dart';
 class TokenUserTextBody {
   @JsonKey(name: "Id")
   String? id;
+
   @JsonKey(name: "NameSurname")
   String? name;
+
   @JsonKey(name: "ElectronicMail")
   String? email;
 
