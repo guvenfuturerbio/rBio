@@ -133,18 +133,22 @@ class MeasurementTrackingVm with ChangeNotifier {
     getIt<GlucoseStorageImpl>().writeAll(glucoseData, isFromHealth: true);
   }
 
-  saveScaleData(List<HealthDataPoint> data) {
+  void saveScaleData(List<HealthDataPoint> data) {
     List<_TempScaleModel> _tempScaleModel = <_TempScaleModel>[];
 
     for (var item in data) {
       if (item.type == HealthDataType.WEIGHT) {
-        _tempScaleModel.add(_TempScaleModel(
+        _tempScaleModel.add(
+          _TempScaleModel(
             weight: item.value.toDouble(),
             date: item.dateFrom,
             deviceId: item.deviceId,
-            deviceName: item.sourceName));
+            deviceName: item.sourceName,
+          ),
+        );
       }
     }
+
     for (var item in data) {
       if (item.type == HealthDataType.BODY_MASS_INDEX) {
         if (_tempScaleModel.any((element) => element.date == item.dateFrom)) {
@@ -160,6 +164,7 @@ class MeasurementTrackingVm with ChangeNotifier {
         }
       }
     }
+
     for (var item in data) {
       if (item.type == HealthDataType.BODY_FAT_PERCENTAGE) {
         if (_tempScaleModel.any((element) => element.date == item.dateFrom)) {
@@ -175,35 +180,44 @@ class MeasurementTrackingVm with ChangeNotifier {
         }
       }
     }
+
     List<ScaleMeasurementViewModel> scaleData = _tempScaleModel
-        .map((e) => ScaleMeasurementViewModel(
+        .map(
+          (e) => ScaleMeasurementViewModel(
             scaleModel: ScaleModel(
-                isManuel: e.deviceId != 'manuel',
-                device:
-                    PairedDevice(deviceId: e.deviceId, modelName: e.deviceName)
-                        .toJson(),
-                unit: ScaleUnit.kg,
-                bmi: e.bmi,
-                weight: e.weight,
-                bodyFat: e.bodyFat,
-                note: '',
-                dateTime: e.date,
-                isFromHealth: true,
-                images: [])))
+              isManuel: e.deviceId != 'manuel',
+              device: PairedDevice(
+                deviceId: e.deviceId,
+                modelName: e.deviceName,
+              ).toJson(),
+              unit: ScaleUnit.kg,
+              bmi: e.bmi,
+              weight: e.weight,
+              bodyFat: e.bodyFat,
+              note: '',
+              dateTime: e.date,
+              isFromHealth: true,
+              images: [],
+            ),
+          ),
+        )
         .toList();
 
     for (var item in scaleData) {
       LoggerUtils.instance.e(item);
     }
+
     for (var item in data) {
       LoggerUtils.instance.e(item);
     }
+
     if (scaleData.any((element) => element.bmi == null)) {
       for (var item
           in scaleData.where((element) => element.bmi == null).toList()) {
         item.calculateVariables();
       }
     }
+
     getIt<ScaleStorageImpl>().writeAll(
         scaleData.map((e) => e.scaleModel).toList(),
         isFromHealth: true);

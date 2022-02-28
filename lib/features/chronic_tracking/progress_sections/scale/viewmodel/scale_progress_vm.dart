@@ -738,7 +738,7 @@ class ScaleProgressVm extends ChangeNotifier
       callback: callBack,
       lastMeasurement: lastMeasurement == null
           ? LocaleProvider.current.no_measurement
-          : '${lastMeasurement.weight ?? ''} ${lastMeasurement.unit.toStr}',
+          : '${(lastMeasurement.weight ?? 0).toStringAsFixed(2)} ${lastMeasurement.unit.toStr}',
       lastMeasurementDate: lastMeasurement?.dateTime ?? DateTime.now(),
       imageUrl: R.image.bodyScale,
     );

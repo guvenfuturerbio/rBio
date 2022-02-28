@@ -388,7 +388,7 @@ class BleReactorOps extends ChangeNotifier {
               Atom.dismiss();
             }
 
-            if ((scaleDevice.scaleData!.scaleModel.measurementComplete)! &&
+            if ((scaleDevice.scaleData?.scaleModel.measurementComplete)! &&
                 !deviceAlreadyPaired) {
               // Saving paired device Section
               controlPointResponse.add(1);

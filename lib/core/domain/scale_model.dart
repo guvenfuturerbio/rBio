@@ -294,8 +294,10 @@ class ScaleModel extends HiveObject {
       return bmi == other.bmi &&
           weight == other.weight &&
           bodyFat == other.bodyFat &&
-          dateTime == other.dateTime;
+          dateTime.millisecondsSinceEpoch ==
+              other.dateTime.millisecondsSinceEpoch;
     }
+
     return jsonEncode(toMap()) == jsonEncode(other.toMap());
   }
 }

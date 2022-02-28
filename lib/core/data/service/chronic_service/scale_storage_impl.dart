@@ -40,12 +40,14 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
         ScaleModel? data = box.get(key);
         if (data != null) {
           await deleteFromServer(
-              data.time!,
-              DeleteScaleMasurementBody(
-                      entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
-                      measurementId: data.measurementId)
-                  .toJson());
-          box.delete(key);
+            data.time!,
+            DeleteScaleMasurementBody(
+              entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+              measurementId: data.measurementId,
+            ).toJson(),
+          );
+
+          await box.delete(key);
           notifyListeners();
           return true;
         } else {
@@ -61,7 +63,9 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
   @override
   Future deleteFromServer(
-      int timeKey, Map<String, dynamic> deleteMeasurementRequest) async {
+    int timeKey,
+    Map<String, dynamic> deleteMeasurementRequest,
+  ) async {
     try {
       await getIt<ChronicTrackingRepository>().deleteScaleMeasurement(
           DeleteScaleMasurementBody.fromJson(deleteMeasurementRequest));
@@ -142,6 +146,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
       isManuel: data.isManuel,
       deviceUUID: data.device?["deviceId"] ?? 'manual',
     );
+
     try {
       return (await getIt<ChronicTrackingRepository>()
               .insertNewScaleValue(addScaleMasurementBody))
@@ -159,7 +164,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
         if (scaleModelFromBox != null && !scaleModelFromBox.isEqual(data)) {
           await updateServer(data);
-          box.put(key, data);
+          await box.put(key, data);
 
           notifyListeners();
         }
@@ -178,20 +183,22 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
     UpdateScaleMasurementBody updateScaleMasurementBody =
         UpdateScaleMasurementBody(
-            id: data.measurementId,
-            bmh: data.bmh,
-            bodyFat: data.bodyFat,
-            bmi: data.bmi,
-            boneMass: data.boneMass,
-            entegrationId: userId,
-            muscle: data.muscle,
-            note: data.note,
-            occurrenceTime: data.dateTime,
-            scaleUnit: data.unit != null || data.unit != ScaleUnit.kg ? 1 : 0,
-            visceralFat: data.visceralFat,
-            water: data.water,
-            weight: data.weight,
-            kioskMeasurementId: 0);
+      id: data.measurementId,
+      bmh: data.bmh,
+      bodyFat: data.bodyFat,
+      bmi: data.bmi,
+      boneMass: data.boneMass,
+      entegrationId: userId,
+      muscle: data.muscle,
+      note: data.note,
+      occurrenceTime: data.dateTime,
+      scaleUnit: data.unit != null || data.unit != ScaleUnit.kg ? 1 : 0,
+      visceralFat: data.visceralFat,
+      water: data.water,
+      weight: data.weight,
+      kioskMeasurementId: 0,
+    );
+
     try {
       return (await getIt<ChronicTrackingRepository>()
               .updateScaleMeasurement(updateScaleMasurementBody))
@@ -206,25 +213,28 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     try {
       if (box.isOpen && !doesExist(data)) {
         if (!data.isFromHealth) {
-          health!.requestAuthorization(types, permissions: perm);
+          await health!.requestAuthorization(types, permissions: perm);
+
           if (data.weight != null) {
-            health!.writeHealthData(
+            await health!.writeHealthData(
               data.weight!,
               HealthDataType.WEIGHT,
               data.dateTime,
               data.dateTime,
             );
           }
+
           if (data.bmi != null) {
-            health!.writeHealthData(
+            await health!.writeHealthData(
               data.bmi!,
               HealthDataType.BODY_MASS_INDEX,
               data.dateTime,
               data.dateTime,
             );
           }
+
           if (data.bodyFat != null) {
-            health!.writeHealthData(
+            await health!.writeHealthData(
               data.bodyFat!,
               HealthDataType.BODY_FAT_PERCENTAGE,
               data.dateTime,
@@ -256,10 +266,11 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   }) async {
     try {
       GetScaleMasurementBody getScaleMasurementBody = GetScaleMasurementBody(
-          entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
-          beginDate: beginDate,
-          endDate: endDate,
-          count: count);
+        entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+        beginDate: beginDate,
+        endDate: endDate,
+        count: count,
+      );
 
       final response = await getIt<ChronicTrackingRepository>()
           .getScaleDataOfPerson(getScaleMasurementBody);
@@ -277,26 +288,34 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     }
   }
 
-  Future<bool> getAndWriteScaleData(
-      {DateTime? beginDate, DateTime? endDate, int count = 20}) async {
+  Future<bool> getAndWriteScaleData({
+    DateTime? beginDate,
+    DateTime? endDate,
+    int count = 20,
+  }) async {
     if (!_hasProgress) {
       _hasProgress = true;
       var list = await getScaleDatas(
-          beginDate: beginDate, endDate: endDate, count: count);
+        beginDate: beginDate,
+        endDate: endDate,
+        count: count,
+      );
+
       if (list.isNotEmpty) {
         var _dubItem = 0;
         for (var scale in list) {
-          if (doesExist(scale)) _dubItem++;
+          if (doesExist(scale)) {
+            _dubItem++;
+          }
         }
+
         if (_dubItem != list.length) {
           await writeAll(list);
           _hasProgress = false;
-
           notifyListeners();
           return false;
         } else {
           _hasProgress = false;
-
           return false;
         }
       } else {
@@ -315,8 +334,8 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
       if (getLatestMeasurement() == null ||
           box.values.length < 5 ||
           !lastData.isEqual(getLatestMeasurement()!)) {
-        box.clear();
-        getAndWriteScaleData();
+        await box.clear();
+        await getAndWriteScaleData();
       }
     }
   }
@@ -329,13 +348,14 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     try {
       if (box.isOpen) {
         for (var item in data) {
-          if (!doesExist(item)) {
-            if (isFromHealth) {
-              var id = await sendToServer(item);
-              item.measurementId = id;
-            }
-            box.add(item);
-          }
+          await write(item, shouldSendToServer: true);
+          // if (!doesExist(item)) {
+          //   if (isFromHealth) {
+          //     var id = await sendToServer(item);
+          //     item.measurementId = id;
+          //   }
+          //   await box.add(item);
+          // }
         }
 
         return true;
