@@ -5,9 +5,12 @@ publish_to: none
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
+
 dependencies:
-  logger: ^1.1.0
   dio: ^4.0.4
+  key_manager:
+    path: ../key_manager
+  logger: ^1.1.0
 
 dev_dependencies:
   coverage: ^1.1.0

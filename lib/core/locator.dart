@@ -14,6 +14,9 @@ import 'core.dart';
 GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator(AppConfig appConfig) async {
+  getIt.registerSingleton<KeyManager>(KeyManager());
+  await getIt<KeyManager>().setup(Environment.prod);
+
   getIt.registerSingleton<AppConfig>(appConfig);
   getIt.registerSingleton<CacheClient>(CacheClient());
 

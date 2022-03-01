@@ -1,20 +1,36 @@
-import 'package:guven_service/src/model/model.dart';
-import 'package:onedosehealth/core/core.dart';
+import 'package:dio/dio.dart';
+import 'package:key_manager/key_manager.dart';
 
-/// {@template guven_server}
-/// Network requests from Guven server
-/// {@endtemplate}
+import '../guven_service.dart';
+
+part 'endpoints.dart';
+
 class GuvenService {
   final IDioHelper _dioHelper;
-  GuvenService(IDioHelper dioHelper):_dioHelper=dioHelper;
+  final String _token;
+  final String _lang;
+  final _Endpoints endpoints;
 
-  /// {@macro guven_server}
+  GuvenService(
+    this._dioHelper,
+    KeyManager _keyManager,
+    this._token,
+    this._lang,
+  ) : endpoints = _Endpoints(_keyManager);
 
+  Options get authOptions => Options(
+        headers: <String, dynamic>{
+          'Authorization': _token,
+          'Lang': _lang,
+        },
+      );
+
+  // #region Scale
   Future<GuvenResponseModel> updateScaleMeasurement(
     UpdateScaleMasurementBody updateScaleMasurementBody,
   ) async {
     final response = await _dioHelper.postGuven(
-      R.endpoints.ctUpdateScaleMeasurement,
+      endpoints.updateScaleMeasurement,
       updateScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -29,7 +45,7 @@ class GuvenService {
     GetScaleMasurementBody getScaleMasurementBody,
   ) async {
     final response = await _dioHelper.postGuven(
-      R.endpoints.ctGetScaleMeasurement,
+      endpoints.getScaleMeasurement,
       getScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -44,7 +60,7 @@ class GuvenService {
     DeleteScaleMasurementBody deleteScaleMasurementBody,
   ) async {
     final response = await _dioHelper.postGuven(
-      R.endpoints.ctDeleteScaleMeasurement,
+      endpoints.deleteScaleMeasurement,
       deleteScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -59,7 +75,7 @@ class GuvenService {
     AddScaleMasurementBody addScaleMasurementBody,
   ) async {
     final response = await _dioHelper.postGuven(
-      R.endpoints.ctInsertNewScaleValue,
+      endpoints.insertNewScaleValue,
       addScaleMasurementBody.toJson(),
       options: authOptions,
     );
@@ -69,4 +85,5 @@ class GuvenService {
       throw Exception('/insertNewScaleValue : ${response.isSuccessful}');
     }
   }
+  // #endregion
 }

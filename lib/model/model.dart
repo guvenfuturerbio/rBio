@@ -2,10 +2,6 @@ export 'bp_measurement/add_bp_mesaurement.dart';
 export 'bp_measurement/delete_bp_measurement.dart';
 export 'bp_measurement/get_bp_measurement.dart';
 export 'bp_measurement/update_bp_measurement.dart';
-export 'scale_measurement/add_scale_measurement.dart';
-export 'scale_measurement/delete_scale_measurement.dart';
-export 'scale_measurement/get_scale_measurement.dart';
-export 'scale_measurement/update_scale_measurement.dart';
 
 export 'account/add_patient_relative_request.dart';
 export 'account/change_contact_info_request.dart';

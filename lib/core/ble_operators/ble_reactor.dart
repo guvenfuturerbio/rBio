@@ -15,7 +15,7 @@ class BleReactorOps extends ChangeNotifier {
 
   late BleReactorState _bleReactorState;
 
-  late ScaleDevice scaleDevice;
+  late MiScaleDevice scaleDevice;
 
   BleReactorState get bleReactorState => _bleReactorState;
 
@@ -302,12 +302,13 @@ class BleReactorOps extends ChangeNotifier {
   }
 
   Future<void> subscribeScaleDevice(DiscoveredDevice device) async {
-    scaleDevice = MiScaleDevice().from(device);
+    scaleDevice = MiScaleDevice.from(device);
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
     pairedDevice.deviceType = Utils.instance.getDeviceType(device);
     pairedDevice.modelName = device.name;
     pairedDevice.manufacturerName = device.name;
+
     _ble
         .discoverServices(device.id)
         .then((value) => LoggerUtils.instance.d(value.toString()));
@@ -345,11 +346,13 @@ class BleReactorOps extends ChangeNotifier {
     _controlPointResponse = <int>[];
     final deviceAlreadyPaired =
         await getIt<BleDeviceManager>().hasDeviceAlreadyPaired(pairedDevice);
+
     final _characteristic = QualifiedCharacteristic(
       characteristicId: Uuid([42, 156]),
       serviceId: Uuid([24, 27]),
       deviceId: device.id,
     );
+
     try {
       _ble.subscribeToCharacteristic(_characteristic).listen(
         (event) async {
@@ -360,10 +363,12 @@ class BleReactorOps extends ChangeNotifier {
               ),
             );
           }
+
           if (scaleDevice.scaleData == null ||
               !scaleDevice.scaleData!.scaleModel.measurementComplete!) {
             final Uint8List data = Uint8List.fromList(event);
             scaleDevice.parseScaleData(pairedDevice, data);
+
             if (scaleDevice.scaleData!.scaleModel.measurementComplete! &&
                 deviceAlreadyPaired) {
               scaleDevice.scaleData!.calculateVariables();
@@ -380,6 +385,7 @@ class BleReactorOps extends ChangeNotifier {
               );
               scaleDevice.scaleData = null;
             }
+
             final popUpCanClose = (Atom.isDialogShow) &&
                 (scaleDevice.scaleData!.scaleModel.weightRemoved)! &&
                 !scaleDevice.scaleData!.scaleModel.measurementComplete!;

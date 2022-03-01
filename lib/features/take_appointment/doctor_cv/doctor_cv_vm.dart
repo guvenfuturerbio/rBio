@@ -32,7 +32,7 @@ class DoctorCvScreenVm extends ChangeNotifier {
       _doctorCvResponse =
           await getIt<Repository>().getDoctorCvDetails(doctorId);
       _progress = LoadingProgress.done;
-      _imageUrl = SecretHelper.instance.get(SecretKeys.dev4Guven) +
+      _imageUrl = getIt<KeyManager>().get(Keys.dev4Guven) +
           "/storage/app/media/" +
           _doctorCvResponse.image1!;
       notifyListeners();

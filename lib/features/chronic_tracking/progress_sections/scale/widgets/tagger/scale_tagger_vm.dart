@@ -9,8 +9,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../core/core.dart';
-import '../../../../../../model/ble_models/device_type.dart';
-import '../../../../../../model/ble_models/paired_device.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
   late ScaleMeasurementLogic scaleModel;

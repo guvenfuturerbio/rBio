@@ -1,6 +1,4 @@
-
 import '../../guven_service.dart';
-import 'base_model.dart';
 
 class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
   bool? isSuccessful;
@@ -54,10 +52,11 @@ extension MapCastExtension on GuvenResponseModel {
 
   List<Map<String, dynamic>> get xGetMapList {
     if (datum is List<dynamic>) {
-      if (datum.isEmpty) {
+      if ((datum as List).isEmpty) {
         return <Map<String, dynamic>>[];
       } else {
-        return datum?.cast<Map<String, dynamic>>().toList();
+        return datum?.cast<Map<String, dynamic>>().toList()
+            as List<Map<String, dynamic>>;
       }
     }
 

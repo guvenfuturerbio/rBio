@@ -753,7 +753,7 @@ packages:
     source: hosted
     version: "4.0.0"
   flutter_reactive_ble:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/flutter_reactive_ble"
       relative: true
@@ -1030,6 +1030,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.4"
+  key_manager:
+    dependency: "direct main"
+    description:
+      path: "packages/key_manager"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   keyboard_actions:
     dependency: "direct overridden"
     description:
@@ -1102,6 +1109,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  mi_scale:
+    dependency: "direct main"
+    description:
+      path: "packages/health_packages/mi_scale"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   mime:
     dependency: transitive
     description:
@@ -1463,6 +1477,20 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/health_packages/scale_api"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  scale_health_impl:
+    dependency: "direct main"
+    description:
+      path: "packages/health_packages/scale_health_impl"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  scale_hive_impl:
+    dependency: "direct main"
+    description:
+      path: "packages/health_packages/scale_hive_impl"
       relative: true
     source: path
     version: "1.0.0+1"

@@ -17,11 +17,11 @@ class ScaleMeasurementLogic {
 
   double? get weight => scaleModel.weight;
 
-  set weight(rhs) => scaleModel.weight = rhs;
+  set weight(double? rhs) => scaleModel.weight = rhs;
 
-  set time(rhs) => scaleModel.time = rhs;
+  set time(int? rhs) => scaleModel.time = rhs;
 
-  get time => scaleModel.time;
+  int? get time => scaleModel.time;
 
   int? get age => scaleModel.age;
 
@@ -64,7 +64,7 @@ class ScaleMeasurementLogic {
 
   DateTime get dateTime => scaleModel.dateTime;
 
-  set dateTime(rhs) => scaleModel.dateTime = rhs;
+  set dateTime(DateTime rhs) => scaleModel.dateTime = rhs;
 
   String get note => scaleModel.note ?? '';
 
@@ -577,7 +577,7 @@ class ScaleMeasurementLogic {
     }
   }
 
-  addImage(String path) {
+  void addImage(String path) {
     images.add(path);
   }
 }

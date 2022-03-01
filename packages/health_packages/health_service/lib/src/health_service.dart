@@ -1,5 +1,5 @@
 import 'package:health/health.dart';
-import 'package:onedosehealth/core/core.dart';
+import 'package:scale_api/scale_api.dart';
 
 part 'model/constants.dart';
 

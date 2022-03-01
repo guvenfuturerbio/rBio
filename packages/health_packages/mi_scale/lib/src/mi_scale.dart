@@ -4,17 +4,28 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:scale_api/scale_api.dart';
 
 class MiScaleDevice {
-  MiScaleDevice({DiscoveredDevice? device});
-  @override
-  MiScaleDevice from(DiscoveredDevice device) {
+  MiScaleDevice._(this.device);
+
+  ScaleMeasurementLogic? scaleData;
+  DiscoveredDevice? device;
+
+  /// The id of the discovere d device
+  String? get id => device?.id;
+
+  /// The name of the discovered device
+  String? get name => device?.name;
+
+  /// The signal strength of the device when it was first discovered
+  int? get rssi => device?.rssi;
+
+  factory MiScaleDevice.from(DiscoveredDevice device) {
     if (matchesDeviceType(device)) {
-      return MiScaleDevice(device: device);
+      return MiScaleDevice._(device);
     } else {
       throw Exception('Device doesnt march any device');
     }
   }
 
-  @override
   ScaleMeasurementLogic? parseScaleData(
     PairedDevice device,
     Uint8List data,
@@ -50,6 +61,7 @@ class MiScaleDevice {
     if (isBitSet) {
       impedance = ((data[10] & 0xFF) << 8) | (data[9] & 0xFF);
     }
+
     // Parse weight
     double? weight = byteData?.getUint16(11, Endian.little).toDouble();
     weight ??= 1;
@@ -58,7 +70,8 @@ class MiScaleDevice {
     } else if (unit == ScaleUnit.kg) {
       weight /= 200;
     } // Return new scale data
-    super.scaleData = ScaleMeasurementLogic(
+
+    scaleData = ScaleMeasurementLogic(
       scaleModel: ScaleModel(
         device: device.toJson(),
         measurementComplete: measurementComplete,
@@ -70,11 +83,11 @@ class MiScaleDevice {
         impedance: impedance,
       ),
     );
+
     return scaleData;
   }
 
-  @override
-  bool matchesDeviceType(DiscoveredDevice device) {
+  static bool matchesDeviceType(DiscoveredDevice device) {
     return device.name == 'MIBFS' &&
         device.serviceData.length == 1 &&
         device.serviceData.values.first.length == 13;

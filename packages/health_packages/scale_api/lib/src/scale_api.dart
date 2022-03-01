@@ -1,4 +1,4 @@
-import 'package:onedosehealth/core/core.dart';
+import 'package:scale_api/scale_api.dart';
 
 abstract class ScaleApi {
   Future<bool> deleteScaleData(int millisecondsSinceEpoch);

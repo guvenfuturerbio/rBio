@@ -1,5 +1,6 @@
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:health/health.dart';
-import 'package:onedosehealth/core/core.dart';
+import 'package:scale_api/scale_api.dart';
 
 part 'constants.dart';
 
@@ -21,11 +22,11 @@ class ScaleHealthImpl implements ScaleApi {
       Constants.instance.scaleTypes,
     );
 
-    List<ScaleModel> _tempScaleModel = <ScaleModel>[];
+    List<ScaleModel> tempList = <ScaleModel>[];
 
     for (var item in data) {
       if (item.type == HealthDataType.WEIGHT) {
-        _tempScaleModel.add(
+        tempList.add(
           ScaleModel(
             isManuel: item.deviceId != 'manuel',
             device: PairedDevice(
@@ -45,13 +46,12 @@ class ScaleHealthImpl implements ScaleApi {
 
     for (var item in data) {
       if (item.type == HealthDataType.BODY_MASS_INDEX) {
-        if (_tempScaleModel
-            .any((element) => element.dateTime == item.dateFrom)) {
-          _tempScaleModel
+        if (tempList.any((element) => element.dateTime == item.dateFrom)) {
+          tempList
               .firstWhere((element) => element.dateTime == item.dateFrom)
               .bmi = item.value.toDouble();
         } else {
-          _tempScaleModel.add(
+          tempList.add(
             ScaleModel(
               isManuel: item.deviceId != 'manuel',
               device: PairedDevice(
@@ -72,13 +72,12 @@ class ScaleHealthImpl implements ScaleApi {
 
     for (var item in data) {
       if (item.type == HealthDataType.BODY_FAT_PERCENTAGE) {
-        if (_tempScaleModel
-            .any((element) => element.dateTime == item.dateFrom)) {
-          _tempScaleModel
+        if (tempList.any((element) => element.dateTime == item.dateFrom)) {
+          tempList
               .firstWhere((element) => element.dateTime == item.dateFrom)
               .bodyFat = item.value.toDouble();
         } else {
-          _tempScaleModel.add(
+          tempList.add(
             ScaleModel(
               isManuel: item.deviceId != 'manuel',
               device: PairedDevice(
@@ -97,27 +96,8 @@ class ScaleHealthImpl implements ScaleApi {
       }
     }
 
-    List<ScaleMeasurementViewModel> scaleData = _tempScaleModel
-        .map(
-          (e) => ScaleMeasurementViewModel(
-            scaleModel: ScaleModel(
-              isManuel: e.deviceId != 'manuel',
-              device: PairedDevice(
-                deviceId: e.deviceId,
-                modelName: e.deviceName,
-              ).toJson(),
-              unit: ScaleUnit.kg,
-              bmi: e.bmi,
-              weight: e.weight,
-              bodyFat: e.bodyFat,
-              note: '',
-              dateTime: e.date,
-              isFromHealth: true,
-              images: [],
-            ),
-          ),
-        )
-        .toList();
+    List<ScaleMeasurementLogic> scaleData =
+        tempList.map((e) => ScaleMeasurementLogic(scaleModel: e)).toList();
 
     if (scaleData.any((element) => element.bmi == null)) {
       for (var item
@@ -125,6 +105,8 @@ class ScaleHealthImpl implements ScaleApi {
         item.calculateVariables();
       }
     }
+
+    return tempList;
   }
 
   @override
@@ -135,5 +117,34 @@ class ScaleHealthImpl implements ScaleApi {
   }
 
   @override
-  Future<int> writeScaleData(ScaleModel model) {}
+  Future<int> writeScaleData(ScaleModel model) async {
+    if (model.weight != null) {
+      await _health.writeHealthData(
+        model.weight!,
+        HealthDataType.WEIGHT,
+        model.dateTime,
+        model.dateTime,
+      );
+    }
+
+    if (model.bmi != null) {
+      await _health.writeHealthData(
+        model.bmi!,
+        HealthDataType.BODY_MASS_INDEX,
+        model.dateTime,
+        model.dateTime,
+      );
+    }
+
+    if (model.bodyFat != null) {
+      await _health.writeHealthData(
+        model.bodyFat!,
+        HealthDataType.BODY_FAT_PERCENTAGE,
+        model.dateTime,
+        model.dateTime,
+      );
+    }
+
+    return 0;
+  }
 }

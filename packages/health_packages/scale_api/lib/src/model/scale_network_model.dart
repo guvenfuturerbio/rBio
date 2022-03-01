@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:onedosehealth/core/core.dart';
+import 'package:scale_api/scale_api.dart';
 
 part 'scale_network_model.g.dart';
 

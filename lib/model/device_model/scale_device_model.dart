@@ -1,9 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-
 import '../../core/core.dart';
-import '../ble_models/paired_device.dart';
 
 abstract class ScaleDevice<T> {
   final DiscoveredDevice? device;

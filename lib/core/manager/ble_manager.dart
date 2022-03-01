@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/model/ble_models/paired_device.dart';
 
 class BleDeviceManager extends ChangeNotifier {
   final sharedPrefs = getIt<ISharedPreferencesManager>();

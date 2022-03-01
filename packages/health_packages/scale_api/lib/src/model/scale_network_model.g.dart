@@ -25,7 +25,7 @@ ScaleNetworkModel _$ScaleNetworkModelFromJson(Map<String, dynamic> json) =>
       isManuel: json['is_manuel'] as bool?,
       bmiMeasurementsImageList:
           (json['bmi_measurements_image_list'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((dynamic e) => e as String)
               .toList(),
       note: json['note'] as String?,
     );

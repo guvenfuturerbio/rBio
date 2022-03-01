@@ -2,6 +2,8 @@ export 'package:atom/atom.dart';
 export 'package:shared_preferences_manager/shared_preferences_manager.dart';
 export 'package:local_notification_manager/local_notification_manager.dart';
 export 'package:scale_api/scale_api.dart';
+export 'package:key_manager/key_manager.dart';
+export 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 export '../app/config/app_config.dart';
 export '../app/app_bloc_observer.dart';
@@ -39,13 +41,11 @@ export "domain/glucose_model.dart";
 export "domain/network_cache_model.dart";
 export "domain/person_model.dart";
 
-export "enums/environment.dart";
 export "enums/loading_progress.dart";
 export 'enums/medicine_period.dart';
 export 'enums/patient_type.dart';
 export 'enums/payment_type.dart';
 export 'enums/remindable.dart';
-export "enums/secret_keys.dart";
 export "enums/usage_type.dart";
 
 export "extension/extension.dart";
@@ -74,7 +74,6 @@ export "utils/logger_helper.dart";
 export "utils/password_advisor.dart";
 export "utils/register_views.dart";
 export 'enums/scale_margin_filter.dart';
-export 'utils/secret_helper.dart';
 export 'enums/time_period_filter.dart';
 export 'utils/utils.dart';
 export "widgets/widgets.dart";

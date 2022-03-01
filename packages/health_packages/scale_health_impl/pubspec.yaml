@@ -11,6 +11,8 @@ dependencies:
     path: ../health
   scale_api:
     path: ../scale_api
+  flutter_reactive_ble:
+    path: ../../flutter_reactive_ble
 
 dev_dependencies:
   coverage: ^1.1.0
