@@ -11,6 +11,7 @@ class DeleteScaleMasurementBody {
         "measurement_id": measurementId,
         "entegration_id": entegrationId,
       };
+
   factory DeleteScaleMasurementBody.fromJson(Map<String, dynamic> map) =>
       DeleteScaleMasurementBody(
         entegrationId: map['entegration_id'] as int?,

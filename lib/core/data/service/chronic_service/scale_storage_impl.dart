@@ -326,6 +326,8 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     }
   }
 
+  /// mt_home_vm'de kişiye ait son veriyi api'den getir
+  /// Box'da veri yoksa, eleman sayısı 5'ten azsa veya apiden gelen son kayıt ile box'daki son kayıt aynıysa, hive'i güncelle
   Future<void> checkLastScale() async {
     var list = (await getScaleNetworkDatas(count: 1));
     if (list.isNotEmpty) {

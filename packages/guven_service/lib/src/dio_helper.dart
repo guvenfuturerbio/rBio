@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:guven_service/guven_service.dart';
 
-import '../src/model/base_model.dart';
-
 abstract class IDioHelper {
   Future<GuvenResponseModel> getGuven(
     String path, {

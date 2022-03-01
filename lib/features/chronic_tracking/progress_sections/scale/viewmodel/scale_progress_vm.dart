@@ -274,11 +274,21 @@ class ScaleProgressVm extends ChangeNotifier
   Future<void> setStartDate(DateTime d) async {
     _startDate = d;
     _currentDateIndex = 0;
+
     await getIt<ScaleStorageImpl>().getAndWriteScaleData(
-        beginDate: _startDate, endDate: endDate.add(const Duration(days: 1)));
+      beginDate: _startDate,
+      endDate: endDate.add(
+        const Duration(days: 1),
+      ),
+    );
+
     fetchScaleMeasurementsInDateRange(
-        startDate, endDate.add(const Duration(days: 1)));
-    //fetchScrolledDailyData();
+      startDate,
+      endDate.add(
+        const Duration(days: 1),
+      ),
+    );
+
     notifyListeners();
   }
 
@@ -292,12 +302,21 @@ class ScaleProgressVm extends ChangeNotifier
   Future<void> setEndDate(DateTime d) async {
     _endDate = d;
     _currentDateIndex = 0;
-    await getIt<ScaleStorageImpl>().getAndWriteScaleData(
-        beginDate: _startDate, endDate: endDate.add(const Duration(days: 1)));
-    fetchScaleMeasurementsInDateRange(
-        startDate, endDate.add(const Duration(days: 1)));
 
-    //fetchScrolledDailyData();
+    await getIt<ScaleStorageImpl>().getAndWriteScaleData(
+      beginDate: _startDate,
+      endDate: endDate.add(
+        const Duration(days: 1),
+      ),
+    );
+
+    fetchScaleMeasurementsInDateRange(
+      startDate,
+      endDate.add(
+        const Duration(days: 1),
+      ),
+    );
+
     notifyListeners();
   }
 

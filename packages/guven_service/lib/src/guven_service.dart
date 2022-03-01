@@ -26,21 +26,6 @@ class GuvenService {
       );
 
   // #region Scale
-  Future<GuvenResponseModel> updateScaleMeasurement(
-    UpdateScaleMasurementBody updateScaleMasurementBody,
-  ) async {
-    final response = await _dioHelper.postGuven(
-      endpoints.updateScaleMeasurement,
-      updateScaleMasurementBody.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
-    }
-  }
-
   Future<GuvenResponseModel> getScaleMasurement(
     GetScaleMasurementBody getScaleMasurementBody,
   ) async {
@@ -56,21 +41,6 @@ class GuvenService {
     }
   }
 
-  Future<GuvenResponseModel> deleteScaleMeasurement(
-    DeleteScaleMasurementBody deleteScaleMasurementBody,
-  ) async {
-    final response = await _dioHelper.postGuven(
-      endpoints.deleteScaleMeasurement,
-      deleteScaleMasurementBody.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/deleteScaleMeasurement : ${response.isSuccessful}');
-    }
-  }
-
   Future<GuvenResponseModel> insertNewScaleValue(
     AddScaleMasurementBody addScaleMasurementBody,
   ) async {
@@ -83,6 +53,36 @@ class GuvenService {
       return response;
     } else {
       throw Exception('/insertNewScaleValue : ${response.isSuccessful}');
+    }
+  }
+
+  Future<GuvenResponseModel> updateScaleMeasurement(
+    UpdateScaleMasurementBody updateScaleMasurementBody,
+  ) async {
+    final response = await _dioHelper.postGuven(
+      endpoints.updateScaleMeasurement,
+      updateScaleMasurementBody.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
+    }
+  }
+
+  Future<GuvenResponseModel> deleteScaleMeasurement(
+    DeleteScaleMasurementBody deleteScaleMasurementBody,
+  ) async {
+    final response = await _dioHelper.postGuven(
+      endpoints.deleteScaleMeasurement,
+      deleteScaleMasurementBody.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/deleteScaleMeasurement : ${response.isSuccessful}');
     }
   }
   // #endregion

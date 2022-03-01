@@ -25,38 +25,41 @@ class BleConnectorOps extends ChangeNotifier {
 
   void listenConnectedDeviceStream() {
     //Telefonla cihaz arasındaki bağlantı durumu dinleyen stream
-    _ble.connectedDeviceStream.listen((event) {
-      if (event.deviceId == device?.id) {
-        final deviceIndex = _deviceConnectionStateUpdate
-            .indexWhere((element) => element.deviceId == event.deviceId);
+    _ble.connectedDeviceStream.listen(
+      (event) {
+        if (event.deviceId == device?.id) {
+          final deviceIndex = _deviceConnectionStateUpdate
+              .indexWhere((element) => element.deviceId == event.deviceId);
 // index aşağıda -1 değilse daha önce bir bağlantı var demektir. Kontrol bunun için yapılıyor.
-        if (deviceIndex != -1) {
-          _deviceConnectionStateUpdate[deviceIndex] = event;
-        } else {
-          _deviceConnectionStateUpdate.add(event);
-        }
-        notifyListeners();
-        //Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
-        if (event.connectionState == DeviceConnectionState.connected) {
-          switch (getDeviceType(device!)) {
-            case DeviceType.accuChek:
-              getIt<BleReactorOps>().write(device!);
-              break;
-            case DeviceType.contourPlusOne:
-              getIt<BleReactorOps>().write(device!);
-              break;
-            case DeviceType.miScale:
-              getIt<BleReactorOps>().subscribeScaleDevice(device!);
-              break;
-            default:
-              break;
+          if (deviceIndex != -1) {
+            _deviceConnectionStateUpdate[deviceIndex] = event;
+          } else {
+            _deviceConnectionStateUpdate.add(event);
           }
-        } else if (event.connectionState ==
-            DeviceConnectionState.disconnected) {
-          getIt<BleScannerOps>().refreshDeviceList();
+          notifyListeners();
+
+          //Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
+          if (event.connectionState == DeviceConnectionState.connected) {
+            switch (getDeviceType(device!)) {
+              case DeviceType.accuChek:
+                getIt<BleReactorOps>().write(device!);
+                break;
+              case DeviceType.contourPlusOne:
+                getIt<BleReactorOps>().write(device!);
+                break;
+              case DeviceType.miScale:
+                getIt<BleReactorOps>().subscribeScaleDevice(device!);
+                break;
+              default:
+                break;
+            }
+          } else if (event.connectionState ==
+              DeviceConnectionState.disconnected) {
+            getIt<BleScannerOps>().refreshDeviceList();
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   DeviceType getDeviceType(DiscoveredDevice device) {
@@ -76,6 +79,7 @@ class BleConnectorOps extends ChangeNotifier {
   Future<void> connect(DiscoveredDevice device) async {
     _device = device;
     notifyListeners();
+
     //Herhangi bir connection varsa connection silme işlemi yapıyoruz.
     if (_connection != null) {
       await _connection!.cancel();

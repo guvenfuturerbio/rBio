@@ -12,17 +12,20 @@ class HealthDataPoint {
   String _deviceId;
   String _sourceId;
   String _sourceName;
+  String? appleUuid;
 
   HealthDataPoint(
-      this._value,
-      this._type,
-      this._unit,
-      this._dateFrom,
-      this._dateTo,
-      this._platform,
-      this._deviceId,
-      this._sourceId,
-      this._sourceName) {
+    this._value,
+    this._type,
+    this._unit,
+    this._dateFrom,
+    this._dateTo,
+    this._platform,
+    this._deviceId,
+    this._sourceId,
+    this._sourceName, {
+    this.appleUuid,
+  }) {
     // set the value to minutes rather than the category
     // returned by the native API
     if (type == HealthDataType.MINDFULNESS ||

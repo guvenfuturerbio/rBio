@@ -15,7 +15,7 @@ class HealthFactory {
   String? _deviceId;
   final _deviceInfo = DeviceInfoPlugin();
 
-  static PlatformType _platformType =
+  static final PlatformType _platformType =
       Platform.isAndroid ? PlatformType.ANDROID : PlatformType.IOS;
 
   /// Check if a given data type is available on the platform
@@ -49,9 +49,10 @@ class HealthFactory {
   ///   On Android, this function returns true or false, depending on whether the specified access right has been granted.
   static Future<bool?> hasPermissions(List<HealthDataType> types,
       {List<HealthDataAccess>? permissions}) async {
-    if (permissions != null && permissions.length != types.length)
+    if (permissions != null && permissions.length != types.length) {
       throw ArgumentError(
           "The lists of types and permissions must be of same length.");
+    }
 
     final mTypes = List<HealthDataType>.from(types, growable: true);
     final mPermissions = permissions == null
@@ -186,8 +187,10 @@ class HealthFactory {
     DateTime startTime,
     DateTime endTime,
   ) async {
-    if (startTime.isAfter(endTime))
+    if (startTime.isAfter(endTime)) {
       throw ArgumentError("startTime must be equal or earlier than endTime");
+    }
+
     Map<String, dynamic> args = {
       'value': value,
       'dataTypeKey': _enumToString(type),
@@ -280,6 +283,7 @@ class HealthFactory {
       final DateTime to = DateTime.fromMillisecondsSinceEpoch(e['date_to']);
       final String sourceId = e["source_id"];
       final String sourceName = e["source_name"];
+
       return HealthDataPoint(
         value,
         dataType,
@@ -290,6 +294,7 @@ class HealthFactory {
         device,
         sourceId,
         sourceName,
+        appleUuid: Platform.isIOS ? e["uuid"] : null,
       );
     }).toList();
 
@@ -333,5 +338,26 @@ class HealthFactory {
       args,
     );
     return stepsCount;
+  }
+
+  /// await health.deleteData(
+  ///   HealthDataType.WEIGHT,
+  ///   DateTime.parse("2022-03-01 22:36:24.697"),
+  /// );
+  Future<bool> deleteData(
+    HealthDataType type,
+    DateTime date,
+  ) async {
+    Map<String, dynamic> args = {
+      'date': date.millisecondsSinceEpoch,
+      'dataTypeKey': _enumToString(type),
+    };
+
+    try {
+      await _channel.invokeMethod('deleteData', args);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

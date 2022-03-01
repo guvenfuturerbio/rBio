@@ -106,6 +106,7 @@ class BleReactorOps extends ChangeNotifier {
   Future<void> saveGlucoseDatas() async {
     var newData = 0;
     late GlucoseData tempData;
+
     for (final item in _gData) {
       final bool doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
       if (!doesExist) {
@@ -113,6 +114,7 @@ class BleReactorOps extends ChangeNotifier {
         tempData = item;
       }
     }
+
     if (newData > 1) {
       for (final item in _gData) {
         final bool doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
@@ -130,6 +132,7 @@ class BleReactorOps extends ChangeNotifier {
         barrierDismissible: false,
       );
     }
+
     getIt<LocalNotificationManager>().show(
       LocaleProvider.current.blood_glucose_measurement,
       LocaleProvider.current.blood_glucose_imported,
@@ -258,13 +261,11 @@ class BleReactorOps extends ChangeNotifier {
               localUser.key,
             );
           }
-
           _lock = false;
         }
 
         _bleReactorState = BleReactorState.done;
         await saveGlucoseDatas();
-
         notifyListeners();
       },
       onError: (dynamic error) {

@@ -85,14 +85,44 @@ public class SwiftHealthPlugin: NSObject, FlutterPlugin {
         else if (call.method.elementsEqual("writeData")){
             try! writeData(call: call, result: result)
         }
+        
         /// Handle hasPermission
         else if (call.method.elementsEqual("hasPermissions")){
             try! hasPermissions(call: call, result: result)
         }
+        
+        /// Delete data
+        else if (call.method.elementsEqual("deleteData")){
+            try! deleteData(call: call, result: result)
+        }
     }
-
+    
     func checkIfHealthDataAvailable(call: FlutterMethodCall, result: @escaping FlutterResult) {
         result(HKHealthStore.isHealthDataAvailable())
+    }
+    
+    func deleteData(call: FlutterMethodCall, result: @escaping FlutterResult) throws {
+        guard let arguments = call.arguments as? NSDictionary,
+            let date = (arguments["date"] as? NSNumber),
+            let type = (arguments["dataTypeKey"] as? String)
+            else {
+                throw PluginError(message: "Invalid Arguments")
+            }
+        
+        let dateInterval = Date(timeIntervalSince1970: date.doubleValue / 1000)
+        
+        print("Successfully called deleteData with value of \(date) and type of \(type)")
+        
+        let healthKitStore = HKHealthStore()
+        let predicate = HKQuery.predicateForObjects(withMetadataKey: HKMetadataKeySyncIdentifier, allowedValues: ["\(dateInterval.timeIntervalSince1970)"])
+        healthKitStore.deleteObjects(of: dataTypeLookUp(key: type) as! HKQuantityType, predicate: predicate) { success, _, error in
+            if let err = error {
+                print("Error Saving \(type) Sample: \(err.localizedDescription)")
+            }
+            DispatchQueue.main.async {
+                result(success)
+            }
+        }
     }
     
     func hasPermissions(call: FlutterMethodCall, result: @escaping FlutterResult) throws {
@@ -118,7 +148,6 @@ public class SwiftHealthPlugin: NSObject, FlutterPlugin {
 
     
     func hasPermission(type: HKSampleType, access: Int) -> Bool? {
-        
         if #available(iOS 11.0, *) {
             let status = healthStore.authorizationStatus(for: type)
             switch access {
@@ -178,25 +207,27 @@ public class SwiftHealthPlugin: NSObject, FlutterPlugin {
         guard let arguments = call.arguments as? NSDictionary,
             let value = (arguments["value"] as? Double),
             let type = (arguments["dataTypeKey"] as? String),
-            let startDate = (arguments["startTime"] as? NSNumber),
-            let endDate = (arguments["endTime"] as? NSNumber)
+            let date = (arguments["startTime"] as? NSNumber)
             else {
                 throw PluginError(message: "Invalid Arguments")
             }
         
-        let dateFrom = Date(timeIntervalSince1970: startDate.doubleValue / 1000)
-        let dateTo = Date(timeIntervalSince1970: endDate.doubleValue / 1000)
+        let dateInterval = Date(timeIntervalSince1970: date.doubleValue / 1000)
         
         print("Successfully called writeData with value of \(value) and type of \(type)")
+        
+        var meta = [String: Any]()
+        meta[HKMetadataKeySyncVersion] = 1
+        meta[HKMetadataKeySyncIdentifier] = "\(dateInterval.timeIntervalSince1970)"
         
         let sample: HKObject
       
         if (unitLookUp(key: type) == HKUnit.init(from: "")) {
-          sample = HKCategorySample(type: dataTypeLookUp(key: type) as! HKCategoryType, value: Int(value), start: dateFrom, end: dateTo)
+          sample = HKCategorySample(type: dataTypeLookUp(key: type) as! HKCategoryType, value: Int(value), start: dateInterval, end: dateInterval, metadata: meta)
         } else {
           let quantity = HKQuantity(unit: unitLookUp(key: type), doubleValue: value)
           
-          sample = HKQuantitySample(type: dataTypeLookUp(key: type) as! HKQuantityType, quantity: quantity, start: dateFrom, end: dateTo)
+          sample = HKQuantitySample(type: dataTypeLookUp(key: type) as! HKQuantityType, quantity: quantity, start: dateInterval, end: dateInterval, metadata: meta)
         }
         
         HKHealthStore().save(sample, withCompletion: { (success, error) in

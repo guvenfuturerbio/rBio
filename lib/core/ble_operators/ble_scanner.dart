@@ -70,7 +70,6 @@ class BleScannerOps extends ChangeNotifier {
         await Permission.location.request();
       } else if (bleStatus == BleStatus.poweredOff) {
         await Future.delayed(const Duration(seconds: 1));
-
         // await SystemShortcuts.bluetooth();
       } else if (bleStatus == BleStatus.locationServicesDisabled) {
         await Future.delayed(const Duration(seconds: 1));
