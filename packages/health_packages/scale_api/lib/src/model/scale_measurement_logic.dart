@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import '../../../../../core/core.dart';
-import '../../../../../core/enums/selected_scale_type.dart';
+import '../../scale_api.dart';
+import './selected_scale_type.dart';
 
-class ScaleMeasurementViewModel {
+class ScaleMeasurementLogic {
   final ScaleModel scaleModel;
-  ScaleMeasurementViewModel({required this.scaleModel});
+  ScaleMeasurementLogic({required this.scaleModel});
 
   bool? get isDeleted => scaleModel.isDeleted;
 
@@ -374,18 +374,25 @@ class ScaleMeasurementViewModel {
     switch (type) {
       case SelectedScaleType.bmi:
         return _getBmiColor(bmi);
+
       case SelectedScaleType.weight:
         return _getWeightColor(weight);
+
       case SelectedScaleType.bodyFat:
         return _getBodyFatColor(bodyFat);
+
       case SelectedScaleType.boneMass:
         return _getBoneMassColor(boneMass);
+
       case SelectedScaleType.water:
         return _getWaterColor(water);
+
       case SelectedScaleType.visceralFat:
         return _getVisceralFatColor(visceralFat);
+
       case SelectedScaleType.muscle:
         return _getMuscleColor(muscle);
+
       default:
         return R.color.grey.withOpacity(.2);
     }

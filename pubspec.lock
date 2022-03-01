@@ -872,14 +872,14 @@ packages:
   health:
     dependency: "direct main"
     description:
-      path: "packages/health"
+      path: "packages/health_packages/health"
       relative: true
     source: path
     version: "3.4.3"
   health_service:
     dependency: "direct main"
     description:
-      path: "packages/health_service"
+      path: "packages/health_packages/health_service"
       relative: true
     source: path
     version: "1.0.0+1"
@@ -1452,6 +1452,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
+  scale_api:
+    dependency: "direct main"
+    description:
+      path: "packages/health_packages/scale_api"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   share:
     dependency: "direct main"
     description:

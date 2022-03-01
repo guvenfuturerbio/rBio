@@ -1,4 +1,4 @@
-import '../core.dart';
+import 'package:onedosehealth/core/core.dart';
 
 enum SelectedScaleType {
   bmi,

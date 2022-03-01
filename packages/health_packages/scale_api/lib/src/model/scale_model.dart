@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 
-import '../core.dart';
-
 part 'scale_model.g.dart';
 
 @HiveType(typeId: 1)
@@ -68,16 +66,22 @@ class ScaleModel extends HiveObject {
   /// This variable calculating after measurement complete.
   @HiveField(3)
   double? bmi;
+
   @HiveField(4)
   double? water;
+
   @HiveField(5)
   double? bodyFat;
+
   @HiveField(6)
   double? visceralFat;
+
   @HiveField(7)
   double? boneMass;
+
   @HiveField(8)
   double? muscle;
+
   @HiveField(9)
   double? bmh;
 
@@ -107,8 +111,10 @@ class ScaleModel extends HiveObject {
   /// required for calculating other variable
   @HiveField(15)
   int? height;
+
   @HiveField(16)
   int? gender;
+
   @HiveField(17)
   int? age;
 
@@ -127,48 +133,37 @@ class ScaleModel extends HiveObject {
   /// So can be return null.
   @HiveField(20)
   int? measurementId;
+
   bool isFromHealth;
 
   @override
-  ScaleModel(
-      {this.device,
-      this.measurementId,
-      this.weight,
-      this.weightStabilized,
-      this.measurementComplete,
-      this.weightRemoved,
-      this.unit,
-      required this.dateTime,
-      this.impedance,
-      this.isManuel = false,
-      this.images = const <String>[],
-      this.note = '',
-      this.bmi,
-      this.bodyFat,
-      this.boneMass,
-      this.isDeleted = false,
-      this.muscle,
-      this.time,
-      this.visceralFat,
-      this.water,
-      this.bmh,
-      this.gender,
-      this.height,
-      this.age,
-      this.isFromHealth = false}) {
-    gender = getIt<ProfileStorageImpl>().getFirst().gender == 'Male' ||
-            getIt<ProfileStorageImpl>().getFirst().gender == 'Erkek'
-        ? 1
-        : 0;
-    height =
-        int.tryParse(getIt<ProfileStorageImpl>().getFirst().height ?? '170');
-    final List<String> nums =
-        getIt<ProfileStorageImpl>().getFirst().birthDate!.split(".");
-    final yearOfBirth = int.parse(nums[2]);
-    age = DateTime.now().year - yearOfBirth < 15
-        ? 15
-        : DateTime.now().year - yearOfBirth;
-  }
+  ScaleModel({
+    this.device,
+    this.measurementId,
+    this.weight,
+    this.weightStabilized,
+    this.measurementComplete,
+    this.weightRemoved,
+    this.unit,
+    required this.dateTime,
+    this.impedance,
+    this.isManuel = false,
+    this.images = const <String>[],
+    this.note = '',
+    this.bmi,
+    this.bodyFat,
+    this.boneMass,
+    this.isDeleted = false,
+    this.muscle,
+    this.time,
+    this.visceralFat,
+    this.water,
+    this.bmh,
+    this.gender,
+    this.height,
+    this.age,
+    this.isFromHealth = false,
+  });
 
   @override
   factory ScaleModel.fromMap(Map map) {
@@ -306,9 +301,11 @@ class ScaleModel extends HiveObject {
 enum ScaleUnit {
   @HiveField(0)
   kg,
+
   @HiveField(1)
   lbs
 }
+
 enum StripMode { add, subtract, none }
 
 extension SUE on ScaleUnit {

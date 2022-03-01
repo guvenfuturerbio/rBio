@@ -1,4 +1,4 @@
-name: health_service
+name: scale_health_impl
 description: A Very Good Project created by Very Good CLI.
 version: 1.0.0+1
 publish_to: none
@@ -9,6 +9,8 @@ environment:
 dependencies:
   health:
     path: ../health
+  scale_api:
+    path: ../scale_api
 
 dev_dependencies:
   coverage: ^1.1.0

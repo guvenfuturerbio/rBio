@@ -1,6 +1,7 @@
 export 'package:atom/atom.dart';
 export 'package:shared_preferences_manager/shared_preferences_manager.dart';
 export 'package:local_notification_manager/local_notification_manager.dart';
+export 'package:scale_api/scale_api.dart';
 
 export '../app/config/app_config.dart';
 export '../app/app_bloc_observer.dart';
@@ -37,7 +38,6 @@ export "domain/blood_pressure_model.dart";
 export "domain/glucose_model.dart";
 export "domain/network_cache_model.dart";
 export "domain/person_model.dart";
-export "domain/scale_model.dart";
 
 export "enums/environment.dart";
 export "enums/loading_progress.dart";
