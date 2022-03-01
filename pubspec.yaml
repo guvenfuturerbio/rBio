@@ -17,6 +17,8 @@ dependency_overrides:
     path: ./packages/flutter_keyboard_actions
 
 dependencies:
+  guven_service:
+    path: ./packages/guven_service
   animated_widgets: ^1.1.0
   app_settings: ^4.1.1
   atom:

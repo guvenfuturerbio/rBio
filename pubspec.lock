@@ -869,6 +869,13 @@ packages:
       relative: true
     source: path
     version: "4.1.0"
+  guven_service:
+    dependency: "direct main"
+    description:
+      path: "packages/guven_service"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   health:
     dependency: "direct main"
     description:

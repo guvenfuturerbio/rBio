@@ -10,6 +10,7 @@ export '../generated/l10n.dart';
 
 export 'locator.dart';
 export 'rbio_custom_icons.dart';
+export 'package:guven_service/guven_service.dart';
 
 /// Core
 export 'ble_operators/ble_operators.dart';
@@ -33,7 +34,6 @@ export "data/service/local_cache_service.dart";
 export "data/service/symptom_api_service.dart";
 
 export 'domain/all_users_model.dart';
-export "domain/base_model.dart";
 export "domain/blood_pressure_model.dart";
 export "domain/glucose_model.dart";
 export "domain/network_cache_model.dart";
@@ -47,11 +47,6 @@ export 'enums/payment_type.dart';
 export 'enums/remindable.dart';
 export "enums/secret_keys.dart";
 export "enums/usage_type.dart";
-
-export 'exception/display_exception.dart';
-export 'exception/model_cast_exception.dart';
-export 'exception/network_exception.dart';
-export "exception/not_list_exception.dart";
 
 export "extension/extension.dart";
 

@@ -13,6 +13,6 @@ part 'available_devices/view_model/available_devices_vm.dart';
 part 'model/devices_model.dart';
 part 'selected_devices/view/selected_devices_screen.dart';
 part 'selected_devices/view_model/selected_devices_vm.dart';
-part 'utils/device_card.dart';
+part 'widgets/device_card.dart';
 part 'view/devices_screen.dart';
 part 'viewmodel/devices_vm.dart';

@@ -1,4 +1,5 @@
-import 'base_model.dart';
+
+import '../core.dart';
 
 class NetworkCacheModel extends IBaseModel<NetworkCacheModel> {
   String data;

@@ -60,7 +60,6 @@ export 'shared/filter_resources_request.dart';
 export 'shared/filter_resources_response.dart';
 export 'shared/get_availability_rate_request.dart';
 export 'shared/get_availability_rate_response.dart';
-export 'shared/guven_response_model.dart';
 export 'shared/kvkk_approve_response.dart';
 export 'shared/rbio_login_response.dart';
 export 'shared/user_account_info.dart';

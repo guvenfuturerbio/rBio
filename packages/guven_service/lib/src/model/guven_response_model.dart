@@ -1,4 +1,6 @@
-import '../../core/core.dart';
+
+import '../../guven_service.dart';
+import 'base_model.dart';
 
 class GuvenResponseModel extends IBaseModel<GuvenResponseModel> {
   bool? isSuccessful;
