@@ -81,8 +81,6 @@ dependencies:
     path: ./packages/health_packages/health
   health_service:
     path: ./packages/health_packages/health_service
-  scale_api:
-    path: ./packages/health_packages/scale_api
 
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.2
@@ -96,6 +94,8 @@ dependencies:
       url: https://github.com/ryanheise/keyboard_avoider.git
       ref: fix/mounted-bug
   loading_animations: ^2.2.0
+  local_notification_manager:
+    path: ./packages/local_notification_manager
   logger: ^1.1.0
   mockito: null
   mocktail: ^0.2.0
@@ -113,11 +113,11 @@ dependencies:
   pub_semver: ^2.1.0
   qr_code_scanner: ^0.6.1
   reorderables: ^0.4.2
+  scale_api:
+    path: ./packages/health_packages/scale_api
   share: ^2.0.4
   shared_preferences_manager:
     path: ./packages/shared_preferences_manager
-  local_notification_manager:
-    path: ./packages/local_notification_manager
   shimmer: ^2.0.0
   simple_gesture_detector: ^0.2.0
   slugify: ^2.0.0

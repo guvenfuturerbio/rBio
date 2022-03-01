@@ -10,11 +10,10 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import '../viewmodel/scale_progress_vm.dart';
-import '../viewmodel/scale_measurement_vm.dart';
 import 'tagger/scale_tagger_pop_up.dart';
 
 class ScaleMeasurementList extends StatelessWidget {
-  final List<ScaleMeasurementViewModel>? scaleMeasurements;
+  final List<ScaleMeasurementLogic>? scaleMeasurements;
   final ScrollController scrollController;
   final bool? useStickyGroupSeparatorsValue;
 
@@ -27,7 +26,7 @@ class ScaleMeasurementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var list = <ScaleMeasurementViewModel>[];
+    var list = <ScaleMeasurementLogic>[];
     if (scaleMeasurements != null) {
       list = scaleMeasurements!
           .where((element) =>
@@ -40,7 +39,7 @@ class ScaleMeasurementList extends StatelessWidget {
 
     return list.isEmpty
         ? Center(child: Text(LocaleProvider.current.no_measurement))
-        : GroupedListView<ScaleMeasurementViewModel, DateTime>(
+        : GroupedListView<ScaleMeasurementLogic, DateTime>(
             elements: list,
             scrollDirection: Axis.vertical,
             order: GroupedListOrder.DESC,
@@ -50,14 +49,14 @@ class ScaleMeasurementList extends StatelessWidget {
               bottom: 2 * (context.height * .1) * context.textScale,
             ),
             useStickyGroupSeparators: useStickyGroupSeparatorsValue ?? false,
-            groupBy: (ScaleMeasurementViewModel scaleMeasurementViewModel) =>
+            groupBy: (ScaleMeasurementLogic scaleMeasurementViewModel) =>
                 DateTime(
               scaleMeasurementViewModel.dateTime.year,
               scaleMeasurementViewModel.dateTime.month,
               scaleMeasurementViewModel.dateTime.day,
             ),
             groupHeaderBuilder:
-                (ScaleMeasurementViewModel scaleMeasurementViewModel) {
+                (ScaleMeasurementLogic scaleMeasurementViewModel) {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
@@ -85,11 +84,10 @@ class ScaleMeasurementList extends StatelessWidget {
                 ),
               );
             },
-            itemBuilder:
-                (_, ScaleMeasurementViewModel scaleMeasurementViewModel) {
+            itemBuilder: (_, ScaleMeasurementLogic scaleMeasurementViewModel) {
               return measurementList(context, scaleMeasurementViewModel);
             },
-            callback: (ScaleMeasurementViewModel data) {
+            callback: (ScaleMeasurementLogic data) {
               if (Provider.of<ScaleProgressVm>(context, listen: false)
                   .isChartShow) {
                 Provider.of<ScaleProgressVm>(context, listen: false)
@@ -102,7 +100,7 @@ class ScaleMeasurementList extends StatelessWidget {
 
 Widget measurementList(
   BuildContext context,
-  ScaleMeasurementViewModel scaleMeasurementViewModel,
+  ScaleMeasurementLogic scaleMeasurementViewModel,
 ) {
   return Slidable(
     actionPane: const SlidableDrawerActionPane(),
@@ -171,7 +169,7 @@ Widget measurementList(
 }
 
 Widget _timeAndImageSection(
-  ScaleMeasurementViewModel scaleMeasurementViewModel,
+  ScaleMeasurementLogic scaleMeasurementViewModel,
   BuildContext context,
 ) {
   return Row(
@@ -242,7 +240,9 @@ Widget _timeAndImageSection(
 }
 
 Expanded _textAndScaleSection(
-    ScaleMeasurementViewModel scaleMeasurementViewModel, BuildContext context) {
+  ScaleMeasurementLogic scaleMeasurementViewModel,
+  BuildContext context,
+) {
   return Expanded(
     flex: 4,
     child: Row(

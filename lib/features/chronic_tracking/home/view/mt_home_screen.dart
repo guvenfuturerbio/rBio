@@ -9,7 +9,6 @@ import '../../../../model/ble_models/paired_device.dart';
 import '../../../dashboard/not_chronic_screen.dart';
 import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
-import '../../progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import '../model/home_page_model.dart';
 

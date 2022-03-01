@@ -1,7 +1,7 @@
 part of '../view/scale_patient_detail_screen.dart';
 
 class ScaleTagger extends StatelessWidget {
-  final ScaleMeasurementViewModel scaleModel;
+  final ScaleMeasurementLogic scaleModel;
   final ScrollController scrollController = ScrollController();
 
   ScaleTagger({

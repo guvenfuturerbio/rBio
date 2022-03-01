@@ -259,7 +259,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
     }
   }
 
-  Future<List<ScaleModel>> getScaleDatas({
+  Future<List<ScaleNetworkModel>> getScaleNetworkDatas({
     DateTime? beginDate,
     DateTime? endDate,
     int? count,
@@ -274,16 +274,14 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
 
       final response = await getIt<ChronicTrackingRepository>()
           .getScaleDataOfPerson(getScaleMasurementBody);
-
-      List datum = response.datum;
-      List<ScaleModel> scaleDataList = <ScaleModel>[];
+      var datum = response.datum as List<dynamic>? ?? [];
+      List<ScaleNetworkModel> scaleDataList = <ScaleNetworkModel>[];
       for (var scaleMeasurement in datum) {
-        scaleDataList.add(ScaleModel.fromMap(scaleMeasurement));
+        scaleDataList.add(ScaleNetworkModel.fromJson(scaleMeasurement));
       }
       return scaleDataList;
-    } catch (e, stk) {
+    } catch (e) {
       LoggerUtils.instance.e(e);
-      debugPrintStack(stackTrace: stk);
       rethrow;
     }
   }
@@ -295,7 +293,7 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   }) async {
     if (!_hasProgress) {
       _hasProgress = true;
-      var list = await getScaleDatas(
+      var list = await getScaleNetworkDatas(
         beginDate: beginDate,
         endDate: endDate,
         count: count,
@@ -304,13 +302,14 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
       if (list.isNotEmpty) {
         var _dubItem = 0;
         for (var scale in list) {
-          if (doesExist(scale)) {
+          if (doesExist(scale.xToScaleModel())) {
             _dubItem++;
           }
         }
 
         if (_dubItem != list.length) {
-          await writeAll(list);
+          final scaleList = list.map((e) => e.xToScaleModel()).toList();
+          await writeAll(scaleList);
           _hasProgress = false;
           notifyListeners();
           return false;
@@ -328,9 +327,9 @@ class ScaleStorageImpl extends ChronicStorageService<ScaleModel> {
   }
 
   Future<void> checkLastScale() async {
-    var list = (await getScaleDatas(count: 1));
+    var list = (await getScaleNetworkDatas(count: 1));
     if (list.isNotEmpty) {
-      final lastData = list.last;
+      final lastData = list.last.xToScaleModel();
       if (getLatestMeasurement() == null ||
           box.values.length < 5 ||
           !lastData.isEqual(getLatestMeasurement()!)) {

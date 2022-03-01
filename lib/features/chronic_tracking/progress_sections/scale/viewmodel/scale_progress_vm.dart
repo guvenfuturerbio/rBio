@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/enums/selected_scale_type.dart';
 import '../../../../../model/model.dart';
 import '../../../bottom_actions_of_graph.dart';
 import '../../widgets/i_progress_screen.dart';
@@ -12,7 +11,6 @@ import '../widgets/charts/scale_bubble_chart.dart';
 import '../widgets/charts/scale_line_chart.dart';
 import '../widgets/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../widgets/tagger/scale_tagger_pop_up.dart';
-import 'scale_measurement_vm.dart';
 
 enum GraphType { bubble, line }
 
@@ -55,11 +53,10 @@ class ScaleProgressVm extends ChangeNotifier
 
   GraphType? _currentGraphType;
 
-  List<ScaleMeasurementViewModel> scaleMeasurementsDailyData =
-      <ScaleMeasurementViewModel>[];
+  List<ScaleMeasurementLogic> scaleMeasurementsDailyData =
+      <ScaleMeasurementLogic>[];
 
-  List<ScaleMeasurementViewModel> scaleMeasurements =
-      <ScaleMeasurementViewModel>[];
+  List<ScaleMeasurementLogic> scaleMeasurements = <ScaleMeasurementLogic>[];
 
   List<ChartData>? _chartData;
 
@@ -675,7 +672,7 @@ class ScaleProgressVm extends ChangeNotifier
     final result = getIt<ScaleStorageImpl>().getAll();
     scaleMeasurements.clear();
     scaleMeasurements =
-        result.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
+        result.map((e) => ScaleMeasurementLogic(scaleModel: e)).toList();
     scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));
   }
 
@@ -703,10 +700,9 @@ class ScaleProgressVm extends ChangeNotifier
     final result = getIt<ScaleStorageImpl>().getAll();
     scaleMeasurements.clear();
     for (var e in result) {
-      DateTime measurementDate =
-          ScaleMeasurementViewModel(scaleModel: e).dateTime;
+      DateTime measurementDate = ScaleMeasurementLogic(scaleModel: e).dateTime;
       if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
-        scaleMeasurements.add(ScaleMeasurementViewModel(scaleModel: e));
+        scaleMeasurements.add(ScaleMeasurementLogic(scaleModel: e));
       }
     }
     scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));
@@ -728,9 +724,9 @@ class ScaleProgressVm extends ChangeNotifier
 
   @override
   Widget smallWidget(Function() callBack) {
-    ScaleMeasurementViewModel? lastMeasurement =
+    ScaleMeasurementLogic? lastMeasurement =
         getIt<ScaleStorageImpl>().getLatestMeasurement() != null
-            ? ScaleMeasurementViewModel(
+            ? ScaleMeasurementLogic(
                 scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement()!)
             : null;
 

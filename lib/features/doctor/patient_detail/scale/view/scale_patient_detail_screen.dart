@@ -12,10 +12,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/enums/selected_scale_type.dart';
 import '../../../../../model/model.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
-import '../../../../chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../../../../chronic_tracking/progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import '../../../../chronic_tracking/progress_sections/scale/widgets/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';

@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 import '../../core/core.dart';
-import '../../features/chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
 import '../ble_models/paired_device.dart';
 import 'scale_device_model.dart';
 
@@ -19,14 +18,14 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
   }
 
   @override
-  ScaleMeasurementViewModel? parseScaleData(
+  ScaleMeasurementLogic? parseScaleData(
     PairedDevice device,
     Uint8List data,
   ) {
     return _parseScaleData(device, data);
   }
 
-  ScaleMeasurementViewModel? _parseScaleData(
+  ScaleMeasurementLogic? _parseScaleData(
     PairedDevice device,
     Uint8List? data,
   ) {
@@ -62,7 +61,7 @@ class MiScaleDevice extends ScaleDevice<MiScaleDevice> {
     } else if (unit == ScaleUnit.kg) {
       weight /= 200;
     } // Return new scale data
-    super.scaleData = ScaleMeasurementViewModel(
+    super.scaleData = ScaleMeasurementLogic(
       scaleModel: ScaleModel(
         device: device.toJson(),
         measurementComplete: measurementComplete,

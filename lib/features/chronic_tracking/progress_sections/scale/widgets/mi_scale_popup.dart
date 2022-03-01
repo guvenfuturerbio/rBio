@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
 import 'loading/scale_progress_circle.dart';
-import '../viewmodel/scale_measurement_vm.dart';
 
 class MiScalePopUp extends StatelessWidget {
   final bool hasAlreadyPair;
@@ -22,7 +21,7 @@ class MiScalePopUp extends StatelessWidget {
         width: context.width,
         child: Consumer<BleReactorOps>(
           builder: (_, _bleReactor, __) {
-            ScaleMeasurementViewModel? data = _bleReactor.scaleDevice.scaleData;
+            ScaleMeasurementLogic? data = _bleReactor.scaleDevice.scaleData;
             return hasAlreadyPair
                 ? _scaleStep(_bleReactor, context, data)
                 : _pairingStep(_bleReactor, context);
@@ -35,7 +34,7 @@ class MiScalePopUp extends StatelessWidget {
   Widget _scaleStep(
     BleReactorOps _bleReactor,
     BuildContext context,
-    ScaleMeasurementViewModel? data,
+    ScaleMeasurementLogic? data,
   ) {
     return data != null && _bleReactor.scaleDevice.scaleData != null
         ? Column(

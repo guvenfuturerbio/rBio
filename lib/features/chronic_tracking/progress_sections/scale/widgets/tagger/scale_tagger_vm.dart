@@ -11,10 +11,9 @@ import '../../../../../../../core/core.dart';
 import '../../../../../../core/core.dart';
 import '../../../../../../model/ble_models/device_type.dart';
 import '../../../../../../model/ble_models/paired_device.dart';
-import '../../viewmodel/scale_measurement_vm.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
-  late ScaleMeasurementViewModel scaleModel;
+  late ScaleMeasurementLogic scaleModel;
 
   final bool isManuel;
   final BuildContext context;
@@ -36,12 +35,12 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   ScaleTaggerVm({
     required this.context,
-    ScaleMeasurementViewModel? scale,
+    ScaleMeasurementLogic? scale,
     this.isManuel = false,
     this.key,
   }) {
     scaleModel = scale ??
-        ScaleMeasurementViewModel(
+        ScaleMeasurementLogic(
           scaleModel: ScaleModel(
             isManuel: isManuel,
             dateTime: DateTime.now(),

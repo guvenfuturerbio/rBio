@@ -181,9 +181,9 @@ class MeasurementTrackingVm with ChangeNotifier {
       }
     }
 
-    List<ScaleMeasurementViewModel> scaleData = _tempScaleModel
+    List<ScaleMeasurementLogic> scaleData = _tempScaleModel
         .map(
-          (e) => ScaleMeasurementViewModel(
+          (e) => ScaleMeasurementLogic(
             scaleModel: ScaleModel(
               isManuel: e.deviceId != 'manuel',
               device: PairedDevice(

@@ -42,11 +42,10 @@ class ScalePatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   List<ScaleModel> scaleData = <ScaleModel>[];
   List<DateTime> scaleMeasurmentDates = <DateTime>[];
 
-  List<ScaleMeasurementViewModel> scaleMeasurement =
-      <ScaleMeasurementViewModel>[];
+  List<ScaleMeasurementLogic> scaleMeasurement = <ScaleMeasurementLogic>[];
 
-  List<ScaleMeasurementViewModel> bmiMeasurementsDailyData =
-      <ScaleMeasurementViewModel>[];
+  List<ScaleMeasurementLogic> bmiMeasurementsDailyData =
+      <ScaleMeasurementLogic>[];
 
   LoadingProgress get stateProcessPatientDetail =>
       _stateProcessPatientDetail ?? LoadingProgress.loading;
@@ -542,7 +541,7 @@ class ScalePatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     scaleMeasurement.clear();
 
     scaleMeasurement =
-        scaleData.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
+        scaleData.map((e) => ScaleMeasurementLogic(scaleModel: e)).toList();
     scaleMeasurement.removeWhere(
         (element) => element.getMeasurement(currentScaleType) == null);
     var year = int.parse(_patientDetail.birthDay!.split('.')[2]);
@@ -579,7 +578,7 @@ class ScalePatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     }
 
     scaleMeasurement =
-        scaleData.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
+        scaleData.map((e) => ScaleMeasurementLogic(scaleModel: e)).toList();
     scaleMeasurement.removeWhere(
         (element) => element.getMeasurement(currentScaleType) == null);
     var year = int.parse(_patientDetail.birthDay!.split('.')[2]);
@@ -597,9 +596,9 @@ class ScalePatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     for (var e in scaleData) {
       if (!scaleData.contains(e)) {
         DateTime measurementDate =
-            ScaleMeasurementViewModel(scaleModel: e).dateTime;
+            ScaleMeasurementLogic(scaleModel: e).dateTime;
         if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
-          scaleMeasurement.add(ScaleMeasurementViewModel(scaleModel: e));
+          scaleMeasurement.add(ScaleMeasurementLogic(scaleModel: e));
         }
       }
     }

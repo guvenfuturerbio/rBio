@@ -8,8 +8,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../../core/enums/selected_scale_type.dart';
-import '../../viewmodel/scale_measurement_vm.dart';
 import 'scale_tagger_vm.dart';
 
 class ScaleTaggerPopUp extends StatelessWidget {
@@ -43,7 +41,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
             context: context,
             scale: scaleModel == null
                 ? null
-                : ScaleMeasurementViewModel(scaleModel: scaleModel!.copy()),
+                : ScaleMeasurementLogic(scaleModel: scaleModel!.copy()),
             isManuel: scaleModel == null,
           ),
           child: RbioDarkStatusBar(

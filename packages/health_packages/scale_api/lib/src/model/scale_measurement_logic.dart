@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import '../../scale_api.dart';
-import './selected_scale_type.dart';
+import 'scale_colors.dart';
 
 class ScaleMeasurementLogic {
   final ScaleModel scaleModel;
@@ -190,18 +190,18 @@ class ScaleMeasurementLogic {
 
     if (weight != null) {
       if (weight < low) {
-        return R.color.very_low;
+        return ScaleColors.instance.veryLow;
       } else if (weight >= low && weight < target) {
-        return R.color.low;
+        return ScaleColors.instance.low;
       } else if (weight >= target && weight < high) {
-        return R.color.target;
+        return ScaleColors.instance.target;
       } else if (weight >= high) {
-        return R.color.high;
+        return ScaleColors.instance.high;
       } else {
-        return R.color.grey.withOpacity(.2);
+        return ScaleColors.instance.grey.withOpacity(.2);
       }
     } else {
-      return R.color.grey.withOpacity(.2);
+      return ScaleColors.instance.grey.withOpacity(.2);
     }
   }
 
@@ -238,18 +238,18 @@ class ScaleMeasurementLogic {
   Color _getBmiColor(double? bmi) {
     if (bmi != null) {
       if (bmi < 19) {
-        return R.color.low;
+        return ScaleColors.instance.low;
       } else if (bmi >= 19 && bmi < 25) {
-        return R.color.target;
+        return ScaleColors.instance.target;
       } else if (bmi >= 25 && bmi < 30) {
-        return R.color.high;
+        return ScaleColors.instance.high;
       } else if (bmi >= 30) {
-        return R.color.very_high;
+        return ScaleColors.instance.veryHigh;
       } else {
-        return R.color.grey.withOpacity(.2);
+        return ScaleColors.instance.grey.withOpacity(.2);
       }
     } else {
-      return R.color.grey.withOpacity(.2);
+      return ScaleColors.instance.grey.withOpacity(.2);
     }
   }
 
@@ -263,18 +263,18 @@ class ScaleMeasurementLogic {
 
     if (bodyFat != null) {
       if (bodyFat < low) {
-        return R.color.very_low;
+        return ScaleColors.instance.veryLow;
       } else if (bodyFat >= low && bodyFat < target) {
-        return R.color.target;
+        return ScaleColors.instance.target;
       } else if (bodyFat >= target && bodyFat < high) {
-        return R.color.high;
+        return ScaleColors.instance.high;
       } else if (bodyFat >= high) {
-        return R.color.very_high;
+        return ScaleColors.instance.veryHigh;
       } else {
-        return R.color.grey.withOpacity(.2);
+        return ScaleColors.instance.grey.withOpacity(.2);
       }
     } else {
-      return R.color.grey.withOpacity(.2);
+      return ScaleColors.instance.grey.withOpacity(.2);
     }
   }
 
@@ -310,63 +310,63 @@ class ScaleMeasurementLogic {
           ((weight! <= 65 && boneMass == 2.65) ||
               ((weight! <= 65 && weight! >= 95) && boneMass == 3.29) ||
               ((weight! > 95) && boneMass == 3.69))) {
-        return R.color.target;
+        return ScaleColors.instance.target;
       } else if (((weight! <= 50 && boneMass == 1.95) ||
           ((weight! <= 50 && weight! >= 75) && boneMass == 2.40) ||
           ((weight! > 76) && boneMass == 2.95))) {
-        return R.color.target;
+        return ScaleColors.instance.target;
       }
     }
-    return R.color.grey.withOpacity(.2);
+    return ScaleColors.instance.grey.withOpacity(.2);
   }
 
   Color _getWaterColor(double? water) {
     if (water != null) {
       if (gender == 0) {
         if (water < 51) {
-          return R.color.very_low;
+          return ScaleColors.instance.veryLow;
         } else if (water < 66) {
-          return R.color.target;
+          return ScaleColors.instance.target;
         } else if (water > 65) {
-          return R.color.very_high;
+          return ScaleColors.instance.veryHigh;
         } else {
-          return R.color.grey.withOpacity(.2);
+          return ScaleColors.instance.grey.withOpacity(.2);
         }
       } else {
         if (water < 46) {
-          return R.color.very_low;
+          return ScaleColors.instance.veryLow;
         } else if (water < 61) {
-          return R.color.target;
+          return ScaleColors.instance.target;
         } else if (water > 60) {
-          return R.color.very_high;
+          return ScaleColors.instance.veryHigh;
         } else {
-          return R.color.grey.withOpacity(.2);
+          return ScaleColors.instance.grey.withOpacity(.2);
         }
       }
     } else {
-      return R.color.grey.withOpacity(.2);
+      return ScaleColors.instance.grey.withOpacity(.2);
     }
   }
 
   Color _getVisceralFatColor(double? visceralFat) {
     if (visceralFat != null) {
       if (visceralFat > 0 && visceralFat <= 10) {
-        return R.color.target;
+        return ScaleColors.instance.target;
       } else if (visceralFat > 10) {
-        return R.color.very_high;
+        return ScaleColors.instance.veryHigh;
       } else {
-        return R.color.grey.withOpacity(.2);
+        return ScaleColors.instance.grey.withOpacity(.2);
       }
     } else {
-      return R.color.grey.withOpacity(.2);
+      return ScaleColors.instance.grey.withOpacity(.2);
     }
   }
 
   Color _getMuscleColor(double? muscle) {
     if (muscle != null) {
-      return R.color.target;
+      return ScaleColors.instance.target;
     } else {
-      return R.color.grey.withOpacity(.2);
+      return ScaleColors.instance.grey.withOpacity(.2);
     }
   }
 
@@ -394,7 +394,7 @@ class ScaleMeasurementLogic {
         return _getMuscleColor(muscle);
 
       default:
-        return R.color.grey.withOpacity(.2);
+        return ScaleColors.instance.grey.withOpacity(.2);
     }
   }
 
