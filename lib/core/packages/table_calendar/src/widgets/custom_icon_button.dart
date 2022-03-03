@@ -13,17 +13,18 @@ class CustomIconButton extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.onTap,
-    this.margin = const EdgeInsets.all(0.0),
+    this.margin = const EdgeInsets.all(12.0),
     this.padding = const EdgeInsets.all(8.0),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: margin,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(100.0),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(100.0),
+      child: Container(
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
         child: Padding(
           padding: padding,
           child: icon,
