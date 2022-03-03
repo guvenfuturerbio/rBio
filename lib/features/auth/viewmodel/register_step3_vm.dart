@@ -17,17 +17,15 @@ class RegisterStep3ScreenVm extends RbioVm {
   ) async {
     try {
       showLoadingDialog(mContext);
-      GuvenResponseModel response;
+      GuvenResponseModel? response;
       if (isWithoutTCKN) {
-        response = await getIt<Repository>()
-            .registerStep3WithOutTc(userRegistrationStep3);
+        // response = await getIt<Repository>().registerStep3WithOutTc(userRegistrationStep3);
       } else {
-        response =
-            await getIt<Repository>().registerStep3Ui(userRegistrationStep3);
+        response = await getIt<Repository>().addStep3(userRegistrationStep3);
       }
 
       hideDialog(mContext);
-      if (response.isSuccessful == true) {
+      if (response?.isSuccessful == true) {
         Atom.to(PagePaths.login, isReplacement: true);
         Atom.show(
           GuvenAlert(
@@ -48,7 +46,7 @@ class RegisterStep3ScreenVm extends RbioVm {
       } else {
         showInfoDialog(
           LocaleProvider.of(mContext).warning,
-          response.message.toString(),
+          response?.message.toString() ?? '',
         );
       }
     } catch (error, stackTrace) {

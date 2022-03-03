@@ -6,77 +6,59 @@ part 'rbio_login_response.g.dart';
 
 @JsonSerializable()
 class RbioLoginResponse extends IBaseModel<RbioLoginResponse> {
-  @JsonKey(name: 'firebase_user_email')
-  String? firebaseUserEmail;
+  @JsonKey(name: "sso_response")
+  SsoResponse? ssoResponse;
 
-  @JsonKey(name: 'firebase_user_salt')
-  String? firebaseUserSalt;
-
-  @JsonKey(name: 'token')
-  Token? token;
-
-  @JsonKey(name: 'roles')
+  @JsonKey(name: "roles")
   List<String>? roles;
 
+  @JsonKey(name: "firebase_user_email")
+  String? firebaseUserEmail;
+
+  @JsonKey(name: "firebase_user_salt")
+  String? firebaseUserSalt;
+
   RbioLoginResponse({
-    this.token,
+    this.ssoResponse,
     this.roles,
     this.firebaseUserEmail,
     this.firebaseUserSalt,
   });
 
-  factory RbioLoginResponse.fromJson(Map<String, dynamic> json) =>
-      _$RbioLoginResponseFromJson(json);
-
   @override
   Map<String, dynamic> toJson() => _$RbioLoginResponseToJson(this);
 
   @override
-  RbioLoginResponse fromJson(Map<String, dynamic> json) {
-    return RbioLoginResponse.fromJson(json);
-  }
+  RbioLoginResponse fromJson(Map<String, dynamic> json) =>
+      RbioLoginResponse.fromJson(json);
+
+  factory RbioLoginResponse.fromJson(Map<String, dynamic> json) =>
+      _$RbioLoginResponseFromJson(json);
 }
 
 @JsonSerializable()
-class Token extends IBaseModel<Token> {
-  @JsonKey(name: 'access_token')
+class SsoResponse {
+  @JsonKey(name: "access_token")
   String? accessToken;
 
-  @JsonKey(name: 'expires_in')
-  int? expiresIn;
+  @JsonKey(name: "error")
+  String? error;
 
-  @JsonKey(name: 'refresh_expires_in')
-  int? refreshExpiresIn;
+  @JsonKey(name: "error_description")
+  String? errorDescription;
 
-  @JsonKey(name: 'refresh_token')
-  String? refreshToken;
+  @JsonKey(name: "http_status_code")
+  int? httpStatusCode;
 
-  @JsonKey(name: 'token_type')
-  String? tokenType;
-
-  @JsonKey(name: 'session_state')
-  String? sessionState;
-
-  @JsonKey(name: 'scope')
-  String? scope;
-
-  Token({
+  SsoResponse({
     this.accessToken,
-    this.expiresIn,
-    this.refreshExpiresIn,
-    this.refreshToken,
-    this.tokenType,
-    this.sessionState,
-    this.scope,
+    this.error,
+    this.errorDescription,
+    this.httpStatusCode,
   });
 
-  factory Token.fromJson(Map<String, dynamic> json) => _$TokenFromJson(json);
+  factory SsoResponse.fromJson(Map<String, dynamic> json) =>
+      _$SsoResponseFromJson(json);
 
-  @override
-  Map<String, dynamic> toJson() => _$TokenToJson(this);
-
-  @override
-  Token fromJson(Map<String, dynamic> json) {
-    return Token.fromJson(json);
-  }
+  Map<String, dynamic> toJson() => _$SsoResponseToJson(this);
 }

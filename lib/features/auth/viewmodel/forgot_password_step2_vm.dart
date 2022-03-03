@@ -32,56 +32,59 @@ class ForgotPasswordStep2ScreenVm extends RbioVm {
   }
 
   void forgotPassStep2(ChangePasswordModel changePasswordModel) async {
-    try {
-      if (passwordAdvisor.validateStructure()) {
-        showLoadingDialog(mContext);
-        notifyListeners();
+    if (passwordAdvisor.validateStructure()) {
+      showLoadingDialog();
 
-        final response =
-            await getIt<Repository>().changePasswordUi(changePasswordModel);
-        await Future.delayed(const Duration(milliseconds: 300));
-        hideDialog(mContext);
-
-        if (response.isSuccessful == true) {
+      final either =
+          await getIt<Repository>().changePassword(changePasswordModel);
+      await either.fold(
+        (response) async {
+          await Future.delayed(const Duration(milliseconds: 300));
+          hideDialog();
           showInfoDialog(
             LocaleProvider.of(mContext).success_message_title,
             LocaleProvider.of(mContext).succefully_created_pass,
           );
           Atom.to(PagePaths.login, isReplacement: true);
-        } else {
-          if (response.datum == 1) {
-            showInfoDialog(
-              LocaleProvider.of(mContext).warning,
-              LocaleProvider.of(mContext).wrong_temporary_pass,
-            );
-          } else if (response.datum == 2) {
-            showInfoDialog(
-              LocaleProvider.of(mContext).warning,
-              LocaleProvider.of(mContext).pass_must_same,
-            );
-          } else if (response.datum == 4) {
-            showInfoDialog(
-              LocaleProvider.of(mContext).warning,
-              LocaleProvider.of(mContext).sorry_dont_transaction,
-            );
-          }
-        }
-      }
-    } catch (error, stackTrace) {
-      showDelayedErrorDialog(
-        error,
-        stackTrace,
-        () => hideDialog(mContext),
+        },
+        (error) {
+          hideDialog();
+
+          error.when(
+            oldError: () {
+              showInfoDialog(
+                LocaleProvider.of(mContext).warning,
+                LocaleProvider.of(mContext).wrong_temporary_pass,
+              );
+            },
+            confirmError: () {
+              showInfoDialog(
+                LocaleProvider.of(mContext).warning,
+                LocaleProvider.of(mContext).pass_must_same,
+              );
+            },
+            systemError: () {
+              showInfoDialog(
+                LocaleProvider.of(mContext).warning,
+                LocaleProvider.of(mContext).error_system_malfunction,
+              );
+            },
+            undefined: () {
+              showInfoDialog(
+                LocaleProvider.of(mContext).warning,
+                LocaleProvider.of(mContext).sorry_dont_transaction,
+              );
+            },
+          );
+        },
       );
-    } finally {
-      notifyListeners();
     }
   }
 
-  void showLoadingDialog(BuildContext context) async {
+  void showLoadingDialog() async {
     await Future.delayed(const Duration(milliseconds: 30));
     await showDialog(
-      context: context,
+      context: mContext,
       barrierDismissible: false,
       builder: (BuildContext context) =>
           loadingDialog = loadingDialog ?? LoadingDialog(),
@@ -89,12 +92,13 @@ class ForgotPasswordStep2ScreenVm extends RbioVm {
     notifyListeners();
   }
 
-  void hideDialog(BuildContext context) {
+  void hideDialog() {
     if (loadingDialog != null) {
       if (loadingDialog!.isShowing()) {
-        Navigator.of(context).pop();
+        Navigator.of(mContext).pop();
         loadingDialog = null;
       }
     }
+    notifyListeners();
   }
 }

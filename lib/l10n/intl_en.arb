@@ -749,6 +749,7 @@
   "apply_discount": "Apply discount",
   "cancel_discount": "Cancel discount",
   "not_found": "Not Found",
+  "user_not_found": "User Not Found",
   "something_went_wrong": "Oops. Something went wrong!",
   "turn_back": "Turn Back",
   "waiting": "Waiting",
@@ -792,5 +793,7 @@
   "days": "Days",
   "appointment_datepicker_warning": "Since you did not select a day, the date has not changed.",
   "logout_confirmation_description": "Do you want to exit the application?",
-  "personal_update_success": "Your information has been successfully updated"
+  "personal_update_success": "Your information has been successfully updated",
+  "account_disabled":"You account is disabled for security reasons. Please contact us at 444 25 25.",
+  "user_phone_not_match": "Phone number is not matching the user"
 }

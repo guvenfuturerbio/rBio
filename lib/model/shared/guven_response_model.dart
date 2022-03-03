@@ -61,4 +61,12 @@ extension MapCastExtension on GuvenResponseModel {
 
     throw RbioModelCastException("Dynamic cast exception");
   }
+
+  T? xGetModel<T extends IBaseModel>(T parserModel) {
+    try {
+      return parseModel<T, T>(datum, parserModel);
+    } catch (e) {
+      return null;
+    }
+  }
 }

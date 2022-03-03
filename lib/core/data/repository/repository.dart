@@ -1,8 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:dartz/dartz.dart';
+
+import 'package:onedosehealth/features/auth/model/login_exception.dart';
 
 import '../../../features/auth/auth.dart';
+import '../../../features/auth/model/change_password_exception.dart';
+import '../../../features/auth/model/forgot_password_exception.dart';
 import '../../../features/chat/model/chat_notification.dart';
 import '../../../features/chat/model/get_chat_contacts_response.dart';
 import '../../../features/home/model/banner_model.dart';
@@ -22,8 +27,35 @@ class Repository {
     required this.localCacheService,
   });
 
-  Future<RbioLoginResponse> login(String username, String password) {
-    return apiService.login(username, password);
+  Future<Either<GuvenResponseModel, LoginExceptions>> login(
+    String username,
+    String password,
+  ) async {
+    try {
+      final response = await apiService.login(username, password);
+      return left(response);
+    } on RbioClientException catch (e) {
+      final errorData = e.xGetModel<RbioLoginResponse>(RbioLoginResponse());
+      if (errorData != null) {
+        final httpStatusCode = errorData.ssoResponse?.httpStatusCode ?? 200;
+        final errorDescription = errorData.ssoResponse?.errorDescription;
+        if (httpStatusCode == 400 &&
+            errorDescription == "Account is not fully set up") {
+          return right(const LoginExceptions.accountNotFullySetUp());
+        } else if (httpStatusCode == 400 &&
+            errorDescription == "Account disabled") {
+          return right(const LoginExceptions.accountDisabled());
+        } else if (httpStatusCode == 401) {
+          return right(const LoginExceptions.invalidUser());
+        }
+      }
+    } on RbioServerException {
+      return right(const LoginExceptions.serverError());
+    } on RbioNetworkException {
+      return right(const LoginExceptions.networkError());
+    }
+
+    return right(const LoginExceptions.undefined());
   }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
@@ -68,27 +100,22 @@ class Repository {
     );
   }
 
+  Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model) =>
+      apiService.addStep1(addStep1Model);
+
+  Future<GuvenResponseModel> addStep2(
+          UserRegistrationStep2Model userRegistrationStep2) =>
+      apiService.addStep2(userRegistrationStep2);
+
+  Future<GuvenResponseModel> addStep3(
+          UserRegistrationStep3Model userRegistrationStep3) =>
+      apiService.addStep3(userRegistrationStep3);
+
   Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(String id) =>
       apiService.getSubCategoryItems(id);
 
   Future<String> doPackagePayment(PackagePaymentRequest packagePayment) =>
       apiService.doPackagePayment(packagePayment);
-
-  Future<GuvenResponseModel> registerStep2Ui(
-          UserRegistrationStep2Model userRegistrationStep2) =>
-      apiService.registerStep2Ui(userRegistrationStep2);
-
-  Future<GuvenResponseModel> registerStep2WithOutTc(
-          UserRegistrationStep2Model userRegistrationStep2) =>
-      apiService.registerStep2WithOutTc(userRegistrationStep2);
-
-  Future<GuvenResponseModel> registerStep3Ui(
-          UserRegistrationStep3Model userRegistrationStep3) =>
-      apiService.registerStep3Ui(userRegistrationStep3);
-
-  Future<GuvenResponseModel> registerStep3WithOutTc(
-          UserRegistrationStep3Model userRegistrationStep3) =>
-      apiService.registerStep3WithOutTc(userRegistrationStep3);
 
   Future<GuvenResponseModel> updateUserSystemName(String identityNumber) =>
       apiService.updateUserSystemName(identityNumber);
@@ -189,13 +216,49 @@ class Repository {
       apiService.getBannerTab(applicationName, groupName);
   Future<GuvenResponseModel> getCountries() => apiService.getCountries();
 
-  Future<GuvenResponseModel> forgotPasswordUi(
-          UserRegistrationStep1Model userRegistrationStep1) =>
-      apiService.forgotPasswordUi(userRegistrationStep1);
+  Future<Either<GuvenResponseModel, ForgotPasswordExceptions>> forgotPassword(
+    UserRegistrationStep1Model userRegistrationStep1,
+  ) async {
+    try {
+      final response = await apiService.forgotPassword(userRegistrationStep1);
+      if (response.datum == true) {
+        return left(response);
+      } else {
+        final responseError = response.xGetMap;
+        if (responseError["error"] == R.apiEnums.forgotPassword.userNotFound) {
+          return right(const ForgotPasswordExceptions.userNotFound());
+        } else if (responseError["error"] ==
+            R.apiEnums.forgotPassword.phoneNumberNotMatch) {
+          return right(const ForgotPasswordExceptions.phoneNumberNotMatch());
+        }
+      }
+    } catch (e) {
+      return right(const ForgotPasswordExceptions.undefined());
+    }
 
-  Future<GuvenResponseModel> changePasswordUi(
-          ChangePasswordModel changePasswordModel) =>
-      apiService.changePasswordUi(changePasswordModel);
+    return right(const ForgotPasswordExceptions.undefined());
+  }
+
+  Future<Either<GuvenResponseModel, ChangePasswordExceptions>> changePassword(
+    ChangePasswordModel changePasswordModel,
+  ) async {
+    try {
+      final response = await apiService.changePassword(changePasswordModel);
+      if (response.datum == R.apiEnums.changePassword.success) {
+        return left(response);
+      } else if (response.datum == R.apiEnums.changePassword.oldError) {
+        return right(const ChangePasswordExceptions.oldError());
+      } else if (response.datum == R.apiEnums.changePassword.confirmError) {
+        return right(const ChangePasswordExceptions.confirmError());
+      } else if (response.datum == R.apiEnums.changePassword.systemError) {
+        return right(const ChangePasswordExceptions.systemError());
+      }
+    } catch (e) {
+      return right(const ChangePasswordExceptions.undefined());
+    }
+
+    return right(const ChangePasswordExceptions.undefined());
+  }
 
   Future<GuvenResponseModel> updateContactInfo(
           ChangeContactInfoRequest changeContactInfo) =>
@@ -208,8 +271,6 @@ class Repository {
   Future<GuvenResponseModel> addFirebaseTokenUi(
           AddFirebaseTokenRequest addFirebaseToken) =>
       apiService.addFirebaseTokenUi(addFirebaseToken);
-
-  Future<GuvenResponseModel> patientCallMeUi() => apiService.patientCallMeUi();
 
   Future<GuvenResponseModel> getRoomStatusUi(String roomId) =>
       apiService.getRoomStatusUi(roomId);
@@ -298,14 +359,6 @@ class Repository {
 
   Future<GuvenResponseModel> uploadFileToAppo(String webAppoId, File file) =>
       apiService.uploadFileToAppo(webAppoId, file);
-
-  Future<GuvenResponseModel> registerStep1Ui(
-          RegisterStep1PusulaModel userRegistrationStep1) =>
-      apiService.registerStep1Ui(userRegistrationStep1);
-
-  Future<GuvenResponseModel> registerStep1WithOutTc(
-          UserRegistrationStep1Model userRegistrationStep1) =>
-      apiService.registerStep1WithOutTc(userRegistrationStep1);
 
   Future<List<VisitResponse>> getVisits(VisitRequest visitRequestBody) =>
       apiService.getVisits(visitRequestBody);

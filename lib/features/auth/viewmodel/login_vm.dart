@@ -14,6 +14,7 @@ import '../../home/viewmodel/home_vm.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import '../auth.dart';
+import '../model/login_exception.dart';
 
 enum VersionCheckProgress { done, loading, error }
 
@@ -142,7 +143,7 @@ class LoginScreenVm extends ChangeNotifier {
       notifyListeners();
     }
 
-    checkAppVersion(userLoginInfo);
+    await checkAppVersion(userLoginInfo);
   }
 
   Future<void> checkAppVersion(UserLoginInfo userLoginInfo) async {
@@ -191,9 +192,63 @@ class LoginScreenVm extends ChangeNotifier {
 
       try {
         // Roles and token
-        _guvenLogin = await getIt<UserManager>().login(username, password);
+        try {
+          _guvenLogin = await getIt<UserManager>().login(username, password);
+        } catch (e) {
+          hideDialog(mContext);
+
+          if (e is LoginExceptions) {
+            e.when(
+              invalidUser: () {
+                showGradientDialog(
+                  mContext,
+                  LocaleProvider.current.warning,
+                  LocaleProvider.current.wrong_user_credential,
+                );
+              },
+              accountNotFullySetUp: () {
+                Atom.to(PagePaths.forgotPasswordStep1);
+              },
+              accountDisabled: () {
+                showGradientDialog(
+                  mContext,
+                  LocaleProvider.current.warning,
+                  LocaleProvider.current.account_disabled,
+                );
+              },
+              serverError: () {
+                showGradientDialog(
+                  mContext,
+                  LocaleProvider.current.warning,
+                  LocaleProvider.current.sorry_dont_transaction,
+                );
+              },
+              networkError: () {
+                showGradientDialog(
+                  mContext,
+                  LocaleProvider.current.warning,
+                  LocaleProvider.current.no_network,
+                );
+              },
+              undefined: () {
+                showGradientDialog(
+                  mContext,
+                  LocaleProvider.current.warning,
+                  LocaleProvider.current.sorry_dont_transaction,
+                );
+              },
+            );
+          }
+
+          return;
+        }
+
         await saveLoginInfo(
-            username, password, guvenLogin?.token?.accessToken ?? '');
+          username,
+          password,
+          _guvenLogin?.ssoResponse?.accessToken ?? '',
+        );
+
         List<dynamic> results = await Future.wait(
           [
             getIt<UserManager>().setApplicationConsentFormState(true),
@@ -264,28 +319,14 @@ class LoginScreenVm extends ChangeNotifier {
         hideDialog(mContext);
         notifyListeners();
         Atom.to(PagePaths.main, isReplacement: true);
-      } catch (e, stackTrace) {
-        debugPrintStack(stackTrace: stackTrace);
+      } catch (e) {
         hideDialog(mContext);
         notifyListeners();
-        if (e.toString().contains("401")) {
-          showGradientDialog(
-            mContext,
-            LocaleProvider.current.warning,
-            LocaleProvider.current.wrong_username_password,
-          );
-        } else if (e.toString().contains("400")) {
-          Atom.to(
-            PagePaths.forgotPasswordStep2,
-            queryParameters: {'identityNumber': username},
-          );
-        } else {
-          showGradientDialog(
-            mContext,
-            LocaleProvider.current.warning,
-            LocaleProvider.current.sorry_dont_transaction,
-          );
-        }
+        showGradientDialog(
+          mContext,
+          LocaleProvider.current.warning,
+          LocaleProvider.current.sorry_dont_transaction,
+        );
       }
     }
   }

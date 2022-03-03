@@ -364,8 +364,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                 text: LocaleProvider.of(context).btn_next.toUpperCase(),
                 onPressed: () {
                   if (checkedValueForTc) {
-                    RegisterStep1PusulaModel userRegisterStep1 =
-                        RegisterStep1PusulaModel();
+                    AddStep1Model userRegisterStep1 = AddStep1Model();
+                    userRegisterStep1.id = 0;
                     userRegisterStep1.firstName = registerName;
                     userRegisterStep1.lastName = registerSurname;
                     userRegisterStep1.nationalityId = vm.isTcCitizen ? 213 : 38;

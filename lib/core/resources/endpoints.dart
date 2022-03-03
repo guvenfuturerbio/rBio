@@ -1,133 +1,123 @@
 part of 'resources.dart';
 
 class _Endpoints {
-  /*final loginPath =
-      '/auth/realms/GuvenComplex/protocol/openid-connect/token'.xSSOPath;*/
-  final loginPath = '/AccessToken/get-token-for-rbio'.xBasePath;
+  // #region xDevApiTest
+  final loginPath = '/AccessToken/get-token-for-rbio'.xDevApiTest;
+  final addStep1 = '/UserRegister/add-step1'.xDevApiTest;
+  final addStep2 = '/UserRegister/add-step2'.xDevApiTest;
+  final addStep3 = '/UserRegister/add-step3'.xDevApiTest;
+  final getUserProfilePath = '/user/get-user-info'.xDevApiTest;
+  String getBannerTab(String applicationName, String groupName) => '/Banner/get-banner-tabs/$applicationName/$groupName'.xDevApiTest;
+  final addFirebaseTokenUiPath = '/user/add-user-firebaseId'.xDevApiTest;
+  final forgotPassword = '/UserRegister/forgot-password'.xDevApiTest;
+  final changePassword ='/UserRegister/change-password-with-old-password'.xDevApiTest;
+  // #endregion
 
-  final getAllPackagePath = '/Package/get-all'.xBasePath;
+  final getAllPackagePath = '/Package/get-all'.xBaseUrl;
   String getAllSubCategoriesPath(int id) =>
-      '/Package/get-all-sub-categories/$id'.xBasePath;
+      '/Package/get-all-sub-categories/$id'.xBaseUrl;
   String getSubCategoryDetailPath(id) =>
-      '/Package/get-all-sub-category-pages/$id'.xBasePath;
+      '/Package/get-all-sub-category-pages/$id'.xBaseUrl;
   String getSubCategoryItemsPath(id) =>
-      '/Package/get-all-sub-category-items/$id'.xBasePath;
-  final doPackagePaymentPath = '/Package/do-mobile-payment'.xBasePath;
-  final sendNotification = '/User/send-message'.xBasePath;
-  final registerStep2UiPath = '/userregister/add-step2'.xBasePath;
-  final registerStep2WithOutTcPath =
-      '/userregister/add-step2-without-tckn'.xBasePath;
-  final registerStep3UiPath = '/userregister/add-step3'.xBasePath;
-  final registerStep3WithOutTcPath =
-      '/userregister/add-step3-without-tckn'.xBasePath;
+      '/Package/get-all-sub-category-items/$id'.xBaseUrl;
+  final doPackagePaymentPath = '/Package/do-mobile-payment'.xBaseUrl;
+  final sendNotification = '/User/send-message'.xBaseUrl;
+
   final findResourceAvailableDays =
-      '/Pusula/findResourceAvailableDays'.xBasePath;
+      '/Pusula/findResourceAvailableDays'.xBaseUrl;
   final updateUserSystemNamePath =
-      '/Authentication/update-user-system-name-pusula'.xBasePath;
-  final getUserProfilePath = '/user/get-user-info'.xBasePath;
-  final getActiveStreamPath = '/profile/get-active-stream'.xBasePath;
-  final getProfilePicturePath = '/file/retrieve-user-profile-image'.xBasePath;
+      '/Authentication/update-user-system-name-pusula'.xBaseUrl;
+  final getActiveStreamPath = '/profile/get-active-stream'.xBaseUrl;
+  final getProfilePicturePath = '/file/retrieve-user-profile-image'.xBaseUrl;
   final getCurrentApplicationVersionPath =
       '/api/v1/ApplicationMobileCheckVersion/get-current'.xDoctorBaseUrl;
-  final getPatientDetailPath = '/Pusula/getPatientByToken'.xBasePath;
+  final getPatientDetailPath = '/Pusula/getPatientByToken'.xBaseUrl;
 
   String getDoctorCvDetailsPath(String doctorWebID) =>
       '/api/doctor/$doctorWebID'.xGuvenPath;
 
-  final filterTenantsPath = '/Pusula/filterTenants'.xBasePath;
-  final filterDepartmentsPath = '/Pusula/FilterDepartments'.xBasePath;
-  final filterResourcesPath = '/Pusula/filterResources'.xBasePath;
-  final getEventsPath = '/Pusula/getevents'.xBasePath;
+  final filterTenantsPath = '/Pusula/filterTenants'.xBaseUrl;
+  final filterDepartmentsPath = '/Pusula/FilterDepartments'.xBaseUrl;
+  final filterResourcesPath = '/Pusula/filterResources'.xBaseUrl;
+  final getEventsPath = '/Pusula/getevents'.xBaseUrl;
   final findResourceClosestAvailablePlanPath =
-      '/Pusula/findResourceClosestAvailablePlan'.xBasePath;
-  final saveAppointmentPath = '/Pusula/saveAppointment'.xBasePath;
+      '/Pusula/findResourceClosestAvailablePlan'.xBaseUrl;
+  final saveAppointmentPath = '/Pusula/saveAppointment'.xBaseUrl;
 
-  final getAllRelativesPath = '/profile/get-all-table'.xBasePath;
-  final getCountriesPath = '/Pusula/getCountries'.xBasePath;
-  final forgotPasswordUiPath = '/userregister/forgot-password'.xBasePath;
-  final changePasswordUiPath =
-      '/userregister/change-password-with-old-password'.xBasePath;
-  final updateContactInfoPath = '/pusula/UpdatePatientContactInfo'.xBasePath;
+  final getAllRelativesPath = '/profile/get-all-table'.xBaseUrl;
+  final getCountriesPath = '/Pusula/getCountries'.xBaseUrl;
+  final updateContactInfoPath = '/pusula/UpdatePatientContactInfo'.xBaseUrl;
   String changeUserPasswordUiPath(String oldPassword, String password) =>
-      '/user/mobile-change-user-password/$oldPassword/$password'.xBasePath;
-  final addFirebaseTokenUiPath = '/user/add-user-firebaseId'.xBasePath;
-  final patientCallMeUiPath = '/patientcallrequest/call-me'.xBasePath;
+      '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
   String getRoomStatusUiPath(String roomId) =>
-      '/liveappointment/get-room-status/$roomId'.xBasePath;
+      '/liveappointment/get-room-status/$roomId'.xBaseUrl;
   String getOnlineAppoFilesPath(String roomId) =>
-      '/file/get-patient-appointments-file-names/$roomId'.xBasePath;
+      '/file/get-patient-appointments-file-names/$roomId'.xBaseUrl;
   String deleteOnlineAppoFilePath(String webAppoId, String fileName) =>
-      '/file/report-file-delete/$webAppoId/$fileName'.xBasePath;
-  final getAllTranslatorPath = '/appointmentinterpreter/get-all'.xBasePath;
-  final getUserKvkkInfoPath = '/user/get-user-kvkk-info'.xBasePath;
-  final updateUserKvkkInfoPath = '/user/update-user-kvkk-info'.xBasePath;
-  final addSuggestionPath = '/SuggestionRate/Add-Suggestion'.xBasePath;
-  final setYoutubeSurveyUserPath = '/course/save-user'.xBasePath;
-  final getCourseIdPath = '/course/get-active'.xBasePath;
+      '/file/report-file-delete/$webAppoId/$fileName'.xBaseUrl;
+  final getAllTranslatorPath = '/appointmentinterpreter/get-all'.xBaseUrl;
+  final getUserKvkkInfoPath = '/user/get-user-kvkk-info'.xBaseUrl;
+  final updateUserKvkkInfoPath = '/user/update-user-kvkk-info'.xBaseUrl;
+  final addSuggestionPath = '/SuggestionRate/Add-Suggestion'.xBaseUrl;
+  final setYoutubeSurveyUserPath = '/course/save-user'.xBaseUrl;
+  final getCourseIdPath = '/course/get-active'.xBaseUrl;
   String setJitsiWebConsultantIdPath(String webConsultantId) =>
       '/CerebrumOnlineAppointment/set-mobile-appointment-entrance-c4dd4e4ac7c34592827f0dbbfc233c56/$webConsultantId'
-          .xBasePath;
-  final deleteProfilePicturePath = '/file/delete-profile-photo'.xBasePath;
-  final uploadProfilePicturePath = '/file/profil-image-upload'.xBasePath;
-  final getChatContacts = '/User/get-chat-contacts'.xBasePath;
+          .xBaseUrl;
+  final deleteProfilePicturePath = '/file/delete-profile-photo'.xBaseUrl;
+  final uploadProfilePicturePath = '/file/profil-image-upload'.xBaseUrl;
+  final getChatContacts = '/User/get-chat-contacts'.xBaseUrl;
   String downloadAppointmentSingleFilePath(String folder, String path) =>
-      '/file/download-patient-appointment-single-file/$folder/$path'.xBasePath;
+      '/file/download-patient-appointment-single-file/$folder/$path'.xBaseUrl;
   final getAllFilesPath =
-      '/file/get-patient-all-appointments-file-names'.xBasePath;
+      '/file/get-patient-all-appointments-file-names'.xBaseUrl;
   String downloadAppointmentFilePath(String id, String name) =>
-      '/file/report-file-download/$id/$name'.xBasePath;
-  String removePatientRelativePath(String id) =>
-      '/profile/remove/$id'.xBasePath;
-  final getRelativeRelationshipsPath = '/user/get-relationships'.xBasePath;
+      '/file/report-file-download/$id/$name'.xBaseUrl;
+  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
+  final getRelativeRelationshipsPath = '/user/get-relationships'.xBaseUrl;
   String changeActiveUserToRelativePath(String id) =>
-      '/profile/set-profile/$id'.xBasePath;
-  String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBasePath;
+      '/profile/set-profile/$id'.xBaseUrl;
+  String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBaseUrl;
   String filterSocialPostsPath(String search) =>
-      '/socialpost/getPostWithTagsByText/$search'.xBasePath;
+      '/socialpost/getPostWithTagsByText/$search'.xBaseUrl;
   String filterSocialPostsPlatform(String platform) =>
-      '/socialPost/getPostWithTagsByPlatform/$platform'.xBasePath;
+      '/socialPost/getPostWithTagsByPlatform/$platform'.xBaseUrl;
 
-  String getBannerTab(String applicationName, String groupName) =>
-      '/Banner/get-banner-tabs/$applicationName/$groupName'.xBasePath;
-  final socialResourcePath = '/socialpost/getAllPosts'.xBasePath;
+  final socialResourcePath = '/socialpost/getAllPosts'.xBaseUrl;
   final getAppointmentTypeViaWebConsultantIdPath =
-      '/videoCall/get-stream-type-mobile'.xBasePath;
+      '/videoCall/get-stream-type-mobile'.xBaseUrl;
   String requestTranslatorPath(String appoId) =>
       '/appointmentinterpreter/add-update-appointment-interpreter-pusula/$appoId'
-          .xBasePath;
+          .xBaseUrl;
   String uploadFileToAppoPath(String webAppoId) =>
-      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBasePath;
+      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
 
-  final registerStep1UiPath = '/userregister/add-step1-pusula'.xBasePath;
-  final registerStep1WithOutTcPath =
-      '/userregister/add-step1-without-tckn'.xBasePath;
-  final getVisitsPath = '/Pusula/getVisits'.xBasePath;
-  final getLaboratoryResultsPath = '/Pusula/getLaboratoryResults'.xBasePath;
+  final getVisitsPath = '/Pusula/getVisits'.xBaseUrl;
+  final getLaboratoryResultsPath = '/Pusula/getLaboratoryResults'.xBaseUrl;
   final rateOnlineCallPath =
-      '/SuggestionRate/Add-Availability-Rate-pusula'.xBasePath;
-  final getRadiologyResultsPath = '/Pusula/getRadiologyResults'.xBasePath;
-  final getPathologyResultsPath = '/Pusula/getPathologyResults'.xBasePath;
-  final getLaboratoryPdfResultPath =
-      '/Pusula/getLaboratoryResultsPdf'.xBasePath;
-  final getRadiologyPdfResultPath = '/Pusula/getRadiologyResultsPdf'.xBasePath;
-  final getPatientAppointmentsPath = '/Pusula/getPatientAppointments'.xBasePath;
-  final cancelAppointmentPath = '/Pusula/cancelAppointment'.xBasePath;
+      '/SuggestionRate/Add-Availability-Rate-pusula'.xBaseUrl;
+  final getRadiologyResultsPath = '/Pusula/getRadiologyResults'.xBaseUrl;
+  final getPathologyResultsPath = '/Pusula/getPathologyResults'.xBaseUrl;
+  final getLaboratoryPdfResultPath = '/Pusula/getLaboratoryResultsPdf'.xBaseUrl;
+  final getRadiologyPdfResultPath = '/Pusula/getRadiologyResultsPdf'.xBaseUrl;
+  final getPatientAppointmentsPath = '/Pusula/getPatientAppointments'.xBaseUrl;
+  final cancelAppointmentPath = '/Pusula/cancelAppointment'.xBaseUrl;
   final getResourceVideoCallPricePath =
-      '/Pusula/getResourceVideoCallPrice'.xBasePath;
+      '/Pusula/getResourceVideoCallPrice'.xBaseUrl;
 
   final getResourceVideoCallPriceWithVoucher =
-      '/Pusula/getResourceVideoCallPriceWithVoucher'.xBasePath;
-  final doMobilePaymentPath = '/Pusula/do-mobile-payment'.xBasePath;
+      '/Pusula/getResourceVideoCallPriceWithVoucher'.xBaseUrl;
+  final doMobilePaymentPath = '/Pusula/do-mobile-payment'.xBaseUrl;
   final doMobilePaymentWithVoucher =
-      "/Pusula/do-mobile-payment-with-voucher".xBasePath;
-  final fetchOnlineDepartmentsPath = '/Pusula/getOnlineDepartments'.xBasePath;
+      "/Pusula/do-mobile-payment-with-voucher".xBaseUrl;
+  final fetchOnlineDepartmentsPath = '/Pusula/getOnlineDepartments'.xBaseUrl;
   final checkOnlineAppointmentPaymentPath =
-      '/pusula/checkOnlineAppointmentPayment'.xBasePath;
+      '/pusula/checkOnlineAppointmentPayment'.xBaseUrl;
   final getAvailabilityRatePath =
-      '/SuggestionRate/Get-Availability-Rate-Pusula'.xBasePath;
-  final addNewPatientRelativePath = '/profile/add-pusula'.xBasePath;
+      '/SuggestionRate/Get-Availability-Rate-Pusula'.xBaseUrl;
+  final addNewPatientRelativePath = '/profile/add-pusula'.xBaseUrl;
   String uploadPatientDocumentsPath(String webAppoId) =>
-      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBasePath;
+      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
 
   final symptomCheckerLogin = '/login'.xSymptomCheckerLogin;
   final symptomGetProposed = '/symptoms/proposed'.xSymptomCheckerRequest;
@@ -139,8 +129,7 @@ class _Endpoints {
   String symptomGetBodySymptoms(int locationID, int gender) =>
       '/symptoms/$locationID/$gender'.xSymptomCheckerRequest;
 
-  String ctSaveAndRetrieveToken =
-      '/AccessToken/validate-remote-token'.xBasePath;
+  String ctSaveAndRetrieveToken = '/AccessToken/validate-remote-token'.xBaseUrl;
   String ctGetUserStrip(int entegrationId, String deviceuuid) =>
       '/user/get-user-strip/$entegrationId/$deviceuuid'.xCronicTracking;
   String ctInsertNewBloodGlucoseValue =
@@ -201,7 +190,7 @@ class _Endpoints {
 
   String dcLogin(String userName, String password) =>
       '/AccessToken/get-token-for-rbio?userName=$userName&password=$password'
-          .xBasePath;
+          .xBaseUrl;
   String dcGetAllAppointment =
       '/mobileapi/v1/MobileDoctor/all-appointment'.xDoctorBaseUrl;
   String dcGetMySugarPatient =
@@ -228,12 +217,12 @@ class _Endpoints {
 }
 
 extension _EndpointsExtension on String {
-  String get xBasePath {
+  String get xBaseUrl {
     final String? path = SecretHelper.instance.get(SecretKeys.baseUrl);
     if (path != null) {
       return path + this;
     } else {
-      throw Exception('xBasePath null');
+      throw Exception('SecretKeys.baseUrl null');
     }
   }
 
@@ -242,7 +231,7 @@ extension _EndpointsExtension on String {
     if (path != null) {
       return path + this;
     } else {
-      throw Exception('xGuvenPath null');
+      throw Exception('SecretKeys.dev4Guven null');
     }
   }
 
@@ -252,7 +241,7 @@ extension _EndpointsExtension on String {
     if (path != null) {
       return path + this;
     } else {
-      throw Exception('xSymptomCheckerLogin null');
+      throw Exception('SecretKeys.symtonCheckerLogin null');
     }
   }
 
@@ -262,17 +251,16 @@ extension _EndpointsExtension on String {
     if (path != null) {
       return path + this;
     } else {
-      throw Exception('xSymptomCheckerRequest null');
+      throw Exception('SecretKeys.symtomRequestLogin null');
     }
   }
 
   String get xCronicTracking {
-    final String? path =
-        SecretHelper.instance.get(SecretKeys.chronicTrackingBaseUrl);
+    final String? path = SecretHelper.instance.get(SecretKeys.prodApiTest);
     if (path != null) {
       return path + this;
     } else {
-      throw Exception('xCronicTracking null');
+      throw Exception('SecretKeys.chronicTrackingBaseUrl null');
     }
   }
 
@@ -281,7 +269,25 @@ extension _EndpointsExtension on String {
     if (path != null) {
       return path + this;
     } else {
-      throw Exception('xDoctorBaseUrl null');
+      throw Exception('SecretKeys.doctorBaseUrl null');
+    }
+  }
+
+  String get xProdApiTest {
+    final String? path = SecretHelper.instance.get(SecretKeys.prodApiTest);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('SecretKeys.prodApiTest null');
+    }
+  }
+
+  String get xDevApiTest {
+    final String? path = SecretHelper.instance.get(SecretKeys.devApiTest);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('SecretKeys.devApiTest null');
     }
   }
 }

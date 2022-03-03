@@ -71,7 +71,7 @@ class RegisterStep2ScreenVm extends RbioVm {
   }
 
   Future<void> registerStep1(
-    RegisterStep1PusulaModel userRegistrationStep1,
+    AddStep1Model userRegistrationStep1,
     UserRegistrationStep1Model registerStep1Model,
   ) async {
     try {
@@ -79,21 +79,16 @@ class RegisterStep2ScreenVm extends RbioVm {
       late GuvenResponseModel response;
       if ((userRegistrationStep1.identityNumber ?? '').trim().isEmpty ||
           (registerStep1Model.identificationNumber ?? '').trim().isEmpty) {
-        isWithOutTCKN = true;
-        response = await getIt<Repository>()
-            .registerStep1WithOutTc(registerStep1Model);
+        // isWithOutTCKN = true;
+        // response = await getIt<Repository>().registerStep1WithOutTc(registerStep1Model);
       } else {
         isWithOutTCKN = false;
-        response =
-            await getIt<Repository>().registerStep1Ui(userRegistrationStep1);
+        response = await getIt<Repository>().addStep1(userRegistrationStep1);
       }
+
       hideDialog(mContext);
 
-      if (response.datum == 18 ||
-          response.datum == 19 ||
-          response.datum == 21 ||
-          response.datum == 1 ||
-          response.datum == 3) {
+      if (response.datum == 18) {
         UserRegistrationStep2Model userRegisterStep2 =
             UserRegistrationStep2Model();
         userRegisterStep2.userRegistrationStep1 = registerStep1Model;
@@ -119,32 +114,43 @@ class RegisterStep2ScreenVm extends RbioVm {
             LocaleProvider.of(mContext).fill_all_field,
           );
         }
-      } else if (response.datum == 5 || response.datum == 2) {
-        showInfoDialog(
-          LocaleProvider.of(mContext).warning,
-          LocaleProvider.current.wrong_tc_number,
-        );
-      } else if (response.datum == 4) {
-        showInfoDialog(
-          LocaleProvider.of(mContext).warning,
-          LocaleProvider.of(mContext).already_registered_mail,
-        );
-      } else if (response.datum == 15) {
-        showInfoDialog(
-          LocaleProvider.of(mContext).warning,
-          LocaleProvider.of(mContext).already_registered_phone,
-        );
-      } else if (response.datum == 16) {
-        showInfoDialog(
-          LocaleProvider.of(mContext).warning,
-          LocaleProvider.of(mContext).credential_already_exist,
-        );
       } else {
-        showInfoDialog(
-          LocaleProvider.of(mContext).warning,
-          response.message.toString(),
-        );
+        final datumError = response.datum is Map<String, dynamic>;
+        if (datumError) {
+          if (response.datum["error"] == 5) {
+            // TCKimlikNo, Ad, Soyad veya Doğum Yılı hatası
+            showInfoDialog(
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.current.wrong_tc_number,
+            );
+          } else if (response.datum["error"] == 19) {
+            // Üzgünüz uyarısı
+            showInfoDialog(
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          }
+        } else {
+          if (response.datum == 16) {
+            // Kimlik bilgileri bir hesaba bağlı olarak zaten mevcuttur
+            showInfoDialog(
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.of(mContext).credential_already_exist,
+            );
+          } else {
+            showInfoDialog(
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          }
+        }
       }
+    } on RbioNotSuccessfulException catch (e) {
+      hideDialog(mContext);
+      showInfoDialog(
+        LocaleProvider.of(mContext).warning,
+        e.xGetMessage,
+      );
     } catch (error, stackTrace) {
       showDelayedErrorDialog(
         error,
@@ -199,21 +205,20 @@ class RegisterStep2ScreenVm extends RbioVm {
     final checkValue = isWithoutTCKN
         ? userRegistrationStep2Model.password
         : userRegistrationStep2.password;
+
     if (checkPasswordCapabilityForAll(checkValue ?? '')) {
       try {
         showLoadingDialog(mContext);
-        GuvenResponseModel response;
+        GuvenResponseModel? response;
         if (isWithoutTCKN) {
-          response = await getIt<Repository>()
-              .registerStep2WithOutTc(userRegistrationStep2Model);
+          // response = await getIt<Repository>().registerStep2WithOutTc(userRegistrationStep2Model);
         } else {
-          response =
-              await getIt<Repository>().registerStep2Ui(userRegistrationStep2);
+          response = await getIt<Repository>().addStep2(userRegistrationStep2);
         }
 
         hideDialog(mContext);
-        if (response.isSuccessful == true) {
-          if (response.datum == 6) {
+        if (response?.isSuccessful == true) {
+          if (response?.datum == R.apiEnums.register.step2PasswordPass) {
             Atom.to(
               PagePaths.registerStep3,
               queryParameters: {
@@ -222,11 +227,16 @@ class RegisterStep2ScreenVm extends RbioVm {
                     jsonEncode(userRegistrationStep2Model.toJson())
               },
             );
+          } else {
+            showInfoDialog(
+              LocaleProvider.of(mContext).warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
           }
         } else {
           showInfoDialog(
             LocaleProvider.of(mContext).warning,
-            response.message.toString(),
+            response?.message.toString() ?? '',
           );
         }
       } catch (error, stackTrace) {

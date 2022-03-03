@@ -7540,6 +7540,16 @@ class LocaleProvider {
     );
   }
 
+  /// `User Not Found`
+  String get user_not_found {
+    return Intl.message(
+      'User Not Found',
+      name: 'user_not_found',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Oops. Something went wrong!`
   String get something_went_wrong {
     return Intl.message(
@@ -7955,6 +7965,26 @@ class LocaleProvider {
     return Intl.message(
       'Your information has been successfully updated',
       name: 'personal_update_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You account is disabled for security reasons. Please contact us at 444 25 25.`
+  String get account_disabled {
+    return Intl.message(
+      'You account is disabled for security reasons. Please contact us at 444 25 25.',
+      name: 'account_disabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number is not matching the user`
+  String get user_phone_not_match {
+    return Intl.message(
+      'Phone number is not matching the user',
+      name: 'user_phone_not_match',
       desc: '',
       args: [],
     );

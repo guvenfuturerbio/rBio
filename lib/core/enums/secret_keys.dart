@@ -4,6 +4,11 @@ import '../core.dart';
 
 enum SecretKeys {
   baseUrl,
+  apiGuven,
+  prodApiTest,
+  devApiTest,
+  doctorBaseUrl,
+
   clientId,
   clientSecret,
   mockAppointment,
@@ -11,11 +16,8 @@ enum SecretKeys {
   sentryDsn,
   symtonCheckerLogin,
   symtomRequestLogin,
-  chronicTrackingBaseUrl,
-  doctorBaseUrl,
   doctorClientId,
   doctorClientSecret,
-  apiGuven,
 }
 
 extension SecretKeysStringExt on String {

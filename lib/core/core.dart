@@ -48,10 +48,13 @@ export 'enums/remindable.dart';
 export "enums/secret_keys.dart";
 export "enums/usage_type.dart";
 
+export 'exception/client_exception.dart';
 export 'exception/display_exception.dart';
 export 'exception/model_cast_exception.dart';
 export 'exception/network_exception.dart';
 export "exception/not_list_exception.dart";
+export 'exception/not_successful_exception.dart';
+export 'exception/server_exception.dart';
 
 export "extension/extension.dart";
 

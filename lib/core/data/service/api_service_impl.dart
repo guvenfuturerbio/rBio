@@ -18,7 +18,52 @@ class ApiServiceImpl extends ApiService {
       };
 
   @override
-  Future<RbioLoginResponse> login(String username, String password) async {
+  Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model) async {
+    final response = await helper.postGuven(
+      R.endpoints.addStep1,
+      addStep1Model.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        R.endpoints.addStep1,
+        response,
+      );
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> addStep2(
+    UserRegistrationStep2Model userRegistrationStep2,
+  ) async {
+    final response = await helper.postGuven(
+      R.endpoints.addStep2,
+      userRegistrationStep2.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/registerStep2Ui : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> addStep3(
+    UserRegistrationStep3Model userRegistrationStep3,
+  ) async {
+    final response = await helper.postGuven(
+      R.endpoints.addStep3,
+      userRegistrationStep3.toJson(),
+      options: authOptions,
+    );
+    return response;
+  }
+
+  @override
+  Future<GuvenResponseModel> login(String username, String password) async {
     final response = await helper.postGuven(
       R.endpoints.loginPath,
       <String, dynamic>{},
@@ -28,7 +73,7 @@ class ApiServiceImpl extends ApiService {
       },
     );
     if (response.xIsSuccessful) {
-      return RbioLoginResponse.fromJson(response.xGetMap);
+      return response;
     } else {
       throw Exception('/login : ${response.isSuccessful}');
     }
@@ -116,62 +161,6 @@ class ApiServiceImpl extends ApiService {
     } else {
       throw Exception('/doPackagePayment : ${response.isSuccessful}');
     }
-  }
-
-  @override
-  Future<GuvenResponseModel> registerStep2Ui(
-    UserRegistrationStep2Model userRegistrationStep2,
-  ) async {
-    final response = await helper.postGuven(
-      R.endpoints.registerStep2UiPath,
-      userRegistrationStep2.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/registerStep2Ui : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> registerStep2WithOutTc(
-    UserRegistrationStep2Model userRegistrationStep2,
-  ) async {
-    final response = await helper.postGuven(
-      R.endpoints.registerStep2WithOutTcPath,
-      userRegistrationStep2.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/registerStep2WithOutTc : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> registerStep3Ui(
-    UserRegistrationStep3Model userRegistrationStep3,
-  ) async {
-    final response = await helper.postGuven(
-      R.endpoints.registerStep3UiPath,
-      userRegistrationStep3.toJson(),
-      options: authOptions,
-    );
-    return response;
-  }
-
-  @override
-  Future<GuvenResponseModel> registerStep3WithOutTc(
-    UserRegistrationStep3Model userRegistrationStep3,
-  ) async {
-    final response = await helper.postGuven(
-      R.endpoints.registerStep3WithOutTcPath,
-      userRegistrationStep3.toJson(),
-      options: authOptions,
-    );
-    return response;
   }
 
   @override
@@ -459,27 +448,27 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> forgotPasswordUi(
+  Future<GuvenResponseModel> forgotPassword(
     UserRegistrationStep1Model userRegistrationStep1,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.forgotPasswordUiPath,
+      R.endpoints.forgotPassword,
       userRegistrationStep1.toJson(),
       options: emptyAuthOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/forgotPasswordUi : ${response.isSuccessful}');
+      throw Exception('/forgotPassword : ${response.isSuccessful}');
     }
   }
 
   @override
-  Future<GuvenResponseModel> changePasswordUi(
+  Future<GuvenResponseModel> changePassword(
     ChangePasswordModel changePasswordModel,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.changePasswordUiPath,
+      R.endpoints.changePassword,
       changePasswordModel.toJson(),
       options: authOptions,
     );
@@ -531,19 +520,6 @@ class ApiServiceImpl extends ApiService {
       return response;
     } else {
       throw Exception('/addFirebaseTokenUi : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> patientCallMeUi() async {
-    final response = await helper.getGuven(
-      R.endpoints.patientCallMeUiPath,
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/patientCallMeUi : ${response.isSuccessful}');
     }
   }
 
@@ -951,38 +927,6 @@ class ApiServiceImpl extends ApiService {
       return response;
     } else {
       throw Exception('/uploadFileToAppo : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> registerStep1Ui(
-    RegisterStep1PusulaModel userRegistrationStep1,
-  ) async {
-    final response = await helper.postGuven(
-      R.endpoints.registerStep1UiPath,
-      userRegistrationStep1.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/registerStep1Ui : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> registerStep1WithOutTc(
-    UserRegistrationStep1Model userRegistrationStep1,
-  ) async {
-    final response = await helper.postGuven(
-      R.endpoints.registerStep1WithOutTcPath,
-      userRegistrationStep1.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/registerStep1WithOutTc : ${response.isSuccessful}');
     }
   }
 

@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "I have read understood and approve the distance sales contract"),
         "accept_personal_data": MessageLookupByLibrary.simpleMessage(
             "I have read and understood the privacy statement and personal data protection policy"),
+        "account_disabled": MessageLookupByLibrary.simpleMessage(
+            "You account is disabled for security reasons. Please contact us at 444 25 25."),
         "accu_check_step1": MessageLookupByLibrary.simpleMessage(
             "Test stribini cihaza yerleştirin."),
         "accu_check_step2": MessageLookupByLibrary.simpleMessage(
@@ -1223,6 +1225,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "user_id": MessageLookupByLibrary.simpleMessage("User ID"),
         "user_login_cannot_blank": MessageLookupByLibrary.simpleMessage(
             "User login information cannot be left blank"),
+        "user_not_found":
+            MessageLookupByLibrary.simpleMessage("User Not Found"),
+        "user_phone_not_match": MessageLookupByLibrary.simpleMessage(
+            "Phone number is not matching the user"),
         "user_with_email_does_not_exists": MessageLookupByLibrary.simpleMessage(
             "User with this email doesn\'t exist."),
         "value": MessageLookupByLibrary.simpleMessage("Değer"),
