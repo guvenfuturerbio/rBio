@@ -568,6 +568,7 @@ class PagePaths {
   static const chat = '/chat';
   static const termsAndPrivacy = '/terms-and-privacy';
   static const login = '/login';
+  static loginWithSuccessChangePassword() => '/login?changePassword=true';
   static const registerStep1 = '/register-first';
   static const registerStep2 = '/register-2';
   static const registerStep3 = '/register-3';

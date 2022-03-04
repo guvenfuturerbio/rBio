@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/core.dart';
 import '../auth.dart';
@@ -39,13 +40,11 @@ class ForgotPasswordStep2ScreenVm extends RbioVm {
           await getIt<Repository>().changePassword(changePasswordModel);
       await either.fold(
         (response) async {
-          await Future.delayed(const Duration(milliseconds: 300));
           hideDialog();
-          showInfoDialog(
-            LocaleProvider.of(mContext).success_message_title,
-            LocaleProvider.of(mContext).succefully_created_pass,
+          Atom.to(
+            PagePaths.loginWithSuccessChangePassword(),
+            isReplacement: true,
           );
-          Atom.to(PagePaths.login, isReplacement: true);
         },
         (error) {
           hideDialog();

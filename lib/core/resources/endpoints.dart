@@ -1,7 +1,7 @@
 part of 'resources.dart';
 
 class _Endpoints {
-  // #region xDevApiTest
+  // #region devApiTest
   final loginPath = '/AccessToken/get-token-for-rbio'.xDevApiTest;
   final addStep1 = '/UserRegister/add-step1'.xDevApiTest;
   final addStep2 = '/UserRegister/add-step2'.xDevApiTest;

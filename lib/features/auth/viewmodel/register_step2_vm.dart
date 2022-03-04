@@ -117,13 +117,14 @@ class RegisterStep2ScreenVm extends RbioVm {
       } else {
         final datumError = response.datum is Map<String, dynamic>;
         if (datumError) {
-          if (response.datum["error"] == 5) {
+          if (response.datum["error"] == R.apiEnums.register.kpsError) {
             // TCKimlikNo, Ad, Soyad veya Doğum Yılı hatası
             showInfoDialog(
               LocaleProvider.of(mContext).warning,
               LocaleProvider.current.wrong_tc_number,
             );
-          } else if (response.datum["error"] == 19) {
+          } else if (response.datum["error"] ==
+              R.apiEnums.register.unexpectedRegisterFlow) {
             // Üzgünüz uyarısı
             showInfoDialog(
               LocaleProvider.of(mContext).warning,
@@ -131,7 +132,7 @@ class RegisterStep2ScreenVm extends RbioVm {
             );
           }
         } else {
-          if (response.datum == 16) {
+          if (response.datum == R.apiEnums.register.userExistOnProile) {
             // Kimlik bilgileri bir hesaba bağlı olarak zaten mevcuttur
             showInfoDialog(
               LocaleProvider.of(mContext).warning,

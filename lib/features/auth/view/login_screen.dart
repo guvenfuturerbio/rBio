@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:onedosehealth/core/utils/logger_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -28,6 +30,24 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordEditingController = TextEditingController();
     _usernameFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
+
+    if (Atom.url == PagePaths.loginWithSuccessChangePassword()) {
+      final widgetsBinding = WidgetsBinding.instance;
+      if (widgetsBinding != null) {
+        widgetsBinding.addPostFrameCallback((_) {
+          Utils.instance.showSnackbar(
+            context,
+            LocaleProvider.of(context).succefully_created_pass,
+            backColor: getIt<ITheme>().mainColor,
+            trailing: SvgPicture.asset(
+              R.image.done,
+              height: R.sizes.iconSize2,
+              color: getIt<ITheme>().iconSecondaryColor,
+            ),
+          );
+        });
+      }
+    }
 
     super.initState();
   }
