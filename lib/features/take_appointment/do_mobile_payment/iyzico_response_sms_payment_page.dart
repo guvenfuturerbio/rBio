@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/core.dart';
 import 'iyzico_response_vm.dart';
@@ -55,18 +56,13 @@ class _IyzicoResponseSmsPaymentScreenState
         builder: (context, vm, child) {
           return RbioScaffold(
             appbar: RbioAppBar(),
-            body: Container(),
-            /* body: Atom.isWeb
-                ? const HtmlElementView(
-                    viewType: "PayPalButtons",
-                  )
-                : WebView(
-                    initialUrl: Uri.dataFromString(
-                      html,
-                      mimeType: 'text/html',
-                    ).toString(),
-                    javascriptMode: JavascriptMode.unrestricted,
-                  ), */
+            body: WebView(
+              initialUrl: Uri.dataFromString(
+                html,
+                mimeType: 'text/html',
+              ).toString(),
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
           );
         },
       ),

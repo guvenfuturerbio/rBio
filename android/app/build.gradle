@@ -46,8 +46,8 @@ android {
         applicationId "com.guvenfuture.onedosehealth"
         minSdkVersion 23 //Required for Jitsi
         targetSdkVersion 31
-        versionCode 24
-        versionName "1.0.13"
+        versionCode 25
+        versionName "1.0.14"
     }
 
     compileOptions {
