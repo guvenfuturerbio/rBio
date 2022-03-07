@@ -3,7 +3,7 @@ import 'package:scale_api/scale_api.dart';
 
 part 'model/constants.dart';
 
-class HealthService implements ScaleApi {
+class HealthService {
   final HealthFactory _health;
   HealthService() : _health = HealthFactory();
 

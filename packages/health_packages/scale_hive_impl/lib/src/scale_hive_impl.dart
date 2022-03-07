@@ -1,18 +1,15 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:scale_api/scale_api.dart';
+import '../scale_hive_impl.dart';
 
-import 'exceptions.dart';
-
-class ScaleHiveImpl extends ScaleApi {
-  late Box<ScaleModel> box;
+class ScaleHiveImpl {
+  late Box<ScaleHiveModel> box;
 
   Future<void> init(String boxKey) async {
-    box = await Hive.openBox<ScaleModel>(boxKey);
+    box = await Hive.openBox<ScaleHiveModel>(boxKey);
   }
 
-  @override
-  Future<bool> deleteScaleData(int millisecondsSinceEpoch) async {
+  Future<bool> deleteScaleData(String millisecondsSinceEpoch) async {
     try {
       if (boxIsOpen()) {
         await box.delete(millisecondsSinceEpoch);
@@ -25,8 +22,7 @@ class ScaleHiveImpl extends ScaleApi {
     }
   }
 
-  @override
-  Future<List<ScaleModel>> readScaleData() async {
+  Future<List<ScaleHiveModel>> readScaleData() async {
     try {
       if (boxIsOpen()) {
         return box.values.toList();
@@ -38,9 +34,8 @@ class ScaleHiveImpl extends ScaleApi {
     }
   }
 
-  @override
   Future<bool> updateScaleData(
-      ScaleModel newModel, int millisecondsSinceEpoch) async {
+      ScaleHiveModel newModel, String millisecondsSinceEpoch) async {
     try {
       if (boxIsOpen()) {
         await box.put(millisecondsSinceEpoch, newModel);
@@ -53,12 +48,11 @@ class ScaleHiveImpl extends ScaleApi {
     }
   }
 
-  @override
-  Future<int> writeScaleData(ScaleModel model) async {
+  Future<String> writeScaleData(ScaleHiveModel model) async {
     try {
       if (boxIsOpen()) {
-        await box.put(model.dateTime.millisecondsSinceEpoch, model);
-        return model.dateTime.millisecondsSinceEpoch;
+        await box.put(model.occurrenceTime, model);
+        return model.occurrenceTime;
       } else {
         throw const HiveScaleBoxClosedException();
       }

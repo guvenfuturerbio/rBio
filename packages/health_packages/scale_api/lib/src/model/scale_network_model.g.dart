@@ -8,7 +8,6 @@ part of 'scale_network_model.dart';
 
 ScaleNetworkModel _$ScaleNetworkModelFromJson(Map<String, dynamic> json) =>
     ScaleNetworkModel(
-      id: json['id'] as int?,
       entegrationId: json['entegration_id'] as int?,
       occurrenceTime: json['occurrence_time'] as String?,
       weight: (json['weight'] as num?)?.toDouble(),
@@ -25,14 +24,13 @@ ScaleNetworkModel _$ScaleNetworkModelFromJson(Map<String, dynamic> json) =>
       isManuel: json['is_manuel'] as bool?,
       bmiMeasurementsImageList:
           (json['bmi_measurements_image_list'] as List<dynamic>?)
-              ?.map((dynamic e) => e as String)
+              ?.map((e) => e as String)
               .toList(),
       note: json['note'] as String?,
     );
 
 Map<String, dynamic> _$ScaleNetworkModelToJson(ScaleNetworkModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'entegration_id': instance.entegrationId,
       'occurrence_time': instance.occurrenceTime,
       'weight': instance.weight,

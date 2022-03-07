@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:cache/cache.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:scale_hive_impl/scale_hive_impl.dart';
 
 import '../features/mediminder/managers/reminder_notifications_manager.dart';
 import '../model/treatment_model/treatment_model.dart';
@@ -218,6 +219,8 @@ Future<void> registerStorage() async {
   Hive.registerAdapter<GlucoseData>(GlucoseDataAdapter());
   Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());
   Hive.registerAdapter<BloodPressureModel>(BloodPressureModelAdapter());
+
+  Hive.registerAdapter<ScaleHiveModel>(ScaleHiveModelAdapter());
 
   await getIt<ProfileStorageImpl>().init();
   await getIt<GlucoseStorageImpl>().init();

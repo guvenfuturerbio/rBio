@@ -5,9 +5,6 @@ part 'scale_network_model.g.dart';
 
 @JsonSerializable()
 class ScaleNetworkModel {
-  @JsonKey(name: "id")
-  int? id;
-
   @JsonKey(name: "entegration_id")
   int? entegrationId;
 
@@ -57,7 +54,6 @@ class ScaleNetworkModel {
   String? note;
 
   ScaleNetworkModel({
-    this.id,
     this.entegrationId,
     this.occurrenceTime,
     this.weight,
