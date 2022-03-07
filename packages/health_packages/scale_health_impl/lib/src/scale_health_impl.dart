@@ -1,150 +1,154 @@
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:health/health.dart';
 import 'package:scale_api/scale_api.dart';
 
+import '../scale_health_impl.dart';
+
 part 'constants.dart';
 
-class ScaleHealthImpl implements ScaleApi {
+class ScaleHealthImpl {
   final HealthFactory _health;
   ScaleHealthImpl() : _health = HealthFactory();
 
-  @override
-  Future<bool> deleteScaleData(int millisecondsSinceEpoch) {
-    // TODO: implement deleteScaleData
-    throw UnimplementedError();
+  Future<bool> deleteScaleData(DateTime date) async {
+    try {
+      await _health.deleteData(
+        HealthDataType.WEIGHT,
+        date,
+      );
+      await _health.deleteData(
+        HealthDataType.BODY_MASS_INDEX,
+        date,
+      );
+      await _health.deleteData(
+        HealthDataType.BODY_FAT_PERCENTAGE,
+        date,
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  @override
-  Future<List<ScaleModel>> readScaleData() async {
-    List<HealthDataPoint> data = await _health.getHealthDataFromTypes(
+  Future<List<ScaleHealthModel>> readScaleData() async {
+    List<HealthDataPoint> healthList = await _health.getHealthDataFromTypes(
       Constants.instance.startDate,
       Constants.instance.endDate,
       Constants.instance.scaleTypes,
     );
 
-    List<ScaleModel> tempList = <ScaleModel>[];
+    List<ScaleHealthModel> result = <ScaleHealthModel>[];
 
-    for (var item in data) {
+    for (var item in healthList) {
       if (item.type == HealthDataType.WEIGHT) {
-        tempList.add(
-          ScaleModel(
+        result.add(
+          ScaleHealthModel(
             isManuel: item.deviceId != 'manuel',
-            device: PairedDevice(
-              deviceId: item.deviceId,
-              modelName: item.sourceName,
-            ).toJson(),
-            dateTime: item.dateFrom,
-            unit: ScaleUnit.kg,
-            note: '',
-            isFromHealth: true,
-            images: [],
+            deviceId: item.deviceId,
+            // device: PairedDevice(
+            //   deviceId: item.deviceId,
+            //   modelName: item.sourceName,
+            // ).toJson(),
+            occurrenceTime: item.dateFrom.millisecondsSinceEpoch.toString(),
+            scaleUnit: ScaleUnit.kg,
             weight: item.value.toDouble(),
           ),
         );
       }
     }
 
-    for (var item in data) {
+    for (var item in healthList) {
       if (item.type == HealthDataType.BODY_MASS_INDEX) {
-        if (tempList.any((element) => element.dateTime == item.dateFrom)) {
-          tempList
-              .firstWhere((element) => element.dateTime == item.dateFrom)
+        if (result.any((element) =>
+            element.occurrenceTime ==
+            item.dateFrom.millisecondsSinceEpoch.toString())) {
+          result
+              .firstWhere((element) =>
+                  element.occurrenceTime ==
+                  item.dateFrom.millisecondsSinceEpoch.toString())
               .bmi = item.value.toDouble();
         } else {
-          tempList.add(
-            ScaleModel(
+          result.add(
+            ScaleHealthModel(
               isManuel: item.deviceId != 'manuel',
-              device: PairedDevice(
-                deviceId: item.deviceId,
-                modelName: item.sourceName,
-              ).toJson(),
-              dateTime: item.dateFrom,
-              unit: ScaleUnit.kg,
-              note: '',
-              isFromHealth: true,
-              images: [],
-              bmi: item.value.toDouble(),
+              deviceId: item.deviceId,
+              occurrenceTime: item.dateFrom.millisecondsSinceEpoch.toString(),
+              scaleUnit: ScaleUnit.kg,
+              weight: item.value.toDouble(),
             ),
           );
         }
       }
     }
 
-    for (var item in data) {
+    for (var item in healthList) {
       if (item.type == HealthDataType.BODY_FAT_PERCENTAGE) {
-        if (tempList.any((element) => element.dateTime == item.dateFrom)) {
-          tempList
-              .firstWhere((element) => element.dateTime == item.dateFrom)
+        if (result.any((element) =>
+            element.occurrenceTime ==
+            item.dateFrom.millisecondsSinceEpoch.toString())) {
+          result
+              .firstWhere((element) =>
+                  element.occurrenceTime ==
+                  item.dateFrom.millisecondsSinceEpoch.toString())
               .bodyFat = item.value.toDouble();
         } else {
-          tempList.add(
-            ScaleModel(
+          result.add(
+            ScaleHealthModel(
               isManuel: item.deviceId != 'manuel',
-              device: PairedDevice(
-                deviceId: item.deviceId,
-                modelName: item.sourceName,
-              ).toJson(),
-              dateTime: item.dateFrom,
-              unit: ScaleUnit.kg,
-              note: '',
-              isFromHealth: true,
-              images: [],
-              bodyFat: item.value.toDouble(),
+              deviceId: item.deviceId,
+              occurrenceTime: item.dateFrom.millisecondsSinceEpoch.toString(),
+              scaleUnit: ScaleUnit.kg,
+              weight: item.value.toDouble(),
             ),
           );
         }
       }
     }
 
-    List<ScaleMeasurementLogic> scaleData =
-        tempList.map((e) => ScaleMeasurementLogic(scaleModel: e)).toList();
+    return result;
+  }
 
-    if (scaleData.any((element) => element.bmi == null)) {
-      for (var item
-          in scaleData.where((element) => element.bmi == null).toList()) {
-        item.calculateVariables();
+  Future<bool> updateScaleData(ScaleHealthModel newModel, DateTime date) async {
+    final isDeleted = await deleteScaleData(date);
+    if (isDeleted) {
+      final hasWritten = await writeScaleData(newModel);
+      return hasWritten;
+    }
+
+    return false;
+  }
+
+  Future<bool> writeScaleData(ScaleHealthModel model) async {
+    try {
+      if (model.weight != null) {
+        await _health.writeHealthData(
+          model.weight!,
+          HealthDataType.WEIGHT,
+          DateTime.fromMillisecondsSinceEpoch(int.parse(model.occurrenceTime)),
+          DateTime.fromMillisecondsSinceEpoch(int.parse(model.occurrenceTime)),
+        );
       }
+
+      if (model.bmi != null) {
+        await _health.writeHealthData(
+          model.bmi!,
+          HealthDataType.BODY_MASS_INDEX,
+          DateTime.fromMillisecondsSinceEpoch(int.parse(model.occurrenceTime)),
+          DateTime.fromMillisecondsSinceEpoch(int.parse(model.occurrenceTime)),
+        );
+      }
+
+      if (model.bodyFat != null) {
+        await _health.writeHealthData(
+          model.bodyFat!,
+          HealthDataType.BODY_FAT_PERCENTAGE,
+          DateTime.fromMillisecondsSinceEpoch(int.parse(model.occurrenceTime)),
+          DateTime.fromMillisecondsSinceEpoch(int.parse(model.occurrenceTime)),
+        );
+      }
+
+      return true;
+    } catch (e) {
+      return false;
     }
-
-    return tempList;
-  }
-
-  @override
-  Future<bool> updateScaleData(
-      ScaleModel newModel, int millisecondsSinceEpoch) {
-    // TODO: implement updateScaleData
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<int> writeScaleData(ScaleModel model) async {
-    if (model.weight != null) {
-      await _health.writeHealthData(
-        model.weight!,
-        HealthDataType.WEIGHT,
-        model.dateTime,
-        model.dateTime,
-      );
-    }
-
-    if (model.bmi != null) {
-      await _health.writeHealthData(
-        model.bmi!,
-        HealthDataType.BODY_MASS_INDEX,
-        model.dateTime,
-        model.dateTime,
-      );
-    }
-
-    if (model.bodyFat != null) {
-      await _health.writeHealthData(
-        model.bodyFat!,
-        HealthDataType.BODY_FAT_PERCENTAGE,
-        model.dateTime,
-        model.dateTime,
-      );
-    }
-
-    return 0;
   }
 }
