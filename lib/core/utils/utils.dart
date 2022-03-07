@@ -39,6 +39,26 @@ class Utils {
     }
   }
 
+  int getHeight() =>
+      int.tryParse(getIt<ProfileStorageImpl>().getFirst().height ?? '170') ??
+      170;
+
+  int getGender() {
+    return getIt<ProfileStorageImpl>().getFirst().gender == 'Male' ||
+            getIt<ProfileStorageImpl>().getFirst().gender == 'Erkek'
+        ? 1
+        : 0;
+  }
+
+  int getAge() {
+    final List<String> nums =
+        getIt<ProfileStorageImpl>().getFirst().birthDate!.split(".");
+    final yearOfBirth = int.parse(nums[2]);
+    return DateTime.now().year - yearOfBirth < 15
+        ? 15
+        : DateTime.now().year - yearOfBirth;
+  }
+
   void showSnackbar(
     BuildContext context,
     String text, {

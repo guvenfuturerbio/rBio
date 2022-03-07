@@ -3,11 +3,20 @@ import 'dart:typed_data';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:scale_api/scale_api.dart';
 
+import '../mi_scale.dart';
+
 class MiScaleDevice {
-  MiScaleDevice._(this.device);
+  int? age;
+  int? height;
+  int? gender;
+  DiscoveredDevice? device;
+
+  MiScaleDevice._(this.age, this.height, this.gender, this.device);
 
   ScaleMeasurementLogic? scaleData;
-  DiscoveredDevice? device;
+  MiScaleModel? model;
+
+  ScaleUtils get getUtils => ScaleUtils.instance;
 
   /// The id of the discovere d device
   String? get id => device?.id;
@@ -18,22 +27,27 @@ class MiScaleDevice {
   /// The signal strength of the device when it was first discovered
   int? get rssi => device?.rssi;
 
-  factory MiScaleDevice.from(DiscoveredDevice device) {
+  factory MiScaleDevice.from(
+    DiscoveredDevice device,
+    int age,
+    int height,
+    int gender,
+  ) {
     if (matchesDeviceType(device)) {
-      return MiScaleDevice._(device);
+      return MiScaleDevice._(age, height, gender, device);
     } else {
       throw Exception('Device doesnt march any device');
     }
   }
 
-  ScaleMeasurementLogic? parseScaleData(
+  MiScaleModel? parseScaleData(
     PairedDevice device,
     Uint8List data,
   ) {
     return _parseScaleData(device, data);
   }
 
-  ScaleMeasurementLogic? _parseScaleData(
+  MiScaleModel? _parseScaleData(
     PairedDevice device,
     Uint8List? data,
   ) {
@@ -71,20 +85,62 @@ class MiScaleDevice {
       weight /= 200;
     } // Return new scale data
 
-    scaleData = ScaleMeasurementLogic(
-      scaleModel: ScaleModel(
-        device: device.toJson(),
-        measurementComplete: measurementComplete,
-        weightStabilized: weightStabilized,
-        weightRemoved: weightRemoved,
-        unit: unit,
-        dateTime: measurementTime,
+    model = MiScaleModel(
+      device: device.toJson(),
+      measurementComplete: measurementComplete,
+      weightStabilized: weightStabilized,
+      weightRemoved: weightRemoved,
+      unit: unit,
+      dateTime: measurementTime,
+      weight: weight,
+      impedance: impedance,
+      bmh: getUtils.getBMH(
+        gender: gender!,
         weight: weight,
+        height: height!,
+        age: age!,
+      ),
+      bmi: getUtils.getBMI(
+        weight,
+        height!,
+      ),
+      bodyFat: getUtils.getBodyFat(
+        gender: gender!,
+        age: age!,
+        weight: weight,
+        height: height!,
+        impedance: impedance,
+      ),
+      boneMass: getUtils.getBoneMass(
+        weight: weight,
+        height: height!,
+        age: age!,
+        impedance: impedance,
+        gender: gender!,
+      ),
+      muscle: getUtils.getMuscle(
+        gender: gender!,
+        age: age!,
+        weight: weight,
+        height: height!,
+        impedance: impedance,
+      ),
+      visceralFat: getUtils.getVisceralFat(
+        gender: gender!,
+        height: height!,
+        weight: weight,
+        age: age!,
+      ),
+      water: getUtils.getWater(
+        gender: gender!,
+        age: age!,
+        weight: weight,
+        height: height!,
         impedance: impedance,
       ),
     );
 
-    return scaleData;
+    return model;
   }
 
   static bool matchesDeviceType(DiscoveredDevice device) {

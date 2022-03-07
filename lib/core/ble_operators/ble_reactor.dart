@@ -303,7 +303,12 @@ class BleReactorOps extends ChangeNotifier {
   }
 
   Future<void> subscribeScaleDevice(DiscoveredDevice device) async {
-    scaleDevice = MiScaleDevice.from(device);
+    scaleDevice = MiScaleDevice.from(
+      device,
+      Utils.instance.getAge(),
+      Utils.instance.getHeight(),
+      Utils.instance.getGender(),
+    );
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
     pairedDevice.deviceType = Utils.instance.getDeviceType(device);

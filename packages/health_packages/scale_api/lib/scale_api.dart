@@ -5,3 +5,4 @@ export 'src/model/scale_model.dart';
 export 'src/model/scale_network_model.dart';
 export 'src/model/scale_measurement_logic.dart';
 export 'src/model/selected_scale_type.dart';
+export 'src/scale_utils.dart';
