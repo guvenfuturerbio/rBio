@@ -17,6 +17,7 @@ import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
 import com.google.android.gms.fitness.data.*
+import com.google.android.gms.fitness.request.DataDeleteRequest
 import com.google.android.gms.fitness.request.SessionReadRequest
 import com.google.android.gms.fitness.result.SessionReadResponse
 import com.google.android.gms.tasks.OnFailureListener
@@ -28,7 +29,6 @@ import java.util.concurrent.TimeUnit
 import java.util.Date
 
 import java.util.concurrent.*
-
 
 const val GOOGLE_FIT_PERMISSIONS_REQUEST_CODE = 1111
 const val CHANNEL_NAME = "flutter_health"
@@ -276,7 +276,38 @@ class HealthPlugin(private var channel: MethodChannel? = null) : MethodCallHandl
              result.success(false)
         }
     }
+    private fun deleteData(call: MethodCall, result: Result){
 
+        if (activity == null) {
+            result.success(false)
+            return
+        }
+
+        val type = call.argument<String>("dataTypeKey")!!
+        val date = call.argument<Long>("date")!!
+
+        val dataType = keyToHealthDataType(type)
+        val request : DataDeleteRequest = DataDeleteRequest.Builder().setTimeInterval(date-1,date+1,TimeUnit.MILLISECONDS).addDataType(dataType).build()
+        val typesBuilder = FitnessOptions.builder()
+        typesBuilder.addDataType(dataType, FitnessOptions.ACCESS_WRITE)
+        val fitnessOptions = typesBuilder.build()
+        try {
+            val googleSignInAccount = GoogleSignIn.getAccountForExtension(activity!!.applicationContext, fitnessOptions)
+            Fitness.getHistoryClient(activity!!.applicationContext, googleSignInAccount)
+                .deleteData(request)
+                .addOnSuccessListener {
+                    Log.i("FLUTTER_HEALTH::SUCCESS", "DataSet deleted successfully!")
+                    result.success(true)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("FLUTTER_HEALTH::ERROR", "There was an error deleting the DataSet", e)
+                    result.success(false)
+                }
+        } catch (e3: Exception) {
+            result.success(false)
+        }
+
+    }
 
 
     private fun getData(call: MethodCall, result: Result) {
@@ -593,6 +624,7 @@ class HealthPlugin(private var channel: MethodChannel? = null) : MethodCallHandl
             "getData" -> getData(call, result)
             "writeData" -> writeData(call, result)
             "getTotalStepsInInterval" -> getTotalStepsInInterval(call, result)
+            "deleteData"-> deleteData(call,result)
             "hasPermissions" -> hasPermissions(call, result)
             else -> result.notImplemented()
         }
