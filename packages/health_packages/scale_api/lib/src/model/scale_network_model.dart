@@ -1,10 +1,12 @@
+import 'package:guven_service/guven_service.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scale_api/scale_api.dart';
+import 'package:scale_hive_impl/scale_hive_impl.dart';
 
 part 'scale_network_model.g.dart';
 
 @JsonSerializable()
-class ScaleNetworkModel {
+class ScaleNetworkModel extends IBaseModel<ScaleNetworkModel> {
   @JsonKey(name: "entegration_id")
   int? entegrationId;
 
@@ -75,8 +77,10 @@ class ScaleNetworkModel {
   factory ScaleNetworkModel.fromJson(Map<String, dynamic> json) =>
       _$ScaleNetworkModelFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ScaleNetworkModelToJson(this);
 
+  @override
   ScaleNetworkModel fromJson(Map<String, dynamic> json) =>
       ScaleNetworkModel.fromJson(json);
 }
@@ -96,6 +100,27 @@ extension ScaleNetworkModelExt on ScaleNetworkModel {
       measurementId: measurementId,
       visceralFat: visceralFat,
       dateTime: DateTime.parse(occurrenceTime ?? ''),
+    );
+  }
+
+  ScaleHiveModel xToScaleHiveModel() {
+    return ScaleHiveModel(
+      occurrenceTime: occurrenceTime ?? '',
+      bmh: bmh,
+      bmi: bmi,
+      bmiMeasurementsImageList: bmiMeasurementsImageList,
+      bodyFat: bodyFat,
+      boneMass: boneMass,
+      deviceId: deviceId,
+      entegrationId: entegrationId,
+      isManuel: isManuel,
+      measurementId: measurementId,
+      muscle: muscle,
+      note: note,
+      scaleUnit: scaleUnit,
+      visceralFat: visceralFat,
+      water: water,
+      weight: weight,
     );
   }
 }

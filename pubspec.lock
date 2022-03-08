@@ -883,13 +883,6 @@ packages:
       relative: true
     source: path
     version: "3.4.3"
-  health_service:
-    dependency: "direct main"
-    description:
-      path: "packages/health_packages/health_service"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   hive:
     dependency: transitive
     description:
@@ -1491,6 +1484,13 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/health_packages/scale_hive_impl"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  scale_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/health_packages/scale_repository"
       relative: true
     source: path
     version: "1.0.0+1"

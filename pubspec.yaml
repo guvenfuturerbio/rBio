@@ -27,8 +27,6 @@ dependencies:
   # Health
   health:
     path: ./packages/health_packages/health
-  health_service:
-    path: ./packages/health_packages/health_service
   scale_api:
     path: ./packages/health_packages/scale_api
   shared_preferences_manager:
@@ -39,6 +37,9 @@ dependencies:
     path: ./packages/health_packages/scale_health_impl
   scale_hive_impl:
     path: ./packages/health_packages/scale_hive_impl
+  scale_repository:
+    path: ./packages/health_packages/scale_repository
+
 
   animated_widgets: ^1.1.0
   app_settings: ^4.1.1

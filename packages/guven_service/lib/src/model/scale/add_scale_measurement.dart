@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:scale_api/scale_api.dart';
+import 'package:scale_health_impl/scale_health_impl.dart';
+import 'package:scale_hive_impl/scale_hive_impl.dart';
+
 String addScaleMasurementBodyToJson(AddScaleMasurementBody data) =>
     json.encode(data.toJson());
 
@@ -52,4 +56,37 @@ class AddScaleMasurementBody {
         "is_manual": isManuel,
         "note": note,
       };
+}
+
+extension AddScaleExtension on AddScaleMasurementBody {
+  ScaleHiveModel xToScaleHiveModel(int measurementId) {
+    return ScaleHiveModel(
+      occurrenceTime: occurrenceTime?.millisecondsSinceEpoch.toString() ?? '',
+      bmh: bmh,
+      bmi: bmi,
+      bmiMeasurementsImageList: [],
+      bodyFat: bodyFat,
+      boneMass: boneMass,
+      deviceId: deviceUUID,
+      entegrationId: entegrationId,
+      isManuel: isManuel,
+      measurementId: measurementId,
+      muscle: muscle,
+      note: note,
+      scaleUnit: scaleUnit,
+      visceralFat: visceralFat,
+      water: water,
+      weight: weight,
+    );
+  }
+
+  ScaleHealthModel get xToScaleHealthModel => ScaleHealthModel(
+        occurrenceTime: occurrenceTime?.millisecondsSinceEpoch.toString() ?? '',
+        bmi: bmi,
+        bodyFat: bodyFat,
+        deviceId: deviceUUID,
+        isManuel: isManuel,
+        scaleUnit: scaleUnit.xToScaleUnit,
+        weight: weight,
+      );
 }

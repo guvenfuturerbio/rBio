@@ -9,6 +9,25 @@ class ScaleHealthImpl {
   final HealthFactory _health;
   ScaleHealthImpl() : _health = HealthFactory();
 
+  Future<bool?> hasPermissions() async =>
+      await HealthFactory.hasPermissions(
+        Constants.instance.scaleTypes,
+        permissions: [
+          HealthDataAccess.READ_WRITE,
+          HealthDataAccess.READ_WRITE,
+          HealthDataAccess.READ_WRITE,
+        ],
+      );
+
+  Future<bool> hasAuthorization() async => _health.requestAuthorization(
+        Constants.instance.scaleTypes,
+        permissions: [
+          HealthDataAccess.READ_WRITE,
+          HealthDataAccess.READ_WRITE,
+          HealthDataAccess.READ_WRITE,
+        ],
+      );
+
   Future<bool> deleteScaleData(DateTime date) async {
     try {
       await _health.deleteData(

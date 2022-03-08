@@ -71,7 +71,7 @@ class GuvenService {
     }
   }
 
-  Future<GuvenResponseModel> deleteScaleMeasurement(
+  Future<bool> deleteScaleMeasurement(
     DeleteScaleMasurementBody deleteScaleMasurementBody,
   ) async {
     final response = await _dioHelper.postGuven(
@@ -80,7 +80,7 @@ class GuvenService {
       options: authOptions,
     );
     if (response.xIsSuccessful) {
-      return response;
+      return response.datum;
     } else {
       throw Exception('/deleteScaleMeasurement : ${response.isSuccessful}');
     }

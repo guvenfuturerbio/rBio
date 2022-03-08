@@ -117,7 +117,7 @@ public class SwiftHealthPlugin: NSObject, FlutterPlugin {
         let predicate = HKQuery.predicateForObjects(withMetadataKey: HKMetadataKeySyncIdentifier, allowedValues: ["\(dateInterval.timeIntervalSince1970)"])
         healthKitStore.deleteObjects(of: dataTypeLookUp(key: type) as! HKQuantityType, predicate: predicate) { success, _, error in
             if let err = error {
-                print("Error Saving \(type) Sample: \(err.localizedDescription)")
+                print("Error Deleting \(type) Sample: \(err.localizedDescription)")
             }
             DispatchQueue.main.async {
                 result(success)

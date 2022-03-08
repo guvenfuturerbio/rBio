@@ -306,6 +306,21 @@ enum ScaleUnit {
   lbs
 }
 
+extension ScaleUnitIntExtension on int? {
+  ScaleUnit get xToScaleUnit {
+    switch (this) {
+      case 1:
+        return ScaleUnit.kg;
+
+      case 2:
+        return ScaleUnit.lbs;
+
+      default:
+        throw Exception("Undefined ${this}");
+    }
+  }
+}
+
 enum StripMode { add, subtract, none }
 
 extension SUE on ScaleUnit {

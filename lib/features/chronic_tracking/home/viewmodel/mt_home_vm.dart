@@ -267,6 +267,7 @@ class MeasurementTrackingVm with ChangeNotifier {
         }
       }
     }
+
     LoggerUtils.instance.e(data.length);
     LoggerUtils.instance.e(_tempPressureModel.length);
     List<BloodPressureModel> pressureData = _tempPressureModel

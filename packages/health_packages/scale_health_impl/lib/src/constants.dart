@@ -21,7 +21,6 @@ class Constants {
     HealthDataType.BODY_MASS_INDEX,
     HealthDataType.BODY_FAT_PERCENTAGE,
     HealthDataType.WEIGHT,
-    HealthDataType.HEIGHT,
   ];
 
   final bloodPressureTypes = [
