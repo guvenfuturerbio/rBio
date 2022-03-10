@@ -1,4 +1,5 @@
 import 'package:dart_date/dart_date.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
@@ -176,7 +177,24 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
             resourcesRequestList: resourceRequestList,
           ),
         );
-        await calculateAppointmentHours(getOnlineEventsResponse, true);
+        availableSlots = await compute(
+          calculateAppointmentHours,
+          _EventArgs(
+            getOnlineEventsResponse,
+            true,
+            filterFromDate,
+            filterToDate,
+          ),
+        );
+        // availableSlots = await calculateAppointmentHours(
+        //   _EventArgs(
+        //     getOnlineEventsResponse,
+        //     true,
+        //     filterFromDate,
+        //     filterToDate,
+        //   ),
+        // );
+        notifyListeners();
       } else {
         if (resourceRequestList.isNotEmpty) {
           final getEventsResponse = await getIt<Repository>().getEvents(
@@ -186,7 +204,24 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
               resourcesRequestList: resourceRequestList,
             ),
           );
-          await calculateAppointmentHours(getEventsResponse, false);
+          availableSlots = await compute(
+            calculateAppointmentHours,
+            _EventArgs(
+              getEventsResponse,
+              false,
+              filterFromDate,
+              filterToDate,
+            ),
+          );
+          // availableSlots = await calculateAppointmentHours(
+          //   _EventArgs(
+          //     getEventsResponse,
+          //     false,
+          //     filterFromDate,
+          //     filterToDate,
+          //   ),
+          // );
+          notifyListeners();
         }
       }
 
@@ -198,100 +233,6 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
     }
   }
 
-  Future calculateAppointmentHours(
-    List<GetEventsResponse> getEventsResponse,
-    bool forOnline,
-  ) async {
-    final appointments = <ResourcesRequest>[];
-
-    try {
-      for (var data in getEventsResponse) {
-        DateTime dayStart =
-            DateTime.parse(filterFromDate); // "2021-11-05T00:00:00"
-        DateTime dayEnd = DateTime.parse(filterToDate); // "2021-11-05T23:59:59"
-        List<DateTime> availableSlotsList = [];
-
-        if (data.serviceTime != 0) {
-          while (dayStart.isBefore(dayEnd)) {
-            availableSlotsList.add(dayStart);
-            dayStart = dayStart.addMinutes(5); // data.serviceTime
-          }
-
-          List<DateTime> tmp = [];
-          for (var element in availableSlotsList) {
-            tmp.add(element);
-          }
-
-          for (var event in (data.events ?? [])) {
-            for (var element in availableSlotsList) {
-              DateTime dateFrom = DateTime(
-                DateTime.parse(filterFromDate).year,
-                DateTime.parse(filterFromDate).month,
-                DateTime.parse(filterFromDate).day,
-                int.parse(event.from.substring(0, 2)),
-                int.parse(event.from.substring(3, 5)),
-                int.parse(event.from.substring(6, 8)),
-              ).addMinutes(-(data.serviceTime ?? 0));
-
-              DateTime dateTo = DateTime(
-                DateTime.parse(filterFromDate).year,
-                DateTime.parse(filterFromDate).month,
-                DateTime.parse(filterFromDate).day,
-                int.parse(event.to.substring(0, 2)),
-                int.parse(event.to.substring(3, 5)),
-                int.parse(event.to.substring(6, 8)),
-              );
-
-              if (element.isAfter(dateFrom) && element.isBefore(dateTo)) {
-                tmp.remove(element);
-              }
-            }
-          }
-
-          availableSlotsList = tmp;
-          List<DateTime> removedList = [];
-          for (var item in availableSlotsList) {
-            final stopTime =
-                item.add(Duration(minutes: (data.serviceTime ?? 0)));
-            if (!removedList.contains(item)) {
-              for (var item2 in availableSlotsList) {
-                if (item2.isAfter(item) && item2.isBefore(stopTime)) {
-                  removedList.add(item2);
-                }
-              }
-            }
-          }
-
-          availableSlotsList = availableSlotsList
-              .toSet()
-              .difference(removedList.toSet())
-              .toList();
-
-          if (availableSlotsList.isNotEmpty) {
-            for (var element in availableSlotsList) {
-              appointments.add(
-                ResourcesRequest(
-                  from: convertDatetime(element),
-                  to: convertDatetime(
-                    element.addMinutes(data.serviceTime ?? 0),
-                  ),
-                  tenantId: data.resource?.tenantId,
-                ),
-              );
-            }
-          }
-        }
-      }
-
-      availableSlots = appointments.groupBy(
-        (m) => m.from!.substring(11, 16).substring(0, 2),
-      );
-      notifyListeners();
-    } catch (e) {
-      LoggerUtils.instance.e(e);
-    }
-  }
-
   bool dateContains(DateTime dayy) => availableDates
       .where((element) =>
           element.year == dayy.year &&
@@ -299,4 +240,110 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           element.day == dayy.day)
       .toList()
       .isNotEmpty;
+}
+
+Future<Map<String, List<ResourcesRequest>>> calculateAppointmentHours(
+    _EventArgs args) async {
+  final appointments = <ResourcesRequest>[];
+
+  try {
+    for (var data in args.getEventsResponse) {
+      DateTime dayStart =
+          DateTime.parse(args.filterFromDate); // "2021-11-05T00:00:00"
+      DateTime dayEnd =
+          DateTime.parse(args.filterToDate); // "2021-11-05T23:59:59"
+      List<DateTime> availableSlotsList = [];
+
+      if (data.serviceTime != 0) {
+        while (dayStart.isBefore(dayEnd)) {
+          availableSlotsList.add(dayStart);
+          dayStart = dayStart.addMinutes(5); // data.serviceTime
+        }
+
+        List<DateTime> tmp = [];
+        for (var element in availableSlotsList) {
+          tmp.add(element);
+        }
+
+        for (var event in (data.events ?? [])) {
+          for (var element in availableSlotsList) {
+            DateTime dateFrom = DateTime(
+              DateTime.parse(args.filterFromDate).year,
+              DateTime.parse(args.filterFromDate).month,
+              DateTime.parse(args.filterFromDate).day,
+              int.parse(event.from.substring(0, 2)),
+              int.parse(event.from.substring(3, 5)),
+              int.parse(event.from.substring(6, 8)),
+            ).addMinutes(-(data.serviceTime ?? 0));
+
+            DateTime dateTo = DateTime(
+              DateTime.parse(args.filterFromDate).year,
+              DateTime.parse(args.filterFromDate).month,
+              DateTime.parse(args.filterFromDate).day,
+              int.parse(event.to.substring(0, 2)),
+              int.parse(event.to.substring(3, 5)),
+              int.parse(event.to.substring(6, 8)),
+            );
+
+            if (element.isAfter(dateFrom) && element.isBefore(dateTo)) {
+              tmp.remove(element);
+            }
+          }
+        }
+
+        availableSlotsList = tmp;
+        List<DateTime> removedList = [];
+        for (var item in availableSlotsList) {
+          final stopTime = item.add(Duration(minutes: (data.serviceTime ?? 0)));
+          if (!removedList.contains(item)) {
+            for (var item2 in availableSlotsList) {
+              if (item2.isAfter(item) && item2.isBefore(stopTime)) {
+                removedList.add(item2);
+              }
+            }
+          }
+        }
+
+        availableSlotsList =
+            availableSlotsList.toSet().difference(removedList.toSet()).toList();
+
+        if (availableSlotsList.isNotEmpty) {
+          for (var element in availableSlotsList) {
+            appointments.add(
+              ResourcesRequest(
+                from: convertDatetime(element),
+                to: convertDatetime(
+                  element.addMinutes(data.serviceTime ?? 0),
+                ),
+                tenantId: data.resource?.tenantId,
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    return appointments.groupBy(
+      (m) => m.from!.substring(11, 16).substring(0, 2),
+    );
+  } catch (e) {
+    LoggerUtils.instance.e(e);
+    return {};
+  }
+}
+
+String convertDatetime(DateTime dateTime) => dateTime.xFormatTime6();
+
+class _EventArgs {
+  List<GetEventsResponse> getEventsResponse;
+  bool forOnline;
+  String filterFromDate;
+  String filterToDate;
+
+  _EventArgs(
+    this.getEventsResponse,
+    this.forOnline,
+    this.filterFromDate,
+    this.filterToDate,
+  );
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../auth.dart';
 import '../../../core/core.dart';
-import '../../../model/model.dart';
 
 class RegisterStep3ScreenVm extends RbioVm {
   @override

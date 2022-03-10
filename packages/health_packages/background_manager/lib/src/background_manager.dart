@@ -1,0 +1,3 @@
+class BackgroundManager {
+  const BackgroundManager();
+}

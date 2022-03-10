@@ -41,7 +41,7 @@ class GuvenService {
     }
   }
 
-  Future<GuvenResponseModel> insertNewScaleValue(
+  Future<GuvenResponseModel> addScaleMeasurement(
     AddScaleMasurementBody addScaleMasurementBody,
   ) async {
     final response = await _dioHelper.postGuven(
@@ -52,11 +52,11 @@ class GuvenService {
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/insertNewScaleValue : ${response.isSuccessful}');
+      throw Exception('/addScaleMeasurement : ${response.isSuccessful}');
     }
   }
 
-  Future<GuvenResponseModel> updateScaleMeasurement(
+  Future<bool> updateScaleMeasurement(
     UpdateScaleMasurementBody updateScaleMasurementBody,
   ) async {
     final response = await _dioHelper.postGuven(
@@ -65,7 +65,7 @@ class GuvenService {
       options: authOptions,
     );
     if (response.xIsSuccessful) {
-      return response;
+      return response.datum;
     } else {
       throw Exception('/updateScaleMeasurement : ${response.isSuccessful}');
     }

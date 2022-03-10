@@ -13,9 +13,11 @@ class ScaleRepository {
     this._scaleHealthImpl,
   );
 
-  Future<void> init() async {
-    await _scaleHiveImpl.init("boxKey");
+  // #region init
+  Future<void> init(String boxKey) async {
+    await _scaleHiveImpl.init(boxKey);
   }
+  // #endregion
 
   // Future<void> getAll() async {
   //   final networkResponse = await _guvenService
@@ -48,22 +50,23 @@ class ScaleRepository {
   //   }
   // }
 
-  Future<bool> addScale(AddScaleMasurementBody model) async {
+  // #region addScaleMeasurement
+  Future<bool> addScaleMeasurement(AddScaleMasurementBody model) async {
     try {
       // Network
       final measurementId =
-          (await _guvenService.insertNewScaleValue(model)).datum;
+          (await _guvenService.addScaleMeasurement(model)).datum;
 
       if (measurementId != null) {
-        // Local
-        await _scaleHiveImpl.writeScaleData(
+        // Hive
+        await _scaleHiveImpl.addScaleMeasurement(
           model.xToScaleHiveModel(measurementId),
         );
 
         // Health
         final hasAuth = await _scaleHealthImpl.hasAuthorization();
         if (hasAuth) {
-          await _scaleHealthImpl.writeScaleData(model.xToScaleHealthModel);
+          await _scaleHealthImpl.addScaleMeasurement(model.xToScaleHealthModel);
         }
 
         return true;
@@ -75,8 +78,10 @@ class ScaleRepository {
       return false;
     }
   }
+  // #endregion
 
-  Future<bool> deleteScale(
+  // #region deleteScaleMeasurement
+  Future<bool> deleteScaleMeasurement(
     DeleteScaleMasurementBody model,
     DateTime date,
   ) async {
@@ -86,10 +91,10 @@ class ScaleRepository {
       if (!networkResult) {
         // Hive
         await _scaleHiveImpl
-            .deleteScaleData(date.millisecondsSinceEpoch.toString());
+            .deleteScaleMeasurement(date.millisecondsSinceEpoch.toString());
 
         // Health
-        await _scaleHealthImpl.deleteScaleData(date);
+        await _scaleHealthImpl.deleteScaleMeasurement(date);
 
         return true;
       }
@@ -100,4 +105,5 @@ class ScaleRepository {
       return false;
     }
   }
+  // #endregion
 }

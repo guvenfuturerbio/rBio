@@ -28,7 +28,7 @@ class ScaleHealthImpl {
         ],
       );
 
-  Future<bool> deleteScaleData(DateTime date) async {
+  Future<bool> deleteScaleMeasurement(DateTime date) async {
     try {
       await _health.deleteData(
         HealthDataType.WEIGHT,
@@ -127,16 +127,16 @@ class ScaleHealthImpl {
   }
 
   Future<bool> updateScaleData(ScaleHealthModel newModel, DateTime date) async {
-    final isDeleted = await deleteScaleData(date);
+    final isDeleted = await deleteScaleMeasurement(date);
     if (isDeleted) {
-      final hasWritten = await writeScaleData(newModel);
+      final hasWritten = await addScaleMeasurement(newModel);
       return hasWritten;
     }
 
     return false;
   }
 
-  Future<bool> writeScaleData(ScaleHealthModel model) async {
+  Future<bool> addScaleMeasurement(ScaleHealthModel model) async {
     try {
       if (model.weight != null) {
         await _health.writeHealthData(

@@ -9,7 +9,7 @@ class ScaleHiveImpl {
     box = await Hive.openBox<ScaleHiveModel>(boxKey);
   }
 
-  Future<bool> deleteScaleData(String millisecondsSinceEpoch) async {
+  Future<bool> deleteScaleMeasurement(String millisecondsSinceEpoch) async {
     try {
       if (boxIsOpen()) {
         await box.delete(millisecondsSinceEpoch);
@@ -48,7 +48,7 @@ class ScaleHiveImpl {
     }
   }
 
-  Future<String> writeScaleData(ScaleHiveModel model) async {
+  Future<String> addScaleMeasurement(ScaleHiveModel model) async {
     try {
       if (boxIsOpen()) {
         await box.put(model.occurrenceTime, model);
