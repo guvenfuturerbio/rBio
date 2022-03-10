@@ -8,7 +8,7 @@ class SelectedDeviceVm extends ChangeNotifier {
       (_) async {
         var devices = await getIt<BleDeviceManager>().getPairedDevices();
         if (devices.isEmpty) {
-          getIt<BleScannerOps>().startScan();
+          getIt<BleScanner>().startScan();
         }
 
         if (!_disposed) {
@@ -19,9 +19,9 @@ class SelectedDeviceVm extends ChangeNotifier {
                   showLoadingDialog();
                 }
 
-                final deviceId = getIt<BleConnectorOps>().device?.id;
+                final deviceId = getIt<BleConnector>().device?.id;
                 if (deviceId != null) {
-                  getIt<BleConnectorOps>().disconnect(deviceId);
+                  getIt<BleConnector>().disconnect(deviceId);
                 }
               }
             },
@@ -162,8 +162,8 @@ class SelectedDeviceVm extends ChangeNotifier {
   }
 
   void connectDevice(
-    BleConnectorOps _bleConnectorOps,
-    BleScannerOps _bleScannerOps,
+    BleConnector _bleConnectorOps,
+    BleScanner _bleScannerOps,
     DiscoveredDevice device,
   ) async {
     switch (deviceType) {

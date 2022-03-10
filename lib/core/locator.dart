@@ -1,3 +1,4 @@
+import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:cache/cache.dart';
@@ -36,13 +37,13 @@ Future<void> setupLocator(AppConfig appConfig) async {
         getIt<FlutterReactiveBle>(),
       ),
     );
-    getIt.registerLazySingleton<BleConnectorOps>(
-      () => BleConnectorOps(
+    getIt.registerLazySingleton<BleConnector>(
+      () => BleConnector(
         getIt<FlutterReactiveBle>(),
       ),
     );
-    getIt.registerLazySingleton<BleScannerOps>(
-      () => BleScannerOps(
+    getIt.registerLazySingleton<BleScanner>(
+      () => BleScanner(
         getIt<FlutterReactiveBle>(),
       ),
     );

@@ -15,6 +15,7 @@ class BleConnector {
       _deviceConnectionStateUpdate;
 
   Stream<ConnectionStateUpdate> get state => _deviceConnectionController.stream;
+  DiscoveredDevice? get device => _device;
 
   final _deviceConnectionController = StreamController<ConnectionStateUpdate>();
 

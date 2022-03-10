@@ -1,5 +1,6 @@
 import 'dart:io' as platform;
 
+import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -233,10 +234,10 @@ class LoginScreenVm extends ChangeNotifier {
           try {
             List<PairedDevice>? devices = await getIt<BleDeviceManager>().getPairedDevices();
             if (devices.isNotEmpty) {
-              getIt<BleScannerOps>().startScan();
+              getIt<BleScanner>().startScan();
             }
           } catch (_) {
-            getIt<BleScannerOps>().startScan();
+            getIt<BleScanner>().startScan();
           }
         }
 

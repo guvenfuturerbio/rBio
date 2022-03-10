@@ -6,16 +6,14 @@ import 'package:shared_preferences_manager/shared_preferences_manager.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 import 'ble_connector.dart';
-import 'ble_scanner.dart';
 
 class BleDeviceManager {
   final ISharedPreferencesManager sharedPrefs;
-  final BleScanner bleScanner;
   final BleConnector bleConnector;
 
   List<String>? pairedDeviceIdList;
 
-  BleDeviceManager(this.sharedPrefs, this.bleScanner, this.bleConnector);
+  BleDeviceManager(this.sharedPrefs,  this.bleConnector);
 
   /// First of all fetching all saved paired device on localStorage.
   /// Then checking sending value it's exist.

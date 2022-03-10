@@ -27,7 +27,7 @@ class SelectedDevicesScreen extends StatelessWidget {
       //
       body: ChangeNotifierProvider(
         create: (BuildContext context) => SelectedDeviceVm(deviceType!),
-        child: Consumer4<BleScannerOps, BleConnectorOps, BleReactorOps,
+        child: Consumer4<BleScanner, BleConnector, BleReactorOps,
             SelectedDeviceVm>(
           builder: (
             _,

@@ -1,3 +1,4 @@
+import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
