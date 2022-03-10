@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:scale_health_impl/scale_health_impl.dart';
 import 'package:scale_hive_impl/scale_hive_impl.dart';
@@ -12,6 +13,8 @@ class ScaleRepository {
     this._scaleHiveImpl,
     this._scaleHealthImpl,
   );
+
+  final firstLoadCount = 30;
 
   // #region init
   Future<void> init(String boxKey) async {
@@ -49,6 +52,43 @@ class ScaleRepository {
   //     }
   //   }
   // }
+
+  Future<bool> fetchScaleData(int entegrationId) async {
+    try {
+      final list = await _fetchNetworkFirstLoad(entegrationId);
+      await _scaleHiveImpl.clear();
+      await _scaleHiveImpl.addScaleListMeasurement(list.xToHiveList);
+
+      final args = <String, dynamic>{
+        "guvenService": _guvenService,
+        "entegrationId": entegrationId,
+        "endDate": list.last.occurrenceTime
+      };
+      fetchOtherLoad(args).then((value) async {
+        await _scaleHiveImpl.addScaleListMeasurement(value.xToHiveList);
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool _isFirstLoad() => (_scaleHiveImpl.readScaleData()).isEmpty;
+
+  Future<List<ScaleNetworkModel>> _fetchNetworkFirstLoad(
+      int entegrationId) async {
+    final response = await _guvenService.getScaleMasurement(
+      GetScaleMasurementBody(
+        entegrationId: entegrationId,
+        count: firstLoadCount,
+      ),
+    );
+    final list =
+        (response.xGetModel<List<ScaleNetworkModel>, ScaleNetworkModel>(
+                ScaleNetworkModel())) ??
+            [];
+    return list;
+  }
 
   // #region addScaleMeasurement
   Future<bool> addScaleMeasurement(AddScaleMasurementBody model) async {
@@ -106,4 +146,21 @@ class ScaleRepository {
     }
   }
   // #endregion
+}
+
+Future<List<ScaleNetworkModel>> fetchOtherLoad(
+  Map<String, dynamic> args,
+) async {
+  final GuvenResponseModel response =
+      await args["guvenService"].getScaleMasurement(
+    GetScaleMasurementBody(
+      entegrationId: args["entegrationId"],
+      beginDate: DateTime(2000),
+      endDate: DateTime.parse(args["endDate"]),
+    ),
+  );
+  final list = (response.xGetModel<List<ScaleNetworkModel>, ScaleNetworkModel>(
+          ScaleNetworkModel())) ??
+      [];
+  return list;
 }

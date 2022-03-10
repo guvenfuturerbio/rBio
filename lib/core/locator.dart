@@ -3,7 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:cache/cache.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:scale_health_impl/scale_health_impl.dart';
 import 'package:scale_hive_impl/scale_hive_impl.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../features/mediminder/managers/reminder_notifications_manager.dart';
 import '../model/treatment_model/treatment_model.dart';
@@ -180,6 +182,24 @@ Future<void> setupLocator(AppConfig appConfig) async {
     clearStorage();
     await registerStorage();
   }
+
+  getIt.registerSingleton<ScaleHealthImpl>(ScaleHealthImpl());
+  getIt.registerSingleton<ScaleHiveImpl>(ScaleHiveImpl());
+  getIt.registerSingleton<GuvenService>(
+    GuvenService(
+      getIt<IDioHelper>(),
+      getIt<KeyManager>(),
+      getIt<ISharedPreferencesManager>(),
+    ),
+  );
+  await getIt<ScaleHiveImpl>().init("scaleKey");
+  getIt.registerSingleton<ScaleRepository>(
+    ScaleRepository(
+      getIt<GuvenService>(),
+      getIt<ScaleHiveImpl>(),
+      getIt<ScaleHealthImpl>(),
+    ),
+  );
 
   // #region Init
   await getIt<ISharedPreferencesManager>().init();

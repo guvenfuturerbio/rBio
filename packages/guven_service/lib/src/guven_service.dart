@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:key_manager/key_manager.dart';
+import 'package:shared_preferences_manager/shared_preferences_manager.dart';
 
 import '../guven_service.dart';
 
@@ -7,21 +9,20 @@ part 'endpoints.dart';
 
 class GuvenService {
   final IDioHelper _dioHelper;
-  final String _token;
-  final String _lang;
+  final ISharedPreferencesManager sharedManager;
   final _Endpoints endpoints;
 
   GuvenService(
     this._dioHelper,
     KeyManager _keyManager,
-    this._token,
-    this._lang,
+    this.sharedManager,
   ) : endpoints = _Endpoints(_keyManager);
 
   Options get authOptions => Options(
         headers: <String, dynamic>{
-          'Authorization': _token,
-          'Lang': _lang,
+          'Authorization':
+              sharedManager.getString(SharedPreferencesKeys.jwtToken),
+          'Lang': Intl.getCurrentLocale(),
         },
       );
 

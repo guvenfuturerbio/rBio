@@ -124,3 +124,13 @@ extension ScaleNetworkModelExt on ScaleNetworkModel {
     );
   }
 }
+
+extension ListScaleNetworkModelExt on List<ScaleNetworkModel> {
+  List<ScaleHiveModel> get xToHiveList {
+    List<ScaleHiveModel> result = [];
+    for (var item in this) {
+      result.add(item.xToScaleHiveModel());
+    }
+    return result;
+  }
+}

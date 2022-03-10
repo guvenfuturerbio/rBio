@@ -11,6 +11,8 @@ dependencies:
   key_manager:
     path: ../key_manager
   logger: ^1.1.0
+  shared_preferences_manager:
+    path: ../shared_preferences_manager
 
 dev_dependencies:
   coverage: ^1.1.0

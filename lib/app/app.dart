@@ -119,6 +119,8 @@ class _MyAppState extends State<MyApp> {
                   debugShowCheckedModeBanner: false,
                   navigatorObservers: const [],
 
+                  showPerformanceOverlay: false,
+
                   //
                   builder: (BuildContext context, Widget? child) {
                     return Directionality(

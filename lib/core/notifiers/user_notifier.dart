@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:scale_hive_impl/scale_hive_impl.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../model/model.dart';
 import '../core.dart';
@@ -191,6 +193,8 @@ class UserNotifier extends ChangeNotifier {
       getIt<ScaleStorageImpl>().clear();
       getIt<BloodPressureStorageImpl>().clear();
       getIt<ProfileStorageImpl>().clear();
+
+      await getIt<ScaleHiveImpl>().clear();
     } catch (e) {
       LoggerUtils.instance.e(e);
     } finally {
