@@ -10,8 +10,8 @@ import 'ble_scanner.dart';
 
 class BleDeviceManager {
   final ISharedPreferencesManager sharedPrefs;
-  final BleScannerOps bleScanner;
-  final BleConnectorOps bleConnector;
+  final BleScanner bleScanner;
+  final BleConnector bleConnector;
 
   List<String>? pairedDeviceIdList;
 
@@ -37,16 +37,6 @@ class BleDeviceManager {
     } else {
       return false;
     }
-  }
-
-  scanDevice() async {
-    try {
-      final List<PairedDevice> pairedDevice = await getPairedDevices();
-      pairedDeviceIdList = pairedDevice.map((e) => e.deviceId!).toList();
-    } catch (e) {
-      Logger().e('Paired device coming null');
-    }
-    await bleScanner.startScan(pairedDeviceIdList);
   }
 
   Future<bool> hasDeviceAlreadyPaired(PairedDevice device) async {

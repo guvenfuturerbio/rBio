@@ -139,8 +139,6 @@ class BleReactorOps extends ChangeNotifier {
     );
   }
 
-  final flutterLocalNotificationsPlugin = ln.FlutterLocalNotificationsPlugin();
-
   /// MG2
   Future<void> write(DiscoveredDevice device) async {
     _measurements.clear();
@@ -309,6 +307,7 @@ class BleReactorOps extends ChangeNotifier {
       Utils.instance.getHeight(),
       Utils.instance.getGender(),
     );
+
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
     pairedDevice.deviceType = Utils.instance.getDeviceType(device);
@@ -335,11 +334,7 @@ class BleReactorOps extends ChangeNotifier {
       ),
     )
         .then((value) {
-      final List<int> charCodes = value;
-      LoggerUtils.instance
-          .d("2a25 serial number ${String.fromCharCodes(charCodes)}");
-      LoggerUtils.instance.d("2a25$value");
-      pairedDevice.serialNumber = String.fromCharCodes(charCodes);
+      pairedDevice.serialNumber = String.fromCharCodes(value);
     });
 
     subscribeScaleCharacteristic(device, pairedDevice);

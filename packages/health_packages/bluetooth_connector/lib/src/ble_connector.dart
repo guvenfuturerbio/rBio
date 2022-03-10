@@ -1,41 +1,35 @@
 import 'dart:async';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:logger/logger.dart';
 
-import 'ble_scanner.dart';
-
-class BleConnectorOps {
+class BleConnector {
   final FlutterReactiveBle _ble;
-  final BleScannerOps bleScanner;
 
-  BleConnectorOps(this._ble, this.bleScanner) {
-    listenConnectedDeviceStream();
-  }
-
-  bool isFirstConnect = true;
+  BleConnector(this._ble);
 
   final List<ConnectionStateUpdate> _deviceConnectionStateUpdate = [];
-
   DiscoveredDevice? _device;
-
-  StreamSubscription<ConnectionStateUpdate>? _connection;
-
-  // ignore: close_sinks
-  final _deviceConnectionController = StreamController<ConnectionStateUpdate>();
 
   List<ConnectionStateUpdate> get deviceConnectionState =>
       _deviceConnectionStateUpdate;
 
-  DiscoveredDevice? get device => _device;
+  Stream<ConnectionStateUpdate> get state => _deviceConnectionController.stream;
+
+  final _deviceConnectionController = StreamController<ConnectionStateUpdate>();
+
+  StreamSubscription<ConnectionStateUpdate>? _connection;
 
   void listenConnectedDeviceStream() {
-    //Telefonla cihaz arasındaki bağlantı durumu dinleyen stream
+    // Telefonla cihaz arasındaki bağlantı durumu dinleyen stream
     _ble.connectedDeviceStream.listen(
       (event) {
-        if (event.deviceId == device?.id) {
-          final deviceIndex = _deviceConnectionStateUpdate
-              .indexWhere((element) => element.deviceId == event.deviceId);
-// index aşağıda -1 değilse daha önce bir bağlantı var demektir. Kontrol bunun için yapılıyor.
+        if (event.deviceId == _device?.id) {
+          final deviceIndex = _deviceConnectionStateUpdate.indexWhere(
+            (element) => element.deviceId == event.deviceId,
+          );
+
+          // index aşağıda -1 değilse daha önce bir bağlantı var demektir. Kontrol bunun için yapılıyor.
           if (deviceIndex != -1) {
             _deviceConnectionStateUpdate[deviceIndex] = event;
           } else {
@@ -43,9 +37,10 @@ class BleConnectorOps {
           }
           //notifyListeners();
 
+          // TODO
           //Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
           if (event.connectionState == DeviceConnectionState.connected) {
-            switch (getDeviceType(device!)) {
+            switch (getDeviceType(_device!)) {
               case DeviceType.accuChek:
                 //getIt<BleReactorOps>().write(device!);
                 break;
@@ -60,11 +55,64 @@ class BleConnectorOps {
             }
           } else if (event.connectionState ==
               DeviceConnectionState.disconnected) {
-            bleScanner.refreshDeviceList();
+            // TODO
+            // bleScanner.refreshDeviceList();
           }
         }
       },
     );
+  }
+
+  Future<void> connect(DiscoveredDevice device) async {
+    _device = device;
+    //notifyListeners();
+
+    //Herhangi bir connection varsa connection silme işlemi yapıyoruz.
+    await _connection?.cancel();
+
+    //Gerekli cihazı gönderip bağlantı kuruyor.
+    _connection = _ble.connectToDevice(id: device.id).listen(
+          _deviceConnectionController.add,
+          onError: (Object e) => Logger()
+              .e('Connecting to device ${_device?.id} resulted in error $e'),
+        );
+  }
+
+  Future<void> disconnect(String deviceId) async {
+    try {
+      Logger().i('disconnecting to device: $deviceId');
+      await _connection?.cancel();
+    } on Exception catch (e, _) {
+      Logger().e("Error disconnecting from a device: $e");
+    } finally {
+      // Since [_connection] subscription is terminated, the "disconnected" state cannot be received and propagated
+      _deviceConnectionController.add(
+        ConnectionStateUpdate(
+          deviceId: deviceId,
+          connectionState: DeviceConnectionState.disconnected,
+          failure: null,
+        ),
+      );
+    }
+  }
+
+  Future<void> removePairedDevice() async {
+    if (_connection != null) {
+      await _connection!.cancel();
+    }
+  }
+
+  Future<void> dispose() => _deviceConnectionController.close();
+
+  // Bağlanmak için cihazı seçtiğimizde kartın rengi için cihaz status durumunu liste edip okuduğumuz kısım.
+  ConnectionStateUpdate? getStatus(String id) {
+    final deviceIndex = _deviceConnectionStateUpdate
+        .indexWhere((element) => element.deviceId == id);
+    if (deviceIndex != -1) {
+      return _deviceConnectionStateUpdate[deviceIndex];
+    } else {
+      return null;
+    }
   }
 
   DeviceType getDeviceType(DiscoveredDevice device) {
@@ -79,50 +127,5 @@ class BleConnectorOps {
     }
 
     throw Exception('Nondefined device');
-  }
-
-  Future<void> connect(DiscoveredDevice device) async {
-    _device = device;
-    //notifyListeners();
-
-    //Herhangi bir connection varsa connection silme işlemi yapıyoruz.
-    if (_connection != null) {
-      await _connection!.cancel();
-    }
-
-    //Gerekli cihazı gönderip bağlantı kuruyor.
-    _connection = _ble.connectToDevice(id: device.id).listen(
-          _deviceConnectionController.add,
-        );
-  }
-
-  Future<void> disconnect(String deviceId) async {
-    if (_connection != null) {
-      try {
-        await _connection!.cancel();
-      } finally {
-        _deviceConnectionController.add(ConnectionStateUpdate(
-            deviceId: deviceId,
-            connectionState: DeviceConnectionState.disconnected,
-            failure: null));
-      }
-    }
-  }
-
-  Future<void> removePairedDevice() async {
-    if (_connection != null) {
-      await _connection!.cancel();
-    }
-  }
-
-// Bağlanmak için cihazı seçtiğimizde kartın rengi için cihaz status durumunu liste edip okuduğumuz kısım.
-  ConnectionStateUpdate? getStatus(String id) {
-    final deviceIndex = _deviceConnectionStateUpdate
-        .indexWhere((element) => element.deviceId == id);
-    if (deviceIndex != -1) {
-      return _deviceConnectionStateUpdate[deviceIndex];
-    } else {
-      return null;
-    }
   }
 }

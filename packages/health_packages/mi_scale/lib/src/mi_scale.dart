@@ -4,6 +4,7 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:scale_api/scale_api.dart';
 
 import '../mi_scale.dart';
+import 'scale_utils.dart';
 
 class MiScaleDevice {
   int? age;

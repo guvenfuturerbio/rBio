@@ -1,24 +1,21 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:bluetooth_connector/bluetooth_connector.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'ble_manager.dart';
 
-class BleScannerOps {
-  final _devices = <DiscoveredDevice>[];
-
+class BleScanner {
   final FlutterReactiveBle _ble;
 
-  final BleConnectorOps bleConnector;
+  BleScanner(this._ble);
 
-  String? _deviceId;
-
+  final _devices = <DiscoveredDevice>[];
   StreamSubscription? _subscription;
 
-  BleScannerOps(this._ble, this.bleConnector);
+  final StreamController<BleScannerState> _stateStreamController =
+      StreamController();
+
+  Stream<BleScannerState> get state => _stateStreamController.stream;
 
   final List<Uuid> _supported = [
     //Blood glucosea ait verileri kontrol eden kod. (Diğer cihazlar için farklı kodlar var).
@@ -29,61 +26,90 @@ class BleScannerOps {
 
   List<DiscoveredDevice> get discoveredDevices => _devices;
 
-  set deviceId(String rhsDeviceId) => _deviceId = rhsDeviceId;
-  String get deviceId => _deviceId ?? '';
+  void startScan() {
+    print('Start ble discovery');
+    _devices.clear();
+    _subscription?.cancel();
+    _subscription = _ble.scanForDevices(withServices: _supported).listen(
+      (device) {
+        final knownDeviceIndex = _devices.indexWhere((d) => d.id == device.id);
+        // Daha önce listede varsa güncelliyor.
+        if (knownDeviceIndex >= 0) {
+          _devices[knownDeviceIndex] = device;
+        } else {
+          _devices.add(device);
+        }
 
-  Future<void> startScan(List<String>? pairedDevices) async {
-    //Cihazın bluetooth'u açık mı kontrolü yapılıyor.
-    _ble.statusStream.listen((bleStatus) async {
-      Logger().w(bleStatus);
+        // TODO AutoConnect - Bağlı cihazlar listesi getirilecek
+        // final isContain = _devices.any((item) => item.id == device.id);
+        // if (isContain) {
+        //   getIt<BleConnectorOps>().connect(device);
+        // }
 
-      if (bleStatus == BleStatus.ready) {
-        _devices.clear();
-        _subscription?.cancel();
-        //Alttaki satır arama yapıyor ve stream olduğu için sürekli olarak dinliyor.
-        _ble.scanForDevices(withServices: _supported).listen((device) async {
-          final knownDeviceIndex =
-              _devices.indexWhere((d) => d.id == device.id);
-          if (knownDeviceIndex >= 0) {
-            _devices[knownDeviceIndex] = device;
-          } else {
-            _devices.add(device);
-
-            /// AutoConnector method caller
-            if (pairedDevices != null && pairedDevices.contains(device.id)) {
-              bleConnector.connect(device);
-            }
-            /*  if (device.id == deviceId) {
-              locator<BleConnectorOps>().connect(device);
-            } */
-
-            //notifyListeners();
-          }
-        }, onError: (e) {
-          log(e.toString());
-        });
-      } else if (bleStatus == BleStatus.unauthorized) {
-        await Future.delayed(const Duration(seconds: 1));
-        await Permission.location.request();
-      } else if (bleStatus == BleStatus.poweredOff) {
-        await Future.delayed(const Duration(seconds: 1));
-        // await SystemShortcuts.bluetooth();
-      } else if (bleStatus == BleStatus.locationServicesDisabled) {
-        await Future.delayed(const Duration(seconds: 1));
-        await Permission.location.request();
-        Logger().i("locationServicesDisabled");
-      }
-    });
+        _pushState();
+      },
+      onError: (Object e) => print('Device scan fails with error: $e'),
+    );
+    _pushState();
   }
 
   Future<void> stopScan() async {
     await _subscription?.cancel();
     _subscription = null;
-    //notifyListeners();
+    _pushState();
+  }
+
+  /// Cihazlarım sayfasını açınca çalıştır
+  BleStatus? bleStatus;
+  void startBluetoothScan() {
+    _ble.statusStream.listen((value) async {
+      bleStatus = value;
+    });
+  }
+
+  /// Herhangi bir cihaza dokununca göster
+  Future<bool> checkPermission() async {
+    if (bleStatus == BleStatus.ready) {
+      return true;
+    } else if (bleStatus == BleStatus.unauthorized) {
+      final permStatus = await Permission.location.request();
+      return permStatus == PermissionStatus.granted;
+    } else if (bleStatus == BleStatus.poweredOff) {
+      // Show Bluetooth Dialog
+      return false;
+    } else if (bleStatus == BleStatus.locationServicesDisabled) {
+      final permStatus = await Permission.location.request();
+      return permStatus == PermissionStatus.granted;
+    } else {
+      return false;
+    }
+  }
+
+  void _pushState() {
+    _stateStreamController.add(
+      BleScannerState(
+        discoveredDevices: _devices,
+        scanIsInProgress: _subscription != null,
+      ),
+    );
+  }
+
+  Future<void> dispose() async {
+    await _stateStreamController.close();
   }
 
   void refreshDeviceList() {
     _devices.clear();
-    //notifyListeners();
   }
+}
+
+@immutable
+class BleScannerState {
+  const BleScannerState({
+    required this.discoveredDevices,
+    required this.scanIsInProgress,
+  });
+
+  final List<DiscoveredDevice> discoveredDevices;
+  final bool scanIsInProgress;
 }

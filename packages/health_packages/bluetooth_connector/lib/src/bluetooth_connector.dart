@@ -1,7 +1,13 @@
-/// {@template bluetooth_connector}
-/// A Very Good Project created by Very Good CLI.
-/// {@endtemplate}
+import '../bluetooth_connector.dart';
+
 class BluetoothConnector {
-  /// {@macro bluetooth_connector}
-  const BluetoothConnector();
+  late BleConnector _connector;
+  late BleDeviceManager _deviceManager;
+  late BleScanner _scannerOps;
+
+  BluetoothConnector(
+    this._connector,
+    this._deviceManager,
+    this._scannerOps,
+  );
 }
