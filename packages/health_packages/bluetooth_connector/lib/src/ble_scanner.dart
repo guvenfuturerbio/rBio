@@ -1,26 +1,24 @@
-part of 'ble_operators.dart';
+import 'dart:async';
+import 'dart:developer';
 
-class BleScannerOps extends ChangeNotifier {
+import 'package:bluetooth_connector/bluetooth_connector.dart';
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'ble_manager.dart';
+
+class BleScannerOps {
   final _devices = <DiscoveredDevice>[];
 
   final FlutterReactiveBle _ble;
 
+  final BleConnectorOps bleConnector;
+
   String? _deviceId;
-  List<String>? pairedDevices;
 
   StreamSubscription? _subscription;
 
-  BleScannerOps(this._ble) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
-      try {
-        final List<PairedDevice> pairedDevice =
-            await getIt<BleDeviceManager>().getPairedDevices();
-        pairedDevices = pairedDevice.map((e) => e.deviceId!).toList();
-      } catch (e) {
-        LoggerUtils.instance.e('Paired device coming null');
-      }
-    });
-  }
+  BleScannerOps(this._ble, this.bleConnector);
 
   final List<Uuid> _supported = [
     //Blood glucosea ait verileri kontrol eden kod. (Diğer cihazlar için farklı kodlar var).
@@ -34,18 +32,16 @@ class BleScannerOps extends ChangeNotifier {
   set deviceId(String rhsDeviceId) => _deviceId = rhsDeviceId;
   String get deviceId => _deviceId ?? '';
 
-  Future<void> startScan() async {
-    //Cihaz açık mı kontrolü yapılıyor.
+  Future<void> startScan(List<String>? pairedDevices) async {
+    //Cihazın bluetooth'u açık mı kontrolü yapılıyor.
     _ble.statusStream.listen((bleStatus) async {
-      LoggerUtils.instance.wtf('DENEME');
-      LoggerUtils.instance.w(bleStatus);
+      Logger().w(bleStatus);
 
       if (bleStatus == BleStatus.ready) {
         _devices.clear();
         _subscription?.cancel();
         //Alttaki satır arama yapıyor ve stream olduğu için sürekli olarak dinliyor.
-        _subscription = _ble.scanForDevices(withServices: _supported).listen(
-            (device) async {
+        _ble.scanForDevices(withServices: _supported).listen((device) async {
           final knownDeviceIndex =
               _devices.indexWhere((d) => d.id == device.id);
           if (knownDeviceIndex >= 0) {
@@ -54,13 +50,14 @@ class BleScannerOps extends ChangeNotifier {
             _devices.add(device);
 
             /// AutoConnector method caller
-            if (pairedDevices != null && pairedDevices!.contains(device.id)) {
-              getIt<BleConnectorOps>().connect(device);
+            if (pairedDevices != null && pairedDevices.contains(device.id)) {
+              bleConnector.connect(device);
             }
             /*  if (device.id == deviceId) {
               locator<BleConnectorOps>().connect(device);
             } */
-            notifyListeners();
+
+            //notifyListeners();
           }
         }, onError: (e) {
           log(e.toString());
@@ -74,7 +71,7 @@ class BleScannerOps extends ChangeNotifier {
       } else if (bleStatus == BleStatus.locationServicesDisabled) {
         await Future.delayed(const Duration(seconds: 1));
         await Permission.location.request();
-        LoggerUtils.instance.i("DOĞAN");
+        Logger().i("locationServicesDisabled");
       }
     });
   }
@@ -82,11 +79,11 @@ class BleScannerOps extends ChangeNotifier {
   Future<void> stopScan() async {
     await _subscription?.cancel();
     _subscription = null;
-    notifyListeners();
+    //notifyListeners();
   }
 
   void refreshDeviceList() {
     _devices.clear();
-    notifyListeners();
+    //notifyListeners();
   }
 }

@@ -1,9 +1,14 @@
-part of 'ble_operators.dart';
+import 'dart:async';
 
-class BleConnectorOps extends ChangeNotifier {
-  late final FlutterReactiveBle _ble;
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
-  BleConnectorOps(this._ble) {
+import 'ble_scanner.dart';
+
+class BleConnectorOps {
+  final FlutterReactiveBle _ble;
+  final BleScannerOps bleScanner;
+
+  BleConnectorOps(this._ble, this.bleScanner) {
     listenConnectedDeviceStream();
   }
 
@@ -36,26 +41,26 @@ class BleConnectorOps extends ChangeNotifier {
           } else {
             _deviceConnectionStateUpdate.add(event);
           }
-          notifyListeners();
+          //notifyListeners();
 
           //Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
           if (event.connectionState == DeviceConnectionState.connected) {
             switch (getDeviceType(device!)) {
               case DeviceType.accuChek:
-                getIt<BleReactorOps>().write(device!);
+                //getIt<BleReactorOps>().write(device!);
                 break;
               case DeviceType.contourPlusOne:
-                getIt<BleReactorOps>().write(device!);
+                //getIt<BleReactorOps>().write(device!);
                 break;
               case DeviceType.miScale:
-                getIt<BleReactorOps>().subscribeScaleDevice(device!);
+                //getIt<BleReactorOps>().subscribeScaleDevice(device!);
                 break;
               default:
                 break;
             }
           } else if (event.connectionState ==
               DeviceConnectionState.disconnected) {
-            getIt<BleScannerOps>().refreshDeviceList();
+            bleScanner.refreshDeviceList();
           }
         }
       },
@@ -78,14 +83,14 @@ class BleConnectorOps extends ChangeNotifier {
 
   Future<void> connect(DiscoveredDevice device) async {
     _device = device;
-    notifyListeners();
+    //notifyListeners();
 
     //Herhangi bir connection varsa connection silme işlemi yapıyoruz.
     if (_connection != null) {
       await _connection!.cancel();
     }
 
-    //Gerekli cihazı gönderip bağlantı kuruluyor.
+    //Gerekli cihazı gönderip bağlantı kuruyor.
     _connection = _ble.connectToDevice(id: device.id).listen(
           _deviceConnectionController.add,
         );
@@ -119,11 +124,5 @@ class BleConnectorOps extends ChangeNotifier {
     } else {
       return null;
     }
-  }
-
-  @override
-  Future<void> dispose() async {
-    await _deviceConnectionController.close();
-    super.dispose();
   }
 }

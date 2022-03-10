@@ -1,5 +1,11 @@
+import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:mi_scale/mi_scale.dart';
 import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale/scale.dart';
 import 'package:scale_health_impl/scale_health_impl.dart';
 import 'package:scale_hive_impl/scale_hive_impl.dart';
 
@@ -52,6 +58,75 @@ class ScaleRepository {
   //     }
   //   }
   // }
+
+  listenMiScale(
+      MiScaleDevice scaleDevice,
+      bool deviceAlreadyPaired,
+      DiscoveredDevice device,
+      PairedDevice pairedDevice,
+      Stream<List<int>> streamForMi) {
+    try {
+      streamForMi.listen(
+        (event) async {
+          if (!(Atom.isDialogShow)) {
+            Atom.show(
+              MiScalePopUp(
+                hasAlreadyPair: deviceAlreadyPaired,
+              ),
+            );
+          }
+
+          if (scaleDevice.scaleData == null ||
+              !scaleDevice.scaleData!.scaleModel.measurementComplete!) {
+            final Uint8List data = Uint8List.fromList(event);
+            scaleDevice.parseScaleData(pairedDevice, data);
+
+            if (scaleDevice.scaleData!.scaleModel.measurementComplete! &&
+                deviceAlreadyPaired) {
+              scaleDevice.scaleData!.calculateVariables();
+              if (Atom.isDialogShow) {
+                Atom.dismiss();
+              }
+              await Future.delayed(const Duration(milliseconds: 350));
+              await Atom.show(
+                ScaleTaggerPopUp(
+                  scaleModel: scaleDevice.scaleData!.scaleModel
+                    ..isManuel = false,
+                ),
+                barrierDismissible: false,
+              );
+              scaleDevice.scaleData = null;
+            }
+
+            final popUpCanClose = (Atom.isDialogShow) &&
+                (scaleDevice.scaleData!.scaleModel.weightRemoved)! &&
+                !scaleDevice.scaleData!.scaleModel.measurementComplete!;
+
+            if (popUpCanClose) {
+              Atom.dismiss();
+            }
+
+            if ((scaleDevice.scaleData?.scaleModel.measurementComplete)! &&
+                !deviceAlreadyPaired) {
+              // Saving paired device Section
+              controlPointResponse.add(1);
+              WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+              });
+            }
+          }
+
+          //notifyListeners();
+        },
+        onError: (e, stk) {
+          LoggerUtils.instance.e(e);
+        },
+      );
+    } catch (e, stk) {
+      LoggerUtils.instance.e(e);
+      debugPrintStack(stackTrace: stk);
+    }
+  }
 
   Future<bool> fetchScaleData(int entegrationId) async {
     try {

@@ -212,25 +212,18 @@ class MiScalePopUp extends StatelessWidget {
         _bleReactor.scaleDevice.scaleData?.scaleModel.measurementComplete ??
                 false
             ? Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        style: TextButton.styleFrom(primary: R.color.white),
-                        onPressed: () {
-                          _bleReactor.scaleDevice.scaleData = null;
-                          _bleReactor.scaleDevice.scaleData = null;
-                          getIt<BleReactorOps>().clearControlPointResponse();
-                          Atom.dismiss();
-                          Atom.historyBack();
-                          Atom.to(PagePaths.devices, isReplacement: true);
-                        },
-                        child: Text(
-                          LocaleProvider.current.done.toUpperCase(),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: TextButton(
+                  style: TextButton.styleFrom(primary: R.color.white),
+                  onPressed: () {
+                    _bleReactor.scaleDevice.scaleData = null;
+                    getIt<BleReactorOps>().clearControlPointResponse();
+                    Atom.dismiss();
+                    Atom.historyBack();
+                    Atom.to(PagePaths.devices, isReplacement: true);
+                  },
+                  child: Text(
+                    LocaleProvider.current.done.toUpperCase(),
+                  ),
                 ),
               )
             : const SizedBox(),

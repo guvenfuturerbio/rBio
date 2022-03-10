@@ -1,10 +1,21 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
+import 'package:logger/logger.dart';
+import 'package:shared_preferences_manager/shared_preferences_manager.dart';
 
-class BleDeviceManager extends ChangeNotifier {
-  final sharedPrefs = getIt<ISharedPreferencesManager>();
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+
+import 'ble_connector.dart';
+import 'ble_scanner.dart';
+
+class BleDeviceManager {
+  final ISharedPreferencesManager sharedPrefs;
+  final BleScannerOps bleScanner;
+  final BleConnectorOps bleConnector;
+
+  List<String>? pairedDeviceIdList;
+
+  BleDeviceManager(this.sharedPrefs, this.bleScanner, this.bleConnector);
 
   /// First of all fetching all saved paired device on localStorage.
   /// Then checking sending value it's exist.
@@ -20,13 +31,22 @@ class BleDeviceManager extends ChangeNotifier {
         SharedPreferencesKeys.pairedDevices,
         _pairedDeviceOnLocal,
       );
-      getIt<BleScannerOps>().pairedDevices =
-          _pairedDevices.map((e) => e.deviceId!).toList();
-      notifyListeners();
+      pairedDeviceIdList = _pairedDevices.map((e) => e.deviceId!).toList();
+      //notifyListeners();
       return response;
     } else {
       return false;
     }
+  }
+
+  scanDevice() async {
+    try {
+      final List<PairedDevice> pairedDevice = await getPairedDevices();
+      pairedDeviceIdList = pairedDevice.map((e) => e.deviceId!).toList();
+    } catch (e) {
+      Logger().e('Paired device coming null');
+    }
+    await bleScanner.startScan(pairedDeviceIdList);
   }
 
   Future<bool> hasDeviceAlreadyPaired(PairedDevice device) async {
@@ -40,12 +60,11 @@ class BleDeviceManager extends ChangeNotifier {
     final response = await getPairedDevices();
     final selectedDeviceIndex =
         response.indexWhere((element) => element.deviceId == id);
-    LoggerUtils.instance.d(selectedDeviceIndex);
+    Logger().d(selectedDeviceIndex);
     if (selectedDeviceIndex != -1) {
       response.removeAt(selectedDeviceIndex);
-      getIt<BleScannerOps>().pairedDevices =
-          response.map((e) => e.deviceId ?? '').toList();
-      getIt<BleConnectorOps>().removePairedDevice();
+      pairedDeviceIdList = response.map((e) => e.deviceId ?? '').toList();
+      bleConnector.removePairedDevice();
       final List<String> _pairedDeviceOnLocal =
           response.map((device) => jsonEncode(device.toJson())).toList();
       await sharedPrefs.setStringList(
@@ -53,7 +72,7 @@ class BleDeviceManager extends ChangeNotifier {
         _pairedDeviceOnLocal,
       );
     }
-    notifyListeners();
+    //notifyListeners();
   }
 
   /// multiple Paired device can be associated. So This method getting all [PairedDevice] as a [List<PairedDevice>]

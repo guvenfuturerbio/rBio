@@ -50,7 +50,6 @@ export "enums/usage_type.dart";
 
 export "extension/extension.dart";
 
-export "manager/ble_manager.dart";
 export 'manager/firebase_messaging_manager.dart';
 
 export "manager/user_manager.dart";
