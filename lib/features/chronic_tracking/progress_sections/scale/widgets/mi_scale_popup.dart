@@ -216,7 +216,7 @@ class MiScalePopUp extends StatelessWidget {
                   style: TextButton.styleFrom(primary: R.color.white),
                   onPressed: () {
                     _bleReactor.scaleDevice.scaleData = null;
-                    getIt<BleReactorOps>().clearControlPointResponse();
+                    Atom.context.read<BluetoothBloc>().add(const BluetoothEvent.clearedControlPointResponse());
                     Atom.dismiss();
                     Atom.historyBack();
                     Atom.to(PagePaths.devices, isReplacement: true);

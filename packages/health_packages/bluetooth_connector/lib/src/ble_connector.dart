@@ -9,21 +9,24 @@ class BleConnector {
   BleConnector(this._ble);
 
   final List<ConnectionStateUpdate> _deviceConnectionStateUpdate = [];
-  DiscoveredDevice? _device;
-
   List<ConnectionStateUpdate> get deviceConnectionState =>
       _deviceConnectionStateUpdate;
 
-  Stream<ConnectionStateUpdate> get state => _deviceConnectionController.stream;
+  DiscoveredDevice? _device;
   DiscoveredDevice? get device => _device;
 
   final _deviceConnectionController = StreamController<ConnectionStateUpdate>();
+  Stream<ConnectionStateUpdate> get state => _deviceConnectionController.stream;
 
   StreamSubscription<ConnectionStateUpdate>? _connection;
 
-  void listenConnectedDeviceStream() {
+  Stream<ConnectionStateUpdate> listenConnectedDeviceStream(
+    void Function(List<ConnectionStateUpdate>) eventCall,
+  ) {
+    final stream = _ble.connectedDeviceStream.asBroadcastStream();
+
     // Telefonla cihaz arasındaki bağlantı durumu dinleyen stream
-    _ble.connectedDeviceStream.listen(
+    stream.listen(
       (event) {
         if (event.deviceId == _device?.id) {
           final deviceIndex = _deviceConnectionStateUpdate.indexWhere(
@@ -36,37 +39,21 @@ class BleConnector {
           } else {
             _deviceConnectionStateUpdate.add(event);
           }
-          //notifyListeners();
 
-          // TODO
-          //Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
-          if (event.connectionState == DeviceConnectionState.connected) {
-            switch (getDeviceType(_device!)) {
-              case DeviceType.accuChek:
-                //getIt<BleReactorOps>().write(device!);
-                break;
-              case DeviceType.contourPlusOne:
-                //getIt<BleReactorOps>().write(device!);
-                break;
-              case DeviceType.miScale:
-                //getIt<BleReactorOps>().subscribeScaleDevice(device!);
-                break;
-              default:
-                break;
-            }
-          } else if (event.connectionState ==
-              DeviceConnectionState.disconnected) {
-            // TODO
-            // bleScanner.refreshDeviceList();
-          }
+          eventCall(_deviceConnectionStateUpdate);
         }
       },
     );
+
+    return stream;
   }
 
-  Future<void> connect(DiscoveredDevice device) async {
+  Future<void> connect(
+    DiscoveredDevice device,
+    void Function(DiscoveredDevice) emitState,
+  ) async {
     _device = device;
-    //notifyListeners();
+    emitState(_device!);
 
     //Herhangi bir connection varsa connection silme işlemi yapıyoruz.
     await _connection?.cancel();
@@ -116,15 +103,17 @@ class BleConnector {
     }
   }
 
-  DeviceType getDeviceType(DiscoveredDevice device) {
-    if (device.name == 'MIBFS' &&
-        device.serviceData.length == 1 &&
-        device.serviceData.values.first.length == 13) {
-      return DeviceType.miScale;
-    } else if (device.manufacturerData[0] == 112) {
-      return DeviceType.accuChek;
-    } else if (device.manufacturerData[0] == 103) {
-      return DeviceType.contourPlusOne;
+  DeviceType getDeviceType() {
+    if (_device != null) {
+      if (_device!.name == 'MIBFS' &&
+          _device!.serviceData.length == 1 &&
+          _device!.serviceData.values.first.length == 13) {
+        return DeviceType.miScale;
+      } else if (_device!.manufacturerData[0] == 112) {
+        return DeviceType.accuChek;
+      } else if (_device!.manufacturerData[0] == 103) {
+        return DeviceType.contourPlusOne;
+      }
     }
 
     throw Exception('Nondefined device');

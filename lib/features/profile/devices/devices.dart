@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 
 part 'available_devices/view/available_devices_screen.dart';
 part 'available_devices/view_model/available_devices_vm.dart';

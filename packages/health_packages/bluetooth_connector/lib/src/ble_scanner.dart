@@ -10,23 +10,21 @@ class BleScanner {
   BleScanner(this._ble);
 
   final _devices = <DiscoveredDevice>[];
+
+  List<String>? pairedDevices;
+
   StreamSubscription? _subscription;
-
-  final StreamController<BleScannerState> _stateStreamController =
-      StreamController();
-
-  Stream<BleScannerState> get state => _stateStreamController.stream;
-
-  final List<Uuid> _supported = [
-    //Blood glucosea ait verileri kontrol eden kod. (Diğer cihazlar için farklı kodlar var).
-    Uuid.parse("1808"),
-    //Kan şekeri ve tartılar karşımıza çıksın diye alttaki kodları kullanıyoruz. Bu kodlara sahip servislerin hepsini tarıyor ve gösteriyor.
-    Uuid([0x18, 0x1B])
-  ];
 
   List<DiscoveredDevice> get discoveredDevices => _devices;
 
-  void startScan() {
+  final List<Uuid> _supported = [
+    // Blood glucosea ait verileri kontrol eden kod. (Diğer cihazlar için farklı kodlar var).
+    Uuid.parse("1808"),
+    // Kan şekeri ve tartılar karşımıza çıksın diye alttaki kodları kullanıyoruz. Bu kodlara sahip servislerin hepsini tarıyor ve gösteriyor.
+    Uuid([0x18, 0x1B])
+  ];
+
+  void startScan(void Function(List<DiscoveredDevice>) emitState) {
     print('Start ble discovery');
     _devices.clear();
     _subscription?.cancel();
@@ -41,22 +39,27 @@ class BleScanner {
         }
 
         // TODO AutoConnect - Bağlı cihazlar listesi getirilecek
+        /*
+            if (pairedDevices != null && pairedDevices!.contains(device.id)) {
+              getIt<BleConnectorOps>().connect(device);
+            }
+        */
         // final isContain = _devices.any((item) => item.id == device.id);
         // if (isContain) {
         //   getIt<BleConnectorOps>().connect(device);
         // }
 
-        _pushState();
+        emitState(_devices);
       },
       onError: (Object e) => print('Device scan fails with error: $e'),
     );
-    _pushState();
+    emitState(_devices);
   }
 
-  Future<void> stopScan() async {
+  Future<void> stopScan(void Function(List<DiscoveredDevice>) emitState) async {
     await _subscription?.cancel();
     _subscription = null;
-    _pushState();
+    emitState(_devices);
   }
 
   /// Cihazlarım sayfasını açınca çalıştır
@@ -83,19 +86,6 @@ class BleScanner {
     } else {
       return false;
     }
-  }
-
-  void _pushState() {
-    _stateStreamController.add(
-      BleScannerState(
-        discoveredDevices: _devices,
-        scanIsInProgress: _subscription != null,
-      ),
-    );
-  }
-
-  Future<void> dispose() async {
-    await _stateStreamController.close();
   }
 
   void refreshDeviceList() {

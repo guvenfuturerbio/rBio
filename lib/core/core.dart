@@ -5,6 +5,7 @@ export 'package:scale_api/scale_api.dart';
 export 'package:key_manager/key_manager.dart';
 export 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
+export '../app/bluetooth/bluetooth_bloc.dart';
 export '../app/config/app_config.dart';
 export '../app/app_bloc_observer.dart';
 export '../app/app_inherited_widget.dart';

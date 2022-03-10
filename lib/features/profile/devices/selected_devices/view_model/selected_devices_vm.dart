@@ -8,24 +8,25 @@ class SelectedDeviceVm extends ChangeNotifier {
       (_) async {
         var devices = await getIt<BleDeviceManager>().getPairedDevices();
         if (devices.isEmpty) {
-          getIt<BleScanner>().startScan();
+          Atom.context
+              .read<BluetoothBloc>()
+              .add(const BluetoothEvent.scanStarted());
         }
 
         if (!_disposed) {
-          getIt<BleReactorOps>().addListener(
-            () {
-              if (getIt<BleReactorOps>().controlPointResponse.isNotEmpty) {
-                if (!Atom.isDialogShow) {
-                  showLoadingDialog();
-                }
-
-                final deviceId = getIt<BleConnector>().device?.id;
-                if (deviceId != null) {
-                  getIt<BleConnector>().disconnect(deviceId);
-                }
+          final bluetoothBloc = Atom.context.read<BluetoothBloc>();
+          bluetoothBloc.stream.listen((event) {
+            if (getIt<BleReactorOps>().controlPointResponse.isNotEmpty) {
+              if (!Atom.isDialogShow) {
+                showLoadingDialog();
               }
-            },
-          );
+
+              final deviceId = getIt<BleConnector>().device?.id;
+              if (deviceId != null) {
+                getIt<BleConnector>().disconnect(deviceId);
+              }
+            }
+          });
         }
       },
     );
@@ -147,7 +148,9 @@ class SelectedDeviceVm extends ChangeNotifier {
             GuvenAlert.buildWhiteAction(
               text: LocaleProvider.current.ok,
               onPressed: () {
-                getIt<BleReactorOps>().clearControlPointResponse();
+                Atom.context
+                    .read<BluetoothBloc>()
+                    .add(const BluetoothEvent.clearedControlPointResponse());
                 Atom.dismiss();
                 Atom.historyBack();
                 Atom.historyBack();
@@ -173,7 +176,9 @@ class SelectedDeviceVm extends ChangeNotifier {
                         DeviceConnectionState.connecting &&
                     _bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(device)
+            ? Atom.context
+                .read<BluetoothBloc>()
+                .add(BluetoothEvent.connected(device))
             : null;
         connectClicked();
         break;
@@ -184,28 +189,31 @@ class SelectedDeviceVm extends ChangeNotifier {
                         DeviceConnectionState.connecting &&
                     _bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
+            ? Atom.context
+                .read<BluetoothBloc>()
+                .add(BluetoothEvent.connected(device))
             : null;
         connectClicked();
         break;
 
       case DeviceType.omronBloodPressureArm:
         break;
+
       case DeviceType.omronBloodPressureWrist:
         break;
+
       case DeviceType.omronScale:
         break;
+
       case DeviceType.miScale:
         connectIsActive &&
                 (_bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
                     _bleConnectorOps.deviceConnectionState !=
                         DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
+            ? Atom.context
+                .read<BluetoothBloc>()
+                .add(BluetoothEvent.connected(device))
             : null;
         connectClicked();
         break;

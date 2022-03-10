@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +36,14 @@ Future<void> bootstrap(AppConfig appConfig) async {
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
-        () async => runApp(AppInheritedWidget(child: const MyApp())),
+        () async => runApp(
+          AppInheritedWidget(
+            child: BlocProvider<BluetoothBloc>(
+              create: (context) => BluetoothBloc(getIt<BluetoothConnector>()),
+              child: const MyApp(),
+            ),
+          ),
+        ),
         blocObserver: AppBlocObserver(),
       );
     },

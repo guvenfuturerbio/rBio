@@ -48,7 +48,9 @@ Future<void> setupLocator(AppConfig appConfig) async {
       ),
     );
     getIt.registerLazySingleton<BleDeviceManager>(
-      () => BleDeviceManager(),
+      () => BleDeviceManager(
+        getIt<ISharedPreferencesManager>(),
+      ),
     );
   }
   // #endregion

@@ -4,8 +4,6 @@ import 'dart:typed_data';
 
 import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart'
-    as ln;
 
 import 'package:mi_scale/mi_scale.dart';
 

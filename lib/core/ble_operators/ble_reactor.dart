@@ -1,8 +1,6 @@
 part of 'ble_operators.dart';
 
-enum BleReactorState { loading, done, error }
-
-class BleReactorOps extends ChangeNotifier {
+class BleReactorOps {
   BleReactorOps(this._ble);
   final FlutterReactiveBle _ble;
 
@@ -13,11 +11,7 @@ class BleReactorOps extends ChangeNotifier {
 
   List<int> _controlPointResponse = [];
 
-  late BleReactorState _bleReactorState;
-
   late MiScaleDevice scaleDevice;
-
-  BleReactorState get bleReactorState => _bleReactorState;
 
   List get controlPointResponse => _controlPointResponse;
 
@@ -140,12 +134,15 @@ class BleReactorOps extends ChangeNotifier {
   }
 
   /// MG2
-  Future<void> write(DiscoveredDevice device) async {
+  Future<void> write(
+    DiscoveredDevice device,
+    void Function(List<int>) emitState,
+  ) async {
     _measurements.clear();
     _gData.clear();
     _controlPointResponse = <int>[];
-    _bleReactorState = BleReactorState.loading;
-    notifyListeners();
+    emitState(_controlPointResponse);
+
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
 
@@ -223,7 +220,7 @@ class BleReactorOps extends ChangeNotifier {
         _measurements.add(measurementData);
         _gData
             .add(parseGlucoseDataFromReadingInstance(measurementData, device));
-        notifyListeners();
+        emitState(_controlPointResponse);
       },
       onError: (dynamic error) {
         LoggerUtils.instance.d("subs characteristic error $error");
@@ -245,7 +242,7 @@ class BleReactorOps extends ChangeNotifier {
         if (!_lock) {
           _lock = true;
           bool isSucces =
-              await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+              await getIt<BluetoothConnector>().savePairedDevices(pairedDevice);
           isSucces
               ? _controlPointResponse = recordAccessData
               : _controlPointResponse.clear();
@@ -262,13 +259,10 @@ class BleReactorOps extends ChangeNotifier {
           _lock = false;
         }
 
-        _bleReactorState = BleReactorState.done;
         await saveGlucoseDatas();
-        notifyListeners();
+        emitState(_controlPointResponse);
       },
       onError: (dynamic error) {
-        _bleReactorState = BleReactorState.error;
-        notifyListeners();
         LoggerUtils.instance
             .i("write characteristic error " + error.toString());
         //user need to press device button for 3 seconds to pairing operation.
@@ -289,18 +283,18 @@ class BleReactorOps extends ChangeNotifier {
         //   getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
         // });
       }, onError: (e) {
-        _bleReactorState = BleReactorState.error;
-        notifyListeners();
         LoggerUtils.instance.i("write errorrrrrrrr" + e.toString());
       });
     } catch (e) {
-      _bleReactorState = BleReactorState.error;
-      notifyListeners();
       LoggerUtils.instance.i("write characterisctic error " + e.toString());
     }
   }
 
-  Future<void> subscribeScaleDevice(DiscoveredDevice device) async {
+  Future<void> subscribeScaleDevice(
+    DiscoveredDevice device,
+    void Function(List<int>) emitState,
+    void Function(MiScaleDevice) emit2State,
+  ) async {
     scaleDevice = MiScaleDevice.from(
       device,
       Utils.instance.getAge(),
@@ -337,12 +331,14 @@ class BleReactorOps extends ChangeNotifier {
       pairedDevice.serialNumber = String.fromCharCodes(value);
     });
 
-    subscribeScaleCharacteristic(device, pairedDevice);
+    subscribeScaleCharacteristic(device, pairedDevice, emitState, emit2State);
   }
 
   Future<void> subscribeScaleCharacteristic(
     DiscoveredDevice device,
     PairedDevice pairedDevice,
+    void Function(List<int>) emitState,
+    void Function(MiScaleDevice) emit2State,
   ) async {
     _controlPointResponse = <int>[];
     final deviceAlreadyPaired =
@@ -400,12 +396,13 @@ class BleReactorOps extends ChangeNotifier {
               // Saving paired device Section
               controlPointResponse.add(1);
               WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-                getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+                getIt<BluetoothConnector>().savePairedDevices(pairedDevice);
               });
             }
           }
 
-          notifyListeners();
+          emitState(_controlPointResponse);
+          emit2State(scaleDevice);
         },
         onError: (e, stk) {
           LoggerUtils.instance.e(e);
@@ -417,7 +414,8 @@ class BleReactorOps extends ChangeNotifier {
     }
   }
 
-  void clearControlPointResponse() {
+  void clearControlPointResponse(void Function(List<int>) emitState) {
     _controlPointResponse = <int>[];
+    emitState(_controlPointResponse);
   }
 }

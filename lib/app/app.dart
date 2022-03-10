@@ -68,19 +68,6 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<BpProgressVm>.value(
             value: BpProgressVm(),
           ),
-
-          //
-          if (!Atom.isWeb) ...[
-            Provider<BleScannerOps>.value(
-              value: getIt<BleScannerOps>(),
-            ),
-            Provider<BleConnectorOps>.value(
-              value: getIt<BleConnectorOps>(),
-            ),
-            ChangeNotifierProvider<BleReactorOps>.value(
-              value: getIt<BleReactorOps>(),
-            ),
-          ],
         ],
 
         //
