@@ -25,10 +25,9 @@ class BleScanner {
     Uuid([0x18, 0x1B])
   ];
 
-  Future<void> startScan({
-    required void Function(List<DiscoveredDevice>) emitState,
+  Stream<List<DiscoveredDevice>> startScan({
     required Future<void> Function(DiscoveredDevice) autoConnect,
-  }) async {
+  }) async* {
     print('Start ble discovery');
     _devices.clear();
     _subscription?.cancel();
@@ -48,13 +47,13 @@ class BleScanner {
           await autoConnect(device);
         }
 
-        emitState(_devices);
+        yield _devices;
       }
     } catch (e) {
       print('Device scan fails with error: $e');
     }
 
-    emitState(_devices);
+    yield _devices;
   }
 
   Future<void> stopScan(void Function(List<DiscoveredDevice>) emitState) async {

@@ -16,17 +16,25 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   final BleReactorOps reactor;
   final ProfileStorageImpl profileStorageImpl;
 
-  BluetoothBloc(this.bluetoothConnector, this.reactor, this.profileStorageImpl)
-      : super(BluetoothState()) {
+  BluetoothBloc(
+    this.bluetoothConnector,
+    this.reactor,
+    this.profileStorageImpl,
+  ) : super(BluetoothState()) {
     on<_BluetoothScanStartedEvent>((event, emit) async {
-      await bluetoothConnector.startScan(
-        (list) {
-          LoggerUtils.instance.i("[BluetoothBloc]");
-          LoggerUtils.instance.i("discoveredDevices = $list");
-          emit(state.copyWith(discoveredDevices: list));
-        },
+      final scanStream = bluetoothConnector.startScan(
         (device) {
           emit(state.copyWith(device: device));
+        },
+      );
+      await emit.forEach<List<DiscoveredDevice>>(
+        scanStream,
+        onData: (list) {
+          return state.copyWith(discoveredDevices: list);
+        },
+        onError: (error, stacktrace) {
+          LoggerUtils.instance.i(error);
+          return state;
         },
       );
     });

@@ -58,12 +58,10 @@ class BluetoothConnector {
     return pairedDevice;
   }
 
-  Future<void> startScan(
-    void Function(List<DiscoveredDevice>) emitState,
+  Stream<List<DiscoveredDevice>> startScan(
     void Function(DiscoveredDevice) emit2State,
-  ) async {
-    await _scanner.startScan(
-      emitState: emitState,
+  ) async* {
+    yield* _scanner.startScan(
       autoConnect: (device) async {
         await connect(device, emit2State);
       },
