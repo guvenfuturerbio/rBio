@@ -4,20 +4,14 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:scale_api/scale_api.dart';
 
 import '../mi_scale.dart';
-import 'scale_utils.dart';
 
 class MiScaleDevice {
-  int? age;
-  int? height;
-  int? gender;
   DiscoveredDevice? device;
 
-  MiScaleDevice._(this.age, this.height, this.gender, this.device);
+  MiScaleDevice._(this.device);
 
   ScaleMeasurementLogic? scaleData;
   MiScaleModel? model;
-
-  ScaleUtils get getUtils => ScaleUtils.instance;
 
   /// The id of the discovere d device
   String? get id => device?.id;
@@ -30,12 +24,9 @@ class MiScaleDevice {
 
   factory MiScaleDevice.from(
     DiscoveredDevice device,
-    int age,
-    int height,
-    int gender,
   ) {
     if (matchesDeviceType(device)) {
-      return MiScaleDevice._(age, height, gender, device);
+      return MiScaleDevice._(device);
     } else {
       throw Exception('Device doesnt march any device');
     }
@@ -95,50 +86,6 @@ class MiScaleDevice {
       dateTime: measurementTime,
       weight: weight,
       impedance: impedance,
-      bmh: getUtils.getBMH(
-        gender: gender!,
-        weight: weight,
-        height: height!,
-        age: age!,
-      ),
-      bmi: getUtils.getBMI(
-        weight,
-        height!,
-      ),
-      bodyFat: getUtils.getBodyFat(
-        gender: gender!,
-        age: age!,
-        weight: weight,
-        height: height!,
-        impedance: impedance,
-      ),
-      boneMass: getUtils.getBoneMass(
-        weight: weight,
-        height: height!,
-        age: age!,
-        impedance: impedance,
-        gender: gender!,
-      ),
-      muscle: getUtils.getMuscle(
-        gender: gender!,
-        age: age!,
-        weight: weight,
-        height: height!,
-        impedance: impedance,
-      ),
-      visceralFat: getUtils.getVisceralFat(
-        gender: gender!,
-        height: height!,
-        weight: weight,
-        age: age!,
-      ),
-      water: getUtils.getWater(
-        gender: gender!,
-        age: age!,
-        weight: weight,
-        height: height!,
-        impedance: impedance,
-      ),
     );
 
     return model;

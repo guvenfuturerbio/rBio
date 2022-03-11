@@ -17,16 +17,10 @@ class MiScaleModel {
   bool? weightRemoved;
 
   double? weight;
-  ScaleUnit? unit;
-  DateTime? dateTime;
 
-  double? bmi;
-  double? water;
-  double? bodyFat;
-  double? visceralFat;
-  double? boneMass;
-  double? muscle;
-  double? bmh;
+  ScaleUnit? unit;
+
+  DateTime? dateTime;
 
   MiScaleModel({
     required this.dateTime,
@@ -37,12 +31,5 @@ class MiScaleModel {
     this.weightRemoved,
     this.unit,
     this.impedance,
-    this.bmi,
-    this.water,
-    this.bodyFat,
-    this.visceralFat,
-    this.boneMass,
-    this.muscle,
-    this.bmh,
   });
 }

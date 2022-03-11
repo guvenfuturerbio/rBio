@@ -1,33 +1,29 @@
-class ScaleUtils {
-  ScaleUtils._();
+class ScaleCalculate {
+  ScaleCalculate._();
 
-  static ScaleUtils? _instance;
+  static ScaleCalculate? _instance;
 
-  static ScaleUtils get instance {
-    _instance ??= ScaleUtils._();
+  static ScaleCalculate get instance {
+    _instance ??= ScaleCalculate._();
     return _instance!;
   }
 
-  double getBMI(double weight, int height) =>
+  double getBMI({
+    required double weight,
+    required int height,
+  }) =>
       weight / (((height * height) / 100.0) / 100.0);
 
   double getWater({
-    required int gender,
-    required int age,
     required double weight,
     required int height,
+    required int age,
+    required int gender,
     required int impedance,
   }) {
     late double coeff;
-    var water = (100.0 -
-            getBodyFat(
-              gender: gender,
-              age: age,
-              height: height,
-              weight: weight,
-              impedance: impedance,
-            )) *
-        0.7;
+    var water =
+        (100.0 - getBodyFat(weight, height, age, gender, impedance)) * 0.7;
 
     if (water < 50) {
       coeff = 1.02;
@@ -38,13 +34,13 @@ class ScaleUtils {
     return coeff * water;
   }
 
-  double getBodyFat({
-    required int gender,
-    required int age,
-    required double weight,
-    required int height,
-    required int impedance,
-  }) {
+  double getBodyFat(
+    double weight,
+    int height,
+    int age,
+    int gender,
+    int impedance,
+  ) {
     double bodyFat = 0.0;
     double lbmSub = 0.8;
     if (gender == 0 && age <= 49) {
@@ -52,12 +48,7 @@ class ScaleUtils {
     } else if (gender == 0 && age > 49) {
       lbmSub = 7.25;
     }
-    double lbmCoeff = getLBMCoefficient(
-      weight: weight,
-      height: height,
-      age: age,
-      impedance: impedance,
-    );
+    double lbmCoeff = getLBMCoefficient(weight, height, age, impedance);
     double coeff = 1.0;
     if (gender == 1 && weight < 61.0) {
       coeff = 0.98;
@@ -84,12 +75,12 @@ class ScaleUtils {
     return bodyFat;
   }
 
-  double getLBMCoefficient({
-    required double weight,
-    required int height,
-    required int age,
-    required int impedance,
-  }) {
+  double getLBMCoefficient(
+    double weight,
+    int height,
+    int age,
+    int impedance,
+  ) {
     double lbm = (height * 9.058 / 100.0) * (height / 100.0);
     lbm += weight * 0.32 + 12.226;
     lbm -= impedance * 0.0068;
@@ -98,10 +89,11 @@ class ScaleUtils {
   }
 
   double getVisceralFat({
-    required int gender,
-    required int height,
     required double weight,
+    required int height,
     required int age,
+    required int gender,
+    required int impedance,
   }) {
     double visceralFat = 0.0;
     if (gender == 0) {
@@ -132,31 +124,24 @@ class ScaleUtils {
     return visceralFat;
   }
 
-  double getBoneMass({
-    required double weight,
-    required int height,
-    required int age,
-    required int impedance,
-    required int gender,
-  }) {
-    late double boneMass;
-    late double base;
-
+  double getBoneMass(
+    int gender,
+    double weight,
+    int height,
+    int age,
+    int impedance,
+  ) {
+    double boneMass;
+    double base;
     if (gender == 0) {
       base = 0.245691014;
     } else {
       base = 0.18016894;
     }
 
-    boneMass = (base -
-            (getLBMCoefficient(
-                  weight: weight,
-                  height: height,
-                  age: age,
-                  impedance: impedance,
-                ) *
-                0.05158)) *
-        -1.0;
+    boneMass =
+        (base - (getLBMCoefficient(weight, height, age, impedance) * 0.05158)) *
+            -1.0;
 
     if (boneMass > 2.2) {
       boneMass += 0.1;
@@ -173,6 +158,26 @@ class ScaleUtils {
     return boneMass;
   }
 
+  double getMuscle(
+    int gender,
+    double weight,
+    int height,
+    int age,
+    int impedance,
+  ) {
+    double muscleMass = weight -
+        ((getBodyFat(weight, height, age, gender, impedance) * 0.01) * weight) -
+        getBoneMass(gender, weight, height, age, impedance);
+
+    if (gender == 0 && muscleMass >= 84.0) {
+      muscleMass = 120.0;
+    } else if (gender == 1 && muscleMass >= 93.5) {
+      muscleMass = 120.0;
+    }
+
+    return muscleMass;
+  }
+
   double getBMH({
     required int gender,
     required double weight,
@@ -184,39 +189,5 @@ class ScaleUtils {
     } else {
       return 655.1 + (9.56 * weight) + (1.85 * height) - (4.68 * age);
     }
-  }
-
-  double getMuscle({
-    required int gender,
-    required int age,
-    required double weight,
-    required int height,
-    required int impedance,
-  }) {
-    double muscleMass = weight -
-        ((getBodyFat(
-                  age: age,
-                  gender: gender,
-                  height: height,
-                  weight: weight,
-                  impedance: impedance,
-                ) *
-                0.01) *
-            weight) -
-        getBoneMass(
-          age: age,
-          gender: gender,
-          height: height,
-          impedance: impedance,
-          weight: weight,
-        );
-
-    if (gender == 0 && muscleMass >= 84.0) {
-      muscleMass = 120.0;
-    } else if (gender == 1 && muscleMass >= 93.5) {
-      muscleMass = 120.0;
-    }
-
-    return muscleMass;
   }
 }

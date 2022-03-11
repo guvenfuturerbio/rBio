@@ -300,12 +300,7 @@ class BleReactorOps {
     void Function(List<int>) emitState,
     void Function(MiScaleDevice) emit2State,
   ) async {
-    scaleDevice = MiScaleDevice.from(
-      device,
-      Utils.instance.getAge(),
-      Utils.instance.getHeight(),
-      Utils.instance.getGender(),
-    );
+    scaleDevice = MiScaleDevice.from(device);
 
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
@@ -371,7 +366,8 @@ class BleReactorOps {
             final Uint8List data = Uint8List.fromList(event);
             scaleDevice.parseScaleData(pairedDevice, data);
 
-            if (scaleDevice.scaleData!.scaleModel.measurementComplete! && deviceAlreadyPaired) {
+            if (scaleDevice.scaleData!.scaleModel.measurementComplete! &&
+                deviceAlreadyPaired) {
               scaleDevice.scaleData!.calculateVariables();
               if (Atom.isDialogShow) {
                 Atom.dismiss();

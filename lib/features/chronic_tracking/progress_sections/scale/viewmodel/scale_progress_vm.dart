@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
@@ -138,13 +139,35 @@ class ScaleProgressVm extends ChangeNotifier
 
   Map<int, List<ChartData>> get chartVeryHighTagged => _chartVeryHighTagged;
 
-  int? get targetMin => scaleMeasurements.isEmpty
-      ? 0
-      : scaleMeasurements[0].minRange(currentScaleType);
+  int? get targetMin {
+    if (scaleMeasurements.isEmpty) {
+      return 0;
+    } else {
+      return ScaleRanges.instance.getTargetMin(
+        type: currentScaleType,
+        age: scaleMeasurements[0].age,
+        height: scaleMeasurements[0].height,
+        water: scaleMeasurements[0].water,
+        gender: scaleMeasurements[0].gender,
+        visceralFat: scaleMeasurements[0].visceralFat,
+      );
+    }
+  }
 
-  int? get targetMax => scaleMeasurements.isEmpty
-      ? 0
-      : scaleMeasurements[0].maxRange(currentScaleType);
+  int? get targetMax {
+    if (scaleMeasurements.isEmpty) {
+      return 0;
+    } else {
+      return ScaleRanges.instance.getTargetMax(
+        type: currentScaleType,
+        age: scaleMeasurements[0].age,
+        height: scaleMeasurements[0].height,
+        water: scaleMeasurements[0].water,
+        gender: scaleMeasurements[0].gender,
+        visceralFat: scaleMeasurements[0].visceralFat,
+      );
+    }
+  }
 
   int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo!;
 
@@ -394,10 +417,13 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
     for (var data in scaleMeasurementsDailyData) {
       if (data.getMeasurement(currentScaleType) != null) {
-        tempChartData.add(ChartData(
+        tempChartData.add(
+          ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
-            data.getColor(currentScaleType)));
+            data.getColor(currentScaleType),
+          ),
+        );
       }
     }
     _chartData = tempChartData;

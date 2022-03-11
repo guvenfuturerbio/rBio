@@ -1,67 +1,57 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
+import 'package:scale_api/scale_api.dart';
 import 'package:scale_calculations/scale_calculations.dart';
 
-import '../../scale_api.dart';
+class ScaleEntity {
+  DateTime dateTime;
 
-class ScaleMeasurementLogic {
-  final ScaleModel scaleModel;
-  ScaleMeasurementLogic({required this.scaleModel});
+  double? weight;
+  double? bmi;
+  double? water;
+  double? bodyFat;
+  double? visceralFat;
+  double? boneMass;
+  double? muscle;
+  int? age;
+  int? height;
+  int? gender;
+  int? impedance;
+  bool? weightStabilized;
+  bool? measurementComplete;
+  bool? weightRemoved;
 
-  double? get weight => scaleModel.weight;
+  bool isManuel;
+  ScaleUnit unit;
+  String note;
+  List<String> images;
 
-  set weight(double? rhs) => scaleModel.weight = rhs;
-
-  double? get bmi => scaleModel.bmi;
-
-  set bmi(double? rhs) => scaleModel.bmi = rhs;
-
-  double? get water => scaleModel.water;
-
-  set water(double? rhs) => scaleModel.water = rhs;
-
-  double? get bodyFat => scaleModel.bodyFat;
-
-  set bodyFat(double? rhs) => scaleModel.bodyFat = rhs;
-
-  double? get visceralFat => scaleModel.visceralFat;
-
-  set visceralFat(double? rhs) => scaleModel.visceralFat = rhs;
-
-  double? get boneMass => scaleModel.boneMass;
-
-  set boneMass(double? rhs) => scaleModel.boneMass = rhs;
-
-  double? get muscle => scaleModel.muscle;
-
-  set muscle(double? rhs) => scaleModel.muscle = rhs;
-
-  int? get age => scaleModel.age;
-
-  set age(int? rhs) => scaleModel.age = (DateTime.now().year - (rhs ?? 0));
-
-  DateTime get dateTime => scaleModel.dateTime;
-
-  set dateTime(DateTime rhs) => scaleModel.dateTime = rhs;
-
-  List<String> get images => scaleModel.images ?? [];
-
-  set images(List<String> rhs) => scaleModel.images = rhs;
-
-  String get note => scaleModel.note ?? '';
-
-  set note(String rhs) => scaleModel.note = rhs;
-
-  bool get isManuel => scaleModel.isManuel ?? false;
-
-  int? get height => scaleModel.height;
-
-  int? get gender => scaleModel.gender;
-
-  ScaleUnit get unit => scaleModel.unit ?? ScaleUnit.kg;
+  ScaleEntity({
+    required this.dateTime,
+    this.weight,
+    this.bmi,
+    this.water,
+    this.bodyFat,
+    this.visceralFat,
+    this.boneMass,
+    this.muscle,
+    this.age,
+    this.height,
+    this.gender,
+    this.impedance,
+    this.weightStabilized,
+    this.measurementComplete,
+    this.weightRemoved,
+    bool? isManuel,
+    ScaleUnit? unit,
+    String? note,
+    List<String>? images,
+  })  : isManuel = isManuel ?? false,
+        unit = unit ?? ScaleUnit.kg,
+        note = note ?? '',
+        images = images ?? [];
 }
 
-extension BaseScaleModelExtension on ScaleMeasurementLogic {
+extension ScaleEntityExtension on ScaleEntity {
   Color getColor(SelectedScaleType type) => ScaleColors.instance.getColor(
         type: type,
         bmi: bmi,
@@ -116,36 +106,36 @@ extension BaseScaleModelExtension on ScaleMeasurementLogic {
         height: height!,
         age: age!,
         gender: gender!,
-        impedance: scaleModel.impedance!,
+        impedance: impedance!,
       );
-      if (scaleModel.impedance != null) {
+      if (impedance != null) {
         water = ScaleCalculate.instance.getWater(
           weight: weight!,
           height: height!,
           age: age!,
           gender: gender!,
-          impedance: scaleModel.impedance!,
+          impedance: impedance!,
         );
         muscle = ScaleCalculate.instance.getMuscle(
           gender!,
           weight!,
           height!,
           age!,
-          scaleModel.impedance!,
+          impedance!,
         );
         bodyFat = ScaleCalculate.instance.getBodyFat(
           weight!,
           height!,
           age!,
           gender!,
-          scaleModel.impedance!,
+          impedance!,
         );
         boneMass = ScaleCalculate.instance.getBoneMass(
           gender!,
           weight!,
           height!,
           age!,
-          scaleModel.impedance!,
+          impedance!,
         );
       }
     }

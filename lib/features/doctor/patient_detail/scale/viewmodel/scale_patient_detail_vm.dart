@@ -75,13 +75,37 @@ class ScalePatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   List<ChartData> get chartData => _chartData;
 
-  int get targetMin => scaleMeasurement.isEmpty
-      ? 0
-      : scaleMeasurement[0].minRange(currentScaleType)!;
+  int get targetMin {
+    if (scaleMeasurement.isEmpty) {
+      return 0;
+    } else {
+      return ScaleRanges.instance.getTargetMin(
+            type: currentScaleType,
+            age: scaleMeasurement[0].age,
+            height: scaleMeasurement[0].height,
+            water: scaleMeasurement[0].water,
+            gender: scaleMeasurement[0].gender,
+            visceralFat: scaleMeasurement[0].visceralFat,
+          ) ??
+          0;
+    }
+  }
 
-  int get targetMax => scaleMeasurement.isEmpty
-      ? 0
-      : scaleMeasurement[0].maxRange(currentScaleType)!;
+  int get targetMax {
+    if (scaleMeasurement.isEmpty) {
+      return 0;
+    } else {
+      return ScaleRanges.instance.getTargetMax(
+            type: currentScaleType,
+            age: scaleMeasurement[0].age,
+            height: scaleMeasurement[0].height,
+            water: scaleMeasurement[0].water,
+            gender: scaleMeasurement[0].gender,
+            visceralFat: scaleMeasurement[0].visceralFat,
+          ) ??
+          0;
+    }
+  }
 
   int get dailyHighestValue {
     int highest = bmiMeasurementsDailyData.isNotEmpty &&

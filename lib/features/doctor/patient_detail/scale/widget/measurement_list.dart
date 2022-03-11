@@ -157,7 +157,7 @@ class __MeasurementListState extends State<_MeasurementList> {
                 ),
               ),
             ),
-          scaleMeasurementViewModel.imageUrl.isEmpty
+          scaleMeasurementViewModel.images.isEmpty
               ? SizedBox(
                   width: 60 * context.textScale,
                   height: 60 * context.textScale,
@@ -178,13 +178,13 @@ class __MeasurementListState extends State<_MeasurementList> {
                 )
               : GestureDetector(
                   onTap: () =>
-                      _galeryView(context, scaleMeasurementViewModel.imageUrl),
+                      _galeryView(context, scaleMeasurementViewModel.images),
                   child: SizedBox(
                     width: 60 * context.textScale,
                     height: 60 * context.textScale,
                     child: StackOfCards(
                       children: [
-                        ...scaleMeasurementViewModel.imageUrl.map(
+                        ...scaleMeasurementViewModel.images.map(
                           (e) => Card(
                             elevation: R.sizes.defaultElevation,
                             shape: RoundedRectangleBorder(

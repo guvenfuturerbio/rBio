@@ -42,6 +42,8 @@ dependencies:
     path: ./packages/health_packages/scale_hive_impl
   scale_repository:
     path: ./packages/health_packages/scale_repository
+  scale_calculations:
+    path: ./packages/health_packages/scale_calculations
 
 
   animated_widgets: ^1.1.0

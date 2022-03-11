@@ -1487,6 +1487,13 @@ packages:
       relative: true
     source: path
     version: "1.0.0+1"
+  scale_calculations:
+    dependency: "direct main"
+    description:
+      path: "packages/health_packages/scale_calculations"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   scale_health_impl:
     dependency: "direct main"
     description:
