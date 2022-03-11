@@ -371,8 +371,7 @@ class BleReactorOps {
             final Uint8List data = Uint8List.fromList(event);
             scaleDevice.parseScaleData(pairedDevice, data);
 
-            if (scaleDevice.scaleData!.scaleModel.measurementComplete! &&
-                deviceAlreadyPaired) {
+            if (scaleDevice.scaleData!.scaleModel.measurementComplete! && deviceAlreadyPaired) {
               scaleDevice.scaleData!.calculateVariables();
               if (Atom.isDialogShow) {
                 Atom.dismiss();

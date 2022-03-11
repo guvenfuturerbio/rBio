@@ -24,15 +24,16 @@ class BleScanner {
     Uuid([0x18, 0x1B])
   ];
 
-  void startScan({
+  Future<void> startScan({
     required void Function(List<DiscoveredDevice>) emitState,
     required void Function(DiscoveredDevice) autoConnect,
-  }) {
+  }) async {
     print('Start ble discovery');
     _devices.clear();
     _subscription?.cancel();
-    _subscription = _ble.scanForDevices(withServices: _supported).listen(
-      (device) {
+
+    try {
+      await for (final device in _ble.scanForDevices(withServices: _supported)) {
         final knownDeviceIndex = _devices.indexWhere((d) => d.id == device.id);
         // Daha önce listede varsa güncelliyor.
         if (knownDeviceIndex >= 0) {
@@ -46,9 +47,11 @@ class BleScanner {
         }
 
         emitState(_devices);
-      },
-      onError: (Object e) => print('Device scan fails with error: $e'),
-    );
+      }
+    } catch (e) {
+      print('Device scan fails with error: $e');
+    }
+
     emitState(_devices);
   }
 
