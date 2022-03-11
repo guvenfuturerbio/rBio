@@ -53,34 +53,48 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     });
 
     on<_BluetoothDeviceConnectedEvent>((event, emit) async {
-      // bluetoothConnector.listenConnectedDeviceStream(
-      //   deviceConnectionUpdate,
-      //   controlPointResponseUpdate,
-      //   scaleUpdate,
-      // );
+      final connectedDeviceStream =
+          bluetoothConnector.listenConnectedDeviceStream();
 
-      await bluetoothConnector.listenConnectedDeviceStream(
-        emitState: deviceConnectionUpdate,
-        accuChek: (device) {
-          reactor.write(
-            device,
-            controlPointResponseUpdate,
-          );
-        },
-        contourPlusOne: (device) {
-          reactor.write(
-            device,
-            controlPointResponseUpdate,
-          );
-        },
-        miScale: (device) {
-          reactor.subscribeScaleDevice(
-            device,
-            controlPointResponseUpdate,
-            scaleUpdate,
-          );
-        },
-      );
+      connectedDeviceStream.listen((event) {
+        if (event.connectionStateList != null) {
+          deviceConnectionUpdate(event.connectionStateList!);
+        }
+
+        //Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
+        if (event.connectionState?.connectionState ==
+            DeviceConnectionState.connected) {
+          switch (bluetoothConnector.getDeviceType()) {
+            case DeviceType.accuChek:
+              reactor.write(
+                bluetoothConnector.device!,
+                controlPointResponseUpdate,
+              );
+              break;
+
+            case DeviceType.contourPlusOne:
+              reactor.write(
+                bluetoothConnector.device!,
+                controlPointResponseUpdate,
+              );
+              break;
+
+            case DeviceType.miScale:
+              reactor.subscribeScaleDevice(
+                bluetoothConnector.device!,
+                controlPointResponseUpdate,
+                scaleUpdate,
+              );
+              break;
+
+            default:
+              break;
+          }
+        } else if (event.connectionState?.connectionState ==
+            DeviceConnectionState.disconnected) {
+          bluetoothConnector.refreshDeviceList();
+        }
+      });
     });
 
     on<_BluetoothDeviceConnectionUpdatedEvent>((event, emit) {

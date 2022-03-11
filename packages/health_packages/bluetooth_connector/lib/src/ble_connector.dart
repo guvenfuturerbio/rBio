@@ -20,32 +20,26 @@ class BleConnector {
 
   StreamSubscription<ConnectionStateUpdate>? _connection;
 
-  Stream<ConnectionStateUpdate> listenConnectedDeviceStream(
-    void Function(List<ConnectionStateUpdate>) eventCall,
-  ) {
-    final stream = _ble.connectedDeviceStream.asBroadcastStream();
-
+  Stream<ListenConnectedDeviceStreamArgs> listenConnectedDeviceStream() async* {
     // Telefonla cihaz arasındaki bağlantı durumu dinleyen stream
-    stream.listen(
-      (event) {
-        if (event.deviceId == _device?.id) {
-          final deviceIndex = _deviceConnectionStateUpdate.indexWhere(
-            (element) => element.deviceId == event.deviceId,
-          );
+    await for (final event in _ble.connectedDeviceStream) {
+      yield ListenConnectedDeviceStreamArgs(connectionState: event);
 
-          // index aşağıda -1 değilse daha önce bir bağlantı var demektir. Kontrol bunun için yapılıyor.
-          if (deviceIndex != -1) {
-            _deviceConnectionStateUpdate[deviceIndex] = event;
-          } else {
-            _deviceConnectionStateUpdate.add(event);
-          }
+      if (event.deviceId == _device?.id) {
+        final deviceIndex = _deviceConnectionStateUpdate.indexWhere(
+          (element) => element.deviceId == event.deviceId,
+        );
 
-          eventCall(_deviceConnectionStateUpdate);
+        // index aşağıda -1 değilse daha önce bir bağlantı var demektir. Kontrol bunun için yapılıyor.
+        if (deviceIndex != -1) {
+          _deviceConnectionStateUpdate[deviceIndex] = event;
+        } else {
+          _deviceConnectionStateUpdate.add(event);
         }
-      },
-    );
 
-    return stream;
+        yield ListenConnectedDeviceStreamArgs(connectionStateList: _deviceConnectionStateUpdate);
+      }
+    }
   }
 
   Future<void> connect(
@@ -108,4 +102,14 @@ class BleConnector {
 
     throw Exception('Nondefined device');
   }
+}
+
+class ListenConnectedDeviceStreamArgs {
+  final List<ConnectionStateUpdate>? connectionStateList;
+  final ConnectionStateUpdate? connectionState;
+
+  ListenConnectedDeviceStreamArgs({
+    this.connectionStateList,
+    this.connectionState,
+  });
 }
