@@ -2,7 +2,6 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:bluetooth_connector/bluetooth_connector.dart';
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mi_scale/mi_scale.dart';
 
@@ -22,7 +21,8 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     on<_BluetoothScanStartedEvent>((event, emit) async {
       await bluetoothConnector.startScan(
         (list) {
-          LoggerUtils.instance.i(list);
+          LoggerUtils.instance.i("[BluetoothBloc]");
+          LoggerUtils.instance.i("discoveredDevices = $list");
           emit(state.copyWith(discoveredDevices: list));
         },
         (device) {
@@ -44,14 +44,14 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       emit(state.copyWith(pairedDevices: list));
     });
 
-    on<_BluetoothDeviceConnectedEvent>((event, emit) {
+    on<_BluetoothDeviceConnectedEvent>((event, emit) async {
       // bluetoothConnector.listenConnectedDeviceStream(
       //   deviceConnectionUpdate,
       //   controlPointResponseUpdate,
       //   scaleUpdate,
       // );
 
-      bluetoothConnector.listenConnectedDeviceStream(
+      await bluetoothConnector.listenConnectedDeviceStream(
         emitState: deviceConnectionUpdate,
         accuChek: (device) {
           reactor.write(

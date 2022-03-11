@@ -35,7 +35,7 @@ class BleScanner {
 
     try {
       await for (final device
-          in _ble.scanForDevices(withServices: _supported)) {
+          in _ble.scanForDevices(withServices: [])) {
         final knownDeviceIndex = _devices.indexWhere((d) => d.id == device.id);
         // Daha önce listede varsa güncelliyor.
         if (knownDeviceIndex >= 0) {
@@ -48,7 +48,6 @@ class BleScanner {
           await autoConnect(device);
         }
 
-        LoggerUtils.instance.i("BleScanner");
         emitState(_devices);
       }
     } catch (e) {

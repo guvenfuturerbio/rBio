@@ -31,10 +31,12 @@ class SelectedDevicesScreen extends StatelessWidget {
           builder: (context, _selectedDeviceVm, child) {
             return BlocBuilder<BluetoothBloc, BluetoothState>(
               builder: (context, bluetoothState) {
-                LoggerUtils.instance.wtf("SelectedDevicesScreen-build");
-                LoggerUtils.instance.wtf(bluetoothState.discoveredDevices);
+                LoggerUtils.instance.i("[SelectedDevicesScreen]");
+                LoggerUtils.instance.i(
+                    "discoveredDevices = ${bluetoothState.discoveredDevices}");
 
                 return ListView(
+                  key: UniqueKey(),
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.only(

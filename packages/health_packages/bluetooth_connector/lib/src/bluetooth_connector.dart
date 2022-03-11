@@ -13,15 +13,15 @@ class BluetoothConnector {
     this._scanner,
   );
 
-  void listenConnectedDeviceStream({
+  Future<void> listenConnectedDeviceStream({
     required void Function(List<ConnectionStateUpdate>) emitState,
     required void Function(DiscoveredDevice) accuChek,
     required void Function(DiscoveredDevice) contourPlusOne,
     required void Function(DiscoveredDevice) miScale,
-  }) {
+  }) async {
     final stream = _connector.listenConnectedDeviceStream(emitState);
 
-    stream.listen((event) {
+    await for (final event in stream) {
       //Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
       if (event.connectionState == DeviceConnectionState.connected) {
         switch (_connector.getDeviceType()) {
@@ -43,7 +43,7 @@ class BluetoothConnector {
       } else if (event.connectionState == DeviceConnectionState.disconnected) {
         _scanner.refreshDeviceList();
       }
-    });
+    }
   }
 
   Future<List<String>> getPairedDevicesWithId() async {

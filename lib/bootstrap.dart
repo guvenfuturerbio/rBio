@@ -43,7 +43,9 @@ Future<void> bootstrap(AppConfig appConfig) async {
                 getIt<BluetoothConnector>(),
                 getIt<BleReactorOps>(),
                 getIt<ProfileStorageImpl>(),
-              )..add(const BluetoothEvent.deviceConnected()),
+              )
+                ..add(const BluetoothEvent.gotPairedDevices())
+                ..add(const BluetoothEvent.deviceConnected()),
               child: const MyApp(),
             ),
           ),

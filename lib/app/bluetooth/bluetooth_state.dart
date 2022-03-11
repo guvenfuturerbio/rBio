@@ -1,6 +1,6 @@
 part of 'bluetooth_bloc.dart';
 
-class BluetoothState extends Equatable {
+class BluetoothState {
   List<String>? pairedDevices;
   List<DiscoveredDevice>? discoveredDevices;
   List<ConnectionStateUpdate>? deviceConnectionState;
@@ -46,14 +46,4 @@ class BluetoothState extends Equatable {
       scaleDevice: scaleDevice,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        pairedDevices,
-        discoveredDevices,
-        deviceConnectionState,
-        device,
-        controlPointResponse,
-        scaleDevice,
-      ];
 }
