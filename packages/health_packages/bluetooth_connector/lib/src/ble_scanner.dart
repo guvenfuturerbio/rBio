@@ -35,7 +35,7 @@ class BleScanner {
 
     try {
       await for (final device
-          in _ble.scanForDevices(withServices: [])) {
+          in _ble.scanForDevices(withServices: _supported)) {
         final knownDeviceIndex = _devices.indexWhere((d) => d.id == device.id);
         // Daha önce listede varsa güncelliyor.
         if (knownDeviceIndex >= 0) {
