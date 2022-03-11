@@ -101,8 +101,13 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       emit(state.copyWith(deviceConnectionState: event.args));
     });
 
-    on<_BluetoothConnectedEvent>((event, emit) {
-      emit(state.copyWith(device: event.device));
+    on<_BluetoothConnectedEvent>((event, emit) async {
+      await bluetoothConnector.connect(
+        event.device,
+        (device) {
+          emit(state.copyWith(device: device));
+        },
+      );
     });
 
     on<_BluetoothClearedControlPointResponseEvent>((event, emit) {

@@ -37,7 +37,8 @@ class BleConnector {
           _deviceConnectionStateUpdate.add(event);
         }
 
-        yield ListenConnectedDeviceStreamArgs(connectionStateList: _deviceConnectionStateUpdate);
+        yield ListenConnectedDeviceStreamArgs(
+            connectionStateList: _deviceConnectionStateUpdate);
       }
     }
   }
