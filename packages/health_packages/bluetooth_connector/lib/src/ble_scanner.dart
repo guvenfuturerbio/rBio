@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:onedosehealth/core/core.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BleScanner {
@@ -26,14 +27,15 @@ class BleScanner {
 
   Future<void> startScan({
     required void Function(List<DiscoveredDevice>) emitState,
-    required void Function(DiscoveredDevice) autoConnect,
+    required Future<void> Function(DiscoveredDevice) autoConnect,
   }) async {
     print('Start ble discovery');
     _devices.clear();
     _subscription?.cancel();
 
     try {
-      await for (final device in _ble.scanForDevices(withServices: _supported)) {
+      await for (final device
+          in _ble.scanForDevices(withServices: _supported)) {
         final knownDeviceIndex = _devices.indexWhere((d) => d.id == device.id);
         // Daha önce listede varsa güncelliyor.
         if (knownDeviceIndex >= 0) {
@@ -43,9 +45,10 @@ class BleScanner {
         }
 
         if (pairedDevices != null && pairedDevices!.contains(device.id)) {
-          autoConnect(device);
+          await autoConnect(device);
         }
 
+        LoggerUtils.instance.i("BleScanner");
         emitState(_devices);
       }
     } catch (e) {

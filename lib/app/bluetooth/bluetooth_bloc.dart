@@ -22,6 +22,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     on<_BluetoothScanStartedEvent>((event, emit) async {
       await bluetoothConnector.startScan(
         (list) {
+          LoggerUtils.instance.i(list);
           emit(state.copyWith(discoveredDevices: list));
         },
         (device) {

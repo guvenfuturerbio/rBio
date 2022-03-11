@@ -64,8 +64,8 @@ class BluetoothConnector {
   ) async {
     await _scanner.startScan(
       emitState: emitState,
-      autoConnect: (device) {
-        connect(device, emit2State);
+      autoConnect: (device) async {
+        await connect(device, emit2State);
       },
     );
   }

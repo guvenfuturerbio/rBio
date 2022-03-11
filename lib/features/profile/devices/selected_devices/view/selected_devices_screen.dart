@@ -31,6 +31,9 @@ class SelectedDevicesScreen extends StatelessWidget {
           builder: (context, _selectedDeviceVm, child) {
             return BlocBuilder<BluetoothBloc, BluetoothState>(
               builder: (context, bluetoothState) {
+                LoggerUtils.instance.wtf("SelectedDevicesScreen-build");
+                LoggerUtils.instance.wtf(bluetoothState.discoveredDevices);
+
                 return ListView(
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
@@ -71,7 +74,9 @@ class SelectedDevicesScreen extends StatelessWidget {
                     ...(bluetoothState.discoveredDevices ?? []).map(
                       (DiscoveredDevice device) {
                         final pairedDevices = bluetoothState.pairedDevices;
-                        if (pairedDevices == null) return const SizedBox();
+                        if (pairedDevices == null) {
+                          return const RbioLoading();
+                        }
 
                         return _selectedDeviceVm.isFocusedDevice(device) &&
                                 !pairedDevices.contains(device.id)
