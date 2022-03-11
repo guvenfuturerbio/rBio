@@ -19,7 +19,7 @@ class DevicesVm extends ChangeNotifier {
   Future<void> getAll() async {
     try {
       state = LoadingProgress.loading;
-      devices = await getIt<BleDeviceManager>().getPairedDevices();
+      devices = await getIt<BluetoothConnector>().getPairedDevices();
       state = LoadingProgress.done;
     } catch (e) {
       state = LoadingProgress.error;
@@ -27,7 +27,7 @@ class DevicesVm extends ChangeNotifier {
   }
 
   void deletePairedDevice(String id) {
-    getIt<BleDeviceManager>().deletePairedDevice(id);
+    getIt<BluetoothConnector>().deletePairedDevice(id);
     devices.removeWhere((element) => element.deviceId == id);
     notifyListeners();
     Atom.dismiss();

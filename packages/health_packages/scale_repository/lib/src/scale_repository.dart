@@ -1,11 +1,7 @@
 import 'dart:async';
-import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:mi_scale/mi_scale.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chronic_tracking/progress_sections/scale/scale.dart';
+import 'package:guven_service/guven_service.dart';
+import 'package:scale_api/scale_api.dart';
 import 'package:scale_health_impl/scale_health_impl.dart';
 import 'package:scale_hive_impl/scale_hive_impl.dart';
 
@@ -120,7 +116,7 @@ class ScaleRepository {
         return false;
       }
     } catch (e) {
-      LoggerUtils.instance.e("[ScaleRepository] - addScale() - $e");
+      print("[ScaleRepository] - addScale() - $e");
       return false;
     }
   }
@@ -147,7 +143,7 @@ class ScaleRepository {
 
       return false;
     } catch (e) {
-      LoggerUtils.instance.e("[ScaleRepository] - deleteScale() - $e");
+      print("[ScaleRepository] - deleteScale() - $e");
       return false;
     }
   }

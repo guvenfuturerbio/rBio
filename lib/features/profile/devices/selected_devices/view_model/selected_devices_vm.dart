@@ -6,7 +6,7 @@ class SelectedDeviceVm extends ChangeNotifier {
   SelectedDeviceVm(this.deviceType) {
     WidgetsBinding.instance?.addPostFrameCallback(
       (_) async {
-        var devices = await getIt<BleDeviceManager>().getPairedDevices();
+        var devices = await getIt<BluetoothConnector>().getPairedDevices();
         if (devices.isEmpty) {
           Atom.context
               .read<BluetoothBloc>()
@@ -16,14 +16,16 @@ class SelectedDeviceVm extends ChangeNotifier {
         if (!_disposed) {
           final bluetoothBloc = Atom.context.read<BluetoothBloc>();
           bluetoothBloc.stream.listen((event) {
-            if (getIt<BleReactorOps>().controlPointResponse.isNotEmpty) {
+            if ((bluetoothBloc.state.controlPointResponse ?? []).isNotEmpty) {
               if (!Atom.isDialogShow) {
                 showLoadingDialog();
               }
 
-              final deviceId = getIt<BleConnector>().device?.id;
+              final deviceId = bluetoothBloc.state.device?.id;
               if (deviceId != null) {
-                getIt<BleConnector>().disconnect(deviceId);
+                Atom.context
+                    .read<BluetoothBloc>()
+                    .add(BluetoothEvent.disconnect(deviceId));
               }
             }
           });
@@ -165,16 +167,15 @@ class SelectedDeviceVm extends ChangeNotifier {
   }
 
   void connectDevice(
-    BleConnector _bleConnectorOps,
-    BleScanner _bleScannerOps,
+    BluetoothState bluetoothState,
     DiscoveredDevice device,
   ) async {
     switch (deviceType) {
       case DeviceType.accuChek:
         connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
+                (bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
+                    bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connected)
             ? Atom.context
                 .read<BluetoothBloc>()
@@ -185,9 +186,9 @@ class SelectedDeviceVm extends ChangeNotifier {
 
       case DeviceType.contourPlusOne:
         connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
+                (bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
+                    bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connected)
             ? Atom.context
                 .read<BluetoothBloc>()
@@ -207,9 +208,9 @@ class SelectedDeviceVm extends ChangeNotifier {
 
       case DeviceType.miScale:
         connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
+                (bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
+                    bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connected)
             ? Atom.context
                 .read<BluetoothBloc>()

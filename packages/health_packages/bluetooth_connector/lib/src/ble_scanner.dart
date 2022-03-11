@@ -24,7 +24,10 @@ class BleScanner {
     Uuid([0x18, 0x1B])
   ];
 
-  void startScan(void Function(List<DiscoveredDevice>) emitState) {
+  void startScan({
+    required void Function(List<DiscoveredDevice>) emitState,
+    required void Function(DiscoveredDevice) autoConnect,
+  }) {
     print('Start ble discovery');
     _devices.clear();
     _subscription?.cancel();
@@ -38,16 +41,9 @@ class BleScanner {
           _devices.add(device);
         }
 
-        // TODO AutoConnect - Bağlı cihazlar listesi getirilecek
-        /*
-            if (pairedDevices != null && pairedDevices!.contains(device.id)) {
-              getIt<BleConnectorOps>().connect(device);
-            }
-        */
-        // final isContain = _devices.any((item) => item.id == device.id);
-        // if (isContain) {
-        //   getIt<BleConnectorOps>().connect(device);
-        // }
+        if (pairedDevices != null && pairedDevices!.contains(device.id)) {
+          autoConnect(device);
+        }
 
         emitState(_devices);
       },

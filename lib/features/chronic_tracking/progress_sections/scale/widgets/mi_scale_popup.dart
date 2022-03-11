@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
@@ -14,17 +15,19 @@ class MiScalePopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final reactor = getIt<BleReactorOps>();
+
     return Scaffold(
       body: Container(
         color: getIt<ITheme>().mainColor,
         height: context.height,
         width: context.width,
-        child: Consumer<BleReactorOps>(
-          builder: (_, _bleReactor, __) {
-            ScaleMeasurementLogic? data = _bleReactor.scaleDevice.scaleData;
+        child: BlocBuilder<BluetoothBloc, BluetoothState>(
+          builder: (context, bluetoothState) {
+            ScaleMeasurementLogic? data = bluetoothState.scaleDevice?.scaleData;
             return hasAlreadyPair
-                ? _scaleStep(_bleReactor, context, data)
-                : _pairingStep(_bleReactor, context);
+                ? _scaleStep(reactor, context, data)
+                : _pairingStep(reactor, context);
           },
         ),
       ),
@@ -216,7 +219,8 @@ class MiScalePopUp extends StatelessWidget {
                   style: TextButton.styleFrom(primary: R.color.white),
                   onPressed: () {
                     _bleReactor.scaleDevice.scaleData = null;
-                    Atom.context.read<BluetoothBloc>().add(const BluetoothEvent.clearedControlPointResponse());
+                    Atom.context.read<BluetoothBloc>().add(
+                        const BluetoothEvent.clearedControlPointResponse());
                     Atom.dismiss();
                     Atom.historyBack();
                     Atom.to(PagePaths.devices, isReplacement: true);

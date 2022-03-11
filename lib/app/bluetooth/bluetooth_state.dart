@@ -36,6 +36,17 @@ class BluetoothState extends Equatable {
     );
   }
 
+  BluetoothState setDeviceNull() {
+    return BluetoothState(
+      pairedDevices: pairedDevices,
+      discoveredDevices: discoveredDevices,
+      deviceConnectionState: deviceConnectionState,
+      device: null,
+      controlPointResponse: controlPointResponse,
+      scaleDevice: scaleDevice,
+    );
+  }
+
   @override
   List<Object?> get props => [
         pairedDevices,

@@ -69,6 +69,7 @@ class BleConnector {
   Future<void> disconnect(String deviceId) async {
     try {
       Logger().i('disconnecting to device: $deviceId');
+      _device = null;
       await _connection?.cancel();
     } on Exception catch (e, _) {
       Logger().e("Error disconnecting from a device: $e");
@@ -91,17 +92,6 @@ class BleConnector {
   }
 
   Future<void> dispose() => _deviceConnectionController.close();
-
-  // Bağlanmak için cihazı seçtiğimizde kartın rengi için cihaz status durumunu liste edip okuduğumuz kısım.
-  ConnectionStateUpdate? getStatus(String id) {
-    final deviceIndex = _deviceConnectionStateUpdate
-        .indexWhere((element) => element.deviceId == id);
-    if (deviceIndex != -1) {
-      return _deviceConnectionStateUpdate[deviceIndex];
-    } else {
-      return null;
-    }
-  }
 
   DeviceType getDeviceType() {
     if (_device != null) {

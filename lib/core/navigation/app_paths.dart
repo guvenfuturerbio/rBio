@@ -460,7 +460,7 @@ class VRouterRoutes {
             }
 
             final pairedDevices =
-                await getIt<BleDeviceManager>().getPairedDevices();
+                await getIt<BluetoothConnector>().getPairedDevices();
             if (pairedDevices.isEmpty) {
               await showAlert();
               //vRedirector.stopRedirection();

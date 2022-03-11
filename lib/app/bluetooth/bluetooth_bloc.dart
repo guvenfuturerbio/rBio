@@ -14,12 +14,18 @@ part 'bluetooth_state.dart';
 
 class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   final BluetoothConnector bluetoothConnector;
+  final BleReactorOps reactor;
+  final ProfileStorageImpl profileStorageImpl;
 
-  BluetoothBloc(this.bluetoothConnector) : super(BluetoothState()) {
+  BluetoothBloc(this.bluetoothConnector, this.reactor, this.profileStorageImpl)
+      : super(BluetoothState()) {
     on<_BluetoothScanStartedEvent>((event, emit) {
       bluetoothConnector.startScan(
         (list) {
           emit(state.copyWith(discoveredDevices: list));
+        },
+        (device) {
+          emit(state.copyWith(device: device));
         },
       );
     });
@@ -33,15 +39,38 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     });
 
     on<_BluetoothGotPairedDevicesEvent>((event, emit) async {
-      final list = await bluetoothConnector.getPairedDevices();
+      final list = await bluetoothConnector.getPairedDevicesWithId();
       emit(state.copyWith(pairedDevices: list));
     });
 
     on<_BluetoothDeviceConnectedEvent>((event, emit) {
+      // bluetoothConnector.listenConnectedDeviceStream(
+      //   deviceConnectionUpdate,
+      //   controlPointResponseUpdate,
+      //   scaleUpdate,
+      // );
+
       bluetoothConnector.listenConnectedDeviceStream(
-        deviceConnectionUpdate,
-        controlPointResponseUpdate,
-        scaleUpdate,
+        emitState: deviceConnectionUpdate,
+        accuChek: (device) {
+          reactor.write(
+            device,
+            controlPointResponseUpdate,
+          );
+        },
+        contourPlusOne: (device) {
+          reactor.write(
+            device,
+            controlPointResponseUpdate,
+          );
+        },
+        miScale: (device) {
+          reactor.subscribeScaleDevice(
+            device,
+            controlPointResponseUpdate,
+            scaleUpdate,
+          );
+        },
       );
     });
 
@@ -54,7 +83,41 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     });
 
     on<_BluetoothClearedControlPointResponseEvent>((event, emit) {
-      bluetoothConnector.clearControlPointResponse(controlPointResponseUpdate);
+      reactor.clearControlPointResponse(controlPointResponseUpdate);
+    });
+
+    on<_BluetoothDisconnectEvent>((event, emit) async {
+      await bluetoothConnector.disconnect(event.deviceId);
+      final newState = state.setDeviceNull();
+      emit(newState);
+    });
+
+    on<_BluetoothSavePairedDevicesEvent>((event, emit) async {
+      final list =
+          await bluetoothConnector.savePairedDevices(event.pairedDevice);
+      if (list == null) return;
+      if (event.checkSuccess != null) {
+        if (event.checkSuccess == true) {
+          emit(state.copyWith(controlPointResponse: event.recordAccessData));
+          var localUser = profileStorageImpl.getFirst();
+          var newPerson = Person.fromJson(localUser.toJson());
+          newPerson.deviceUUID = event.pairedDevice.deviceId;
+          await profileStorageImpl.update(
+            newPerson,
+            localUser.key,
+          );
+        } else {
+          emit(state.copyWith(controlPointResponse: []));
+        }
+      } else {
+        emit(state.copyWith(pairedDevices: list));
+      }
+    });
+
+    on<_BluetoothPairedDeviceDeletedEvent>((event, emit) async {
+      final list = await bluetoothConnector.deletePairedDevice(event.id);
+      if (list == null) return;
+      emit(state.copyWith(pairedDevices: list));
     });
   }
 
@@ -62,7 +125,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     add(BluetoothEvent.deviceConnectionUpdate(args));
   }
 
-  void controlPointResponseUpdate(result) {
+  void controlPointResponseUpdate(List<int> result) {
     emit(state.copyWith(controlPointResponse: result));
   }
 

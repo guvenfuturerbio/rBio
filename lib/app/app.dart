@@ -1,4 +1,3 @@
-import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

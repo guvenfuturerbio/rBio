@@ -233,12 +233,16 @@ class LoginScreenVm extends ChangeNotifier {
         if (!Atom.isWeb && getIt<UserNotifier>().isCronic) {
           try {
             List<PairedDevice>? devices =
-                await getIt<BleDeviceManager>().getPairedDevices();
+                await getIt<BluetoothConnector>().getPairedDevices();
             if (devices.isNotEmpty) {
-              Atom.context.read<BluetoothBloc>().add(const BluetoothEvent.scanStarted());
+              Atom.context
+                  .read<BluetoothBloc>()
+                  .add(const BluetoothEvent.scanStarted());
             }
           } catch (_) {
-            Atom.context.read<BluetoothBloc>().add(const BluetoothEvent.scanStarted());
+            Atom.context
+                .read<BluetoothBloc>()
+                .add(const BluetoothEvent.scanStarted());
           }
         }
 

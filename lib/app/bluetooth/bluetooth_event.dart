@@ -9,4 +9,7 @@ class BluetoothEvent with _$BluetoothEvent {
   const factory BluetoothEvent.scanStopped() = _BluetoothScanStoppedEvent;
   const factory BluetoothEvent.connected(DiscoveredDevice device) = _BluetoothConnectedEvent;
   const factory BluetoothEvent.clearedControlPointResponse() = _BluetoothClearedControlPointResponseEvent;
+  const factory BluetoothEvent.disconnect(String deviceId) = _BluetoothDisconnectEvent;
+  const factory BluetoothEvent.savePairedDevices(PairedDevice pairedDevice, [bool? checkSuccess, List<int>? recordAccessData]) = _BluetoothSavePairedDevicesEvent;
+  const factory BluetoothEvent.pairedDeviceDeleted(String id) = _BluetoothPairedDeviceDeletedEvent;
 }

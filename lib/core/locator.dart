@@ -29,27 +29,15 @@ Future<void> setupLocator(AppConfig appConfig) async {
     directory = appDocumentDirectory.path;
     Hive.init(directory);
 
-    getIt.registerLazySingleton<FlutterReactiveBle>(
-      () => FlutterReactiveBle(),
-    );
+    FlutterReactiveBle ble = FlutterReactiveBle();
     getIt.registerLazySingleton<BleReactorOps>(
-      () => BleReactorOps(
-        getIt<FlutterReactiveBle>(),
-      ),
+      () => BleReactorOps(ble),
     );
-    getIt.registerLazySingleton<BleConnector>(
-      () => BleConnector(
-        getIt<FlutterReactiveBle>(),
-      ),
-    );
-    getIt.registerLazySingleton<BleScanner>(
-      () => BleScanner(
-        getIt<FlutterReactiveBle>(),
-      ),
-    );
-    getIt.registerLazySingleton<BleDeviceManager>(
-      () => BleDeviceManager(
-        getIt<ISharedPreferencesManager>(),
+    getIt.registerLazySingleton<BluetoothConnector>(
+      () => BluetoothConnector(
+        BleConnector(ble),
+        BleDeviceManager(getIt<ISharedPreferencesManager>()),
+        BleScanner(ble),
       ),
     );
   }

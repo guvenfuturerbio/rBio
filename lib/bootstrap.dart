@@ -39,7 +39,11 @@ Future<void> bootstrap(AppConfig appConfig) async {
         () async => runApp(
           AppInheritedWidget(
             child: BlocProvider<BluetoothBloc>(
-              create: (context) => BluetoothBloc(getIt<BluetoothConnector>()),
+              create: (context) => BluetoothBloc(
+                getIt<BluetoothConnector>(),
+                getIt<BleReactorOps>(),
+                getIt<ProfileStorageImpl>(),
+              ),
               child: const MyApp(),
             ),
           ),

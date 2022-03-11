@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:logger/logger.dart';
 import 'package:shared_preferences_manager/shared_preferences_manager.dart';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
@@ -40,13 +39,10 @@ class BleDeviceManager {
 
   Future<List<PairedDevice>> deletePairedDevice(String id) async {
     final response = await getPairedDevices();
-    final selectedDeviceIndex =
-        response.indexWhere((element) => element.deviceId == id);
-    Logger().d(selectedDeviceIndex);
+    final selectedDeviceIndex = response.indexWhere((element) => element.deviceId == id);
     if (selectedDeviceIndex != -1) {
       response.removeAt(selectedDeviceIndex);
-      final List<String> _pairedDeviceOnLocal =
-          response.map((device) => jsonEncode(device.toJson())).toList();
+      final List<String> _pairedDeviceOnLocal = response.map((device) => jsonEncode(device.toJson())).toList();
       await sharedPrefs.setStringList(
         SharedPreferencesKeys.pairedDevices,
         _pairedDeviceOnLocal,

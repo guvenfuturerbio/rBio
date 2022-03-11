@@ -1,4 +1,17 @@
-part of 'ble_operators.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:bluetooth_connector/bluetooth_connector.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:mi_scale/mi_scale.dart';
+
+import '../../../../../core/core.dart';
+import '../../features/chronic_tracking/progress_sections/blood_glucose/widgets/tagger/bg_tagger_pop_up.dart';
+import '../../features/chronic_tracking/progress_sections/scale/widgets/mi_scale_popup.dart';
+import '../../features/chronic_tracking/progress_sections/scale/widgets/tagger/scale_tagger_pop_up.dart';
 
 class BleReactorOps {
   BleReactorOps(this._ble);
@@ -236,26 +249,18 @@ class BleReactorOps {
       (recordAccessData) async {
         LoggerUtils.instance
             .i("record access data " + recordAccessData.toString());
-
         LoggerUtils.instance.i("LOCK :$_lock");
 
         if (!_lock) {
           _lock = true;
-          bool isSucces =
-              await getIt<BluetoothConnector>().savePairedDevices(pairedDevice);
-          isSucces
-              ? _controlPointResponse = recordAccessData
-              : _controlPointResponse.clear();
+          Atom.context.read<BluetoothBloc>().add(
+                BluetoothEvent.savePairedDevices(
+                  pairedDevice,
+                  true,
+                  recordAccessData,
+                ),
+              );
 
-          if (isSucces) {
-            var localUser = getIt<ProfileStorageImpl>().getFirst();
-            var newPerson = Person.fromJson(localUser.toJson());
-            newPerson.deviceUUID = pairedDevice.deviceId;
-            await getIt<ProfileStorageImpl>().update(
-              newPerson,
-              localUser.key,
-            );
-          }
           _lock = false;
         }
 
@@ -342,7 +347,7 @@ class BleReactorOps {
   ) async {
     _controlPointResponse = <int>[];
     final deviceAlreadyPaired =
-        await getIt<BleDeviceManager>().hasDeviceAlreadyPaired(pairedDevice);
+        await getIt<BluetoothConnector>().hasDeviceAlreadyPaired(pairedDevice);
 
     final _characteristic = QualifiedCharacteristic(
       characteristicId: Uuid([42, 156]),
@@ -396,7 +401,9 @@ class BleReactorOps {
               // Saving paired device Section
               controlPointResponse.add(1);
               WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-                getIt<BluetoothConnector>().savePairedDevices(pairedDevice);
+                Atom.context
+                    .read<BluetoothBloc>()
+                    .add(BluetoothEvent.savePairedDevices(pairedDevice));
               });
             }
           }
