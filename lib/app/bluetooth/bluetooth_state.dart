@@ -7,6 +7,7 @@ class BluetoothState {
   DiscoveredDevice? device;
   List<int>? controlPointResponse;
   MiScaleDevice? scaleDevice;
+  ScaleEntity? scaleEntity;
 
   BluetoothState({
     this.pairedDevices,
@@ -15,6 +16,7 @@ class BluetoothState {
     this.device,
     this.controlPointResponse,
     this.scaleDevice,
+    this.scaleEntity,
   });
 
   BluetoothState copyWith({
@@ -24,6 +26,7 @@ class BluetoothState {
     DiscoveredDevice? device,
     List<int>? controlPointResponse,
     MiScaleDevice? scaleDevice,
+    ScaleEntity? scaleEntity,
   }) {
     return BluetoothState(
       pairedDevices: pairedDevices ?? this.pairedDevices,
@@ -33,6 +36,7 @@ class BluetoothState {
       device: device ?? this.device,
       controlPointResponse: controlPointResponse ?? this.controlPointResponse,
       scaleDevice: scaleDevice ?? this.scaleDevice,
+      scaleEntity: scaleEntity ?? this.scaleEntity,
     );
   }
 
@@ -44,6 +48,7 @@ class BluetoothState {
       device: null,
       controlPointResponse: controlPointResponse,
       scaleDevice: scaleDevice,
+      scaleEntity: scaleEntity,
     );
   }
 }

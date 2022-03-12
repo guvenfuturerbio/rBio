@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../core/core.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
-  late ScaleMeasurementLogic scaleModel;
+  late ScaleEntity scaleModel;
 
   final bool isManuel;
   final BuildContext context;
@@ -33,24 +34,15 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   ScaleTaggerVm({
     required this.context,
-    ScaleMeasurementLogic? scale,
+    ScaleEntity? scale,
     this.isManuel = false,
     this.key,
   }) {
     scaleModel = scale ??
-        ScaleMeasurementLogic(
-          scaleModel: ScaleModel(
-            isManuel: isManuel,
-            dateTime: DateTime.now(),
-            device: PairedDevice(
-              deviceId: 'manuel',
-              deviceType: DeviceType.manuel,
-              manufacturerName: 'manuel',
-              modelName: 'manuel',
-              serialNumber: 'manuel',
-            ).toJson(),
-            unit: ScaleUnit.kg,
-          ),
+        ScaleEntity(
+          isManuel: isManuel,
+          dateTime: DateTime.now(),
+          unit: ScaleUnit.kg,
         );
     _fillControllers(isInit: true);
     scrollController = ScrollController();
@@ -322,8 +314,11 @@ class ScaleTaggerVm extends ChangeNotifier {
       }
 
       scaleModel.dateTime = DateTime.now();
-      await getIt<ScaleStorageImpl>()
-          .write(scaleModel.scaleModel, shouldSendToServer: true);
+      // TODO
+      // await getIt<ScaleStorageImpl>().write(
+      //   scaleModel.scaleModel,
+      //   shouldSendToServer: true,
+      // );
       Atom.dismiss();
     } catch (e) {
       LoggerUtils.instance.e(e);
@@ -331,7 +326,8 @@ class ScaleTaggerVm extends ChangeNotifier {
   }
 
   Future<void> update() async {
-    await getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
+    // TODO
+    // await getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
     Atom.dismiss();
   }
 

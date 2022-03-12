@@ -12,4 +12,5 @@ class BluetoothEvent with _$BluetoothEvent {
   const factory BluetoothEvent.disconnect(String deviceId) = _BluetoothDisconnectEvent;
   const factory BluetoothEvent.savePairedDevices(PairedDevice pairedDevice, [bool? checkSuccess, List<int>? recordAccessData]) = _BluetoothSavePairedDevicesEvent;
   const factory BluetoothEvent.pairedDeviceDeleted(String id) = _BluetoothPairedDeviceDeletedEvent;
+  const factory BluetoothEvent.scaleSubscribed(PairedDevice pairedDevice) = _BluetoothScaleSubscribedEvent;
 }

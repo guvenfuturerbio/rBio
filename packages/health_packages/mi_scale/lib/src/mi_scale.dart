@@ -10,8 +10,7 @@ class MiScaleDevice {
 
   MiScaleDevice._(this.device);
 
-  ScaleMeasurementLogic? scaleData;
-  MiScaleModel? model;
+  MiScaleModel? scaleData;
 
   /// The id of the discovere d device
   String? get id => device?.id;
@@ -77,7 +76,7 @@ class MiScaleDevice {
       weight /= 200;
     } // Return new scale data
 
-    model = MiScaleModel(
+    scaleData = MiScaleModel(
       device: device.toJson(),
       measurementComplete: measurementComplete,
       weightStabilized: weightStabilized,
@@ -88,7 +87,7 @@ class MiScaleDevice {
       impedance: impedance,
     );
 
-    return model;
+    return scaleData;
   }
 
   static bool matchesDeviceType(DiscoveredDevice device) {

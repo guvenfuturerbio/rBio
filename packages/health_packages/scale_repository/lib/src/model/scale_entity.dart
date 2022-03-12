@@ -16,14 +16,15 @@ class ScaleEntity {
   int? height;
   int? gender;
   int? impedance;
-  bool? weightStabilized;
-  bool? measurementComplete;
-  bool? weightRemoved;
 
   bool isManuel;
   ScaleUnit unit;
   String note;
   List<String> images;
+
+  bool? weightStabilized;
+  bool? measurementComplete;
+  bool? weightRemoved;
 
   ScaleEntity({
     required this.dateTime,
@@ -38,17 +39,41 @@ class ScaleEntity {
     this.height,
     this.gender,
     this.impedance,
-    this.weightStabilized,
-    this.measurementComplete,
-    this.weightRemoved,
     bool? isManuel,
     ScaleUnit? unit,
     String? note,
     List<String>? images,
+    this.weightStabilized,
+    this.measurementComplete,
+    this.weightRemoved,
   })  : isManuel = isManuel ?? false,
         unit = unit ?? ScaleUnit.kg,
         note = note ?? '',
         images = images ?? [];
+
+  ScaleEntity copy() {
+    return ScaleEntity(
+      dateTime: dateTime,
+      age: age,
+      bmi: bmi,
+      bodyFat: bodyFat,
+      boneMass: boneMass,
+      gender: gender,
+      height: height,
+      images: images,
+      impedance: impedance,
+      isManuel: isManuel,
+      muscle: muscle,
+      note: note,
+      unit: unit,
+      visceralFat: visceralFat,
+      water: water,
+      weight: weight,
+      measurementComplete: measurementComplete,
+      weightRemoved: weightRemoved,
+      weightStabilized: weightStabilized,
+    );
+  }
 }
 
 extension ScaleEntityExtension on ScaleEntity {
@@ -138,6 +163,19 @@ extension ScaleEntityExtension on ScaleEntity {
           impedance!,
         );
       }
+    }
+  }
+
+  String get getUnit {
+    switch (unit) {
+      case ScaleUnit.kg:
+        return 'kg';
+
+      case ScaleUnit.lbs:
+        return 'lbs';
+
+      default:
+        throw Exception('Unit has not defined');
     }
   }
 }

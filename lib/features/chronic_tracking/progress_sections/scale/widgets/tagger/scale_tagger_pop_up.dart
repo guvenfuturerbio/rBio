@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../core/core.dart';
 import 'scale_tagger_vm.dart';
 
 class ScaleTaggerPopUp extends StatelessWidget {
-  final ScaleModel? scaleModel;
+  final ScaleEntity? scaleModel;
   final bool isUpdate;
 
   const ScaleTaggerPopUp({
@@ -37,11 +38,9 @@ class ScaleTaggerPopUp extends StatelessWidget {
 
         return ChangeNotifierProvider(
           create: (_) => ScaleTaggerVm(
-            key: scaleModel?.key,
+            // key: scaleModel?.key,
             context: context,
-            scale: scaleModel == null
-                ? null
-                : ScaleMeasurementLogic(scaleModel: scaleModel!.copy()),
+            scale: scaleModel == null ? null : scaleModel!.copy(),
             isManuel: scaleModel == null,
           ),
           child: RbioDarkStatusBar(

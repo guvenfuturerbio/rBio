@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:scale_api/scale_api.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 part 'scale_hive_model.g.dart';
 
@@ -113,5 +115,40 @@ class ScaleHiveModel extends HiveObject {
   @override
   String toString() {
     return 'ScaleHiveModel(entegrationId: $entegrationId, occurrenceTime: $occurrenceTime, weight: $weight, bmi: $bmi, measurementId: $measurementId, water: $water, bodyFat: $bodyFat, visceralFat: $visceralFat, boneMass: $boneMass, muscle: $muscle, bmh: $bmh, scaleUnit: $scaleUnit, deviceId: $deviceId, isManuel: $isManuel, bmiMeasurementsImageList: $bmiMeasurementsImageList, note: $note)';
+  }
+}
+
+extension ScaleHiveModelExtension on ScaleHiveModel {
+  ScaleEntity xToChronicEntity(
+    int age,
+    int gender,
+    int height, {
+    int? impedance,
+    bool? weightRemoved,
+    bool? weightStabilized,
+    bool? measurementComplete,
+  }) {
+    return ScaleEntity(
+      dateTime: DateTime.fromMillisecondsSinceEpoch(
+          int.tryParse(occurrenceTime) ?? 0),
+      age: age,
+      bmi: bmi,
+      bodyFat: bodyFat,
+      boneMass: boneMass,
+      gender: gender,
+      height: height,
+      images: bmiMeasurementsImageList,
+      isManuel: isManuel,
+      muscle: muscle,
+      note: note,
+      unit: scaleUnit?.xToScaleUnit,
+      visceralFat: visceralFat,
+      water: water,
+      weight: weight,
+      impedance: impedance,
+      weightRemoved: weightRemoved,
+      weightStabilized: weightStabilized,
+      measurementComplete: measurementComplete,
+    );
   }
 }

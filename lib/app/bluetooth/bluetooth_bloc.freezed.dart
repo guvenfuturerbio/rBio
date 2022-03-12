@@ -70,6 +70,12 @@ class _$BluetoothEventTearOff {
       id,
     );
   }
+
+  _BluetoothScaleSubscribedEvent scaleSubscribed(PairedDevice pairedDevice) {
+    return _BluetoothScaleSubscribedEvent(
+      pairedDevice,
+    );
+  }
 }
 
 /// @nodoc
@@ -92,6 +98,7 @@ mixin _$BluetoothEvent {
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -108,6 +115,7 @@ mixin _$BluetoothEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -124,6 +132,7 @@ mixin _$BluetoothEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -145,6 +154,8 @@ mixin _$BluetoothEvent {
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -162,6 +173,7 @@ mixin _$BluetoothEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -179,6 +191,7 @@ mixin _$BluetoothEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -260,6 +273,7 @@ class _$_BluetoothGotPairedDevicesEvent
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return gotPairedDevices();
   }
@@ -279,6 +293,7 @@ class _$_BluetoothGotPairedDevicesEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return gotPairedDevices?.call();
   }
@@ -298,6 +313,7 @@ class _$_BluetoothGotPairedDevicesEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (gotPairedDevices != null) {
@@ -325,6 +341,8 @@ class _$_BluetoothGotPairedDevicesEvent
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return gotPairedDevices(this);
   }
@@ -345,6 +363,7 @@ class _$_BluetoothGotPairedDevicesEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return gotPairedDevices?.call(this);
   }
@@ -365,6 +384,7 @@ class _$_BluetoothGotPairedDevicesEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (gotPairedDevices != null) {
@@ -438,6 +458,7 @@ class _$_BluetoothDeviceConnectedEvent
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return deviceConnected();
   }
@@ -457,6 +478,7 @@ class _$_BluetoothDeviceConnectedEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return deviceConnected?.call();
   }
@@ -476,6 +498,7 @@ class _$_BluetoothDeviceConnectedEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (deviceConnected != null) {
@@ -503,6 +526,8 @@ class _$_BluetoothDeviceConnectedEvent
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return deviceConnected(this);
   }
@@ -523,6 +548,7 @@ class _$_BluetoothDeviceConnectedEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return deviceConnected?.call(this);
   }
@@ -543,6 +569,7 @@ class _$_BluetoothDeviceConnectedEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (deviceConnected != null) {
@@ -642,6 +669,7 @@ class _$_BluetoothDeviceConnectionUpdatedEvent
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return deviceConnectionUpdate(args);
   }
@@ -661,6 +689,7 @@ class _$_BluetoothDeviceConnectionUpdatedEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return deviceConnectionUpdate?.call(args);
   }
@@ -680,6 +709,7 @@ class _$_BluetoothDeviceConnectionUpdatedEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (deviceConnectionUpdate != null) {
@@ -707,6 +737,8 @@ class _$_BluetoothDeviceConnectionUpdatedEvent
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return deviceConnectionUpdate(this);
   }
@@ -727,6 +759,7 @@ class _$_BluetoothDeviceConnectionUpdatedEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return deviceConnectionUpdate?.call(this);
   }
@@ -747,6 +780,7 @@ class _$_BluetoothDeviceConnectionUpdatedEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (deviceConnectionUpdate != null) {
@@ -825,6 +859,7 @@ class _$_BluetoothScanStartedEvent implements _BluetoothScanStartedEvent {
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return scanStarted();
   }
@@ -844,6 +879,7 @@ class _$_BluetoothScanStartedEvent implements _BluetoothScanStartedEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return scanStarted?.call();
   }
@@ -863,6 +899,7 @@ class _$_BluetoothScanStartedEvent implements _BluetoothScanStartedEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (scanStarted != null) {
@@ -890,6 +927,8 @@ class _$_BluetoothScanStartedEvent implements _BluetoothScanStartedEvent {
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return scanStarted(this);
   }
@@ -910,6 +949,7 @@ class _$_BluetoothScanStartedEvent implements _BluetoothScanStartedEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return scanStarted?.call(this);
   }
@@ -930,6 +970,7 @@ class _$_BluetoothScanStartedEvent implements _BluetoothScanStartedEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (scanStarted != null) {
@@ -999,6 +1040,7 @@ class _$_BluetoothScanStoppedEvent implements _BluetoothScanStoppedEvent {
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return scanStopped();
   }
@@ -1018,6 +1060,7 @@ class _$_BluetoothScanStoppedEvent implements _BluetoothScanStoppedEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return scanStopped?.call();
   }
@@ -1037,6 +1080,7 @@ class _$_BluetoothScanStoppedEvent implements _BluetoothScanStoppedEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (scanStopped != null) {
@@ -1064,6 +1108,8 @@ class _$_BluetoothScanStoppedEvent implements _BluetoothScanStoppedEvent {
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return scanStopped(this);
   }
@@ -1084,6 +1130,7 @@ class _$_BluetoothScanStoppedEvent implements _BluetoothScanStoppedEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return scanStopped?.call(this);
   }
@@ -1104,6 +1151,7 @@ class _$_BluetoothScanStoppedEvent implements _BluetoothScanStoppedEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (scanStopped != null) {
@@ -1197,6 +1245,7 @@ class _$_BluetoothConnectedEvent implements _BluetoothConnectedEvent {
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return connected(device);
   }
@@ -1216,6 +1265,7 @@ class _$_BluetoothConnectedEvent implements _BluetoothConnectedEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return connected?.call(device);
   }
@@ -1235,6 +1285,7 @@ class _$_BluetoothConnectedEvent implements _BluetoothConnectedEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (connected != null) {
@@ -1262,6 +1313,8 @@ class _$_BluetoothConnectedEvent implements _BluetoothConnectedEvent {
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return connected(this);
   }
@@ -1282,6 +1335,7 @@ class _$_BluetoothConnectedEvent implements _BluetoothConnectedEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return connected?.call(this);
   }
@@ -1302,6 +1356,7 @@ class _$_BluetoothConnectedEvent implements _BluetoothConnectedEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (connected != null) {
@@ -1381,6 +1436,7 @@ class _$_BluetoothClearedControlPointResponseEvent
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return clearedControlPointResponse();
   }
@@ -1400,6 +1456,7 @@ class _$_BluetoothClearedControlPointResponseEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return clearedControlPointResponse?.call();
   }
@@ -1419,6 +1476,7 @@ class _$_BluetoothClearedControlPointResponseEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (clearedControlPointResponse != null) {
@@ -1446,6 +1504,8 @@ class _$_BluetoothClearedControlPointResponseEvent
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return clearedControlPointResponse(this);
   }
@@ -1466,6 +1526,7 @@ class _$_BluetoothClearedControlPointResponseEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return clearedControlPointResponse?.call(this);
   }
@@ -1486,6 +1547,7 @@ class _$_BluetoothClearedControlPointResponseEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (clearedControlPointResponse != null) {
@@ -1581,6 +1643,7 @@ class _$_BluetoothDisconnectEvent implements _BluetoothDisconnectEvent {
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return disconnect(deviceId);
   }
@@ -1600,6 +1663,7 @@ class _$_BluetoothDisconnectEvent implements _BluetoothDisconnectEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return disconnect?.call(deviceId);
   }
@@ -1619,6 +1683,7 @@ class _$_BluetoothDisconnectEvent implements _BluetoothDisconnectEvent {
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (disconnect != null) {
@@ -1646,6 +1711,8 @@ class _$_BluetoothDisconnectEvent implements _BluetoothDisconnectEvent {
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return disconnect(this);
   }
@@ -1666,6 +1733,7 @@ class _$_BluetoothDisconnectEvent implements _BluetoothDisconnectEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return disconnect?.call(this);
   }
@@ -1686,6 +1754,7 @@ class _$_BluetoothDisconnectEvent implements _BluetoothDisconnectEvent {
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (disconnect != null) {
@@ -1814,6 +1883,7 @@ class _$_BluetoothSavePairedDevicesEvent
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return savePairedDevices(pairedDevice, checkSuccess, recordAccessData);
   }
@@ -1833,6 +1903,7 @@ class _$_BluetoothSavePairedDevicesEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return savePairedDevices?.call(
         pairedDevice, checkSuccess, recordAccessData);
@@ -1853,6 +1924,7 @@ class _$_BluetoothSavePairedDevicesEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (savePairedDevices != null) {
@@ -1880,6 +1952,8 @@ class _$_BluetoothSavePairedDevicesEvent
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return savePairedDevices(this);
   }
@@ -1900,6 +1974,7 @@ class _$_BluetoothSavePairedDevicesEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return savePairedDevices?.call(this);
   }
@@ -1920,6 +1995,7 @@ class _$_BluetoothSavePairedDevicesEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (savePairedDevices != null) {
@@ -2026,6 +2102,7 @@ class _$_BluetoothPairedDeviceDeletedEvent
             List<int>? recordAccessData)
         savePairedDevices,
     required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
   }) {
     return pairedDeviceDeleted(id);
   }
@@ -2045,6 +2122,7 @@ class _$_BluetoothPairedDeviceDeletedEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
   }) {
     return pairedDeviceDeleted?.call(id);
   }
@@ -2064,6 +2142,7 @@ class _$_BluetoothPairedDeviceDeletedEvent
             List<int>? recordAccessData)?
         savePairedDevices,
     TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (pairedDeviceDeleted != null) {
@@ -2091,6 +2170,8 @@ class _$_BluetoothPairedDeviceDeletedEvent
         savePairedDevices,
     required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
         pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
   }) {
     return pairedDeviceDeleted(this);
   }
@@ -2111,6 +2192,7 @@ class _$_BluetoothPairedDeviceDeletedEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
   }) {
     return pairedDeviceDeleted?.call(this);
   }
@@ -2131,6 +2213,7 @@ class _$_BluetoothPairedDeviceDeletedEvent
     TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
     TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
         pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
     required TResult orElse(),
   }) {
     if (pairedDeviceDeleted != null) {
@@ -2148,5 +2231,220 @@ abstract class _BluetoothPairedDeviceDeletedEvent implements BluetoothEvent {
   @JsonKey(ignore: true)
   _$BluetoothPairedDeviceDeletedEventCopyWith<
           _BluetoothPairedDeviceDeletedEvent>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$BluetoothScaleSubscribedEventCopyWith<$Res> {
+  factory _$BluetoothScaleSubscribedEventCopyWith(
+          _BluetoothScaleSubscribedEvent value,
+          $Res Function(_BluetoothScaleSubscribedEvent) then) =
+      __$BluetoothScaleSubscribedEventCopyWithImpl<$Res>;
+  $Res call({PairedDevice pairedDevice});
+}
+
+/// @nodoc
+class __$BluetoothScaleSubscribedEventCopyWithImpl<$Res>
+    extends _$BluetoothEventCopyWithImpl<$Res>
+    implements _$BluetoothScaleSubscribedEventCopyWith<$Res> {
+  __$BluetoothScaleSubscribedEventCopyWithImpl(
+      _BluetoothScaleSubscribedEvent _value,
+      $Res Function(_BluetoothScaleSubscribedEvent) _then)
+      : super(_value, (v) => _then(v as _BluetoothScaleSubscribedEvent));
+
+  @override
+  _BluetoothScaleSubscribedEvent get _value =>
+      super._value as _BluetoothScaleSubscribedEvent;
+
+  @override
+  $Res call({
+    Object? pairedDevice = freezed,
+  }) {
+    return _then(_BluetoothScaleSubscribedEvent(
+      pairedDevice == freezed
+          ? _value.pairedDevice
+          : pairedDevice // ignore: cast_nullable_to_non_nullable
+              as PairedDevice,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_BluetoothScaleSubscribedEvent
+    implements _BluetoothScaleSubscribedEvent {
+  const _$_BluetoothScaleSubscribedEvent(this.pairedDevice);
+
+  @override
+  final PairedDevice pairedDevice;
+
+  @override
+  String toString() {
+    return 'BluetoothEvent.scaleSubscribed(pairedDevice: $pairedDevice)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _BluetoothScaleSubscribedEvent &&
+            const DeepCollectionEquality()
+                .equals(other.pairedDevice, pairedDevice));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(pairedDevice));
+
+  @JsonKey(ignore: true)
+  @override
+  _$BluetoothScaleSubscribedEventCopyWith<_BluetoothScaleSubscribedEvent>
+      get copyWith => __$BluetoothScaleSubscribedEventCopyWithImpl<
+          _BluetoothScaleSubscribedEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() gotPairedDevices,
+    required TResult Function() deviceConnected,
+    required TResult Function(List<ConnectionStateUpdate> args)
+        deviceConnectionUpdate,
+    required TResult Function() scanStarted,
+    required TResult Function() scanStopped,
+    required TResult Function(DiscoveredDevice device) connected,
+    required TResult Function() clearedControlPointResponse,
+    required TResult Function(String deviceId) disconnect,
+    required TResult Function(PairedDevice pairedDevice, bool? checkSuccess,
+            List<int>? recordAccessData)
+        savePairedDevices,
+    required TResult Function(String id) pairedDeviceDeleted,
+    required TResult Function(PairedDevice pairedDevice) scaleSubscribed,
+  }) {
+    return scaleSubscribed(pairedDevice);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? gotPairedDevices,
+    TResult Function()? deviceConnected,
+    TResult Function(List<ConnectionStateUpdate> args)? deviceConnectionUpdate,
+    TResult Function()? scanStarted,
+    TResult Function()? scanStopped,
+    TResult Function(DiscoveredDevice device)? connected,
+    TResult Function()? clearedControlPointResponse,
+    TResult Function(String deviceId)? disconnect,
+    TResult Function(PairedDevice pairedDevice, bool? checkSuccess,
+            List<int>? recordAccessData)?
+        savePairedDevices,
+    TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
+  }) {
+    return scaleSubscribed?.call(pairedDevice);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? gotPairedDevices,
+    TResult Function()? deviceConnected,
+    TResult Function(List<ConnectionStateUpdate> args)? deviceConnectionUpdate,
+    TResult Function()? scanStarted,
+    TResult Function()? scanStopped,
+    TResult Function(DiscoveredDevice device)? connected,
+    TResult Function()? clearedControlPointResponse,
+    TResult Function(String deviceId)? disconnect,
+    TResult Function(PairedDevice pairedDevice, bool? checkSuccess,
+            List<int>? recordAccessData)?
+        savePairedDevices,
+    TResult Function(String id)? pairedDeviceDeleted,
+    TResult Function(PairedDevice pairedDevice)? scaleSubscribed,
+    required TResult orElse(),
+  }) {
+    if (scaleSubscribed != null) {
+      return scaleSubscribed(pairedDevice);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_BluetoothGotPairedDevicesEvent value)
+        gotPairedDevices,
+    required TResult Function(_BluetoothDeviceConnectedEvent value)
+        deviceConnected,
+    required TResult Function(_BluetoothDeviceConnectionUpdatedEvent value)
+        deviceConnectionUpdate,
+    required TResult Function(_BluetoothScanStartedEvent value) scanStarted,
+    required TResult Function(_BluetoothScanStoppedEvent value) scanStopped,
+    required TResult Function(_BluetoothConnectedEvent value) connected,
+    required TResult Function(_BluetoothClearedControlPointResponseEvent value)
+        clearedControlPointResponse,
+    required TResult Function(_BluetoothDisconnectEvent value) disconnect,
+    required TResult Function(_BluetoothSavePairedDevicesEvent value)
+        savePairedDevices,
+    required TResult Function(_BluetoothPairedDeviceDeletedEvent value)
+        pairedDeviceDeleted,
+    required TResult Function(_BluetoothScaleSubscribedEvent value)
+        scaleSubscribed,
+  }) {
+    return scaleSubscribed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_BluetoothGotPairedDevicesEvent value)? gotPairedDevices,
+    TResult Function(_BluetoothDeviceConnectedEvent value)? deviceConnected,
+    TResult Function(_BluetoothDeviceConnectionUpdatedEvent value)?
+        deviceConnectionUpdate,
+    TResult Function(_BluetoothScanStartedEvent value)? scanStarted,
+    TResult Function(_BluetoothScanStoppedEvent value)? scanStopped,
+    TResult Function(_BluetoothConnectedEvent value)? connected,
+    TResult Function(_BluetoothClearedControlPointResponseEvent value)?
+        clearedControlPointResponse,
+    TResult Function(_BluetoothDisconnectEvent value)? disconnect,
+    TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
+    TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
+        pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
+  }) {
+    return scaleSubscribed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_BluetoothGotPairedDevicesEvent value)? gotPairedDevices,
+    TResult Function(_BluetoothDeviceConnectedEvent value)? deviceConnected,
+    TResult Function(_BluetoothDeviceConnectionUpdatedEvent value)?
+        deviceConnectionUpdate,
+    TResult Function(_BluetoothScanStartedEvent value)? scanStarted,
+    TResult Function(_BluetoothScanStoppedEvent value)? scanStopped,
+    TResult Function(_BluetoothConnectedEvent value)? connected,
+    TResult Function(_BluetoothClearedControlPointResponseEvent value)?
+        clearedControlPointResponse,
+    TResult Function(_BluetoothDisconnectEvent value)? disconnect,
+    TResult Function(_BluetoothSavePairedDevicesEvent value)? savePairedDevices,
+    TResult Function(_BluetoothPairedDeviceDeletedEvent value)?
+        pairedDeviceDeleted,
+    TResult Function(_BluetoothScaleSubscribedEvent value)? scaleSubscribed,
+    required TResult orElse(),
+  }) {
+    if (scaleSubscribed != null) {
+      return scaleSubscribed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BluetoothScaleSubscribedEvent implements BluetoothEvent {
+  const factory _BluetoothScaleSubscribedEvent(PairedDevice pairedDevice) =
+      _$_BluetoothScaleSubscribedEvent;
+
+  PairedDevice get pairedDevice;
+  @JsonKey(ignore: true)
+  _$BluetoothScaleSubscribedEventCopyWith<_BluetoothScaleSubscribedEvent>
       get copyWith => throw _privateConstructorUsedError;
 }

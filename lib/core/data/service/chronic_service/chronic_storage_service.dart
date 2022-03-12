@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:hive/hive.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../model/bg_measurement/blood_glucose_value_detail_model.dart';
 import '../../../../model/bg_measurement/blood_glucose_value_model.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../core/core.dart';
 import 'loading/scale_progress_circle.dart';
@@ -24,7 +24,7 @@ class MiScalePopUp extends StatelessWidget {
         width: context.width,
         child: BlocBuilder<BluetoothBloc, BluetoothState>(
           builder: (context, bluetoothState) {
-            ScaleMeasurementLogic? data = bluetoothState.scaleDevice?.scaleData;
+            ScaleEntity? data = bluetoothState.scaleEntity;
             return hasAlreadyPair
                 ? _scaleStep(reactor, context, data)
                 : _pairingStep(reactor, context);
@@ -37,7 +37,7 @@ class MiScalePopUp extends StatelessWidget {
   Widget _scaleStep(
     BleReactorOps _bleReactor,
     BuildContext context,
-    ScaleMeasurementLogic? data,
+    ScaleEntity? data,
   ) {
     return data != null && _bleReactor.scaleDevice.scaleData != null
         ? Column(
@@ -47,14 +47,13 @@ class MiScalePopUp extends StatelessWidget {
                 child: Center(
                   child: getMeasurementStatus(
                     context,
-                    data.scaleModel,
+                    data,
                   ),
                 ),
               ),
 
               //
-              if (data.scaleModel.measurementComplete ??
-                  true && data.scaleModel.impedance != 0) ...[
+              if (data.measurementComplete ?? true && data.impedance != 0) ...[
                 Expanded(
                   child: GridView(
                     gridDelegate:
@@ -88,8 +87,8 @@ class MiScalePopUp extends StatelessWidget {
 
               //
               Text(
-                data.scaleModel.weightStabilized ?? false
-                    ? data.scaleModel.measurementComplete ?? false
+                data.weightStabilized ?? false
+                    ? data.measurementComplete ?? false
                         ? LocaleProvider.current.ble_scale_weight_info
                         : LocaleProvider.current.ble_scale_stabilizing_info
                     : LocaleProvider.current.ble_scale_weight_calculating_info,
@@ -99,8 +98,7 @@ class MiScalePopUp extends StatelessWidget {
               //
               SizedBox(
                 height: context.height * 0.1,
-                child: _bleReactor.scaleDevice.scaleData?.scaleModel
-                            .measurementComplete ??
+                child: _bleReactor.scaleDevice.scaleData?.measurementComplete ??
                         false
                     ? Row(
                         children: [
@@ -145,7 +143,7 @@ class MiScalePopUp extends StatelessWidget {
           );
   }
 
-  Widget getMeasurementStatus(BuildContext context, ScaleModel data) {
+  Widget getMeasurementStatus(BuildContext context, ScaleEntity data) {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -184,25 +182,21 @@ class MiScalePopUp extends StatelessWidget {
           child: Stack(
             alignment: AlignmentDirectional.center,
             children: [
-              _bleReactor.scaleDevice.scaleData?.scaleModel
-                          .measurementComplete ??
-                      false
+              _bleReactor.scaleDevice.scaleData?.measurementComplete ?? false
                   ? const SizedBox()
                   : ScaleProgressCircle(
                       size: context.height * .5,
                       color: R.color.white,
                     ),
               Text(
-                _bleReactor.scaleDevice.scaleData?.scaleModel
-                            .measurementComplete ??
-                        false
+                _bleReactor.scaleDevice.scaleData?.measurementComplete ?? false
                     ? LocaleProvider.current.pair_successful
                     : LocaleProvider.current.pairing,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: R.color.white,
-                    fontSize: _bleReactor.scaleDevice.scaleData?.scaleModel
-                                .measurementComplete ??
+                    fontSize: _bleReactor
+                                .scaleDevice.scaleData?.measurementComplete ??
                             false
                         ? context.textScale * 25
                         : null),
@@ -212,8 +206,7 @@ class MiScalePopUp extends StatelessWidget {
         ),
 
         //
-        _bleReactor.scaleDevice.scaleData?.scaleModel.measurementComplete ??
-                false
+        _bleReactor.scaleDevice.scaleData?.measurementComplete ?? false
             ? Expanded(
                 child: TextButton(
                   style: TextButton.styleFrom(primary: R.color.white),

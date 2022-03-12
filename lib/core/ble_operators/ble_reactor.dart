@@ -10,7 +10,6 @@ import 'package:mi_scale/mi_scale.dart';
 
 import '../../../../../core/core.dart';
 import '../../features/chronic_tracking/progress_sections/blood_glucose/widgets/tagger/bg_tagger_pop_up.dart';
-import '../../features/chronic_tracking/progress_sections/scale/widgets/mi_scale_popup.dart';
 import '../../features/chronic_tracking/progress_sections/scale/widgets/tagger/scale_tagger_pop_up.dart';
 
 class BleReactorOps {
@@ -297,10 +296,10 @@ class BleReactorOps {
 
   Future<void> subscribeScaleDevice(
     DiscoveredDevice device,
-    void Function(List<int>) emitState,
-    void Function(MiScaleDevice) emit2State,
+    void Function(MiScaleDevice) emitState,
   ) async {
     scaleDevice = MiScaleDevice.from(device);
+    emitState(scaleDevice);
 
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
@@ -331,15 +330,14 @@ class BleReactorOps {
       pairedDevice.serialNumber = String.fromCharCodes(value);
     });
 
-    subscribeScaleCharacteristic(device, pairedDevice, emitState, emit2State);
+    Atom.context
+        .read<BluetoothBloc>()
+        .add(BluetoothEvent.scaleSubscribed(pairedDevice));
   }
 
-  Future<void> subscribeScaleCharacteristic(
-    DiscoveredDevice device,
+  Stream<ScaleRepoSubscribeState> subscribeScale(
     PairedDevice pairedDevice,
-    void Function(List<int>) emitState,
-    void Function(MiScaleDevice) emit2State,
-  ) async {
+  ) async* {
     _controlPointResponse = <int>[];
     final deviceAlreadyPaired =
         await getIt<BluetoothConnector>().hasDeviceAlreadyPaired(pairedDevice);
@@ -347,69 +345,46 @@ class BleReactorOps {
     final _characteristic = QualifiedCharacteristic(
       characteristicId: Uuid([42, 156]),
       serviceId: Uuid([24, 27]),
-      deviceId: device.id,
+      deviceId: pairedDevice.deviceId!,
     );
 
     try {
-      _ble.subscribeToCharacteristic(_characteristic).listen(
-        (event) async {
-          if (!(Atom.isDialogShow)) {
-            Atom.show(
-              MiScalePopUp(
-                hasAlreadyPair: deviceAlreadyPaired,
-              ),
-            );
+      await for (var event in _ble.subscribeToCharacteristic(_characteristic)) {
+        yield ScaleRepoSubscribeState.showMiScalePopUp(deviceAlreadyPaired);
+
+        if (scaleDevice.scaleData == null ||
+            !scaleDevice.scaleData!.measurementComplete!) {
+          final Uint8List data = Uint8List.fromList(event);
+          scaleDevice.parseScaleData(pairedDevice, data);
+
+          if (scaleDevice.scaleData!.measurementComplete! &&
+              deviceAlreadyPaired) {
+            yield ScaleRepoSubscribeState.sendModel(scaleDevice.scaleData!);
+            scaleDevice.scaleData = null;
           }
 
-          if (scaleDevice.scaleData == null ||
-              !scaleDevice.scaleData!.scaleModel.measurementComplete!) {
-            final Uint8List data = Uint8List.fromList(event);
-            scaleDevice.parseScaleData(pairedDevice, data);
+          final popUpCanClose = (Atom.isDialogShow) &&
+              (scaleDevice.scaleData!.weightRemoved)! &&
+              !scaleDevice.scaleData!.measurementComplete!;
 
-            if (scaleDevice.scaleData!.scaleModel.measurementComplete! &&
-                deviceAlreadyPaired) {
-              scaleDevice.scaleData!.calculateVariables();
-              if (Atom.isDialogShow) {
-                Atom.dismiss();
-              }
-              await Future.delayed(const Duration(milliseconds: 350));
-              await Atom.show(
-                ScaleTaggerPopUp(
-                  scaleModel: scaleDevice.scaleData!.scaleModel
-                    ..isManuel = false,
-                ),
-                barrierDismissible: false,
-              );
-              scaleDevice.scaleData = null;
-            }
-
-            final popUpCanClose = (Atom.isDialogShow) &&
-                (scaleDevice.scaleData!.scaleModel.weightRemoved)! &&
-                !scaleDevice.scaleData!.scaleModel.measurementComplete!;
-
-            if (popUpCanClose) {
-              Atom.dismiss();
-            }
-
-            if ((scaleDevice.scaleData?.scaleModel.measurementComplete)! &&
-                !deviceAlreadyPaired) {
-              // Saving paired device Section
-              controlPointResponse.add(1);
-              WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-                Atom.context
-                    .read<BluetoothBloc>()
-                    .add(BluetoothEvent.savePairedDevices(pairedDevice));
-              });
-            }
+          if (popUpCanClose) {
+            Atom.dismiss();
           }
 
-          emitState(_controlPointResponse);
-          emit2State(scaleDevice);
-        },
-        onError: (e, stk) {
-          LoggerUtils.instance.e(e);
-        },
-      );
+          if ((scaleDevice.scaleData?.measurementComplete)! &&
+              !deviceAlreadyPaired) {
+            // Saving paired device Section
+            controlPointResponse.add(1);
+            WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+              Atom.context
+                  .read<BluetoothBloc>()
+                  .add(BluetoothEvent.savePairedDevices(pairedDevice));
+            });
+          }
+        }
+
+        yield ScaleRepoSubscribeState.changeState(_controlPointResponse, scaleDevice);
+      }
     } catch (e, stk) {
       LoggerUtils.instance.e(e);
       debugPrintStack(stackTrace: stk);

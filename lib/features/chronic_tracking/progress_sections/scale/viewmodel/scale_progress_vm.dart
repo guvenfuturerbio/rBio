@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scale_repository/scale_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:scale_calculations/scale_calculations.dart';
 
@@ -54,10 +55,9 @@ class ScaleProgressVm extends ChangeNotifier
 
   GraphType? _currentGraphType;
 
-  List<ScaleMeasurementLogic> scaleMeasurementsDailyData =
-      <ScaleMeasurementLogic>[];
+  List<ScaleEntity> scaleMeasurementsDailyData = <ScaleEntity>[];
 
-  List<ScaleMeasurementLogic> scaleMeasurements = <ScaleMeasurementLogic>[];
+  List<ScaleEntity> scaleMeasurements = <ScaleEntity>[];
 
   List<ChartData>? _chartData;
 
@@ -714,10 +714,13 @@ class ScaleProgressVm extends ChangeNotifier
   }
 
   void fetchScaleMeasurements() {
-    final result = getIt<ScaleStorageImpl>().getAll();
+    final result = getIt<ScaleRepository>().readLocalScaleData(
+      Utils.instance.getAge(),
+      Utils.instance.getGender(),
+      Utils.instance.getHeight(),
+    );
     scaleMeasurements.clear();
-    scaleMeasurements =
-        result.map((e) => ScaleMeasurementLogic(scaleModel: e)).toList();
+    scaleMeasurements = result.map((e) => e).toList();
     scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));
   }
 
@@ -745,9 +748,9 @@ class ScaleProgressVm extends ChangeNotifier
     final result = getIt<ScaleStorageImpl>().getAll();
     scaleMeasurements.clear();
     for (var e in result) {
-      DateTime measurementDate = ScaleMeasurementLogic(scaleModel: e).dateTime;
+      DateTime measurementDate = e.dateTime;
       if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
-        scaleMeasurements.add(ScaleMeasurementLogic(scaleModel: e));
+        //scaleMeasurements.add(ScaleMeasurementLogic(scaleModel: e));
       }
     }
     scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));

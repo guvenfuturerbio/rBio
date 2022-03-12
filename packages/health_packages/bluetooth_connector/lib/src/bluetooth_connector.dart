@@ -1,4 +1,5 @@
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:shared_preferences_manager/shared_preferences_manager.dart';
 
 import '../bluetooth_connector.dart';
 
@@ -6,12 +7,17 @@ class BluetoothConnector {
   late final BleConnector _connector;
   late final BleDeviceManager _deviceManager;
   late final BleScanner _scanner;
+  late final FlutterReactiveBle ble;
 
   BluetoothConnector(
-    this._connector,
-    this._deviceManager,
-    this._scanner,
-  );
+    this.ble,
+    ISharedPreferencesManager sharedPrefs, {
+    BleConnector? connector,
+    BleDeviceManager? deviceManager,
+    BleScanner? scanner,
+  })  : _connector = connector ?? BleConnector(ble),
+        _deviceManager = deviceManager ?? BleDeviceManager(sharedPrefs),
+        _scanner = scanner ?? BleScanner(ble);
 
   Stream<ListenConnectedDeviceStreamArgs> listenConnectedDeviceStream() async* {
     yield* _connector.listenConnectedDeviceStream();

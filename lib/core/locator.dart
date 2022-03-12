@@ -35,9 +35,8 @@ Future<void> setupLocator(AppConfig appConfig) async {
     );
     getIt.registerLazySingleton<BluetoothConnector>(
       () => BluetoothConnector(
-        BleConnector(ble),
-        BleDeviceManager(getIt<ISharedPreferencesManager>()),
-        BleScanner(ble),
+        ble,
+        getIt<ISharedPreferencesManager>(),
       ),
     );
   }
@@ -174,8 +173,6 @@ Future<void> setupLocator(AppConfig appConfig) async {
     await registerStorage();
   }
 
-  getIt.registerSingleton<ScaleHealthImpl>(ScaleHealthImpl());
-  getIt.registerSingleton<ScaleHiveImpl>(ScaleHiveImpl());
   getIt.registerSingleton<GuvenService>(
     GuvenService(
       getIt<IDioHelper>(),
@@ -183,16 +180,18 @@ Future<void> setupLocator(AppConfig appConfig) async {
       getIt<ISharedPreferencesManager>(),
     ),
   );
-  await getIt<ScaleHiveImpl>().init("scaleKey");
   getIt.registerSingleton<ScaleRepository>(
     ScaleRepository(
       getIt<GuvenService>(),
-      getIt<ScaleHiveImpl>(),
-      getIt<ScaleHealthImpl>(),
+      ScaleHiveImpl(),
+      ScaleHealthImpl(),
+      getIt<BluetoothConnector>(),
+      getIt<BleReactorOps>(),
     ),
   );
 
   // #region Init
+  await getIt<ScaleRepository>().init("hive_scale");
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
   await getIt<LocaleNotifier>().init();
