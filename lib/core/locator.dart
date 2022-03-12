@@ -30,6 +30,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
     Hive.init(directory);
 
     FlutterReactiveBle ble = FlutterReactiveBle();
+    await ble.initialize();
     getIt.registerLazySingleton<BleReactorOps>(
       () => BleReactorOps(ble),
     );

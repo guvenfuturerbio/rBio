@@ -19,6 +19,8 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   final ProfileStorageImpl profileStorageImpl;
   final ScaleRepository scaleRepository;
 
+  Stream<List<DiscoveredDevice>>? scanStream;
+
   BluetoothBloc(
     this.bluetoothConnector,
     this.reactor,
@@ -26,24 +28,27 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     this.scaleRepository,
   ) : super(BluetoothState()) {
     on<_BluetoothScanStartedEvent>((event, emit) async {
-      final scanStream = bluetoothConnector.startScan(
-        (device) {
-          emit(state.copyWith(device: device));
-        },
-      );
-      await emit.forEach<List<DiscoveredDevice>>(
-        scanStream,
-        onData: (list) {
-          return state.copyWith(discoveredDevices: list);
-        },
-        onError: (error, stacktrace) {
-          LoggerUtils.instance.i(error);
-          return state;
-        },
-      );
+      if (scanStream == null) {
+        scanStream = bluetoothConnector.startScan(
+          (device) {
+            emit(state.copyWith(device: device));
+          },
+        );
+        await emit.forEach<List<DiscoveredDevice>>(
+          scanStream!,
+          onData: (list) {
+            return state.copyWith(discoveredDevices: list);
+          },
+          onError: (error, stacktrace) {
+            LoggerUtils.instance.i(error);
+            return state;
+          },
+        );
+      }
     });
 
     on<_BluetoothScanStoppedEvent>((event, emit) {
+      scanStream = null;
       bluetoothConnector.stopScan(
         (list) {
           emit(state.copyWith(discoveredDevices: list));
@@ -105,6 +110,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     });
 
     on<_BluetoothConnectedEvent>((event, emit) async {
+      LoggerUtils.instance.wtf("_BluetoothConnectedEvent - EYC");
       await bluetoothConnector.connect(
         event.device,
         (device) {

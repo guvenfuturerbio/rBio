@@ -49,7 +49,9 @@ Future<void> bootstrap(AppConfig appConfig) async {
                 getIt<ScaleRepository>(),
               )
                 ..add(const BluetoothEvent.gotPairedDevices())
+                ..add(const BluetoothEvent.scanStarted())
                 ..add(const BluetoothEvent.deviceConnected()),
+              lazy: false,
               child: const MyApp(),
             ),
           ),
