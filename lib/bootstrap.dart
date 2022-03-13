@@ -34,8 +34,6 @@ Future<void> bootstrap(AppConfig appConfig) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  LoggerUtils.instance.i(Utils.instance.getAge());
-
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
@@ -49,7 +47,6 @@ Future<void> bootstrap(AppConfig appConfig) async {
                 getIt<ScaleRepository>(),
               )
                 ..add(const BluetoothEvent.gotPairedDevices())
-                ..add(const BluetoothEvent.scanStarted())
                 ..add(const BluetoothEvent.deviceConnected()),
               lazy: false,
               child: const MyApp(),

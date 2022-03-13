@@ -194,6 +194,10 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
         });
       }
     });
+
+    on<_BluetoothMiScaleClearedEvent>((event, emit) async {
+      emit(state.setScaleDeviceNull());
+    });
   }
 
   void deviceConnectionUpdate(List<ConnectionStateUpdate> args) {

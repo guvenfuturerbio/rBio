@@ -15,8 +15,6 @@ class MiScalePopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reactor = getIt<BleReactorOps>();
-
     return Scaffold(
       body: Container(
         color: getIt<ITheme>().mainColor,
@@ -26,8 +24,8 @@ class MiScalePopUp extends StatelessWidget {
           builder: (context, bluetoothState) {
             ScaleEntity? data = bluetoothState.scaleEntity;
             return hasAlreadyPair
-                ? _scaleStep(reactor, context, data)
-                : _pairingStep(reactor, context);
+                ? _scaleStep(data, context)
+                : _pairingStep(data, context);
           },
         ),
       ),
@@ -35,11 +33,10 @@ class MiScalePopUp extends StatelessWidget {
   }
 
   Widget _scaleStep(
-    BleReactorOps _bleReactor,
+    ScaleEntity? scaleEntity,
     BuildContext context,
-    ScaleEntity? data,
   ) {
-    return data != null && _bleReactor.scaleDevice.scaleData != null
+    return scaleEntity != null
         ? Column(
             children: [
               //
@@ -47,13 +44,14 @@ class MiScalePopUp extends StatelessWidget {
                 child: Center(
                   child: getMeasurementStatus(
                     context,
-                    data,
+                    scaleEntity,
                   ),
                 ),
               ),
 
               //
-              if (data.measurementComplete ?? true && data.impedance != 0) ...[
+              if (scaleEntity.measurementComplete ??
+                  true && scaleEntity.impedance != 0) ...[
                 Expanded(
                   child: GridView(
                     gridDelegate:
@@ -63,22 +61,22 @@ class MiScalePopUp extends StatelessWidget {
                     ),
                     children: [
                       textItem(
-                        '${LocaleProvider.current.scale_data_bmi}: ${data.bmi?.toStringAsFixed(2)}',
+                        '${LocaleProvider.current.scale_data_bmi}: ${scaleEntity.bmi?.toStringAsFixed(2)}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_body_fat}: ${data.bodyFat?.toStringAsFixed(2)} ${data.unit}',
+                        '${LocaleProvider.current.scale_data_body_fat}: ${scaleEntity.bodyFat?.toStringAsFixed(2)} ${scaleEntity.unit}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_bone_mass}: ${data.boneMass?.toStringAsFixed(2)} ${data.unit}',
+                        '${LocaleProvider.current.scale_data_bone_mass}: ${scaleEntity.boneMass?.toStringAsFixed(2)} ${scaleEntity.unit}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_muscle}: ${data.muscle?.toStringAsFixed(2)} ${data.unit}',
+                        '${LocaleProvider.current.scale_data_muscle}: ${scaleEntity.muscle?.toStringAsFixed(2)} ${scaleEntity.unit}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_visceral_fat}: ${data.visceralFat?.toStringAsFixed(2)}',
+                        '${LocaleProvider.current.scale_data_visceral_fat}: ${scaleEntity.visceralFat?.toStringAsFixed(2)}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_water}: ${data.water?.toStringAsFixed(2)}%',
+                        '${LocaleProvider.current.scale_data_water}: ${scaleEntity.water?.toStringAsFixed(2)}%',
                       )
                     ],
                   ),
@@ -87,8 +85,8 @@ class MiScalePopUp extends StatelessWidget {
 
               //
               Text(
-                data.weightStabilized ?? false
-                    ? data.measurementComplete ?? false
+                scaleEntity.weightStabilized ?? false
+                    ? scaleEntity.measurementComplete ?? false
                         ? LocaleProvider.current.ble_scale_weight_info
                         : LocaleProvider.current.ble_scale_stabilizing_info
                     : LocaleProvider.current.ble_scale_weight_calculating_info,
@@ -98,16 +96,18 @@ class MiScalePopUp extends StatelessWidget {
               //
               SizedBox(
                 height: context.height * 0.1,
-                child: _bleReactor.scaleDevice.scaleData?.measurementComplete ??
-                        false
+                child: scaleEntity.measurementComplete ?? false
                     ? Row(
                         children: [
+                          //
                           Expanded(
                             child: TextButton(
                               style:
                                   TextButton.styleFrom(primary: R.color.white),
                               onPressed: () {
-                                _bleReactor.scaleDevice.scaleData = null;
+                                Atom.context
+                                    .read<BluetoothBloc>()
+                                    .add(const BluetoothEvent.miScaleCleared());
                                 Atom.dismiss();
                               },
                               child: Text(
@@ -115,12 +115,16 @@ class MiScalePopUp extends StatelessWidget {
                               ),
                             ),
                           ),
+
+                          //
                           Expanded(
                             child: TextButton(
                               style:
                                   TextButton.styleFrom(primary: R.color.white),
                               onPressed: () async {
-                                _bleReactor.scaleDevice.scaleData = null;
+                                Atom.context
+                                    .read<BluetoothBloc>()
+                                    .add(const BluetoothEvent.miScaleCleared());
                                 Atom.dismiss();
                               },
                               child: Text(
@@ -143,7 +147,7 @@ class MiScalePopUp extends StatelessWidget {
           );
   }
 
-  Widget getMeasurementStatus(BuildContext context, ScaleEntity data) {
+  Widget getMeasurementStatus(BuildContext context, ScaleEntity? data) {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -152,12 +156,12 @@ class MiScalePopUp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              data.weight.toString(),
+              (data?.weight ?? 0).toString(),
               style: TextStyle(
                   color: R.color.white, fontSize: context.textScale * 32),
             ),
             Text(
-              data.getUnit,
+              data!.getUnit,
               style: TextStyle(
                   color: R.color.white, fontSize: context.textScale * 32),
             )
@@ -173,7 +177,7 @@ class MiScalePopUp extends StatelessWidget {
     );
   }
 
-  Widget _pairingStep(BleReactorOps _bleReactor, BuildContext context) {
+  Widget _pairingStep(ScaleEntity? scaleEntity, BuildContext context) {
     return Column(
       children: [
         //
@@ -182,22 +186,20 @@ class MiScalePopUp extends StatelessWidget {
           child: Stack(
             alignment: AlignmentDirectional.center,
             children: [
-              _bleReactor.scaleDevice.scaleData?.measurementComplete ?? false
+              scaleEntity?.measurementComplete ?? false
                   ? const SizedBox()
                   : ScaleProgressCircle(
                       size: context.height * .5,
                       color: R.color.white,
                     ),
               Text(
-                _bleReactor.scaleDevice.scaleData?.measurementComplete ?? false
+                scaleEntity?.measurementComplete ?? false
                     ? LocaleProvider.current.pair_successful
                     : LocaleProvider.current.pairing,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: R.color.white,
-                    fontSize: _bleReactor
-                                .scaleDevice.scaleData?.measurementComplete ??
-                            false
+                    fontSize: scaleEntity?.measurementComplete ?? false
                         ? context.textScale * 25
                         : null),
               ),
@@ -206,12 +208,14 @@ class MiScalePopUp extends StatelessWidget {
         ),
 
         //
-        _bleReactor.scaleDevice.scaleData?.measurementComplete ?? false
+        scaleEntity?.measurementComplete ?? false
             ? Expanded(
                 child: TextButton(
                   style: TextButton.styleFrom(primary: R.color.white),
                   onPressed: () {
-                    _bleReactor.scaleDevice.scaleData = null;
+                    Atom.context
+                        .read<BluetoothBloc>()
+                        .add(const BluetoothEvent.miScaleCleared());
                     Atom.context
                         .read<BluetoothBloc>()
                         .add(const BluetoothEvent.scanStopped());

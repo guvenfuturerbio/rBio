@@ -52,6 +52,18 @@ class BluetoothState {
     );
   }
 
+  BluetoothState setScaleDeviceNull() {
+    return BluetoothState(
+      pairedDevices: pairedDevices,
+      discoveredDevices: discoveredDevices,
+      deviceConnectionState: deviceConnectionState,
+      device: device,
+      controlPointResponse: controlPointResponse,
+      scaleDevice: null,
+      scaleEntity: scaleEntity,
+    );
+  }
+
   @override
   String toString() {
     return 'BluetoothState(pairedDevices: $pairedDevices, discoveredDevices: $discoveredDevices, deviceConnectionState: $deviceConnectionState, device: $device, controlPointResponse: $controlPointResponse, scaleDevice: $scaleDevice, scaleEntity: $scaleEntity)';
