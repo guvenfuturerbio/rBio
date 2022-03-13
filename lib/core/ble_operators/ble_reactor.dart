@@ -360,15 +360,22 @@ class BleReactorOps {
           if (scaleDevice.scaleData!.measurementComplete! &&
               deviceAlreadyPaired) {
             yield ScaleRepoSubscribeState.sendModel(scaleDevice.scaleData!);
+            final popUpCanClose = (Atom.isDialogShow) &&
+                (scaleDevice.scaleData!.weightRemoved)! &&
+                !scaleDevice.scaleData!.measurementComplete!;
+
+            if (popUpCanClose) {
+              Atom.dismiss();
+            }
             scaleDevice.scaleData = null;
-          }
+          } else {
+            final popUpCanClose = (Atom.isDialogShow) &&
+                (scaleDevice.scaleData!.weightRemoved)! &&
+                !scaleDevice.scaleData!.measurementComplete!;
 
-          final popUpCanClose = (Atom.isDialogShow) &&
-              (scaleDevice.scaleData!.weightRemoved)! &&
-              !scaleDevice.scaleData!.measurementComplete!;
-
-          if (popUpCanClose) {
-            Atom.dismiss();
+            if (popUpCanClose) {
+              Atom.dismiss();
+            }
           }
 
           if ((scaleDevice.scaleData?.measurementComplete)! &&
@@ -383,7 +390,8 @@ class BleReactorOps {
           }
         }
 
-        yield ScaleRepoSubscribeState.changeState(_controlPointResponse, scaleDevice);
+        yield ScaleRepoSubscribeState.changeState(
+            _controlPointResponse, scaleDevice);
       }
     } catch (e, stk) {
       LoggerUtils.instance.e(e);

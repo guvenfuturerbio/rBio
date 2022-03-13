@@ -31,7 +31,7 @@ class BleScanner {
     print('Start ble discovery');
     _devices.clear();
     _subscription?.cancel();
-
+    await startBluetoothScan();
     try {
       await for (final device
           in _ble.scanForDevices(withServices: _supported)) {
@@ -64,9 +64,10 @@ class BleScanner {
 
   /// Cihazlarım sayfasını açınca çalıştır
   BleStatus? bleStatus;
-  void startBluetoothScan() {
+  Future<void> startBluetoothScan() async {
     _ble.statusStream.listen((value) async {
       bleStatus = value;
+      await checkPermission();
     });
   }
 

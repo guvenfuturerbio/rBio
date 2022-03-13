@@ -34,7 +34,7 @@ class BluetoothConnector {
         await _deviceManager.getPairedDevices();
     return pairedDevice;
   }
-
+  
   Stream<List<DiscoveredDevice>> startScan(
     void Function(DiscoveredDevice) emit2State,
   ) async* {
