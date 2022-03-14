@@ -26,6 +26,9 @@ class ScaleEntity {
   bool? measurementComplete;
   bool? weightRemoved;
 
+  String? deviceId;
+  double? bmh;
+
   ScaleEntity({
     required this.dateTime,
     this.weight,
@@ -39,6 +42,8 @@ class ScaleEntity {
     this.height,
     this.gender,
     this.impedance,
+    this.deviceId,
+    this.bmh,
     bool? isManuel,
     ScaleUnit? unit,
     String? note,
@@ -72,6 +77,8 @@ class ScaleEntity {
       measurementComplete: measurementComplete,
       weightRemoved: weightRemoved,
       weightStabilized: weightStabilized,
+      deviceId: deviceId,
+      bmh: bmh,
     );
   }
 }

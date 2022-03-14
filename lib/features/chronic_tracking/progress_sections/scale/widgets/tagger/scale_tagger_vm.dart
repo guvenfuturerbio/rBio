@@ -312,13 +312,26 @@ class ScaleTaggerVm extends ChangeNotifier {
       if (weightController.text == '') {
         throw Exception(LocaleProvider.current.required_area);
       }
-
       scaleModel.dateTime = DateTime.now();
-      // TODO
-      // await getIt<ScaleStorageImpl>().write(
-      //   scaleModel.scaleModel,
-      //   shouldSendToServer: true,
-      // );
+
+      //
+      AddScaleMasurementBody model = AddScaleMasurementBody(
+        entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+        occurrenceTime: scaleModel.dateTime,
+        weight: scaleModel.weight,
+        water: scaleModel.water,
+        bmi: scaleModel.bmi,
+        bodyFat: scaleModel.bodyFat,
+        bmh: scaleModel.bmh,
+        visceralFat: scaleModel.visceralFat,
+        boneMass: scaleModel.boneMass,
+        muscle: scaleModel.muscle,
+        scaleUnit: scaleModel.unit.xScaleToInt,
+        deviceUUID: scaleModel.deviceId,
+        note: scaleModel.note,
+        isManuel: scaleModel.isManuel,
+      );
+      await getIt<ScaleRepository>().addScaleMeasurement(model);
       Atom.dismiss();
     } catch (e) {
       LoggerUtils.instance.e(e);

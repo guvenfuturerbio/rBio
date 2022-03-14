@@ -322,6 +322,21 @@ extension ScaleUnitIntExtension on int? {
   }
 }
 
+extension ScaleToInt on ScaleUnit? {
+  int get xScaleToInt {
+    switch (this) {
+      case ScaleUnit.kg:
+        return 1;
+
+      case ScaleUnit.lbs:
+        return 2;
+
+      default:
+        throw Exception("Undefined ${this}");
+    }
+  }
+}
+
 enum StripMode { add, subtract, none }
 
 extension SUE on ScaleUnit {

@@ -50,6 +50,7 @@ extension MiScaleModelExtension on MiScaleModel {
       weight: weight,
       weightRemoved: weightRemoved,
       weightStabilized: weightStabilized,
+      deviceId: device?['deviceId'] ?? "",
     );
   }
 
@@ -85,6 +86,8 @@ extension MiScaleModelExtension on MiScaleModel {
       weight: weight,
       weightRemoved: weightRemoved,
       weightStabilized: weightStabilized,
+      deviceId: device?['deviceId'] ?? "",
+      bmh: ScaleCalculate.instance.getBMH(gender: gender, weight: weight!, height: height, age: age),
     );
   }
 }
