@@ -22,21 +22,34 @@ class SelectedDevicesScreen extends StatelessWidget {
           context,
           LocaleProvider.current.device_connections,
         ),
+        actions: [
+          BlocBuilder<BluetoothBloc, BluetoothState>(
+            builder: (context, state) {
+              return CircleAvatar(
+                backgroundColor: state.bleStatus == BleStatus.ready
+                    ? Colors.white
+                    : Colors.red,
+                radius: 16,
+              );
+            },
+          ),
+          R.sizes.wSizer8,
+        ],
       ),
 
       //
       body: ChangeNotifierProvider(
         create: (BuildContext context) => SelectedDeviceVm(deviceType!),
-        child: Consumer<SelectedDeviceVm>(
-          builder: (context, _selectedDeviceVm, child) {
+        child: Consumer2<BleReactorOps, SelectedDeviceVm>(
+          builder: (
+            _,
+            _bleReactorOps,
+            _selectedDeviceVm,
+            __,
+          ) {
             return BlocBuilder<BluetoothBloc, BluetoothState>(
               builder: (context, bluetoothState) {
-                LoggerUtils.instance.i("[SelectedDevicesScreen]");
-                LoggerUtils.instance.i(
-                    "discoveredDevices = ${bluetoothState.discoveredDevices}");
-
                 return ListView(
-                  key: UniqueKey(),
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.only(
@@ -73,12 +86,9 @@ class SelectedDevicesScreen extends StatelessWidget {
                     ),
 
                     //
-                    ...(bluetoothState.discoveredDevices ?? []).map(
+                    ...bluetoothState.discoveredDevices.map(
                       (DiscoveredDevice device) {
-                        final pairedDevices = bluetoothState.pairedDevices;
-                        if (pairedDevices == null) {
-                          return const RbioLoading();
-                        }
+                        final pairedDevices = bluetoothState.pairedDeviceIds;
 
                         return _selectedDeviceVm.isFocusedDevice(device) &&
                                 !pairedDevices.contains(device.id)
@@ -87,22 +97,13 @@ class SelectedDevicesScreen extends StatelessWidget {
                                   bluetoothState,
                                   device,
                                 ),
-                                background: getIt<BluetoothConnector>()
-                                            .getStatus(
-                                                (bluetoothState
-                                                        .deviceConnectionState ??
-                                                    []),
-                                                device.id)
+                                background: getIt<BleConnector>()
+                                            .getStatus(device.id)
                                             ?.connectionState ==
                                         DeviceConnectionState.connected
                                     ? getIt<ITheme>().mainColor
-                                    : getIt<BluetoothConnector>()
-                                                .getStatus(
-                                                  (bluetoothState
-                                                          .deviceConnectionState ??
-                                                      []),
-                                                  device.id,
-                                                )
+                                    : getIt<BleConnector>()
+                                                .getStatus(device.id)
                                                 ?.connectionState ==
                                             DeviceConnectionState.connecting
                                         ? R.color.high

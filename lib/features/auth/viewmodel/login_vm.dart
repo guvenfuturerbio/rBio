@@ -1,6 +1,5 @@
 import 'dart:io' as platform;
 
-import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -233,16 +232,16 @@ class LoginScreenVm extends ChangeNotifier {
         if (!Atom.isWeb && getIt<UserNotifier>().isCronic) {
           try {
             List<PairedDevice>? devices =
-                await getIt<BluetoothConnector>().getPairedDevices();
+                getIt<BleDeviceManager>().getPairedDevices();
             if (devices.isNotEmpty) {
               Atom.context
                   .read<BluetoothBloc>()
-                  .add(const BluetoothEvent.scanStarted());
+                  .add(const BluetoothEvent.listenBleStatus());
             }
           } catch (_) {
             Atom.context
                 .read<BluetoothBloc>()
-                .add(const BluetoothEvent.scanStarted());
+                .add(const BluetoothEvent.listenBleStatus());
           }
         }
 

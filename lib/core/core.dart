@@ -5,7 +5,7 @@ export 'package:scale_api/scale_api.dart';
 export 'package:key_manager/key_manager.dart';
 export 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
-export '../app/bluetooth/bluetooth_bloc.dart';
+export '../app/bluetooth/bluetooth.dart';
 export '../app/config/app_config.dart';
 export '../app/app_bloc_observer.dart';
 export '../app/app_inherited_widget.dart';
@@ -14,10 +14,6 @@ export '../generated/l10n.dart';
 export 'locator.dart';
 export 'rbio_custom_icons.dart';
 export 'package:guven_service/guven_service.dart';
-
-/// Core
-export 'ble_operators/ble_operators.dart';
-export 'ble_operators/ble_operators.dart';
 
 export 'resources/resources.dart';
 

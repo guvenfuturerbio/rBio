@@ -20,8 +20,6 @@ dependencies:
   guven_service:
     path: ./packages/guven_service
 
-  bluetooth_connector:
-    path: ./packages/health_packages/bluetooth_connector
   key_manager:
     path: ./packages/key_manager
   grouped_list:

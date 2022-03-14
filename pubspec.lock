@@ -94,13 +94,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "9.0.2"
-  bluetooth_connector:
-    dependency: "direct main"
-    description:
-      path: "packages/health_packages/bluetooth_connector"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   boolean_selector:
     dependency: transitive
     description:

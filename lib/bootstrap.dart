@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scale_repository/scale_repository.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
@@ -40,15 +38,12 @@ Future<void> bootstrap(AppConfig appConfig) async {
         () async => runApp(
           AppInheritedWidget(
             child: BlocProvider<BluetoothBloc>(
-              create: (context) => BluetoothBloc(
-                getIt<BluetoothConnector>(),
-                getIt<BleReactorOps>(),
-                getIt<ProfileStorageImpl>(),
-                getIt<ScaleRepository>(),
-              )
-                ..add(const BluetoothEvent.gotPairedDevices())
-                ..add(const BluetoothEvent.deviceConnected()),
               lazy: false,
+              create: (context) => BluetoothBloc(
+                getIt<BleScanner>(),
+                getIt<BleConnector>(),
+                getIt<BleDeviceManager>(),
+              )..add(const BluetoothEvent.init()),
               child: const MyApp(),
             ),
           ),

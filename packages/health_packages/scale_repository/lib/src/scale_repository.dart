@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bluetooth_connector/bluetooth_connector.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:scale_health_impl/scale_health_impl.dart';
 import 'package:scale_hive_impl/scale_hive_impl.dart';
@@ -10,14 +9,12 @@ class ScaleRepository {
   final GuvenService _guvenService;
   final ScaleHiveImpl _scaleHiveImpl;
   final ScaleHealthImpl _scaleHealthImpl;
-  final BluetoothConnector _connector;
   final BleReactorOps _reactor;
 
   ScaleRepository(
     this._guvenService,
     this._scaleHiveImpl,
     this._scaleHealthImpl,
-    this._connector,
     this._reactor,
   );
 
@@ -29,38 +26,6 @@ class ScaleRepository {
 
   Future<void> clear() async {
     await _scaleHiveImpl.clear();
-  }
-
-  Stream<ScaleSubscribeState> subscribeScale(
-    PairedDevice pairedDevice,
-    int age,
-    int gender,
-    int height,
-  ) async* {
-    await for (var event in _reactor.subscribeScale(pairedDevice)) {
-      yield* event.when(showMiScalePopUp: (deviceAlreadyPaired) async* {
-        yield ScaleSubscribeState.showMiScalePopUp(deviceAlreadyPaired);
-      }, sendModel: (model) async* {
-        final scaleEntity = ScaleEntity(
-          dateTime: model.dateTime!,
-          age: age,
-          gender: gender,
-          height: height,
-          weight: model.weight,
-          impedance: model.impedance,
-          isManuel: false,
-          unit: model.unit,
-          weightRemoved: model.weightRemoved,
-          measurementComplete: model.measurementComplete,
-          weightStabilized: model.weightStabilized,
-        );
-
-        scaleEntity.calculateVariables();
-        yield ScaleSubscribeState.sendEntity(scaleEntity);
-      }, changeState: (_, __) async* {
-        yield ScaleSubscribeState.changeState(_, __);
-      });
-    }
   }
 
   List<ScaleEntity> readLocalScaleData(int age, int gender, int height) {

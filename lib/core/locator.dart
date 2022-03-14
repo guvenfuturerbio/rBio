@@ -1,7 +1,6 @@
-import 'package:bluetooth_connector/bluetooth_connector.dart';
+import 'package:cache/cache.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:cache/cache.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:scale_health_impl/scale_health_impl.dart';
@@ -29,14 +28,21 @@ Future<void> setupLocator(AppConfig appConfig) async {
     directory = appDocumentDirectory.path;
     Hive.init(directory);
 
-    FlutterReactiveBle ble = FlutterReactiveBle();
-    await ble.initialize();
-    getIt.registerLazySingleton<BleReactorOps>(
-      () => BleReactorOps(ble),
+    final ble = FlutterReactiveBle();
+    getIt.registerSingleton<BleScanner>(BleScanner(ble));
+    getIt.registerSingleton<BleConnector>(BleConnector(ble));
+    getIt.registerLazySingleton<FlutterReactiveBle>(
+      () => FlutterReactiveBle(),
     );
-    getIt.registerLazySingleton<BluetoothConnector>(
-      () => BluetoothConnector(
-        ble,
+    getIt.registerLazySingleton<BleReactorOps>(
+      () => BleReactorOps(
+        getIt<FlutterReactiveBle>(),
+      ),
+    );
+    getIt.registerLazySingleton<BleDeviceManager>(
+      () => BleDeviceManager(
+        getIt<BleScanner>(),
+        getIt<BleConnector>(),
         getIt<ISharedPreferencesManager>(),
       ),
     );
@@ -186,7 +192,6 @@ Future<void> setupLocator(AppConfig appConfig) async {
       getIt<GuvenService>(),
       ScaleHiveImpl(),
       ScaleHealthImpl(),
-      getIt<BluetoothConnector>(),
       getIt<BleReactorOps>(),
     ),
   );

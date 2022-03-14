@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../core/core.dart';
@@ -20,12 +20,12 @@ class MiScalePopUp extends StatelessWidget {
         color: getIt<ITheme>().mainColor,
         height: context.height,
         width: context.width,
-        child: BlocBuilder<BluetoothBloc, BluetoothState>(
-          builder: (context, bluetoothState) {
-            ScaleEntity? data = bluetoothState.scaleEntity;
+        child: Consumer<BleReactorOps>(
+          builder: (_, _bleReactor, __) {
+            ScaleEntity? data = _bleReactor.scaleEntity;
             return hasAlreadyPair
-                ? _scaleStep(data, context)
-                : _pairingStep(data, context);
+                ? _scaleStep(_bleReactor, context, data)
+                : _pairingStep(_bleReactor, context);
           },
         ),
       ),
@@ -33,10 +33,11 @@ class MiScalePopUp extends StatelessWidget {
   }
 
   Widget _scaleStep(
-    ScaleEntity? scaleEntity,
+    BleReactorOps _bleReactor,
     BuildContext context,
+    ScaleEntity? data,
   ) {
-    return scaleEntity != null
+    return data != null && _bleReactor.scaleDevice.scaleData != null
         ? Column(
             children: [
               //
@@ -44,14 +45,13 @@ class MiScalePopUp extends StatelessWidget {
                 child: Center(
                   child: getMeasurementStatus(
                     context,
-                    scaleEntity,
+                    data,
                   ),
                 ),
               ),
 
               //
-              if (scaleEntity.measurementComplete ??
-                  true && scaleEntity.impedance != 0) ...[
+              if (data.measurementComplete ?? true && data.impedance != 0) ...[
                 Expanded(
                   child: GridView(
                     gridDelegate:
@@ -61,22 +61,22 @@ class MiScalePopUp extends StatelessWidget {
                     ),
                     children: [
                       textItem(
-                        '${LocaleProvider.current.scale_data_bmi}: ${scaleEntity.bmi?.toStringAsFixed(2)}',
+                        '${LocaleProvider.current.scale_data_bmi}: ${data.bmi?.toStringAsFixed(2)}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_body_fat}: ${scaleEntity.bodyFat?.toStringAsFixed(2)} ${scaleEntity.unit}',
+                        '${LocaleProvider.current.scale_data_body_fat}: ${data.bodyFat?.toStringAsFixed(2)} ${data.unit}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_bone_mass}: ${scaleEntity.boneMass?.toStringAsFixed(2)} ${scaleEntity.unit}',
+                        '${LocaleProvider.current.scale_data_bone_mass}: ${data.boneMass?.toStringAsFixed(2)} ${data.unit}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_muscle}: ${scaleEntity.muscle?.toStringAsFixed(2)} ${scaleEntity.unit}',
+                        '${LocaleProvider.current.scale_data_muscle}: ${data.muscle?.toStringAsFixed(2)} ${data.unit}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_visceral_fat}: ${scaleEntity.visceralFat?.toStringAsFixed(2)}',
+                        '${LocaleProvider.current.scale_data_visceral_fat}: ${data.visceralFat?.toStringAsFixed(2)}',
                       ),
                       textItem(
-                        '${LocaleProvider.current.scale_data_water}: ${scaleEntity.water?.toStringAsFixed(2)}%',
+                        '${LocaleProvider.current.scale_data_water}: ${data.water?.toStringAsFixed(2)}%',
                       )
                     ],
                   ),
@@ -85,8 +85,8 @@ class MiScalePopUp extends StatelessWidget {
 
               //
               Text(
-                scaleEntity.weightStabilized ?? false
-                    ? scaleEntity.measurementComplete ?? false
+                data.weightStabilized ?? false
+                    ? data.measurementComplete ?? false
                         ? LocaleProvider.current.ble_scale_weight_info
                         : LocaleProvider.current.ble_scale_stabilizing_info
                     : LocaleProvider.current.ble_scale_weight_calculating_info,
@@ -96,18 +96,15 @@ class MiScalePopUp extends StatelessWidget {
               //
               SizedBox(
                 height: context.height * 0.1,
-                child: scaleEntity.measurementComplete ?? false
+                child: _bleReactor.scaleEntity!.measurementComplete ?? false
                     ? Row(
                         children: [
-                          //
                           Expanded(
                             child: TextButton(
                               style:
                                   TextButton.styleFrom(primary: R.color.white),
                               onPressed: () {
-                                Atom.context
-                                    .read<BluetoothBloc>()
-                                    .add(const BluetoothEvent.miScaleCleared());
+                                _bleReactor.scaleDevice.scaleData = null;
                                 Atom.dismiss();
                               },
                               child: Text(
@@ -115,16 +112,12 @@ class MiScalePopUp extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          //
                           Expanded(
                             child: TextButton(
                               style:
                                   TextButton.styleFrom(primary: R.color.white),
                               onPressed: () async {
-                                Atom.context
-                                    .read<BluetoothBloc>()
-                                    .add(const BluetoothEvent.miScaleCleared());
+                                _bleReactor.scaleDevice.scaleData = null;
                                 Atom.dismiss();
                               },
                               child: Text(
@@ -147,7 +140,7 @@ class MiScalePopUp extends StatelessWidget {
           );
   }
 
-  Widget getMeasurementStatus(BuildContext context, ScaleEntity? data) {
+  Widget getMeasurementStatus(BuildContext context, ScaleEntity data) {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -156,12 +149,12 @@ class MiScalePopUp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              (data?.weight ?? 0).toString(),
+              data.weight.toString(),
               style: TextStyle(
                   color: R.color.white, fontSize: context.textScale * 32),
             ),
             Text(
-              data!.getUnit,
+              data.getUnit,
               style: TextStyle(
                   color: R.color.white, fontSize: context.textScale * 32),
             )
@@ -177,7 +170,7 @@ class MiScalePopUp extends StatelessWidget {
     );
   }
 
-  Widget _pairingStep(ScaleEntity? scaleEntity, BuildContext context) {
+  Widget _pairingStep(BleReactorOps _bleReactor, BuildContext context) {
     return Column(
       children: [
         //
@@ -186,48 +179,50 @@ class MiScalePopUp extends StatelessWidget {
           child: Stack(
             alignment: AlignmentDirectional.center,
             children: [
-              scaleEntity?.measurementComplete ?? false
+              _bleReactor.scaleEntity!.measurementComplete ?? false
                   ? const SizedBox()
                   : ScaleProgressCircle(
                       size: context.height * .5,
                       color: R.color.white,
                     ),
               Text(
-                scaleEntity?.measurementComplete ?? false
+                _bleReactor.scaleEntity!.measurementComplete ?? false
                     ? LocaleProvider.current.pair_successful
                     : LocaleProvider.current.pairing,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: R.color.white,
-                    fontSize: scaleEntity?.measurementComplete ?? false
-                        ? context.textScale * 25
-                        : null),
+                    fontSize:
+                        _bleReactor.scaleEntity!.measurementComplete ?? false
+                            ? context.textScale * 25
+                            : null),
               ),
             ],
           ),
         ),
 
         //
-        scaleEntity?.measurementComplete ?? false
+        _bleReactor.scaleEntity!.measurementComplete ?? false
             ? Expanded(
-                child: TextButton(
-                  style: TextButton.styleFrom(primary: R.color.white),
-                  onPressed: () {
-                    Atom.context
-                        .read<BluetoothBloc>()
-                        .add(const BluetoothEvent.miScaleCleared());
-                    Atom.context
-                        .read<BluetoothBloc>()
-                        .add(const BluetoothEvent.scanStopped());
-                    Atom.context.read<BluetoothBloc>().add(
-                        const BluetoothEvent.clearedControlPointResponse());
-                    Atom.dismiss();
-                    Atom.historyBack();
-                    Atom.to(PagePaths.devices, isReplacement: true);
-                  },
-                  child: Text(
-                    LocaleProvider.current.done.toUpperCase(),
-                  ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(primary: R.color.white),
+                        onPressed: () {
+                          _bleReactor.scaleDevice.scaleData = null;
+                          _bleReactor.scaleDevice.scaleData = null;
+                          getIt<BleReactorOps>().clearControlPointResponse();
+                          Atom.dismiss();
+                          Atom.historyBack();
+                          Atom.to(PagePaths.devices, isReplacement: true);
+                        },
+                        child: Text(
+                          LocaleProvider.current.done.toUpperCase(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               )
             : const SizedBox(),

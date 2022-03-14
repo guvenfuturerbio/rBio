@@ -1,33 +1,20 @@
-import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
+part of 'ble_operators.dart';
 
-import 'package:bluetooth_connector/bluetooth_connector.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:mi_scale/mi_scale.dart';
-
-import '../../../../../core/core.dart';
-import '../../features/chronic_tracking/progress_sections/blood_glucose/widgets/tagger/bg_tagger_pop_up.dart';
-import '../../features/chronic_tracking/progress_sections/scale/widgets/tagger/scale_tagger_pop_up.dart';
-
-class BleReactorOps {
+class BleReactorOps extends ChangeNotifier {
   BleReactorOps(this._ble);
   final FlutterReactiveBle _ble;
 
-  bool isFirstConnect = true;
-
+  List<List<int>> get measurements => _measurements;
   final List<List<int>> _measurements = <List<int>>[];
+
   final List<GlucoseData> _gData = <GlucoseData>[];
 
+  List get controlPointResponse => _controlPointResponse;
   List<int> _controlPointResponse = [];
 
   late MiScaleDevice scaleDevice;
-
-  List get controlPointResponse => _controlPointResponse;
-
-  List<List<int>> get measurements => _measurements;
+  ScaleEntity? scaleEntity;
+  StreamSubscription<List<int>>? scaleSubs;
 
   GlucoseData parseGlucoseDataFromReadingInstance(
     List<int> data,
@@ -112,7 +99,6 @@ class BleReactorOps {
   Future<void> saveGlucoseDatas() async {
     var newData = 0;
     late GlucoseData tempData;
-
     for (final item in _gData) {
       final bool doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
       if (!doesExist) {
@@ -120,7 +106,6 @@ class BleReactorOps {
         tempData = item;
       }
     }
-
     if (newData > 1) {
       for (final item in _gData) {
         final bool doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
@@ -138,22 +123,20 @@ class BleReactorOps {
         barrierDismissible: false,
       );
     }
-
     getIt<LocalNotificationManager>().show(
       LocaleProvider.current.blood_glucose_measurement,
       LocaleProvider.current.blood_glucose_imported,
     );
   }
 
+  final flutterLocalNotificationsPlugin = ln.FlutterLocalNotificationsPlugin();
+
   /// MG2
-  Future<void> write(
-    DiscoveredDevice device,
-    void Function(List<int>) emitState,
-  ) async {
+  Future<void> write(DiscoveredDevice device) async {
     _measurements.clear();
     _gData.clear();
     _controlPointResponse = <int>[];
-    emitState(_controlPointResponse);
+    notifyListeners();
 
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
@@ -232,7 +215,7 @@ class BleReactorOps {
         _measurements.add(measurementData);
         _gData
             .add(parseGlucoseDataFromReadingInstance(measurementData, device));
-        emitState(_controlPointResponse);
+        notifyListeners();
       },
       onError: (dynamic error) {
         LoggerUtils.instance.d("subs characteristic error $error");
@@ -252,21 +235,30 @@ class BleReactorOps {
 
         if (!_lock) {
           _lock = true;
-          Atom.context.read<BluetoothBloc>().add(
-                BluetoothEvent.savePairedDevices(
-                  pairedDevice,
-                  true,
-                  recordAccessData,
-                ),
-              );
+          bool isSucces =
+              await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+          isSucces
+              ? _controlPointResponse = recordAccessData
+              : _controlPointResponse.clear();
+
+          if (isSucces) {
+            var localUser = getIt<ProfileStorageImpl>().getFirst();
+            var newPerson = Person.fromJson(localUser.toJson());
+            newPerson.deviceUUID = pairedDevice.deviceId;
+            await getIt<ProfileStorageImpl>().update(
+              newPerson,
+              localUser.key,
+            );
+          }
 
           _lock = false;
         }
 
         await saveGlucoseDatas();
-        emitState(_controlPointResponse);
+        notifyListeners();
       },
       onError: (dynamic error) {
+        notifyListeners();
         LoggerUtils.instance
             .i("write characteristic error " + error.toString());
         //user need to press device button for 3 seconds to pairing operation.
@@ -287,19 +279,17 @@ class BleReactorOps {
         //   getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
         // });
       }, onError: (e) {
+        notifyListeners();
         LoggerUtils.instance.i("write errorrrrrrrr" + e.toString());
       });
     } catch (e) {
+      notifyListeners();
       LoggerUtils.instance.i("write characterisctic error " + e.toString());
     }
   }
 
-  Future<void> subscribeScaleDevice(
-    DiscoveredDevice device,
-    void Function(MiScaleDevice) emitState,
-  ) async {
+  Future<void> subscribeScaleDevice(DiscoveredDevice device) async {
     scaleDevice = MiScaleDevice.from(device);
-    emitState(scaleDevice);
 
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
@@ -330,77 +320,99 @@ class BleReactorOps {
       pairedDevice.serialNumber = String.fromCharCodes(value);
     });
 
-    Atom.context
-        .read<BluetoothBloc>()
-        .add(BluetoothEvent.scaleSubscribed(pairedDevice));
+    subscribeScaleCharacteristic(device, pairedDevice);
   }
 
-  Stream<ScaleRepoSubscribeState> subscribeScale(
+  Future<void> subscribeScaleCharacteristic(
+    DiscoveredDevice device,
     PairedDevice pairedDevice,
-  ) async* {
+  ) async {
     _controlPointResponse = <int>[];
     final deviceAlreadyPaired =
-        await getIt<BluetoothConnector>().hasDeviceAlreadyPaired(pairedDevice);
+        getIt<BleDeviceManager>().hasDeviceAlreadyPaired(pairedDevice);
 
     final _characteristic = QualifiedCharacteristic(
       characteristicId: Uuid([42, 156]),
       serviceId: Uuid([24, 27]),
-      deviceId: pairedDevice.deviceId!,
+      deviceId: device.id,
     );
 
     try {
-      await for (var event in _ble.subscribeToCharacteristic(_characteristic)) {
-        yield ScaleRepoSubscribeState.showMiScalePopUp(deviceAlreadyPaired);
+      scaleSubs?.cancel();
+      await Future.delayed(const Duration(milliseconds: 300));
+      scaleSubs = _ble.subscribeToCharacteristic(_characteristic).listen(
+        (event) async {
+          if (!(Atom.isDialogShow)) {
+            Atom.show(
+              MiScalePopUp(
+                hasAlreadyPair: deviceAlreadyPaired,
+              ),
+            );
+          }
 
-        if (scaleDevice.scaleData == null ||
-            !scaleDevice.scaleData!.measurementComplete!) {
-          final Uint8List data = Uint8List.fromList(event);
-          scaleDevice.parseScaleData(pairedDevice, data);
+          if (scaleDevice.scaleData == null ||
+              !scaleEntity!.measurementComplete!) {
+            final Uint8List data = Uint8List.fromList(event);
+            final scaleModel = scaleDevice.parseScaleData(pairedDevice, data);
+            if (scaleModel != null) {
+              scaleEntity = scaleModel.xGetEntity(
+                Utils.instance.getAge(),
+                Utils.instance.getHeight(),
+                Utils.instance.getGender(),
+              );
+            }
 
-          if (scaleDevice.scaleData!.measurementComplete! &&
-              deviceAlreadyPaired) {
-            yield ScaleRepoSubscribeState.sendModel(scaleDevice.scaleData!);
+            if (scaleEntity!.measurementComplete! && deviceAlreadyPaired) {
+              scaleEntity = scaleModel!.xGetEntityWithCalculate(
+                Utils.instance.getAge(),
+                Utils.instance.getHeight(),
+                Utils.instance.getGender(),
+              );
+
+              if (Atom.isDialogShow) {
+                Atom.dismiss();
+              }
+              await Future.delayed(const Duration(milliseconds: 350));
+              await Atom.show(
+                ScaleTaggerPopUp(
+                  scaleModel: scaleEntity,
+                ),
+                barrierDismissible: false,
+              );
+              scaleDevice.scaleData = null;
+              scaleEntity = null;
+            }
+
             final popUpCanClose = (Atom.isDialogShow) &&
-                (scaleDevice.scaleData!.weightRemoved)! &&
-                !scaleDevice.scaleData!.measurementComplete!;
-
+                (scaleEntity!.weightRemoved)! &&
+                !scaleEntity!.measurementComplete!;
             if (popUpCanClose) {
               Atom.dismiss();
             }
-            scaleDevice.scaleData = null;
-          } else {
-            final popUpCanClose = (Atom.isDialogShow) &&
-                (scaleDevice.scaleData!.weightRemoved)! &&
-                !scaleDevice.scaleData!.measurementComplete!;
 
-            if (popUpCanClose) {
-              Atom.dismiss();
+            if (((scaleEntity!.measurementComplete) ?? false) &&
+                !deviceAlreadyPaired) {
+              // Saving paired device Section
+              controlPointResponse.add(1);
+              WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+              });
             }
           }
 
-          if ((scaleDevice.scaleData?.measurementComplete)! &&
-              !deviceAlreadyPaired) {
-            // Saving paired device Section
-            controlPointResponse.add(1);
-            WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-              Atom.context
-                  .read<BluetoothBloc>()
-                  .add(BluetoothEvent.savePairedDevices(pairedDevice));
-            });
-          }
-        }
-
-        yield ScaleRepoSubscribeState.changeState(
-            _controlPointResponse, scaleDevice);
-      }
+          notifyListeners();
+        },
+        onError: (e, stk) {
+          LoggerUtils.instance.e(e);
+        },
+      );
     } catch (e, stk) {
       LoggerUtils.instance.e(e);
       debugPrintStack(stackTrace: stk);
     }
   }
 
-  void clearControlPointResponse(void Function(List<int>) emitState) {
+  void clearControlPointResponse() {
     _controlPointResponse = <int>[];
-    emitState(_controlPointResponse);
   }
 }
