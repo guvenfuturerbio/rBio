@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../../../core/enums/selected_scale_type.dart';
 import '../../viewmodel/scale_progress_vm.dart';
 import 'scale_filter_pop_up_vm.dart';
 

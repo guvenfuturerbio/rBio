@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../model/model.dart';
 import '../core.dart';
@@ -188,9 +189,9 @@ class UserNotifier extends ChangeNotifier {
       await getIt<LocalNotificationManager>().cancelAllNotifications();
       await getIt<FirebaseMessagingManager>().userLogout();
       getIt<GlucoseStorageImpl>().clear();
-      getIt<ScaleStorageImpl>().clear();
       getIt<BloodPressureStorageImpl>().clear();
       getIt<ProfileStorageImpl>().clear();
+      await getIt<ScaleRepository>().clear();
     } catch (e) {
       LoggerUtils.instance.e(e);
     } finally {

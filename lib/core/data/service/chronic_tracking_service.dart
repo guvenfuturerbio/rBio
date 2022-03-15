@@ -70,18 +70,6 @@ abstract class ChronicTrackingApiService {
     int entegrationId,
   );
   Future<GuvenResponseModel> getMedicineByFilter(String text);
-  Future<GuvenResponseModel> insertNewScaleValue(
-    AddScaleMasurementBody addScaleMasurementBody,
-  );
-  Future<GuvenResponseModel> deleteScaleMeasurement(
-    DeleteScaleMasurementBody deleteScaleMasurementBody,
-  );
-  Future<GuvenResponseModel> getScaleMasurement(
-    GetScaleMasurementBody getScaleMasurementBody,
-  );
-  Future<GuvenResponseModel> updateScaleMeasurement(
-    UpdateScaleMasurementBody updateScaleMasurementBody,
-  );
 
   Future<GuvenResponseModel> insertNewBpValue(AddBpWithDetail addBpWithDetail);
 

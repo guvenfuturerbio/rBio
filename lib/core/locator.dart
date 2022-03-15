@@ -1,9 +1,11 @@
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:cache/cache.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:cache/cache.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:scale_health_impl/scale_health_impl.dart';
+import 'package:scale_hive_impl/scale_hive_impl.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../features/mediminder/managers/reminder_notifications_manager.dart';
 import '../model/treatment_model/treatment_model.dart';
@@ -13,6 +15,9 @@ import 'core.dart';
 GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator(AppConfig appConfig) async {
+  getIt.registerSingleton<KeyManager>(KeyManager());
+  await getIt<KeyManager>().setup(Environment.prod);
+
   getIt.registerSingleton<AppConfig>(appConfig);
   getIt.registerSingleton<CacheClient>(CacheClient());
 
@@ -23,6 +28,9 @@ Future<void> setupLocator(AppConfig appConfig) async {
     directory = appDocumentDirectory.path;
     Hive.init(directory);
 
+    final ble = FlutterReactiveBle();
+    getIt.registerSingleton<BleScanner>(BleScanner(ble));
+    getIt.registerSingleton<BleConnector>(BleConnector(ble));
     getIt.registerLazySingleton<FlutterReactiveBle>(
       () => FlutterReactiveBle(),
     );
@@ -31,18 +39,12 @@ Future<void> setupLocator(AppConfig appConfig) async {
         getIt<FlutterReactiveBle>(),
       ),
     );
-    getIt.registerLazySingleton<BleConnectorOps>(
-      () => BleConnectorOps(
-        getIt<FlutterReactiveBle>(),
-      ),
-    );
-    getIt.registerLazySingleton<BleScannerOps>(
-      () => BleScannerOps(
-        getIt<FlutterReactiveBle>(),
-      ),
-    );
     getIt.registerLazySingleton<BleDeviceManager>(
-      () => BleDeviceManager(),
+      () => BleDeviceManager(
+        getIt<BleScanner>(),
+        getIt<BleConnector>(),
+        getIt<ISharedPreferencesManager>(),
+      ),
     );
   }
   // #endregion
@@ -100,13 +102,9 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerLazySingleton<GlucoseStorageImpl>(
     () => GlucoseStorageImpl(),
   );
-  getIt.registerLazySingleton<ScaleStorageImpl>(
-    () => ScaleStorageImpl(),
-  );
   getIt.registerLazySingleton<BloodPressureStorageImpl>(
     () => BloodPressureStorageImpl(),
   );
-
   getIt.registerLazySingleton<ApiService>(
     () => ApiServiceImpl(getIt<IDioHelper>()),
   );
@@ -178,7 +176,24 @@ Future<void> setupLocator(AppConfig appConfig) async {
     await registerStorage();
   }
 
+  getIt.registerSingleton<GuvenService>(
+    GuvenService(
+      getIt<IDioHelper>(),
+      getIt<KeyManager>(),
+      getIt<ISharedPreferencesManager>(),
+    ),
+  );
+  getIt.registerSingleton<ScaleRepository>(
+    ScaleRepository(
+      getIt<GuvenService>(),
+      ScaleHiveImpl(),
+      ScaleHealthImpl(),
+      getIt<BleReactorOps>(),
+    ),
+  );
+
   // #region Init
+  await getIt<ScaleRepository>().init("hive_scale");
   await getIt<ISharedPreferencesManager>().init();
   await getIt<LocalCacheService>().init();
   await getIt<LocaleNotifier>().init();
@@ -213,9 +228,10 @@ Future<void> registerStorage() async {
   Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());
   Hive.registerAdapter<BloodPressureModel>(BloodPressureModelAdapter());
 
+  Hive.registerAdapter<ScaleHiveModel>(ScaleHiveModelAdapter());
+
   await getIt<ProfileStorageImpl>().init();
   await getIt<GlucoseStorageImpl>().init();
-  await getIt<ScaleStorageImpl>().init();
   await getIt<BloodPressureStorageImpl>().init();
 }
 

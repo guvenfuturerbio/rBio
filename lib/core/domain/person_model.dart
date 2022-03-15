@@ -131,7 +131,7 @@ class Person extends HiveObject {
   Person fromDefault({
     String name = 'First',
     String lastName = 'Last Name',
-    String birthDate = '2022-02-03T11:08:06.655',
+    String birthDate = '01.01.1980',
     String gender = 'Unspesified',
   }) {
     return Person(

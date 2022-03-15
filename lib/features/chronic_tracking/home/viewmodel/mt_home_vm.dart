@@ -1,41 +1,21 @@
 part of '../view/mt_home_screen.dart';
 
-class _TempScaleModel {
-  double? weight;
-  double? bmi;
-  double? bodyFat;
-
-  DateTime date;
-
-  String deviceId;
-  String deviceName;
-
-  _TempScaleModel(
-      {this.bmi,
-      this.bodyFat,
-      this.weight,
-      required this.date,
-      required this.deviceId,
-      required this.deviceName});
-}
-
 class _TempPressureModel {
   int? sys;
   int? dia;
   int? pulse;
-
   DateTime date;
-
   String deviceId;
   String deviceName;
 
-  _TempPressureModel(
-      {this.sys,
-      this.dia,
-      this.pulse,
-      required this.date,
-      required this.deviceId,
-      required this.deviceName});
+  _TempPressureModel({
+    this.sys,
+    this.dia,
+    this.pulse,
+    required this.date,
+    required this.deviceId,
+    required this.deviceName,
+  });
 }
 
 class MeasurementTrackingVm with ChangeNotifier {
@@ -111,7 +91,7 @@ class MeasurementTrackingVm with ChangeNotifier {
           .toList();
 
       saveGlucoseData(glucoseData);
-      saveScaleData(scaleData);
+      // saveScaleData(scaleData);
       savePressureData(pressureData);
     }
   }
@@ -131,82 +111,6 @@ class MeasurementTrackingVm with ChangeNotifier {
         .toList();
 
     getIt<GlucoseStorageImpl>().writeAll(glucoseData, isFromHealth: true);
-  }
-
-  saveScaleData(List<HealthDataPoint> data) {
-    List<_TempScaleModel> _tempScaleModel = <_TempScaleModel>[];
-
-    for (var item in data) {
-      if (item.type == HealthDataType.WEIGHT) {
-        _tempScaleModel.add(_TempScaleModel(
-            weight: item.value.toDouble(),
-            date: item.dateFrom,
-            deviceId: item.deviceId,
-            deviceName: item.sourceName));
-      }
-    }
-    for (var item in data) {
-      if (item.type == HealthDataType.BODY_MASS_INDEX) {
-        if (_tempScaleModel.any((element) => element.date == item.dateFrom)) {
-          _tempScaleModel
-              .firstWhere((element) => element.date == item.dateFrom)
-              .bmi = item.value.toDouble();
-        } else {
-          _tempScaleModel.add(_TempScaleModel(
-              bmi: item.value.toDouble(),
-              date: item.dateFrom,
-              deviceId: item.deviceId,
-              deviceName: item.sourceName));
-        }
-      }
-    }
-    for (var item in data) {
-      if (item.type == HealthDataType.BODY_FAT_PERCENTAGE) {
-        if (_tempScaleModel.any((element) => element.date == item.dateFrom)) {
-          _tempScaleModel
-              .firstWhere((element) => element.date == item.dateFrom)
-              .bodyFat = item.value.toDouble();
-        } else {
-          _tempScaleModel.add(_TempScaleModel(
-              bodyFat: item.value.toDouble(),
-              date: item.dateFrom,
-              deviceId: item.deviceId,
-              deviceName: item.sourceName));
-        }
-      }
-    }
-    List<ScaleMeasurementViewModel> scaleData = _tempScaleModel
-        .map((e) => ScaleMeasurementViewModel(
-            scaleModel: ScaleModel(
-                isManuel: e.deviceId != 'manuel',
-                device:
-                    PairedDevice(deviceId: e.deviceId, modelName: e.deviceName)
-                        .toJson(),
-                unit: ScaleUnit.kg,
-                bmi: e.bmi,
-                weight: e.weight,
-                bodyFat: e.bodyFat,
-                note: '',
-                dateTime: e.date,
-                isFromHealth: true,
-                images: [])))
-        .toList();
-
-    for (var item in scaleData) {
-      LoggerUtils.instance.e(item);
-    }
-    for (var item in data) {
-      LoggerUtils.instance.e(item);
-    }
-    if (scaleData.any((element) => element.bmi == null)) {
-      for (var item
-          in scaleData.where((element) => element.bmi == null).toList()) {
-        item.calculateVariables();
-      }
-    }
-    getIt<ScaleStorageImpl>().writeAll(
-        scaleData.map((e) => e.scaleModel).toList(),
-        isFromHealth: true);
   }
 
   savePressureData(List<HealthDataPoint> data) {
@@ -253,6 +157,7 @@ class MeasurementTrackingVm with ChangeNotifier {
         }
       }
     }
+
     LoggerUtils.instance.e(data.length);
     LoggerUtils.instance.e(_tempPressureModel.length);
     List<BloodPressureModel> pressureData = _tempPressureModel
@@ -279,7 +184,6 @@ class MeasurementTrackingVm with ChangeNotifier {
 
       if (!(state == LoadingProgress.done)) {
         await getIt<GlucoseStorageImpl>().checkLastGlucoseData();
-        await getIt<ScaleStorageImpl>().checkLastScale();
         await getIt<BloodPressureStorageImpl>().checkLastBp();
 
         items = [

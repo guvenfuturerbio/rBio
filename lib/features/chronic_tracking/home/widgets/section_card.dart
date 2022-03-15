@@ -21,6 +21,7 @@ class _SectionCard extends StatelessWidget {
     return isVisible || isActive
         ? Column(
             children: [
+              //
               AnimatedContainer(
                 duration: const Duration(milliseconds: 1000),
                 curve: Curves.easeInOutBack,
@@ -31,6 +32,8 @@ class _SectionCard extends StatelessWidget {
                 width: context.width,
                 child: isActive ? largeChild : smallChild,
               ),
+
+              //
               if (hasDivider)
                 const Divider(
                   thickness: 1,

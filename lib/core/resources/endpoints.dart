@@ -182,14 +182,6 @@ class _Endpoints {
           .xCronicTracking;
   String ctGetMedicineByFilter(String text) =>
       '/Medicine/get-by-filter/$text'.xCronicTracking;
-  String ctInsertNewScaleValue =
-      '/Measurement/add-bmi-with-detail'.xCronicTracking;
-  String ctDeleteScaleMeasurement =
-      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
-  String ctGetScaleMeasurement =
-      '/Measurement/get-bmi-measurements'.xCronicTracking;
-  String ctUpdateScaleMeasurement =
-      '/Measurement/update-bmi-measurement'.xCronicTracking;
 
   String ctInsertNewBpValue = '/Measurement/add-bp-with-detail'.xCronicTracking;
   String ctDeleteBpMeasurement =
@@ -229,7 +221,7 @@ class _Endpoints {
 
 extension _EndpointsExtension on String {
   String get xBasePath {
-    final String? path = SecretHelper.instance.get(SecretKeys.baseUrl);
+    final String? path = getIt<KeyManager>().get(Keys.baseUrl);
     if (path != null) {
       return path + this;
     } else {
@@ -238,7 +230,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xGuvenPath {
-    final String? path = SecretHelper.instance.get(SecretKeys.dev4Guven);
+    final String? path = getIt<KeyManager>().get(Keys.dev4Guven);
     if (path != null) {
       return path + this;
     } else {
@@ -247,8 +239,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xSymptomCheckerLogin {
-    final String? path =
-        SecretHelper.instance.get(SecretKeys.symtonCheckerLogin);
+    final String? path = getIt<KeyManager>().get(Keys.symtonCheckerLogin);
     if (path != null) {
       return path + this;
     } else {
@@ -257,8 +248,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xSymptomCheckerRequest {
-    final String? path =
-        SecretHelper.instance.get(SecretKeys.symtomRequestLogin);
+    final String? path = getIt<KeyManager>().get(Keys.symtomRequestLogin);
     if (path != null) {
       return path + this;
     } else {
@@ -267,8 +257,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xCronicTracking {
-    final String? path =
-        SecretHelper.instance.get(SecretKeys.chronicTrackingBaseUrl);
+    final String? path = getIt<KeyManager>().get(Keys.chronicTrackingBaseUrl);
     if (path != null) {
       return path + this;
     } else {
@@ -277,7 +266,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xDoctorBaseUrl {
-    final String? path = SecretHelper.instance.get(SecretKeys.doctorBaseUrl);
+    final String? path = getIt<KeyManager>().get(Keys.doctorBaseUrl);
     if (path != null) {
       return path + this;
     } else {

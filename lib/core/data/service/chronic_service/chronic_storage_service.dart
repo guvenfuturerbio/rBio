@@ -11,16 +11,11 @@ import '../../../../model/bp_measurement/add_bp_mesaurement.dart';
 import '../../../../model/bp_measurement/delete_bp_measurement.dart';
 import '../../../../model/bp_measurement/get_bp_measurement.dart';
 import '../../../../model/bp_measurement/update_bp_measurement.dart';
-import '../../../../model/scale_measurement/add_scale_measurement.dart';
-import '../../../../model/scale_measurement/delete_scale_measurement.dart';
-import '../../../../model/scale_measurement/get_scale_measurement.dart';
-import '../../../../model/scale_measurement/update_scale_measurement.dart';
 import '../../../core.dart';
 
 part 'blood_pressure_storage_impl.dart';
 part 'glucose_storage_impl.dart';
 part 'profile_storage_impl.dart';
-part 'scale_storage_impl.dart';
 
 abstract class ChronicStorageService<T extends HiveObject>
     extends ChangeNotifier {
