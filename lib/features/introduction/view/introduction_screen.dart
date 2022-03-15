@@ -11,16 +11,13 @@ const _title1 = "Sağlığınız\nTek Bir Uygulamada";
 const _desc1 = "Sağlınızı korumak için yenilikçi ve teknolojik bir yaklaşım.";
 
 const _title2 = "Anında\nRandevu Oluşturun";
-const _desc2 =
-    "Dilediğiniz sağlık uzmanından hastane ve online randevu alabilirsiniz.";
+const _desc2 = "Dilediğiniz sağlık uzmanından hastane ve online randevu alabilirsiniz.";
 
 const _title3 = "Kişiselleştirilmiş\nGrafikler";
-const _desc3 =
-    "Diyabet, tansiyon ve kilo takibinizi uzmanlar eşliğinde yönetebilirsiniz.";
+const _desc3 = "Diyabet, tansiyon ve kilo takibinizi uzmanlar eşliğinde yönetebilirsiniz.";
 
 const _title4 = "Önemli Anları Beraber\nTakip Edelim";
-const _desc4 =
-    "Günlük hatırlatıcılar ve anlık bildirimler sayesinde sağlığınızı korumak için size yardımcı olacağız.";
+const _desc4 = "Günlük hatırlatıcılar ve anlık bildirimler sayesinde sağlığınızı korumak için size yardımcı olacağız.";
 
 const _title5 = "One Dose Health";
 const _desc5 = "Sağlığınız Parmaklarınızın Ucunda";
@@ -33,34 +30,36 @@ class IntroductionScreen extends StatefulWidget {
 }
 
 class IntroductionScreenState extends State<IntroductionScreen> {
+  ValueNotifier<bool> valueNotifier = ValueNotifier(false);
+
   final itemCount = 5;
 
-  static List<dtoIntroduction> dataList = <dtoIntroduction>[
-    dtoIntroduction(
+  static List<IntroductionDto> dataList = <IntroductionDto>[
+    IntroductionDto(
       animationPath: R.image.riveGiris,
       title: _title1,
       description: _desc1,
       isLast: false,
     ),
-    dtoIntroduction(
+    IntroductionDto(
       animationPath: R.image.riveRandevu,
       title: _title2,
       description: _desc2,
       isLast: false,
     ),
-    dtoIntroduction(
+    IntroductionDto(
       animationPath: R.image.riveSaglikTakibi,
       title: _title3,
       description: _desc3,
       isLast: false,
     ),
-    dtoIntroduction(
+    IntroductionDto(
       animationPath: R.image.riveReminer,
       title: _title4,
       description: _desc4,
       isLast: false,
     ),
-    dtoIntroduction(
+    IntroductionDto(
       animationPath: R.image.riveReminer,
       title: _title5,
       description: _desc5,
@@ -76,6 +75,9 @@ class IntroductionScreenState extends State<IntroductionScreen> {
       if (mounted) {
         setState(() {
           currentPage = _pageController.page!.toInt();
+          if (currentPage < itemCount - 1) {
+            valueNotifier.value = false;
+          }
         });
       }
     }
@@ -114,7 +116,7 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                 child: PageView.builder(
                   controller: _pageController,
                   scrollDirection: Axis.horizontal,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: itemCount,
                   itemBuilder: (BuildContext context, int index) {
                     return _getChildren()[index];
@@ -140,54 +142,58 @@ class IntroductionScreenState extends State<IntroductionScreen> {
               //
               Align(
                 alignment: Alignment.bottomCenter,
-                child: RbioSwitcher(
-                  showFirstChild: currentPage != itemCount - 1,
-                  child1: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        //
-                        Expanded(
-                          child: RbioElevatedButton(
-                            title: _gec,
-                            onTap: () {
-                              _pageController.animateToPage(
-                                itemCount - 1,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            },
-                            backColor: getIt<ITheme>().cardBackgroundColor,
-                            showElevation: false,
-                            textColor: getIt<ITheme>().mainColor,
-                          ),
-                        ),
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: valueNotifier,
+                  builder: (BuildContext context, bool isLast, Widget? child) {
+                    if (isLast) return const SizedBox();
 
-                        //
-                        Expanded(
-                          child: RbioElevatedButton(
-                            showElevation: false,
-                            title: _devam,
-                            onTap: () {
-                              if (currentPage != itemCount - 1) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          //
+                          Expanded(
+                            child: RbioElevatedButton(
+                              title: _gec,
+                              onTap: () {
+                                valueNotifier.value = true;
                                 _pageController.animateToPage(
-                                  currentPage + 1,
+                                  itemCount - 1,
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.ease,
                                 );
-                              } else {
-                                //
-                              }
-                            },
+                              },
+                              backColor: getIt<ITheme>().cardBackgroundColor,
+                              showElevation: false,
+                              textColor: getIt<ITheme>().mainColor,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  child2: Container(),
+
+                          //
+                          Expanded(
+                            child: RbioElevatedButton(
+                              showElevation: false,
+                              title: _devam,
+                              onTap: () {
+                                if (currentPage != itemCount - 1) {
+                                  _pageController.animateToPage(
+                                    currentPage + 1,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.ease,
+                                  );
+                                } else {
+                                  //
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -214,7 +220,7 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                       ? Container(color: getIt<ITheme>().mainColor)
                       : RiveAnimation.asset(
                           item.animationPath,
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.scaleDown,
                           alignment: Alignment.bottomCenter,
                         ),
                 ),
@@ -290,11 +296,8 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                             showElevation: false,
                             fontWeight: FontWeight.bold,
                             title: LocaleProvider.current.sign_up,
-                            onTap: () {
-                              Atom.to(
-                                PagePaths.registerStep1,
-                                isReplacement: true,
-                              );
+                            onTap: () async {
+                              await openScreen(PagePaths.registerStep1);
                             },
                           ),
                         ),
@@ -308,11 +311,8 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                             showElevation: false,
                             fontWeight: FontWeight.bold,
                             title: LocaleProvider.current.login,
-                            onTap: () {
-                              Atom.to(
-                                PagePaths.login,
-                                isReplacement: true,
-                              );
+                            onTap: () async {
+                              await openScreen(PagePaths.login);
                             },
                           ),
                         ),
@@ -326,15 +326,24 @@ class IntroductionScreenState extends State<IntroductionScreen> {
         )
         .toList();
   }
+
+  Future<void> openScreen(String route) async {
+    await getIt<ISharedPreferencesManager>()
+        .setBool(SharedPreferencesKeys.firstLaunch, true);
+    Atom.to(
+      route,
+      isReplacement: true,
+    );
+  }
 }
 
-class dtoIntroduction {
+class IntroductionDto {
   final String animationPath;
   final String title;
   final String description;
   final bool isLast;
 
-  dtoIntroduction({
+  IntroductionDto({
     required this.animationPath,
     required this.title,
     required this.description,

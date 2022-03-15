@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:scale_repository/scale_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/enums/selected_scale_type.dart';
 import '../../../../../model/model.dart';
 import '../../../bottom_actions_of_graph.dart';
 import '../../widgets/i_progress_screen.dart';
@@ -12,7 +13,6 @@ import '../widgets/charts/scale_bubble_chart.dart';
 import '../widgets/charts/scale_line_chart.dart';
 import '../widgets/scale_filter_pop_up/scale_filter_pop_up.dart';
 import '../widgets/tagger/scale_tagger_pop_up.dart';
-import 'scale_measurement_vm.dart';
 
 enum GraphType { bubble, line }
 
@@ -26,10 +26,17 @@ class ScaleProgressVm extends ChangeNotifier
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       isChartShow = true;
 
-      getIt<ScaleStorageImpl>().addListener(() async {
-        LoggerUtils.instance.i("Triggered ScaleRepository Listener");
-        setSelectedItem(selected);
-      });
+      scaleMeasurementsDailyData = getIt<ScaleRepository>().readLocalScaleData(
+        Utils.instance.getAge(),
+        Utils.instance.getGender(),
+        Utils.instance.getHeight(),
+      );
+      scaleMeasurements = scaleMeasurementsDailyData;
+
+      // getIt<ScaleStorageImpl>().addListener(() async {
+      //   LoggerUtils.instance.i("Triggered ScaleRepository Listener");
+      //   setSelectedItem(selected);
+      // });
 
       fetchScaleMeasurements();
       fetchScrolledDailyData();
@@ -55,11 +62,9 @@ class ScaleProgressVm extends ChangeNotifier
 
   GraphType? _currentGraphType;
 
-  List<ScaleMeasurementViewModel> scaleMeasurementsDailyData =
-      <ScaleMeasurementViewModel>[];
+  List<ScaleEntity> scaleMeasurementsDailyData = <ScaleEntity>[];
 
-  List<ScaleMeasurementViewModel> scaleMeasurements =
-      <ScaleMeasurementViewModel>[];
+  List<ScaleEntity> scaleMeasurements = <ScaleEntity>[];
 
   List<ChartData>? _chartData;
 
@@ -141,13 +146,35 @@ class ScaleProgressVm extends ChangeNotifier
 
   Map<int, List<ChartData>> get chartVeryHighTagged => _chartVeryHighTagged;
 
-  int? get targetMin => scaleMeasurements.isEmpty
-      ? 0
-      : scaleMeasurements[0].minRange(currentScaleType);
+  int? get targetMin {
+    if (scaleMeasurements.isEmpty) {
+      return 0;
+    } else {
+      return ScaleRanges.instance.getTargetMin(
+        type: currentScaleType,
+        age: scaleMeasurements[0].age,
+        height: scaleMeasurements[0].height,
+        water: scaleMeasurements[0].water,
+        gender: scaleMeasurements[0].gender,
+        visceralFat: scaleMeasurements[0].visceralFat,
+      );
+    }
+  }
 
-  int? get targetMax => scaleMeasurements.isEmpty
-      ? 0
-      : scaleMeasurements[0].maxRange(currentScaleType);
+  int? get targetMax {
+    if (scaleMeasurements.isEmpty) {
+      return 0;
+    } else {
+      return ScaleRanges.instance.getTargetMax(
+        type: currentScaleType,
+        age: scaleMeasurements[0].age,
+        height: scaleMeasurements[0].height,
+        water: scaleMeasurements[0].water,
+        gender: scaleMeasurements[0].gender,
+        visceralFat: scaleMeasurements[0].visceralFat,
+      );
+    }
+  }
 
   int get criticMin => getIt<ProfileStorageImpl>().getFirst().hypo!;
 
@@ -277,11 +304,21 @@ class ScaleProgressVm extends ChangeNotifier
   Future<void> setStartDate(DateTime d) async {
     _startDate = d;
     _currentDateIndex = 0;
-    await getIt<ScaleStorageImpl>().getAndWriteScaleData(
-        beginDate: _startDate, endDate: endDate.add(const Duration(days: 1)));
+
+    // await getIt<ScaleStorageImpl>().getAndWriteScaleData(
+    //   beginDate: _startDate,
+    //   endDate: endDate.add(
+    //     const Duration(days: 1),
+    //   ),
+    // );
+
     fetchScaleMeasurementsInDateRange(
-        startDate, endDate.add(const Duration(days: 1)));
-    //fetchScrolledDailyData();
+      startDate,
+      endDate.add(
+        const Duration(days: 1),
+      ),
+    );
+
     notifyListeners();
   }
 
@@ -295,12 +332,21 @@ class ScaleProgressVm extends ChangeNotifier
   Future<void> setEndDate(DateTime d) async {
     _endDate = d;
     _currentDateIndex = 0;
-    await getIt<ScaleStorageImpl>().getAndWriteScaleData(
-        beginDate: _startDate, endDate: endDate.add(const Duration(days: 1)));
-    fetchScaleMeasurementsInDateRange(
-        startDate, endDate.add(const Duration(days: 1)));
 
-    //fetchScrolledDailyData();
+    // await getIt<ScaleStorageImpl>().getAndWriteScaleData(
+    //   beginDate: _startDate,
+    //   endDate: endDate.add(
+    //     const Duration(days: 1),
+    //   ),
+    // );
+
+    fetchScaleMeasurementsInDateRange(
+      startDate,
+      endDate.add(
+        const Duration(days: 1),
+      ),
+    );
+
     notifyListeners();
   }
 
@@ -378,10 +424,13 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
     for (var data in scaleMeasurementsDailyData) {
       if (data.getMeasurement(currentScaleType) != null) {
-        tempChartData.add(ChartData(
+        tempChartData.add(
+          ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
-            data.getColor(currentScaleType)));
+            data.getColor(currentScaleType),
+          ),
+        );
       }
     }
     _chartData = tempChartData;
@@ -672,10 +721,13 @@ class ScaleProgressVm extends ChangeNotifier
   }
 
   void fetchScaleMeasurements() {
-    final result = getIt<ScaleStorageImpl>().getAll();
+    final result = getIt<ScaleRepository>().readLocalScaleData(
+      Utils.instance.getAge(),
+      Utils.instance.getGender(),
+      Utils.instance.getHeight(),
+    );
     scaleMeasurements.clear();
-    scaleMeasurements =
-        result.map((e) => ScaleMeasurementViewModel(scaleModel: e)).toList();
+    scaleMeasurements = result.map((e) => e).toList();
     scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));
   }
 
@@ -700,13 +752,12 @@ class ScaleProgressVm extends ChangeNotifier
   }
 
   void fetchScaleMeasurementsInDateRange(DateTime start, DateTime end) {
-    final result = getIt<ScaleStorageImpl>().getAll();
-    scaleMeasurements.clear();
-    for (var e in result) {
-      DateTime measurementDate =
-          ScaleMeasurementViewModel(scaleModel: e).dateTime;
+    // final result = getIt<ScaleStorageImpl>().getAll();
+    // scaleMeasurements.clear();
+    for (var e in scaleMeasurements) {
+      DateTime measurementDate = e.dateTime;
       if (measurementDate.isAfter(start) && measurementDate.isBefore(end)) {
-        scaleMeasurements.add(ScaleMeasurementViewModel(scaleModel: e));
+        //scaleMeasurements.add(ScaleMeasurementLogic(scaleModel: e));
       }
     }
     scaleMeasurements.sort((a, b) => a.dateTime.compareTo(b.dateTime));
@@ -728,18 +779,24 @@ class ScaleProgressVm extends ChangeNotifier
 
   @override
   Widget smallWidget(Function() callBack) {
-    ScaleMeasurementViewModel? lastMeasurement =
-        getIt<ScaleStorageImpl>().getLatestMeasurement() != null
-            ? ScaleMeasurementViewModel(
-                scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement()!)
-            : null;
+    // ScaleMeasurementLogic? lastMeasurement =
+    //     getIt<ScaleStorageImpl>().getLatestMeasurement() != null
+    //         ? ScaleMeasurementLogic(
+    //             scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement()!)
+    //         : null;
+
+    final scaleEntity = getIt<ScaleRepository>().getLatestMeasurement(
+      Utils.instance.getAge(),
+      Utils.instance.getGender(),
+      Utils.instance.getHeight(),
+    );
 
     return SmallChronicComponent(
       callback: callBack,
-      lastMeasurement: lastMeasurement == null
+      lastMeasurement: scaleEntity == null
           ? LocaleProvider.current.no_measurement
-          : '${lastMeasurement.weight ?? ''} ${lastMeasurement.unit.toStr}',
-      lastMeasurementDate: lastMeasurement?.dateTime ?? DateTime.now(),
+          : '${(scaleEntity.weight ?? 0).toStringAsFixed(2)} ${scaleEntity.unit.toStr}',
+      lastMeasurementDate: scaleEntity?.dateTime ?? DateTime.now(),
       imageUrl: R.image.bodyScale,
     );
   }
@@ -755,9 +812,9 @@ class ScaleProgressVm extends ChangeNotifier
         if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
           scaleMeasurements.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
-          getIt<ScaleStorageImpl>()
-              .getAndWriteScaleData(endDate: scaleMeasurements.last.dateTime)
-              .then((value) => hasReachEnd = value);
+          // getIt<ScaleStorageImpl>()
+          //     .getAndWriteScaleData(endDate: scaleMeasurements.last.dateTime)
+          //     .then((value) => hasReachEnd = value);
         }
       },
     );

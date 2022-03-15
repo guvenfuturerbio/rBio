@@ -25,6 +25,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<SearchTextFiltered>(onTextFiltered);
     on<SearchPlatformFiltered>(onPlatformFiltered);
     on<SearchFilterRetrieved>(onFilterRetrieved);
+  
   }
 
   FutureOr<void> onFetched(

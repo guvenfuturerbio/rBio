@@ -7,14 +7,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../core/core.dart';
 import '../viewmodel/scale_progress_vm.dart';
-import '../viewmodel/scale_measurement_vm.dart';
 import 'tagger/scale_tagger_pop_up.dart';
 
 class ScaleMeasurementList extends StatelessWidget {
-  final List<ScaleMeasurementViewModel>? scaleMeasurements;
+  final List<ScaleEntity>? scaleMeasurements;
   final ScrollController scrollController;
   final bool? useStickyGroupSeparatorsValue;
 
@@ -27,7 +27,7 @@ class ScaleMeasurementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var list = <ScaleMeasurementViewModel>[];
+    var list = <ScaleEntity>[];
     if (scaleMeasurements != null) {
       list = scaleMeasurements!
           .where((element) =>
@@ -40,7 +40,7 @@ class ScaleMeasurementList extends StatelessWidget {
 
     return list.isEmpty
         ? Center(child: Text(LocaleProvider.current.no_measurement))
-        : GroupedListView<ScaleMeasurementViewModel, DateTime>(
+        : GroupedListView<ScaleEntity, DateTime>(
             elements: list,
             scrollDirection: Axis.vertical,
             order: GroupedListOrder.DESC,
@@ -50,14 +50,12 @@ class ScaleMeasurementList extends StatelessWidget {
               bottom: 2 * (context.height * .1) * context.textScale,
             ),
             useStickyGroupSeparators: useStickyGroupSeparatorsValue ?? false,
-            groupBy: (ScaleMeasurementViewModel scaleMeasurementViewModel) =>
-                DateTime(
+            groupBy: (ScaleEntity scaleMeasurementViewModel) => DateTime(
               scaleMeasurementViewModel.dateTime.year,
               scaleMeasurementViewModel.dateTime.month,
               scaleMeasurementViewModel.dateTime.day,
             ),
-            groupHeaderBuilder:
-                (ScaleMeasurementViewModel scaleMeasurementViewModel) {
+            groupHeaderBuilder: (ScaleEntity scaleMeasurementViewModel) {
               return Container(
                 alignment: Alignment.center,
                 width: double.infinity,
@@ -85,11 +83,10 @@ class ScaleMeasurementList extends StatelessWidget {
                 ),
               );
             },
-            itemBuilder:
-                (_, ScaleMeasurementViewModel scaleMeasurementViewModel) {
+            itemBuilder: (_, ScaleEntity scaleMeasurementViewModel) {
               return measurementList(context, scaleMeasurementViewModel);
             },
-            callback: (ScaleMeasurementViewModel data) {
+            callback: (ScaleEntity data) {
               if (Provider.of<ScaleProgressVm>(context, listen: false)
                   .isChartShow) {
                 Provider.of<ScaleProgressVm>(context, listen: false)
@@ -102,7 +99,7 @@ class ScaleMeasurementList extends StatelessWidget {
 
 Widget measurementList(
   BuildContext context,
-  ScaleMeasurementViewModel scaleMeasurementViewModel,
+  ScaleEntity scaleMeasurementViewModel,
 ) {
   return Slidable(
     actionPane: const SlidableDrawerActionPane(),
@@ -111,7 +108,7 @@ Widget measurementList(
       onTap: () {
         Atom.show(
           ScaleTaggerPopUp(
-            scaleModel: scaleMeasurementViewModel.scaleModel,
+            scaleModel: scaleMeasurementViewModel,
             isUpdate: true,
           ),
           barrierDismissible: false,
@@ -159,8 +156,8 @@ Widget measurementList(
         icon: Icons.delete,
         onTap: () {
           try {
-            getIt<ScaleStorageImpl>()
-                .delete(scaleMeasurementViewModel.scaleModel.key);
+            // TODO
+            // getIt<ScaleStorageImpl>().delete(scaleMeasurementViewModel.scaleModel.key);
           } catch (e) {
             LoggerUtils.instance.e(e);
           }
@@ -171,7 +168,7 @@ Widget measurementList(
 }
 
 Widget _timeAndImageSection(
-  ScaleMeasurementViewModel scaleMeasurementViewModel,
+  ScaleEntity scaleMeasurementViewModel,
   BuildContext context,
 ) {
   return Row(
@@ -187,7 +184,7 @@ Widget _timeAndImageSection(
       ],
 
       //
-      (scaleMeasurementViewModel.imageUrl.isEmpty)
+      (scaleMeasurementViewModel.images.isEmpty)
           ? SizedBox(
               width: 60 * context.textScale,
               height: 60 * context.textScale,
@@ -208,13 +205,13 @@ Widget _timeAndImageSection(
             )
           : GestureDetector(
               onTap: () =>
-                  _galeryView(context, scaleMeasurementViewModel.imageUrl),
+                  _galeryView(context, scaleMeasurementViewModel.images),
               child: SizedBox(
                 width: 60 * context.textScale,
                 height: 60 * context.textScale,
                 child: StackOfCards(
                   children: [
-                    ...scaleMeasurementViewModel.imageUrl.map(
+                    ...scaleMeasurementViewModel.images.map(
                       (e) => Card(
                         elevation: R.sizes.defaultElevation,
                         shape: RoundedRectangleBorder(
@@ -242,7 +239,9 @@ Widget _timeAndImageSection(
 }
 
 Expanded _textAndScaleSection(
-    ScaleMeasurementViewModel scaleMeasurementViewModel, BuildContext context) {
+  ScaleEntity scaleMeasurementViewModel,
+  BuildContext context,
+) {
   return Expanded(
     flex: 4,
     child: Row(
@@ -277,11 +276,7 @@ Expanded _textAndScaleSection(
 Future<dynamic> _galeryView(BuildContext context, List<String> images) {
   return Atom.show(
     GalleryView(
-      images: [
-        ...images
-            .map((e) => getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
-            .toList()
-      ],
+      images: [...images.map((e) => e).toList()],
     ),
     barrierColor: Colors.transparent,
     barrierDismissible: false,

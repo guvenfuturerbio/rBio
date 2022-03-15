@@ -1,13 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-
-import '../../features/chronic_tracking/progress_sections/scale/viewmodel/scale_measurement_vm.dart';
-import '../ble_models/paired_device.dart';
+import '../../core/core.dart';
 
 abstract class ScaleDevice<T> {
   final DiscoveredDevice? device;
-  ScaleMeasurementViewModel? scaleData;
+  ScaleMeasurementLogic? scaleData;
 
   ScaleDevice(this.device);
 
@@ -21,7 +18,7 @@ abstract class ScaleDevice<T> {
   int? get rssi => device?.rssi;
 
   /// Parse the raw advertisement data to obtain a [T] instance
-  ScaleMeasurementViewModel? parseScaleData(
+  ScaleMeasurementLogic? parseScaleData(
     PairedDevice device,
     Uint8List data,
   );

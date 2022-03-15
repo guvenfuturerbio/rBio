@@ -13,7 +13,6 @@ import 'core/core.dart';
 Future<void> bootstrap(AppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await SecretHelper.instance.setup(Environment.prod);
   await Firebase.initializeApp();
   await setupLocator(appConfig);
   timeago.setLocaleMessages('tr', timeago.TrMessages());
@@ -33,10 +32,32 @@ Future<void> bootstrap(AppConfig appConfig) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
+  String initialRoute = PagePaths.login;
+  // if (!Atom.isWeb) {
+  //   final mobileIntroduction = getIt<ISharedPreferencesManager>()
+  //           .getBool(SharedPreferencesKeys.firstLaunch) ??
+  //       false;
+  //   if (!mobileIntroduction) {
+  //     initialRoute = PagePaths.introduction;
+  //   }
+  // }
+
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
-        () async => runApp(AppInheritedWidget(child: const MyApp())),
+        () async => runApp(
+          AppInheritedWidget(
+            child: BlocProvider<BluetoothBloc>(
+              lazy: false,
+              create: (context) => BluetoothBloc(
+                getIt<BleScanner>(),
+                getIt<BleConnector>(),
+                getIt<BleDeviceManager>(),
+              )..add(const BluetoothEvent.init()),
+              child: MyApp(initialRoute: initialRoute),
+            ),
+          ),
+        ),
         blocObserver: AppBlocObserver(),
       );
     },

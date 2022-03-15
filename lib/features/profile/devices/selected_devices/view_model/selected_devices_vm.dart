@@ -6,9 +6,11 @@ class SelectedDeviceVm extends ChangeNotifier {
   SelectedDeviceVm(this.deviceType) {
     WidgetsBinding.instance?.addPostFrameCallback(
       (_) async {
-        var devices = await getIt<BleDeviceManager>().getPairedDevices();
+        var devices = getIt<BleDeviceManager>().getPairedDevices();
         if (devices.isEmpty) {
-          getIt<BleScannerOps>().startScan();
+          Atom.context
+              .read<BluetoothBloc>()
+              .add(const BluetoothEvent.listenBleStatus());
         }
 
         if (!_disposed) {
@@ -19,9 +21,12 @@ class SelectedDeviceVm extends ChangeNotifier {
                   showLoadingDialog();
                 }
 
-                final deviceId = getIt<BleConnectorOps>().device?.id;
+                final deviceId =
+                    Atom.context.read<BluetoothBloc>().state.device?.id;
                 if (deviceId != null) {
-                  getIt<BleConnectorOps>().disconnect(deviceId);
+                  Atom.context
+                      .read<BluetoothBloc>()
+                      .add(const BluetoothEvent.disconnect());
                 }
               }
             },
@@ -162,50 +167,54 @@ class SelectedDeviceVm extends ChangeNotifier {
   }
 
   void connectDevice(
-    BleConnectorOps _bleConnectorOps,
-    BleScannerOps _bleScannerOps,
+    BluetoothState bluetoothState,
     DiscoveredDevice device,
   ) async {
     switch (deviceType) {
       case DeviceType.accuChek:
         connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
+                (bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
+                    bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(device)
+            ? Atom.context
+                .read<BluetoothBloc>()
+                .add(BluetoothEvent.connect(device))
             : null;
         connectClicked();
         break;
 
       case DeviceType.contourPlusOne:
         connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
+                (bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
+                    bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
+            ? Atom.context
+                .read<BluetoothBloc>()
+                .add(BluetoothEvent.connect(device))
             : null;
         connectClicked();
         break;
 
       case DeviceType.omronBloodPressureArm:
         break;
+
       case DeviceType.omronBloodPressureWrist:
         break;
+
       case DeviceType.omronScale:
         break;
+
       case DeviceType.miScale:
         connectIsActive &&
-                (_bleConnectorOps.deviceConnectionState !=
+                (bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
-                    _bleConnectorOps.deviceConnectionState !=
+                    bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connected)
-            ? _bleConnectorOps.connect(
-                // ignore: unnecessary_statements
-                device)
+            ? Atom.context
+                .read<BluetoothBloc>()
+                .add(BluetoothEvent.connect(device))
             : null;
         connectClicked();
         break;

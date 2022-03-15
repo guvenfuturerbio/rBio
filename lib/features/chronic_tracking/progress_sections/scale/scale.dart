@@ -1,5 +1,4 @@
 export 'view/scale_progress_screen.dart';
-export 'viewmodel/scale_measurement_vm.dart';
 export 'viewmodel/scale_progress_vm.dart';
 export 'widgets/charts/scale_bubble_chart.dart';
 export 'widgets/charts/scale_line_chart.dart';

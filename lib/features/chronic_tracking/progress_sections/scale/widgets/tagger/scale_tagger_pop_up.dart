@@ -6,14 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../../core/enums/selected_scale_type.dart';
-import '../../viewmodel/scale_measurement_vm.dart';
 import 'scale_tagger_vm.dart';
 
 class ScaleTaggerPopUp extends StatelessWidget {
-  final ScaleModel? scaleModel;
+  final ScaleEntity? scaleModel;
   final bool isUpdate;
 
   const ScaleTaggerPopUp({
@@ -39,11 +38,9 @@ class ScaleTaggerPopUp extends StatelessWidget {
 
         return ChangeNotifierProvider(
           create: (_) => ScaleTaggerVm(
-            key: scaleModel?.key,
+            // key: scaleModel?.key,
             context: context,
-            scale: scaleModel == null
-                ? null
-                : ScaleMeasurementViewModel(scaleModel: scaleModel!.copy()),
+            scale: scaleModel == null ? null : scaleModel!.copy(),
             isManuel: scaleModel == null,
           ),
           child: RbioDarkStatusBar(
@@ -536,11 +533,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
                                 onTap: () => _buildGaleryView(context, value),
                                 child: Image(
                                   image: FileImage(
-                                    File(
-                                      getIt<ScaleStorageImpl>()
-                                          .getImagePathOfImageURL(
-                                              value.scaleModel.images[index]),
-                                    ),
+                                    File(value.scaleModel.images[index]),
                                   ),
                                 ),
                               ),
@@ -602,11 +595,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
       barrierColor: Colors.transparent,
       barrierDismissible: false,
       builder: (_) => GalleryView(
-        images: [
-          ...value.scaleModel.images
-              .map((e) => getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
-              .toList()
-        ],
+        images: [...value.scaleModel.images.map((e) => e).toList()],
       ),
     );
   }
