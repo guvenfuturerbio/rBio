@@ -28,6 +28,21 @@ class ScaleRepository {
     await _scaleHiveImpl.clear();
   }
 
+  ScaleEntity? getLatestMeasurement(
+    int age,
+    int gender,
+    int height,
+  ) {
+    List<ScaleHiveModel> list = _scaleHiveImpl.readScaleData();
+    list.sort((a, b) {
+      return (DateTime.fromMillisecondsSinceEpoch(
+              int.tryParse(b.occurrenceTime) ?? 0))
+          .compareTo((DateTime.fromMillisecondsSinceEpoch(
+              int.tryParse(a.occurrenceTime) ?? 0)));
+    });
+    return list[0].xToChronicEntity(age, gender, height);
+  }
+
   List<ScaleEntity> readLocalScaleData(int age, int gender, int height) {
     final list = _scaleHiveImpl.readScaleData();
     List<ScaleEntity> result = [];

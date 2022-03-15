@@ -102,13 +102,9 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerLazySingleton<GlucoseStorageImpl>(
     () => GlucoseStorageImpl(),
   );
-  getIt.registerLazySingleton<ScaleStorageImpl>(
-    () => ScaleStorageImpl(),
-  );
   getIt.registerLazySingleton<BloodPressureStorageImpl>(
     () => BloodPressureStorageImpl(),
   );
-
   getIt.registerLazySingleton<ApiService>(
     () => ApiServiceImpl(getIt<IDioHelper>()),
   );
@@ -236,7 +232,6 @@ Future<void> registerStorage() async {
 
   await getIt<ProfileStorageImpl>().init();
   await getIt<GlucoseStorageImpl>().init();
-  await getIt<ScaleStorageImpl>().init();
   await getIt<BloodPressureStorageImpl>().init();
 }
 

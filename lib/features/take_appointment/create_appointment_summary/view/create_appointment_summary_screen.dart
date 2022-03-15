@@ -106,242 +106,303 @@ class _CreateAppointmentSummaryScreenState
     );
   }
 
-  Widget _buildBody(CreateAppointmentSummaryVm vm) => SizedBox(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //
-            R.sizes.stackedTopPadding(context),
+  Widget _buildBody(CreateAppointmentSummaryVm vm) {
+    return KeyboardVisibilityBuilder(
+      builder: (context, isKeyboardVisible) {
+        return SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //
+              R.sizes.stackedTopPadding(context),
 
-            //
-            if (vm.appointmentSuccess) ...[
-              Center(
-                child: Column(
+              //
+              if (vm.appointmentSuccess) ...[
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      //
+                      R.sizes.hSizer8,
+
+                      //
+                      SvgPicture.asset(
+                        R.image.successAppointment,
+                        width: Atom.width * 0.4,
+                      ),
+
+                      //
+                      R.sizes.hSizer4,
+
+                      //
+                      Text(
+                        LocaleProvider.current.appo_created,
+                        textAlign: TextAlign.center,
+                        style: context.xHeadline3.copyWith(
+                          color: getIt<ITheme>().mainColor,
+                        ),
+                      ),
+
+                      //
+                      R.sizes.hSizer12,
+                    ],
+                  ),
+                ),
+              ],
+
+              //
+              R.sizes.hSizer16,
+
+              //
+              Text(
+                LocaleProvider.current.appointment_details,
+                textAlign: TextAlign.start,
+                style: context.xHeadline3,
+              ),
+
+              //
+              const SizedBox(
+                height: 12,
+              ),
+
+              //
+              RbioSwitcher(
+                showFirstChild: !isKeyboardVisible,
+                child1: _buildInfoCard(vm),
+                child2: const SizedBox(),
+              ),
+
+              //
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SingleChildScrollView(
+                    child:
+                        _buildKeyboardVisibilityBuilder(vm, isKeyboardVisible),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildKeyboardVisibilityBuilder(
+      CreateAppointmentSummaryVm vm, bool isKeyboardVisible) {
+    return RbioKeyboardActions(
+      focusList: [
+        codeFocusNode,
+      ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (forOnline) ...[
+            if (vm.showCodeField) ...[
+              Container(
+                height: 55,
+                width: double.infinity,
+                margin: EdgeInsets.only(bottom: isKeyboardVisible ? 5 : 0),
+                decoration: BoxDecoration(
+                  color: getIt<ITheme>().cardBackgroundColor,
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     //
-                    R.sizes.hSizer8,
+                    _buildHorizontalGap(),
 
                     //
-                    SvgPicture.asset(
-                      R.image.successAppointment,
-                      width: Atom.width * 0.4,
-                    ),
-
-                    //
-                    R.sizes.hSizer4,
-
-                    //
-                    Text(
-                      LocaleProvider.current.appo_created,
-                      textAlign: TextAlign.center,
-                      style: context.xHeadline3.copyWith(
-                        color: getIt<ITheme>().mainColor,
+                    Expanded(
+                      child: RbioTextFormField(
+                        focusNode: codeFocusNode,
+                        controller: codeEditingController,
+                        hintText: LocaleProvider.current.discount_code,
+                        border: RbioTextFormField.noneBorder(),
+                        textInputAction: TextInputAction.done,
+                        contentPadding: const EdgeInsets.only(
+                          left: 0,
+                          right: 20,
+                          top: 10,
+                          bottom: 13,
+                        ),
+                        onChanged: (term) {
+                          if (term != '') {
+                            vm.summaryButton = SummaryButtons.applyActive;
+                          } else {
+                            vm.summaryButton = SummaryButtons.applyPassive;
+                          }
+                        },
                       ),
                     ),
 
                     //
-                    R.sizes.hSizer12,
+                    if (!Atom.isWeb)
+                      GestureDetector(
+                        onTap: () async {
+                          final code = await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const QRCodeScannerScreen();
+                              },
+                            ),
+                          );
+                          if (code != null) {
+                            codeEditingController.text = code;
+                            vm.summaryButton = SummaryButtons.applyActive;
+                          }
+                        },
+                        child: SvgPicture.asset(
+                          R.image.qr,
+                          width: 28,
+                        ),
+                      ),
+
+                    //
+                    _buildHorizontalGap(),
                   ],
                 ),
               ),
+
+              //
+              _buildVerticalGap(),
+              if (!isKeyboardVisible) ...[
+                _buildVerticalGap(),
+              ],
             ],
 
             //
-            R.sizes.hSizer16,
+            if (!isKeyboardVisible) ...[
+              Container(
+                height: 55,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: getIt<ITheme>().cardBackgroundColor,
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    _buildHorizontalGap(),
 
-            //
-            Text(
-              LocaleProvider.current.appointment_details,
-              textAlign: TextAlign.start,
-              style: context.xHeadline3,
-            ),
+                    //
+                    Text(
+                      LocaleProvider.current.price,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.xHeadline3.copyWith(
+                        fontWeight: FontWeight.w600,
+                        height: 1.0,
+                      ),
+                    ),
 
-            //
-            const SizedBox(
-              height: 12,
-            ),
+                    //
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: _buildPrice(vm),
+                      ),
+                    ),
 
-            //
-            _buildInfoCard(vm),
-
-            //
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: SingleChildScrollView(
-                  child: _buildKeyboardVisibilityBuilder(vm),
+                    //
+                    _buildHorizontalGap(),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-
-  Widget _buildKeyboardVisibilityBuilder(CreateAppointmentSummaryVm vm) {
-    return KeyboardVisibilityBuilder(
-      builder: (context, isKeyboardVisible) {
-        return RbioKeyboardActions(
-          focusList: [
-            codeFocusNode,
-          ],
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (forOnline) ...[
-                if (vm.showCodeField) ...[
-                  Container(
-                    height: 55,
-                    width: double.infinity,
-                    margin: EdgeInsets.only(bottom: isKeyboardVisible ? 5 : 0),
-                    decoration: BoxDecoration(
-                      color: getIt<ITheme>().cardBackgroundColor,
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        //
-                        _buildHorizontalGap(),
-
-                        //
-                        Expanded(
-                          child: RbioTextFormField(
-                            focusNode: codeFocusNode,
-                            controller: codeEditingController,
-                            hintText: LocaleProvider.current.discount_code,
-                            border: RbioTextFormField.noneBorder(),
-                            textInputAction: TextInputAction.done,
-                            contentPadding: const EdgeInsets.only(
-                              left: 0,
-                              right: 20,
-                              top: 10,
-                              bottom: 13,
-                            ),
-                            onChanged: (term) {
-                              if (term != '') {
-                                vm.summaryButton = SummaryButtons.applyActive;
-                              } else {
-                                vm.summaryButton = SummaryButtons.applyPassive;
-                              }
-                            },
-                          ),
-                        ),
-
-                        //
-                        if (!Atom.isWeb)
-                          GestureDetector(
-                            onTap: () async {
-                              final code = await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const QRCodeScannerScreen();
-                                  },
-                                ),
-                              );
-                              if (code != null) {
-                                codeEditingController.text = code;
-                                vm.summaryButton = SummaryButtons.applyActive;
-                              }
-                            },
-                            child: SvgPicture.asset(
-                              R.image.qr,
-                              width: 28,
-                            ),
-                          ),
-
-                        //
-                        _buildHorizontalGap(),
-                      ],
-                    ),
-                  ),
-
-                  //
-                  _buildVerticalGap(),
-                  if (!isKeyboardVisible) ...[
-                    _buildVerticalGap(),
-                  ],
-                ],
-
-                //
-                if (!isKeyboardVisible) ...[
-                  Container(
-                    height: 55,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: getIt<ITheme>().cardBackgroundColor,
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        //
-                        _buildHorizontalGap(),
-
-                        //
-                        Text(
-                          LocaleProvider.current.price,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.xHeadline3.copyWith(
-                            fontWeight: FontWeight.w600,
-                            height: 1.0,
-                          ),
-                        ),
-
-                        //
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: _buildPrice(vm),
-                          ),
-                        ),
-
-                        //
-                        _buildHorizontalGap(),
-                      ],
-                    ),
-                  ),
-
-                  //
-                  if (!isKeyboardVisible) ...[
-                    _buildVerticalGap(),
-                    _buildVerticalGap(),
-                  ],
-                ],
-              ],
 
               //
-              if (!forOnline) ...[
-                RbioElevatedButton(
-                  infinityWidth: true,
-                  showElevation: false,
-                  onTap: () {
-                    if (vm.appointmentSuccess) {
-                      Atom.to(PagePaths.main, isReplacement: true);
+              if (!isKeyboardVisible) ...[
+                _buildVerticalGap(),
+                _buildVerticalGap(),
+              ],
+            ],
+          ],
+
+          //
+          if (!forOnline) ...[
+            RbioElevatedButton(
+              infinityWidth: true,
+              showElevation: false,
+              onTap: () {
+                if (vm.appointmentSuccess) {
+                  Atom.to(PagePaths.main, isReplacement: true);
+                } else {
+                  if (vm.orgVideoCallPriceResponse?.patientPrice == null) {
+                    Atom.show(
+                      GuvenAlert(
+                        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                        title: GuvenAlert.buildTitle(
+                          LocaleProvider.current.warning,
+                        ),
+                        content: GuvenAlert.buildSmallDescription(
+                            LocaleProvider.current.something_went_wrong),
+                      ),
+                    );
+                  } else {
+                    if (vm.newVideoCallPriceResponse?.patientPrice == null) {
+                      vm.saveAppointment(
+                        price: vm.orgVideoCallPriceResponse?.patientPrice
+                            ?.toString(),
+                        forOnline: forOnline,
+                        forFree:
+                            (vm.orgVideoCallPriceResponse?.patientPrice ?? 0) <
+                                    1
+                                ? true
+                                : false,
+                      );
                     } else {
-                      if (vm.orgVideoCallPriceResponse?.patientPrice == null) {
-                        Atom.show(
-                          GuvenAlert(
-                            backgroundColor:
-                                getIt<ITheme>().cardBackgroundColor,
-                            title: GuvenAlert.buildTitle(
-                              LocaleProvider.current.warning,
-                            ),
-                            content: GuvenAlert.buildSmallDescription(
-                                LocaleProvider.current.something_went_wrong),
-                          ),
-                        );
-                      } else {
+                      vm.saveAppointment(
+                        price: vm.newVideoCallPriceResponse?.patientPrice
+                            ?.toString(),
+                        forOnline: forOnline,
+                        forFree:
+                            (vm.newVideoCallPriceResponse?.patientPrice ?? 0) <
+                                    1
+                                ? true
+                                : false,
+                      );
+                    }
+                  }
+                }
+              },
+              title: vm.appointmentSuccess
+                  ? LocaleProvider.current.Ok
+                  : LocaleProvider.current.confirm,
+              fontWeight: FontWeight.w600,
+            ),
+            R.sizes.defaultBottomPadding,
+          ] else ...[
+            if (!isKeyboardVisible) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  Expanded(
+                    child: _buildSummaryButton(vm),
+                  ),
+
+                  //
+                  const SizedBox(width: 8),
+
+                  //
+                  Expanded(
+                    child: RbioElevatedButton(
+                      showElevation: false,
+                      onTap: () {
                         if (vm.newVideoCallPriceResponse?.patientPrice ==
                             null) {
                           vm.saveAppointment(
@@ -368,83 +429,24 @@ class _CreateAppointmentSummaryScreenState
                                     : false,
                           );
                         }
-                      }
-                    }
-                  },
-                  title: vm.appointmentSuccess
-                      ? LocaleProvider.current.Ok
-                      : LocaleProvider.current.confirm,
-                  fontWeight: FontWeight.w600,
-                ),
-                R.sizes.defaultBottomPadding,
-              ] else ...[
-                if (!isKeyboardVisible) ...[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //
-                      Expanded(
-                        child: _buildSummaryButton(vm),
-                      ),
-
-                      //
-                      const SizedBox(width: 8),
-
-                      //
-                      Expanded(
-                        child: RbioElevatedButton(
-                          showElevation: false,
-                          onTap: () {
-                            if (vm.newVideoCallPriceResponse?.patientPrice ==
-                                null) {
-                              vm.saveAppointment(
-                                price: vm
-                                    .orgVideoCallPriceResponse?.patientPrice
-                                    ?.toString(),
-                                forOnline: forOnline,
-                                forFree: (vm.orgVideoCallPriceResponse
-                                                ?.patientPrice ??
-                                            0) <
-                                        1
-                                    ? true
-                                    : false,
-                              );
-                            } else {
-                              vm.saveAppointment(
-                                price: vm
-                                    .newVideoCallPriceResponse?.patientPrice
-                                    ?.toString(),
-                                forOnline: forOnline,
-                                forFree: (vm.newVideoCallPriceResponse
-                                                ?.patientPrice ??
-                                            0) <
-                                        1
-                                    ? true
-                                    : false,
-                              );
-                            }
-                          },
-                          title: forOnline
-                              ? LocaleProvider.current.pay
-                              : LocaleProvider.current.done,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  //
-                  SizedBox(
-                    height: Atom.safeBottom + 10,
+                      },
+                      title: forOnline
+                          ? LocaleProvider.current.pay
+                          : LocaleProvider.current.done,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
-              ],
+              ),
+
+              //
+              SizedBox(
+                height: Atom.safeBottom + 10,
+              ),
             ],
-          ),
-        );
-      },
+          ],
+        ],
+      ),
     );
   }
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
-import 'package:scale_repository/src/model/scale_entity.dart';
 
 part 'scale_model.g.dart';
 

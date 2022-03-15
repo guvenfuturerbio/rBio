@@ -43,6 +43,9 @@ class ScaleTaggerVm extends ChangeNotifier {
           isManuel: isManuel,
           dateTime: DateTime.now(),
           unit: ScaleUnit.kg,
+          age: Utils.instance.getAge(),
+          gender: Utils.instance.getGender(),
+          height: Utils.instance.getHeight(),
         );
     _fillControllers(isInit: true);
     scrollController = ScrollController();

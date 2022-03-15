@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../core/core.dart';
-import '../bluetooth.dart';
 
 part 'bluetooth_bloc.freezed.dart';
 part 'bluetooth_event.dart';
