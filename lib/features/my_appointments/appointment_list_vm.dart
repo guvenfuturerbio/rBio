@@ -209,8 +209,9 @@ class AppointmentListVm extends RbioVm {
 
   Future<File?> getSelectedFile() async {
     FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['svg', 'pdf', 'png', 'jpg', 'bmp']);
+      type: FileType.custom,
+      allowedExtensions: R.constants.supportedFileExtensions,
+    );
     PlatformFile? platformFile = filePickerResult?.files[0];
     File? file;
     if (platformFile != null) {
