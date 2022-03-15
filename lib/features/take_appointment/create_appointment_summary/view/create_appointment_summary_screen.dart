@@ -329,45 +329,30 @@ class _CreateAppointmentSummaryScreenState
                     if (vm.appointmentSuccess) {
                       Atom.to(PagePaths.main, isReplacement: true);
                     } else {
-                      if (vm.orgVideoCallPriceResponse?.patientPrice == null) {
-                        Atom.show(
-                          GuvenAlert(
-                            backgroundColor:
-                                getIt<ITheme>().cardBackgroundColor,
-                            title: GuvenAlert.buildTitle(
-                              LocaleProvider.current.warning,
-                            ),
-                            content: GuvenAlert.buildSmallDescription(
-                                LocaleProvider.current.something_went_wrong),
-                          ),
+                      if (vm.newVideoCallPriceResponse?.patientPrice == null) {
+                        vm.saveAppointment(
+                          price: vm.orgVideoCallPriceResponse?.patientPrice
+                              ?.toString(),
+                          forOnline: forOnline,
+                          forFree:
+                              (vm.orgVideoCallPriceResponse?.patientPrice ??
+                                          0) <
+                                      1
+                                  ? true
+                                  : false,
                         );
                       } else {
-                        if (vm.newVideoCallPriceResponse?.patientPrice ==
-                            null) {
-                          vm.saveAppointment(
-                            price: vm.orgVideoCallPriceResponse?.patientPrice
-                                ?.toString(),
-                            forOnline: forOnline,
-                            forFree:
-                                (vm.orgVideoCallPriceResponse?.patientPrice ??
-                                            0) <
-                                        1
-                                    ? true
-                                    : false,
-                          );
-                        } else {
-                          vm.saveAppointment(
-                            price: vm.newVideoCallPriceResponse?.patientPrice
-                                ?.toString(),
-                            forOnline: forOnline,
-                            forFree:
-                                (vm.newVideoCallPriceResponse?.patientPrice ??
-                                            0) <
-                                        1
-                                    ? true
-                                    : false,
-                          );
-                        }
+                        vm.saveAppointment(
+                          price: vm.newVideoCallPriceResponse?.patientPrice
+                              ?.toString(),
+                          forOnline: forOnline,
+                          forFree:
+                              (vm.newVideoCallPriceResponse?.patientPrice ??
+                                          0) <
+                                      1
+                                  ? true
+                                  : false,
+                        );
                       }
                     }
                   },
