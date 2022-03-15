@@ -22,6 +22,7 @@ import '../../features/doctor/patient_detail/scale/view/scale_patient_detail_scr
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
+import '../../features/introduction/view/introduction_screen.dart';
 import '../../features/mediminder/mediminder.dart';
 import '../../features/my_appointments/all_files_screen.dart';
 import '../../features/my_appointments/appointment_list_screen.dart';
@@ -90,6 +91,11 @@ class VRouterRoutes {
           widget: const RequestSuggestionsScreen(),
         ),
       ],
+    ),
+
+    VWidget(
+      path: PagePaths.introduction,
+      widget: const IntroductionScreen(),
     ),
 
     VWidget(
@@ -573,6 +579,7 @@ class PagePaths {
   static const forgotPasswordStep2 = '/change-password-with-old';
   static const doctorCv = '/doctor-cv';
   static const appointmentSummary = '/appointment-summary';
+  static const introduction = '/introduction';
 
   static const covid19 = '/covid19';
   static const eResult = '/results';

@@ -158,7 +158,7 @@ packages:
     source: hosted
     version: "8.1.4"
   cache:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/cache"
       relative: true
@@ -870,21 +870,21 @@ packages:
     source: hosted
     version: "2.1.0"
   grouped_list:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/grouped_list"
       relative: true
     source: path
     version: "4.1.0"
   guven_service:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/guven_service"
       relative: true
     source: path
     version: "1.0.0+1"
   health:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/health_packages/health"
       relative: true
@@ -1031,7 +1031,7 @@ packages:
     source: hosted
     version: "6.1.4"
   key_manager:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/key_manager"
       relative: true
@@ -1068,7 +1068,7 @@ packages:
     source: hosted
     version: "2.2.0"
   local_notification_manager:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/local_notification_manager"
       relative: true
@@ -1110,7 +1110,7 @@ packages:
     source: hosted
     version: "1.7.0"
   mi_scale:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/health_packages/mi_scale"
       relative: true
@@ -1466,6 +1466,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.3"
+  rive:
+    dependency: "direct main"
+    description:
+      name: rive
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.1"
   rxdart:
     dependency: transitive
     description:
@@ -1474,35 +1481,35 @@ packages:
     source: hosted
     version: "0.27.3"
   scale_api:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/health_packages/scale_api"
       relative: true
     source: path
     version: "1.0.0+1"
   scale_calculations:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/health_packages/scale_calculations"
       relative: true
     source: path
     version: "1.0.0+1"
   scale_health_impl:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/health_packages/scale_health_impl"
       relative: true
     source: path
     version: "1.0.0+1"
   scale_hive_impl:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/health_packages/scale_hive_impl"
       relative: true
     source: path
     version: "1.0.0+1"
   scale_repository:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/health_packages/scale_repository"
       relative: true
@@ -1551,7 +1558,7 @@ packages:
     source: hosted
     version: "2.0.3"
   shared_preferences_manager:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "packages/shared_preferences_manager"
       relative: true
@@ -1639,6 +1646,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  smooth_page_indicator:
+    dependency: "direct main"
+    description:
+      name: smooth_page_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+2"
   source_gen:
     dependency: transitive
     description:
@@ -2067,5 +2081,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.16.0 <3.0.0"
+  dart: ">=2.15.0 <3.0.0"
   flutter: ">=2.8.0"
