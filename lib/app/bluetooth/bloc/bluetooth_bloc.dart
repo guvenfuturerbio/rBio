@@ -73,7 +73,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       emit(state.updateDevice(event.device));
       await connector.connect(event.device);
       await scanner.statusHandler(BleStatus.poweredOff);
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 1500));
       await scanner.statusHandler(BleStatus.ready);
     });
 
