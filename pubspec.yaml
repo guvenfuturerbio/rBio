@@ -127,12 +127,10 @@ dependencies:
   pub_semver: ^2.1.0
   qr_code_scanner: ^0.6.1
   reorderables: ^0.4.2
-  rive: ^0.8.1
   share: ^2.0.4
   shimmer: ^2.0.0
   simple_gesture_detector: ^0.2.0
   slugify: ^2.0.0
-  smooth_page_indicator: ^1.0.0+2
   spring: ^2.0.2
   syncfusion_flutter_charts: ^19.4.50
   syncfusion_flutter_gauges: ^19.4.50
