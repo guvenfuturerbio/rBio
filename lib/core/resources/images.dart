@@ -141,4 +141,12 @@ class _Images {
   final reminderStrip = 'assets/images/reminders/strip_icon.svg';
   final water = 'assets/images/reminders/water_icon.svg';
   // #endregion
+
+  // #region Rive
+  final riveGiris = 'assets/animations/introduction/giris.riv';
+  final riveRandevu = 'assets/animations/introduction/randevu.riv';
+  final riveReminer = 'assets/animations/introduction/reminer.riv';
+  final riveSaglikTakibi = 'assets/animations/introduction/saglık_takibi.riv';
+  // #endregion
+
 }

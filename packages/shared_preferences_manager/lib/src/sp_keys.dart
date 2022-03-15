@@ -18,6 +18,7 @@ enum SharedPreferencesKeys {
   pairedDevices,
   chatNotification,
   allUsers, // Home Widget List Tutuyor
+  firstLaunch,
 
   hba1cList,
   medicines,

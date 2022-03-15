@@ -32,6 +32,16 @@ Future<void> bootstrap(AppConfig appConfig) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
+  String initialRoute = PagePaths.login;
+  // if (!Atom.isWeb) {
+  //   final mobileIntroduction = getIt<ISharedPreferencesManager>()
+  //           .getBool(SharedPreferencesKeys.firstLaunch) ??
+  //       false;
+  //   if (!mobileIntroduction) {
+  //     initialRoute = PagePaths.introduction;
+  //   }
+  // }
+
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
@@ -44,7 +54,7 @@ Future<void> bootstrap(AppConfig appConfig) async {
                 getIt<BleConnector>(),
                 getIt<BleDeviceManager>(),
               )..add(const BluetoothEvent.init()),
-              child: const MyApp(),
+              child: MyApp(initialRoute: initialRoute),
             ),
           ),
         ),

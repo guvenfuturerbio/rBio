@@ -533,11 +533,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
                                 onTap: () => _buildGaleryView(context, value),
                                 child: Image(
                                   image: FileImage(
-                                    File(
-                                      getIt<ScaleStorageImpl>()
-                                          .getImagePathOfImageURL(
-                                              value.scaleModel.images[index]),
-                                    ),
+                                    File(value.scaleModel.images[index]),
                                   ),
                                 ),
                               ),
@@ -599,11 +595,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
       barrierColor: Colors.transparent,
       barrierDismissible: false,
       builder: (_) => GalleryView(
-        images: [
-          ...value.scaleModel.images
-              .map((e) => getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
-              .toList()
-        ],
+        images: [...value.scaleModel.images.map((e) => e).toList()],
       ),
     );
   }

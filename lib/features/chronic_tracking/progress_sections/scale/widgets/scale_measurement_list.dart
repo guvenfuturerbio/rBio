@@ -276,11 +276,7 @@ Expanded _textAndScaleSection(
 Future<dynamic> _galeryView(BuildContext context, List<String> images) {
   return Atom.show(
     GalleryView(
-      images: [
-        ...images
-            .map((e) => getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
-            .toList()
-      ],
+      images: [...images.map((e) => e).toList()],
     ),
     barrierColor: Colors.transparent,
     barrierDismissible: false,

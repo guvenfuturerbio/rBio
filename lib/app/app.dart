@@ -13,7 +13,12 @@ import '../features/doctor/notifiers/patient_notifiers.dart';
 import '../features/home/viewmodel/home_vm.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String initialRoute;
+
+  const MyApp({
+    Key? key,
+    required this.initialRoute,
+  }) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -86,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                 AppInheritedWidget.of(context)?.changeOrientation(orientation);
 
                 return AtomMaterialApp(
-                  initialUrl: PagePaths.login,
+                  initialUrl: widget.initialRoute,
                   routes: VRouterRoutes.routes,
                   onSystemPop: (data) async {
                     if (Atom.isDialogShow) {

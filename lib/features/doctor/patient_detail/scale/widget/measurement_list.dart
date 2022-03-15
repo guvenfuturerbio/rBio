@@ -195,9 +195,7 @@ class __MeasurementListState extends State<_MeasurementList> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image(
-                                  image: FileImage(File(
-                                      getIt<ScaleStorageImpl>()
-                                          .getImagePathOfImageURL(e))),
+                                  image: FileImage(File(e)),
                                 ),
                               ),
                             ),
@@ -244,11 +242,7 @@ class __MeasurementListState extends State<_MeasurementList> {
   Future<dynamic> _galeryView(BuildContext context, List<String> images) {
     return Atom.show(
       GalleryView(
-        images: [
-          ...images
-              .map((e) => getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
-              .toList()
-        ],
+        images: [...images.map((e) => e).toList()],
       ),
       barrierColor: Colors.transparent,
       barrierDismissible: false,

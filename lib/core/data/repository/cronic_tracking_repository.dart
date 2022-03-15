@@ -99,24 +99,6 @@ class ChronicTrackingRepository {
         entegrationId,
       );
 
-  // Scale Definations
-  Future<GuvenResponseModel> insertNewScaleValue(
-    AddScaleMasurementBody addScaleMasurementBody,
-  ) =>
-      apiService.insertNewScaleValue(addScaleMasurementBody);
-  Future<GuvenResponseModel> deleteScaleMeasurement(
-    DeleteScaleMasurementBody deleteScaleMasurementBody,
-  ) =>
-      apiService.deleteScaleMeasurement(deleteScaleMasurementBody);
-  Future<GuvenResponseModel> getScaleDataOfPerson(
-    GetScaleMasurementBody getScaleMasurementBody,
-  ) =>
-      apiService.getScaleMasurement(getScaleMasurementBody);
-  Future<GuvenResponseModel> updateScaleMeasurement(
-    UpdateScaleMasurementBody updateScaleMasurementBody,
-  ) =>
-      apiService.updateScaleMeasurement(updateScaleMasurementBody);
-
   // Bp Definitions
   Future<GuvenResponseModel> insertNewBpValue(
     AddBpWithDetail addBpWithDetail,

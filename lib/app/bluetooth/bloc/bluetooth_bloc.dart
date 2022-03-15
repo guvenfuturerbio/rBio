@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../core/core.dart';
-import '../bluetooth.dart';
 
 part 'bluetooth_bloc.freezed.dart';
 part 'bluetooth_event.dart';
@@ -33,7 +31,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     // ! ------------ ------------ Init ------------ ------------
 
     on<_BluetoothInitEvent>((event, emit) async {
-      await Future.delayed(const Duration(seconds: 1), () async {
+      await Future.delayed(const Duration(seconds: 2), () async {
         final pairedDevice = deviceManager.getPairedDevices();
         scanner
             .setPairedDeviceIds(pairedDevice.map((e) => e.deviceId!).toList());
