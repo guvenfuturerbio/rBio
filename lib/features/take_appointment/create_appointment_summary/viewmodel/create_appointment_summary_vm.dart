@@ -168,6 +168,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           int datum = await getIt<Repository>().saveAppointment(
             AppointmentRequest(
               saveAppointmentsRequest: saveAppointmentsRequest,
+              voucherCode:voucherCode
             ),
           );
 
