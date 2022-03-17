@@ -31,7 +31,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   bool doctorSelected = false;
 
   PatientRelativeInfoResponse? relativeResponse;
-  late PatientRelative dropdownValueRelative;
+  PatientRelative? dropdownValueRelative;
 
   //For favorites
   DateTime? _startDate;

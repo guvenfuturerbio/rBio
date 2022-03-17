@@ -137,47 +137,6 @@ class ScaleModel extends HiveObject {
   bool isFromHealth;
 
   @override
-<<<<<<< HEAD:lib/core/domain/scale_model.dart
-  ScaleModel(
-      {this.device,
-      this.measurementId,
-      this.weight,
-      this.weightStabilized,
-      this.measurementComplete,
-      this.weightRemoved,
-      this.unit,
-      required this.dateTime,
-      this.impedance,
-      this.isManuel = false,
-      this.images = const <String>[],
-      this.note = '',
-      this.bmi,
-      this.bodyFat,
-      this.boneMass,
-      this.isDeleted = false,
-      this.muscle,
-      this.time,
-      this.visceralFat,
-      this.water,
-      this.bmh,
-      this.gender,
-      this.height,
-      this.age,
-      this.isFromHealth = false}) {
-    gender = getIt<ProfileStorageImpl>().getFirst().gender == 'Male' ||
-            getIt<ProfileStorageImpl>().getFirst().gender == 'Erkek'
-        ? 1
-        : 0;
-    height =
-        int.tryParse(getIt<ProfileStorageImpl>().getFirst().height ?? '170');
-    //  final List<String> nums =
-    //     getIt<ProfileStorageImpl>().getFirst().birthDate!.split(".");
-    final yearOfBirth = 1978;
-    age = DateTime.now().year - yearOfBirth < 15
-        ? 15
-        : DateTime.now().year - yearOfBirth;
-  }
-=======
   ScaleModel({
     this.device,
     this.measurementId,
@@ -205,7 +164,6 @@ class ScaleModel extends HiveObject {
     this.age,
     this.isFromHealth = false,
   });
->>>>>>> health_update_ergun_deneme:packages/health_packages/scale_api/lib/src/model/scale_model.dart
 
   @override
   factory ScaleModel.fromMap(Map map) {
