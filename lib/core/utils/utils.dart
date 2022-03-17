@@ -8,13 +8,12 @@ import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../features/shared/do_not_show_again_dialog.dart';
-import '../../model/ble_models/device_type.dart';
+
 import '../../model/model.dart';
 import '../core.dart';
 
@@ -38,6 +37,26 @@ class Utils {
     } else {
       return NetworkImage(R.image.circlevatar);
     }
+  }
+
+  int getHeight() =>
+      int.tryParse(getIt<ProfileStorageImpl>().getFirst().height ?? '170') ??
+      170;
+
+  int getGender() {
+    return getIt<ProfileStorageImpl>().getFirst().gender == 'Male' ||
+            getIt<ProfileStorageImpl>().getFirst().gender == 'Erkek'
+        ? 1
+        : 0;
+  }
+
+  int getAge() {
+    final List<String> nums =
+        getIt<ProfileStorageImpl>().getFirst().birthDate!.split(".");
+    final yearOfBirth = int.parse(nums[2]);
+    return DateTime.now().year - yearOfBirth < 15
+        ? 15
+        : DateTime.now().year - yearOfBirth;
   }
 
   void showSnackbar(
@@ -1045,4 +1064,31 @@ class _ProgressDialogState extends State<ProgressDialog> {
         begin: Alignment.bottomLeft,
         end: Alignment.centerRight,
       );
+}
+
+extension SclaeToStringExtension on SelectedScaleType {
+  String get toStr {
+    switch (this) {
+      case SelectedScaleType.bmi:
+        return LocaleProvider.current.scale_data_bmi;
+
+      case SelectedScaleType.weight:
+        return LocaleProvider.current.weight;
+
+      case SelectedScaleType.bodyFat:
+        return LocaleProvider.current.scale_data_body_fat;
+
+      case SelectedScaleType.boneMass:
+        return LocaleProvider.current.scale_data_bone_mass;
+
+      case SelectedScaleType.water:
+        return LocaleProvider.current.scale_data_water;
+
+      case SelectedScaleType.visceralFat:
+        return LocaleProvider.current.scale_data_visceral_fat;
+
+      case SelectedScaleType.muscle:
+        return LocaleProvider.current.scale_data_muscle;
+    }
+  }
 }

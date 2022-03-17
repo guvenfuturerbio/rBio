@@ -1,7 +1,7 @@
 part of '../view/scale_patient_detail_screen.dart';
 
 class _MeasurementList extends StatefulWidget {
-  final List<ScaleMeasurementViewModel> scaleMeasurements;
+  final List<ScaleMeasurementLogic> scaleMeasurements;
   final ScrollController scrollController;
   final bool? useStickyGroupSeparatorsValue;
   final SelectedScaleType selected;
@@ -23,7 +23,7 @@ class __MeasurementListState extends State<_MeasurementList> {
   @override
   Widget build(BuildContext context) {
     log(widget.selected.toStr);
-    var list = <ScaleMeasurementViewModel>[];
+    var list = <ScaleMeasurementLogic>[];
     if (widget.scaleMeasurements.isNotEmpty) {
       list = widget.scaleMeasurements
           .where((element) => element.getMeasurement(widget.selected) != null)
@@ -34,7 +34,7 @@ class __MeasurementListState extends State<_MeasurementList> {
         Expanded(
           child: list.isEmpty
               ? Center(child: Text(LocaleProvider.current.no_measurement))
-              : GroupedListView<ScaleMeasurementViewModel, DateTime>(
+              : GroupedListView<ScaleMeasurementLogic, DateTime>(
                   elements: list,
                   scrollDirection: Axis.vertical,
                   order: GroupedListOrder.DESC,
@@ -43,14 +43,13 @@ class __MeasurementListState extends State<_MeasurementList> {
                   padding: EdgeInsets.only(
                       bottom: 2 * (context.height * .1) * context.textScale),
                   useStickyGroupSeparators: true,
-                  groupBy:
-                      (ScaleMeasurementViewModel scaleMeasurementViewModel) =>
-                          DateTime(
-                              scaleMeasurementViewModel.dateTime.year,
-                              scaleMeasurementViewModel.dateTime.month,
-                              scaleMeasurementViewModel.dateTime.day),
+                  groupBy: (ScaleMeasurementLogic scaleMeasurementViewModel) =>
+                      DateTime(
+                          scaleMeasurementViewModel.dateTime.year,
+                          scaleMeasurementViewModel.dateTime.month,
+                          scaleMeasurementViewModel.dateTime.day),
                   groupHeaderBuilder:
-                      (ScaleMeasurementViewModel bgMeasurementViewModel) {
+                      (ScaleMeasurementLogic bgMeasurementViewModel) {
                     return Container(
                       alignment: Alignment.center,
                       width: double.infinity,
@@ -79,10 +78,10 @@ class __MeasurementListState extends State<_MeasurementList> {
                     );
                   },
                   itemBuilder:
-                      (_, ScaleMeasurementViewModel scaleMeasurementViewModel) {
+                      (_, ScaleMeasurementLogic scaleMeasurementViewModel) {
                     return measurementList(scaleMeasurementViewModel, context);
                   },
-                  callback: (ScaleMeasurementViewModel data) {
+                  callback: (ScaleMeasurementLogic data) {
                     widget.fetchScrolledData(data.dateTime);
                   },
                 ),
@@ -91,8 +90,8 @@ class __MeasurementListState extends State<_MeasurementList> {
     );
   }
 
-  Widget measurementList(ScaleMeasurementViewModel scaleMeasurementViewModel,
-      BuildContext context) {
+  Widget measurementList(
+      ScaleMeasurementLogic scaleMeasurementViewModel, BuildContext context) {
     return GestureDetector(
       onTap: () {
         Atom.show(
@@ -143,8 +142,8 @@ class __MeasurementListState extends State<_MeasurementList> {
     );
   }
 
-  Row _timeAndImageSection(ScaleMeasurementViewModel scaleMeasurementViewModel,
-      BuildContext context) {
+  Row _timeAndImageSection(
+      ScaleMeasurementLogic scaleMeasurementViewModel, BuildContext context) {
     return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -158,7 +157,7 @@ class __MeasurementListState extends State<_MeasurementList> {
                 ),
               ),
             ),
-          scaleMeasurementViewModel.imageUrl.isEmpty
+          scaleMeasurementViewModel.images.isEmpty
               ? SizedBox(
                   width: 60 * context.textScale,
                   height: 60 * context.textScale,
@@ -179,13 +178,13 @@ class __MeasurementListState extends State<_MeasurementList> {
                 )
               : GestureDetector(
                   onTap: () =>
-                      _galeryView(context, scaleMeasurementViewModel.imageUrl),
+                      _galeryView(context, scaleMeasurementViewModel.images),
                   child: SizedBox(
                     width: 60 * context.textScale,
                     height: 60 * context.textScale,
                     child: StackOfCards(
                       children: [
-                        ...scaleMeasurementViewModel.imageUrl.map(
+                        ...scaleMeasurementViewModel.images.map(
                           (e) => Card(
                             elevation: R.sizes.defaultElevation,
                             shape: RoundedRectangleBorder(
@@ -196,9 +195,7 @@ class __MeasurementListState extends State<_MeasurementList> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image(
-                                  image: FileImage(File(
-                                      getIt<ScaleStorageImpl>()
-                                          .getImagePathOfImageURL(e))),
+                                  image: FileImage(File(e)),
                                 ),
                               ),
                             ),
@@ -212,8 +209,9 @@ class __MeasurementListState extends State<_MeasurementList> {
   }
 
   Expanded _textAndScaleSection(
-      ScaleMeasurementViewModel scaleMeasurementViewModel,
-      BuildContext context) {
+    ScaleMeasurementLogic scaleMeasurementViewModel,
+    BuildContext context,
+  ) {
     return Expanded(
       flex: 4,
       child: Row(
@@ -244,11 +242,7 @@ class __MeasurementListState extends State<_MeasurementList> {
   Future<dynamic> _galeryView(BuildContext context, List<String> images) {
     return Atom.show(
       GalleryView(
-        images: [
-          ...images
-              .map((e) => getIt<ScaleStorageImpl>().getImagePathOfImageURL(e))
-              .toList()
-        ],
+        images: [...images.map((e) => e).toList()],
       ),
       barrierColor: Colors.transparent,
       barrierDismissible: false,

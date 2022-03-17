@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -210,8 +209,9 @@ class AppointmentListVm extends RbioVm {
 
   Future<File?> getSelectedFile() async {
     FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['svg', 'pdf', 'png', 'jpg', 'bmp']);
+      type: FileType.custom,
+      allowedExtensions: R.constants.supportedFileExtensions,
+    );
     PlatformFile? platformFile = filePickerResult?.files[0];
     File? file;
     if (platformFile != null) {
@@ -225,7 +225,7 @@ class AppointmentListVm extends RbioVm {
       showProgressOverlay = true;
       notifyListeners();
       await getIt<Repository>().uploadPatientDocuments(
-        SecretHelper.instance.get(SecretKeys.mockAppointment),
+        getIt<KeyManager>().get(Keys.mockAppointment),
         await file.readAsBytes(),
       );
       return true;

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
-import '../../../model/model.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../auth.dart';
 

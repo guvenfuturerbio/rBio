@@ -1,6 +1,5 @@
 import 'package:onedosehealth/features/search/search_vm.dart';
-
-import '../../core/domain/base_model.dart';
+import '../../core/core.dart';
 
 import '../model.dart';
 

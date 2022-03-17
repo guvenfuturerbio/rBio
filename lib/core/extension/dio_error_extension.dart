@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../model/model.dart';
+import '../core.dart';
 
 extension DioErrorExtension on DioError {
   GuvenResponseModel? get xGuvenResponseModel {

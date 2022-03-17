@@ -3,6 +3,16 @@ part of 'resources.dart';
 class _Constants {
   final date2000 = DateTime(2000, 1, 1, 0, 0, 0);
 
+  final supportedFileExtensions = [
+    'docx',
+    'pdf',
+    'txt',
+    'dicom',
+    'jpeg',
+    'png',
+    'jpg',
+  ];
+
   final onlineAppointmentType = 256;
   final hospitalAppointmentType = 1;
   final tenantAyranciId = 1;

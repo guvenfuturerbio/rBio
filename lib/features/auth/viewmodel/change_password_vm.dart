@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
-import '../../../model/shared/guven_response_model.dart';
 import '../../../model/shared/user_login_info.dart';
 
 class ChangePasswordScreenVm extends RbioVm {

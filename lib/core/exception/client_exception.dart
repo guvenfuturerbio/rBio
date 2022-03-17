@@ -1,4 +1,3 @@
-import '../../model/shared/guven_response_model.dart';
 import '../core.dart';
 
 class RbioClientException implements Exception {

@@ -6,15 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../core/core.dart';
-import '../../../../../../model/ble_models/device_type.dart';
-import '../../../../../../model/ble_models/paired_device.dart';
-import '../../viewmodel/scale_measurement_vm.dart';
 
 class ScaleTaggerVm extends ChangeNotifier {
-  late ScaleMeasurementViewModel scaleModel;
+  late ScaleEntity scaleModel;
 
   final bool isManuel;
   final BuildContext context;
@@ -36,24 +34,18 @@ class ScaleTaggerVm extends ChangeNotifier {
 
   ScaleTaggerVm({
     required this.context,
-    ScaleMeasurementViewModel? scale,
+    ScaleEntity? scale,
     this.isManuel = false,
     this.key,
   }) {
     scaleModel = scale ??
-        ScaleMeasurementViewModel(
-          scaleModel: ScaleModel(
-            isManuel: isManuel,
-            dateTime: DateTime.now(),
-            device: PairedDevice(
-              deviceId: 'manuel',
-              deviceType: DeviceType.manuel,
-              manufacturerName: 'manuel',
-              modelName: 'manuel',
-              serialNumber: 'manuel',
-            ).toJson(),
-            unit: ScaleUnit.kg,
-          ),
+        ScaleEntity(
+          isManuel: isManuel,
+          dateTime: DateTime.now(),
+          unit: ScaleUnit.kg,
+          age: Utils.instance.getAge(),
+          gender: Utils.instance.getGender(),
+          height: Utils.instance.getHeight(),
         );
     _fillControllers(isInit: true);
     scrollController = ScrollController();
@@ -323,10 +315,26 @@ class ScaleTaggerVm extends ChangeNotifier {
       if (weightController.text == '') {
         throw Exception(LocaleProvider.current.required_area);
       }
-
       scaleModel.dateTime = DateTime.now();
-      await getIt<ScaleStorageImpl>()
-          .write(scaleModel.scaleModel, shouldSendToServer: true);
+
+      //
+      AddScaleMasurementBody model = AddScaleMasurementBody(
+        entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+        occurrenceTime: scaleModel.dateTime,
+        weight: scaleModel.weight,
+        water: scaleModel.water,
+        bmi: scaleModel.bmi,
+        bodyFat: scaleModel.bodyFat,
+        bmh: scaleModel.bmh,
+        visceralFat: scaleModel.visceralFat,
+        boneMass: scaleModel.boneMass,
+        muscle: scaleModel.muscle,
+        scaleUnit: scaleModel.unit.xScaleToInt,
+        deviceUUID: scaleModel.deviceId,
+        note: scaleModel.note,
+        isManuel: scaleModel.isManuel,
+      );
+      await getIt<ScaleRepository>().addScaleMeasurement(model);
       Atom.dismiss();
     } catch (e) {
       LoggerUtils.instance.e(e);
@@ -334,7 +342,8 @@ class ScaleTaggerVm extends ChangeNotifier {
   }
 
   Future<void> update() async {
-    await getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
+    // TODO
+    // await getIt<ScaleStorageImpl>().update(scaleModel.scaleModel, key);
     Atom.dismiss();
   }
 

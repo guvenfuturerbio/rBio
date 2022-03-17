@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/shared/guven_response_model.dart';
 
 enum HealthInformationType {
   diabetType,

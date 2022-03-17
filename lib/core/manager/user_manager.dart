@@ -50,7 +50,9 @@ class UserManagerImpl extends UserManager {
     var either = await getIt<Repository>().login(userName, password);
     return either.fold(
       (response) async {
-        final loginResponse = response.xGetModel<RbioLoginResponse>(RbioLoginResponse());
+        final loginResponse =
+            response.xGetModel<RbioLoginResponse, RbioLoginResponse>(
+                RbioLoginResponse());
         if (loginResponse != null) {
           if (loginResponse.ssoResponse?.accessToken != null) {
             await getIt<ISharedPreferencesManager>().setString(

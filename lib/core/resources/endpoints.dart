@@ -7,10 +7,12 @@ class _Endpoints {
   final addStep2 = '/UserRegister/add-step2'.xDevApiTest;
   final addStep3 = '/UserRegister/add-step3'.xDevApiTest;
   final getUserProfilePath = '/user/get-user-info'.xDevApiTest;
-  String getBannerTab(String applicationName, String groupName) => '/Banner/get-banner-tabs/$applicationName/$groupName'.xDevApiTest;
+  String getBannerTab(String applicationName, String groupName) =>
+      '/Banner/get-banner-tabs/$applicationName/$groupName'.xDevApiTest;
   final addFirebaseTokenUiPath = '/user/add-user-firebaseId'.xDevApiTest;
   final forgotPassword = '/UserRegister/forgot-password'.xDevApiTest;
-  final changePassword ='/UserRegister/change-password-with-old-password'.xDevApiTest;
+  final changePassword =
+      '/UserRegister/change-password-with-old-password'.xDevApiTest;
   // #endregion
 
   final getAllPackagePath = '/Package/get-all'.xBaseUrl;
@@ -43,7 +45,8 @@ class _Endpoints {
   final findResourceClosestAvailablePlanPath =
       '/Pusula/findResourceClosestAvailablePlan'.xBaseUrl;
   final saveAppointmentPath = '/Pusula/saveAppointment'.xBaseUrl;
-
+  final syncronizeOneDoseUser =
+      '/UserRegister/synchronize-onedose-user'.xBaseUrl;
   final getAllRelativesPath = '/profile/get-all-table'.xBaseUrl;
   final getCountriesPath = '/Pusula/getCountries'.xBaseUrl;
   final updateContactInfoPath = '/pusula/UpdatePatientContactInfo'.xBaseUrl;
@@ -171,14 +174,6 @@ class _Endpoints {
           .xCronicTracking;
   String ctGetMedicineByFilter(String text) =>
       '/Medicine/get-by-filter/$text'.xCronicTracking;
-  String ctInsertNewScaleValue =
-      '/Measurement/add-bmi-with-detail'.xCronicTracking;
-  String ctDeleteScaleMeasurement =
-      '/Measurement/delete-bmi-with-detail'.xCronicTracking;
-  String ctGetScaleMeasurement =
-      '/Measurement/get-bmi-measurements'.xCronicTracking;
-  String ctUpdateScaleMeasurement =
-      '/Measurement/update-bmi-measurement'.xCronicTracking;
 
   String ctInsertNewBpValue = '/Measurement/add-bp-with-detail'.xCronicTracking;
   String ctDeleteBpMeasurement =
@@ -218,7 +213,7 @@ class _Endpoints {
 
 extension _EndpointsExtension on String {
   String get xBaseUrl {
-    final String? path = SecretHelper.instance.get(SecretKeys.baseUrl);
+    final String? path = getIt<KeyManager>().get(Keys.baseUrl);
     if (path != null) {
       return path + this;
     } else {
@@ -227,7 +222,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xGuvenPath {
-    final String? path = SecretHelper.instance.get(SecretKeys.dev4Guven);
+    final String? path = getIt<KeyManager>().get(Keys.dev4Guven);
     if (path != null) {
       return path + this;
     } else {
@@ -236,8 +231,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xSymptomCheckerLogin {
-    final String? path =
-        SecretHelper.instance.get(SecretKeys.symtonCheckerLogin);
+    final String? path = getIt<KeyManager>().get(Keys.symtonCheckerLogin);
     if (path != null) {
       return path + this;
     } else {
@@ -246,8 +240,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xSymptomCheckerRequest {
-    final String? path =
-        SecretHelper.instance.get(SecretKeys.symtomRequestLogin);
+    final String? path = getIt<KeyManager>().get(Keys.symtomRequestLogin);
     if (path != null) {
       return path + this;
     } else {
@@ -256,7 +249,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xCronicTracking {
-    final String? path = SecretHelper.instance.get(SecretKeys.prodApiTest);
+    final String? path = getIt<KeyManager>().get(Keys.prodApiTest);
     if (path != null) {
       return path + this;
     } else {
@@ -265,7 +258,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xDoctorBaseUrl {
-    final String? path = SecretHelper.instance.get(SecretKeys.doctorBaseUrl);
+    final String? path = getIt<KeyManager>().get(Keys.doctorBaseUrl);
     if (path != null) {
       return path + this;
     } else {
@@ -274,7 +267,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xProdApiTest {
-    final String? path = SecretHelper.instance.get(SecretKeys.prodApiTest);
+    final String? path = getIt<KeyManager>().get(Keys.prodApiTest);
     if (path != null) {
       return path + this;
     } else {
@@ -283,7 +276,7 @@ extension _EndpointsExtension on String {
   }
 
   String get xDevApiTest {
-    final String? path = SecretHelper.instance.get(SecretKeys.devApiTest);
+    final String? path = getIt<KeyManager>().get(Keys.devApiTest);
     if (path != null) {
       return path + this;
     } else {

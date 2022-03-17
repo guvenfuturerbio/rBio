@@ -31,7 +31,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   bool doctorSelected = false;
 
   PatientRelativeInfoResponse? relativeResponse;
-  late PatientRelative dropdownValueRelative;
+  PatientRelative? dropdownValueRelative;
 
   //For favorites
   DateTime? _startDate;
@@ -573,7 +573,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         try {
           DoctorCvResponse tmpResp =
               await getIt<Repository>().getDoctorCvDetails(doctorId);
-          doctorsImageUrls.add(SecretHelper.instance.get(SecretKeys.dev4Guven) +
+          doctorsImageUrls.add(getIt<KeyManager>().get(Keys.dev4Guven) +
               "/storage/app/media/" +
               tmpResp.image1!);
         } catch (e) {

@@ -199,7 +199,7 @@ class BgProgressVm
 
   int get dailyHighestValue {
     int highest = bgMeasurementsDailyData.isNotEmpty
-        ? int.parse(bgMeasurementsDailyData[0].result)
+        ? (double.tryParse(bgMeasurementsDailyData[0].result) ?? 0).toInt()
         : 300;
     for (var data in bgMeasurementsDailyData) {
       if (double.parse(data.result).toInt() > highest) {
@@ -211,7 +211,7 @@ class BgProgressVm
 
   int get dailyLowestValue {
     int lowest = bgMeasurementsDailyData.isNotEmpty
-        ? int.parse(bgMeasurementsDailyData[0].result)
+        ? (double.tryParse(bgMeasurementsDailyData[0].result) ?? 0).toInt()
         : 50;
     for (var data in bgMeasurementsDailyData) {
       if (double.parse(data.result).toInt() < lowest) {
@@ -1009,7 +1009,7 @@ class BgProgressVm
       callback: callBack,
       lastMeasurement: lastMeasurement == null
           ? LocaleProvider.current.no_measurement
-          : '${lastMeasurement.result}  mg/dl',
+          : '${(double.tryParse(lastMeasurement.result) ?? 0).toStringAsFixed(1)}  mg/dl',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: R.image.bloodGlucose,
     );

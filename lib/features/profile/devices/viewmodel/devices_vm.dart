@@ -19,7 +19,7 @@ class DevicesVm extends ChangeNotifier {
   Future<void> getAll() async {
     try {
       state = LoadingProgress.loading;
-      devices = await getIt<BleDeviceManager>().getPairedDevices();
+      devices = getIt<BleDeviceManager>().getPairedDevices();
       state = LoadingProgress.done;
     } catch (e) {
       state = LoadingProgress.error;

@@ -1,3 +1,5 @@
+import 'package:onedosehealth/core/core.dart';
+
 import '../../model/model.dart';
 
 class RbioNotSuccessfulException<T> implements Exception {
