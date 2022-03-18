@@ -163,7 +163,7 @@ class VRouterRoutes {
 
     VWidget(
       path: PagePaths.registerStep1,
-      widget: const RegisterStep1Screen(key: Key('RegisterStep1Screen')),
+      widget: const RegisterStep1Screen(),
     ),
 
     VWidget(
@@ -449,7 +449,8 @@ class VRouterRoutes {
                   backgroundColor: getIt<ITheme>().cardBackgroundColor,
                   title: GuvenAlert.buildTitle(LocaleProvider.current.info),
                   content: GuvenAlert.buildDescription(
-                      LocaleProvider.current.device_register),
+                    LocaleProvider.current.device_register,
+                  ),
                   actions: [
                     //
                     GuvenAlert.buildMaterialAction(
@@ -532,19 +533,19 @@ class VRouterRoutes {
 
     //
     VGuard(
-        beforeEnter: (vRedirector) async {
-          if (!getIt<UserNotifier>().isCronic) {
-            vRedirector.stopRedirection();
-            Atom.show(const NotChronicWarning());
-          }
-        },
-        stackedRoutes: [
-          VWidget(
-            path: PagePaths.healthInformation,
-            widget:
-                const HealthInformationScreen(key: Key('RegisterStep1Screen')),
-          ),
-        ]),
+      beforeEnter: (vRedirector) async {
+        if (!getIt<UserNotifier>().isCronic) {
+          vRedirector.stopRedirection();
+          Atom.show(const NotChronicWarning());
+        }
+      },
+      stackedRoutes: [
+        VWidget(
+          path: PagePaths.healthInformation,
+          widget: const HealthInformationScreen(),
+        ),
+      ],
+    ),
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -572,7 +573,8 @@ class PagePaths {
   static const chat = '/chat';
   static const termsAndPrivacy = '/terms-and-privacy';
   static const login = '/login';
-  static const registerStep1 = '/register-first';
+  static const registerStep1 = '/register-1';
+  static const registerStep1Intro = '/register-1?from=intro';
   static const registerStep2 = '/register-2';
   static const registerStep3 = '/register-3';
   static const forgotPasswordStep1 = '/forgot-password';

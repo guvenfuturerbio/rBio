@@ -11,13 +11,16 @@ const _title1 = "Sağlığınız\nTek Bir Uygulamada";
 const _desc1 = "Sağlınızı korumak için yenilikçi ve teknolojik bir yaklaşım.";
 
 const _title2 = "Anında\nRandevu Oluşturun";
-const _desc2 = "Dilediğiniz sağlık uzmanından hastane ve online randevu alabilirsiniz.";
+const _desc2 =
+    "Dilediğiniz sağlık uzmanından hastane ve online randevu alabilirsiniz.";
 
 const _title3 = "Kişiselleştirilmiş\nGrafikler";
-const _desc3 = "Diyabet, tansiyon ve kilo takibinizi uzmanlar eşliğinde yönetebilirsiniz.";
+const _desc3 =
+    "Diyabet, tansiyon ve kilo takibinizi uzmanlar eşliğinde yönetebilirsiniz.";
 
 const _title4 = "Önemli Anları Beraber\nTakip Edelim";
-const _desc4 = "Günlük hatırlatıcılar ve anlık bildirimler sayesinde sağlığınızı korumak için size yardımcı olacağız.";
+const _desc4 =
+    "Günlük hatırlatıcılar ve anlık bildirimler sayesinde sağlığınızı korumak için size yardımcı olacağız.";
 
 const _title5 = "One Dose Health";
 const _desc5 = "Sağlığınız Parmaklarınızın Ucunda";
@@ -30,7 +33,7 @@ class IntroductionScreen extends StatefulWidget {
 }
 
 class IntroductionScreenState extends State<IntroductionScreen> {
-  ValueNotifier<bool> valueNotifier = ValueNotifier(false);
+  ValueNotifier<bool> valueNotifier = ValueNotifier(true);
 
   final itemCount = 5;
 
@@ -76,6 +79,8 @@ class IntroductionScreenState extends State<IntroductionScreen> {
         setState(() {
           currentPage = _pageController.page!.toInt();
           if (currentPage < itemCount - 1) {
+            valueNotifier.value = true;
+          } else {
             valueNotifier.value = false;
           }
         });
@@ -119,7 +124,18 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: itemCount,
                   itemBuilder: (BuildContext context, int index) {
-                    return _getChildren()[index];
+                    if (!dataList[index].isLast) {
+                      return IntroCard(
+                        item: dataList[index],
+                        openScreen: openScreen,
+                      );
+                    } else {
+                      return AnimatedIntroCard(
+                        item: dataList[index],
+                        valueNotifier: valueNotifier,
+                        openScreen: openScreen,
+                      );
+                    }
                   },
                 ),
               ),
@@ -145,53 +161,56 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                 child: ValueListenableBuilder<bool>(
                   valueListenable: valueNotifier,
                   builder: (BuildContext context, bool isLast, Widget? child) {
-                    if (isLast) return const SizedBox();
-
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          //
-                          Expanded(
-                            child: RbioElevatedButton(
-                              title: _gec,
-                              onTap: () {
-                                valueNotifier.value = true;
-                                _pageController.animateToPage(
-                                  itemCount - 1,
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.ease,
-                                );
-                              },
-                              backColor: getIt<ITheme>().cardBackgroundColor,
-                              showElevation: false,
-                              textColor: getIt<ITheme>().mainColor,
-                            ),
-                          ),
-
-                          //
-                          Expanded(
-                            child: RbioElevatedButton(
-                              showElevation: false,
-                              title: _devam,
-                              onTap: () {
-                                if (currentPage != itemCount - 1) {
+                    return RbioSwitcher(
+                      showFirstChild: isLast,
+                      child1: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            //
+                            Expanded(
+                              child: RbioElevatedButton(
+                                title: _gec,
+                                onTap: () {
+                                  valueNotifier.value = true;
                                   _pageController.animateToPage(
-                                    currentPage + 1,
+                                    itemCount - 1,
                                     duration: const Duration(milliseconds: 500),
                                     curve: Curves.ease,
                                   );
-                                } else {
-                                  //
-                                }
-                              },
+                                },
+                                backColor: getIt<ITheme>().cardBackgroundColor,
+                                showElevation: false,
+                                textColor: getIt<ITheme>().mainColor,
+                              ),
                             ),
-                          ),
-                        ],
+
+                            //
+                            Expanded(
+                              child: RbioElevatedButton(
+                                showElevation: false,
+                                title: _devam,
+                                onTap: () {
+                                  if (currentPage != itemCount - 1) {
+                                    _pageController.animateToPage(
+                                      currentPage + 1,
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.ease,
+                                    );
+                                  } else {
+                                    //
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                      child2: const SizedBox(),
                     );
                   },
                 ),
@@ -203,58 +222,62 @@ class IntroductionScreenState extends State<IntroductionScreen> {
     );
   }
 
-  List<Widget> _getChildren() {
-    return dataList
-        .map(
-          (item) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                //
-                SizedBox(
-                  height: Atom.height * 0.4,
-                  child: item.isLast
-                      ? Container(color: getIt<ITheme>().mainColor)
-                      : RiveAnimation.asset(
-                          item.animationPath,
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.bottomCenter,
-                        ),
-                ),
+  Future<void> openScreen(String route) async {
+    await getIt<ISharedPreferencesManager>().setBool(
+      SharedPreferencesKeys.firstLaunch,
+      true,
+    );
 
-                //
-                if (!item.isLast) ...[
-                  //
-                  const Spacer(flex: 3),
+    Atom.to(
+      route,
+      isReplacement: true,
+    );
+  }
+}
 
-                  //
-                  Text(
-                    item.title,
-                    style: context.xHeadline1.copyWith(
-                      fontSize: context.xHeadline1.fontSize! * 1.25,
-                      fontWeight: FontWeight.bold,
-                      height: 1.35,
-                    ),
+class AnimatedIntroCard extends StatelessWidget {
+  final IntroductionDto item;
+  final Future<void> Function(String route) openScreen;
+  final ValueNotifier<bool> valueNotifier;
+
+  const AnimatedIntroCard({
+    Key? key,
+    required this.item,
+    required this.openScreen,
+    required this.valueNotifier,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          //
+          SizedBox(
+            height: Atom.height * 0.4,
+            child: item.isLast
+                ? Container(color: getIt<ITheme>().mainColor)
+                : RiveAnimation.asset(
+                    item.animationPath,
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.bottomCenter,
                   ),
+          ),
 
-                  //
-                  R.sizes.hSizer16,
-
-                  //
-                  Text(
-                    item.description,
-                    style: context.xHeadline2.copyWith(),
-                  ),
-
-                  //
-                  const Spacer(flex: 6),
-                ] else ...[
-                  //
-                  Expanded(
-                    child: Column(
+          //
+          Expanded(
+            child: ValueListenableBuilder<bool>(
+                valueListenable: valueNotifier,
+                builder: (BuildContext context, bool isLast, Widget? child) {
+                  return RbioSwitcher(
+                    showFirstChild: isLast,
+                    duration: const Duration(seconds: 1),
+                    child1: const SizedBox(),
+                    child2: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -297,7 +320,7 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                             fontWeight: FontWeight.bold,
                             title: LocaleProvider.current.sign_up,
                             onTap: () async {
-                              await openScreen(PagePaths.registerStep1);
+                              await openScreen(PagePaths.registerStep1Intro);
                             },
                           ),
                         ),
@@ -318,21 +341,72 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                         ),
                       ],
                     ),
+                  );
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class IntroCard extends StatelessWidget {
+  final IntroductionDto item;
+  final Future<void> Function(String route) openScreen;
+
+  const IntroCard({
+    Key? key,
+    required this.item,
+    required this.openScreen,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          //
+          SizedBox(
+            height: Atom.height * 0.4,
+            child: item.isLast
+                ? Container(color: getIt<ITheme>().mainColor)
+                : RiveAnimation.asset(
+                    item.animationPath,
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.bottomCenter,
                   ),
-                ],
-              ],
+          ),
+
+          //
+          const Spacer(flex: 3),
+
+          //
+          Text(
+            item.title,
+            style: context.xHeadline1.copyWith(
+              fontSize: context.xHeadline1.fontSize! * 1.25,
+              fontWeight: FontWeight.bold,
+              height: 1.35,
             ),
           ),
-        )
-        .toList();
-  }
 
-  Future<void> openScreen(String route) async {
-    await getIt<ISharedPreferencesManager>()
-        .setBool(SharedPreferencesKeys.firstLaunch, true);
-    Atom.to(
-      route,
-      isReplacement: true,
+          //
+          R.sizes.hSizer16,
+
+          //
+          Text(
+            item.description,
+            style: context.xHeadline2.copyWith(),
+          ),
+
+          //
+          const Spacer(flex: 6),
+        ],
+      ),
     );
   }
 }

@@ -33,14 +33,14 @@ Future<void> bootstrap(AppConfig appConfig) async {
   };
 
   String initialRoute = PagePaths.login;
-  // if (!Atom.isWeb) {
-  //   final mobileIntroduction = getIt<ISharedPreferencesManager>()
-  //           .getBool(SharedPreferencesKeys.firstLaunch) ??
-  //       false;
-  //   if (!mobileIntroduction) {
-  //     initialRoute = PagePaths.introduction;
-  //   }
-  // }
+  if (!Atom.isWeb) {
+    final mobileIntroduction = getIt<ISharedPreferencesManager>()
+            .getBool(SharedPreferencesKeys.firstLaunch) ??
+        false;
+    if (!mobileIntroduction) {
+      initialRoute = PagePaths.introduction;
+    }
+  }
 
   runZonedGuarded(
     () async {

@@ -59,6 +59,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final isFromIntro = Atom.url == PagePaths.registerStep1Intro;
+
     return ChangeNotifierProvider<RegisterStep2ScreenVm>(
       create: (_) => RegisterStep2ScreenVm(context),
       child: Consumer<RegisterStep2ScreenVm>(
@@ -70,7 +72,9 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
           return KeyboardDismissOnTap(
             child: RbioScaffold(
               resizeToAvoidBottomInset: true,
-              appbar: RbioAppBar(),
+              appbar: RbioAppBar(
+                leading: isFromIntro ? const SizedBox() : null,
+              ),
               body: _buildBody(vm),
             ),
           );
