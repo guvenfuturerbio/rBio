@@ -42,8 +42,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return BlocListener<MiScaleReadValuesCubit, MiScaleReadValuesState>(
       listener: (context, state) {
-        final miScaleModel = state.miScaleModel;
-        if (miScaleModel != null) {
+        final scaleEntity = state.scaleEntity;
+        if (scaleEntity != null) {
           if (!Atom.isDialogShow) {
             Atom.show(const MiScalePopUp());
           }

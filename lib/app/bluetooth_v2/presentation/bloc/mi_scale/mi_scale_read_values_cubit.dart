@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:scale_repository/scale_repository.dart';
 
 import '../../../bluetooth_v2.dart';
 
@@ -8,7 +9,7 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
   ) : super(const MiScaleReadValuesState());
   final ReadValuesUseCase readValuesUseCase;
 
-  StreamSubscription<MiScaleModel>? _streamSubs;
+  StreamSubscription<ScaleEntity>? _streamSubs;
 
   @override
   Future<void> close() async {
@@ -30,7 +31,7 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
       return null;
     }, (stream) {
       _streamSubs = stream.listen((event) {
-        emit(MiScaleReadValuesState(miScaleModel: event));
+        emit(MiScaleReadValuesState(scaleEntity: event));
       });
       return null;
     });
@@ -38,12 +39,12 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
 }
 
 class MiScaleReadValuesState extends Equatable {
-  final MiScaleModel? miScaleModel;
+  final ScaleEntity? scaleEntity;
 
   const MiScaleReadValuesState({
-    this.miScaleModel,
+    this.scaleEntity,
   });
 
   @override
-  List<Object?> get props => [miScaleModel];
+  List<Object?> get props => [scaleEntity];
 }

@@ -17,17 +17,11 @@ class MiScalePopUp extends StatelessWidget {
         width: context.width,
         child: BlocBuilder<MiScaleReadValuesCubit, MiScaleReadValuesState>(
           builder: (context, miScaleState) {
-            final miScaleModel = miScaleState.miScaleModel;
-            if (miScaleModel != null) {
-              final entity = miScaleModel.xGetEntity(
-                Utils.instance.getAge(),
-                Utils.instance.getHeight(),
-                Utils.instance.getGender(),
-              );
-
-              return miScaleModel.measurementComplete == true
-                  ? _scaleStep(context, entity)
-                  : _pairingStep(context, entity);
+            final scaleEntity = miScaleState.scaleEntity;
+            if (scaleEntity != null) {
+              return scaleEntity.measurementComplete == true
+                  ? _scaleStep(context, scaleEntity)
+                  : _pairingStep(context, scaleEntity);
             } else {
               return const RbioLoading();
             }

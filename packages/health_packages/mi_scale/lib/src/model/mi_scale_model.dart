@@ -58,37 +58,61 @@ extension MiScaleModelExtension on MiScaleModel {
     return ScaleEntity(
       dateTime: dateTime!,
       age: age,
-      bmi: ScaleCalculate.instance.getBMI(weight: weight!, height: height),
-      bodyFat: ScaleCalculate.instance
-          .getBodyFat(weight!, height, age, gender, impedance!),
-      boneMass: ScaleCalculate.instance
-          .getBoneMass(gender, weight!, height, age, impedance!),
+      bmi: ScaleCalculate.instance.getBMI(
+        weight: weight!,
+        height: height,
+      ),
+      bodyFat: ScaleCalculate.instance.getBodyFat(
+        weight!,
+        height,
+        age,
+        gender,
+        impedance!,
+      ),
+      boneMass: ScaleCalculate.instance.getBoneMass(
+        gender,
+        weight!,
+        height,
+        age,
+        impedance!,
+      ),
       gender: gender,
       height: height,
       impedance: impedance,
       isManuel: false,
       measurementComplete: measurementComplete,
-      muscle: ScaleCalculate.instance
-          .getMuscle(gender, weight!, height, age, impedance!),
+      muscle: ScaleCalculate.instance.getMuscle(
+        gender,
+        weight!,
+        height,
+        age,
+        impedance!,
+      ),
       unit: unit,
       visceralFat: ScaleCalculate.instance.getVisceralFat(
-          weight: weight!,
-          height: height,
-          age: age,
-          gender: gender,
-          impedance: impedance!),
+        weight: weight!,
+        height: height,
+        age: age,
+        gender: gender,
+        impedance: impedance!,
+      ),
       water: ScaleCalculate.instance.getWater(
-          weight: weight!,
-          height: height,
-          age: age,
-          gender: gender,
-          impedance: impedance!),
+        weight: weight!,
+        height: height,
+        age: age,
+        gender: gender,
+        impedance: impedance!,
+      ),
       weight: weight,
       weightRemoved: weightRemoved,
       weightStabilized: weightStabilized,
       deviceId: device?['deviceId'] ?? "",
-      bmh: ScaleCalculate.instance
-          .getBMH(gender: gender, weight: weight!, height: height, age: age),
+      bmh: ScaleCalculate.instance.getBMH(
+        gender: gender,
+        weight: weight!,
+        height: height,
+        age: age,
+      ),
     );
   }
 }
