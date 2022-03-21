@@ -36,13 +36,20 @@ class _MyAppState extends State<MyApp> {
         final pairedDevices = getIt<BluetoothLocalManager>().getPairedDevices();
         for (var element in pairedDevices) {
           if (element.deviceType == DeviceType.miScale) {
-            context.read<DeviceSelectedCubit>().connect(element);
+            //context.read<DeviceSelectedCubit>().connect(element);
+            LoggerUtils.instance.wtf("WTF -- ${element.deviceType}");
             Future.delayed(
               const Duration(seconds: 1),
               () {
-                context
-                    .read<MiScaleReadValuesCubit>()
-                    .readValue(element, "Weight");
+                context.read<MiScaleReadValuesCubit>().readValue(
+                    DeviceModel(
+                      deviceType: element.deviceType,
+                      kind: element.kind,
+                      id: element.id,
+                      strength: element.strength,
+                      name: element.name,
+                    ),
+                    "Weight");
               },
             );
           }

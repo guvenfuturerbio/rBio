@@ -36,6 +36,7 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
       (stream) {
         _streamSubs = stream.listen(
           (scaleEntity) async {
+            LoggerUtils.instance.wtf("HAYDAR - $scaleEntity");
             emit(MiScaleReadValuesState.showLoading(scaleEntity));
             if (scaleEntity.measurementComplete == true) {
               emit(const MiScaleReadValuesState.dismissLoading());
