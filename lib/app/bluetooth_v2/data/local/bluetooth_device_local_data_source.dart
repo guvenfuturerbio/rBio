@@ -5,13 +5,14 @@ import 'package:mi_scale/mi_scale.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:onedosehealth/app/bluetooth_v2/core/failures.dart';
 
+import '../../../../core/core.dart';
 import '../../core/constants.dart';
 import '../../domain/usecase/read_status_device_usecase.dart';
 import '../models/device_model.dart';
 import 'helpers/bluetooth_device_extension.dart';
 
 abstract class DeviceLocalDataSource {
-  Stream<List<DeviceModel>> searchDevices(List<String> searchTerms);
+  Stream<List<DeviceModel>> searchDevices(DeviceType deviceType);
   Future<void> stopScan();
   bool connect(DeviceModel device);
   bool disconnect(DeviceModel device);
@@ -21,29 +22,35 @@ abstract class DeviceLocalDataSource {
 
 class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
   @override
-  Stream<List<DeviceModel>> searchDevices(List<String> searchTerms) {
+  Stream<List<DeviceModel>> searchDevices(DeviceType deviceType) {
     FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
-    flutterBlue.startScan(timeout: const Duration(seconds: 5));
+    flutterBlue.startScan();
     return flutterBlue.scanResults.map(
       (event) {
-        return event
-            .map(
-          (e) => DeviceModel(
+        var tempList = event;
+        tempList = tempList.where((element) {
+          if (deviceType == DeviceType.miScale) {
+            if (element.device.name == 'MIBFS' &&
+                element.advertisementData.serviceData.length == 1 &&
+                element.advertisementData.serviceData.values.first.length ==
+                    13) {
+              return true;
+            }
+          }
+
+          return false;
+        }).toList();
+
+        return tempList.map(
+          (e) {
+            return DeviceModel(
               name: e.device.name,
               strength: e.rssi,
               id: e.device.id.id,
-              kind: DeviceKind.ble),
-        )
-            .where((deviceModel) {
-          if (searchTerms.isNotEmpty) {
-            final regex = r'(' +
-                searchTerms.reduce((value, element) => '$value|$element') +
-                ')';
-            return deviceModel.name.contains(RegExp(regex));
-          }
-
-          return true;
-        }).toList();
+              kind: DeviceKind.ble,
+            );
+          },
+        ).toList();
       },
     );
   }

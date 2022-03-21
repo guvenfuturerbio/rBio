@@ -1,12 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:mi_scale/mi_scale.dart';
 
-import '../../core/failures.dart';
-import '../../domain/entity/device_entity.dart';
-import '../../domain/repository/device_repository.dart';
-import '../../domain/usecase/read_status_device_usecase.dart';
-import '../local/bluetooth_device_local_data_source.dart';
-import '../models/device_model.dart';
+import '../../../../core/core.dart';
+import '../../bluetooth_v2.dart';
 
 class DeviceRepositoryImpl extends DeviceRepository {
   final DeviceLocalDataSource localDataSource;
@@ -14,9 +9,9 @@ class DeviceRepositoryImpl extends DeviceRepository {
 
   @override
   Either<Failure, Stream<List<DeviceModel>>> searchDevices(
-      List<String> searchTerms) {
+      DeviceType deviceType) {
     try {
-      final result = localDataSource.searchDevices(searchTerms);
+      final result = localDataSource.searchDevices(deviceType);
       return Right(result);
     } catch (e) {
       return Left(BluetoothFailure());

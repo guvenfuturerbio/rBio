@@ -3,7 +3,7 @@ import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
-import '../../app/bluetooth_v2/presentation/available_devices/available_devices.dart';
+import '../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
@@ -551,7 +551,7 @@ class VRouterRoutes {
     // Bluetooth v2
     VWidget(
       path: PagePaths.deviceListing,
-      widget: const DeviceListingScreen(),
+      widget: DeviceListingScreen(),
     ),
 
     //

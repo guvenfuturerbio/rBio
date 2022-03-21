@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/core.dart';
 import '../../core/failures.dart';
 import '../../core/usecases.dart';
 import '../entity/device_entity.dart';
@@ -11,11 +12,11 @@ class SearchDeviceUseCase extends UseCase<void, SearchParams> {
 
   @override
   Either<Failure, Stream<List<DeviceEntity>>> call(SearchParams params) {
-    return repository.searchDevices(params.searchTerms);
+    return repository.searchDevices(params.deviceType);
   }
 }
 
 class SearchParams {
-  SearchParams({required this.searchTerms});
-  final List<String> searchTerms;
+  SearchParams({required this.deviceType});
+  final DeviceType deviceType;
 }

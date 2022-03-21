@@ -68,7 +68,12 @@ class AvailableDevices extends StatelessWidget {
       onTap: (device.enable ?? false)
           ? () {
               if (device.deviceType == DeviceType.miScale) {
-                Atom.to(PagePaths.deviceListing);
+                Atom.to(
+                  PagePaths.deviceListing,
+                  queryParameters: {
+                    'device_type': device.deviceType?.name ?? '',
+                  },
+                );
               } else {
                 Atom.to(
                   PagePaths.selectedDevice,

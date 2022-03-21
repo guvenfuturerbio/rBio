@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/app/bluetooth_v2/presentation/available_devices/available_devices.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';

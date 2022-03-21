@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
 
 abstract class DeviceRepository {
   Either<Failure, Stream<List<DeviceModel>>> searchDevices(
-    List<String> searchTerms,
+    DeviceType deviceType,
   );
 
   Either<Failure, bool> connect(DeviceEntity device);
