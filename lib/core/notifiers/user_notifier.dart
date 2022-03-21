@@ -55,7 +55,7 @@ class UserNotifier extends ChangeNotifier {
     }
   }
 
-// Guven online user account set
+  // Guven online user account set
   Future<void> setUserAccount(UserAccount userAccount) async {
     bool? _canAccessHospitalOps;
 

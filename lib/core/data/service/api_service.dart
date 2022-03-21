@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 
 import '../../../features/auth/auth.dart';
 import '../../../features/chat/model/chat_notification.dart';
@@ -20,7 +21,7 @@ abstract class ApiService {
   final IDioHelper helper;
   ApiService(this.helper);
 
-  Future<RbioLoginResponse> login(String username, String password);
+  Future<GuvenResponseModel> login(String username, String password);
 
   // for_you_services.dart
   Future<List<ForYouCategoryResponse>> getAllPackage(String path);
@@ -30,26 +31,20 @@ abstract class ApiService {
   Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(String id);
   Future<String> doPackagePayment(PackagePaymentRequest packagePayment);
 
-  Future<GuvenResponseModel> registerStep2Ui(
+  Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model);
+  Future<GuvenResponseModel> addStep2(
       UserRegistrationStep2Model userRegistrationStep2);
-  Future<GuvenResponseModel> registerStep2WithOutTc(
-      UserRegistrationStep2Model userRegistrationStep2);
-  Future<GuvenResponseModel> registerStep3Ui(
-    UserRegistrationStep3Model userRegistrationStep3,
-  );
-  Future<GuvenResponseModel> registerStep3WithOutTc(
-    UserRegistrationStep3Model userRegistrationStep3,
-  );
+  Future<GuvenResponseModel> addStep3(
+      UserRegistrationStep3Model userRegistrationStep3);
+
   Future<GuvenResponseModel> updateUserSystemName(String identityNumber);
   Future<UserAccount> getUserProfile();
   Future<Map<String, dynamic>> getActiveStream();
   Future<String> getProfilePicture();
   Future<ApplicationVersionResponse> getCurrentApplicationVersion();
-  Future<PatientResponse> getPatientDetail(String url);
+  Future<PatientResponse?> getPatientDetail(String url);
   Future<List<BannerTabsModel>> getBannerTab(
-    String applicationName,
-    String groupName,
-  );
+      String applicationName, String groupName);
   //
   Future<List<FilterTenantsResponse>> filterTenants(
     String path,
@@ -75,10 +70,11 @@ abstract class ApiService {
     GetAllRelativesRequest bodyPages,
   );
   Future<GuvenResponseModel> getCountries();
-  Future<GuvenResponseModel> forgotPasswordUi(
+  Future<GuvenResponseModel> forgotPassword(
     UserRegistrationStep1Model userRegistrationStep1,
   );
-  Future<GuvenResponseModel> changePasswordUi(
+  Future<GuvenResponseModel> synchronizeOneDoseUser(SynchronizeOneDoseUserRequest synchronizeOnedoseUserRequest);
+  Future<GuvenResponseModel> changePassword(
       ChangePasswordModel changePasswordModel);
   Future<GuvenResponseModel> updateContactInfo(
       ChangeContactInfoRequest changeContactInfo);
@@ -86,7 +82,6 @@ abstract class ApiService {
       String oldPassword, String password);
   Future<GuvenResponseModel> addFirebaseTokenUi(
       AddFirebaseTokenRequest addFirebaseToken);
-  Future<GuvenResponseModel> patientCallMeUi();
   Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
 
   Future<GuvenResponseModel> getRoomStatusUi(String roomId);
@@ -121,10 +116,6 @@ abstract class ApiService {
       String appoId, TranslatorRequest translatorPost);
   Future<GuvenResponseModel> uploadFileToAppo(String webAppoId, File file);
 
-  Future<GuvenResponseModel> registerStep1Ui(
-      RegisterStep1PusulaModel userRegistrationStep1);
-  Future<GuvenResponseModel> registerStep1WithOutTc(
-      UserRegistrationStep1Model userRegistrationStep1);
   Future<List<VisitResponse>> getVisits(VisitRequest visitRequestBody);
   Future<List<LaboratoryResponse>> getLaboratoryResults(
       VisitDetailRequest detailRequest);

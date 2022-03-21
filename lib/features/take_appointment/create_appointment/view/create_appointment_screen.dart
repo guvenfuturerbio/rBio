@@ -264,7 +264,6 @@ class CreateAppointmentScreen extends StatelessWidget {
     Atom.to(
       PagePaths.createAppointmentEvents,
       queryParameters: {
-        'patientId': Uri.encodeFull(val.dropdownValueRelative?.id ?? ""),
         'patientName': Uri.encodeFull(
             '${val.dropdownValueRelative?.name ?? ""} ${val.dropdownValueRelative?.surname}'),
         'tenantId': val.dropdownValueTenant!.id!.toString(),

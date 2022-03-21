@@ -27,7 +27,7 @@ class Utils {
   }
 
   String get getCurrentUserNameAndSurname =>
-      '${getIt<UserNotifier>().getPatient().firstName} ${getIt<UserNotifier>().getPatient().lastName}';
+      '${getIt<UserNotifier>().getUserAccount().name} ${getIt<UserNotifier>().getUserAccount().surname}';
 
   String? get getCacheProfileImageStr => getIt<ISharedPreferencesManager>()
       .getString(SharedPreferencesKeys.profileImage);

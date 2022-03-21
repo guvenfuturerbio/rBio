@@ -45,6 +45,10 @@ export 'enums/payment_type.dart';
 export 'enums/remindable.dart';
 export "enums/usage_type.dart";
 
+export 'exception/client_exception.dart';
+export 'exception/not_successful_exception.dart';
+export 'exception/server_exception.dart';
+
 export "extension/extension.dart";
 
 export 'manager/firebase_messaging_manager.dart';

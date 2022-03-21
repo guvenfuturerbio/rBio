@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 
 import 'package:onedosehealth/core/platform/mobil_interface.dart'
@@ -61,16 +60,16 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         },
         onResponse:
             (Response<dynamic> response, ResponseInterceptorHandler handler) {
-          LoggerUtils.instance.v(response.requestOptions.uri);
+          LoggerUtils.instance
+              .v("(${response.statusCode}) - ${response.requestOptions.uri}");
           LoggerUtils.instance.i(response.data);
 
           return handler.next(response);
         },
         onError: (DioError error, ErrorInterceptorHandler handler) {
-          LoggerUtils.instance.v(error.requestOptions.uri);
-          LoggerUtils.instance.w(error.response?.statusCode);
+          LoggerUtils.instance.v(
+              "(${error.response?.statusCode}) - ${error.requestOptions.uri}");
           LoggerUtils.instance.wtf(error.response?.toString());
-          LoggerUtils.instance.wtf(error.error?.toString());
 
           return handler.next(error);
         },
@@ -81,18 +80,6 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       InterceptorsWrapper(
         onRequest:
             (RequestOptions options, RequestInterceptorHandler handler) async {
-          final connectivityResult = await Connectivity().checkConnectivity();
-          final isConnectionNone =
-              connectivityResult == ConnectivityResult.none;
-          if (isConnectionNone) {
-            return handler.reject(
-              DioError(
-                requestOptions: options,
-                error: RbioNetworkException(),
-              ),
-            );
-          }
-
           return handler.next(options);
         },
         onResponse:
@@ -268,13 +255,6 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      if (response.statusCode != null) {
-        if (response.statusCode! < HttpStatus.ok ||
-            response.statusCode! > HttpStatus.badRequest) {
-          throw Exception('GET | ${response.data}');
-        }
-      }
-
       return getResponseResult<T, R>(
           response.data, parseModel, isJsonDecode ?? false);
     } on SocketException catch (e) {
@@ -282,7 +262,8 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
     } on FormatException catch (_) {
       throw const FormatException('Unable to process the data');
     } catch (e) {
-      rethrow;
+      _handleError(path, e);
+      return Future.value();
     }
   }
   // #endregion
@@ -309,19 +290,13 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      if (response.statusCode == null ||
-          response.statusCode! < HttpStatus.ok ||
-          response.statusCode! > HttpStatus.badRequest) {
-        throw Exception('POST | ${response.data}');
-      }
-
       return response.data;
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
       throw const FormatException('Unable to process the data');
     } catch (e) {
-      rethrow;
+      _handleError(path, e);
     }
   }
   // #endregion
@@ -344,19 +319,13 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         cancelToken: cancelToken,
       );
 
-      if (response.statusCode == null ||
-          response.statusCode! < HttpStatus.ok ||
-          response.statusCode! > HttpStatus.badRequest) {
-        throw Exception('DELETE | ${response.data}');
-      }
-
       return response.data;
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
       throw const FormatException('Unable to process the data');
     } catch (e) {
-      rethrow;
+      _handleError(path, e);
     }
   }
   // #endregion
@@ -383,21 +352,50 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onReceiveProgress: onReceiveProgress,
       );
 
-      if (response.statusCode == null ||
-          response.statusCode! < HttpStatus.ok ||
-          response.statusCode! > HttpStatus.badRequest) {
-        throw Exception('PATCH | ${response.data}');
-      }
-
       return response.data;
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
       throw const FormatException('Unable to process the data');
     } catch (e) {
-      rethrow;
+      _handleError(path, e);
     }
   }
-
   // #endregion
+
+  void _handleError(String url, dynamic error) {
+    if (error is Exception) {
+      if (error is DioError) {
+        switch (error.type) {
+          case DioErrorType.response:
+            _checkStatusCode(error.response, url);
+            break;
+
+          case DioErrorType.other:
+            if (error.message.contains('SocketException: Failed host lookup')) {
+              throw RbioNetworkException(url);
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
+
+    throw error;
+  }
+
+  void _checkStatusCode(Response<dynamic>? response, String url) {
+    final statusCode = response?.statusCode;
+    if (statusCode != null) {
+      if (statusCode >= HttpStatus.badRequest &&
+          statusCode <= HttpStatus.clientClosedRequest) {
+        throw RbioClientException(url, response?.data);
+      } else if (statusCode >= HttpStatus.internalServerError &&
+          statusCode <= HttpStatus.networkConnectTimeoutError) {
+        throw RbioServerException(url, response?.data);
+      }
+    }
+  }
 }

@@ -22,9 +22,10 @@ class PasswordAdvisor {
 
   bool validateStructureByPattern(String value) {
     String pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~-]).{8,}$';
     RegExp regExp = RegExp(pattern);
-    return regExp.hasMatch(value);
+    final result = regExp.hasMatch(value);
+    return result;
   }
 
   bool validateStructure() =>

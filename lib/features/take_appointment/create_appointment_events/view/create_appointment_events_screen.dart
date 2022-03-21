@@ -12,7 +12,6 @@ part '../widgets/list_body.dart';
 part '../widgets/table_calendar.dart';
 
 class CreateAppointmentEventsScreen extends StatefulWidget {
-  late String patientId;
   late String patientName;
   late int tenantId;
   late String tenantName;
@@ -37,7 +36,6 @@ class _CreateAppointmentEventsScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      widget.patientId = Uri.decodeFull(Atom.queryParameters['patientId']!);
       widget.patientName = Uri.decodeFull(Atom.queryParameters['patientName']!);
       widget.tenantId = int.parse(Atom.queryParameters['tenantId']!);
       widget.tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']!);
@@ -124,7 +122,6 @@ class _CreateAppointmentEventsScreenState
                 Atom.to(
                   PagePaths.createAppointmentSummary,
                   queryParameters: {
-                    'patientId': Uri.encodeFull(widget.patientId),
                     'patientName': Uri.encodeFull(widget.patientName),
                     'tenantId':
                         completeNotifier.value!.selected!.tenantId!.toString(),
