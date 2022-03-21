@@ -1,4 +1,5 @@
 import '../../domain/entity/device_entity.dart';
+import 'package:collection/collection.dart';
 
 class DeviceModel extends DeviceEntity {
   DeviceModel({
@@ -12,15 +13,6 @@ class DeviceModel extends DeviceEntity {
           strength: strength,
           kind: kind,
         );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'strength': strength,
-      'kind': "$kind",
-    };
-  }
 }
 
 enum DeviceKind {
@@ -30,4 +22,13 @@ enum DeviceKind {
   usb,
   none,
   unknown,
+}
+
+extension DeviceKindExtension on DeviceKind {
+  String get xRawValue => toString().split('.').last;
+}
+
+extension DeviceKindStringExtension on String {
+  DeviceKind? get xDeviceKind => DeviceKind.values
+      .firstWhereOrNull((element) => element.xRawValue == this);
 }

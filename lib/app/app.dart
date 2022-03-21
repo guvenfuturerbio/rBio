@@ -8,12 +8,11 @@ import '../core/core.dart';
 import '../features/chronic_tracking/progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../features/chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../features/chronic_tracking/progress_sections/scale/scale.dart';
-import '../features/chronic_tracking/progress_sections/scale/viewmodel/scale_progress_vm.dart';
-import '../features/chronic_tracking/progress_sections/scale/widgets/mi_scale_popup.dart';
 import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
 import '../features/doctor/notifiers/patient_notifiers.dart';
 import '../features/home/viewmodel/home_vm.dart';
 import 'bluetooth_v2/bluetooth_v2.dart';
+import 'bluetooth_v2/presentation/bloc/mi_scale/mi_scale_state.dart';
 
 class MyApp extends StatefulWidget {
   final String initialRoute;
@@ -178,31 +177,22 @@ class _MyAppState extends State<MyApp> {
     BuildContext context,
     MiScaleReadValuesState state,
   ) async {
-    final scaleEntity = state.scaleEntity;
-    if (scaleEntity != null) {
-      if (!Atom.isDialogShow) {
-        Atom.show(const MiScalePopUp());
-      }
-
-      if (scaleEntity.measurementComplete!) {
-        if (Atom.isDialogShow) {
-          Atom.dismiss();
-        }
-        await Future.delayed(const Duration(milliseconds: 350));
-        await Atom.show(
-          ScaleTaggerPopUp(
-            scaleModel: scaleEntity,
-          ),
+    state.when(
+      initial: () {
+        //
+      },
+      showLoading: (scaleEntity) {
+        Atom.show(MiScalePopUp(scaleEntity: scaleEntity));
+      },
+      dismissLoading: () {
+        Atom.dismiss();
+      },
+      showScalePopup: (scaleEntity) {
+        Atom.show(
+          ScaleTaggerPopUp(scaleModel: scaleEntity),
           barrierDismissible: false,
         );
-      }
-
-      final popUpCanClose = (Atom.isDialogShow) &&
-          (scaleEntity.weightRemoved)! &&
-          !scaleEntity.measurementComplete!;
-      if (popUpCanClose) {
-        Atom.dismiss();
-      }
-    }
+      },
+    );
   }
 }

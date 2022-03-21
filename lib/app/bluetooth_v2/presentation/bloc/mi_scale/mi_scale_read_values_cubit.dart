@@ -1,12 +1,15 @@
 import 'dart:async';
+
 import 'package:scale_repository/scale_repository.dart';
 
+import '../../../../../core/core.dart';
 import '../../../bluetooth_v2.dart';
+import 'mi_scale_state.dart';
 
 class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
   MiScaleReadValuesCubit(
     this.readValuesUseCase,
-  ) : super(const MiScaleReadValuesState());
+  ) : super(const MiScaleReadValuesState.initial());
   final ReadValuesUseCase readValuesUseCase;
 
   StreamSubscription<ScaleEntity>? _streamSubs;
@@ -26,28 +29,30 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
         field: field,
       ),
     );
-    result.fold((l) {
-      return null;
-    }, (stream) {
-      _streamSubs = stream.listen((event) {
-        emit(MiScaleReadValuesState(scaleEntity: event));
-      });
-      return null;
-    });
+    result.fold(
+      (l) {
+        return null;
+      },
+      (stream) {
+        _streamSubs = stream.listen(
+          (scaleEntity) async {
+            emit(MiScaleReadValuesState.showLoading(scaleEntity));
+            if (scaleEntity.measurementComplete == true) {
+              emit(const MiScaleReadValuesState.dismissLoading());
+              await Future.delayed(const Duration(milliseconds: 350));
+              emit(MiScaleReadValuesState.showScalePopup(scaleEntity));
+            }
+
+            final popUpCanClose = (Atom.isDialogShow) &&
+                (scaleEntity.weightRemoved)! &&
+                !scaleEntity.measurementComplete! &&
+                (state is! MiScaleReadValuesShowScalePopup);
+            if (popUpCanClose) {
+              emit(const MiScaleReadValuesState.dismissLoading());
+            }
+          },
+        );
+      },
+    );
   }
-
-  Future<void> resetState() async {
-    emit(const MiScaleReadValuesState(scaleEntity: null));
-  }
-}
-
-class MiScaleReadValuesState extends Equatable {
-  final ScaleEntity? scaleEntity;
-
-  const MiScaleReadValuesState({
-    this.scaleEntity,
-  });
-
-  @override
-  List<Object?> get props => [scaleEntity];
 }

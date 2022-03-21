@@ -1,6 +1,7 @@
+import '../../../../core/core.dart';
 import '../../data/models/device_model.dart';
 
-class DeviceEntity {
+class DeviceEntity extends IBaseModel<DeviceEntity> {
   DeviceEntity({
     required this.id,
     required this.name,
@@ -21,4 +22,23 @@ class DeviceEntity {
       kind: DeviceKind.none,
     );
   }
+
+  factory DeviceEntity.fromJson(Map<String, dynamic> json) => DeviceEntity(
+        id: json["id"],
+        name: json["name"],
+        strength: json["strength"],
+        kind: (json["kind"] as String).xDeviceKind ?? DeviceKind.none,
+      );
+
+  @override
+  DeviceEntity fromJson(Map<String, dynamic> json) =>
+      DeviceEntity.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        "id": id,
+        "name": name,
+        "strength": strength,
+        "kind": kind.xRawValue,
+      };
 }
