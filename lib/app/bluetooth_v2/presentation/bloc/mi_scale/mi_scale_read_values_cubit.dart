@@ -36,6 +36,10 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
       return null;
     });
   }
+
+  void resetState() {
+    emit(const MiScaleReadValuesState(scaleEntity: null));
+  }
 }
 
 class MiScaleReadValuesState extends Equatable {
