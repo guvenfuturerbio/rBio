@@ -44,9 +44,8 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
             }
 
             final popUpCanClose = (Atom.isDialogShow) &&
-                (scaleEntity.weightRemoved)! &&
-                !scaleEntity.measurementComplete! &&
-                (state is! MiScaleReadValuesShowScalePopup);
+                (scaleEntity.weightRemoved == true) &&
+                (scaleEntity.measurementComplete == false);
             if (popUpCanClose) {
               emit(const MiScaleReadValuesState.dismissLoading());
             }

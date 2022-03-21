@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:scale_repository/scale_repository.dart';
 
+import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../../../app/bluetooth_v2/presentation/bloc/mi_scale/mi_scale_state.dart';
 import '../../../../../core/core.dart';
 import 'loading/scale_progress_circle.dart';
 
 class MiScalePopUp extends StatelessWidget {
-  final ScaleEntity scaleEntity;
-
   const MiScalePopUp({
     Key? key,
-    required this.scaleEntity,
   }) : super(key: key);
 
   @override
@@ -19,7 +18,21 @@ class MiScalePopUp extends StatelessWidget {
         color: getIt<ITheme>().mainColor,
         height: context.height,
         width: context.width,
-        child: _pairingStep(context, scaleEntity),
+        child: BlocBuilder<MiScaleReadValuesCubit, MiScaleReadValuesState>(
+          builder: (context, miScaleState) {
+            Widget? child = const RbioLoading();
+            miScaleState.whenOrNull(
+              showLoading: (scaleEntity) {
+                child = _scaleStep(context, scaleEntity);
+                // return scaleEntity.measurementComplete == true
+                //     ? _scaleStep(context, scaleEntity)
+                //     : _pairingStep(context, scaleEntity);
+              },
+            );
+
+            return child!;
+          },
+        ),
       ),
     );
   }

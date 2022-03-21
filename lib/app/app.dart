@@ -182,7 +182,9 @@ class _MyAppState extends State<MyApp> {
         //
       },
       showLoading: (scaleEntity) {
-        Atom.show(MiScalePopUp(scaleEntity: scaleEntity));
+        if (!Atom.isDialogShow) {
+          Atom.show(const MiScalePopUp());
+        }
       },
       dismissLoading: () {
         Atom.dismiss();
