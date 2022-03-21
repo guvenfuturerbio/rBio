@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scale_api/scale_api.dart';
 import 'package:scale_calculations/scale_calculations.dart';
@@ -80,6 +81,59 @@ class ScaleEntity {
       deviceId: deviceId,
       bmh: bmh,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ScaleEntity &&
+        other.dateTime == dateTime &&
+        other.weight == weight &&
+        other.bmi == bmi &&
+        other.water == water &&
+        other.bodyFat == bodyFat &&
+        other.visceralFat == visceralFat &&
+        other.boneMass == boneMass &&
+        other.muscle == muscle &&
+        other.age == age &&
+        other.height == height &&
+        other.gender == gender &&
+        other.impedance == impedance &&
+        other.isManuel == isManuel &&
+        other.unit == unit &&
+        other.note == note &&
+        listEquals(other.images, images) &&
+        other.weightStabilized == weightStabilized &&
+        other.measurementComplete == measurementComplete &&
+        other.weightRemoved == weightRemoved &&
+        other.deviceId == deviceId &&
+        other.bmh == bmh;
+  }
+
+  @override
+  int get hashCode {
+    return dateTime.hashCode ^
+        weight.hashCode ^
+        bmi.hashCode ^
+        water.hashCode ^
+        bodyFat.hashCode ^
+        visceralFat.hashCode ^
+        boneMass.hashCode ^
+        muscle.hashCode ^
+        age.hashCode ^
+        height.hashCode ^
+        gender.hashCode ^
+        impedance.hashCode ^
+        isManuel.hashCode ^
+        unit.hashCode ^
+        note.hashCode ^
+        images.hashCode ^
+        weightStabilized.hashCode ^
+        measurementComplete.hashCode ^
+        weightRemoved.hashCode ^
+        deviceId.hashCode ^
+        bmh.hashCode;
   }
 }
 

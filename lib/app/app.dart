@@ -42,34 +42,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<MiScaleReadValuesCubit, MiScaleReadValuesState>(
-      listener: (context, state) async {
-        final scaleEntity = state.scaleEntity;
-        if (scaleEntity != null) {
-          if (!Atom.isDialogShow) {
-            Atom.show(const MiScalePopUp());
-          }
-
-          if (scaleEntity.measurementComplete!) {
-            if (Atom.isDialogShow) {
-              Atom.dismiss();
-            }
-            await Future.delayed(const Duration(milliseconds: 350));
-            await Atom.show(
-              ScaleTaggerPopUp(
-                scaleModel: scaleEntity,
-              ),
-              barrierDismissible: false,
-            );
-          }
-
-          final popUpCanClose = (Atom.isDialogShow) &&
-              (scaleEntity.weightRemoved)! &&
-              !scaleEntity.measurementComplete!;
-          if (popUpCanClose) {
-            Atom.dismiss();
-          }
-        }
-      },
+      listener: (context, state) => _miScaleListener(context, state),
       child: Container(
         color: Colors.white,
         child: MultiProvider(
@@ -199,5 +172,37 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void _miScaleListener(
+    BuildContext context,
+    MiScaleReadValuesState state,
+  ) async {
+    final scaleEntity = state.scaleEntity;
+    if (scaleEntity != null) {
+      if (!Atom.isDialogShow) {
+        Atom.show(const MiScalePopUp());
+      }
+
+      if (scaleEntity.measurementComplete!) {
+        if (Atom.isDialogShow) {
+          Atom.dismiss();
+        }
+        await Future.delayed(const Duration(milliseconds: 350));
+        await Atom.show(
+          ScaleTaggerPopUp(
+            scaleModel: scaleEntity,
+          ),
+          barrierDismissible: false,
+        );
+      }
+
+      final popUpCanClose = (Atom.isDialogShow) &&
+          (scaleEntity.weightRemoved)! &&
+          !scaleEntity.measurementComplete!;
+      if (popUpCanClose) {
+        Atom.dismiss();
+      }
+    }
   }
 }

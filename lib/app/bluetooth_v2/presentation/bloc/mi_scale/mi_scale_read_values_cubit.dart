@@ -27,7 +27,6 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
       ),
     );
     result.fold((l) {
-      print("[ReadValuesCubit] - Left - $l");
       return null;
     }, (stream) {
       _streamSubs = stream.listen((event) {
@@ -37,7 +36,7 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
     });
   }
 
-  void resetState() {
+  Future<void> resetState() async {
     emit(const MiScaleReadValuesState(scaleEntity: null));
   }
 }
