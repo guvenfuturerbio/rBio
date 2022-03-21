@@ -115,7 +115,10 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
       var newValue = Uint8List.fromList(value);
       MiScaleModel? model = parseScaleData(newValue, device.toJson());
       if (model != null) {
-        yield model;
+        if (!(model.measurementComplete == true &&
+            model.weightRemoved == true)) {
+          yield model;
+        }
       }
     }
   }
