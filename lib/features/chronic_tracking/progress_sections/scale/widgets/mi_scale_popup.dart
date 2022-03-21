@@ -19,9 +19,10 @@ class MiScalePopUp extends StatelessWidget {
           builder: (context, miScaleState) {
             final scaleEntity = miScaleState.scaleEntity;
             if (scaleEntity != null) {
-              return scaleEntity.measurementComplete == true
-                  ? _scaleStep(context, scaleEntity)
-                  : _pairingStep(context, scaleEntity);
+              return _pairingStep(context, scaleEntity);
+              // return scaleEntity.measurementComplete == true
+              //     ? _scaleStep(context, scaleEntity)
+              //     : _pairingStep(context, scaleEntity);
             } else {
               return const RbioLoading();
             }

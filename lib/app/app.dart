@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../core/core.dart';
 import '../features/chronic_tracking/progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../features/chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
+import '../features/chronic_tracking/progress_sections/scale/scale.dart';
 import '../features/chronic_tracking/progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import '../features/chronic_tracking/progress_sections/scale/widgets/mi_scale_popup.dart';
 import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
@@ -41,11 +42,31 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<MiScaleReadValuesCubit, MiScaleReadValuesState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         final scaleEntity = state.scaleEntity;
         if (scaleEntity != null) {
           if (!Atom.isDialogShow) {
             Atom.show(const MiScalePopUp());
+          }
+
+          if (scaleEntity.measurementComplete!) {
+            if (Atom.isDialogShow) {
+              Atom.dismiss();
+            }
+            await Future.delayed(const Duration(milliseconds: 350));
+            await Atom.show(
+              ScaleTaggerPopUp(
+                scaleModel: scaleEntity,
+              ),
+              barrierDismissible: false,
+            );
+          }
+
+          final popUpCanClose = (Atom.isDialogShow) &&
+              (scaleEntity.weightRemoved)! &&
+              !scaleEntity.measurementComplete!;
+          if (popUpCanClose) {
+            Atom.dismiss();
           }
         }
       },
