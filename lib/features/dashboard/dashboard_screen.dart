@@ -128,6 +128,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
 
             //
+            Card(
+              color: Colors.red,
+              child: ListTile(
+                onTap: () {
+                  Atom.to(PagePaths.pairedDeviceListing);
+                },
+                title: const Text("Open MiScale Devices"),
+              ),
+            ),
+
+            //
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.only(left: 15, top: 12),

@@ -20,6 +20,8 @@ enum SharedPreferencesKeys {
   allUsers, // Home Widget List Tutuyor
   firstLaunch,
 
+  pairedDevicesV2,
+
   hba1cList,
   medicines,
   usedStripCount,

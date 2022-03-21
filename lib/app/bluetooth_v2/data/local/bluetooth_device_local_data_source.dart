@@ -48,6 +48,7 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
               strength: e.rssi,
               id: e.device.id.id,
               kind: DeviceKind.ble,
+              deviceType: deviceType,
             );
           },
         ).toList();

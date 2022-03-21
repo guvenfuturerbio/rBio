@@ -1,3 +1,4 @@
+import '../../../../core/core.dart';
 import '../../domain/entity/device_entity.dart';
 import 'package:collection/collection.dart';
 
@@ -7,11 +8,13 @@ class DeviceModel extends DeviceEntity {
     required String name,
     required int strength,
     required DeviceKind kind,
+    required DeviceType? deviceType,
   }) : super(
           id: id,
           name: name,
           strength: strength,
           kind: kind,
+          deviceType: deviceType,
         );
 }
 

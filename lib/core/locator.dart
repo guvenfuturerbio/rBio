@@ -8,6 +8,7 @@ import 'package:scale_hive_impl/scale_hive_impl.dart';
 import 'package:scale_repository/scale_repository.dart';
 
 import '../app/bluetooth_v2/data/local/bluetooth_device_local_data_source.dart';
+import '../app/bluetooth_v2/data/local/bluetooth_local_manager.dart';
 import '../app/bluetooth_v2/data/repository/device_repository_impl.dart';
 import '../app/bluetooth_v2/domain/repository/device_repository.dart';
 import '../app/bluetooth_v2/domain/usecase/connect_device_usecase.dart';
@@ -38,6 +39,7 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerFactory<ReadValuesUseCase>(() => ReadValuesUseCase(getIt()));
   getIt.registerFactory<ReadStatusDeviceUseCase>(() => ReadStatusDeviceUseCase(getIt()));
   getIt.registerFactory<StopScanUseCase>(() => StopScanUseCase(getIt()));
+  getIt.registerLazySingleton<BluetoothLocalManager>(() => BluetoothLocalManager(getIt()));
 
   // #region !isWeb
   String? directory;

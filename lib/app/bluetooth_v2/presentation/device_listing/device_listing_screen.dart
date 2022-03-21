@@ -55,6 +55,11 @@ class DeviceListingScreen extends StatelessWidget {
                 itemCount: deviceSearchState.devices.length,
                 itemBuilder: (BuildContext context, int index) {
                   final discoveredDevice = deviceSearchState.devices[index];
+                  final hasExist = getIt<BluetoothLocalManager>()
+                      .hasDeviceAlreadyPaired(discoveredDevice);
+                  if (hasExist) {
+                    return const SizedBox();
+                  }
 
                   return BlocProvider<DeviceStatusCubit>(
                     create: (context) => DeviceStatusCubit(getIt())
@@ -135,20 +140,37 @@ class DeviceListingScreen extends StatelessWidget {
     }
   }
 
-  void _deviceStatusListen(
+  Future<void> _deviceStatusListen(
     BuildContext context,
     DeviceStatus? deviceStatusState,
-    DeviceEntity discoveredDevice,
-  ) {
+    DeviceEntity device,
+  ) async {
     if (deviceStatusState == DeviceStatus.connected) {
       Utils.instance.showSnackbar(
         context,
         LocaleProvider.current.pair_successful,
         backColor: getIt<ITheme>().mainColor,
       );
-      context
-          .read<MiScaleReadValuesCubit>()
-          .readValue(discoveredDevice, "Weight");
+
+      await getIt<BluetoothLocalManager>().savePairedDevices(device);
+
+      switch (deviceType) {
+        case DeviceType.miScale:
+          {
+            context.read<MiScaleReadValuesCubit>().readValue(device, "Weight");
+            break;
+          }
+
+        case DeviceType.accuChek:
+        case DeviceType.contourPlusOne:
+        case DeviceType.omronBloodPressureArm:
+        case DeviceType.omronBloodPressureWrist:
+        case DeviceType.omronScale:
+        case DeviceType.manuel:
+        default:
+          break;
+      }
+
       Future.delayed(
         const Duration(seconds: 1),
         () {

@@ -7,12 +7,14 @@ class DeviceEntity extends IBaseModel<DeviceEntity> {
     required this.name,
     required this.strength,
     required this.kind,
+    required this.deviceType,
   });
 
   final String id;
   final String name;
   final int strength;
   final DeviceKind kind;
+  final DeviceType? deviceType;
 
   factory DeviceEntity.empty() {
     return DeviceEntity(
@@ -20,6 +22,7 @@ class DeviceEntity extends IBaseModel<DeviceEntity> {
       name: '',
       strength: 0,
       kind: DeviceKind.none,
+      deviceType: null,
     );
   }
 
@@ -28,6 +31,7 @@ class DeviceEntity extends IBaseModel<DeviceEntity> {
         name: json["name"],
         strength: json["strength"],
         kind: (json["kind"] as String).xDeviceKind ?? DeviceKind.none,
+        deviceType: (json["deviceType"] as String).xDeviceType,
       );
 
   @override
@@ -40,5 +44,18 @@ class DeviceEntity extends IBaseModel<DeviceEntity> {
         "name": name,
         "strength": strength,
         "kind": kind.xRawValue,
+        "deviceType": deviceType!.xRawValue,
       };
+
+  DeviceEntity setDeviceType({
+    required DeviceType newDeviceType,
+  }) {
+    return DeviceEntity(
+      id: id,
+      name: name,
+      strength: strength,
+      kind: kind,
+      deviceType: newDeviceType,
+    );
+  }
 }

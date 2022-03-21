@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 class DeviceConnectionType {
   String? name;
   String? imagePath;
@@ -24,6 +26,15 @@ enum DeviceType {
   omronScale,
   miScale,
   manuel,
+}
+
+extension DeviceTypeEnumExtension on DeviceType {
+  String get xRawValue => toString().split('.').last;
+}
+
+extension DeviceTypeStringExtension on String {
+  DeviceType? get xDeviceType => DeviceType.values
+      .firstWhereOrNull((element) => element.xRawValue == this);
 }
 
 extension DeviceTypeExtension on DeviceType {
