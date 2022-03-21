@@ -76,7 +76,7 @@ class RegisterStep2ScreenVm extends RbioVm {
     try {
       showLoadingDialog(mContext);
       late GuvenResponseModel response;
-      if ((userRegistrationStep1.identityNumber ?? '').trim().isEmpty ||
+      if ((userRegistrationStep1.identityNumber ?? '').trim().isEmpty &&
           (registerStep1Model.identificationNumber ?? '').trim().isEmpty) {
         // isWithOutTCKN = true;
         // response = await getIt<Repository>().registerStep1WithOutTc(registerStep1Model);

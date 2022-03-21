@@ -37,7 +37,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   DateTime? _startDate;
   DateTime? _endDate;
   int? _patientId;
-  List<PatientAppointmentsResponse>? patientAppointments;
+  List<PatientAppointmentsResponse>? patientAppointments =[];
   List<PatientAppointmentsResponse> holderForFavorites = [];
   final List<String> doctorsImageUrls = [];
   List<int> _doctorsIds = [];
@@ -257,14 +257,13 @@ class CreateAppointmentVm extends ChangeNotifier {
           relativeResponse?.patientRelatives == []) {
         relativeResponse = PatientRelativeInfoResponse([]);
       }
-      final currentPatient = getIt<UserNotifier>().getPatient();
+      final currentPatient = getIt<UserNotifier>().getUserAccount();
       relativeResponse = PatientRelativeInfoResponse(
         [
           PatientRelative(
-            name: currentPatient.firstName,
-            surname: currentPatient.lastName,
-            tcNo: currentPatient.identityNumber,
-            id: currentPatient.id.toString(),
+            name: currentPatient.name,
+            surname: currentPatient.surname,
+            tcNo: currentPatient.identificationNumber,
           ),
           ...relativeResponse!.patientRelatives,
         ],
@@ -556,13 +555,16 @@ class CreateAppointmentVm extends ChangeNotifier {
     progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      patientAppointments = await getIt<Repository>().getPatientAppointments(
-        PatientAppointmentRequest(
-          patientId: _patientId,
-          to: endDate.toString(),
-          from: startDate.toString(),
-        ),
-      );
+      _patientId != null
+          ? patientAppointments =
+              await getIt<Repository>().getPatientAppointments(
+              PatientAppointmentRequest(
+                patientId: _patientId,
+                to: endDate.toString(),
+                from: startDate.toString(),
+              ),
+            )
+          : null;
 
       await holderListFillFunc();
       for (var element in holderForFavorites) {

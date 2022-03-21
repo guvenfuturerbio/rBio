@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:dartz/dartz.dart';
 
 import 'package:onedosehealth/features/auth/model/login_exception.dart';
+import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 
 import '../../../features/auth/auth.dart';
 import '../../../features/auth/model/change_password_exception.dart';
@@ -134,7 +135,7 @@ class Repository {
   Future<ApplicationVersionResponse> getCurrentApplicationVersion() =>
       apiService.getCurrentApplicationVersion();
 
-  Future<PatientResponse> getPatientDetail() async {
+  Future<PatientResponse?> getPatientDetail() async {
     final url = R.endpoints.getPatientDetailPath;
     final response = await apiService.getPatientDetail(url);
     return response;
@@ -397,6 +398,10 @@ class Repository {
   Future<GetVideoCallPriceResponse> getResourceVideoCallPrice(
           GetVideoCallPriceRequest getVideoCallPriceRequest) =>
       apiService.getResourceVideoCallPrice(getVideoCallPriceRequest);
+
+  Future<GuvenResponseModel> synchronizeOneDoseUser(
+          SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest) =>
+      apiService.synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
 
   Future<GuvenResponseModel> doMobilePayment(
           DoMobilePaymentRequest doMobilePaymentRequest) =>

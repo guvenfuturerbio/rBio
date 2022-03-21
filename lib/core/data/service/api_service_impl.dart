@@ -238,7 +238,7 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<PatientResponse> getPatientDetail(String url) async {
+  Future<PatientResponse?> getPatientDetail(String url) async {
     final response = await helper.postGuven(url, {}, options: authOptions);
     if (response.xIsSuccessful) {
       final patient = PatientResponse.fromJson(response.xGetMap);
@@ -248,7 +248,7 @@ class ApiServiceImpl extends ApiService {
       await getIt<UserNotifier>().setPatient(patient);
       return patient;
     } else {
-      throw Exception('/getPatientDetail : ${response.isSuccessful}');
+      return null;
     }
   }
 
@@ -1319,6 +1319,21 @@ class ApiServiceImpl extends ApiService {
       return response;
     } else {
       throw Exception('/sendNotification : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> synchronizeOneDoseUser(
+      SynchronizeOneDoseUserRequest synchronizeOnedoseUserRequest) async {
+    final response = await helper.postGuven(
+      R.endpoints.syncronizeOneDoseUser,
+      synchronizeOnedoseUserRequest.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/synchronizeOneDoseUser : ${response.isSuccessful}');
     }
   }
 }

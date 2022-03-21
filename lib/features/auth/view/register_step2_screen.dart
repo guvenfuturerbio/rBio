@@ -363,61 +363,52 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
               child: Utils.instance.button(
                 text: LocaleProvider.of(context).btn_next.toUpperCase(),
                 onPressed: () {
-                  if (checkedValueForTc) {
-                    AddStep1Model userRegisterStep1 = AddStep1Model();
-                    userRegisterStep1.id = 0;
-                    userRegisterStep1.firstName = registerName;
-                    userRegisterStep1.lastName = registerSurname;
-                    userRegisterStep1.nationalityId = vm.isTcCitizen ? 213 : 38;
-                    vm.isTcCitizen
-                        ? userRegisterStep1.identityNumber =
-                            _identityEditingController.text
-                        : userRegisterStep1.passportNumber =
-                            _identityEditingController.text;
-                    //
-                    userRegisterStep1.gender = registerGender;
-                    userRegisterStep1.gsm = registerPhoneNumber;
-                    userRegisterStep1.birthDate = registerDateOfBirth;
-                    userRegisterStep1.email = _emailEditingController.text;
-                    userRegisterStep1.countryCode =
-                        registerCountryCode.substring(1);
-                    //-------------------------------------
-                    UserRegistrationStep1Model userRegisterStep1Model =
-                        UserRegistrationStep1Model();
-                    userRegisterStep1Model.name = registerName;
-                    userRegisterStep1Model.surname = registerSurname;
-                    userRegisterStep1Model.identificationNumber =
-                        _identityEditingController.text;
-                    userRegisterStep1Model.userNationality =
-                        vm.isTcCitizen ? 'TC' : 'D';
-                    userRegisterStep1Model.phoneNumber = registerPhoneNumber;
-                    userRegisterStep1Model.electronicMail =
-                        _emailEditingController.text;
-                    userRegisterStep1Model.countryCode =
-                        registerCountryCode.substring(1);
+                  AddStep1Model userRegisterStep1 = AddStep1Model();
+                  userRegisterStep1.id = 0;
+                  userRegisterStep1.firstName = registerName;
+                  userRegisterStep1.lastName = registerSurname;
+                  userRegisterStep1.nationalityId = vm.isTcCitizen ? 213 : 38;
+                  userRegisterStep1.identityNumber =
+                      _identityEditingController.text;
 
-                    if (_identityEditingController.text.isNotEmpty &&
-                        _emailEditingController.text.isNotEmpty) {
-                      vm.registerStep1(
-                        userRegisterStep1,
-                        userRegisterStep1Model,
-                      );
-                    } else if ((_identityEditingController.text.isEmpty) &&
-                        _emailEditingController.text.isNotEmpty) {
-                      vm.registerStep1(
-                        userRegisterStep1,
-                        userRegisterStep1Model,
-                      );
-                    } else {
-                      vm.showInfoDialog(
-                        LocaleProvider.of(context).warning,
-                        LocaleProvider.of(context).fill_all_field,
-                      );
-                    }
+                  //
+                  userRegisterStep1.gender = registerGender;
+                  userRegisterStep1.gsm = registerPhoneNumber;
+                  userRegisterStep1.birthDate = registerDateOfBirth;
+                  userRegisterStep1.email = _emailEditingController.text;
+                  userRegisterStep1.countryCode =
+                      registerCountryCode.substring(1);
+                  //-------------------------------------
+                  UserRegistrationStep1Model userRegisterStep1Model =
+                      UserRegistrationStep1Model();
+                  userRegisterStep1Model.name = registerName;
+                  userRegisterStep1Model.surname = registerSurname;
+                  userRegisterStep1Model.identificationNumber =
+                      _identityEditingController.text;
+                  userRegisterStep1Model.userNationality =
+                      vm.isTcCitizen ? 'TC' : 'D';
+                  userRegisterStep1Model.phoneNumber = registerPhoneNumber;
+                  userRegisterStep1Model.electronicMail =
+                      _emailEditingController.text;
+                  userRegisterStep1Model.countryCode =
+                      registerCountryCode.substring(1);
+
+                  if (_identityEditingController.text.isNotEmpty &&
+                      _emailEditingController.text.isNotEmpty) {
+                    vm.registerStep1(
+                      userRegisterStep1,
+                      userRegisterStep1Model,
+                    );
+                  } else if ((_identityEditingController.text.isEmpty) &&
+                      _emailEditingController.text.isNotEmpty) {
+                    vm.registerStep1(
+                      userRegisterStep1,
+                      userRegisterStep1Model,
+                    );
                   } else {
                     vm.showInfoDialog(
                       LocaleProvider.of(context).warning,
-                      LocaleProvider.of(context).check_personal_data,
+                      LocaleProvider.of(context).fill_all_field,
                     );
                   }
                 },

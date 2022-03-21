@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 
 import '../../../features/auth/auth.dart';
 import '../../../features/chat/model/chat_notification.dart';
@@ -25,22 +26,25 @@ abstract class ApiService {
   // for_you_services.dart
   Future<List<ForYouCategoryResponse>> getAllPackage(String path);
   Future<List<ForYouCategoryResponse>> getAllSubCategories(String path);
-  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(String path);
+  Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
+      String path);
   Future<List<ForYouSubCategoryItemsResponse>> getSubCategoryItems(String id);
   Future<String> doPackagePayment(PackagePaymentRequest packagePayment);
 
   Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model);
-  Future<GuvenResponseModel> addStep2(UserRegistrationStep2Model userRegistrationStep2);
-  Future<GuvenResponseModel> addStep3(UserRegistrationStep3Model userRegistrationStep3);
+  Future<GuvenResponseModel> addStep2(
+      UserRegistrationStep2Model userRegistrationStep2);
+  Future<GuvenResponseModel> addStep3(
+      UserRegistrationStep3Model userRegistrationStep3);
 
   Future<GuvenResponseModel> updateUserSystemName(String identityNumber);
   Future<UserAccount> getUserProfile();
   Future<Map<String, dynamic>> getActiveStream();
   Future<String> getProfilePicture();
   Future<ApplicationVersionResponse> getCurrentApplicationVersion();
-  Future<PatientResponse> getPatientDetail(String url);
-  Future<List<BannerTabsModel>> getBannerTab(String applicationName,String groupName
-  );
+  Future<PatientResponse?> getPatientDetail(String url);
+  Future<List<BannerTabsModel>> getBannerTab(
+      String applicationName, String groupName);
   //
   Future<List<FilterTenantsResponse>> filterTenants(
     String path,
@@ -69,6 +73,7 @@ abstract class ApiService {
   Future<GuvenResponseModel> forgotPassword(
     UserRegistrationStep1Model userRegistrationStep1,
   );
+  Future<GuvenResponseModel> synchronizeOneDoseUser(SynchronizeOneDoseUserRequest synchronizeOnedoseUserRequest);
   Future<GuvenResponseModel> changePassword(
       ChangePasswordModel changePasswordModel);
   Future<GuvenResponseModel> updateContactInfo(
@@ -111,7 +116,6 @@ abstract class ApiService {
       String appoId, TranslatorRequest translatorPost);
   Future<GuvenResponseModel> uploadFileToAppo(String webAppoId, File file);
 
-  
   Future<List<VisitResponse>> getVisits(VisitRequest visitRequestBody);
   Future<List<LaboratoryResponse>> getLaboratoryResults(
       VisitDetailRequest detailRequest);

@@ -47,21 +47,25 @@ class PersonalInformationScreenVm extends RbioVm {
     showLoadingOverlay = true;
 
     try {
-      PatientResponse patient = await getIt<Repository>().getPatientDetail();
+      UserAccount patient = await getIt<Repository>().getUserProfile();
+      PatientResponse? pusulaPatient = await getIt<Repository>().getPatientDetail();
+
+       patient = await getIt<Repository>().getUserProfile();
+
       ChangeContactInfoRequest changeInfo = ChangeContactInfoRequest();
-      changeInfo.patientId = patient.id;
-      changeInfo.patientType = int.tryParse(patient.patientType ?? '');
-      changeInfo.nationalityId = patient.nationalityId;
-      changeInfo.firstName = patient.firstName;
-      changeInfo.lastName = patient.lastName;
-      changeInfo.gender = patient.gender;
-      changeInfo.identityNumber = patient.identityNumber;
+
+      changeInfo.patientId = pusulaPatient?.id;
+      changeInfo.nationalityId = int.parse(patient.nationality!);
+      changeInfo.firstName = patient.name;
+      changeInfo.lastName = patient.surname;
+      changeInfo.gender = patient.patients?.first.gender;
+      changeInfo.identityNumber = patient.identificationNumber;
       changeInfo.gsm = newPhoneNumber;
       changeInfo.gsmCountryCode = null;
       changeInfo.email = newEmail;
-      changeInfo.hasETKApproval = patient.hasETKApproval;
-      changeInfo.hasKVKKApproval = patient.hasKVKKApproval;
-      changeInfo.passportNumber = patient.passportNumber;
+      changeInfo.hasETKApproval = pusulaPatient?.hasETKApproval;
+      changeInfo.hasKVKKApproval = pusulaPatient?.hasKVKKApproval;
+      changeInfo.passportNumber = patient.passaportNumber;
       await getIt<Repository>().updateContactInfo(changeInfo);
       var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
       sharedUserAccount = sharedUserAccount.copyWith(

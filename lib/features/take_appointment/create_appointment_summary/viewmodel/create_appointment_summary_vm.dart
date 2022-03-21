@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -20,7 +21,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   final int tenantId;
   final int departmentId;
   final int resourceId;
-  final int patientId;
+  int? patientId;
   final bool forOnline;
   final String to;
   final String from;
@@ -56,7 +57,6 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     required this.tenantId,
     required this.departmentId,
     required this.resourceId,
-    required this.patientId,
     required this.forOnline,
     required this.to,
     required this.from,
@@ -122,7 +122,37 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     String? price,
   }) async {
     showOverlayLoading = true;
-
+    try {
+      final patientDetail = await getIt<Repository>().getPatientDetail();
+      final oneDoseAccount = getIt<UserNotifier>().getUserAccount();
+      if (patientDetail?.id == null) {
+        SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
+            SynchronizeOneDoseUserRequest(
+                birthDate: oneDoseAccount.patients?.first.birthDate,
+                email: oneDoseAccount.electronicMail,
+                firstName: oneDoseAccount.name,
+                gender: oneDoseAccount.patients?.first.gender,
+                gsm: oneDoseAccount.phoneNumber,
+                // countryCode: oneDoseAccount.c,
+                //TODO       countryCode: oneDoseAccount.,
+                hasEtkApproval: true,
+                hasKvkkApproval: true,
+                identityNumber: oneDoseAccount.identificationNumber,
+                lastName: oneDoseAccount.surname,
+                nationalityId: int.parse(oneDoseAccount.nationality!),
+                passportNumber: oneDoseAccount.passaportNumber,
+                patientType: 1);
+        await getIt<Repository>()
+            .synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
+        final patientDetailResponse =
+            await getIt<Repository>().getPatientDetail();
+        patientId = patientDetailResponse?.id!;
+      } else {
+        patientId = patientDetail?.id;
+      }
+    } catch (e) {
+      LoggerUtils.instance.e("Error in synchronization");
+    }
     try {
       List<ResourcesRequest> resourcesRequest = <ResourcesRequest>[];
       resourcesRequest.add(
@@ -167,9 +197,8 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
         try {
           int datum = await getIt<Repository>().saveAppointment(
             AppointmentRequest(
-              saveAppointmentsRequest: saveAppointmentsRequest,
-              voucherCode:voucherCode
-            ),
+                saveAppointmentsRequest: saveAppointmentsRequest,
+                voucherCode: voucherCode),
           );
 
           _showOverlayLoading = false;

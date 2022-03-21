@@ -4,6 +4,7 @@ class UserAccount {
   String? nationality;
   String? name;
   String? surname;
+  String? countryCode;
   String? phoneNumber;
   String? electronicMail;
   bool? isSmsCodeValidated;
@@ -18,6 +19,7 @@ class UserAccount {
     this.name,
     this.surname,
     this.phoneNumber,
+    this.countryCode,
     this.electronicMail,
     this.isSmsCodeValidated,
     this.isActiveEmail,
@@ -32,6 +34,7 @@ class UserAccount {
     name = json['name'] as String?;
     surname = json['surname'] as String?;
     phoneNumber = json['phone_number'] as String?;
+    countryCode = json['country_code'] as String?;
     electronicMail = json['electronic_mail'] as String?;
     isSmsCodeValidated = json['is_sms_code_validated'] as bool?;
     isActiveEmail = json['is_active_email'] as bool?;
@@ -52,6 +55,7 @@ class UserAccount {
     data['name'] = name;
     data['surname'] = surname;
     data['phone_number'] = phoneNumber;
+    data['country_code'] = countryCode;
     data['electronic_mail'] = electronicMail;
     data['is_sms_code_validated'] = isSmsCodeValidated;
     data['is_active_email'] = isActiveEmail;
@@ -85,10 +89,13 @@ class UserAccount {
 class Patients {
   String? birthDate;
   List<String>? patinetHealthCompanies;
-
+  int? genderId;
+  String? gender;
   Patients({
     this.birthDate,
     this.patinetHealthCompanies,
+    this.genderId,
+    this.gender,
   });
 
   Patients.fromJson(Map<String, dynamic> json) {
@@ -97,12 +104,16 @@ class Patients {
         ? patinetHealthCompanies =
             json['patinet_health_companies'] as List<String>?
         : patinetHealthCompanies = [];
+    gender = json['gender'];
+    genderId = json['gender_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['birth_date'] = birthDate;
     data['patinet_health_companies'] = patinetHealthCompanies;
+    data['gender_id'] = genderId;
+    data['gender'] = gender;
     return data;
   }
 }

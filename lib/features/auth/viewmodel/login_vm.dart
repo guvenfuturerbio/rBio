@@ -2,11 +2,14 @@ import 'dart:io' as platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:scale_repository/scale_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:jiffy/jiffy.dart';
 
 import '../../../core/core.dart';
 import '../../../model/model.dart';
@@ -253,15 +256,50 @@ class LoginScreenVm extends ChangeNotifier {
           [
             getIt<UserManager>().setApplicationConsentFormState(true),
             //One dose hasta bilgileri
-            getIt<Repository>().getPatientDetail(),
             // Güven online kullanıcı bilgileri
             getIt<UserManager>().getUserProfile(),
-            getIt<UserManager>().getKvkkFormState()
+            getIt<UserManager>().getKvkkFormState(),
           ],
         );
+        final patientDetail = results[1] as UserAccount;
+        var result;
+        var pusulaPatientDetail;
+        try {
+          pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
+        } catch (e) {
+          if (pusulaPatientDetail == null) {
+            var inputFormat = DateFormat('dd.MM.yyyy');
+            var date1 =
+                inputFormat.parse(patientDetail.patients!.first.birthDate!);
 
-        final patientDetail = results[1];
-        _checkedKvkk = results[3];
+            var outputFormat = DateFormat('yyyy-MM-dd');
+            var date2 = outputFormat.format(date1);
+            SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
+                SynchronizeOneDoseUserRequest(
+                    birthDate: date2,
+                    email: patientDetail.electronicMail,
+                    firstName: patientDetail.name,
+                    gender: patientDetail.patients?.first.gender,
+                    gsm: patientDetail.phoneNumber,
+                    countryCode: patientDetail.countryCode,
+                    id: 0,
+                    hasEtkApproval: true,
+                    hasKvkkApproval: true,
+                    identityNumber: patientDetail.identificationNumber,
+                    lastName: patientDetail.surname,
+                    nationalityId:
+                        (patientDetail.nationality!) == 'TC' ? 213 : 98,
+                    passportNumber: patientDetail.passaportNumber,
+                    patientType: 1);
+            await getIt<Repository>()
+                .synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
+          }
+        }
+        if (pusulaPatientDetail == null) {
+          pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
+          await getIt<UserNotifier>().setPatient(pusulaPatientDetail);
+        }
+        _checkedKvkk = results[2];
 
         if (getIt<UserNotifier>().isCronic) {
           var profiles =
@@ -274,10 +312,11 @@ class LoginScreenVm extends ChangeNotifier {
           } else {
             await getIt<ProfileStorageImpl>().write(
               Person().fromDefault(
-                name: patientDetail?.firstName ?? 'Name',
-                lastName: patientDetail?.lastName ?? 'LastName',
-                birthDate: patientDetail?.birthDate ?? '01.01.2000',
-                gender: patientDetail?.gender ?? 'unsp',
+                name: patientDetail.name ?? 'Name',
+                lastName: patientDetail.surname ?? 'LastName',
+                birthDate:
+                    patientDetail.patients?.first.birthDate ?? '01.01.2000',
+                gender: patientDetail.patients?.first.gender ?? 'unsp',
               ),
               shouldSendToServer: true,
             );

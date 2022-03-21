@@ -172,6 +172,7 @@ class UserManagerImpl extends UserManager {
   Future getUserProfile() async {
     final response = await getIt<Repository>().getUserProfile();
     await getIt<UserNotifier>().setUserAccount(response);
+    return response;
   }
 
   @override

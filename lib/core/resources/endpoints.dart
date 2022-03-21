@@ -47,7 +47,7 @@ class _Endpoints {
   final saveAppointmentPath = '/Pusula/saveAppointment'.xBaseUrl;
   final syncronizeOneDoseUser =
       '/UserRegister/synchronize-onedose-user'.xBaseUrl;
-  final getAllRelativesPath = '/profile/get-all-table'.xBaseUrl;
+  final getAllRelativesPath = '/profile/get-all-table'.xDevApiTest;
   final getCountriesPath = '/Pusula/getCountries'.xBaseUrl;
   final updateContactInfoPath = '/pusula/UpdatePatientContactInfo'.xBaseUrl;
   String changeUserPasswordUiPath(String oldPassword, String password) =>
