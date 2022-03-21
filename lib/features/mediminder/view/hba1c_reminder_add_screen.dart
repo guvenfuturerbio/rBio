@@ -182,14 +182,14 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           IconButton(
             onPressed: () async {
               final initialDate = hba1cVM.lastMeasurementDate;
-              final result = await showGuvenDatePicker(
+              final result = await showRbioDatePicker(
                 context,
-                R.constants.date2000,
-                DateTime.now().add(const Duration(days: 365)),
-                (initialDate == '')
+                title: LocaleProvider.current.last_test_date,
+                initialDateTime: (initialDate == '')
                     ? DateTime.now()
                     : DateTime.parse(initialDate),
-                LocaleProvider.of(context).select_day_from,
+                minimumDate: R.constants.date2000,
+                maximumDate: DateTime.now().add(const Duration(days: 730)),
               );
 
               if (result != null) {
@@ -264,15 +264,16 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           IconButton(
             onPressed: () async {
+              final now = DateTime.now();
               final initialDate = hba1cVM.remindDate;
-              final result = await showGuvenDatePicker(
+              final result = await showRbioDatePicker(
                 context,
-                DateTime.now(),
-                DateTime.now().add(const Duration(days: 365)),
-                (initialDate == '')
+                title: LocaleProvider.current.reminder_date,
+                initialDateTime: (initialDate == '')
                     ? DateTime.now()
                     : DateTime.parse(initialDate),
-                LocaleProvider.of(context).select_day_from,
+                minimumDate: DateTime(now.year, now.month, now.day, 0, 0, 0),
+                maximumDate: DateTime.now().add(const Duration(days: 730)),
               );
 
               if (result != null) {

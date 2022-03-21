@@ -39,12 +39,12 @@ class GuvenDateRange extends StatelessWidget {
         //
         InkWell(
           onTap: () async {
-            final result = await showGuvenDatePicker(
+            final result = await showRbioDatePicker(
               context,
-              startMinDate ?? DateTime(2000, 1, 1),
-              startMaxDate ?? now,
-              startCurrentDate,
-              LocaleProvider.of(context).select_day_from,
+              title: LocaleProvider.of(context).select_day_from,
+              initialDateTime: startCurrentDate,
+              minimumDate: startMinDate ?? DateTime(2000, 1, 1),
+              maximumDate: startMaxDate ?? now,
             );
 
             if (result != null) {
@@ -93,12 +93,13 @@ class GuvenDateRange extends StatelessWidget {
         //
         InkWell(
           onTap: () async {
-            final result = await showGuvenDatePicker(
+            final result = await showRbioDatePicker(
               context,
-              endMinDate ?? now,
-              endMaxDate ?? DateTime(now.year + 1, now.month, now.day),
-              endCurrentDate,
-              LocaleProvider.of(context).select_day_to,
+              title: LocaleProvider.of(context).select_day_to,
+              initialDateTime: endCurrentDate,
+              minimumDate: endMinDate ?? now,
+              maximumDate:
+                  endMaxDate ?? DateTime(now.year + 1, now.month, now.day),
             );
 
             if (result != null) {

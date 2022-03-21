@@ -37,30 +37,12 @@ class RegisterStep2ScreenVm extends RbioVm {
   Future<void> selectDate(BuildContext context) async {
     selectedDate ??= DateTime.now();
 
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate!,
-      firstDate: DateTime(selectedDate!.year - 150),
-      lastDate: DateTime(selectedDate!.year + 1),
-      helpText:
-          LocaleProvider.of(context).select_birth_date, // Can be used as title
-      cancelText: LocaleProvider.of(context).btn_cancel,
-      confirmText: LocaleProvider.of(context).btn_confirm,
-      // locale: new Locale(Intl.getCurrentLocale().toLowerCase()),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            primaryColor: getIt<ITheme>().secondaryColor,
-            colorScheme: ColorScheme.light(
-              primary: getIt<ITheme>().mainColor,
-              secondary: getIt<ITheme>().mainColor,
-            ),
-            buttonTheme:
-                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-          ),
-          child: child!,
-        );
-      },
+    final DateTime? picked = await showRbioDatePicker(
+      context,
+      title: LocaleProvider.of(context).select_birth_date,
+      initialDateTime: selectedDate!,
+      maximumDate: DateTime.now(),
+      minimumDate: DateTime(1900),
     );
 
     if (picked != null && picked != selectedDate) {
