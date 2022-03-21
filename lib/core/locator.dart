@@ -7,6 +7,15 @@ import 'package:scale_health_impl/scale_health_impl.dart';
 import 'package:scale_hive_impl/scale_hive_impl.dart';
 import 'package:scale_repository/scale_repository.dart';
 
+import '../app/bluetooth_v2/data/local/bluetooth_device_local_data_source.dart';
+import '../app/bluetooth_v2/data/repository/device_repository_impl.dart';
+import '../app/bluetooth_v2/domain/repository/device_repository.dart';
+import '../app/bluetooth_v2/domain/usecase/connect_device_usecase.dart';
+import '../app/bluetooth_v2/domain/usecase/disconnect_device_usecase.dart';
+import '../app/bluetooth_v2/domain/usecase/read_status_device_usecase.dart';
+import '../app/bluetooth_v2/domain/usecase/read_values_usecase.dart';
+import '../app/bluetooth_v2/domain/usecase/search_devices_usecase.dart';
+import '../app/bluetooth_v2/domain/usecase/stop_scan_usecase.dart';
 import '../features/mediminder/managers/reminder_notifications_manager.dart';
 import '../model/treatment_model/treatment_model.dart';
 import 'core.dart';
@@ -20,6 +29,15 @@ Future<void> setupLocator(AppConfig appConfig) async {
 
   getIt.registerSingleton<AppConfig>(appConfig);
   getIt.registerSingleton<CacheClient>(CacheClient());
+
+  getIt.registerFactory<DeviceLocalDataSource>(() => BluetoothDeviceLocalDataSourceImpl());
+  getIt.registerFactory<DeviceRepository>(() => DeviceRepositoryImpl(getIt()));
+  getIt.registerFactory<DisconnectDeviceUseCase>(() => DisconnectDeviceUseCase(getIt()));
+  getIt.registerFactory<ConnectDeviceUseCase>(() => ConnectDeviceUseCase(getIt()));
+  getIt.registerFactory<SearchDeviceUseCase>(() => SearchDeviceUseCase(getIt()));
+  getIt.registerFactory<ReadValuesUseCase>(() => ReadValuesUseCase(getIt()));
+  getIt.registerFactory<ReadStatusDeviceUseCase>(() => ReadStatusDeviceUseCase(getIt()));
+  getIt.registerFactory<StopScanUseCase>(() => StopScanUseCase(getIt()));
 
   // #region !isWeb
   String? directory;

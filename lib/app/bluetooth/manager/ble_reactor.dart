@@ -12,7 +12,7 @@ class BleReactorOps extends ChangeNotifier {
   List get controlPointResponse => _controlPointResponse;
   List<int> _controlPointResponse = [];
 
-  late MiScaleDevice scaleDevice;
+  // late MiScaleDevice scaleDevice;
   ScaleEntity? scaleEntity;
   StreamSubscription<List<int>>? scaleSubs;
 
@@ -289,7 +289,7 @@ class BleReactorOps extends ChangeNotifier {
   }
 
   Future<void> subscribeScaleDevice(DiscoveredDevice device) async {
-    scaleDevice = MiScaleDevice.from(device);
+    // scaleDevice = MiScaleDevice.from(device);
 
     final PairedDevice pairedDevice = PairedDevice();
     pairedDevice.deviceId = device.id;
@@ -327,89 +327,89 @@ class BleReactorOps extends ChangeNotifier {
     DiscoveredDevice device,
     PairedDevice pairedDevice,
   ) async {
-    _controlPointResponse = <int>[];
-    final deviceAlreadyPaired =
-        getIt<BleDeviceManager>().hasDeviceAlreadyPaired(pairedDevice);
+    // _controlPointResponse = <int>[];
+    // final deviceAlreadyPaired =
+    //     getIt<BleDeviceManager>().hasDeviceAlreadyPaired(pairedDevice);
 
-    final _characteristic = QualifiedCharacteristic(
-      characteristicId: Uuid([42, 156]),
-      serviceId: Uuid([24, 27]),
-      deviceId: device.id,
-    );
+    // final _characteristic = QualifiedCharacteristic(
+    //   characteristicId: Uuid([42, 156]),
+    //   serviceId: Uuid([24, 27]),
+    //   deviceId: device.id,
+    // );
 
-    try {
-      scaleSubs?.cancel();
-      await Future.delayed(const Duration(milliseconds: 300));
-      scaleSubs = _ble.subscribeToCharacteristic(_characteristic).listen(
-        (event) async {
-          if (!(Atom.isDialogShow)) {
-            Atom.show(
-              MiScalePopUp(
-                hasAlreadyPair: deviceAlreadyPaired,
-              ),
-            );
-          }
+    // try {
+    //   scaleSubs?.cancel();
+    //   await Future.delayed(const Duration(milliseconds: 300));
+    //   scaleSubs = _ble.subscribeToCharacteristic(_characteristic).listen(
+    //     (event) async {
+    //       if (!(Atom.isDialogShow)) {
+    //         Atom.show(
+    //           MiScalePopUp(
+    //             hasAlreadyPair: deviceAlreadyPaired,
+    //           ),
+    //         );
+    //       }
 
-          if (scaleDevice.scaleData == null ||
-              !scaleEntity!.measurementComplete!) {
-            final Uint8List data = Uint8List.fromList(event);
-            final scaleModel = scaleDevice.parseScaleData(pairedDevice, data);
-            if (scaleModel != null) {
-              scaleEntity = scaleModel.xGetEntity(
-                Utils.instance.getAge(),
-                Utils.instance.getHeight(),
-                Utils.instance.getGender(),
-              );
-            }
+    //       if (scaleDevice.scaleData == null ||
+    //           !scaleEntity!.measurementComplete!) {
+    //         final Uint8List data = Uint8List.fromList(event);
+    //         final scaleModel = scaleDevice.parseScaleData(pairedDevice, data);
+    //         if (scaleModel != null) {
+    //           scaleEntity = scaleModel.xGetEntity(
+    //             Utils.instance.getAge(),
+    //             Utils.instance.getHeight(),
+    //             Utils.instance.getGender(),
+    //           );
+    //         }
 
-            if (scaleEntity!.measurementComplete! && deviceAlreadyPaired) {
-              scaleEntity = scaleModel!.xGetEntityWithCalculate(
-                Utils.instance.getAge(),
-                Utils.instance.getHeight(),
-                Utils.instance.getGender(),
-              );
+    //         if (scaleEntity!.measurementComplete! && deviceAlreadyPaired) {
+    //           scaleEntity = scaleModel!.xGetEntityWithCalculate(
+    //             Utils.instance.getAge(),
+    //             Utils.instance.getHeight(),
+    //             Utils.instance.getGender(),
+    //           );
 
-              if (Atom.isDialogShow) {
-                Atom.dismiss();
-              }
-              await Future.delayed(const Duration(milliseconds: 350));
-              await Atom.show(
-                ScaleTaggerPopUp(
-                  scaleModel: scaleEntity,
-                ),
-                barrierDismissible: false,
-              );
-              scaleDevice.scaleData = null;
-              scaleEntity = null;
-            }
+    //           if (Atom.isDialogShow) {
+    //             Atom.dismiss();
+    //           }
+    //           await Future.delayed(const Duration(milliseconds: 350));
+    //           await Atom.show(
+    //             ScaleTaggerPopUp(
+    //               scaleModel: scaleEntity,
+    //             ),
+    //             barrierDismissible: false,
+    //           );
+    //           scaleDevice.scaleData = null;
+    //           scaleEntity = null;
+    //         }
 
-            final popUpCanClose = (Atom.isDialogShow) &&
-                (scaleEntity!.weightRemoved)! &&
-                !scaleEntity!.measurementComplete!;
-            if (popUpCanClose) {
-              Atom.dismiss();
-            }
+    //         final popUpCanClose = (Atom.isDialogShow) &&
+    //             (scaleEntity!.weightRemoved)! &&
+    //             !scaleEntity!.measurementComplete!;
+    //         if (popUpCanClose) {
+    //           Atom.dismiss();
+    //         }
 
-            if (((scaleEntity?.measurementComplete) ?? false) &&
-                !deviceAlreadyPaired) {
-              // Saving paired device Section
-              controlPointResponse.add(1);
-              WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-                getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
-              });
-            }
-          }
+    //         if (((scaleEntity?.measurementComplete) ?? false) &&
+    //             !deviceAlreadyPaired) {
+    //           // Saving paired device Section
+    //           controlPointResponse.add(1);
+    //           WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    //             getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+    //           });
+    //         }
+    //       }
 
-          notifyListeners();
-        },
-        onError: (e, stk) {
-          LoggerUtils.instance.e(e);
-        },
-      );
-    } catch (e, stk) {
-      LoggerUtils.instance.e(e);
-      debugPrintStack(stackTrace: stk);
-    }
+    //       notifyListeners();
+    //     },
+    //     onError: (e, stk) {
+    //       LoggerUtils.instance.e(e);
+    //     },
+    //   );
+    // } catch (e, stk) {
+    //   LoggerUtils.instance.e(e);
+    //   debugPrintStack(stackTrace: stk);
+    // }
   }
 
   void clearControlPointResponse() {

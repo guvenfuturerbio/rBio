@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
+import 'app/bluetooth_v2/bluetooth_v2.dart';
 import 'core/core.dart';
 
 Future<void> bootstrap(AppConfig appConfig) async {
@@ -54,7 +55,20 @@ Future<void> bootstrap(AppConfig appConfig) async {
                 getIt<BleConnector>(),
                 getIt<BleDeviceManager>(),
               )..add(const BluetoothEvent.init()),
-              child: MyApp(initialRoute: initialRoute),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<DeviceSearchCubit>(
+                    create: (context) => DeviceSearchCubit(getIt(), getIt()),
+                  ),
+                  BlocProvider<DeviceSelectedCubit>(
+                    create: (context) => DeviceSelectedCubit(getIt(), getIt()),
+                  ),
+                  BlocProvider<MiScaleReadValuesCubit>(
+                    create: (context) => MiScaleReadValuesCubit(getIt()),
+                  ),
+                ],
+                child: MyApp(initialRoute: initialRoute),
+              ),
             ),
           ),
         ),

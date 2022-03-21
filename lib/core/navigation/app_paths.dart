@@ -3,6 +3,7 @@ import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
+import '../../app/bluetooth_v2/presentation/available_devices/available_devices.dart';
 import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
@@ -546,6 +547,13 @@ class VRouterRoutes {
         ),
       ],
     ),
+
+    // Bluetooth v2
+    VWidget(
+      path: PagePaths.deviceListing,
+      widget: const DeviceListingScreen(),
+    ),
+
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -653,4 +661,7 @@ class PagePaths {
   static const doctorTreatmentProgress = '/doctor-treatment_process';
   static const doctorTreatmentEdit = '/doctor-patient-treatment-edit';
   static const doctorCosultation = '/doctor-consultation';
+
+  // Bluetooth v2
+  static const deviceListing = '/device-listing';
 }

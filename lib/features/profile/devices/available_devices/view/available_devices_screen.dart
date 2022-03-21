@@ -67,12 +67,16 @@ class AvailableDevices extends StatelessWidget {
     return GestureDetector(
       onTap: (device.enable ?? false)
           ? () {
-              Atom.to(
-                PagePaths.selectedDevice,
-                queryParameters: {
-                  'device_type': device.deviceType?.name ?? '',
-                },
-              );
+              if (device.deviceType == DeviceType.miScale) {
+                Atom.to(PagePaths.deviceListing);
+              } else {
+                Atom.to(
+                  PagePaths.selectedDevice,
+                  queryParameters: {
+                    'device_type': device.deviceType?.name ?? '',
+                  },
+                );
+              }
             }
           : null,
       child: Container(
