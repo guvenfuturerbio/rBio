@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:scale_repository/scale_repository.dart';
 
-import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
 
 class DeviceRepositoryImpl extends DeviceRepository {
@@ -9,7 +8,17 @@ class DeviceRepositoryImpl extends DeviceRepository {
   DeviceRepositoryImpl(this.localDataSource);
 
   @override
-  Either<Failure, Stream<List<DeviceModel>>> searchDevices(
+  Either<BluetoothFailures, Stream<BluetoothStatus>> readBluetoothStatus() {
+    try {
+      final result = localDataSource.readBluetoothStatus();
+      return Right(result.map((event) => event.xGetStatus));
+    } catch (e) {
+      return Left(BluetoothFailure());
+    }
+  }
+
+  @override
+  Either<BluetoothFailures, Stream<List<DeviceModel>>> searchDevices(
       DeviceType deviceType) {
     try {
       final result = localDataSource.searchDevices(deviceType);
@@ -20,7 +29,7 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<Failure, void> stopScan() {
+  Either<BluetoothFailures, void> stopScan() {
     try {
       localDataSource.stopScan();
       return const Right(null);
@@ -30,9 +39,18 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<Failure, bool> connect(DeviceEntity device) {
+  Either<BluetoothFailures, bool> connect(DeviceEntity device) {
     try {
-      final result = localDataSource.connect(device as DeviceModel);
+      final result = localDataSource.connect(
+        DeviceModel(
+          id: device.id,
+          name: device.name,
+          localName: device.localName,
+          kind: device.kind,
+          strength: device.strength,
+          deviceType: device.deviceType,
+        ),
+      );
       return Right(result);
     } catch (e) {
       return Left(BluetoothFailure());
@@ -40,9 +58,18 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<Failure, bool> disconnect(DeviceEntity device) {
+  Either<BluetoothFailures, bool> disconnect(DeviceEntity device) {
     try {
-      final result = localDataSource.disconnect(device as DeviceModel);
+      final result = localDataSource.disconnect(
+        DeviceModel(
+          id: device.id,
+          name: device.name,
+          localName: device.localName,
+          kind: device.kind,
+          strength: device.strength,
+          deviceType: device.deviceType,
+        ),
+      );
       return Right(result);
     } catch (e) {
       return Left(BluetoothFailure());
@@ -50,7 +77,8 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<Failure, Stream<DeviceStatus>> readStatus(DeviceEntity device) {
+  Either<BluetoothFailures, Stream<DeviceStatus>> readStatus(
+      DeviceEntity device) {
     try {
       final result = localDataSource.readStatus(device as DeviceModel);
       return Right(result);
@@ -60,7 +88,7 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<Failure, Stream<ScaleEntity>> miScaleReadValues(
+  Either<BluetoothFailures, Stream<ScaleEntity>> miScaleReadValues(
     DeviceEntity device,
     String field,
   ) {
@@ -76,6 +104,36 @@ class DeviceRepositoryImpl extends DeviceRepository {
           ),
         ),
       );
+    } catch (e) {
+      return Left(BluetoothFailure());
+    }
+  }
+
+  @override
+  Either<BluetoothFailures, void> miScaleStopListen() {
+    try {
+      localDataSource.miScaleStopListen();
+      return const Right(null);
+    } catch (e) {
+      return Left(BluetoothFailure());
+    }
+  }
+
+  @override
+  Either<BluetoothFailures, Future<DeviceStatus>> deviceLastState(
+    DeviceEntity device,
+  ) {
+    try {
+      return Right(localDataSource.getLastStateOfDevice(
+        DeviceModel(
+          id: device.id,
+          name: device.name,
+          localName: device.localName,
+          strength: device.strength,
+          deviceType: device.deviceType,
+          kind: device.kind,
+        ),
+      ));
     } catch (e) {
       return Left(BluetoothFailure());
     }

@@ -8,7 +8,7 @@ class DevicesVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<PairedDevice> devices = [];
+  List<RbioDevice> devices = [];
 
   DevicesVm() {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -19,16 +19,61 @@ class DevicesVm extends ChangeNotifier {
   Future<void> getAll() async {
     try {
       state = LoadingProgress.loading;
-      devices = getIt<BleDeviceManager>().getPairedDevices();
+      final devicesV1 = getIt<BleDeviceManager>().getPairedDevices();
+      final devicesV2 = getIt<BluetoothLocalManager>().getPairedDevices();
+      for (var element in devicesV1) {
+        devices.add(
+            RbioDevice(version: BluetoothDeviceVersion.v1, v1Device: element));
+      }
+      for (var element in devicesV2) {
+        devices.add(
+            RbioDevice(version: BluetoothDeviceVersion.v2, v2Device: element));
+      }
       state = LoadingProgress.done;
     } catch (e) {
       state = LoadingProgress.error;
     }
   }
 
-  void deletePairedDevice(String id) {
-    getIt<BleDeviceManager>().deletePairedDevice(id);
-    devices.removeWhere((element) => element.deviceId == id);
+  Future<void> deletePairedDeviceV1(String id) async {
+    await getIt<BleDeviceManager>().deletePairedDevice(id);
+
+    devices.removeWhere((element) {
+      if (id == element.v1Device?.deviceId) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    notifyListeners();
+    Atom.dismiss();
+    Utils.instance.showSnackbar(
+      Atom.context,
+      LocaleProvider.current.paired_devices_deleted,
+    );
+  }
+
+  Future<void> deletePairedDeviceV2(
+    BuildContext context,
+    DeviceEntity device,
+  ) async {
+    devices.removeWhere((element) {
+      if (device.id == element.v2Device?.id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    await getIt<BluetoothLocalManager>().deletePairedDevice(device.id);
+
+    context.read<DeviceSelectedCubit>().disconnect(device);
+
+    if (device.deviceType == DeviceType.miScale) {
+      context.read<MiScaleReadValuesCubit>().stopListen();
+    }
+
     notifyListeners();
     Atom.dismiss();
     Utils.instance.showSnackbar(

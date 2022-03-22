@@ -96,6 +96,11 @@ class IntroductionScreenState extends State<IntroductionScreen> {
     );
     _pageController.addListener(_onScroll);
 
+    getIt<ISharedPreferencesManager>().setBool(
+      SharedPreferencesKeys.firstLaunch,
+      true,
+    );
+
     super.initState();
   }
 
@@ -223,11 +228,6 @@ class IntroductionScreenState extends State<IntroductionScreen> {
   }
 
   Future<void> openScreen(String route) async {
-    await getIt<ISharedPreferencesManager>().setBool(
-      SharedPreferencesKeys.firstLaunch,
-      true,
-    );
-
     Atom.to(
       route,
       isReplacement: true,

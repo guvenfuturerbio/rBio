@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../app/bluetooth_v2/bluetooth_v2.dart';
-import '../../app/bluetooth_v2/presentation/paired_device_listing/paired_device_listing.dart';
 import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';

@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
@@ -57,14 +56,21 @@ Future<void> bootstrap(AppConfig appConfig) async {
               )..add(const BluetoothEvent.init()),
               child: MultiBlocProvider(
                 providers: [
+                  BlocProvider<BluetoothStatusCubit>(
+                    lazy: false,
+                    create: (context) =>
+                        BluetoothStatusCubit(getIt())..listenStateOfBluetooth(),
+                  ),
                   BlocProvider<DeviceSearchCubit>(
                     create: (context) => DeviceSearchCubit(getIt(), getIt()),
                   ),
                   BlocProvider<DeviceSelectedCubit>(
-                    create: (context) => DeviceSelectedCubit(getIt(), getIt()),
+                    create: (context) =>
+                        DeviceSelectedCubit(getIt(), getIt(), getIt(), getIt()),
                   ),
                   BlocProvider<MiScaleReadValuesCubit>(
-                    create: (context) => MiScaleReadValuesCubit(getIt()),
+                    create: (context) =>
+                        MiScaleReadValuesCubit(getIt(), getIt()),
                   ),
                 ],
                 child: MyApp(initialRoute: initialRoute),

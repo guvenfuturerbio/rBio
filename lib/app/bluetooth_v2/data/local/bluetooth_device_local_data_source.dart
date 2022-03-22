@@ -1,32 +1,39 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:mi_scale/mi_scale.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:onedosehealth/app/bluetooth_v2/core/failures.dart';
 
-import '../../../../core/core.dart';
-import '../../core/constants.dart';
-import '../../domain/usecase/read_status_device_usecase.dart';
-import '../models/device_model.dart';
-import 'helpers/bluetooth_device_extension.dart';
+import '../../bluetooth_v2.dart';
 
 abstract class DeviceLocalDataSource {
+  Stream<BluetoothState> readBluetoothStatus();
   Stream<List<DeviceModel>> searchDevices(DeviceType deviceType);
   Future<void> stopScan();
   bool connect(DeviceModel device);
   bool disconnect(DeviceModel device);
   Stream<DeviceStatus> readStatus(DeviceModel device);
   Stream<MiScaleModel> miScaleReadValues(DeviceModel device, String field);
+  void miScaleStopListen();
+  Future<DeviceStatus> getLastStateOfDevice(DeviceModel device);
 }
 
 class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
+  Timer? miScaleTimer;
+
+  @override
+  Stream<BluetoothState> readBluetoothStatus() {
+    FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+    return flutterBlue.state;
+  }
+
   @override
   Stream<List<DeviceModel>> searchDevices(DeviceType deviceType) {
     FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
     flutterBlue.startScan();
     return flutterBlue.scanResults.map(
       (event) {
+        // LoggerUtils.instance.i(event);
+
         var tempList = event;
         tempList = tempList.where((element) {
           if (deviceType == DeviceType.miScale) {
@@ -44,9 +51,10 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
         return tempList.map(
           (e) {
             return DeviceModel(
-              name: e.device.name,
-              strength: e.rssi,
               id: e.device.id.id,
+              name: e.device.name,
+              localName: e.advertisementData.localName,
+              strength: e.rssi,
               kind: DeviceKind.ble,
               deviceType: deviceType,
             );
@@ -100,7 +108,7 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
   @override
   Stream<MiScaleModel> miScaleReadValues(
       DeviceModel device, String field) async* {
-    final BluetoothDevice ble = device.toBluetoothDevice();
+    final ble = device.toBluetoothDevice();
     final services = await ble.discoverServices();
     BluetoothService relatedService = services.firstWhere((element) =>
         element.uuid.toString() ==
@@ -109,9 +117,17 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
         element.uuid.toString() ==
         BluetoothConstants.miScaleUUIDs["Weight"]?["characteristicUUID"]);
     await characteristic.setNotifyValue(true);
-    Timer.periodic(BluetoothConstants.miScaleNotifyDuration, (timer) async {
-      await characteristic.setNotifyValue(true);
-    });
+
+    try {
+      miScaleTimer = Timer.periodic(BluetoothConstants.miScaleNotifyDuration,
+          (timer) async {
+        await characteristic.setNotifyValue(true);
+      });
+    } catch (e) {
+      LoggerUtils.instance
+          .e("[BluetoothDeviceLocalDataSourceImpl] - miScaleReadValues() - $e");
+    }
+
     await for (List<int> value in characteristic.value) {
       var newValue = Uint8List.fromList(value);
       MiScaleModel? model = parseScaleData(newValue, device.toJson());
@@ -122,5 +138,26 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
         }
       }
     }
+  }
+
+  @override
+  void miScaleStopListen() {
+    miScaleTimer?.cancel();
+  }
+
+  @override
+  Future<DeviceStatus> getLastStateOfDevice(DeviceModel device) async {
+    final bluetoothDevice = device.toBluetoothDevice();
+    final result = await bluetoothDevice.state.last;
+    switch (result) {
+        case BluetoothDeviceState.disconnected:
+          return DeviceStatus.disconnected;
+        case BluetoothDeviceState.connecting:
+          return DeviceStatus.connecting;
+        case BluetoothDeviceState.connected:
+          return DeviceStatus.connected;
+        case BluetoothDeviceState.disconnecting:
+          return DeviceStatus.disconnecting;
+      }
   }
 }

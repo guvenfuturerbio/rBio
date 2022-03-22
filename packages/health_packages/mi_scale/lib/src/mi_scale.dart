@@ -28,14 +28,14 @@ MiScaleModel? _parseScaleData(
   final unit = (data[0] & 0x01 != 0) ? ScaleUnit.lbs : ScaleUnit.kg;
   final isBitSet = (data[1] & (1 << 1)) != 0;
   // Parse date
-  final year = byteData?.getUint16(2, Endian.little);
-  final month = byteData?.getUint8(4);
-  final day = byteData?.getUint8(5);
-  final hour = byteData?.getUint8(6);
-  final minute = byteData?.getUint8(7);
-  final seconds = byteData?.getUint8(8);
-  final measurementTime =
-      DateTime.utc(year!, month!, day!, hour!, minute!, seconds!);
+  // final year = byteData?.getUint16(2, Endian.little);
+  // final month = byteData?.getUint8(4);
+  // final day = byteData?.getUint8(5);
+  // final hour = byteData?.getUint8(6);
+  // final minute = byteData?.getUint8(7);
+  // final seconds = byteData?.getUint8(8);
+  // final measurementTime = DateTime.utc(year!, month!, day!, hour!, minute!, seconds!);
+
 
   var impedance = 0;
 
@@ -58,7 +58,7 @@ MiScaleModel? _parseScaleData(
     weightStabilized: weightStabilized,
     weightRemoved: weightRemoved,
     unit: unit,
-    dateTime: measurementTime,
+    dateTime: DateTime.now(),
     weight: weight,
     impedance: impedance,
   );

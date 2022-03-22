@@ -1,16 +1,13 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/failures.dart';
-import '../../core/usecases.dart';
-import '../entity/device_entity.dart';
-import '../repository/device_repository.dart';
+import '../../bluetooth_v2.dart';
 
 class ConnectDeviceUseCase extends UseCase<void, DeviceParams> {
   final DeviceRepository repository;
   ConnectDeviceUseCase(this.repository);
 
   @override
-  Either<Failure, bool> call(DeviceParams params) {
+  Either<BluetoothFailures, bool> call(DeviceParams params) {
     return repository.connect(params.device);
   }
 }

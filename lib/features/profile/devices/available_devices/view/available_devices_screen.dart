@@ -71,7 +71,7 @@ class AvailableDevices extends StatelessWidget {
                 Atom.to(
                   PagePaths.deviceListing,
                   queryParameters: {
-                    'device_type': device.deviceType?.name ?? '',
+                    'device_type': device.deviceType!.xRawValue,
                   },
                 );
               } else {

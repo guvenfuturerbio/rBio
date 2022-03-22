@@ -1,22 +1,29 @@
 import 'package:dartz/dartz.dart';
 import 'package:scale_repository/scale_repository.dart';
 
-import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
 
 abstract class DeviceRepository {
-  Either<Failure, Stream<List<DeviceModel>>> searchDevices(
+  Either<BluetoothFailures, Stream<BluetoothStatus>> readBluetoothStatus();
+
+  Either<BluetoothFailures, Stream<List<DeviceModel>>> searchDevices(
     DeviceType deviceType,
   );
 
-  Either<Failure, bool> connect(DeviceEntity device);
+  Either<BluetoothFailures, bool> connect(DeviceEntity device);
 
-  Either<Failure, bool> disconnect(DeviceEntity device);
+  Either<BluetoothFailures, bool> disconnect(DeviceEntity device);
 
-  Either<Failure, Stream<DeviceStatus>> readStatus(DeviceEntity device);
+  Either<BluetoothFailures, Stream<DeviceStatus>> readStatus(
+      DeviceEntity device);
 
-  Either<Failure, Stream<ScaleEntity>> miScaleReadValues(
+  Either<BluetoothFailures, Stream<ScaleEntity>> miScaleReadValues(
       DeviceEntity device, String field);
 
-  Either<Failure, void> stopScan();
+  Either<BluetoothFailures, void> stopScan();
+
+  Either<BluetoothFailures, void> miScaleStopListen();
+
+  Either<BluetoothFailures, Future<DeviceStatus>> deviceLastState(
+      DeviceEntity device);
 }

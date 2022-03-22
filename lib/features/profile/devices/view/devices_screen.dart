@@ -53,64 +53,11 @@ class DevicesScreen extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final device = vm.devices[index];
 
-        return DeviceCard(
-          background: getIt<ITheme>().cardBackgroundColor,
-          image: UtilityManager().getDeviceImageFromType(device.deviceType!) ??
-              const SizedBox(),
-          name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
-          trailing: Row(
-            children: [
-              //
-              IconButton(
-                onPressed: () {
-                  LoggerUtils.instance.i(device.toJson());
-                },
-                icon: Icon(
-                  Icons.info,
-                  size: R.sizes.iconSize * 1.25,
-                ),
-              ),
-
-              //
-              IconButton(
-                onPressed: () {
-                  Atom.show(
-                    GuvenAlert(
-                      backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 25,
-                        vertical: 25,
-                      ),
-                      title: GuvenAlert.buildTitle(
-                        LocaleProvider.current.warning,
-                      ),
-                      content: GuvenAlert.buildDescription(
-                        LocaleProvider.current.ble_delete_paired_device_approv,
-                      ),
-                      actions: [
-                        GuvenAlert.buildBigMaterialAction(
-                          LocaleProvider.current.cancel,
-                          () => Atom.dismiss(),
-                        ),
-                        GuvenAlert.buildBigMaterialAction(
-                          LocaleProvider.current.yes,
-                          () => vm.deletePairedDevice(
-                            device.deviceId ?? '',
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                icon: Icon(
-                  Icons.cancel,
-                  color: R.color.darkRed,
-                  size: R.sizes.iconSize * 1.25,
-                ),
-              ),
-            ],
-          ),
-        );
+        if (device.version == BluetoothDeviceVersion.v1) {
+          return _buildV1Card(context, device.v1Device!, vm);
+        } else {
+          return _buildV2Card(context, device.v2Device!, vm);
+        }
       },
     );
   }
@@ -126,6 +73,129 @@ class DevicesScreen extends StatelessWidget {
           R.image.add,
           width: R.sizes.iconSize2,
         ),
+      ),
+    );
+  }
+
+  Widget _buildV2Card(BuildContext context, DeviceEntity device, DevicesVm vm) {
+    return DeviceCard(
+      background: getIt<ITheme>().cardBackgroundColor,
+      image: UtilityManager().getDeviceImageFromType(device.deviceType!) ??
+          const SizedBox(),
+      name: device.name,
+      trailing: Row(
+        children: [
+          //
+          IconButton(
+            onPressed: () {
+              LoggerUtils.instance.i(device.toJson());
+            },
+            icon: Icon(
+              Icons.info,
+              size: R.sizes.iconSize * 1.25,
+            ),
+          ),
+
+          //
+          IconButton(
+            onPressed: () {
+              Atom.show(
+                GuvenAlert(
+                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                    vertical: 25,
+                  ),
+                  title: GuvenAlert.buildTitle(
+                    LocaleProvider.current.warning,
+                  ),
+                  content: GuvenAlert.buildDescription(
+                    LocaleProvider.current.ble_delete_paired_device_approv,
+                  ),
+                  actions: [
+                    GuvenAlert.buildBigMaterialAction(
+                      LocaleProvider.current.cancel,
+                      () => Atom.dismiss(),
+                    ),
+                    GuvenAlert.buildBigMaterialAction(
+                      LocaleProvider.current.yes,
+                      () => vm.deletePairedDeviceV2(
+                        context,
+                        device,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.cancel,
+              color: R.color.darkRed,
+              size: R.sizes.iconSize * 1.25,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildV1Card(BuildContext context, PairedDevice device, DevicesVm vm) {
+    return DeviceCard(
+      background: getIt<ITheme>().cardBackgroundColor,
+      image: UtilityManager().getDeviceImageFromType(device.deviceType!) ??
+          const SizedBox(),
+      name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
+      trailing: Row(
+        children: [
+          //
+          IconButton(
+            onPressed: () {
+              LoggerUtils.instance.i(device.toJson());
+            },
+            icon: Icon(
+              Icons.info,
+              size: R.sizes.iconSize * 1.25,
+            ),
+          ),
+
+          //
+          IconButton(
+            onPressed: () {
+              Atom.show(
+                GuvenAlert(
+                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                    vertical: 25,
+                  ),
+                  title: GuvenAlert.buildTitle(
+                    LocaleProvider.current.warning,
+                  ),
+                  content: GuvenAlert.buildDescription(
+                    LocaleProvider.current.ble_delete_paired_device_approv,
+                  ),
+                  actions: [
+                    GuvenAlert.buildBigMaterialAction(
+                      LocaleProvider.current.cancel,
+                      () => Atom.dismiss(),
+                    ),
+                    GuvenAlert.buildBigMaterialAction(
+                      LocaleProvider.current.yes,
+                      () => vm.deletePairedDeviceV1(
+                        device.deviceId ?? '',
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.cancel,
+              color: R.color.darkRed,
+              size: R.sizes.iconSize * 1.25,
+            ),
+          ),
+        ],
       ),
     );
   }

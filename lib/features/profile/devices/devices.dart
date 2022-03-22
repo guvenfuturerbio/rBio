@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../core/core.dart';
 
 part 'available_devices/view/available_devices_screen.dart';

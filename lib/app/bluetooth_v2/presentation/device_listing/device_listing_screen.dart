@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
@@ -12,109 +13,132 @@ class DeviceListingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       final deviceTypeStr = Atom.queryParameters['device_type'];
-      if (deviceTypeStr != null && deviceType == null) {
-        deviceType = deviceTypeStr.toType;
-        _startScan(context);
+      if (deviceTypeStr != null) {
+        deviceType = deviceTypeStr.xDeviceType;
+        _restartScan(context);
       }
     } catch (e) {
       return const RbioRouteError();
     }
 
-    return RbioStackedScaffold(
-      appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          LocaleProvider.current.device_connections,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () => _restartScan(context),
-            icon: const Icon(Icons.refresh),
+    return WillPopScope(
+      onWillPop: () async {
+        _stopScan(context);
+        return true;
+      },
+      child: RbioStackedScaffold(
+        appbar: RbioAppBar(
+          title: RbioAppBar.textTitle(
+            context,
+            LocaleProvider.current.device_connections,
           ),
-        ],
-      ),
-
-      //
-      body: BlocBuilder<DeviceSearchCubit, DeviceSearchState>(
-        builder: (context, deviceSearchState) {
-          switch (deviceSearchState.status) {
-            case DeviceSearchStatus.initial:
-              return const SizedBox();
-
-            case DeviceSearchStatus.searching:
-              return const RbioLoading();
-
-            case DeviceSearchStatus.done:
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(
-                  top: R.sizes.stackedTopPaddingValue(context),
-                  bottom: R.sizes.defaultBottomValue,
+          leading: Align(
+            alignment: Alignment.center,
+            child: InkWell(
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
+                child: SvgPicture.asset(
+                  R.image.back,
+                  width: R.sizes.iconSize,
                 ),
-                itemCount: deviceSearchState.devices.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final discoveredDevice = deviceSearchState.devices[index];
-                  final hasExist = getIt<BluetoothLocalManager>()
-                      .hasDeviceAlreadyPaired(discoveredDevice);
-                  if (hasExist) {
-                    return const SizedBox();
-                  }
+              ),
+              onTap: () {
+                _stopScan(context);
+                Atom.historyBack();
+              },
+            ),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () => _restartScan(context),
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
+        ),
 
-                  return BlocProvider<DeviceStatusCubit>(
-                    create: (context) => DeviceStatusCubit(getIt())
-                      ..readStatus(discoveredDevice),
-                    child: BlocConsumer<DeviceStatusCubit, DeviceStatus?>(
-                      listener: (context, deviceStatusState) =>
-                          _deviceStatusListen(
-                        context,
-                        deviceStatusState,
-                        discoveredDevice,
+        //
+        body: BlocBuilder<DeviceSearchCubit, DeviceSearchState>(
+          builder: (context, deviceSearchState) {
+            switch (deviceSearchState.status) {
+              case DeviceSearchStatus.initial:
+                return const SizedBox();
+
+              case DeviceSearchStatus.searching:
+                return const RbioLoading();
+
+              case DeviceSearchStatus.done:
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(
+                    top: R.sizes.stackedTopPaddingValue(context),
+                    bottom: R.sizes.defaultBottomValue,
+                  ),
+                  itemCount: deviceSearchState.devices.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final discoveredDevice = deviceSearchState.devices[index];
+                    final hasExist = getIt<BluetoothLocalManager>()
+                        .hasDeviceAlreadyPaired(discoveredDevice);
+                    if (hasExist) {
+                      return const SizedBox();
+                    }
+
+                    return BlocProvider<DeviceStatusCubit>(
+                      create: (context) => DeviceStatusCubit(getIt())
+                        ..readStatus(discoveredDevice),
+                      child: BlocConsumer<DeviceStatusCubit, DeviceStatus?>(
+                        listener: (context, deviceStatusState) =>
+                            _deviceStatusListen(
+                          context,
+                          deviceStatusState,
+                          discoveredDevice,
+                        ),
+                        builder: (context, deviceStatusState) {
+                          return Card(
+                            key: ValueKey(index),
+                            elevation: R.sizes.defaultElevation,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: R.sizes.borderRadiusCircular,
+                            ),
+                            color: _getBackColor(deviceStatusState),
+                            child: ListTile(
+                              onTap: () => _deviceOnTap(
+                                context,
+                                deviceStatusState,
+                                discoveredDevice,
+                              ),
+                              title: Text(
+                                discoveredDevice.name,
+                                style: context.xHeadline3.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                discoveredDevice.id,
+                                style: context.xHeadline4,
+                              ),
+                              trailing: Visibility(
+                                visible:
+                                    deviceStatusState == DeviceStatus.connected,
+                                child: const Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      builder: (context, deviceStatusState) {
-                        return Card(
-                          key: ValueKey(index),
-                          elevation: R.sizes.defaultElevation,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: R.sizes.borderRadiusCircular,
-                          ),
-                          color: _getBackColor(deviceStatusState),
-                          child: ListTile(
-                            onTap: () => _deviceOnTap(
-                              context,
-                              deviceStatusState,
-                              discoveredDevice,
-                            ),
-                            title: Text(
-                              discoveredDevice.name,
-                              style: context.xHeadline3.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              discoveredDevice.id,
-                              style: context.xHeadline4,
-                            ),
-                            trailing: Visibility(
-                              visible:
-                                  deviceStatusState == DeviceStatus.connected,
-                              child: const Icon(
-                                Icons.check,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-              );
+                    );
+                  },
+                );
 
-            case DeviceSearchStatus.error:
-              return const RbioBodyError();
-          }
-        },
+              case DeviceSearchStatus.error:
+                return const RbioBodyError();
+            }
+          },
+        ),
       ),
     );
   }
@@ -123,8 +147,12 @@ class DeviceListingScreen extends StatelessWidget {
     context.read<DeviceSearchCubit>().startSearching(deviceType!);
   }
 
+  void _stopScan(BuildContext context) {
+    BlocProvider.of<DeviceSearchCubit>(context).stopScan();
+  }
+
   Future<void> _restartScan(BuildContext context) async {
-    context.read<DeviceSearchCubit>().stopScan();
+    _stopScan(context);
     await Future.delayed(const Duration(milliseconds: 250));
     _startScan(context);
   }
@@ -157,7 +185,8 @@ class DeviceListingScreen extends StatelessWidget {
       switch (deviceType) {
         case DeviceType.miScale:
           {
-            context.read<MiScaleReadValuesCubit>().readValue(device, "Weight");
+            BlocProvider.of<MiScaleReadValuesCubit>(context)
+                .readValue(device, "Weight");
             break;
           }
 
@@ -170,6 +199,8 @@ class DeviceListingScreen extends StatelessWidget {
         default:
           break;
       }
+
+      _stopScan(context);
 
       Future.delayed(
         const Duration(seconds: 1),

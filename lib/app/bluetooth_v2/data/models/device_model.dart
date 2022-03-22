@@ -6,12 +6,14 @@ class DeviceModel extends DeviceEntity {
   DeviceModel({
     required String id,
     required String name,
+    required String localName,
     required int strength,
     required DeviceKind kind,
     required DeviceType? deviceType,
   }) : super(
           id: id,
           name: name,
+          localName: localName,
           strength: strength,
           kind: kind,
           deviceType: deviceType,

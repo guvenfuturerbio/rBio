@@ -1,11 +1,17 @@
 import 'device_type.dart';
 
+enum BluetoothDeviceVersion {
+  v1,
+  v2,
+}
+
 class PairedDevice {
   String? deviceId;
-  String? manufacturerName;
   String? modelName;
-  String? serialNumber;
   DeviceType? deviceType;
+
+  String? manufacturerName;
+  String? serialNumber;
 
   PairedDevice({
     this.deviceId,

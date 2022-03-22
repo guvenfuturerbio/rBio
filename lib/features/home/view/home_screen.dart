@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
+import '../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../core/core.dart';
 import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Utils.instance.forcePortraitOrientation();
       DeepLinkHelper.instance.initDynamicLinks(context);
       getIt<FirebaseMessagingManager>().userInit();
+      context.read<DeviceSelectedCubit>().connectAndListen(context);
     }
     super.initState();
   }

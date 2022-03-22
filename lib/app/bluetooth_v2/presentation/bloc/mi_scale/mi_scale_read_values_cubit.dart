@@ -9,8 +9,10 @@ import 'mi_scale_state.dart';
 class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
   MiScaleReadValuesCubit(
     this.readValuesUseCase,
+    this.miScaleStopUseCase,
   ) : super(const MiScaleReadValuesState.initial());
   final ReadValuesUseCase readValuesUseCase;
+  final MiScaleStopUseCase miScaleStopUseCase;
 
   StreamSubscription<ScaleEntity>? _streamSubs;
 
@@ -36,7 +38,11 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
       (stream) {
         _streamSubs = stream.listen(
           (scaleEntity) async {
-            LoggerUtils.instance.wtf("HAYDAR - $scaleEntity");
+            if ((scaleEntity.weight ?? 0) < 15.0) {
+              emit(const MiScaleReadValuesState.dismissLoading());
+              return;
+            }
+
             emit(MiScaleReadValuesState.showLoading(scaleEntity));
             if (scaleEntity.measurementComplete == true) {
               emit(const MiScaleReadValuesState.dismissLoading());
@@ -54,5 +60,10 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
         );
       },
     );
+  }
+
+  void stopListen() {
+    _streamSubs?.cancel();
+    miScaleStopUseCase.call(NoParams());
   }
 }

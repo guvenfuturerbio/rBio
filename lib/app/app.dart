@@ -33,28 +33,6 @@ class _MyAppState extends State<MyApp> {
     final widgetsBinding = WidgetsBinding.instance;
     if (widgetsBinding != null) {
       widgetsBinding.addPostFrameCallback((_) {
-        final pairedDevices = getIt<BluetoothLocalManager>().getPairedDevices();
-        for (var element in pairedDevices) {
-          if (element.deviceType == DeviceType.miScale) {
-            //context.read<DeviceSelectedCubit>().connect(element);
-            LoggerUtils.instance.wtf("WTF -- ${element.deviceType}");
-            Future.delayed(
-              const Duration(seconds: 1),
-              () {
-                context.read<MiScaleReadValuesCubit>().readValue(
-                    DeviceModel(
-                      deviceType: element.deviceType,
-                      kind: element.kind,
-                      id: element.id,
-                      strength: element.strength,
-                      name: element.name,
-                    ),
-                    "Weight");
-              },
-            );
-          }
-        }
-
         Utils.instance.hideKeyboardWithoutContext();
       });
     }

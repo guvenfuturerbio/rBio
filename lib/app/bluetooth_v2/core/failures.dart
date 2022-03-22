@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-abstract class Failure extends Equatable {
+abstract class BluetoothFailures extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class GenericFailure extends Failure {}
+class BluetoothGenericFailure extends BluetoothFailures {}
 
-class BluetoothFailure extends Failure {}
+class BluetoothFailure extends BluetoothFailures {}
 
-class UnableToConnectDeviceFailure extends Failure {}
-
+class UnableToConnectDeviceFailure extends BluetoothFailures {}

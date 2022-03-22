@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:scale_repository/scale_repository.dart';
 
+import '../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../model/model.dart';
 import '../core.dart';
 
@@ -181,6 +182,15 @@ class UserNotifier extends ChangeNotifier {
 
     try {
       Atom.show(RbioLoading.progressIndicator());
+      final localDevices = getIt<BluetoothLocalManager>().getPairedDevices();
+      if (localDevices.isNotEmpty) {
+        for (var item in localDevices) {
+          if (item.deviceType == DeviceType.miScale) {
+            context.read<DeviceSelectedCubit>().disconnect(item);
+            context.read<MiScaleReadValuesCubit>().stopListen();
+          }
+        }
+      }
       await getIt<FirebaseMessagingManager>().saveTokenServer("");
       await getIt<UserNotifier>().widgetsSave();
       await getIt<ISharedPreferencesManager>().reload();
@@ -273,7 +283,12 @@ class UserNotifier extends ChangeNotifier {
     } else {
       sharedMap = jsonDecode(sharedData);
     }
+    final firstLaunch =
+        sharedPreferencesManager.getBool(SharedPreferencesKeys.firstLaunch) ??
+            false;
     await sharedPreferencesManager.clear();
+    await sharedPreferencesManager.setBool(
+        SharedPreferencesKeys.firstLaunch, firstLaunch);
     await sharedPreferencesManager.setString(
       SharedPreferencesKeys.allUsers,
       jsonEncode(sharedMap),
