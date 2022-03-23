@@ -31,15 +31,14 @@ class ScaleHiveModelAdapter extends TypeAdapter<ScaleHiveModel> {
       scaleUnit: fields[11] as int?,
       deviceId: fields[12] as String?,
       isManuel: fields[13] as bool?,
-      bmiMeasurementsImageList: (fields[14] as List?)?.cast<String>(),
-      note: fields[15] as String?,
+      note: fields[14] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ScaleHiveModel obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.entegrationId)
       ..writeByte(1)
@@ -69,8 +68,6 @@ class ScaleHiveModelAdapter extends TypeAdapter<ScaleHiveModel> {
       ..writeByte(13)
       ..write(obj.isManuel)
       ..writeByte(14)
-      ..write(obj.bmiMeasurementsImageList)
-      ..writeByte(15)
       ..write(obj.note);
   }
 

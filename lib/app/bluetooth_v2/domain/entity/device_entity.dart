@@ -1,5 +1,6 @@
 import '../../../../core/core.dart';
 import '../../data/models/device_model.dart';
+import 'package:reactive_ble_mobile/reactive_ble_mobile.dart';
 
 class RbioDevice {
   final BluetoothDeviceVersion version;

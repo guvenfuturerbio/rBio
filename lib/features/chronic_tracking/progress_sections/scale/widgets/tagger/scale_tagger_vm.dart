@@ -166,149 +166,149 @@ class ScaleTaggerVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getImage(BuildContext context) async {
-    await showDialog<String>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        String title = LocaleProvider.current.how_to_get_photo;
+  // Future getImage(BuildContext context) async {
+  //   await showDialog<String>(
+  //     context: context,
+  //     barrierDismissible: true,
+  //     builder: (BuildContext context) {
+  //       String title = LocaleProvider.current.how_to_get_photo;
 
-        return Platform.isIOS
-            ? CupertinoAlertDialog(
-                title: Text(title),
-                content: Text(LocaleProvider.current.pick_a_photo_option),
-                actions: <Widget>[
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.camera,
-                    ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.camera);
-                    },
-                  ),
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.gallery,
-                    ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.gallery);
-                    },
-                  ),
-                ],
-              )
-            : AlertDialog(
-                title: Text(
-                  title,
-                  style: const TextStyle(fontSize: 22),
-                ),
-                actions: <Widget>[
-                  RbioTextButton(
-                    child: Text(LocaleProvider.current.camera),
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.camera);
-                    },
-                  ),
-                  RbioTextButton(
-                    child: Text(LocaleProvider.current.gallery),
-                    onPressed: () {
-                      getPhotoFromSource(context, ImageSource.gallery);
-                    },
-                  ),
-                ],
-              );
-      },
-    );
-  }
+  //       return Platform.isIOS
+  //           ? CupertinoAlertDialog(
+  //               title: Text(title),
+  //               content: Text(LocaleProvider.current.pick_a_photo_option),
+  //               actions: <Widget>[
+  //                 CupertinoDialogAction(
+  //                   child: Text(
+  //                     LocaleProvider.current.camera,
+  //                   ),
+  //                   isDefaultAction: true,
+  //                   onPressed: () {
+  //                     getPhotoFromSource(context, ImageSource.camera);
+  //                   },
+  //                 ),
+  //                 CupertinoDialogAction(
+  //                   child: Text(
+  //                     LocaleProvider.current.gallery,
+  //                   ),
+  //                   isDefaultAction: true,
+  //                   onPressed: () {
+  //                     getPhotoFromSource(context, ImageSource.gallery);
+  //                   },
+  //                 ),
+  //               ],
+  //             )
+  //           : AlertDialog(
+  //               title: Text(
+  //                 title,
+  //                 style: const TextStyle(fontSize: 22),
+  //               ),
+  //               actions: <Widget>[
+  //                 RbioTextButton(
+  //                   child: Text(LocaleProvider.current.camera),
+  //                   onPressed: () {
+  //                     getPhotoFromSource(context, ImageSource.camera);
+  //                   },
+  //                 ),
+  //                 RbioTextButton(
+  //                   child: Text(LocaleProvider.current.gallery),
+  //                   onPressed: () {
+  //                     getPhotoFromSource(context, ImageSource.gallery);
+  //                   },
+  //                 ),
+  //               ],
+  //             );
+  //     },
+  //   );
+  // }
 
-  void getPhotoFromSource(
-    BuildContext context,
-    ImageSource imageSource,
-  ) async {
-    dynamic photoPerm, cameraPerm;
+  // void getPhotoFromSource(
+  //   BuildContext context,
+  //   ImageSource imageSource,
+  // ) async {
+  //   dynamic photoPerm, cameraPerm;
 
-    try {
-      try {
-        if (imageSource == ImageSource.gallery) {
-          photoPerm = await Permission.storage.request();
+  //   try {
+  //     try {
+  //       if (imageSource == ImageSource.gallery) {
+  //         photoPerm = await Permission.storage.request();
 
-          if (Platform.isAndroid) {
-            photoPerm = await Permission.storage.request();
-          }
-        } else {
-          cameraPerm = await Permission.camera.request();
-        }
-      } catch (e) {
-        LoggerUtils.instance.e(e);
-      }
+  //         if (Platform.isAndroid) {
+  //           photoPerm = await Permission.storage.request();
+  //         }
+  //       } else {
+  //         cameraPerm = await Permission.camera.request();
+  //       }
+  //     } catch (e) {
+  //       LoggerUtils.instance.e(e);
+  //     }
 
-      if (photoPerm == PermissionStatus.denied ||
-          photoPerm == PermissionStatus.permanentlyDenied) {
-        UtilityManager().showConfirmationAlertDialog(
-          context,
-          LocaleProvider.current.warning,
-          LocaleProvider.current.allow_permission_gallery,
-          RbioTextButton(
-            child: Text(
-              LocaleProvider.current.confirm,
-              style: context.xHeadline3.copyWith(
-                color: Colors.white,
-              ),
-            ),
-            onPressed: () async {
-              Navigator.of(context).pop();
-              AppSettings.openAppSettings();
-            },
-          ),
-        );
-        return;
-      } else if (cameraPerm == PermissionStatus.denied ||
-          cameraPerm == PermissionStatus.permanentlyDenied) {
-        UtilityManager().showConfirmationAlertDialog(
-          context,
-          LocaleProvider.current.warning,
-          LocaleProvider.current.allow_permission_gallery,
-          RbioTextButton(
-            child: Text(
-              LocaleProvider.current.confirm,
-              style: context.xHeadline3.copyWith(
-                color: Colors.white,
-              ),
-            ),
-            onPressed: () async {
-              Navigator.of(context).pop();
-              AppSettings.openAppSettings();
-            },
-          ),
-        );
-        return;
-      }
+  //     if (photoPerm == PermissionStatus.denied ||
+  //         photoPerm == PermissionStatus.permanentlyDenied) {
+  //       UtilityManager().showConfirmationAlertDialog(
+  //         context,
+  //         LocaleProvider.current.warning,
+  //         LocaleProvider.current.allow_permission_gallery,
+  //         RbioTextButton(
+  //           child: Text(
+  //             LocaleProvider.current.confirm,
+  //             style: context.xHeadline3.copyWith(
+  //               color: Colors.white,
+  //             ),
+  //           ),
+  //           onPressed: () async {
+  //             Navigator.of(context).pop();
+  //             AppSettings.openAppSettings();
+  //           },
+  //         ),
+  //       );
+  //       return;
+  //     } else if (cameraPerm == PermissionStatus.denied ||
+  //         cameraPerm == PermissionStatus.permanentlyDenied) {
+  //       UtilityManager().showConfirmationAlertDialog(
+  //         context,
+  //         LocaleProvider.current.warning,
+  //         LocaleProvider.current.allow_permission_gallery,
+  //         RbioTextButton(
+  //           child: Text(
+  //             LocaleProvider.current.confirm,
+  //             style: context.xHeadline3.copyWith(
+  //               color: Colors.white,
+  //             ),
+  //           ),
+  //           onPressed: () async {
+  //             Navigator.of(context).pop();
+  //             AppSettings.openAppSettings();
+  //           },
+  //         ),
+  //       );
+  //       return;
+  //     }
 
-      final XFile? pickedFile = await picker.pickImage(source: imageSource);
-      WidgetsBinding.instance?.addPostFrameCallback(
-        (_) {
-          Navigator.of(context).pop();
-        },
-      );
+  //     final XFile? pickedFile = await picker.pickImage(source: imageSource);
+  //     WidgetsBinding.instance?.addPostFrameCallback(
+  //       (_) {
+  //         Navigator.of(context).pop();
+  //       },
+  //     );
 
-      if (pickedFile != null) {
-        final fileName = basename(pickedFile.path);
-        await pickedFile
-            .saveTo(('${getIt<GuvenSettings>().appDocDirectory}/$fileName'));
-        if (scaleModel.images.isNotEmpty) {
-          scaleModel.images.add(pickedFile.path);
-        } else {
-          scaleModel.images = [pickedFile.path];
-        }
-      }
+  //     if (pickedFile != null) {
+  //       final fileName = basename(pickedFile.path);
+  //       await pickedFile
+  //           .saveTo(('${getIt<GuvenSettings>().appDocDirectory}/$fileName'));
+  //       if (scaleModel.images.isNotEmpty) {
+  //         scaleModel.images.add(pickedFile.path);
+  //       } else {
+  //         scaleModel.images = [pickedFile.path];
+  //       }
+  //     }
 
-      notifyListeners();
-    } catch (e, stk) {
-      LoggerUtils.instance.e(e);
-      debugPrintStack(stackTrace: stk);
-    }
-  }
+  //     notifyListeners();
+  //   } catch (e, stk) {
+  //     LoggerUtils.instance.e(e);
+  //     debugPrintStack(stackTrace: stk);
+  //   }
+  // }
 
   Future<void> save() async {
     try {
@@ -347,8 +347,8 @@ class ScaleTaggerVm extends ChangeNotifier {
     Atom.dismiss();
   }
 
-  void deleteImageFromIndex(int index) {
-    scaleModel.images.removeAt(index);
-    notifyListeners();
-  }
+  // void deleteImageFromIndex(int index) {
+  //   scaleModel.images.removeAt(index);
+  //   notifyListeners();
+  // }
 }

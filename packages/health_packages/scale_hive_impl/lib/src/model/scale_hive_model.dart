@@ -49,9 +49,6 @@ class ScaleHiveModel extends HiveObject {
   bool? isManuel;
 
   @HiveField(14)
-  List<String>? bmiMeasurementsImageList;
-
-  @HiveField(15)
   String? note;
 
   ScaleHiveModel({
@@ -69,7 +66,6 @@ class ScaleHiveModel extends HiveObject {
     this.scaleUnit,
     this.deviceId,
     this.isManuel,
-    this.bmiMeasurementsImageList,
     this.note,
   });
 
@@ -88,7 +84,6 @@ class ScaleHiveModel extends HiveObject {
     int? scaleUnit,
     String? deviceId,
     bool? isManuel,
-    List<String>? bmiMeasurementsImageList,
     String? note,
   }) {
     return ScaleHiveModel(
@@ -106,15 +101,13 @@ class ScaleHiveModel extends HiveObject {
       scaleUnit: scaleUnit ?? this.scaleUnit,
       deviceId: deviceId ?? this.deviceId,
       isManuel: isManuel ?? this.isManuel,
-      bmiMeasurementsImageList:
-          bmiMeasurementsImageList ?? this.bmiMeasurementsImageList,
       note: note ?? this.note,
     );
   }
 
   @override
   String toString() {
-    return 'ScaleHiveModel(entegrationId: $entegrationId, occurrenceTime: $occurrenceTime, weight: $weight, bmi: $bmi, measurementId: $measurementId, water: $water, bodyFat: $bodyFat, visceralFat: $visceralFat, boneMass: $boneMass, muscle: $muscle, bmh: $bmh, scaleUnit: $scaleUnit, deviceId: $deviceId, isManuel: $isManuel, bmiMeasurementsImageList: $bmiMeasurementsImageList, note: $note)';
+    return 'ScaleHiveModel(entegrationId: $entegrationId, occurrenceTime: $occurrenceTime, weight: $weight, bmi: $bmi, measurementId: $measurementId, water: $water, bodyFat: $bodyFat, visceralFat: $visceralFat, boneMass: $boneMass, muscle: $muscle, bmh: $bmh, scaleUnit: $scaleUnit, deviceId: $deviceId, isManuel: $isManuel, note: $note)';
   }
 }
 
@@ -137,7 +130,6 @@ extension ScaleHiveModelExtension on ScaleHiveModel {
       boneMass: boneMass,
       gender: gender,
       height: height,
-      images: bmiMeasurementsImageList,
       isManuel: isManuel,
       muscle: muscle,
       note: note,

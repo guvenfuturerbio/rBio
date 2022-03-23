@@ -64,7 +64,6 @@ extension AddScaleExtension on AddScaleMasurementBody {
       occurrenceTime: occurrenceTime?.millisecondsSinceEpoch.toString() ?? '',
       bmh: bmh,
       bmi: bmi,
-      bmiMeasurementsImageList: [],
       bodyFat: bodyFat,
       boneMass: boneMass,
       deviceId: deviceUUID,

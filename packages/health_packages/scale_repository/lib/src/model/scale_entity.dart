@@ -21,8 +21,6 @@ class ScaleEntity {
   bool isManuel;
   ScaleUnit unit;
   String note;
-  List<String> images;
-
   bool? weightStabilized;
   bool? measurementComplete;
   bool? weightRemoved;
@@ -48,14 +46,12 @@ class ScaleEntity {
     bool? isManuel,
     ScaleUnit? unit,
     String? note,
-    List<String>? images,
     this.weightStabilized,
     this.measurementComplete,
     this.weightRemoved,
   })  : isManuel = isManuel ?? false,
         unit = unit ?? ScaleUnit.kg,
-        note = note ?? '',
-        images = images ?? [];
+        note = note ?? '';
 
   ScaleEntity copy() {
     return ScaleEntity(
@@ -66,7 +62,6 @@ class ScaleEntity {
       boneMass: boneMass,
       gender: gender,
       height: height,
-      images: images,
       impedance: impedance,
       isManuel: isManuel,
       muscle: muscle,
@@ -103,7 +98,6 @@ class ScaleEntity {
         other.isManuel == isManuel &&
         other.unit == unit &&
         other.note == note &&
-        listEquals(other.images, images) &&
         other.weightStabilized == weightStabilized &&
         other.measurementComplete == measurementComplete &&
         other.weightRemoved == weightRemoved &&
@@ -128,7 +122,6 @@ class ScaleEntity {
         isManuel.hashCode ^
         unit.hashCode ^
         note.hashCode ^
-        images.hashCode ^
         weightStabilized.hashCode ^
         measurementComplete.hashCode ^
         weightRemoved.hashCode ^

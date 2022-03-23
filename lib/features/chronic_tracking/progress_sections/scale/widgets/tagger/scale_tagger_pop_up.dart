@@ -83,7 +83,6 @@ class ScaleTaggerPopUp extends StatelessWidget {
                       _buildWeightInputSection(vm, context),
                       _buildDateTimeSection(context, vm),
                       _buildParametersSection(context, vm),
-                      _buildImageSection(context, vm),
                       _buildNoteSection(context, vm),
                     ],
                   ),
@@ -482,120 +481,6 @@ class ScaleTaggerPopUp extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-  // #endregion
-
-  // #region _buildImageSection
-  Widget _buildImageSection(BuildContext context, ScaleTaggerVm value) {
-    return SizedBox(
-      height: height * .1,
-      child: Row(
-        children: [
-          //
-          ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: value.scaleModel.images.length == 3
-                ? 3
-                : value.scaleModel.images.length + 1,
-            itemBuilder: (_, index) => Stack(
-              children: [
-                //
-                SizedBox(
-                  width: height * .1,
-                  height: height * .1,
-                  child: Card(
-                    elevation: R.sizes.defaultElevation,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
-                    child: SizedBox(
-                      height: height * .1,
-                      width: height * .1,
-                      child: value.scaleModel.images.isEmpty ||
-                              index >= value.scaleModel.images.length
-                          ? GestureDetector(
-                              onTap: () {
-                                value.getImage(context);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SvgPicture.asset(
-                                  R.image.addphotoIcon,
-                                ),
-                              ),
-                            )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: GestureDetector(
-                                onTap: () => _buildGaleryView(context, value),
-                                child: Image(
-                                  image: FileImage(
-                                    File(value.scaleModel.images[index]),
-                                  ),
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                ),
-
-                //
-                Visibility(
-                  visible: !(value.scaleModel.images.isEmpty ||
-                      index >= value.scaleModel.images.length),
-                  child: Positioned(
-                    top: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () => value.deleteImageFromIndex(index),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: R.color.very_low,
-                        ),
-                        height: height * .03,
-                        width: height * .03,
-                        child: Icon(
-                          Icons.close,
-                          size: height * .02,
-                          color: R.color.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-
-          //
-          if (value.scaleModel.images.length < 3)
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  LocaleProvider.current.add_photo,
-                  style: context.xHeadline4,
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-  // #endregion
-
-  // #region _buildGaleryView
-  Future<dynamic> _buildGaleryView(BuildContext context, ScaleTaggerVm value) {
-    return showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      barrierDismissible: false,
-      builder: (_) => GalleryView(
-        images: [...value.scaleModel.images.map((e) => e).toList()],
       ),
     );
   }

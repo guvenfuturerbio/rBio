@@ -184,56 +184,56 @@ Widget _timeAndImageSection(
       ],
 
       //
-      (scaleMeasurementViewModel.images.isEmpty)
-          ? SizedBox(
-              width: 60 * context.textScale,
-              height: 60 * context.textScale,
-              child: Card(
-                elevation: R.sizes.defaultElevation,
-                shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  height: 25,
-                  width: 25,
-                  child: SvgPicture.asset(
-                    R.image.addphotoIcon,
-                  ),
-                ),
-              ),
-            )
-          : GestureDetector(
-              onTap: () =>
-                  _galeryView(context, scaleMeasurementViewModel.images),
-              child: SizedBox(
-                width: 60 * context.textScale,
-                height: 60 * context.textScale,
-                child: StackOfCards(
-                  children: [
-                    ...scaleMeasurementViewModel.images.map(
-                      (e) => Card(
-                        elevation: R.sizes.defaultElevation,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: ClipRRect(
-                            borderRadius: R.sizes.borderRadiusCircular,
-                            child: Image(
-                              image: FileImage(
-                                File(e),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      // (scaleMeasurementViewModel.images.isEmpty)
+      //     ? SizedBox(
+      //         width: 60 * context.textScale,
+      //         height: 60 * context.textScale,
+      //         child: Card(
+      //           elevation: R.sizes.defaultElevation,
+      //           shape: RoundedRectangleBorder(
+      //             borderRadius: R.sizes.borderRadiusCircular,
+      //           ),
+      //           child: Container(
+      //             padding: const EdgeInsets.all(8),
+      //             height: 25,
+      //             width: 25,
+      //             child: SvgPicture.asset(
+      //               R.image.addphotoIcon,
+      //             ),
+      //           ),
+      //         ),
+      //       )
+      //     : GestureDetector(
+      //         onTap: () =>
+      //             _galeryView(context, scaleMeasurementViewModel.images),
+      //         child: SizedBox(
+      //           width: 60 * context.textScale,
+      //           height: 60 * context.textScale,
+      //           child: StackOfCards(
+      //             children: [
+      //               ...scaleMeasurementViewModel.images.map(
+      //                 (e) => Card(
+      //                   elevation: R.sizes.defaultElevation,
+      //                   shape: RoundedRectangleBorder(
+      //                     borderRadius: R.sizes.borderRadiusCircular,
+      //                   ),
+      //                   child: Padding(
+      //                     padding: const EdgeInsets.all(2.0),
+      //                     child: ClipRRect(
+      //                       borderRadius: R.sizes.borderRadiusCircular,
+      //                       child: Image(
+      //                         image: FileImage(
+      //                           File(e),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ),
     ],
   );
 }
