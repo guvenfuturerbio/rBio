@@ -258,10 +258,12 @@ class AnimatedIntroCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           //
-          SizedBox(
-            height: Atom.height * 0.4,
-            child: SvgPicture.asset(
-              R.image.odhLogoSvg,
+          Center(
+            child: SizedBox(
+              height: Atom.height * 0.4,
+              child: SvgPicture.asset(
+                R.image.odhLogoSvg,
+              ),
             ),
           ),
 

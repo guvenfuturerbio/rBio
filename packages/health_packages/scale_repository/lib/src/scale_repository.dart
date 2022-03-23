@@ -56,11 +56,12 @@ class ScaleRepository {
     try {
       final list = await _fetchNetworkFirstLoad(entegrationId);
       await _scaleHiveImpl.clear();
-      await _scaleHiveImpl.addScaleListMeasurement(list.xToHiveList);
+      await _scaleHiveImpl.addScaleListMeasurement(list.xToNetworkToHiveList);
       fetchOtherLoad(
               _guvenService, entegrationId, list.last.occurrenceTime ?? '')
           .then((value) async {
-        await _scaleHiveImpl.addScaleListMeasurement(value.xToHiveList);
+        await _scaleHiveImpl
+            .addScaleListMeasurement(value.xToNetworkToHiveList);
       });
       return true;
     } catch (e) {

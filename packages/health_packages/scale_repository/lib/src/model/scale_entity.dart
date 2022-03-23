@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scale_api/scale_api.dart';
 import 'package:scale_calculations/scale_calculations.dart';

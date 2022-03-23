@@ -104,9 +104,9 @@ extension ScaleNetworkModelExt on ScaleNetworkModel {
     );
   }
 
-  ScaleHiveModel xToScaleHiveModel() {
+  ScaleHiveModel xToNetworkToScaleHiveModel() {
     return ScaleHiveModel(
-      occurrenceTime: DateTime.parse(occurrenceTime ?? '').millisecondsSinceEpoch.toString(),
+      occurrenceTime: (DateTime.parse(occurrenceTime ?? '').toUtc()).millisecondsSinceEpoch.toString(),
       bmh: bmh,
       bmi: bmi,
       bodyFat: bodyFat,
@@ -126,10 +126,10 @@ extension ScaleNetworkModelExt on ScaleNetworkModel {
 }
 
 extension ListScaleNetworkModelExt on List<ScaleNetworkModel> {
-  List<ScaleHiveModel> get xToHiveList {
+  List<ScaleHiveModel> get xToNetworkToHiveList {
     List<ScaleHiveModel> result = [];
     for (var item in this) {
-      result.add(item.xToScaleHiveModel());
+      result.add(item.xToNetworkToScaleHiveModel());
     }
     return result;
   }

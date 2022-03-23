@@ -219,10 +219,12 @@ class DeviceListingScreen extends StatelessWidget {
       case DeviceStatus.connected:
         return getIt<ITheme>().mainColor;
 
-      case DeviceStatus.disconnecting:
       case DeviceStatus.disconnected:
+        return R.color.darkRed;
+
+      case DeviceStatus.disconnecting:
       default:
-        return Colors.white;
+        return getIt<ITheme>().cardBackgroundColor;
     }
   }
 }

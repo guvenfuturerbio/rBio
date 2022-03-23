@@ -123,7 +123,8 @@ extension ScaleHiveModelExtension on ScaleHiveModel {
   }) {
     return ScaleEntity(
       dateTime: DateTime.fromMillisecondsSinceEpoch(
-          int.tryParse(occurrenceTime) ?? 0),
+          int.tryParse(occurrenceTime) ?? 0,
+          isUtc: true),
       age: age,
       bmi: bmi,
       bodyFat: bodyFat,

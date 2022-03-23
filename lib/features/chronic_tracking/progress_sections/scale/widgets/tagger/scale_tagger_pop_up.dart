@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:scale_repository/scale_repository.dart';
 
@@ -532,14 +530,16 @@ class ScaleTaggerPopUp extends StatelessWidget {
           onTap: leftButtonAction,
         ),
 
-        //
-        R.sizes.wSizer8,
+        if (!isUpdate) ...[
+          //
+          R.sizes.wSizer8,
 
-        //
-        _buildActionButton(
-          isSave: true,
-          onTap: rightButtonAction,
-        ),
+          //
+          _buildActionButton(
+            isSave: true,
+            onTap: rightButtonAction,
+          ),
+        ],
       ],
     );
   }

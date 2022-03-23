@@ -554,11 +554,6 @@ class VRouterRoutes {
       widget: DeviceListingScreen(),
     ),
 
-    VWidget(
-      path: PagePaths.pairedDeviceListing,
-      widget: const PairedDeviceListingScreen(),
-    ),
-
     //
     // :_ is a path parameters named _
     // .+ is a regexp to match any path
@@ -669,5 +664,4 @@ class PagePaths {
 
   // Bluetooth v2
   static const deviceListing = '/device-listing';
-  static const pairedDeviceListing = '/paired-device-listing';
 }

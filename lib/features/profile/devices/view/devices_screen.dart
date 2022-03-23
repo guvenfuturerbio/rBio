@@ -78,65 +78,99 @@ class DevicesScreen extends StatelessWidget {
   }
 
   Widget _buildV2Card(BuildContext context, DeviceEntity device, DevicesVm vm) {
-    return DeviceCard(
-      background: getIt<ITheme>().cardBackgroundColor,
-      image: UtilityManager().getDeviceImageFromType(device.deviceType!) ??
-          const SizedBox(),
-      name: device.name,
-      trailing: Row(
-        children: [
-          //
-          IconButton(
-            onPressed: () {
-              LoggerUtils.instance.i(device.toJson());
+    return BlocProvider<DeviceStatusCubit>(
+      create: (context) => DeviceStatusCubit(getIt())..readStatus(device),
+      child: BlocBuilder<DeviceStatusCubit, DeviceStatus?>(
+        builder: (context, deviceStatus) {
+          return DeviceCard(
+            onTap: () {
+              if (deviceStatus == null ||
+                  deviceStatus == DeviceStatus.disconnected) {
+                context.read<DeviceSelectedCubit>().connect(device);
+              } else {
+                context.read<DeviceSelectedCubit>().disconnect(device);
+              }
             },
-            icon: Icon(
-              Icons.info,
-              size: R.sizes.iconSize * 1.25,
-            ),
-          ),
-
-          //
-          IconButton(
-            onPressed: () {
-              Atom.show(
-                GuvenAlert(
-                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                    vertical: 25,
+            background: _getBackgroundColorV2(deviceStatus),
+            image:
+                UtilityManager().getDeviceImageFromType(device.deviceType!) ??
+                    const SizedBox(),
+            name: device.name,
+            trailing: Row(
+              children: [
+                //
+                IconButton(
+                  onPressed: () {
+                    LoggerUtils.instance.i(device.toJson());
+                  },
+                  icon: Icon(
+                    Icons.info,
+                    size: R.sizes.iconSize * 1.25,
                   ),
-                  title: GuvenAlert.buildTitle(
-                    LocaleProvider.current.warning,
-                  ),
-                  content: GuvenAlert.buildDescription(
-                    LocaleProvider.current.ble_delete_paired_device_approv,
-                  ),
-                  actions: [
-                    GuvenAlert.buildBigMaterialAction(
-                      LocaleProvider.current.cancel,
-                      () => Atom.dismiss(),
-                    ),
-                    GuvenAlert.buildBigMaterialAction(
-                      LocaleProvider.current.yes,
-                      () => vm.deletePairedDeviceV2(
-                        context,
-                        device,
-                      ),
-                    ),
-                  ],
                 ),
-              );
-            },
-            icon: Icon(
-              Icons.cancel,
-              color: R.color.darkRed,
-              size: R.sizes.iconSize * 1.25,
+
+                //
+                IconButton(
+                  onPressed: () {
+                    Atom.show(
+                      GuvenAlert(
+                        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                          vertical: 25,
+                        ),
+                        title: GuvenAlert.buildTitle(
+                          LocaleProvider.current.warning,
+                        ),
+                        content: GuvenAlert.buildDescription(
+                          LocaleProvider
+                              .current.ble_delete_paired_device_approv,
+                        ),
+                        actions: [
+                          GuvenAlert.buildBigMaterialAction(
+                            LocaleProvider.current.cancel,
+                            () => Atom.dismiss(),
+                          ),
+                          GuvenAlert.buildBigMaterialAction(
+                            LocaleProvider.current.yes,
+                            () => vm.deletePairedDeviceV2(
+                              context,
+                              device,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.cancel,
+                    color: R.color.darkRed,
+                    size: R.sizes.iconSize * 1.25,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
+  }
+
+  Color _getBackgroundColorV2(DeviceStatus? deviceStatus) {
+    switch (deviceStatus) {
+      case DeviceStatus.connecting:
+        return R.color.high;
+
+      case DeviceStatus.connected:
+        return getIt<ITheme>().mainColor;
+
+      case DeviceStatus.disconnected:
+        return R.color.darkRed;
+
+      case DeviceStatus.disconnecting:
+      default:
+        return getIt<ITheme>().cardBackgroundColor;
+    }
   }
 
   Widget _buildV1Card(BuildContext context, PairedDevice device, DevicesVm vm) {

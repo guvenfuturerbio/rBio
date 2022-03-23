@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -78,13 +74,15 @@ class ScaleMeasurementList extends StatelessWidget {
                     child: Text(
                       DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
                           .format(scaleMeasurementViewModel.dateTime),
+                      style: context.xHeadline3,
                     ),
                   ),
                 ),
               );
             },
-            itemBuilder: (_, ScaleEntity scaleMeasurementViewModel) {
-              return measurementList(context, scaleMeasurementViewModel);
+            itemBuilder:
+                (BuildContext context, ScaleEntity scaleMeasurementViewModel) {
+              return _buildCard(context, scaleMeasurementViewModel);
             },
             callback: (ScaleEntity data) {
               if (Provider.of<ScaleProgressVm>(context, listen: false)
@@ -97,9 +95,9 @@ class ScaleMeasurementList extends StatelessWidget {
   }
 }
 
-Widget measurementList(
+Widget _buildCard(
   BuildContext context,
-  ScaleEntity scaleMeasurementViewModel,
+  ScaleEntity scaleEntity,
 ) {
   return Slidable(
     actionPane: const SlidableDrawerActionPane(),
@@ -108,7 +106,7 @@ Widget measurementList(
       onTap: () {
         Atom.show(
           ScaleTaggerPopUp(
-            scaleModel: scaleMeasurementViewModel,
+            scaleModel: scaleEntity,
             isUpdate: true,
           ),
           barrierDismissible: false,
@@ -122,8 +120,10 @@ Widget measurementList(
         children: [
           //
           Text(
-            DateFormat("kk : mm").format(scaleMeasurementViewModel.dateTime),
-            style: context.xBodyText1,
+            DateFormat("kk : mm").format(scaleEntity.dateTime),
+            style: context.xHeadline3.copyWith(
+              height: 1.5,
+            ),
           ),
 
           //
@@ -140,8 +140,8 @@ Widget measurementList(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _textAndScaleSection(scaleMeasurementViewModel, context),
-                  _timeAndImageSection(scaleMeasurementViewModel, context)
+                  _textAndScaleSection(scaleEntity, context),
+                  _timeAndImageSection(scaleEntity, context)
                 ],
               ),
             ),
@@ -154,10 +154,15 @@ Widget measurementList(
         caption: LocaleProvider.current.delete,
         color: Colors.red,
         icon: Icons.delete,
-        onTap: () {
+        onTap: () async {
           try {
-            // TODO
-            // getIt<ScaleStorageImpl>().delete(scaleMeasurementViewModel.scaleModel.key);
+            await getIt<ScaleRepository>().deleteScaleMeasurement(
+              DeleteScaleMasurementBody(
+                entegrationId: 0,
+                measurementId: 28947,
+              ),
+              DateTime.parse("2017-09-01T20:20:16.05+00:00"),
+            );
           } catch (e) {
             LoggerUtils.instance.e(e);
           }
@@ -168,13 +173,13 @@ Widget measurementList(
 }
 
 Widget _timeAndImageSection(
-  ScaleEntity scaleMeasurementViewModel,
+  ScaleEntity scaleEntity,
   BuildContext context,
 ) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
-      if (scaleMeasurementViewModel.isManuel) ...[
+      if (scaleEntity.isManuel) ...[
         Text(
           "M",
           style: context.xHeadline3.copyWith(
