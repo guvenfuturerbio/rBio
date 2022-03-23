@@ -23,7 +23,10 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
         LoggerUtils.instance.e("[DeviceSelectedCubit] - connect() - $l");
       },
       (deviceStatus) async {
+        LoggerUtils.instance.d('27nin üstü');
+
         final deviceState = await deviceStatus;
+
         if (deviceState != DeviceStatus.connected) {
           final result =
               connectDeviceUseCase.call(DeviceParams(device: device));
@@ -68,7 +71,7 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
     final pairedDevices = bluetoothLocalManager.getPairedDevices();
     for (var element in pairedDevices) {
       if (element.deviceType == DeviceType.miScale) {
-        context.read<DeviceSelectedCubit>().checkAfterConnect(element);
+        context.read<DeviceSelectedCubit>().connect(element);
         Future.delayed(
           const Duration(seconds: 1),
           () {

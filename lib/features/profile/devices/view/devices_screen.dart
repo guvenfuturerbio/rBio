@@ -86,10 +86,6 @@ class DevicesScreen extends StatelessWidget {
             if (device.deviceType == DeviceType.miScale) {
               context.read<MiScaleReadValuesCubit>().readValue(device);
             }
-          } else {
-            if (device.deviceType == DeviceType.miScale) {
-              context.read<MiScaleReadValuesCubit>().stopListen();
-            }
           }
         },
         builder: (context, deviceStatus) {
@@ -97,7 +93,10 @@ class DevicesScreen extends StatelessWidget {
             onTap: () {
               if (deviceStatus == DeviceStatus.connected) {
                 context.read<DeviceSelectedCubit>().disconnect(device);
-              } else {
+                if (device.deviceType == DeviceType.miScale) {
+                  context.read<MiScaleReadValuesCubit>().stopListen();
+                }
+              } else if (deviceStatus == DeviceStatus.disconnected) {
                 context.read<DeviceSelectedCubit>().connect(device);
               }
             },

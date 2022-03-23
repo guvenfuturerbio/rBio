@@ -18,6 +18,9 @@ abstract class DeviceLocalDataSource {
 }
 
 class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
+  BluetoothDeviceLocalDataSourceImpl() {
+    LoggerUtils.instance.wtf('sss');
+  }
   Timer? miScaleTimer;
 
   @override
@@ -122,6 +125,7 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     try {
       miScaleTimer = Timer.periodic(BluetoothConstants.miScaleNotifyDuration,
           (timer) async {
+        miScaleTimer = timer;
         await characteristic.setNotifyValue(true);
       });
     } catch (e) {
@@ -143,7 +147,14 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
 
   @override
   void miScaleStopListen() {
-    miScaleTimer?.cancel();
+    try {
+      LoggerUtils.instance.w('Timer canceled');
+
+      miScaleTimer?.cancel();
+      miScaleTimer = null;
+    } catch (e) {
+      LoggerUtils.instance.w('MiScaleStopListen Error');
+    }
   }
 
   @override
