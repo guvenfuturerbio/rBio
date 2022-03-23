@@ -90,6 +90,7 @@ class DevicesScreen extends StatelessWidget {
         },
         builder: (context, deviceStatus) {
           return DeviceCard(
+            overlay: _getOverlay(deviceStatus),
             onTap: () {
               if (deviceStatus == DeviceStatus.connected) {
                 context.read<DeviceSelectedCubit>().disconnect(device);
@@ -163,6 +164,19 @@ class DevicesScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget? _getOverlay(DeviceStatus? deviceStatus) {
+    if (deviceStatus == DeviceStatus.connected ||
+        deviceStatus == DeviceStatus.disconnected) {
+      return null;
+    } else {
+      return Container(
+        color: Colors.black12,
+        alignment: Alignment.center,
+        child: const RbioLoading(),
+      );
+    }
   }
 
   Color _getBackgroundColorV2(DeviceStatus? deviceStatus) {
