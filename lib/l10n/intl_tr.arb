@@ -361,8 +361,7 @@
   "complaint_body_part": "Şikayetiniz vücudunuzun hangi bölgesinde bulunmaktadır?",
   "preselection": "Ön seçiminizi belirleyin:",
   "create_appo": "Randevu Ara",
-  "wrong_tc_number":"Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate",
-
+  "wrong_tc_number":"TC kimlik numarası, adı, doğum günü uyuşmuyor. Lütfen uygunsa Türkçe karakterler kullanın.",
   "mars_hosp": "Güven Hastanesi Ayrancı",
   "neptune_hosp": "Güven Çayyolu Kampüsü",
   "digitalcheckup": "Dijital Checkup",
@@ -747,6 +746,7 @@
   "apply_discount": "İndirim uygula",
   "cancel_discount": "İndirimi iptal et",
   "not_found": "Bulunamadı",
+  "user_not_found": "Kullanıcı bulunamadı",
   "something_went_wrong": "Bir şeyler ters gitti",
   "turn_back": "Geriye Dön",
   "waiting": "Bekleniyor",
@@ -785,5 +785,7 @@
   "days": "Günler",
   "appointment_datepicker_warning": "Gün seçimi yapmadığınız için tarihte değişiklik olmadı.",
   "logout_confirmation_description": "Uygulamadan çıkış yapmak istiyor musunuz?",
-  "personal_update_success": "Bilgileriniz başarıyla güncellenmiştir"
+  "personal_update_success": "Bilgileriniz başarıyla güncellenmiştir",
+  "account_disabled":"Hesabınıza çok fazla hatalı giriş denemesi yapılmıştır. Güvenliğiniz için hesabınız geçici olarak devre dışı bırakılmıştır. Acil işlemleriniz için 4442525'i arayabilirsiniz",
+  "user_phone_not_match": "Telefon numarası, kullanıcı ile eşleşmedi"
 }

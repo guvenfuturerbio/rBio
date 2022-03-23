@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Mesafeli satış sözleşmesini okudum, anladım ve onaylıyorum"),
         "accept_personal_data": MessageLookupByLibrary.simpleMessage(
             "Gizlilik bildirimi ve kişisel veri koruma politikası\' nı okudum, anladım."),
+        "account_disabled": MessageLookupByLibrary.simpleMessage(
+            "Hesabınıza çok fazla hatalı giriş denemesi yapılmıştır. Güvenliğiniz için hesabınız geçici olarak devre dışı bırakılmıştır. Acil işlemleriniz için 4442525\'i arayabilirsiniz"),
         "accu_check_step1": MessageLookupByLibrary.simpleMessage(
             "Test stribini cihaza yerleştirin."),
         "accu_check_step2": MessageLookupByLibrary.simpleMessage(
@@ -1215,6 +1217,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "user_id": MessageLookupByLibrary.simpleMessage("Kullanıcı Adı"),
         "user_login_cannot_blank": MessageLookupByLibrary.simpleMessage(
             "Kullanıcı giriş bilgileri boş bırakılamaz"),
+        "user_not_found":
+            MessageLookupByLibrary.simpleMessage("Kullanıcı bulunamadı"),
+        "user_phone_not_match": MessageLookupByLibrary.simpleMessage(
+            "Telefon numarası, kullanıcı ile eşleşmedi"),
         "user_with_email_does_not_exists": MessageLookupByLibrary.simpleMessage(
             "Bu e-posta adresine kayıtlı kullanıcı yoktur."),
         "value": MessageLookupByLibrary.simpleMessage("Value"),
@@ -1263,7 +1269,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Şu anda kullanımda olan 7 widget\'ınız var. Yeni widget eklemek için bunlardan birini kaldırın."),
         "wrong_password": MessageLookupByLibrary.simpleMessage("Hatalı şifre"),
         "wrong_tc_number": MessageLookupByLibrary.simpleMessage(
-            "Turkish identity number, name, birthday properties is not matching. Please use Turkish characters if appropriate"),
+            "TC kimlik numarası, adı, doğum günü uyuşmuyor. Lütfen uygunsa Türkçe karakterler kullanın."),
         "wrong_temporary_pass": MessageLookupByLibrary.simpleMessage(
             "Geçici şifrenizi hatalı girdiniz"),
         "wrong_user_credential": MessageLookupByLibrary.simpleMessage(

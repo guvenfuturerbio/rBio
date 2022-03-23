@@ -11,33 +11,52 @@ class ForgotPasswordStep1ScreenVm extends RbioVm {
   LoadingDialog? loadingDialog;
 
   void forgotPassStep1(UserRegistrationStep1Model userRegistrationStep1) async {
-    try {
-      showLoadingDialog(mContext);
-      notifyListeners();
-      await getIt<Repository>().forgotPasswordUi(userRegistrationStep1);
-      await Future.delayed(const Duration(milliseconds: 500));
-      hideDialog(mContext);
-      Atom.to(
-        PagePaths.forgotPasswordStep2,
-        queryParameters: {
-          'identityNumber': userRegistrationStep1.identificationNumber ?? '',
-        },
-      );
-    } catch (error, stackTrace) {
-      showDelayedErrorDialog(
-        error,
-        stackTrace,
-        () => hideDialog(mContext),
-      );
-    } finally {
-      notifyListeners();
-    }
+    showLoadingDialog();
+
+    final either =
+        await getIt<Repository>().forgotPassword(userRegistrationStep1);
+    await either.fold(
+      (response) async {
+        await Future.delayed(const Duration(milliseconds: 500));
+        hideDialog();
+        Atom.to(
+          PagePaths.forgotPasswordStep2,
+          queryParameters: {
+            'identityNumber': userRegistrationStep1.identificationNumber ?? '',
+          },
+        );
+      },
+      (error) {
+        hideDialog();
+
+        error.when(
+          userNotFound: () {
+            showInfoDialog(
+              LocaleProvider.current.warning,
+              LocaleProvider.current.user_not_found,
+            );
+          },
+          phoneNumberNotMatch: () {
+            showInfoDialog(
+              LocaleProvider.current.warning,
+              LocaleProvider.current.user_phone_not_match,
+            );
+          },
+          undefined: () {
+            showInfoDialog(
+              LocaleProvider.current.warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          },
+        );
+      },
+    );
   }
 
-  void showLoadingDialog(BuildContext context) async {
+  void showLoadingDialog() async {
     await Future.delayed(const Duration(milliseconds: 30));
     await showDialog(
-      context: context,
+      context: mContext,
       barrierDismissible: false,
       builder: (BuildContext context) =>
           loadingDialog = loadingDialog ?? LoadingDialog(),
@@ -45,12 +64,13 @@ class ForgotPasswordStep1ScreenVm extends RbioVm {
     notifyListeners();
   }
 
-  void hideDialog(BuildContext context) {
+  void hideDialog() {
     if (loadingDialog != null) {
       if (loadingDialog!.isShowing()) {
-        Navigator.of(context).pop();
+        Navigator.of(mContext).pop();
         loadingDialog = null;
       }
     }
+    notifyListeners();
   }
 }

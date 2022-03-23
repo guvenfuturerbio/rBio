@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
+import '../../features/auth/model/login_exception.dart';
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/rate_dialog.dart';
 import '../../model/model.dart';
@@ -46,20 +47,32 @@ abstract class UserManager {
 class UserManagerImpl extends UserManager {
   @override
   Future<RbioLoginResponse> login(String userName, String password) async {
-    final response = await getIt<Repository>().login(userName, password);
-    if (response.token != null && response.token?.accessToken != null) {
-      await getIt<ISharedPreferencesManager>().setString(
-        SharedPreferencesKeys.jwtToken,
-        response.token!.accessToken!,
-      );
+    var either = await getIt<Repository>().login(userName, password);
+    return either.fold(
+      (response) async {
+        final loginResponse =
+            response.xGetModel<RbioLoginResponse, RbioLoginResponse>(
+                RbioLoginResponse());
+        if (loginResponse != null) {
+          if (loginResponse.ssoResponse?.accessToken != null) {
+            await getIt<ISharedPreferencesManager>().setString(
+              SharedPreferencesKeys.jwtToken,
+              loginResponse.ssoResponse!.accessToken!,
+            );
 
-      loginToFirebase(response);
-      //Update user notifier depending on roles
-      getIt<UserNotifier>().userTypeFetcher(response);
-      return response;
-    } else {
-      throw "Access token is null!";
-    }
+            loginToFirebase(loginResponse);
+            //Update user notifier depending on roles
+            getIt<UserNotifier>().userTypeFetcher(loginResponse);
+            return loginResponse;
+          }
+        }
+
+        throw const LoginExceptions.undefined();
+      },
+      (error) {
+        throw error;
+      },
+    );
   }
 
   Future<void> loginToFirebase(RbioLoginResponse? response) async {
@@ -159,6 +172,7 @@ class UserManagerImpl extends UserManager {
   Future getUserProfile() async {
     final response = await getIt<Repository>().getUserProfile();
     await getIt<UserNotifier>().setUserAccount(response);
+    return response;
   }
 
   @override

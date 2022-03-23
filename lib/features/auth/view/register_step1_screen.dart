@@ -372,13 +372,14 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   if (_nameEditingController.text.isNotEmpty &&
                       _surnameEditingController.text.isNotEmpty &&
                       _phoneNumberEditingController.text.isNotEmpty &&
-                      vm.selectedDate != null) {
+                      vm.selectedDate != null &&
+                      gender != null) {
                     Atom.to(
                       PagePaths.registerStep2,
                       queryParameters: {
                         'registerName': _nameEditingController.text,
                         'registerSurname': _surnameEditingController.text,
-                        'registerGender': gender!.toString(),
+                        'registerGender': gender.toString(),
                         'registerDateOfBirth': vm.selectedDate.toString(),
                         'registerPhoneNumber':
                             _phoneNumberEditingController.text,

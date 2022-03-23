@@ -583,6 +583,7 @@ class PagePaths {
   static const login = '/login';
   static const registerStep1 = '/register-1';
   static const registerStep1Intro = '/register-1?from=intro';
+  static loginWithSuccessChangePassword() => '/login?changePassword=true';
   static const registerStep2 = '/register-2';
   static const registerStep3 = '/register-3';
   static const forgotPasswordStep1 = '/forgot-password';

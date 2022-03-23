@@ -17,7 +17,6 @@ class CreateAppointmentSummaryScreen extends StatefulWidget {
 
 class _CreateAppointmentSummaryScreenState
     extends State<CreateAppointmentSummaryScreen> {
-  late String patientId;
   late String patientName;
   late int tenantId;
   late String tenantName;
@@ -52,7 +51,6 @@ class _CreateAppointmentSummaryScreenState
   @override
   Widget build(BuildContext context) {
     try {
-      patientId = Uri.decodeFull(Atom.queryParameters['patientId']!);
       patientName = Uri.decodeFull(Atom.queryParameters['patientName']!);
       tenantId = int.parse(Atom.queryParameters['tenantId']!);
       tenantName = Uri.decodeFull(Atom.queryParameters['tenantName']!);
@@ -71,7 +69,6 @@ class _CreateAppointmentSummaryScreenState
     return ChangeNotifierProvider<CreateAppointmentSummaryVm>(
       create: (context) => CreateAppointmentSummaryVm(
         mContext: context,
-        patientId: getIt<UserNotifier>().getPatient().id!,
         tenantId: tenantId,
         departmentId: departmentId,
         resourceId: resourceId,
@@ -101,7 +98,7 @@ class _CreateAppointmentSummaryScreenState
     return RbioAppBar(
       title: RbioAppBar.textTitle(
         context,
-        LocaleProvider.current.create_appo,
+        LocaleProvider.current.appointment_details,
       ),
     );
   }
@@ -335,47 +332,12 @@ class _CreateAppointmentSummaryScreenState
             RbioElevatedButton(
               infinityWidth: true,
               showElevation: false,
-              onTap: () {
-                if (vm.appointmentSuccess) {
-                  Atom.to(PagePaths.main, isReplacement: true);
-                } else {
-                  if (vm.orgVideoCallPriceResponse?.patientPrice == null) {
-                    Atom.show(
-                      GuvenAlert(
-                        backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                        title: GuvenAlert.buildTitle(
-                          LocaleProvider.current.warning,
-                        ),
-                        content: GuvenAlert.buildSmallDescription(
-                            LocaleProvider.current.something_went_wrong),
-                      ),
-                    );
-                  } else {
-                    if (vm.newVideoCallPriceResponse?.patientPrice == null) {
-                      vm.saveAppointment(
-                        price: vm.orgVideoCallPriceResponse?.patientPrice
-                            ?.toString(),
-                        forOnline: forOnline,
-                        forFree:
-                            (vm.orgVideoCallPriceResponse?.patientPrice ?? 0) <
-                                    1
-                                ? true
-                                : false,
-                      );
-                    } else {
-                      vm.saveAppointment(
-                        price: vm.newVideoCallPriceResponse?.patientPrice
-                            ?.toString(),
-                        forOnline: forOnline,
-                        forFree:
-                            (vm.newVideoCallPriceResponse?.patientPrice ?? 0) <
-                                    1
-                                ? true
-                                : false,
-                      );
-                    }
-                  }
-                }
+              onTap: () async {
+                LoggerUtils.instance.i("heyo");
+                vm.appointmentSuccess
+                    ? Atom.to(PagePaths.main, isReplacement: true)
+                    : await vm.saveAppointment(forOnline: false, forFree: true);
+                ;
               },
               title: vm.appointmentSuccess
                   ? LocaleProvider.current.Ok
@@ -390,20 +352,11 @@ class _CreateAppointmentSummaryScreenState
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    //
-                    Expanded(
-                      child: _buildSummaryButton(vm),
-                    ),
-
-                    //
-                    const SizedBox(width: 8),
-
-                    //
                     if (!forOnline) ...[
                       RbioElevatedButton(
                         infinityWidth: true,
                         showElevation: false,
-                        onTap: () {
+                        onTap: () async {
                           if (vm.appointmentSuccess) {
                             Atom.to(PagePaths.main, isReplacement: true);
                           } else {
@@ -445,22 +398,22 @@ class _CreateAppointmentSummaryScreenState
                       R.sizes.defaultBottomPadding,
                     ] else ...[
                       if (!isKeyboardVisible) ...[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            //
-                            Expanded(
-                              child: _buildSummaryButton(vm),
-                            ),
+                        SizedBox(
+                          width: Atom.width - 24,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              //
+                              _buildSummaryButton(vm),
 
-                            //
-                            const SizedBox(width: 8),
-
-                            //
-                            Expanded(
-                              child: RbioElevatedButton(
+                              //
+                              SizedBox(
+                                width: 5,
+                              ),
+                              //
+                              RbioElevatedButton(
                                 showElevation: false,
                                 onTap: () {
                                   if (vm.newVideoCallPriceResponse
@@ -498,8 +451,8 @@ class _CreateAppointmentSummaryScreenState
                                     : LocaleProvider.current.done,
                                 fontWeight: FontWeight.w600,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
 
                         //
