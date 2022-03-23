@@ -185,8 +185,7 @@ class DeviceListingScreen extends StatelessWidget {
       switch (deviceType) {
         case DeviceType.miScale:
           {
-            BlocProvider.of<MiScaleReadValuesCubit>(context)
-                .readValue(device, "Weight");
+            BlocProvider.of<MiScaleReadValuesCubit>(context).readValue(device);
             break;
           }
 
@@ -220,8 +219,6 @@ class DeviceListingScreen extends StatelessWidget {
         return getIt<ITheme>().mainColor;
 
       case DeviceStatus.disconnected:
-        return R.color.darkRed;
-
       case DeviceStatus.disconnecting:
       default:
         return getIt<ITheme>().cardBackgroundColor;

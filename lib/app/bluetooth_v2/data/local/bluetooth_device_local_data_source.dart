@@ -12,7 +12,7 @@ abstract class DeviceLocalDataSource {
   bool connect(DeviceModel device);
   bool disconnect(DeviceModel device);
   Stream<DeviceStatus> readStatus(DeviceModel device);
-  Stream<MiScaleModel> miScaleReadValues(DeviceModel device, String field);
+  Stream<MiScaleModel> miScaleReadValues(DeviceModel device);
   void miScaleStopListen();
   Future<DeviceStatus> getLastStateOfDevice(DeviceModel device);
 }
@@ -107,7 +107,8 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
 
   @override
   Stream<MiScaleModel> miScaleReadValues(
-      DeviceModel device, String field) async* {
+    DeviceModel device,
+  ) async* {
     final ble = device.toBluetoothDevice();
     final services = await ble.discoverServices();
     BluetoothService relatedService = services.firstWhere((element) =>
@@ -150,14 +151,14 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     final bluetoothDevice = device.toBluetoothDevice();
     final result = await bluetoothDevice.state.last;
     switch (result) {
-        case BluetoothDeviceState.disconnected:
-          return DeviceStatus.disconnected;
-        case BluetoothDeviceState.connecting:
-          return DeviceStatus.connecting;
-        case BluetoothDeviceState.connected:
-          return DeviceStatus.connected;
-        case BluetoothDeviceState.disconnecting:
-          return DeviceStatus.disconnecting;
-      }
+      case BluetoothDeviceState.disconnected:
+        return DeviceStatus.disconnected;
+      case BluetoothDeviceState.connecting:
+        return DeviceStatus.connecting;
+      case BluetoothDeviceState.connected:
+        return DeviceStatus.connected;
+      case BluetoothDeviceState.disconnecting:
+        return DeviceStatus.disconnecting;
+    }
   }
 }

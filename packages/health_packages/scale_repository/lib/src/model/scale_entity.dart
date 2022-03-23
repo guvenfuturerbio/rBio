@@ -4,6 +4,8 @@ import 'package:scale_calculations/scale_calculations.dart';
 
 class ScaleEntity {
   DateTime dateTime;
+  int? measurementId;
+  int? entegrationId;
 
   double? weight;
   double? bmi;
@@ -29,6 +31,8 @@ class ScaleEntity {
 
   ScaleEntity({
     required this.dateTime,
+    this.measurementId,
+    this.entegrationId,
     this.weight,
     this.bmi,
     this.water,
@@ -55,6 +59,8 @@ class ScaleEntity {
   ScaleEntity copy() {
     return ScaleEntity(
       dateTime: dateTime,
+      entegrationId: entegrationId,
+      measurementId: measurementId,
       age: age,
       bmi: bmi,
       bodyFat: bodyFat,
@@ -83,6 +89,8 @@ class ScaleEntity {
 
     return other is ScaleEntity &&
         other.dateTime == dateTime &&
+        other.measurementId == measurementId &&
+        other.entegrationId == entegrationId &&
         other.weight == weight &&
         other.bmi == bmi &&
         other.water == water &&
@@ -107,6 +115,8 @@ class ScaleEntity {
   @override
   int get hashCode {
     return dateTime.hashCode ^
+        measurementId.hashCode ^
+        entegrationId.hashCode ^
         weight.hashCode ^
         bmi.hashCode ^
         water.hashCode ^

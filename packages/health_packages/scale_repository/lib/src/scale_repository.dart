@@ -143,7 +143,7 @@ class ScaleRepository {
     try {
       // Network
       final networkResult = await _guvenService.deleteScaleMeasurement(model);
-      if (!networkResult) {
+      if (networkResult) {
         // Hive
         await _scaleHiveImpl
             .deleteScaleMeasurement(date.millisecondsSinceEpoch.toString());

@@ -77,3 +77,16 @@ class DeviceEntity extends IBaseModel<DeviceEntity> {
     );
   }
 }
+
+extension DeviceEntityExtension on DeviceEntity {
+  DeviceModel get xGetModel {
+    return DeviceModel(
+      id: id,
+      name: name,
+      localName: localName,
+      strength: strength,
+      kind: kind,
+      deviceType: deviceType,
+    );
+  }
+}

@@ -62,10 +62,11 @@ class ScaleMeasurementList extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black.withAlpha(50),
-                          blurRadius: 5,
-                          spreadRadius: 0,
-                          offset: const Offset(5, 5))
+                        color: Colors.black.withAlpha(50),
+                        blurRadius: 5,
+                        spreadRadius: 0,
+                        offset: const Offset(5, 5),
+                      ),
                     ],
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -121,16 +122,13 @@ Widget _buildCard(
           //
           Text(
             DateFormat("kk : mm").format(scaleEntity.dateTime),
-            style: context.xHeadline3.copyWith(
-              height: 1.5,
-            ),
+            style: context.xHeadline3,
           ),
 
           //
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
-              height: (context.height * .08) * context.textScale,
               margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
               decoration: BoxDecoration(
                 color: getIt<ITheme>().cardBackgroundColor,
@@ -158,10 +156,10 @@ Widget _buildCard(
           try {
             await getIt<ScaleRepository>().deleteScaleMeasurement(
               DeleteScaleMasurementBody(
-                entegrationId: 0,
-                measurementId: 28947,
+                entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+                measurementId: scaleEntity.measurementId,
               ),
-              DateTime.parse("2017-09-01T20:20:16.05+00:00"),
+              scaleEntity.dateTime,
             );
           } catch (e) {
             LoggerUtils.instance.e(e);

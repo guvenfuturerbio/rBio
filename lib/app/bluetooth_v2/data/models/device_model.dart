@@ -1,6 +1,7 @@
+import 'package:collection/collection.dart';
+
 import '../../../../core/core.dart';
 import '../../domain/entity/device_entity.dart';
-import 'package:collection/collection.dart';
 
 class DeviceModel extends DeviceEntity {
   DeviceModel({

@@ -270,78 +270,82 @@ class AnimatedIntroCard extends StatelessWidget {
           //
           Expanded(
             child: ValueListenableBuilder<bool>(
-                valueListenable: valueNotifier,
-                builder: (BuildContext context, bool isLast, Widget? child) {
-                  return RbioSwitcher(
-                    showFirstChild: isLast,
-                    duration: const Duration(seconds: 1),
-                    child1: const SizedBox(),
-                    child2: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        //
-                        const Spacer(),
-                        R.sizes.hSizer8,
+              valueListenable: valueNotifier,
+              builder: (BuildContext context, bool isLast, Widget? child) {
+                return RbioSwitcher(
+                  showFirstChild: isLast,
+                  duration: const Duration(seconds: 1),
+                  child1: const SizedBox(),
+                  child2: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      //
+                      const Spacer(),
+                      R.sizes.hSizer8,
 
-                        //
-                        Text(
-                          item.title,
-                          textAlign: TextAlign.center,
-                          style: context.xHeadline1.copyWith(
-                            color: getIt<ITheme>().mainColor,
-                            fontSize: context.xHeadline1.fontSize! * 1.5,
-                            fontWeight: FontWeight.bold,
-                            height: 1.35,
-                          ),
+                      //
+                      Text(
+                        item.title,
+                        textAlign: TextAlign.center,
+                        style: context.xHeadline1.copyWith(
+                          color: getIt<ITheme>().mainColor,
+                          fontSize: context.xHeadline1.fontSize! * 1.5,
+                          fontWeight: FontWeight.bold,
+                          height: 1.35,
                         ),
+                      ),
 
-                        //
-                        R.sizes.hSizer8,
+                      //
+                      R.sizes.hSizer8,
 
-                        //
-                        Text(
-                          item.description,
-                          textAlign: TextAlign.center,
-                          style: context.xHeadline2.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      //
+                      Text(
+                        item.description,
+                        textAlign: TextAlign.center,
+                        style: context.xHeadline2.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
 
-                        //
-                        const Spacer(),
+                      //
+                      const Spacer(),
 
-                        //
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                          child: RbioElevatedButton(
-                            showElevation: false,
-                            fontWeight: FontWeight.bold,
-                            title: LocaleProvider.current.sign_up,
-                            onTap: () async {
-                              await openScreen(PagePaths.registerStep1Intro);
-                            },
-                          ),
+                      //
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: RbioElevatedButton(
+                          showElevation: false,
+                          fontWeight: FontWeight.bold,
+                          title: LocaleProvider.current.sign_up,
+                          onTap: () async {
+                            await openScreen(PagePaths.registerStep1Intro);
+                          },
                         ),
+                      ),
 
-                        //
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                          child: RbioElevatedButton(
-                            backColor: getIt<ITheme>().cardBackgroundColor,
-                            textColor: getIt<ITheme>().mainColor,
-                            showElevation: false,
-                            fontWeight: FontWeight.bold,
-                            title: LocaleProvider.current.login,
-                            onTap: () async {
-                              await openScreen(PagePaths.login);
-                            },
-                          ),
+                      //
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: RbioElevatedButton(
+                          backColor: getIt<ITheme>().cardBackgroundColor,
+                          textColor: getIt<ITheme>().mainColor,
+                          showElevation: false,
+                          fontWeight: FontWeight.bold,
+                          title: LocaleProvider.current.login,
+                          onTap: () async {
+                            await openScreen(PagePaths.login);
+                          },
                         ),
-                      ],
-                    ),
-                  );
-                }),
+                      ),
+
+                      //
+                      R.sizes.hSizer8,
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

@@ -9,12 +9,11 @@ class ReadValuesUseCase extends UseCase<void, ReadValuesParams> {
 
   @override
   Either<BluetoothFailures, Stream<ScaleEntity>> call(ReadValuesParams params) {
-    return repository.miScaleReadValues(params.device, params.field);
+    return repository.miScaleReadValues(params.device);
   }
 }
 
 class ReadValuesParams {
-  ReadValuesParams({required this.device, required this.field});
+  ReadValuesParams({required this.device});
   final DeviceEntity device;
-  final String field;
 }

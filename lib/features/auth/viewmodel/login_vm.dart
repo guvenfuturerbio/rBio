@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:scale_repository/scale_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:jiffy/jiffy.dart';
 
 import '../../../core/core.dart';
 import '../../../model/model.dart';

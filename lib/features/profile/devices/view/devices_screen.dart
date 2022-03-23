@@ -80,26 +80,25 @@ class DevicesScreen extends StatelessWidget {
   Widget _buildV2Card(BuildContext context, DeviceEntity device, DevicesVm vm) {
     return BlocProvider<DeviceStatusCubit>(
       create: (context) => DeviceStatusCubit(getIt())..readStatus(device),
-      child: BlocBuilder<DeviceStatusCubit, DeviceStatus?>(
+      child: BlocConsumer<DeviceStatusCubit, DeviceStatus?>(
+        listener: (context, deviceStatus) {
+          if (deviceStatus == DeviceStatus.connected) {
+            if (device.deviceType == DeviceType.miScale) {
+              context.read<MiScaleReadValuesCubit>().readValue(device);
+            }
+          } else {
+            if (device.deviceType == DeviceType.miScale) {
+              context.read<MiScaleReadValuesCubit>().stopListen();
+            }
+          }
+        },
         builder: (context, deviceStatus) {
           return DeviceCard(
             onTap: () {
-              LoggerUtils.instance.w(deviceStatus);
-              
-              if (deviceStatus == null ||
-                  deviceStatus == DeviceStatus.disconnected) {
-                context.read<DeviceSelectedCubit>().connect(device);
-                       if (device.deviceType == DeviceType.miScale) {
-                  context
-                      .read<MiScaleReadValuesCubit>()
-                      .readValue(device, 'Weight');
-                }
-         
-              } else {
+              if (deviceStatus == DeviceStatus.connected) {
                 context.read<DeviceSelectedCubit>().disconnect(device);
-                if (device.deviceType == DeviceType.miScale) {
-                  context.read<MiScaleReadValuesCubit>().stopListen();
-                }
+              } else {
+                context.read<DeviceSelectedCubit>().connect(device);
               }
             },
             background: _getBackgroundColorV2(deviceStatus),
@@ -176,8 +175,6 @@ class DevicesScreen extends StatelessWidget {
         return getIt<ITheme>().mainColor;
 
       case DeviceStatus.disconnected:
-        return R.color.darkRed;
-
       case DeviceStatus.disconnecting:
       default:
         return getIt<ITheme>().cardBackgroundColor;

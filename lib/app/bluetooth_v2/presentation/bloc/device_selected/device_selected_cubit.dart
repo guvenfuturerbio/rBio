@@ -81,7 +81,6 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
                     strength: element.strength,
                     deviceType: element.deviceType,
                   ),
-                  "Weight",
                 );
           },
         );

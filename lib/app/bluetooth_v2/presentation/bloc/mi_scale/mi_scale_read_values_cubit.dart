@@ -22,15 +22,10 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
     super.close();
   }
 
-  Future<void> readValue(DeviceEntity device, String field) async {
+  Future<void> readValue(DeviceEntity device) async {
     _streamSubs?.cancel();
     _streamSubs = null;
-    final result = readValuesUseCase.call(
-      ReadValuesParams(
-        device: device,
-        field: field,
-      ),
-    );
+    final result = readValuesUseCase.call(ReadValuesParams(device: device));
     result.fold(
       (l) {
         return null;

@@ -18,7 +18,7 @@ abstract class DeviceRepository {
       DeviceEntity device);
 
   Either<BluetoothFailures, Stream<ScaleEntity>> miScaleReadValues(
-      DeviceEntity device, String field);
+      DeviceEntity device);
 
   Either<BluetoothFailures, void> stopScan();
 

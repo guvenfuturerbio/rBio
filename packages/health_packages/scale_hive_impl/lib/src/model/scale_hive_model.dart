@@ -125,6 +125,8 @@ extension ScaleHiveModelExtension on ScaleHiveModel {
       dateTime: DateTime.fromMillisecondsSinceEpoch(
           int.tryParse(occurrenceTime) ?? 0,
           isUtc: true),
+      entegrationId: entegrationId,
+      measurementId: measurementId,
       age: age,
       bmi: bmi,
       bodyFat: bodyFat,
