@@ -40,7 +40,7 @@ class ScaleRepository {
           .compareTo((DateTime.fromMillisecondsSinceEpoch(
               int.tryParse(a.occurrenceTime) ?? 0)));
     });
-    return list[0].xToChronicEntity(age, gender, height);
+    return list.isEmpty ? null : list[0].xToChronicEntity(age, gender, height);
   }
 
   List<ScaleEntity> readLocalScaleData(int age, int gender, int height) {

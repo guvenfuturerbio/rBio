@@ -84,11 +84,22 @@ class DevicesScreen extends StatelessWidget {
         builder: (context, deviceStatus) {
           return DeviceCard(
             onTap: () {
+              LoggerUtils.instance.w(deviceStatus);
+              
               if (deviceStatus == null ||
                   deviceStatus == DeviceStatus.disconnected) {
                 context.read<DeviceSelectedCubit>().connect(device);
+                       if (device.deviceType == DeviceType.miScale) {
+                  context
+                      .read<MiScaleReadValuesCubit>()
+                      .readValue(device, 'Weight');
+                }
+         
               } else {
                 context.read<DeviceSelectedCubit>().disconnect(device);
+                if (device.deviceType == DeviceType.miScale) {
+                  context.read<MiScaleReadValuesCubit>().stopListen();
+                }
               }
             },
             background: _getBackgroundColorV2(deviceStatus),

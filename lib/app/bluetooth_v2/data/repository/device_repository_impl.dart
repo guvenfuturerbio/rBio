@@ -80,7 +80,13 @@ class DeviceRepositoryImpl extends DeviceRepository {
   Either<BluetoothFailures, Stream<DeviceStatus>> readStatus(
       DeviceEntity device) {
     try {
-      final result = localDataSource.readStatus(device as DeviceModel);
+      final result = localDataSource.readStatus(DeviceModel(
+          id: device.id,
+          name: device.name,
+          localName: device.localName,
+          strength: device.strength,
+          kind: device.kind,
+          deviceType: device.deviceType));
       return Right(result);
     } catch (e) {
       return Left(BluetoothFailure());
@@ -93,8 +99,15 @@ class DeviceRepositoryImpl extends DeviceRepository {
     String field,
   ) {
     try {
-      final miScaleStream =
-          localDataSource.miScaleReadValues(device as DeviceModel, field);
+      final miScaleStream = localDataSource.miScaleReadValues(
+          DeviceModel(
+              id: device.id,
+              name: device.name,
+              localName: device.localName,
+              strength: device.strength,
+              kind: device.kind,
+              deviceType: device.deviceType),
+          field);
       return Right(
         miScaleStream.map(
           (event) => event.xGetEntityWithCalculate(
