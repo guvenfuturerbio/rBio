@@ -49,9 +49,6 @@ class ScaleNetworkModel extends IBaseModel<ScaleNetworkModel> {
   @JsonKey(name: "is_manuel")
   bool? isManuel;
 
-  @JsonKey(name: "bmi_measurements_image_list")
-  List<String>? bmiMeasurementsImageList;
-
   @JsonKey(name: "note")
   String? note;
 
@@ -70,7 +67,6 @@ class ScaleNetworkModel extends IBaseModel<ScaleNetworkModel> {
     this.scaleUnit,
     this.deviceId,
     this.isManuel,
-    this.bmiMeasurementsImageList,
     this.note,
   });
 
@@ -86,7 +82,7 @@ class ScaleNetworkModel extends IBaseModel<ScaleNetworkModel> {
 
   @override
   String toString() {
-    return 'ScaleNetworkModel(entegrationId: $entegrationId, occurrenceTime: $occurrenceTime, weight: $weight, bmi: $bmi, measurementId: $measurementId, water: $water, bodyFat: $bodyFat, visceralFat: $visceralFat, boneMass: $boneMass, muscle: $muscle, bmh: $bmh, scaleUnit: $scaleUnit, deviceId: $deviceId, isManuel: $isManuel, bmiMeasurementsImageList: $bmiMeasurementsImageList, note: $note)';
+    return 'ScaleNetworkModel(entegrationId: $entegrationId, occurrenceTime: $occurrenceTime, weight: $weight, bmi: $bmi, measurementId: $measurementId, water: $water, bodyFat: $bodyFat, visceralFat: $visceralFat, boneMass: $boneMass, muscle: $muscle, bmh: $bmh, scaleUnit: $scaleUnit, deviceId: $deviceId, isManuel: $isManuel, note: $note)';
   }
 }
 
@@ -113,7 +109,6 @@ extension ScaleNetworkModelExt on ScaleNetworkModel {
       occurrenceTime: DateTime.parse(occurrenceTime ?? '').millisecondsSinceEpoch.toString(),
       bmh: bmh,
       bmi: bmi,
-      bmiMeasurementsImageList: bmiMeasurementsImageList,
       bodyFat: bodyFat,
       boneMass: boneMass,
       deviceId: deviceId,

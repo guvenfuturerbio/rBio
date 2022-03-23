@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:rive/rive.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -259,13 +260,9 @@ class AnimatedIntroCard extends StatelessWidget {
           //
           SizedBox(
             height: Atom.height * 0.4,
-            child: item.isLast
-                ? Container(color: getIt<ITheme>().mainColor)
-                : RiveAnimation.asset(
-                    item.animationPath,
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.bottomCenter,
-                  ),
+            child: SvgPicture.asset(
+              R.image.odhLogoSvg,
+            ),
           ),
 
           //

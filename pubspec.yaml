@@ -171,6 +171,7 @@ flutter:
     - assets/sound/
     - assets/departments.json
     - assets/pdf/
+    - assets/logo/
     - assets/animations/introduction/
 
   fonts:

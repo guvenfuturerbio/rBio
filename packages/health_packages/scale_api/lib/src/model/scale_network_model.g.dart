@@ -22,10 +22,6 @@ ScaleNetworkModel _$ScaleNetworkModelFromJson(Map<String, dynamic> json) =>
       scaleUnit: json['scale_unit'] as int?,
       deviceId: json['device_id'] as String?,
       isManuel: json['is_manuel'] as bool?,
-      bmiMeasurementsImageList:
-          (json['bmi_measurements_image_list'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
       note: json['note'] as String?,
     );
 
@@ -45,6 +41,5 @@ Map<String, dynamic> _$ScaleNetworkModelToJson(ScaleNetworkModel instance) =>
       'scale_unit': instance.scaleUnit,
       'device_id': instance.deviceId,
       'is_manuel': instance.isManuel,
-      'bmi_measurements_image_list': instance.bmiMeasurementsImageList,
       'note': instance.note,
     };

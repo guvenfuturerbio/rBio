@@ -115,6 +115,10 @@ class _Images {
   final women = "assets/images/women_icon.svg";
   final youtube = "assets/images/youtubeicon.svg";
 
+  // #region Logo
+  final odhLogoSvg = "assets/logo/odh_logo.svg";
+  // #endregion
+
   // #region bottom_navigation
   final bottomNavigationChatGreen =
       'assets/images/bottom_navigation/chat_icon_green.svg';
