@@ -54,6 +54,8 @@ class Repository {
       return right(const LoginExceptions.serverError());
     } on RbioNetworkException {
       return right(const LoginExceptions.networkError());
+    } catch (_) {
+      return right(const LoginExceptions.undefined());
     }
 
     return right(const LoginExceptions.undefined());
