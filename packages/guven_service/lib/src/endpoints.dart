@@ -7,68 +7,23 @@ class _Endpoints {
 
   // #region Scale
   String get insertNewScaleValue =>
-      '/Measurement/add-bmi-with-detail'.xCronicTracking(keyManager);
+      '/Measurement/add-bmi-with-detail'.xDevApiTest(keyManager);
   String get deleteScaleMeasurement =>
-      '/Measurement/delete-bmi-with-detail'.xCronicTracking(keyManager);
+      '/Measurement/delete-bmi-with-detail'.xDevApiTest(keyManager);
   String get getScaleMeasurement =>
-      '/Measurement/get-bmi-measurements'.xCronicTracking(keyManager);
+      '/Measurement/get-bmi-measurements'.xDevApiTest(keyManager);
   String get updateScaleMeasurement =>
-      '/Measurement/update-bmi-measurement'.xCronicTracking(keyManager);
+      '/Measurement/update-bmi-measurement'.xDevApiTest(keyManager);
   // #endregion
 }
 
 extension _EndpointsExtension on String {
-  String xBasePath(KeyManager keyManager) {
-    final String? path = keyManager.get(Keys.baseUrl);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('xBasePath null');
-    }
-  }
-
-  String xGuvenPath(KeyManager keyManager) {
-    final String? path = keyManager.get(Keys.dev4Guven);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('xGuvenPath null');
-    }
-  }
-
-  String xSymptomCheckerLogin(KeyManager keyManager) {
-    final String? path = keyManager.get(Keys.symtonCheckerLogin);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('xSymptomCheckerLogin null');
-    }
-  }
-
-  String xSymptomCheckerRequest(KeyManager keyManager) {
-    final String? path = keyManager.get(Keys.symtomRequestLogin);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('xSymptomCheckerRequest null');
-    }
-  }
-
-  String xCronicTracking(KeyManager keyManager) {
-    final String? path = keyManager.get(Keys.chronicTrackingBaseUrl);
+  String xDevApiTest(KeyManager keyManager) {
+    final String? path = keyManager.get(Keys.devApiTest);
     if (path != null) {
       return path + this;
     } else {
       throw Exception('xCronicTracking null');
-    }
-  }
-
-  String xDoctorBaseUrl(KeyManager keyManager) {
-    final String? path = keyManager.get(Keys.doctorBaseUrl);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('xDoctorBaseUrl null');
     }
   }
 }

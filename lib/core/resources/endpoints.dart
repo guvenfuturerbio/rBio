@@ -134,54 +134,50 @@ class _Endpoints {
 
   String ctSaveAndRetrieveToken = '/AccessToken/validate-remote-token'.xBaseUrl;
   String ctGetUserStrip(int entegrationId, String deviceuuid) =>
-      '/user/get-user-strip/$entegrationId/$deviceuuid'.xCronicTracking;
+      '/user/get-user-strip/$entegrationId/$deviceuuid'.xDevApiTest;
   String ctInsertNewBloodGlucoseValue =
-      '/Measurement/add-blood-glucose-with-detail'.xCronicTracking;
+      '/Measurement/add-blood-glucose-with-detail'.xDevApiTest;
   String ctDeleteBloodGlucoseValue =
-      '/Measurement/delete-blood-glucose-with-detail'.xCronicTracking;
+      '/Measurement/delete-blood-glucose-with-detail'.xDevApiTest;
   String ctUpdateBloodGlucoseValue =
-      '/Measurement/update-blood-glucose-with-detail'.xCronicTracking;
+      '/Measurement/update-blood-glucose-with-detail'.xDevApiTest;
   String ctUploadMeasurementImage(var entegrationId, var measurementId) =>
       '/Measurement/upload-measurement-image/$entegrationId/$measurementId'
-          .xCronicTracking;
+          .xDevApiTest;
   String ctGetBloodGlucoseReport =
-      '/Measurement/get-my-blood-glucose-report'.xCronicTracking;
+      '/Measurement/get-my-blood-glucose-report'.xDevApiTest;
   String ctGetBloodGlucoseDataOfPerson =
       '/Measurement/get-my-blood-glucose-with-detail-and-limit-value'
-          .xCronicTracking;
-  String ctGetAllProfiles = '/profile/get-all'.xCronicTracking;
-  String ctAddProfile = '/profile/add'.xCronicTracking;
+          .xDevApiTest;
+  String ctGetAllProfiles = '/profile/get-all'.xDevApiTest;
+  String ctAddProfile = '/profile/add'.xDevApiTest;
   String ctChangeProfile(entegrationId) =>
-      '/profile/set-profile/$entegrationId'.xCronicTracking;
-  String ctDeleteProfile(var userId) =>
-      '/profile/delete/$userId'.xCronicTracking;
-  String ctAddFirebaseToken = '/user/add-user-firebaseId'.xCronicTracking;
-  String ctUpdateProfile(var id) =>
-      '/user/user-profile-update/$id'.xCronicTracking;
+      '/profile/set-profile/$entegrationId'.xDevApiTest;
+  String ctDeleteProfile(var userId) => '/profile/delete/$userId'.xDevApiTest;
+  String ctAddFirebaseToken = '/user/add-user-firebaseId'.xDevApiTest;
+  String ctUpdateProfile(var id) => '/user/user-profile-update/$id'.xDevApiTest;
   String ctSetDefaultProfile =
-      '/user/set-user-profile-default-value'.xCronicTracking;
-  String ctUpdateUserStrip = '/user/add-update-user-strip'.xCronicTracking;
+      '/user/set-user-profile-default-value'.xDevApiTest;
+  String ctUpdateUserStrip = '/user/add-update-user-strip'.xDevApiTest;
   String ctDeleteUserStrip(var id, var entegrationId) =>
-      '/user/delete-user-strip/$id/$entegrationId'.xCronicTracking;
+      '/user/delete-user-strip/$id/$entegrationId'.xDevApiTest;
   String ctIsDeviceIdRegisteredForSomeUser(var deviceId, var entegrationId) =>
       '/SugarDevice/is-device-id-registered-for-some-user/$deviceId/$entegrationId'
-          .xCronicTracking;
+          .xDevApiTest;
   String ctAddHospitalHba1cMeasurement(var entegrationId) =>
-      '/Measurement/add-hospital-hba1c-measurement/$entegrationId'
-          .xCronicTracking;
+      '/Measurement/add-hospital-hba1c-measurement/$entegrationId'.xDevApiTest;
   String ctGetHba1cMeasurementList(var entegrationId) =>
       '/Measurement/get-list-hospital-hba1c-measurement/$entegrationId'
-          .xCronicTracking;
+          .xDevApiTest;
   String ctGetMedicineByFilter(String text) =>
-      '/Medicine/get-by-filter/$text'.xCronicTracking;
+      '/Medicine/get-by-filter/$text'.xDevApiTest;
 
-  String ctInsertNewBpValue = '/Measurement/add-bp-with-detail'.xCronicTracking;
+  String ctInsertNewBpValue = '/Measurement/add-bp-with-detail'.xDevApiTest;
   String ctDeleteBpMeasurement =
-      '/Measurement/delete-bp-with-detail'.xCronicTracking;
-  String ctGetBpMeasurement =
-      '/Measurement/get-bp-measurements'.xCronicTracking;
+      '/Measurement/delete-bp-with-detail'.xDevApiTest;
+  String ctGetBpMeasurement = '/Measurement/get-bp-measurements'.xDevApiTest;
   String ctUpdateBpMeasurement =
-      '/Measurement/update-bp-measurement'.xCronicTracking;
+      '/Measurement/update-bp-measurement'.xDevApiTest;
 
   String dcLogin(String userName, String password) =>
       '/AccessToken/get-token-for-rbio?userName=$userName&password=$password'
@@ -248,30 +244,12 @@ extension _EndpointsExtension on String {
     }
   }
 
-  String get xCronicTracking {
-    final String? path = getIt<KeyManager>().get(Keys.prodApiTest);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('SecretKeys.chronicTrackingBaseUrl null');
-    }
-  }
-
   String get xDoctorBaseUrl {
     final String? path = getIt<KeyManager>().get(Keys.doctorBaseUrl);
     if (path != null) {
       return path + this;
     } else {
       throw Exception('SecretKeys.doctorBaseUrl null');
-    }
-  }
-
-  String get xProdApiTest {
-    final String? path = getIt<KeyManager>().get(Keys.prodApiTest);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('SecretKeys.prodApiTest null');
     }
   }
 

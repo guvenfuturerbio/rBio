@@ -6,7 +6,6 @@ enum Keys {
   clientSecret,
   mockAppointment,
   dev4Guven,
-  prodApiTest,
   sentryDsn,
   symtonCheckerLogin,
   symtomRequestLogin,
