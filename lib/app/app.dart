@@ -12,7 +12,6 @@ import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
 import '../features/doctor/notifiers/patient_notifiers.dart';
 import '../features/home/viewmodel/home_vm.dart';
 import 'bluetooth_v2/bluetooth_v2.dart';
-import 'bluetooth_v2/presentation/bloc/mi_scale/mi_scale_state.dart';
 
 class MyApp extends StatefulWidget {
   final String initialRoute;
@@ -40,7 +39,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MiScaleReadValuesCubit, MiScaleReadValuesState>(
+    return BlocListener<MiScaleCubit, MiScaleState>(
       listener: (context, state) => _miScaleListener(context, state),
       child: Container(
         color: Colors.white,
@@ -175,9 +174,9 @@ class _MyAppState extends State<MyApp> {
 
   void _miScaleListener(
     BuildContext context,
-    MiScaleReadValuesState state,
+    MiScaleState miScaleState,
   ) async {
-    state.when(
+    miScaleState.when(
       initial: () {
         //
       },

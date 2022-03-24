@@ -68,9 +68,8 @@ Future<void> bootstrap(AppConfig appConfig) async {
                     create: (context) =>
                         DeviceSelectedCubit(getIt(), getIt(), getIt(), getIt()),
                   ),
-                  BlocProvider<MiScaleReadValuesCubit>(
-                    create: (context) =>
-                        MiScaleReadValuesCubit(getIt(), getIt()),
+                  BlocProvider<MiScaleCubit>(
+                    create: (context) => MiScaleCubit(getIt(), getIt()),
                   ),
                 ],
                 child: MyApp(initialRoute: initialRoute),

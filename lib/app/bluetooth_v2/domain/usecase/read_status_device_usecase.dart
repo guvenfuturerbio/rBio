@@ -11,10 +11,3 @@ class ReadStatusDeviceUseCase extends UseCase<void, DeviceParams> {
     return repository.readStatus(params.device);
   }
 }
-
-enum DeviceStatus {
-  disconnected,
-  connecting,
-  connected,
-  disconnecting,
-}

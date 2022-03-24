@@ -188,7 +188,7 @@ class UserNotifier extends ChangeNotifier {
         for (var item in localDevices) {
           if (item.deviceType == DeviceType.miScale) {
             context.read<DeviceSelectedCubit>().disconnect(item);
-            context.read<MiScaleReadValuesCubit>().stopListen();
+            context.read<MiScaleCubit>().stopListen();
           }
         }
       }

@@ -18,9 +18,6 @@ abstract class DeviceLocalDataSource {
 }
 
 class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
-  BluetoothDeviceLocalDataSourceImpl() {
-    LoggerUtils.instance.wtf('sss');
-  }
   Timer? miScaleTimer;
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
-import '../../../../../app/bluetooth_v2/presentation/bloc/mi_scale/mi_scale_state.dart';
 import '../../../../../core/core.dart';
 import 'loading/scale_progress_circle.dart';
 
@@ -18,7 +17,7 @@ class MiScalePopUp extends StatelessWidget {
         color: getIt<ITheme>().mainColor,
         height: context.height,
         width: context.width,
-        child: BlocBuilder<MiScaleReadValuesCubit, MiScaleReadValuesState>(
+        child: BlocBuilder<MiScaleCubit, MiScaleState>(
           builder: (context, miScaleState) {
             Widget? child = const RbioLoading();
             miScaleState.whenOrNull(
