@@ -75,7 +75,7 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
         Future.delayed(
           const Duration(seconds: 1),
           () {
-            context.read<MiScaleReadValuesCubit>().readValue(
+            context.read<MiScaleCubit>().readValue(
                   DeviceModel(
                     id: element.id,
                     name: element.name,

@@ -37,9 +37,9 @@ class DeviceSearchCubit extends Cubit<DeviceSearchState> {
     _streamSubs = null;
     final result = stopScanUseCase.call(NoParams());
     result.fold((l) {
-      print("[DeviceSearchCubit] - Left - $l");
+      LoggerUtils.instance.e("[DeviceSearchCubit] - Left - $l");
     }, (r) {
-      print("[DeviceSearchCubit] - Right - true");
+      LoggerUtils.instance.e("[DeviceSearchCubit] - Right - true");
     });
   }
 }

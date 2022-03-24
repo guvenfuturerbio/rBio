@@ -185,7 +185,7 @@ class DeviceListingScreen extends StatelessWidget {
       switch (deviceType) {
         case DeviceType.miScale:
           {
-            BlocProvider.of<MiScaleReadValuesCubit>(context).readValue(device);
+            BlocProvider.of<MiScaleCubit>(context).readValue(device);
             break;
           }
 

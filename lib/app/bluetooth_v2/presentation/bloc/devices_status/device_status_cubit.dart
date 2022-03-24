@@ -2,6 +2,8 @@ import 'dart:async';
 
 import '../../../bluetooth_v2.dart';
 
+part 'device_status.dart';
+
 class DeviceStatusCubit extends Cubit<DeviceStatus?> {
   final ReadStatusDeviceUseCase useCase;
   DeviceStatusCubit(this.useCase) : super(null);
@@ -18,7 +20,7 @@ class DeviceStatusCubit extends Cubit<DeviceStatus?> {
     _streamSubs?.cancel();
     final result = useCase.call(DeviceParams(device: device));
     result.fold((l) {
-      print("[DeviceStatusCubit] - Left - $l");
+      LoggerUtils.instance.e("[DeviceStatusCubit] - Left - $l");
     }, (stream) {
       _streamSubs = stream.listen((event) {
         emit(event);

@@ -4,13 +4,17 @@ import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../core/core.dart';
 import '../../../bluetooth_v2.dart';
-import 'mi_scale_state.dart';
 
-class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
-  MiScaleReadValuesCubit(
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'mi_scale_cubit.freezed.dart';
+part 'mi_scale_state.dart';
+
+class MiScaleCubit extends Cubit<MiScaleState> {
+  MiScaleCubit(
     this.readValuesUseCase,
     this.miScaleStopUseCase,
-  ) : super(const MiScaleReadValuesState.initial());
+  ) : super(const MiScaleState.initial());
   final ReadValuesUseCase readValuesUseCase;
   final MiScaleStopUseCase miScaleStopUseCase;
 
@@ -34,22 +38,22 @@ class MiScaleReadValuesCubit extends Cubit<MiScaleReadValuesState> {
         _streamSubs = stream.listen(
           (scaleEntity) async {
             if ((scaleEntity.weight ?? 0) < 15.0) {
-              emit(const MiScaleReadValuesState.dismissLoading());
+              emit(const MiScaleState.dismissLoading());
               return;
             }
 
-            emit(MiScaleReadValuesState.showLoading(scaleEntity));
+            emit(MiScaleState.showLoading(scaleEntity));
             if (scaleEntity.measurementComplete == true) {
-              emit(const MiScaleReadValuesState.dismissLoading());
+              emit(const MiScaleState.dismissLoading());
               await Future.delayed(const Duration(milliseconds: 350));
-              emit(MiScaleReadValuesState.showScalePopup(scaleEntity));
+              emit(MiScaleState.showScalePopup(scaleEntity));
             }
 
             final popUpCanClose = (Atom.isDialogShow) &&
                 (scaleEntity.weightRemoved == true) &&
                 (scaleEntity.measurementComplete == false);
             if (popUpCanClose) {
-              emit(const MiScaleReadValuesState.dismissLoading());
+              emit(const MiScaleState.dismissLoading());
             }
           },
         );
