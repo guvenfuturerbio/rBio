@@ -11,6 +11,8 @@ import '../viewmodel/home_vm.dart';
 part '../enum/home_widgets.dart';
 part '../enum/shake_mod.dart';
 
+bool kAutoConnect = true;
+
 class HomeScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState>? drawerKey;
 
@@ -30,7 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Utils.instance.forcePortraitOrientation();
       DeepLinkHelper.instance.initDynamicLinks(context);
       getIt<FirebaseMessagingManager>().userInit();
-      context.read<DeviceSelectedCubit>().connectAndListen(context);
+      if (kAutoConnect) {
+        context.read<DeviceSelectedCubit>().connectAndListen(context);
+        kAutoConnect = false;
+      }
     }
     super.initState();
   }

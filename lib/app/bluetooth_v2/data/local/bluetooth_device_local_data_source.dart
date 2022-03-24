@@ -125,7 +125,12 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     try {
       miScaleTimer = Timer.periodic(BluetoothConstants.miScaleNotifyDuration,
           (timer) async {
-        miScaleTimer = timer;
+        if (await ble.state.last == BluetoothDeviceState.disconnected) {
+          LoggerUtils.instance.w('Timer canceled!! ');
+
+          timer.cancel();
+          return;
+        }
         await characteristic.setNotifyValue(true);
       });
     } catch (e) {
