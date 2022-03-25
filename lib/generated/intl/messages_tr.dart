@@ -1077,9 +1077,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "smokes_often": MessageLookupByLibrary.simpleMessage("Sık Sık İçiyor"),
         "smoking": MessageLookupByLibrary.simpleMessage("Sigara Kullanımı"),
         "sms_verification":
-            MessageLookupByLibrary.simpleMessage("Sms Doğrulama"),
+            MessageLookupByLibrary.simpleMessage("Sms/Email Doğrulama"),
         "sms_verification_code":
-            MessageLookupByLibrary.simpleMessage("Sms Doğrulama Kodu"),
+            MessageLookupByLibrary.simpleMessage("Sms/Email Doğrulama Kodu"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Bir şeyler ters gitti"),
         "sorry_dont_transaction": MessageLookupByLibrary.simpleMessage(
