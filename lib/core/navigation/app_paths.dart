@@ -11,6 +11,7 @@ import '../../features/chat/view/consultation_screen.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_progress_screen.dart';
 import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
+import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_detail_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/view/scale_progress_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
@@ -548,6 +549,12 @@ class VRouterRoutes {
       ],
     ),
 
+    // New Chronic Screen
+    VWidget(
+      path: PagePaths.scaleDetail,
+      widget: const ScaleDetailScreen(),
+    ),
+
     // Bluetooth v2
     VWidget(
       path: PagePaths.deviceListing,
@@ -642,6 +649,8 @@ class PagePaths {
   static const bpProgress = '/blood-pressure-progress';
   static const treatmentProgress = '/treatment-progress';
   static const treatmentEditProgress = '/tretment-edit-progress';
+
+  static const scaleDetail = '/scale-detail';
 
   // Symptom Checker
   static const symptomMainMenu = '/symptom-main';

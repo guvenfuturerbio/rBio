@@ -670,6 +670,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Güven Hospital Ayrancı"),
         "max_range": MessageLookupByLibrary.simpleMessage("Max Range: "),
         "meal": MessageLookupByLibrary.simpleMessage("Meal"),
+        "measurement_delete_question": MessageLookupByLibrary.simpleMessage(
+            "Do you want to delete the measurement?"),
         "medication_reminder":
             MessageLookupByLibrary.simpleMessage("Medication Reminder"),
         "medicine_daily_count":

@@ -7,6 +7,7 @@ class RbioScaffold extends StatelessWidget {
   final Key? scaffoldKey;
   final IRbioAppBar appbar;
   final Widget body;
+  final EdgeInsetsGeometry? bodyPadding;
 
   // Optionals
   final Color? backgroundColor;
@@ -36,6 +37,7 @@ class RbioScaffold extends StatelessWidget {
     this.scaffoldKey,
     required this.appbar,
     required this.body,
+    this.bodyPadding,
     this.backgroundColor,
     this.bottomNavigationBar,
     this.bottomSheet,
@@ -103,6 +105,7 @@ class RbioScaffold extends StatelessWidget {
           Expanded(
             child: RbioBody(
               child: body,
+              padding: bodyPadding,
             ),
           ),
         ],
@@ -138,11 +141,13 @@ class RbioScaffold extends StatelessWidget {
 class RbioBody extends StatelessWidget {
   final Widget child;
   final bool isLoading;
+  final EdgeInsetsGeometry? padding;
 
   const RbioBody({
     Key? key,
     required this.child,
     this.isLoading = false,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -151,7 +156,7 @@ class RbioBody extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 1200),
       child: RbioLoadingOverlay(
         child: Padding(
-          padding: R.sizes.screenPadding(context),
+          padding: padding ?? R.sizes.screenPadding(context),
           child: child,
         ),
         isLoading: isLoading,

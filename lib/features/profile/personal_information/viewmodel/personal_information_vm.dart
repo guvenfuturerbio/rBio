@@ -48,12 +48,10 @@ class PersonalInformationScreenVm extends RbioVm {
 
     try {
       UserAccount patient = await getIt<Repository>().getUserProfile();
-      PatientResponse? pusulaPatient = await getIt<Repository>().getPatientDetail();
-
-       patient = await getIt<Repository>().getUserProfile();
-
+      PatientResponse? pusulaPatient =
+          await getIt<Repository>().getPatientDetail();
+      patient = await getIt<Repository>().getUserProfile();
       ChangeContactInfoRequest changeInfo = ChangeContactInfoRequest();
-
       changeInfo.patientId = pusulaPatient?.id;
       changeInfo.nationalityId = int.parse(patient.nationality!);
       changeInfo.firstName = patient.name;

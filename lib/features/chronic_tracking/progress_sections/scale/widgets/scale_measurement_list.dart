@@ -156,7 +156,7 @@ Widget _buildCard(
           try {
             await getIt<ScaleRepository>().deleteScaleMeasurement(
               DeleteScaleMasurementBody(
-                entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
+                entegrationId: scaleEntity.entegrationId,
                 measurementId: scaleEntity.measurementId,
               ),
               scaleEntity.dateTime,

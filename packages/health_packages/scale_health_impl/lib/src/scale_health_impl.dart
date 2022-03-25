@@ -9,8 +9,7 @@ class ScaleHealthImpl {
   final HealthFactory _health;
   ScaleHealthImpl() : _health = HealthFactory();
 
-  Future<bool?> hasPermissions() async =>
-      await HealthFactory.hasPermissions(
+  Future<bool?> hasPermissions() async => await HealthFactory.hasPermissions(
         Constants.instance.scaleTypes,
         permissions: [
           HealthDataAccess.READ_WRITE,
@@ -29,18 +28,22 @@ class ScaleHealthImpl {
       );
 
   Future<bool> deleteScaleMeasurement(DateTime date) async {
+    var itemDate = date.toString();
+    itemDate = itemDate.substring(0, itemDate.length - 1);
+    final newDate = DateTime.parse(itemDate);
+
     try {
       await _health.deleteData(
         HealthDataType.WEIGHT,
-        date,
+        newDate,
       );
       await _health.deleteData(
         HealthDataType.BODY_MASS_INDEX,
-        date,
+        newDate,
       );
       await _health.deleteData(
         HealthDataType.BODY_FAT_PERCENTAGE,
-        date,
+        newDate,
       );
       return true;
     } catch (e) {

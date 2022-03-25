@@ -3,13 +3,18 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioLoading extends StatelessWidget {
-  const RbioLoading({Key? key}) : super(key: key);
+  final Color? color;
+
+  const RbioLoading({
+    Key? key,
+    this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(getIt<ITheme>().mainColor),
+        valueColor: AlwaysStoppedAnimation<Color>(color ?? getIt<ITheme>().mainColor),
       ),
     );
   }

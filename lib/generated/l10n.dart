@@ -7989,6 +7989,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Do you want to delete the measurement?`
+  String get measurement_delete_question {
+    return Intl.message(
+      'Do you want to delete the measurement?',
+      name: 'measurement_delete_question',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
