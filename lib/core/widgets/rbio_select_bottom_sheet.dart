@@ -40,7 +40,7 @@ class RbioSelectBottomSheet<T> extends StatelessWidget {
           Expanded(
             child: CupertinoPicker(
               scrollController: FixedExtentScrollController(
-                initialItem: initalItem,
+                initialItem: initalItem ?? 0,
               ),
               backgroundColor: Colors.white,
               onSelectedItemChanged: onSelectedItemChanged,

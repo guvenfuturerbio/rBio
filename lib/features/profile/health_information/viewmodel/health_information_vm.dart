@@ -54,7 +54,7 @@ class HealthInformationVm extends RbioVm {
 
   // #region showDiabetsSheet
   void showDiabetsSheet() {
-    late int selectedType;
+    int selectedType = 0;
 
     _showBottomSheet(
       children: _getChildren(HealthInformationType.diabetType),
@@ -101,7 +101,7 @@ class HealthInformationVm extends RbioVm {
 
   // #region showHeightSheet
   void showHeightSheet() {
-    late int selectedHeight;
+    int? selectedHeight;
 
     _showBottomSheet(
       children: _getChildren(HealthInformationType.height),
@@ -116,15 +116,17 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region changeHeight
-  void changeHeight(int height) {
-    selection.height = height.toString();
+  void changeHeight(int? height) {
+    if (height != null) {
+      selection.height = height.toString();
+    }
     notifyListeners();
   }
   // #endregion
 
   // #region showWeightSheet
   void showWeightSheet() {
-    late int selectedWeight;
+    int? selectedWeight;
 
     _showBottomSheet(
       children: _getChildren(HealthInformationType.weight),
@@ -139,8 +141,10 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region changeWeight
-  void changeWeight(int weight) {
-    selection.weight = weight.toString();
+  void changeWeight(int? weight) {
+    if (weight != null) {
+      selection.weight = weight.toString();
+    }
     notifyListeners();
   }
   // #endregion
@@ -157,7 +161,7 @@ class HealthInformationVm extends RbioVm {
 
   // #region showMaxRangeSheet
   void showMaxRangeSheet() {
-    late int _selectedMaxRange;
+    int? _selectedMaxRange;
 
     _showBottomSheet(
       children: _getChildren(HealthInformationType.maxRange),
@@ -173,10 +177,12 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region changeMaxRange
-  void changeMaxRange(int selectedHyper) async {
-    selection.hyper = selectedHyper < selection.rangeMax!
-        ? selection.rangeMax! + 1
-        : selectedHyper;
+  void changeMaxRange(int? selectedHyper) async {
+    if (selectedHyper != null) {
+      selection.hyper = selectedHyper < selection.rangeMax!
+          ? selection.rangeMax! + 1
+          : selectedHyper;
+    }
     notifyListeners();
   }
   // #endregion
@@ -210,7 +216,7 @@ class HealthInformationVm extends RbioVm {
 
   // #region showSmokerSheet
   void showSmokerSheet() {
-    late int selectedType;
+    int? selectedType;
 
     _showBottomSheet(
       children: _getChildren(HealthInformationType.smoker),
@@ -252,7 +258,7 @@ class HealthInformationVm extends RbioVm {
   // #region showDiagnosisSheet
   void showDiagnosisSheet() {
     {
-      late int selectedYear;
+      int? selectedYear;
 
       _showBottomSheet(
         children: _getChildren(HealthInformationType.yearofDiagnosis),
@@ -269,8 +275,10 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region changeDiagnosis
-  void changeDiagnosis(int diagnosis) {
-    selection.yearOfDiagnosis = diagnosis;
+  void changeDiagnosis(int? diagnosis) {
+    if (diagnosis != null) {
+      selection.yearOfDiagnosis = diagnosis;
+    }
     notifyListeners();
   }
   // #endregion
@@ -494,7 +502,9 @@ class HealthInformationVm extends RbioVm {
     required TextEditingController smokerController,
     required TextEditingController yearofDiagnosisController,
   }) {
-    diabetTypeController.text = selection.diabetesType ?? '';
+    diabetTypeController.text = selection.diabetesType == 'Non-Diabetes'
+        ? LocaleProvider.current.non_diabetes
+        : selection.diabetesType ?? '';
     weightController.text = "${selection.weight} kg";
     normalRangeController.text =
         "${selection.rangeMin}-${selection.rangeMax} mg/dl";
