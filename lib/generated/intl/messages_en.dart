@@ -1084,9 +1084,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "smokes_often": MessageLookupByLibrary.simpleMessage("Smokes Often"),
         "smoking": MessageLookupByLibrary.simpleMessage("Smoking"),
         "sms_verification":
-            MessageLookupByLibrary.simpleMessage("Sms Verification"),
+            MessageLookupByLibrary.simpleMessage("Sms/Email Verification"),
         "sms_verification_code":
-            MessageLookupByLibrary.simpleMessage("Sms Verification Code"),
+            MessageLookupByLibrary.simpleMessage("Sms/Email Verification Code"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Oops. Something went wrong!"),
         "sorry_dont_transaction": MessageLookupByLibrary.simpleMessage(

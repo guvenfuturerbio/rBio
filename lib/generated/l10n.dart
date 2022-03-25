@@ -810,20 +810,20 @@ class LocaleProvider {
     );
   }
 
-  /// `Sms Verification`
+  /// `Sms/Email Verification`
   String get sms_verification {
     return Intl.message(
-      'Sms Verification',
+      'Sms/Email Verification',
       name: 'sms_verification',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sms Verification Code`
+  /// `Sms/Email Verification Code`
   String get sms_verification_code {
     return Intl.message(
-      'Sms Verification Code',
+      'Sms/Email Verification Code',
       name: 'sms_verification_code',
       desc: '',
       args: [],
