@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -69,6 +70,22 @@ class CreateAppointmentScreen extends StatelessWidget {
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      leading: Align(
+        alignment: Alignment.center,
+        child: InkWell(
+          child: Container(
+            color: Colors.transparent,
+            padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
+            child: SvgPicture.asset(
+              R.image.back,
+              width: R.sizes.iconSize,
+            ),
+          ),
+          onTap: () {
+            fromSymptom ? Atom.to(PagePaths.main) : Atom.historyBack();
+          },
+        ),
+      ),
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.title_appointment,
