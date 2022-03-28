@@ -199,25 +199,19 @@ class BpTaggerPopUp extends StatelessWidget {
   // #region _buildDateTimeSection
   Widget _buildDateTimeSection(BuildContext context, BpTaggerVm value) {
     return GestureDetector(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return SizedBox(
-              height: 260,
-              child: CupertinoDatePicker(
-                initialDateTime: value.bpModel!.date,
-                onDateTimeChanged: value.changeDate,
-                use24hFormat: true,
-                maximumDate: DateTime.now(),
-                minimumYear: DateTime.now().year,
-                maximumYear: DateTime.now().year,
-                minuteInterval: 1,
-                mode: CupertinoDatePickerMode.dateAndTime,
-              ),
-            );
-          },
+      onTap: () async {
+        final DateTime? pickedDate = await showRbioDatePicker(
+          context,
+          title: LocaleProvider.of(context).date,
+          initialDateTime: value.bpModel!.date,
+          maximumDate: DateTime.now(),
+          minimumDate: DateTime(2000),
+          mode: CupertinoDatePickerMode.dateAndTime,
         );
+
+        if (pickedDate != null) {
+          value.changeDate(pickedDate);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 20),

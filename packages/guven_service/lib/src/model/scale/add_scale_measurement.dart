@@ -58,10 +58,15 @@ class AddScaleMasurementBody {
       };
 }
 
-extension AddScaleExtension on AddScaleMasurementBody {
+extension AddScaleMasurementBodyExtension on AddScaleMasurementBody {
   ScaleHiveModel xToScaleHiveModel(int measurementId) {
+    var localDate = occurrenceTime!.toIso8601String();
+    localDate = (localDate.substring(0, localDate.length - 2)) + "+00:00";
+    final lastDate = DateTime.parse(localDate).toUtc().millisecondsSinceEpoch.toString();
+
     return ScaleHiveModel(
-      occurrenceTime: occurrenceTime?.millisecondsSinceEpoch.toString() ?? '',
+      occurrenceTime: lastDate,
+      measurementId: measurementId,
       bmh: bmh,
       bmi: bmi,
       bodyFat: bodyFat,
@@ -69,7 +74,6 @@ extension AddScaleExtension on AddScaleMasurementBody {
       deviceId: deviceUUID,
       entegrationId: entegrationId,
       isManuel: isManuel,
-      measurementId: measurementId,
       muscle: muscle,
       note: note,
       scaleUnit: scaleUnit,

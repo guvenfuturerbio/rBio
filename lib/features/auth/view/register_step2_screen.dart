@@ -105,18 +105,20 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
   }
 
   Widget _buildBody(RegisterStep2ScreenVm vm) {
-    return KeyboardAvoider(
-      autoScroll: true,
-      child: RbioKeyboardActions(
-        focusList: [
-          _identityFocusNode,
-          _emailFocusNode,
-          _passwordFocusNode,
-          _passwordAgainFocusNode,
-        ],
+    return RbioKeyboardActions(
+      focusList: [
+        _identityFocusNode,
+        _emailFocusNode,
+        _passwordFocusNode,
+        _passwordAgainFocusNode,
+      ],
+      child: KeyboardAvoider(
+        autoScroll: true,
+        duration: const Duration(seconds: 1),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            //
             Padding(
               padding: const EdgeInsets.only(bottom: 5.0, left: 20),
               child: Column(

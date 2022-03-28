@@ -79,8 +79,7 @@ class BgTaggerPopUp extends StatelessWidget {
                         vm.data.tag == 3 || vm.data.tag == null
                             ? _buildSquareBg(context, vm)
                             : _buildCircleBg(context, vm),
-                        _buildDateTimeSection(
-                            context, vm.date, vm.onChangeDate),
+                        _buildDateTimeSection(context, vm),
                         _buildTags(context, vm.data.tag, vm.changeTag),
                         _buildImageSection(context, vm),
                         _buildNoteSection(context, vm.noteController),
@@ -212,29 +211,22 @@ class BgTaggerPopUp extends StatelessWidget {
   // #region _buildDateTimeSection
   Widget _buildDateTimeSection(
     BuildContext context,
-    DateTime date,
-    Function(DateTime) onChange,
+    BgTaggerVm vm,
   ) {
     return GestureDetector(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (BuildContext builder) {
-            return SizedBox(
-              height: 260,
-              child: CupertinoDatePicker(
-                initialDateTime: DateTime.now(),
-                onDateTimeChanged: onChange,
-                use24hFormat: true,
-                maximumDate: DateTime.now(),
-                minimumYear: DateTime.now().year,
-                maximumYear: DateTime.now().year,
-                minuteInterval: 1,
-                mode: CupertinoDatePickerMode.dateAndTime,
-              ),
-            );
-          },
+      onTap: () async {
+        final DateTime? pickedDate = await showRbioDatePicker(
+          context,
+          title: LocaleProvider.of(context).date,
+          initialDateTime: vm.date,
+          maximumDate: DateTime.now(),
+          minimumDate: DateTime(2000),
+          mode: CupertinoDatePickerMode.dateAndTime,
         );
+
+        if (pickedDate != null) {
+          vm.onChangeDate(pickedDate);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 16),
@@ -257,12 +249,12 @@ class BgTaggerPopUp extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    UtilityManager().getReadableDate(date),
+                    UtilityManager().getReadableDate(vm.date),
                     style: context.xHeadline4,
                   ),
                 ),
                 Text(
-                  UtilityManager().getReadableHour(date),
+                  UtilityManager().getReadableHour(vm.date),
                   style: context.xHeadline4,
                 )
               ],

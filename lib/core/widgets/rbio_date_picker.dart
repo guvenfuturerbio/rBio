@@ -11,6 +11,7 @@ Future<DateTime?> showRbioDatePicker(
   required DateTime initialDateTime,
   DateTime? minimumDate,
   DateTime? maximumDate,
+  CupertinoDatePickerMode? mode,
 }) async {
   final result = await showModalBottomSheet(
     context: context,
@@ -23,6 +24,7 @@ Future<DateTime?> showRbioDatePicker(
       return SizedBox(
         height: Atom.height * 0.45,
         child: RbioDatePicker(
+          mode: mode ?? CupertinoDatePickerMode.date,
           title: title,
           initialDateTime: initialDateTime,
           minimumDate: minimumDate ?? DateTime(2000),
@@ -41,6 +43,7 @@ class RbioDatePicker extends StatefulWidget {
   final DateTime initialDateTime;
   final DateTime minimumDate;
   final DateTime maximumDate;
+  final CupertinoDatePickerMode mode;
 
   const RbioDatePicker({
     Key? key,
@@ -48,6 +51,7 @@ class RbioDatePicker extends StatefulWidget {
     required this.initialDateTime,
     required this.minimumDate,
     required this.maximumDate,
+    required this.mode,
   }) : super(key: key);
 
   @override
@@ -118,7 +122,7 @@ class _RbioDatePickerState extends State<RbioDatePicker> {
         Expanded(
           flex: 200,
           child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
+            mode: widget.mode,
             onDateTimeChanged: (value) {
               if (value != _selectedDate) {
                 setState(() {

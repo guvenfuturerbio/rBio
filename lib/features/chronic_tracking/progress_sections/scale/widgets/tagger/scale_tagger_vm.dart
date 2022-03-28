@@ -310,7 +310,6 @@ class ScaleTaggerVm extends ChangeNotifier {
       if (weightController.text == '') {
         throw Exception(LocaleProvider.current.required_area);
       }
-      scaleModel.dateTime = DateTime.now();
 
       //
       AddScaleMasurementBody model = AddScaleMasurementBody(
@@ -330,7 +329,7 @@ class ScaleTaggerVm extends ChangeNotifier {
         isManuel: scaleModel.isManuel,
       );
       await getIt<ScaleRepository>().addScaleMeasurement(model);
-      Atom.dismiss();
+      Atom.dismiss(true);
     } catch (e) {
       LoggerUtils.instance.e(e);
     }

@@ -90,32 +90,16 @@ class AddPatientRelativesScreenVm extends RbioVm {
   Future<void> selectDate(BuildContext context) async {
     selectedDate ??= DateTime.now();
 
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate!,
-      firstDate: DateTime(selectedDate!.year - 20),
-      lastDate: DateTime(selectedDate!.year + 1),
-      helpText: LocaleProvider.of(context).select_birth_date,
-      cancelText: LocaleProvider.of(context).btn_cancel,
-      confirmText: LocaleProvider.of(context).btn_confirm,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            primaryColor: getIt<ITheme>().mainColor,
-            colorScheme: ColorScheme.light(
-              primary: getIt<ITheme>().mainColor,
-              secondary: getIt<ITheme>().mainColor,
-            ),
-            buttonTheme:
-                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-          ),
-          child: child!,
-        );
-      },
+    final DateTime? pickedDate = await showRbioDatePicker(
+      context,
+      title: LocaleProvider.of(context).select_birth_date,
+      initialDateTime: selectedDate!,
+      maximumDate: DateTime(selectedDate!.year + 1),
+      minimumDate: DateTime(selectedDate!.year - 20),
     );
 
-    if (picked != null && picked != selectedDate) {
-      selectedDate = picked;
+    if (pickedDate != null && pickedDate != selectedDate) {
+      selectedDate = pickedDate;
     }
     notifyListeners();
   }

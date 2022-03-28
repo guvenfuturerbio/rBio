@@ -220,10 +220,11 @@ class MeasurementTrackingVm with ChangeNotifier {
     if (key == const Key('Glucose')) {
       Atom.to(PagePaths.bloodGlucoseProgress);
     } else if (key == const Key('Scale')) {
-      Atom.to(PagePaths.bmiProgress);
+      Atom.to(PagePaths.scaleDetail);
     } else if (key == const Key('Pressure')) {
       Atom.to(PagePaths.bpProgress);
     }
+
     notifyListeners();
   }
 }

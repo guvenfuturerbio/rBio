@@ -87,26 +87,11 @@ class ScaleNetworkModel extends IBaseModel<ScaleNetworkModel> {
 }
 
 extension ScaleNetworkModelExt on ScaleNetworkModel {
-  ScaleModel xToScaleModel() {
-    return ScaleModel(
-      weight: weight,
-      isManuel: isManuel,
-      note: note,
-      water: water,
-      bmi: bmi,
-      bmh: bmh,
-      bodyFat: bodyFat,
-      boneMass: boneMass,
-      muscle: muscle,
-      measurementId: measurementId,
-      visceralFat: visceralFat,
-      dateTime: DateTime.parse(occurrenceTime ?? ''),
-    );
-  }
-
   ScaleHiveModel xToNetworkToScaleHiveModel() {
     return ScaleHiveModel(
-      occurrenceTime: (DateTime.parse(occurrenceTime ?? '').toUtc()).millisecondsSinceEpoch.toString(),
+      occurrenceTime: (DateTime.parse(occurrenceTime ?? '').toUtc())
+          .millisecondsSinceEpoch
+          .toString(),
       bmh: bmh,
       bmi: bmi,
       bodyFat: bodyFat,
