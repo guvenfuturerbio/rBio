@@ -48,10 +48,23 @@ class _BpPulseChartState extends State<BpPulseChart> {
       pulse.sort((a, b) => a.x.compareTo(b.x));
 
       // DateTime n = DateTime.now();
-      beginDate = DateTime(
-          pulse.first.x.year, pulse.first.x.month, pulse.first.x.day, 00, 00);
-      endDate = DateTime(
-          pulse.first.x.year, pulse.first.x.month, pulse.first.x.day, 24, 00);
+      if (pulse.isNotEmpty) {
+        beginDate = DateTime(
+          pulse.first.x.year,
+          pulse.first.x.month,
+          pulse.first.x.day,
+          00,
+          00,
+        );
+        endDate = DateTime(
+          pulse.first.x.year,
+          pulse.first.x.month,
+          pulse.first.x.day,
+          24,
+          00,
+        );
+      }
+
       map = val.measurements;
 
       return _buildChartBody(val);
