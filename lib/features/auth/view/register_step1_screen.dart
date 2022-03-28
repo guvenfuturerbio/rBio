@@ -84,14 +84,15 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
   }
 
   Widget _buildBody(RegisterStep2ScreenVm vm) {
-    return KeyboardAvoider(
-      autoScroll: true,
-      child: RbioKeyboardActions(
-        focusList: [
-          _nameFocusNode,
-          _surnameFocusNode,
-          _phoneNumberFocusNode,
-        ],
+    return RbioKeyboardActions(
+      focusList: [
+        _nameFocusNode,
+        _surnameFocusNode,
+        _phoneNumberFocusNode,
+      ],
+      child: KeyboardAvoider(
+        autoScroll: true,
+        duration: const Duration(seconds: 1),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -430,15 +431,18 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
     );
   }
 
-  Row buildSeperator() {
+  Widget buildSeperator() {
     return Row(
       children: [
+        //
         Expanded(
           child: Container(
             height: 1,
             color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
           ),
         ),
+
+        //
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
@@ -448,6 +452,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
             ),
           ),
         ),
+
+        //
         Expanded(
           child: Container(
             height: 1,
@@ -458,18 +464,23 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
     );
   }
 
-  Row buildSocialLogin() {
+  Widget buildSocialLogin() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        //
         SvgPicture.asset(
           R.image.facebook,
           width: 50,
         ),
+
+        //
         SvgPicture.asset(
           R.image.apple,
           width: 50,
         ),
+
+        //
         SvgPicture.asset(
           R.image.google,
           width: 50,
@@ -488,6 +499,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            //
             Radio<String>(
               activeColor: Theme.of(context).primaryColor,
               value: genderList[btnValue],
@@ -500,7 +512,12 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 }
               },
             ),
-            Text(title, style: context.xHeadline3)
+
+            //
+            Text(
+              title,
+              style: context.xHeadline3,
+            ),
           ],
         ),
       ),

@@ -66,6 +66,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
       padding: const EdgeInsets.only(top: 20.0),
       child: KeyboardAvoider(
         autoScroll: true,
+        duration: const Duration(seconds: 1),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
