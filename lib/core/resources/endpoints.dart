@@ -49,7 +49,10 @@ class _Endpoints {
       '/UserRegister/synchronize-onedose-user'.xBaseUrl;
   final getAllRelativesPath = '/profile/get-all-table'.xDevApiTest;
   final getCountriesPath = '/Pusula/getCountries'.xBaseUrl;
-  final updateContactInfoPath = '/pusula/UpdatePatientContactInfo'.xBaseUrl;
+  final updatePusulaContactInfoPath = '/pusula/UpdatePatientContactInfo'.xBaseUrl;
+  final updateContactInfoPath =
+      '/User/UpdatePatientContactInfo'.xDevApiTest;
+
   String changeUserPasswordUiPath(String oldPassword, String password) =>
       '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
   String getRoomStatusUiPath(String roomId) =>

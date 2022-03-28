@@ -266,7 +266,9 @@ class Repository {
   Future<GuvenResponseModel> updateContactInfo(
           ChangeContactInfoRequest changeContactInfo) =>
       apiService.updateContactInfo(changeContactInfo);
-
+  Future<GuvenResponseModel> updatePusulaContactInfo(
+          ChangeContactInfoRequest changeContactInfo) =>
+      apiService.updatePusulaContactInfo(changeContactInfo);
   Future<GuvenResponseModel> changeUserPasswordUi(
           String oldPassword, String password) =>
       apiService.changeUserPasswordUi(oldPassword, password);

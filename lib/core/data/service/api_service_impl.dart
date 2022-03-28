@@ -496,6 +496,22 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
+  Future<GuvenResponseModel> updatePusulaContactInfo(
+    ChangeContactInfoRequest changeContactInfo,
+  ) async {
+    final response = await helper.postGuven(
+      R.endpoints.updatePusulaContactInfoPath,
+      changeContactInfo.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/updateContactInfo : ${response.isSuccessful}');
+    }
+  }
+
+  @override
   Future<GuvenResponseModel> changeUserPasswordUi(
     String oldPassword,
     String password,

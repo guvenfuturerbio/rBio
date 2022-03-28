@@ -73,10 +73,13 @@ abstract class ApiService {
   Future<GuvenResponseModel> forgotPassword(
     UserRegistrationStep1Model userRegistrationStep1,
   );
-  Future<GuvenResponseModel> synchronizeOneDoseUser(SynchronizeOneDoseUserRequest synchronizeOnedoseUserRequest);
+  Future<GuvenResponseModel> synchronizeOneDoseUser(
+      SynchronizeOneDoseUserRequest synchronizeOnedoseUserRequest);
   Future<GuvenResponseModel> changePassword(
       ChangePasswordModel changePasswordModel);
   Future<GuvenResponseModel> updateContactInfo(
+      ChangeContactInfoRequest changeContactInfo);
+  Future<GuvenResponseModel> updatePusulaContactInfo(
       ChangeContactInfoRequest changeContactInfo);
   Future<GuvenResponseModel> changeUserPasswordUi(
       String oldPassword, String password);

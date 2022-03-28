@@ -47,27 +47,27 @@ class PersonalInformationScreenVm extends RbioVm {
     showLoadingOverlay = true;
 
     try {
-      UserAccount patient = await getIt<Repository>().getUserProfile();
-      PatientResponse? pusulaPatient = await getIt<Repository>().getPatientDetail();
-
-       patient = await getIt<Repository>().getUserProfile();
-
       ChangeContactInfoRequest changeInfo = ChangeContactInfoRequest();
-
-      changeInfo.patientId = pusulaPatient?.id;
-      changeInfo.nationalityId = int.parse(patient.nationality!);
-      changeInfo.firstName = patient.name;
-      changeInfo.lastName = patient.surname;
-      changeInfo.gender = patient.patients?.first.gender;
-      changeInfo.identityNumber = patient.identificationNumber;
-      changeInfo.gsm = newPhoneNumber;
-      changeInfo.gsmCountryCode = null;
-      changeInfo.email = newEmail;
-      changeInfo.hasETKApproval = pusulaPatient?.hasETKApproval;
-      changeInfo.hasKVKKApproval = pusulaPatient?.hasKVKKApproval;
-      changeInfo.passportNumber = patient.passaportNumber;
-      await getIt<Repository>().updateContactInfo(changeInfo);
       var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
+      var pusulaAccount = getIt<UserNotifier>().getPatient();
+      if (pusulaAccount != null && pusulaAccount.id != null) {
+        changeInfo.gsm = newPhoneNumber;
+        changeInfo.gsmCountryCode = null;
+        changeInfo.email = newEmail;
+        changeInfo.patientId = pusulaAccount.id;
+        changeInfo.patientType = int.parse(pusulaAccount.patientType!);
+        changeInfo.nationalityId = pusulaAccount.nationalityId;
+        changeInfo.hasETKApproval = pusulaAccount.hasETKApproval ?? true;
+        changeInfo.hasKVKKApproval = pusulaAccount.hasKVKKApproval ?? true;
+        await getIt<Repository>().updatePusulaContactInfo(changeInfo);
+        await getIt<Repository>().updateContactInfo(changeInfo);
+      } else {
+        changeInfo.gsm = newPhoneNumber;
+        changeInfo.gsmCountryCode = null;
+        changeInfo.email = newEmail;
+        await getIt<Repository>().updateContactInfo(changeInfo);
+      }
+
       sharedUserAccount = sharedUserAccount.copyWith(
         phoneNumber: newPhoneNumber,
         electronicMail: newEmail,
