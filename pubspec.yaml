@@ -147,6 +147,7 @@ dependencies:
   url_launcher: ^6.0.18
   url_strategy: ^0.2.0
   webview_flutter: ^2.3.1
+  video_player: ^2.3.0
 
 dev_dependencies:
   build_runner: ^2.1.7
@@ -172,6 +173,7 @@ flutter:
     - assets/departments.json
     - assets/pdf/
     - assets/logo/
+    - assets/device/
     - assets/animations/introduction/
 
   fonts:

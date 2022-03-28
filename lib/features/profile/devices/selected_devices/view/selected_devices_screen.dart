@@ -22,19 +22,6 @@ class SelectedDevicesScreen extends StatelessWidget {
           context,
           LocaleProvider.current.device_connections,
         ),
-        actions: [
-          BlocBuilder<BluetoothBloc, BluetoothState>(
-            builder: (context, state) {
-              return CircleAvatar(
-                backgroundColor: state.bleStatus == BleStatus.ready
-                    ? Colors.white
-                    : Colors.red,
-                radius: 16,
-              );
-            },
-          ),
-          R.sizes.wSizer8,
-        ],
       ),
 
       //

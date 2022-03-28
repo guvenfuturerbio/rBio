@@ -13,6 +13,7 @@ class RbioElevatedButton extends StatelessWidget {
   final Color? textColor;
   final bool showElevation;
   final EdgeInsetsGeometry? padding;
+  final BorderRadius? borderRadius;
 
   const RbioElevatedButton({
     Key? key,
@@ -24,6 +25,7 @@ class RbioElevatedButton extends StatelessWidget {
     this.textColor,
     this.showElevation = true,
     this.padding,
+    this.borderRadius,
   }) : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class RbioElevatedButton extends StatelessWidget {
           primary: backColor ?? getIt<ITheme>().mainColor,
           onSurface: backColor ?? getIt<ITheme>().mainColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50.0),
+            borderRadius: borderRadius ?? BorderRadius.circular(50.0),
           ),
           elevation: showElevation ? null : 0,
         ),

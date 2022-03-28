@@ -19,6 +19,8 @@ class _Constants {
   final tenantCayyoluId = 7;
   final tenantOnlineId = -1;
 
+  final miScaleSetup = "assets/device/scale.mp4";
+
   final userName = "<userName>";
   final adress = "<adress>";
   final phoneNumber = "<phoneNumber>";
