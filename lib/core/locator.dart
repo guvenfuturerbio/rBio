@@ -22,26 +22,19 @@ Future<void> setupLocator(AppConfig appConfig) async {
   getIt.registerSingleton<AppConfig>(appConfig);
   getIt.registerSingleton<CacheClient>(CacheClient());
 
-  getIt.registerSingleton<DeviceLocalDataSource>(
-      BluetoothDeviceLocalDataSourceImpl());
+  getIt.registerSingleton<DeviceLocalDataSource>(BluetoothDeviceLocalDataSourceImpl());
   getIt.registerFactory<DeviceRepository>(() => DeviceRepositoryImpl(getIt()));
-  getIt.registerFactory<DisconnectDeviceUseCase>(
-      () => DisconnectDeviceUseCase(getIt()));
-  getIt.registerFactory<ConnectDeviceUseCase>(
-      () => ConnectDeviceUseCase(getIt()));
-  getIt
-      .registerFactory<SearchDeviceUseCase>(() => SearchDeviceUseCase(getIt()));
+  getIt.registerFactory<DisconnectDeviceUseCase>(() => DisconnectDeviceUseCase(getIt()));
+  getIt.registerFactory<ConnectDeviceUseCase>(() => ConnectDeviceUseCase(getIt()));
+  getIt.registerFactory<SearchDeviceUseCase>(() => SearchDeviceUseCase(getIt()));
   getIt.registerFactory<ReadValuesUseCase>(() => ReadValuesUseCase(getIt()));
-  getIt.registerFactory<ReadStatusDeviceUseCase>(
-      () => ReadStatusDeviceUseCase(getIt()));
+  getIt.registerFactory<ReadStatusDeviceUseCase>(() => ReadStatusDeviceUseCase(getIt()));
   getIt.registerFactory<StopScanUseCase>(() => StopScanUseCase(getIt()));
-  getIt.registerFactory<BluetoothStatusUseCase>(
-      () => BluetoothStatusUseCase(getIt()));
+  getIt.registerFactory<BluetoothStatusUseCase>(() => BluetoothStatusUseCase(getIt()));
   getIt.registerFactory<MiScaleStopUseCase>(() => MiScaleStopUseCase(getIt()));
-  getIt.registerFactory<DeviceLastStatusUseCase>(
-      () => DeviceLastStatusUseCase(getIt()));
-  getIt.registerLazySingleton<BluetoothLocalManager>(
-      () => BluetoothLocalManager(getIt()));
+  getIt.registerFactory<DeviceLastStatusUseCase>(() => DeviceLastStatusUseCase(getIt()));
+  getIt.registerFactory<PillarSmallTriggerUseCase>(() => PillarSmallTriggerUseCase(getIt()));
+  getIt.registerLazySingleton<BluetoothLocalManager>(() => BluetoothLocalManager(getIt()));
 
   // #region !isWeb
   String? directory;

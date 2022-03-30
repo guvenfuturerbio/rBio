@@ -15,6 +15,7 @@ abstract class DeviceLocalDataSource {
   Stream<MiScaleModel> miScaleReadValues(DeviceModel device);
   void miScaleStopListen();
   Future<DeviceStatus> getLastStateOfDevice(DeviceModel device);
+  Future<bool> pillarSmallTrigger(DeviceModel device);
 }
 
 class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
@@ -47,6 +48,13 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
                     {
                       368: [215, 33, 0, 1, 0, 1]
                     }) {
+              return true;
+            }
+          } else if (deviceType == DeviceType.pillarSmall) {
+            if (element.device.name.contains("Arduino")) {
+              LoggerUtils.instance.i("BURADA");
+              LoggerUtils.instance
+                  .i(element.advertisementData.manufacturerData);
               return true;
             }
           }
@@ -118,11 +126,10 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     final ble = device.toBluetoothDevice();
     final services = await ble.discoverServices();
     BluetoothService relatedService = services.firstWhere((element) =>
-        element.uuid.toString() ==
-        BluetoothConstants.miScaleUUIDs["Weight"]?["serviceUUID"]);
+        element.uuid.toString() == BluetoothConstants.miScale.serviceUuid);
     var characteristic = relatedService.characteristics.firstWhere((element) =>
         element.uuid.toString() ==
-        BluetoothConstants.miScaleUUIDs["Weight"]?["characteristicUUID"]);
+        BluetoothConstants.miScale.characteristicUuid);
     await characteristic.setNotifyValue(true);
 
     try {
@@ -155,14 +162,8 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
 
   @override
   void miScaleStopListen() {
-    try {
-      LoggerUtils.instance.w('Timer canceled');
-
-      miScaleTimer?.cancel();
-      miScaleTimer = null;
-    } catch (e) {
-      LoggerUtils.instance.w('MiScaleStopListen Error');
-    }
+    miScaleTimer?.cancel();
+    miScaleTimer = null;
   }
 
   @override
@@ -179,5 +180,18 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
       case BluetoothDeviceState.disconnecting:
         return DeviceStatus.disconnecting;
     }
+  }
+
+  @override
+  Future<bool> pillarSmallTrigger(DeviceModel device) async {
+    final bluetoothDevice = device.toBluetoothDevice();
+    final services = await bluetoothDevice.discoverServices();
+    BluetoothService relatedService = services.firstWhere((element) =>
+        element.uuid.toString() == BluetoothConstants.pillarSmall.serviceUuid);
+    var characteristic = relatedService.characteristics.firstWhere((element) =>
+        element.uuid.toString() ==
+        BluetoothConstants.pillarSmall.characteristicUuid);
+    await characteristic.write([1]);
+    return true;
   }
 }

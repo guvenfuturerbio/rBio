@@ -89,94 +89,110 @@ class DevicesScreen extends StatelessWidget {
           }
         },
         builder: (context, deviceStatus) {
-          return DeviceCard(
-            overlay: _getOverlay(deviceStatus),
-            onTap: () {
-              if (deviceStatus == DeviceStatus.connected) {
-                context.read<DeviceSelectedCubit>().disconnect(device);
-                if (device.deviceType == DeviceType.miScale) {
-                  BlocProvider.of<MiScaleCubit>(context).stopListen();
-                }
-              } else if (deviceStatus == DeviceStatus.disconnected) {
-                BlocProvider.of<DeviceSelectedCubit>(context).connect(device);
-              }
-            },
-            background: _getBackgroundColorV2(deviceStatus),
-            image:
-                UtilityManager().getDeviceImageFromType(device.deviceType!) ??
+          Widget deviceCard({
+            Widget? pillarSmallTrigger,
+          }) =>
+              DeviceCard(
+                name: device.name,
+                background: _getBackgroundColorV2(deviceStatus),
+                image: UtilityManager()
+                        .getDeviceImageFromType(device.deviceType!) ??
                     const SizedBox(),
-            name: device.name,
-            trailing: Row(
-              children: [
-                //
-                IconButton(
-                  onPressed: () {
-                    LoggerUtils.instance.i(device.toJson());
-                  },
-                  icon: Icon(
-                    Icons.info,
-                    size: R.sizes.iconSize * 1.25,
-                  ),
-                ),
+                onTap: () {
+                  if (deviceStatus == DeviceStatus.connected) {
+                    context.read<DeviceSelectedCubit>().disconnect(device);
+                    if (device.deviceType == DeviceType.miScale) {
+                      BlocProvider.of<MiScaleCubit>(context).stopListen();
+                    }
+                  } else if (deviceStatus == DeviceStatus.disconnected) {
+                    BlocProvider.of<DeviceSelectedCubit>(context)
+                        .connect(device);
+                  }
+                },
+                trailing: Row(
+                  children: [
+                    pillarSmallTrigger ?? const SizedBox(),
 
-                //
-                IconButton(
-                  onPressed: () {
-                    Atom.show(
-                      GuvenAlert(
-                        backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                          vertical: 25,
-                        ),
-                        title: GuvenAlert.buildTitle(
-                          LocaleProvider.current.warning,
-                        ),
-                        content: GuvenAlert.buildDescription(
-                          LocaleProvider
-                              .current.ble_delete_paired_device_approv,
-                        ),
-                        actions: [
-                          GuvenAlert.buildBigMaterialAction(
-                            LocaleProvider.current.cancel,
-                            () => Atom.dismiss(),
-                          ),
-                          GuvenAlert.buildBigMaterialAction(
-                            LocaleProvider.current.yes,
-                            () => vm.deletePairedDeviceV2(
-                              context,
-                              device,
-                            ),
-                          ),
-                        ],
+                    //
+                    IconButton(
+                      onPressed: () {
+                        LoggerUtils.instance.i(device.toJson());
+                      },
+                      icon: Icon(
+                        Icons.info,
+                        size: R.sizes.iconSize * 1.25,
                       ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.cancel,
-                    color: R.color.darkRed,
-                    size: R.sizes.iconSize * 1.25,
-                  ),
+                    ),
+
+                    //
+                    IconButton(
+                      onPressed: () {
+                        Atom.show(
+                          GuvenAlert(
+                            backgroundColor:
+                                getIt<ITheme>().cardBackgroundColor,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 25,
+                              vertical: 25,
+                            ),
+                            title: GuvenAlert.buildTitle(
+                              LocaleProvider.current.warning,
+                            ),
+                            content: GuvenAlert.buildDescription(
+                              LocaleProvider
+                                  .current.ble_delete_paired_device_approv,
+                            ),
+                            actions: [
+                              GuvenAlert.buildBigMaterialAction(
+                                LocaleProvider.current.cancel,
+                                () => Atom.dismiss(),
+                              ),
+                              GuvenAlert.buildBigMaterialAction(
+                                LocaleProvider.current.yes,
+                                () => vm.deletePairedDeviceV2(
+                                  context,
+                                  device,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.cancel,
+                        color: R.color.darkRed,
+                        size: R.sizes.iconSize * 1.25,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
+              );
+
+          if (device.deviceType == DeviceType.pillarSmall) {
+            return BlocProvider<PillarSmallCubit>(
+              create: (context) => PillarSmallCubit(getIt()),
+              child: BlocBuilder<PillarSmallCubit, bool>(
+                builder: (context, pillarSmallState) {
+                  return deviceCard(
+                    pillarSmallTrigger: IconButton(
+                      onPressed: () {
+                        context.read<PillarSmallCubit>().trigger(device);
+                      },
+                      icon: Icon(
+                        Icons.turn_slight_right,
+                        size: R.sizes.iconSize * 1.25,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return deviceCard();
+          }
         },
       ),
     );
-  }
-
-  Widget? _getOverlay(DeviceStatus? deviceStatus) {
-    if (deviceStatus == DeviceStatus.connected ||
-        deviceStatus == DeviceStatus.disconnected) {
-      return null;
-    } else {
-      return Container(
-        color: Colors.black12,
-        alignment: Alignment.center,
-        child: const RbioLoading(),
-      );
-    }
   }
 
   Color _getBackgroundColorV2(DeviceStatus? deviceStatus) {

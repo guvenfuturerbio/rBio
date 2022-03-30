@@ -558,7 +558,7 @@ class VRouterRoutes {
     // Bluetooth v2
     VWidget(
       path: PagePaths.deviceListing,
-      widget: DeviceListingScreen(),
+      widget: const DeviceListingScreen(),
     ),
 
     //

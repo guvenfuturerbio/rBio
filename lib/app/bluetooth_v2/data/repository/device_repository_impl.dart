@@ -109,4 +109,13 @@ class DeviceRepositoryImpl extends DeviceRepository {
       return Left(BluetoothFailure());
     }
   }
+
+  @override
+  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(DeviceEntity device) {
+    try {
+      return Right(localDataSource.pillarSmallTrigger(device.xGetModel));
+    } catch (e) {
+      return Left(BluetoothFailure());
+    }
+  }
 }

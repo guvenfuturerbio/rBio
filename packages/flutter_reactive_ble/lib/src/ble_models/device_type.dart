@@ -25,6 +25,7 @@ enum DeviceType {
   omronBloodPressureWrist,
   omronScale,
   miScale,
+  pillarSmall,
   manuel,
 }
 

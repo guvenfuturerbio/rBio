@@ -26,4 +26,6 @@ abstract class DeviceRepository {
 
   Either<BluetoothFailures, Future<DeviceStatus>> deviceLastState(
       DeviceEntity device);
+
+  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(DeviceEntity device);
 }

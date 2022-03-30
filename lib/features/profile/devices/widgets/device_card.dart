@@ -6,7 +6,6 @@ class DeviceCard extends StatelessWidget {
   final Color background;
   final VoidCallback? onTap;
   final Widget? trailing;
-  final Widget? overlay;
 
   const DeviceCard({
     Key? key,
@@ -15,7 +14,6 @@ class DeviceCard extends StatelessWidget {
     required this.background,
     this.onTap,
     this.trailing,
-    this.overlay,
   }) : super(key: key);
 
   @override
@@ -33,42 +31,29 @@ class DeviceCard extends StatelessWidget {
             child: SizedBox(
               width: constraints.maxWidth,
               height: context.height * .1,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  //
-                  Positioned.fill(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          //
-                          Expanded(
-                            flex: 2,
-                            child: image,
-                          ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    //
+                    Expanded(
+                      flex: 2,
+                      child: image,
+                    ),
 
-                          //
-                          Expanded(
-                            flex: 5,
-                            child: Text(
-                              name,
-                              style: context.xHeadline2,
-                            ),
-                          ),
-
-                          //
-                          if (trailing != null) trailing!,
-                        ],
+                    //
+                    Expanded(
+                      flex: 5,
+                      child: Text(
+                        name,
+                        style: context.xHeadline2,
                       ),
                     ),
-                  ),
 
-                  //
-                  if (overlay != null) ...[
-                    Positioned.fill(child: overlay!),
+                    //
+                    if (trailing != null) trailing!,
                   ],
-                ],
+                ),
               ),
             ),
           );

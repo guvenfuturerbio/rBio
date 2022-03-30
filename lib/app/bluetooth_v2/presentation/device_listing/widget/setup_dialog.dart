@@ -26,6 +26,9 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
       case DeviceType.miScale:
         return R.constants.miScaleSetup;
 
+      case DeviceType.pillarSmall:
+        return R.constants.miScaleSetup;
+
       case DeviceType.omronBloodPressureArm:
       case DeviceType.omronBloodPressureWrist:
       case DeviceType.omronScale:
