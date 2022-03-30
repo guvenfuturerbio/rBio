@@ -31,16 +31,12 @@ class BleConnector {
         // Reactor dosyasına gönderilen kısım. Cihazı tanıdıktan sonra cihazın verilerini yazıyoruz.
         if (event.connectionState == DeviceConnectionState.connected) {
           switch (getDeviceType(device!)) {
-            case DeviceType.accuChek:
+            case DeviceType.accuCheck:
               getIt<BleReactorOps>().write(device!);
               break;
 
             case DeviceType.contourPlusOne:
               getIt<BleReactorOps>().write(device!);
-              break;
-
-            case DeviceType.miScale:
-              getIt<BleReactorOps>().subscribeScaleDevice(device!);
               break;
 
             default:
@@ -62,7 +58,7 @@ class BleConnector {
         device.serviceData.values.first.length == 13) {
       return DeviceType.miScale;
     } else if (device.manufacturerData[0] == 112) {
-      return DeviceType.accuChek;
+      return DeviceType.accuCheck;
     } else if (device.manufacturerData[0] == 103) {
       return DeviceType.contourPlusOne;
     }

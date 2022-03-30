@@ -18,26 +18,21 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
   DeviceType? deviceType;
 
   @override
-  void initState() {
-    super.initState();
-    Future(
-      () => showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const DeviceSetupDialog();
-        },
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     try {
       final deviceTypeStr = Atom.queryParameters['device_type'];
       if (deviceTypeStr != null) {
-        deviceType = deviceTypeStr.xDeviceType;
+        deviceType = DeviceType.accuCheck;
         _restartScan(context);
+        Future(
+          () => showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return DeviceSetupDialog(deviceType: deviceType!);
+            },
+          ),
+        );
       }
     } catch (e) {
       return const RbioRouteError();
@@ -238,7 +233,7 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
             break;
           }
 
-        case DeviceType.accuChek:
+        case DeviceType.accuCheck:
         case DeviceType.contourPlusOne:
         case DeviceType.omronBloodPressureArm:
         case DeviceType.omronBloodPressureWrist:

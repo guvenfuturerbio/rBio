@@ -268,7 +268,7 @@ class Utils {
         device.serviceData.values.first.length == 13) {
       return DeviceType.miScale;
     } else if (device.manufacturerData[0] == 112) {
-      return DeviceType.accuChek;
+      return DeviceType.accuCheck;
     } else if (device.manufacturerData[0] == 103) {
       return DeviceType.contourPlusOne;
     }
@@ -721,7 +721,7 @@ class UtilityManager {
       case DeviceType.contourPlusOne:
         return Image.asset(R.image.contour);
 
-      case DeviceType.accuChek:
+      case DeviceType.accuCheck:
         return Image.asset(R.image.accuCheckPng);
 
       default:
@@ -737,7 +737,7 @@ class UtilityManager {
       case DeviceType.contourPlusOne:
         return R.image.contour;
 
-      case DeviceType.accuChek:
+      case DeviceType.accuCheck:
         return R.image.accuCheckPng;
       default:
         return null;

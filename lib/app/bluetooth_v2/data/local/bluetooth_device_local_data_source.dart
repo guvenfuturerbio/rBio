@@ -32,8 +32,6 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     flutterBlue.startScan();
     return flutterBlue.scanResults.map(
       (event) {
-        // LoggerUtils.instance.i(event);
-
         var tempList = event;
         tempList = tempList.where((element) {
           if (deviceType == DeviceType.miScale) {
@@ -41,6 +39,14 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
                 element.advertisementData.serviceData.length == 1 &&
                 element.advertisementData.serviceData.values.first.length ==
                     13) {
+              return true;
+            }
+          } else if (deviceType == DeviceType.accuCheck) {
+            if (element.device.name.contains("meter") &&
+                element.advertisementData.manufacturerData ==
+                    {
+                      368: [215, 33, 0, 1, 0, 1]
+                    }) {
               return true;
             }
           }

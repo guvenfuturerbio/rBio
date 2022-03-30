@@ -473,7 +473,7 @@ class VRouterRoutes {
               //vRedirector.stopRedirection();
             } else {
               final hasSugarDevice = pairedDevices.any((item) =>
-                  item.deviceType == DeviceType.accuChek ||
+                  item.deviceType == DeviceType.accuCheck ||
                   item.deviceType == DeviceType.contourPlusOne);
               if (!hasSugarDevice) {
                 await showAlert();

@@ -3,7 +3,6 @@ import 'dart:io' as platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -12,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
 import '../../../model/model.dart';
+import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../home/viewmodel/home_vm.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
@@ -260,6 +260,7 @@ class LoginScreenVm extends ChangeNotifier {
             getIt<UserManager>().getKvkkFormState(),
           ],
         );
+
         final patientDetail = results[1] as UserAccount;
         var result;
         var pusulaPatientDetail;
