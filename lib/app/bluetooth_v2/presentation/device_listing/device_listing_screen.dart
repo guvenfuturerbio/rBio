@@ -22,7 +22,7 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
     try {
       final deviceTypeStr = Atom.queryParameters['device_type'];
       if (deviceTypeStr != null) {
-        deviceType = DeviceType.accuCheck;
+        deviceType = deviceTypeStr.xDeviceType;
         _restartScan(context);
         Future(
           () => showDialog(
