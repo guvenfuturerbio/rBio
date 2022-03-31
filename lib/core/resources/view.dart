@@ -146,4 +146,6 @@ class _Color {
   final chart_gray = const Color(0xffDDDEDE);
   final darkRed = const Color.fromRGBO(219, 56, 50, 1);
   final graphRangeColor = const Color(0xFFCBEBD9);
+
+  final warning = const Color.fromARGB(255, 244, 183, 63);
 }

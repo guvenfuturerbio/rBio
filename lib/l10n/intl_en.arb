@@ -796,5 +796,18 @@
   "personal_update_success": "Your information has been successfully updated",
   "account_disabled":"You account is disabled for security reasons. Please contact us at 444 25 25.",
   "user_phone_not_match": "Phone number is not matching the user",
-  "measurement_delete_question": "Do you want to delete the measurement?"
+  "measurement_delete_question": "Do you want to delete the measurement?",
+
+  "filter": "Filter",
+  "person": "Person",
+  "apply": "Apply",
+  "status": "Status",
+  "type": "Type",
+  "not_done": "Not Done",
+  "future": "Future",
+  "medication_reminders": "Medication Reminder",
+  "postpone": "Postpone",
+  "done_text": "Done",
+  "btn_delete_reminder": "Delete Reminder",
+  "create_reminder": "Create Reminder"
 }

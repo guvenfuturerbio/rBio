@@ -7999,6 +7999,126 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Filter`
+  String get filter {
+    return Intl.message(
+      'Filter',
+      name: 'filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Person`
+  String get person {
+    return Intl.message(
+      'Person',
+      name: 'person',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message(
+      'Apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get status {
+    return Intl.message(
+      'Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type`
+  String get type {
+    return Intl.message(
+      'Type',
+      name: 'type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Done`
+  String get not_done {
+    return Intl.message(
+      'Not Done',
+      name: 'not_done',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Future`
+  String get future {
+    return Intl.message(
+      'Future',
+      name: 'future',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medication Reminder`
+  String get medication_reminders {
+    return Intl.message(
+      'Medication Reminder',
+      name: 'medication_reminders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Postpone`
+  String get postpone {
+    return Intl.message(
+      'Postpone',
+      name: 'postpone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get done_text {
+    return Intl.message(
+      'Done',
+      name: 'done_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Reminder`
+  String get btn_delete_reminder {
+    return Intl.message(
+      'Delete Reminder',
+      name: 'btn_delete_reminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Reminder`
+  String get create_reminder {
+    return Intl.message(
+      'Create Reminder',
+      name: 'create_reminder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

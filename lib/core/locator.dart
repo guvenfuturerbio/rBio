@@ -8,7 +8,7 @@ import 'package:scale_hive_impl/scale_hive_impl.dart';
 import 'package:scale_repository/scale_repository.dart';
 
 import '../app/bluetooth_v2/bluetooth_v2.dart';
-import '../features/mediminder/managers/reminder_notifications_manager.dart';
+import '../features/mediminder/mediminder.dart';
 import '../model/treatment_model/treatment_model.dart';
 import 'core.dart';
 

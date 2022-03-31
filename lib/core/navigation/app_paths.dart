@@ -424,16 +424,20 @@ class VRouterRoutes {
       },
       stackedRoutes: [
         VWidget(
-          path: PagePaths.reminder,
-          widget: const ReminderHomeScreen(),
+          path: PagePaths.allReminderList,
+          widget: const AllReminderListScreen(),
         ),
         VWidget(
-          path: PagePaths.reminderList,
-          widget: ReminderListScreen(),
+          path: PagePaths.selectReminder,
+          widget: const SelectReminderScreen(),
         ),
         VWidget(
-          path: PagePaths.medicationAdd,
-          widget: MedicationAddScreen(),
+          path: PagePaths.bloodGlucoseReminderList,
+          widget: BloodGlucoseReminderListScreen(),
+        ),
+        VWidget(
+          path: PagePaths.bloodGlucoseReminderAdd,
+          widget: BloodGlucoseReminderAddScreen(),
         ),
         VWidget(
           path: PagePaths.hba1cReminderAdd,
@@ -442,6 +446,10 @@ class VRouterRoutes {
         VWidget(
           path: PagePaths.hba1cList,
           widget: Hba1cReminderListScreen(),
+        ),
+        VWidget(
+          path: PagePaths.reminderDetail,
+          widget: const ReminderDetailScreen(),
         ),
         VGuard(
           beforeEnter: (vRedirector) async {
@@ -634,12 +642,14 @@ class PagePaths {
   static const searchPage = '/search-page';
 
   //Mediminder
-  static const reminder = '/reminder';
-  static const reminderList = '/reminder/list';
-  static const hba1cList = '/reminder/hba1c-list';
-  static const hba1cReminderAdd = '/reminder/hba1c-reminder-add';
+  static const allReminderList = "/reminders";
+  static const selectReminder = '/select-reminder';
+  static const reminderDetail = '/reminder/reminder-detail';
   static const strip = '/reminder/strips';
-  static const medicationAdd = '/reminder/medication-add';
+  static const hba1cList = '/reminder/hba1c-list';
+  static const hba1cReminderAdd = '/reminder/hba1c-add';
+  static const bloodGlucoseReminderList = '/reminder/blood-glucose-list';
+  static const bloodGlucoseReminderAdd = '/reminder/blood-glucose-add';
 
   // Chroic Tracking
   static const settings = '/ct-settings';

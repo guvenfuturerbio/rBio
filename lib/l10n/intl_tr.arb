@@ -788,5 +788,18 @@
   "personal_update_success": "Bilgileriniz başarıyla güncellenmiştir",
   "account_disabled":"Hesabınıza çok fazla hatalı giriş denemesi yapılmıştır. Güvenliğiniz için hesabınız geçici olarak devre dışı bırakılmıştır. Acil işlemleriniz için 4442525'i arayabilirsiniz",
   "user_phone_not_match": "Telefon numarası, kullanıcı ile eşleşmedi",
-  "measurement_delete_question": "Ölçümü silmek istiyor musunuz ?"
+  "measurement_delete_question": "Ölçümü silmek istiyor musunuz ?",
+
+  "filter": "Filtrele",
+  "person": "Kişi",
+  "apply": "Uygula",
+  "status": "Durum",
+  "type": "Tür",
+  "not_done": "Yapılmayan",
+  "future": "Gelecek",
+  "medication_reminders": "İlaç Hatırlatıcısı",
+  "postpone": "Ertele",
+  "done_text": "Yapıldı",
+  "btn_delete_reminder": "Hatırlatıcıyı sil",
+  "create_reminder": "Hatırlatıcı oluştur"
 }
