@@ -77,4 +77,8 @@ extension TZDateTimeExtensions on tz.TZDateTime {
 
   String xFormatTime1([dynamic locale]) =>
       DateFormat("dd-MM-yyyy", locale).format(this);
+
+  /// Format : HH:MM
+  String xFormatTime2([dynamic locale]) =>
+      DateFormat("HH:mm", locale).format(this);
 }

@@ -33,7 +33,7 @@ class Hba1cReminderListVm extends ChangeNotifier {
         final tempHba1cElement =
             Hba1CForScheduleModel.fromJson(jsonDecode(jsonMedicine));
         final itemReminderDate = TZHelper.instance.fromMillisecondsSinceEpoch(
-            int.tryParse(tempHba1cElement.reminderDate ?? '') ?? 0);
+            int.tryParse(tempHba1cElement.scheduledDate ?? '') ?? 0);
 
         if (itemReminderDate.isAfter(tzNow)) {
           hba1cForScheduled.add(tempHba1cElement);
@@ -49,12 +49,12 @@ class Hba1cReminderListVm extends ChangeNotifier {
   Future<void> removeScheduledHba1c(
       Hba1CForScheduleModel hba1cForSchedule) async {
     // Vm'de ki listeden item'ı sil
-    hba1cForScheduled.removeWhere((hba1c) => hba1c.id == hba1cForSchedule.id);
+    hba1cForScheduled.removeWhere((hba1c) => hba1c.notificationId == hba1cForSchedule.notificationId);
 
     // Notification'ı iptal et
-    if (hba1cForSchedule.id != null) {
+    if (hba1cForSchedule.notificationId != null) {
       await getIt<LocalNotificationManager>()
-          .cancelNotification(hba1cForSchedule.id!);
+          .cancelNotification(hba1cForSchedule.notificationId!);
     }
 
     // Shared Preferences'da ki listeyi güncelle
@@ -83,8 +83,8 @@ class Hba1cReminderListVm extends ChangeNotifier {
       for (String jsonHba1c in jsonList) {
         Map<String, dynamic> userMap = jsonDecode(jsonHba1c);
         final tempHba1c = Hba1CForScheduleModel.fromJson(userMap);
-        if (tempHba1c.id != null) {
-          prefList.add(tempHba1c.id!);
+        if (tempHba1c.notificationId != null) {
+          prefList.add(tempHba1c.notificationId!);
         }
       }
     }

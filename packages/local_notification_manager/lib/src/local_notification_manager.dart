@@ -33,6 +33,7 @@ abstract class LocalNotificationManager {
   void requestPermissions();
   Future<void> cancelNotification(int id, {String? tag});
   Future<void> cancelAllNotifications();
+  Future<List<int>> getPendingNotificationIds();
   Future<List<PendingNotificationRequest>> pendingNotificationRequests();
 
   /// Bildirim hemen gösterilir.
@@ -243,6 +244,12 @@ class LocalNotificationManagerImpl extends LocalNotificationManager {
     logger('[LocalNotificationManager] -----------');
   }
   // #endregion
+
+  @override
+  Future<List<int>> getPendingNotificationIds() async {
+    final pendingNotifications = await pendingNotificationRequests();
+    return pendingNotifications.map((e) => e.id).toList();
+  }
 
   // #region requestPermissions
   @override

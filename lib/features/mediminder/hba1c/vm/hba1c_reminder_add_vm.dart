@@ -53,10 +53,11 @@ class Hba1cReminderAddVm extends ChangeNotifier {
         .add(Duration(minutes: remindHour?.minute ?? 0));
     var remindDateTimeTZ = TZHelper.instance.from(remindDateTime.toString());
     final currentHbaModel = Hba1CForScheduleModel(
-      id: notificationId,
+      notificationId: notificationId,
       lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch.toString(),
       lastTestValue: previousResult.toString(),
-      reminderDate: remindDateTimeTZ.millisecondsSinceEpoch.toString(),
+      scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch.toString(),
+      createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
     );
 
     await getIt<ReminderNotificationsManager>().createHba1c(

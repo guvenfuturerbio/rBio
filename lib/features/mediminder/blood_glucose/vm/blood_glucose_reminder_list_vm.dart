@@ -18,7 +18,7 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
 
   Future<void> fetchAll() async {
     List<String>? jsonList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.medicines);
+        .getStringList(SharedPreferencesKeys.bloodGlucoseList);
     List<MedicineForScheduledModel> prefList = [];
     if (jsonList != null) {
       for (String jsonMedicine in jsonList) {
@@ -80,8 +80,8 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
         medicineJsonList.add(medicineJson);
       }
     }
-    await getIt<ISharedPreferencesManager>()
-        .setStringList(SharedPreferencesKeys.medicines, medicineJsonList);
+    await getIt<ISharedPreferencesManager>().setStringList(
+        SharedPreferencesKeys.bloodGlucoseList, medicineJsonList);
   }
 
   String getSubTitle(MedicineForScheduledModel medicine) {
@@ -216,7 +216,6 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
         medicineIndex,
         medicineForScheduled[medicineIndex].copyWith(
           scheduledDate: newScheduledDate.millisecondsSinceEpoch,
-          time: newScheduledDate.xTimeFormat,
         ),
       );
 

@@ -19,7 +19,10 @@ class _ReminderEditDialogState extends State<_ReminderEditDialog> {
 
   @override
   void initState() {
-    final hourMinutes = widget.item.time?.split(':') ?? ["0", "0"];
+    final hourMinutes = TZHelper.instance
+        .fromMillisecondsSinceEpoch(widget.item.scheduledDate ?? 0)
+        .xFormatTime2()
+        .split(':');
     currentTimeOfDay = TimeOfDay(
       hour: int.tryParse(hourMinutes[0]) ?? 0,
       minute: int.tryParse(hourMinutes[1]) ?? 0,

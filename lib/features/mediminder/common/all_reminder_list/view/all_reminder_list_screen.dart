@@ -132,7 +132,7 @@ class _AllReminderListViewState extends State<AllReminderListView> {
     return GestureDetector(
       onTap: () {
         Atom.show(
-          ReminderAlertDialog(
+          ReminderDetailDialog(
             model: model,
           ),
         );

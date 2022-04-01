@@ -45,7 +45,7 @@ class SelectReminderScreen extends StatelessWidget {
         Remindable.bloodGlucose,
         onTap: () {
           Atom.to(
-            PagePaths.bloodGlucoseReminderList,
+            PagePaths.bloodGlucoseReminderAdd,
             queryParameters: {
               'remindable': Remindable.bloodGlucose.toRouteString()
             },
@@ -66,7 +66,7 @@ class SelectReminderScreen extends StatelessWidget {
         Remindable.medication,
         onTap: () {
           Atom.to(
-            PagePaths.bloodGlucoseReminderList,
+            PagePaths.medicationReminderAdd,
             queryParameters: {
               'remindable': Remindable.medication.toRouteString()
             },
@@ -79,9 +79,10 @@ class SelectReminderScreen extends StatelessWidget {
         Remindable.hbA1c,
         onTap: () {
           Atom.to(
-            PagePaths.hba1cList,
+            PagePaths.hba1cReminderAdd,
             queryParameters: {
               'remindable': Remindable.hbA1c.toRouteString(),
+              'hba1cIdForNotification': '1000',
             },
           );
         },

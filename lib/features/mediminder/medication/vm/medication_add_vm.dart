@@ -9,13 +9,13 @@ import '../../../../core/core.dart';
 import '../../../../core/utils/tz_helper.dart';
 import '../../mediminder.dart';
 
-class BloodGlucoseReminderAddVm extends RbioVm {
+class MedicationReminderAddVm extends RbioVm {
   @override
   late BuildContext mContext;
   late Remindable mRemindable;
   late ReminderNotificationsManager mRotificationManager;
 
-  BloodGlucoseReminderAddVm({
+  MedicationReminderAddVm({
     required this.mContext,
     required this.mRemindable,
     required this.mRotificationManager,
@@ -367,14 +367,14 @@ class BloodGlucoseReminderAddVm extends RbioVm {
 
     List<String> medicineJsonList = [];
     final sharedList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.bloodGlucoseList);
+        .getStringList(SharedPreferencesKeys.medicineList);
     if (sharedList != null) {
       medicineJsonList = sharedList;
     }
 
     medicineJsonList.add(medicineStr);
-    await getIt<ISharedPreferencesManager>().setStringList(
-        SharedPreferencesKeys.bloodGlucoseList, medicineJsonList);
+    await getIt<ISharedPreferencesManager>()
+        .setStringList(SharedPreferencesKeys.medicineList, medicineJsonList);
   }
 
   String _getNotificationTitle() {

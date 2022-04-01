@@ -23,6 +23,7 @@ enum SharedPreferencesKeys {
   pairedDevicesV2,
 
   hba1cList,
-  medicines,
+  medicineList,
+  bloodGlucoseList,
   usedStripCount,
 }

@@ -33,8 +33,12 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
 
   @override
   Future<void> checkOneTimeNotifications() async {
-    final sharedList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.medicines);
+    await _buildCheckNotifications(SharedPreferencesKeys.medicineList);
+    await _buildCheckNotifications(SharedPreferencesKeys.bloodGlucoseList);
+  }
+
+  Future<void> _buildCheckNotifications(SharedPreferencesKeys key) async {
+    final sharedList = getIt<ISharedPreferencesManager>().getStringList(key);
     var medicineList = <MedicineForScheduledModel>[];
     if (sharedList != null) {
       for (String jsonMedicine in sharedList) {
@@ -67,8 +71,7 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
           .toList();
       final savedList =
           differenceList.map((e) => jsonEncode(e.toJson())).toList();
-      await getIt<ISharedPreferencesManager>()
-          .setStringList(SharedPreferencesKeys.medicines, savedList);
+      await getIt<ISharedPreferencesManager>().setStringList(key, savedList);
     }
   }
 
@@ -115,7 +118,7 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
     TZDateTime scheduledDate,
   ) {
     return notificationManager.zonedSchedule(
-      hba1cModel.id ?? 0,
+      hba1cModel.notificationId ?? 0,
       "Hba1c Ölçümü",
       "Hba1c ölçümü zamanınız geldi",
       scheduledDate,

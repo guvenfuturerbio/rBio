@@ -79,6 +79,20 @@ class ReminderDetailDialog extends StatelessWidget {
               textColor: getIt<ITheme>().textColorSecondary,
               fontWeight: FontWeight.bold,
             ),
+
+            //
+            R.sizes.hSizer4,
+
+            //
+            RbioElevatedButton(
+              onTap: () {},
+              title: LocaleProvider.current.btn_cancel,
+              infinityWidth: true,
+              showElevation: false,
+              fontWeight: FontWeight.bold,
+              textColor: getIt<ITheme>().textColor,
+              backColor: R.color.darkRed,
+            ),
           ],
         ),
       ),
@@ -160,9 +174,6 @@ class _ExpandablePostponeComponentState
 
                   //
                   ..._buildTimeCard("30 dk", false),
-
-                  //
-                  ..._buildTimeCard(LocaleProvider.current.btn_cancel, true),
                 ],
               ),
             ),

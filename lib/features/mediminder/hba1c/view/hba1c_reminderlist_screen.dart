@@ -171,7 +171,7 @@ class HbaCard extends StatelessWidget {
               Text(
                 TZHelper.instance
                     .fromMillisecondsSinceEpoch(
-                        int.parse(item.reminderDate ?? ''))
+                        int.parse(item.scheduledDate ?? ''))
                     .xFormatTime10(),
                 style: context.xHeadline3.copyWith(
                   fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class HbaCard extends StatelessWidget {
               Text(
                 TZHelper.instance
                     .fromMillisecondsSinceEpoch(
-                        int.parse(item.reminderDate ?? ''))
+                        int.parse(item.scheduledDate ?? ''))
                     .xFormatTime8(),
                 style: context.xHeadline4.copyWith(
                   color: getIt<ITheme>().grey,

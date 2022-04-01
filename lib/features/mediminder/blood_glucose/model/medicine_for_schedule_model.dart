@@ -1,20 +1,31 @@
 class MedicineForScheduledModel {
   int? notificationId;
+
+  /// Drug Name
   String? name;
+
+  // Day Index of Week
   int? dayIndex;
-  String? time;
+
   int? dosage;
+
+  /// oneTime, everyDay, specificDays, intermittentDays,
   String? medicinePeriod;
+
+  /// bloodGlucose, medication,
   String? remindable;
+
+  /// hungry, full, irrelevant,
   String? usageType;
+
   int? scheduledDate;
+
   int? createdDate;
 
   MedicineForScheduledModel({
     this.notificationId,
     this.name,
     this.dayIndex,
-    this.time,
     this.medicinePeriod,
     this.dosage,
     this.remindable,
@@ -28,7 +39,6 @@ class MedicineForScheduledModel {
       notificationId: parsedJson['id'],
       name: parsedJson['name'],
       dayIndex: parsedJson['day'],
-      time: parsedJson['time'],
       medicinePeriod: parsedJson['medicinePeriod'],
       dosage: parsedJson['dosage'],
       remindable: parsedJson['remindable'],
@@ -43,7 +53,6 @@ class MedicineForScheduledModel {
       "id": notificationId,
       "name": name,
       "day": dayIndex,
-      "time": time.toString(),
       "medicinePeriod": medicinePeriod.toString(),
       "dosage": dosage,
       "remindable": remindable.toString(),
@@ -57,7 +66,6 @@ class MedicineForScheduledModel {
     int? notificationId,
     String? name,
     int? dayIndex,
-    String? time,
     int? dosage,
     String? medicinePeriod,
     String? remindable,
@@ -69,7 +77,6 @@ class MedicineForScheduledModel {
       notificationId: notificationId ?? this.notificationId,
       name: name ?? this.name,
       dayIndex: dayIndex ?? this.dayIndex,
-      time: time ?? this.time,
       dosage: dosage ?? this.dosage,
       medicinePeriod: medicinePeriod ?? this.medicinePeriod,
       remindable: remindable ?? this.remindable,
@@ -82,31 +89,29 @@ class MedicineForScheduledModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is MedicineForScheduledModel &&
-      other.notificationId == notificationId &&
-      other.name == name &&
-      other.dayIndex == dayIndex &&
-      other.time == time &&
-      other.dosage == dosage &&
-      other.medicinePeriod == medicinePeriod &&
-      other.remindable == remindable &&
-      other.usageType == usageType &&
-      other.scheduledDate == scheduledDate &&
-      other.createdDate == createdDate;
+        other.notificationId == notificationId &&
+        other.name == name &&
+        other.dayIndex == dayIndex &&
+        other.dosage == dosage &&
+        other.medicinePeriod == medicinePeriod &&
+        other.remindable == remindable &&
+        other.usageType == usageType &&
+        other.scheduledDate == scheduledDate &&
+        other.createdDate == createdDate;
   }
 
   @override
   int get hashCode {
     return notificationId.hashCode ^
-      name.hashCode ^
-      dayIndex.hashCode ^
-      time.hashCode ^
-      dosage.hashCode ^
-      medicinePeriod.hashCode ^
-      remindable.hashCode ^
-      usageType.hashCode ^
-      scheduledDate.hashCode ^
-      createdDate.hashCode;
+        name.hashCode ^
+        dayIndex.hashCode ^
+        dosage.hashCode ^
+        medicinePeriod.hashCode ^
+        remindable.hashCode ^
+        usageType.hashCode ^
+        scheduledDate.hashCode ^
+        createdDate.hashCode;
   }
 }

@@ -10,17 +10,13 @@ import '../../mediminder.dart';
 part 'widget/reminder_edit_dialog.dart';
 
 class BloodGlucoseReminderListScreen extends StatelessWidget {
-  Remindable? remindable;
+  late Remindable remindable;
 
   BloodGlucoseReminderListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    try {
-      remindable = Atom.queryParameters['remindable']!.toRouteToRemindable();
-    } catch (e) {
-      return const RbioRouteError();
-    }
+    remindable = Remindable.bloodGlucose;
 
     return ChangeNotifierProvider<BloodGlucoseReminderListVm>(
       create: (context) => BloodGlucoseReminderListVm(context),
@@ -37,7 +33,7 @@ class BloodGlucoseReminderListScreen extends StatelessWidget {
     return RbioAppBar(
       title: RbioAppBar.textTitle(
         context,
-        remindable!.toShortTitle(),
+        remindable.toShortTitle(),
       ),
     );
   }
@@ -93,7 +89,7 @@ class BloodGlucoseReminderListScreen extends StatelessWidget {
           createdDate: key,
           medicineList: filterList[key],
           reminderListVm: vm,
-          remindable: remindable!,
+          remindable: remindable,
         );
       },
     );
@@ -105,7 +101,7 @@ class BloodGlucoseReminderListScreen extends StatelessWidget {
       onPressed: () {
         Atom.to(
           PagePaths.bloodGlucoseReminderAdd,
-          queryParameters: {'remindable': remindable!.toRouteString()},
+          queryParameters: {'remindable': remindable.toRouteString()},
         );
       },
       child: Padding(
@@ -333,12 +329,18 @@ class _MedicineCardState extends State<MedicineCard> {
                         Flexible(
                           child: Text(
                             widget.remindable == Remindable.bloodGlucose
-                                ? "${item.time}" +
+                                ? TZHelper.instance
+                                        .fromMillisecondsSinceEpoch(
+                                            item.scheduledDate ?? 0)
+                                        .xFormatTime2() +
                                     (item.remindable!.xRemindableKeys ==
                                             Remindable.medication
                                         ? " " "${item.name}"
                                         : " ")
-                                : "${item.time}",
+                                : TZHelper.instance
+                                    .fromMillisecondsSinceEpoch(
+                                        item.scheduledDate ?? 0)
+                                    .xFormatTime2(),
                             style: context.xHeadline1.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -464,7 +466,10 @@ class _MedicineCardState extends State<MedicineCard> {
 
     if (result != null) {
       if (result is TimeOfDay) {
-        final itemTimeOfDay = item.time.xToTimeOfDay;
+        final itemTimeOfDay = TZHelper.instance
+            .fromMillisecondsSinceEpoch(item.scheduledDate ?? 0)
+            .xFormatTime2()
+            .xToTimeOfDay;
         if (!result.xIsEqual(itemTimeOfDay)) {
           widget.reminderListVm.updateMedicineForScheduledModel(result, item);
         }
