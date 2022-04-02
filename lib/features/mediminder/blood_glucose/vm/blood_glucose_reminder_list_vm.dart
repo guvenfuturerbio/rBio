@@ -191,7 +191,7 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
         .cancelNotification(selectedItem.notificationId);
 
     // Yeni bildirim oluştur
-    await getIt<ReminderNotificationsManager>().createMedinicine(
+    await getIt<ReminderNotificationsManager>().createMedinicineOrBloodGlucose(
       selectedItem.notificationId,
       pendingItem.title ?? '',
       pendingItem.body ?? '',

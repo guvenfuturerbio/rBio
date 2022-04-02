@@ -328,7 +328,7 @@ class BloodGlucoseReminderAddVm extends RbioVm {
   ) async {
     if (mMedicinePeriod == null) return;
 
-    await mRotificationManager.createMedinicine(
+    await mRotificationManager.createMedinicineOrBloodGlucose(
       id,
       _getNotificationTitle(),
       _getNotificationBody(),
@@ -341,7 +341,6 @@ class BloodGlucoseReminderAddVm extends RbioVm {
         notificationId: id,
         scheduledDate: scheduledDate.millisecondsSinceEpoch,
         createdDate: createdDate,
-        name: drugName,
         dayIndex: dayIndex,
         dosage: dailyDose,
         medicinePeriod: mMedicinePeriod,

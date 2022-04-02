@@ -67,7 +67,7 @@ class SelectReminderScreen extends StatelessWidget {
         Remindable.medication,
         onTap: () {
           Atom.to(
-            PagePaths.medicationReminderAdd,
+            PagePaths.bloodGlucoseReminderList,
             queryParameters: {
               'remindable': Remindable.medication.toRouteString()
             },

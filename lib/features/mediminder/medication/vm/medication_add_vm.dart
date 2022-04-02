@@ -328,7 +328,7 @@ class MedicationReminderAddVm extends RbioVm {
   ) async {
     if (mMedicinePeriod == null) return;
 
-    await mRotificationManager.createMedinicine(
+    await mRotificationManager.createMedinicineOrBloodGlucose(
       id,
       _getNotificationTitle(),
       _getNotificationBody(),
@@ -337,7 +337,7 @@ class MedicationReminderAddVm extends RbioVm {
     );
 
     saveScheduledMedicine(
-      BloodGlucoseReminderModel(
+      MedicationReminderModel(
         notificationId: id,
         scheduledDate: scheduledDate.millisecondsSinceEpoch,
         createdDate: createdDate,
@@ -361,7 +361,7 @@ class MedicationReminderAddVm extends RbioVm {
     );
   }
 
-  Future<void> saveScheduledMedicine(BloodGlucoseReminderModel medicine) async {
+  Future<void> saveScheduledMedicine(MedicationReminderModel medicine) async {
     final medicineStr = jsonEncode(medicine.toJson());
 
     List<String> medicineJsonList = [];

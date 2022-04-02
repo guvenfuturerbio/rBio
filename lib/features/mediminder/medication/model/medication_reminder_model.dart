@@ -1,23 +1,25 @@
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
-class BloodGlucoseReminderModel extends ReminderEntity {
+class MedicationReminderModel extends ReminderEntity {
+  String? name;
   int? dayIndex;
   int? dosage;
   MedicinePeriod? medicinePeriod;
   UsageType? usageType;
 
-  BloodGlucoseReminderModel({
+  MedicationReminderModel({
     required int notificationId,
     required int scheduledDate,
     required int createdDate,
+    this.name,
     this.dayIndex,
     this.dosage,
     this.medicinePeriod,
     this.usageType,
   }) : super(
           notificationId: notificationId,
-          remindable: Remindable.bloodGlucose,
+          remindable: Remindable.medication,
           scheduledDate: scheduledDate,
           createdDate: createdDate,
         );
@@ -28,6 +30,7 @@ class BloodGlucoseReminderModel extends ReminderEntity {
     return baseJson
       ..addAll(
         {
+          "name": name,
           "dayIndex": dayIndex,
           "dosage": dosage,
           "medicinePeriod": medicinePeriod?.xRawValue,
@@ -36,12 +39,13 @@ class BloodGlucoseReminderModel extends ReminderEntity {
       );
   }
 
-  factory BloodGlucoseReminderModel.fromJson(Map<String, dynamic> json) {
+  factory MedicationReminderModel.fromJson(Map<String, dynamic> json) {
     final baseModel = ReminderEntity.fromJson(json);
-    return BloodGlucoseReminderModel(
+    return MedicationReminderModel(
       notificationId: baseModel.notificationId,
       scheduledDate: baseModel.scheduledDate,
       createdDate: baseModel.createdDate,
+      name: json['name'] as String?,
       dayIndex: json['dayIndex'] as int?,
       dosage: json['dosage'] as int?,
       medicinePeriod: json['medicinePeriod'] == null
@@ -53,11 +57,12 @@ class BloodGlucoseReminderModel extends ReminderEntity {
     );
   }
 
-  BloodGlucoseReminderModel changeScheduledDate({int? scheduledDate}) =>
-      BloodGlucoseReminderModel(
+  MedicationReminderModel changeScheduledDate({int? scheduledDate}) =>
+      MedicationReminderModel(
         notificationId: notificationId,
         scheduledDate: scheduledDate ?? this.scheduledDate,
         createdDate: createdDate,
+        name: name,
         dayIndex: dayIndex,
         dosage: dosage,
         medicinePeriod: medicinePeriod,

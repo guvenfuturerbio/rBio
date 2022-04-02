@@ -140,10 +140,7 @@ class _MedicineCardState extends State<MedicineCard> {
 
   @override
   void initState() {
-    title = widget.remindable == Remindable.bloodGlucose
-        ? "${widget.remindable.toShortTitle()} - ${widget.index + 1}"
-        : widget.medicineList?.first.name ?? '';
-
+    title = "${widget.remindable.toShortTitle()} - ${widget.index + 1}";
     super.initState();
   }
 
@@ -329,12 +326,9 @@ class _MedicineCardState extends State<MedicineCard> {
                           child: Text(
                             widget.remindable == Remindable.bloodGlucose
                                 ? TZHelper.instance
-                                        .fromMillisecondsSinceEpoch(
-                                            item.scheduledDate)
-                                        .xFormatTime2() +
-                                    (item.remindable == Remindable.medication
-                                        ? " " "${item.name}"
-                                        : " ")
+                                    .fromMillisecondsSinceEpoch(
+                                        item.scheduledDate)
+                                    .xFormatTime2()
                                 : TZHelper.instance
                                     .fromMillisecondsSinceEpoch(
                                         item.scheduledDate)

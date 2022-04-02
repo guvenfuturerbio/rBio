@@ -12,7 +12,7 @@ abstract class ReminderNotificationsManager {
   ReminderNotificationsManager(this.notificationManager);
 
   Future<void> checkOneTimeNotifications();
-  Future<void> createMedinicine(
+  Future<void> createMedinicineOrBloodGlucose(
     int id,
     String title,
     String description,
@@ -74,7 +74,7 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
   }
 
   @override
-  Future<void> createMedinicine(
+  Future<void> createMedinicineOrBloodGlucose(
     int id,
     String title,
     String description,
