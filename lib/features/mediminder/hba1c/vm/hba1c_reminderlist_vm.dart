@@ -18,7 +18,7 @@ class Hba1cReminderListVm extends ChangeNotifier {
 
   final random = Random();
 
-  List<Hba1CForScheduleModel> hba1cForScheduled = [];
+  List<Hba1CReminderModel> hba1cForScheduled = [];
   List<int>? generatedIdForSchedule;
 
   Future<void> fetchAll() async {
@@ -31,9 +31,9 @@ class Hba1cReminderListVm extends ChangeNotifier {
 
       for (String jsonMedicine in jsonList) {
         final tempHba1cElement =
-            Hba1CForScheduleModel.fromJson(jsonDecode(jsonMedicine));
-        final itemReminderDate = TZHelper.instance.fromMillisecondsSinceEpoch(
-            int.tryParse(tempHba1cElement.scheduledDate ?? '') ?? 0);
+            Hba1CReminderModel.fromJson(jsonDecode(jsonMedicine));
+        final itemReminderDate = TZHelper.instance
+            .fromMillisecondsSinceEpoch(tempHba1cElement.scheduledDate);
 
         if (itemReminderDate.isAfter(tzNow)) {
           hba1cForScheduled.add(tempHba1cElement);
@@ -47,15 +47,14 @@ class Hba1cReminderListVm extends ChangeNotifier {
   }
 
   Future<void> removeScheduledHba1c(
-      Hba1CForScheduleModel hba1cForSchedule) async {
+      Hba1CReminderModel hba1cForSchedule) async {
     // Vm'de ki listeden item'ı sil
-    hba1cForScheduled.removeWhere((hba1c) => hba1c.notificationId == hba1cForSchedule.notificationId);
+    hba1cForScheduled.removeWhere(
+        (hba1c) => hba1c.notificationId == hba1cForSchedule.notificationId);
 
     // Notification'ı iptal et
-    if (hba1cForSchedule.notificationId != null) {
-      await getIt<LocalNotificationManager>()
-          .cancelNotification(hba1cForSchedule.notificationId!);
-    }
+    await getIt<LocalNotificationManager>()
+        .cancelNotification(hba1cForSchedule.notificationId);
 
     // Shared Preferences'da ki listeyi güncelle
     List<String> hba1cJsonList = [];
@@ -75,19 +74,9 @@ class Hba1cReminderListVm extends ChangeNotifier {
 
   Future<void> generateUniqueIdForSchedule() async {
     List<int> numberList = [];
-    List<String>? jsonList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.hba1cList);
 
-    List<int> prefList = [];
-    if (jsonList != null) {
-      for (String jsonHba1c in jsonList) {
-        Map<String, dynamic> userMap = jsonDecode(jsonHba1c);
-        final tempHba1c = Hba1CForScheduleModel.fromJson(userMap);
-        if (tempHba1c.notificationId != null) {
-          prefList.add(tempHba1c.notificationId!);
-        }
-      }
-    }
+    List<int> prefList =
+        await getIt<LocalNotificationManager>().getPendingNotificationIds();
 
     bool isAdded = false;
     while (!isAdded) {

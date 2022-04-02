@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
+import '../extension/extension.dart';
 
 class TZHelper {
   TZHelper._();
@@ -81,4 +82,12 @@ extension TZDateTimeExtensions on tz.TZDateTime {
   /// Format : HH:MM
   String xFormatTime2([dynamic locale]) =>
       DateFormat("HH:mm", locale).format(this);
+}
+
+extension TZDateTimeIntExtensions on int {
+  String get xDateFormat =>
+      TZHelper.instance.fromMillisecondsSinceEpoch(this).xFormatTime10();
+
+  String get xHourFormat =>
+      TZHelper.instance.fromMillisecondsSinceEpoch(this).xFormatTime8();
 }

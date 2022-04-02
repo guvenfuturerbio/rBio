@@ -273,7 +273,8 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
                     ? DateTime.now()
                     : DateTime.parse(initialDate),
                 minimumDate: DateTime(now.year, now.month, now.day, 0, 0, 0),
-                maximumDate: DateTime.now().add(const Duration(days: 730)),
+                maximumDate: DateTime.parse(hba1cVM.lastMeasurementDate)
+                    .add(const Duration(days: 365)),
               );
 
               if (result != null) {

@@ -20,7 +20,7 @@ abstract class ReminderNotificationsManager {
     MedicinePeriod period,
   );
   Future<void> createHba1c(
-    Hba1CForScheduleModel hba1cModel,
+    Hba1CReminderModel hba1cModel,
     TZDateTime scheduledDate,
   );
 }
@@ -114,11 +114,11 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
 
   @override
   Future<void> createHba1c(
-    Hba1CForScheduleModel hba1cModel,
+    Hba1CReminderModel hba1cModel,
     TZDateTime scheduledDate,
   ) {
     return notificationManager.zonedSchedule(
-      hba1cModel.notificationId ?? 0,
+      hba1cModel.notificationId,
       "Hba1c Ölçümü",
       "Hba1c ölçümü zamanınız geldi",
       scheduledDate,

@@ -52,11 +52,11 @@ class Hba1cReminderAddVm extends ChangeNotifier {
         .add(Duration(hours: remindHour?.hour ?? 0))
         .add(Duration(minutes: remindHour?.minute ?? 0));
     var remindDateTimeTZ = TZHelper.instance.from(remindDateTime.toString());
-    final currentHbaModel = Hba1CForScheduleModel(
+    final currentHbaModel = Hba1CReminderModel(
       notificationId: notificationId,
       lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch.toString(),
       lastTestValue: previousResult.toString(),
-      scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch.toString(),
+      scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch,
       createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
     );
 
@@ -92,7 +92,7 @@ class Hba1cReminderAddVm extends ChangeNotifier {
     );
   }
 
-  Future<void> saveScheduledHba1c(Hba1CForScheduleModel hba1c) async {
+  Future<void> saveScheduledHba1c(Hba1CReminderModel hba1c) async {
     String newHba1cJson = jsonEncode(hba1c.toJson());
     List<String> hba1cJsonList = [];
 

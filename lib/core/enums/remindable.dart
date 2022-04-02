@@ -10,7 +10,7 @@ enum Remindable {
 }
 
 extension ParseToString on Remindable {
-  String get xRawValue => getEnumValue(this);
+  String get xRawValue => name;
 
   String toShortTitle() {
     switch (this) {

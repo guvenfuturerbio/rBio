@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/core/utils/tz_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/utils/tz_helper.dart';
 import '../hba1c.dart';
 
 class Hba1cReminderListScreen extends StatelessWidget {
@@ -68,7 +68,7 @@ class Hba1cReminderListScreen extends StatelessWidget {
   Widget _buildList(
     BuildContext context,
     Hba1cReminderListVm vm,
-    List<Hba1CForScheduleModel> list,
+    List<Hba1CReminderModel> list,
   ) {
     return ListView.builder(
       shrinkWrap: true,
@@ -114,7 +114,7 @@ class Hba1cReminderListScreen extends StatelessWidget {
 
 class HbaCard extends StatelessWidget {
   final int index;
-  final Hba1CForScheduleModel item;
+  final Hba1CReminderModel item;
   final Hba1cReminderListVm hbaScheduledVm;
 
   const HbaCard({
@@ -169,10 +169,7 @@ class HbaCard extends StatelessWidget {
             children: [
               //
               Text(
-                TZHelper.instance
-                    .fromMillisecondsSinceEpoch(
-                        int.parse(item.scheduledDate ?? ''))
-                    .xFormatTime10(),
+                item.scheduledDate.xDateFormat,
                 style: context.xHeadline3.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -180,10 +177,7 @@ class HbaCard extends StatelessWidget {
 
               //
               Text(
-                TZHelper.instance
-                    .fromMillisecondsSinceEpoch(
-                        int.parse(item.scheduledDate ?? ''))
-                    .xFormatTime8(),
+                item.scheduledDate.xHourFormat,
                 style: context.xHeadline4.copyWith(
                   color: getIt<ITheme>().grey,
                 ),

@@ -6,3 +6,4 @@ export 'common/select_reminder/select_reminder.dart';
 export 'hba1c/hba1c.dart';
 export 'medication/medication.dart';
 export 'strip/strip.dart';
+export 'common/model/reminder_entity.dart';
