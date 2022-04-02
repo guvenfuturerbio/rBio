@@ -68,7 +68,14 @@ class ReminderDetailDialog extends StatelessWidget {
                 Future.delayed(
                   const Duration(milliseconds: 500),
                   () {
-                    Atom.to(PagePaths.reminderDetail);
+                    Atom.to(
+                      PagePaths.reminderDetail,
+                      queryParameters: <String, String>{
+                        'title': model.title,
+                        'remindable': model.remindable.toRouteString(),
+                        'notificationId': model.notificationId.toString(),
+                      },
+                    );
                   },
                 );
               },

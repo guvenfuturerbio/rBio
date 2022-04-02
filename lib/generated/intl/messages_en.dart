@@ -60,7 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Additional Information"),
         "aft": MessageLookupByLibrary.simpleMessage("Aft."),
         "after": MessageLookupByLibrary.simpleMessage("After"),
-        "after_meal": MessageLookupByLibrary.simpleMessage("After Meal"),
+        "after_meal": MessageLookupByLibrary.simpleMessage("Full"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "alert": MessageLookupByLibrary.simpleMessage("Alert"),
         "all_appointment_file":
@@ -120,7 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "back": MessageLookupByLibrary.simpleMessage("Back"),
         "bef": MessageLookupByLibrary.simpleMessage("Bef."),
         "before": MessageLookupByLibrary.simpleMessage("Before"),
-        "before_meal": MessageLookupByLibrary.simpleMessage("Before Meal"),
+        "before_meal": MessageLookupByLibrary.simpleMessage("Hungry"),
         "bg_graph":
             MessageLookupByLibrary.simpleMessage("Blood Glucose Tracking"),
         "bg_measurement_time": MessageLookupByLibrary.simpleMessage(
@@ -819,6 +819,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please check the internet connection"),
         "no_permission": MessageLookupByLibrary.simpleMessage(
             "Camera permission is not granted"),
+        "no_records_found":
+            MessageLookupByLibrary.simpleMessage("No records found"),
         "no_result_selected_date": MessageLookupByLibrary.simpleMessage(
             "Seçilen tarihler için sonuç bulunamadı. Tarih aralığınızı değiştirebilirsiniz."),
         "no_suitable_appo": MessageLookupByLibrary.simpleMessage(
@@ -1166,6 +1168,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "sync_data": MessageLookupByLibrary.simpleMessage(
             "We\'re currently sync your data please wait..."),
         "sys": MessageLookupByLibrary.simpleMessage("Systolic Blood Pressure"),
+        "tag": MessageLookupByLibrary.simpleMessage("Etiket"),
+        "tag_description": MessageLookupByLibrary.simpleMessage(
+            "Select the state you need to receive"),
         "take_covid_19":
             MessageLookupByLibrary.simpleMessage("Take a COVID-19 Test"),
         "take_video_appointment":

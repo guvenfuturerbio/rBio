@@ -1,15 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/core.dart';
+import '../../../mediminder.dart';
 
-class ReminderDetailScreen extends StatefulWidget {
+class ReminderDetailScreen extends StatelessWidget {
   const ReminderDetailScreen({Key? key}) : super(key: key);
 
   @override
-  _ReminderDetailScreenState createState() => _ReminderDetailScreenState();
+  Widget build(BuildContext context) {
+    late Remindable remindable;
+    late int notificationId;
+    late String title;
+
+    try {
+      title = Atom.queryParameters['title']!;
+      final remindableStr = Atom.queryParameters['remindable'];
+      notificationId = int.parse(Atom.queryParameters['notificationId'] ?? '0');
+      if (remindableStr != null) {
+        remindable = remindableStr.toRouteToRemindable();
+      }
+    } catch (e) {
+      return const RbioRouteError();
+    }
+
+    return BlocProvider<ReminderDetailCubit>(
+      create: (context) => ReminderDetailCubit(
+        notificationId,
+        remindable,
+        getIt(),
+      )..getDetail(),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<ReminderDetailCubit, ReminderDetailState>(
+            listener: (context, state) {
+              state.whenOrNull(
+                openListScreen: () {
+                  Atom.historyBack();
+                  Atom.to(
+                    PagePaths.allReminderList,
+                    isReplacement: true,
+                  );
+                },
+              );
+            },
+            child: ReminderDetailView(
+              title: title,
+              remindable: remindable,
+              notificationId: notificationId,
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
 
-class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
+class ReminderDetailView extends StatefulWidget {
+  final String title;
+  final Remindable remindable;
+  final int notificationId;
+
+  const ReminderDetailView({
+    Key? key,
+    required this.title,
+    required this.remindable,
+    required this.notificationId,
+  }) : super(key: key);
+
+  @override
+  _ReminderDetailViewState createState() => _ReminderDetailViewState();
+}
+
+class _ReminderDetailViewState extends State<ReminderDetailView> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
@@ -21,33 +84,57 @@ class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
   RbioAppBar _buildAppBar() => RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
-          "İlaç Aspirin",
+          widget.title,
         ),
       );
 
-  Widget _buildBody() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Expanded(
-            child: _buildScrollView(),
-          ),
-
-          //
-          _buildButtons(),
-
-          //
-          R.sizes.defaultBottomPadding,
-        ],
+  Widget _buildBody() => BlocBuilder<ReminderDetailCubit, ReminderDetailState>(
+        builder: (context, state) {
+          return state.whenOrNull(
+                initial: () => const SizedBox(),
+                loadInProgress: () => const SizedBox(),
+                success: (result) => _buildSuccess(result),
+                empty: () => Center(
+                  heightFactor: 5,
+                  child: Text(
+                    LocaleProvider.current.no_records_found,
+                    textAlign: TextAlign.center,
+                    style: context.xHeadline3.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                failure: () => const RbioBodyError(),
+              ) ??
+              const SizedBox();
+        },
       );
 
-  Widget _buildScrollView() {
+  Widget _buildSuccess(ReminderDetailResult result) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Expanded(
+          child: _buildScrollView(result),
+        ),
+
+        //
+        _buildButtons(result),
+
+        //
+        R.sizes.defaultBottomPadding,
+      ],
+    );
+  }
+
+  Widget _buildScrollView(ReminderDetailResult result) {
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
-      physics: const ClampingScrollPhysics(),
       scrollDirection: Axis.vertical,
+      physics: const ClampingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +148,11 @@ class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
               color: getIt<ITheme>().cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
-            child: _buildPillar(),
+            child: result.when(
+              hba1C: (_) => _buildHbA1c(),
+              bloodGlucose: (model) => _buildBloodGlucose(model),
+              medication: (_) => _buildMedicationReminders(),
+            ),
           ),
         ],
       ),
@@ -145,7 +236,7 @@ class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
     );
   }
 
-  Widget _buildBloodGlucose() {
+  Widget _buildBloodGlucose(BloodGlucoseReminderModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -156,15 +247,17 @@ class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
 
         //
         _buildTitleRow(
-          "Etiket",
-          "Ne sıklıkla",
+          LocaleProvider.current.tag,
+          LocaleProvider.current.how_often,
           false,
         ),
 
         //
         _buildTitleRow(
-          "Tok",
-          "Her gün",
+          model.usageType == null ? '' : model.usageType!.toShortString(),
+          model.medicinePeriod == null
+              ? ''
+              : model.medicinePeriod!.toShortString(),
           true,
         ),
 
@@ -173,14 +266,14 @@ class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
 
         //
         _buildTitleRow(
-          "Günde kaç kere",
+          LocaleProvider.current.how_many_times_a_day,
           "",
           false,
         ),
 
         //
         _buildTitleRow(
-          "2",
+          model.dosage == null ? '' : model.dosage.toString(),
           "",
           true,
         ),
@@ -318,7 +411,7 @@ class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
     );
   }
 
-  Widget _buildButtons() {
+  Widget _buildButtons(ReminderDetailResult result) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 32,
@@ -341,7 +434,9 @@ class _ReminderDetailScreenState extends State<ReminderDetailScreen> {
 
           //
           RbioElevatedButton(
-            onTap: () {},
+            onTap: () async {
+              await context.read<ReminderDetailCubit>().removeReminder(result);
+            },
             title: LocaleProvider.current.btn_delete_reminder,
             infinityWidth: true,
             showElevation: false,

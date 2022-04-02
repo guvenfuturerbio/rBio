@@ -453,7 +453,7 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.reminderDetail,
-          widget: const ReminderDetailScreen(),
+          widget: ReminderDetailScreen(),
         ),
         VGuard(
           beforeEnter: (vRedirector) async {

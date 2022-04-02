@@ -7880,20 +7880,20 @@ class LocaleProvider {
     );
   }
 
-  /// `After Meal`
+  /// `Full`
   String get after_meal {
     return Intl.message(
-      'After Meal',
+      'Full',
       name: 'after_meal',
       desc: '',
       args: [],
     );
   }
 
-  /// `Before Meal`
+  /// `Hungry`
   String get before_meal {
     return Intl.message(
-      'Before Meal',
+      'Hungry',
       name: 'before_meal',
       desc: '',
       args: [],
@@ -8145,6 +8145,36 @@ class LocaleProvider {
     return Intl.message(
       'Medicine',
       name: 'medicine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No records found`
+  String get no_records_found {
+    return Intl.message(
+      'No records found',
+      name: 'no_records_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Etiket`
+  String get tag {
+    return Intl.message(
+      'Etiket',
+      name: 'tag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select the state you need to receive`
+  String get tag_description {
+    return Intl.message(
+      'Select the state you need to receive',
+      name: 'tag_description',
       desc: '',
       args: [],
     );

@@ -777,8 +777,8 @@
   "recover_your_password": "Şifremi Kurtar",
   "notification_inbox_empty": "Henüz bildiriminiz yok",
   "select_tag": "Etiket seçiniz",
-  "after_meal": "Yemekten sonra",
-  "before_meal": "Yemekten önce",
+  "after_meal": "Tok",
+  "before_meal": "Hungry",
   "how_often": "Ne sıklıkla",
   "alert": "Alarm",
   "how_many_times_a_day": "Günde kaç kere?",
@@ -804,5 +804,8 @@
   "create_reminder": "Hatırlatıcı oluştur",
   "blood_glucose_measurement_title": "Kan şekeri ölçümü",
   "hbA1c": "HbA1c",
-  "medicine": "İlaç"
+  "medicine": "İlaç",
+  "no_records_found": "Kayıt bulunamadı",
+  "tag": "Etiket",
+  "tag_description": "Almanız gereken durumu seçiniz"
 }

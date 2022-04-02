@@ -25,6 +25,13 @@ class BloodGlucoseReminderModel
           entegrationId: entegrationId,
         );
 
+  factory BloodGlucoseReminderModel.empty() => BloodGlucoseReminderModel(
+        notificationId: -1,
+        scheduledDate: -1,
+        createdDate: -1,
+        entegrationId: -1,
+      );
+
   @override
   Map<String, dynamic> toJson() {
     final baseJson = super.toJson();

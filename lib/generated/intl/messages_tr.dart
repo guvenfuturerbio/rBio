@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gerekli Bilgiler"),
         "aft": MessageLookupByLibrary.simpleMessage("Son."),
         "after": MessageLookupByLibrary.simpleMessage("Sonra"),
-        "after_meal": MessageLookupByLibrary.simpleMessage("Yemekten sonra"),
+        "after_meal": MessageLookupByLibrary.simpleMessage("Tok"),
         "age": MessageLookupByLibrary.simpleMessage("Yaş"),
         "alert": MessageLookupByLibrary.simpleMessage("Alarm"),
         "all_appointment_file":
@@ -116,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "back": MessageLookupByLibrary.simpleMessage("Geri"),
         "bef": MessageLookupByLibrary.simpleMessage("Önc."),
         "before": MessageLookupByLibrary.simpleMessage("Önce"),
-        "before_meal": MessageLookupByLibrary.simpleMessage("Yemekten önce"),
+        "before_meal": MessageLookupByLibrary.simpleMessage("Hungry"),
         "bg_graph": MessageLookupByLibrary.simpleMessage("Kan Şeker Takibi"),
         "bg_measurement_time":
             MessageLookupByLibrary.simpleMessage("Kan şekerinizi ölçelim!"),
@@ -810,6 +810,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Lütfen internet bağlantınızı kontrol ediniz."),
         "no_permission":
             MessageLookupByLibrary.simpleMessage("Kamera izni verilmedi."),
+        "no_records_found":
+            MessageLookupByLibrary.simpleMessage("Kayıt bulunamadı"),
         "no_result_selected_date": MessageLookupByLibrary.simpleMessage(
             "Seçilen tarihler için sonuç bulunamadı. Tarih aralığınızı değiştirebilirsiniz."),
         "no_suitable_appo": MessageLookupByLibrary.simpleMessage(
@@ -1159,6 +1161,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "symptom_checker_welcome": MessageLookupByLibrary.simpleMessage(
             "Detaylı Sağlık Kontrolüne hoşgeldiniz, lütfen cinsiyetinizi ve doğum yılınızı sesli bir şekilde söyler misiniz? Örneğin, Erkek, 1980"),
         "sys": MessageLookupByLibrary.simpleMessage("Büyük Tansiyon"),
+        "tag": MessageLookupByLibrary.simpleMessage("Etiket"),
+        "tag_description": MessageLookupByLibrary.simpleMessage(
+            "Almanız gereken durumu seçiniz"),
         "take_covid_19":
             MessageLookupByLibrary.simpleMessage("COVID-19 PCR Testi yaptır"),
         "take_video_appointment":

@@ -21,6 +21,7 @@ export "data/helper/dio_helper.dart";
 
 export "data/repository/cronic_tracking_repository.dart";
 export "data/repository/doctor_repository.dart";
+export "data/repository/reminder_repository.dart";
 export "data/repository/repository.dart";
 export "data/repository/symptom_repository.dart";
 

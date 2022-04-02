@@ -785,8 +785,8 @@
   "recover_your_password": "Recover your password",
   "notification_inbox_empty": "You don't have any notifications yet",
   "select_tag": "Select tag",
-  "after_meal": "After Meal",
-  "before_meal": "Before Meal",
+  "after_meal": "Full",
+  "before_meal": "Hungry",
   "how_often": "How often",
   "alert": "Alert",
   "how_many_times_a_day": "How many times a day?",
@@ -812,5 +812,8 @@
   "create_reminder": "Create Reminder",
   "blood_glucose_measurement_title": "Blood glucose measurement",
   "hbA1c": "HbA1c",
-  "medicine": "Medicine"
+  "medicine": "Medicine",
+  "no_records_found": "No records found",
+  "tag": "Etiket",
+  "tag_description": "Select the state you need to receive"
 }

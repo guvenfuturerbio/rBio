@@ -101,7 +101,7 @@ class _MedicationReminderAddScreenState
                   _buildMedicineName(vm),
 
                   // Tags
-                  _buildBoldTitle(LocaleProvider.current.select_tag),
+                  _buildBoldTitle(LocaleProvider.current.tag_description),
                   _buildTags(vm),
 
                   //
@@ -235,63 +235,26 @@ class _MedicationReminderAddScreenState
 
   // #region _buildTags
   Widget _buildTags(MedicationReminderAddVm value) {
-    if (context.xTextScaleType == TextScaleType.small) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: _buildTagCard(
-              value,
-              R.image.beforeMeal,
-              UsageType.hungry,
-              false,
-            ),
-          ),
-          R.sizes.wSizer12,
-          Expanded(
-            child: _buildTagCard(
-              value,
-              R.image.afterMeal,
-              UsageType.full,
-              false,
-            ),
-          ),
-          R.sizes.wSizer12,
-          Expanded(
-            child: _buildTagCard(
-              value,
-              R.image.otherIcon,
-              UsageType.irrelevant,
-              false,
-            ),
-          ),
-        ],
-      );
-    } else {
-      return Wrap(
-        runSpacing: 5,
-        children: [
-          _buildTagCard(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: _buildTagCard(
             value,
             R.image.beforeMeal,
             UsageType.hungry,
-            true,
           ),
-          _buildTagCard(
+        ),
+        R.sizes.wSizer12,
+        Expanded(
+          child: _buildTagCard(
             value,
             R.image.afterMeal,
             UsageType.full,
-            true,
           ),
-          _buildTagCard(
-            value,
-            R.image.otherIcon,
-            UsageType.irrelevant,
-            true,
-          )
-        ],
-      );
-    }
+        ),
+      ],
+    );
   }
   // #endregion
 
@@ -300,13 +263,12 @@ class _MedicationReminderAddScreenState
     MedicationReminderAddVm value,
     String icon,
     UsageType usageType,
-    bool isWrap,
   ) {
     final _text = Text(
-      usageType.xToString(),
+      usageType.toShortString(),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.end,
+      textAlign: TextAlign.start,
       style: context.xHeadline4.copyWith(
         color: usageType == value.selectedUsageType
             ? getIt<ITheme>().textColor
@@ -317,37 +279,14 @@ class _MedicationReminderAddScreenState
     return GestureDetector(
       onTap: () => {value.setSelectedUsageType(usageType)},
       child: Container(
-        height: isWrap ? null : 60,
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: usageType == value.selectedUsageType
               ? getIt<ITheme>().mainColor
               : Colors.white,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              //
-              SvgPicture.asset(
-                icon,
-                height: R.sizes.iconSize2,
-                color: usageType == value.selectedUsageType
-                    ? Colors.white
-                    : Colors.black,
-              ),
-
-              //
-              if (isWrap) ...[
-                R.sizes.wSizer8,
-                _text,
-              ] else ...[
-                Expanded(child: _text),
-              ],
-            ],
-          ),
-        ),
+        child: _text,
       ),
     );
   }
@@ -494,7 +433,6 @@ class _MedicationReminderAddScreenState
   Widget _buildBoldTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: 16,
         bottom: 8,
       ),
       child: Text(

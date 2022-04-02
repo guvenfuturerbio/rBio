@@ -26,6 +26,13 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
           entegrationId: entegrationId,
         );
 
+  factory MedicationReminderModel.empty() => MedicationReminderModel(
+        notificationId: -1,
+        scheduledDate: -1,
+        createdDate: -1,
+        entegrationId: -1,
+      );
+
   @override
   Map<String, dynamic> toJson() {
     final baseJson = super.toJson();

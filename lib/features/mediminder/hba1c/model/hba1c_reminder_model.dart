@@ -20,6 +20,13 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
           entegrationId: entegrationId,
         );
 
+  factory Hba1CReminderModel.empty() => Hba1CReminderModel(
+        notificationId: -1,
+        scheduledDate: -1,
+        createdDate: -1,
+        entegrationId: -1,
+      );
+
   @override
   Map<String, dynamic> toJson() {
     final baseJson = super.toJson();

@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 
 import '../core.dart';
 
@@ -12,7 +11,7 @@ enum UsageType {
 extension UsageTypeExtension on UsageType {
   String get xRawValue => getEnumValue(this);
 
-  String xToString() {
+  String toShortString() {
     switch (this) {
       case UsageType.hungry:
         return LocaleProvider.current.before_meal;
