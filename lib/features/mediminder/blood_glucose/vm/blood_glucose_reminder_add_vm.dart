@@ -143,7 +143,7 @@ class BloodGlucoseReminderAddVm extends RbioVm {
   List<int>? _generatedIdForSchedule;
   List<int> get generatedIdForSchedule => _generatedIdForSchedule ?? [];
   Future<void> _generateUniqueIdForSchedule() async {
-    List<int> prefList =
+    List<int> pendingList =
         await getIt<LocalNotificationManager>().getPendingNotificationIds();
 
     int requiredIdCount = 0;
@@ -162,7 +162,7 @@ class BloodGlucoseReminderAddVm extends RbioVm {
       int randomNumber = 10000 + random.nextInt(1000);
       // Prevent Generate Duplicate Ids
       if (!numberList.contains(randomNumber) &&
-          !prefList.contains(randomNumber)) {
+          !pendingList.contains(randomNumber)) {
         numberList.add(randomNumber);
       }
     }
@@ -341,6 +341,7 @@ class BloodGlucoseReminderAddVm extends RbioVm {
         notificationId: id,
         scheduledDate: scheduledDate.millisecondsSinceEpoch,
         createdDate: createdDate,
+        entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
         dayIndex: dayIndex,
         dosage: dailyDose,
         medicinePeriod: mMedicinePeriod,

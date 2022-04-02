@@ -1,7 +1,8 @@
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
-class BloodGlucoseReminderModel extends ReminderEntity {
+class BloodGlucoseReminderModel
+    extends ReminderEntity<BloodGlucoseReminderModel> {
   int? dayIndex;
   int? dosage;
   MedicinePeriod? medicinePeriod;
@@ -11,6 +12,7 @@ class BloodGlucoseReminderModel extends ReminderEntity {
     required int notificationId,
     required int scheduledDate,
     required int createdDate,
+    required int entegrationId,
     this.dayIndex,
     this.dosage,
     this.medicinePeriod,
@@ -20,6 +22,7 @@ class BloodGlucoseReminderModel extends ReminderEntity {
           remindable: Remindable.bloodGlucose,
           scheduledDate: scheduledDate,
           createdDate: createdDate,
+          entegrationId: entegrationId,
         );
 
   @override
@@ -37,11 +40,11 @@ class BloodGlucoseReminderModel extends ReminderEntity {
   }
 
   factory BloodGlucoseReminderModel.fromJson(Map<String, dynamic> json) {
-    final baseModel = ReminderEntity.fromJson(json);
     return BloodGlucoseReminderModel(
-      notificationId: baseModel.notificationId,
-      scheduledDate: baseModel.scheduledDate,
-      createdDate: baseModel.createdDate,
+      notificationId: json['notificationId'] as int,
+      scheduledDate: json['scheduledDate'] as int,
+      createdDate: json['createdDate'] as int,
+      entegrationId: json['entegrationId'] as int,
       dayIndex: json['dayIndex'] as int?,
       dosage: json['dosage'] as int?,
       medicinePeriod: json['medicinePeriod'] == null
@@ -58,9 +61,15 @@ class BloodGlucoseReminderModel extends ReminderEntity {
         notificationId: notificationId,
         scheduledDate: scheduledDate ?? this.scheduledDate,
         createdDate: createdDate,
+        entegrationId: entegrationId,
         dayIndex: dayIndex,
         dosage: dosage,
         medicinePeriod: medicinePeriod,
         usageType: usageType,
       );
+
+  @override
+  BloodGlucoseReminderModel fromJson(Map<String, dynamic> json) {
+    return BloodGlucoseReminderModel.fromJson(json);
+  }
 }

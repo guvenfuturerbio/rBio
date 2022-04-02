@@ -94,11 +94,6 @@ class Hba1cReminderListScreen extends StatelessWidget {
       onPressed: () {
         Atom.to(
           PagePaths.hba1cReminderAdd,
-          queryParameters: {
-            'remindable': remindable!.toRouteString(),
-            'hba1cIdForNotification':
-                value.generatedIdForSchedule?.last.toString() ?? '',
-          },
         );
       },
       child: Padding(

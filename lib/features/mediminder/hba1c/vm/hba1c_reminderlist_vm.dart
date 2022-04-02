@@ -12,14 +12,12 @@ class Hba1cReminderListVm extends ChangeNotifier {
   Hba1cReminderListVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await fetchAll();
-      await generateUniqueIdForSchedule();
     });
   }
 
   final random = Random();
 
   List<Hba1CReminderModel> hba1cForScheduled = [];
-  List<int>? generatedIdForSchedule;
 
   Future<void> fetchAll() async {
     final jsonList = getIt<ISharedPreferencesManager>()
@@ -69,27 +67,6 @@ class Hba1cReminderListVm extends ChangeNotifier {
       hba1cJsonList,
     );
 
-    notifyListeners();
-  }
-
-  Future<void> generateUniqueIdForSchedule() async {
-    List<int> numberList = [];
-
-    List<int> prefList =
-        await getIt<LocalNotificationManager>().getPendingNotificationIds();
-
-    bool isAdded = false;
-    while (!isAdded) {
-      int randomNumber = 20000 + random.nextInt(10000);
-      // Prevent Generate Duplicate Ids
-      if (!numberList.contains(randomNumber) &&
-          !prefList.contains(randomNumber)) {
-        isAdded = true;
-        numberList.add(randomNumber);
-      }
-    }
-
-    generatedIdForSchedule = numberList;
     notifyListeners();
   }
 }

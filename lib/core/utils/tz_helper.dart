@@ -37,6 +37,8 @@ class TZHelper {
 
   tz.TZDateTime now() => tz.TZDateTime.now(tz.local);
 
+  int nowMillisecondsSinceEpoch() => now().millisecondsSinceEpoch;
+
   tz.TZDateTime nextInstanceOfTenAM() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month,

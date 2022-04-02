@@ -801,5 +801,8 @@
   "postpone": "Ertele",
   "done_text": "Yapıldı",
   "btn_delete_reminder": "Hatırlatıcıyı sil",
-  "create_reminder": "Hatırlatıcı oluştur"
+  "create_reminder": "Hatırlatıcı oluştur",
+  "blood_glucose_measurement_title": "Kan şekeri ölçümü",
+  "hbA1c": "HbA1c",
+  "medicine": "İlaç"
 }

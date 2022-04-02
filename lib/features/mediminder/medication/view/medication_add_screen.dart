@@ -9,7 +9,7 @@ import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
 class MedicationReminderAddScreen extends StatefulWidget {
-  Remindable? remindable;
+  Remindable remindable = Remindable.medication;
 
   MedicationReminderAddScreen({Key? key}) : super(key: key);
 
@@ -47,17 +47,10 @@ class _MedicationReminderAddScreenState
 
   @override
   Widget build(BuildContext context) {
-    try {
-      widget.remindable =
-          Atom.queryParameters['remindable']!.toRouteToRemindable();
-    } catch (e) {
-      return const RbioRouteError();
-    }
-
     return ChangeNotifierProvider<MedicationReminderAddVm>(
       create: (_) => MedicationReminderAddVm(
         mContext: context,
-        mRemindable: widget.remindable!,
+        mRemindable: widget.remindable,
         mRotificationManager: getIt<ReminderNotificationsManager>(),
       ),
       child: Consumer<MedicationReminderAddVm>(
@@ -72,7 +65,7 @@ class _MedicationReminderAddScreenState
               appbar: RbioAppBar(
                 title: RbioAppBar.textTitle(
                   context,
-                  widget.remindable!.toShortTitle(),
+                  widget.remindable.toShortTitle(),
                 ),
               ),
               body: _buildBody(vm),
@@ -194,7 +187,7 @@ class _MedicationReminderAddScreenState
                 child: RbioElevatedButton(
                   title: LocaleProvider.current.btn_create,
                   onTap: () {
-                    vm.createReminderPlan(widget.remindable!);
+                    vm.createReminderPlan(widget.remindable);
                   },
                   showElevation: false,
                 ),

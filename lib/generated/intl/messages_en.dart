@@ -156,6 +156,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your Blood Glucose measurements have been imported."),
         "blood_glucose_measurement": MessageLookupByLibrary.simpleMessage(
             "Blood Glucose Measurement Reminder"),
+        "blood_glucose_measurement_title":
+            MessageLookupByLibrary.simpleMessage("Blood glucose measurement"),
         "blood_glucose_progress":
             MessageLookupByLibrary.simpleMessage("Blood Glucose Progress"),
         "blood_pressure_tracking":
@@ -539,6 +541,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "guven_journal_url":
             MessageLookupByLibrary.simpleMessage("https://www.guvenin.com.tr"),
         "has_result": MessageLookupByLibrary.simpleMessage("Has Result"),
+        "hbA1c": MessageLookupByLibrary.simpleMessage("HbA1c"),
         "hbA1c_measurement":
             MessageLookupByLibrary.simpleMessage("HbA1c Measurement Reminder"),
         "health_information":
@@ -684,6 +687,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Medication Reminder"),
         "medication_reminders":
             MessageLookupByLibrary.simpleMessage("Medication Reminder"),
+        "medicine": MessageLookupByLibrary.simpleMessage("Medicine"),
         "medicine_daily_count":
             MessageLookupByLibrary.simpleMessage("Daily count"),
         "medicine_daily_count_error_message":

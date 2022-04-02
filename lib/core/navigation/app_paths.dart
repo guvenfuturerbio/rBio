@@ -433,7 +433,7 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.bloodGlucoseReminderList,
-          widget: BloodGlucoseReminderListScreen(),
+          widget: const BloodGlucoseReminderListScreen(),
         ),
         VWidget(
           path: PagePaths.bloodGlucoseReminderAdd,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class Hba1cReminderAddVm extends ChangeNotifier {
   Remindable mRemindable;
 
   Hba1cReminderAddVm(this.mContext, this.mRemindable);
+
+  final random = Random();
 
   String remindDate = "";
   Future<void> setRemindDate(String time) async {
@@ -40,9 +43,22 @@ class Hba1cReminderAddVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createNotification(int notificationId) async {
+  Future<void> createNotification() async {
     final isValid = _checkValidation();
     if (!isValid) return;
+
+    List<int> pendingList =
+        await getIt<LocalNotificationManager>().getPendingNotificationIds();
+
+    List<int> numberList = [];
+    while (numberList.length <= 1) {
+      int randomNumber = 10000 + random.nextInt(1000);
+      // Prevent Generate Duplicate Ids
+      if (!numberList.contains(randomNumber) &&
+          !pendingList.contains(randomNumber)) {
+        numberList.add(randomNumber.toInt());
+      }
+    }
 
     final lastMeasurementDateTime = DateTime.parse(lastMeasurementDate);
     var lastMeasurementDateTimeTZ =
@@ -53,11 +69,12 @@ class Hba1cReminderAddVm extends ChangeNotifier {
         .add(Duration(minutes: remindHour?.minute ?? 0));
     var remindDateTimeTZ = TZHelper.instance.from(remindDateTime.toString());
     final currentHbaModel = Hba1CReminderModel(
-      notificationId: notificationId,
-      lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch.toString(),
-      lastTestValue: previousResult.toString(),
+      notificationId: numberList.first,
       scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch,
       createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
+      entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
+      lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch.toString(),
+      lastTestValue: previousResult.toString(),
     );
 
     await getIt<ReminderNotificationsManager>().createHba1c(

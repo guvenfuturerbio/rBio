@@ -1,7 +1,7 @@
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
-class MedicationReminderModel extends ReminderEntity {
+class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
   String? name;
   int? dayIndex;
   int? dosage;
@@ -12,6 +12,7 @@ class MedicationReminderModel extends ReminderEntity {
     required int notificationId,
     required int scheduledDate,
     required int createdDate,
+    required int entegrationId,
     this.name,
     this.dayIndex,
     this.dosage,
@@ -22,6 +23,7 @@ class MedicationReminderModel extends ReminderEntity {
           remindable: Remindable.medication,
           scheduledDate: scheduledDate,
           createdDate: createdDate,
+          entegrationId: entegrationId,
         );
 
   @override
@@ -40,11 +42,11 @@ class MedicationReminderModel extends ReminderEntity {
   }
 
   factory MedicationReminderModel.fromJson(Map<String, dynamic> json) {
-    final baseModel = ReminderEntity.fromJson(json);
     return MedicationReminderModel(
-      notificationId: baseModel.notificationId,
-      scheduledDate: baseModel.scheduledDate,
-      createdDate: baseModel.createdDate,
+      notificationId: json['notificationId'] as int,
+      scheduledDate: json['scheduledDate'] as int,
+      createdDate: json['createdDate'] as int,
+      entegrationId: json['entegrationId'] as int,
       name: json['name'] as String?,
       dayIndex: json['dayIndex'] as int?,
       dosage: json['dosage'] as int?,
@@ -62,10 +64,16 @@ class MedicationReminderModel extends ReminderEntity {
         notificationId: notificationId,
         scheduledDate: scheduledDate ?? this.scheduledDate,
         createdDate: createdDate,
+        entegrationId: entegrationId,
         name: name,
         dayIndex: dayIndex,
         dosage: dosage,
         medicinePeriod: medicinePeriod,
         usageType: usageType,
       );
+
+  @override
+  MedicationReminderModel fromJson(Map<String, dynamic> json) {
+    return MedicationReminderModel.fromJson(json);
+  }
 }

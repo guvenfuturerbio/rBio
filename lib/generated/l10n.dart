@@ -8119,6 +8119,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Blood glucose measurement`
+  String get blood_glucose_measurement_title {
+    return Intl.message(
+      'Blood glucose measurement',
+      name: 'blood_glucose_measurement_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `HbA1c`
+  String get hbA1c {
+    return Intl.message(
+      'HbA1c',
+      name: 'hbA1c',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medicine`
+  String get medicine {
+    return Intl.message(
+      'Medicine',
+      name: 'medicine',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

@@ -152,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan Şekeri ölçümleriniz içeri aktarıldı."),
         "blood_glucose_measurement": MessageLookupByLibrary.simpleMessage(
             "Kan Şekeri Ölçüm Hatırlatıcısı"),
+        "blood_glucose_measurement_title":
+            MessageLookupByLibrary.simpleMessage("Kan şekeri ölçümü"),
         "blood_glucose_progress":
             MessageLookupByLibrary.simpleMessage("Kan Şekeri İlerleyişi"),
         "blood_pressure_tracking":
@@ -533,6 +535,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "guven_journal_url":
             MessageLookupByLibrary.simpleMessage("https://www.guvenin.com.tr"),
         "has_result": MessageLookupByLibrary.simpleMessage("Sonuçlananlar"),
+        "hbA1c": MessageLookupByLibrary.simpleMessage("HbA1c"),
         "hbA1c_measurement":
             MessageLookupByLibrary.simpleMessage("HbA1c Ölçüm Hatırlatıcısı"),
         "health_information":
@@ -677,6 +680,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("İlaç Hatırlatıcı"),
         "medication_reminders":
             MessageLookupByLibrary.simpleMessage("İlaç Hatırlatıcısı"),
+        "medicine": MessageLookupByLibrary.simpleMessage("İlaç"),
         "medicine_daily_count":
             MessageLookupByLibrary.simpleMessage("Günlük sayı"),
         "medicine_daily_count_error_message":

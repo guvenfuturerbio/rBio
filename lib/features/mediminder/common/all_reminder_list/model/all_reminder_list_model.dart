@@ -1,13 +1,24 @@
+import '../../../../../core/core.dart';
+
 class AllReminderListModel {
-  final String? title;
+  final int notificationId;
+  final int scheduledDate;
+  final int createdDate;
+  /// /profile/get-all
+  final int entegrationId;
+  final Remindable remindable;
+  final String title;
   final String? subTitle;
-  final String? date;
-  final String? nameAndSurname;
+  final String nameAndSurname;
 
   AllReminderListModel({
-    this.title,
+    required this.notificationId,
+    required this.scheduledDate,
+    required this.createdDate,
+    required this.entegrationId,
+    required this.remindable,
+    required this.title,
     this.subTitle,
-    this.date,
-    this.nameAndSurname,
+    required this.nameAndSurname,
   });
 }

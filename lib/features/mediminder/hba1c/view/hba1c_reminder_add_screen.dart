@@ -8,8 +8,7 @@ import '../../../../core/core.dart';
 import '../hba1c.dart';
 
 class Hba1cReminderAddScreen extends StatefulWidget {
-  int? hba1cIdForNotification;
-  Remindable? remindable;
+  Remindable remindable = Remindable.hbA1c;
 
   Hba1cReminderAddScreen({Key? key}) : super(key: key);
 
@@ -20,19 +19,10 @@ class Hba1cReminderAddScreen extends StatefulWidget {
 class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
   @override
   Widget build(BuildContext context) {
-    try {
-      widget.remindable =
-          Atom.queryParameters['remindable']?.toRouteToRemindable();
-      widget.hba1cIdForNotification =
-          int.parse(Atom.queryParameters['hba1cIdForNotification']!);
-    } catch (e) {
-      return const RbioRouteError();
-    }
-
     return ChangeNotifierProvider<Hba1cReminderAddVm>(
       create: (context) => Hba1cReminderAddVm(
         context,
-        widget.remindable!,
+        widget.remindable,
       ),
       child: RbioScaffold(
         appbar: _buildAppBar(context),
@@ -135,7 +125,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
                   child: RbioElevatedButton(
                     title: LocaleProvider.current.btn_create,
                     onTap: () {
-                      vm.createNotification(widget.hba1cIdForNotification!);
+                      vm.createNotification();
                     },
                     showElevation: false,
                   ),

@@ -25,7 +25,7 @@ class ReminderDetailDialog extends StatelessWidget {
           children: [
             //
             Text(
-              model.title ?? '',
+              model.title,
               style: context.xHeadline3,
             ),
 
@@ -39,7 +39,7 @@ class ReminderDetailDialog extends StatelessWidget {
 
             //
             Text(
-              model.nameAndSurname ?? '',
+              model.nameAndSurname,
               style: context.xHeadline3,
             ),
 
@@ -85,7 +85,10 @@ class ReminderDetailDialog extends StatelessWidget {
 
             //
             RbioElevatedButton(
-              onTap: () {},
+              onTap: () {
+                context.read<AllReminderListCubit>().removeReminder(model);
+                Atom.dismiss();
+              },
               title: LocaleProvider.current.btn_cancel,
               infinityWidth: true,
               showElevation: false,

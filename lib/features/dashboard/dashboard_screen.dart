@@ -387,7 +387,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.reminders,
           onTap: () {
-            Atom.to(PagePaths.selectReminder);
+            Atom.to(PagePaths.allReminderList);
           },
         ),
         DrawerModel(

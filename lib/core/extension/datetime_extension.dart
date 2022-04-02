@@ -59,4 +59,29 @@ extension BuildContextExtensions on DateTime {
         millisecond == other.millisecond &&
         microsecond == other.microsecond;
   }
+
+  String xCalculateTimeDifferenceBetween({
+    required DateTime endDate,
+  }) {
+    int seconds = endDate.difference(this).inSeconds;
+    int h, m, s;
+    h = seconds ~/ 3600;
+    m = ((seconds - h * 3600)) ~/ 60;
+    s = seconds - (h * 3600) - (m * 60);
+    final hourLeft = int.tryParse(
+            h.toString().length < 2 ? "0" + h.toString() : h.toString()) ??
+        0;
+    final minuteLeft = int.tryParse(
+            m.toString().length < 2 ? "0" + m.toString() : m.toString()) ??
+        0;
+    final secondsLeft = int.tryParse(
+            s.toString().length < 2 ? "0" + s.toString() : s.toString()) ??
+        0;
+
+    if (hourLeft == 0) {
+      return "$minuteLeft dk";
+    } else {
+      return "$hourLeft s $minuteLeft dk";
+    }
+  }
 }

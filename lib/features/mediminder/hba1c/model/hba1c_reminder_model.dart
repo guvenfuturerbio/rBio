@@ -1,7 +1,7 @@
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
-class Hba1CReminderModel extends ReminderEntity {
+class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
   String? lastTestDate;
   String? lastTestValue;
 
@@ -9,6 +9,7 @@ class Hba1CReminderModel extends ReminderEntity {
     required int notificationId,
     required int scheduledDate,
     required int createdDate,
+    required int entegrationId,
     this.lastTestDate,
     this.lastTestValue,
   }) : super(
@@ -16,6 +17,7 @@ class Hba1CReminderModel extends ReminderEntity {
           remindable: Remindable.hbA1c,
           scheduledDate: scheduledDate,
           createdDate: createdDate,
+          entegrationId: entegrationId,
         );
 
   @override
@@ -31,13 +33,18 @@ class Hba1CReminderModel extends ReminderEntity {
   }
 
   factory Hba1CReminderModel.fromJson(Map<String, dynamic> json) {
-    final baseModel = ReminderEntity.fromJson(json);
     return Hba1CReminderModel(
-      notificationId: baseModel.notificationId,
-      scheduledDate: baseModel.scheduledDate,
-      createdDate: baseModel.createdDate,
+      notificationId: json['notificationId'] as int,
+      scheduledDate: json['scheduledDate'] as int,
+      createdDate: json['createdDate'] as int,
+      entegrationId: json['entegrationId'] as int,
       lastTestDate: json['lastTestDate'] as String?,
       lastTestValue: json['lastTestValue'] as String?,
     );
+  }
+
+  @override
+  Hba1CReminderModel fromJson(Map<String, dynamic> json) {
+    return Hba1CReminderModel.fromJson(json);
   }
 }

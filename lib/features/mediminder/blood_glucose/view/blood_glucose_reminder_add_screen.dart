@@ -9,7 +9,7 @@ import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
 class BloodGlucoseReminderAddScreen extends StatefulWidget {
-  Remindable? remindable;
+  Remindable remindable = Remindable.bloodGlucose;
 
   BloodGlucoseReminderAddScreen({Key? key}) : super(key: key);
 
@@ -45,17 +45,11 @@ class _BloodGlucoseReminderAddScreenState extends State<BloodGlucoseReminderAddS
 
   @override
   Widget build(BuildContext context) {
-    try {
-      widget.remindable =
-          Atom.queryParameters['remindable']!.toRouteToRemindable();
-    } catch (e) {
-      return const RbioRouteError();
-    }
-
+   
     return ChangeNotifierProvider<BloodGlucoseReminderAddVm>(
       create: (_) => BloodGlucoseReminderAddVm(
         mContext: context,
-        mRemindable: widget.remindable!,
+        mRemindable: widget.remindable,
         mRotificationManager: getIt<ReminderNotificationsManager>(),
       ),
       child: Consumer<BloodGlucoseReminderAddVm>(
@@ -70,7 +64,7 @@ class _BloodGlucoseReminderAddScreenState extends State<BloodGlucoseReminderAddS
               appbar: RbioAppBar(
                 title: RbioAppBar.textTitle(
                   context,
-                  widget.remindable!.toShortTitle(),
+                  widget.remindable.toShortTitle(),
                 ),
               ),
               body: _buildBody(vm),
@@ -210,7 +204,7 @@ class _BloodGlucoseReminderAddScreenState extends State<BloodGlucoseReminderAddS
                 child: RbioElevatedButton(
                   title: LocaleProvider.current.btn_create,
                   onTap: () {
-                    vm.createReminderPlan(widget.remindable!);
+                    vm.createReminderPlan(widget.remindable);
                   },
                   showElevation: false,
                 ),

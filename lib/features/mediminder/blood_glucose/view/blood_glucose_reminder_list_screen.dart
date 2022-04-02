@@ -10,14 +10,12 @@ import '../../mediminder.dart';
 part 'widget/reminder_edit_dialog.dart';
 
 class BloodGlucoseReminderListScreen extends StatelessWidget {
-  late Remindable remindable;
+  final Remindable remindable = Remindable.bloodGlucose;
 
-  BloodGlucoseReminderListScreen({Key? key}) : super(key: key);
+  const BloodGlucoseReminderListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    remindable = Remindable.bloodGlucose;
-
     return ChangeNotifierProvider<BloodGlucoseReminderListVm>(
       create: (context) => BloodGlucoseReminderListVm(context),
       child: RbioScaffold(

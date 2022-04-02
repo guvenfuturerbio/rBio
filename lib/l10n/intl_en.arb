@@ -809,5 +809,8 @@
   "postpone": "Postpone",
   "done_text": "Done",
   "btn_delete_reminder": "Delete Reminder",
-  "create_reminder": "Create Reminder"
+  "create_reminder": "Create Reminder",
+  "blood_glucose_measurement_title": "Blood glucose measurement",
+  "hbA1c": "HbA1c",
+  "medicine": "Medicine"
 }

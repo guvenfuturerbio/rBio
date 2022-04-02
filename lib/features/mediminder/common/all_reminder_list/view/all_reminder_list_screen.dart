@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/core/utils/tz_helper.dart';
 
 import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../core/core.dart';
@@ -15,14 +16,16 @@ class AllReminderListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AllReminderListCubit>(
-      create: (ctx) => AllReminderListCubit()..fetchAll(),
-      child: const AllReminderListView(),
+      create: (ctx) => AllReminderListCubit(getIt())..fetchAll(),
+      child: AllReminderListView(),
     );
   }
 }
 
 class AllReminderListView extends StatefulWidget {
-  const AllReminderListView({Key? key}) : super(key: key);
+  final currentTime = TZHelper.instance.now();
+
+  AllReminderListView({Key? key}) : super(key: key);
 
   @override
   _AllReminderListViewState createState() => _AllReminderListViewState();
@@ -132,8 +135,11 @@ class _AllReminderListViewState extends State<AllReminderListView> {
     return GestureDetector(
       onTap: () {
         Atom.show(
-          ReminderDetailDialog(
-            model: model,
+          BlocProvider.value(
+            value: context.read<AllReminderListCubit>(),
+            child: ReminderDetailDialog(
+              model: model,
+            ),
           ),
         );
       },
@@ -166,7 +172,7 @@ class _AllReminderListViewState extends State<AllReminderListView> {
                   //
                   Expanded(
                     child: Text(
-                      model.title ?? '',
+                      model.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.xHeadline4.copyWith(
@@ -207,7 +213,10 @@ class _AllReminderListViewState extends State<AllReminderListView> {
                         left: 12,
                       ),
                       child: Text(
-                        "30dk",
+                        widget.currentTime.xCalculateTimeDifferenceBetween(
+                            endDate: TZHelper.instance
+                                .fromMillisecondsSinceEpoch(
+                                    model.scheduledDate)),
                         style: context.xHeadline3.copyWith(
                           fontWeight: FontWeight.bold,
                           color: getIt<ITheme>().mainColor,
@@ -232,7 +241,7 @@ class _AllReminderListViewState extends State<AllReminderListView> {
                         children: [
                           //
                           Text(
-                            model.date ?? '',
+                            '${model.scheduledDate.xDateFormat} : ${model.scheduledDate.xHourFormat}',
                             style: context.xHeadline4.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -243,7 +252,7 @@ class _AllReminderListViewState extends State<AllReminderListView> {
 
                           //
                           Text(
-                            model.nameAndSurname ?? '',
+                            model.nameAndSurname,
                             style: context.xHeadline4.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

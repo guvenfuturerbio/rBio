@@ -90,10 +90,10 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
         result += LocaleProvider.current.every;
         result += " ";
         result += _getDayString(medicine.dayIndex);
-        result += ", " + _getUsageType(medicine.usageType);
+        result += ", " + medicine.usageType.xGetText;
       } else {
         result += _getPeriodString(medicine.medicinePeriod);
-        result += ", " + _getUsageType(medicine.usageType);
+        result += ", " + medicine.usageType.xGetText;
 
         final remindable = medicine.remindable;
         if (remindable == Remindable.medication) {
@@ -149,24 +149,6 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
       return LocaleProvider.of(mContext).weekdays_sunday;
     } else {
       return "";
-    }
-  }
-
-  String _getUsageType(UsageType? usageType) {
-    if (usageType == null) return '';
-
-    switch (usageType) {
-      case UsageType.hungry:
-        return LocaleProvider.of(mContext).hungry;
-
-      case UsageType.full:
-        return LocaleProvider.of(mContext).full;
-
-      case UsageType.irrelevant:
-        return LocaleProvider.of(mContext).irrelevant;
-
-      default:
-        return '';
     }
   }
 

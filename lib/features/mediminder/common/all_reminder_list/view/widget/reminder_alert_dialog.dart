@@ -34,7 +34,7 @@ class ReminderAlertDialog extends StatelessWidget {
 
             //
             Text(
-              model.title ?? '',
+              model.title,
               style: context.xHeadline2.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -42,7 +42,7 @@ class ReminderAlertDialog extends StatelessWidget {
 
             //
             Text(
-              model.date ?? '',
+              model.scheduledDate.toString(),
               style: context.xHeadline3.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -50,7 +50,7 @@ class ReminderAlertDialog extends StatelessWidget {
 
             //
             Text(
-              model.nameAndSurname ?? '',
+              model.nameAndSurname,
               style: context.xHeadline3,
             ),
 
