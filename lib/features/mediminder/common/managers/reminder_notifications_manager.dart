@@ -39,24 +39,22 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
 
   Future<void> _buildCheckNotifications(SharedPreferencesKeys key) async {
     final sharedList = getIt<ISharedPreferencesManager>().getStringList(key);
-    var medicineList = <MedicineForScheduledModel>[];
+    var medicineList = <BloodGlucoseReminderModel>[];
     if (sharedList != null) {
       for (String jsonMedicine in sharedList) {
         Map<String, dynamic> map = jsonDecode(jsonMedicine);
-        medicineList.add(MedicineForScheduledModel.fromJson(map));
+        medicineList.add(BloodGlucoseReminderModel.fromJson(map));
       }
     }
 
     //
     final now = TZHelper.instance.now();
-    var deletedList = <MedicineForScheduledModel>[];
+    var deletedList = <BloodGlucoseReminderModel>[];
     for (var item in medicineList) {
       if (item.medicinePeriod != null) {
-        if (item.medicinePeriod!.xMedicinePeriodKeys ==
-                MedicinePeriod.oneTime &&
-            item.scheduledDate != null) {
-          final scheduledDate = TZHelper.instance
-              .fromMillisecondsSinceEpoch(item.scheduledDate ?? 0);
+        if (item.medicinePeriod == MedicinePeriod.oneTime) {
+          final scheduledDate =
+              TZHelper.instance.fromMillisecondsSinceEpoch(item.scheduledDate);
           if (!now.isBefore(scheduledDate)) {
             deletedList.add(item);
           }

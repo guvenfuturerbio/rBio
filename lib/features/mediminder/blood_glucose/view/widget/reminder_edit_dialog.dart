@@ -2,7 +2,7 @@ part of '../blood_glucose_reminder_list_screen.dart';
 
 class _ReminderEditDialog extends StatefulWidget {
   final String title;
-  final MedicineForScheduledModel item;
+  final BloodGlucoseReminderModel item;
 
   const _ReminderEditDialog({
     Key? key,
@@ -20,7 +20,7 @@ class _ReminderEditDialogState extends State<_ReminderEditDialog> {
   @override
   void initState() {
     final hourMinutes = TZHelper.instance
-        .fromMillisecondsSinceEpoch(widget.item.scheduledDate ?? 0)
+        .fromMillisecondsSinceEpoch(widget.item.scheduledDate)
         .xFormatTime2()
         .split(':');
     currentTimeOfDay = TimeOfDay(

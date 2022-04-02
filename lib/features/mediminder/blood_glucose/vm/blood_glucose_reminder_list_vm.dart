@@ -14,16 +14,16 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
     });
   }
 
-  List<MedicineForScheduledModel> medicineForScheduled = [];
+  List<BloodGlucoseReminderModel> medicineForScheduled = [];
 
   Future<void> fetchAll() async {
     List<String>? jsonList = getIt<ISharedPreferencesManager>()
         .getStringList(SharedPreferencesKeys.bloodGlucoseList);
-    List<MedicineForScheduledModel> prefList = [];
+    List<BloodGlucoseReminderModel> prefList = [];
     if (jsonList != null) {
       for (String jsonMedicine in jsonList) {
         Map<String, dynamic> jsonMap = jsonDecode(jsonMedicine);
-        prefList.add(MedicineForScheduledModel.fromJson(jsonMap));
+        prefList.add(BloodGlucoseReminderModel.fromJson(jsonMap));
       }
       medicineForScheduled = prefList;
       notifyListeners();
@@ -32,15 +32,13 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
 
   Future<void> removeAllMedicines(int createdDate) async {
     // Notificationlar'ı iptal et
-    await Future.forEach<MedicineForScheduledModel>(
+    await Future.forEach<BloodGlucoseReminderModel>(
       medicineForScheduled,
       (item) async {
         if (item.createdDate == createdDate) {
-          if (item.notificationId != null) {
-            // Notification'ı iptal et
-            await getIt<LocalNotificationManager>()
-                .cancelNotification(item.notificationId!);
-          }
+          // Notification'ı iptal et
+          await getIt<LocalNotificationManager>()
+              .cancelNotification(item.notificationId);
         }
       },
     );
@@ -55,16 +53,14 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeMedicine(MedicineForScheduledModel item) async {
+  Future<void> removeMedicine(BloodGlucoseReminderModel item) async {
     // Vm'de ki listeden item'ı sil
     medicineForScheduled.removeWhere(
         (medicine) => medicine.notificationId == item.notificationId);
 
     // Notification'ı iptal et
-    if (item.notificationId != null) {
-      await getIt<LocalNotificationManager>()
-          .cancelNotification(item.notificationId!);
-    }
+    await getIt<LocalNotificationManager>()
+        .cancelNotification(item.notificationId);
 
     // Shared Preferences'da ki listeyi güncelle
     await _saveList();
@@ -84,13 +80,13 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
         SharedPreferencesKeys.bloodGlucoseList, medicineJsonList);
   }
 
-  String getSubTitle(MedicineForScheduledModel medicine) {
+  String getSubTitle(BloodGlucoseReminderModel medicine) {
     String result = "";
 
     final medicinePeriod = medicine.medicinePeriod;
 
     if (medicinePeriod != null) {
-      if (medicinePeriod.xMedicinePeriodKeys == MedicinePeriod.specificDays) {
+      if (medicinePeriod == MedicinePeriod.specificDays) {
         result += LocaleProvider.current.every;
         result += " ";
         result += _getDayString(medicine.dayIndex);
@@ -100,13 +96,11 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
         result += ", " + _getUsageType(medicine.usageType);
 
         final remindable = medicine.remindable;
-        if (remindable != null) {
-          if (remindable.xRemindableKeys == Remindable.medication) {
-            result += ", " +
-                medicine.dosage.toString() +
-                " " +
-                LocaleProvider.current.hint_dosage;
-          }
+        if (remindable == Remindable.medication) {
+          result += ", " +
+              medicine.dosage.toString() +
+              " " +
+              LocaleProvider.current.hint_dosage;
         }
       }
     }
@@ -114,11 +108,10 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
     return result;
   }
 
-  String _getPeriodString(String? period) {
+  String _getPeriodString(MedicinePeriod? period) {
     if (period == null) return '';
-    final medicinePeriod = period.xMedicinePeriodKeys;
 
-    switch (medicinePeriod) {
+    switch (period) {
       case MedicinePeriod.oneTime:
         return LocaleProvider.of(mContext).one_time;
 
@@ -159,11 +152,10 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
     }
   }
 
-  String _getUsageType(String? usageType) {
+  String _getUsageType(UsageType? usageType) {
     if (usageType == null) return '';
-    final type = usageType.xUsageTypeKeys;
 
-    switch (type) {
+    switch (usageType) {
       case UsageType.hungry:
         return LocaleProvider.of(mContext).hungry;
 
@@ -180,7 +172,7 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
 
   Future<void> updateMedicineForScheduledModel(
     TimeOfDay newTimeOfDay,
-    MedicineForScheduledModel selectedItem,
+    BloodGlucoseReminderModel selectedItem,
   ) async {
     // Bildirimin Title ve Body değerlerine erişmek için, pending listeyi getir
     final pendingNotifications =
@@ -190,39 +182,36 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
 
     // Geçerli bildirim saatinin sadece saat ve dakikaasını güncelle
     final oldScheduledDate = TZHelper.instance
-        .fromMillisecondsSinceEpoch(selectedItem.scheduledDate ?? 0);
+        .fromMillisecondsSinceEpoch(selectedItem.scheduledDate);
     final newScheduledDate =
         TZHelper.instance.changeOnlyHourMinutes(oldScheduledDate, newTimeOfDay);
 
-    if (selectedItem.notificationId != null) {
-      // Geçerli bildirimi iptal et
-      await getIt<LocalNotificationManager>()
-          .cancelNotification(selectedItem.notificationId!);
+    // Geçerli bildirimi iptal et
+    await getIt<LocalNotificationManager>()
+        .cancelNotification(selectedItem.notificationId);
 
-      // Yeni bildirim oluştur
-      await getIt<ReminderNotificationsManager>().createMedinicine(
-        selectedItem.notificationId!,
-        pendingItem.title ?? '',
-        pendingItem.body ?? '',
-        newScheduledDate,
-        selectedItem.medicinePeriod?.xMedicinePeriodKeys ??
-            MedicinePeriod.oneTime,
-      );
+    // Yeni bildirim oluştur
+    await getIt<ReminderNotificationsManager>().createMedinicine(
+      selectedItem.notificationId,
+      pendingItem.title ?? '',
+      pendingItem.body ?? '',
+      newScheduledDate,
+      selectedItem.medicinePeriod ?? MedicinePeriod.oneTime,
+    );
 
-      // View modelde ki listeyi güncelle
-      final medicineIndex = medicineForScheduled.indexWhere(
-          (element) => element.notificationId == selectedItem.notificationId);
-      medicineForScheduled = medicineForScheduled.update(
-        medicineIndex,
-        medicineForScheduled[medicineIndex].copyWith(
-          scheduledDate: newScheduledDate.millisecondsSinceEpoch,
-        ),
-      );
+    // View modelde ki listeyi güncelle
+    final medicineIndex = medicineForScheduled.indexWhere(
+        (element) => element.notificationId == selectedItem.notificationId);
+    medicineForScheduled = medicineForScheduled.update(
+      medicineIndex,
+      medicineForScheduled[medicineIndex].changeScheduledDate(
+        scheduledDate: newScheduledDate.millisecondsSinceEpoch,
+      ),
+    );
 
-      // Shared Preferences'da ki listeyi güncelle
-      await _saveList();
+    // Shared Preferences'da ki listeyi güncelle
+    await _saveList();
 
-      notifyListeners();
-    }
+    notifyListeners();
   }
 }

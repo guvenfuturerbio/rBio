@@ -48,8 +48,7 @@ class BloodGlucoseReminderListScreen extends StatelessWidget {
         final medicineList = vm.medicineForScheduled;
         if (medicineList.isNotEmpty) {
           final filterList = medicineList
-              .where((element) =>
-                  element.remindable?.xRemindableKeys == remindable)
+              .where((element) => element.remindable == remindable)
               .toList();
           if (filterList.isEmpty) {
             return RbioEmptyText(
@@ -70,7 +69,7 @@ class BloodGlucoseReminderListScreen extends StatelessWidget {
 
   Widget _buildList(
     BloodGlucoseReminderListVm vm,
-    Map<int?, List<MedicineForScheduledModel>> filterList,
+    Map<int?, List<BloodGlucoseReminderModel>> filterList,
   ) {
     return ListView.builder(
       shrinkWrap: true,
@@ -118,7 +117,7 @@ class BloodGlucoseReminderListScreen extends StatelessWidget {
 class MedicineCard extends StatefulWidget {
   final int index;
   final int createdDate;
-  final List<MedicineForScheduledModel>? medicineList;
+  final List<BloodGlucoseReminderModel>? medicineList;
   final BloodGlucoseReminderListVm reminderListVm;
   final Remindable remindable;
 
@@ -266,7 +265,7 @@ class _MedicineCardState extends State<MedicineCard> {
     );
   }
 
-  Widget _buildCard(MedicineForScheduledModel item, bool isBottomLine) {
+  Widget _buildCard(BloodGlucoseReminderModel item, bool isBottomLine) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -331,15 +330,14 @@ class _MedicineCardState extends State<MedicineCard> {
                             widget.remindable == Remindable.bloodGlucose
                                 ? TZHelper.instance
                                         .fromMillisecondsSinceEpoch(
-                                            item.scheduledDate ?? 0)
+                                            item.scheduledDate)
                                         .xFormatTime2() +
-                                    (item.remindable!.xRemindableKeys ==
-                                            Remindable.medication
+                                    (item.remindable == Remindable.medication
                                         ? " " "${item.name}"
                                         : " ")
                                 : TZHelper.instance
                                     .fromMillisecondsSinceEpoch(
-                                        item.scheduledDate ?? 0)
+                                        item.scheduledDate)
                                     .xFormatTime2(),
                             style: context.xHeadline1.copyWith(
                               fontWeight: FontWeight.bold,
@@ -455,7 +453,7 @@ class _MedicineCardState extends State<MedicineCard> {
 
   Future<void> showEditDialog(
     String title,
-    MedicineForScheduledModel item,
+    BloodGlucoseReminderModel item,
   ) async {
     final result = await Atom.show(
       _ReminderEditDialog(
@@ -467,7 +465,7 @@ class _MedicineCardState extends State<MedicineCard> {
     if (result != null) {
       if (result is TimeOfDay) {
         final itemTimeOfDay = TZHelper.instance
-            .fromMillisecondsSinceEpoch(item.scheduledDate ?? 0)
+            .fromMillisecondsSinceEpoch(item.scheduledDate)
             .xFormatTime2()
             .xToTimeOfDay;
         if (!result.xIsEqual(itemTimeOfDay)) {
@@ -477,11 +475,11 @@ class _MedicineCardState extends State<MedicineCard> {
     }
   }
 
-  Widget _getPeriodTitle(MedicineForScheduledModel item) {
-    if (item.medicinePeriod!.xMedicinePeriodKeys == MedicinePeriod.oneTime) {
+  Widget _getPeriodTitle(BloodGlucoseReminderModel item) {
+    if (item.medicinePeriod == MedicinePeriod.oneTime) {
       return Text(
         TZHelper.instance
-            .fromMillisecondsSinceEpoch(item.scheduledDate ?? 0)
+            .fromMillisecondsSinceEpoch(item.scheduledDate)
             .xFormatTime1(),
         style: context.xHeadline5,
       );

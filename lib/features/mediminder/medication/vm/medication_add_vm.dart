@@ -337,16 +337,15 @@ class MedicationReminderAddVm extends RbioVm {
     );
 
     saveScheduledMedicine(
-      MedicineForScheduledModel(
+      BloodGlucoseReminderModel(
         notificationId: id,
-        remindable: mRemindable.xRawValue,
-        dosage: dailyDose,
-        medicinePeriod: mMedicinePeriod!.xRawValue,
-        dayIndex: dayIndex,
-        name: drugName,
-        usageType: selectedUsageType.xRawValue,
         scheduledDate: scheduledDate.millisecondsSinceEpoch,
         createdDate: createdDate,
+        name: drugName,
+        dayIndex: dayIndex,
+        dosage: dailyDose,
+        medicinePeriod: mMedicinePeriod,
+        usageType: selectedUsageType,
       ),
     );
   }
@@ -362,7 +361,7 @@ class MedicationReminderAddVm extends RbioVm {
     );
   }
 
-  Future<void> saveScheduledMedicine(MedicineForScheduledModel medicine) async {
+  Future<void> saveScheduledMedicine(BloodGlucoseReminderModel medicine) async {
     final medicineStr = jsonEncode(medicine.toJson());
 
     List<String> medicineJsonList = [];

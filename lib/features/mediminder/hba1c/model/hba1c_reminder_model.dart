@@ -1,5 +1,5 @@
-import '../../mediminder.dart';
 import '../../../../core/core.dart';
+import '../../mediminder.dart';
 
 class Hba1CReminderModel extends ReminderEntity {
   String? lastTestDate;
