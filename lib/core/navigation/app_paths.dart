@@ -444,8 +444,8 @@ class VRouterRoutes {
           widget: MedicationReminderAddScreen(),
         ),
         VWidget(
-          path: PagePaths.hba1cReminderAdd,
-          widget: const Hba1cReminderAddScreen(),
+          path: PagePaths.hba1cReminderAddEdit,
+          widget: const Hba1cReminderAddEditScreen(),
         ),
         VWidget(
           path: PagePaths.hba1cList,
@@ -652,7 +652,7 @@ class PagePaths {
   static const strip = '/reminder/strips';
   static const hba1cList = '/reminder/hba1c-list';
   static const medicationReminderAdd = '/reminder/medication-add';
-  static const hba1cReminderAdd = '/reminder/hba1c-add';
+  static const hba1cReminderAddEdit = '/reminder/hba1c-add-edit';
   static const bloodGlucoseReminderList = '/reminder/blood-glucose-list';
   static const bloodGlucoseReminderAdd = '/reminder/blood-glucose-add';
 

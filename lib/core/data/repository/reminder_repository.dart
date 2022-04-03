@@ -1,19 +1,27 @@
 import 'dart:convert';
+import 'dart:math';
+
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 
 import '../../../features/mediminder/mediminder.dart';
 import '../../core.dart';
+import '../../utils/tz_helper.dart';
 
 class ReminderRepository {
   final ProfileStorageImpl profileStorage;
   final ISharedPreferencesManager sharedPreferencesManager;
   final LocalNotificationManager localNotificationManager;
+  final ReminderNotificationsManager reminderNotificationsManager;
 
   ReminderRepository(
     this.profileStorage,
     this.sharedPreferencesManager,
     this.localNotificationManager,
+    this.reminderNotificationsManager,
   );
+
+  final random = Random();
 
   // #region getAllRelatives
   List<AllReminderRelativePerson> getAllRelatives() =>
@@ -382,6 +390,102 @@ class ReminderRepository {
         SharedPreferencesKeys.medicineList,
       );
   // #endregion
+
+  Future<bool> createOrEditHba1C(Hba1cReminderAddEditResult result) async {
+    try {
+      //
+      if (!result.isCreated) {
+        // Bu plana ait tüm bildirimleri sil ve iptal et.
+        await cancelAndRemoveNotificationHba1C(result.editCreatedDate!);
+      }
+
+      final pendingList =
+          await getIt<LocalNotificationManager>().getPendingNotificationIds();
+
+      List<int> numberList = [];
+      while (numberList.length <= 1) {
+        int randomNumber = 10000 + random.nextInt(1000);
+        // Prevent Generate Duplicate Ids
+        if (!numberList.contains(randomNumber) &&
+            !pendingList.contains(randomNumber)) {
+          numberList.add(randomNumber.toInt());
+        }
+      }
+
+      final lastMeasurementDateTime = DateTime.parse(result.lastTestDate!);
+      var lastMeasurementDateTimeTZ =
+          TZHelper.instance.from(lastMeasurementDateTime.toString());
+
+      final scheduledDateTime = DateTime.parse(result.scheduledDate!);
+      final remindDateTime = DateTime(scheduledDateTime.year,
+              scheduledDateTime.month, scheduledDateTime.day)
+          .add(Duration(hours: result.scheduledHour?.hour ?? 0))
+          .add(Duration(minutes: result.scheduledHour?.minute ?? 0));
+      var remindDateTimeTZ = TZHelper.instance.from(remindDateTime.toString());
+      final currentHbaModel = Hba1CReminderModel(
+        notificationId: numberList.first,
+        scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch,
+        createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
+        entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
+        lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch,
+        lastTestValue: result.lastTestValue,
+      );
+
+      await getIt<ReminderNotificationsManager>().createHba1c(
+        currentHbaModel,
+        remindDateTimeTZ,
+      );
+
+      await saveScheduledHba1c(currentHbaModel);
+
+      return true;
+    } catch (e) {
+      if (e.toString().contains(
+          'Invalid argument (scheduledDate): Must be a date in the future')) {
+        LoggerUtils.instance.i("Geçmişe hatırlatıcı oluşturulamaz.");
+      }
+
+      return false;
+    }
+  }
+
+  Future<void> saveScheduledHba1c(Hba1CReminderModel hba1c) async {
+    final newHba1cJson = jsonEncode(hba1c.toJson());
+    final sharedList = getIt<ISharedPreferencesManager>()
+            .getStringList(SharedPreferencesKeys.hba1cList) ??
+        [];
+    sharedList.add(newHba1cJson);
+    await getIt<ISharedPreferencesManager>().setStringList(
+      SharedPreferencesKeys.hba1cList,
+      sharedList,
+    );
+  }
+
+  Hba1cReminderAddEditResult? getHba1CDetailResult(int notificationId) {
+    final localModel = getHba1CById(notificationId);
+    if (localModel != null) {
+      final createdDate = localModel.createdDate;
+      final remindDate = localModel.scheduledDate.xGetTZDateTime;
+      final scheduledDate = remindDate.toString();
+      final scheduledHour = TimeOfDay(
+        hour: remindDate.hour,
+        minute: remindDate.minute,
+      );
+      final lastTestDate = localModel.lastTestDate!.xGetTZDateTime.toString();
+      final lastTestValue = localModel.lastTestValue ?? 0;
+      return Hba1cReminderAddEditResult(
+        isCreated: false,
+        editNotificationId: notificationId,
+        editCreatedDate: createdDate,
+        scheduledDate: scheduledDate,
+        scheduledHour: scheduledHour,
+        lastTestDate: lastTestDate,
+        lastTestValue: lastTestValue,
+      );
+    }
+
+    return null;
+  }
 
   // #region getHba1CById
   Hba1CReminderModel? getHba1CById(int notificationId) =>

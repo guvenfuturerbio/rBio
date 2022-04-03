@@ -78,7 +78,7 @@ class SelectReminderScreen extends StatelessWidget {
         Remindable.hbA1c,
         onTap: () {
           Atom.to(
-            PagePaths.hba1cReminderAdd,
+            PagePaths.hba1cReminderAddEdit,
             isReplacement: true,
           );
         },

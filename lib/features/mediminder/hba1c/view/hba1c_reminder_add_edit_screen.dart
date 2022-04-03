@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../hba1c.dart';
 
-class Hba1cReminderAddScreen extends StatefulWidget {
-  const Hba1cReminderAddScreen({Key? key}) : super(key: key);
-
-  @override
-  State<Hba1cReminderAddScreen> createState() => _Hba1cReminderAddScreenState();
-}
-
-class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
-  int? notificationId;
-  bool get isCreated => notificationId == null;
+class Hba1cReminderAddEditScreen extends StatelessWidget {
+  const Hba1cReminderAddEditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int? notificationId;
+
     try {
       final routeParam = Atom.queryParameters['notificationId'];
       if (routeParam != null) {
@@ -29,12 +23,55 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
       return const RbioRouteError();
     }
 
-    return ChangeNotifierProvider<Hba1cReminderAddVm>(
-      create: (context) => Hba1cReminderAddVm(context, notificationId, getIt()),
-      child: RbioScaffold(
-        appbar: _buildAppBar(context),
-        body: _buildBody(context),
+    return BlocProvider<Hba1cReminderAddEditCubit>(
+      create: (context) => Hba1cReminderAddEditCubit(
+        getIt(),
+      )..setInitState(notificationId),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<Hba1cReminderAddEditCubit,
+              Hba1cReminderAddEditState>(
+            listener: (context, state) {
+              state.whenOrNull(
+                openListScreen: () {
+                  Atom.historyBack();
+                  Atom.to(
+                    PagePaths.allReminderList,
+                    isReplacement: true,
+                  );
+                },
+                showWarningDialog: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) {
+                      return GradientDialog(
+                        title: LocaleProvider.current.warning,
+                        text: LocaleProvider.current.fill_all_field,
+                      );
+                    },
+                  );
+                },
+              );
+            },
+            child: const Hba1cReminderAddEditView(),
+          );
+        },
       ),
+    );
+  }
+}
+
+class Hba1cReminderAddEditView extends StatelessWidget {
+  const Hba1cReminderAddEditView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RbioScaffold(
+      appbar: _buildAppBar(context),
+      body: _buildBody(context),
     );
   }
 
@@ -48,77 +85,100 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Consumer<Hba1cReminderAddVm>(
-      builder: (
-        BuildContext context,
-        Hba1cReminderAddVm vm,
-        Widget? child,
-      ) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            //
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                child: Column(
+    return BlocBuilder<Hba1cReminderAddEditCubit, Hba1cReminderAddEditState>(
+      buildWhen: (previous, current) =>
+          current.whenOrNull(
+            openListScreen: () => false,
+            showWarningDialog: () => false,
+          ) ??
+          true,
+      builder: (context, state) {
+        return state.whenOrNull(
+              initial: () => const SizedBox(),
+              success: (result) {
+                return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     //
-                    _buildBoldTitle(LocaleProvider.current.last_test_date),
-                    _buildLastTestDate(context, vm),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.vertical,
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            //
+                            _buildBoldTitle(
+                              context,
+                              LocaleProvider.current.last_test_date,
+                            ),
+                            _buildLastTestDate(context, result),
+
+                            //
+                            _buildGap(),
+
+                            //
+                            _buildBoldTitle(
+                              context,
+                              LocaleProvider.current.last_result,
+                            ),
+                            _buildLastTestValue(context, result),
+
+                            //
+                            _buildGap(),
+
+                            //
+                            _buildBoldTitle(
+                              context,
+                              LocaleProvider.current.reminder_date,
+                            ),
+                            _buildReminderDate(context, result),
+
+                            //
+                            _buildGap(),
+
+                            //
+                            _buildBoldTitle(
+                              context,
+                              LocaleProvider.current.reminder_hour,
+                            ),
+                            _buildReminderHour(context, result),
+
+                            //
+                            _buildGap(),
+                          ],
+                        ),
+                      ),
+                    ),
 
                     //
                     _buildGap(),
 
                     //
-                    _buildBoldTitle(LocaleProvider.current.last_result),
-                    _buildLastTestValue(context, vm),
+                    _buildButtons(context, result),
 
                     //
-                    _buildGap(),
-
-                    //
-                    _buildBoldTitle(LocaleProvider.current.reminder_date),
-                    _buildReminderDate(context, vm),
-
-                    //
-                    _buildGap(),
-
-                    //
-                    _buildBoldTitle(LocaleProvider.current.reminder_hour),
-                    _buildReminderHour(context, vm),
-
-                    //
-                    _buildGap(),
+                    R.sizes.defaultBottomPadding,
                   ],
-                ),
-              ),
-            ),
-
-            //
-            _buildGap(),
-
-            //
-            _buildButtons(vm),
-
-            //
-            R.sizes.defaultBottomPadding,
-          ],
-        );
+                );
+              },
+            ) ??
+            const SizedBox();
       },
     );
   }
 
   Widget _buildGap() => R.sizes.hSizer16;
 
-  Widget _buildLastTestDate(BuildContext context, Hba1cReminderAddVm hba1cVM) {
+  Widget _buildLastTestDate(
+    BuildContext context,
+    Hba1cReminderAddEditResult result,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
@@ -136,9 +196,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           Expanded(
             child: Text(
-              (hba1cVM.lastTestDate == "")
+              (result.lastTestDate == null)
                   ? ""
-                  : DateTime.parse(hba1cVM.lastTestDate).xFormatTime10(),
+                  : DateTime.parse(result.lastTestDate!).xFormatTime10(),
               style: context.xHeadline3,
             ),
           ),
@@ -146,19 +206,21 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           IconButton(
             onPressed: () async {
-              final initialDate = hba1cVM.lastTestDate;
-              final result = await showRbioDatePicker(
+              final initialDate = result.lastTestDate;
+              final selectedDate = await showRbioDatePicker(
                 context,
                 title: LocaleProvider.current.last_test_date,
-                initialDateTime: (initialDate == '')
+                initialDateTime: (initialDate == null)
                     ? DateTime.now()
                     : DateTime.parse(initialDate),
                 minimumDate: R.constants.date2000,
                 maximumDate: DateTime.now().add(const Duration(days: 730)),
               );
 
-              if (result != null) {
-                hba1cVM.setLastTestDate(result.toString());
+              if (selectedDate != null) {
+                context
+                    .read<Hba1cReminderAddEditCubit>()
+                    .setLastTestDate(selectedDate);
               }
             },
             icon: Icon(
@@ -171,16 +233,23 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
     );
   }
 
-  Widget _buildLastTestValue(BuildContext context, Hba1cReminderAddVm hba1cVM) {
+  Widget _buildLastTestValue(
+    BuildContext context,
+    Hba1cReminderAddEditResult result,
+  ) {
     return GestureDetector(
       onTap: () async {
-        final result = await Atom.show(
+        final newValue = await Atom.show(
           _LastTestDialog(
-            initValue: hba1cVM.lastTestValue.toString(),
+            initValue: result.lastTestValue == null
+                ? ''
+                : result.lastTestValue!.toString(),
           ),
         );
-        if (result != null) {
-          hba1cVM.setLastTestValue(double.tryParse(result) ?? 0);
+        if (newValue != null) {
+          context
+              .read<Hba1cReminderAddEditCubit>()
+              .setLastTestValue(double.tryParse(newValue) ?? 0);
         }
       },
       child: Container(
@@ -194,16 +263,21 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           horizontal: 12,
         ),
         child: Text(
-          (Intl.getCurrentLocale() == "tr"
-              ? "% ${hba1cVM.lastTestValue.toString()}"
-              : "${hba1cVM.lastTestValue.toString()} %"),
+          result.lastTestValue == null
+              ? ''
+              : (Intl.getCurrentLocale() == "tr"
+                  ? "% ${result.lastTestValue.toString()}"
+                  : "${result.lastTestValue.toString()} %"),
           style: context.xHeadline3,
         ),
       ),
     );
   }
 
-  Widget _buildReminderDate(BuildContext context, Hba1cReminderAddVm hba1cVM) {
+  Widget _buildReminderDate(
+    BuildContext context,
+    Hba1cReminderAddEditResult result,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
@@ -221,9 +295,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           Expanded(
             child: Text(
-              (hba1cVM.scheduledDate == "")
+              (result.scheduledDate == null)
                   ? ""
-                  : DateTime.parse(hba1cVM.scheduledDate).xFormatTime10(),
+                  : DateTime.parse(result.scheduledDate!).xFormatTime10(),
               style: context.xHeadline3.copyWith(
                 color: getIt<ITheme>().textColorSecondary,
               ),
@@ -234,20 +308,24 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           IconButton(
             onPressed: () async {
               final now = DateTime.now();
-              final initialDate = hba1cVM.scheduledDate;
-              final result = await showRbioDatePicker(
+              final initialDate = result.scheduledDate;
+              final selectedDate = await showRbioDatePicker(
                 context,
                 title: LocaleProvider.current.reminder_date,
-                initialDateTime: (initialDate == '')
+                initialDateTime: (initialDate == null)
                     ? DateTime.now()
                     : DateTime.parse(initialDate),
                 minimumDate: DateTime(now.year, now.month, now.day, 0, 0, 0),
-                maximumDate: DateTime.parse(hba1cVM.lastTestDate)
-                    .add(const Duration(days: 365)),
+                maximumDate: result.lastTestDate == null
+                    ? DateTime.now()
+                    : DateTime.parse(result.lastTestDate!)
+                        .add(const Duration(days: 365)),
               );
 
-              if (result != null) {
-                hba1cVM.setScheduledDate(result.toString());
+              if (selectedDate != null) {
+                context
+                    .read<Hba1cReminderAddEditCubit>()
+                    .setScheduledDate(selectedDate);
               }
             },
             icon: Icon(
@@ -260,7 +338,10 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
     );
   }
 
-  Widget _buildReminderHour(BuildContext context, Hba1cReminderAddVm hba1cVM) {
+  Widget _buildReminderHour(
+    BuildContext context,
+    Hba1cReminderAddEditResult result,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: getIt<ITheme>().cardBackgroundColor,
@@ -278,9 +359,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           Expanded(
             child: Text(
-              hba1cVM.scheduledHour == null
+              result.scheduledHour == null
                   ? ''
-                  : hba1cVM.scheduledHour!.xTimeFormat,
+                  : result.scheduledHour!.xTimeFormat,
               style: context.xHeadline3.copyWith(
                 color: getIt<ITheme>().textColorSecondary,
               ),
@@ -295,8 +376,8 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
                 hour: now.hour,
                 minute: now.minute,
               );
-              if (hba1cVM.scheduledHour != null) {
-                nowTimeOfDay = hba1cVM.scheduledHour!;
+              if (result.scheduledHour != null) {
+                nowTimeOfDay = result.scheduledHour!;
               }
 
               var timeOfDay = await Utils.instance.openMaterialTimePicker(
@@ -304,7 +385,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
                 nowTimeOfDay,
               );
               if (timeOfDay != null) {
-                hba1cVM.setScheduledHour(timeOfDay);
+                context
+                    .read<Hba1cReminderAddEditCubit>()
+                    .setScheduledHour(timeOfDay);
               }
             },
             icon: SvgPicture.asset(
@@ -317,7 +400,10 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
     );
   }
 
-  Widget _buildButtons(Hba1cReminderAddVm vm) {
+  Widget _buildButtons(
+    BuildContext context,
+    Hba1cReminderAddEditResult result,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -342,11 +428,13 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
         //
         Expanded(
           child: RbioElevatedButton(
-            title: isCreated
+            title: result.isCreated
                 ? LocaleProvider.current.btn_create
                 : LocaleProvider.current.update,
             onTap: () {
-              vm.createNotification(isCreated);
+              context
+                  .read<Hba1cReminderAddEditCubit>()
+                  .createNotification(context);
             },
             showElevation: false,
           ),
@@ -356,7 +444,10 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
   }
 
   // #region _buildBoldTitle
-  Widget _buildBoldTitle(String title) {
+  Widget _buildBoldTitle(
+    BuildContext context,
+    String title,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(
         left: 16,

@@ -427,7 +427,7 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
               result.when(
                 hba1C: (model) {
                   Atom.to(
-                    PagePaths.hba1cReminderAdd,
+                    PagePaths.hba1cReminderAddEdit,
                     queryParameters: <String, String>{
                       'notificationId': model.notificationId.toString(),
                     },

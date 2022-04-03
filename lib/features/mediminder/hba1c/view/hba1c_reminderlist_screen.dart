@@ -93,7 +93,7 @@ class Hba1cReminderListScreen extends StatelessWidget {
       backgroundColor: getIt<ITheme>().mainColor,
       onPressed: () {
         Atom.to(
-          PagePaths.hba1cReminderAdd,
+          PagePaths.hba1cReminderAddEdit,
         );
       },
       child: Padding(
