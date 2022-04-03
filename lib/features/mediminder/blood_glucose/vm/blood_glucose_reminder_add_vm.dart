@@ -14,15 +14,44 @@ class BloodGlucoseReminderAddVm extends RbioVm {
   late BuildContext mContext;
   late Remindable mRemindable;
   late ReminderNotificationsManager mRotificationManager;
+  late ReminderRepository reminderRepository;
+  late TextEditingController dailyDoseController;
+  int? createdDate;
 
   BloodGlucoseReminderAddVm({
     required this.mContext,
+    required this.reminderRepository,
     required this.mRemindable,
     required this.mRotificationManager,
+    required this.createdDate,
+    required this.dailyDoseController,
   }) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       _createDays();
       await _generateUniqueIdForSchedule();
+
+      if (createdDate != null) {
+        // Set Default Values
+        final sharedList =
+            reminderRepository.getNotificationList<BloodGlucoseReminderModel>(
+          createdDate!,
+          BloodGlucoseReminderModel.empty(),
+          SharedPreferencesKeys.bloodGlucoseList,
+        );
+        if (sharedList.isNotEmpty) {
+          final firstItem = sharedList.first;
+          _selectedUsageType = firstItem.usageType;
+          _dailyDose = firstItem.dailyDose;
+          mMedicinePeriod = firstItem.medicinePeriod;
+          dailyDoseController.text = "$_dailyDose";
+          await _generateUniqueIdForSchedule();
+          _doseTimes = sharedList
+              .map((e) =>
+                  TZHelper.instance.fromMillisecondsSinceEpoch(e.scheduledDate))
+              .toList();
+          notifyListeners();
+        }
+      }
     });
   }
 
@@ -80,26 +109,12 @@ class BloodGlucoseReminderAddVm extends RbioVm {
   }
 
   int? _dailyDose;
-  int get dailyDose => _dailyDose ?? 1;
-  setDailyDose(int dose) {
-    _dailyDose = dose;
-    notifyListeners();
-  }
-
-  int? _dailyCount;
-  int get dailyCount => _dailyCount ?? 0;
-  Future<void> setDailyCount(int count) async {
-    _dailyCount = count;
+  int get dailyDose => _dailyDose ?? 0;
+  Future<void> setDailyDose(int count) async {
+    _dailyDose = count;
     notifyListeners();
     calculateDoseTimes();
     await _generateUniqueIdForSchedule();
-  }
-
-  String? _drugName;
-  String get drugName => _drugName ?? "-";
-  void setDrugName(String drugName) {
-    _drugName = drugName;
-    notifyListeners();
   }
 
   UsageType? _selectedUsageType;
@@ -148,11 +163,11 @@ class BloodGlucoseReminderAddVm extends RbioVm {
 
     int requiredIdCount = 0;
     if (mMedicinePeriod == MedicinePeriod.oneTime) {
-      requiredIdCount = dailyCount;
+      requiredIdCount = dailyDose;
     } else if (mMedicinePeriod == MedicinePeriod.everyDay) {
-      requiredIdCount = dailyCount;
+      requiredIdCount = dailyDose;
     } else if (mMedicinePeriod == MedicinePeriod.specificDays) {
-      requiredIdCount = days.length * dailyCount;
+      requiredIdCount = days.length * dailyDose;
     } else {
       requiredIdCount = 1;
     }
@@ -172,16 +187,21 @@ class BloodGlucoseReminderAddVm extends RbioVm {
   }
 
   void calculateDoseTimes() {
-    if (dailyCount == 0) return;
+    if (dailyDose == 0) return;
 
     // dailyCount : 3
-    int perMinute = ((24 * 60) / dailyCount).round(); // 480
+    int perMinute = ((24 * 60) / dailyDose).round(); // 480
     int hour = perMinute < 60 ? perMinute : (perMinute / 60).round(); // 8
     int minute = perMinute < 60 ? 0 : perMinute - hour * 60; // 0
     List<tz.TZDateTime> doseTimeList = [];
-    doseTimeList.add(TZHelper.instance.now().add(const Duration(
-        hours: 1))); // TZDateTime (2022-01-31 12:08:12.034435+0300)
-    for (var i = 1; i < dailyCount; i++) {
+    doseTimeList.add(
+      TZHelper.instance.now().add(
+            const Duration(
+              hours: 1,
+            ),
+          ),
+    ); // TZDateTime (2022-01-31 12:08:12.034435+0300)
+    for (var i = 1; i < dailyDose; i++) {
       doseTimeList.add(
         doseTimeList.first.add(
           Duration(hours: i * hour, minutes: i * minute),
@@ -207,9 +227,19 @@ class BloodGlucoseReminderAddVm extends RbioVm {
     notifyListeners();
   }
 
-  void createReminderPlan(Remindable selectedRemindable) {
+  Future<void> createReminderPlan(
+    Remindable selectedRemindable,
+    bool isCreated,
+  ) async {
     final isValid = checkValidation(selectedRemindable, mMedicinePeriod);
     if (!isValid) return;
+
+    //
+    if (!isCreated) {
+      // Bu plana ait tüm bildirimleri sil ve iptal et.
+      await reminderRepository
+          .cancelAndRemoveNotificationBloodGlucose(createdDate!);
+    }
 
     switch (mMedicinePeriod) {
       case MedicinePeriod.oneTime:
@@ -236,17 +266,6 @@ class BloodGlucoseReminderAddVm extends RbioVm {
     Remindable selectedRemindable,
     MedicinePeriod? medicinePeriod,
   ) {
-    // İlaç ismi kontrolü
-    if (selectedRemindable == Remindable.medication) {
-      if (_drugName == null || _drugName == '') {
-        showInfoDialog(
-          LocaleProvider.current.warning,
-          LocaleProvider.current.error_empty_medicine_name,
-        );
-        return false;
-      }
-    }
-
     // Belirli Günler seçiminde gün kontrolü
     if (medicinePeriod == MedicinePeriod.specificDays) {
       final anyDateSelected = days.any((item) => item.selected);
@@ -343,7 +362,7 @@ class BloodGlucoseReminderAddVm extends RbioVm {
         createdDate: createdDate,
         entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
         dayIndex: dayIndex,
-        dosage: dailyDose,
+        dailyDose: dailyDose,
         medicinePeriod: mMedicinePeriod,
         usageType: selectedUsageType,
       ),
@@ -376,27 +395,9 @@ class BloodGlucoseReminderAddVm extends RbioVm {
         SharedPreferencesKeys.bloodGlucoseList, medicineJsonList);
   }
 
-  String _getNotificationTitle() {
-    if (mRemindable == Remindable.medication) {
-      return drugName;
-    } else if (mRemindable == Remindable.bloodGlucose) {
-      return LocaleProvider.of(mContext).blood_glucose_measurement;
-    } else if (mRemindable == Remindable.hbA1c) {
-      return LocaleProvider.of(mContext).hbA1c_measurement;
-    } else {
-      return "";
-    }
-  }
+  String _getNotificationTitle() =>
+      LocaleProvider.of(mContext).blood_glucose_measurement;
 
-  String _getNotificationBody() {
-    if (mRemindable == Remindable.medication) {
-      return LocaleProvider.of(mContext).time_take_medicine;
-    } else if (mRemindable == Remindable.bloodGlucose) {
-      return LocaleProvider.of(mContext).bg_measurement_time;
-    } else if (mRemindable == Remindable.hbA1c) {
-      return LocaleProvider.of(mContext).time_hba1c;
-    } else {
-      return "";
-    }
-  }
+  String _getNotificationBody() =>
+      LocaleProvider.of(mContext).bg_measurement_time;
 }

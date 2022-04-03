@@ -8,46 +8,75 @@ import '../../../../core/utils/tz_helper.dart';
 import '../../mediminder.dart';
 
 class Hba1cReminderAddVm extends ChangeNotifier {
-  BuildContext mContext;
-  Remindable mRemindable;
+  late final BuildContext mContext;
+  late final ReminderRepository reminderRepository;
+  late final int? notificationId;
+  int? createdDate;
 
-  Hba1cReminderAddVm(this.mContext, this.mRemindable);
+  Hba1cReminderAddVm(
+    this.mContext,
+    this.notificationId,
+    this.reminderRepository,
+  ) {
+    // Edit Mode
+    if (notificationId != null) {
+      final localModel = reminderRepository.getHba1CById(notificationId!);
+      if (localModel != null) {
+        createdDate = localModel.createdDate;
+        final remindDate = localModel.scheduledDate.xGetTZDateTime;
+        scheduledDate = remindDate.toString();
+        scheduledHour = TimeOfDay(
+          hour: remindDate.hour,
+          minute: remindDate.minute,
+        );
+        lastTestDate = localModel.lastTestDate!.xGetTZDateTime.toString();
+        lastTestValue = localModel.lastTestValue ?? 0;
+        notifyListeners();
+      }
+    }
+  }
 
   final random = Random();
 
-  String remindDate = "";
-  Future<void> setRemindDate(String time) async {
-    remindDate = time;
+  String scheduledDate = "";
+  Future<void> setScheduledDate(String time) async {
+    scheduledDate = time;
     notifyListeners();
   }
 
-  TimeOfDay? remindHour;
-  Future<void> setRemindHour(TimeOfDay time) async {
-    remindHour = time;
+  TimeOfDay? scheduledHour;
+  Future<void> setScheduledHour(TimeOfDay time) async {
+    scheduledHour = time;
     notifyListeners();
   }
 
-  String lastMeasurementDate = "";
-  Future<void> setLastMeasurementDate(String time) async {
-    lastMeasurementDate = time;
-    remindDate = (DateTime.parse(time).add(const Duration(days: 90)))
+  String lastTestDate = "";
+  Future<void> setLastTestDate(String time) async {
+    lastTestDate = time;
+    scheduledDate = (DateTime.parse(time).add(const Duration(days: 90)))
             .isBefore(DateTime.now().add(const Duration(minutes: 5)))
         ? DateTime.now().add(const Duration(minutes: 5)).toString()
         : (DateTime.parse(time).add(const Duration(days: 90))).toString();
     notifyListeners();
   }
 
-  double previousResult = 0;
-  Future<void> setPreviousResult(double result) async {
-    previousResult = result;
+  double lastTestValue = 0;
+  Future<void> setLastTestValue(double value) async {
+    lastTestValue = value;
     notifyListeners();
   }
 
-  Future<void> createNotification() async {
+  Future<void> createNotification(bool isCreated) async {
     final isValid = _checkValidation();
     if (!isValid) return;
 
-    List<int> pendingList =
+    //
+    if (!isCreated) {
+      // Bu plana ait tüm bildirimleri sil ve iptal et.
+      await reminderRepository.cancelAndRemoveNotificationHba1C(createdDate!);
+    }
+
+    final pendingList =
         await getIt<LocalNotificationManager>().getPendingNotificationIds();
 
     List<int> numberList = [];
@@ -60,13 +89,15 @@ class Hba1cReminderAddVm extends ChangeNotifier {
       }
     }
 
-    final lastMeasurementDateTime = DateTime.parse(lastMeasurementDate);
+    final lastMeasurementDateTime = DateTime.parse(lastTestDate);
     var lastMeasurementDateTimeTZ =
         TZHelper.instance.from(lastMeasurementDateTime.toString());
 
-    final remindDateTime = DateTime.parse(remindDate)
-        .add(Duration(hours: remindHour?.hour ?? 0))
-        .add(Duration(minutes: remindHour?.minute ?? 0));
+    final scheduledDateTime = DateTime.parse(scheduledDate);
+    final remindDateTime = DateTime(scheduledDateTime.year,
+            scheduledDateTime.month, scheduledDateTime.day)
+        .add(Duration(hours: scheduledHour?.hour ?? 0))
+        .add(Duration(minutes: scheduledHour?.minute ?? 0));
     var remindDateTimeTZ = TZHelper.instance.from(remindDateTime.toString());
     final currentHbaModel = Hba1CReminderModel(
       notificationId: numberList.first,
@@ -74,21 +105,30 @@ class Hba1cReminderAddVm extends ChangeNotifier {
       createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
       entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
       lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch,
-      lastTestValue: previousResult,
+      lastTestValue: lastTestValue,
     );
 
-    await getIt<ReminderNotificationsManager>().createHba1c(
-      currentHbaModel,
-      remindDateTimeTZ,
-    );
-    await saveScheduledHba1c(currentHbaModel);
-    Atom.historyBack();
+    try {
+      await getIt<ReminderNotificationsManager>().createHba1c(
+        currentHbaModel,
+        remindDateTimeTZ,
+      );
+
+      await saveScheduledHba1c(currentHbaModel);
+
+      Atom.historyBack();
+    } catch (e) {
+      if (e.toString().contains(
+          'Invalid argument (scheduledDate): Must be a date in the future')) {
+        LoggerUtils.instance.i("Geçmişe hatırlatıcı oluşturulamaz.");
+      }
+    }
   }
 
   bool _checkValidation() {
-    if ((lastMeasurementDate == '') ||
-        (remindDate == '') ||
-        (remindHour == null)) {
+    if ((lastTestDate == '') ||
+        (scheduledDate == '') ||
+        (scheduledHour == null)) {
       showInformationDialog();
       return false;
     }
@@ -110,19 +150,14 @@ class Hba1cReminderAddVm extends ChangeNotifier {
   }
 
   Future<void> saveScheduledHba1c(Hba1CReminderModel hba1c) async {
-    String newHba1cJson = jsonEncode(hba1c.toJson());
-    List<String> hba1cJsonList = [];
-
+    final newHba1cJson = jsonEncode(hba1c.toJson());
     final sharedList = getIt<ISharedPreferencesManager>()
-        .getStringList(SharedPreferencesKeys.hba1cList);
-    if (sharedList != null) {
-      hba1cJsonList = sharedList;
-    }
-
-    hba1cJsonList.add(newHba1cJson);
+            .getStringList(SharedPreferencesKeys.hba1cList) ??
+        [];
+    sharedList.add(newHba1cJson);
     await getIt<ISharedPreferencesManager>().setStringList(
       SharedPreferencesKeys.hba1cList,
-      hba1cJsonList,
+      sharedList,
     );
   }
 }

@@ -445,7 +445,7 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.hba1cReminderAdd,
-          widget: Hba1cReminderAddScreen(),
+          widget: const Hba1cReminderAddScreen(),
         ),
         VWidget(
           path: PagePaths.hba1cList,
@@ -453,7 +453,7 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.reminderDetail,
-          widget: ReminderDetailScreen(),
+          widget: const ReminderDetailScreen(),
         ),
         VGuard(
           beforeEnter: (vRedirector) async {

@@ -8,22 +8,29 @@ import '../../../../core/core.dart';
 import '../hba1c.dart';
 
 class Hba1cReminderAddScreen extends StatefulWidget {
-  Remindable remindable = Remindable.hbA1c;
-
-  Hba1cReminderAddScreen({Key? key}) : super(key: key);
+  const Hba1cReminderAddScreen({Key? key}) : super(key: key);
 
   @override
   State<Hba1cReminderAddScreen> createState() => _Hba1cReminderAddScreenState();
 }
 
 class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
+  int? notificationId;
+  bool get isCreated => notificationId == null;
+
   @override
   Widget build(BuildContext context) {
+    try {
+      final routeParam = Atom.queryParameters['notificationId'];
+      if (routeParam != null) {
+        notificationId = int.tryParse(routeParam);
+      }
+    } catch (_) {
+      return const RbioRouteError();
+    }
+
     return ChangeNotifierProvider<Hba1cReminderAddVm>(
-      create: (context) => Hba1cReminderAddVm(
-        context,
-        widget.remindable,
-      ),
+      create: (context) => Hba1cReminderAddVm(context, notificationId, getIt()),
       child: RbioScaffold(
         appbar: _buildAppBar(context),
         body: _buildBody(context),
@@ -99,39 +106,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
             _buildGap(),
 
             //
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                Expanded(
-                  child: RbioElevatedButton(
-                    backColor: getIt<ITheme>().cardBackgroundColor,
-                    textColor: getIt<ITheme>().textColorSecondary,
-                    title: LocaleProvider.current.btn_cancel,
-                    onTap: () {
-                      Atom.historyBack();
-                    },
-                    showElevation: false,
-                  ),
-                ),
-
-                //
-                R.sizes.wSizer8,
-
-                //
-                Expanded(
-                  child: RbioElevatedButton(
-                    title: LocaleProvider.current.btn_create,
-                    onTap: () {
-                      vm.createNotification();
-                    },
-                    showElevation: false,
-                  ),
-                ),
-              ],
-            ),
+            _buildButtons(vm),
 
             //
             R.sizes.defaultBottomPadding,
@@ -161,9 +136,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           Expanded(
             child: Text(
-              (hba1cVM.lastMeasurementDate == "")
+              (hba1cVM.lastTestDate == "")
                   ? ""
-                  : DateTime.parse(hba1cVM.lastMeasurementDate).xFormatTime10(),
+                  : DateTime.parse(hba1cVM.lastTestDate).xFormatTime10(),
               style: context.xHeadline3,
             ),
           ),
@@ -171,7 +146,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           IconButton(
             onPressed: () async {
-              final initialDate = hba1cVM.lastMeasurementDate;
+              final initialDate = hba1cVM.lastTestDate;
               final result = await showRbioDatePicker(
                 context,
                 title: LocaleProvider.current.last_test_date,
@@ -183,7 +158,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
               );
 
               if (result != null) {
-                hba1cVM.setLastMeasurementDate(result.toString());
+                hba1cVM.setLastTestDate(result.toString());
               }
             },
             icon: Icon(
@@ -199,9 +174,13 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
   Widget _buildLastTestValue(BuildContext context, Hba1cReminderAddVm hba1cVM) {
     return GestureDetector(
       onTap: () async {
-        final result = await Atom.show(const _LastTestDialog());
+        final result = await Atom.show(
+          _LastTestDialog(
+            initValue: hba1cVM.lastTestValue.toString(),
+          ),
+        );
         if (result != null) {
-          hba1cVM.setPreviousResult(double.tryParse(result) ?? 0);
+          hba1cVM.setLastTestValue(double.tryParse(result) ?? 0);
         }
       },
       child: Container(
@@ -216,8 +195,8 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
         ),
         child: Text(
           (Intl.getCurrentLocale() == "tr"
-              ? "% ${hba1cVM.previousResult.toString()}"
-              : "${hba1cVM.previousResult.toString()} %"),
+              ? "% ${hba1cVM.lastTestValue.toString()}"
+              : "${hba1cVM.lastTestValue.toString()} %"),
           style: context.xHeadline3,
         ),
       ),
@@ -242,9 +221,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           Expanded(
             child: Text(
-              (hba1cVM.remindDate == "")
+              (hba1cVM.scheduledDate == "")
                   ? ""
-                  : DateTime.parse(hba1cVM.remindDate).xFormatTime10(),
+                  : DateTime.parse(hba1cVM.scheduledDate).xFormatTime10(),
               style: context.xHeadline3.copyWith(
                 color: getIt<ITheme>().textColorSecondary,
               ),
@@ -255,7 +234,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           IconButton(
             onPressed: () async {
               final now = DateTime.now();
-              final initialDate = hba1cVM.remindDate;
+              final initialDate = hba1cVM.scheduledDate;
               final result = await showRbioDatePicker(
                 context,
                 title: LocaleProvider.current.reminder_date,
@@ -263,12 +242,12 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
                     ? DateTime.now()
                     : DateTime.parse(initialDate),
                 minimumDate: DateTime(now.year, now.month, now.day, 0, 0, 0),
-                maximumDate: DateTime.parse(hba1cVM.lastMeasurementDate)
+                maximumDate: DateTime.parse(hba1cVM.lastTestDate)
                     .add(const Duration(days: 365)),
               );
 
               if (result != null) {
-                hba1cVM.setRemindDate(result.toString());
+                hba1cVM.setScheduledDate(result.toString());
               }
             },
             icon: Icon(
@@ -299,9 +278,9 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           //
           Expanded(
             child: Text(
-              hba1cVM.remindHour == null
+              hba1cVM.scheduledHour == null
                   ? ''
-                  : "${hba1cVM.remindHour?.hour}:${hba1cVM.remindHour?.minute}",
+                  : hba1cVM.scheduledHour!.xTimeFormat,
               style: context.xHeadline3.copyWith(
                 color: getIt<ITheme>().textColorSecondary,
               ),
@@ -316,8 +295,8 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
                 hour: now.hour,
                 minute: now.minute,
               );
-              if (hba1cVM.remindHour != null) {
-                nowTimeOfDay = hba1cVM.remindHour!;
+              if (hba1cVM.scheduledHour != null) {
+                nowTimeOfDay = hba1cVM.scheduledHour!;
               }
 
               var timeOfDay = await Utils.instance.openMaterialTimePicker(
@@ -325,7 +304,7 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
                 nowTimeOfDay,
               );
               if (timeOfDay != null) {
-                hba1cVM.setRemindHour(timeOfDay);
+                hba1cVM.setScheduledHour(timeOfDay);
               }
             },
             icon: SvgPicture.asset(
@@ -335,6 +314,44 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildButtons(Hba1cReminderAddVm vm) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        Expanded(
+          child: RbioElevatedButton(
+            backColor: getIt<ITheme>().cardBackgroundColor,
+            textColor: getIt<ITheme>().textColorSecondary,
+            title: LocaleProvider.current.btn_cancel,
+            onTap: () {
+              Atom.historyBack();
+            },
+            showElevation: false,
+          ),
+        ),
+
+        //
+        R.sizes.wSizer8,
+
+        //
+        Expanded(
+          child: RbioElevatedButton(
+            title: isCreated
+                ? LocaleProvider.current.btn_create
+                : LocaleProvider.current.update,
+            onTap: () {
+              vm.createNotification(isCreated);
+            },
+            showElevation: false,
+          ),
+        ),
+      ],
     );
   }
 
@@ -358,7 +375,12 @@ class _Hba1cReminderAddScreenState extends State<Hba1cReminderAddScreen> {
 }
 
 class _LastTestDialog extends StatefulWidget {
-  const _LastTestDialog({Key? key}) : super(key: key);
+  final String initValue;
+
+  const _LastTestDialog({
+    Key? key,
+    this.initValue = '',
+  }) : super(key: key);
 
   @override
   State<_LastTestDialog> createState() => _LastTestDialogState();
@@ -370,6 +392,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
   @override
   void initState() {
     textEditingController = TextEditingController();
+    textEditingController.text = widget.initValue;
 
     super.initState();
   }

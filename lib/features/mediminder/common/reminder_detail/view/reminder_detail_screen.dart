@@ -274,7 +274,7 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
 
         //
         _buildTitleRow(
-          model.dosage == null ? '' : model.dosage.toString(),
+          model.dailyDose == null ? '' : model.dailyDose.toString(),
           "",
           true,
         ),
@@ -423,7 +423,27 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
         children: [
           //
           RbioElevatedButton(
-            onTap: () {},
+            onTap: () {
+              result.when(
+                hba1C: (model) {
+                  Atom.to(
+                    PagePaths.hba1cReminderAdd,
+                    queryParameters: <String, String>{
+                      'notificationId': model.notificationId.toString(),
+                    },
+                  );
+                },
+                bloodGlucose: (model) {
+                  Atom.to(
+                    PagePaths.bloodGlucoseReminderAdd,
+                    queryParameters: <String, String>{
+                      'createdDate': model.createdDate.toString(),
+                    },
+                  );
+                },
+                medication: (model) {},
+              );
+            },
             title: LocaleProvider.current.edit,
             infinityWidth: true,
             showElevation: false,
@@ -436,16 +456,12 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
           R.sizes.hSizer8,
 
           //
-          RbioElevatedButton(
+          RbioRedButton(
             onTap: () async {
               await context.read<ReminderDetailCubit>().removeReminder(result);
             },
             title: LocaleProvider.current.btn_delete_reminder,
             infinityWidth: true,
-            showElevation: false,
-            fontWeight: FontWeight.bold,
-            textColor: getIt<ITheme>().textColor,
-            backColor: R.color.darkRed,
           ),
         ],
       ),

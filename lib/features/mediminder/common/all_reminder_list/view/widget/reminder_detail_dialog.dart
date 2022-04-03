@@ -91,17 +91,13 @@ class ReminderDetailDialog extends StatelessWidget {
             R.sizes.hSizer4,
 
             //
-            RbioElevatedButton(
+            RbioRedButton(
               onTap: () {
                 context.read<AllReminderListCubit>().removeReminder(model);
                 Atom.dismiss();
               },
               title: LocaleProvider.current.btn_cancel,
               infinityWidth: true,
-              showElevation: false,
-              fontWeight: FontWeight.bold,
-              textColor: getIt<ITheme>().textColor,
-              backColor: R.color.darkRed,
             ),
           ],
         ),

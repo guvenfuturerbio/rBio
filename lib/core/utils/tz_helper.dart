@@ -87,6 +87,8 @@ extension TZDateTimeExtensions on tz.TZDateTime {
 }
 
 extension TZDateTimeIntExtensions on int {
+  tz.TZDateTime get xGetTZDateTime => TZHelper.instance.fromMillisecondsSinceEpoch(this);
+
   String get xDateFormat =>
       TZHelper.instance.fromMillisecondsSinceEpoch(this).xFormatTime10();
 

@@ -98,7 +98,7 @@ class BloodGlucoseReminderListVm extends ChangeNotifier {
         final remindable = medicine.remindable;
         if (remindable == Remindable.medication) {
           result += ", " +
-              medicine.dosage.toString() +
+              medicine.dailyDose.toString() +
               " " +
               LocaleProvider.current.hint_dosage;
         }

@@ -20,38 +20,44 @@ class BloodGlucoseReminderAddScreen extends StatefulWidget {
 
 class _BloodGlucoseReminderAddScreenState
     extends State<BloodGlucoseReminderAddScreen> {
-  late TextEditingController drugDailyCountController;
-  late TextEditingController intermittentDrugPerDayController;
   late TextEditingController dailyDoseController;
-  late TextEditingController drugNameController;
+
+  int? createdDate;
+  bool get isCreated => createdDate == null;
 
   @override
   void initState() {
-    drugDailyCountController = TextEditingController();
-    intermittentDrugPerDayController = TextEditingController();
     dailyDoseController = TextEditingController();
-    drugNameController = TextEditingController();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    drugDailyCountController.dispose();
-    intermittentDrugPerDayController.dispose();
     dailyDoseController.dispose();
-    drugNameController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    try {
+      final routeParam = Atom.queryParameters['createdDate'];
+      if (routeParam != null) {
+        createdDate = int.tryParse(routeParam);
+      }
+    } catch (_) {
+      return const RbioRouteError();
+    }
+
     return ChangeNotifierProvider<BloodGlucoseReminderAddVm>(
       create: (_) => BloodGlucoseReminderAddVm(
         mContext: context,
+        reminderRepository: getIt(),
         mRemindable: widget.remindable,
         mRotificationManager: getIt<ReminderNotificationsManager>(),
+        createdDate: createdDate,
+        dailyDoseController: dailyDoseController,
       ),
       child: Consumer<BloodGlucoseReminderAddVm>(
         builder: (
@@ -97,9 +103,6 @@ class _BloodGlucoseReminderAddScreenState
                   R.sizes.stackedTopPadding(context),
                   _buildGap(),
 
-                  // Medicine Name
-                  _buildMedicineName(vm),
-
                   // Tags
                   _buildBoldTitle(LocaleProvider.current.tag_description),
                   _buildTags(vm),
@@ -110,6 +113,7 @@ class _BloodGlucoseReminderAddScreenState
                   // Periods
                   _buildBoldTitle(LocaleProvider.current.how_often),
                   ExpandablePeriodCard(
+                    initValue: vm.mMedicinePeriod,
                     isReset: vm.mMedicinePeriod == null,
                     onChanged: (value) {
                       vm.setMedicinePeriod(value);
@@ -119,21 +123,15 @@ class _BloodGlucoseReminderAddScreenState
                   //
                   _buildGap(),
 
-                  // How many times a day?
+                  // Daily Dose
                   if (vm.mMedicinePeriod != null) ...[
                     _buildBoldTitle(
                         LocaleProvider.current.how_many_times_a_day),
-                    _buildHowManyTimes(vm),
+                    _buildDailyDose(vm),
                   ],
 
                   //
-                  if (vm.mMedicinePeriod ==
-                      MedicinePeriod.intermittentDays) ...[
-                    _buildIntermittentDaysSection(),
-                  ],
-
-                  //
-                  vm.dailyCount == 0
+                  vm.dailyDose == 0
                       ? const SizedBox()
                       : Column(
                           children: <Widget>[
@@ -168,7 +166,7 @@ class _BloodGlucoseReminderAddScreenState
           ),
         ),
 
-        if (vm.dailyCount != 0) ...[
+        if (vm.dailyDose != 0) ...[
           _buildGap(),
 
           //
@@ -184,14 +182,14 @@ class _BloodGlucoseReminderAddScreenState
                   textColor: getIt<ITheme>().textColorSecondary,
                   title: LocaleProvider.current.btn_cancel,
                   onTap: () {
-                    drugDailyCountController.clear();
-                    drugDailyCountController.clear();
-                    intermittentDrugPerDayController.clear();
-                    dailyDoseController.clear();
-                    drugNameController;
-                    vm.daysReset();
-                    vm.setMedicinePeriod(null);
-                    vm.setDailyCount(0);
+                    if (isCreated) {
+                      dailyDoseController.clear();
+                      vm.daysReset();
+                      vm.setMedicinePeriod(null);
+                      vm.setDailyDose(0);
+                    } else {
+                      Atom.historyBack();
+                    }
                   },
                   showElevation: false,
                 ),
@@ -203,9 +201,11 @@ class _BloodGlucoseReminderAddScreenState
               //
               Expanded(
                 child: RbioElevatedButton(
-                  title: LocaleProvider.current.btn_create,
+                  title: isCreated
+                      ? LocaleProvider.current.btn_create
+                      : LocaleProvider.current.update,
                   onTap: () {
-                    vm.createReminderPlan(widget.remindable);
+                    vm.createReminderPlan(widget.remindable, isCreated);
                   },
                   showElevation: false,
                 ),
@@ -217,36 +217,6 @@ class _BloodGlucoseReminderAddScreenState
           R.sizes.defaultBottomPadding,
         ],
       ],
-    );
-  }
-  // #endregion
-
-  // #region _buildMedicineName
-  Widget _buildMedicineName(BloodGlucoseReminderAddVm value) {
-    return Visibility(
-      visible: widget.remindable == Remindable.medication,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildBoldTitle(LocaleProvider.current.medicine_name),
-
-          //
-          RbioTextFormField(
-            controller: drugNameController,
-            // maxLength: 10,
-            obscureText: false,
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.next,
-            hintText: LocaleProvider.current.medicine_name,
-            onChanged: (text) {
-              value.setDrugName(text);
-            },
-          ),
-
-          //
-          _buildGap(),
-        ],
-      ),
     );
   }
   // #endregion
@@ -310,10 +280,10 @@ class _BloodGlucoseReminderAddScreenState
   }
   // #endregion
 
-  // #region _buildHowManyTimes
-  RbioTextFormField _buildHowManyTimes(BloodGlucoseReminderAddVm vm) {
+  // #region _buildDailyDose
+  RbioTextFormField _buildDailyDose(BloodGlucoseReminderAddVm vm) {
     return RbioTextFormField(
-      controller: drugDailyCountController,
+      controller: dailyDoseController,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.number,
       obscureText: false,
@@ -323,43 +293,9 @@ class _BloodGlucoseReminderAddScreenState
       ],
       onChanged: (text) {
         if (text != '') {
-          vm.setDailyCount(text.isNotEmpty ? int.parse(text) : 0);
+          vm.setDailyDose(text.isNotEmpty ? int.parse(text) : 0);
         }
       },
-    );
-  }
-  // #endregion
-
-  // #region _buildIntermittentDaysSection
-  Widget _buildIntermittentDaysSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        //
-        _buildGap(),
-
-        _buildBoldTitle(
-          LocaleProvider.current.medicine_how_often_intermittent_daily_message,
-        ),
-
-        //
-        RbioTextFormField(
-          controller: intermittentDrugPerDayController,
-          textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.number,
-          obscureText: false,
-          hintText: LocaleProvider.current.medicine_intermittent_daily_count,
-          prefixIcon: SvgPicture.asset(
-            R.image.user,
-            fit: BoxFit.none,
-          ),
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
-          ],
-          onFieldSubmitted: (term) {},
-          onChanged: (text) {},
-        ),
-      ],
     );
   }
   // #endregion
@@ -468,11 +404,13 @@ class _BloodGlucoseReminderAddScreenState
 }
 
 class ExpandablePeriodCard extends StatefulWidget {
+  final MedicinePeriod? initValue;
   final bool isReset;
   final ValueChanged<MedicinePeriod> onChanged;
 
   const ExpandablePeriodCard({
     Key? key,
+    this.initValue,
     required this.isReset,
     required this.onChanged,
   }) : super(key: key);
@@ -490,6 +428,10 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
     if (widget.isReset) {
       _selectedPeriod = null;
       _isExpanded = true;
+    }
+
+    if (widget.initValue != null) {
+      _selectedPeriod = widget.initValue!;
     }
 
     return Container(

@@ -15,6 +15,7 @@ class ReminderRepository {
     this.localNotificationManager,
   );
 
+  // #region getAllRelatives
   List<AllReminderRelativePerson> getAllRelatives() =>
       profileStorage.getAll().map(
         (e) {
@@ -25,7 +26,9 @@ class ReminderRepository {
           );
         },
       ).toList();
+  // #endregion
 
+  // #region getAllReminders
   List<AllReminderListModel> getAllReminders() {
     final allProfiles = profileStorage.getAll();
 
@@ -105,7 +108,9 @@ class ReminderRepository {
 
     return result;
   }
+  // #endregion
 
+  // #region cancelAndRemoveNotification
   Future<bool> cancelAndRemoveNotification(
     Remindable remindable,
     int notificationId,
@@ -173,89 +178,128 @@ class ReminderRepository {
       return false;
     }
   }
+  // #endregion
 
-  Future<void> _updateLocalList<T extends ReminderEntity>(
-    int notificationId,
-    SharedPreferencesKeys sharedKeys,
-    T entity,
+  // #region cancelAndRemoveNotificationBloodGlucose
+  Future<void> cancelAndRemoveNotificationBloodGlucose(
+    int createdDate,
   ) async {
-    List<String> jsonList =
-        sharedPreferencesManager.getStringList(sharedKeys) ?? [];
-    List<T> prefList = [];
-    for (String jsonMedicine in jsonList) {
-      Map<String, dynamic> jsonMap = jsonDecode(jsonMedicine);
-      prefList.add(entity.fromJson(jsonMap));
+    final sharedList = sharedPreferencesManager
+            .getStringList(SharedPreferencesKeys.bloodGlucoseList) ??
+        [];
+    final tempList = <BloodGlucoseReminderModel>[];
+    for (String item in sharedList) {
+      final json = jsonDecode(item);
+      tempList.add(BloodGlucoseReminderModel.fromJson(json));
     }
-    prefList.removeWhere((item) => item.notificationId == notificationId);
-    List<String> saveList = [];
-    for (var medicines in prefList) {
-      String medicineJson = jsonEncode(medicines.toJson());
-      saveList.add(medicineJson);
+
+    // Notificationlar'ı iptal et
+    await Future.forEach<BloodGlucoseReminderModel>(
+      tempList,
+      (item) async {
+        if (item.createdDate == createdDate) {
+          // Notification'ı iptal et
+          await getIt<LocalNotificationManager>()
+              .cancelNotification(item.notificationId);
+        }
+      },
+    );
+
+    tempList.removeWhere((element) => element.createdDate == createdDate);
+
+    List<String> savedList = [];
+    if (sharedList.isNotEmpty) {
+      for (var item in tempList) {
+        final itemStr = jsonEncode(item.toJson());
+        savedList.add(itemStr);
+      }
     }
-    await sharedPreferencesManager.setStringList(
-      sharedKeys,
-      saveList,
+    await getIt<ISharedPreferencesManager>().setStringList(
+      SharedPreferencesKeys.bloodGlucoseList,
+      savedList,
     );
   }
+  // #endregion
 
+  // #region cancelAndRemoveNotificationHba1C
+  Future<void> cancelAndRemoveNotificationHba1C(
+    int createdDate,
+  ) async {
+    final sharedList = sharedPreferencesManager
+            .getStringList(SharedPreferencesKeys.hba1cList) ??
+        [];
+    final tempList = <Hba1CReminderModel>[];
+    for (String item in sharedList) {
+      final json = jsonDecode(item);
+      tempList.add(Hba1CReminderModel.fromJson(json));
+    }
+
+    // Notificationlar'ı iptal et
+    await Future.forEach<Hba1CReminderModel>(
+      tempList,
+      (item) async {
+        if (item.createdDate == createdDate) {
+          // Notification'ı iptal et
+          await getIt<LocalNotificationManager>()
+              .cancelNotification(item.notificationId);
+        }
+      },
+    );
+
+    tempList.removeWhere((element) => element.createdDate == createdDate);
+
+    List<String> savedList = [];
+    if (sharedList.isNotEmpty) {
+      for (var item in tempList) {
+        final itemStr = jsonEncode(item.toJson());
+        savedList.add(itemStr);
+      }
+    }
+    await getIt<ISharedPreferencesManager>().setStringList(
+      SharedPreferencesKeys.hba1cList,
+      savedList,
+    );
+  }
+  // #endregion
+
+  // #region getReminderDetailResult
   ReminderDetailResult? getReminderDetailResult(
     Remindable remindable,
     int notificationId,
   ) {
     switch (remindable) {
       case Remindable.bloodGlucose:
-        {
-          final result = _getNotificationDetail<BloodGlucoseReminderModel>(
-            notificationId,
-            BloodGlucoseReminderModel.empty(),
-            SharedPreferencesKeys.bloodGlucoseList,
-          );
-          if (result != null) {
-            return ReminderDetailResult.bloodGlucose(result);
-          }
-
-          break;
+        final result = getBloodGlucoseById(notificationId);
+        if (result != null) {
+          return ReminderDetailResult.bloodGlucose(result);
         }
+        break;
 
       case Remindable.strip:
-        {
-          break;
-        }
+        break;
 
       case Remindable.medication:
-        {
-          final result = _getNotificationDetail<MedicationReminderModel>(
-            notificationId,
-            MedicationReminderModel.empty(),
-            SharedPreferencesKeys.medicineList,
-          );
-          if (result != null) {
-            return ReminderDetailResult.medication(result);
-          }
-
-          break;
+        final result = getMedicationById(notificationId);
+        if (result != null) {
+          return ReminderDetailResult.medication(result);
         }
+        break;
 
       case Remindable.hbA1c:
-        {
-          final result = _getNotificationDetail<Hba1CReminderModel>(
-            notificationId,
-            Hba1CReminderModel.empty(),
-            SharedPreferencesKeys.hba1cList,
-          );
-          if (result != null) {
-            return ReminderDetailResult.hba1C(result);
-          }
-
-          break;
+        final result = getHba1CById(notificationId);
+        if (result != null) {
+          return ReminderDetailResult.hba1C(result);
         }
+        break;
     }
 
     return null;
   }
+  // #endregion
 
-  T? _getNotificationDetail<T extends ReminderEntity>(
-    int notificationId,
+  // #region getNotificationList
+  List<T> getNotificationList<T extends ReminderEntity>(
+    int createdDate,
     T entity,
     SharedPreferencesKeys keys,
   ) {
@@ -265,11 +309,13 @@ class ReminderRepository {
       final json = jsonDecode(item);
       tempList.add(entity.fromJson(json));
     }
-    return tempList.firstWhereOrNull(
-      (element) => element.notificationId == notificationId,
-    );
+    return tempList
+        .where((element) => element.createdDate == createdDate)
+        .toList();
   }
+  // #endregion
 
+  // #region filterList
   List<AllReminderListModel> filterList(
     List<AllReminderListModel> allList,
     AllReminderListFilterResult filterResult,
@@ -317,4 +363,75 @@ class ReminderRepository {
 
     return filterList;
   }
+  // #endregion
+
+  // #region getBloodGlucoseById
+  BloodGlucoseReminderModel? getBloodGlucoseById(int notificationId) =>
+      _getNotificationDetail(
+        notificationId,
+        BloodGlucoseReminderModel.empty(),
+        SharedPreferencesKeys.bloodGlucoseList,
+      );
+  // #endregion
+
+  // #region getMedicationById
+  MedicationReminderModel? getMedicationById(int notificationId) =>
+      _getNotificationDetail(
+        notificationId,
+        MedicationReminderModel.empty(),
+        SharedPreferencesKeys.medicineList,
+      );
+  // #endregion
+
+  // #region getHba1CById
+  Hba1CReminderModel? getHba1CById(int notificationId) =>
+      _getNotificationDetail(
+        notificationId,
+        Hba1CReminderModel.empty(),
+        SharedPreferencesKeys.hba1cList,
+      );
+  // #endregion
+
+  // #region _getNotificationDetail
+  T? _getNotificationDetail<T extends ReminderEntity>(
+    int notificationId,
+    T entity,
+    SharedPreferencesKeys keys,
+  ) {
+    final sharedList = sharedPreferencesManager.getStringList(keys) ?? [];
+    final tempList = <T>[];
+    for (String item in sharedList) {
+      final json = jsonDecode(item);
+      tempList.add(entity.fromJson(json));
+    }
+    return tempList.firstWhereOrNull(
+      (element) => element.notificationId == notificationId,
+    );
+  }
+  // #endregion
+
+  // #region _updateLocalList
+  Future<void> _updateLocalList<T extends ReminderEntity>(
+    int notificationId,
+    SharedPreferencesKeys sharedKeys,
+    T entity,
+  ) async {
+    final localList = sharedPreferencesManager.getStringList(sharedKeys) ?? [];
+    List<T> prefList = [];
+    for (String item in localList) {
+      final json = jsonDecode(item);
+      prefList.add(entity.fromJson(json));
+    }
+    prefList.removeWhere((item) => item.notificationId == notificationId);
+    List<String> saveList = [];
+    for (var item in prefList) {
+      final itemStr = jsonEncode(item.toJson());
+      saveList.add(itemStr);
+    }
+    await sharedPreferencesManager.setStringList(
+      sharedKeys,
+      saveList,
+    );
+  }
+  // #endregion
 }

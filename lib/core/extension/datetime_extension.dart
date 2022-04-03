@@ -71,9 +71,7 @@ extension BuildContextExtensions on DateTime {
     final hourLeft = int.tryParse(
             h.toString().length < 2 ? "0" + h.toString() : h.toString()) ??
         0;
-    final minuteLeft = int.tryParse(
-            m.toString().length < 2 ? "0" + m.toString() : m.toString()) ??
-        0;
+    final minuteLeft = int.tryParse(m.toString().length < 2 ? "0" + m.toString() : m.toString()) ?? 0;
     final secondsLeft = int.tryParse(
             s.toString().length < 2 ? "0" + s.toString() : s.toString()) ??
         0;

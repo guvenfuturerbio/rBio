@@ -4,7 +4,7 @@ import '../../mediminder.dart';
 class BloodGlucoseReminderModel
     extends ReminderEntity<BloodGlucoseReminderModel> {
   int? dayIndex;
-  int? dosage;
+  int? dailyDose;
   MedicinePeriod? medicinePeriod;
   UsageType? usageType;
 
@@ -14,7 +14,7 @@ class BloodGlucoseReminderModel
     required int createdDate,
     required int entegrationId,
     this.dayIndex,
-    this.dosage,
+    this.dailyDose,
     this.medicinePeriod,
     this.usageType,
   }) : super(
@@ -39,7 +39,7 @@ class BloodGlucoseReminderModel
       ..addAll(
         {
           "dayIndex": dayIndex,
-          "dosage": dosage,
+          "dailyDose": dailyDose,
           "medicinePeriod": medicinePeriod?.xRawValue,
           "usageType": usageType?.xRawValue,
         },
@@ -53,7 +53,7 @@ class BloodGlucoseReminderModel
       createdDate: json['createdDate'] as int,
       entegrationId: json['entegrationId'] as int,
       dayIndex: json['dayIndex'] as int?,
-      dosage: json['dosage'] as int?,
+      dailyDose: json['dailyDose'] as int?,
       medicinePeriod: json['medicinePeriod'] == null
           ? null
           : (json['medicinePeriod'] as String).xMedicinePeriodKeys,
@@ -70,7 +70,7 @@ class BloodGlucoseReminderModel
         createdDate: createdDate,
         entegrationId: entegrationId,
         dayIndex: dayIndex,
-        dosage: dosage,
+        dailyDose: dailyDose,
         medicinePeriod: medicinePeriod,
         usageType: usageType,
       );

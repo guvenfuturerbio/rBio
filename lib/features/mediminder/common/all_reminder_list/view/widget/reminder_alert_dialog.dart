@@ -88,7 +88,7 @@ class ReminderAlertDialog extends StatelessWidget {
             R.sizes.hSizer4,
 
             //
-            RbioElevatedButton(
+            RbioRedButton(
               onTap: () {
                 Atom.dismiss();
                 Future.delayed(
@@ -99,10 +99,7 @@ class ReminderAlertDialog extends StatelessWidget {
                 );
               },
               title: LocaleProvider.current.discard,
-              showElevation: false,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              backColor: R.color.darkRed,
-              fontWeight: FontWeight.bold,
+              infinityWidth: true,
             ),
           ],
         ),
