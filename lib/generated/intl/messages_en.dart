@@ -575,6 +575,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you satisfied with your doctor ?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
             "How was the quality of the video call ?"),
+        "how_will_you_follow_up":
+            MessageLookupByLibrary.simpleMessage("How will you follow up?"),
         "hungry": MessageLookupByLibrary.simpleMessage("Hungry"),
         "hyper": MessageLookupByLibrary.simpleMessage("Hyper"),
         "hypo": MessageLookupByLibrary.simpleMessage("Hypo"),
@@ -677,6 +679,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "make_an_online":
             MessageLookupByLibrary.simpleMessage("Make an Online Appointment"),
         "male": MessageLookupByLibrary.simpleMessage("Male"),
+        "manuel": MessageLookupByLibrary.simpleMessage("Manuel"),
         "mars_hosp":
             MessageLookupByLibrary.simpleMessage("Güven Hospital Ayrancı"),
         "max_range": MessageLookupByLibrary.simpleMessage("Max Range: "),
@@ -877,6 +880,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sonucunuz ekrana gelene kadar bekleyin."),
         "omron_wrist_step5": MessageLookupByLibrary.simpleMessage(
             "Cihaz ölçüm yaparken rahat ve hareketsiz bekledğinizden emin olun."),
+        "once": MessageLookupByLibrary.simpleMessage("Once"),
         "one_glucometer_one_profile_message":
             MessageLookupByLibrary.simpleMessage(
                 "You can use 1 glucometer for a single profile only."),
@@ -964,6 +968,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pick a photo option"),
         "pick_time": MessageLookupByLibrary.simpleMessage("Pick Time"),
         "piece": MessageLookupByLibrary.simpleMessage("piece"),
+        "pillar_small": MessageLookupByLibrary.simpleMessage("Pillar small"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Choose"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Please select department"),
@@ -1175,6 +1180,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Take a COVID-19 Test"),
         "take_video_appointment":
             MessageLookupByLibrary.simpleMessage("Video Call Appointment"),
+        "taken_per_day": MessageLookupByLibrary.simpleMessage("Taken per day"),
         "target": MessageLookupByLibrary.simpleMessage("Target"),
         "tawkto_url": MessageLookupByLibrary.simpleMessage(
             "https://tawk.to/chat/5f86c131a2eb1124c0bcccc5/default"),

@@ -65,7 +65,7 @@ class _MedicationReminderAddScreenState
               appbar: RbioAppBar(
                 title: RbioAppBar.textTitle(
                   context,
-                  widget.remindable.toShortTitle(),
+                  LocaleProvider.current.medication_reminders,
                 ),
               ),
               body: _buildBody(vm),
@@ -95,6 +95,14 @@ class _MedicationReminderAddScreenState
                 children: <Widget>[
                   //
                   R.sizes.stackedTopPadding(context),
+                  _buildGap(),
+
+                  //
+                  _buildBoldTitle(
+                      LocaleProvider.current.how_will_you_follow_up),
+                  _buildMedicineTypes(vm),
+
+                  //
                   _buildGap(),
 
                   // Medicine Name
@@ -228,6 +236,62 @@ class _MedicationReminderAddScreenState
           //
           _buildGap(),
         ],
+      ),
+    );
+  }
+  // #endregion
+
+  // #region _buildMedicineTypes
+  Widget _buildMedicineTypes(MedicationReminderAddVm value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: _buildMedicineTypeCard(
+            value,
+            MedicineType.pillarSmall,
+          ),
+        ),
+        R.sizes.wSizer12,
+        Expanded(
+          child: _buildMedicineTypeCard(
+            value,
+            MedicineType.manuel,
+          ),
+        ),
+      ],
+    );
+  }
+  // #endregion
+
+  // #region _buildMedicineTypeCard
+  Widget _buildMedicineTypeCard(
+    MedicationReminderAddVm value,
+    MedicineType type,
+  ) {
+    final _text = Text(
+      type.toShortString(),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.start,
+      style: context.xHeadline4.copyWith(
+        color: type == value.selectedMedicineType
+            ? getIt<ITheme>().textColor
+            : getIt<ITheme>().textColorPassive,
+      ),
+    );
+
+    return GestureDetector(
+      onTap: () => {value.setMedicineType(type)},
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: type == value.selectedMedicineType
+              ? getIt<ITheme>().mainColor
+              : Colors.white,
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        child: _text,
       ),
     );
   }

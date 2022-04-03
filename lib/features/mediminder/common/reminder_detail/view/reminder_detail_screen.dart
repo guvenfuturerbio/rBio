@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onedosehealth/core/utils/tz_helper.dart';
 
 import '../../../../../core/core.dart';
 import '../../../mediminder.dart';
@@ -149,9 +150,9 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: result.when(
-              hba1C: (_) => _buildHbA1c(),
+              hba1C: (model) => _buildHbA1c(model),
               bloodGlucose: (model) => _buildBloodGlucose(model),
-              medication: (_) => _buildMedicationReminders(),
+              medication: (model) => _buildMedicationReminders(model),
             ),
           ),
         ],
@@ -307,7 +308,7 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
     );
   }
 
-  Widget _buildHbA1c() {
+  Widget _buildHbA1c(Hba1CReminderModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -318,15 +319,15 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
 
         //
         _buildTitleRow(
-          "Son test tarihi",
-          "Son test değeri",
+          LocaleProvider.current.last_test_date,
+          LocaleProvider.current.last_result,
           false,
         ),
 
         //
         _buildTitleRow(
-          "23/12/2021",
-          "4.5%",
+          model.lastTestDate == null ? '' : model.lastTestDate!.xDateFormat,
+          model.lastTestValue == null ? '' : '${model.lastTestValue} %',
           true,
         ),
 
@@ -335,22 +336,22 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
 
         //
         _buildTitleRow(
-          "Hatırlatılacak gün",
-          "Saat",
+          LocaleProvider.current.reminder_date,
+          LocaleProvider.current.time,
           false,
         ),
 
         //
         _buildTitleRow(
-          "23/03/2022",
-          "10:00",
+          model.scheduledDate.xDateFormat,
+          model.scheduledDate.xHourFormat,
           true,
         ),
       ],
     );
   }
 
-  Widget _buildMedicationReminders() {
+  Widget _buildMedicationReminders(MedicationReminderModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -361,13 +362,13 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
         //
         _buildTitleRow(
           LocaleProvider.current.status,
-          "Günde alınan",
+          LocaleProvider.current.taken_per_day,
           false,
         ),
 
         //
         _buildTitleRow(
-          "Aç",
+          model.usageType == null ? '' : model.usageType!.toShortString(),
           "2 kere",
           true,
         ),
@@ -378,14 +379,16 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
         //
         _buildTitleRow(
           "Kaç günde bir",
-          "Bir kerede",
+          LocaleProvider.current.once,
           false,
         ),
 
         //
         _buildTitleRow(
           "1",
-          "1 doz",
+          model.dosage == null
+              ? ''
+              : '${model.dosage} ${LocaleProvider.current.hint_dosage.toLowerCase()}',
           true,
         ),
       ],

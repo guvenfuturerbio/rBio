@@ -73,8 +73,8 @@ class Hba1cReminderAddVm extends ChangeNotifier {
       scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch,
       createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
       entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
-      lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch.toString(),
-      lastTestValue: previousResult.toString(),
+      lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch,
+      lastTestValue: previousResult,
     );
 
     await getIt<ReminderNotificationsManager>().createHba1c(

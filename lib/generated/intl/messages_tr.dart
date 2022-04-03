@@ -116,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "back": MessageLookupByLibrary.simpleMessage("Geri"),
         "bef": MessageLookupByLibrary.simpleMessage("Önc."),
         "before": MessageLookupByLibrary.simpleMessage("Önce"),
-        "before_meal": MessageLookupByLibrary.simpleMessage("Hungry"),
+        "before_meal": MessageLookupByLibrary.simpleMessage("Aç"),
         "bg_graph": MessageLookupByLibrary.simpleMessage("Kan Şeker Takibi"),
         "bg_measurement_time":
             MessageLookupByLibrary.simpleMessage("Kan şekerinizi ölçelim!"),
@@ -569,6 +569,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Doktorunuzdan memnun kaldınız mı ?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
             "Video görüşmesinin kalitesi nasıldı ?"),
+        "how_will_you_follow_up":
+            MessageLookupByLibrary.simpleMessage("Nasıl takip edeceksiniz?"),
         "hungry": MessageLookupByLibrary.simpleMessage("Aç"),
         "hyper": MessageLookupByLibrary.simpleMessage("Hiper"),
         "hypo": MessageLookupByLibrary.simpleMessage("Hipo"),
@@ -670,6 +672,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "make_an_online":
             MessageLookupByLibrary.simpleMessage("Online randevu al"),
         "male": MessageLookupByLibrary.simpleMessage("Erkek"),
+        "manuel": MessageLookupByLibrary.simpleMessage("Manuel"),
         "mars_hosp":
             MessageLookupByLibrary.simpleMessage("Güven Hastanesi Ayrancı"),
         "max_range": MessageLookupByLibrary.simpleMessage("Max Aralık: "),
@@ -868,6 +871,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sonucunuz ekrana gelene kadar bekleyin."),
         "omron_wrist_step5": MessageLookupByLibrary.simpleMessage(
             "Cihaz ölçüm yaparken rahat ve hareketsiz bekledğinizden emin olun."),
+        "once": MessageLookupByLibrary.simpleMessage("Bir kerede"),
         "one_glucometer_one_profile_message":
             MessageLookupByLibrary.simpleMessage(
                 "Tek profil için sadece 1 tane glukometre bağlayabilirsiniz."),
@@ -953,6 +957,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Opsiyon seçiniz"),
         "pick_time": MessageLookupByLibrary.simpleMessage("Zaman Seç"),
         "piece": MessageLookupByLibrary.simpleMessage("adet"),
+        "pillar_small": MessageLookupByLibrary.simpleMessage("İlaç kutusu"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Seçiniz"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Lütfen departman seçiniz"),
@@ -1168,6 +1173,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("COVID-19 PCR Testi yaptır"),
         "take_video_appointment":
             MessageLookupByLibrary.simpleMessage("Görüntülü Görüşme Randevusu"),
+        "taken_per_day": MessageLookupByLibrary.simpleMessage("Günde alınan"),
         "target": MessageLookupByLibrary.simpleMessage("Hedef"),
         "tawkto_url": MessageLookupByLibrary.simpleMessage(
             "https://tawk.to/chat/5ec22b4c967ae56c521abb5d/default"),

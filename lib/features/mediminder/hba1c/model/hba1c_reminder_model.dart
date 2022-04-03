@@ -2,8 +2,8 @@ import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
 class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
-  String? lastTestDate;
-  String? lastTestValue;
+  int? lastTestDate;
+  double? lastTestValue;
 
   Hba1CReminderModel({
     required int notificationId,
@@ -45,8 +45,8 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
       entegrationId: json['entegrationId'] as int,
-      lastTestDate: json['lastTestDate'] as String?,
-      lastTestValue: json['lastTestValue'] as String?,
+      lastTestDate: json['lastTestDate'] as int?,
+      lastTestValue: json['lastTestValue'] as double?,
     );
   }
 

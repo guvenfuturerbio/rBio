@@ -5,6 +5,43 @@ class FilterDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<AllReminderListCubit, AllReminderListState>(
+      builder: (context, state) {
+        return state.whenOrNull(
+              success: (result) {
+                final filterResult = result.filterResult;
+                return FilterBody(filterResult: filterResult);
+              },
+            ) ??
+            const SizedBox();
+      },
+    );
+  }
+}
+
+class FilterBody extends StatefulWidget {
+  final AllReminderListFilterResult filterResult;
+
+  const FilterBody({
+    Key? key,
+    required this.filterResult,
+  }) : super(key: key);
+
+  @override
+  State<FilterBody> createState() => _FilterBodyState();
+}
+
+class _FilterBodyState extends State<FilterBody> {
+  late AllReminderListFilterResult currentResult;
+
+  @override
+  void initState() {
+    currentResult = widget.filterResult;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Container(
         constraints: BoxConstraints(
@@ -30,19 +67,19 @@ class FilterDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               //
-              ..._buildPersonalList(context),
+              ..._buildPersonalList(),
 
               //
               R.sizes.hSizer8,
 
               //
-              ..._buildStatusList(context),
+              ..._buildStatusList(),
 
               //
               R.sizes.hSizer8,
 
               //
-              ..._buildTypeList(context),
+              ..._buildTypeList(),
 
               //
               R.sizes.hSizer8,
@@ -56,7 +93,7 @@ class FilterDialog extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildPersonalList(BuildContext context) => [
+  List<Widget> _buildPersonalList() => [
         //
         Text(
           LocaleProvider.current.person,
@@ -64,12 +101,32 @@ class FilterDialog extends StatelessWidget {
         ),
 
         //
-        _buildCheckboxWithText(context, "Ayşe Yıldırım"),
-        _buildCheckboxWithText(context, "Ahmet Yıldırım"),
-        _buildCheckboxWithText(context, "Zeynep Yıldırım"),
+        for (int index = 0;
+            index < currentResult.relativeList.length;
+            index++) ...[
+          FilterRow(
+            text: currentResult.relativeList[index].nameAndSurname,
+            isEnabled: currentResult.relativeList[index].isEnabled,
+            onChanged: (newValue) {
+              var relativeList = currentResult.relativeList;
+              relativeList = relativeList.update(
+                index,
+                AllReminderRelativePerson(
+                  id: currentResult.relativeList[index].id,
+                  isEnabled: newValue,
+                  nameAndSurname:
+                      currentResult.relativeList[index].nameAndSurname,
+                ),
+              );
+              currentResult = currentResult.copyWith(
+                relativeList: relativeList,
+              );
+            },
+          ),
+        ],
       ];
 
-  List<Widget> _buildStatusList(BuildContext context) => [
+  List<Widget> _buildStatusList() => [
         //
         Text(
           LocaleProvider.current.status,
@@ -77,11 +134,27 @@ class FilterDialog extends StatelessWidget {
         ),
 
         //
-        _buildCheckboxWithText(context, LocaleProvider.current.not_done),
-        _buildCheckboxWithText(context, LocaleProvider.current.future),
+        FilterRow(
+          text: LocaleProvider.current.not_done,
+          isEnabled: currentResult.isNotCompleted,
+          onChanged: (newValue) {
+            currentResult = currentResult.copyWith(
+              isNotCompleted: newValue,
+            );
+          },
+        ),
+        FilterRow(
+          text: LocaleProvider.current.future,
+          isEnabled: currentResult.isCompleted,
+          onChanged: (newValue) {
+            currentResult = currentResult.copyWith(
+              isCompleted: newValue,
+            );
+          },
+        ),
       ];
 
-  List<Widget> _buildTypeList(BuildContext context) => [
+  List<Widget> _buildTypeList() => [
         //
         Text(
           LocaleProvider.current.type,
@@ -89,21 +162,41 @@ class FilterDialog extends StatelessWidget {
         ),
 
         //
-        _buildCheckboxWithText(
-          context,
-          LocaleProvider.current.medication_reminders,
+        FilterRow(
+          text: LocaleProvider.current.medication_reminders,
+          isEnabled: currentResult.isMedication,
+          onChanged: (newValue) {
+            currentResult = currentResult.copyWith(
+              isMedication: newValue,
+            );
+          },
         ),
-        _buildCheckboxWithText(
-          context,
-          LocaleProvider.current.blood_glucose_measurement,
+        FilterRow(
+          text: LocaleProvider.current.blood_glucose_measurement,
+          isEnabled: currentResult.isBloodGlucose,
+          onChanged: (newValue) {
+            currentResult = currentResult.copyWith(
+              isBloodGlucose: newValue,
+            );
+          },
         ),
-        _buildCheckboxWithText(
-          context,
-          LocaleProvider.current.strip_tracker,
+        FilterRow(
+          text: LocaleProvider.current.strip_tracker,
+          isEnabled: currentResult.isStrip,
+          onChanged: (newValue) {
+            currentResult = currentResult.copyWith(
+              isStrip: newValue,
+            );
+          },
         ),
-        _buildCheckboxWithText(
-          context,
-          LocaleProvider.current.hbA1c_measurement,
+        FilterRow(
+          text: LocaleProvider.current.hbA1c_measurement,
+          isEnabled: currentResult.isHbA1c,
+          onChanged: (newValue) {
+            currentResult = currentResult.copyWith(
+              isHbA1c: newValue,
+            );
+          },
         ),
       ];
 
@@ -116,7 +209,9 @@ class FilterDialog extends StatelessWidget {
         //
         Expanded(
           child: RbioElevatedButton(
-            onTap: () {},
+            onTap: () {
+              Atom.dismiss();
+            },
             title: LocaleProvider.current.btn_cancel,
             showElevation: false,
             padding: EdgeInsets.zero,
@@ -132,7 +227,12 @@ class FilterDialog extends StatelessWidget {
         //
         Expanded(
           child: RbioElevatedButton(
-            onTap: () {},
+            onTap: () {
+              context
+                  .read<AllReminderListCubit>()
+                  .changeFilterResult(currentResult);
+              Atom.dismiss();
+            },
             title: LocaleProvider.current.apply,
             showElevation: false,
             padding: EdgeInsets.zero,
@@ -142,11 +242,35 @@ class FilterDialog extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildCheckboxWithText(
-    BuildContext context,
-    String text,
-  ) {
+class FilterRow extends StatefulWidget {
+  final String text;
+  final bool isEnabled;
+  final void Function(bool) onChanged;
+
+  const FilterRow({
+    Key? key,
+    required this.text,
+    required this.isEnabled,
+    required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  State<FilterRow> createState() => _FilterRowState();
+}
+
+class _FilterRowState extends State<FilterRow> {
+  late bool currentValue;
+
+  @override
+  void initState() {
+    currentValue = widget.isEnabled;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Row(
@@ -159,8 +283,14 @@ class FilterDialog extends StatelessWidget {
             child: SizedBox.fromSize(
               size: const Size(20, 20),
               child: Checkbox(
-                value: true,
-                onChanged: (newValue) {},
+                value: currentValue,
+                onChanged: (newValue) {
+                  if (newValue == null) return;
+                  setState(() {
+                    currentValue = newValue;
+                  });
+                  widget.onChanged(newValue);
+                },
                 activeColor: getIt<ITheme>().mainColor,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
@@ -172,7 +302,7 @@ class FilterDialog extends StatelessWidget {
 
           //
           Text(
-            text,
+            widget.text,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline4,

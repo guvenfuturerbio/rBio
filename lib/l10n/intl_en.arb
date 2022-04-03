@@ -815,5 +815,10 @@
   "medicine": "Medicine",
   "no_records_found": "No records found",
   "tag": "Etiket",
-  "tag_description": "Select the state you need to receive"
+  "tag_description": "Select the state you need to receive",
+  "taken_per_day": "Taken per day",
+  "once": "Once",
+  "manuel": "Manuel",
+  "pillar_small": "Pillar small",
+  "how_will_you_follow_up": "How will you follow up?"
 }

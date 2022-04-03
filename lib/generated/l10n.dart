@@ -8179,6 +8179,56 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Taken per day`
+  String get taken_per_day {
+    return Intl.message(
+      'Taken per day',
+      name: 'taken_per_day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Once`
+  String get once {
+    return Intl.message(
+      'Once',
+      name: 'once',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manuel`
+  String get manuel {
+    return Intl.message(
+      'Manuel',
+      name: 'manuel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pillar small`
+  String get pillar_small {
+    return Intl.message(
+      'Pillar small',
+      name: 'pillar_small',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How will you follow up?`
+  String get how_will_you_follow_up {
+    return Intl.message(
+      'How will you follow up?',
+      name: 'how_will_you_follow_up',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

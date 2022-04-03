@@ -100,7 +100,12 @@ class _AllReminderListViewState extends State<AllReminderListView> {
           alignment: Alignment.centerRight,
           child: RbioElevatedButton(
             onTap: () {
-              Atom.show(const FilterDialog());
+              Atom.show(
+                BlocProvider.value(
+                  value: context.read<AllReminderListCubit>(),
+                  child: const FilterDialog(),
+                ),
+              );
             },
             title: LocaleProvider.current.filter,
             showElevation: false,
@@ -118,9 +123,9 @@ class _AllReminderListViewState extends State<AllReminderListView> {
             ),
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
-            itemCount: result.list.length,
+            itemCount: result.filterList.length,
             itemBuilder: (BuildContext context, int index) {
-              return _buildCard(context, result.list[index]);
+              return _buildCard(context, result.filterList[index]);
             },
           ),
         ),

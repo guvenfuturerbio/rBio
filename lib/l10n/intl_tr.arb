@@ -778,7 +778,7 @@
   "notification_inbox_empty": "Henüz bildiriminiz yok",
   "select_tag": "Etiket seçiniz",
   "after_meal": "Tok",
-  "before_meal": "Hungry",
+  "before_meal": "Aç",
   "how_often": "Ne sıklıkla",
   "alert": "Alarm",
   "how_many_times_a_day": "Günde kaç kere?",
@@ -807,5 +807,10 @@
   "medicine": "İlaç",
   "no_records_found": "Kayıt bulunamadı",
   "tag": "Etiket",
-  "tag_description": "Almanız gereken durumu seçiniz"
+  "tag_description": "Almanız gereken durumu seçiniz",
+  "taken_per_day": "Günde alınan",
+  "once": "Bir kerede",
+  "manuel": "Manuel",
+  "pillar_small": "İlaç kutusu",
+  "how_will_you_follow_up": "Nasıl takip edeceksiniz?"
 }

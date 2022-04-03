@@ -41,9 +41,12 @@ export "domain/person_model.dart";
 
 export "enums/loading_progress.dart";
 export 'enums/medicine_period.dart';
+export 'enums/medicine_type.dart';
 export 'enums/patient_type.dart';
 export 'enums/payment_type.dart';
 export 'enums/remindable.dart';
+export "enums/scale_margin_filter.dart";
+export "enums/time_period_filter.dart";
 export "enums/usage_type.dart";
 
 export 'exception/client_exception.dart';

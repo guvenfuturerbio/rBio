@@ -15,6 +15,17 @@ class ReminderRepository {
     this.localNotificationManager,
   );
 
+  List<AllReminderRelativePerson> getAllRelatives() =>
+      profileStorage.getAll().map(
+        (e) {
+          return AllReminderRelativePerson(
+            id: e.id ?? -1,
+            isEnabled: true,
+            nameAndSurname: e.name ?? '',
+          );
+        },
+      ).toList();
+
   List<AllReminderListModel> getAllReminders() {
     final allProfiles = profileStorage.getAll();
 
@@ -95,65 +106,71 @@ class ReminderRepository {
     return result;
   }
 
-  Future<void> cancelAndRemoveNotification(
+  Future<bool> cancelAndRemoveNotification(
     Remindable remindable,
     int notificationId,
     int scheduledDate,
     int createdDate,
     int entegrationId,
   ) async {
-    // Notification'ı iptal et
-    await localNotificationManager.cancelNotification(notificationId);
+    try {
+      // Notification'ı iptal et
+      await localNotificationManager.cancelNotification(notificationId);
 
-    // Shared Preferences'da ki listeyi güncelle
-    switch (remindable) {
-      case Remindable.bloodGlucose:
-        {
-          await _updateLocalList(
-            notificationId,
-            SharedPreferencesKeys.bloodGlucoseList,
-            BloodGlucoseReminderModel(
-              notificationId: notificationId,
-              scheduledDate: scheduledDate,
-              createdDate: createdDate,
-              entegrationId: entegrationId,
-            ),
-          );
+      // Shared Preferences'da ki listeyi güncelle
+      switch (remindable) {
+        case Remindable.bloodGlucose:
+          {
+            await _updateLocalList(
+              notificationId,
+              SharedPreferencesKeys.bloodGlucoseList,
+              BloodGlucoseReminderModel(
+                notificationId: notificationId,
+                scheduledDate: scheduledDate,
+                createdDate: createdDate,
+                entegrationId: entegrationId,
+              ),
+            );
+            break;
+          }
+
+        case Remindable.strip:
           break;
-        }
 
-      case Remindable.strip:
-        break;
+        case Remindable.medication:
+          {
+            await _updateLocalList(
+              notificationId,
+              SharedPreferencesKeys.medicineList,
+              MedicationReminderModel(
+                notificationId: notificationId,
+                scheduledDate: scheduledDate,
+                createdDate: createdDate,
+                entegrationId: entegrationId,
+              ),
+            );
+            break;
+          }
 
-      case Remindable.medication:
-        {
-          await _updateLocalList(
-            notificationId,
-            SharedPreferencesKeys.medicineList,
-            MedicationReminderModel(
-              notificationId: notificationId,
-              scheduledDate: scheduledDate,
-              createdDate: createdDate,
-              entegrationId: entegrationId,
-            ),
-          );
-          break;
-        }
+        case Remindable.hbA1c:
+          {
+            await _updateLocalList(
+              notificationId,
+              SharedPreferencesKeys.hba1cList,
+              Hba1CReminderModel(
+                notificationId: notificationId,
+                scheduledDate: scheduledDate,
+                createdDate: createdDate,
+                entegrationId: entegrationId,
+              ),
+            );
+            break;
+          }
+      }
 
-      case Remindable.hbA1c:
-        {
-          await _updateLocalList(
-            notificationId,
-            SharedPreferencesKeys.hba1cList,
-            Hba1CReminderModel(
-              notificationId: notificationId,
-              scheduledDate: scheduledDate,
-              createdDate: createdDate,
-              entegrationId: entegrationId,
-            ),
-          );
-          break;
-        }
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -251,5 +268,53 @@ class ReminderRepository {
     return tempList.firstWhereOrNull(
       (element) => element.notificationId == notificationId,
     );
+  }
+
+  List<AllReminderListModel> filterList(
+    List<AllReminderListModel> allList,
+    AllReminderListFilterResult filterResult,
+  ) {
+    final relativeList = filterResult.relativeList
+        .where((element) => element.isEnabled)
+        .toList();
+    var filterList = allList.where((element) {
+      if (filterResult.isBloodGlucose) {
+        if (element.remindable == Remindable.bloodGlucose) {
+          return true;
+        }
+      }
+
+      if (filterResult.isHbA1c) {
+        if (element.remindable == Remindable.hbA1c) {
+          return true;
+        }
+      }
+
+      if (filterResult.isStrip) {
+        if (element.remindable == Remindable.strip) {
+          return true;
+        }
+      }
+
+      if (filterResult.isMedication) {
+        if (element.remindable == Remindable.medication) {
+          return true;
+        }
+      }
+
+      return false;
+    }).toList();
+
+    filterList = filterList.where((element) {
+      for (var relative in relativeList) {
+        if (relative.id == element.entegrationId) {
+          return true;
+        }
+      }
+
+      return false;
+    }).toList();
+
+    return filterList;
   }
 }

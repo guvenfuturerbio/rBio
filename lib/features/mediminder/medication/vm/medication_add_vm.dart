@@ -102,6 +102,13 @@ class MedicationReminderAddVm extends RbioVm {
     notifyListeners();
   }
 
+  MedicineType? _medicineType;
+  MedicineType get selectedMedicineType => _medicineType ?? MedicineType.manuel;
+  void setMedicineType(MedicineType type) {
+    _medicineType = type;
+    notifyListeners();
+  }
+
   UsageType? _selectedUsageType;
   UsageType get selectedUsageType => _selectedUsageType ?? UsageType.irrelevant;
   void setSelectedUsageType(UsageType usageType) {
