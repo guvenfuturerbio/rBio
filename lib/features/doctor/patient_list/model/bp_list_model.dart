@@ -74,7 +74,7 @@ class BpPatientListModel
     switch (sortType) {
       case DoctorPatientListSortType.fromNewest:
         _filterList = _list
-            .sortedBy((i) => i.bpMeasurements?.first.occurrenceTime ?? '')
+            .xSortedBy((i) => i.bpMeasurements?.first.occurrenceTime ?? '')
             .toList()
             .reversed
             .toList();
@@ -82,7 +82,7 @@ class BpPatientListModel
 
       case DoctorPatientListSortType.fromOldest:
         _filterList = _list
-            .sortedBy((i) => i.bpMeasurements?.first.occurrenceTime ?? '')
+            .xSortedBy((i) => i.bpMeasurements?.first.occurrenceTime ?? '')
             .toList();
         break;
 

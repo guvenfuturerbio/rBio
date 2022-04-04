@@ -31,8 +31,10 @@ class _$Hba1cReminderAddEditStateTearOff {
     return const _AddEditOpenListScreenState();
   }
 
-  _ShowWarningDialogState showWarningDialog() {
-    return const _ShowWarningDialogState();
+  _ShowWarningDialogState showWarningDialog(String description) {
+    return _ShowWarningDialogState(
+      description,
+    );
   }
 }
 
@@ -46,7 +48,7 @@ mixin _$Hba1cReminderAddEditState {
     required TResult Function() initial,
     required TResult Function(Hba1cReminderAddEditResult result) success,
     required TResult Function() openListScreen,
-    required TResult Function() showWarningDialog,
+    required TResult Function(String description) showWarningDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +56,7 @@ mixin _$Hba1cReminderAddEditState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +64,7 @@ mixin _$Hba1cReminderAddEditState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -154,7 +156,7 @@ class _$_InitialState implements _InitialState {
     required TResult Function() initial,
     required TResult Function(Hba1cReminderAddEditResult result) success,
     required TResult Function() openListScreen,
-    required TResult Function() showWarningDialog,
+    required TResult Function(String description) showWarningDialog,
   }) {
     return initial();
   }
@@ -165,7 +167,7 @@ class _$_InitialState implements _InitialState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
   }) {
     return initial?.call();
   }
@@ -176,7 +178,7 @@ class _$_InitialState implements _InitialState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -295,7 +297,7 @@ class _$_SuccessState implements _SuccessState {
     required TResult Function() initial,
     required TResult Function(Hba1cReminderAddEditResult result) success,
     required TResult Function() openListScreen,
-    required TResult Function() showWarningDialog,
+    required TResult Function(String description) showWarningDialog,
   }) {
     return success(result);
   }
@@ -306,7 +308,7 @@ class _$_SuccessState implements _SuccessState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
   }) {
     return success?.call(result);
   }
@@ -317,7 +319,7 @@ class _$_SuccessState implements _SuccessState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -421,7 +423,7 @@ class _$_AddEditOpenListScreenState implements _AddEditOpenListScreenState {
     required TResult Function() initial,
     required TResult Function(Hba1cReminderAddEditResult result) success,
     required TResult Function() openListScreen,
-    required TResult Function() showWarningDialog,
+    required TResult Function(String description) showWarningDialog,
   }) {
     return openListScreen();
   }
@@ -432,7 +434,7 @@ class _$_AddEditOpenListScreenState implements _AddEditOpenListScreenState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
   }) {
     return openListScreen?.call();
   }
@@ -443,7 +445,7 @@ class _$_AddEditOpenListScreenState implements _AddEditOpenListScreenState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (openListScreen != null) {
@@ -500,6 +502,7 @@ abstract class _$ShowWarningDialogStateCopyWith<$Res> {
   factory _$ShowWarningDialogStateCopyWith(_ShowWarningDialogState value,
           $Res Function(_ShowWarningDialogState) then) =
       __$ShowWarningDialogStateCopyWithImpl<$Res>;
+  $Res call({String description});
 }
 
 /// @nodoc
@@ -512,26 +515,51 @@ class __$ShowWarningDialogStateCopyWithImpl<$Res>
 
   @override
   _ShowWarningDialogState get _value => super._value as _ShowWarningDialogState;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+  }) {
+    return _then(_ShowWarningDialogState(
+      description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_ShowWarningDialogState implements _ShowWarningDialogState {
-  const _$_ShowWarningDialogState();
+  const _$_ShowWarningDialogState(this.description);
+
+  @override
+  final String description;
 
   @override
   String toString() {
-    return 'Hba1cReminderAddEditState.showWarningDialog()';
+    return 'Hba1cReminderAddEditState.showWarningDialog(description: $description)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ShowWarningDialogState);
+        (other.runtimeType == runtimeType &&
+            other is _ShowWarningDialogState &&
+            const DeepCollectionEquality()
+                .equals(other.description, description));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(description));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ShowWarningDialogStateCopyWith<_ShowWarningDialogState> get copyWith =>
+      __$ShowWarningDialogStateCopyWithImpl<_ShowWarningDialogState>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -539,9 +567,9 @@ class _$_ShowWarningDialogState implements _ShowWarningDialogState {
     required TResult Function() initial,
     required TResult Function(Hba1cReminderAddEditResult result) success,
     required TResult Function() openListScreen,
-    required TResult Function() showWarningDialog,
+    required TResult Function(String description) showWarningDialog,
   }) {
-    return showWarningDialog();
+    return showWarningDialog(description);
   }
 
   @override
@@ -550,9 +578,9 @@ class _$_ShowWarningDialogState implements _ShowWarningDialogState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
   }) {
-    return showWarningDialog?.call();
+    return showWarningDialog?.call(description);
   }
 
   @override
@@ -561,11 +589,11 @@ class _$_ShowWarningDialogState implements _ShowWarningDialogState {
     TResult Function()? initial,
     TResult Function(Hba1cReminderAddEditResult result)? success,
     TResult Function()? openListScreen,
-    TResult Function()? showWarningDialog,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (showWarningDialog != null) {
-      return showWarningDialog();
+      return showWarningDialog(description);
     }
     return orElse();
   }
@@ -609,5 +637,11 @@ class _$_ShowWarningDialogState implements _ShowWarningDialogState {
 }
 
 abstract class _ShowWarningDialogState implements Hba1cReminderAddEditState {
-  const factory _ShowWarningDialogState() = _$_ShowWarningDialogState;
+  const factory _ShowWarningDialogState(String description) =
+      _$_ShowWarningDialogState;
+
+  String get description;
+  @JsonKey(ignore: true)
+  _$ShowWarningDialogStateCopyWith<_ShowWarningDialogState> get copyWith =>
+      throw _privateConstructorUsedError;
 }

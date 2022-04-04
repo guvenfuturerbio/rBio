@@ -73,7 +73,7 @@ class ScalePatientListModel extends PatientListModel<DoctorBMIPatientModel> {
     switch (sortType) {
       case DoctorPatientListSortType.fromNewest:
         _filterList = _list
-            .sortedBy((i) => i.bmiMeasurements?.first.occurrenceTime ?? '')
+            .xSortedBy((i) => i.bmiMeasurements?.first.occurrenceTime ?? '')
             .toList()
             .reversed
             .toList();
@@ -81,7 +81,7 @@ class ScalePatientListModel extends PatientListModel<DoctorBMIPatientModel> {
 
       case DoctorPatientListSortType.fromOldest:
         _filterList = _list
-            .sortedBy((i) => i.bmiMeasurements?.first.occurrenceTime ?? '')
+            .xSortedBy((i) => i.bmiMeasurements?.first.occurrenceTime ?? '')
             .toList();
         break;
 

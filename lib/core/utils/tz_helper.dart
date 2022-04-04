@@ -37,16 +37,43 @@ class TZHelper {
 
   tz.TZDateTime now() => tz.TZDateTime.now(tz.local);
 
+  tz.TZDateTime currentDay() {
+    final nowDate = now();
+    return tz.TZDateTime(
+      tz.local,
+      nowDate.year,
+      nowDate.month,
+      nowDate.day,
+      0,
+      0,
+      0,
+    );
+  }
+
   int nowMillisecondsSinceEpoch() => now().millisecondsSinceEpoch;
 
   tz.TZDateTime nextInstanceOfTenAM() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month,
-        now.day, 10); // 2022-01-29 10:00:00.000+0300
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      10,
+    ); // 2022-01-29 10:00:00.000+0300
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     return scheduledDate;
+  }
+
+  tz.TZDateTime nextSameTimeAfterDay(tz.TZDateTime value) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime result = value;
+    if (result.isBefore(now)) {
+      result = result.add(const Duration(days: 1));
+    }
+    return result;
   }
 
   tz.TZDateTime nextInstanceOfTenAMLastYear() {
@@ -87,7 +114,8 @@ extension TZDateTimeExtensions on tz.TZDateTime {
 }
 
 extension TZDateTimeIntExtensions on int {
-  tz.TZDateTime get xGetTZDateTime => TZHelper.instance.fromMillisecondsSinceEpoch(this);
+  tz.TZDateTime get xGetTZDateTime =>
+      TZHelper.instance.fromMillisecondsSinceEpoch(this);
 
   String get xDateFormat =>
       TZHelper.instance.fromMillisecondsSinceEpoch(this).xFormatTime10();

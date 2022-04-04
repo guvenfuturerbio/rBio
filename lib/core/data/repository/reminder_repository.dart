@@ -55,7 +55,7 @@ class ReminderRepository {
           notificationId: id,
           scheduledDate: scheduledDate.millisecondsSinceEpoch,
           createdDate: createdDate,
-          entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
+          entegrationId: profileStorage.getFirst().id ?? 0,
           dayIndex: dayIndex,
           dailyDose: result.dailyDose,
           medicinePeriod: result.medicinePeriod,
@@ -73,9 +73,13 @@ class ReminderRepository {
       final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
 
       for (int i = 0; i < result.doseTimes.length; i++) {
+        var itemScheduledTime = result.doseTimes[i];
+        itemScheduledTime =
+            TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
+
         await _createNotificationAndSaved(
           notificationIds[i],
-          result.doseTimes[i],
+          itemScheduledTime,
           MedicinePeriod.oneTime,
           null,
           dateTimeNow,
@@ -90,15 +94,20 @@ class ReminderRepository {
       List<int> notificationIds,
       BloodGlucoseReminderAddEditResult result,
     ) async {
-      final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+      final dateTimeNow = TZHelper.instance.now();
+      final dateTimeNowMilliSeconds = dateTimeNow.millisecondsSinceEpoch;
 
       for (int i = 0; i < result.doseTimes.length; i++) {
+        var itemScheduledTime = result.doseTimes[i];
+        itemScheduledTime =
+            TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
+
         await _createNotificationAndSaved(
           notificationIds[i],
-          result.doseTimes[i],
+          itemScheduledTime,
           MedicinePeriod.everyDay,
           null,
-          dateTimeNow,
+          dateTimeNowMilliSeconds,
           result,
         );
       }
@@ -180,6 +189,7 @@ class ReminderRepository {
   ///
   /// * result parametresi içerisindeki "isCreated" değeri false ise, bu daha önce oluşturulan bir hatırlatıcıya aittir bu yüzden ilk önce bu plana ait bildirimleri createdDate değerine göre iptal edip, siliyor.
   ///
+  /// * Her zaman "Hba1cReminderAddEditResult" tipindeki parametreye göre bildirimleri oluşturup, Shared Preferences'a kaydediyor.
   // #region createOrEditHba1CReminderPlan
   Future<bool> createOrEditHba1CReminderPlan(
     Hba1cReminderAddEditResult result,
@@ -212,12 +222,12 @@ class ReminderRepository {
         notificationId: notificationId,
         scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch,
         createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
-        entegrationId: getIt<ProfileStorageImpl>().getFirst().id ?? 0,
+        entegrationId: profileStorage.getFirst().id ?? 0,
         lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch,
         lastTestValue: result.lastTestValue,
       );
 
-      await getIt<ReminderNotificationsManager>().createHba1c(
+      await reminderNotificationsManager.createHba1c(
         currentHbaModel,
         remindDateTimeTZ,
       );
@@ -239,11 +249,11 @@ class ReminderRepository {
   // #region saveScheduledMedicine
   Future<void> saveScheduledMedicine(BloodGlucoseReminderModel medicine) async {
     final medicineStr = jsonEncode(medicine.toJson());
-    final sharedList = getIt<ISharedPreferencesManager>()
+    final sharedList = sharedPreferencesManager
             .getStringList(SharedPreferencesKeys.bloodGlucoseList) ??
         [];
     sharedList.add(medicineStr);
-    await getIt<ISharedPreferencesManager>().setStringList(
+    await sharedPreferencesManager.setStringList(
       SharedPreferencesKeys.bloodGlucoseList,
       sharedList,
     );
@@ -323,10 +333,25 @@ class ReminderRepository {
     for (var item in bloodGlucoseList) {
       final bloodGlucoseModel =
           BloodGlucoseReminderModel.fromJson(jsonDecode(item));
+
+      int scheduledDate = bloodGlucoseModel.scheduledDate;
+      final itemDate = TZHelper.instance
+          .fromMillisecondsSinceEpoch(bloodGlucoseModel.scheduledDate);
+      if (bloodGlucoseModel.medicinePeriod == MedicinePeriod.everyDay) {
+        scheduledDate = TZHelper.instance
+            .nextSameTimeAfterDay(itemDate)
+            .millisecondsSinceEpoch;
+      } else if (bloodGlucoseModel.medicinePeriod ==
+          MedicinePeriod.specificDays) {
+        scheduledDate = TZHelper.instance
+            .nextInstanceOfDay(bloodGlucoseModel.dayIndex! + 1, itemDate)
+            .millisecondsSinceEpoch;
+      }
+
       result.add(
         AllReminderListModel(
           notificationId: bloodGlucoseModel.notificationId,
-          scheduledDate: bloodGlucoseModel.scheduledDate,
+          scheduledDate: scheduledDate,
           createdDate: bloodGlucoseModel.createdDate,
           entegrationId: bloodGlucoseModel.entegrationId,
           remindable: Remindable.bloodGlucose,
@@ -341,7 +366,7 @@ class ReminderRepository {
       );
     }
 
-    return result;
+    return result.xSortedBy((element) => element.scheduledDate).toList();
   }
   // #endregion
 

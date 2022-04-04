@@ -91,7 +91,7 @@ class BgPatientListModel extends PatientListModel<DoctorGlucosePatientModel> {
 
       case DoctorPatientListSortType.fromNewest:
         _filterList = _list
-            .sortedBy((i) => i.measurements?.first.measurementTime ?? '')
+            .xSortedBy((i) => i.measurements?.first.measurementTime ?? '')
             .toList()
             .reversed
             .toList();
@@ -99,7 +99,7 @@ class BgPatientListModel extends PatientListModel<DoctorGlucosePatientModel> {
 
       case DoctorPatientListSortType.fromOldest:
         _filterList = _list
-            .sortedBy((i) => i.measurements?.first.measurementTime ?? '')
+            .xSortedBy((i) => i.measurements?.first.measurementTime ?? '')
             .toList();
         break;
 

@@ -5,7 +5,7 @@ class Hba1cReminderAddEditState with _$Hba1cReminderAddEditState {
   const factory Hba1cReminderAddEditState.initial() = _InitialState;
   const factory Hba1cReminderAddEditState.success(Hba1cReminderAddEditResult result) = _SuccessState;
   const factory Hba1cReminderAddEditState.openListScreen() = _AddEditOpenListScreenState;
-  const factory Hba1cReminderAddEditState.showWarningDialog() = _ShowWarningDialogState;
+  const factory Hba1cReminderAddEditState.showWarningDialog(String description) = _ShowWarningDialogState;
 }
 
 class Hba1cReminderAddEditResult {

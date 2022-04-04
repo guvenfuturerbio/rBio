@@ -6,7 +6,7 @@ extension Iterables<E> on Iterable<E> {
 }
 
 extension MyIterable<E> on Iterable<E> {
-  Iterable<E> sortedBy(Comparable Function(E e) key) =>
+  Iterable<E> xSortedBy(Comparable Function(E e) key) =>
       toList()..sort((a, b) => key(a).compareTo(key(b)));
 }
 

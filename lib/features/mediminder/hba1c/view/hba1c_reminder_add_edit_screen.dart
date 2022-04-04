@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import '../../../../core/core.dart';
 import '../hba1c.dart';
 
+part 'widget/last_test_dialog.dart';
+
 class Hba1cReminderAddEditScreen extends StatelessWidget {
   const Hba1cReminderAddEditScreen({Key? key}) : super(key: key);
 
@@ -41,14 +43,14 @@ class Hba1cReminderAddEditScreen extends StatelessWidget {
                     isReplacement: true,
                   );
                 },
-                showWarningDialog: () {
+                showWarningDialog: (description) {
                   showDialog(
                     context: context,
                     barrierDismissible: true,
                     builder: (BuildContext context) {
                       return GradientDialog(
                         title: LocaleProvider.current.warning,
-                        text: LocaleProvider.current.fill_all_field,
+                        text: description,
                       );
                     },
                   );
@@ -90,7 +92,7 @@ class Hba1cReminderAddEditView extends StatelessWidget {
       buildWhen: (previous, current) =>
           current.whenOrNull(
             openListScreen: () => false,
-            showWarningDialog: () => false,
+            showWarningDialog: (_) => false,
           ) ??
           true,
       builder: (context, state) {
@@ -161,14 +163,8 @@ class Hba1cReminderAddEditView extends StatelessWidget {
                     _buildGap(),
 
                     //
-                    if (result.lastTestDate != null &&
-                        result.lastTestValue != null &&
-                        result.scheduledDate != null &&
-                        result.scheduledHour != null)
-                      _buildButtons(context, result),
-
-                    //
-                    R.sizes.defaultBottomPadding,
+                    _buildButtons(context, result),
+                    _buildGap(),
                   ],
                 );
               },
@@ -444,43 +440,52 @@ class Hba1cReminderAddEditView extends StatelessWidget {
     BuildContext context,
     Hba1cReminderAddEditResult result,
   ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        Expanded(
-          child: RbioElevatedButton(
-            backColor: getIt<ITheme>().cardBackgroundColor,
-            textColor: getIt<ITheme>().textColorSecondary,
-            title: LocaleProvider.current.btn_cancel,
-            onTap: () {
-              Atom.historyBack();
-            },
-            showElevation: false,
-          ),
-        ),
+    if (result.lastTestDate != null &&
+        result.lastTestValue != null &&
+        result.scheduledDate != null &&
+        result.scheduledHour != null) {
+      return SafeArea(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: RbioElevatedButton(
+                backColor: getIt<ITheme>().cardBackgroundColor,
+                textColor: getIt<ITheme>().textColorSecondary,
+                title: LocaleProvider.current.btn_cancel,
+                onTap: () {
+                  Atom.historyBack();
+                },
+                showElevation: false,
+              ),
+            ),
 
-        //
-        R.sizes.wSizer8,
+            //
+            R.sizes.wSizer8,
 
-        //
-        Expanded(
-          child: RbioElevatedButton(
-            title: result.isCreated
-                ? LocaleProvider.current.btn_create
-                : LocaleProvider.current.update,
-            onTap: () {
-              context
-                  .read<Hba1cReminderAddEditCubit>()
-                  .createNotification(context);
-            },
-            showElevation: false,
-          ),
+            //
+            Expanded(
+              child: RbioElevatedButton(
+                title: result.isCreated
+                    ? LocaleProvider.current.btn_create
+                    : LocaleProvider.current.update,
+                onTap: () {
+                  context
+                      .read<Hba1cReminderAddEditCubit>()
+                      .createNotification(context);
+                },
+                showElevation: false,
+              ),
+            ),
+          ],
         ),
-      ],
-    );
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 
   // #region _buildBoldTitle
@@ -502,153 +507,4 @@ class Hba1cReminderAddEditView extends StatelessWidget {
     );
   }
   // #endregion
-}
-
-class _LastTestDialog extends StatefulWidget {
-  final String initValue;
-
-  const _LastTestDialog({
-    Key? key,
-    this.initValue = '',
-  }) : super(key: key);
-
-  @override
-  State<_LastTestDialog> createState() => _LastTestDialogState();
-}
-
-class _LastTestDialogState extends State<_LastTestDialog> {
-  late TextEditingController textEditingController;
-
-  @override
-  void initState() {
-    textEditingController = TextEditingController();
-    textEditingController.text = widget.initValue;
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    textEditingController.dispose();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GuvenAlert(
-      elevation: 0,
-      insetPadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.zero,
-      backgroundColor: Colors.transparent,
-      content: SafeArea(
-        child: Container(
-          width: Atom.width > 350 ? 350 : Atom.width,
-          decoration: BoxDecoration(
-            color: getIt<ITheme>().cardBackgroundColor,
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //
-                R.sizes.hSizer8,
-
-                //
-                Text(
-                  LocaleProvider.current.test_result,
-                  style: context.xHeadline1.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-
-                //
-                R.sizes.hSizer8,
-
-                //
-                RbioTextFormField(
-                  backColor: getIt<ITheme>().grayColor,
-                  controller: textEditingController,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,2}'))
-                  ],
-                  keyboardType: TextInputType.number,
-                ),
-
-                //
-                R.sizes.hSizer16,
-
-                //
-                if (context.xTextScaleType == TextScaleType.small) ...[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //
-                      Expanded(
-                        child: _buildCancelButton(infinityWidth: false),
-                      ),
-
-                      //
-                      R.sizes.wSizer8,
-
-                      //
-                      Expanded(
-                        child: _buildConfirmButton(infinityWidth: false),
-                      ),
-                    ],
-                  ),
-                ] else ...[
-                  _buildCancelButton(infinityWidth: true),
-                  R.sizes.hSizer12,
-                  _buildConfirmButton(infinityWidth: true),
-                ],
-
-                //
-                R.sizes.hSizer4,
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  RbioElevatedButton _buildConfirmButton({
-    required bool infinityWidth,
-  }) {
-    return RbioElevatedButton(
-      title: LocaleProvider.current.btn_confirm,
-      onTap: () {
-        if (textEditingController.text.isNotEmpty) {
-          Atom.dismiss(textEditingController.text.trim());
-        }
-      },
-      showElevation: false,
-      fontWeight: FontWeight.bold,
-      infinityWidth: infinityWidth,
-    );
-  }
-
-  RbioElevatedButton _buildCancelButton({
-    required bool infinityWidth,
-  }) {
-    return RbioElevatedButton(
-      backColor: getIt<ITheme>().grayColor,
-      textColor: getIt<ITheme>().textColorSecondary,
-      title: LocaleProvider.current.btn_cancel,
-      onTap: () {
-        Atom.dismiss();
-      },
-      showElevation: false,
-      fontWeight: FontWeight.bold,
-      infinityWidth: infinityWidth,
-    );
-  }
 }

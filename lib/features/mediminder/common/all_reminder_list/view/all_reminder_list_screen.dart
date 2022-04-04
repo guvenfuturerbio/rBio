@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/core/utils/tz_helper.dart';
 
 import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../core/core.dart';
+import '../../../../../core/utils/tz_helper.dart';
 import '../../../mediminder.dart';
 
 part 'widget/filter_dialog.dart';
@@ -22,16 +22,11 @@ class AllReminderListScreen extends StatelessWidget {
   }
 }
 
-class AllReminderListView extends StatefulWidget {
+class AllReminderListView extends StatelessWidget {
   final currentTime = TZHelper.instance.now();
 
   AllReminderListView({Key? key}) : super(key: key);
 
-  @override
-  _AllReminderListViewState createState() => _AllReminderListViewState();
-}
-
-class _AllReminderListViewState extends State<AllReminderListView> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
@@ -66,7 +61,7 @@ class _AllReminderListViewState extends State<AllReminderListView> {
         return state.when(
           initial: () => const SizedBox(),
           loadInProgress: () => const RbioLoading(),
-          success: (result) => _buildList(result),
+          success: (result) => _buildList(context, result),
           failure: () => const RbioBodyError(),
         );
       },
@@ -89,7 +84,7 @@ class _AllReminderListViewState extends State<AllReminderListView> {
     );
   }
 
-  Widget _buildList(AllReminderListResult result) {
+  Widget _buildList(BuildContext context, AllReminderListResult result) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -218,7 +213,7 @@ class _AllReminderListViewState extends State<AllReminderListView> {
                         left: 12,
                       ),
                       child: Text(
-                        widget.currentTime.xCalculateTimeDifferenceBetween(
+                        currentTime.xCalculateTimeDifferenceBetween(
                             endDate: TZHelper.instance
                                 .fromMillisecondsSinceEpoch(
                                     model.scheduledDate)),

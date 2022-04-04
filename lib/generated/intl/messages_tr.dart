@@ -1020,6 +1020,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminder_time_selection": MessageLookupByLibrary.simpleMessage(
             "Hatırlatıcı zamanı belirleyiniz"),
         "reminders": MessageLookupByLibrary.simpleMessage("Hatırlatıcılarım"),
+        "reminders_past_create_message": MessageLookupByLibrary.simpleMessage(
+            "Geçmişe hatırlatıcı oluşturulamaz."),
         "remove_strips": MessageLookupByLibrary.simpleMessage("Strip Azalt"),
         "requestTranslator":
             MessageLookupByLibrary.simpleMessage("Çevirme\nTalep Et"),

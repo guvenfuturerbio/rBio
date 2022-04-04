@@ -8229,6 +8229,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Reminders cannot be created in the past.`
+  String get reminders_past_create_message {
+    return Intl.message(
+      'Reminders cannot be created in the past.',
+      name: 'reminders_past_create_message',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

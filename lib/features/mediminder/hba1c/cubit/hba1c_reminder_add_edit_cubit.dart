@@ -98,6 +98,15 @@ class Hba1cReminderAddEditCubit extends Cubit<Hba1cReminderAddEditState> {
     );
   }
 
+  void setState() {
+    final currentState = state;
+    currentState.whenOrNull(
+      success: (result) {
+        emit(Hba1cReminderAddEditState.success(result));
+      },
+    );
+  }
+
   Future<void> createNotification(BuildContext context) async {
     final currentState = state;
     await currentState.whenOrNull(
@@ -105,7 +114,8 @@ class Hba1cReminderAddEditCubit extends Cubit<Hba1cReminderAddEditState> {
         final isValid = _checkValidation(context, result);
         if (!isValid) return;
 
-        final isSuccess = await reminderRepository.createOrEditHba1CReminderPlan(result);
+        final isSuccess =
+            await reminderRepository.createOrEditHba1CReminderPlan(result);
         if (isSuccess) {
           emit(const Hba1cReminderAddEditState.openListScreen());
         }
@@ -121,17 +131,32 @@ class Hba1cReminderAddEditCubit extends Cubit<Hba1cReminderAddEditState> {
         (result.scheduledHour == null) ||
         (result.lastTestDate == null) ||
         (result.lastTestValue == null)) {
-      final currentState = state;
-      emit(const Hba1cReminderAddEditState.showWarningDialog());
-      Future.delayed(
-        const Duration(milliseconds: 100),
-        () {
-          emit(currentState);
-        },
-      );
+      _showWarningDialog(LocaleProvider.current.fill_all_field);
+      return false;
+    }
+
+    final scheduledDate = DateTime.parse(result.scheduledDate!)
+      ..add(Duration(hours: result.scheduledHour!.hour))
+      ..add(Duration(minutes: result.scheduledHour!.minute));
+    final now = DateTime.now();
+    if (scheduledDate.isBefore(now)) {
+      _showWarningDialog(LocaleProvider.current.reminders_past_create_message);
       return false;
     }
 
     return true;
   }
+
+  // #region _showWarningDialog
+  void _showWarningDialog(String description) {
+    final currentState = state;
+    emit(Hba1cReminderAddEditState.showWarningDialog(description));
+    Future.delayed(
+      const Duration(milliseconds: 100),
+      () {
+        emit(currentState);
+      },
+    );
+  }
+  // #endregion
 }

@@ -812,5 +812,6 @@
   "once": "Bir kerede",
   "manuel": "Manuel",
   "pillar_small": "İlaç kutusu",
-  "how_will_you_follow_up": "Nasıl takip edeceksiniz?"
+  "how_will_you_follow_up": "Nasıl takip edeceksiniz?",
+  "reminders_past_create_message": "Geçmişe hatırlatıcı oluşturulamaz."
 }

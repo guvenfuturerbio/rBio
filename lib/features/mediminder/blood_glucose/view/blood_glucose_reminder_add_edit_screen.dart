@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,16 +74,19 @@ class BloodGlucoseReminderAddEditView extends StatefulWidget {
 class _BloodGlucoseReminderAddEditViewState
     extends State<BloodGlucoseReminderAddEditView> {
   late TextEditingController _dailyDoseController;
+  late FocusNode _dailyDoseFocusNode;
 
   @override
   void initState() {
     _dailyDoseController = TextEditingController();
+    _dailyDoseFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
     _dailyDoseController.dispose();
+    _dailyDoseFocusNode.dispose();
     super.dispose();
   }
 
@@ -147,134 +151,15 @@ class _BloodGlucoseReminderAddEditViewState
                   children: [
                     //
                     Expanded(
-                      child: RbioScrollbar(
-                        child: SingleChildScrollView(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.vertical,
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              //
-                              R.sizes.stackedTopPadding(context),
-                              _buildGap(),
-
-                              // Usage Types
-                              _buildBoldTitle(
-                                  LocaleProvider.current.tag_description),
-                              _buildUsageTypes(result),
-
-                              //
-                              _buildGap(),
-
-                              // Medicine Periods
-                              _buildBoldTitle(LocaleProvider.current.how_often),
-                              ExpandablePeriodCard(
-                                initValue: result.medicinePeriod,
-                                isReset: result.medicinePeriod == null,
-                                onChanged: (value) {
-                                  context
-                                      .read<BloodGlucoseReminderAddEditCubit>()
-                                      .setMedicinePeriod(value);
-                                },
-                              ),
-
-                              //
-                              _buildGap(),
-
-                              // Daily Dose
-                              if (result.medicinePeriod != null) ...[
-                                _buildBoldTitle(LocaleProvider
-                                    .current.how_many_times_a_day),
-                                _buildDailyDose(),
-                              ],
-
-                              //
-                              (result.dailyDose == 0 ||
-                                      result.dailyDose == null)
-                                  ? const SizedBox()
-                                  : Column(
-                                      children: <Widget>[
-                                        //
-                                        _buildGap(),
-
-                                        //
-                                        _buildTimeAndDoseSection(result),
-
-                                        //
-                                        if (result.medicinePeriod ==
-                                            MedicinePeriod.specificDays) ...[
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              //
-                                              _buildGap(),
-
-                                              //
-                                              _buildBoldTitle(
-                                                  LocaleProvider.current.days),
-
-                                              //
-                                              ExpandableSpecificDays(
-                                                days: result.days,
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ],
-                                    ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      child: _buildScrollBody(result),
                     ),
 
-                    if (result.dailyDose != null) ...[
-                      _buildGap(),
-
-                      //
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          //
-                          Expanded(
-                            child: RbioElevatedButton(
-                              backColor: getIt<ITheme>().cardBackgroundColor,
-                              textColor: getIt<ITheme>().textColorSecondary,
-                              title: LocaleProvider.current.btn_cancel,
-                              onTap: () {
-                                Atom.historyBack();
-                              },
-                              showElevation: false,
-                            ),
-                          ),
-
-                          //
-                          R.sizes.wSizer8,
-
-                          //
-                          Expanded(
-                            child: RbioElevatedButton(
-                              title: result.isCreated
-                                  ? LocaleProvider.current.btn_create
-                                  : LocaleProvider.current.update,
-                              onTap: () async {
-                                await context
-                                    .read<BloodGlucoseReminderAddEditCubit>()
-                                    .createReminderPlan();
-                              },
-                              showElevation: false,
-                            ),
-                          ),
-                        ],
+                    //
+                    KeyboardVisibilityBuilder(
+                      builder: (context, isKeyboardVisible) => Column(
+                        children: _buildButtons(result, isKeyboardVisible),
                       ),
-
-                      //
-                      R.sizes.defaultBottomPadding,
-                    ],
+                    ),
                   ],
                 );
               },
@@ -282,6 +167,147 @@ class _BloodGlucoseReminderAddEditViewState
             const SizedBox();
       },
     );
+  }
+
+  Widget _buildScrollBody(BloodGlucoseReminderAddEditResult result) {
+    return RbioScrollbar(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.zero,
+        scrollDirection: Axis.vertical,
+        physics: const BouncingScrollPhysics(),
+        child: RbioKeyboardActions(
+          focusList: [
+            _dailyDoseFocusNode,
+          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //
+              R.sizes.stackedTopPadding(context),
+              _buildGap(),
+
+              // Usage Types
+              _buildBoldTitle(LocaleProvider.current.tag_description),
+              _buildUsageTypes(result),
+
+              //
+              _buildGap(),
+
+              // Medicine Periods
+              _buildBoldTitle(LocaleProvider.current.how_often),
+              ExpandablePeriodCard(
+                initValue: result.medicinePeriod,
+                isReset: result.medicinePeriod == null,
+                onChanged: (value) {
+                  context
+                      .read<BloodGlucoseReminderAddEditCubit>()
+                      .setMedicinePeriod(value);
+                },
+              ),
+
+              //
+              _buildGap(),
+
+              // Daily Dose
+              if (result.medicinePeriod != null) ...[
+                _buildBoldTitle(LocaleProvider.current.how_many_times_a_day),
+                _buildDailyDose(),
+              ],
+
+              //
+              ...(result.dailyDose == 0 || result.dailyDose == null)
+                  ? [
+                      const SizedBox(),
+                    ]
+                  : [
+                      //
+                      _buildGap(),
+
+                      //
+                      _buildTimeAndDoseSection(result),
+
+                      //
+                      if (result.medicinePeriod ==
+                          MedicinePeriod.specificDays) ...[
+                        ...[
+                          //
+                          _buildGap(),
+
+                          //
+                          _buildBoldTitle(LocaleProvider.current.days),
+
+                          //
+                          ExpandableSpecificDays(
+                            days: result.days,
+                          ),
+                        ],
+                      ],
+                    ],
+
+              //
+              _buildGap(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  // #endregion
+
+  // #region _buildButtons
+  List<Widget> _buildButtons(
+    BloodGlucoseReminderAddEditResult result,
+    bool isKeyboardVisible,
+  ) {
+    if (result.dailyDose != null && !isKeyboardVisible) {
+      return [
+        _buildGap(),
+
+        //
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: RbioElevatedButton(
+                backColor: getIt<ITheme>().cardBackgroundColor,
+                textColor: getIt<ITheme>().textColorSecondary,
+                title: LocaleProvider.current.btn_cancel,
+                onTap: () {
+                  Atom.historyBack();
+                },
+                showElevation: false,
+              ),
+            ),
+
+            //
+            R.sizes.wSizer8,
+
+            //
+            Expanded(
+              child: RbioElevatedButton(
+                title: result.isCreated
+                    ? LocaleProvider.current.btn_create
+                    : LocaleProvider.current.update,
+                onTap: () async {
+                  await context
+                      .read<BloodGlucoseReminderAddEditCubit>()
+                      .createReminderPlan();
+                },
+                showElevation: false,
+              ),
+            ),
+          ],
+        ),
+
+        //
+        R.sizes.defaultBottomPadding,
+      ];
+    } else {
+      return [const SizedBox()];
+    }
   }
   // #endregion
 
@@ -348,6 +374,7 @@ class _BloodGlucoseReminderAddEditViewState
   // #region _buildDailyDose
   Widget _buildDailyDose() {
     return RbioTextFormField(
+      focusNode: _dailyDoseFocusNode,
       controller: _dailyDoseController,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.number,
@@ -424,18 +451,46 @@ class _BloodGlucoseReminderAddEditViewState
           //
           GestureDetector(
             onTap: () async {
-              var timeOfDay = await Utils.instance.openMaterialTimePicker(
-                context,
-                TimeOfDay(
-                  hour: dateTime.hour,
-                  minute: dateTime.minute,
-                ),
+              var nowTimeOfDay = TimeOfDay(
+                hour: dateTime.hour,
+                minute: dateTime.minute,
               );
 
-              if (timeOfDay != null) {
-                context
-                    .read<BloodGlucoseReminderAddEditCubit>()
-                    .setDoseTimes(timeOfDay, index);
+              final selectedDate = await showRbioDatePicker(
+                context,
+                title: LocaleProvider.current.reminder_hour,
+                initialDateTime: DateTime(
+                  dateTime.year,
+                  dateTime.month,
+                  dateTime.day,
+                  nowTimeOfDay.hour,
+                  nowTimeOfDay.minute,
+                ),
+                minimumDate: DateTime(
+                  dateTime.year,
+                  dateTime.month,
+                  dateTime.day,
+                  0,
+                  0,
+                ),
+                maximumDate: DateTime(
+                  dateTime.year,
+                  dateTime.month,
+                  dateTime.day,
+                  23,
+                  59,
+                ),
+                mode: CupertinoDatePickerMode.time,
+              );
+
+              if (selectedDate != null) {
+                context.read<BloodGlucoseReminderAddEditCubit>().setDoseTimes(
+                      TimeOfDay(
+                        hour: selectedDate.hour,
+                        minute: selectedDate.minute,
+                      ),
+                      index,
+                    );
               }
             },
             child: Container(

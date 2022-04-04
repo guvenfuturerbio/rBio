@@ -1028,6 +1028,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminder_time_selection": MessageLookupByLibrary.simpleMessage(
             "Determine time of the reminder"),
         "reminders": MessageLookupByLibrary.simpleMessage("Reminders"),
+        "reminders_past_create_message": MessageLookupByLibrary.simpleMessage(
+            "Reminders cannot be created in the past."),
         "remove_strips": MessageLookupByLibrary.simpleMessage("Remove Strips"),
         "requestTranslator":
             MessageLookupByLibrary.simpleMessage("Request\nTranslator"),

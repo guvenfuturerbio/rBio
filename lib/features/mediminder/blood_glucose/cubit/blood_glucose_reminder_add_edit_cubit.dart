@@ -216,18 +216,15 @@ class BloodGlucoseReminderAddEditCubit
   List<tz.TZDateTime>? _calculateDoseTimes(int dailyDose) {
     if (dailyDose == 0) return null;
 
-    // dailyCount : 3
-    int perMinute = ((24 * 60) / dailyDose).round(); // 480
-    int hour = perMinute < 60 ? perMinute : (perMinute / 60).round(); // 8
-    int minute = perMinute < 60 ? 0 : perMinute - hour * 60; // 0
+    int perMinute = ((24 * 60) / dailyDose).round();
+    int hour = perMinute < 60 ? perMinute : (perMinute / 60).round();
+    int minute = perMinute < 60 ? 0 : perMinute - hour * 60;
     List<tz.TZDateTime> doseTimeList = [];
+
     doseTimeList.add(
-      TZHelper.instance.now().add(
-            const Duration(
-              hours: 1,
-            ),
-          ),
-    ); // TZDateTime (2022-01-31 12:08:12.034435+0300)
+      TZHelper.instance.currentDay(),
+    );
+
     for (var i = 1; i < dailyDose; i++) {
       doseTimeList.add(
         doseTimeList.first.add(
@@ -235,10 +232,6 @@ class BloodGlucoseReminderAddEditCubit
         ),
       );
     }
-    /*
-      TZDateTime (2022-01-31 12:08:12.034435+0300)
-      TZDateTime (2022-02-01 00:08:12.034435+0300)
-    */
     return doseTimeList;
   }
   // #endregion

@@ -6,11 +6,13 @@ import '../core.dart';
 class RbioKeyboardActions extends StatelessWidget {
   final Widget child;
   final List<FocusNode> focusList;
+  final bool isDialog;
 
   const RbioKeyboardActions({
     Key? key,
     required this.child,
     required this.focusList,
+    this.isDialog = false,
   }) : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class RbioKeyboardActions extends StatelessWidget {
     return KeyboardActions(
       autoScroll: false,
       tapOutsideBehavior: TapOutsideBehavior.none,
+      isDialog: isDialog,
       config: KeyboardActionsConfig(
         child: _buildMyDoneWidget(context),
         keyboardSeparatorColor: getIt<ITheme>().mainColor,

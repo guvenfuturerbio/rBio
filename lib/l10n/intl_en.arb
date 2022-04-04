@@ -820,5 +820,6 @@
   "once": "Once",
   "manuel": "Manuel",
   "pillar_small": "Pillar small",
-  "how_will_you_follow_up": "How will you follow up?"
+  "how_will_you_follow_up": "How will you follow up?",
+  "reminders_past_create_message": "Reminders cannot be created in the past."
 }
