@@ -1,46 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
-class BloodGlucoseReminderAddScreen extends StatefulWidget {
-  Remindable remindable = Remindable.bloodGlucose;
-
-  BloodGlucoseReminderAddScreen({Key? key}) : super(key: key);
-
-  @override
-  _BloodGlucoseReminderAddScreenState createState() =>
-      _BloodGlucoseReminderAddScreenState();
-}
-
-class _BloodGlucoseReminderAddScreenState
-    extends State<BloodGlucoseReminderAddScreen> {
-  late TextEditingController dailyDoseController;
-
-  int? createdDate;
-  bool get isCreated => createdDate == null;
-
-  @override
-  void initState() {
-    dailyDoseController = TextEditingController();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    dailyDoseController.dispose();
-
-    super.dispose();
-  }
+class BloodGlucoseReminderAddEditScreen extends StatelessWidget {
+  const BloodGlucoseReminderAddEditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int? createdDate;
+
     try {
       final routeParam = Atom.queryParameters['createdDate'];
       if (routeParam != null) {
@@ -50,194 +23,283 @@ class _BloodGlucoseReminderAddScreenState
       return const RbioRouteError();
     }
 
-    return ChangeNotifierProvider<BloodGlucoseReminderAddVm>(
-      create: (_) => BloodGlucoseReminderAddVm(
-        mContext: context,
-        reminderRepository: getIt(),
-        mRemindable: widget.remindable,
-        mRotificationManager: getIt<ReminderNotificationsManager>(),
-        createdDate: createdDate,
-        dailyDoseController: dailyDoseController,
-      ),
-      child: Consumer<BloodGlucoseReminderAddVm>(
-        builder: (
-          BuildContext context,
-          BloodGlucoseReminderAddVm vm,
-          Widget? child,
-        ) {
-          return KeyboardDismissOnTap(
-            child: RbioStackedScaffold(
-              extendBodyBehindAppBar: true,
-              appbar: RbioAppBar(
-                title: RbioAppBar.textTitle(
-                  context,
-                  widget.remindable.toShortTitle(),
-                ),
-              ),
-              body: _buildBody(vm),
-            ),
+    return BlocProvider<BloodGlucoseReminderAddEditCubit>(
+      create: (context) => BloodGlucoseReminderAddEditCubit(
+        getIt(),
+      )..setInitState(createdDate),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<BloodGlucoseReminderAddEditCubit,
+              BloodGlucoseReminderAddEditState>(
+            listener: (context, state) {
+              state.whenOrNull(
+                openListScreen: () {
+                  Atom.historyBack();
+                  Atom.to(
+                    PagePaths.allReminderList,
+                    isReplacement: true,
+                  );
+                },
+                showWarningDialog: (descripton) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) {
+                      return GradientDialog(
+                        title: LocaleProvider.current.warning,
+                        text: descripton,
+                      );
+                    },
+                  );
+                },
+              );
+            },
+            child: const BloodGlucoseReminderAddEditView(),
           );
         },
       ),
     );
   }
+}
 
-  // #region _buildBody
-  Widget _buildBody(BloodGlucoseReminderAddVm vm) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        Expanded(
-          child: RbioScrollbar(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.zero,
-              scrollDirection: Axis.vertical,
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  //
-                  R.sizes.stackedTopPadding(context),
-                  _buildGap(),
+class BloodGlucoseReminderAddEditView extends StatefulWidget {
+  const BloodGlucoseReminderAddEditView({Key? key}) : super(key: key);
 
-                  // Tags
-                  _buildBoldTitle(LocaleProvider.current.tag_description),
-                  _buildTags(vm),
+  @override
+  _BloodGlucoseReminderAddEditViewState createState() =>
+      _BloodGlucoseReminderAddEditViewState();
+}
 
-                  //
-                  _buildGap(),
+class _BloodGlucoseReminderAddEditViewState
+    extends State<BloodGlucoseReminderAddEditView> {
+  late TextEditingController _dailyDoseController;
 
-                  // Periods
-                  _buildBoldTitle(LocaleProvider.current.how_often),
-                  ExpandablePeriodCard(
-                    initValue: vm.mMedicinePeriod,
-                    isReset: vm.mMedicinePeriod == null,
-                    onChanged: (value) {
-                      vm.setMedicinePeriod(value);
-                    },
-                  ),
+  @override
+  void initState() {
+    _dailyDoseController = TextEditingController();
+    super.initState();
+  }
 
-                  //
-                  _buildGap(),
+  @override
+  void dispose() {
+    _dailyDoseController.dispose();
+    super.dispose();
+  }
 
-                  // Daily Dose
-                  if (vm.mMedicinePeriod != null) ...[
-                    _buildBoldTitle(
-                        LocaleProvider.current.how_many_times_a_day),
-                    _buildDailyDose(vm),
-                  ],
+  @override
+  Widget build(BuildContext context) {
+    return KeyboardDismissOnTap(
+      child: RbioStackedScaffold(
+        extendBodyBehindAppBar: true,
+        appbar: _buildAppBar(),
+        body: _buildBody(),
+      ),
+    );
+  }
 
-                  //
-                  vm.dailyDose == 0
-                      ? const SizedBox()
-                      : Column(
-                          children: <Widget>[
-                            //
-                            _buildGap(),
-
-                            //
-                            _buildTimeAndDoseSection(vm),
-
-                            //
-                            if (vm.mMedicinePeriod ==
-                                MedicinePeriod.specificDays) ...[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //
-                                  _buildGap(),
-
-                                  //
-                                  _buildBoldTitle(LocaleProvider.current.days),
-
-                                  //
-                                  ExpandableSpecificDays(vm: vm),
-                                ],
-                              )
-                            ],
-                          ],
-                        ),
-                ],
-              ),
-            ),
-          ),
-        ),
-
-        if (vm.dailyDose != 0) ...[
-          _buildGap(),
-
-          //
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //
-              Expanded(
-                child: RbioElevatedButton(
-                  backColor: getIt<ITheme>().cardBackgroundColor,
-                  textColor: getIt<ITheme>().textColorSecondary,
-                  title: LocaleProvider.current.btn_cancel,
-                  onTap: () {
-                    if (isCreated) {
-                      dailyDoseController.clear();
-                      vm.daysReset();
-                      vm.setMedicinePeriod(null);
-                      vm.setDailyDose(0);
-                    } else {
-                      Atom.historyBack();
-                    }
-                  },
-                  showElevation: false,
-                ),
-              ),
-
-              //
-              R.sizes.wSizer8,
-
-              //
-              Expanded(
-                child: RbioElevatedButton(
-                  title: isCreated
-                      ? LocaleProvider.current.btn_create
-                      : LocaleProvider.current.update,
-                  onTap: () {
-                    vm.createReminderPlan(widget.remindable, isCreated);
-                  },
-                  showElevation: false,
-                ),
-              ),
-            ],
-          ),
-
-          //
-          R.sizes.defaultBottomPadding,
-        ],
-      ],
+  // #region _buildAppBar
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        Remindable.bloodGlucose.toShortTitle(),
+      ),
     );
   }
   // #endregion
 
-  // #region _buildTags
-  Widget _buildTags(BloodGlucoseReminderAddVm value) {
+  // #region _buildBody
+  Widget _buildBody() {
+    return BlocConsumer<BloodGlucoseReminderAddEditCubit,
+        BloodGlucoseReminderAddEditState>(
+      listenWhen: (previous, current) =>
+          previous.mapOrNull(
+            initial: (_) =>
+                current.mapOrNull(
+                  success: (_) => true,
+                ) ??
+                false,
+          ) ??
+          false,
+      listener: (context, state) {
+        state.whenOrNull(
+          success: (result) {
+            if (!result.isCreated) {
+              _dailyDoseController.text = result.dailyDose.toString();
+            }
+          },
+        );
+      },
+      buildWhen: (previous, current) =>
+          current.whenOrNull(
+            openListScreen: () => false,
+            showWarningDialog: (_) => false,
+          ) ??
+          true,
+      builder: (context, state) {
+        return state.whenOrNull(
+              initial: () => const SizedBox(),
+              success: (result) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    Expanded(
+                      child: RbioScrollbar(
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.vertical,
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              //
+                              R.sizes.stackedTopPadding(context),
+                              _buildGap(),
+
+                              // Usage Types
+                              _buildBoldTitle(
+                                  LocaleProvider.current.tag_description),
+                              _buildUsageTypes(result),
+
+                              //
+                              _buildGap(),
+
+                              // Medicine Periods
+                              _buildBoldTitle(LocaleProvider.current.how_often),
+                              ExpandablePeriodCard(
+                                initValue: result.medicinePeriod,
+                                isReset: result.medicinePeriod == null,
+                                onChanged: (value) {
+                                  context
+                                      .read<BloodGlucoseReminderAddEditCubit>()
+                                      .setMedicinePeriod(value);
+                                },
+                              ),
+
+                              //
+                              _buildGap(),
+
+                              // Daily Dose
+                              if (result.medicinePeriod != null) ...[
+                                _buildBoldTitle(LocaleProvider
+                                    .current.how_many_times_a_day),
+                                _buildDailyDose(),
+                              ],
+
+                              //
+                              (result.dailyDose == 0 ||
+                                      result.dailyDose == null)
+                                  ? const SizedBox()
+                                  : Column(
+                                      children: <Widget>[
+                                        //
+                                        _buildGap(),
+
+                                        //
+                                        _buildTimeAndDoseSection(result),
+
+                                        //
+                                        if (result.medicinePeriod ==
+                                            MedicinePeriod.specificDays) ...[
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              //
+                                              _buildGap(),
+
+                                              //
+                                              _buildBoldTitle(
+                                                  LocaleProvider.current.days),
+
+                                              //
+                                              ExpandableSpecificDays(
+                                                days: result.days,
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ],
+                                    ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    if (result.dailyDose != null) ...[
+                      _buildGap(),
+
+                      //
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          //
+                          Expanded(
+                            child: RbioElevatedButton(
+                              backColor: getIt<ITheme>().cardBackgroundColor,
+                              textColor: getIt<ITheme>().textColorSecondary,
+                              title: LocaleProvider.current.btn_cancel,
+                              onTap: () {
+                                Atom.historyBack();
+                              },
+                              showElevation: false,
+                            ),
+                          ),
+
+                          //
+                          R.sizes.wSizer8,
+
+                          //
+                          Expanded(
+                            child: RbioElevatedButton(
+                              title: result.isCreated
+                                  ? LocaleProvider.current.btn_create
+                                  : LocaleProvider.current.update,
+                              onTap: () async {
+                                await context
+                                    .read<BloodGlucoseReminderAddEditCubit>()
+                                    .createReminderPlan();
+                              },
+                              showElevation: false,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      //
+                      R.sizes.defaultBottomPadding,
+                    ],
+                  ],
+                );
+              },
+            ) ??
+            const SizedBox();
+      },
+    );
+  }
+  // #endregion
+
+  // #region _buildUsageTypes
+  Widget _buildUsageTypes(BloodGlucoseReminderAddEditResult result) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
-          child: _buildTagCard(
-            value,
-            R.image.beforeMeal,
+          child: _buildUsageTypeCard(
+            result,
             UsageType.hungry,
           ),
         ),
         R.sizes.wSizer12,
         Expanded(
-          child: _buildTagCard(
-            value,
-            R.image.afterMeal,
+          child: _buildUsageTypeCard(
+            result,
             UsageType.full,
           ),
         ),
@@ -246,10 +308,9 @@ class _BloodGlucoseReminderAddScreenState
   }
   // #endregion
 
-  // #region _buildTagCard
-  Widget _buildTagCard(
-    BloodGlucoseReminderAddVm value,
-    String icon,
+  // #region _buildUsageTypeCard
+  Widget _buildUsageTypeCard(
+    BloodGlucoseReminderAddEditResult result,
     UsageType usageType,
   ) {
     final _text = Text(
@@ -258,18 +319,22 @@ class _BloodGlucoseReminderAddScreenState
       overflow: TextOverflow.ellipsis,
       textAlign: TextAlign.start,
       style: context.xHeadline4.copyWith(
-        color: usageType == value.selectedUsageType
+        color: usageType == result.usageType
             ? getIt<ITheme>().textColor
             : getIt<ITheme>().textColorPassive,
       ),
     );
 
     return GestureDetector(
-      onTap: () => {value.setSelectedUsageType(usageType)},
+      onTap: () {
+        context
+            .read<BloodGlucoseReminderAddEditCubit>()
+            .setUsageType(usageType);
+      },
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: usageType == value.selectedUsageType
+          color: usageType == result.usageType
               ? getIt<ITheme>().mainColor
               : Colors.white,
           borderRadius: R.sizes.borderRadiusCircular,
@@ -281,9 +346,9 @@ class _BloodGlucoseReminderAddScreenState
   // #endregion
 
   // #region _buildDailyDose
-  RbioTextFormField _buildDailyDose(BloodGlucoseReminderAddVm vm) {
+  Widget _buildDailyDose() {
     return RbioTextFormField(
-      controller: dailyDoseController,
+      controller: _dailyDoseController,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.number,
       obscureText: false,
@@ -291,9 +356,13 @@ class _BloodGlucoseReminderAddScreenState
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
       ],
-      onChanged: (text) {
-        if (text != '') {
-          vm.setDailyDose(text.isNotEmpty ? int.parse(text) : 0);
+      onChanged: (text) async {
+        if (text.isNotEmpty) {
+          await context
+              .read<BloodGlucoseReminderAddEditCubit>()
+              .setDailyDose(int.parse(text));
+        } else {
+          context.read<BloodGlucoseReminderAddEditCubit>().resetDailyDose();
         }
       },
     );
@@ -301,7 +370,7 @@ class _BloodGlucoseReminderAddScreenState
   // #endregion
 
   // #region _buildTimeAndDoseSection
-  Widget _buildTimeAndDoseSection(BloodGlucoseReminderAddVm value) {
+  Widget _buildTimeAndDoseSection(BloodGlucoseReminderAddEditResult result) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -314,8 +383,8 @@ class _BloodGlucoseReminderAddScreenState
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            for (var i = 0; i < value.doseTimes.length; i++)
-              _buildTimeCard(i, value.doseTimes[i], value),
+            for (var i = 0; i < result.doseTimes.length; i++)
+              _buildTimeCard(i, result.doseTimes[i]),
           ],
         )
       ],
@@ -327,7 +396,6 @@ class _BloodGlucoseReminderAddScreenState
   Widget _buildTimeCard(
     int index,
     DateTime dateTime,
-    BloodGlucoseReminderAddVm value,
   ) {
     return Container(
       width: double.infinity,
@@ -345,7 +413,7 @@ class _BloodGlucoseReminderAddScreenState
             child: Padding(
               padding: const EdgeInsets.only(left: 16),
               child: Text(
-                DateFormat('HH:mm').format(dateTime),
+                dateTime.xFormatTime8(),
                 style: context.xHeadline3.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -359,13 +427,15 @@ class _BloodGlucoseReminderAddScreenState
               var timeOfDay = await Utils.instance.openMaterialTimePicker(
                 context,
                 TimeOfDay(
-                  hour: value.doseTimes[index].hour,
-                  minute: value.doseTimes[index].minute,
+                  hour: dateTime.hour,
+                  minute: dateTime.minute,
                 ),
               );
 
               if (timeOfDay != null) {
-                value.setSelectedDoseDate(timeOfDay, index);
+                context
+                    .read<BloodGlucoseReminderAddEditCubit>()
+                    .setDoseTimes(timeOfDay, index);
               }
             },
             child: Container(
@@ -424,14 +494,19 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
   bool _isExpanded = true;
 
   @override
+  void initState() {
+    if (widget.initValue != null) {
+      _selectedPeriod = widget.initValue!;
+      _isExpanded = false;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.isReset) {
       _selectedPeriod = null;
       _isExpanded = true;
-    }
-
-    if (widget.initValue != null) {
-      _selectedPeriod = widget.initValue!;
     }
 
     return Container(
@@ -593,11 +668,11 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
 }
 
 class ExpandableSpecificDays extends StatefulWidget {
-  final BloodGlucoseReminderAddVm vm;
+  final List<SelectableDay> days;
 
   const ExpandableSpecificDays({
     Key? key,
-    required this.vm,
+    required this.days,
   }) : super(key: key);
 
   @override
@@ -675,9 +750,9 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
               duration: const Duration(milliseconds: 250),
               child: Column(
                 children: [
-                  for (var index = 0; index < widget.vm.days.length; index++)
+                  for (var index = 0; index < widget.days.length; index++)
                     _buildDayCard(index, context,
-                        isBottomLine: index != widget.vm.days.length - 1),
+                        isBottomLine: index != widget.days.length - 1),
                 ],
               ),
             ),
@@ -689,7 +764,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
 
   String _getTitle() {
     String title = '';
-    final list = widget.vm.days;
+    final list = widget.days;
     for (var element in list) {
       if (element.selected) {
         title += (title.isEmpty ? '' : ', ') + (element.shortName ?? '');
@@ -724,7 +799,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
                 //
                 Expanded(
                   child: Text(
-                    widget.vm.days[index].name ?? '',
+                    widget.days[index].name ?? '',
                     style: context.xHeadline4.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -736,9 +811,11 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
                   height: R.sizes.iconSize,
                   width: R.sizes.iconSize,
                   child: Checkbox(
-                    value: widget.vm.days[index].selected,
-                    onChanged: (value) {
-                      widget.vm.setSelectedDay(index);
+                    value: widget.days[index].selected,
+                    onChanged: (value) async {
+                      await context
+                          .read<BloodGlucoseReminderAddEditCubit>()
+                          .selectedDayToggle(index);
                     },
                     activeColor: getIt<ITheme>().mainColor,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

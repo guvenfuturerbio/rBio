@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -160,7 +161,11 @@ class Hba1cReminderAddEditView extends StatelessWidget {
                     _buildGap(),
 
                     //
-                    _buildButtons(context, result),
+                    if (result.lastTestDate != null &&
+                        result.lastTestValue != null &&
+                        result.scheduledDate != null &&
+                        result.scheduledHour != null)
+                      _buildButtons(context, result),
 
                     //
                     R.sizes.defaultBottomPadding,
@@ -179,56 +184,59 @@ class Hba1cReminderAddEditView extends StatelessWidget {
     BuildContext context,
     Hba1cReminderAddEditResult result,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-        horizontal: 12,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Expanded(
-            child: Text(
-              (result.lastTestDate == null)
-                  ? ""
-                  : DateTime.parse(result.lastTestDate!).xFormatTime10(),
-              style: context.xHeadline3,
-            ),
-          ),
+    return GestureDetector(
+      onTap: () async {
+        final initialDate = result.lastTestDate;
+        final selectedDate = await showRbioDatePicker(
+          context,
+          title: LocaleProvider.current.last_test_date,
+          initialDateTime: (initialDate == null)
+              ? DateTime.now()
+              : DateTime.parse(initialDate),
+          minimumDate: R.constants.date2000,
+          maximumDate: DateTime.now().add(const Duration(days: 730)),
+        );
 
-          //
-          IconButton(
-            onPressed: () async {
-              final initialDate = result.lastTestDate;
-              final selectedDate = await showRbioDatePicker(
-                context,
-                title: LocaleProvider.current.last_test_date,
-                initialDateTime: (initialDate == null)
-                    ? DateTime.now()
-                    : DateTime.parse(initialDate),
-                minimumDate: R.constants.date2000,
-                maximumDate: DateTime.now().add(const Duration(days: 730)),
-              );
-
-              if (selectedDate != null) {
-                context
-                    .read<Hba1cReminderAddEditCubit>()
-                    .setLastTestDate(selectedDate);
-              }
-            },
-            icon: Icon(
-              RbioCustomIcons.calendar,
-              size: R.sizes.iconSize,
+        if (selectedDate != null) {
+          context
+              .read<Hba1cReminderAddEditCubit>()
+              .setLastTestDate(selectedDate);
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: getIt<ITheme>().cardBackgroundColor,
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 4,
+          horizontal: 12,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: Text(
+                (result.lastTestDate == null)
+                    ? ""
+                    : DateTime.parse(result.lastTestDate!).xFormatTime10(),
+                style: context.xHeadline3,
+              ),
             ),
-          ),
-        ],
+
+            //
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                RbioCustomIcons.calendar,
+                size: R.sizes.iconSize,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -278,62 +286,65 @@ class Hba1cReminderAddEditView extends StatelessWidget {
     BuildContext context,
     Hba1cReminderAddEditResult result,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-        horizontal: 12,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Expanded(
-            child: Text(
-              (result.scheduledDate == null)
-                  ? ""
-                  : DateTime.parse(result.scheduledDate!).xFormatTime10(),
-              style: context.xHeadline3.copyWith(
-                color: getIt<ITheme>().textColorSecondary,
+    return GestureDetector(
+      onTap: () async {
+        final now = DateTime.now();
+        final initialDate = result.scheduledDate;
+        final selectedDate = await showRbioDatePicker(
+          context,
+          title: LocaleProvider.current.reminder_date,
+          initialDateTime: (initialDate == null)
+              ? DateTime.now()
+              : DateTime.parse(initialDate),
+          minimumDate: DateTime(now.year, now.month, now.day, 0, 0, 0),
+          maximumDate: result.lastTestDate == null
+              ? DateTime.now()
+              : DateTime.parse(result.lastTestDate!)
+                  .add(const Duration(days: 365)),
+        );
+
+        if (selectedDate != null) {
+          context
+              .read<Hba1cReminderAddEditCubit>()
+              .setScheduledDate(selectedDate);
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: getIt<ITheme>().cardBackgroundColor,
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 4,
+          horizontal: 12,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: Text(
+                (result.scheduledDate == null)
+                    ? ""
+                    : DateTime.parse(result.scheduledDate!).xFormatTime10(),
+                style: context.xHeadline3.copyWith(
+                  color: getIt<ITheme>().textColorSecondary,
+                ),
               ),
             ),
-          ),
 
-          //
-          IconButton(
-            onPressed: () async {
-              final now = DateTime.now();
-              final initialDate = result.scheduledDate;
-              final selectedDate = await showRbioDatePicker(
-                context,
-                title: LocaleProvider.current.reminder_date,
-                initialDateTime: (initialDate == null)
-                    ? DateTime.now()
-                    : DateTime.parse(initialDate),
-                minimumDate: DateTime(now.year, now.month, now.day, 0, 0, 0),
-                maximumDate: result.lastTestDate == null
-                    ? DateTime.now()
-                    : DateTime.parse(result.lastTestDate!)
-                        .add(const Duration(days: 365)),
-              );
-
-              if (selectedDate != null) {
-                context
-                    .read<Hba1cReminderAddEditCubit>()
-                    .setScheduledDate(selectedDate);
-              }
-            },
-            icon: Icon(
-              RbioCustomIcons.calendar,
-              size: R.sizes.iconSize,
+            //
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                RbioCustomIcons.calendar,
+                size: R.sizes.iconSize,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -342,60 +353,89 @@ class Hba1cReminderAddEditView extends StatelessWidget {
     BuildContext context,
     Hba1cReminderAddEditResult result,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-        horizontal: 12,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Expanded(
-            child: Text(
-              result.scheduledHour == null
-                  ? ''
-                  : result.scheduledHour!.xTimeFormat,
-              style: context.xHeadline3.copyWith(
-                color: getIt<ITheme>().textColorSecondary,
+    return GestureDetector(
+      onTap: () async {
+        final now = DateTime.now();
+        var nowTimeOfDay = TimeOfDay(
+          hour: now.hour,
+          minute: now.minute,
+        );
+        if (result.scheduledHour != null) {
+          nowTimeOfDay = result.scheduledHour!;
+        }
+
+        final selectedDate = await showRbioDatePicker(
+          context,
+          title: LocaleProvider.current.reminder_hour,
+          initialDateTime: DateTime(
+            now.year,
+            now.month,
+            now.day,
+            nowTimeOfDay.hour,
+            nowTimeOfDay.minute,
+          ),
+          minimumDate: DateTime(
+            now.year,
+            now.month,
+            now.day,
+            0,
+            0,
+          ),
+          maximumDate: DateTime(
+            now.year,
+            now.month,
+            now.day,
+            23,
+            59,
+          ),
+          mode: CupertinoDatePickerMode.time,
+        );
+
+        if (selectedDate != null) {
+          context.read<Hba1cReminderAddEditCubit>().setScheduledHour(
+                TimeOfDay(
+                  hour: selectedDate.hour,
+                  minute: selectedDate.minute,
+                ),
+              );
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: getIt<ITheme>().cardBackgroundColor,
+          borderRadius: R.sizes.borderRadiusCircular,
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 4,
+          horizontal: 12,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: Text(
+                result.scheduledHour == null
+                    ? ''
+                    : result.scheduledHour!.xTimeFormat,
+                style: context.xHeadline3.copyWith(
+                  color: getIt<ITheme>().textColorSecondary,
+                ),
               ),
             ),
-          ),
 
-          //
-          IconButton(
-            onPressed: () async {
-              final now = DateTime.now();
-              var nowTimeOfDay = TimeOfDay(
-                hour: now.hour,
-                minute: now.minute,
-              );
-              if (result.scheduledHour != null) {
-                nowTimeOfDay = result.scheduledHour!;
-              }
-
-              var timeOfDay = await Utils.instance.openMaterialTimePicker(
-                context,
-                nowTimeOfDay,
-              );
-              if (timeOfDay != null) {
-                context
-                    .read<Hba1cReminderAddEditCubit>()
-                    .setScheduledHour(timeOfDay);
-              }
-            },
-            icon: SvgPicture.asset(
-              R.image.otherIcon,
-              width: R.sizes.iconSize2,
+            //
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SvgPicture.asset(
+                R.image.otherIcon,
+                width: R.sizes.iconSize2,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -450,7 +490,6 @@ class Hba1cReminderAddEditView extends StatelessWidget {
   ) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: 16,
         bottom: 8,
       ),
       child: Text(

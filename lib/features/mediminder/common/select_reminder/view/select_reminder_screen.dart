@@ -45,7 +45,7 @@ class SelectReminderScreen extends StatelessWidget {
         Remindable.bloodGlucose,
         onTap: () {
           Atom.to(
-            PagePaths.bloodGlucoseReminderAdd,
+            PagePaths.bloodGlucoseReminderAddEdit,
             isReplacement: true,
           );
         },

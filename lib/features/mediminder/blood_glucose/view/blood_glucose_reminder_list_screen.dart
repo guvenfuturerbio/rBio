@@ -97,7 +97,7 @@ class BloodGlucoseReminderListScreen extends StatelessWidget {
       backgroundColor: getIt<ITheme>().mainColor,
       onPressed: () {
         Atom.to(
-          PagePaths.bloodGlucoseReminderAdd,
+          PagePaths.bloodGlucoseReminderAddEdit,
           queryParameters: {'remindable': remindable.toRouteString()},
         );
       },

@@ -435,7 +435,7 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
                 },
                 bloodGlucose: (model) {
                   Atom.to(
-                    PagePaths.bloodGlucoseReminderAdd,
+                    PagePaths.bloodGlucoseReminderAddEdit,
                     queryParameters: <String, String>{
                       'createdDate': model.createdDate.toString(),
                     },

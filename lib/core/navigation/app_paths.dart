@@ -436,8 +436,8 @@ class VRouterRoutes {
           widget: const BloodGlucoseReminderListScreen(),
         ),
         VWidget(
-          path: PagePaths.bloodGlucoseReminderAdd,
-          widget: BloodGlucoseReminderAddScreen(),
+          path: PagePaths.bloodGlucoseReminderAddEdit,
+          widget: const BloodGlucoseReminderAddEditScreen(),
         ),
         VWidget(
           path: PagePaths.medicationReminderAdd,
@@ -654,7 +654,7 @@ class PagePaths {
   static const medicationReminderAdd = '/reminder/medication-add';
   static const hba1cReminderAddEdit = '/reminder/hba1c-add-edit';
   static const bloodGlucoseReminderList = '/reminder/blood-glucose-list';
-  static const bloodGlucoseReminderAdd = '/reminder/blood-glucose-add';
+  static const bloodGlucoseReminderAddEdit = '/reminder/blood-glucose-add-edit';
 
   // Chroic Tracking
   static const settings = '/ct-settings';

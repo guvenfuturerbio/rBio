@@ -5,7 +5,6 @@ import '../core.dart';
 enum UsageType {
   hungry,
   full,
-  irrelevant,
 }
 
 extension UsageTypeExtension on UsageType {
@@ -18,9 +17,6 @@ extension UsageTypeExtension on UsageType {
 
       case UsageType.full:
         return LocaleProvider.current.after_meal;
-
-      case UsageType.irrelevant:
-        return LocaleProvider.current.other;
 
       default:
         return '';
@@ -38,9 +34,6 @@ extension UsageTypeNullExtension on UsageType? {
 
       case UsageType.full:
         return LocaleProvider.current.full;
-
-      case UsageType.irrelevant:
-        return LocaleProvider.current.irrelevant;
 
       default:
         return '';

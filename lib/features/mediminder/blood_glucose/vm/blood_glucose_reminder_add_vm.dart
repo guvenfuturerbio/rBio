@@ -118,7 +118,7 @@ class BloodGlucoseReminderAddVm extends RbioVm {
   }
 
   UsageType? _selectedUsageType;
-  UsageType get selectedUsageType => _selectedUsageType ?? UsageType.irrelevant;
+  UsageType? get selectedUsageType => _selectedUsageType;
   void setSelectedUsageType(UsageType usageType) {
     _selectedUsageType = usageType;
     notifyListeners();

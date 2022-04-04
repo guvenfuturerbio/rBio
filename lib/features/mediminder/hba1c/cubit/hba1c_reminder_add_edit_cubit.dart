@@ -105,7 +105,7 @@ class Hba1cReminderAddEditCubit extends Cubit<Hba1cReminderAddEditState> {
         final isValid = _checkValidation(context, result);
         if (!isValid) return;
 
-        final isSuccess = await reminderRepository.createOrEditHba1C(result);
+        final isSuccess = await reminderRepository.createOrEditHba1CReminderPlan(result);
         if (isSuccess) {
           emit(const Hba1cReminderAddEditState.openListScreen());
         }
