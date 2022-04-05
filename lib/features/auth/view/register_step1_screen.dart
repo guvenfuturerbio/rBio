@@ -403,7 +403,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  LocaleProvider.of(context).lbl_dont_have_account,
+                  LocaleProvider.of(context).lbl_have_account,
                   style: context.xHeadline3.copyWith(
                     color: getIt<ITheme>().textColorSecondary,
                   ),
