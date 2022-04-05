@@ -75,7 +75,7 @@ class ReminderAlertDialog extends StatelessWidget {
                 Expanded(
                   child: RbioElevatedButton(
                     onTap: () {},
-                    title: LocaleProvider.current.done_text,
+                    title: LocaleProvider.current.Ok,
                     showElevation: false,
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     fontWeight: FontWeight.bold,

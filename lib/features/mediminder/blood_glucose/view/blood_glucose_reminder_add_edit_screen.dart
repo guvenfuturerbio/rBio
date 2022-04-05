@@ -278,7 +278,6 @@ class _BloodGlucoseReminderAddEditViewState
                 onTap: () {
                   Atom.historyBack();
                 },
-                showElevation: false,
               ),
             ),
 
@@ -296,7 +295,6 @@ class _BloodGlucoseReminderAddEditViewState
                       .read<BloodGlucoseReminderAddEditCubit>()
                       .createReminderPlan();
                 },
-                showElevation: false,
               ),
             ),
           ],

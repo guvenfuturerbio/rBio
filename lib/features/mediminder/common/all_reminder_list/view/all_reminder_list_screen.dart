@@ -61,7 +61,15 @@ class AllReminderListView extends StatelessWidget {
         return state.when(
           initial: () => const SizedBox(),
           loadInProgress: () => const RbioLoading(),
-          success: (result) => _buildList(context, result),
+          success: (result) {
+            if (result.filterList.isEmpty) {
+              return RbioEmptyText(
+                title: LocaleProvider.current.there_are_no_reminders,
+              );
+            } else {
+              return _buildList(context, result.filterList);
+            }
+          },
           failure: () => const RbioBodyError(),
         );
       },
@@ -84,7 +92,7 @@ class AllReminderListView extends StatelessWidget {
     );
   }
 
-  Widget _buildList(BuildContext context, AllReminderListResult result) {
+  Widget _buildList(BuildContext context, List<AllReminderListModel> list) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -118,9 +126,9 @@ class AllReminderListView extends StatelessWidget {
             ),
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
-            itemCount: result.filterList.length,
+            itemCount: list.length,
             itemBuilder: (BuildContext context, int index) {
-              return _buildCard(context, result.filterList[index]);
+              return _buildCard(context, list[index]);
             },
           ),
         ),

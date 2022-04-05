@@ -25,3 +25,21 @@ abstract class ReminderEntity<T> {
         'entegrationId': entegrationId,
       };
 }
+
+extension ReminderEntityExtension on ReminderEntity {
+  SharedPreferencesKeys get xGetSharedKeys {
+    switch (remindable) {
+      case Remindable.bloodGlucose:
+        return SharedPreferencesKeys.bloodGlucoseList;
+
+      case Remindable.strip:
+        throw Exception("Uninplemented");
+
+      case Remindable.medication:
+        return SharedPreferencesKeys.medicineList;
+
+      case Remindable.hbA1c:
+        return SharedPreferencesKeys.hba1cList;
+    }
+  }
+}

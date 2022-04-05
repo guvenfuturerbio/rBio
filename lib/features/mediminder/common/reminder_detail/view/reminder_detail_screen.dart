@@ -95,15 +95,8 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
                 initial: () => const SizedBox(),
                 loadInProgress: () => const SizedBox(),
                 success: (result) => _buildSuccess(result),
-                empty: () => Center(
-                  heightFactor: 5,
-                  child: Text(
-                    LocaleProvider.current.no_records_found,
-                    textAlign: TextAlign.center,
-                    style: context.xHeadline3.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                empty: () => RbioEmptyText(
+                  title: LocaleProvider.current.no_records_found,
                 ),
                 failure: () => const RbioBodyError(),
               ) ??
@@ -446,7 +439,6 @@ class _ReminderDetailViewState extends State<ReminderDetailView> {
             },
             title: LocaleProvider.current.edit,
             infinityWidth: true,
-            showElevation: false,
             fontWeight: FontWeight.bold,
             textColor: getIt<ITheme>().textColorSecondary,
             backColor: getIt<ITheme>().cardBackgroundColor,

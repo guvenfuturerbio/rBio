@@ -459,7 +459,6 @@ class Hba1cReminderAddEditView extends StatelessWidget {
                 onTap: () {
                   Atom.historyBack();
                 },
-                showElevation: false,
               ),
             ),
 
@@ -477,7 +476,6 @@ class Hba1cReminderAddEditView extends StatelessWidget {
                       .read<Hba1cReminderAddEditCubit>()
                       .createNotification(context);
                 },
-                showElevation: false,
               ),
             ),
           ],

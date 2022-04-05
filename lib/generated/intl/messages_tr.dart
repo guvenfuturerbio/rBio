@@ -877,6 +877,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Tek profil için sadece 1 tane glukometre bağlayabilirsiniz."),
         "one_time": MessageLookupByLibrary.simpleMessage("Bir kere"),
         "one_time_a_day": MessageLookupByLibrary.simpleMessage("Günde 1 kez"),
+        "one_time_dose_question": MessageLookupByLibrary.simpleMessage(
+            "Bir kerede kaç doz alınacak?"),
         "online_appo": MessageLookupByLibrary.simpleMessage("Online Görüşme"),
         "online_appo_error_0": MessageLookupByLibrary.simpleMessage(
             "Görüşme sonlanmıştır. Katılamazsınız"),

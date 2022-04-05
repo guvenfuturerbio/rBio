@@ -1,17 +1,13 @@
-part of 'blood_glucose_reminder_add_edit_cubit.dart';
+part of 'medication_reminder_add_edit_cubit.dart';
 
 @freezed
-class BloodGlucoseReminderAddEditState with _$BloodGlucoseReminderAddEditState {
-  const factory BloodGlucoseReminderAddEditState.initial() = _InitialState;
-  const factory BloodGlucoseReminderAddEditState.success(
-      BloodGlucoseReminderAddEditResult result) = _SuccessState;
-  const factory BloodGlucoseReminderAddEditState.openListScreen() =
-      _OpenListScreenState;
-  const factory BloodGlucoseReminderAddEditState.showWarningDialog(
-      String description) = _ShowWarningDialogState;
+class MedicationReminderAddEditState with _$MedicationReminderAddEditState {
+  const factory MedicationReminderAddEditState.initial() = _InitialState;
+  const factory MedicationReminderAddEditState.success(
+      MedicationReminderAddEditResult result) = _SuccessState;
 }
 
-class BloodGlucoseReminderAddEditResult {
+class MedicationReminderAddEditResult {
   bool isCreated;
   int? editNotificationId;
   int? editCreatedDate;
@@ -20,8 +16,9 @@ class BloodGlucoseReminderAddEditResult {
   int? dailyDose;
   List<tz.TZDateTime> doseTimes;
   List<SelectableDay> days;
+  int? oneTimeDose;
 
-  BloodGlucoseReminderAddEditResult({
+  MedicationReminderAddEditResult({
     required this.isCreated,
     this.editNotificationId,
     this.editCreatedDate,
@@ -30,9 +27,10 @@ class BloodGlucoseReminderAddEditResult {
     this.dailyDose,
     this.doseTimes = const [],
     this.days = const [],
+    this.oneTimeDose,
   });
 
-  BloodGlucoseReminderAddEditResult copyWith({
+  MedicationReminderAddEditResult copyWith({
     bool? isCreated,
     int? editNotificationId,
     int? editCreatedDate,
@@ -41,8 +39,9 @@ class BloodGlucoseReminderAddEditResult {
     int? dailyDose,
     List<tz.TZDateTime>? doseTimes,
     List<SelectableDay>? days,
+    int? oneTimeDose,
   }) {
-    return BloodGlucoseReminderAddEditResult(
+    return MedicationReminderAddEditResult(
       isCreated: isCreated ?? this.isCreated,
       editNotificationId: editNotificationId ?? this.editNotificationId,
       editCreatedDate: editCreatedDate ?? this.editCreatedDate,
@@ -51,11 +50,12 @@ class BloodGlucoseReminderAddEditResult {
       dailyDose: dailyDose ?? this.dailyDose,
       doseTimes: doseTimes ?? this.doseTimes,
       days: days ?? this.days,
+      oneTimeDose: oneTimeDose ?? this.oneTimeDose,
     );
   }
 
-  BloodGlucoseReminderAddEditResult resetDailDose() {
-    return BloodGlucoseReminderAddEditResult(
+  MedicationReminderAddEditResult resetDailDose() {
+    return MedicationReminderAddEditResult(
       isCreated: isCreated,
       editNotificationId: editNotificationId,
       editCreatedDate: editCreatedDate,
@@ -64,6 +64,7 @@ class BloodGlucoseReminderAddEditResult {
       dailyDose: null,
       doseTimes: [],
       days: days,
+      oneTimeDose: oneTimeDose,
     );
   }
 }

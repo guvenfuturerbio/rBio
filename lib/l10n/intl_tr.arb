@@ -813,5 +813,6 @@
   "manuel": "Manuel",
   "pillar_small": "İlaç kutusu",
   "how_will_you_follow_up": "Nasıl takip edeceksiniz?",
-  "reminders_past_create_message": "Geçmişe hatırlatıcı oluşturulamaz."
+  "reminders_past_create_message": "Geçmişe hatırlatıcı oluşturulamaz.",
+  "one_time_dose_question": "Bir kerede kaç doz alınacak?"
 }

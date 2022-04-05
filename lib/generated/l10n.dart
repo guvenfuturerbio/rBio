@@ -8239,6 +8239,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `How many doses will be taken at once?`
+  String get one_time_dose_question {
+    return Intl.message(
+      'How many doses will be taken at once?',
+      name: 'one_time_dose_question',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

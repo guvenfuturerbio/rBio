@@ -24,6 +24,33 @@ class RbioRedButton extends StatelessWidget {
       textColor: getIt<ITheme>().textColor,
       backColor: R.color.darkRed,
       infinityWidth: infinityWidth,
+      showElevation: true,
+    );
+  }
+}
+
+class RbioWhiteButton extends StatelessWidget {
+  final String title;
+  final void Function()? onTap;
+  final bool infinityWidth;
+
+  const RbioWhiteButton({
+    Key? key,
+    required this.title,
+    required this.onTap,
+    this.infinityWidth = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RbioElevatedButton(
+      title: title,
+      onTap: onTap,
+      fontWeight: FontWeight.bold,
+      textColor: getIt<ITheme>().textColorSecondary,
+      backColor: Colors.white,
+      infinityWidth: infinityWidth,
+      showElevation: true,
     );
   }
 }

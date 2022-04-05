@@ -47,16 +47,9 @@ class ReminderDetailDialog extends StatelessWidget {
             RbioElevatedButton(
               onTap: () {},
               title: LocaleProvider.current.done_text,
-              showElevation: false,
               padding: const EdgeInsets.symmetric(vertical: 10),
               fontWeight: FontWeight.bold,
             ),
-
-            //
-            R.sizes.hSizer4,
-
-            //
-            const ExpandablePostponeComponent(),
 
             //
             R.sizes.hSizer4,
@@ -80,7 +73,6 @@ class ReminderDetailDialog extends StatelessWidget {
                 );
               },
               title: LocaleProvider.current.details,
-              showElevation: false,
               padding: const EdgeInsets.symmetric(vertical: 10),
               backColor: getIt<ITheme>().cardBackgroundColor,
               textColor: getIt<ITheme>().textColorSecondary,
@@ -96,7 +88,7 @@ class ReminderDetailDialog extends StatelessWidget {
                 context.read<AllReminderListCubit>().removeReminder(model);
                 Atom.dismiss();
               },
-              title: LocaleProvider.current.btn_cancel,
+              title: LocaleProvider.current.btn_delete_reminder,
               infinityWidth: true,
             ),
           ],

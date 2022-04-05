@@ -887,6 +887,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "one_time": MessageLookupByLibrary.simpleMessage("One time"),
         "one_time_a_day":
             MessageLookupByLibrary.simpleMessage("One time a day"),
+        "one_time_dose_question": MessageLookupByLibrary.simpleMessage(
+            "How many doses will be taken at once?"),
         "online_appo":
             MessageLookupByLibrary.simpleMessage("Online Appointment"),
         "online_appo_error_0": MessageLookupByLibrary.simpleMessage(

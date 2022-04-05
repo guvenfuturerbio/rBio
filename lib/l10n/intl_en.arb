@@ -821,5 +821,6 @@
   "manuel": "Manuel",
   "pillar_small": "Pillar small",
   "how_will_you_follow_up": "How will you follow up?",
-  "reminders_past_create_message": "Reminders cannot be created in the past."
+  "reminders_past_create_message": "Reminders cannot be created in the past.",
+  "one_time_dose_question": "How many doses will be taken at once?"
 }
