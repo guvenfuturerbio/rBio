@@ -8249,6 +8249,46 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Remaining Count Notification`
+  String get remaining_count_notification {
+    return Intl.message(
+      'Remaining Count Notification',
+      name: 'remaining_count_notification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining drug`
+  String get remaining_drug {
+    return Intl.message(
+      'Remaining drug',
+      name: 'remaining_drug',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification`
+  String get notification {
+    return Intl.message(
+      'Notification',
+      name: 'notification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Box code`
+  String get box_code {
+    return Intl.message(
+      'Box code',
+      name: 'box_code',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

@@ -90,7 +90,8 @@ Future<void> setupLocator(AppConfig appConfig) async {
   // #region Manager
   getIt.registerLazySingleton<ReminderNotificationsManager>(
     () => ReminderNotificationsManagerImpl(
-      getIt<LocalNotificationManager>(),
+      getIt(),
+      getIt(),
     ),
   );
   getIt.registerLazySingleton<FirebaseMessagingManager>(
@@ -216,8 +217,8 @@ Future<void> setupLocator(AppConfig appConfig) async {
     ),
   );
 
-  getIt.registerSingleton<ReminderRepository>(
-    ReminderRepository(getIt(), getIt(), getIt(), getIt()),
+  getIt.registerSingleton<ReminderManager>(
+    ReminderManager(getIt(), getIt(), getIt(), getIt()),
   );
 
   // #region Init

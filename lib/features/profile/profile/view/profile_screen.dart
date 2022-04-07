@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _buildListItem(
                         LocaleProvider.current.reminders,
                         () {
-                          Atom.to(PagePaths.allReminderList);
+                          Atom.to(PagePaths.reminderList);
                         },
                       ),
 

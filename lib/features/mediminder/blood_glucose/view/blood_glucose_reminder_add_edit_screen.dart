@@ -37,7 +37,7 @@ class BloodGlucoseReminderAddEditScreen extends StatelessWidget {
                 openListScreen: () {
                   Atom.historyBack();
                   Atom.to(
-                    PagePaths.allReminderList,
+                    PagePaths.reminderList,
                     isReplacement: true,
                   );
                 },
@@ -55,7 +55,7 @@ class BloodGlucoseReminderAddEditScreen extends StatelessWidget {
                 },
               );
             },
-            child: const BloodGlucoseReminderAddEditView(),
+            child: const _BloodGlucoseReminderAddEditView(),
           );
         },
       ),
@@ -63,24 +63,24 @@ class BloodGlucoseReminderAddEditScreen extends StatelessWidget {
   }
 }
 
-class BloodGlucoseReminderAddEditView extends StatefulWidget {
-  const BloodGlucoseReminderAddEditView({Key? key}) : super(key: key);
+class _BloodGlucoseReminderAddEditView extends StatefulWidget {
+  const _BloodGlucoseReminderAddEditView({Key? key}) : super(key: key);
 
   @override
-  _BloodGlucoseReminderAddEditViewState createState() =>
-      _BloodGlucoseReminderAddEditViewState();
+  __BloodGlucoseReminderAddEditViewState createState() =>
+      __BloodGlucoseReminderAddEditViewState();
 }
 
-class _BloodGlucoseReminderAddEditViewState
-    extends State<BloodGlucoseReminderAddEditView> {
+class __BloodGlucoseReminderAddEditViewState
+    extends State<_BloodGlucoseReminderAddEditView> {
   late TextEditingController _dailyDoseController;
   late FocusNode _dailyDoseFocusNode;
 
   @override
   void initState() {
+    super.initState();
     _dailyDoseController = TextEditingController();
     _dailyDoseFocusNode = FocusNode();
-    super.initState();
   }
 
   @override
@@ -129,7 +129,8 @@ class _BloodGlucoseReminderAddEditViewState
         state.whenOrNull(
           success: (result) {
             if (!result.isCreated) {
-              _dailyDoseController.text = result.dailyDose.toString();
+              _dailyDoseController.text =
+                  result.dailyDose == null ? '' : result.dailyDose.toString();
             }
           },
         );
@@ -186,63 +187,61 @@ class _BloodGlucoseReminderAddEditViewState
               R.sizes.stackedTopPadding(context),
               _buildGap(),
 
-              // Usage Types
-              _buildBoldTitle(LocaleProvider.current.tag_description),
-              _buildUsageTypes(result),
-
-              //
-              _buildGap(),
-
-              // Medicine Periods
-              _buildBoldTitle(LocaleProvider.current.how_often),
-              ExpandablePeriodCard(
-                initValue: result.medicinePeriod,
-                isReset: result.medicinePeriod == null,
+              // Almanız gereken durumu seçiniz
+              SelectableUsageType(
+                activeType: result.usageType,
                 onChanged: (value) {
                   context
                       .read<BloodGlucoseReminderAddEditCubit>()
-                      .setMedicinePeriod(value);
+                      .setUsageType(value);
                 },
               ),
 
               //
               _buildGap(),
 
-              // Daily Dose
-              if (result.medicinePeriod != null) ...[
-                _buildBoldTitle(LocaleProvider.current.how_many_times_a_day),
-                _buildDailyDose(),
-              ],
+              // Ne sıklıkla
+              ..._buildPeriodCard(result),
 
               //
-              ...(result.dailyDose == 0 || result.dailyDose == null)
-                  ? [
-                      const SizedBox(),
-                    ]
-                  : [
-                      //
-                      _buildGap(),
+              _buildGap(),
 
-                      //
-                      _buildTimeAndDoseSection(result),
+              // Günde kaç kere?
+              if (result.reminderPeriod != null) ...[
+                ..._buildDailyDose(),
+              ],
 
-                      //
-                      if (result.medicinePeriod ==
-                          MedicinePeriod.specificDays) ...[
-                        ...[
-                          //
-                          _buildGap(),
+              // Alarm & Belirli Günler
+              if (!(result.dailyDose == 0 || result.dailyDose == null)) ...[
+                //
+                _buildGap(),
 
-                          //
-                          _buildBoldTitle(LocaleProvider.current.days),
+                //
+                _buildTimeAndDoseSection(result),
 
-                          //
-                          ExpandableSpecificDays(
-                            days: result.days,
-                          ),
-                        ],
-                      ],
-                    ],
+                //
+                if (result.reminderPeriod == ReminderPeriod.specificDays) ...[
+                  ...[
+                    //
+                    _buildGap(),
+
+                    //
+                    ReminderBoldTitle(
+                      title: LocaleProvider.current.days,
+                    ),
+
+                    //
+                    ExpandableSpecificDays(
+                      days: result.days,
+                      onChanged: (index) async {
+                        await context
+                            .read<BloodGlucoseReminderAddEditCubit>()
+                            .selectedDayToggle(index);
+                      },
+                    ),
+                  ],
+                ],
+              ],
 
               //
               _buildGap(),
@@ -309,88 +308,60 @@ class _BloodGlucoseReminderAddEditViewState
   }
   // #endregion
 
-  // #region _buildUsageTypes
-  Widget _buildUsageTypes(BloodGlucoseReminderAddEditResult result) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: _buildUsageTypeCard(
-            result,
-            UsageType.hungry,
-          ),
-        ),
-        R.sizes.wSizer12,
-        Expanded(
-          child: _buildUsageTypeCard(
-            result,
-            UsageType.full,
-          ),
-        ),
-      ],
-    );
-  }
-  // #endregion
-
-  // #region _buildUsageTypeCard
-  Widget _buildUsageTypeCard(
+  // #region _buildPeriodCard
+  List<Widget> _buildPeriodCard(
     BloodGlucoseReminderAddEditResult result,
-    UsageType usageType,
   ) {
-    final _text = Text(
-      usageType.toShortString(),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.start,
-      style: context.xHeadline4.copyWith(
-        color: usageType == result.usageType
-            ? getIt<ITheme>().textColor
-            : getIt<ITheme>().textColorPassive,
+    return [
+      //
+      ReminderBoldTitle(
+        title: LocaleProvider.current.how_often,
       ),
-    );
 
-    return GestureDetector(
-      onTap: () {
-        context
-            .read<BloodGlucoseReminderAddEditCubit>()
-            .setUsageType(usageType);
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: usageType == result.usageType
-              ? getIt<ITheme>().mainColor
-              : Colors.white,
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
-        child: _text,
+      //
+      ExpandablePeriodCard(
+        initValue: result.reminderPeriod,
+        isReset: result.reminderPeriod == null,
+        onChanged: (value) {
+          context
+              .read<BloodGlucoseReminderAddEditCubit>()
+              .setReminderPeriod(value);
+        },
       ),
-    );
+    ];
   }
   // #endregion
 
   // #region _buildDailyDose
-  Widget _buildDailyDose() {
-    return RbioTextFormField(
-      focusNode: _dailyDoseFocusNode,
-      controller: _dailyDoseController,
-      textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.number,
-      obscureText: false,
-      hintText: LocaleProvider.current.medicine_daily_count,
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
-      ],
-      onChanged: (text) async {
-        if (text.isNotEmpty) {
-          await context
-              .read<BloodGlucoseReminderAddEditCubit>()
-              .setDailyDose(int.parse(text));
-        } else {
-          context.read<BloodGlucoseReminderAddEditCubit>().resetDailyDose();
-        }
-      },
-    );
+  List<Widget> _buildDailyDose() {
+    return [
+      //
+      ReminderBoldTitle(
+        title: LocaleProvider.current.how_many_times_a_day,
+      ),
+
+      //
+      RbioTextFormField(
+        focusNode: _dailyDoseFocusNode,
+        controller: _dailyDoseController,
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.number,
+        obscureText: false,
+        hintText: LocaleProvider.current.medicine_daily_count,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+        ],
+        onChanged: (text) async {
+          if (text.isNotEmpty) {
+            await context
+                .read<BloodGlucoseReminderAddEditCubit>()
+                .setDailyDose(int.parse(text));
+          } else {
+            context.read<BloodGlucoseReminderAddEditCubit>().resetDailyDose();
+          }
+        },
+      ),
+    ];
   }
   // #endregion
 
@@ -400,7 +371,9 @@ class _BloodGlucoseReminderAddEditViewState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         //
-        _buildBoldTitle(LocaleProvider.current.alert),
+        ReminderBoldTitle(
+          title: LocaleProvider.current.alert,
+        ),
 
         //
         Column(
@@ -506,391 +479,5 @@ class _BloodGlucoseReminderAddEditViewState
   }
   // #endregion
 
-  // #region _buildBoldTitle
-  Widget _buildBoldTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 8,
-      ),
-      child: Text(
-        title,
-        textAlign: TextAlign.left,
-        style: context.xHeadline3.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-  // #endregion
-
   Widget _buildGap() => R.sizes.hSizer16;
-}
-
-class ExpandablePeriodCard extends StatefulWidget {
-  final MedicinePeriod? initValue;
-  final bool isReset;
-  final ValueChanged<MedicinePeriod> onChanged;
-
-  const ExpandablePeriodCard({
-    Key? key,
-    this.initValue,
-    required this.isReset,
-    required this.onChanged,
-  }) : super(key: key);
-
-  @override
-  _ExpandablePeriodCardState createState() => _ExpandablePeriodCardState();
-}
-
-class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
-  MedicinePeriod? _selectedPeriod;
-  bool _isExpanded = true;
-
-  @override
-  void initState() {
-    if (widget.initValue != null) {
-      _selectedPeriod = widget.initValue!;
-      _isExpanded = false;
-    }
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.isReset) {
-      _selectedPeriod = null;
-      _isExpanded = true;
-    }
-
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //
-          GestureDetector(
-            onTap: () {
-              if (mounted) {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              }
-            },
-            child: Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 12,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 6,
-                      ),
-                      child: Text(
-                        _selectedPeriod == null
-                            ? ''
-                            : _selectedPeriod!.toShortString(),
-                        style: context.xHeadline4,
-                      ),
-                    ),
-                  ),
-
-                  //
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: SvgPicture.asset(
-                      R.image.arrowDown,
-                      width: R.sizes.iconSize3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          //
-          SizedBox(
-            width: double.infinity,
-            child: RbioAnimatedClipRect(
-              open: _isExpanded,
-              alignment: Alignment.center,
-              duration: const Duration(milliseconds: 250),
-              child: Column(
-                children: [
-                  _buildTextTile(
-                    period: MedicinePeriod.oneTime,
-                  ),
-                  _buildTextTile(
-                    period: MedicinePeriod.everyDay,
-                  ),
-                  // _buildTextTile(
-                  //   period: MedicinePeriod.INTERMITTENT_DAYS,
-                  // ),
-                  _buildTextTile(
-                    period: MedicinePeriod.specificDays,
-                    isBottomLine: false,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTextTile({
-    required MedicinePeriod period,
-    bool isBottomLine = true,
-  }) {
-    return GestureDetector(
-      onTap: () {
-        if (widget.isReset) {
-          widget.onChanged(period);
-          Future.delayed(
-            const Duration(milliseconds: 100),
-            () {
-              if (mounted) {
-                setState(() {
-                  _selectedPeriod = period;
-                  _isExpanded = false;
-                });
-              }
-            },
-          );
-        } else {
-          if (mounted) {
-            setState(() {
-              _selectedPeriod = period;
-              _isExpanded = false;
-            });
-          }
-          widget.onChanged(period);
-        }
-      },
-      child: Container(
-        color: Colors.transparent,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 6,
-                top: 12,
-                bottom: 12,
-              ),
-              child: Text(
-                period.toShortString(),
-                textAlign: TextAlign.left,
-                style: context.xHeadline4.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            //
-            if (isBottomLine)
-              Container(
-                color: getIt<ITheme>().textColorPassive,
-                height: 0.25,
-              )
-            else
-              Container(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ExpandableSpecificDays extends StatefulWidget {
-  final List<SelectableDay> days;
-
-  const ExpandableSpecificDays({
-    Key? key,
-    required this.days,
-  }) : super(key: key);
-
-  @override
-  _ExpandableSpecificDaysState createState() => _ExpandableSpecificDaysState();
-}
-
-class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
-  bool _isExpanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //
-          GestureDetector(
-            onTap: () {
-              if (mounted) {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              }
-            },
-            child: Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 12,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 6,
-                      ),
-                      child: Text(
-                        _getTitle(),
-                        style: context.xHeadline4,
-                      ),
-                    ),
-                  ),
-
-                  //
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: SvgPicture.asset(
-                      R.image.arrowDown,
-                      width: R.sizes.iconSize3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          //
-          SizedBox(
-            width: double.infinity,
-            child: RbioAnimatedClipRect(
-              open: _isExpanded,
-              alignment: Alignment.centerLeft,
-              duration: const Duration(milliseconds: 250),
-              child: Column(
-                children: [
-                  for (var index = 0; index < widget.days.length; index++)
-                    _buildDayCard(index, context,
-                        isBottomLine: index != widget.days.length - 1),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  String _getTitle() {
-    String title = '';
-    final list = widget.days;
-    for (var element in list) {
-      if (element.selected) {
-        title += (title.isEmpty ? '' : ', ') + (element.shortName ?? '');
-      }
-    }
-    return title;
-  }
-
-  Widget _buildDayCard(
-    int index,
-    BuildContext context, {
-    bool isBottomLine = true,
-  }) {
-    return Container(
-      color: Colors.transparent,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 6,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-              top: 12,
-              bottom: 12,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //
-                Expanded(
-                  child: Text(
-                    widget.days[index].name ?? '',
-                    style: context.xHeadline4.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-
-                //
-                SizedBox(
-                  height: R.sizes.iconSize,
-                  width: R.sizes.iconSize,
-                  child: Checkbox(
-                    value: widget.days[index].selected,
-                    onChanged: (value) async {
-                      await context
-                          .read<BloodGlucoseReminderAddEditCubit>()
-                          .selectedDayToggle(index);
-                    },
-                    activeColor: getIt<ITheme>().mainColor,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                ),
-
-                //
-                R.sizes.wSizer12,
-              ],
-            ),
-          ),
-
-          //
-          if (isBottomLine)
-            Container(
-              color: getIt<ITheme>().textColorPassive,
-              height: 0.25,
-            )
-          else
-            Container(),
-        ],
-      ),
-    );
-  }
 }

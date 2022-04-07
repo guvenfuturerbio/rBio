@@ -21,7 +21,6 @@ export "data/helper/dio_helper.dart";
 
 export "data/repository/cronic_tracking_repository.dart";
 export "data/repository/doctor_repository.dart";
-export "data/repository/reminder_repository.dart";
 export "data/repository/repository.dart";
 export "data/repository/symptom_repository.dart";
 
@@ -40,14 +39,11 @@ export "domain/network_cache_model.dart";
 export "domain/person_model.dart";
 
 export "enums/loading_progress.dart";
-export 'enums/medicine_period.dart';
-export 'enums/medicine_type.dart';
 export 'enums/patient_type.dart';
 export 'enums/payment_type.dart';
 export 'enums/remindable.dart';
 export "enums/scale_margin_filter.dart";
 export "enums/time_period_filter.dart";
-export "enums/usage_type.dart";
 
 export 'exception/client_exception.dart';
 export 'exception/not_successful_exception.dart';

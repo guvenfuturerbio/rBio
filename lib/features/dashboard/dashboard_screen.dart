@@ -384,12 +384,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.devices);
           },
         ),
-        DrawerModel(
-          title: LocaleProvider.current.reminders,
-          onTap: () {
-            Atom.to(PagePaths.allReminderList);
-          },
-        ),
+        if (getIt<AppConfig>().mediminder)
+          DrawerModel(
+            title: LocaleProvider.current.reminders,
+            onTap: () {
+              Atom.to(PagePaths.reminderList);
+            },
+          ),
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           onTap: () {

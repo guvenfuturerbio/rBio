@@ -467,7 +467,7 @@
   "do_u_want_continue": "Devam etmek istiyor musunuz ?",
   "doctor": "Doktor",
   "dose_interval": "Doz Aralığı",
-  "drug_count": "İlaç sayısı",
+  "drug_count": "İlaç adedi",
   "drug_search": "İlaç arama",
   "edit": "Düzenle",
   "edit_profile": "Profili Düzenle",
@@ -814,5 +814,9 @@
   "pillar_small": "İlaç kutusu",
   "how_will_you_follow_up": "Nasıl takip edeceksiniz?",
   "reminders_past_create_message": "Geçmişe hatırlatıcı oluşturulamaz.",
-  "one_time_dose_question": "Bir kerede kaç doz alınacak?"
+  "one_time_dose_question": "Bir kerede kaç doz alınacak?",
+  "remaining_count_notification": "Kalan adet bildirimi",
+  "remaining_drug": "Kalan ilaç",
+  "notification": "Bildirim",
+  "box_code": "Kutu kodu"
 }

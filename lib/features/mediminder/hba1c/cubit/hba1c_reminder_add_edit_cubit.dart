@@ -2,22 +2,22 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../core/core.dart';
+import '../../../../generated/l10n.dart';
+import '../../mediminder.dart';
 
 part 'hba1c_reminder_add_edit_cubit.freezed.dart';
 part 'hba1c_reminder_add_edit_state.dart';
 
 class Hba1cReminderAddEditCubit extends Cubit<Hba1cReminderAddEditState> {
-  Hba1cReminderAddEditCubit(this.reminderRepository)
+  Hba1cReminderAddEditCubit(this.reminderManager)
       : super(const Hba1cReminderAddEditState.initial());
-  late final ReminderRepository reminderRepository;
+  late final ReminderManager reminderManager;
 
   void setInitState(
     int? notificationId,
   ) {
     if (notificationId != null) {
-      final editResult =
-          reminderRepository.getHba1CDetailResult(notificationId);
+      final editResult = reminderManager.getHba1CDetailResult(notificationId);
       if (editResult != null) {
         emit(Hba1cReminderAddEditState.success(editResult));
         return;
@@ -115,7 +115,7 @@ class Hba1cReminderAddEditCubit extends Cubit<Hba1cReminderAddEditState> {
         if (!isValid) return;
 
         final isSuccess =
-            await reminderRepository.createOrEditHba1CReminderPlan(result);
+            await reminderManager.createOrEditHba1CReminderPlan(result);
         if (isSuccess) {
           emit(const Hba1cReminderAddEditState.openListScreen());
         }

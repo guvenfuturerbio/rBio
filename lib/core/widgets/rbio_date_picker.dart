@@ -105,15 +105,16 @@ class _RbioDatePickerState extends State<RbioDatePicker> {
         R.sizes.hSizer8,
 
         //
-        Text(
-          DateFormat("d MMMM yyyy EEEE",
-                  context.watch<LocaleNotifier>().current.languageCode)
-              .format(_selectedDate),
-          style: context.xHeadline4.copyWith(
-            fontWeight: FontWeight.w400,
-            color: context.xHeadline5.color!.withOpacity(0.75),
+        if (widget.mode != CupertinoDatePickerMode.time)
+          Text(
+            DateFormat("d MMMM yyyy EEEE",
+                    context.watch<LocaleNotifier>().current.languageCode)
+                .format(_selectedDate),
+            style: context.xHeadline4.copyWith(
+              fontWeight: FontWeight.w400,
+              color: context.xHeadline5.color!.withOpacity(0.75),
+            ),
           ),
-        ),
 
         //
         const Spacer(flex: 30),

@@ -5,66 +5,127 @@ class MedicationReminderAddEditState with _$MedicationReminderAddEditState {
   const factory MedicationReminderAddEditState.initial() = _InitialState;
   const factory MedicationReminderAddEditState.success(
       MedicationReminderAddEditResult result) = _SuccessState;
+  const factory MedicationReminderAddEditState.openListScreen() =
+      _OpenListScreenState;
+  const factory MedicationReminderAddEditState.showWarningDialog(
+      String description) = _ShowWarningDialogState;
 }
 
 class MedicationReminderAddEditResult {
   bool isCreated;
-  int? editNotificationId;
   int? editCreatedDate;
+  DrugTracking drugTracking;
+  String? drugName;
   UsageType? usageType;
-  MedicinePeriod? medicinePeriod;
+  ReminderPeriod? reminderPeriod;
   int? dailyDose;
-  List<tz.TZDateTime> doseTimes;
-  List<SelectableDay> days;
   int? oneTimeDose;
+  List<SelectableDay> days;
+  List<tz.TZDateTime> doseTimes;
+  int? drugCount;
+  int? remainingCountNotification;
+  String? boxCode;
 
   MedicationReminderAddEditResult({
     required this.isCreated,
-    this.editNotificationId,
     this.editCreatedDate,
+    this.drugTracking = DrugTracking.manuel,
+    this.drugName,
     this.usageType,
-    this.medicinePeriod,
+    this.reminderPeriod,
     this.dailyDose,
+    this.oneTimeDose,
     this.doseTimes = const [],
     this.days = const [],
-    this.oneTimeDose,
+    this.drugCount,
+    this.remainingCountNotification,
+    this.boxCode,
   });
 
   MedicationReminderAddEditResult copyWith({
     bool? isCreated,
-    int? editNotificationId,
     int? editCreatedDate,
+    DrugTracking? drugTracking,
+    String? drugName,
     UsageType? usageType,
-    MedicinePeriod? medicinePeriod,
+    ReminderPeriod? reminderPeriod,
     int? dailyDose,
-    List<tz.TZDateTime>? doseTimes,
-    List<SelectableDay>? days,
     int? oneTimeDose,
+    List<SelectableDay>? days,
+    List<tz.TZDateTime>? doseTimes,
+    int? drugCount,
+    int? remainingCountNotification,
+    String? boxCode,
   }) {
     return MedicationReminderAddEditResult(
       isCreated: isCreated ?? this.isCreated,
-      editNotificationId: editNotificationId ?? this.editNotificationId,
       editCreatedDate: editCreatedDate ?? this.editCreatedDate,
+      drugTracking: drugTracking ?? this.drugTracking,
+      drugName: drugName ?? this.drugName,
       usageType: usageType ?? this.usageType,
-      medicinePeriod: medicinePeriod ?? this.medicinePeriod,
+      reminderPeriod: reminderPeriod ?? this.reminderPeriod,
       dailyDose: dailyDose ?? this.dailyDose,
-      doseTimes: doseTimes ?? this.doseTimes,
-      days: days ?? this.days,
       oneTimeDose: oneTimeDose ?? this.oneTimeDose,
+      days: days ?? this.days,
+      doseTimes: doseTimes ?? this.doseTimes,
+      drugCount: drugCount ?? this.drugCount,
+      remainingCountNotification:
+          remainingCountNotification ?? this.remainingCountNotification,
+      boxCode: boxCode ?? this.boxCode,
     );
   }
 
   MedicationReminderAddEditResult resetDailDose() {
     return MedicationReminderAddEditResult(
       isCreated: isCreated,
-      editNotificationId: editNotificationId,
       editCreatedDate: editCreatedDate,
+      drugTracking: drugTracking,
+      drugName: drugName,
       usageType: usageType,
-      medicinePeriod: medicinePeriod,
+      reminderPeriod: reminderPeriod,
       dailyDose: null,
+      oneTimeDose: oneTimeDose,
       doseTimes: [],
       days: days,
+      drugCount: drugCount,
+      remainingCountNotification: remainingCountNotification,
+      boxCode: boxCode,
+    );
+  }
+
+  MedicationReminderAddEditResult resetDrugCount() {
+    return MedicationReminderAddEditResult(
+      isCreated: isCreated,
+      editCreatedDate: editCreatedDate,
+      drugTracking: drugTracking,
+      drugName: drugName,
+      usageType: usageType,
+      reminderPeriod: reminderPeriod,
+      dailyDose: dailyDose,
       oneTimeDose: oneTimeDose,
+      doseTimes: doseTimes,
+      days: days,
+      drugCount: null,
+      remainingCountNotification: remainingCountNotification,
+      boxCode: boxCode,
+    );
+  }
+
+  MedicationReminderAddEditResult resetRemainingCountNotification() {
+    return MedicationReminderAddEditResult(
+      isCreated: isCreated,
+      editCreatedDate: editCreatedDate,
+      drugTracking: drugTracking,
+      drugName: drugName,
+      usageType: usageType,
+      reminderPeriod: reminderPeriod,
+      dailyDose: dailyDose,
+      oneTimeDose: oneTimeDose,
+      doseTimes: doseTimes,
+      days: days,
+      drugCount: drugCount,
+      remainingCountNotification: null,
+      boxCode: boxCode,
     );
   }
 }

@@ -336,8 +336,6 @@ extension ScaleToInt on ScaleUnit? {
   }
 }
 
-enum StripMode { add, subtract, none }
-
 extension SUE on ScaleUnit {
   String get toStr {
     switch (this) {

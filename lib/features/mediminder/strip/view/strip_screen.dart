@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../core/core.dart';
-import '../vm/strip_vm.dart';
+import '../../mediminder.dart';
 
 part 'widget/strip_counter_dialog.dart';
 
@@ -52,23 +52,29 @@ class _StripScreenState extends State<StripScreen> {
           alarmController.text = stripCount.alarmCount.toString();
           stripCountController.text = stripCount.stripCount.toString();
           stripCountController.selection = TextSelection.collapsed(
-              offset: stripCount.stripCount.toString().length);
+            offset: stripCount.stripCount.toString().length,
+          );
           alarmController.selection = TextSelection.collapsed(
-              offset: stripCount.alarmCount.toString().length);
+            offset: stripCount.alarmCount.toString().length,
+          );
 
           return KeyboardDismissOnTap(
             child: RbioScaffold(
               extendBodyBehindAppBar: true,
-              appbar: RbioAppBar(
-                title: RbioAppBar.textTitle(
-                  context,
-                  LocaleProvider.current.strip_tracker,
-                ),
-              ),
+              appbar: _buildAppBar(context),
               body: _buildBody(stripCount),
             ),
           );
         },
+      ),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.strip_tracker,
       ),
     );
   }

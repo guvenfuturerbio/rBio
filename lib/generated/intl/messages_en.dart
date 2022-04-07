@@ -164,6 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Blood Pressure Tracking"),
         "bmi_tracking":
             MessageLookupByLibrary.simpleMessage("Body Scale Tracking"),
+        "box_code": MessageLookupByLibrary.simpleMessage("Box code"),
         "boy": MessageLookupByLibrary.simpleMessage("Boy"),
         "bp_tracking":
             MessageLookupByLibrary.simpleMessage("Blood Pressure Tracking"),
@@ -840,6 +841,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_found": MessageLookupByLibrary.simpleMessage("Not Found"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not Specified"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "notification": MessageLookupByLibrary.simpleMessage("Notification"),
         "notification_inbox_empty": MessageLookupByLibrary.simpleMessage(
             "You don\'t have any notifications yet"),
         "oauth_credential_error":
@@ -1021,6 +1023,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "relatives": MessageLookupByLibrary.simpleMessage("Relatives"),
         "relatives_only_children_warning": MessageLookupByLibrary.simpleMessage(
             "You can only add children of your own below age of 18"),
+        "remaining_count_notification": MessageLookupByLibrary.simpleMessage(
+            "Remaining Count Notification"),
+        "remaining_drug":
+            MessageLookupByLibrary.simpleMessage("Remaining drug"),
         "remind_me_every":
             MessageLookupByLibrary.simpleMessage("Remind me, every"),
         "reminder": MessageLookupByLibrary.simpleMessage("Reminder"),

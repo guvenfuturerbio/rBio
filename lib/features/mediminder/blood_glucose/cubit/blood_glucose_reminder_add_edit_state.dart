@@ -13,20 +13,18 @@ class BloodGlucoseReminderAddEditState with _$BloodGlucoseReminderAddEditState {
 
 class BloodGlucoseReminderAddEditResult {
   bool isCreated;
-  int? editNotificationId;
   int? editCreatedDate;
   UsageType? usageType;
-  MedicinePeriod? medicinePeriod;
+  ReminderPeriod? reminderPeriod;
   int? dailyDose;
   List<tz.TZDateTime> doseTimes;
   List<SelectableDay> days;
 
   BloodGlucoseReminderAddEditResult({
     required this.isCreated,
-    this.editNotificationId,
     this.editCreatedDate,
     this.usageType,
-    this.medicinePeriod,
+    this.reminderPeriod,
     this.dailyDose,
     this.doseTimes = const [],
     this.days = const [],
@@ -34,20 +32,18 @@ class BloodGlucoseReminderAddEditResult {
 
   BloodGlucoseReminderAddEditResult copyWith({
     bool? isCreated,
-    int? editNotificationId,
     int? editCreatedDate,
     UsageType? usageType,
-    MedicinePeriod? medicinePeriod,
+    ReminderPeriod? reminderPeriod,
     int? dailyDose,
     List<tz.TZDateTime>? doseTimes,
     List<SelectableDay>? days,
   }) {
     return BloodGlucoseReminderAddEditResult(
       isCreated: isCreated ?? this.isCreated,
-      editNotificationId: editNotificationId ?? this.editNotificationId,
       editCreatedDate: editCreatedDate ?? this.editCreatedDate,
       usageType: usageType ?? this.usageType,
-      medicinePeriod: medicinePeriod ?? this.medicinePeriod,
+      reminderPeriod: reminderPeriod ?? this.reminderPeriod,
       dailyDose: dailyDose ?? this.dailyDose,
       doseTimes: doseTimes ?? this.doseTimes,
       days: days ?? this.days,
@@ -57,10 +53,9 @@ class BloodGlucoseReminderAddEditResult {
   BloodGlucoseReminderAddEditResult resetDailDose() {
     return BloodGlucoseReminderAddEditResult(
       isCreated: isCreated,
-      editNotificationId: editNotificationId,
       editCreatedDate: editCreatedDate,
       usageType: usageType,
-      medicinePeriod: medicinePeriod,
+      reminderPeriod: reminderPeriod,
       dailyDose: null,
       doseTimes: [],
       days: days,

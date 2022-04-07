@@ -145,8 +145,10 @@ class StripVm with ChangeNotifier {
   }
 
   static String stripLocaleProviderFetcher(String localPvString) {
-    return LocaleProvider.current.you_have_strip
-        .replaceFirst(LocaleProvider.current.strpCnt, localPvString);
+    return LocaleProvider.current.you_have_strip.replaceFirst(
+      LocaleProvider.current.strpCnt,
+      localPvString,
+    );
   }
 
   static void decrementAndSave(int value) async {

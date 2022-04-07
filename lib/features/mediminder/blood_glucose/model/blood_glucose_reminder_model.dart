@@ -5,7 +5,7 @@ class BloodGlucoseReminderModel
     extends ReminderEntity<BloodGlucoseReminderModel> {
   int? dayIndex;
   int? dailyDose;
-  MedicinePeriod? medicinePeriod;
+  ReminderPeriod? reminderPeriod;
   UsageType? usageType;
 
   BloodGlucoseReminderModel({
@@ -15,7 +15,7 @@ class BloodGlucoseReminderModel
     required int entegrationId,
     this.dayIndex,
     this.dailyDose,
-    this.medicinePeriod,
+    this.reminderPeriod,
     this.usageType,
   }) : super(
           notificationId: notificationId,
@@ -40,7 +40,7 @@ class BloodGlucoseReminderModel
         {
           "dayIndex": dayIndex,
           "dailyDose": dailyDose,
-          "medicinePeriod": medicinePeriod?.xRawValue,
+          "reminderPeriod": reminderPeriod?.xRawValue,
           "usageType": usageType?.xRawValue,
         },
       );
@@ -54,26 +54,14 @@ class BloodGlucoseReminderModel
       entegrationId: json['entegrationId'] as int,
       dayIndex: json['dayIndex'] as int?,
       dailyDose: json['dailyDose'] as int?,
-      medicinePeriod: json['medicinePeriod'] == null
+      reminderPeriod: json['reminderPeriod'] == null
           ? null
-          : (json['medicinePeriod'] as String).xMedicinePeriodKeys,
+          : (json['reminderPeriod'] as String).xGetReminderPeriod,
       usageType: json['usageType'] == null
           ? null
-          : (json['usageType'] as String).xUsageTypeKeys,
+          : (json['usageType'] as String).xGetUsageType,
     );
   }
-
-  BloodGlucoseReminderModel changeScheduledDate({int? scheduledDate}) =>
-      BloodGlucoseReminderModel(
-        notificationId: notificationId,
-        scheduledDate: scheduledDate ?? this.scheduledDate,
-        createdDate: createdDate,
-        entegrationId: entegrationId,
-        dayIndex: dayIndex,
-        dailyDose: dailyDose,
-        medicinePeriod: medicinePeriod,
-        usageType: usageType,
-      );
 
   @override
   BloodGlucoseReminderModel fromJson(Map<String, dynamic> json) {

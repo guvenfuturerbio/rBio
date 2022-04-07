@@ -2,22 +2,32 @@ import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
 class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
-  String? name;
-  int? dayIndex;
-  int? dosage;
-  MedicinePeriod? medicinePeriod;
+  DrugTracking? drugTracking;
+  String? drugName;
   UsageType? usageType;
+  ReminderPeriod? reminderPeriod;
+  int? dayIndex;
+  int? dailyDose;
+  int? oneTimeDose;
+  int? drugCount;
+  int? remainingCountNotification;
+  String? boxCode;
 
   MedicationReminderModel({
     required int notificationId,
     required int scheduledDate,
     required int createdDate,
     required int entegrationId,
-    this.name,
-    this.dayIndex,
-    this.dosage,
-    this.medicinePeriod,
+    this.drugTracking,
+    this.drugName,
     this.usageType,
+    this.reminderPeriod,
+    this.dayIndex,
+    this.dailyDose,
+    this.oneTimeDose,
+    this.drugCount,
+    this.remainingCountNotification,
+    this.boxCode,
   }) : super(
           notificationId: notificationId,
           remindable: Remindable.medication,
@@ -39,11 +49,16 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
     return baseJson
       ..addAll(
         {
-          "name": name,
-          "dayIndex": dayIndex,
-          "dosage": dosage,
-          "medicinePeriod": medicinePeriod?.xRawValue,
+          "drugTracking": drugTracking?.xRawValue,
+          "drugName": drugName,
           "usageType": usageType?.xRawValue,
+          "reminderPeriod": reminderPeriod?.xRawValue,
+          "dayIndex": dayIndex,
+          "dailyDose": dailyDose,
+          "oneTimeDose": oneTimeDose,
+          'drugCount': drugCount,
+          'remainingCountNotification': remainingCountNotification,
+          'boxCode': boxCode,
         },
       );
   }
@@ -54,30 +69,24 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
       entegrationId: json['entegrationId'] as int,
-      name: json['name'] as String?,
-      dayIndex: json['dayIndex'] as int?,
-      dosage: json['dosage'] as int?,
-      medicinePeriod: json['medicinePeriod'] == null
+      drugTracking: json['drugTracking'] == null
           ? null
-          : (json['medicinePeriod'] as String).xMedicinePeriodKeys,
+          : (json['drugTracking'] as String).xGetDrugTracking,
+      drugName: json['drugName'] as String?,
       usageType: json['usageType'] == null
           ? null
-          : (json['usageType'] as String).xUsageTypeKeys,
+          : (json['usageType'] as String).xGetUsageType,
+      reminderPeriod: json['reminderPeriod'] == null
+          ? null
+          : (json['reminderPeriod'] as String).xGetReminderPeriod,
+      dayIndex: json['dayIndex'] as int?,
+      dailyDose: json['dailyDose'] as int?,
+      oneTimeDose: json['oneTimeDose'] as int?,
+      drugCount: json['drugCount'] as int?,
+      remainingCountNotification: json['remainingCountNotification'] as int?,
+      boxCode: json['boxCode'] as String?,
     );
   }
-
-  MedicationReminderModel changeScheduledDate({int? scheduledDate}) =>
-      MedicationReminderModel(
-        notificationId: notificationId,
-        scheduledDate: scheduledDate ?? this.scheduledDate,
-        createdDate: createdDate,
-        entegrationId: entegrationId,
-        name: name,
-        dayIndex: dayIndex,
-        dosage: dosage,
-        medicinePeriod: medicinePeriod,
-        usageType: usageType,
-      );
 
   @override
   MedicationReminderModel fromJson(Map<String, dynamic> json) {

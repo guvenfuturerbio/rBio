@@ -160,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Tansiyon Takibi"),
         "bmi_tracking":
             MessageLookupByLibrary.simpleMessage("Vücut Ölçüm Takibi"),
+        "box_code": MessageLookupByLibrary.simpleMessage("Kutu kodu"),
         "boy": MessageLookupByLibrary.simpleMessage("Erkek Çocuğu"),
         "bp_tracking": MessageLookupByLibrary.simpleMessage("Tansiyon Takibi"),
         "btn_cancel": MessageLookupByLibrary.simpleMessage("İptal"),
@@ -428,7 +429,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "done_text": MessageLookupByLibrary.simpleMessage("Yapıldı"),
         "dont_ask_again": MessageLookupByLibrary.simpleMessage("Tekrar sorma"),
         "dose_interval": MessageLookupByLibrary.simpleMessage("Doz Aralığı"),
-        "drug_count": MessageLookupByLibrary.simpleMessage("İlaç sayısı"),
+        "drug_count": MessageLookupByLibrary.simpleMessage("İlaç adedi"),
         "drug_search": MessageLookupByLibrary.simpleMessage("İlaç arama"),
         "edit": MessageLookupByLibrary.simpleMessage("Düzenle"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Profili Düzenle"),
@@ -831,6 +832,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_found": MessageLookupByLibrary.simpleMessage("Bulunamadı"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Belirtilmemiş"),
         "notes": MessageLookupByLibrary.simpleMessage("Notlar"),
+        "notification": MessageLookupByLibrary.simpleMessage("Bildirim"),
         "notification_inbox_empty":
             MessageLookupByLibrary.simpleMessage("Henüz bildiriminiz yok"),
         "oauth_credential_error":
@@ -1010,6 +1012,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "relatives": MessageLookupByLibrary.simpleMessage("Yakınlarım"),
         "relatives_only_children_warning": MessageLookupByLibrary.simpleMessage(
             "Sadece 18 yaşından küçük çocuklarınızı ekleyebilirsiniz."),
+        "remaining_count_notification":
+            MessageLookupByLibrary.simpleMessage("Kalan adet bildirimi"),
+        "remaining_drug": MessageLookupByLibrary.simpleMessage("Kalan ilaç"),
         "remind_me_every":
             MessageLookupByLibrary.simpleMessage("Bana hatırlat, her:"),
         "reminder": MessageLookupByLibrary.simpleMessage("Hatırlatıcı"),

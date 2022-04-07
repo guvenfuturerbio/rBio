@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../core/core.dart';
-import '../../../../core/utils/tz_helper.dart';
 import '../../mediminder.dart';
 
 part 'blood_glucose_reminder_add_edit_cubit.freezed.dart';
@@ -12,18 +11,15 @@ part 'blood_glucose_reminder_add_edit_state.dart';
 
 class BloodGlucoseReminderAddEditCubit
     extends Cubit<BloodGlucoseReminderAddEditState> {
-  BloodGlucoseReminderAddEditCubit(this.reminderRepository)
+  BloodGlucoseReminderAddEditCubit(this.reminderManager)
       : super(const BloodGlucoseReminderAddEditState.initial());
-  late final ReminderRepository reminderRepository;
+  late final ReminderManager reminderManager;
 
   // #region setInitState
   void setInitState(int? createdDate) {
-    final days = ReminderHelper.instance.getSelectableDays();
-
     if (createdDate != null) {
-      final editResult = reminderRepository.getBloodGlucoseDetailResult(
+      final editResult = reminderManager.getBloodGlucoseDetailResult(
         createdDate,
-        days,
       );
       if (editResult != null) {
         Future.microtask(
@@ -33,6 +29,7 @@ class BloodGlucoseReminderAddEditCubit
       }
     }
 
+    final days = reminderManager.getSelectableDays();
     Future.microtask(
       () => emit(
         BloodGlucoseReminderAddEditState.success(
@@ -63,15 +60,15 @@ class BloodGlucoseReminderAddEditCubit
   }
   // #endregion
 
-  // #region setMedicinePeriod
-  void setMedicinePeriod(MedicinePeriod value) {
+  // #region setReminderPeriod
+  void setReminderPeriod(ReminderPeriod value) {
     final currentState = state;
     currentState.whenOrNull(
       success: (result) {
         emit(
           BloodGlucoseReminderAddEditState.success(
             result.copyWith(
-              medicinePeriod: value,
+              reminderPeriod: value,
             ),
           ),
         );
@@ -85,7 +82,7 @@ class BloodGlucoseReminderAddEditCubit
     final currentState = state;
     await currentState.whenOrNull(
       success: (result) async {
-        final doseTimeList = _calculateDoseTimes(value);
+        final doseTimeList = reminderManager.calculateDoseTimes(value);
         emit(
           BloodGlucoseReminderAddEditState.success(
             result.copyWith(
@@ -166,7 +163,7 @@ class BloodGlucoseReminderAddEditCubit
         if (!isValid) return;
 
         final isSuccess =
-            await reminderRepository.createOrEditBgReminderPlan(result);
+            await reminderManager.createOrEditBgReminderPlan(result);
         if (isSuccess) {
           emit(const BloodGlucoseReminderAddEditState.openListScreen());
         }
@@ -178,13 +175,13 @@ class BloodGlucoseReminderAddEditCubit
   // #region _checkValidation
   bool _checkValidation(BloodGlucoseReminderAddEditResult result) {
     if (result.usageType == null ||
-        result.medicinePeriod == null ||
+        result.reminderPeriod == null ||
         result.dailyDose == null) {
       _showWarningDialog(
         LocaleProvider.current.fill_all_field,
       );
       return false;
-    } else if (result.medicinePeriod == MedicinePeriod.specificDays) {
+    } else if (result.reminderPeriod == ReminderPeriod.specificDays) {
       // Belirli Günler seçiminde gün kontrolü
       final anyDateSelected = result.days.any((item) => item.selected);
       if (!anyDateSelected) {
@@ -209,30 +206,6 @@ class BloodGlucoseReminderAddEditCubit
         emit(currentState);
       },
     );
-  }
-  // #endregion
-
-  // #region _calculateDoseTimes
-  List<tz.TZDateTime>? _calculateDoseTimes(int dailyDose) {
-    if (dailyDose == 0) return null;
-
-    int perMinute = ((24 * 60) / dailyDose).round();
-    int hour = perMinute < 60 ? perMinute : (perMinute / 60).round();
-    int minute = perMinute < 60 ? 0 : perMinute - hour * 60;
-    List<tz.TZDateTime> doseTimeList = [];
-
-    doseTimeList.add(
-      TZHelper.instance.currentDay(),
-    );
-
-    for (var i = 1; i < dailyDose; i++) {
-      doseTimeList.add(
-        doseTimeList.first.add(
-          Duration(hours: i * hour, minutes: i * minute),
-        ),
-      );
-    }
-    return doseTimeList;
   }
   // #endregion
 }

@@ -26,6 +26,16 @@ class _$MedicationReminderAddEditStateTearOff {
       result,
     );
   }
+
+  _OpenListScreenState openListScreen() {
+    return const _OpenListScreenState();
+  }
+
+  _ShowWarningDialogState showWarningDialog(String description) {
+    return _ShowWarningDialogState(
+      description,
+    );
+  }
 }
 
 /// @nodoc
@@ -38,18 +48,24 @@ mixin _$MedicationReminderAddEditState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MedicationReminderAddEditResult result) success,
+    required TResult Function() openListScreen,
+    required TResult Function(String description) showWarningDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -57,18 +73,24 @@ mixin _$MedicationReminderAddEditState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialState value) initial,
     required TResult Function(_SuccessState value) success,
+    required TResult Function(_OpenListScreenState value) openListScreen,
+    required TResult Function(_ShowWarningDialogState value) showWarningDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitialState value)? initial,
     TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialState value)? initial,
     TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -135,6 +157,8 @@ class _$_InitialState implements _InitialState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MedicationReminderAddEditResult result) success,
+    required TResult Function() openListScreen,
+    required TResult Function(String description) showWarningDialog,
   }) {
     return initial();
   }
@@ -144,6 +168,8 @@ class _$_InitialState implements _InitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
   }) {
     return initial?.call();
   }
@@ -153,6 +179,8 @@ class _$_InitialState implements _InitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -166,6 +194,8 @@ class _$_InitialState implements _InitialState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialState value) initial,
     required TResult Function(_SuccessState value) success,
+    required TResult Function(_OpenListScreenState value) openListScreen,
+    required TResult Function(_ShowWarningDialogState value) showWarningDialog,
   }) {
     return initial(this);
   }
@@ -175,6 +205,8 @@ class _$_InitialState implements _InitialState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitialState value)? initial,
     TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
   }) {
     return initial?.call(this);
   }
@@ -184,6 +216,8 @@ class _$_InitialState implements _InitialState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialState value)? initial,
     TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -264,6 +298,8 @@ class _$_SuccessState implements _SuccessState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MedicationReminderAddEditResult result) success,
+    required TResult Function() openListScreen,
+    required TResult Function(String description) showWarningDialog,
   }) {
     return success(result);
   }
@@ -273,6 +309,8 @@ class _$_SuccessState implements _SuccessState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
   }) {
     return success?.call(result);
   }
@@ -282,6 +320,8 @@ class _$_SuccessState implements _SuccessState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -295,6 +335,8 @@ class _$_SuccessState implements _SuccessState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialState value) initial,
     required TResult Function(_SuccessState value) success,
+    required TResult Function(_OpenListScreenState value) openListScreen,
+    required TResult Function(_ShowWarningDialogState value) showWarningDialog,
   }) {
     return success(this);
   }
@@ -304,6 +346,8 @@ class _$_SuccessState implements _SuccessState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitialState value)? initial,
     TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
   }) {
     return success?.call(this);
   }
@@ -313,6 +357,8 @@ class _$_SuccessState implements _SuccessState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialState value)? initial,
     TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -329,5 +375,272 @@ abstract class _SuccessState implements MedicationReminderAddEditState {
   MedicationReminderAddEditResult get result;
   @JsonKey(ignore: true)
   _$SuccessStateCopyWith<_SuccessState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$OpenListScreenStateCopyWith<$Res> {
+  factory _$OpenListScreenStateCopyWith(_OpenListScreenState value,
+          $Res Function(_OpenListScreenState) then) =
+      __$OpenListScreenStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$OpenListScreenStateCopyWithImpl<$Res>
+    extends _$MedicationReminderAddEditStateCopyWithImpl<$Res>
+    implements _$OpenListScreenStateCopyWith<$Res> {
+  __$OpenListScreenStateCopyWithImpl(
+      _OpenListScreenState _value, $Res Function(_OpenListScreenState) _then)
+      : super(_value, (v) => _then(v as _OpenListScreenState));
+
+  @override
+  _OpenListScreenState get _value => super._value as _OpenListScreenState;
+}
+
+/// @nodoc
+
+class _$_OpenListScreenState implements _OpenListScreenState {
+  const _$_OpenListScreenState();
+
+  @override
+  String toString() {
+    return 'MedicationReminderAddEditState.openListScreen()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _OpenListScreenState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(MedicationReminderAddEditResult result) success,
+    required TResult Function() openListScreen,
+    required TResult Function(String description) showWarningDialog,
+  }) {
+    return openListScreen();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
+  }) {
+    return openListScreen?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
+    required TResult orElse(),
+  }) {
+    if (openListScreen != null) {
+      return openListScreen();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialState value) initial,
+    required TResult Function(_SuccessState value) success,
+    required TResult Function(_OpenListScreenState value) openListScreen,
+    required TResult Function(_ShowWarningDialogState value) showWarningDialog,
+  }) {
+    return openListScreen(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitialState value)? initial,
+    TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
+  }) {
+    return openListScreen?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialState value)? initial,
+    TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
+    required TResult orElse(),
+  }) {
+    if (openListScreen != null) {
+      return openListScreen(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OpenListScreenState implements MedicationReminderAddEditState {
+  const factory _OpenListScreenState() = _$_OpenListScreenState;
+}
+
+/// @nodoc
+abstract class _$ShowWarningDialogStateCopyWith<$Res> {
+  factory _$ShowWarningDialogStateCopyWith(_ShowWarningDialogState value,
+          $Res Function(_ShowWarningDialogState) then) =
+      __$ShowWarningDialogStateCopyWithImpl<$Res>;
+  $Res call({String description});
+}
+
+/// @nodoc
+class __$ShowWarningDialogStateCopyWithImpl<$Res>
+    extends _$MedicationReminderAddEditStateCopyWithImpl<$Res>
+    implements _$ShowWarningDialogStateCopyWith<$Res> {
+  __$ShowWarningDialogStateCopyWithImpl(_ShowWarningDialogState _value,
+      $Res Function(_ShowWarningDialogState) _then)
+      : super(_value, (v) => _then(v as _ShowWarningDialogState));
+
+  @override
+  _ShowWarningDialogState get _value => super._value as _ShowWarningDialogState;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+  }) {
+    return _then(_ShowWarningDialogState(
+      description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ShowWarningDialogState implements _ShowWarningDialogState {
+  const _$_ShowWarningDialogState(this.description);
+
+  @override
+  final String description;
+
+  @override
+  String toString() {
+    return 'MedicationReminderAddEditState.showWarningDialog(description: $description)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ShowWarningDialogState &&
+            const DeepCollectionEquality()
+                .equals(other.description, description));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(description));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ShowWarningDialogStateCopyWith<_ShowWarningDialogState> get copyWith =>
+      __$ShowWarningDialogStateCopyWithImpl<_ShowWarningDialogState>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(MedicationReminderAddEditResult result) success,
+    required TResult Function() openListScreen,
+    required TResult Function(String description) showWarningDialog,
+  }) {
+    return showWarningDialog(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
+  }) {
+    return showWarningDialog?.call(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MedicationReminderAddEditResult result)? success,
+    TResult Function()? openListScreen,
+    TResult Function(String description)? showWarningDialog,
+    required TResult orElse(),
+  }) {
+    if (showWarningDialog != null) {
+      return showWarningDialog(description);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialState value) initial,
+    required TResult Function(_SuccessState value) success,
+    required TResult Function(_OpenListScreenState value) openListScreen,
+    required TResult Function(_ShowWarningDialogState value) showWarningDialog,
+  }) {
+    return showWarningDialog(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitialState value)? initial,
+    TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
+  }) {
+    return showWarningDialog?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialState value)? initial,
+    TResult Function(_SuccessState value)? success,
+    TResult Function(_OpenListScreenState value)? openListScreen,
+    TResult Function(_ShowWarningDialogState value)? showWarningDialog,
+    required TResult orElse(),
+  }) {
+    if (showWarningDialog != null) {
+      return showWarningDialog(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ShowWarningDialogState
+    implements MedicationReminderAddEditState {
+  const factory _ShowWarningDialogState(String description) =
+      _$_ShowWarningDialogState;
+
+  String get description;
+  @JsonKey(ignore: true)
+  _$ShowWarningDialogStateCopyWith<_ShowWarningDialogState> get copyWith =>
       throw _privateConstructorUsedError;
 }

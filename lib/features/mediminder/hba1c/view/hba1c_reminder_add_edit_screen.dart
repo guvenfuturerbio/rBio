@@ -39,7 +39,7 @@ class Hba1cReminderAddEditScreen extends StatelessWidget {
                 openListScreen: () {
                   Atom.historyBack();
                   Atom.to(
-                    PagePaths.allReminderList,
+                    PagePaths.reminderList,
                     isReplacement: true,
                   );
                 },
@@ -57,7 +57,7 @@ class Hba1cReminderAddEditScreen extends StatelessWidget {
                 },
               );
             },
-            child: const Hba1cReminderAddEditView(),
+            child: const _Hba1cReminderAddEditView(),
           );
         },
       ),
@@ -65,8 +65,8 @@ class Hba1cReminderAddEditScreen extends StatelessWidget {
   }
 }
 
-class Hba1cReminderAddEditView extends StatelessWidget {
-  const Hba1cReminderAddEditView({
+class _Hba1cReminderAddEditView extends StatelessWidget {
+  const _Hba1cReminderAddEditView({
     Key? key,
   }) : super(key: key);
 

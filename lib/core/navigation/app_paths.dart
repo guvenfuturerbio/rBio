@@ -424,32 +424,24 @@ class VRouterRoutes {
       },
       stackedRoutes: [
         VWidget(
-          path: PagePaths.allReminderList,
-          widget: const AllReminderListScreen(),
+          path: PagePaths.reminderList,
+          widget: const ReminderListScreen(),
         ),
         VWidget(
           path: PagePaths.selectReminder,
           widget: const SelectReminderScreen(),
         ),
         VWidget(
-          path: PagePaths.bloodGlucoseReminderList,
-          widget: const BloodGlucoseReminderListScreen(),
-        ),
-        VWidget(
           path: PagePaths.bloodGlucoseReminderAddEdit,
           widget: const BloodGlucoseReminderAddEditScreen(),
         ),
         VWidget(
-          path: PagePaths.medicationReminderAdd,
-          widget: MedicationReminderAddScreen(),
+          path: PagePaths.medicationReminderAddEdit,
+          widget: const MedicationReminderAddEditScreen(),
         ),
         VWidget(
           path: PagePaths.hba1cReminderAddEdit,
           widget: const Hba1cReminderAddEditScreen(),
-        ),
-        VWidget(
-          path: PagePaths.hba1cList,
-          widget: Hba1cReminderListScreen(),
         ),
         VWidget(
           path: PagePaths.reminderDetail,
@@ -645,15 +637,13 @@ class PagePaths {
   //Search
   static const searchPage = '/search-page';
 
-  //Mediminder
-  static const allReminderList = "/reminders";
+  // Mediminder
+  static const reminderList = "/reminder-list";
   static const selectReminder = '/select-reminder';
   static const reminderDetail = '/reminder/reminder-detail';
   static const strip = '/reminder/strips';
-  static const hba1cList = '/reminder/hba1c-list';
-  static const medicationReminderAdd = '/reminder/medication-add';
+  static const medicationReminderAddEdit = '/reminder/medication-add-edit';
   static const hba1cReminderAddEdit = '/reminder/hba1c-add-edit';
-  static const bloodGlucoseReminderList = '/reminder/blood-glucose-list';
   static const bloodGlucoseReminderAddEdit = '/reminder/blood-glucose-add-edit';
 
   // Chroic Tracking

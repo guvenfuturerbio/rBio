@@ -162,7 +162,7 @@ class _Endpoints {
   String ctSetDefaultProfile =
       '/user/set-user-profile-default-value'.xDevApiTest;
   String ctUpdateUserStrip = '/user/add-update-user-strip'.xDevApiTest;
-  String ctDeleteUserStrip(var id, var entegrationId) =>
+  String ctDeleteUserStrip(int id, var entegrationId) =>
       '/user/delete-user-strip/$id/$entegrationId'.xDevApiTest;
   String ctIsDeviceIdRegisteredForSomeUser(var deviceId, var entegrationId) =>
       '/SugarDevice/is-device-id-registered-for-some-user/$deviceId/$entegrationId'

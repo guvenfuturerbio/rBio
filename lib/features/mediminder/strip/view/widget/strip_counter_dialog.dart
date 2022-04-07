@@ -15,17 +15,17 @@ class _StripGradientDialog extends StatefulWidget {
 }
 
 class _StripGradientDialogState extends State<_StripGradientDialog> {
-  late TextEditingController stripController;
+  late TextEditingController _stripController;
 
   @override
   void initState() {
-    stripController = TextEditingController();
+    _stripController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    stripController.dispose();
+    _stripController.dispose();
     super.dispose();
   }
 
@@ -39,7 +39,7 @@ class _StripGradientDialogState extends State<_StripGradientDialog> {
         ),
       ),
       onPressed: () {
-        widget.callback(int.parse(stripController.text));
+        widget.callback(int.parse(_stripController.text));
         Navigator.of(context).pop();
       },
     );
@@ -72,7 +72,7 @@ class _StripGradientDialogState extends State<_StripGradientDialog> {
               child: SizedBox(
                 width: 350,
                 child: TextField(
-                  controller: stripController,
+                  controller: _stripController,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
