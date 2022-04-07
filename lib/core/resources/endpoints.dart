@@ -49,9 +49,9 @@ class _Endpoints {
       '/UserRegister/synchronize-onedose-user'.xBaseUrl;
   final getAllRelativesPath = '/profile/get-all-table'.xDevApiTest;
   final getCountriesPath = '/Pusula/getCountries'.xBaseUrl;
-  final updatePusulaContactInfoPath = '/pusula/UpdatePatientContactInfo'.xBaseUrl;
-  final updateContactInfoPath =
-      '/User/UpdatePatientContactInfo'.xDevApiTest;
+  final updatePusulaContactInfoPath =
+      '/pusula/UpdatePatientContactInfo'.xBaseUrl;
+  final updateContactInfoPath = '/User/UpdatePatientContactInfo'.xDevApiTest;
 
   String changeUserPasswordUiPath(String oldPassword, String password) =>
       '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
@@ -208,6 +208,8 @@ class _Endpoints {
       '/api/v1/doctorpatient/get-my-patient-bmi/$patientId'.xDoctorBaseUrl;
   String dcGetMyPatientPressure(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-bp/$patientId'.xDoctorBaseUrl;
+
+  String consentFormPath =  '/userregister/get-consent-form'.xApiGuven;
 }
 
 extension _EndpointsExtension on String {
@@ -262,6 +264,15 @@ extension _EndpointsExtension on String {
       return path + this;
     } else {
       throw Exception('SecretKeys.devApiTest null');
+    }
+  }
+
+  String get xApiGuven {
+    final String? path = getIt<KeyManager>().get(Keys.apiGuven);
+    if (path != null) {
+      return path + this;
+    } else {
+      throw Exception('SecretKeys.ApiGuven null');
     }
   }
 }

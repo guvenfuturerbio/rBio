@@ -627,12 +627,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("\$distance km way"),
         "lbl_dont_have_account":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account? "),
-        "lbl_have_account":
-            MessageLookupByLibrary.simpleMessage("Have an account? "),
         "lbl_find_hospital":
             MessageLookupByLibrary.simpleMessage("Hospital Appointment"),
         "lbl_forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
+        "lbl_have_account":
+            MessageLookupByLibrary.simpleMessage("Have an account? "),
         "lbl_hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "lbl_number_appointment":
             MessageLookupByLibrary.simpleMessage("\$number available"),

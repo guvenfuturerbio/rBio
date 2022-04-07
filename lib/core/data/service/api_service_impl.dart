@@ -223,6 +223,21 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
+  Future<ConsentForm> getConsentForm() async {
+    final response = await helper.getGuven(
+      R.endpoints.consentFormPath,
+    );
+
+    if (response.xIsSuccessful) {
+      final datum = ConsentForm.fromJson(response.datum);
+
+      return datum;
+    } else {
+      throw Exception('/consentForm : ${response.isSuccessful}');
+    }
+  }
+
+  @override
   Future<ApplicationVersionResponse> getCurrentApplicationVersion() async {
     final response = await helper.getGuven(
       R.endpoints.getCurrentApplicationVersionPath,
