@@ -26,6 +26,8 @@ class RbioTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final Color? backColor;
   final Color? textColor;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
 
   const RbioTextFormField({
     Key? key,
@@ -47,11 +49,13 @@ class RbioTextFormField extends StatelessWidget {
     this.autocorrect = true,
     this.textInputAction = TextInputAction.next,
     this.border,
+    this.validator,
     this.enabled,
     this.maxLines = 1,
     this.suffixIcon,
     this.backColor,
     this.textColor,
+    this.autovalidateMode,
   }) : super(key: key);
 
   @override
@@ -65,6 +69,8 @@ class RbioTextFormField extends StatelessWidget {
       controller: controller,
       autocorrect: autocorrect ?? true,
       enabled: enabled,
+      autovalidateMode: autovalidateMode,
+      validator: validator,
       enableSuggestions: enableSuggestions ?? true,
       obscureText: obscureText ?? false,
       keyboardType: keyboardType,

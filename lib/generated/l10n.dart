@@ -440,6 +440,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Have an account? `
+  String get lbl_have_account {
+    return Intl.message(
+      'Have an account? ',
+      name: 'lbl_have_account',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Forgot Password?`
   String get lbl_forgot_password {
     return Intl.message(
@@ -1095,6 +1105,16 @@ class LocaleProvider {
     return Intl.message(
       'Month',
       name: 'month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, `
+  String get password_validation {
+    return Intl.message(
+      'Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, ',
+      name: 'password_validation',
       desc: '',
       args: [],
     );

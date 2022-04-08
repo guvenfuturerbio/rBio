@@ -362,7 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //
         Expanded(
           child: TextButton(
-            onPressed: () => value.showApplicationContestForm(),
+            onPressed: ()  => value.showApplicationContestForm(),
             child: Text(
               LocaleProvider.of(context).accept_application_consent_form,
               maxLines: 2,

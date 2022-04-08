@@ -26,8 +26,12 @@ class RegisterStep2ScreenVm extends RbioVm {
   bool _clickedGeneralForm = false;
   bool get clickedGeneralForm => _clickedGeneralForm;
 
-  void passwordFetcher(String fromPwController) {
+  bool passwordFetcher(String fromPwController) {
     textFromPass = fromPwController;
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~-]).{8,}$';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(fromPwController);
   }
 
   void passwordAgainFetcher(String fromPwAgainController) {

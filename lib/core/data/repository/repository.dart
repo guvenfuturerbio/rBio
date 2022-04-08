@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dartz/dartz.dart';
+import 'package:onedosehealth/features/auth/model/consent_form_model.dart';
 
 import 'package:onedosehealth/features/auth/model/login_exception.dart';
 import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
@@ -133,6 +134,8 @@ class Repository {
       apiService.getActiveStream();
 
   Future<String> getProfilePicture() => apiService.getProfilePicture();
+
+  Future<ConsentForm> getConsentForm() => apiService.getConsentForm();
 
   Future<ApplicationVersionResponse> getCurrentApplicationVersion() =>
       apiService.getCurrentApplicationVersion();

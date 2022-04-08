@@ -265,8 +265,15 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         _passwordAgainFocusNode,
                       ),
                     ],
-                    onChanged: (value) {
-                      vm.passwordFetcher(value);
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if ((value ?? '').isNotEmpty) {
+                        if (!vm.passwordFetcher(value!)) {
+                          return LocaleProvider.current.password_validation;
+                        }
+                      }
+
+                      return null;
                     },
                     onFieldSubmitted: (term) {
                       UtilityManager().fieldFocusChange(

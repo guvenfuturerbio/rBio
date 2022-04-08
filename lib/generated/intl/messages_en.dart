@@ -645,6 +645,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Hospital Appointment"),
         "lbl_forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
+        "lbl_have_account":
+            MessageLookupByLibrary.simpleMessage("Have an account? "),
         "lbl_hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "lbl_number_appointment":
             MessageLookupByLibrary.simpleMessage("\$number available"),
@@ -937,6 +939,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Password length must be at least 8 characters"),
         "password_security": MessageLookupByLibrary.simpleMessage(
             "According to our security policies, your password must comply with the security criteria."),
+        "password_validation": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, "),
         "password_wrong": MessageLookupByLibrary.simpleMessage(
             "Please enter valid password."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(

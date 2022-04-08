@@ -6,7 +6,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   @override
   final String boxKey = 'GlucoseBox';
 
-  HealthFactory? health;
+  //HealthFactory? health;
 
   bool _hasProgress = false;
 
@@ -21,7 +21,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   Future<void> init() async {
     box = await Hive.openBox<GlucoseData>(boxKey);
 
-    health = HealthFactory();
+    //health = HealthFactory();
 
     types = [
       HealthDataType.BLOOD_GLUCOSE,
@@ -30,6 +30,21 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   late Box<GlucoseData> box;
+
+  /*Future<bool> deleteBloodGlucoseFromHealth(DateTime date) async {
+    var itemDate = date.toString();
+    itemDate = itemDate.substring(0, itemDate.length - 1);
+    final newDate = DateTime.parse(itemDate);
+    try {
+      await health?.deleteData(
+        HealthDataType.BLOOD_GLUCOSE,
+        newDate,
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }*/
 
   @override
   Future<bool> delete(dynamic key) async {
@@ -43,6 +58,8 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
             measurementId: data.measurementId,
           ).toJson(),
         );
+        /*deleteBloodGlucoseFromHealth(
+            DateTime.fromMillisecondsSinceEpoch(data.time));*/
         box.delete(key);
         notifyListeners();
         return true;
@@ -90,7 +107,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     try {
       if (box.isOpen && !doesExist(data)) {
         if (!data.isFromHealth) {
-          await health!.requestAuthorization(types, permissions: perm);
+          /*await health!.requestAuthorization(types, permissions: perm);
 
           health!
               .writeHealthData(
@@ -101,7 +118,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
           )
               .then((value) {
             LoggerUtils.instance.i("Health Response : $value");
-          });
+          });*/
         }
 
         if (shouldSendToServer) {
@@ -291,7 +308,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
           entegrationId: getIt<ProfileStorageImpl>().getFirst().id,
           measurementId: data.measurementId,
           tag: data.tag,
-          value: int.parse(data.level),
+          value: double.parse(data.level).toInt(),
           type: "mg",
           note: data.note,
           date: data.date,
