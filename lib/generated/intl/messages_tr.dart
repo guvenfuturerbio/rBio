@@ -900,6 +900,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Şifre uzunluğu en az 8 karakter olmalı"),
         "password_security": MessageLookupByLibrary.simpleMessage(
             "Güvenlik politikalarımız gereği şifrenizin güvenlik kriterlerine uyması gerekmektedir."),
+        "password_validation": MessageLookupByLibrary.simpleMessage(
+            "Şifre en az 1 büyük, 1 küçük, 1 özel karakter, 1 sayı içermeli"),
         "password_wrong":
             MessageLookupByLibrary.simpleMessage("Geçerli bir şifre giriniz."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(

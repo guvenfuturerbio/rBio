@@ -75,6 +75,7 @@
   "surname": "Soyad",
   "passport_number": "Pasaport/Vatandaşlık Numaranız",
   "personal_info": "Kişisel Bilgiler",
+  "password_validation": "Şifre en az 1 büyük, 1 küçük, 1 özel karakter, 1 sayı içermeli",
   "create_password": "Şifre Oluştur",
   "sms_verification": "Sms/Email Doğrulama",
   "sms_verification_code": "Sms/Email Doğrulama Kodu",

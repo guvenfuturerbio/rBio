@@ -1100,6 +1100,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, `
+  String get password_validation {
+    return Intl.message(
+      'Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, ',
+      name: 'password_validation',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Your appointment has been created successfully`
   String get appo_created {
     return Intl.message(
