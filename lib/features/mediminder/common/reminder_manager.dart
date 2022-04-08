@@ -43,10 +43,8 @@ class ReminderManager {
       int createdDate,
       BloodGlucoseReminderAddEditResult result,
     ) async {
-      await reminderNotificationsManager.createMedinicineOrBloodGlucose(
+      await reminderNotificationsManager.createBloodGlucose(
         id,
-        LocaleProvider.current.blood_glucose_measurement,
-        LocaleProvider.current.bg_measurement_time,
         scheduledDate,
         period,
       );
@@ -203,10 +201,9 @@ class ReminderManager {
       int createdDate,
       MedicationReminderAddEditResult result,
     ) async {
-      await reminderNotificationsManager.createMedinicineOrBloodGlucose(
+      await reminderNotificationsManager.createMedinicine(
         id,
         result.drugName ?? '',
-        LocaleProvider.current.time_take_medicine,
         scheduledDate,
         period,
       );
@@ -370,7 +367,7 @@ class ReminderManager {
         );
       }
 
-      final notificationId = await _generateNotificationId();
+      final notificationId = await generateNotificationId();
 
       final lastMeasurementDateTime = DateTime.parse(result.lastTestDate!);
 
@@ -396,7 +393,7 @@ class ReminderManager {
       );
 
       await reminderNotificationsManager.createHba1c(
-        currentHbaModel,
+        currentHbaModel.notificationId,
         remindDateTimeTZ,
       );
 
@@ -871,8 +868,8 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region _generateNotificationId
-  Future<int> _generateNotificationId() async {
+  // #region generateNotificationId - Future<int>
+  Future<int> generateNotificationId() async {
     final _pendingList =
         await localNotificationManager.getPendingNotificationIds();
     List<int> numberList = [];
@@ -888,7 +885,7 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region _generateUniqueIdsWithReminderPeriod
+  // #region _generateUniqueIdsWithReminderPeriod - Future<List<int>>
   Future<List<int>> _generateUniqueIdsWithReminderPeriod(
     LocalNotificationManager notificationManager,
     ReminderPeriod? period,
@@ -966,7 +963,7 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region _getAllReminderWithType
+  // #region _getAllReminderWithType - List<T>
   List<T> _getAllReminderWithType<T extends ReminderEntity>(T entity) {
     final sharedList =
         sharedPreferencesManager.getStringList(entity.xGetSharedKeys) ?? [];
@@ -979,7 +976,7 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region _saveReminders
+  // #region _saveReminders - Future<void>
   Future<void> _saveReminders<T extends ReminderEntity>(
     List<T> reminderList,
     SharedPreferencesKeys sharedKeys,

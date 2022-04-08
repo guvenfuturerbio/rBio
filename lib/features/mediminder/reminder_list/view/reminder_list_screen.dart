@@ -8,7 +8,6 @@ import '../../../../../core/utils/tz_helper.dart';
 import '../../mediminder.dart';
 
 part 'widget/filter_dialog.dart';
-part '../../common/widget/reminder_alert_dialog.dart';
 part 'widget/reminder_card.dart';
 part 'widget/reminder_detail_dialog.dart';
 

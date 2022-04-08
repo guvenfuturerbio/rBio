@@ -82,7 +82,11 @@ extension BuildContextExtensions on DateTime {
         0;
 
     if (hourLeft == 0) {
-      return "$minuteLeft dk";
+      if (minuteLeft == 0) {
+        return "$secondsLeft sn";
+      } else {
+        return "$minuteLeft dk";
+      }
     } else if (hourLeft > 23) {
       final dayLeft = hourLeft ~/ 24;
       final dayHours = dayLeft * 24;

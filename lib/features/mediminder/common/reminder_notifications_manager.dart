@@ -16,16 +16,24 @@ abstract class ReminderNotificationsManager {
       this.notificationManager, this.sharedPreferencesManager);
 
   Future<void> checkOneTimeNotifications();
-  Future<void> createMedinicineOrBloodGlucose(
+  Future<void> createMedinicine(
     int id,
     String title,
-    String description,
+    TZDateTime scheduledDate,
+    ReminderPeriod period,
+  );
+  Future<void> createBloodGlucose(
+    int id,
     TZDateTime scheduledDate,
     ReminderPeriod period,
   );
   Future<void> createHba1c(
-    Hba1CReminderModel hba1cModel,
+    int id,
     TZDateTime scheduledDate,
+  );
+  Future<void> createPostponeNotification(
+    TZDateTime scheduledDate,
+    ReminderNotificationModel model,
   );
 }
 
@@ -80,24 +88,130 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
   }
 
   @override
-  Future<void> createMedinicineOrBloodGlucose(
+  Future<void> createMedinicine(
     int id,
     String title,
-    String description,
     TZDateTime scheduledDate,
     ReminderPeriod period,
   ) async {
     await notificationManager.zonedSchedule(
       id,
       title,
-      description,
+      LocaleProvider.current.time_take_medicine,
       scheduledDate,
       notificationDetails.getNotificationDetails(period),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
       matchDateTimeComponents: _getDateTimeComponents(period),
+      payload: LocalNotificationModel(
+        type: LocalNotificationType.reminder,
+        data: ReminderNotificationModel(
+          notificationId: id,
+          remindable: Remindable.medication,
+          title: title,
+          description: LocaleProvider.current.time_take_medicine,
+        ).toJsonString(),
+      ).toJsonString(),
     );
+  }
+
+  @override
+  Future<void> createBloodGlucose(
+    int id,
+    TZDateTime scheduledDate,
+    ReminderPeriod period,
+  ) async {
+    await notificationManager.zonedSchedule(
+      id,
+      LocaleProvider.current.blood_glucose_measurement,
+      LocaleProvider.current.bg_measurement_time,
+      scheduledDate,
+      notificationDetails.getNotificationDetails(period),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      matchDateTimeComponents: _getDateTimeComponents(period),
+      payload: LocalNotificationModel(
+        type: LocalNotificationType.reminder,
+        data: ReminderNotificationModel(
+          notificationId: id,
+          remindable: Remindable.bloodGlucose,
+          title: LocaleProvider.current.blood_glucose_measurement,
+          description: LocaleProvider.current.bg_measurement_time,
+        ).toJsonString(),
+      ).toJsonString(),
+    );
+  }
+
+  @override
+  Future<void> createHba1c(
+    int id,
+    TZDateTime scheduledDate,
+  ) {
+    return notificationManager.zonedSchedule(
+      id,
+      LocaleProvider.current.hbA1c_measurement_title,
+      LocaleProvider.current.time_hba1c,
+      scheduledDate,
+      notificationDetails.hba1c,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: LocalNotificationModel(
+        type: LocalNotificationType.reminder,
+        data: ReminderNotificationModel(
+          notificationId: id,
+          remindable: Remindable.hbA1c,
+          title: LocaleProvider.current.hbA1c_measurement_title,
+          description: LocaleProvider.current.time_hba1c,
+        ).toJsonString(),
+      ).toJsonString(),
+    );
+  }
+
+  @override
+  Future<void> createPostponeNotification(
+    TZDateTime scheduledDate,
+    ReminderNotificationModel model,
+  ) async {
+    LoggerUtils.instance.i("BURADA");
+    LoggerUtils.instance.i(scheduledDate);
+    return notificationManager.zonedSchedule(
+      model.notificationId,
+      model.title ?? '',
+      model.description ?? '',
+      scheduledDate,
+      _getPosponeDetails(model),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: LocalNotificationModel(
+        type: LocalNotificationType.reminder,
+        data: model.toJsonString(),
+      ).toJsonString(),
+    );
+  }
+
+  NotificationDetails _getPosponeDetails(
+    ReminderNotificationModel model,
+  ) {
+    switch (model.remindable) {
+      case Remindable.bloodGlucose:
+        return notificationDetails
+            .getNotificationDetails(ReminderPeriod.oneTime);
+
+      case Remindable.medication:
+        return notificationDetails
+            .getNotificationDetails(ReminderPeriod.oneTime);
+
+      case Remindable.hbA1c:
+        return notificationDetails.hba1c;
+
+      case Remindable.strip:
+      default:
+        throw Exception("Unsupported");
+    }
   }
 
   DateTimeComponents? _getDateTimeComponents(ReminderPeriod period) {
@@ -111,23 +225,6 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
       case ReminderPeriod.specificDays:
         return DateTimeComponents.dayOfWeekAndTime;
     }
-  }
-
-  @override
-  Future<void> createHba1c(
-    Hba1CReminderModel hba1cModel,
-    TZDateTime scheduledDate,
-  ) {
-    return notificationManager.zonedSchedule(
-      hba1cModel.notificationId,
-      "Hba1c Ölçümü",
-      "Hba1c ölçümü zamanınız geldi",
-      scheduledDate,
-      notificationDetails.hba1c,
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-    );
   }
 }
 

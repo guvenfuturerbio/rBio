@@ -47,6 +47,7 @@ Future<void> bootstrap(AppConfig appConfig) async {
       await BlocOverrides.runZoned(
         () async => runApp(
           AppInheritedWidget(
+            localNotificationManager: getIt(),
             child: BlocProvider<BluetoothBloc>(
               lazy: false,
               create: (context) => BluetoothBloc(

@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'local_notification_type.dart';
 
 class LocalNotificationModel {
   final LocalNotificationType? type;
-  final Map<String, dynamic>? data;
+  final Object? data;
 
   LocalNotificationModel({
     this.type,
@@ -14,12 +16,27 @@ class LocalNotificationModel {
         'data': data,
       };
 
-  factory LocalNotificationModel.fromMap(Map<String, dynamic> map) =>
+  factory LocalNotificationModel.fromJson(Map<String, dynamic> map) =>
       LocalNotificationModel(
         type: map['type'] != null
             ? (map['type'] as String).xLocalNotificationType
             : null,
-        data:
-            map['data'] != null ? Map<String, dynamic>.from(map['data']) : null,
+        data: map['data'],
       );
+
+  String toJsonString() => json.encode(toJson());
+
+  static LocalNotificationModel? chechIsModel(String payload) {
+    final notificationJson = jsonDecode(payload);
+    if (notificationJson is Map<String, dynamic>) {
+      if (notificationJson.containsKey("type") &&
+          notificationJson.containsKey("data") &&
+          notificationJson.length == 2) {
+        final model = LocalNotificationModel.fromJson(notificationJson);
+        return model;
+      }
+    }
+
+    return null;
+  }
 }

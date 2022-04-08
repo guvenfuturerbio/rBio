@@ -821,5 +821,8 @@
   "remaining_drug": "Kalan ilaç",
   "notification": "Bildirim",
   "box_code": "Kutu kodu",
-  "successfully_updated": "Successfully updated"
+  "successfully_updated": "Successfully updated",
+  "hbA1c_measurement_title": "HbA1c Ölçümü",
+  "time_take_medicine_title": "İlacınızı almanız gerekmektedir"
+
 }

@@ -34,6 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
       getIt<FirebaseMessagingManager>().userInit();
       if (kAutoConnect) {
         context.read<DeviceSelectedCubit>().connectAndListen(context);
+        final widgetsBinding = WidgetsBinding.instance;
+        if (widgetsBinding != null) {
+          widgetsBinding.addPostFrameCallback((_) {
+            AppInheritedWidget.of(context)?.listenLocalNotification();
+          });
+        }
         kAutoConnect = false;
       }
     }

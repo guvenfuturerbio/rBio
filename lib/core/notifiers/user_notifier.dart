@@ -203,6 +203,7 @@ class UserNotifier extends ChangeNotifier {
       getIt<BloodPressureStorageImpl>().clear();
       getIt<ProfileStorageImpl>().clear();
       await getIt<ScaleRepository>().clear();
+      AppInheritedWidget.of(context)?.cancelStreamLocalNotification();
       kAutoConnect = true;
     } catch (e) {
       LoggerUtils.instance.e(e);

@@ -545,6 +545,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hbA1c": MessageLookupByLibrary.simpleMessage("HbA1c"),
         "hbA1c_measurement":
             MessageLookupByLibrary.simpleMessage("HbA1c Measurement Reminder"),
+        "hbA1c_measurement_title":
+            MessageLookupByLibrary.simpleMessage("HbA1c Measurement"),
         "health_information":
             MessageLookupByLibrary.simpleMessage("Health Information"),
         "healthcare_employee":
@@ -1224,6 +1226,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "time_hba1c":
             MessageLookupByLibrary.simpleMessage("It\'s time to measure Hba1c"),
         "time_take_medicine":
+            MessageLookupByLibrary.simpleMessage("It\'s time to take medicine"),
+        "time_take_medicine_title":
             MessageLookupByLibrary.simpleMessage("It\'s time to take medicine"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),

@@ -1,10 +1,7 @@
 import 'package:collection/collection.dart';
 
 enum LocalNotificationType {
-  strip,
-  hba1c,
-  bloodGlucose,
-  medication,
+  reminder,
 }
 
 extension LocalNotificationTypeStringExt on String {

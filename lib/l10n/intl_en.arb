@@ -829,5 +829,7 @@
   "remaining_drug": "Remaining drug",
   "notification": "Notification",
   "box_code": "Box code",
-  "successfully_updated": "Başarıyla güncellendi"
+  "successfully_updated": "Başarıyla güncellendi",
+  "hbA1c_measurement_title": "HbA1c Measurement",
+  "time_take_medicine_title": "It's time to take medicine"
 }

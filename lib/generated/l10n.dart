@@ -8319,6 +8319,26 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `HbA1c Measurement`
+  String get hbA1c_measurement_title {
+    return Intl.message(
+      'HbA1c Measurement',
+      name: 'hbA1c_measurement_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `It's time to take medicine`
+  String get time_take_medicine_title {
+    return Intl.message(
+      'It\'s time to take medicine',
+      name: 'time_take_medicine_title',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

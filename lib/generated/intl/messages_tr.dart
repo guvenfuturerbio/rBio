@@ -539,6 +539,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hbA1c": MessageLookupByLibrary.simpleMessage("HbA1c"),
         "hbA1c_measurement":
             MessageLookupByLibrary.simpleMessage("HbA1c Ölçüm Hatırlatıcısı"),
+        "hbA1c_measurement_title":
+            MessageLookupByLibrary.simpleMessage("HbA1c Ölçümü"),
         "health_information":
             MessageLookupByLibrary.simpleMessage("Sağlık Bilgilerim"),
         "healthcare_employee":
@@ -1216,6 +1218,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Hba1c ölçüm vakti geldi"),
         "time_take_medicine":
             MessageLookupByLibrary.simpleMessage("İlaç vakti geldi"),
+        "time_take_medicine_title": MessageLookupByLibrary.simpleMessage(
+            "İlacınızı almanız gerekmektedir"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
         "title_appointment_detail":
