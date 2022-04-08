@@ -19,7 +19,7 @@ class DeviceConnectionType {
 }
 
 enum DeviceType {
-  accuChek,
+  accuCheck,
   contourPlusOne,
   omronBloodPressureArm,
   omronBloodPressureWrist,
@@ -40,7 +40,7 @@ extension DeviceTypeStringExtension on String {
 extension DeviceTypeExtension on DeviceType {
   String? get name {
     switch (this) {
-      case DeviceType.accuChek:
+      case DeviceType.accuCheck:
         return 'ACCU-CHEK';
 
       case DeviceType.contourPlusOne:
@@ -70,7 +70,7 @@ extension DeviceTypeExtension on DeviceType {
 extension TypeExtensionOnDevice on String {
   DeviceType? get toType {
     if (this == 'ACCU-CHEK') {
-      return DeviceType.accuChek;
+      return DeviceType.accuCheck;
     } else if (this == 'Contour Plus One') {
       return DeviceType.contourPlusOne;
     } else if (this == 'Omron Blood Pressure Arm') {
@@ -90,7 +90,7 @@ extension TypeExtensionOnDevice on String {
 
   DeviceType? get fromEnv {
     if (this == 'ACCU_CHEK') {
-      return DeviceType.accuChek;
+      return DeviceType.accuCheck;
     } else if (this == 'CONTOUR_PLUS_ONE') {
       return DeviceType.contourPlusOne;
     } else if (this == 'OMRON_BLOOD_PRESSURE_ARM') {

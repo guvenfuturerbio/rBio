@@ -1,8 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/features/auth/model/consent_form_model.dart';
 import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 
 import '../../../features/auth/auth.dart';
@@ -41,6 +43,7 @@ abstract class ApiService {
   Future<UserAccount> getUserProfile();
   Future<Map<String, dynamic>> getActiveStream();
   Future<String> getProfilePicture();
+  Future<ConsentForm> getConsentForm();
   Future<ApplicationVersionResponse> getCurrentApplicationVersion();
   Future<PatientResponse?> getPatientDetail(String url);
   Future<List<BannerTabsModel>> getBannerTab(

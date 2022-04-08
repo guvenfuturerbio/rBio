@@ -139,9 +139,13 @@ class BleReactorOps extends ChangeNotifier {
     notifyListeners();
 
     final PairedDevice pairedDevice = PairedDevice();
+
+    // ! DeviceId
     pairedDevice.deviceId = device.id;
 
+    // ! DeviceType
     pairedDevice.deviceType = Utils.instance.getDeviceType(device);
+
     final writeCharacteristic = QualifiedCharacteristic(
       serviceId: Uuid.parse("1808"),
       characteristicId: Uuid.parse("2a52"),
@@ -161,19 +165,16 @@ class BleReactorOps extends ChangeNotifier {
       );
     }
 
-    //read ilgili unique id içerisindeki değeri okumamızı sağlayan parametre. byteArray - List<int> olarak döner.
-    _ble
-        .readCharacteristic(
+    // * Read ilgili unique id içerisindeki değeri okumamızı sağlayan parametre. byteArray - List<int> olarak döner.
+    _ble.readCharacteristic(
       QualifiedCharacteristic(
         characteristicId: Uuid.parse("2a24"),
         serviceId: Uuid.parse("180a"),
         deviceId: device.id,
       ),
-    )
-        .then((value) {
+    ).then((value) {
       final List<int> charCodes = value;
-      LoggerUtils.instance
-          .d("2a24 model name ${String.fromCharCodes(charCodes)}");
+      LoggerUtils.instance.d("2a24 model name ${String.fromCharCodes(charCodes)}");
       LoggerUtils.instance.d("2a24$value");
       pairedDevice.modelName = String.fromCharCodes(charCodes);
     });
@@ -213,8 +214,7 @@ class BleReactorOps extends ChangeNotifier {
     _ble.subscribeToCharacteristic(subsCharacteristic).listen(
       (measurementData) {
         _measurements.add(measurementData);
-        _gData
-            .add(parseGlucoseDataFromReadingInstance(measurementData, device));
+        _gData.add(parseGlucoseDataFromReadingInstance(measurementData, device));
         notifyListeners();
       },
       onError: (dynamic error) {
@@ -229,14 +229,12 @@ class BleReactorOps extends ChangeNotifier {
     bool _lock = false;
     _ble.subscribeToCharacteristic(writeCharacteristic).listen(
       (recordAccessData) async {
-        LoggerUtils.instance
-            .i("record access data " + recordAccessData.toString());
+        LoggerUtils.instance.i("record access data " + recordAccessData.toString());
         LoggerUtils.instance.i("LOCK :$_lock");
 
         if (!_lock) {
           _lock = true;
-          bool isSucces =
-              await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+          bool isSucces = await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
           isSucces
               ? _controlPointResponse = recordAccessData
               : _controlPointResponse.clear();
@@ -269,7 +267,7 @@ class BleReactorOps extends ChangeNotifier {
     );
 
     try {
-      //Cihazının servis karakteristiklerinin içerisine veri yazmamızı sağlayan metod.
+      // Cihazının servis karakteristiklerinin içerisine veri yazmamızı sağlayan metod.
       _ble.writeCharacteristicWithResponse(
         writeCharacteristic,
         value: [0x01, 0x01],
@@ -286,130 +284,6 @@ class BleReactorOps extends ChangeNotifier {
       notifyListeners();
       LoggerUtils.instance.i("write characterisctic error " + e.toString());
     }
-  }
-
-  Future<void> subscribeScaleDevice(DiscoveredDevice device) async {
-    // scaleDevice = MiScaleDevice.from(device);
-
-    final PairedDevice pairedDevice = PairedDevice();
-    pairedDevice.deviceId = device.id;
-    pairedDevice.deviceType = Utils.instance.getDeviceType(device);
-    pairedDevice.modelName = device.name;
-    pairedDevice.manufacturerName = device.name;
-
-    _ble
-        .discoverServices(device.id)
-        .then((value) => LoggerUtils.instance.d(value.toString()));
-
-    if (Platform.isAndroid) {
-      await _ble.requestConnectionPriority(
-        deviceId: device.id,
-        priority: ConnectionPriority.highPerformance,
-      );
-    }
-
-    _ble
-        .readCharacteristic(
-      QualifiedCharacteristic(
-        characteristicId: Uuid.parse("2a25"),
-        serviceId: Uuid.parse("180a"),
-        deviceId: device.id,
-      ),
-    )
-        .then((value) {
-      pairedDevice.serialNumber = String.fromCharCodes(value);
-    });
-
-    subscribeScaleCharacteristic(device, pairedDevice);
-  }
-
-  Future<void> subscribeScaleCharacteristic(
-    DiscoveredDevice device,
-    PairedDevice pairedDevice,
-  ) async {
-    // _controlPointResponse = <int>[];
-    // final deviceAlreadyPaired =
-    //     getIt<BleDeviceManager>().hasDeviceAlreadyPaired(pairedDevice);
-
-    // final _characteristic = QualifiedCharacteristic(
-    //   characteristicId: Uuid([42, 156]),
-    //   serviceId: Uuid([24, 27]),
-    //   deviceId: device.id,
-    // );
-
-    // try {
-    //   scaleSubs?.cancel();
-    //   await Future.delayed(const Duration(milliseconds: 300));
-    //   scaleSubs = _ble.subscribeToCharacteristic(_characteristic).listen(
-    //     (event) async {
-    //       if (!(Atom.isDialogShow)) {
-    //         Atom.show(
-    //           MiScalePopUp(
-    //             hasAlreadyPair: deviceAlreadyPaired,
-    //           ),
-    //         );
-    //       }
-
-    //       if (scaleDevice.scaleData == null ||
-    //           !scaleEntity!.measurementComplete!) {
-    //         final Uint8List data = Uint8List.fromList(event);
-    //         final scaleModel = scaleDevice.parseScaleData(pairedDevice, data);
-    //         if (scaleModel != null) {
-    //           scaleEntity = scaleModel.xGetEntity(
-    //             Utils.instance.getAge(),
-    //             Utils.instance.getHeight(),
-    //             Utils.instance.getGender(),
-    //           );
-    //         }
-
-    //         if (scaleEntity!.measurementComplete! && deviceAlreadyPaired) {
-    //           scaleEntity = scaleModel!.xGetEntityWithCalculate(
-    //             Utils.instance.getAge(),
-    //             Utils.instance.getHeight(),
-    //             Utils.instance.getGender(),
-    //           );
-
-    //           if (Atom.isDialogShow) {
-    //             Atom.dismiss();
-    //           }
-    //           await Future.delayed(const Duration(milliseconds: 350));
-    //           await Atom.show(
-    //             ScaleTaggerPopUp(
-    //               scaleModel: scaleEntity,
-    //             ),
-    //             barrierDismissible: false,
-    //           );
-    //           scaleDevice.scaleData = null;
-    //           scaleEntity = null;
-    //         }
-
-    //         final popUpCanClose = (Atom.isDialogShow) &&
-    //             (scaleEntity!.weightRemoved)! &&
-    //             !scaleEntity!.measurementComplete!;
-    //         if (popUpCanClose) {
-    //           Atom.dismiss();
-    //         }
-
-    //         if (((scaleEntity?.measurementComplete) ?? false) &&
-    //             !deviceAlreadyPaired) {
-    //           // Saving paired device Section
-    //           controlPointResponse.add(1);
-    //           WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-    //             getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
-    //           });
-    //         }
-    //       }
-
-    //       notifyListeners();
-    //     },
-    //     onError: (e, stk) {
-    //       LoggerUtils.instance.e(e);
-    //     },
-    //   );
-    // } catch (e, stk) {
-    //   LoggerUtils.instance.e(e);
-    //   debugPrintStack(stackTrace: stk);
-    // }
   }
 
   void clearControlPointResponse() {

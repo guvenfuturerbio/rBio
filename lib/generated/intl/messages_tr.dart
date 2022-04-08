@@ -624,6 +624,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Hastane Randevusu"),
         "lbl_forgot_password":
             MessageLookupByLibrary.simpleMessage("Şifremi unuttum"),
+        "lbl_have_account":
+            MessageLookupByLibrary.simpleMessage("Hesabınız var mı? "),
         "lbl_hello": MessageLookupByLibrary.simpleMessage("Merhaba"),
         "lbl_number_appointment":
             MessageLookupByLibrary.simpleMessage("\$number available"),

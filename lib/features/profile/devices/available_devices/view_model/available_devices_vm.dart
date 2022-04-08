@@ -10,7 +10,7 @@ class AvailableDevicesVm extends ChangeNotifier {
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.accuChek,
+      deviceType: DeviceType.accuCheck,
       name: LocaleProvider.current.accu_chek_blood_sugar,
       imagePath: R.image.accuCheckPng,
       enable: true,
@@ -55,7 +55,7 @@ class AvailableDevicesVm extends ChangeNotifier {
       usesBLE: true,
     ),
     DeviceConnectionType(
-      deviceType: DeviceType.accuChek,
+      deviceType: DeviceType.accuCheck,
       name: LocaleProvider.current.accu_chek_blood_sugar,
       imagePath: R.image.accuCheckPng,
       enable: true,

@@ -631,6 +631,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Hospital Appointment"),
         "lbl_forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
+        "lbl_have_account":
+            MessageLookupByLibrary.simpleMessage("Have an account? "),
         "lbl_hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "lbl_number_appointment":
             MessageLookupByLibrary.simpleMessage("\$number available"),

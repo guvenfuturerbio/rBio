@@ -117,12 +117,12 @@ class BgTaggerPopUp extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: UtilityManager()
-            .getGlucoseMeasurementColor(int.parse(value.data.level)),
+            .getGlucoseMeasurementColor(double.parse(value.data.level).toInt()),
         border: Border.all(
           color: UtilityManager().getGlucoseMeasurementColor(
-            int.parse(
+            double.parse(
               value.data.level,
-            ),
+            ).toInt(),
           ),
           width: 5.0,
         ),
@@ -141,12 +141,12 @@ class BgTaggerPopUp extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: value.data.tag == 2
-            ? UtilityManager()
-                .getGlucoseMeasurementColor(int.parse(value.data.level))
+            ? UtilityManager().getGlucoseMeasurementColor(
+                double.parse(value.data.level).toInt())
             : Colors.white,
         border: Border.all(
           color: UtilityManager().getGlucoseMeasurementColor(
-            int.parse(value.data.level),
+            double.parse(value.data.level).toInt(),
           ),
           width: 10.0,
         ),

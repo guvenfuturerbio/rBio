@@ -1,7 +1,12 @@
 part of '../device_listing_screen.dart';
 
 class DeviceSetupDialog extends StatefulWidget {
-  const DeviceSetupDialog({Key? key}) : super(key: key);
+  final DeviceType deviceType;
+
+  const DeviceSetupDialog({
+    Key? key,
+    required this.deviceType,
+  }) : super(key: key);
 
   @override
   State<DeviceSetupDialog> createState() => _DeviceSetupDialogState();
@@ -10,12 +15,32 @@ class DeviceSetupDialog extends StatefulWidget {
 class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
   late VideoPlayerController _controller;
 
+  String _getVideoPath() {
+    switch (widget.deviceType) {
+      case DeviceType.accuCheck:
+        return R.constants.accuCheckSetup;
+
+      case DeviceType.contourPlusOne:
+        return R.constants.contourPlusOneSetup;
+
+      case DeviceType.miScale:
+        return R.constants.miScaleSetup;
+
+      case DeviceType.omronBloodPressureArm:
+      case DeviceType.omronBloodPressureWrist:
+      case DeviceType.omronScale:
+      case DeviceType.manuel:
+        break;
+    }
+
+    return "";
+  }
+
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(
-      R.constants.miScaleSetup,
-    )..initialize().then((_) {
+    _controller = VideoPlayerController.asset(_getVideoPath())
+      ..initialize().then((_) {
         setState(() {});
       });
 

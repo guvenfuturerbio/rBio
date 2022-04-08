@@ -1,9 +1,10 @@
+import 'dart:developer';
 import 'dart:io' as platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
+import 'package:onedosehealth/features/auth/model/consent_form_model.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -12,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
 import '../../../model/model.dart';
+import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../home/viewmodel/home_vm.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
@@ -260,6 +262,7 @@ class LoginScreenVm extends ChangeNotifier {
             getIt<UserManager>().getKvkkFormState(),
           ],
         );
+
         final patientDetail = results[1] as UserAccount;
         var result;
         var pusulaPatientDetail;
@@ -454,14 +457,19 @@ class LoginScreenVm extends ChangeNotifier {
             loadingDialog = loadingDialog ?? LoadingDialog());
   }
 
-  showApplicationContestForm() {
+  
+
+  showApplicationContestForm() async {
+
+    final consentForm = await getIt<Repository>().getConsentForm();
+    
     showDialog(
         context: mContext,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return ConsentFormDialog(
-            title: LocaleProvider.current.approve_consent_form,
-            text: LocaleProvider.current.application_consent_form_text,
+            title: consentForm.consentHeader,
+            text: consentForm.consentContent,
             alwaysAsk: false,
           );
         }).then((value) async {

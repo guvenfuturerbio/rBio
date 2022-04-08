@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -127,22 +128,22 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   Widget _builBody(BuildContext context, PersonalInformationScreenVm vm) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        Expanded(
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: false,
-            removeBottom: true,
-            child: Scrollbar(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
+    return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Expanded(
+            child: RbioKeyboardActions(
+              focusList: [
+                _phoneNumberFocus,
+                _emailFocus,
+              ],
+              child: KeyboardAvoider(
+                autoScroll: true,
+                duration: const Duration(seconds: 1),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -281,55 +282,57 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               ),
             ),
           ),
-        ),
 
-        //
-        Container(
-          padding: const EdgeInsets.only(top: 8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //
-              Expanded(
-                child: RbioElevatedButton(
-                  title: LocaleProvider.current.btn_cancel,
-                  onTap: () {
-                    vm.resetValues();
-                  },
-                  backColor: getIt<ITheme>().cardBackgroundColor,
-                  textColor: getIt<ITheme>().textColorSecondary,
-                  fontWeight: FontWeight.bold,
-                  showElevation: false,
-                ),
+          //
+          if (!isKeyboardVisible)
+            Container(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  Expanded(
+                    child: RbioElevatedButton(
+                      title: LocaleProvider.current.btn_cancel,
+                      onTap: () {
+                        vm.resetValues();
+                      },
+                      backColor: getIt<ITheme>().cardBackgroundColor,
+                      textColor: getIt<ITheme>().textColorSecondary,
+                      fontWeight: FontWeight.bold,
+                      showElevation: false,
+                    ),
+                  ),
+
+                  //
+                  R.sizes.wSizer12,
+
+                  //
+                  Expanded(
+                    child: RbioElevatedButton(
+                      title: LocaleProvider.current.update,
+                      onTap: () {
+                        vm.updateValues(
+                          newPhoneNumber:
+                              _phoneNumberEditingController.text.trim(),
+                          newEmail: _emailEditingController.text.trim(),
+                        );
+                      },
+                      fontWeight: FontWeight.bold,
+                      showElevation: false,
+                    ),
+                  ),
+                ],
               ),
+            ),
 
-              //
-              R.sizes.wSizer12,
-
-              //
-              Expanded(
-                child: RbioElevatedButton(
-                  title: LocaleProvider.current.update,
-                  onTap: () {
-                    vm.updateValues(
-                      newPhoneNumber: _phoneNumberEditingController.text.trim(),
-                      newEmail: _emailEditingController.text.trim(),
-                    );
-                  },
-                  fontWeight: FontWeight.bold,
-                  showElevation: false,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        //
-        R.sizes.defaultBottomPadding,
-      ],
-    );
+          //
+          R.sizes.defaultBottomPadding,
+        ],
+      );
+    });
   }
 
   Widget _buildSpacer() => const SizedBox(height: 16);

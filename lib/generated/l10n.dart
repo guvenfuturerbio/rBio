@@ -440,6 +440,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Have an account? `
+  String get lbl_have_account {
+    return Intl.message(
+      'Have an account? ',
+      name: 'lbl_have_account',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Forgot Password?`
   String get lbl_forgot_password {
     return Intl.message(

@@ -4,7 +4,7 @@ import '../../../core/core.dart';
 
 class KvkkFormScreenVm extends ChangeNotifier {
   BuildContext? mContext;
-  bool? clickedConsentForm;
+  bool? clickedConsentForm = false;
 
   KvkkFormScreenVm({BuildContext? context, bool? alwaysAsk}) {
     mContext = context!;

@@ -39,6 +39,7 @@
   "hint_input_password": "Şifre",
   "hint_time": "Saat",
   "lbl_dont_have_account": "Hesabınız yok mu? ",
+  "lbl_have_account":"Hesabınız var mı? ",
   "lbl_forgot_password": "Şifremi unuttum",
   "lbl_find_hospital": "Hastane Randevusu",
   "lbl_personal_information": "Kişisel Bilgiler",

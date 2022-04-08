@@ -41,7 +41,7 @@ class SelectedDeviceVm extends ChangeNotifier {
 
   Map<String, String> getPairOrder() {
     switch (deviceType) {
-      case DeviceType.accuChek:
+      case DeviceType.accuCheck:
         Map<String, String> map = <String, String>{
           '1': LocaleProvider.current.device_connection_step_1,
           '2': LocaleProvider.current.device_connection_step_2_Roche,
@@ -75,7 +75,7 @@ class SelectedDeviceVm extends ChangeNotifier {
 
   bool isFocusedDevice(DiscoveredDevice device) {
     switch (deviceType) {
-      case DeviceType.accuChek:
+      case DeviceType.accuCheck:
         return device.manufacturerData[0] == 112;
 
       case DeviceType.contourPlusOne:
@@ -171,7 +171,7 @@ class SelectedDeviceVm extends ChangeNotifier {
     DiscoveredDevice device,
   ) async {
     switch (deviceType) {
-      case DeviceType.accuChek:
+      case DeviceType.accuCheck:
         connectIsActive &&
                 (bluetoothState.deviceConnectionState !=
                         DeviceConnectionState.connecting &&
