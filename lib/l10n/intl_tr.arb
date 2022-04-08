@@ -649,7 +649,7 @@
   "strip_detected_message": "%1$ adet okuma tespit ettik. %2$ adet stripi silmek için tıklayın.",
   "strip_number": "Strip Sayısı",
   "strip_number_2": "Strip sayısı",
-  "strip_page_info_message": "Strip sayısı her şeker ölçümünde otomatik olarak azalır. Striplerinizin kaybolması veya bozulması durumunda sayıyı manuel olarak azaltmanız gerekir.",
+  "strip_page_info_message": "Kan şekeri ölçümü yapıldığında strip sayısı otomatik olarak azalmaktadır. Strip kaybetme ya da kırılma gibi durumlarda elle azaltmanız gerekmektedir.",
   "strip_tracker": "Strip Hatırlatıcısı",
   "strip_tracking": "Strip Takibi",
   "strips": "Strip",
@@ -694,7 +694,7 @@
   "weekdays_wednesday_short": "Çar",
   "weekly": "Haftalık",
   "weight": "Kilo",
-  "when_to_be_notified": "Ne zaman hatırlatılmasını istersiniz?",
+  "when_to_be_notified": "Kaç strip kaldığında hatırlatılsın",
   "wrong_password": "Hatalı şifre",
   "wrong_user_credential": "Hatalı Kullanıcı Adı ya da Şifre",
   "year_of_diagnosis": "Teşhis Yılı",
@@ -818,5 +818,6 @@
   "remaining_count_notification": "Kalan adet bildirimi",
   "remaining_drug": "Kalan ilaç",
   "notification": "Bildirim",
-  "box_code": "Kutu kodu"
+  "box_code": "Kutu kodu",
+  "successfully_updated": "Successfully updated"
 }

@@ -1,110 +1,162 @@
-part of '../strip_screen.dart';
+part of '../strip_reminder_add_edit_screen.dart';
 
-class _StripGradientDialog extends StatefulWidget {
+class _StripCounterDialog extends StatefulWidget {
   final String title;
-  final void Function(int) callback;
 
-  const _StripGradientDialog({
+  const _StripCounterDialog({
     Key? key,
     required this.title,
-    required this.callback,
   }) : super(key: key);
 
   @override
-  _StripGradientDialogState createState() => _StripGradientDialogState();
+  __StripCounterDialogState createState() => __StripCounterDialogState();
 }
 
-class _StripGradientDialogState extends State<_StripGradientDialog> {
+class __StripCounterDialogState extends State<_StripCounterDialog> {
   late TextEditingController _stripController;
+  late FocusNode _stripFocusNode;
 
   @override
   void initState() {
-    _stripController = TextEditingController();
     super.initState();
+    _stripController = TextEditingController();
+    _stripFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _stripController.dispose();
+    _stripFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget okButton = TextButton(
-      child: Text(LocaleProvider.current.Ok),
-      style: TextButton.styleFrom(
-        textStyle: context.xHeadline3.copyWith(
-          color: getIt<ITheme>().textColorSecondary,
-        ),
-      ),
-      onPressed: () {
-        widget.callback(int.parse(_stripController.text));
-        Navigator.of(context).pop();
-      },
-    );
+    return GuvenAlert(
+      elevation: 0,
+      insetPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      backgroundColor: Colors.transparent,
+      content: SafeArea(
+        child: Container(
+          width: Atom.width > 350 ? 350 : Atom.width,
+          decoration: BoxDecoration(
+            color: getIt<ITheme>().cardBackgroundColor,
+            borderRadius: R.sizes.borderRadiusCircular,
+          ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: RbioKeyboardActions(
+              isDialog: true,
+              focusList: [
+                _stripFocusNode,
+              ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  //
+                  R.sizes.hSizer8,
 
-    return AlertDialog(
-      backgroundColor: getIt<ITheme>().grey,
-      contentPadding: const EdgeInsets.all(0.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      title: Text(
-        widget.title,
-        style: context.xHeadline1.copyWith(
-            color: getIt<ITheme>().textColorSecondary,
-            fontWeight: FontWeight.w700),
-      ),
-      content: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Material(
-              elevation: 15,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: R.sizes.borderRadiusCircular,
-              ),
-              child: SizedBox(
-                width: 350,
-                child: TextField(
-                  controller: _stripController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  cursorColor: Colors.black,
-                  textAlign: TextAlign.center,
-                  maxLength: 3,
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    counterText: "",
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                      left: 15,
-                      bottom: 11,
-                      top: 11,
-                      right: 15,
+                  //
+                  Text(
+                    widget.title,
+                    style: context.xHeadline1.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
-                    hintText: "Strip number",
                   ),
-                ),
+
+                  //
+                  R.sizes.hSizer8,
+
+                  //
+                  RbioTextFormField(
+                    focusNode: _stripFocusNode,
+                    backColor: getIt<ITheme>().grayColor,
+                    controller: _stripController,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                    ],
+                  ),
+
+                  //
+                  R.sizes.hSizer16,
+
+                  //
+                  if (context.xTextScaleType == TextScaleType.small) ...[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        //
+                        Expanded(
+                          child: _buildCancelButton(infinityWidth: false),
+                        ),
+
+                        //
+                        R.sizes.wSizer8,
+
+                        //
+                        Expanded(
+                          child: _buildConfirmButton(infinityWidth: false),
+                        ),
+                      ],
+                    ),
+                  ] else ...[
+                    _buildCancelButton(infinityWidth: true),
+                    R.sizes.hSizer12,
+                    _buildConfirmButton(infinityWidth: true),
+                  ],
+
+                  //
+                  R.sizes.hSizer4,
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
-      actions: [
-        okButton,
-      ],
     );
   }
+
+  // #region _buildConfirmButton
+  RbioElevatedButton _buildConfirmButton({
+    required bool infinityWidth,
+  }) {
+    return RbioElevatedButton(
+      title: LocaleProvider.current.btn_confirm,
+      onTap: () {
+        final inputValue = _stripController.text.trim();
+        if (inputValue.isNotEmpty) {
+          Atom.dismiss(inputValue.replaceAll(",", "."));
+        }
+      },
+      showElevation: false,
+      fontWeight: FontWeight.bold,
+      infinityWidth: infinityWidth,
+    );
+  }
+  // #endregion
+
+  // #region _buildCancelButton
+  RbioElevatedButton _buildCancelButton({
+    required bool infinityWidth,
+  }) {
+    return RbioElevatedButton(
+      backColor: getIt<ITheme>().grayColor,
+      textColor: getIt<ITheme>().textColorSecondary,
+      title: LocaleProvider.current.btn_cancel,
+      onTap: () {
+        Atom.dismiss();
+      },
+      showElevation: false,
+      fontWeight: FontWeight.bold,
+      infinityWidth: infinityWidth,
+    );
+  }
+  // #endregion
 }

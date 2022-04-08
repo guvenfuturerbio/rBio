@@ -577,7 +577,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
             "How was the quality of the video call ?"),
         "how_will_you_follow_up":
-            MessageLookupByLibrary.simpleMessage("How will you follow up?"),
+            MessageLookupByLibrary.simpleMessage("How are you going to track?"),
         "hungry": MessageLookupByLibrary.simpleMessage("Hungry"),
         "hyper": MessageLookupByLibrary.simpleMessage("Hyper"),
         "hypo": MessageLookupByLibrary.simpleMessage("Hypo"),
@@ -1023,8 +1023,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "relatives": MessageLookupByLibrary.simpleMessage("Relatives"),
         "relatives_only_children_warning": MessageLookupByLibrary.simpleMessage(
             "You can only add children of your own below age of 18"),
-        "remaining_count_notification": MessageLookupByLibrary.simpleMessage(
-            "Remaining Count Notification"),
+        "remaining_count_notification":
+            MessageLookupByLibrary.simpleMessage("Remaining dose"),
         "remaining_drug":
             MessageLookupByLibrary.simpleMessage("Remaining drug"),
         "remind_me_every":
@@ -1148,7 +1148,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Number of Strips"),
         "strip_number_2": MessageLookupByLibrary.simpleMessage("Strip number"),
         "strip_page_info_message": MessageLookupByLibrary.simpleMessage(
-            "Strip number decreases automatically when the blood glucose measurement is added. In cases such as loss or breakage, you need to reduce it manually"),
+            "When the blood glucose calculation is done, the number of strips will be deducted automatically. If strips are missing or broken, user needs to deduct them manually."),
         "strip_tracker": MessageLookupByLibrary.simpleMessage("Strip Reminder"),
         "strip_tracking":
             MessageLookupByLibrary.simpleMessage("Strip Tracking"),
@@ -1163,6 +1163,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "succefully_created_pass": MessageLookupByLibrary.simpleMessage(
             "Your new password has been successfully created"),
         "success_message_title": MessageLookupByLibrary.simpleMessage("Info"),
+        "successfully_updated":
+            MessageLookupByLibrary.simpleMessage("Başarıyla güncellendi"),
         "suggestion_thanks_message": MessageLookupByLibrary.simpleMessage(
             "Thank you for your interest and contribution"),
         "supported_devices":
@@ -1183,7 +1185,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sync_data": MessageLookupByLibrary.simpleMessage(
             "We\'re currently sync your data please wait..."),
         "sys": MessageLookupByLibrary.simpleMessage("Systolic Blood Pressure"),
-        "tag": MessageLookupByLibrary.simpleMessage("Etiket"),
+        "tag": MessageLookupByLibrary.simpleMessage("Tag"),
         "tag_description": MessageLookupByLibrary.simpleMessage(
             "Select the state you need to receive"),
         "take_covid_19":

@@ -6560,10 +6560,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Strip number decreases automatically when the blood glucose measurement is added. In cases such as loss or breakage, you need to reduce it manually`
+  /// `When the blood glucose calculation is done, the number of strips will be deducted automatically. If strips are missing or broken, user needs to deduct them manually.`
   String get strip_page_info_message {
     return Intl.message(
-      'Strip number decreases automatically when the blood glucose measurement is added. In cases such as loss or breakage, you need to reduce it manually',
+      'When the blood glucose calculation is done, the number of strips will be deducted automatically. If strips are missing or broken, user needs to deduct them manually.',
       name: 'strip_page_info_message',
       desc: '',
       args: [],
@@ -8160,10 +8160,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Etiket`
+  /// `Tag`
   String get tag {
     return Intl.message(
-      'Etiket',
+      'Tag',
       name: 'tag',
       desc: '',
       args: [],
@@ -8220,10 +8220,10 @@ class LocaleProvider {
     );
   }
 
-  /// `How will you follow up?`
+  /// `How are you going to track?`
   String get how_will_you_follow_up {
     return Intl.message(
-      'How will you follow up?',
+      'How are you going to track?',
       name: 'how_will_you_follow_up',
       desc: '',
       args: [],
@@ -8250,10 +8250,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Remaining Count Notification`
+  /// `Remaining dose`
   String get remaining_count_notification {
     return Intl.message(
-      'Remaining Count Notification',
+      'Remaining dose',
       name: 'remaining_count_notification',
       desc: '',
       args: [],
@@ -8285,6 +8285,16 @@ class LocaleProvider {
     return Intl.message(
       'Box code',
       name: 'box_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Başarıyla güncellendi`
+  String get successfully_updated {
+    return Intl.message(
+      'Başarıyla güncellendi',
+      name: 'successfully_updated',
       desc: '',
       args: [],
     );

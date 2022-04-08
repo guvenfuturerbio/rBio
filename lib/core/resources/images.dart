@@ -115,6 +115,9 @@ class _Images {
   final women = "assets/images/women_icon.svg";
   final youtube = "assets/images/youtubeicon.svg";
 
+  final minus = 'assets/images/minus.svg';
+  final warning = 'assets/images/warning.svg';
+
   // #region Logo
   final odhLogoSvg = "assets/logo/odh_logo.svg";
   // #endregion

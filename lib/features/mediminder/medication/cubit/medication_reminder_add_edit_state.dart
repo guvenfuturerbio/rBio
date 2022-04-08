@@ -3,12 +3,9 @@ part of 'medication_reminder_add_edit_cubit.dart';
 @freezed
 class MedicationReminderAddEditState with _$MedicationReminderAddEditState {
   const factory MedicationReminderAddEditState.initial() = _InitialState;
-  const factory MedicationReminderAddEditState.success(
-      MedicationReminderAddEditResult result) = _SuccessState;
-  const factory MedicationReminderAddEditState.openListScreen() =
-      _OpenListScreenState;
-  const factory MedicationReminderAddEditState.showWarningDialog(
-      String description) = _ShowWarningDialogState;
+  const factory MedicationReminderAddEditState.success(MedicationReminderAddEditResult result) = _SuccessState;
+  const factory MedicationReminderAddEditState.openListScreen() = _OpenListScreenState;
+  const factory MedicationReminderAddEditState.showWarningDialog(String description) = _ShowWarningDialogState;
 }
 
 class MedicationReminderAddEditResult {

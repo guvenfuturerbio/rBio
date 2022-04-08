@@ -1140,7 +1140,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "strip_number": MessageLookupByLibrary.simpleMessage("Strip Sayısı"),
         "strip_number_2": MessageLookupByLibrary.simpleMessage("Strip sayısı"),
         "strip_page_info_message": MessageLookupByLibrary.simpleMessage(
-            "Strip sayısı her şeker ölçümünde otomatik olarak azalır. Striplerinizin kaybolması veya bozulması durumunda sayıyı manuel olarak azaltmanız gerekir."),
+            "Kan şekeri ölçümü yapıldığında strip sayısı otomatik olarak azalmaktadır. Strip kaybetme ya da kırılma gibi durumlarda elle azaltmanız gerekmektedir."),
         "strip_tracker":
             MessageLookupByLibrary.simpleMessage("Strip Hatırlatıcısı"),
         "strip_tracking": MessageLookupByLibrary.simpleMessage("Strip Takibi"),
@@ -1157,6 +1157,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "succefully_created_pass": MessageLookupByLibrary.simpleMessage(
             "Yeni şifreniz başarıyla oluşturulmuştur"),
         "success_message_title": MessageLookupByLibrary.simpleMessage("Bilgi"),
+        "successfully_updated":
+            MessageLookupByLibrary.simpleMessage("Successfully updated"),
         "suggestion_thanks_message": MessageLookupByLibrary.simpleMessage(
             "İlginiz ve katkınız için teşekkür ederiz."),
         "supported_devices":
@@ -1303,7 +1305,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "weight": MessageLookupByLibrary.simpleMessage("Kilo"),
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
-            "Ne zaman hatırlatılmasını istersiniz?"),
+            "Kaç strip kaldığında hatırlatılsın"),
         "which_depart_i_go": MessageLookupByLibrary.simpleMessage(
             "Hangi bölüme gideceğimi bilmiyorum"),
         "widgets_add_message": MessageLookupByLibrary.simpleMessage(

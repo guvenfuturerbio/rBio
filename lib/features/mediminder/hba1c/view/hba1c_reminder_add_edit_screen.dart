@@ -463,7 +463,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
             ),
 
             //
-            R.sizes.wSizer8,
+            R.sizes.wSizer12,
 
             //
             Expanded(

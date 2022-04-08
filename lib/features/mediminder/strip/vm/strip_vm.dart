@@ -16,37 +16,44 @@ class StripVm with ChangeNotifier {
   }
 
   int initCount = 0;
-  int alarmCount = 0;
-  int stripCount = 0;
-  int usedStripCount = 0;
+  int alarmCount = 0; // Alarm
+  int stripCount = 0; // Mevcut
+  int usedStripCount = 0; // Kullanılan
   Person? userLocal;
 
   Future<void> loadValues() async {
-    showLoadingDialog();
-    await Future.delayed(const Duration(milliseconds: 200));
+    // showLoadingDialog();
+    // await Future.delayed(const Duration(milliseconds: 200));
 
     try {
-      if (getIt<ISharedPreferencesManager>()
-          .containsKey(SharedPreferencesKeys.usedStripCount)) {
-        usedStripCount = getIt<ISharedPreferencesManager>()
-                .getInt(SharedPreferencesKeys.usedStripCount) ??
-            0;
-      } else {
-        usedStripCount = 0;
-        await getIt<ISharedPreferencesManager>()
-            .setInt(SharedPreferencesKeys.usedStripCount, 0);
-      }
+      // TODO
+      stripDetailModel.alarmCount = 10;
+      stripDetailModel.currentCount = 50;
+      stripDetailModel.deviceUUID = "ID";
+      stripDetailModel.entegrationId = 10;
+      stripDetailModel.isNotificationActive = true;
 
-      userLocal = getIt<ProfileStorageImpl>().getFirst();
-      if (userLocal != null) {
-        stripDetailModel = (await getIt<ChronicTrackingRepository>()
-            .getUserStrip(userLocal!.id ?? 0, userLocal!.deviceUUID));
-        stripDetailModel.deviceUUID = userLocal!.deviceUUID!;
-        alarmCount = stripDetailModel.alarmCount;
-        stripDetailModel.entegrationId = userLocal!.id!;
-        stripCount = stripDetailModel.currentCount;
-        initCount = stripDetailModel.currentCount;
-      }
+      // if (getIt<ISharedPreferencesManager>()
+      //     .containsKey(SharedPreferencesKeys.usedStripCount)) {
+      //   usedStripCount = getIt<ISharedPreferencesManager>()
+      //           .getInt(SharedPreferencesKeys.usedStripCount) ??
+      //       0;
+      // } else {
+      //   usedStripCount = 0;
+      //   await getIt<ISharedPreferencesManager>()
+      //       .setInt(SharedPreferencesKeys.usedStripCount, 0);
+      // }
+
+      // userLocal = getIt<ProfileStorageImpl>().getFirst();
+      // if (userLocal != null) {
+      //   stripDetailModel = (await getIt<ChronicTrackingRepository>()
+      //       .getUserStrip(userLocal!.id ?? 0, userLocal!.deviceUUID));
+      //   stripDetailModel.deviceUUID = userLocal!.deviceUUID!;
+      //   alarmCount = stripDetailModel.alarmCount;
+      //   stripDetailModel.entegrationId = userLocal!.id!;
+      //   stripCount = stripDetailModel.currentCount;
+      //   initCount = stripDetailModel.currentCount;
+      // }
     } catch (e) {
       LoggerUtils.instance.e(e);
     } finally {
