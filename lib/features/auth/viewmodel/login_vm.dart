@@ -1,10 +1,8 @@
-import 'dart:developer';
 import 'dart:io' as platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/auth/model/consent_form_model.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -457,12 +455,9 @@ class LoginScreenVm extends ChangeNotifier {
             loadingDialog = loadingDialog ?? LoadingDialog());
   }
 
-  
-
   showApplicationContestForm() async {
-
     final consentForm = await getIt<Repository>().getConsentForm();
-    
+
     showDialog(
         context: mContext,
         barrierDismissible: true,

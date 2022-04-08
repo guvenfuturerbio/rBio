@@ -1,13 +1,11 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/auth/model/consent_form_model.dart';
-import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 
 import '../../../features/auth/auth.dart';
+import '../../../features/auth/model/consent_form_model.dart';
 import '../../../features/chat/model/chat_notification.dart';
 import '../../../features/home/model/banner_model.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
@@ -15,6 +13,7 @@ import '../../../features/take_appointment/create_appointment/model/find_resourc
 import '../../../features/take_appointment/create_appointment/model/voucher_price_request.dart';
 import '../../../model/home/take_appointment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
+import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../core.dart';
 
 part 'api_service_impl.dart';

@@ -446,45 +446,45 @@ class VRouterRoutes {
         VWidget(
           path: PagePaths.reminderDetail,
           widget: const ReminderDetailScreen(),
-        ), 
+        ),
         VGuard(
-          // beforeEnter: (vRedirector) async {
-          //   Future<void> showAlert() async {
-          //     await Atom.show(
-          //       GuvenAlert(
-          //         backgroundColor: getIt<ITheme>().cardBackgroundColor,
-          //         title: GuvenAlert.buildTitle(LocaleProvider.current.info),
-          //         content: GuvenAlert.buildDescription(
-          //           LocaleProvider.current.device_register,
-          //         ),
-          //         actions: [
-          //           //
-          //           GuvenAlert.buildMaterialAction(
-          //             LocaleProvider.current.Ok,
-          //             () {
-          //               Atom.dismiss();
-          //               vRedirector.to(PagePaths.allDevices);
-          //             },
-          //           ),
-          //         ],
-          //       ),
-          //     );
-          //   }
+          beforeEnter: (vRedirector) async {
+            Future<void> showAlert() async {
+              await Atom.show(
+                GuvenAlert(
+                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+                  content: GuvenAlert.buildDescription(
+                    LocaleProvider.current.device_register,
+                  ),
+                  actions: [
+                    //
+                    GuvenAlert.buildMaterialAction(
+                      LocaleProvider.current.Ok,
+                      () {
+                        Atom.dismiss();
+                        vRedirector.to(PagePaths.allDevices);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
 
-          //   final pairedDevices = getIt<BleDeviceManager>().getPairedDevices();
-          //   if (pairedDevices.isEmpty) {
-          //     await showAlert();
-          //     //vRedirector.stopRedirection();
-          //   } else {
-          //     final hasSugarDevice = pairedDevices.any((item) =>
-          //         item.deviceType == DeviceType.accuCheck ||
-          //         item.deviceType == DeviceType.contourPlusOne);
-          //     if (!hasSugarDevice) {
-          //       await showAlert();
-          //       vRedirector.stopRedirection();
-          //     }
-          //   }
-          // },
+            final pairedDevices = getIt<BleDeviceManager>().getPairedDevices();
+            if (pairedDevices.isEmpty) {
+              await showAlert();
+              //vRedirector.stopRedirection();
+            } else {
+              final hasSugarDevice = pairedDevices.any((item) =>
+                  item.deviceType == DeviceType.accuCheck ||
+                  item.deviceType == DeviceType.contourPlusOne);
+              if (!hasSugarDevice) {
+                await showAlert();
+                vRedirector.stopRedirection();
+              }
+            }
+          },
           stackedRoutes: [
             VWidget(
               path: PagePaths.strip,

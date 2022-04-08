@@ -26,63 +26,49 @@ class StripReminderAddEditCubitCubit
   var stripDetailModel = StripDetailModel();
   var sharedKeys = SharedPreferencesKeys.usedStripCount;
 
+  // #region setInitState
   Future<void> setInitState() async {
     try {
-      // TODO ------------ ------------
-      stripDetailModel.alarmCount = 10;
-      stripDetailModel.currentCount = 50;
-      stripDetailModel.deviceUUID = "ID";
-      stripDetailModel.entegrationId = 10;
-      stripDetailModel.isNotificationActive = true;
-
       emit(const StripReminderAddEditCubitState.loadInProgress());
-      await Future.delayed(const Duration(seconds: 2));
-      emit(
-        StripReminderAddEditCubitState.success(
-          StripReminderAddEditResult(
-            alarmCount: stripDetailModel.alarmCount,
-            stripCount: stripDetailModel.currentCount,
-            usedStripCount: 20,
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      var usedStripCount = 0;
+      if (sharedPreferencesManager.containsKey(sharedKeys)) {
+        usedStripCount = sharedPreferencesManager.getInt(sharedKeys) ?? 0;
+      } else {
+        usedStripCount = 0;
+        await sharedPreferencesManager.setInt(
+          sharedKeys,
+          0,
+        );
+      }
+
+      _userLocal = profileStorage.getFirst();
+      if (_userLocal != null) {
+        stripDetailModel = await chronicTrackingRepository.getUserStrip(
+          _userLocal!.id ?? 0,
+          _userLocal!.deviceUUID,
+        );
+        stripDetailModel.deviceUUID = _userLocal!.deviceUUID!;
+        stripDetailModel.entegrationId = _userLocal!.id!;
+        _initCount = stripDetailModel.currentCount;
+        emit(
+          StripReminderAddEditCubitState.success(
+            StripReminderAddEditResult(
+              alarmCount: stripDetailModel.alarmCount,
+              stripCount: stripDetailModel.currentCount,
+              usedStripCount: usedStripCount,
+            ),
           ),
-        ),
-      );
-      // TODO ------------ ------------
-
-      // var usedStripCount = 0;
-      // if (sharedPreferencesManager.containsKey(sharedKeys)) {
-      //   usedStripCount = sharedPreferencesManager.getInt(sharedKeys) ?? 0;
-      // } else {
-      //   usedStripCount = 0;
-      //   await sharedPreferencesManager.setInt(
-      //     sharedKeys,
-      //     0,
-      //   );
-      // }
-
-      // _userLocal = profileStorage.getFirst();
-      // if (_userLocal != null) {
-      //   stripDetailModel = await chronicTrackingRepository.getUserStrip(
-      //     _userLocal!.id ?? 0,
-      //     _userLocal!.deviceUUID,
-      //   );
-      //   stripDetailModel.deviceUUID = _userLocal!.deviceUUID!;
-      //   stripDetailModel.entegrationId = _userLocal!.id!;
-      //   _initCount = stripDetailModel.currentCount;
-      //   emit(
-      //     StripReminderAddEditCubitState.success(
-      //       StripReminderAddEditResult(
-      //         alarmCount: stripDetailModel.alarmCount,
-      //         stripCount: stripDetailModel.currentCount,
-      //         usedStripCount: usedStripCount,
-      //       ),
-      //     ),
-      //   );
-      // }
+        );
+      }
     } catch (e) {
       LoggerUtils.instance.e(e);
     }
   }
+  // #endregion
 
+  // #region changeTo
   void changeTo(int value) {
     final currentState = state;
     currentState.whenOrNull(
@@ -99,7 +85,9 @@ class StripReminderAddEditCubitCubit
       },
     );
   }
+  // #endregion
 
+  // #region incrementBy
   void incrementBy(int value) {
     final currentState = state;
     currentState.whenOrNull(
@@ -117,7 +105,9 @@ class StripReminderAddEditCubitCubit
       },
     );
   }
+  // #endregion
 
+  // #region decrementBy
   void decrementBy(int value) {
     final currentState = state;
     currentState.whenOrNull(
@@ -138,7 +128,9 @@ class StripReminderAddEditCubitCubit
       },
     );
   }
+  // #endregion
 
+  // #region setAlarmCount
   void setAlarmCount(int value) {
     final currentState = state;
     currentState.whenOrNull(
@@ -153,7 +145,9 @@ class StripReminderAddEditCubitCubit
       },
     );
   }
+  // #endregion
 
+  // #region saveData
   Future<void> saveData(int alarmCount) async {
     final currentState = state;
     await currentState.whenOrNull(
@@ -169,20 +163,24 @@ class StripReminderAddEditCubitCubit
           result.usedStripCount = newUseStripCount;
         }
 
-        _showSuccessMessage();
+        stripDetailModel.alarmCount = alarmCount;
+        stripDetailModel.currentCount = result.stripCount;
+        stripDetailModel.deviceUUID = _userLocal!.deviceUUID!;
+        stripDetailModel.entegrationId = _userLocal!.id!;
 
-        // stripDetailModel.alarmCount = alarmCount;
-        // stripDetailModel.currentCount = result.stripCount;
-        // stripDetailModel.deviceUUID = _userLocal!.deviceUUID!;
-        // stripDetailModel.entegrationId = _userLocal!.id!;
-
-        // await chronicTrackingRepository.updateUserStrip(stripDetailModel);
-
-        // _checkAlarmAndSendNotification(stripDetailModel);
+        try {
+          await chronicTrackingRepository.updateUserStrip(stripDetailModel);
+          _showSuccessMessage();
+          _checkAlarmAndSendNotification(stripDetailModel);
+        } catch (e) {
+          LoggerUtils.instance.e(e);
+        }
       },
     );
   }
+  // #endregion
 
+  // #region _checkAlarmAndSendNotification
   void _checkAlarmAndSendNotification(
     StripDetailModel stripDetailModel,
   ) {
@@ -195,13 +193,16 @@ class StripReminderAddEditCubitCubit
       );
     }
   }
+  // #endregion
 
+  // #region _stripLocaleProviderFetcher
   String _stripLocaleProviderFetcher(String localPvString) {
     return LocaleProvider.current.you_have_strip.replaceFirst(
       LocaleProvider.current.strpCnt,
       localPvString,
     );
   }
+  // #endregion
 
   // #region _showSuccessMessage
   void _showSuccessMessage() {
