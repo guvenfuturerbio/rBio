@@ -171,7 +171,9 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     focusNode: _identityFocusNode,
                     controller: _identityEditingController,
                     textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.number,
+                    keyboardType: vm.isTcCitizen
+                        ? TextInputType.number
+                        : TextInputType.text,
                     hintText: vm.isTcCitizen
                         ? LocaleProvider.of(context).tc_identity_number
                         : LocaleProvider.of(context).passport_number,
