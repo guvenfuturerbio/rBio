@@ -97,7 +97,7 @@ class SearchScreenVm extends ChangeNotifier {
   Future<void> fetchResources(String text) async {
     if ((text.length) >= 3) {
       text = text.xTurkishCharacterToEnglish;
-      await Future.delayed(const Duration(milliseconds: 300));
+
       try {
         filterResources = await getIt<Repository>().filterResources(
           FilterResourcesRequest(
