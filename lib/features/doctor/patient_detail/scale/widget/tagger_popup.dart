@@ -1,4 +1,4 @@
-part of '../view/scale_patient_detail_screen.dart';
+/*part of '../view/scale_patient_detail_screen.dart';
 
 class ScaleTagger extends StatelessWidget {
   final ScaleMeasurementLogic scaleModel;
@@ -379,3 +379,4 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 }
+*/

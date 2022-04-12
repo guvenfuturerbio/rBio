@@ -1,5 +1,6 @@
 import '../../../model/model.dart';
 import '../../core.dart';
+import '../service/model/patient_scale_measurement.dart';
 
 class DoctorRepository {
   final DoctorApiService apiService;
@@ -42,7 +43,7 @@ class DoctorRepository {
     GetMyPatientFilter getMyPatientFilter,
   ) =>
       apiService.getMyPatientBloodGlucose(patientId, getMyPatientFilter);
-  Future<List<ScaleModel>> getMyPatientScale(
+  Future<List<PatientScaleMeasurement>> getMyPatientScale(
     int patientId,
     GetMyPatientFilter getMyPatientFilter,
   ) =>

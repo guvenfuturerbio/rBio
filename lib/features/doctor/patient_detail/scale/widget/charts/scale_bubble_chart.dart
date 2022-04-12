@@ -1,4 +1,4 @@
-part of '../../view/scale_patient_detail_screen.dart';
+/*part of '../../view/scale_patient_detail_screen.dart';
 
 class _ScaleBubbleChart extends StatefulWidget {
   const _ScaleBubbleChart({Key? key}) : super(key: key);
@@ -163,3 +163,4 @@ class __ScaleBubbleChartState
     super.dispose();
   }
 }
+*/

@@ -1,4 +1,4 @@
-part of '../view/scale_patient_detail_screen.dart';
+/*part of '../view/scale_patient_detail_screen.dart';
 
 class _GraphHeaderSection extends StatelessWidget {
   final ScalePatientDetailVm value;
@@ -87,3 +87,4 @@ class _GraphHeaderSection extends StatelessWidget {
     );
   }
 }
+*/

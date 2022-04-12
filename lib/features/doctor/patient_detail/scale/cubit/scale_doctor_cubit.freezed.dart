@@ -25,9 +25,9 @@ class _$ScaleDoctorStateTearOff {
     return const _Loading();
   }
 
-  _Loaded loaded(bool isChartVisible) {
+  _Loaded loaded(ScaleDoctorLoadedResult result) {
     return _Loaded(
-      isChartVisible,
+      result,
     );
   }
 
@@ -45,7 +45,7 @@ mixin _$ScaleDoctorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(bool isChartVisible) loaded,
+    required TResult Function(ScaleDoctorLoadedResult result) loaded,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
@@ -53,7 +53,7 @@ mixin _$ScaleDoctorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +61,7 @@ mixin _$ScaleDoctorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -150,7 +150,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(bool isChartVisible) loaded,
+    required TResult Function(ScaleDoctorLoadedResult result) loaded,
     required TResult Function() error,
   }) {
     return initial();
@@ -161,7 +161,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
   }) {
     return initial?.call();
@@ -172,7 +172,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -264,7 +264,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(bool isChartVisible) loaded,
+    required TResult Function(ScaleDoctorLoadedResult result) loaded,
     required TResult Function() error,
   }) {
     return loading();
@@ -275,7 +275,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
   }) {
     return loading?.call();
@@ -286,7 +286,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -342,7 +342,9 @@ abstract class _Loading implements ScaleDoctorState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
-  $Res call({bool isChartVisible});
+  $Res call({ScaleDoctorLoadedResult result});
+
+  $ScaleDoctorLoadedResultCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -356,28 +358,35 @@ class __$LoadedCopyWithImpl<$Res> extends _$ScaleDoctorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? isChartVisible = freezed,
+    Object? result = freezed,
   }) {
     return _then(_Loaded(
-      isChartVisible == freezed
-          ? _value.isChartVisible
-          : isChartVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
+      result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as ScaleDoctorLoadedResult,
     ));
+  }
+
+  @override
+  $ScaleDoctorLoadedResultCopyWith<$Res> get result {
+    return $ScaleDoctorLoadedResultCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.isChartVisible);
+  const _$_Loaded(this.result);
 
   @override
-  final bool isChartVisible;
+  final ScaleDoctorLoadedResult result;
 
   @override
   String toString() {
-    return 'ScaleDoctorState.loaded(isChartVisible: $isChartVisible)';
+    return 'ScaleDoctorState.loaded(result: $result)';
   }
 
   @override
@@ -385,13 +394,12 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Loaded &&
-            const DeepCollectionEquality()
-                .equals(other.isChartVisible, isChartVisible));
+            const DeepCollectionEquality().equals(other.result, result));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(isChartVisible));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(result));
 
   @JsonKey(ignore: true)
   @override
@@ -403,10 +411,10 @@ class _$_Loaded implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(bool isChartVisible) loaded,
+    required TResult Function(ScaleDoctorLoadedResult result) loaded,
     required TResult Function() error,
   }) {
-    return loaded(isChartVisible);
+    return loaded(result);
   }
 
   @override
@@ -414,10 +422,10 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
   }) {
-    return loaded?.call(isChartVisible);
+    return loaded?.call(result);
   }
 
   @override
@@ -425,12 +433,12 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(isChartVisible);
+      return loaded(result);
     }
     return orElse();
   }
@@ -474,9 +482,9 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements ScaleDoctorState {
-  const factory _Loaded(bool isChartVisible) = _$_Loaded;
+  const factory _Loaded(ScaleDoctorLoadedResult result) = _$_Loaded;
 
-  bool get isChartVisible;
+  ScaleDoctorLoadedResult get result;
   @JsonKey(ignore: true)
   _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -521,7 +529,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(bool isChartVisible) loaded,
+    required TResult Function(ScaleDoctorLoadedResult result) loaded,
     required TResult Function() error,
   }) {
     return error();
@@ -532,7 +540,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
   }) {
     return error?.call();
@@ -543,7 +551,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(bool isChartVisible)? loaded,
+    TResult Function(ScaleDoctorLoadedResult result)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {

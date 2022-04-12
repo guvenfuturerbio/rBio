@@ -1,4 +1,4 @@
-part of '../../view/scale_patient_detail_screen.dart';
+/*part of '../../view/scale_patient_detail_screen.dart';
 
 class _ScaleLineChart extends StatefulWidget {
   const _ScaleLineChart({Key? key}) : super(key: key);
@@ -180,3 +180,4 @@ class __ScaleLineChartState
     super.dispose();
   }
 }
+*/

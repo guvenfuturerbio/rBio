@@ -1,55 +1,51 @@
-part of '../view/scale_patient_detail_screen.dart';
+import 'package:atom/atom.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/extension/extension.dart';
 
-class _MeasurementList extends StatefulWidget {
-  final List<ScaleMeasurementLogic> scaleMeasurements;
-  final ScrollController scrollController;
+import '../../../../../core/data/service/model/patient_scale_measurement.dart';
+import '../../../../../core/resources/resources.dart';
+import '../../../../../generated/l10n.dart';
+import 'package:grouped_list/grouped_list.dart';
+
+class MeasurementList extends StatefulWidget {
+  final List<PatientScaleMeasurement> scaleMeasurements;
+
   final bool? useStickyGroupSeparatorsValue;
-  final SelectedScaleType selected;
-  final Function(DateTime) fetchScrolledData;
-
-  const _MeasurementList({
+  const MeasurementList({
     required this.scaleMeasurements,
-    this.selected = SelectedScaleType.weight,
-    required this.scrollController,
     this.useStickyGroupSeparatorsValue,
-    required this.fetchScrolledData,
   });
-
   @override
-  __MeasurementListState createState() => __MeasurementListState();
+  MeasurementListState createState() => MeasurementListState();
 }
 
-class __MeasurementListState extends State<_MeasurementList> {
+class MeasurementListState extends State<MeasurementList> {
   @override
   Widget build(BuildContext context) {
-    log(widget.selected.toStr);
-    var list = <ScaleMeasurementLogic>[];
+    var list = <PatientScaleMeasurement>[];
     if (widget.scaleMeasurements.isNotEmpty) {
-      list = widget.scaleMeasurements
-          .where((element) => element.getMeasurement(widget.selected) != null)
-          .toList();
+      list = widget.scaleMeasurements;
     }
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(
           child: list.isEmpty
               ? Center(child: Text(LocaleProvider.current.no_measurement))
-              : GroupedListView<ScaleMeasurementLogic, DateTime>(
+              : GroupedListView<PatientScaleMeasurement, DateTime>(
                   elements: list,
                   scrollDirection: Axis.vertical,
                   order: GroupedListOrder.DESC,
-                  controller: widget.scrollController,
                   floatingHeader: true,
                   padding: EdgeInsets.only(
                       bottom: 2 * (context.height * .1) * context.textScale),
                   useStickyGroupSeparators: true,
-                  groupBy: (ScaleMeasurementLogic scaleMeasurementViewModel) =>
-                      DateTime(
-                          scaleMeasurementViewModel.dateTime.year,
-                          scaleMeasurementViewModel.dateTime.month,
-                          scaleMeasurementViewModel.dateTime.day),
+                  groupBy: (PatientScaleMeasurement scaleMeasurement) =>
+                      DateTime.parse(scaleMeasurement.occurrenceTime!),
                   groupHeaderBuilder:
-                      (ScaleMeasurementLogic bgMeasurementViewModel) {
+                      (PatientScaleMeasurement scaleMeasurement) {
                     return Container(
                       alignment: Alignment.center,
                       width: double.infinity,
@@ -71,18 +67,15 @@ class __MeasurementListState extends State<_MeasurementList> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
-                                .format(bgMeasurementViewModel.dateTime),
+                                .format(DateTime.parse(
+                                    scaleMeasurement.occurrenceTime!)),
                           ),
                         ),
                       ),
                     );
                   },
-                  itemBuilder:
-                      (_, ScaleMeasurementLogic scaleMeasurementViewModel) {
-                    return measurementList(scaleMeasurementViewModel, context);
-                  },
-                  callback: (ScaleMeasurementLogic data) {
-                    widget.fetchScrolledData(data.dateTime);
+                  itemBuilder: (_, PatientScaleMeasurement scaleMeasurement) {
+                    return measurementList(scaleMeasurement, context);
                   },
                 ),
         ),
@@ -91,63 +84,55 @@ class __MeasurementListState extends State<_MeasurementList> {
   }
 
   Widget measurementList(
-      ScaleMeasurementLogic scaleMeasurementViewModel, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Atom.show(
-            ScaleTagger(
-              scaleModel: scaleMeasurementViewModel,
+      PatientScaleMeasurement scaleMeasurement, BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+            DateFormat("kk : mm")
+                .format(DateTime.parse(scaleMeasurement.occurrenceTime!)),
+            style: context.xBodyText1),
+        Expanded(
+          child: Container(
+            alignment: Alignment.center,
+            height: (context.height * .08) * context.textScale,
+            margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
+            decoration: BoxDecoration(
+              color: Colors.green,
+              gradient: const LinearGradient(
+                  colors: [Colors.white, Colors.white],
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.centerRight),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withAlpha(50),
+                    blurRadius: 5,
+                    spreadRadius: 0,
+                    offset: const Offset(5, 5))
+              ],
+              borderRadius: const BorderRadius.all(Radius.circular(30.0)),
             ),
-            barrierDismissible: false,
-            barrierColor: Colors.transparent);
-      },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(DateFormat("kk : mm").format(scaleMeasurementViewModel.dateTime),
-              style: context.xBodyText1),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              height: (context.height * .08) * context.textScale,
-              margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-              decoration: BoxDecoration(
-                color: Colors.green,
-                gradient: const LinearGradient(
-                    colors: [Colors.white, Colors.white],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.centerRight),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withAlpha(50),
-                      blurRadius: 5,
-                      spreadRadius: 0,
-                      offset: const Offset(5, 5))
-                ],
-                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-              ),
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _textAndScaleSection(scaleMeasurementViewModel, context),
-                  _timeAndImageSection(scaleMeasurementViewModel, context)
-                ],
-              ),
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _textAndScaleSection(scaleMeasurement, context),
+                _timeAndImageSection(scaleMeasurement, context)
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Row _timeAndImageSection(
-      ScaleMeasurementLogic scaleMeasurementViewModel, BuildContext context) {
+      PatientScaleMeasurement scaleMeasurement, BuildContext context) {
     return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          if (scaleMeasurementViewModel.isManuel)
+          if (scaleMeasurement.isManuel!)
             Container(
               margin: const EdgeInsets.only(right: 20),
               child: Text(
@@ -157,59 +142,29 @@ class __MeasurementListState extends State<_MeasurementList> {
                 ),
               ),
             ),
-          scaleMeasurementViewModel.images.isEmpty
-              ? SizedBox(
-                  width: 60 * context.textScale,
-                  height: 60 * context.textScale,
-                  child: Card(
-                    elevation: R.sizes.defaultElevation,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      height: 25,
-                      width: 25,
-                      child: SvgPicture.asset(
-                        R.image.addphotoIcon,
-                      ),
-                    ),
-                  ),
-                )
-              : GestureDetector(
-                  onTap: () =>
-                      _galeryView(context, scaleMeasurementViewModel.images),
-                  child: SizedBox(
-                    width: 60 * context.textScale,
-                    height: 60 * context.textScale,
-                    child: StackOfCards(
-                      children: [
-                        ...scaleMeasurementViewModel.images.map(
-                          (e) => Card(
-                            elevation: R.sizes.defaultElevation,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: R.sizes.borderRadiusCircular,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image(
-                                  image: FileImage(File(e)),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
+          SizedBox(
+            width: 60 * context.textScale,
+            height: 60 * context.textScale,
+            child: Card(
+              elevation: R.sizes.defaultElevation,
+              shape: RoundedRectangleBorder(
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                height: 25,
+                width: 25,
+                child: SvgPicture.asset(
+                  R.image.addphotoIcon,
+                ),
+              ),
+            ),
+          )
         ]);
   }
 
   Expanded _textAndScaleSection(
-    ScaleMeasurementLogic scaleMeasurementViewModel,
+    PatientScaleMeasurement scaleMeasurement,
     BuildContext context,
   ) {
     return Expanded(
@@ -222,30 +177,17 @@ class __MeasurementListState extends State<_MeasurementList> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                    scaleMeasurementViewModel
-                        .getMeasurement(widget.selected)!
-                        .toStringAsFixed(2),
+                Text(scaleMeasurement.weight!.toStringAsFixed(2),
                     style: context.xHeadline1),
               ],
             ),
           ),
           Expanded(
             flex: 4,
-            child: Text(scaleMeasurementViewModel.note),
+            child: Text(scaleMeasurement.note!),
           ),
         ],
       ),
-    );
-  }
-
-  Future<dynamic> _galeryView(BuildContext context, List<String> images) {
-    return Atom.show(
-      GalleryView(
-        images: [...images.map((e) => e).toList()],
-      ),
-      barrierColor: Colors.transparent,
-      barrierDismissible: false,
     );
   }
 }
