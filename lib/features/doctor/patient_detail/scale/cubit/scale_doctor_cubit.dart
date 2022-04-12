@@ -27,14 +27,12 @@ class ScaleDoctorCubit extends Cubit<ScaleDoctorState> {
   }
 
   Future<List<PatientScaleMeasurement>> fetchScaleData() async {
-    emit(ScaleDoctorState.loading());
+    emit(const ScaleDoctorState.loading());
     var response = await getIt<DoctorRepository>().getMyPatientScale(
       patientId,
       GetMyPatientFilter(end: null, start: null),
     );
     patientScaleMeasurements = response;
-    final currentState = state;
-
     emit(ScaleDoctorState.loaded(ScaleDoctorLoadedResult(
       patientScaleMeasurements: patientScaleMeasurements ?? [],
       isChartVisible: false,
