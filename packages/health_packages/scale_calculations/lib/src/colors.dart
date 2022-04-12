@@ -226,3 +226,33 @@ class ScaleColors {
     }
   }
 }
+
+extension SelectedScaleTypeRangeExt on SelectedScaleType {
+  List<double> xGetRanges() {
+    switch (this) {
+      case SelectedScaleType.bmi:
+        // TODO: Handle this case.
+        break;
+      case SelectedScaleType.weight:
+        // TODO: Handle this case.
+        break;
+      case SelectedScaleType.bodyFat:
+        // TODO: Handle this case.
+        break;
+      case SelectedScaleType.boneMass:
+        // TODO: Handle this case.
+        break;
+      case SelectedScaleType.water:
+        // TODO: Handle this case.
+        break;
+      case SelectedScaleType.visceralFat:
+        // TODO: Handle this case.
+        break;
+      case SelectedScaleType.muscle:
+        // TODO: Handle this case.
+        break;
+    }
+
+    return [];
+  }
+}

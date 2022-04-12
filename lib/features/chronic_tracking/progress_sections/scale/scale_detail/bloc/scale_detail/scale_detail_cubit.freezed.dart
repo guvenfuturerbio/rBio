@@ -17,22 +17,22 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ScaleDetailStateTearOff {
   const _$ScaleDetailStateTearOff();
 
-  ScaleDetailInitial initial() {
-    return const ScaleDetailInitial();
+  _Initial initial() {
+    return const _Initial();
   }
 
-  ScaleDetailLoadInProgress loadInProgress() {
-    return const ScaleDetailLoadInProgress();
+  _LoadInProgress loadInProgress() {
+    return const _LoadInProgress();
   }
 
-  ScaleDetailSuccess success(ScaleDetailSuccessResult result) {
-    return ScaleDetailSuccess(
+  _Success success(ScaleDetailSuccessResult result) {
+    return _Success(
       result,
     );
   }
 
-  ScaleDetailFailure failure() {
-    return const ScaleDetailFailure();
+  _Failure failure() {
+    return const _Failure();
   }
 }
 
@@ -68,26 +68,26 @@ mixin _$ScaleDetailState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ScaleDetailInitial value) initial,
-    required TResult Function(ScaleDetailLoadInProgress value) loadInProgress,
-    required TResult Function(ScaleDetailSuccess value) success,
-    required TResult Function(ScaleDetailFailure value) failure,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -111,28 +111,25 @@ class _$ScaleDetailStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ScaleDetailInitialCopyWith<$Res> {
-  factory $ScaleDetailInitialCopyWith(
-          ScaleDetailInitial value, $Res Function(ScaleDetailInitial) then) =
-      _$ScaleDetailInitialCopyWithImpl<$Res>;
+abstract class _$InitialCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
+      __$InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ScaleDetailInitialCopyWithImpl<$Res>
-    extends _$ScaleDetailStateCopyWithImpl<$Res>
-    implements $ScaleDetailInitialCopyWith<$Res> {
-  _$ScaleDetailInitialCopyWithImpl(
-      ScaleDetailInitial _value, $Res Function(ScaleDetailInitial) _then)
-      : super(_value, (v) => _then(v as ScaleDetailInitial));
+class __$InitialCopyWithImpl<$Res> extends _$ScaleDetailStateCopyWithImpl<$Res>
+    implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
+      : super(_value, (v) => _then(v as _Initial));
 
   @override
-  ScaleDetailInitial get _value => super._value as ScaleDetailInitial;
+  _Initial get _value => super._value as _Initial;
 }
 
 /// @nodoc
 
-class _$ScaleDetailInitial implements ScaleDetailInitial {
-  const _$ScaleDetailInitial();
+class _$_Initial implements _Initial {
+  const _$_Initial();
 
   @override
   String toString() {
@@ -142,7 +139,7 @@ class _$ScaleDetailInitial implements ScaleDetailInitial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ScaleDetailInitial);
+        (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @override
@@ -188,10 +185,10 @@ class _$ScaleDetailInitial implements ScaleDetailInitial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ScaleDetailInitial value) initial,
-    required TResult Function(ScaleDetailLoadInProgress value) loadInProgress,
-    required TResult Function(ScaleDetailSuccess value) success,
-    required TResult Function(ScaleDetailFailure value) failure,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
   }) {
     return initial(this);
   }
@@ -199,10 +196,10 @@ class _$ScaleDetailInitial implements ScaleDetailInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
   }) {
     return initial?.call(this);
   }
@@ -210,10 +207,10 @@ class _$ScaleDetailInitial implements ScaleDetailInitial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -223,34 +220,33 @@ class _$ScaleDetailInitial implements ScaleDetailInitial {
   }
 }
 
-abstract class ScaleDetailInitial implements ScaleDetailState {
-  const factory ScaleDetailInitial() = _$ScaleDetailInitial;
+abstract class _Initial implements ScaleDetailState {
+  const factory _Initial() = _$_Initial;
 }
 
 /// @nodoc
-abstract class $ScaleDetailLoadInProgressCopyWith<$Res> {
-  factory $ScaleDetailLoadInProgressCopyWith(ScaleDetailLoadInProgress value,
-          $Res Function(ScaleDetailLoadInProgress) then) =
-      _$ScaleDetailLoadInProgressCopyWithImpl<$Res>;
+abstract class _$LoadInProgressCopyWith<$Res> {
+  factory _$LoadInProgressCopyWith(
+          _LoadInProgress value, $Res Function(_LoadInProgress) then) =
+      __$LoadInProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ScaleDetailLoadInProgressCopyWithImpl<$Res>
+class __$LoadInProgressCopyWithImpl<$Res>
     extends _$ScaleDetailStateCopyWithImpl<$Res>
-    implements $ScaleDetailLoadInProgressCopyWith<$Res> {
-  _$ScaleDetailLoadInProgressCopyWithImpl(ScaleDetailLoadInProgress _value,
-      $Res Function(ScaleDetailLoadInProgress) _then)
-      : super(_value, (v) => _then(v as ScaleDetailLoadInProgress));
+    implements _$LoadInProgressCopyWith<$Res> {
+  __$LoadInProgressCopyWithImpl(
+      _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
+      : super(_value, (v) => _then(v as _LoadInProgress));
 
   @override
-  ScaleDetailLoadInProgress get _value =>
-      super._value as ScaleDetailLoadInProgress;
+  _LoadInProgress get _value => super._value as _LoadInProgress;
 }
 
 /// @nodoc
 
-class _$ScaleDetailLoadInProgress implements ScaleDetailLoadInProgress {
-  const _$ScaleDetailLoadInProgress();
+class _$_LoadInProgress implements _LoadInProgress {
+  const _$_LoadInProgress();
 
   @override
   String toString() {
@@ -260,8 +256,7 @@ class _$ScaleDetailLoadInProgress implements ScaleDetailLoadInProgress {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ScaleDetailLoadInProgress);
+        (other.runtimeType == runtimeType && other is _LoadInProgress);
   }
 
   @override
@@ -307,10 +302,10 @@ class _$ScaleDetailLoadInProgress implements ScaleDetailLoadInProgress {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ScaleDetailInitial value) initial,
-    required TResult Function(ScaleDetailLoadInProgress value) loadInProgress,
-    required TResult Function(ScaleDetailSuccess value) success,
-    required TResult Function(ScaleDetailFailure value) failure,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
   }) {
     return loadInProgress(this);
   }
@@ -318,10 +313,10 @@ class _$ScaleDetailLoadInProgress implements ScaleDetailLoadInProgress {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
   }) {
     return loadInProgress?.call(this);
   }
@@ -329,10 +324,10 @@ class _$ScaleDetailLoadInProgress implements ScaleDetailLoadInProgress {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -342,34 +337,31 @@ class _$ScaleDetailLoadInProgress implements ScaleDetailLoadInProgress {
   }
 }
 
-abstract class ScaleDetailLoadInProgress implements ScaleDetailState {
-  const factory ScaleDetailLoadInProgress() = _$ScaleDetailLoadInProgress;
+abstract class _LoadInProgress implements ScaleDetailState {
+  const factory _LoadInProgress() = _$_LoadInProgress;
 }
 
 /// @nodoc
-abstract class $ScaleDetailSuccessCopyWith<$Res> {
-  factory $ScaleDetailSuccessCopyWith(
-          ScaleDetailSuccess value, $Res Function(ScaleDetailSuccess) then) =
-      _$ScaleDetailSuccessCopyWithImpl<$Res>;
+abstract class _$SuccessCopyWith<$Res> {
+  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
+      __$SuccessCopyWithImpl<$Res>;
   $Res call({ScaleDetailSuccessResult result});
 }
 
 /// @nodoc
-class _$ScaleDetailSuccessCopyWithImpl<$Res>
-    extends _$ScaleDetailStateCopyWithImpl<$Res>
-    implements $ScaleDetailSuccessCopyWith<$Res> {
-  _$ScaleDetailSuccessCopyWithImpl(
-      ScaleDetailSuccess _value, $Res Function(ScaleDetailSuccess) _then)
-      : super(_value, (v) => _then(v as ScaleDetailSuccess));
+class __$SuccessCopyWithImpl<$Res> extends _$ScaleDetailStateCopyWithImpl<$Res>
+    implements _$SuccessCopyWith<$Res> {
+  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
+      : super(_value, (v) => _then(v as _Success));
 
   @override
-  ScaleDetailSuccess get _value => super._value as ScaleDetailSuccess;
+  _Success get _value => super._value as _Success;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(ScaleDetailSuccess(
+    return _then(_Success(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -380,8 +372,8 @@ class _$ScaleDetailSuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ScaleDetailSuccess implements ScaleDetailSuccess {
-  const _$ScaleDetailSuccess(this.result);
+class _$_Success implements _Success {
+  const _$_Success(this.result);
 
   @override
   final ScaleDetailSuccessResult result;
@@ -395,7 +387,7 @@ class _$ScaleDetailSuccess implements ScaleDetailSuccess {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ScaleDetailSuccess &&
+            other is _Success &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -405,8 +397,8 @@ class _$ScaleDetailSuccess implements ScaleDetailSuccess {
 
   @JsonKey(ignore: true)
   @override
-  $ScaleDetailSuccessCopyWith<ScaleDetailSuccess> get copyWith =>
-      _$ScaleDetailSuccessCopyWithImpl<ScaleDetailSuccess>(this, _$identity);
+  _$SuccessCopyWith<_Success> get copyWith =>
+      __$SuccessCopyWithImpl<_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -448,10 +440,10 @@ class _$ScaleDetailSuccess implements ScaleDetailSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ScaleDetailInitial value) initial,
-    required TResult Function(ScaleDetailLoadInProgress value) loadInProgress,
-    required TResult Function(ScaleDetailSuccess value) success,
-    required TResult Function(ScaleDetailFailure value) failure,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
   }) {
     return success(this);
   }
@@ -459,10 +451,10 @@ class _$ScaleDetailSuccess implements ScaleDetailSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
   }) {
     return success?.call(this);
   }
@@ -470,10 +462,10 @@ class _$ScaleDetailSuccess implements ScaleDetailSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -483,39 +475,35 @@ class _$ScaleDetailSuccess implements ScaleDetailSuccess {
   }
 }
 
-abstract class ScaleDetailSuccess implements ScaleDetailState {
-  const factory ScaleDetailSuccess(ScaleDetailSuccessResult result) =
-      _$ScaleDetailSuccess;
+abstract class _Success implements ScaleDetailState {
+  const factory _Success(ScaleDetailSuccessResult result) = _$_Success;
 
   ScaleDetailSuccessResult get result;
   @JsonKey(ignore: true)
-  $ScaleDetailSuccessCopyWith<ScaleDetailSuccess> get copyWith =>
+  _$SuccessCopyWith<_Success> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ScaleDetailFailureCopyWith<$Res> {
-  factory $ScaleDetailFailureCopyWith(
-          ScaleDetailFailure value, $Res Function(ScaleDetailFailure) then) =
-      _$ScaleDetailFailureCopyWithImpl<$Res>;
+abstract class _$FailureCopyWith<$Res> {
+  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) then) =
+      __$FailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ScaleDetailFailureCopyWithImpl<$Res>
-    extends _$ScaleDetailStateCopyWithImpl<$Res>
-    implements $ScaleDetailFailureCopyWith<$Res> {
-  _$ScaleDetailFailureCopyWithImpl(
-      ScaleDetailFailure _value, $Res Function(ScaleDetailFailure) _then)
-      : super(_value, (v) => _then(v as ScaleDetailFailure));
+class __$FailureCopyWithImpl<$Res> extends _$ScaleDetailStateCopyWithImpl<$Res>
+    implements _$FailureCopyWith<$Res> {
+  __$FailureCopyWithImpl(_Failure _value, $Res Function(_Failure) _then)
+      : super(_value, (v) => _then(v as _Failure));
 
   @override
-  ScaleDetailFailure get _value => super._value as ScaleDetailFailure;
+  _Failure get _value => super._value as _Failure;
 }
 
 /// @nodoc
 
-class _$ScaleDetailFailure implements ScaleDetailFailure {
-  const _$ScaleDetailFailure();
+class _$_Failure implements _Failure {
+  const _$_Failure();
 
   @override
   String toString() {
@@ -525,7 +513,7 @@ class _$ScaleDetailFailure implements ScaleDetailFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ScaleDetailFailure);
+        (other.runtimeType == runtimeType && other is _Failure);
   }
 
   @override
@@ -571,10 +559,10 @@ class _$ScaleDetailFailure implements ScaleDetailFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ScaleDetailInitial value) initial,
-    required TResult Function(ScaleDetailLoadInProgress value) loadInProgress,
-    required TResult Function(ScaleDetailSuccess value) success,
-    required TResult Function(ScaleDetailFailure value) failure,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
   }) {
     return failure(this);
   }
@@ -582,10 +570,10 @@ class _$ScaleDetailFailure implements ScaleDetailFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
   }) {
     return failure?.call(this);
   }
@@ -593,10 +581,10 @@ class _$ScaleDetailFailure implements ScaleDetailFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ScaleDetailInitial value)? initial,
-    TResult Function(ScaleDetailLoadInProgress value)? loadInProgress,
-    TResult Function(ScaleDetailSuccess value)? success,
-    TResult Function(ScaleDetailFailure value)? failure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -606,6 +594,6 @@ class _$ScaleDetailFailure implements ScaleDetailFailure {
   }
 }
 
-abstract class ScaleDetailFailure implements ScaleDetailState {
-  const factory ScaleDetailFailure() = _$ScaleDetailFailure;
+abstract class _Failure implements ScaleDetailState {
+  const factory _Failure() = _$_Failure;
 }

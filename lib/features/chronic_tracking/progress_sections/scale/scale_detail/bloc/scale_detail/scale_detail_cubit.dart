@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../scale_detail.dart';
 
 part 'scale_detail_cubit.freezed.dart';
 part 'scale_detail_state.dart';
@@ -26,11 +27,9 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
     }
   }
 
-  FutureOr<void> deleteItem(
-    ScaleEntity entity,
-    ScaleDetailSuccess successState,
-  ) async {
-    successState.whenOrNull(
+  FutureOr<void> deleteItem(ScaleEntity entity) {
+    final currentState = state;
+    currentState.whenOrNull(
       success: (result) {
         final currentList = result.list;
         final item = currentList.firstWhereOrNull((element) =>
@@ -40,6 +39,21 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
           currentList.remove(entity);
           emit(ScaleDetailState.success(_getResult(currentList)));
         }
+      },
+    );
+  }
+
+  void changeFilterType(ScaleChartFilterType value) {
+    final currentState = state;
+    currentState.whenOrNull(
+      success: (result) {
+        emit(
+          ScaleDetailState.success(
+            result.copyWith(
+              filterType: value,
+            ),
+          ),
+        );
       },
     );
   }

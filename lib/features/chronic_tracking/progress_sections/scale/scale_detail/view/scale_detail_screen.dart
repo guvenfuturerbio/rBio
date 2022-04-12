@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/utils/logger_helper.dart';
 import 'package:scale_repository/scale_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
-import '../../scale.dart';
-import '../bloc/cubit/scale_detail_cubit.dart';
+import '../scale_detail.dart';
 
 class ScaleDetailScreen extends StatelessWidget {
-  const ScaleDetailScreen({
-    Key? key,
-  }) : super(key: key);
+  const ScaleDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,24 +50,32 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
     return RbioScaffold(
       backgroundColor: getIt<ITheme>().mainColor,
       bodyPadding: EdgeInsets.zero,
-      appbar: RbioAppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.read<ScaleDetailCubit>().fetchAll();
-            },
-            icon: const Icon(
-              Icons.refresh,
-            ),
-          ),
-        ],
-      ),
+      appbar: _buildAppBar(),
       body: BlocBuilder<ScaleDetailCubit, ScaleDetailState>(
         builder: (context, state) {
           return _buildBody(state);
         },
       ),
       floatingActionButton: _buildFAB(context),
+    );
+  }
+
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.weight_tracking,
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            context.read<ScaleDetailCubit>().fetchAll();
+          },
+          icon: const Icon(
+            Icons.refresh,
+          ),
+        ),
+      ],
     );
   }
 
@@ -105,201 +109,252 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Container(
-          width: double.infinity,
-          height: 1.0,
-          color: Colors.white24,
-        ),
-
-        //
         Expanded(
           flex: 30,
-          child: Container(
-            color: Colors.transparent,
-            child: SfCartesianChart(
-              // Zoom
-              zoomPanBehavior: _zoomPanBehavior,
-              onZooming: (ZoomPanArgs args) {
-                // print(args.currentZoomFactor);
-                // print(args.currentZoomPosition);
-              },
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              //
+              _buildChart(result),
 
-              // Title
-              title: ChartTitle(
-                text: "",
-                alignment: ChartAlignment.center,
-                backgroundColor: Colors.transparent,
-                borderColor: Colors.transparent,
-                borderWidth: 0,
-                textStyle: Theme.of(context).textTheme.headline6,
+              //
+              Align(
+                alignment: Alignment.topCenter,
+                child: _buildCurrentWeight(),
               ),
-
-              // Plot Area
-              plotAreaBorderWidth: 0,
-              plotAreaBorderColor: Colors.transparent,
-              plotAreaBackgroundColor: Colors.transparent,
-              onPlotAreaSwipe: (detail) {},
-              // plotAreaBackgroundImage: const AssetImage('images/bike.png'),
-
-              // Legend
-              legend: Legend(
-                isVisible: false,
-                title: LegendTitle(),
-                backgroundColor: Colors.transparent,
-                isResponsive: true,
-                alignment: ChartAlignment.center,
-                borderWidth: 2.0,
-                borderColor: Colors.transparent,
-                iconBorderWidth: 2.0,
-                iconBorderColor: Colors.transparent,
-                itemPadding: 10,
-              ),
-              onLegendTapped: (detail) {},
-              onLegendItemRender: (detail) {},
-
-              // General
-              borderWidth: 0,
-              borderColor: Colors.transparent,
-              backgroundColor: Colors.transparent,
-              margin: R.sizes.screenPadding(context),
-              // selectionType: SelectionType.point,
-
-              // Primary
-              primaryXAxis: CategoryAxis(
-                plotOffset: 10,
-                visibleMaximum: 10,
-                labelPlacement: LabelPlacement.onTicks,
-                majorGridLines: const MajorGridLines(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                minorGridLines: const MinorGridLines(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                majorTickLines: const MajorTickLines(
-                  size: 0,
-                  color: Colors.transparent,
-                ),
-
-                //
-                borderWidth: 0,
-                borderColor: Colors.transparent,
-
-                axisLine: const AxisLine(
-                  width: 0.01,
-                  color: Colors.transparent,
-                ),
-                axisLabelFormatter: (detail) {
-                  return ChartAxisLabel(
-                    "",
-                    const TextStyle(fontSize: 0),
-                  );
-                },
-                axisBorderType: AxisBorderType.rectangle,
-              ),
-              primaryYAxis: NumericAxis(
-                minimum: result.minimumWeight,
-                maximum: result.maximumWeight,
-                edgeLabelPlacement: EdgeLabelPlacement.shift,
-
-                //
-                majorGridLines: const MajorGridLines(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                majorTickLines: const MajorTickLines(
-                  size: 0,
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                minorTickLines: const MinorTickLines(
-                  size: 0,
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-
-                //
-                title: AxisTitle(
-                  text: "",
-                  alignment: ChartAlignment.center,
-                  textStyle: const TextStyle(),
-                ),
-
-                //
-                axisLine: const AxisLine(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                axisBorderType: AxisBorderType.withoutTopAndBottom,
-
-                //
-                labelFormat: '{value}',
-                labelStyle: const TextStyle(fontSize: 0),
-
-                //
-                borderWidth: 0,
-                borderColor: Colors.transparent,
-              ),
-
-              // Series
-              series: _getSeries(result.list),
-
-              // Trackball
-              trackballBehavior: TrackballBehavior(),
-
-              // Tooltip
-              onTooltipRender: (detail) {},
-              tooltipBehavior: TooltipBehavior(
-                enable: true,
-                color: Colors.black, // Background Color
-                borderWidth: 0,
-                borderColor: Colors.transparent,
-                // header: "Header",
-                textStyle: const TextStyle(fontSize: 13),
-                elevation: 4,
-                shadowColor: Colors.black,
-                shouldAlwaysShow: false,
-                tooltipPosition: TooltipPosition.auto,
-                format: 'point.x | point.y KG',
-              ),
-            ),
+            ],
           ),
         ),
 
         //
         Expanded(
           flex: 70,
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
-              borderRadius: R.sizes.borderRadiusCircular,
-            ),
-            child: ListView.builder(
-              padding: EdgeInsets.only(bottom: R.sizes.defaultBottomValue),
-              itemCount: result.list.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ValueListenableBuilder<ScaleEntity?>(
-                  valueListenable: _pointTapNotifier,
-                  builder: (
-                    BuildContext context,
-                    ScaleEntity? selectedItem,
-                    Widget? child,
-                  ) {
-                    return ScaleCard(
-                      entity: result.list[index],
-                      isSelected: result.list[index].dateTime.xIsSameDateTime(
-                        selectedItem?.dateTime ?? DateTime.now(),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
+          child: _buildBottomList(result),
         ),
       ],
+    );
+  }
+
+  Widget _buildChart(ScaleDetailSuccessResult result) {
+    return SfCartesianChart(
+      // Zoom
+      zoomPanBehavior: _zoomPanBehavior,
+      onZooming: (ZoomPanArgs args) {
+        // print(args.currentZoomFactor);
+        // print(args.currentZoomPosition);
+      },
+
+      // Title
+      title: ChartTitle(
+        text: "",
+        alignment: ChartAlignment.center,
+        backgroundColor: Colors.transparent,
+        borderColor: Colors.transparent,
+        borderWidth: 0,
+        textStyle: Theme.of(context).textTheme.headline6,
+      ),
+
+      // Plot Area
+      plotAreaBorderWidth: 0,
+      plotAreaBorderColor: Colors.transparent,
+      plotAreaBackgroundColor: Colors.transparent,
+      onPlotAreaSwipe: (detail) {},
+      // plotAreaBackgroundImage: const AssetImage('images/bike.png'),
+
+      // Legend
+      legend: Legend(
+        isVisible: false,
+        title: LegendTitle(),
+        backgroundColor: Colors.transparent,
+        isResponsive: true,
+        alignment: ChartAlignment.center,
+        borderWidth: 2.0,
+        borderColor: Colors.transparent,
+        iconBorderWidth: 2.0,
+        iconBorderColor: Colors.transparent,
+        itemPadding: 10,
+      ),
+      onLegendTapped: (detail) {},
+      onLegendItemRender: (detail) {},
+
+      // General
+      borderWidth: 0,
+      borderColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      margin: R.sizes.screenPadding(context),
+      // selectionType: SelectionType.point,
+
+      // Primary
+      primaryXAxis: CategoryAxis(
+        plotOffset: 10,
+        visibleMaximum: 10,
+        labelPlacement: LabelPlacement.onTicks,
+        majorGridLines: const MajorGridLines(
+          width: 0,
+          color: Colors.transparent,
+        ),
+        minorGridLines: const MinorGridLines(
+          width: 0,
+          color: Colors.transparent,
+        ),
+        majorTickLines: const MajorTickLines(
+          size: 0,
+          color: Colors.transparent,
+        ),
+
+        //
+        borderWidth: 0,
+        borderColor: Colors.transparent,
+
+        axisLine: const AxisLine(
+          width: 0.01,
+          color: Colors.transparent,
+        ),
+        axisLabelFormatter: (detail) {
+          return ChartAxisLabel(
+            "",
+            const TextStyle(fontSize: 0),
+          );
+        },
+        axisBorderType: AxisBorderType.rectangle,
+      ),
+      primaryYAxis: NumericAxis(
+        minimum: result.minimumWeight,
+        maximum: result.maximumWeight,
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
+
+        //
+        majorGridLines: const MajorGridLines(
+          width: 0,
+          color: Colors.transparent,
+        ),
+        majorTickLines: const MajorTickLines(
+          size: 0,
+          width: 0,
+          color: Colors.transparent,
+        ),
+        minorTickLines: const MinorTickLines(
+          size: 0,
+          width: 0,
+          color: Colors.transparent,
+        ),
+
+        //
+        title: AxisTitle(
+          text: "",
+          alignment: ChartAlignment.center,
+          textStyle: const TextStyle(),
+        ),
+
+        //
+        axisLine: const AxisLine(
+          width: 0,
+          color: Colors.transparent,
+        ),
+        axisBorderType: AxisBorderType.withoutTopAndBottom,
+
+        //
+        labelFormat: '{value}',
+        labelStyle: const TextStyle(fontSize: 0),
+
+        //
+        borderWidth: 0,
+        borderColor: Colors.transparent,
+      ),
+
+      // Series
+      series: _getSeries(result.list),
+
+      // Trackball
+      trackballBehavior: TrackballBehavior(),
+
+      // Tooltip
+      onTooltipRender: (detail) {},
+      tooltipBehavior: TooltipBehavior(
+        enable: true,
+        color: Colors.black, // Background Color
+        borderWidth: 0,
+        borderColor: Colors.transparent,
+        // header: "Header",
+        textStyle: const TextStyle(fontSize: 13),
+        elevation: 4,
+        shadowColor: Colors.black,
+        shouldAlwaysShow: false,
+        tooltipPosition: TooltipPosition.auto,
+        format: 'point.x | point.y KG',
+      ),
+    );
+  }
+
+  Widget _buildCurrentWeight() {
+    return ValueListenableBuilder<ScaleEntity?>(
+      valueListenable: _pointTapNotifier,
+      builder: (
+        BuildContext context,
+        ScaleEntity? selectedItem,
+        Widget? child,
+      ) {
+        if (selectedItem == null) {
+          return const SizedBox();
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(top: 24),
+            child: Text(
+              ((selectedItem.weight ?? 0.0).toStringAsFixed(1))
+                  .replaceAll(".", ","),
+              style: context.xHeadline1.copyWith(
+                fontSize: context.xHeadline1.fontSize! * 1.5,
+                color: getIt<ITheme>().textColor,
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildBottomList(ScaleDetailSuccessResult result) {
+    return Container(
+      width: double.infinity,
+      padding: R.sizes.screenPaddingOnlyHorizontal(context),
+      color: getIt<ITheme>().scaffoldBackgroundColor,
+      child: Column(
+        children: [
+          //
+          const ChartFilterComponent(),
+
+          //
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: R.sizes.defaultBottomValue,
+              ),
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  ScaleDetailExpansionComponent(
+                    isRedTheme: true,
+                    title: LocaleProvider.current.didnt_reach_goals,
+                    list: ScaleExpansionModel.list1,
+                  ),
+
+                  //
+                  ScaleDetailExpansionComponent(
+                    isRedTheme: false,
+                    title: LocaleProvider.current.reach_goal,
+                    list: ScaleExpansionModel.list2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -366,17 +421,18 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
     return FloatingActionButton(
       backgroundColor: getIt<ITheme>().mainColor,
       onPressed: () async {
-        final isAdded = await Atom.show(
-          const ScaleTaggerPopUp(),
-          barrierDismissible: false,
-          barrierColor: Colors.transparent,
-        );
+        Atom.to(PagePaths.scaleManuelAdd);
+        // final isAdded = await Atom.show(
+        //   const ScaleTaggerPopUp(),
+        //   barrierDismissible: false,
+        //   barrierColor: Colors.transparent,
+        // );
 
-        if (isAdded != null) {
-          if (isAdded == true) {
-            await context.read<ScaleDetailCubit>().fetchAll();
-          }
-        }
+        // if (isAdded != null) {
+        //   if (isAdded == true) {
+        //     await context.read<ScaleDetailCubit>().fetchAll();
+        //   }
+        // }
       },
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -421,14 +477,14 @@ class ScaleCard extends StatelessWidget {
         ],
         child: GestureDetector(
           onTap: () async {
-            Atom.show(
-              ScaleTaggerPopUp(
-                scaleModel: entity,
-                isUpdate: true,
-              ),
-              barrierDismissible: false,
-              barrierColor: Colors.transparent,
-            );
+            // Atom.show(
+            //   ScaleTaggerPopUp(
+            //     scaleModel: entity,
+            //     isUpdate: true,
+            //   ),
+            //   barrierDismissible: false,
+            //   barrierColor: Colors.transparent,
+            // );
           },
           child: Container(
             color: Colors.transparent,
@@ -558,10 +614,7 @@ class ScaleCard extends StatelessWidget {
           entity.dateTime,
         );
         if (isDeleted) {
-          context.read<ScaleDetailCubit>().deleteItem(
-                entity,
-                context.read<ScaleDetailCubit>().state as ScaleDetailSuccess,
-              );
+          context.read<ScaleDetailCubit>().deleteItem(entity);
         }
       } catch (e) {
         LoggerUtils.instance.e(e);

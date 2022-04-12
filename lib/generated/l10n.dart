@@ -8339,6 +8339,186 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Weight Tracking`
+  String get weight_tracking {
+    return Intl.message(
+      'Weight Tracking',
+      name: 'weight_tracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yearly`
+  String get yearly {
+    return Intl.message(
+      'Yearly',
+      name: 'yearly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `6 months`
+  String get six_months {
+    return Intl.message(
+      '6 months',
+      name: 'six_months',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weight`
+  String get weight_text {
+    return Intl.message(
+      'Weight',
+      name: 'weight_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get time_text {
+    return Intl.message(
+      'Time',
+      name: 'time_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mass unit`
+  String get mass_unit {
+    return Intl.message(
+      'Mass unit',
+      name: 'mass_unit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Didn't reach goals`
+  String get didnt_reach_goals {
+    return Intl.message(
+      'Didn\'t reach goals',
+      name: 'didnt_reach_goals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reach goal`
+  String get reach_goal {
+    return Intl.message(
+      'Reach goal',
+      name: 'reach_goal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Protein`
+  String get protein {
+    return Intl.message(
+      'Protein',
+      name: 'protein',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Basal metabolism`
+  String get basal_metabolism {
+    return Intl.message(
+      'Basal metabolism',
+      name: 'basal_metabolism',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Normal`
+  String get normal {
+    return Intl.message(
+      'Normal',
+      name: 'normal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insufficient`
+  String get insufficient {
+    return Intl.message(
+      'Insufficient',
+      name: 'insufficient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Great`
+  String get great {
+    return Intl.message(
+      'Great',
+      name: 'great',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Increased`
+  String get increased {
+    return Intl.message(
+      'Increased',
+      name: 'increased',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the weight`
+  String get enter_weight {
+    return Intl.message(
+      'Enter the weight',
+      name: 'enter_weight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weighing`
+  String get weighing {
+    return Intl.message(
+      'Weighing',
+      name: 'weighing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please wait until\nweighing completed`
+  String get weighing_completed {
+    return Intl.message(
+      'Please wait until\nweighing completed',
+      name: 'weighing_completed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weighing results`
+  String get weighing_results {
+    return Intl.message(
+      'Weighing results',
+      name: 'weighing_results',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

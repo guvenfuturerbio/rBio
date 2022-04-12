@@ -8,6 +8,7 @@ import '../core/core.dart';
 import '../features/chronic_tracking/progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../features/chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../features/chronic_tracking/progress_sections/scale/scale.dart';
+import '../features/chronic_tracking/progress_sections/scale/scale_detail/scale_detail.dart';
 import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
 import '../features/doctor/notifiers/patient_notifiers.dart';
 import '../features/home/viewmodel/home_vm.dart';
@@ -182,7 +183,7 @@ class _MyAppState extends State<MyApp> {
       },
       showLoading: (scaleEntity) {
         if (!Atom.isDialogShow) {
-          Atom.show(const MiScalePopUp());
+          Atom.show(const ScaleMeasurementPopup());
         }
       },
       dismissLoading: () {
@@ -190,7 +191,7 @@ class _MyAppState extends State<MyApp> {
       },
       showScalePopup: (scaleEntity) {
         Atom.show(
-          ScaleTaggerPopUp(scaleModel: scaleEntity),
+          ScaleMeasurementResultScreen(scaleEntity: scaleEntity),
           barrierDismissible: false,
         );
       },

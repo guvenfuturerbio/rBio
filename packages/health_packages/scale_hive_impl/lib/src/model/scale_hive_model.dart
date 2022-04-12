@@ -129,6 +129,7 @@ extension ScaleHiveModelExtension on ScaleHiveModel {
       measurementId: measurementId,
       age: age,
       bmi: bmi,
+      bmh: bmh,
       bodyFat: bodyFat,
       boneMass: boneMass,
       gender: gender,

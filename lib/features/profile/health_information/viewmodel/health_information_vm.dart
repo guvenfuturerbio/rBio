@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/utils/logger_helper.dart';
 
 import '../../../../core/core.dart';
 
@@ -53,42 +55,28 @@ class HealthInformationVm extends RbioVm {
   }
 
   // #region showDiabetsSheet
-  void showDiabetsSheet() {
-    int selectedType = 0;
-
-    _showBottomSheet(
+  Future<void> showDiabetsSheet() async {
+    final result = await showRbioSelectBottomSheet(
+      mContext,
+      title: LocaleProvider.current.diabet_type,
       children: _getChildren(HealthInformationType.diabetType),
       initialItem: _getInitialItem(HealthInformationType.diabetType),
-      onSelectedItemChanged: (value) {
-        if (value == null) {
-          selectedType = selection.diabetesType == null
-              ? 0
-              : selection.diabetesType == 'Type 1'
-                  ? 1
-                  : selection.diabetesType == 'Type 2'
-                      ? 2
-                      : 0;
-        } else {
-          selectedType = value;
-        }
-      },
-      pick: () async {
-        switch (selectedType) {
-          case 1:
-            changeDiabetsType(LocaleProvider.of(mContext).diabetes_type_1);
-            break;
-
-          case 2:
-            changeDiabetsType(LocaleProvider.of(mContext).diabetes_type_2);
-            break;
-
-          default:
-            changeDiabetsType(LocaleProvider.of(mContext).non_diabetes);
-        }
-
-        _closeBottomSheet();
-      },
     );
+
+    if (result != null) {
+      switch (result) {
+        case 1:
+          changeDiabetsType(LocaleProvider.of(mContext).diabetes_type_1);
+          break;
+
+        case 2:
+          changeDiabetsType(LocaleProvider.of(mContext).diabetes_type_2);
+          break;
+
+        default:
+          changeDiabetsType(LocaleProvider.of(mContext).non_diabetes);
+      }
+    }
   }
   // #endregion
 
@@ -100,18 +88,18 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region showHeightSheet
-  void showHeightSheet() {
-    int? selectedHeight;
-
-    _showBottomSheet(
+  Future<void> showHeightSheet() async {
+    final result = await showRbioSelectBottomSheet(
+      mContext,
+      title: LocaleProvider.current.height,
       children: _getChildren(HealthInformationType.height),
       initialItem: _getInitialItem(HealthInformationType.height),
-      onSelectedItemChanged: (value) => selectedHeight = value,
-      pick: () {
-        changeHeight(selectedHeight);
-        _closeBottomSheet();
-      },
     );
+
+    if (result != null) {
+      final selectedHeight = result;
+      changeHeight(selectedHeight);
+    }
   }
   // #endregion
 
@@ -125,18 +113,18 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region showWeightSheet
-  void showWeightSheet() {
-    int? selectedWeight;
-
-    _showBottomSheet(
+  Future<void> showWeightSheet() async {
+    final result = await showRbioSelectBottomSheet(
+      mContext,
+      title: LocaleProvider.current.weight,
       children: _getChildren(HealthInformationType.weight),
       initialItem: _getInitialItem(HealthInformationType.weight),
-      onSelectedItemChanged: (value) => selectedWeight = value,
-      pick: () {
-        changeWeight(selectedWeight);
-        _closeBottomSheet();
-      },
     );
+
+    if (result != null) {
+      final selectedWeight = result;
+      changeWeight(selectedWeight);
+    }
   }
   // #endregion
 
@@ -160,19 +148,18 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region showMaxRangeSheet
-  void showMaxRangeSheet() {
-    int? _selectedMaxRange;
-
-    _showBottomSheet(
+  Future<void> showMaxRangeSheet() async {
+    final result = await showRbioSelectBottomSheet(
+      mContext,
+      title: LocaleProvider.current.max_range,
       children: _getChildren(HealthInformationType.maxRange),
       initialItem: _getInitialItem(HealthInformationType.maxRange),
-      onSelectedItemChanged: (val) =>
-          val = _selectedMaxRange = _getMaxRangeList()[val],
-      pick: () {
-        changeMaxRange(_selectedMaxRange);
-        _closeBottomSheet();
-      },
     );
+
+    if (result != null) {
+      final _selectedMaxRange = _getMaxRangeList()[result];
+      changeMaxRange(_selectedMaxRange);
+    }
   }
   // #endregion
 
@@ -188,18 +175,18 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region showMinRangeSheet
-  void showMinRangeSheet() {
-    int? _selectedMinRange;
-
-    _showBottomSheet(
+  Future<void> showMinRangeSheet() async {
+    final result = await showRbioSelectBottomSheet(
+      mContext,
+      title: LocaleProvider.current.min_range,
       children: _getChildren(HealthInformationType.minRange),
       initialItem: _getInitialItem(HealthInformationType.minRange),
-      onSelectedItemChanged: (val) => _selectedMinRange = val,
-      pick: () {
-        changeMinRange(_selectedMinRange);
-        _closeBottomSheet();
-      },
     );
+
+    if (result != null) {
+      final _selectedMinRange = result;
+      changeMinRange(_selectedMinRange);
+    }
   }
   // #endregion
 
@@ -215,36 +202,24 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region showSmokerSheet
-  void showSmokerSheet() {
-    int? selectedType;
-
-    _showBottomSheet(
+  Future<void> showSmokerSheet() async {
+    final result = await showRbioSelectBottomSheet(
+      mContext,
+      title: LocaleProvider.current.do_you_smoke,
       children: _getChildren(HealthInformationType.smoker),
       initialItem: _getInitialItem(HealthInformationType.smoker),
-      onSelectedItemChanged: (value) {
-        if (value != null) {
-          selectedType = selection.smoker == null
-              ? 0
-              : selection.smoker ?? false
-                  ? 0
-                  : 1;
-        } else {
-          selectedType = value;
-        }
-      },
-      pick: () async {
-        switch (selectedType) {
-          case 0:
-            changeSmokerType(false);
-            break;
-
-          default:
-            changeSmokerType(true);
-        }
-
-        _closeBottomSheet();
-      },
     );
+
+    if (result != null) {
+      switch (result) {
+        case 0:
+          changeSmokerType(false);
+          break;
+
+        default:
+          changeSmokerType(true);
+      }
+    }
   }
   // #endregion
 
@@ -256,20 +231,19 @@ class HealthInformationVm extends RbioVm {
   // #endregion
 
   // #region showDiagnosisSheet
-  void showDiagnosisSheet() {
+  Future<void> showDiagnosisSheet() async {
     {
-      int? selectedYear;
-
-      _showBottomSheet(
+      final result = await showRbioSelectBottomSheet(
+        mContext,
+        title: LocaleProvider.current.year_of_diagnosis,
         children: _getChildren(HealthInformationType.yearofDiagnosis),
         initialItem: _getInitialItem(HealthInformationType.yearofDiagnosis),
-        onSelectedItemChanged: (value) =>
-            selectedYear = (DateTime.now().year - value).toInt(),
-        pick: () {
-          changeDiagnosis(selectedYear);
-          _closeBottomSheet();
-        },
       );
+
+      if (result != null) {
+        final selectedYear = (DateTime.now().year - result).toInt();
+        changeDiagnosis(selectedYear);
+      }
     }
   }
   // #endregion
@@ -288,9 +262,13 @@ class HealthInformationVm extends RbioVm {
     switch (type) {
       case HealthInformationType.diabetType:
         {
-          return selection.diabetesType == "Type 1"
+          return (selection.diabetesType == "Type 1" ||
+                  selection.diabetesType == "Tip 1")
               ? 1
-              : (selection.diabetesType == "Type 2" ? 2 : 0);
+              : ((selection.diabetesType == "Type 2" ||
+                      selection.diabetesType == "Tip 2")
+                  ? 2
+                  : 0);
         }
 
       case HealthInformationType.height:
@@ -337,7 +315,8 @@ class HealthInformationVm extends RbioVm {
 
   // #region _getChildren
   List<Widget> _getChildren(HealthInformationType type) {
-    TextStyle _bottomTextStyle = mContext.xHeadline2;
+    TextStyle _bottomTextStyle =
+        CupertinoTheme.of(mContext).textTheme.dateTimePickerTextStyle;
 
     switch (type) {
       case HealthInformationType.diabetType:
@@ -461,33 +440,6 @@ class HealthInformationVm extends RbioVm {
       hyperWidget.add(i);
     }
     return hyperWidget;
-  }
-  // #endregion
-
-  // #region _showBottomSheet
-  void _showBottomSheet({
-    required List<Widget> children,
-    required int initialItem,
-    required void Function(dynamic) onSelectedItemChanged,
-    required void Function() pick,
-  }) {
-    showModalBottomSheet(
-      context: mContext,
-      builder: (BuildContext builder) {
-        return RbioSelectBottomSheet(
-          children: children,
-          initalItem: initialItem,
-          onSelectedItemChanged: onSelectedItemChanged,
-          pick: pick,
-        );
-      },
-    );
-  }
-  // #endregion
-
-  // #region _closeBottomSheet
-  void _closeBottomSheet() {
-    Navigator.pop(mContext);
   }
   // #endregion
 

@@ -36,7 +36,6 @@ MiScaleModel? _parseScaleData(
   // final seconds = byteData?.getUint8(8);
   // final measurementTime = DateTime.utc(year!, month!, day!, hour!, minute!, seconds!);
 
-
   var impedance = 0;
 
   if (isBitSet) {
