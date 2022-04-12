@@ -90,18 +90,15 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
               body: state.when(
                 error: () => const SizedBox(),
                 initial: () => const SizedBox(),
-                loading: () => CircularProgressIndicator(),
+                loading: () => const CircularProgressIndicator(),
                 loaded: (result) => Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(height: 50, child: _buildExpandedUser()),
-                      SizedBox(
-                        height: 300,
-                        child: MeasurementList(
-                            scaleMeasurements: result.patientScaleMeasurements),
-                      ),
+                      MeasurementList(
+                          scaleMeasurements: result.patientScaleMeasurements),
                     ]),
               ),
             ));

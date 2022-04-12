@@ -1,7 +1,18 @@
-/*part of '../view/scale_patient_detail_screen.dart';
+import 'dart:ui';
+
+import 'package:atom/atom.dart';
+import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/data/service/model/patient_scale_measurement.dart';
+import 'package:onedosehealth/core/extension/extension.dart';
+
+import '../../../../../core/locator.dart';
+import '../../../../../core/resources/resources.dart';
+import '../../../../../core/theme/main_theme.dart';
+import '../../../../../core/utils/utils.dart';
+import '../../../../../generated/l10n.dart';
 
 class ScaleTagger extends StatelessWidget {
-  final ScaleMeasurementLogic scaleModel;
+  final PatientScaleMeasurement scaleModel;
   final ScrollController scrollController = ScrollController();
 
   ScaleTagger({
@@ -176,7 +187,7 @@ class ScaleTagger extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child:
-                SizedBox(width: double.infinity, child: Text(scaleModel.note)),
+                SizedBox(width: double.infinity, child: Text(scaleModel.note!)),
           )),
     );
   }
@@ -197,8 +208,10 @@ class ScaleTagger extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(UtilityManager().getReadableDate(scaleModel.dateTime)),
-                Text(UtilityManager().getReadableHour(scaleModel.dateTime))
+                Text(UtilityManager().getReadableDate(
+                    DateTime.parse(scaleModel.occurrenceTime!))),
+                Text(UtilityManager().getReadableHour(
+                    DateTime.parse(scaleModel.occurrenceTime!)))
               ],
             )),
       ),
@@ -219,54 +232,59 @@ class ScaleTagger extends StatelessWidget {
   List<Widget> _sectionItems(BuildContext context) {
     return [
       scaleSection(
-        measurement: scaleModel.bmi,
+        measurement:
+            scaleModel.bmi == null ? null : scaleModel.bmi!.toStringAsFixed(2),
         name: LocaleProvider.current.scale_data_bmi,
-        color: scaleModel.getColor(SelectedScaleType.bmi),
         type: '',
         index: 1,
         crossAxisCount: 1,
         context: context,
       ),
       scaleSection(
-        measurement: scaleModel.bodyFat,
+        measurement: scaleModel.bmi == null
+            ? null
+            : scaleModel.bodyFat?.toStringAsFixed(2),
         name: LocaleProvider.current.scale_data_body_fat,
-        color: scaleModel.getColor(SelectedScaleType.bodyFat),
         type: '%',
         index: 2,
         crossAxisCount: 1,
         context: context,
       ),
       scaleSection(
-        measurement: scaleModel.boneMass,
+        measurement: scaleModel.boneMass == null
+            ? null
+            : scaleModel.boneMass!.toStringAsFixed(2),
         name: LocaleProvider.current.scale_data_bone_mass,
-        color: scaleModel.getColor(SelectedScaleType.boneMass),
-        type: '${scaleModel.scaleModel.unit ?? ScaleUnit.kg.toStr}',
+        type: scaleModel.scaleUnit!.getScaleUnit(),
         index: 3,
         crossAxisCount: 2,
         context: context,
       ),
       scaleSection(
         name: LocaleProvider.current.scale_data_muscle,
-        measurement: scaleModel.muscle,
-        color: scaleModel.getColor(SelectedScaleType.muscle),
+        measurement: scaleModel.muscle == null
+            ? null
+            : scaleModel.muscle!.toStringAsFixed(2),
         type: '%',
         index: 4,
         crossAxisCount: 2,
         context: context,
       ),
       scaleSection(
-        measurement: scaleModel.visceralFat,
+        measurement: scaleModel.visceralFat == null
+            ? null
+            : scaleModel.visceralFat!.toStringAsFixed(2),
         name: LocaleProvider.current.scale_data_visceral_fat,
-        color: scaleModel.getColor(SelectedScaleType.visceralFat),
         type: '',
         index: 5,
         crossAxisCount: 3,
         context: context,
       ),
       scaleSection(
-        measurement: scaleModel.water,
+        measurement: scaleModel.water == null
+            ? null
+            : scaleModel.water!.toStringAsFixed(2),
         name: LocaleProvider.current.scale_data_water,
-        color: scaleModel.getColor(SelectedScaleType.water),
         type: '%',
         index: 6,
         crossAxisCount: 3,
@@ -295,9 +313,6 @@ class ScaleTagger extends StatelessWidget {
                 ],
                 border: Border.all(
                   width: 13,
-                  color: scaleModel.getColor(
-                    SelectedScaleType.weight,
-                  ),
                 ),
                 shape: BoxShape.circle,
                 color: R.color.white,
@@ -306,13 +321,12 @@ class ScaleTagger extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _inputSection(
-                    measurement: scaleModel.weight!,
+                    measurement: scaleModel.weight.toString(),
                     context: context,
                   ),
-
                   //
                   Text(
-                    scaleModel.unit.toStr,
+                    scaleModel.scaleUnit!.getScaleUnit(),
                     style: const TextStyle(color: Colors.black, fontSize: 14),
                   ),
                 ],
@@ -325,7 +339,7 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  Theme _inputSection({double? measurement, required BuildContext context}) {
+  Theme _inputSection({String? measurement, required BuildContext context}) {
     return Theme(
         data: ThemeData(primaryColor: Colors.black),
         child: Text(
@@ -336,7 +350,7 @@ class ScaleTagger extends StatelessWidget {
 
   scaleSection({
     required BuildContext context,
-    double? measurement,
+    String? measurement,
     required String name,
     Color? color,
     required String type,
@@ -379,4 +393,3 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 }
-*/
