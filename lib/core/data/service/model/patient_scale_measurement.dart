@@ -21,6 +21,10 @@ class PatientScaleMeasurement with _$PatientScaleMeasurement {
     @JsonKey(name: "device_id") String? deviceId,
     @JsonKey(name: "is_manuel") bool? isManuel,
     @JsonKey(name: "note") String? note,
+        @JsonKey(name: "height") int? height,
+    @JsonKey(name: "age") int? age,
+    @JsonKey(name: "genderId") int? genderId,
+
   }) = _PatientScaleMeasurement;
 
   factory PatientScaleMeasurement.fromJson(Map<String, dynamic> json) =>

@@ -4,6 +4,7 @@ import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/core/data/service/model/patient_scale_measurement.dart';
 import 'package:onedosehealth/features/doctor/patient_detail/scale/cubit/scale_doctor_loaded_result.dart';
 import 'package:onedosehealth/model/doctor/get_my_patient_filter.dart';
+import 'package:scale_repository/scale_repository.dart';
 
 part 'scale_doctor_state.dart';
 part 'scale_doctor_cubit.freezed.dart';

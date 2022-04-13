@@ -37,7 +37,10 @@ class _$PatientScaleMeasurementTearOff {
       @JsonKey(name: "scale_unit") int? scaleUnit,
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
-      @JsonKey(name: "note") String? note}) {
+      @JsonKey(name: "note") String? note,
+      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "age") int? age,
+      @JsonKey(name: "genderId") int? genderId}) {
     return _PatientScaleMeasurement(
       entegrationId: entegrationId,
       occurrenceTime: occurrenceTime,
@@ -54,6 +57,9 @@ class _$PatientScaleMeasurementTearOff {
       deviceId: deviceId,
       isManuel: isManuel,
       note: note,
+      height: height,
+      age: age,
+      genderId: genderId,
     );
   }
 
@@ -97,6 +103,12 @@ mixin _$PatientScaleMeasurement {
   bool? get isManuel => throw _privateConstructorUsedError;
   @JsonKey(name: "note")
   String? get note => throw _privateConstructorUsedError;
+  @JsonKey(name: "height")
+  int? get height => throw _privateConstructorUsedError;
+  @JsonKey(name: "age")
+  int? get age => throw _privateConstructorUsedError;
+  @JsonKey(name: "genderId")
+  int? get genderId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -124,7 +136,10 @@ abstract class $PatientScaleMeasurementCopyWith<$Res> {
       @JsonKey(name: "scale_unit") int? scaleUnit,
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
-      @JsonKey(name: "note") String? note});
+      @JsonKey(name: "note") String? note,
+      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "age") int? age,
+      @JsonKey(name: "genderId") int? genderId});
 }
 
 /// @nodoc
@@ -153,6 +168,9 @@ class _$PatientScaleMeasurementCopyWithImpl<$Res>
     Object? deviceId = freezed,
     Object? isManuel = freezed,
     Object? note = freezed,
+    Object? height = freezed,
+    Object? age = freezed,
+    Object? genderId = freezed,
   }) {
     return _then(_value.copyWith(
       entegrationId: entegrationId == freezed
@@ -215,6 +233,18 @@ class _$PatientScaleMeasurementCopyWithImpl<$Res>
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      age: age == freezed
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
+      genderId: genderId == freezed
+          ? _value.genderId
+          : genderId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -241,7 +271,10 @@ abstract class _$PatientScaleMeasurementCopyWith<$Res>
       @JsonKey(name: "scale_unit") int? scaleUnit,
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
-      @JsonKey(name: "note") String? note});
+      @JsonKey(name: "note") String? note,
+      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "age") int? age,
+      @JsonKey(name: "genderId") int? genderId});
 }
 
 /// @nodoc
@@ -273,6 +306,9 @@ class __$PatientScaleMeasurementCopyWithImpl<$Res>
     Object? deviceId = freezed,
     Object? isManuel = freezed,
     Object? note = freezed,
+    Object? height = freezed,
+    Object? age = freezed,
+    Object? genderId = freezed,
   }) {
     return _then(_PatientScaleMeasurement(
       entegrationId: entegrationId == freezed
@@ -335,6 +371,18 @@ class __$PatientScaleMeasurementCopyWithImpl<$Res>
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      age: age == freezed
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
+      genderId: genderId == freezed
+          ? _value.genderId
+          : genderId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -357,7 +405,10 @@ class _$_PatientScaleMeasurement implements _PatientScaleMeasurement {
       @JsonKey(name: "scale_unit") this.scaleUnit,
       @JsonKey(name: "device_id") this.deviceId,
       @JsonKey(name: "is_manuel") this.isManuel,
-      @JsonKey(name: "note") this.note});
+      @JsonKey(name: "note") this.note,
+      @JsonKey(name: "height") this.height,
+      @JsonKey(name: "age") this.age,
+      @JsonKey(name: "genderId") this.genderId});
 
   factory _$_PatientScaleMeasurement.fromJson(Map<String, dynamic> json) =>
       _$$_PatientScaleMeasurementFromJson(json);
@@ -407,10 +458,19 @@ class _$_PatientScaleMeasurement implements _PatientScaleMeasurement {
   @override
   @JsonKey(name: "note")
   final String? note;
+  @override
+  @JsonKey(name: "height")
+  final int? height;
+  @override
+  @JsonKey(name: "age")
+  final int? age;
+  @override
+  @JsonKey(name: "genderId")
+  final int? genderId;
 
   @override
   String toString() {
-    return 'PatientScaleMeasurement(entegrationId: $entegrationId, occurrenceTime: $occurrenceTime, weight: $weight, bmi: $bmi, measurementId: $measurementId, water: $water, bodyFat: $bodyFat, visceralFat: $visceralFat, boneMass: $boneMass, muscle: $muscle, bmh: $bmh, scaleUnit: $scaleUnit, deviceId: $deviceId, isManuel: $isManuel, note: $note)';
+    return 'PatientScaleMeasurement(entegrationId: $entegrationId, occurrenceTime: $occurrenceTime, weight: $weight, bmi: $bmi, measurementId: $measurementId, water: $water, bodyFat: $bodyFat, visceralFat: $visceralFat, boneMass: $boneMass, muscle: $muscle, bmh: $bmh, scaleUnit: $scaleUnit, deviceId: $deviceId, isManuel: $isManuel, note: $note, height: $height, age: $age, genderId: $genderId)';
   }
 
   @override
@@ -436,7 +496,10 @@ class _$_PatientScaleMeasurement implements _PatientScaleMeasurement {
             const DeepCollectionEquality().equals(other.scaleUnit, scaleUnit) &&
             const DeepCollectionEquality().equals(other.deviceId, deviceId) &&
             const DeepCollectionEquality().equals(other.isManuel, isManuel) &&
-            const DeepCollectionEquality().equals(other.note, note));
+            const DeepCollectionEquality().equals(other.note, note) &&
+            const DeepCollectionEquality().equals(other.height, height) &&
+            const DeepCollectionEquality().equals(other.age, age) &&
+            const DeepCollectionEquality().equals(other.genderId, genderId));
   }
 
   @override
@@ -456,7 +519,10 @@ class _$_PatientScaleMeasurement implements _PatientScaleMeasurement {
       const DeepCollectionEquality().hash(scaleUnit),
       const DeepCollectionEquality().hash(deviceId),
       const DeepCollectionEquality().hash(isManuel),
-      const DeepCollectionEquality().hash(note));
+      const DeepCollectionEquality().hash(note),
+      const DeepCollectionEquality().hash(height),
+      const DeepCollectionEquality().hash(age),
+      const DeepCollectionEquality().hash(genderId));
 
   @JsonKey(ignore: true)
   @override
@@ -486,7 +552,10 @@ abstract class _PatientScaleMeasurement implements PatientScaleMeasurement {
       @JsonKey(name: "scale_unit") int? scaleUnit,
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
-      @JsonKey(name: "note") String? note}) = _$_PatientScaleMeasurement;
+      @JsonKey(name: "note") String? note,
+      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "age") int? age,
+      @JsonKey(name: "genderId") int? genderId}) = _$_PatientScaleMeasurement;
 
   factory _PatientScaleMeasurement.fromJson(Map<String, dynamic> json) =
       _$_PatientScaleMeasurement.fromJson;
@@ -536,6 +605,15 @@ abstract class _PatientScaleMeasurement implements PatientScaleMeasurement {
   @override
   @JsonKey(name: "note")
   String? get note;
+  @override
+  @JsonKey(name: "height")
+  int? get height;
+  @override
+  @JsonKey(name: "age")
+  int? get age;
+  @override
+  @JsonKey(name: "genderId")
+  int? get genderId;
   @override
   @JsonKey(ignore: true)
   _$PatientScaleMeasurementCopyWith<_PatientScaleMeasurement> get copyWith =>

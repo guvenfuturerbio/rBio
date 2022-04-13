@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:onedosehealth/features/doctor/patient_detail/scale/cubit/scale_doctor_cubit.dart';
+import 'package:onedosehealth/features/doctor/patient_detail/scale/widget/doctor_scale_chart.dart';
 import 'package:onedosehealth/features/doctor/patient_detail/scale/widget/measurement_list.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
 
@@ -97,6 +99,16 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(height: 50, child: _buildExpandedUser()),
+                      RbioElevatedButton(title: LocaleProvider.current.show),
+                      DoctorScaleChart(
+                          list: result.patientScaleMeasurements,
+                          zoomPanBehavior: ZoomPanBehavior(
+                            enableDoubleTapZooming: true,
+                            enablePanning: true,
+                            enablePinching: true,
+                            enableSelectionZooming: true,
+                            zoomMode: ZoomMode.x,
+                          )),
                       MeasurementList(
                           scaleMeasurements: result.patientScaleMeasurements),
                     ]),

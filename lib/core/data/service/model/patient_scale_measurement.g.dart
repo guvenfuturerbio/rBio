@@ -24,6 +24,9 @@ _$_PatientScaleMeasurement _$$_PatientScaleMeasurementFromJson(
       deviceId: json['device_id'] as String?,
       isManuel: json['is_manuel'] as bool?,
       note: json['note'] as String?,
+      height: json['height'] as int?,
+      age: json['age'] as int?,
+      genderId: json['genderId'] as int?,
     );
 
 Map<String, dynamic> _$$_PatientScaleMeasurementToJson(
@@ -44,4 +47,7 @@ Map<String, dynamic> _$$_PatientScaleMeasurementToJson(
       'device_id': instance.deviceId,
       'is_manuel': instance.isManuel,
       'note': instance.note,
+      'height': instance.height,
+      'age': instance.age,
+      'genderId': instance.genderId,
     };
