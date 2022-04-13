@@ -38,7 +38,7 @@ class _$PatientScaleMeasurementTearOff {
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
       @JsonKey(name: "note") String? note,
-      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "height") double? height,
       @JsonKey(name: "age") int? age,
       @JsonKey(name: "genderId") int? genderId}) {
     return _PatientScaleMeasurement(
@@ -104,7 +104,7 @@ mixin _$PatientScaleMeasurement {
   @JsonKey(name: "note")
   String? get note => throw _privateConstructorUsedError;
   @JsonKey(name: "height")
-  int? get height => throw _privateConstructorUsedError;
+  double? get height => throw _privateConstructorUsedError;
   @JsonKey(name: "age")
   int? get age => throw _privateConstructorUsedError;
   @JsonKey(name: "genderId")
@@ -137,7 +137,7 @@ abstract class $PatientScaleMeasurementCopyWith<$Res> {
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
       @JsonKey(name: "note") String? note,
-      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "height") double? height,
       @JsonKey(name: "age") int? age,
       @JsonKey(name: "genderId") int? genderId});
 }
@@ -236,7 +236,7 @@ class _$PatientScaleMeasurementCopyWithImpl<$Res>
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       age: age == freezed
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
@@ -272,7 +272,7 @@ abstract class _$PatientScaleMeasurementCopyWith<$Res>
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
       @JsonKey(name: "note") String? note,
-      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "height") double? height,
       @JsonKey(name: "age") int? age,
       @JsonKey(name: "genderId") int? genderId});
 }
@@ -374,7 +374,7 @@ class __$PatientScaleMeasurementCopyWithImpl<$Res>
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       age: age == freezed
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
@@ -460,7 +460,7 @@ class _$_PatientScaleMeasurement implements _PatientScaleMeasurement {
   final String? note;
   @override
   @JsonKey(name: "height")
-  final int? height;
+  final double? height;
   @override
   @JsonKey(name: "age")
   final int? age;
@@ -553,7 +553,7 @@ abstract class _PatientScaleMeasurement implements PatientScaleMeasurement {
       @JsonKey(name: "device_id") String? deviceId,
       @JsonKey(name: "is_manuel") bool? isManuel,
       @JsonKey(name: "note") String? note,
-      @JsonKey(name: "height") int? height,
+      @JsonKey(name: "height") double? height,
       @JsonKey(name: "age") int? age,
       @JsonKey(name: "genderId") int? genderId}) = _$_PatientScaleMeasurement;
 
@@ -607,7 +607,7 @@ abstract class _PatientScaleMeasurement implements PatientScaleMeasurement {
   String? get note;
   @override
   @JsonKey(name: "height")
-  int? get height;
+  double? get height;
   @override
   @JsonKey(name: "age")
   int? get age;

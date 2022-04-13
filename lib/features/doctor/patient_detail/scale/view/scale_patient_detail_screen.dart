@@ -92,23 +92,112 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
               body: state.when(
                 error: () => const SizedBox(),
                 initial: () => const SizedBox(),
-                loading: () => const CircularProgressIndicator(),
+                loading: () => const RbioLoading(),
                 loaded: (result) => Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(height: 50, child: _buildExpandedUser()),
-                      RbioElevatedButton(title: LocaleProvider.current.show),
-                      DoctorScaleChart(
-                          list: result.patientScaleMeasurements,
-                          zoomPanBehavior: ZoomPanBehavior(
-                            enableDoubleTapZooming: true,
-                            enablePanning: true,
-                            enablePinching: true,
-                            enableSelectionZooming: true,
-                            zoomMode: ZoomMode.x,
-                          )),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      RbioElevatedButton(
+                        title: result.isChartVisible
+                            ? LocaleProvider.current.close_chart
+                            : LocaleProvider.current.open_chart,
+                        onTap: () {
+                          context.read<ScaleDoctorCubit>().toogleChart();
+                        },
+                      ),
+                      Visibility(
+                        visible: result.isChartVisible,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<ScaleDoctorCubit>()
+                                            .changeGraph(GraphTypes.weight);
+                                      },
+                                      child: Card(
+                                        color: result.graphType ==
+                                                GraphTypes.weight
+                                            ? getIt<ITheme>().mainColor
+                                            : null,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Text(
+                                            'Weight',
+                                            style: result.graphType ==
+                                                    GraphTypes.weight
+                                                ? const TextStyle(
+                                                    color: Colors.white)
+                                                : const TextStyle(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<ScaleDoctorCubit>()
+                                            .changeGraph(GraphTypes.bmi);
+                                      },
+                                      child: Card(
+                                        color:
+                                            result.graphType == GraphTypes.bmi
+                                                ? getIt<ITheme>().mainColor
+                                                : null,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Text(
+                                            'BMI',
+                                            style: result.graphType ==
+                                                    GraphTypes.bmi
+                                                ? const TextStyle(
+                                                    color: Colors.white)
+                                                : const TextStyle(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                            DoctorScaleChart(
+                                type: result.graphType,
+                                list: result.patientScaleMeasurements,
+                                zoomPanBehavior: ZoomPanBehavior(
+                                  enableDoubleTapZooming: true,
+                                  enablePanning: true,
+                                  enablePinching: true,
+                                  enableSelectionZooming: true,
+                                  zoomMode: ZoomMode.x,
+                                )),
+                          ],
+                        ),
+                      ),
                       MeasurementList(
                           scaleMeasurements: result.patientScaleMeasurements),
                     ]),

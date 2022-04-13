@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onedosehealth/core/data/service/model/patient_scale_measurement.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../../../core/core.dart';
+import '../cubit/scale_doctor_cubit.dart';
 
 class DoctorScaleChart extends StatefulWidget {
+  final GraphTypes type;
   final List<PatientScaleMeasurement> list;
   final ZoomPanBehavior zoomPanBehavior;
   final ValueNotifier<PatientScaleMeasurement?>? pointTapNotifier;
@@ -11,6 +14,7 @@ class DoctorScaleChart extends StatefulWidget {
   double? minimumWeight;
   DoctorScaleChart({
     Key? key,
+    required this.type,
     required this.list,
     required this.zoomPanBehavior,
     this.pointTapNotifier,
@@ -23,12 +27,13 @@ class DoctorScaleChart extends StatefulWidget {
 class _DoctorScaleChartState extends State<DoctorScaleChart> {
   @override
   void initState() {
-    calculateMinMax(widget.list);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    calculateMinMax(widget.list);
+
     return SfCartesianChart(
       // Zoom
       zoomPanBehavior: widget.zoomPanBehavior,
@@ -156,7 +161,9 @@ class _DoctorScaleChartState extends State<DoctorScaleChart> {
       ),
 
       // Series
-      series: _getSeries(context, widget.list),
+      series: widget.type == GraphTypes.weight
+          ? _getWeightSeries(context, widget.list)
+          : _getBMISeries(context, widget.list),
 
       // Trackball
       trackballBehavior: TrackballBehavior(),
@@ -179,7 +186,69 @@ class _DoctorScaleChartState extends State<DoctorScaleChart> {
     );
   }
 
-  List<SplineSeries<PatientScaleMeasurement, String>> _getSeries(
+  List<SplineSeries<PatientScaleMeasurement, String>> _getBMISeries(
+    BuildContext context,
+    List<PatientScaleMeasurement> list,
+  ) {
+    return <SplineSeries<PatientScaleMeasurement, String>>[
+      SplineSeries<PatientScaleMeasurement, String>(
+        name: LocaleProvider.of(context).scale_graph,
+        width: 5,
+        trendlines: const [],
+        enableTooltip: true,
+
+        //
+        pointColorMapper: (d1, d2) {
+          return Colors.green;
+        },
+        onPointTap: (detail) {
+          if (detail.pointIndex != null) {
+            final selectedItem = list[detail.pointIndex!];
+            if (widget.pointTapNotifier != null) {
+              widget.pointTapNotifier!.value = selectedItem;
+            }
+          }
+        },
+        onPointDoubleTap: (detail) {
+          // print("[onPointDoubleTap] - ${detail.dataPoints}");
+        },
+        onPointLongPress: (detail) {
+          // print("[onPointLongPress] - ${detail.dataPoints}");
+        },
+        onRendererCreated: (controller) {
+          //
+        },
+
+        // Legend
+        legendItemText: LocaleProvider.of(context).bmi_tracking,
+        isVisibleInLegend: true,
+        legendIconType: LegendIconType.seriesType,
+
+        // Data Source
+        dataSource: list,
+        xValueMapper: (PatientScaleMeasurement sales, int index) =>
+            DateTime.parse(sales.occurrenceTime!).xFormatTime3(),
+        yValueMapper: (PatientScaleMeasurement sales, int index) => sales.bmi,
+
+        // Marker
+        markerSettings: const MarkerSettings(
+          isVisible: true,
+          borderColor: null,
+          color: null,
+          height: null,
+          width: null,
+        ),
+
+        //
+        isVisible: true,
+        splineType: SplineType.natural,
+        sortingOrder: SortingOrder.ascending,
+        sortFieldValueMapper: (_, __) => DateTime.parse(_.occurrenceTime!),
+      ),
+    ];
+  }
+
+  List<SplineSeries<PatientScaleMeasurement, String>> _getWeightSeries(
     BuildContext context,
     List<PatientScaleMeasurement> list,
   ) {
@@ -243,9 +312,31 @@ class _DoctorScaleChartState extends State<DoctorScaleChart> {
   }
 
   void calculateMinMax(List<PatientScaleMeasurement> list) {
-    widget.maximumWeight = (list
-        .reduce((a, b) => (a.weight ?? 0) > (b.weight ?? 0) ? a : b)).weight;
-    widget.minimumWeight = (list
-        .reduce((a, b) => (a.weight ?? 0) < (b.weight ?? 0) ? a : b)).weight;
+    switch (widget.type) {
+      case GraphTypes.weight:
+        return calculateWeightMinMax(widget.list);
+      case GraphTypes.bmi:
+        return calculateBMIMinMax(widget.list);
+
+      default:
+    }
+  }
+
+  void calculateWeightMinMax(List<PatientScaleMeasurement> list) {
+    widget.maximumWeight =
+        (list.reduce((a, b) => (a.weight ?? 0) > (b.weight ?? 0) ? a : b))
+                .weight! +
+            3;
+    widget.minimumWeight =
+        (list.reduce((a, b) => (a.weight ?? 0) < (b.weight ?? 0) ? a : b))
+                .weight! -
+            3;
+  }
+
+  void calculateBMIMinMax(List<PatientScaleMeasurement> list) {
+    widget.maximumWeight =
+        (list.reduce((a, b) => (a.bmi ?? 0) > (b.bmi ?? 0) ? a : b)).bmi! + 3;
+    widget.minimumWeight =
+        (list.reduce((a, b) => (a.bmi ?? 0) < (b.bmi ?? 0) ? a : b)).bmi! - 3;
   }
 }

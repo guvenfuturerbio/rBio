@@ -24,7 +24,7 @@ _$_PatientScaleMeasurement _$$_PatientScaleMeasurementFromJson(
       deviceId: json['device_id'] as String?,
       isManuel: json['is_manuel'] as bool?,
       note: json['note'] as String?,
-      height: json['height'] as int?,
+      height: (json['height'] as num?)?.toDouble(),
       age: json['age'] as int?,
       genderId: json['genderId'] as int?,
     );

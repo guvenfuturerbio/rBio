@@ -9,6 +9,8 @@ import 'package:scale_repository/scale_repository.dart';
 part 'scale_doctor_state.dart';
 part 'scale_doctor_cubit.freezed.dart';
 
+enum GraphTypes { weight, bmi }
+
 class ScaleDoctorCubit extends Cubit<ScaleDoctorState> {
   int patientId;
   List<PatientScaleMeasurement>? patientScaleMeasurements;
@@ -20,13 +22,26 @@ class ScaleDoctorCubit extends Cubit<ScaleDoctorState> {
       loaded: (result) {
         emit(
           ScaleDoctorState.loaded(
-            result.copyWith(isChartVisible: result.isChartVisible),
+            result.copyWith(isChartVisible: !result.isChartVisible),
           ),
         );
       },
     );
   }
 
+  void changeGraph(GraphTypes type) {
+        final currentState = state;
+
+        currentState.whenOrNull(
+      loaded: (result) {
+        emit(
+          ScaleDoctorState.loaded(
+            result.copyWith(graphType: type),
+          ),
+        );
+      },
+    );
+  }
   Future<List<PatientScaleMeasurement>> fetchScaleData() async {
     emit(const ScaleDoctorState.loading());
     var response = await getIt<DoctorRepository>().getMyPatientScale(

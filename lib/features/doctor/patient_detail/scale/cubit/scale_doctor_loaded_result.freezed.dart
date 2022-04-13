@@ -24,9 +24,11 @@ class _$ScaleDoctorLoadedResultTearOff {
 
   _ScaleDoctorLoadedResult call(
       {bool isChartVisible = false,
+      GraphTypes graphType = GraphTypes.weight,
       required List<PatientScaleMeasurement> patientScaleMeasurements}) {
     return _ScaleDoctorLoadedResult(
       isChartVisible: isChartVisible,
+      graphType: graphType,
       patientScaleMeasurements: patientScaleMeasurements,
     );
   }
@@ -42,6 +44,7 @@ const $ScaleDoctorLoadedResult = _$ScaleDoctorLoadedResultTearOff();
 /// @nodoc
 mixin _$ScaleDoctorLoadedResult {
   bool get isChartVisible => throw _privateConstructorUsedError;
+  GraphTypes get graphType => throw _privateConstructorUsedError;
   List<PatientScaleMeasurement> get patientScaleMeasurements =>
       throw _privateConstructorUsedError;
 
@@ -58,6 +61,7 @@ abstract class $ScaleDoctorLoadedResultCopyWith<$Res> {
       _$ScaleDoctorLoadedResultCopyWithImpl<$Res>;
   $Res call(
       {bool isChartVisible,
+      GraphTypes graphType,
       List<PatientScaleMeasurement> patientScaleMeasurements});
 }
 
@@ -73,6 +77,7 @@ class _$ScaleDoctorLoadedResultCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isChartVisible = freezed,
+    Object? graphType = freezed,
     Object? patientScaleMeasurements = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +85,10 @@ class _$ScaleDoctorLoadedResultCopyWithImpl<$Res>
           ? _value.isChartVisible
           : isChartVisible // ignore: cast_nullable_to_non_nullable
               as bool,
+      graphType: graphType == freezed
+          ? _value.graphType
+          : graphType // ignore: cast_nullable_to_non_nullable
+              as GraphTypes,
       patientScaleMeasurements: patientScaleMeasurements == freezed
           ? _value.patientScaleMeasurements
           : patientScaleMeasurements // ignore: cast_nullable_to_non_nullable
@@ -97,6 +106,7 @@ abstract class _$ScaleDoctorLoadedResultCopyWith<$Res>
   @override
   $Res call(
       {bool isChartVisible,
+      GraphTypes graphType,
       List<PatientScaleMeasurement> patientScaleMeasurements});
 }
 
@@ -115,6 +125,7 @@ class __$ScaleDoctorLoadedResultCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isChartVisible = freezed,
+    Object? graphType = freezed,
     Object? patientScaleMeasurements = freezed,
   }) {
     return _then(_ScaleDoctorLoadedResult(
@@ -122,6 +133,10 @@ class __$ScaleDoctorLoadedResultCopyWithImpl<$Res>
           ? _value.isChartVisible
           : isChartVisible // ignore: cast_nullable_to_non_nullable
               as bool,
+      graphType: graphType == freezed
+          ? _value.graphType
+          : graphType // ignore: cast_nullable_to_non_nullable
+              as GraphTypes,
       patientScaleMeasurements: patientScaleMeasurements == freezed
           ? _value.patientScaleMeasurements
           : patientScaleMeasurements // ignore: cast_nullable_to_non_nullable
@@ -134,7 +149,9 @@ class __$ScaleDoctorLoadedResultCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
   const _$_ScaleDoctorLoadedResult(
-      {this.isChartVisible = false, required this.patientScaleMeasurements});
+      {this.isChartVisible = false,
+      this.graphType = GraphTypes.weight,
+      required this.patientScaleMeasurements});
 
   factory _$_ScaleDoctorLoadedResult.fromJson(Map<String, dynamic> json) =>
       _$$_ScaleDoctorLoadedResultFromJson(json);
@@ -142,12 +159,15 @@ class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
   @JsonKey()
   @override
   final bool isChartVisible;
+  @JsonKey()
+  @override
+  final GraphTypes graphType;
   @override
   final List<PatientScaleMeasurement> patientScaleMeasurements;
 
   @override
   String toString() {
-    return 'ScaleDoctorLoadedResult(isChartVisible: $isChartVisible, patientScaleMeasurements: $patientScaleMeasurements)';
+    return 'ScaleDoctorLoadedResult(isChartVisible: $isChartVisible, graphType: $graphType, patientScaleMeasurements: $patientScaleMeasurements)';
   }
 
   @override
@@ -157,6 +177,7 @@ class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
             other is _ScaleDoctorLoadedResult &&
             const DeepCollectionEquality()
                 .equals(other.isChartVisible, isChartVisible) &&
+            const DeepCollectionEquality().equals(other.graphType, graphType) &&
             const DeepCollectionEquality().equals(
                 other.patientScaleMeasurements, patientScaleMeasurements));
   }
@@ -165,6 +186,7 @@ class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(isChartVisible),
+      const DeepCollectionEquality().hash(graphType),
       const DeepCollectionEquality().hash(patientScaleMeasurements));
 
   @JsonKey(ignore: true)
@@ -182,6 +204,7 @@ class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
 abstract class _ScaleDoctorLoadedResult implements ScaleDoctorLoadedResult {
   const factory _ScaleDoctorLoadedResult(
           {bool isChartVisible,
+          GraphTypes graphType,
           required List<PatientScaleMeasurement> patientScaleMeasurements}) =
       _$_ScaleDoctorLoadedResult;
 
@@ -190,6 +213,8 @@ abstract class _ScaleDoctorLoadedResult implements ScaleDoctorLoadedResult {
 
   @override
   bool get isChartVisible;
+  @override
+  GraphTypes get graphType;
   @override
   List<PatientScaleMeasurement> get patientScaleMeasurements;
   @override
