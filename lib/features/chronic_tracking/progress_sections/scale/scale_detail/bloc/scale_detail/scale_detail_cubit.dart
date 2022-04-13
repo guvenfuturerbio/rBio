@@ -14,12 +14,15 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
   ScaleDetailCubit() : super(const ScaleDetailState.initial());
 
   FutureOr<void> fetchAll() async {
+    final heightCheck = Utils.instance.checkUserHeight();
+    if (!heightCheck) return;
+
     emit(const ScaleDetailState.loadInProgress());
     try {
       final result = getIt<ScaleRepository>().readLocalScaleData(
         Utils.instance.getAge(),
         Utils.instance.getGender(),
-        Utils.instance.getHeight(),
+        Utils.instance.getHeight()!,
       );
       emit(ScaleDetailState.success(_getResult(result)));
     } catch (e) {

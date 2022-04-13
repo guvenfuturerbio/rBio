@@ -849,5 +849,6 @@
   "enter_weight": "Enter the weight",
   "weighing": "Weighing",
   "weighing_completed": "Please wait until\nweighing completed",
-  "weighing_results": "Weighing results"
+  "weighing_results": "Weighing results",
+  "required_user_height_info_message": "You need to enter your Height information to continue."
 }

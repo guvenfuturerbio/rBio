@@ -5,7 +5,6 @@ import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../../../core/core.dart';
-import '../scale_detail_screen.dart';
 
 class ScaleMeasurementPopup extends StatelessWidget {
   const ScaleMeasurementPopup({
@@ -153,28 +152,6 @@ class __LoadingBarState extends State<_LoadingBar> {
               ),
             ),
           ),
-
-          //
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(child: _buildDivider()),
-                R.sizes.wSizer4,
-                Expanded(child: _buildDivider()),
-                R.sizes.wSizer4,
-                Expanded(child: _buildDivider()),
-                R.sizes.wSizer4,
-                Expanded(child: _buildDivider()),
-                R.sizes.wSizer4,
-                Expanded(child: _buildDivider()),
-                R.sizes.wSizer4,
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -207,11 +184,4 @@ class __LoadingBarState extends State<_LoadingBar> {
         height: 40.0,
         color: Colors.green,
       );
-
-  Widget _buildDivider() {
-    return Container(
-      color: Colors.black26,
-      height: 1.5,
-    );
-  }
 }

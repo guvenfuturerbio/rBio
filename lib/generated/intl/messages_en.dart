@@ -1065,6 +1065,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution."),
         "required_area": MessageLookupByLibrary.simpleMessage("are required"),
+        "required_user_height_info_message":
+            MessageLookupByLibrary.simpleMessage(
+                "You need to enter your Height information to continue."),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Reset Filter Values"),
         "result_detail": MessageLookupByLibrary.simpleMessage("Result Detail"),

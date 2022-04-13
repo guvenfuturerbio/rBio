@@ -2,9 +2,336 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:scale_repository/scale_repository.dart';
+import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../scale_detail.dart';
+
+class ScaleDetailScrollView extends StatelessWidget {
+  final ScaleEntity scaleEntity;
+
+  const ScaleDetailScrollView({
+    Key? key,
+    required this.scaleEntity,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue,
+      ),
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: _getChildren(),
+      ),
+    );
+  }
+
+  List<Widget> _getChildren() {
+    var didntReachGoalsList = <ScaleExpansionModel>[];
+    var reachGoalsList = <ScaleExpansionModel>[];
+
+    final bmhVal = scaleEntity.bmh;
+    if (bmhVal != null) {
+      final result = _getExpansionModel(
+        SelectedScaleType.bmh,
+        bmhVal,
+        '${bmhVal.xGetFriendyString} kcal',
+      );
+      if (result['isNormal']) {
+        reachGoalsList.add(result['model']);
+      } else {
+        didntReachGoalsList.add(result['model']);
+      }
+    }
+
+    final bodyFatVal = scaleEntity.bodyFat;
+    if (bodyFatVal != null) {
+      final result = _getExpansionModel(
+        SelectedScaleType.bodyFat,
+        bodyFatVal,
+        '%${bodyFatVal.xGetFriendyString}',
+      );
+      if (result['isNormal']) {
+        reachGoalsList.add(result['model']);
+      } else {
+        didntReachGoalsList.add(result['model']);
+      }
+    }
+
+    final bmiVal = scaleEntity.bmi;
+    if (bmiVal != null) {
+      final result = _getExpansionModel(
+        SelectedScaleType.bmi,
+        bmiVal,
+        bmiVal.xGetFriendyString,
+      );
+      if (result['isNormal']) {
+        reachGoalsList.add(result['model']);
+      } else {
+        didntReachGoalsList.add(result['model']);
+      }
+    }
+
+    final muscleVal = scaleEntity.muscle;
+    if (muscleVal != null) {
+      final result = _getExpansionModel(
+        SelectedScaleType.muscle,
+        muscleVal,
+        '${muscleVal.xGetFriendyString} ${scaleEntity.getUnit}',
+      );
+      if (result['isNormal']) {
+        reachGoalsList.add(result['model']);
+      } else {
+        didntReachGoalsList.add(result['model']);
+      }
+    }
+
+    final waterVal = scaleEntity.water;
+    if (waterVal != null) {
+      final result = _getExpansionModel(
+        SelectedScaleType.water,
+        waterVal,
+        '%${waterVal.xGetFriendyString}',
+      );
+      if (result['isNormal']) {
+        reachGoalsList.add(result['model']);
+      } else {
+        didntReachGoalsList.add(result['model']);
+      }
+    }
+
+    final visceralFatVal = scaleEntity.visceralFat;
+    if (visceralFatVal != null) {
+      final result = _getExpansionModel(
+        SelectedScaleType.visceralFat,
+        visceralFatVal,
+        '%${visceralFatVal.xGetFriendyString}',
+      );
+      if (result['isNormal']) {
+        reachGoalsList.add(result['model']);
+      } else {
+        didntReachGoalsList.add(result['model']);
+      }
+    }
+
+    final boneMassVal = scaleEntity.boneMass;
+    if (boneMassVal != null) {
+      final result = _getExpansionModel(
+        SelectedScaleType.boneMass,
+        boneMassVal,
+        '${boneMassVal.xGetFriendyString} ${scaleEntity.getUnit}',
+      );
+      if (result['isNormal']) {
+        reachGoalsList.add(result['model']);
+      } else {
+        didntReachGoalsList.add(result['model']);
+      }
+    }
+
+    return <Widget>[
+      if (didntReachGoalsList.isNotEmpty)
+        ScaleDetailExpansionComponent(
+          isRedTheme: true,
+          title: LocaleProvider.current.didnt_reach_goals,
+          list: didntReachGoalsList,
+        ),
+
+      //
+      if (reachGoalsList.isNotEmpty)
+        ScaleDetailExpansionComponent(
+          isRedTheme: false,
+          title: LocaleProvider.current.reach_goal,
+          list: reachGoalsList,
+        ),
+    ];
+  }
+
+  Map<String, dynamic> _getExpansionModel(
+    SelectedScaleType type,
+    double val,
+    String valDesc,
+  ) {
+    final isNormal = ScaleCalculate.instance
+        .checkNormalValue(Utils.instance.getGender(), type, val);
+    final expansionModel = getExpansionModel(type, valDesc, val);
+    return {'isNormal': isNormal, 'model': expansionModel};
+  }
+
+  ScaleExpansionModel getExpansionModel(
+    SelectedScaleType type,
+    String value,
+    double currentValue,
+  ) {
+    switch (type) {
+      case SelectedScaleType.bmh:
+        {
+          return ScaleExpansionModel(
+            type: type,
+            title: LocaleProvider.current.basal_metabolism,
+            value: value,
+            description: '',
+            model: DynamicColorfulRangeModel(
+              currentValue: currentValue,
+              minValue: kBMHMinimum,
+              maxValue: kBMHMaximum,
+              breakpoints: kBMHRanges,
+              colors: type.xGetColors,
+              titles: [
+                LocaleProvider.current.didnt_reach_goals,
+                LocaleProvider.current.reach_goal,
+              ],
+            ),
+          );
+        }
+
+      case SelectedScaleType.bodyFat:
+        {
+          return ScaleExpansionModel(
+            type: type,
+            title: LocaleProvider.current.scale_data_body_fat,
+            value: value,
+            description: '',
+            model: DynamicColorfulRangeModel(
+              currentValue: currentValue,
+              minValue: kBodyFatMinimum(Utils.instance.getGender()),
+              maxValue: kBodyFatMaximum(Utils.instance.getGender()),
+              breakpoints: kBodyFatRanges(Utils.instance.getGender()),
+              colors: type.xGetColors,
+              titles: [
+                LocaleProvider.current.low,
+                LocaleProvider.current.normal,
+                LocaleProvider.current.high,
+                LocaleProvider.current.very_high,
+              ],
+            ),
+          );
+        }
+
+      case SelectedScaleType.bmi:
+        {
+          return ScaleExpansionModel(
+            type: type,
+            title: LocaleProvider.current.scale_data_bmi,
+            value: value,
+            description: '',
+            model: DynamicColorfulRangeModel(
+              currentValue: currentValue,
+              minValue: kBMIMinimum,
+              maxValue: kBMIMaximum,
+              breakpoints: kBMIRanges,
+              colors: type.xGetColors,
+              titles: [
+                LocaleProvider.current.low,
+                LocaleProvider.current.normal,
+                LocaleProvider.current.increased,
+                LocaleProvider.current.high,
+                LocaleProvider.current.very_high,
+              ],
+            ),
+          );
+        }
+
+      case SelectedScaleType.muscle:
+        {
+          return ScaleExpansionModel(
+            type: type,
+            title: LocaleProvider.current.scale_data_muscle,
+            value: value,
+            description: '',
+            model: DynamicColorfulRangeModel(
+              currentValue: currentValue,
+              minValue: kMuscleMinimum(Utils.instance.getGender()),
+              maxValue: kMuscleMaximum(Utils.instance.getGender()),
+              breakpoints: kMuscleRanges(Utils.instance.getGender()),
+              colors: type.xGetColors,
+              titles: [
+                LocaleProvider.current.low,
+                LocaleProvider.current.normal,
+                LocaleProvider.current.high,
+                LocaleProvider.current.very_high,
+              ],
+            ),
+          );
+        }
+
+      case SelectedScaleType.water:
+        {
+          return ScaleExpansionModel(
+            type: type,
+            title: LocaleProvider.current.scale_data_water,
+            value: value,
+            description: '',
+            model: DynamicColorfulRangeModel(
+              currentValue: currentValue,
+              minValue: kWaterMinimum(Utils.instance.getGender()),
+              maxValue: kWaterMaximum(Utils.instance.getGender()),
+              breakpoints: kWaterRanges(Utils.instance.getGender()),
+              colors: type.xGetColors,
+              titles: [
+                LocaleProvider.current.low,
+                LocaleProvider.current.normal,
+                LocaleProvider.current.high,
+              ],
+            ),
+          );
+        }
+
+      case SelectedScaleType.visceralFat:
+        {
+          return ScaleExpansionModel(
+            type: type,
+            title: LocaleProvider.current.scale_data_visceral_fat,
+            value: value,
+            description: '',
+            model: DynamicColorfulRangeModel(
+              currentValue: currentValue,
+              minValue: kVisceralFatMinimum,
+              maxValue: kVisceralFatMaximum,
+              breakpoints: kVisceralFatRanges,
+              colors: type.xGetColors,
+              titles: [
+                LocaleProvider.current.normal,
+                LocaleProvider.current.high,
+                LocaleProvider.current.very_high,
+              ],
+            ),
+          );
+        }
+
+      case SelectedScaleType.boneMass:
+        {
+          return ScaleExpansionModel(
+            type: type,
+            title: LocaleProvider.current.scale_data_bone_mass,
+            value: value,
+            description: '',
+            model: DynamicColorfulRangeModel(
+              currentValue: currentValue,
+              minValue: kBoneMassMinimum,
+              maxValue: kBoneMassMaximum,
+              breakpoints: kBoneMassRanges,
+              colors: type.xGetColors,
+              titles: [
+                LocaleProvider.current.insufficient,
+                LocaleProvider.current.normal,
+                LocaleProvider.current.great,
+              ],
+            ),
+          );
+        }
+
+      case SelectedScaleType.weight:
+        throw Exception("Not defined");
+    }
+  }
+}
 
 class ScaleDetailExpansionComponent extends StatefulWidget {
   final String title;
@@ -165,6 +492,7 @@ class _ScaleDetailExpansionComponentState
         children: [
           //
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //
               Expanded(
@@ -196,6 +524,7 @@ class _ScaleDetailExpansionComponentState
           //
           _DynamicColorfulRange(
             model: model.model,
+            type: model.type,
           ),
 
           //
@@ -214,10 +543,12 @@ class _ScaleDetailExpansionComponentState
 
 class _DynamicColorfulRange extends StatelessWidget {
   final DynamicColorfulRangeModel model;
+  final SelectedScaleType type;
 
   const _DynamicColorfulRange({
     Key? key,
     required this.model,
+    required this.type,
   }) : super(key: key);
 
   @override
@@ -227,7 +558,11 @@ class _DynamicColorfulRange extends StatelessWidget {
         final maxWidth = constraints.maxWidth;
 
         final perPoint = (maxWidth / (model.maxValue - model.minValue));
-        final currentPoint = (model.currentValue - model.minValue) * perPoint;
+        final currentPoint = model.currentValue >= model.maxValue
+            ? maxWidth - 8
+            : model.currentValue <= model.minValue
+                ? 0.0
+                : (model.currentValue - model.minValue) * perPoint;
 
         final containersWidths = _getContainerWidths(maxWidth);
         final containersPoints = _getPoints(containersWidths);
@@ -264,10 +599,12 @@ class _DynamicColorfulRange extends StatelessWidget {
         width: 8,
         height: 8,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ScaleColors.instance.getCurrentBorderColor(
+              Utils.instance.getGender(), type, model.currentValue),
           shape: BoxShape.circle,
           border: Border.all(
-            color: R.color.darkRed,
+            color: ScaleColors.instance.getCurrentBorderColor(
+                Utils.instance.getGender(), type, model.currentValue),
           ),
         ),
       ),

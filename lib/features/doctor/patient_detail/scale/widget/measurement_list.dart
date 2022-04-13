@@ -223,10 +223,11 @@ class __MeasurementListState extends State<_MeasurementList> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                    scaleMeasurementViewModel
-                        .getMeasurement(widget.selected)!
-                        .toStringAsFixed(2),
-                    style: context.xHeadline1),
+                  scaleMeasurementViewModel
+                      .getMeasurement(widget.selected)!
+                      .xGetFriendyString,
+                  style: context.xHeadline1,
+                ),
               ],
             ),
           ),

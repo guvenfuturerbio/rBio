@@ -11,12 +11,64 @@ class ScaleColors {
     return _instance!;
   }
 
+  final _colorOneDose = const Color.fromARGB(255, 0, 158, 71);
   final _colorGrey = const Color(0xFF696969);
   final _colorVeryHigh = const Color(0xFFf4bb44);
   final _colorHigh = const Color(0xFFf7ec57);
   final _colorTarget = const Color(0xFF66c791);
   final _colorLow = const Color(0xFFe98884);
   final _colorVeryLow = const Color(0xFFe2605b);
+
+  Color getCurrentBorderColor(int gender, SelectedScaleType type, double val) {
+    switch (type) {
+      case SelectedScaleType.bmh:
+        return _getColorFromRanges(kBMHRanges, type, val);
+
+      case SelectedScaleType.bodyFat:
+        return _getColorFromRanges(kBodyFatRanges(gender), type, val);
+
+      case SelectedScaleType.bmi:
+        return _getColorFromRanges(kBMIRanges, type, val);
+
+      case SelectedScaleType.muscle:
+        return _getColorFromRanges(kMuscleRanges(gender), type, val);
+
+      case SelectedScaleType.water:
+        return _getColorFromRanges(kWaterRanges(gender), type, val);
+
+      case SelectedScaleType.visceralFat:
+        return _getColorFromRanges(kVisceralFatRanges, type, val);
+
+      case SelectedScaleType.boneMass:
+        return _getColorFromRanges(kBoneMassRanges, type, val);
+
+      case SelectedScaleType.weight:
+        break;
+    }
+
+    return Colors.transparent;
+  }
+
+  Color _getColorFromRanges(
+    List<double> ranges,
+    SelectedScaleType type,
+    double val,
+  ) {
+    List<Color> colors = type.xGetColors;
+    if (val < ranges[0]) {
+      return colors[0];
+    } else if (val >= ranges.last) {
+      return colors.last;
+    }
+
+    for (var i = 0; i < colors.length; i++) {
+      if (val >= ranges[i] && val < ranges[i + 1]) {
+        return colors[i + 1];
+      }
+    }
+
+    return Colors.transparent;
+  }
 
   Color getColor({
     required SelectedScaleType type,
@@ -227,32 +279,63 @@ class ScaleColors {
   }
 }
 
-extension SelectedScaleTypeRangeExt on SelectedScaleType {
-  List<double> xGetRanges() {
+extension SelectedScaleTypeExtension on SelectedScaleType {
+  List<Color> get xGetColors {
     switch (this) {
-      case SelectedScaleType.bmi:
-        // TODO: Handle this case.
-        break;
-      case SelectedScaleType.weight:
-        // TODO: Handle this case.
-        break;
-      case SelectedScaleType.bodyFat:
-        // TODO: Handle this case.
-        break;
-      case SelectedScaleType.boneMass:
-        // TODO: Handle this case.
-        break;
-      case SelectedScaleType.water:
-        // TODO: Handle this case.
-        break;
-      case SelectedScaleType.visceralFat:
-        // TODO: Handle this case.
-        break;
-      case SelectedScaleType.muscle:
-        // TODO: Handle this case.
-        break;
-    }
+      case SelectedScaleType.bmh:
+        return [
+          ScaleColors.instance._colorVeryLow,
+          ScaleColors.instance._colorOneDose,
+        ];
 
-    return [];
+      case SelectedScaleType.bodyFat:
+        return [
+          ScaleColors.instance._colorLow,
+          ScaleColors.instance._colorTarget,
+          ScaleColors.instance._colorHigh,
+          ScaleColors.instance._colorVeryHigh,
+        ];
+
+      case SelectedScaleType.bmi:
+        return [
+          ScaleColors.instance._colorVeryLow,
+          ScaleColors.instance._colorTarget,
+          ScaleColors.instance._colorOneDose,
+          ScaleColors.instance._colorHigh,
+          ScaleColors.instance._colorVeryHigh,
+        ];
+
+      case SelectedScaleType.muscle:
+        return [
+          ScaleColors.instance._colorVeryLow,
+          ScaleColors.instance._colorOneDose,
+          ScaleColors.instance._colorHigh,
+          ScaleColors.instance._colorVeryHigh,
+        ];
+
+      case SelectedScaleType.water:
+        return [
+          ScaleColors.instance._colorLow,
+          ScaleColors.instance._colorTarget,
+          ScaleColors.instance._colorHigh,
+        ];
+
+      case SelectedScaleType.visceralFat:
+        return [
+          ScaleColors.instance._colorOneDose,
+          ScaleColors.instance._colorHigh,
+          ScaleColors.instance._colorVeryHigh,
+        ];
+
+      case SelectedScaleType.boneMass:
+        return [
+          ScaleColors.instance._colorVeryLow,
+          ScaleColors.instance._colorTarget,
+          ScaleColors.instance._colorOneDose,
+        ];
+
+      case SelectedScaleType.weight:
+        throw Exception("Undefined");
+    }
   }
 }

@@ -29,6 +29,10 @@ class MiScaleCubit extends Cubit<MiScaleState> {
   Future<void> readValue(DeviceEntity device) async {
     _streamSubs?.cancel();
     _streamSubs = null;
+
+    final heightCheck = Utils.instance.checkUserHeight();
+    if (!heightCheck) return;
+
     final result = readValuesUseCase.call(ReadValuesParams(device: device));
     result.fold(
       (l) {

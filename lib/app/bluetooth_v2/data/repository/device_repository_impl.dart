@@ -79,7 +79,7 @@ class DeviceRepositoryImpl extends DeviceRepository {
         miScaleStream.map(
           (event) => event.xGetEntityWithCalculate(
             Utils.instance.getAge(),
-            Utils.instance.getHeight(),
+            Utils.instance.getHeight()!,
             Utils.instance.getGender(),
           ),
         ),
@@ -111,7 +111,8 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(DeviceEntity device) {
+  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(
+      DeviceEntity device) {
     try {
       return Right(localDataSource.pillarSmallTrigger(device.xGetModel));
     } catch (e) {

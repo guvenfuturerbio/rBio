@@ -26,10 +26,13 @@ class ScaleProgressVm extends ChangeNotifier
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       isChartShow = true;
 
+      final heightCheck = Utils.instance.checkUserHeight();
+      if (!heightCheck) return;
+
       scaleMeasurementsDailyData = getIt<ScaleRepository>().readLocalScaleData(
         Utils.instance.getAge(),
         Utils.instance.getGender(),
-        Utils.instance.getHeight(),
+        Utils.instance.getHeight()!,
       );
       scaleMeasurements = scaleMeasurementsDailyData;
 
@@ -721,10 +724,13 @@ class ScaleProgressVm extends ChangeNotifier
   }
 
   void fetchScaleMeasurements() {
+    final heightCheck = Utils.instance.checkUserHeight();
+    if (!heightCheck) return;
+
     final result = getIt<ScaleRepository>().readLocalScaleData(
       Utils.instance.getAge(),
       Utils.instance.getGender(),
-      Utils.instance.getHeight(),
+      Utils.instance.getHeight()!,
     );
     scaleMeasurements.clear();
     scaleMeasurements = result.map((e) => e).toList();
@@ -785,18 +791,26 @@ class ScaleProgressVm extends ChangeNotifier
     //             scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement()!)
     //         : null;
 
-    final scaleEntity = getIt<ScaleRepository>().getLatestMeasurement(
-      Utils.instance.getAge(),
-      Utils.instance.getGender(),
-      Utils.instance.getHeight(),
-    );
+    final heightCheck = Utils.instance.checkUserHeight();
+    ScaleEntity? scaleEntity;
+    if (heightCheck) {
+      scaleEntity = getIt<ScaleRepository>().getLatestMeasurement(
+        Utils.instance.getAge(),
+        Utils.instance.getGender(),
+        Utils.instance.getHeight()!,
+      );
+    }
 
     return SmallChronicComponent(
       callback: callBack,
-      lastMeasurement: scaleEntity == null
+      lastMeasurement: heightCheck == false
           ? LocaleProvider.current.no_measurement
-          : '${(scaleEntity.weight ?? 0).toStringAsFixed(2)} ${scaleEntity.unit.toStr}',
-      lastMeasurementDate: scaleEntity?.dateTime ?? DateTime.now(),
+          : scaleEntity == null
+              ? LocaleProvider.current.no_measurement
+              : '${(scaleEntity.weight ?? 0).xGetFriendyString} ${scaleEntity.getUnit}',
+      lastMeasurementDate: heightCheck == false
+          ? DateTime.now()
+          : scaleEntity?.dateTime ?? DateTime.now(),
       imageUrl: R.image.bodyScale,
     );
   }

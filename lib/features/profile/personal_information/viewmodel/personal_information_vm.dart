@@ -47,7 +47,7 @@ class PersonalInformationScreenVm extends RbioVm {
     showLoadingOverlay = true;
 
     try {
-      ChangeContactInfoRequest changeInfo = ChangeContactInfoRequest();
+      var changeInfo = ChangeContactInfoRequest();
       var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
       var pusulaAccount = getIt<UserNotifier>().getPatient();
       if (pusulaAccount != null && pusulaAccount.id != null) {

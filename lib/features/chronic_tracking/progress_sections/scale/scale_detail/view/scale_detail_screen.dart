@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
 import '../scale_detail.dart';
+import 'widget/scale_chart.dart';
 
 class ScaleDetailScreen extends StatelessWidget {
   const ScaleDetailScreen({Key? key}) : super(key: key);
@@ -29,7 +30,6 @@ class ScaleDetailView extends StatefulWidget {
 
 class _ScaleDetailViewState extends State<ScaleDetailView> {
   final ValueNotifier<ScaleEntity?> _pointTapNotifier = ValueNotifier(null);
-
   late ZoomPanBehavior _zoomPanBehavior;
 
   @override
@@ -115,7 +115,13 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
             fit: StackFit.expand,
             children: [
               //
-              _buildChart(result),
+              ScaleChart(
+                list: result.list,
+                maximum: result.maximumWeight,
+                minimum: result.minimumWeight,
+                zoomPanBehavior: _zoomPanBehavior,
+                pointTapNotifier: _pointTapNotifier,
+              ),
 
               //
               Align(
@@ -129,160 +135,22 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
         //
         Expanded(
           flex: 70,
-          child: _buildBottomList(result),
+          child: ValueListenableBuilder<ScaleEntity?>(
+            valueListenable: _pointTapNotifier,
+            builder: (
+              BuildContext context,
+              ScaleEntity? selectedItem,
+              Widget? child,
+            ) {
+              if (selectedItem == null) {
+                return const SizedBox();
+              } else {
+                return _buildBottomList(result, selectedItem);
+              }
+            },
+          ),
         ),
       ],
-    );
-  }
-
-  Widget _buildChart(ScaleDetailSuccessResult result) {
-    return SfCartesianChart(
-      // Zoom
-      zoomPanBehavior: _zoomPanBehavior,
-      onZooming: (ZoomPanArgs args) {
-        // print(args.currentZoomFactor);
-        // print(args.currentZoomPosition);
-      },
-
-      // Title
-      title: ChartTitle(
-        text: "",
-        alignment: ChartAlignment.center,
-        backgroundColor: Colors.transparent,
-        borderColor: Colors.transparent,
-        borderWidth: 0,
-        textStyle: Theme.of(context).textTheme.headline6,
-      ),
-
-      // Plot Area
-      plotAreaBorderWidth: 0,
-      plotAreaBorderColor: Colors.transparent,
-      plotAreaBackgroundColor: Colors.transparent,
-      onPlotAreaSwipe: (detail) {},
-      // plotAreaBackgroundImage: const AssetImage('images/bike.png'),
-
-      // Legend
-      legend: Legend(
-        isVisible: false,
-        title: LegendTitle(),
-        backgroundColor: Colors.transparent,
-        isResponsive: true,
-        alignment: ChartAlignment.center,
-        borderWidth: 2.0,
-        borderColor: Colors.transparent,
-        iconBorderWidth: 2.0,
-        iconBorderColor: Colors.transparent,
-        itemPadding: 10,
-      ),
-      onLegendTapped: (detail) {},
-      onLegendItemRender: (detail) {},
-
-      // General
-      borderWidth: 0,
-      borderColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
-      margin: R.sizes.screenPadding(context),
-      // selectionType: SelectionType.point,
-
-      // Primary
-      primaryXAxis: CategoryAxis(
-        plotOffset: 10,
-        visibleMaximum: 10,
-        labelPlacement: LabelPlacement.onTicks,
-        majorGridLines: const MajorGridLines(
-          width: 0,
-          color: Colors.transparent,
-        ),
-        minorGridLines: const MinorGridLines(
-          width: 0,
-          color: Colors.transparent,
-        ),
-        majorTickLines: const MajorTickLines(
-          size: 0,
-          color: Colors.transparent,
-        ),
-
-        //
-        borderWidth: 0,
-        borderColor: Colors.transparent,
-
-        axisLine: const AxisLine(
-          width: 0.01,
-          color: Colors.transparent,
-        ),
-        axisLabelFormatter: (detail) {
-          return ChartAxisLabel(
-            "",
-            const TextStyle(fontSize: 0),
-          );
-        },
-        axisBorderType: AxisBorderType.rectangle,
-      ),
-      primaryYAxis: NumericAxis(
-        minimum: result.minimumWeight,
-        maximum: result.maximumWeight,
-        edgeLabelPlacement: EdgeLabelPlacement.shift,
-
-        //
-        majorGridLines: const MajorGridLines(
-          width: 0,
-          color: Colors.transparent,
-        ),
-        majorTickLines: const MajorTickLines(
-          size: 0,
-          width: 0,
-          color: Colors.transparent,
-        ),
-        minorTickLines: const MinorTickLines(
-          size: 0,
-          width: 0,
-          color: Colors.transparent,
-        ),
-
-        //
-        title: AxisTitle(
-          text: "",
-          alignment: ChartAlignment.center,
-          textStyle: const TextStyle(),
-        ),
-
-        //
-        axisLine: const AxisLine(
-          width: 0,
-          color: Colors.transparent,
-        ),
-        axisBorderType: AxisBorderType.withoutTopAndBottom,
-
-        //
-        labelFormat: '{value}',
-        labelStyle: const TextStyle(fontSize: 0),
-
-        //
-        borderWidth: 0,
-        borderColor: Colors.transparent,
-      ),
-
-      // Series
-      series: _getSeries(result.list),
-
-      // Trackball
-      trackballBehavior: TrackballBehavior(),
-
-      // Tooltip
-      onTooltipRender: (detail) {},
-      tooltipBehavior: TooltipBehavior(
-        enable: true,
-        color: Colors.black, // Background Color
-        borderWidth: 0,
-        borderColor: Colors.transparent,
-        // header: "Header",
-        textStyle: const TextStyle(fontSize: 13),
-        elevation: 4,
-        shadowColor: Colors.black,
-        shouldAlwaysShow: false,
-        tooltipPosition: TooltipPosition.auto,
-        format: 'point.x | point.y KG',
-      ),
     );
   }
 
@@ -300,7 +168,7 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
           return Padding(
             padding: const EdgeInsets.only(top: 24),
             child: Text(
-              ((selectedItem.weight ?? 0.0).toStringAsFixed(1))
+              ((selectedItem.weight ?? 0.0).xGetFriendyString)
                   .replaceAll(".", ","),
               style: context.xHeadline1.copyWith(
                 fontSize: context.xHeadline1.fontSize! * 1.5,
@@ -313,7 +181,10 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
     );
   }
 
-  Widget _buildBottomList(ScaleDetailSuccessResult result) {
+  Widget _buildBottomList(
+    ScaleDetailSuccessResult result,
+    ScaleEntity selectedItem,
+  ) {
     return Container(
       width: double.infinity,
       padding: R.sizes.screenPaddingOnlyHorizontal(context),
@@ -325,96 +196,13 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
 
           //
           Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(
-                bottom: R.sizes.defaultBottomValue,
-              ),
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  ScaleDetailExpansionComponent(
-                    isRedTheme: true,
-                    title: LocaleProvider.current.didnt_reach_goals,
-                    list: ScaleExpansionModel.list1,
-                  ),
-
-                  //
-                  ScaleDetailExpansionComponent(
-                    isRedTheme: false,
-                    title: LocaleProvider.current.reach_goal,
-                    list: ScaleExpansionModel.list2,
-                  ),
-                ],
-              ),
+            child: ScaleDetailScrollView(
+              scaleEntity: selectedItem,
             ),
           ),
         ],
       ),
     );
-  }
-
-  List<SplineSeries<ScaleEntity, String>> _getSeries(
-    List<ScaleEntity> list,
-  ) {
-    return <SplineSeries<ScaleEntity, String>>[
-      SplineSeries<ScaleEntity, String>(
-        name: LocaleProvider.of(context).scale_graph,
-        width: 5,
-        trendlines: const [],
-        enableTooltip: true,
-
-        //
-        pointColorMapper: (d1, d2) {
-          return Colors.green;
-        },
-        onPointTap: (detail) {
-          if (detail.pointIndex != null) {
-            final selectedItem = list[detail.pointIndex!];
-            _pointTapNotifier.value = selectedItem;
-          }
-        },
-        onPointDoubleTap: (detail) {
-          // print("[onPointDoubleTap] - ${detail.dataPoints}");
-        },
-        onPointLongPress: (detail) {
-          // print("[onPointLongPress] - ${detail.dataPoints}");
-        },
-        onRendererCreated: (controller) {
-          //
-        },
-
-        // Legend
-        legendItemText: LocaleProvider.of(context).weight,
-        isVisibleInLegend: true,
-        legendIconType: LegendIconType.seriesType,
-
-        // Data Source
-        dataSource: list,
-        xValueMapper: (ScaleEntity sales, int index) =>
-            sales.dateTime.xFormatTime3(),
-        yValueMapper: (ScaleEntity sales, int index) => sales.weight,
-
-        // Marker
-        markerSettings: const MarkerSettings(
-          isVisible: true,
-          borderColor: null,
-          color: null,
-          height: null,
-          width: null,
-        ),
-
-        //
-        isVisible: true,
-        splineType: SplineType.natural,
-        sortingOrder: SortingOrder.ascending,
-        sortFieldValueMapper: (_, __) => _.dateTime,
-      ),
-    ];
   }
 
   Widget _buildFAB(BuildContext context) {
@@ -543,7 +331,9 @@ class ScaleCard extends StatelessWidget {
                         ),
                         child: _buildColumn(
                           context,
-                          entity.weight!.toStringAsFixed(1),
+                          entity.weight == null
+                              ? ''
+                              : entity.weight!.xGetFriendyString,
                           entity.getUnit,
                           textColor: isSelected
                               ? null
@@ -571,7 +361,7 @@ class ScaleCard extends StatelessWidget {
                                 context,
                                 entity.bmi == null
                                     ? "0"
-                                    : entity.bmi!.toStringAsFixed(2),
+                                    : entity.bmi!.xGetFriendyString,
                                 "BMI",
                                 textColor: getIt<ITheme>().textColorSecondary,
                               ),
@@ -583,7 +373,7 @@ class ScaleCard extends StatelessWidget {
                                 context,
                                 entity.bmh == null
                                     ? "0"
-                                    : entity.bmh!.toStringAsFixed(2),
+                                    : entity.bmh!.xGetFriendyString,
                                 "BMH",
                                 textColor: getIt<ITheme>().textColorSecondary,
                               ),

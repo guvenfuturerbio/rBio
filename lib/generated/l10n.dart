@@ -8519,6 +8519,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `You need to enter your Height information to continue.`
+  String get required_user_height_info_message {
+    return Intl.message(
+      'You need to enter your Height information to continue.',
+      name: 'required_user_height_info_message',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

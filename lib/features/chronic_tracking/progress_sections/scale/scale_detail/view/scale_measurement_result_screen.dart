@@ -86,33 +86,8 @@ class _ScaleMeasurementResultView extends StatelessWidget {
                 builder: (context, state) {
                   return state.whenOrNull(
                         initial: (scaleEntity) {
-                          return SingleChildScrollView(
-                            padding: EdgeInsets.only(
-                              bottom: R.sizes.defaultBottomValue,
-                            ),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                //
-                                ScaleDetailExpansionComponent(
-                                  isRedTheme: true,
-                                  title:
-                                      LocaleProvider.current.didnt_reach_goals,
-                                  list: ScaleExpansionModel.list1,
-                                ),
-
-                                //
-                                ScaleDetailExpansionComponent(
-                                  isRedTheme: false,
-                                  title: LocaleProvider.current.reach_goal,
-                                  list: ScaleExpansionModel.list2,
-                                ),
-                              ],
-                            ),
+                          return ScaleDetailScrollView(
+                            scaleEntity: scaleEntity,
                           );
                         },
                       ) ??

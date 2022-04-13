@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:scale_repository/scale_repository.dart';
+import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../../../core/core.dart';
 
@@ -67,6 +68,9 @@ class ScaleManuelAddCubit extends Cubit<ScaleManuelAddState> {
 
   // #region save
   Future<void> save() async {
+    final heightCheck = Utils.instance.checkUserHeight();
+    if (!heightCheck) return;
+
     final currentState = state;
     currentState.whenOrNull(
       initial: (result) async {
@@ -78,11 +82,20 @@ class ScaleManuelAddCubit extends Cubit<ScaleManuelAddState> {
             entegrationId: profileStorageImpl.getFirst().id,
             occurrenceTime: result.dateTime,
             weight: result.weight,
+            bmi: ScaleCalculate.instance.getBMI(
+              weight: result.weight!,
+              height: Utils.instance.getHeight()!,
+            ),
+            bmh: ScaleCalculate.instance.getBMH(
+              gender: Utils.instance.getGender(),
+              weight: result.weight!,
+              height: Utils.instance.getHeight()!,
+              age: Utils.instance.getAge(),
+            ),
             scaleUnit: result.scaleUnit.xScaleToInt,
-            bmi: 0.0,
-            deviceUUID: null,
             note: "",
             isManuel: true,
+            deviceUUID: null,
           );
           final isSuccess =
               await scaleRepository.addScaleMeasurement(requestBody);

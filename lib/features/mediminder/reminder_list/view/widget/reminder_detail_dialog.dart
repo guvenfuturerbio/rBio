@@ -44,6 +44,9 @@ class ReminderDetailDialog extends StatelessWidget {
             ),
 
             //
+            R.sizes.hSizer8,
+
+            //
             RbioElevatedButton(
               onTap: () {
                 Atom.dismiss();

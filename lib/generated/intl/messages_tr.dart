@@ -1056,6 +1056,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "Bu Form; sizlere daha iyi hizmet verebilmek amacıyla uygulamada yaşadığınız ve gözlemlediğiniz sorunları / önerilerinizi ve teşekkürlerinizi bildirmeniz için hazırlanmıştır. Bildiriminiz Hastane Yönetimi tarafından en kısa sürede incelenecek, alınan önlemler ve yapılacak düzenlemeler hakkında size bilgi verilecektir. İlgilerinize ve katkılarınıza teşekkür ederiz."),
         "required_area": MessageLookupByLibrary.simpleMessage("alanı zorunlu"),
+        "required_user_height_info_message":
+            MessageLookupByLibrary.simpleMessage(
+                "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir."),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Filtre verilerini temizle"),
         "result_detail": MessageLookupByLibrary.simpleMessage("Sonuç Detayı"),

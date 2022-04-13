@@ -841,5 +841,6 @@
   "enter_weight": "Değer girme",
   "weighing": "Ölçüm yapılıyor",
   "weighing_completed": "Lütfen tartının üzerinde ölçümünüzün\ntamamlanmasını bekleyin",
-  "weighing_results": "Ölçüm sonuçları"
+  "weighing_results": "Ölçüm sonuçları",
+  "required_user_height_info_message": "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir."
 }

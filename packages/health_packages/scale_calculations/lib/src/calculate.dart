@@ -1,3 +1,5 @@
+import 'package:scale_api/scale_api.dart';
+
 class ScaleCalculate {
   ScaleCalculate._();
 
@@ -6,6 +8,47 @@ class ScaleCalculate {
   static ScaleCalculate get instance {
     _instance ??= ScaleCalculate._();
     return _instance!;
+  }
+
+  bool checkNormalValue(int gender, SelectedScaleType type, double val) {
+    switch (type) {
+      case SelectedScaleType.bmh:
+        return (val >= kBMHRanges[0]) ? true : false;
+
+      case SelectedScaleType.bodyFat:
+        {
+          final ranges = kBodyFatRanges(gender);
+          return (val >= ranges[0] && val < ranges[1]) ? true : false;
+        }
+
+      case SelectedScaleType.bmi:
+        return (val >= kBMIRanges[0] && val < kBMIRanges[2]) ? true : false;
+
+      case SelectedScaleType.muscle:
+        {
+          final ranges = kMuscleRanges(gender);
+          return (val >= ranges[0] && val < ranges[1]) ? true : false;
+        }
+
+      case SelectedScaleType.water:
+        {
+          final ranges = kWaterRanges(gender);
+          return (val >= ranges[0] && val < ranges[1]) ? true : false;
+        }
+
+      case SelectedScaleType.visceralFat:
+        return (val <= kVisceralFatRanges[0]) ? true : false;
+
+      case SelectedScaleType.boneMass:
+        return (val >= kBoneMassRanges[0] && val < kBoneMassRanges[1])
+            ? true
+            : false;
+
+      case SelectedScaleType.weight:
+        break;
+    }
+
+    return false;
   }
 
   double getBMI({

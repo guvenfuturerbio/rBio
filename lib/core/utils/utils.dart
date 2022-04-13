@@ -39,9 +39,49 @@ class Utils {
     }
   }
 
-  int getHeight() =>
-      int.tryParse(getIt<ProfileStorageImpl>().getFirst().height ?? '170') ??
-      170;
+  bool checkUserHeight() {
+    final height = getHeight();
+    if (height != null) {
+      return true;
+    } else {
+      Atom.show(
+        GuvenAlert(
+          contentPadding: const EdgeInsets.all(16),
+          backgroundColor: getIt<ITheme>().cardBackgroundColor,
+          title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
+          content: GuvenAlert.buildDescription(
+            LocaleProvider.current.required_user_height_info_message,
+          ),
+          actions: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: RbioElevatedButton(
+                    infinityWidth: true,
+                    title: LocaleProvider.current.update_information,
+                    onTap: () {
+                      Atom.dismiss();
+                      Atom.to(PagePaths.healthInformation);
+                    },
+                  ),
+                ),
+                R.sizes.hSizer8,
+              ],
+            ),
+          ],
+        ),
+      );
+      return false;
+    }
+  }
+
+  int? getHeight() {
+    final height = getIt<ProfileStorageImpl>().getFirst().height;
+    return height == null ? null : int.tryParse(height);
+  }
 
   int getGender() {
     return getIt<ProfileStorageImpl>().getFirst().gender == 'Male' ||
@@ -1089,6 +1129,9 @@ extension SclaeToStringExtension on SelectedScaleType {
 
       case SelectedScaleType.muscle:
         return LocaleProvider.current.scale_data_muscle;
+
+      default:
+        return "";
     }
   }
 }
