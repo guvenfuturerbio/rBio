@@ -4,10 +4,12 @@ import '../extension/build_context_extension.dart';
 
 class RbioEmptyText extends StatelessWidget {
   final String title;
+  final Color? textColor;
 
   const RbioEmptyText({
     Key? key,
     required this.title,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class RbioEmptyText extends StatelessWidget {
         title,
         textAlign: TextAlign.center,
         style: context.xHeadline3.copyWith(
+          color: textColor ?? context.xHeadline3.color,
           fontWeight: FontWeight.bold,
         ),
       ),

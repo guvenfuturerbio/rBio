@@ -285,7 +285,7 @@ extension SelectedScaleTypeExtension on SelectedScaleType {
       case SelectedScaleType.bmh:
         return [
           ScaleColors.instance._colorVeryLow,
-          ScaleColors.instance._colorOneDose,
+          ScaleColors.instance._colorTarget,
         ];
 
       case SelectedScaleType.bodyFat:
@@ -308,7 +308,7 @@ extension SelectedScaleTypeExtension on SelectedScaleType {
       case SelectedScaleType.muscle:
         return [
           ScaleColors.instance._colorVeryLow,
-          ScaleColors.instance._colorOneDose,
+          ScaleColors.instance._colorTarget,
           ScaleColors.instance._colorHigh,
           ScaleColors.instance._colorVeryHigh,
         ];
@@ -322,7 +322,7 @@ extension SelectedScaleTypeExtension on SelectedScaleType {
 
       case SelectedScaleType.visceralFat:
         return [
-          ScaleColors.instance._colorOneDose,
+          ScaleColors.instance._colorTarget,
           ScaleColors.instance._colorHigh,
           ScaleColors.instance._colorVeryHigh,
         ];

@@ -24,23 +24,45 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
         Utils.instance.getGender(),
         Utils.instance.getHeight()!,
       );
-      emit(ScaleDetailState.success(_getResult(result)));
+      final initState = _getResult(result, ScaleChartFilterType.weekly);
+      emit(ScaleDetailState.success(initState));
     } catch (e) {
       emit(const ScaleDetailState.failure());
     }
+
+    // BlocConsumer'un listener'ı tetiklenmesi için.
+    Future.microtask(
+      () {
+        changeFilterType(ScaleChartFilterType.weekly);
+      },
+    );
   }
 
   FutureOr<void> deleteItem(ScaleEntity entity) {
     final currentState = state;
     currentState.whenOrNull(
-      success: (result) {
-        final currentList = result.list;
+      success: (result) async {
+        final currentList = result.allList;
         final item = currentList.firstWhereOrNull((element) =>
             element.dateTime.millisecondsSinceEpoch ==
             entity.dateTime.millisecondsSinceEpoch);
         if (item != null) {
+          await getIt<ScaleRepository>().deleteScaleMeasurement(
+            DeleteScaleMasurementBody(
+              entegrationId: entity.entegrationId,
+              measurementId: entity.measurementId,
+            ),
+            entity.dateTime,
+          );
           currentList.remove(entity);
-          emit(ScaleDetailState.success(_getResult(currentList)));
+          emit(
+            ScaleDetailState.success(
+              _getResult(
+                currentList,
+                result.filterType,
+              ),
+            ),
+          );
         }
       },
     );
@@ -52,8 +74,9 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
       success: (result) {
         emit(
           ScaleDetailState.success(
-            result.copyWith(
-              filterType: value,
+            _getResult(
+              result.allList,
+              value,
             ),
           ),
         );
@@ -61,23 +84,54 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
     );
   }
 
-  ScaleDetailSuccessResult _getResult(List<ScaleEntity> result) {
+  ScaleDetailSuccessResult _getResult(
+    List<ScaleEntity> result,
+    ScaleChartFilterType filterType,
+  ) {
     if (result.isEmpty) {
       return ScaleDetailSuccessResult();
     } else {
-      final list = result;
+      var list = result;
+      list = list.where((element) {
+        final date = element.dateTime;
+        switch (filterType) {
+          case ScaleChartFilterType.monthly:
+            return now_1m().isBefore(date);
+
+          case ScaleChartFilterType.sixMonths:
+            return now_6m().isBefore(date);
+
+          case ScaleChartFilterType.yearly:
+            return now_1y().isBefore(date);
+
+          case ScaleChartFilterType.weekly:
+          default:
+            return now_1w().isBefore(date);
+        }
+      }).toList();
+
       list.sort((a, b) {
         return a.dateTime.isAfter(b.dateTime) ? -1 : 1;
       });
+
       final maximumWeight = (result
           .reduce((a, b) => (a.weight ?? 0) > (b.weight ?? 0) ? a : b)).weight;
       final minimumWeight = (result
           .reduce((a, b) => (a.weight ?? 0) < (b.weight ?? 0) ? a : b)).weight;
+
       return ScaleDetailSuccessResult(
-        list: list,
+        filterType: filterType,
+        allList: result,
+        filterList: list,
         maximumWeight: (maximumWeight ?? 0) + 1,
         minimumWeight: (minimumWeight ?? 0) - 0.3,
       );
     }
   }
+
+  DateTime now = DateTime.now();
+  DateTime now_1w() => now.subtract(const Duration(days: 7));
+  DateTime now_1m() => DateTime(now.year, now.month - 1, now.day);
+  DateTime now_6m() => DateTime(now.year, now.month - 6, now.day);
+  DateTime now_1y() => DateTime(now.year - 1, now.month, now.day);
 }

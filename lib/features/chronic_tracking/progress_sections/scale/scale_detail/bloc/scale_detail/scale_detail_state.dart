@@ -10,26 +10,30 @@ class ScaleDetailState with _$ScaleDetailState {
 
 class ScaleDetailSuccessResult {
   final ScaleChartFilterType filterType;
-  final List<ScaleEntity> list;
+  final List<ScaleEntity> allList;
+  final List<ScaleEntity> filterList;
   final double maximumWeight;
   final double minimumWeight;
 
   ScaleDetailSuccessResult({
     this.filterType = ScaleChartFilterType.weekly,
-    this.list = const [],
+    this.allList = const [],
+    this.filterList = const [],
     this.maximumWeight = 0,
     this.minimumWeight = 0,
   });
 
   ScaleDetailSuccessResult copyWith({
     ScaleChartFilterType? filterType,
-    List<ScaleEntity>? list,
+    List<ScaleEntity>? allList,
+    List<ScaleEntity>? filterList,
     double? maximumWeight,
     double? minimumWeight,
   }) {
     return ScaleDetailSuccessResult(
       filterType: filterType ?? this.filterType,
-      list: list ?? this.list,
+      allList: allList ?? this.allList,
+      filterList: filterList ?? this.filterList,
       maximumWeight: maximumWeight ?? this.maximumWeight,
       minimumWeight: minimumWeight ?? this.minimumWeight,
     );

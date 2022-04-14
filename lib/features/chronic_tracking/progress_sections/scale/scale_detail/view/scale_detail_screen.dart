@@ -16,19 +16,19 @@ class ScaleDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<ScaleDetailCubit>(
       create: (ctx) => ScaleDetailCubit()..fetchAll(),
-      child: const ScaleDetailView(),
+      child: const _ScaleDetailView(),
     );
   }
 }
 
-class ScaleDetailView extends StatefulWidget {
-  const ScaleDetailView({Key? key}) : super(key: key);
+class _ScaleDetailView extends StatefulWidget {
+  const _ScaleDetailView({Key? key}) : super(key: key);
 
   @override
-  _ScaleDetailViewState createState() => _ScaleDetailViewState();
+  __ScaleDetailViewState createState() => __ScaleDetailViewState();
 }
 
-class _ScaleDetailViewState extends State<ScaleDetailView> {
+class __ScaleDetailViewState extends State<_ScaleDetailView> {
   final ValueNotifier<ScaleEntity?> _pointTapNotifier = ValueNotifier(null);
   late ZoomPanBehavior _zoomPanBehavior;
 
@@ -40,6 +40,7 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
       enablePinching: true,
       enableSelectionZooming: true,
       zoomMode: ZoomMode.x,
+      enableMouseWheelZooming: true,
     );
 
     super.initState();
@@ -51,58 +52,60 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
       backgroundColor: getIt<ITheme>().mainColor,
       bodyPadding: EdgeInsets.zero,
       appbar: _buildAppBar(),
-      body: BlocBuilder<ScaleDetailCubit, ScaleDetailState>(
-        builder: (context, state) {
-          return _buildBody(state);
-        },
-      ),
+      body: _buildBody(),
       floatingActionButton: _buildFAB(context),
     );
   }
 
+  // #region _buildAppBar
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.weight_tracking,
       ),
-      actions: [
-        IconButton(
-          onPressed: () {
-            context.read<ScaleDetailCubit>().fetchAll();
+    );
+  }
+  // #endregion
+
+  // #region _buildBody
+  Widget _buildBody() {
+    return BlocConsumer<ScaleDetailCubit, ScaleDetailState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          success: (result) {
+            _pointTapNotifier.value ??= result.filterList.first;
+
+            if (result.filterType == ScaleChartFilterType.weekly) {
+              _zoomPanBehavior.zoomByFactor(1);
+            } else {
+              _zoomPanBehavior.reset();
+              _zoomPanBehavior.panToDirection('right');
+            }
           },
-          icon: const Icon(
-            Icons.refresh,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildBody(ScaleDetailState state) {
-    return state.when(
-      initial: () => const SizedBox(),
-      loadInProgress: () => const RbioLoading(color: Colors.white),
-      success: (result) {
-        if (result.list.isNotEmpty) {
-          _pointTapNotifier.value ??= result.list.first;
-          if (result.list.length < 10) {
-            Future.delayed(
-              const Duration(milliseconds: 10),
-              () {
-                _zoomPanBehavior.zoomByFactor(1);
-              },
-            );
-          }
-        }
-
-        return _buildSuccess(result);
+        );
       },
-      failure: () => const RbioBodyError(),
+      builder: (context, state) {
+        return state.when(
+          initial: () => const SizedBox(),
+          loadInProgress: () => const RbioWhiteLoading(),
+          success: (result) => _buildSuccess(result),
+          failure: () => const RbioBodyError(),
+        );
+      },
     );
   }
+  // #endregion
 
+  // #region _buildSuccess
   Widget _buildSuccess(ScaleDetailSuccessResult result) {
+    if (result.allList.isEmpty) {
+      return RbioEmptyText(
+        title: LocaleProvider.current.no_records_found,
+        textColor: getIt<ITheme>().textColor,
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -116,7 +119,7 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
             children: [
               //
               ScaleChart(
-                list: result.list,
+                list: result.filterList,
                 maximum: result.maximumWeight,
                 minimum: result.minimumWeight,
                 zoomPanBehavior: _zoomPanBehavior,
@@ -135,25 +138,14 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
         //
         Expanded(
           flex: 70,
-          child: ValueListenableBuilder<ScaleEntity?>(
-            valueListenable: _pointTapNotifier,
-            builder: (
-              BuildContext context,
-              ScaleEntity? selectedItem,
-              Widget? child,
-            ) {
-              if (selectedItem == null) {
-                return const SizedBox();
-              } else {
-                return _buildBottomList(result, selectedItem);
-              }
-            },
-          ),
+          child: _buildBottomBody(result),
         ),
       ],
     );
   }
+  // #endregion
 
+  // #region _buildCurrentWeight
   Widget _buildCurrentWeight() {
     return ValueListenableBuilder<ScaleEntity?>(
       valueListenable: _pointTapNotifier,
@@ -180,11 +172,10 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
       },
     );
   }
+  // #endregion
 
-  Widget _buildBottomList(
-    ScaleDetailSuccessResult result,
-    ScaleEntity selectedItem,
-  ) {
+  // #region _buildBottomBody
+  Widget _buildBottomBody(ScaleDetailSuccessResult result) {
     return Container(
       width: double.infinity,
       padding: R.sizes.screenPaddingOnlyHorizontal(context),
@@ -196,15 +187,30 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
 
           //
           Expanded(
-            child: ScaleDetailScrollView(
-              scaleEntity: selectedItem,
+            child: ValueListenableBuilder<ScaleEntity?>(
+              valueListenable: _pointTapNotifier,
+              builder: (
+                BuildContext context,
+                ScaleEntity? selectedItem,
+                Widget? child,
+              ) {
+                if (selectedItem == null) {
+                  return const SizedBox();
+                } else {
+                  return ScaleDetailScrollView(
+                    scaleEntity: selectedItem,
+                  );
+                }
+              },
             ),
           ),
         ],
       ),
     );
   }
+  // #endregion
 
+  // #region _buildFAB
   Widget _buildFAB(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: getIt<ITheme>().mainColor,
@@ -231,6 +237,7 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
       ),
     );
   }
+  // #endregion
 }
 
 class ScaleCard extends StatelessWidget {
