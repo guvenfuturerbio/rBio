@@ -23,7 +23,7 @@ class _Endpoints {
   String getSubCategoryItemsPath(id) =>
       '/Package/get-all-sub-category-items/$id'.xBaseUrl;
   final doPackagePaymentPath = '/Package/do-mobile-payment'.xBaseUrl;
-  final sendNotification = '/User/send-message'.xBaseUrl;
+  final sendNotification = '/User/send-message'.xDevApiTest;
 
   final findResourceAvailableDays =
       '/Pusula/findResourceAvailableDays'.xBaseUrl;
@@ -72,7 +72,7 @@ class _Endpoints {
           .xBaseUrl;
   final deleteProfilePicturePath = '/file/delete-profile-photo'.xBaseUrl;
   final uploadProfilePicturePath = '/file/profil-image-upload'.xBaseUrl;
-  final getChatContacts = '/User/get-chat-contacts'.xBaseUrl;
+  final getChatContacts = '/User/get-chat-contacts'.xDevApiTest;
   String downloadAppointmentSingleFilePath(String folder, String path) =>
       '/file/download-patient-appointment-single-file/$folder/$path'.xBaseUrl;
   final getAllFilesPath =
@@ -209,7 +209,7 @@ class _Endpoints {
   String dcGetMyPatientPressure(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-bp/$patientId'.xDoctorBaseUrl;
 
-  String consentFormPath =  '/userregister/get-consent-form'.xApiGuven;
+  String consentFormPath = '/userregister/get-consent-form'.xApiGuven;
 }
 
 extension _EndpointsExtension on String {

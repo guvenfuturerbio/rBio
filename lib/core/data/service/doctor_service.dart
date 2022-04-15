@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../../model/model.dart';
 import '../../core.dart';
+import 'model/patient_scale_measurement.dart';
 
 part 'doctor_service_impl.dart';
 
@@ -26,7 +27,7 @@ abstract class DoctorApiService {
       int patientId, UpdateMyPatientLimit updateMyPatientLimit);
   Future<List<BloodGlucose>> getMyPatientBloodGlucose(
       int patientId, GetMyPatientFilter getMyPatientFilter);
-  Future<List<ScaleModel>> getMyPatientScale(
+  Future<List<PatientScaleMeasurement>> getMyPatientScale(
       int patientId, GetMyPatientFilter getMyPatientFilter);
   Future<List<BloodPressureModel>> getMyPatientBloodPressure(
       int patientId, GetMyPatientFilter getMyPatientFilter);
