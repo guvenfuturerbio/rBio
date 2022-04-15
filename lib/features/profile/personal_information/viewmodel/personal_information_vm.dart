@@ -41,6 +41,7 @@ class PersonalInformationScreenVm extends RbioVm {
   Future<void> updateValues({
     required String newPhoneNumber,
     required String newEmail,
+    required String countryCode,
   }) async {
     phoneNumber = newPhoneNumber;
     email = newEmail;
@@ -52,14 +53,13 @@ class PersonalInformationScreenVm extends RbioVm {
       var pusulaAccount = getIt<UserNotifier>().getPatient();
       if (pusulaAccount != null && pusulaAccount.id != null) {
         changeInfo.gsm = newPhoneNumber;
-        changeInfo.gsmCountryCode = null;
+        changeInfo.gsmCountryCode = countryCode;
         changeInfo.email = newEmail;
         changeInfo.patientId = pusulaAccount.id;
         changeInfo.patientType = int.parse(pusulaAccount.patientType!);
         changeInfo.nationalityId = pusulaAccount.nationalityId;
         changeInfo.hasETKApproval = pusulaAccount.hasETKApproval ?? true;
         changeInfo.hasKVKKApproval = pusulaAccount.hasKVKKApproval ?? true;
-        await getIt<Repository>().updatePusulaContactInfo(changeInfo);
         await getIt<Repository>().updateContactInfo(changeInfo);
       } else {
         changeInfo.gsm = newPhoneNumber;

@@ -71,7 +71,7 @@ class _HyperPicker extends StatelessWidget {
               ),
             ),
             onTap: () {
-              value.setHyperValue((value.higherValue + hyper));
+              value.setHyperValue((value.higherValue + hyper) * 1.0);
               value.updatePatientLimit(
                 id: Provider.of<PatientNotifiers>(context, listen: false)
                     .patientDetail
