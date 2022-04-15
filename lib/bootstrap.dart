@@ -55,25 +55,39 @@ Future<void> bootstrap(AppConfig appConfig) async {
                 getIt<BleConnector>(),
                 getIt<BleDeviceManager>(),
               )..add(const BluetoothEvent.init()),
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<BluetoothStatusCubit>(
-                    lazy: false,
-                    create: (context) =>
-                        BluetoothStatusCubit(getIt())..listenStateOfBluetooth(),
-                  ),
-                  BlocProvider<DeviceSearchCubit>(
-                    create: (context) => DeviceSearchCubit(getIt(), getIt()),
-                  ),
-                  BlocProvider<DeviceSelectedCubit>(
-                    create: (context) =>
-                        DeviceSelectedCubit(getIt(), getIt(), getIt(), getIt()),
-                  ),
-                  BlocProvider<MiScaleCubit>(
-                    create: (context) => MiScaleCubit(getIt(), getIt()),
-                  ),
-                ],
-                child: MyApp(initialRoute: initialRoute),
+              child: BlocProvider<MiScaleStatusCubit>(
+                lazy: false,
+                create: (context) => MiScaleStatusCubit(getIt()),
+                child: Builder(
+                  builder: (context) {
+                    return MultiBlocProvider(
+                      providers: [
+                        BlocProvider<BluetoothStatusCubit>(
+                          lazy: false,
+                          create: (context) => BluetoothStatusCubit(getIt())
+                            ..listenStateOfBluetooth(),
+                        ),
+                        BlocProvider<DeviceSearchCubit>(
+                          create: (context) =>
+                              DeviceSearchCubit(getIt(), getIt()),
+                        ),
+                        BlocProvider<DeviceSelectedCubit>(
+                          create: (context) => DeviceSelectedCubit(
+                            context.read<MiScaleStatusCubit>(),
+                            getIt(),
+                            getIt(),
+                            getIt(),
+                            getIt(),
+                          ),
+                        ),
+                        BlocProvider<MiScaleOpsCubit>(
+                          create: (context) => MiScaleOpsCubit(getIt(), getIt()),
+                        ),
+                      ],
+                      child: MyApp(initialRoute: initialRoute),
+                    );
+                  },
+                ),
               ),
             ),
           ),

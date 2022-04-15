@@ -40,133 +40,146 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MiScaleCubit, MiScaleState>(
+    return BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
       listener: (context, state) => _miScaleListener(context, state),
-      child: Container(
-        color: Colors.white,
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider<NotificationBadgeNotifier>(
-              create: (context) => getIt<NotificationBadgeNotifier>(),
-            ),
-            ChangeNotifierProvider(
-              create: (context) => PatientNotifiers(),
-            ),
-            ChangeNotifierProvider<LocaleNotifier>.value(
-              value: getIt<LocaleNotifier>(),
-            ),
-            ChangeNotifierProvider(
-              create: (context) => BgMeasurementsNotifierDoc(),
-            ),
-            ChangeNotifierProvider<HomeVm>(
-              create: (context) => HomeVm(context),
-            ),
-            ChangeNotifierProvider<ThemeNotifier>(
-              create: (context) => ThemeNotifier(),
-            ),
-            ChangeNotifierProvider<UserNotifier>(
-              create: (context) => getIt<UserNotifier>(),
-            ),
-            ChangeNotifierProvider<ScaleProgressVm>(
-              create: (ctx) => ScaleProgressVm(),
-            ),
-            ChangeNotifierProvider<BgProgressVm>.value(
-              value: BgProgressVm(context: context),
-            ),
-            ChangeNotifierProvider<BpProgressVm>.value(
-              value: BpProgressVm(),
-            ),
-            if (!Atom.isWeb) ...[
-              ChangeNotifierProvider<BleReactorOps>.value(
-                value: getIt<BleReactorOps>(),
+      child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
+        listener: (context, miScaleStatus) {
+          if (miScaleStatus.status == DeviceStatus.connected) {
+            if (miScaleStatus.device != null) {
+              BlocProvider.of<MiScaleOpsCubit>(context)
+                  .readValue(miScaleStatus.device!);
+            }
+          } else if (miScaleStatus.status == DeviceStatus.disconnected) {
+            BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
+          }
+        },
+        child: Container(
+          color: Colors.white,
+          child: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<NotificationBadgeNotifier>(
+                create: (context) => getIt<NotificationBadgeNotifier>(),
               ),
+              ChangeNotifierProvider(
+                create: (context) => PatientNotifiers(),
+              ),
+              ChangeNotifierProvider<LocaleNotifier>.value(
+                value: getIt<LocaleNotifier>(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => BgMeasurementsNotifierDoc(),
+              ),
+              ChangeNotifierProvider<HomeVm>(
+                create: (context) => HomeVm(context),
+              ),
+              ChangeNotifierProvider<ThemeNotifier>(
+                create: (context) => ThemeNotifier(),
+              ),
+              ChangeNotifierProvider<UserNotifier>(
+                create: (context) => getIt<UserNotifier>(),
+              ),
+              ChangeNotifierProvider<ScaleProgressVm>(
+                create: (ctx) => ScaleProgressVm(),
+              ),
+              ChangeNotifierProvider<BgProgressVm>.value(
+                value: BgProgressVm(context: context),
+              ),
+              ChangeNotifierProvider<BpProgressVm>.value(
+                value: BpProgressVm(),
+              ),
+              if (!Atom.isWeb) ...[
+                ChangeNotifierProvider<BleReactorOps>.value(
+                  value: getIt<BleReactorOps>(),
+                ),
+              ],
             ],
-          ],
 
-          //
-          child: Consumer<ThemeNotifier>(
-            builder: (
-              BuildContext context,
-              ThemeNotifier themeNotifier,
-              Widget? child,
-            ) {
-              return OrientationBuilder(
-                builder: (BuildContext context, Orientation orientation) {
-                  AppInheritedWidget.of(context)
-                      ?.changeOrientation(orientation);
+            //
+            child: Consumer<ThemeNotifier>(
+              builder: (
+                BuildContext context,
+                ThemeNotifier themeNotifier,
+                Widget? child,
+              ) {
+                return OrientationBuilder(
+                  builder: (BuildContext context, Orientation orientation) {
+                    AppInheritedWidget.of(context)
+                        ?.changeOrientation(orientation);
 
-                  return AtomMaterialApp(
-                    initialUrl: widget.initialRoute,
-                    routes: VRouterRoutes.routes,
-                    onSystemPop: (data) async {
-                      if (Atom.isDialogShow) {
-                        try {
-                          Atom.dismiss();
-                          data.stopRedirection();
-                        } catch (e) {
-                          LoggerUtils.instance.i(e);
+                    return AtomMaterialApp(
+                      initialUrl: widget.initialRoute,
+                      routes: VRouterRoutes.routes,
+                      onSystemPop: (data) async {
+                        if (Atom.isDialogShow) {
+                          try {
+                            Atom.dismiss();
+                            data.stopRedirection();
+                          } catch (e) {
+                            LoggerUtils.instance.i(e);
+                          }
+                        } else {
+                          final currentUrl = data.fromUrl ?? "";
+                          if (currentUrl.contains('/home')) {
+                            SystemNavigator.pop();
+                          } else if (data.historyCanBack()) {
+                            data.historyBack();
+                          }
                         }
-                      } else {
-                        final currentUrl = data.fromUrl ?? "";
-                        if (currentUrl.contains('/home')) {
-                          SystemNavigator.pop();
-                        } else if (data.historyCanBack()) {
-                          data.historyBack();
-                        }
-                      }
-                    },
+                      },
 
-                    //
-                    title: 'One Dose Health',
-                    debugShowCheckedModeBanner: false,
-                    navigatorObservers: const [],
+                      //
+                      title: 'One Dose Health',
+                      debugShowCheckedModeBanner: false,
+                      navigatorObservers: const [],
 
-                    showPerformanceOverlay: false,
+                      showPerformanceOverlay: false,
 
-                    //
-                    builder: (BuildContext context, Widget? child) {
-                      return Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: MediaQuery(
-                          data: MediaQuery.of(context).copyWith(
-                            textScaleFactor: themeNotifier.textScale.getValue(),
+                      //
+                      builder: (BuildContext context, Widget? child) {
+                        return Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: MediaQuery(
+                            data: MediaQuery.of(context).copyWith(
+                              textScaleFactor:
+                                  themeNotifier.textScale.getValue(),
+                            ),
+                            child: child!,
                           ),
-                          child: child!,
-                        ),
-                      );
-                    },
+                        );
+                      },
 
-                    //
-                    theme: ThemeData(
-                      primaryColor: themeNotifier.theme.mainColor,
-                      scaffoldBackgroundColor:
-                          themeNotifier.theme.scaffoldBackgroundColor,
-                      fontFamily: themeNotifier.theme.fontFamily,
-                      textTheme: themeNotifier.theme.textTheme,
-                      textSelectionTheme: TextSelectionThemeData(
-                        cursorColor: getIt<ITheme>().mainColor,
-                        selectionColor: getIt<ITheme>().mainColor,
-                        selectionHandleColor: getIt<ITheme>().mainColor,
+                      //
+                      theme: ThemeData(
+                        primaryColor: themeNotifier.theme.mainColor,
+                        scaffoldBackgroundColor:
+                            themeNotifier.theme.scaffoldBackgroundColor,
+                        fontFamily: themeNotifier.theme.fontFamily,
+                        textTheme: themeNotifier.theme.textTheme,
+                        textSelectionTheme: TextSelectionThemeData(
+                          cursorColor: getIt<ITheme>().mainColor,
+                          selectionColor: getIt<ITheme>().mainColor,
+                          selectionHandleColor: getIt<ITheme>().mainColor,
+                        ),
+                        cupertinoOverrideTheme: CupertinoThemeData(
+                          primaryColor: getIt<ITheme>().mainColor,
+                        ),
                       ),
-                      cupertinoOverrideTheme: CupertinoThemeData(
-                        primaryColor: getIt<ITheme>().mainColor,
-                      ),
-                    ),
-                    locale: context.watch<LocaleNotifier>().current,
-                    localizationsDelegates: const [
-                      LocaleProvider.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                      DefaultCupertinoLocalizations.delegate
-                    ],
-                    supportedLocales:
-                        context.read<LocaleNotifier>().supportedLocales,
-                    onPop: (vRedirector) async {},
-                  );
-                },
-              );
-            },
+                      locale: context.watch<LocaleNotifier>().current,
+                      localizationsDelegates: const [
+                        LocaleProvider.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                        DefaultCupertinoLocalizations.delegate
+                      ],
+                      supportedLocales:
+                          context.read<LocaleNotifier>().supportedLocales,
+                      onPop: (vRedirector) async {},
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -175,7 +188,7 @@ class _MyAppState extends State<MyApp> {
 
   void _miScaleListener(
     BuildContext context,
-    MiScaleState miScaleState,
+    MiScaleOpsState miScaleState,
   ) async {
     miScaleState.when(
       initial: () {

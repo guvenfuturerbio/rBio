@@ -12,7 +12,8 @@ class ScaleManuelAddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ScaleManuelAddCubit>(
-      create: (context) => ScaleManuelAddCubit(getIt(), getIt()),
+      create: (context) =>
+          ScaleManuelAddCubit(getIt(), getIt())..chechHeightValue(),
       child: Builder(
         builder: (context) {
           return BlocListener<ScaleManuelAddCubit, ScaleManuelAddState>(
@@ -43,6 +44,10 @@ class ScaleManuelAddScreen extends StatelessWidget {
                   );
                 },
                 successAdded: () {
+                  Utils.instance.showSuccessSnackbar(
+                    context,
+                    LocaleProvider.current.measurement_saved,
+                  );
                   Atom.to(
                     PagePaths.scaleDetail,
                     isReplacement: true,
@@ -196,7 +201,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                           ),
 
                           //
-                          _buildButtons(),
+                          _buildButtons(result),
 
                           //
                           R.sizes.defaultBottomPadding,
@@ -364,7 +369,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
   }
 
   // #endregion
-  Widget _buildButtons() {
+  Widget _buildButtons(ScaleManuelAddResult result) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -387,9 +392,11 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
         Expanded(
           child: RbioElevatedButton(
             title: LocaleProvider.current.save,
-            onTap: () async {
-              await context.read<ScaleManuelAddCubit>().save();
-            },
+            onTap: result.isHeightNull
+                ? null
+                : () async {
+                    await context.read<ScaleManuelAddCubit>().save();
+                  },
           ),
         ),
       ],

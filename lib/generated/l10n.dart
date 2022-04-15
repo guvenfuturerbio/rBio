@@ -8529,6 +8529,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `The measurement has been saved`
+  String get measurement_saved {
+    return Intl.message(
+      'The measurement has been saved',
+      name: 'measurement_saved',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

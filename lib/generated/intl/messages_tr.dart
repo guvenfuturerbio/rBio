@@ -693,6 +693,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "meal": MessageLookupByLibrary.simpleMessage("Yemek"),
         "measurement_delete_question": MessageLookupByLibrary.simpleMessage(
             "Ölçümü silmek istiyor musunuz ?"),
+        "measurement_saved":
+            MessageLookupByLibrary.simpleMessage("Ölçüm kaydedildi"),
         "medication_reminder":
             MessageLookupByLibrary.simpleMessage("İlaç Hatırlatıcı"),
         "medication_reminders":
@@ -1075,7 +1077,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kemik Kütlesi"),
         "scale_data_muscle": MessageLookupByLibrary.simpleMessage("Kas"),
         "scale_data_visceral_fat":
-            MessageLookupByLibrary.simpleMessage("Vücut Yağlanması"),
+            MessageLookupByLibrary.simpleMessage("İç organ yağı"),
         "scale_data_water": MessageLookupByLibrary.simpleMessage("Su"),
         "scale_graph":
             MessageLookupByLibrary.simpleMessage(" Vücut Ölçüm Değişimi"),

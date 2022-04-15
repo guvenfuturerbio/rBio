@@ -6,42 +6,17 @@ part 'device_selected_state.dart';
 
 class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
   DeviceSelectedCubit(
+    this.miScaleStatusCubit,
     this.connectDeviceUseCase,
     this.disconnectDeviceUseCase,
     this.bluetoothLocalManager,
     this.deviceLastStatusUseCase,
   ) : super(DeviceSelectedState.initial());
+  final MiScaleStatusCubit miScaleStatusCubit;
   final ConnectDeviceUseCase connectDeviceUseCase;
   final DisconnectDeviceUseCase disconnectDeviceUseCase;
   final BluetoothLocalManager bluetoothLocalManager;
   final DeviceLastStatusUseCase deviceLastStatusUseCase;
-
-  void checkAfterConnect(DeviceEntity device) {
-    final result = deviceLastStatusUseCase.call(DeviceParams(device: device));
-    result.fold(
-      (l) {
-        LoggerUtils.instance.e("[DeviceSelectedCubit] - connect() - $l");
-      },
-      (deviceStatus) async {
-        LoggerUtils.instance.d('27nin üstü');
-
-        final deviceState = await deviceStatus;
-
-        if (deviceState != DeviceStatus.connected) {
-          final result =
-              connectDeviceUseCase.call(DeviceParams(device: device));
-          result.fold(
-            (l) {
-              emit(DeviceSelectedState.error("Something went wrong"));
-            },
-            (r) {
-              emit(DeviceSelectedState.done(device, true));
-            },
-          );
-        }
-      },
-    );
-  }
 
   void connect(DeviceEntity device) {
     final result = connectDeviceUseCase.call(DeviceParams(device: device));
@@ -53,6 +28,10 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
         emit(DeviceSelectedState.done(device, true));
       },
     );
+
+    if (device.deviceType == DeviceType.miScale) {
+      miScaleStatusCubit.readStatus(device);
+    }
   }
 
   void disconnect(DeviceEntity device) {
@@ -72,21 +51,6 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
     for (var element in pairedDevices) {
       if (element.deviceType == DeviceType.miScale) {
         context.read<DeviceSelectedCubit>().connect(element);
-        Future.delayed(
-          const Duration(seconds: 1),
-          () {
-            context.read<MiScaleCubit>().readValue(
-                  DeviceModel(
-                    id: element.id,
-                    name: element.name,
-                    localName: element.localName,
-                    kind: element.kind,
-                    strength: element.strength,
-                    deviceType: element.deviceType,
-                  ),
-                );
-          },
-        );
       }
     }
   }

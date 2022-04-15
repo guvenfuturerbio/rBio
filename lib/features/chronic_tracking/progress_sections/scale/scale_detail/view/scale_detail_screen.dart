@@ -77,7 +77,14 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
             _pointTapNotifier.value ??= result.filterList.first;
 
             if (result.filterType == ScaleChartFilterType.weekly) {
-              _zoomPanBehavior.zoomByFactor(1);
+              if (result.filterList.length < 10) {
+                Future.delayed(
+                  const Duration(milliseconds: 100),
+                  () {
+                    _zoomPanBehavior.zoomByFactor(1);
+                  },
+                );
+              }
             } else {
               _zoomPanBehavior.reset();
               _zoomPanBehavior.panToDirection('right');
@@ -101,7 +108,7 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
   Widget _buildSuccess(ScaleDetailSuccessResult result) {
     if (result.allList.isEmpty) {
       return RbioEmptyText(
-        title: LocaleProvider.current.no_records_found,
+        title: LocaleProvider.current.no_measurement,
         textColor: getIt<ITheme>().textColor,
       );
     }
@@ -197,7 +204,7 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
                 if (selectedItem == null) {
                   return const SizedBox();
                 } else {
-                  return ScaleDetailScrollView(
+                  return ScaleValuesScrollView(
                     scaleEntity: selectedItem,
                   );
                 }

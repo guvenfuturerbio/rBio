@@ -701,6 +701,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "meal": MessageLookupByLibrary.simpleMessage("Meal"),
         "measurement_delete_question": MessageLookupByLibrary.simpleMessage(
             "Do you want to delete the measurement?"),
+        "measurement_saved": MessageLookupByLibrary.simpleMessage(
+            "The measurement has been saved"),
         "medication_reminder":
             MessageLookupByLibrary.simpleMessage("Medication Reminder"),
         "medication_reminders":

@@ -39,6 +39,9 @@ class Utils {
     }
   }
 
+  /// * device_listing_screen.dart'da "DeviceType.miScale" kontrol ediyorum.
+  ///
+  /// * scale_manuel_add_cubit.dart'da kontrol ediyorum, yoksa "Kaydet" butonunu disable yapıyorum.
   bool checkUserHeight() {
     final height = getHeight();
     if (height != null) {
@@ -128,6 +131,21 @@ class Utils {
       ),
     );
   }
+
+  // #region showSuccessSnackbar
+  void showSuccessSnackbar(BuildContext context, String text) {
+    showSnackbar(
+      context,
+      text,
+      backColor: getIt<ITheme>().mainColor,
+      trailing: SvgPicture.asset(
+        R.image.done,
+        height: R.sizes.iconSize2,
+        color: getIt<ITheme>().iconSecondaryColor,
+      ),
+    );
+  }
+  // #endregion
 
   String encryptWithSalsa20(String plainText, String email) {
     //final key = encrypt.Key.fromLength(32);

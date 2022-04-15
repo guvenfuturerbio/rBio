@@ -104,7 +104,7 @@ class _RbioSelectBottomSheetState<T> extends State<RbioSelectBottomSheet<T>> {
             scrollController: FixedExtentScrollController(
               initialItem: widget.initialItem ?? 0,
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             onSelectedItemChanged: (val) {
               _currentValue = val;
             },

@@ -71,7 +71,7 @@ class DevicesVm extends ChangeNotifier {
     context.read<DeviceSelectedCubit>().disconnect(device);
 
     if (device.deviceType == DeviceType.miScale) {
-      BlocProvider.of<MiScaleCubit>(context).stopListen();
+      BlocProvider.of<MiScaleStatusCubit>(context).resetState();
     }
 
     notifyListeners();

@@ -14,9 +14,6 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
   ScaleDetailCubit() : super(const ScaleDetailState.initial());
 
   FutureOr<void> fetchAll() async {
-    final heightCheck = Utils.instance.checkUserHeight();
-    if (!heightCheck) return;
-
     emit(const ScaleDetailState.loadInProgress());
     try {
       final result = getIt<ScaleRepository>().readLocalScaleData(
@@ -25,17 +22,12 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
         Utils.instance.getHeight()!,
       );
       final initState = _getResult(result, ScaleChartFilterType.weekly);
-      emit(ScaleDetailState.success(initState));
+      Future.microtask(() {
+        emit(ScaleDetailState.success(initState));
+      });
     } catch (e) {
       emit(const ScaleDetailState.failure());
     }
-
-    // BlocConsumer'un listener'ı tetiklenmesi için.
-    Future.microtask(
-      () {
-        changeFilterType(ScaleChartFilterType.weekly);
-      },
-    );
   }
 
   FutureOr<void> deleteItem(ScaleEntity entity) {
@@ -114,19 +106,42 @@ class ScaleDetailCubit extends Cubit<ScaleDetailState> {
         return a.dateTime.isAfter(b.dateTime) ? -1 : 1;
       });
 
-      final maximumWeight = (result
-          .reduce((a, b) => (a.weight ?? 0) > (b.weight ?? 0) ? a : b)).weight;
-      final minimumWeight = (result
-          .reduce((a, b) => (a.weight ?? 0) < (b.weight ?? 0) ? a : b)).weight;
+      final maximumWeight =
+          ((result.reduce((a, b) => (a.weight ?? 0) > (b.weight ?? 0) ? a : b))
+                  .weight) ??
+              0;
+      final minimumWeight =
+          ((result.reduce((a, b) => (a.weight ?? 0) < (b.weight ?? 0) ? a : b))
+                  .weight) ??
+              0;
 
       return ScaleDetailSuccessResult(
         filterType: filterType,
         allList: result,
         filterList: list,
-        maximumWeight: (maximumWeight ?? 0) + 1,
-        minimumWeight: (minimumWeight ?? 0) - 0.3,
+        maximumWeight:
+            maximumWeight + _getLimitPadding(maximumWeight, minimumWeight),
+        minimumWeight:
+            minimumWeight - _getLimitPadding(maximumWeight, minimumWeight),
       );
     }
+  }
+
+  double _getLimitPadding(double maximumWeight, double minimumWeight) {
+    final range = maximumWeight - minimumWeight;
+    if (range < 5) {
+      return 1;
+    } else if (range < 10) {
+      return 2;
+    } else if (range < 20) {
+      return 5;
+    } else if (range < 30) {
+      return 10;
+    } else if (range < 40) {
+      return 15;
+    }
+
+    return 20;
   }
 
   DateTime now = DateTime.now();

@@ -623,7 +623,7 @@
   "scale_data_body_fat": "Vücut yağı",
   "scale_data_bone_mass": "Kemik Kütlesi",
   "scale_data_muscle": "Kas",
-  "scale_data_visceral_fat": "Vücut Yağlanması",
+  "scale_data_visceral_fat": "İç organ yağı",
   "scale_data_water": "Su",
   "scale_graph": " Vücut Ölçüm Değişimi",
   "scale_progress": "Vücut değer ilerleyişi",
@@ -842,5 +842,6 @@
   "weighing": "Ölçüm yapılıyor",
   "weighing_completed": "Lütfen tartının üzerinde ölçümünüzün\ntamamlanmasını bekleyin",
   "weighing_results": "Ölçüm sonuçları",
-  "required_user_height_info_message": "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir."
+  "required_user_height_info_message": "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir.",
+  "measurement_saved": "Ölçüm kaydedildi"
 }

@@ -74,15 +74,9 @@ class PersonalInformationScreenVm extends RbioVm {
       );
       await getIt<UserNotifier>().setUserAccount(sharedUserAccount);
       await savePhoto();
-      Utils.instance.showSnackbar(
+      Utils.instance.showSuccessSnackbar(
         mContext,
         LocaleProvider.current.personal_update_success,
-        backColor: getIt<ITheme>().mainColor,
-        trailing: SvgPicture.asset(
-          R.image.done,
-          height: R.sizes.iconSize2,
-          color: getIt<ITheme>().iconSecondaryColor,
-        ),
       );
       Utils.instance.hideKeyboard(mContext);
     } catch (e, stackTrace) {

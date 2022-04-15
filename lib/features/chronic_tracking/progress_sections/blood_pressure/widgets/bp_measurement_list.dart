@@ -130,15 +130,9 @@ class BpMeasurementList extends StatelessWidget {
           onTap: () async {
             try {
               await getIt<BloodPressureStorageImpl>().delete(item.bpModel.key);
-              Utils.instance.showSnackbar(
+              Utils.instance.showSuccessSnackbar(
                 context,
                 LocaleProvider.current.delete_measurement_succesfull,
-                backColor: getIt<ITheme>().mainColor,
-                trailing: SvgPicture.asset(
-                  R.image.done,
-                  height: R.sizes.iconSize2,
-                  color: getIt<ITheme>().iconSecondaryColor,
-                ),
               );
             } catch (e) {
               Utils.instance.showSnackbar(

@@ -1,4 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onedosehealth/app/bluetooth_v2/bluetooth_v2.dart';
 import 'package:scale_repository/scale_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +40,10 @@ class ScaleMeasurementResultScreen extends StatelessWidget {
                   );
                 },
                 successAdded: () {
+                  Utils.instance.showSuccessSnackbar(
+                    context,
+                    LocaleProvider.current.measurement_saved,
+                  );
                   Atom.dismiss();
                 },
               );
@@ -86,7 +90,7 @@ class _ScaleMeasurementResultView extends StatelessWidget {
                 builder: (context, state) {
                   return state.whenOrNull(
                         initial: (scaleEntity) {
-                          return ScaleDetailScrollView(
+                          return ScaleValuesScrollView(
                             scaleEntity: scaleEntity,
                           );
                         },
@@ -125,6 +129,7 @@ class _ScaleMeasurementResultView extends StatelessWidget {
           child: RbioWhiteButton(
             title: LocaleProvider.current.btn_cancel,
             onTap: () {
+              context.read<MiScaleOpsCubit>().changeResultDialogStatus();
               Atom.dismiss();
             },
           ),
@@ -138,6 +143,7 @@ class _ScaleMeasurementResultView extends StatelessWidget {
           child: RbioElevatedButton(
             title: LocaleProvider.current.save,
             onTap: () async {
+              context.read<MiScaleOpsCubit>().changeResultDialogStatus();
               await context.read<ScaleMeasurementResultCubit>().save();
             },
           ),

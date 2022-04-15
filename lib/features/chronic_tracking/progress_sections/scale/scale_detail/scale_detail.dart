@@ -7,5 +7,5 @@ export 'view/scale_detail_screen.dart';
 export 'view/scale_manuel_add_screen.dart';
 export 'view/scale_measurement_result_screen.dart';
 export 'view/widget/chart_filter_component.dart';
-export 'view/widget/expansion_component.dart';
+export 'view/widget/scale_values_scrollview.dart';
 export 'view/widget/scale_measurement_popup.dart';

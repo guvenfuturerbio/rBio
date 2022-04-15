@@ -8,10 +8,10 @@ import 'package:scale_calculations/scale_calculations.dart';
 import '../../../../../../../core/core.dart';
 import '../../scale_detail.dart';
 
-class ScaleDetailScrollView extends StatelessWidget {
+class ScaleValuesScrollView extends StatelessWidget {
   final ScaleEntity scaleEntity;
 
-  const ScaleDetailScrollView({
+  const ScaleValuesScrollView({
     Key? key,
     required this.scaleEntity,
   }) : super(key: key);
@@ -333,7 +333,7 @@ class ScaleDetailScrollView extends StatelessWidget {
   }
 }
 
-class ScaleDetailExpansionComponent extends StatefulWidget {
+class ScaleDetailExpansionComponent extends StatelessWidget {
   final String title;
   final bool isRedTheme;
   final List<ScaleExpansionModel> list;
@@ -346,15 +346,6 @@ class ScaleDetailExpansionComponent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ScaleDetailExpansionComponentState createState() =>
-      _ScaleDetailExpansionComponentState();
-}
-
-class _ScaleDetailExpansionComponentState
-    extends State<ScaleDetailExpansionComponent> {
-  bool _isExpanded = true;
-
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -364,111 +355,68 @@ class _ScaleDetailExpansionComponentState
         mainAxisSize: MainAxisSize.min,
         children: [
           //
-          GestureDetector(
-            onTap: () {
-              if (mounted) {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              }
-            },
-            child: Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 12,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        //
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 6,
-                            ),
-                            child: Text(
-                              widget.title,
-                              style: context.xHeadline4.copyWith(
-                                color: widget.isRedTheme
-                                    ? R.color.darkRed
-                                    : getIt<ITheme>().mainColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        //
-                        R.sizes.wSizer4,
-
-                        //
-                        Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: widget.isRedTheme
-                                ? R.color.darkRed
-                                : getIt<ITheme>().mainColor,
-                          ),
-                          child: Text(
-                            widget.list.length.toString(),
-                            style: context.xHeadline3.copyWith(
-                              color: getIt<ITheme>().textColor,
-                            ),
-                          ),
-                        ),
-                      ],
+          RbioExpansionTile(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 6,
                     ),
-                  ),
-
-                  //
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: SvgPicture.asset(
-                      R.image.arrowDown,
-                      width: R.sizes.iconSize3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          //
-          SizedBox(
-            width: double.infinity,
-            child: RbioAnimatedClipRect(
-              open: _isExpanded,
-              alignment: Alignment.centerLeft,
-              duration: const Duration(milliseconds: 250),
-              child: Column(
-                children: widget.list
-                    .mapIndexed(
-                      (index, element) => _buildCard(
-                        topMargin: index != 0,
-                        model: element,
+                    child: Text(
+                      title,
+                      style: context.xHeadline4.copyWith(
+                        color: isRedTheme
+                            ? R.color.darkRed
+                            : getIt<ITheme>().mainColor,
+                        fontWeight: FontWeight.bold,
                       ),
-                    )
-                    .toList(),
-              ),
+                    ),
+                  ),
+                ),
+
+                //
+                R.sizes.wSizer4,
+
+                //
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isRedTheme
+                        ? R.color.darkRed
+                        : getIt<ITheme>().mainColor,
+                  ),
+                  child: Text(
+                    list.length.toString(),
+                    style: context.xHeadline3.copyWith(
+                      color: getIt<ITheme>().textColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
+            children: list
+                .mapIndexed(
+                  (index, element) => _buildCard(
+                    context,
+                    topMargin: index != 0,
+                    model: element,
+                  ),
+                )
+                .toList(),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCard({
+  Widget _buildCard(
+    BuildContext context, {
     bool topMargin = true,
     required ScaleExpansionModel model,
   }) {
@@ -478,9 +426,10 @@ class _ScaleDetailExpansionComponentState
         color: getIt<ITheme>().cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 12,
+      padding: const EdgeInsets.only(
+        left: 12,
+        right: 12,
+        top: 8,
       ),
       margin: EdgeInsets.only(
         top: topMargin ? 8 : 0,
@@ -568,17 +517,17 @@ class _DynamicColorfulRange extends StatelessWidget {
         final containersPoints = _getPoints(containersWidths);
 
         return Container(
-          height: 50,
+          height: 56,
           width: maxWidth,
           color: Colors.transparent,
           child: Stack(
             alignment: Alignment.center,
             children: [
               //
-              ..._buildContainers(containersWidths, containersPoints),
+              _buildContainers(containersWidths),
 
               //
-              ..._buildTitles(context, containersWidths, containersPoints),
+              _buildTitles(context, containersWidths),
 
               //
               ..._buildBreakpoints(context, containersWidths, containersPoints),
@@ -592,9 +541,9 @@ class _DynamicColorfulRange extends StatelessWidget {
     );
   }
 
-  Widget _getCurrentPoint(double currentPoint) {
+  Widget _getCurrentPoint(double leftPosition) {
     return Positioned(
-      left: currentPoint,
+      left: leftPosition,
       child: Container(
         width: 8,
         height: 8,
@@ -642,47 +591,45 @@ class _DynamicColorfulRange extends StatelessWidget {
     return result;
   }
 
-  List<Widget> _buildContainers(
-    Map<int, double> containersWidths,
-    Map<int, double> containersPoints,
-  ) {
-    return containersPoints.entries.map<Widget>(
-      (entry) {
-        return Positioned(
-          left: containersPoints[entry.key],
-          width: containersWidths[entry.key],
-          height: 3.0,
-          child: Container(
+  Widget _buildContainers(Map<int, double> containersWidths) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: containersWidths.entries.map<Widget>(
+        (entry) {
+          return Container(
             color: model.colors[entry.key],
-          ),
-        );
-      },
-    ).toList();
+            width: containersWidths[entry.key],
+            height: 3.0,
+          );
+        },
+      ).toList(),
+    );
   }
 
-  List<Widget> _buildTitles(
+  Widget _buildTitles(
     BuildContext context,
     Map<int, double> containersWidths,
-    Map<int, double> containersPoints,
   ) {
-    return containersPoints.entries.map<Widget>(
-      (entry) {
-        return Positioned(
-          top: 30,
-          left: containersPoints[entry.key],
-          width: containersWidths[entry.key],
-          child: AutoSizeText(
-            model.titles[entry.key],
-            textAlign: TextAlign.center,
-            minFontSize: 10,
-            maxFontSize: 12,
-            style: context.xHeadline3.copyWith(
-              color: getIt<ITheme>().textColorPassive,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: containersWidths.entries.map<Widget>(
+        (entry) {
+          return Container(
+            margin: const EdgeInsets.only(top: 30),
+            width: containersWidths[entry.key],
+            child: AutoSizeText(
+              model.titles[entry.key],
+              minFontSize: 10,
+              maxFontSize: 12,
+              textAlign: TextAlign.center,
+              style: context.xHeadline3.copyWith(
+                color: getIt<ITheme>().textColorPassive,
+              ),
             ),
-          ),
-        );
-      },
-    ).toList();
+          );
+        },
+      ).toList(),
+    );
   }
 
   List<Widget> _buildBreakpoints(

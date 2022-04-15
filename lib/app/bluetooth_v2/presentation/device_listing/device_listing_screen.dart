@@ -17,22 +17,37 @@ class DeviceListingScreen extends StatefulWidget {
 class _DeviceListingScreenState extends State<DeviceListingScreen> {
   DeviceType? deviceType;
 
+  void _showSetupDialog() {
+    Future(
+      () {
+        return showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return DeviceSetupDialog(deviceType: deviceType!);
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     try {
       final deviceTypeStr = Atom.queryParameters['device_type'];
       if (deviceTypeStr != null) {
         deviceType = deviceTypeStr.xDeviceType;
-        _restartScan(context);
-        Future(
-          () => showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return DeviceSetupDialog(deviceType: deviceType!);
-            },
-          ),
-        );
+
+        if (deviceType == DeviceType.miScale) {
+          final heightCheck = Utils.instance.checkUserHeight();
+          if (heightCheck) {
+            _restartScan(context);
+            _showSetupDialog();
+          }
+        } else {
+          _restartScan(context);
+          _showSetupDialog();
+        }
       }
     } catch (e) {
       return const RbioRouteError();
@@ -40,7 +55,7 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        _stopScan(context);
+        _setInitState(context);
         return true;
       },
       child: RbioStackedScaffold(
@@ -68,7 +83,7 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
             ),
           ),
           onTap: () {
-            _stopScan(context);
+            _setInitState(context);
             Atom.historyBack();
           },
         ),
@@ -188,11 +203,15 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
   }
 
   void _startScan(BuildContext context) {
-    context.read<DeviceSearchCubit>().startSearching(deviceType!);
+    BlocProvider.of<DeviceSearchCubit>(context).startSearching(deviceType!);
   }
 
   void _stopScan(BuildContext context) {
     BlocProvider.of<DeviceSearchCubit>(context).stopScan();
+  }
+
+  void _setInitState(BuildContext context) {
+    BlocProvider.of<DeviceSearchCubit>(context).setInitState();
   }
 
   Future<void> _restartScan(BuildContext context) async {
@@ -218,30 +237,12 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
     DeviceEntity device,
   ) async {
     if (deviceStatusState == DeviceStatus.connected) {
-      Utils.instance.showSnackbar(
+      Utils.instance.showSuccessSnackbar(
         context,
         LocaleProvider.current.pair_successful,
-        backColor: getIt<ITheme>().mainColor,
       );
 
       await getIt<BluetoothLocalManager>().savePairedDevices(device);
-
-      switch (deviceType) {
-        case DeviceType.miScale:
-          {
-            BlocProvider.of<MiScaleCubit>(context).readValue(device);
-            break;
-          }
-
-        case DeviceType.accuCheck:
-        case DeviceType.contourPlusOne:
-        case DeviceType.omronBloodPressureArm:
-        case DeviceType.omronBloodPressureWrist:
-        case DeviceType.omronScale:
-        case DeviceType.manuel:
-        default:
-          break;
-      }
 
       _stopScan(context);
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rive/rive.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:scale_repository/scale_repository.dart';
 
@@ -21,7 +22,7 @@ class ScaleMeasurementPopup extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return BlocBuilder<MiScaleCubit, MiScaleState>(
+    return BlocBuilder<MiScaleOpsCubit, MiScaleOpsState>(
       builder: (context, miScaleState) {
         return miScaleState.whenOrNull(
               showLoading: (scaleEntity) {
@@ -35,9 +36,34 @@ class ScaleMeasurementPopup extends StatelessWidget {
                       children: [
                         R.sizes.hSizer28,
                         _buildTitle(context),
+                        R.sizes.hSizer8,
                         R.sizes.hSizer28,
                         _buildWeight(scaleEntity, context),
-                        const _LoadingBar(),
+                        Center(
+                          child: MirrorAnimation(
+                            duration: const Duration(seconds: 1),
+                            tween: Tween<double>(begin: 0, end: 10),
+                            builder: (context, child, double value) {
+                              return Transform.translate(
+                                offset: Offset(0, value),
+                                child: SvgPicture.asset(
+                                  R.image.arrowDown,
+                                  width: R.sizes.iconSize3,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        R.sizes.hSizer8,
+                        Container(
+                          color: Colors.transparent,
+                          height: 45,
+                          child: RiveAnimation.asset(
+                            R.image.scaleLoadingLines,
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.bottomCenter,
+                          ),
+                        ),
                         R.sizes.hSizer28,
                         R.sizes.hSizer28,
                         R.sizes.hSizer28,

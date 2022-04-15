@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'mi_scale_cubit.dart';
+part of 'mi_scale_ops_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,35 +14,35 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$MiScaleStateTearOff {
-  const _$MiScaleStateTearOff();
+class _$MiScaleOpsStateTearOff {
+  const _$MiScaleOpsStateTearOff();
 
-  MiScaleInitialState initial() {
-    return const MiScaleInitialState();
+  MiScaleOpsInitialState initial() {
+    return const MiScaleOpsInitialState();
   }
 
-  MiScaleShowLoadingState showLoading(ScaleEntity scaleEntity) {
-    return MiScaleShowLoadingState(
+  MiScaleOpsShowLoadingState showLoading(ScaleEntity scaleEntity) {
+    return MiScaleOpsShowLoadingState(
       scaleEntity,
     );
   }
 
-  MiScaleDismissLoadingState dismissLoading() {
-    return const MiScaleDismissLoadingState();
+  MiScaleOpsDismissLoadingState dismissLoading() {
+    return const MiScaleOpsDismissLoadingState();
   }
 
-  MiScaleShowScalePopupState showScalePopup(ScaleEntity scaleEntity) {
-    return MiScaleShowScalePopupState(
+  MiScaleOpsShowScalePopupState showScalePopup(ScaleEntity scaleEntity) {
+    return MiScaleOpsShowScalePopupState(
       scaleEntity,
     );
   }
 }
 
 /// @nodoc
-const $MiScaleState = _$MiScaleStateTearOff();
+const $MiScaleOpsState = _$MiScaleOpsStateTearOff();
 
 /// @nodoc
-mixin _$MiScaleState {
+mixin _$MiScaleOpsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -70,80 +70,83 @@ mixin _$MiScaleState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(MiScaleInitialState value) initial,
-    required TResult Function(MiScaleShowLoadingState value) showLoading,
-    required TResult Function(MiScaleDismissLoadingState value) dismissLoading,
-    required TResult Function(MiScaleShowScalePopupState value) showScalePopup,
+    required TResult Function(MiScaleOpsInitialState value) initial,
+    required TResult Function(MiScaleOpsShowLoadingState value) showLoading,
+    required TResult Function(MiScaleOpsDismissLoadingState value)
+        dismissLoading,
+    required TResult Function(MiScaleOpsShowScalePopupState value)
+        showScalePopup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MiScaleStateCopyWith<$Res> {
-  factory $MiScaleStateCopyWith(
-          MiScaleState value, $Res Function(MiScaleState) then) =
-      _$MiScaleStateCopyWithImpl<$Res>;
+abstract class $MiScaleOpsStateCopyWith<$Res> {
+  factory $MiScaleOpsStateCopyWith(
+          MiScaleOpsState value, $Res Function(MiScaleOpsState) then) =
+      _$MiScaleOpsStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MiScaleStateCopyWithImpl<$Res> implements $MiScaleStateCopyWith<$Res> {
-  _$MiScaleStateCopyWithImpl(this._value, this._then);
+class _$MiScaleOpsStateCopyWithImpl<$Res>
+    implements $MiScaleOpsStateCopyWith<$Res> {
+  _$MiScaleOpsStateCopyWithImpl(this._value, this._then);
 
-  final MiScaleState _value;
+  final MiScaleOpsState _value;
   // ignore: unused_field
-  final $Res Function(MiScaleState) _then;
+  final $Res Function(MiScaleOpsState) _then;
 }
 
 /// @nodoc
-abstract class $MiScaleInitialStateCopyWith<$Res> {
-  factory $MiScaleInitialStateCopyWith(
-          MiScaleInitialState value, $Res Function(MiScaleInitialState) then) =
-      _$MiScaleInitialStateCopyWithImpl<$Res>;
+abstract class $MiScaleOpsInitialStateCopyWith<$Res> {
+  factory $MiScaleOpsInitialStateCopyWith(MiScaleOpsInitialState value,
+          $Res Function(MiScaleOpsInitialState) then) =
+      _$MiScaleOpsInitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MiScaleInitialStateCopyWithImpl<$Res>
-    extends _$MiScaleStateCopyWithImpl<$Res>
-    implements $MiScaleInitialStateCopyWith<$Res> {
-  _$MiScaleInitialStateCopyWithImpl(
-      MiScaleInitialState _value, $Res Function(MiScaleInitialState) _then)
-      : super(_value, (v) => _then(v as MiScaleInitialState));
+class _$MiScaleOpsInitialStateCopyWithImpl<$Res>
+    extends _$MiScaleOpsStateCopyWithImpl<$Res>
+    implements $MiScaleOpsInitialStateCopyWith<$Res> {
+  _$MiScaleOpsInitialStateCopyWithImpl(MiScaleOpsInitialState _value,
+      $Res Function(MiScaleOpsInitialState) _then)
+      : super(_value, (v) => _then(v as MiScaleOpsInitialState));
 
   @override
-  MiScaleInitialState get _value => super._value as MiScaleInitialState;
+  MiScaleOpsInitialState get _value => super._value as MiScaleOpsInitialState;
 }
 
 /// @nodoc
 
-class _$MiScaleInitialState implements MiScaleInitialState {
-  const _$MiScaleInitialState();
+class _$MiScaleOpsInitialState implements MiScaleOpsInitialState {
+  const _$MiScaleOpsInitialState();
 
   @override
   String toString() {
-    return 'MiScaleState.initial()';
+    return 'MiScaleOpsState.initial()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is MiScaleInitialState);
+        (other.runtimeType == runtimeType && other is MiScaleOpsInitialState);
   }
 
   @override
@@ -189,10 +192,12 @@ class _$MiScaleInitialState implements MiScaleInitialState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(MiScaleInitialState value) initial,
-    required TResult Function(MiScaleShowLoadingState value) showLoading,
-    required TResult Function(MiScaleDismissLoadingState value) dismissLoading,
-    required TResult Function(MiScaleShowScalePopupState value) showScalePopup,
+    required TResult Function(MiScaleOpsInitialState value) initial,
+    required TResult Function(MiScaleOpsShowLoadingState value) showLoading,
+    required TResult Function(MiScaleOpsDismissLoadingState value)
+        dismissLoading,
+    required TResult Function(MiScaleOpsShowScalePopupState value)
+        showScalePopup,
   }) {
     return initial(this);
   }
@@ -200,10 +205,10 @@ class _$MiScaleInitialState implements MiScaleInitialState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
   }) {
     return initial?.call(this);
   }
@@ -211,10 +216,10 @@ class _$MiScaleInitialState implements MiScaleInitialState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -224,34 +229,35 @@ class _$MiScaleInitialState implements MiScaleInitialState {
   }
 }
 
-abstract class MiScaleInitialState implements MiScaleState {
-  const factory MiScaleInitialState() = _$MiScaleInitialState;
+abstract class MiScaleOpsInitialState implements MiScaleOpsState {
+  const factory MiScaleOpsInitialState() = _$MiScaleOpsInitialState;
 }
 
 /// @nodoc
-abstract class $MiScaleShowLoadingStateCopyWith<$Res> {
-  factory $MiScaleShowLoadingStateCopyWith(MiScaleShowLoadingState value,
-          $Res Function(MiScaleShowLoadingState) then) =
-      _$MiScaleShowLoadingStateCopyWithImpl<$Res>;
+abstract class $MiScaleOpsShowLoadingStateCopyWith<$Res> {
+  factory $MiScaleOpsShowLoadingStateCopyWith(MiScaleOpsShowLoadingState value,
+          $Res Function(MiScaleOpsShowLoadingState) then) =
+      _$MiScaleOpsShowLoadingStateCopyWithImpl<$Res>;
   $Res call({ScaleEntity scaleEntity});
 }
 
 /// @nodoc
-class _$MiScaleShowLoadingStateCopyWithImpl<$Res>
-    extends _$MiScaleStateCopyWithImpl<$Res>
-    implements $MiScaleShowLoadingStateCopyWith<$Res> {
-  _$MiScaleShowLoadingStateCopyWithImpl(MiScaleShowLoadingState _value,
-      $Res Function(MiScaleShowLoadingState) _then)
-      : super(_value, (v) => _then(v as MiScaleShowLoadingState));
+class _$MiScaleOpsShowLoadingStateCopyWithImpl<$Res>
+    extends _$MiScaleOpsStateCopyWithImpl<$Res>
+    implements $MiScaleOpsShowLoadingStateCopyWith<$Res> {
+  _$MiScaleOpsShowLoadingStateCopyWithImpl(MiScaleOpsShowLoadingState _value,
+      $Res Function(MiScaleOpsShowLoadingState) _then)
+      : super(_value, (v) => _then(v as MiScaleOpsShowLoadingState));
 
   @override
-  MiScaleShowLoadingState get _value => super._value as MiScaleShowLoadingState;
+  MiScaleOpsShowLoadingState get _value =>
+      super._value as MiScaleOpsShowLoadingState;
 
   @override
   $Res call({
     Object? scaleEntity = freezed,
   }) {
-    return _then(MiScaleShowLoadingState(
+    return _then(MiScaleOpsShowLoadingState(
       scaleEntity == freezed
           ? _value.scaleEntity
           : scaleEntity // ignore: cast_nullable_to_non_nullable
@@ -262,22 +268,22 @@ class _$MiScaleShowLoadingStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MiScaleShowLoadingState implements MiScaleShowLoadingState {
-  const _$MiScaleShowLoadingState(this.scaleEntity);
+class _$MiScaleOpsShowLoadingState implements MiScaleOpsShowLoadingState {
+  const _$MiScaleOpsShowLoadingState(this.scaleEntity);
 
   @override
   final ScaleEntity scaleEntity;
 
   @override
   String toString() {
-    return 'MiScaleState.showLoading(scaleEntity: $scaleEntity)';
+    return 'MiScaleOpsState.showLoading(scaleEntity: $scaleEntity)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is MiScaleShowLoadingState &&
+            other is MiScaleOpsShowLoadingState &&
             const DeepCollectionEquality()
                 .equals(other.scaleEntity, scaleEntity));
   }
@@ -288,9 +294,10 @@ class _$MiScaleShowLoadingState implements MiScaleShowLoadingState {
 
   @JsonKey(ignore: true)
   @override
-  $MiScaleShowLoadingStateCopyWith<MiScaleShowLoadingState> get copyWith =>
-      _$MiScaleShowLoadingStateCopyWithImpl<MiScaleShowLoadingState>(
-          this, _$identity);
+  $MiScaleOpsShowLoadingStateCopyWith<MiScaleOpsShowLoadingState>
+      get copyWith =>
+          _$MiScaleOpsShowLoadingStateCopyWithImpl<MiScaleOpsShowLoadingState>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -332,10 +339,12 @@ class _$MiScaleShowLoadingState implements MiScaleShowLoadingState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(MiScaleInitialState value) initial,
-    required TResult Function(MiScaleShowLoadingState value) showLoading,
-    required TResult Function(MiScaleDismissLoadingState value) dismissLoading,
-    required TResult Function(MiScaleShowScalePopupState value) showScalePopup,
+    required TResult Function(MiScaleOpsInitialState value) initial,
+    required TResult Function(MiScaleOpsShowLoadingState value) showLoading,
+    required TResult Function(MiScaleOpsDismissLoadingState value)
+        dismissLoading,
+    required TResult Function(MiScaleOpsShowScalePopupState value)
+        showScalePopup,
   }) {
     return showLoading(this);
   }
@@ -343,10 +352,10 @@ class _$MiScaleShowLoadingState implements MiScaleShowLoadingState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
   }) {
     return showLoading?.call(this);
   }
@@ -354,10 +363,10 @@ class _$MiScaleShowLoadingState implements MiScaleShowLoadingState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
     required TResult orElse(),
   }) {
     if (showLoading != null) {
@@ -367,51 +376,53 @@ class _$MiScaleShowLoadingState implements MiScaleShowLoadingState {
   }
 }
 
-abstract class MiScaleShowLoadingState implements MiScaleState {
-  const factory MiScaleShowLoadingState(ScaleEntity scaleEntity) =
-      _$MiScaleShowLoadingState;
+abstract class MiScaleOpsShowLoadingState implements MiScaleOpsState {
+  const factory MiScaleOpsShowLoadingState(ScaleEntity scaleEntity) =
+      _$MiScaleOpsShowLoadingState;
 
   ScaleEntity get scaleEntity;
   @JsonKey(ignore: true)
-  $MiScaleShowLoadingStateCopyWith<MiScaleShowLoadingState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $MiScaleOpsShowLoadingStateCopyWith<MiScaleOpsShowLoadingState>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MiScaleDismissLoadingStateCopyWith<$Res> {
-  factory $MiScaleDismissLoadingStateCopyWith(MiScaleDismissLoadingState value,
-          $Res Function(MiScaleDismissLoadingState) then) =
-      _$MiScaleDismissLoadingStateCopyWithImpl<$Res>;
+abstract class $MiScaleOpsDismissLoadingStateCopyWith<$Res> {
+  factory $MiScaleOpsDismissLoadingStateCopyWith(
+          MiScaleOpsDismissLoadingState value,
+          $Res Function(MiScaleOpsDismissLoadingState) then) =
+      _$MiScaleOpsDismissLoadingStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MiScaleDismissLoadingStateCopyWithImpl<$Res>
-    extends _$MiScaleStateCopyWithImpl<$Res>
-    implements $MiScaleDismissLoadingStateCopyWith<$Res> {
-  _$MiScaleDismissLoadingStateCopyWithImpl(MiScaleDismissLoadingState _value,
-      $Res Function(MiScaleDismissLoadingState) _then)
-      : super(_value, (v) => _then(v as MiScaleDismissLoadingState));
+class _$MiScaleOpsDismissLoadingStateCopyWithImpl<$Res>
+    extends _$MiScaleOpsStateCopyWithImpl<$Res>
+    implements $MiScaleOpsDismissLoadingStateCopyWith<$Res> {
+  _$MiScaleOpsDismissLoadingStateCopyWithImpl(
+      MiScaleOpsDismissLoadingState _value,
+      $Res Function(MiScaleOpsDismissLoadingState) _then)
+      : super(_value, (v) => _then(v as MiScaleOpsDismissLoadingState));
 
   @override
-  MiScaleDismissLoadingState get _value =>
-      super._value as MiScaleDismissLoadingState;
+  MiScaleOpsDismissLoadingState get _value =>
+      super._value as MiScaleOpsDismissLoadingState;
 }
 
 /// @nodoc
 
-class _$MiScaleDismissLoadingState implements MiScaleDismissLoadingState {
-  const _$MiScaleDismissLoadingState();
+class _$MiScaleOpsDismissLoadingState implements MiScaleOpsDismissLoadingState {
+  const _$MiScaleOpsDismissLoadingState();
 
   @override
   String toString() {
-    return 'MiScaleState.dismissLoading()';
+    return 'MiScaleOpsState.dismissLoading()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is MiScaleDismissLoadingState);
+            other is MiScaleOpsDismissLoadingState);
   }
 
   @override
@@ -457,10 +468,12 @@ class _$MiScaleDismissLoadingState implements MiScaleDismissLoadingState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(MiScaleInitialState value) initial,
-    required TResult Function(MiScaleShowLoadingState value) showLoading,
-    required TResult Function(MiScaleDismissLoadingState value) dismissLoading,
-    required TResult Function(MiScaleShowScalePopupState value) showScalePopup,
+    required TResult Function(MiScaleOpsInitialState value) initial,
+    required TResult Function(MiScaleOpsShowLoadingState value) showLoading,
+    required TResult Function(MiScaleOpsDismissLoadingState value)
+        dismissLoading,
+    required TResult Function(MiScaleOpsShowScalePopupState value)
+        showScalePopup,
   }) {
     return dismissLoading(this);
   }
@@ -468,10 +481,10 @@ class _$MiScaleDismissLoadingState implements MiScaleDismissLoadingState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
   }) {
     return dismissLoading?.call(this);
   }
@@ -479,10 +492,10 @@ class _$MiScaleDismissLoadingState implements MiScaleDismissLoadingState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
     required TResult orElse(),
   }) {
     if (dismissLoading != null) {
@@ -492,35 +505,38 @@ class _$MiScaleDismissLoadingState implements MiScaleDismissLoadingState {
   }
 }
 
-abstract class MiScaleDismissLoadingState implements MiScaleState {
-  const factory MiScaleDismissLoadingState() = _$MiScaleDismissLoadingState;
+abstract class MiScaleOpsDismissLoadingState implements MiScaleOpsState {
+  const factory MiScaleOpsDismissLoadingState() =
+      _$MiScaleOpsDismissLoadingState;
 }
 
 /// @nodoc
-abstract class $MiScaleShowScalePopupStateCopyWith<$Res> {
-  factory $MiScaleShowScalePopupStateCopyWith(MiScaleShowScalePopupState value,
-          $Res Function(MiScaleShowScalePopupState) then) =
-      _$MiScaleShowScalePopupStateCopyWithImpl<$Res>;
+abstract class $MiScaleOpsShowScalePopupStateCopyWith<$Res> {
+  factory $MiScaleOpsShowScalePopupStateCopyWith(
+          MiScaleOpsShowScalePopupState value,
+          $Res Function(MiScaleOpsShowScalePopupState) then) =
+      _$MiScaleOpsShowScalePopupStateCopyWithImpl<$Res>;
   $Res call({ScaleEntity scaleEntity});
 }
 
 /// @nodoc
-class _$MiScaleShowScalePopupStateCopyWithImpl<$Res>
-    extends _$MiScaleStateCopyWithImpl<$Res>
-    implements $MiScaleShowScalePopupStateCopyWith<$Res> {
-  _$MiScaleShowScalePopupStateCopyWithImpl(MiScaleShowScalePopupState _value,
-      $Res Function(MiScaleShowScalePopupState) _then)
-      : super(_value, (v) => _then(v as MiScaleShowScalePopupState));
+class _$MiScaleOpsShowScalePopupStateCopyWithImpl<$Res>
+    extends _$MiScaleOpsStateCopyWithImpl<$Res>
+    implements $MiScaleOpsShowScalePopupStateCopyWith<$Res> {
+  _$MiScaleOpsShowScalePopupStateCopyWithImpl(
+      MiScaleOpsShowScalePopupState _value,
+      $Res Function(MiScaleOpsShowScalePopupState) _then)
+      : super(_value, (v) => _then(v as MiScaleOpsShowScalePopupState));
 
   @override
-  MiScaleShowScalePopupState get _value =>
-      super._value as MiScaleShowScalePopupState;
+  MiScaleOpsShowScalePopupState get _value =>
+      super._value as MiScaleOpsShowScalePopupState;
 
   @override
   $Res call({
     Object? scaleEntity = freezed,
   }) {
-    return _then(MiScaleShowScalePopupState(
+    return _then(MiScaleOpsShowScalePopupState(
       scaleEntity == freezed
           ? _value.scaleEntity
           : scaleEntity // ignore: cast_nullable_to_non_nullable
@@ -531,22 +547,22 @@ class _$MiScaleShowScalePopupStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MiScaleShowScalePopupState implements MiScaleShowScalePopupState {
-  const _$MiScaleShowScalePopupState(this.scaleEntity);
+class _$MiScaleOpsShowScalePopupState implements MiScaleOpsShowScalePopupState {
+  const _$MiScaleOpsShowScalePopupState(this.scaleEntity);
 
   @override
   final ScaleEntity scaleEntity;
 
   @override
   String toString() {
-    return 'MiScaleState.showScalePopup(scaleEntity: $scaleEntity)';
+    return 'MiScaleOpsState.showScalePopup(scaleEntity: $scaleEntity)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is MiScaleShowScalePopupState &&
+            other is MiScaleOpsShowScalePopupState &&
             const DeepCollectionEquality()
                 .equals(other.scaleEntity, scaleEntity));
   }
@@ -557,10 +573,9 @@ class _$MiScaleShowScalePopupState implements MiScaleShowScalePopupState {
 
   @JsonKey(ignore: true)
   @override
-  $MiScaleShowScalePopupStateCopyWith<MiScaleShowScalePopupState>
-      get copyWith =>
-          _$MiScaleShowScalePopupStateCopyWithImpl<MiScaleShowScalePopupState>(
-              this, _$identity);
+  $MiScaleOpsShowScalePopupStateCopyWith<MiScaleOpsShowScalePopupState>
+      get copyWith => _$MiScaleOpsShowScalePopupStateCopyWithImpl<
+          MiScaleOpsShowScalePopupState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -602,10 +617,12 @@ class _$MiScaleShowScalePopupState implements MiScaleShowScalePopupState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(MiScaleInitialState value) initial,
-    required TResult Function(MiScaleShowLoadingState value) showLoading,
-    required TResult Function(MiScaleDismissLoadingState value) dismissLoading,
-    required TResult Function(MiScaleShowScalePopupState value) showScalePopup,
+    required TResult Function(MiScaleOpsInitialState value) initial,
+    required TResult Function(MiScaleOpsShowLoadingState value) showLoading,
+    required TResult Function(MiScaleOpsDismissLoadingState value)
+        dismissLoading,
+    required TResult Function(MiScaleOpsShowScalePopupState value)
+        showScalePopup,
   }) {
     return showScalePopup(this);
   }
@@ -613,10 +630,10 @@ class _$MiScaleShowScalePopupState implements MiScaleShowScalePopupState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
   }) {
     return showScalePopup?.call(this);
   }
@@ -624,10 +641,10 @@ class _$MiScaleShowScalePopupState implements MiScaleShowScalePopupState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(MiScaleInitialState value)? initial,
-    TResult Function(MiScaleShowLoadingState value)? showLoading,
-    TResult Function(MiScaleDismissLoadingState value)? dismissLoading,
-    TResult Function(MiScaleShowScalePopupState value)? showScalePopup,
+    TResult Function(MiScaleOpsInitialState value)? initial,
+    TResult Function(MiScaleOpsShowLoadingState value)? showLoading,
+    TResult Function(MiScaleOpsDismissLoadingState value)? dismissLoading,
+    TResult Function(MiScaleOpsShowScalePopupState value)? showScalePopup,
     required TResult orElse(),
   }) {
     if (showScalePopup != null) {
@@ -637,12 +654,12 @@ class _$MiScaleShowScalePopupState implements MiScaleShowScalePopupState {
   }
 }
 
-abstract class MiScaleShowScalePopupState implements MiScaleState {
-  const factory MiScaleShowScalePopupState(ScaleEntity scaleEntity) =
-      _$MiScaleShowScalePopupState;
+abstract class MiScaleOpsShowScalePopupState implements MiScaleOpsState {
+  const factory MiScaleOpsShowScalePopupState(ScaleEntity scaleEntity) =
+      _$MiScaleOpsShowScalePopupState;
 
   ScaleEntity get scaleEntity;
   @JsonKey(ignore: true)
-  $MiScaleShowScalePopupStateCopyWith<MiScaleShowScalePopupState>
+  $MiScaleOpsShowScalePopupStateCopyWith<MiScaleOpsShowScalePopupState>
       get copyWith => throw _privateConstructorUsedError;
 }
