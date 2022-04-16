@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:scale_api/scale_api.dart';
-import 'package:scale_health_impl/scale_health_impl.dart';
-import 'package:scale_hive_impl/scale_hive_impl.dart';
+import 'package:onedosehealth/core/core.dart';
 
 String addScaleMasurementBodyToJson(AddScaleMasurementBody data) =>
     json.encode(data.toJson());
@@ -62,7 +60,8 @@ extension AddScaleMasurementBodyExtension on AddScaleMasurementBody {
   ScaleHiveModel xToScaleHiveModel(int measurementId) {
     var localDate = occurrenceTime!.toIso8601String();
     localDate = (localDate.substring(0, localDate.length - 2)) + "+00:00";
-    final lastDate = DateTime.parse(localDate).toUtc().millisecondsSinceEpoch.toString();
+    final lastDate =
+        DateTime.parse(localDate).toUtc().millisecondsSinceEpoch.toString();
 
     return ScaleHiveModel(
       occurrenceTime: lastDate,

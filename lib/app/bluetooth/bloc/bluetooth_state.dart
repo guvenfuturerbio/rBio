@@ -1,13 +1,13 @@
 part of 'bluetooth_bloc.dart';
 
-class BluetoothState {
+class BluetoothV1State {
   BleStatus bleStatus;
   List<DiscoveredDevice> discoveredDevices;
   List<String> pairedDeviceIds;
   DiscoveredDevice? device;
   List<ConnectionStateUpdate> deviceConnectionState;
 
-  BluetoothState({
+  BluetoothV1State({
     this.bleStatus = BleStatus.unknown,
     this.discoveredDevices = const [],
     this.pairedDeviceIds = const [],
@@ -17,12 +17,12 @@ class BluetoothState {
 
   @override
   String toString() {
-    return 'BluetoothState(bleStatus: $bleStatus, discoveredDevices: $discoveredDevices, pairedDeviceIds: $pairedDeviceIds, device: $device, deviceConnectionState: $deviceConnectionState)';
+    return 'BluetoothV1State(bleStatus: $bleStatus, discoveredDevices: $discoveredDevices, pairedDeviceIds: $pairedDeviceIds, device: $device, deviceConnectionState: $deviceConnectionState)';
   }
 }
 
-extension BluetoothStateExtension on BluetoothState {
-  BluetoothState updateBleStatus(BleStatus value) => BluetoothState(
+extension BluetoothV1StateExtension on BluetoothV1State {
+  BluetoothV1State updateBleStatus(BleStatus value) => BluetoothV1State(
         bleStatus: value,
         discoveredDevices: discoveredDevices,
         pairedDeviceIds: pairedDeviceIds,
@@ -30,7 +30,7 @@ extension BluetoothStateExtension on BluetoothState {
         deviceConnectionState: deviceConnectionState,
       );
 
-  BluetoothState updateDevice(DiscoveredDevice? value) => BluetoothState(
+  BluetoothV1State updateDevice(DiscoveredDevice? value) => BluetoothV1State(
         bleStatus: bleStatus,
         discoveredDevices: discoveredDevices,
         pairedDeviceIds: pairedDeviceIds,
@@ -38,7 +38,7 @@ extension BluetoothStateExtension on BluetoothState {
         deviceConnectionState: deviceConnectionState,
       );
 
-  BluetoothState updatePairedDeviceIds(List<String> value) => BluetoothState(
+  BluetoothV1State updatePairedDeviceIds(List<String> value) => BluetoothV1State(
         bleStatus: bleStatus,
         discoveredDevices: discoveredDevices,
         pairedDeviceIds: value,
@@ -46,8 +46,8 @@ extension BluetoothStateExtension on BluetoothState {
         deviceConnectionState: deviceConnectionState,
       );
 
-  BluetoothState updateDiscoveredDevices(List<DiscoveredDevice> value) =>
-      BluetoothState(
+  BluetoothV1State updateDiscoveredDevices(List<DiscoveredDevice> value) =>
+      BluetoothV1State(
         bleStatus: bleStatus,
         discoveredDevices: value,
         pairedDeviceIds: pairedDeviceIds,
@@ -55,8 +55,8 @@ extension BluetoothStateExtension on BluetoothState {
         deviceConnectionState: deviceConnectionState,
       );
 
-  BluetoothState updateDeviceConnections(List<ConnectionStateUpdate> value) =>
-      BluetoothState(
+  BluetoothV1State updateDeviceConnections(List<ConnectionStateUpdate> value) =>
+      BluetoothV1State(
         bleStatus: bleStatus,
         discoveredDevices: discoveredDevices,
         pairedDeviceIds: pairedDeviceIds,

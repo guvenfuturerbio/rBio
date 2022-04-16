@@ -133,11 +133,8 @@ class _MeasurementTrackingHomeScreenState
               children: vm.items
                   .map(
                     (parentElement) => _SectionCard(
-                      isActive: vm.activeItem != null &&
-                          vm.activeItem!.key == parentElement.key,
                       isVisible: vm.activeItem == null,
                       smallChild: parentElement.smallChild ?? const SizedBox(),
-                      largeChild: parentElement.largeChild ?? const SizedBox(),
                       hasDivider: vm.activeItem == null &&
                           vm.items.indexWhere((element) =>
                                   element.key == parentElement.key) <

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rive/rive.dart';
 import 'package:simple_animations/simple_animations.dart';
-import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../../../core/core.dart';

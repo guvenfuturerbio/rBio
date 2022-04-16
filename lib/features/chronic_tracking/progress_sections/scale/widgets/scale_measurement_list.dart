@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../core/core.dart';
 import '../viewmodel/scale_progress_vm.dart';

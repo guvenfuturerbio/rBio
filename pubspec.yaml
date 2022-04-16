@@ -6,7 +6,7 @@ publish_to: "none"
 version: 1.0.18+31
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ">=2.16.0 <3.0.0"
 
 dependency_overrides:
   flutter_reactive_ble:
@@ -25,20 +25,10 @@ dependency_overrides:
     path: ./packages/key_manager
   cache:
     path: ./packages/cache
-  scale_api:
-    path: ./packages/health_packages/scale_api
-  scale_calculations:
-    path: ./packages/health_packages/scale_calculations
-  scale_health_impl:
-    path: ./packages/health_packages/scale_health_impl
-  scale_hive_impl:
-    path: ./packages/health_packages/scale_hive_impl
-  scale_repository:
-    path: ./packages/health_packages/scale_repository
+  scale_dependencies:
+    path: ./packages/health_packages/scale_dependencies
   shared_preferences_manager:
     path: ./packages/shared_preferences_manager
-  mi_scale:
-    path: ./packages/health_packages/mi_scale
   local_notification_manager:
     path: ./packages/local_notification_manager
 
@@ -136,9 +126,9 @@ dependencies:
   slugify: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
   spring: ^2.0.2
-  syncfusion_flutter_charts: ^19.4.50
-  syncfusion_flutter_gauges: ^19.4.50
-  syncfusion_flutter_pdfviewer: ^19.4.50-beta
+  syncfusion_flutter_charts: ^20.1.48
+  syncfusion_flutter_gauges: ^20.1.48
+  syncfusion_flutter_pdfviewer: ^20.1.48-beta.1
   table_calendar: ^3.0.3
   time: ^2.1.0
   timeago: ^3.2.2

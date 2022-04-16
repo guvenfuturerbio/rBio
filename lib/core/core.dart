@@ -1,9 +1,9 @@
 export 'package:atom/atom.dart';
 export 'package:shared_preferences_manager/shared_preferences_manager.dart';
 export 'package:local_notification_manager/local_notification_manager.dart';
-export 'package:scale_api/scale_api.dart';
 export 'package:key_manager/key_manager.dart';
 export 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+export 'package:scale_dependencies/scale_dependencies.dart';
 
 export '../app/bluetooth/bluetooth.dart';
 export '../app/config/app_config.dart';

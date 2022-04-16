@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:scale_repository/scale_repository.dart';
 
+import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
 
 class ReadValuesUseCase extends UseCase<void, ReadValuesParams> {

@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:scale_repository/scale_repository.dart';
-
 import '../../../../../../core/core.dart';
 import '../../../../bluetooth_v2.dart';
 

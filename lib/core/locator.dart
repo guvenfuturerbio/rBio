@@ -3,9 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:scale_health_impl/scale_health_impl.dart';
-import 'package:scale_hive_impl/scale_hive_impl.dart';
-import 'package:scale_repository/scale_repository.dart';
 
 import '../app/bluetooth_v2/bluetooth_v2.dart';
 import '../features/mediminder/mediminder.dart';
@@ -213,7 +210,6 @@ Future<void> setupLocator(AppConfig appConfig) async {
       getIt<GuvenService>(),
       ScaleHiveImpl(),
       ScaleHealthImpl(),
-      getIt<BleReactorOps>(),
     ),
   );
 
@@ -250,11 +246,9 @@ class GuvenSettings {
 
 Future<void> registerStorage() async {
   Hive.registerAdapter<TreatmentModel>(TreatmentModelAdapter());
-  Hive.registerAdapter<ScaleUnit>(ScaleUnitAdapter());
 
   Hive.registerAdapter<Person>(PersonAdapter());
   Hive.registerAdapter<GlucoseData>(GlucoseDataAdapter());
-  Hive.registerAdapter<ScaleModel>(ScaleModelAdapter());
   Hive.registerAdapter<BloodPressureModel>(BloodPressureModelAdapter());
 
   Hive.registerAdapter<ScaleHiveModel>(ScaleHiveModelAdapter());

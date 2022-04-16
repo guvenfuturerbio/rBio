@@ -358,6 +358,7 @@ class VRouterRoutes {
       ],
     ),
 
+    //
     VGuard(
       beforeEnter: (vRedirector) async {
         if (!getIt<UserNotifier>().isCronic) {
@@ -370,10 +371,6 @@ class VRouterRoutes {
           path: PagePaths.measurementTracking,
           widget: const MeasurementTrackingHomeScreen(),
           stackedRoutes: [
-            VWidget(
-              path: PagePaths.bmiProgress,
-              widget: const ScaleProgressScreen(),
-            ),
             VWidget(
               path: PagePaths.bpProgress,
               widget: const BpProgressScreen(),

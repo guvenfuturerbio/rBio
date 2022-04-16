@@ -167,7 +167,7 @@ class SelectedDeviceVm extends ChangeNotifier {
   }
 
   void connectDevice(
-    BluetoothState bluetoothState,
+    BluetoothV1State bluetoothState,
     DiscoveredDevice device,
   ) async {
     switch (deviceType) {

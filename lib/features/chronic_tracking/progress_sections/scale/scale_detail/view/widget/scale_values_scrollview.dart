@@ -1,9 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:scale_repository/scale_repository.dart';
-import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../scale_detail.dart';
@@ -179,9 +176,9 @@ class ScaleValuesScrollView extends StatelessWidget {
             description: '',
             model: DynamicColorfulRangeModel(
               currentValue: currentValue,
-              minValue: kBMHMinimum,
-              maxValue: kBMHMaximum,
-              breakpoints: kBMHRanges,
+              minValue: ScaleConstants.bMHMinimum,
+              maxValue: ScaleConstants.bMHMaximum,
+              breakpoints: ScaleConstants.bMHRanges,
               colors: type.xGetColors,
               titles: [
                 LocaleProvider.current.didnt_reach_goals,
@@ -200,9 +197,12 @@ class ScaleValuesScrollView extends StatelessWidget {
             description: '',
             model: DynamicColorfulRangeModel(
               currentValue: currentValue,
-              minValue: kBodyFatMinimum(Utils.instance.getGender()),
-              maxValue: kBodyFatMaximum(Utils.instance.getGender()),
-              breakpoints: kBodyFatRanges(Utils.instance.getGender()),
+              minValue:
+                  ScaleConstants.bodyFatMinimum(Utils.instance.getGender()),
+              maxValue:
+                  ScaleConstants.bodyFatMaximum(Utils.instance.getGender()),
+              breakpoints:
+                  ScaleConstants.bodyFatRanges(Utils.instance.getGender()),
               colors: type.xGetColors,
               titles: [
                 LocaleProvider.current.low,
@@ -223,9 +223,9 @@ class ScaleValuesScrollView extends StatelessWidget {
             description: '',
             model: DynamicColorfulRangeModel(
               currentValue: currentValue,
-              minValue: kBMIMinimum,
-              maxValue: kBMIMaximum,
-              breakpoints: kBMIRanges,
+              minValue: ScaleConstants.bMIMinimum,
+              maxValue: ScaleConstants.bMIMaximum,
+              breakpoints: ScaleConstants.bMIRanges,
               colors: type.xGetColors,
               titles: [
                 LocaleProvider.current.low,
@@ -247,9 +247,12 @@ class ScaleValuesScrollView extends StatelessWidget {
             description: '',
             model: DynamicColorfulRangeModel(
               currentValue: currentValue,
-              minValue: kMuscleMinimum(Utils.instance.getGender()),
-              maxValue: kMuscleMaximum(Utils.instance.getGender()),
-              breakpoints: kMuscleRanges(Utils.instance.getGender()),
+              minValue:
+                  ScaleConstants.muscleMinimum(Utils.instance.getGender()),
+              maxValue:
+                  ScaleConstants.muscleMaximum(Utils.instance.getGender()),
+              breakpoints:
+                  ScaleConstants.muscleRanges(Utils.instance.getGender()),
               colors: type.xGetColors,
               titles: [
                 LocaleProvider.current.low,
@@ -270,9 +273,10 @@ class ScaleValuesScrollView extends StatelessWidget {
             description: '',
             model: DynamicColorfulRangeModel(
               currentValue: currentValue,
-              minValue: kWaterMinimum(Utils.instance.getGender()),
-              maxValue: kWaterMaximum(Utils.instance.getGender()),
-              breakpoints: kWaterRanges(Utils.instance.getGender()),
+              minValue: ScaleConstants.waterMinimum(Utils.instance.getGender()),
+              maxValue: ScaleConstants.waterMaximum(Utils.instance.getGender()),
+              breakpoints:
+                  ScaleConstants.waterRanges(Utils.instance.getGender()),
               colors: type.xGetColors,
               titles: [
                 LocaleProvider.current.low,
@@ -292,9 +296,9 @@ class ScaleValuesScrollView extends StatelessWidget {
             description: '',
             model: DynamicColorfulRangeModel(
               currentValue: currentValue,
-              minValue: kVisceralFatMinimum,
-              maxValue: kVisceralFatMaximum,
-              breakpoints: kVisceralFatRanges,
+              minValue: ScaleConstants.visceralFatMinimum,
+              maxValue: ScaleConstants.visceralFatMaximum,
+              breakpoints: ScaleConstants.visceralFatRanges,
               colors: type.xGetColors,
               titles: [
                 LocaleProvider.current.normal,
@@ -314,9 +318,9 @@ class ScaleValuesScrollView extends StatelessWidget {
             description: '',
             model: DynamicColorfulRangeModel(
               currentValue: currentValue,
-              minValue: kBoneMassMinimum,
-              maxValue: kBoneMassMaximum,
-              breakpoints: kBoneMassRanges,
+              minValue: ScaleConstants.boneMassMinimum,
+              maxValue: ScaleConstants.boneMassMaximum,
+              breakpoints: ScaleConstants.boneMassRanges,
               colors: type.xGetColors,
               titles: [
                 LocaleProvider.current.insufficient,

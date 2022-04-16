@@ -1,7 +1,6 @@
-import 'package:onedosehealth/app/bluetooth_v2/bluetooth_v2.dart';
-import 'package:scale_repository/scale_repository.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../../core/core.dart';
 import '../scale_detail.dart';
 

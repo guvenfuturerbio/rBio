@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:scale_repository/scale_repository.dart';
-import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../../../core/core.dart';
 

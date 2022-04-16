@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scale_repository/scale_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
@@ -785,7 +783,7 @@ class ScaleProgressVm extends ChangeNotifier
     //             scaleModel: getIt<ScaleStorageImpl>().getLatestMeasurement()!)
     //         : null;
 
-    ScaleEntity? scaleEntity = getIt<ScaleRepository>().getLatestMeasurement(
+    final scaleEntity = getIt<ScaleRepository>().getLatestMeasurement(
       Utils.instance.getAge(),
       Utils.instance.getGender(),
       Utils.instance.getHeight()!,

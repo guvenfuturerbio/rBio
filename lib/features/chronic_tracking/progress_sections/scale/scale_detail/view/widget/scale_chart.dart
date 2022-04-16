@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scale_repository/scale_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../../core/core.dart';

@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/core/data/service/model/patient_scale_measurement.dart';
-import 'package:onedosehealth/features/doctor/patient_detail/scale/cubit/scale_doctor_loaded_result.dart';
-import 'package:onedosehealth/model/doctor/get_my_patient_filter.dart';
-import 'package:scale_repository/scale_repository.dart';
 
-part 'scale_doctor_state.dart';
+import '../../../../../core/core.dart';
+import '../../../../../core/data/service/model/patient_scale_measurement.dart';
+import '../../../../../model/doctor/get_my_patient_filter.dart';
+import 'scale_doctor_loaded_result.dart';
+
 part 'scale_doctor_cubit.freezed.dart';
+part 'scale_doctor_state.dart';
 
 enum GraphTypes { weight, bmi }
 
@@ -30,9 +30,9 @@ class ScaleDoctorCubit extends Cubit<ScaleDoctorState> {
   }
 
   void changeGraph(GraphTypes type) {
-        final currentState = state;
+    final currentState = state;
 
-        currentState.whenOrNull(
+    currentState.whenOrNull(
       loaded: (result) {
         emit(
           ScaleDoctorState.loaded(
@@ -42,6 +42,7 @@ class ScaleDoctorCubit extends Cubit<ScaleDoctorState> {
       },
     );
   }
+
   Future<List<PatientScaleMeasurement>> fetchScaleData() async {
     emit(const ScaleDoctorState.loading());
     var response = await getIt<DoctorRepository>().getMyPatientScale(

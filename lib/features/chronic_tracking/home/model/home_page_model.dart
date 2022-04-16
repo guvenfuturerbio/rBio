@@ -7,7 +7,6 @@ class HomePageModel<K extends IProgressScreen> {
   final String? title;
   final Color? color;
   final Key? key;
-  Widget? largeChild;
   Widget? smallChild;
   final Function(Key key)? activateCallBack;
   final Function()? deActivateCallBack;
@@ -20,12 +19,6 @@ class HomePageModel<K extends IProgressScreen> {
     this.color,
     this.deActivateCallBack,
   }) {
-    largeChild = Consumer<K>(
-      builder: (ctx, value, __) {
-        manuelEntry = () => value.manuelEntry(ctx);
-        return value.largeWidget();
-      },
-    );
     smallChild = Consumer<K>(
       builder: (_, value, __) {
         return value.smallWidget(() => activateCallBack!(key!));
