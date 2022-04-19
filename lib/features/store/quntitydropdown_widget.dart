@@ -26,7 +26,7 @@ class _QuantityDropdownWidgetState extends State<QuantityDropdownWidget> {
             style: const TextStyle(color: Colors.black),
             underline: Container(
               height: 2,
-              color: getIt<ITheme>().mainColor,
+              color: getIt<IAppConfig>().theme.mainColor,
             ),
             onChanged: (String? newValue) {
               setState(() {

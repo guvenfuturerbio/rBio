@@ -135,7 +135,8 @@ class ConsultationScreen extends StatelessWidget {
               children: [
                 //
                 CircleAvatar(
-                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  backgroundColor:
+                      getIt<IAppConfig>().theme.cardBackgroundColor,
                   backgroundImage: NetworkImage(item.url!),
                   radius: 25,
                 ),
@@ -175,7 +176,7 @@ class ConsultationScreen extends StatelessWidget {
                                   margin: const EdgeInsets.only(right: 4),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: getIt<ITheme>().mainColor,
+                                    color: getIt<IAppConfig>().theme.mainColor,
                                   ),
                                   child: const SizedBox(
                                     height: 10,

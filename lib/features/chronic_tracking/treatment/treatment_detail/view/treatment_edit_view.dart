@@ -107,7 +107,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: RbioTextFormField(
@@ -170,7 +170,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -178,7 +178,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
         children: [
           CircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
-            backgroundColor: getIt<ITheme>().cardBackgroundColor,
+            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
           ),
 
           //

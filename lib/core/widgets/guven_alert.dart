@@ -31,7 +31,7 @@ class GuvenAlert extends StatelessWidget {
       elevation: elevation,
       insetPadding: insetPadding ??
           const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
-      backgroundColor: backgroundColor ?? getIt<ITheme>().mainColor,
+      backgroundColor: backgroundColor ?? getIt<IAppConfig>().theme.mainColor,
       contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
       title: context.xTextScaleType == TextScaleType.large
           ? Container(
@@ -68,7 +68,7 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 26,
         fontWeight: FontWeight.w700,
-        color: getIt<ITheme>().textColorSecondary,
+        color: getIt<IAppConfig>().theme.textColorSecondary,
       ),
     );
   }
@@ -80,7 +80,7 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 20.0,
         fontFamily: 'Roboto',
-        color: color ?? getIt<ITheme>().textColorSecondary,
+        color: color ?? getIt<IAppConfig>().theme.textColorSecondary,
       ),
     );
   }
@@ -96,7 +96,7 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 16.0,
         fontFamily: 'Roboto',
-        color: getIt<ITheme>().textColorSecondary,
+        color: getIt<IAppConfig>().theme.textColorSecondary,
         decoration: decoration,
       ),
     );
@@ -115,15 +115,15 @@ class GuvenAlert extends StatelessWidget {
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: TextStyle(color: getIt<ITheme>().mainColor),
+          style: TextStyle(color: getIt<IAppConfig>().theme.mainColor),
         ),
         textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         callback: onPressed,
-        gradient: LinearGradient(
-            colors: [getIt<ITheme>().textColor, getIt<ITheme>().textColor],
-            begin: Alignment.bottomLeft,
-            end: Alignment.centerRight),
-        shadowColor: getIt<ITheme>().textColorSecondary,
+        gradient: LinearGradient(colors: [
+          getIt<IAppConfig>().theme.textColor,
+          getIt<IAppConfig>().theme.textColor
+        ], begin: Alignment.bottomLeft, end: Alignment.centerRight),
+        shadowColor: getIt<IAppConfig>().theme.textColorSecondary,
       );
 
   static Widget buildBigMaterialAction(
@@ -159,7 +159,7 @@ class GuvenAlert extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 18,
-            color: getIt<ITheme>().textColor,
+            color: getIt<IAppConfig>().theme.textColor,
           ),
         ),
         onPressed: onPressed,

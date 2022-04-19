@@ -88,8 +88,8 @@ class BgChartFilterPopUp extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  backColor: getIt<ITheme>().cardBackgroundColor,
-                  textColor: getIt<ITheme>().textColorSecondary,
+                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
                   showElevation: false,
                 ),
 
@@ -179,7 +179,7 @@ class BgChartFilterPopUp extends StatelessWidget {
               child: Checkbox(
                 value: status,
                 onChanged: statCallback,
-                activeColor: getIt<ITheme>().mainColor,
+                activeColor: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
           ),

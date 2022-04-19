@@ -67,15 +67,15 @@ class _TableCalendarState extends State<_TableCalendar> {
         //
         Positioned.fill(
           child: Container(
-            color: getIt<ITheme>().cardBackgroundColor,
+            color: getIt<IAppConfig>().theme.cardBackgroundColor,
           ),
         ),
 
         //
         TableCalendar<Event>(
           locale: context.watch<LocaleNotifier>().getLocaleStr,
-          daysBackgroundColor: getIt<ITheme>().secondaryColor,
-          cellBackgroundColor: getIt<ITheme>().cardBackgroundColor,
+          daysBackgroundColor: getIt<IAppConfig>().theme.secondaryColor,
+          cellBackgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
 
           //
           firstDay: kFirstDay,
@@ -100,7 +100,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             headerMargin: EdgeInsets.zero,
             headerPadding: EdgeInsets.zero,
             decoration: BoxDecoration(
-              color: getIt<ITheme>().secondaryColor,
+              color: getIt<IAppConfig>().theme.secondaryColor,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(12),
               ),
@@ -169,8 +169,8 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<ITheme>().textColorSecondary
-                        : getIt<ITheme>().textColorPassive,
+                        ? getIt<IAppConfig>().theme.textColorSecondary
+                        : getIt<IAppConfig>().theme.textColorPassive,
                   ),
                 ),
               );
@@ -189,8 +189,8 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<ITheme>().textColorSecondary
-                        : getIt<ITheme>().textColorPassive,
+                        ? getIt<IAppConfig>().theme.textColorSecondary
+                        : getIt<IAppConfig>().theme.textColorPassive,
                   ),
                 ),
               );
@@ -208,7 +208,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: getIt<ITheme>().mainColor,
+                    color: getIt<IAppConfig>().theme.mainColor,
                     shape: BoxShape.circle,
                   ),
                   child: Text(

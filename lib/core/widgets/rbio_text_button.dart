@@ -28,7 +28,7 @@ class RbioTextButton extends StatelessWidget {
       child: child,
       style: TextButton.styleFrom(
         backgroundColor: backgroundColor ?? Colors.transparent,
-        primary: getIt<ITheme>().textColorSecondary,
+        primary: getIt<IAppConfig>().theme.textColorSecondary,
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 22.0),
         tapTargetSize: tapTargetSize,
         shape: shape,

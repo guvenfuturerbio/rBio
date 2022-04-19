@@ -185,7 +185,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                         },
                         textStyle: context.xHeadline3,
                         selectedTextStyle: context.xHeadline1.copyWith(
-                          color: getIt<ITheme>().mainColor,
+                          color: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                     ),
@@ -261,8 +261,8 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
           child: Card(
             elevation: R.sizes.defaultElevation,
             color: value.genderIdHolder == index
-                ? getIt<ITheme>().mainColor
-                : getIt<ITheme>().cardBackgroundColor,
+                ? getIt<IAppConfig>().theme.mainColor
+                : getIt<IAppConfig>().theme.cardBackgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: R.sizes.borderRadiusCircular,
             ),
@@ -305,7 +305,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         child: Text(
           title,
           style: context.xHeadline2.copyWith(
-            color: getIt<ITheme>().textColorPassive,
+            color: getIt<IAppConfig>().theme.textColorPassive,
           ),
         ),
       ),

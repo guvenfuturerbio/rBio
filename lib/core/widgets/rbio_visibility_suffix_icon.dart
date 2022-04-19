@@ -18,7 +18,7 @@ class RbioVisibilitySuffixIcon extends StatelessWidget {
       onTap: onTap,
       child: Icon(
         eyesOpen ? Icons.visibility : Icons.visibility_off,
-        color: getIt<ITheme>().mainColor,
+        color: getIt<IAppConfig>().theme.mainColor,
       ),
     );
   }

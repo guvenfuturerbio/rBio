@@ -139,7 +139,7 @@ class __ReminderDetailViewState extends State<_ReminderDetailView> {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
+              color: getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: result.when(
@@ -453,8 +453,8 @@ class __ReminderDetailViewState extends State<_ReminderDetailView> {
             title: LocaleProvider.current.edit,
             infinityWidth: true,
             fontWeight: FontWeight.bold,
-            textColor: getIt<ITheme>().textColorSecondary,
-            backColor: getIt<ITheme>().cardBackgroundColor,
+            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
           ),
 
           //
@@ -490,7 +490,8 @@ class __ReminderDetailViewState extends State<_ReminderDetailView> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline4.copyWith(
-              color: isActive ? null : getIt<ITheme>().textColorPassive,
+              color:
+                  isActive ? null : getIt<IAppConfig>().theme.textColorPassive,
             ),
           ),
         ),
@@ -502,7 +503,8 @@ class __ReminderDetailViewState extends State<_ReminderDetailView> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline4.copyWith(
-              color: isActive ? null : getIt<ITheme>().textColorPassive,
+              color:
+                  isActive ? null : getIt<IAppConfig>().theme.textColorPassive,
             ),
           ),
         ),

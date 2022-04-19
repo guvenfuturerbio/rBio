@@ -34,7 +34,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
@@ -67,13 +67,13 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                   tooltip: FlutterSliderTooltip(
                     boxStyle: FlutterSliderTooltipBox(
                       decoration: BoxDecoration(
-                        color: getIt<ITheme>().mainColor,
+                        color: getIt<IAppConfig>().theme.mainColor,
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                     ),
                     alwaysShowTooltip: true,
                     textStyle: context.xHeadline4.copyWith(
-                      color: getIt<ITheme>().textColor,
+                      color: getIt<IAppConfig>().theme.textColor,
                     ),
                   ),
                   trackBar: FlutterSliderTrackBar(
@@ -84,12 +84,12 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                       color: Colors.black12,
                       border: Border.all(
                         width: 3,
-                        color: getIt<ITheme>().secondaryColor,
+                        color: getIt<IAppConfig>().theme.secondaryColor,
                       ),
                     ),
                     activeTrackBar: BoxDecoration(
                       borderRadius: R.sizes.borderRadiusCircular,
-                      color: getIt<ITheme>().mainColor,
+                      color: getIt<IAppConfig>().theme.mainColor,
                     ),
                   ),
                   onDragging: (handlerIndex, lower, upper) {
@@ -106,7 +106,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
-                  color: getIt<ITheme>().mainColor,
+                  color: getIt<IAppConfig>().theme.mainColor,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(12.0),
                     bottomRight: Radius.circular(12.0),
@@ -116,7 +116,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                   LocaleProvider.current.save,
                   textAlign: TextAlign.center,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColor,
+                    color: getIt<IAppConfig>().theme.textColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

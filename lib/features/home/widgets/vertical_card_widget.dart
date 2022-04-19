@@ -51,7 +51,7 @@ class VerticalCard extends StatelessWidget {
                     maxLines: 3,
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
-                    style: getIt<ITheme>().textTheme.headline3,
+                    style: getIt<IAppConfig>().theme.textTheme.headline3,
                   ),
                 ),
               ),

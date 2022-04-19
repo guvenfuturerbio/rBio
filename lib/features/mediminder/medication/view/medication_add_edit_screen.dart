@@ -361,8 +361,8 @@ class __MedicationReminderAddEditViewState
             //
             Expanded(
               child: RbioElevatedButton(
-                backColor: getIt<ITheme>().cardBackgroundColor,
-                textColor: getIt<ITheme>().textColorSecondary,
+                backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                textColor: getIt<IAppConfig>().theme.textColorSecondary,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();
@@ -446,8 +446,8 @@ class __MedicationReminderAddEditViewState
       textAlign: TextAlign.start,
       style: context.xHeadline4.copyWith(
         color: type == result.drugTracking
-            ? getIt<ITheme>().textColor
-            : getIt<ITheme>().textColorPassive,
+            ? getIt<IAppConfig>().theme.textColor
+            : getIt<IAppConfig>().theme.textColorPassive,
       ),
     );
 
@@ -459,7 +459,7 @@ class __MedicationReminderAddEditViewState
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: type == result.drugTracking
-              ? getIt<ITheme>().mainColor
+              ? getIt<IAppConfig>().theme.mainColor
               : Colors.white,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
@@ -693,7 +693,7 @@ class __MedicationReminderAddEditViewState
       padding: const EdgeInsets.symmetric(vertical: 6),
       margin: EdgeInsets.only(top: index == 0 ? 0 : 8),
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(

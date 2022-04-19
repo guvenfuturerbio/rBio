@@ -36,7 +36,7 @@ class BgPatientListModel extends PatientListModel<DoctorGlucosePatientModel> {
   @override
   Color getBackColor(String? text, DoctorGlucosePatientModel model) {
     return text == '' || text == null
-        ? getIt<ITheme>().cardBackgroundColor
+        ? getIt<IAppConfig>().theme.cardBackgroundColor
         : Utils.instance.fetchMeasurementColor(
             measurement: _textToInt(text),
             criticMin: model.alertMin?.toInt() ?? 0,

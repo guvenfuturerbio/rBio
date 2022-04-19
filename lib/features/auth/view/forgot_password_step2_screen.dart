@@ -235,7 +235,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<ITheme>().textColorSecondary,
+                color: getIt<IAppConfig>().theme.textColorSecondary,
               ),
             ),
           ),
@@ -244,7 +244,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
           Checkbox(
             value: checkboxValue,
             onChanged: (value) {},
-            activeColor: getIt<ITheme>().mainColor,
+            activeColor: getIt<IAppConfig>().theme.mainColor,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         ],

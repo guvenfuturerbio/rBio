@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(
                 Icons.done,
                 size: R.sizes.iconSize,
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
               ),
             ),
           ),

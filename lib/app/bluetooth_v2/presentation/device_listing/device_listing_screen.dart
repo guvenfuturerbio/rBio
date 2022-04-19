@@ -261,12 +261,12 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
         return R.color.high;
 
       case DeviceStatus.connected:
-        return getIt<ITheme>().mainColor;
+        return getIt<IAppConfig>().theme.mainColor;
 
       case DeviceStatus.disconnected:
       case DeviceStatus.disconnecting:
       default:
-        return getIt<ITheme>().cardBackgroundColor;
+        return getIt<IAppConfig>().theme.cardBackgroundColor;
     }
   }
 }

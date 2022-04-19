@@ -124,7 +124,7 @@ class BpProgressScreen extends StatelessWidget {
 
   Widget _buildFAB(BpProgressVm vm, BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPressed: () => vm.manuelEntry(context),
       child: Padding(
         padding: const EdgeInsets.all(15),

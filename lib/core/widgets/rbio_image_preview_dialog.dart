@@ -60,7 +60,7 @@ class RbioImagePreviewDialog extends StatelessWidget {
                   child: Icon(
                     Icons.close,
                     size: R.sizes.iconSize,
-                    color: getIt<ITheme>().iconColor,
+                    color: getIt<IAppConfig>().theme.iconColor,
                   ),
                 ),
               ),

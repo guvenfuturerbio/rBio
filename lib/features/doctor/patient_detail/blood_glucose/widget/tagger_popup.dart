@@ -178,7 +178,7 @@ class _TaggerPopUp extends StatelessWidget {
   Widget getTagElement(bool isCurrent, String icon, String title) {
     return Card(
       elevation: R.sizes.defaultElevation,
-      color: isCurrent ? getIt<ITheme>().mainColor : R.color.white,
+      color: isCurrent ? getIt<IAppConfig>().theme.mainColor : R.color.white,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -211,7 +211,7 @@ class _TaggerPopUp extends StatelessWidget {
   BoxDecoration getTagElementDeco(bool isCurrent) {
     return BoxDecoration(
       borderRadius: R.sizes.borderRadiusCircular,
-      color: isCurrent ? getIt<ITheme>().mainColor : Colors.white,
+      color: isCurrent ? getIt<IAppConfig>().theme.mainColor : Colors.white,
     );
   }
   // TagSection #end
@@ -253,7 +253,7 @@ class _TaggerPopUp extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: R.sizes.borderRadiusCircular,
-          color: getIt<ITheme>().mainColor,
+          color: getIt<IAppConfig>().theme.mainColor,
         ),
         padding: const EdgeInsets.symmetric(
           vertical: 10,

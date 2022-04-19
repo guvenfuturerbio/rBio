@@ -11,7 +11,8 @@ class RbioLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(getIt<ITheme>().mainColor),
+        valueColor:
+            AlwaysStoppedAnimation<Color>(getIt<IAppConfig>().theme.mainColor),
       ),
     );
   }

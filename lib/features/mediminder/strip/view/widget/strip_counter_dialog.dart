@@ -41,7 +41,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
         child: Container(
           width: Atom.width > 350 ? 350 : Atom.width,
           decoration: BoxDecoration(
-            color: getIt<ITheme>().cardBackgroundColor,
+            color: getIt<IAppConfig>().theme.cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: SingleChildScrollView(
@@ -73,7 +73,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                   //
                   RbioTextFormField(
                     focusNode: _stripFocusNode,
-                    backColor: getIt<ITheme>().grayColor,
+                    backColor: getIt<IAppConfig>().theme.grayColor,
                     controller: _stripController,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -147,8 +147,8 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: getIt<ITheme>().grayColor,
-      textColor: getIt<ITheme>().textColorSecondary,
+      backColor: getIt<IAppConfig>().theme.grayColor,
+      textColor: getIt<IAppConfig>().theme.textColorSecondary,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {
         Atom.dismiss();

@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
-import '../hba1c.dart';
 
 part 'widget/last_test_dialog.dart';
 
@@ -198,7 +197,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<ITheme>().cardBackgroundColor,
+          color: getIt<IAppConfig>().theme.cardBackgroundColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -256,7 +255,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<ITheme>().cardBackgroundColor,
+          color: getIt<IAppConfig>().theme.cardBackgroundColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -304,7 +303,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<ITheme>().cardBackgroundColor,
+          color: getIt<IAppConfig>().theme.cardBackgroundColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -323,7 +322,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                     ? ""
                     : DateTime.parse(result.scheduledDate!).xFormatTime10(),
                 style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColorSecondary,
+                  color: getIt<IAppConfig>().theme.textColorSecondary,
                 ),
               ),
             ),
@@ -395,7 +394,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<ITheme>().cardBackgroundColor,
+          color: getIt<IAppConfig>().theme.cardBackgroundColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -414,7 +413,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                     ? ''
                     : result.scheduledHour!.xTimeFormat,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColorSecondary,
+                  color: getIt<IAppConfig>().theme.textColorSecondary,
                 ),
               ),
             ),
@@ -450,8 +449,8 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
             //
             Expanded(
               child: RbioElevatedButton(
-                backColor: getIt<ITheme>().cardBackgroundColor,
-                textColor: getIt<ITheme>().textColorSecondary,
+                backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                textColor: getIt<IAppConfig>().theme.textColorSecondary,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();

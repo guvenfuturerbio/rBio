@@ -164,7 +164,7 @@ class _MeasurementTrackingHomeScreenState
               width: double.infinity,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: getIt<ITheme>().mainColor,
+                color: getIt<IAppConfig>().theme.mainColor,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15),
@@ -194,7 +194,7 @@ class _MeasurementTrackingHomeScreenState
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Row(
@@ -202,7 +202,8 @@ class _MeasurementTrackingHomeScreenState
                 children: [
                   CircleAvatar(
                     foregroundImage: Utils.instance.getCacheProfileImage,
-                    backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                    backgroundColor:
+                        getIt<IAppConfig>().theme.cardBackgroundColor,
                   ),
 
                   //
@@ -237,7 +238,7 @@ class _MeasurementTrackingHomeScreenState
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Text(

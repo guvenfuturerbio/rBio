@@ -27,11 +27,12 @@ Widget _buildHistoryDoctorCard(
 
             //
             Text(
-              doctorName??"",
+              doctorName ?? "",
               maxLines: 3,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: context.xHeadline5.copyWith(color: getIt<ITheme>().grey),
+              style: context.xHeadline5
+                  .copyWith(color: getIt<IAppConfig>().theme.grey),
             )
           ],
         ),

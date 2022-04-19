@@ -366,7 +366,7 @@ class HomeVm extends ChangeNotifier {
     switch (widgetType) {
       case HomeWidgets.hospitalAppointment:
         {
-          if (getIt<AppConfig>().takeHospitalAppointment) {
+          if (getIt<IAppConfig>().functionality.takeHospitalAppointment) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.hospitalAppointment]!,
               type: HomeWidgets.hospitalAppointment,
@@ -397,7 +397,7 @@ class HomeVm extends ChangeNotifier {
 
       case HomeWidgets.onlineAppointment:
         {
-          if (getIt<AppConfig>().takeOnlineAppointment) {
+          if (getIt<IAppConfig>().functionality.takeOnlineAppointment) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.onlineAppointment]!,
               type: HomeWidgets.onlineAppointment,
@@ -428,7 +428,7 @@ class HomeVm extends ChangeNotifier {
 
       case HomeWidgets.chronicTracking:
         {
-          if (getIt<AppConfig>().chronicTracking) {
+          if (getIt<IAppConfig>().functionality.chronicTracking) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.chronicTracking]!,
               type: HomeWidgets.chronicTracking,
@@ -504,7 +504,7 @@ class HomeVm extends ChangeNotifier {
 
       case HomeWidgets.symptomChecker:
         {
-          if (getIt<AppConfig>().symptomChecker) {
+          if (getIt<IAppConfig>().functionality.symptomChecker) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.symptomChecker],
               type: HomeWidgets.symptomChecker,

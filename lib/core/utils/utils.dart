@@ -50,7 +50,7 @@ class Utils {
       Atom.show(
         GuvenAlert(
           contentPadding: const EdgeInsets.all(16),
-          backgroundColor: getIt<ITheme>().cardBackgroundColor,
+          backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
           title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
           content: GuvenAlert.buildDescription(
             LocaleProvider.current.required_user_height_info_message,
@@ -119,7 +119,7 @@ class Utils {
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColor,
+                  color: getIt<IAppConfig>().theme.textColor,
                 ),
               ),
             ),
@@ -137,11 +137,11 @@ class Utils {
     showSnackbar(
       context,
       text,
-      backColor: getIt<ITheme>().mainColor,
+      backColor: getIt<IAppConfig>().theme.mainColor,
       trailing: SvgPicture.asset(
         R.image.done,
         height: R.sizes.iconSize2,
-        color: getIt<ITheme>().iconSecondaryColor,
+        color: getIt<IAppConfig>().theme.iconSecondaryColor,
       ),
     );
   }
@@ -209,7 +209,7 @@ class Utils {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
-              primary: getIt<ITheme>().mainColor,
+              primary: getIt<IAppConfig>().theme.mainColor,
             ),
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
@@ -350,7 +350,7 @@ class Utils {
             : const Icon(Icons.close),
         focusedBorder: _borderTextField(),
         border: _borderTextField(),
-        focusColor: getIt<ITheme>().mainColor,
+        focusColor: getIt<IAppConfig>().theme.mainColor,
         suffixIcon: Visibility(
           visible: suffixIcon != null ? true : false,
           child: InkWell(
@@ -420,8 +420,8 @@ class Utils {
         ),
         gradient: LinearGradient(
           colors: [
-            getIt<ITheme>().mainColor.withAlpha(15),
-            getIt<ITheme>().mainColor.withAlpha(15)
+            getIt<IAppConfig>().theme.mainColor.withAlpha(15),
+            getIt<IAppConfig>().theme.mainColor.withAlpha(15)
           ],
           begin: Alignment.bottomLeft,
           end: Alignment.centerRight,
@@ -445,7 +445,7 @@ class Utils {
         labelText: labelText,
         prefixIcon: prefixIcon,
         hintStyle: Atom.context.xHeadline4.copyWith(
-          color: getIt<ITheme>().textColorPassive,
+          color: getIt<IAppConfig>().theme.textColorPassive,
         ),
       );
 
@@ -521,8 +521,8 @@ class Utils {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          getIt<ITheme>().mainColor.withOpacity(0.8),
-                          getIt<ITheme>().mainColor.withOpacity(0.3),
+                          getIt<IAppConfig>().theme.mainColor.withOpacity(0.8),
+                          getIt<IAppConfig>().theme.mainColor.withOpacity(0.3),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.topRight,
@@ -547,7 +547,7 @@ class Utils {
                             overflow: TextOverflow.ellipsis,
                             style: context.xHeadline4.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: getIt<ITheme>().textColor,
+                              color: getIt<IAppConfig>().theme.textColor,
                             ),
                           ),
                         ),
@@ -872,7 +872,7 @@ Future<void> showCompulsoryUpdateDialog({
       String btnLabel = LocaleProvider.of(context).update_now;
 
       return GuvenAlert(
-        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
         title: GuvenAlert.buildTitle(title),
         content: GuvenAlert.buildDescription(message),
         actions: <Widget>[
@@ -951,8 +951,8 @@ String getEnumValue(e) => e.toString().split('.').last;
 
 Gradient appGradient() => LinearGradient(
       colors: [
-        getIt<ITheme>().mainColor,
-        getIt<ITheme>().mainColor,
+        getIt<IAppConfig>().theme.mainColor,
+        getIt<IAppConfig>().theme.mainColor,
       ],
     );
 
@@ -1005,7 +1005,7 @@ class _GradientDialogState extends State<GradientDialog> {
   @override
   Widget build(BuildContext context) {
     Widget okButton = TextButton(
-      style: TextButton.styleFrom(primary: getIt<ITheme>().textColor),
+      style: TextButton.styleFrom(primary: getIt<IAppConfig>().theme.textColor),
       child: Text(LocaleProvider.current.ok),
       onPressed: () {
         Navigator.of(context).pop();
@@ -1013,12 +1013,13 @@ class _GradientDialogState extends State<GradientDialog> {
     );
 
     return AlertDialog(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       contentPadding: EdgeInsets.zero,
       title: Text(
         widget.title ?? '',
         style: context.xHeadline1.copyWith(
-            fontWeight: FontWeight.w700, color: getIt<ITheme>().textColor),
+            fontWeight: FontWeight.w700,
+            color: getIt<IAppConfig>().theme.textColor),
       ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -1038,7 +1039,7 @@ class _GradientDialogState extends State<GradientDialog> {
             Text(
               widget.text ?? '',
               style: context.xHeadline3.copyWith(
-                color: getIt<ITheme>().textColor,
+                color: getIt<IAppConfig>().theme.textColor,
               ),
             ),
           ],

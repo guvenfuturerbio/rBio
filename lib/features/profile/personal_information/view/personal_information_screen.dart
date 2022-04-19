@@ -165,14 +165,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             backgroundImage: vm.getProfileImage,
                             radius: R.sizes.iconSize * 1.5,
                             backgroundColor:
-                                getIt<ITheme>().cardBackgroundColor,
+                                getIt<IAppConfig>().theme.cardBackgroundColor,
                           ),
 
                           //
                           TextButton(
                             style: ButtonStyle(
                               overlayColor: MaterialStateProperty.all(
-                                getIt<ITheme>().textColorPassive,
+                                getIt<IAppConfig>().theme.textColorPassive,
                               ),
                             ),
                             onPressed: () {
@@ -181,7 +181,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             child: Text(
                               LocaleProvider.current.change,
                               style: context.xHeadline5.copyWith(
-                                color: getIt<ITheme>().mainColor,
+                                color: getIt<IAppConfig>().theme.mainColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -305,8 +305,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       onTap: () {
                         vm.resetValues();
                       },
-                      backColor: getIt<ITheme>().cardBackgroundColor,
-                      textColor: getIt<ITheme>().textColorSecondary,
+                      backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                      textColor: getIt<IAppConfig>().theme.textColorSecondary,
                       fontWeight: FontWeight.bold,
                       showElevation: false,
                     ),
@@ -361,7 +361,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         absorbing: true,
         child: RbioTextFormField(
           controller: controller,
-          textColor: getIt<ITheme>().textColorPassive,
+          textColor: getIt<IAppConfig>().theme.textColorPassive,
         ),
       );
 

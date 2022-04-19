@@ -6,7 +6,7 @@ export 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 export 'package:scale_dependencies/scale_dependencies.dart';
 
 export '../app/bluetooth/bluetooth.dart';
-export '../app/config/app_config.dart';
+export '../app/config/abstract/app_config.dart';
 export '../app/app_bloc_observer.dart';
 export '../app/app_inherited_widget.dart';
 export '../generated/l10n.dart';
@@ -64,7 +64,6 @@ export "notifiers/user_notifier.dart";
 
 export 'packages/table_calendar/table_calendar.dart';
 
-export 'theme/main_theme.dart';
 export 'theme/text_scale_type.dart';
 export 'theme/theme_notifier.dart';
 export 'theme/theme_type.dart';

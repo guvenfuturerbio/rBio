@@ -130,15 +130,15 @@ class RbioFilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilterChip(
-      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
       selected: isSelected,
-      checkmarkColor: getIt<ITheme>().cardBackgroundColor,
-      selectedColor: getIt<ITheme>().mainColor,
+      checkmarkColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      selectedColor: getIt<IAppConfig>().theme.mainColor,
       label: Text(
         type.xGetTitle,
         style: isSelected
             ? context.xHeadline3
-                .copyWith(color: getIt<ITheme>().cardBackgroundColor)
+                .copyWith(color: getIt<IAppConfig>().theme.cardBackgroundColor)
             : context.xHeadline3,
       ),
       onSelected: (val) {

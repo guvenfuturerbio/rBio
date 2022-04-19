@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:onedosehealth/core/data/service/model/patient_scale_measurement.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
 import '../../../../../../../core/core.dart';
+import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 import '../cubit/scale_doctor_cubit.dart';
 
 class DoctorScaleChart extends StatefulWidget {
@@ -55,7 +55,7 @@ class _DoctorScaleChartState extends State<DoctorScaleChart> {
       // Plot Area
       plotAreaBorderWidth: 0,
       plotAreaBorderColor: Colors.transparent,
-      plotAreaBackgroundColor: getIt<ITheme>().mainColor,
+      plotAreaBackgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPlotAreaSwipe: (detail) {},
       // plotAreaBackgroundImage: const AssetImage('images/bike.png'),
 

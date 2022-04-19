@@ -122,7 +122,7 @@ class SelectReminderScreen extends StatelessWidget {
                   maxLines: 5,
                   textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
-                  style: getIt<ITheme>().textTheme.headline4,
+                  style: getIt<IAppConfig>().theme.textTheme.headline4,
                 ),
               ),
             ],

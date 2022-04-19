@@ -15,10 +15,10 @@ class KeyManager {
   }
 
   Future<void> setup(
-    Environment env, {
+    String filePath, {
     Map<Keys, String> remote = const {},
   }) async {
-    await dotenv.load(fileName: env.xFileName);
+    await dotenv.load(fileName: filePath);
     final local =
         dotenv.env.map((key, value) => MapEntry(_fromString(key), value));
     _map.addAll({...local, ...remote});

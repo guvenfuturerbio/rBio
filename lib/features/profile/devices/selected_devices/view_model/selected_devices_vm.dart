@@ -103,7 +103,7 @@ class SelectedDeviceVm extends ChangeNotifier {
   void showLoadingDialog() {
     Atom.show(
       GuvenAlert(
-        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -121,12 +121,13 @@ class SelectedDeviceVm extends ChangeNotifier {
                   height: Atom.context.width * .04,
                   child: SvgPicture.asset(
                     R.image.logo,
-                    color: getIt<ITheme>().mainColor,
+                    color: getIt<IAppConfig>().theme.mainColor,
                   ),
                 ),
               ),
               decoration: BoxDecoration(
-                border: Border.all(color: getIt<ITheme>().mainColor, width: 10),
+                border: Border.all(
+                    color: getIt<IAppConfig>().theme.mainColor, width: 10),
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
             ),

@@ -89,7 +89,7 @@ class RbioStackedScaffold extends StatelessWidget {
                     Positioned.fill(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: getIt<ITheme>().mainColor,
+                          color: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                     ),

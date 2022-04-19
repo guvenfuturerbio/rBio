@@ -113,7 +113,7 @@ class ScaleProgressScreen extends StatelessWidget {
 
   Widget _buildFAB(ScaleProgressVm vm, BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPressed: () => vm.manuelEntry(context),
       child: Padding(
         padding: const EdgeInsets.all(15),

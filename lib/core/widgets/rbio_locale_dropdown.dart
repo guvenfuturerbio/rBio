@@ -13,7 +13,7 @@ class RbioLocaleDropdown extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15.0, right: 10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: getIt<ITheme>().cardBackgroundColor,
+          color: getIt<IAppConfig>().theme.cardBackgroundColor,
         ),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,

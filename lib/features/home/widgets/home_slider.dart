@@ -49,7 +49,8 @@ class _HomeSliderState extends State<HomeSlider> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: getIt<ITheme>().cardBackgroundColor,
+                              color:
+                                  getIt<IAppConfig>().theme.cardBackgroundColor,
                               borderRadius: R.sizes.borderRadiusCircular,
                             ),
                             child: GestureDetector(
@@ -118,7 +119,8 @@ class _HomeSliderState extends State<HomeSlider> {
                                   ),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: getIt<ITheme>()
+                                    color: getIt<IAppConfig>()
+                                        .theme
                                         .mainColor
                                         .withOpacity(
                                             _current == entry.key ? 0.9 : 0.4),

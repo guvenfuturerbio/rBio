@@ -41,7 +41,7 @@ class _GraphHeaderSection extends StatelessWidget {
               : context.height * 0.7,
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: getIt<ITheme>().cardBackgroundColor,
+            color: getIt<IAppConfig>().theme.cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Stack(

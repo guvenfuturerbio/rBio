@@ -59,7 +59,8 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                             onChanged: (newValue) {
                               value.toggleConsentFormState();
                             },
-                            activeColor: getIt<ITheme>()
+                            activeColor: getIt<IAppConfig>()
+                                .theme
                                 .mainColor, //  <-- leading Checkbox
                           ),
                         ),

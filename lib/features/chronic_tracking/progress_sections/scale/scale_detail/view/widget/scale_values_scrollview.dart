@@ -376,7 +376,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                       style: context.xHeadline4.copyWith(
                         color: isRedTheme
                             ? R.color.darkRed
-                            : getIt<ITheme>().mainColor,
+                            : getIt<IAppConfig>().theme.mainColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -393,12 +393,12 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: isRedTheme
                         ? R.color.darkRed
-                        : getIt<ITheme>().mainColor,
+                        : getIt<IAppConfig>().theme.mainColor,
                   ),
                   child: Text(
                     list.length.toString(),
                     style: context.xHeadline3.copyWith(
-                      color: getIt<ITheme>().textColor,
+                      color: getIt<IAppConfig>().theme.textColor,
                     ),
                   ),
                 ),
@@ -427,7 +427,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       padding: const EdgeInsets.only(
@@ -485,7 +485,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
             Text(
               model.description,
               style: context.xHeadline4.copyWith(
-                color: getIt<ITheme>().textColorPassive,
+                color: getIt<IAppConfig>().theme.textColorPassive,
               ),
             ),
         ],
@@ -627,7 +627,7 @@ class _DynamicColorfulRange extends StatelessWidget {
               maxFontSize: 12,
               textAlign: TextAlign.center,
               style: context.xHeadline3.copyWith(
-                color: getIt<ITheme>().textColorPassive,
+                color: getIt<IAppConfig>().theme.textColorPassive,
               ),
             ),
           );
@@ -655,7 +655,7 @@ class _DynamicColorfulRange extends StatelessWidget {
               maxFontSize: 13,
               style: context.xHeadline3.copyWith(
                 fontWeight: FontWeight.bold,
-                color: getIt<ITheme>().textColorPassive,
+                color: getIt<IAppConfig>().theme.textColorPassive,
               ),
             ),
           );

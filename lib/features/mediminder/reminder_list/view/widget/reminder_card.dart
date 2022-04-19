@@ -39,7 +39,7 @@ class ReminderCard extends StatelessWidget {
                 horizontal: 12,
               ),
               decoration: BoxDecoration(
-                color: getIt<ITheme>().mainColor,
+                color: getIt<IAppConfig>().theme.mainColor,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(12),
                 ),
@@ -56,7 +56,7 @@ class ReminderCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<ITheme>().textColor,
+                        color: getIt<IAppConfig>().theme.textColor,
                       ),
                     ),
                   ),
@@ -65,7 +65,7 @@ class ReminderCard extends StatelessWidget {
                   Text(
                     model.subTitle ?? '',
                     style: context.xHeadline4.copyWith(
-                      color: getIt<ITheme>().textColor,
+                      color: getIt<IAppConfig>().theme.textColor,
                     ),
                   ),
                 ],
@@ -75,7 +75,7 @@ class ReminderCard extends StatelessWidget {
             //
             Container(
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(12),
                 ),
@@ -99,7 +99,7 @@ class ReminderCard extends StatelessWidget {
                                     model.scheduledDate)),
                         style: context.xHeadline3.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: getIt<ITheme>().mainColor,
+                          color: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                     ),

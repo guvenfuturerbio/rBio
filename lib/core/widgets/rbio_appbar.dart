@@ -24,7 +24,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             toolbarHeight: 64,
             centerTitle: true,
             elevation: 0,
-            backgroundColor: getIt<ITheme>().mainColor,
+            backgroundColor: getIt<IAppConfig>().theme.mainColor,
 
             //
             leadingWidth: leadingWidth,

@@ -26,7 +26,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -154,7 +154,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
                     onChanged: (value) {
                       widget.onChanged(index);
                     },
-                    activeColor: getIt<ITheme>().mainColor,
+                    activeColor: getIt<IAppConfig>().theme.mainColor,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
@@ -168,7 +168,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
           //
           if (isBottomLine)
             Container(
-              color: getIt<ITheme>().textColorPassive,
+              color: getIt<IAppConfig>().theme.textColorPassive,
               height: 0.25,
             )
           else

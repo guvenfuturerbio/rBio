@@ -296,7 +296,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onChanged: (newValue) {
                     value.toggleRememberMeChecked();
                   },
-                  activeColor: getIt<ITheme>().mainColor,
+                  activeColor: getIt<IAppConfig>().theme.mainColor,
                 ),
               ),
               Expanded(
@@ -305,7 +305,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline5.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
+                    color: getIt<IAppConfig>().theme.textColorSecondary,
                   ),
                 ),
               )
@@ -318,7 +318,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text(
             LocaleProvider.of(context).lbl_forgot_password,
             style: context.xHeadline5.copyWith(
-              color: getIt<ITheme>().mainColor,
+              color: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
           onPressed: () {
@@ -348,7 +348,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   value.clickedGeneralForm = newValue;
                 }
               },
-              activeColor: getIt<ITheme>().mainColor,
+              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),
@@ -390,7 +390,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   value.checkedKvkkForm = newValue;
                 }
               },
-              activeColor: getIt<ITheme>().mainColor,
+              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),
@@ -449,14 +449,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       LocaleProvider.of(context).lbl_dont_have_account,
                       style: context.xHeadline3.copyWith(
-                        color: getIt<ITheme>().textColorSecondary,
+                        color: getIt<IAppConfig>().theme.textColorSecondary,
                       ),
                     ),
                     InkWell(
                       child: Text(
                         LocaleProvider.of(context).btn_sign_up,
                         style: context.xHeadline3.copyWith(
-                          color: getIt<ITheme>().mainColor,
+                          color: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       onTap: () {
@@ -523,7 +523,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline5.copyWith(
-                          color: getIt<ITheme>().textColorSecondary,
+                          color: getIt<IAppConfig>().theme.textColorSecondary,
                         ),
                       ),
                     ),
@@ -531,7 +531,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         LocaleProvider.of(context).btn_sign_up,
                         style: context.xHeadline5.copyWith(
-                          color: getIt<ITheme>().mainColor,
+                          color: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       onTap: () {

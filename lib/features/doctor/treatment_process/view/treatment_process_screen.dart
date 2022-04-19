@@ -137,7 +137,7 @@ class _DoctorTreatmentProcessScreenState
                     Text(
                       item.description ?? "",
                       style: context.xHeadline5.copyWith(
-                        color: getIt<ITheme>().textColorPassive,
+                        color: getIt<IAppConfig>().theme.textColorPassive,
                       ),
                     ),
                   ],

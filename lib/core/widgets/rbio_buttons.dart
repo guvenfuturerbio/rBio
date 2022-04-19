@@ -21,7 +21,7 @@ class RbioRedButton extends StatelessWidget {
       title: title,
       onTap: onTap,
       fontWeight: FontWeight.bold,
-      textColor: getIt<ITheme>().textColor,
+      textColor: getIt<IAppConfig>().theme.textColor,
       backColor: R.color.darkRed,
       infinityWidth: infinityWidth,
       showElevation: true,
@@ -47,7 +47,7 @@ class RbioWhiteButton extends StatelessWidget {
       title: title,
       onTap: onTap,
       fontWeight: FontWeight.bold,
-      textColor: getIt<ITheme>().textColorSecondary,
+      textColor: getIt<IAppConfig>().theme.textColorSecondary,
       backColor: Colors.white,
       infinityWidth: infinityWidth,
       showElevation: true,
@@ -87,8 +87,8 @@ class RbioElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          primary: backColor ?? getIt<ITheme>().mainColor,
-          onSurface: backColor ?? getIt<ITheme>().mainColor,
+          primary: backColor ?? getIt<IAppConfig>().theme.mainColor,
+          onSurface: backColor ?? getIt<IAppConfig>().theme.mainColor,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(50.0),
           ),
@@ -100,7 +100,7 @@ class RbioElevatedButton extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: context.xHeadline3.copyWith(
-              color: textColor ?? getIt<ITheme>().textColor,
+              color: textColor ?? getIt<IAppConfig>().theme.textColor,
               fontWeight: fontWeight,
               fontSize: R.sizes.textScaleHandler<double>(
                 context,
@@ -156,8 +156,8 @@ class RbioElevatedAutoButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          primary: backColor ?? getIt<ITheme>().mainColor,
-          onSurface: backColor ?? getIt<ITheme>().mainColor,
+          primary: backColor ?? getIt<IAppConfig>().theme.mainColor,
+          onSurface: backColor ?? getIt<IAppConfig>().theme.mainColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50.0),
           ),
@@ -171,7 +171,7 @@ class RbioElevatedAutoButton extends StatelessWidget {
             maxFontSize: 8,
             minFontSize: 8,
             style: context.xHeadline3.copyWith(
-              color: textColor ?? getIt<ITheme>().textColor,
+              color: textColor ?? getIt<IAppConfig>().theme.textColor,
               fontWeight: fontWeight,
             ),
           ),

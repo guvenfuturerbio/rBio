@@ -79,8 +79,8 @@ class ReminderDetailDialog extends StatelessWidget {
               },
               title: LocaleProvider.current.details,
               padding: const EdgeInsets.symmetric(vertical: 10),
-              backColor: getIt<ITheme>().cardBackgroundColor,
-              textColor: getIt<ITheme>().textColorSecondary,
+              backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+              textColor: getIt<IAppConfig>().theme.textColorSecondary,
               fontWeight: FontWeight.bold,
             ),
 

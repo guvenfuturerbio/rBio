@@ -1,15 +1,9 @@
 import 'dart:ui';
 
-import 'package:atom/atom.dart';
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/data/service/model/patient_scale_measurement.dart';
-import 'package:onedosehealth/core/extension/extension.dart';
 
-import '../../../../../core/locator.dart';
-import '../../../../../core/resources/resources.dart';
-import '../../../../../core/theme/main_theme.dart';
-import '../../../../../core/utils/utils.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../core/core.dart';
+import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 
 class ScaleTagger extends StatelessWidget {
   final PatientScaleMeasurement scaleModel;
@@ -165,7 +159,7 @@ class ScaleTagger extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            color: getIt<ITheme>().mainColor),
+            color: getIt<IAppConfig>().theme.mainColor),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           LocaleProvider.current.done,
@@ -343,7 +337,7 @@ class ScaleTagger extends StatelessWidget {
     return Theme(
         data: ThemeData(primaryColor: Colors.black),
         child: Text(
-          '${measurement ?? ''}',
+          measurement ?? '',
           style: context.xHeadline2,
         ));
   }

@@ -130,7 +130,7 @@ Widget _buildCard(
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Row(

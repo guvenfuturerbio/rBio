@@ -133,7 +133,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
             child: Container(
               padding: const EdgeInsets.all(13),
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Row(
@@ -144,7 +144,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
                         ? Text(
                             'DD/MM/YYYY',
                             style: context.xHeadline4.copyWith(
-                              color: getIt<ITheme>().textColorPassive,
+                              color: getIt<IAppConfig>().theme.textColorPassive,
                             ),
                           )
                         : Text(
@@ -172,7 +172,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
             child: Container(
               padding: const EdgeInsets.only(left: 13.0, bottom: 15, top: 13),
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Row(
@@ -249,7 +249,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
     Atom.show(
       GuvenAlert(
         title: GuvenAlert.buildTitle(LocaleProvider.current.country),
-        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
         content: SizedBox(
           height: 300.0,
           width: 300.0,
@@ -324,7 +324,7 @@ class _AddPatientRelativesScreenState extends State<AddPatientRelativesScreen> {
       },
       child: Card(
         elevation: R.sizes.defaultElevation,
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),

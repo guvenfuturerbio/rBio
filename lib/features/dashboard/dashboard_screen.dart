@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Drawer _buildDrawer() {
     return Drawer(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       child: SafeArea(
         top: true,
         child: Column(
@@ -73,7 +73,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       right: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: getIt<ITheme>().secondaryColor,
+                      color: getIt<IAppConfig>().theme.secondaryColor,
                       borderRadius: R.sizes.borderRadiusCircular,
                     ),
                     child: Row(
@@ -85,7 +85,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         CircleAvatar(
                           backgroundImage: Utils.instance.getCacheProfileImage,
                           radius: R.sizes.iconSize2,
-                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                          backgroundColor:
+                              getIt<IAppConfig>().theme.cardBackgroundColor,
                         ),
 
                         //
@@ -154,7 +155,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Text(
                             drawerList[index].title,
                             style: context.xHeadline4.copyWith(
-                              color: getIt<ITheme>().textColor,
+                              color: getIt<IAppConfig>().theme.textColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -164,7 +165,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                           //
                           Divider(
-                            color: getIt<ITheme>().textColor,
+                            color: getIt<IAppConfig>().theme.textColor,
                             endIndent: 15,
                           ),
                         ],
@@ -193,7 +194,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         "v" + getIt<GuvenSettings>().version,
         textAlign: TextAlign.left,
         style: context.xHeadline5.copyWith(
-          color: getIt<ITheme>().textColor,
+          color: getIt<IAppConfig>().theme.textColor,
         ),
       ),
     );
@@ -217,7 +218,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomPaint(
               size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
-                getIt<ITheme>().cardBackgroundColor,
+                getIt<IAppConfig>().theme.cardBackgroundColor,
               ),
             ),
 
@@ -228,7 +229,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 height: 60,
                 width: 60,
                 child: FloatingActionButton(
-                  backgroundColor: getIt<ITheme>().mainColor,
+                  backgroundColor: getIt<IAppConfig>().theme.mainColor,
                   child: SvgPicture.asset(
                     R.image.bottomNavigationHome,
                     width: R.sizes.iconSize,
@@ -384,7 +385,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.devices);
           },
         ),
-        if (getIt<AppConfig>().mediminder)
+        if (getIt<IAppConfig>().functionality.mediminder)
           DrawerModel(
             title: LocaleProvider.current.reminders,
             onTap: () {

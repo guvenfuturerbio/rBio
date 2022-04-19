@@ -152,7 +152,7 @@ class _CreateAppointmentEventsScreenState
       width: double.infinity,
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(12),
         ),
@@ -205,7 +205,7 @@ class _CreateAppointmentEventsScreenState
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline4.copyWith(
-          color: getIt<ITheme>().textColorPassive,
+          color: getIt<IAppConfig>().theme.textColorPassive,
         ),
       );
 }

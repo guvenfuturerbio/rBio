@@ -67,7 +67,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
 
   Widget _buildFab() {
     return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPressed: () {},
       child: Center(
         child: SvgPicture.asset(

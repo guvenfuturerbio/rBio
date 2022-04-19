@@ -100,7 +100,7 @@ class _SymptomsBodyLocationsScreenState
                                     : LocaleProvider.of(context).girl,
                         style: context.xHeadline1.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: getIt<ITheme>().mainColor),
+                            color: getIt<IAppConfig>().theme.mainColor),
                         textAlign: TextAlign.start,
                       ),
                     ),

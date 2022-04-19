@@ -269,7 +269,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: getIt<ITheme>().cardBackgroundColor,
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -277,7 +277,8 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
                   children: [
                     CircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
-                      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                      backgroundColor:
+                          getIt<IAppConfig>().theme.cardBackgroundColor,
                     ),
 
                     //
@@ -319,7 +320,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Text(

@@ -211,8 +211,9 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       value.toggleDistanceContract();
                     });
                   },
-                  activeColor:
-                      getIt<ITheme>().mainColor, //  <-- leading Checkbox
+                  activeColor: getIt<IAppConfig>()
+                      .theme
+                      .mainColor, //  <-- leading Checkbox
                 ),
               ),
               Expanded(
@@ -228,7 +229,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline3.copyWith(
-                          color: getIt<ITheme>().textColorSecondary,
+                          color: getIt<IAppConfig>().theme.textColorSecondary,
                           decoration: TextDecoration.underline,
                         )),
               )),
@@ -244,7 +245,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     value.toggleInformationForm();
                   });
                 },
-                activeColor: getIt<ITheme>().mainColor,
+                activeColor: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
             Expanded(
@@ -260,7 +261,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
+                    color: getIt<IAppConfig>().theme.textColorSecondary,
                     decoration: TextDecoration.underline,
                   ),
                 ),

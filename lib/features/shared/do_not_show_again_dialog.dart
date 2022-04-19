@@ -34,7 +34,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
   @override
   Widget build(BuildContext context) {
     return GuvenAlert(
-      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
       title: GuvenAlert.buildTitle(widget.title),
       contentPadding: const EdgeInsets.all(8),
       content: FittedBox(
@@ -64,7 +64,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                         doNotAskAgain = val!;
                       });
                     },
-                    activeColor: getIt<ITheme>().mainColor,
+                    activeColor: getIt<IAppConfig>().theme.mainColor,
                   ),
                 ),
 

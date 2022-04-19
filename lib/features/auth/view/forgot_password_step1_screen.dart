@@ -248,7 +248,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                         Text(
                           LocaleProvider.of(context).lbl_dont_have_account,
                           style: context.xHeadline3.copyWith(
-                            color: getIt<ITheme>().grey,
+                            color: getIt<IAppConfig>().theme.grey,
                           ),
                         ),
 
@@ -257,7 +257,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                           child: Text(
                             LocaleProvider.of(context).btn_sign_up,
                             style: context.xHeadline3.copyWith(
-                              color: getIt<ITheme>().mainColor,
+                              color: getIt<IAppConfig>().theme.mainColor,
                             ),
                           ),
                           onTap: () {

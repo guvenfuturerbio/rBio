@@ -43,7 +43,7 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -183,7 +183,7 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
             //
             if (isBottomLine)
               Container(
-                color: getIt<ITheme>().textColorPassive,
+                color: getIt<IAppConfig>().theme.textColorPassive,
                 height: 0.25,
               )
             else

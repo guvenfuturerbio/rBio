@@ -38,7 +38,8 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      widget.selectedBodyLocation = AppInheritedWidget.of(context)?.bodyLocationRsp;
+      widget.selectedBodyLocation =
+          AppInheritedWidget.of(context)?.bodyLocationRsp;
       widget.selectedGenderId =
           int.parse(Atom.queryParameters['selectedGenderId'] as String);
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
@@ -182,13 +183,13 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                     0.70,
                                                 child: Text(
                                                     value
-                                                        .allBodySymptoms[
-                                                            index]![indx]
+                                                        .allBodySymptoms[index]![
+                                                            indx]
                                                         .name!,
                                                     softWrap: true,
                                                     maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
+                                                    overflow: TextOverflow
+                                                        .ellipsis,
                                                     style: context.xHeadline3.copyWith(
                                                         color: value
                                                                 .selectedSymptoms!
@@ -196,9 +197,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                                             .allBodySymptoms[
                                                                         index]![
                                                                     indx])
-                                                            ? getIt<ITheme>()
+                                                            ? getIt<IAppConfig>()
+                                                                .theme
                                                                 .mainColor
-                                                            : getIt<ITheme>()
+                                                            : getIt<IAppConfig>()
+                                                                .theme
                                                                 .textColorSecondary)),
                                               ),
                                               GestureDetector(

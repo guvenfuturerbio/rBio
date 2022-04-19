@@ -136,14 +136,14 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
                       : widget.tenantId == 7
                           ? LocaleProvider.current.guven_cayyolu_campus
                           : LocaleProvider.current.online_hospital,
-                  style:
-                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
+                  style: context.xHeadline3
+                      .copyWith(color: getIt<IAppConfig>().theme.grey)),
             ),
             Container(
               margin: const EdgeInsets.only(top: 4),
               child: Text(widget.departmentName,
-                  style:
-                      context.xHeadline3.copyWith(color: getIt<ITheme>().grey)),
+                  style: context.xHeadline3
+                      .copyWith(color: getIt<IAppConfig>().theme.grey)),
             ),
             Container(
               margin: const EdgeInsets.only(top: 20, bottom: 20),

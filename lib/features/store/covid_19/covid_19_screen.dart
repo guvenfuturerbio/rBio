@@ -103,7 +103,7 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                   title == "" ? covidTitles[0] : title,
                   style: context.xHeadline3.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: getIt<ITheme>().mainColor),
+                      color: getIt<IAppConfig>().theme.mainColor),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -152,8 +152,9 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _currentIndex == index
-                            ? getIt<ITheme>().mainColor
-                            : getIt<ITheme>()
+                            ? getIt<IAppConfig>().theme.mainColor
+                            : getIt<IAppConfig>()
+                                .theme
                                 .textColorSecondary
                                 .withOpacity(0.5),
                       ),
@@ -259,7 +260,7 @@ Widget _itemTakeCovid({
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline3.copyWith(
               fontWeight: FontWeight.bold,
-              color: getIt<ITheme>().textColor,
+              color: getIt<IAppConfig>().theme.textColor,
             ),
             textAlign: TextAlign.center,
           ),
@@ -269,8 +270,8 @@ Widget _itemTakeCovid({
         borderRadius: R.sizes.borderRadiusCircular,
         gradient: LinearGradient(
           colors: [
-            getIt<ITheme>().textColorSecondary.withOpacity(0.7),
-            getIt<ITheme>().textColorSecondary.withOpacity(0.5),
+            getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.7),
+            getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.5),
           ],
           begin: Alignment.topLeft,
           end: Alignment.topRight,

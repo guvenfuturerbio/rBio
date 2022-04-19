@@ -55,7 +55,7 @@ class _HyperPicker extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
-                color: getIt<ITheme>().mainColor,
+                color: getIt<IAppConfig>().theme.mainColor,
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(12.0),
                   bottomRight: Radius.circular(12.0),
@@ -65,7 +65,7 @@ class _HyperPicker extends StatelessWidget {
                 LocaleProvider.current.save,
                 textAlign: TextAlign.center,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColor,
+                  color: getIt<IAppConfig>().theme.textColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -148,7 +148,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                 Row(
                   children: [
                     Checkbox(
-                      activeColor: getIt<ITheme>().mainColor,
+                      activeColor: getIt<IAppConfig>().theme.mainColor,
                       value: vm.isTcCitizen,
                       onChanged: (val) {
                         vm.toggleCitizen();
@@ -344,7 +344,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     onChanged: (newValue) {
                       vm.showApplicationContestForm();
                     },
-                    activeColor: getIt<ITheme>().mainColor,
+                    activeColor: getIt<IAppConfig>().theme.mainColor,
                   ),
                 ),
 
@@ -434,14 +434,14 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                 Text(
                   LocaleProvider.of(context).lbl_dont_have_account,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
+                    color: getIt<IAppConfig>().theme.textColorSecondary,
                   ),
                 ),
                 InkWell(
                   child: Text(
                     LocaleProvider.of(context).btn_sign_in,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<ITheme>().mainColor,
+                      color: getIt<IAppConfig>().theme.mainColor,
                     ),
                   ),
                   onTap: () {
@@ -488,7 +488,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         Expanded(
           child: Container(
             height: 1,
-            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+            color:
+                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
           ),
         ),
         Padding(
@@ -496,14 +497,16 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
           child: Text(
             "or",
             style: context.xHeadline3.copyWith(
-              color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+              color:
+                  getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
             ),
           ),
         ),
         Expanded(
           child: Container(
             height: 1,
-            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+            color:
+                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
           ),
         ),
       ],

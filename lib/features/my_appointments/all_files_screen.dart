@@ -101,7 +101,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
                 margin: const EdgeInsets.only(left: 10, right: 10),
                 width: 1,
                 height: 30,
-                color: getIt<ITheme>().textColorPassive,
+                color: getIt<IAppConfig>().theme.textColorPassive,
               ),
 
               //

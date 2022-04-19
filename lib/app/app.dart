@@ -156,12 +156,13 @@ class _MyAppState extends State<MyApp> {
                         fontFamily: themeNotifier.theme.fontFamily,
                         textTheme: themeNotifier.theme.textTheme,
                         textSelectionTheme: TextSelectionThemeData(
-                          cursorColor: getIt<ITheme>().mainColor,
-                          selectionColor: getIt<ITheme>().mainColor,
-                          selectionHandleColor: getIt<ITheme>().mainColor,
+                          cursorColor: getIt<IAppConfig>().theme.mainColor,
+                          selectionColor: getIt<IAppConfig>().theme.mainColor,
+                          selectionHandleColor:
+                              getIt<IAppConfig>().theme.mainColor,
                         ),
                         cupertinoOverrideTheme: CupertinoThemeData(
-                          primaryColor: getIt<ITheme>().mainColor,
+                          primaryColor: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       locale: context.watch<LocaleNotifier>().current,

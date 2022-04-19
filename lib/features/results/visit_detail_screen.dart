@@ -156,8 +156,8 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
               text,
               style: context.xHeadline3.copyWith(
                 color: isActive
-                    ? getIt<ITheme>().textColor
-                    : getIt<ITheme>().textColorSecondary,
+                    ? getIt<IAppConfig>().theme.textColor
+                    : getIt<IAppConfig>().theme.textColorSecondary,
               ),
             ),
           ),
@@ -170,7 +170,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   // #region _getTabButtonDecoration
   BoxDecoration _getTabButtonDecoration(bool isActive) {
     return BoxDecoration(
-      color: isActive ? getIt<ITheme>().mainColor : Colors.white,
+      color: isActive ? getIt<IAppConfig>().theme.mainColor : Colors.white,
       borderRadius: R.sizes.borderRadiusCircular,
       boxShadow: [
         BoxShadow(
@@ -225,7 +225,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       //       padding: EdgeInsets.all(8),
       //       margin: EdgeInsets.only(bottom: 20),
       //       decoration: BoxDecoration(
-      //         color: getIt<ITheme>().cardBackgroundColor,
+      //         color: getIt<IAppConfig>().theme.cardBackgroundColor,
       //         borderRadius: BorderRadius.circular(10),
       //       ),
       //       child: Column(
@@ -259,7 +259,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       //                       child: Text(
       //                         LocaleProvider.of(context).test_name,
       //                         style: context.xHeadline4.copyWith(
-      //                           color: getIt<ITheme>().textColorPassive,
+      //                           color: getIt<IAppConfig>().theme.textColorPassive,
       //                         ),
       //                       ),
       //                     ),
@@ -269,7 +269,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       //                       child: Text(
       //                         LocaleProvider.current.value,
       //                         style: context.xHeadline4.copyWith(
-      //                           color: getIt<ITheme>().textColorPassive,
+      //                           color: getIt<IAppConfig>().theme.textColorPassive,
       //                         ),
       //                       ),
       //                     ),
@@ -308,7 +308,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       //                         child: Text(
       //                           LocaleProvider.of(context).group_name,
       //                           style: context.xHeadline4.copyWith(
-      //                             color: getIt<ITheme>().textColorPassive,
+      //                             color: getIt<IAppConfig>().theme.textColorPassive,
       //                           ),
       //                         ),
       //                       ),
@@ -318,7 +318,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       //                         child: Text(
       //                           LocaleProvider.of(context).approved_date,
       //                           style: context.xHeadline4.copyWith(
-      //                             color: getIt<ITheme>().textColorPassive,
+      //                             color: getIt<IAppConfig>().theme.textColorPassive,
       //                           ),
       //                         ),
       //                       ),
@@ -372,7 +372,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
+              color: getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Column(
@@ -433,7 +433,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
+              color: getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Column(
@@ -481,7 +481,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                       Text(
                         LocaleProvider.of(context).test_name,
                         style: context.xHeadline4.copyWith(
-                          color: getIt<ITheme>().textColorPassive,
+                          color: getIt<IAppConfig>().theme.textColorPassive,
                         ),
                       ),
 
@@ -502,7 +502,9 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                               child: Text(
                                 LocaleProvider.of(context).group_name,
                                 style: context.xHeadline4.copyWith(
-                                  color: getIt<ITheme>().textColorPassive,
+                                  color: getIt<IAppConfig>()
+                                      .theme
+                                      .textColorPassive,
                                 ),
                               ),
                             ),
@@ -512,7 +514,9 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                               child: Text(
                                 LocaleProvider.of(context).approved_date,
                                 style: context.xHeadline4.copyWith(
-                                  color: getIt<ITheme>().textColorPassive,
+                                  color: getIt<IAppConfig>()
+                                      .theme
+                                      .textColorPassive,
                                 ),
                               ),
                             ),

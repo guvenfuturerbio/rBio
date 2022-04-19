@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/utils/logger_helper.dart';
 
 import '../../../../core/core.dart';
 

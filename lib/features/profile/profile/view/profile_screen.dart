@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
           icon: SvgPicture.asset(
             R.image.changeSize,
-            color: getIt<ITheme>().iconSecondaryColor,
+            color: getIt<IAppConfig>().theme.iconSecondaryColor,
           ),
         ),
       ],
@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: getIt<ITheme>().cardBackgroundColor,
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Column(
@@ -139,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
 
                     //
-                    if (getIt<AppConfig>().mediminder)
+                    if (getIt<IAppConfig>().functionality.mediminder)
                       _buildListItem(
                         LocaleProvider.current.reminders,
                         () {

@@ -310,8 +310,8 @@ class BgTaggerPopUp extends StatelessWidget {
     return Card(
       elevation: R.sizes.defaultElevation,
       color: isCurrent
-          ? getIt<ITheme>().mainColor
-          : getIt<ITheme>().cardBackgroundColor,
+          ? getIt<IAppConfig>().theme.mainColor
+          : getIt<IAppConfig>().theme.cardBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -534,8 +534,8 @@ class BgTaggerPopUp extends StatelessWidget {
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
       showElevation: false,
-      backColor: isSave ? null : getIt<ITheme>().cardBackgroundColor,
-      textColor: isSave ? null : getIt<ITheme>().textColorSecondary,
+      backColor: isSave ? null : getIt<IAppConfig>().theme.cardBackgroundColor,
+      textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
     );
   }
   // #endregion

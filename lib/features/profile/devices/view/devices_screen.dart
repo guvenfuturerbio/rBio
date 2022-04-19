@@ -64,7 +64,7 @@ class DevicesScreen extends StatelessWidget {
 
   Widget _buildFab() {
     return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPressed: () {
         Atom.to(PagePaths.allDevices);
       },
@@ -120,7 +120,7 @@ class DevicesScreen extends StatelessWidget {
                         Atom.show(
                           GuvenAlert(
                             backgroundColor:
-                                getIt<ITheme>().cardBackgroundColor,
+                                getIt<IAppConfig>().theme.cardBackgroundColor,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 25,
                               vertical: 25,
@@ -191,18 +191,18 @@ class DevicesScreen extends StatelessWidget {
         return R.color.high;
 
       case DeviceStatus.connected:
-        return getIt<ITheme>().mainColor;
+        return getIt<IAppConfig>().theme.mainColor;
 
       case DeviceStatus.disconnected:
       case DeviceStatus.disconnecting:
       default:
-        return getIt<ITheme>().cardBackgroundColor;
+        return getIt<IAppConfig>().theme.cardBackgroundColor;
     }
   }
 
   Widget _buildV1Card(BuildContext context, PairedDevice device, DevicesVm vm) {
     return DeviceCard(
-      background: getIt<ITheme>().cardBackgroundColor,
+      background: getIt<IAppConfig>().theme.cardBackgroundColor,
       image: UtilityManager().getDeviceImageFromType(device.deviceType!) ??
           const SizedBox(),
       name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
@@ -224,7 +224,8 @@ class DevicesScreen extends StatelessWidget {
             onPressed: () {
               Atom.show(
                 GuvenAlert(
-                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  backgroundColor:
+                      getIt<IAppConfig>().theme.cardBackgroundColor,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 25,
                     vertical: 25,

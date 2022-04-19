@@ -72,7 +72,7 @@ class RbioUserTile extends StatelessWidget {
     switch (type) {
       case UserLeadingImage.circle:
         return CircleAvatar(
-          backgroundColor: getIt<ITheme>().mainColor,
+          backgroundColor: getIt<IAppConfig>().theme.mainColor,
           backgroundImage: imageBytes != null
               ? MemoryImage(base64.decode(imageBytes!))
               : imageUrl == null

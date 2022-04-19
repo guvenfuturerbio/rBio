@@ -62,7 +62,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                             onChanged: (newValue) {
                               value.toggleConsentFormState();
                             },
-                            activeColor: getIt<ITheme>().mainColor,
+                            activeColor: getIt<IAppConfig>().theme.mainColor,
                           ),
                         ),
 

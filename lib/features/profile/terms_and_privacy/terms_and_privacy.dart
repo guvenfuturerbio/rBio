@@ -56,7 +56,7 @@ class TermsAndPrivacyScreen extends StatelessWidget {
             child: Checkbox(
               value: true,
               onChanged: (newValue) {},
-              activeColor: getIt<ITheme>().mainColor,
+              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),
@@ -98,7 +98,7 @@ class TermsAndPrivacyScreen extends StatelessWidget {
                   value.setCheckedKvkk(newValue);
                 }
               },
-              activeColor: getIt<ITheme>().mainColor,
+              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),

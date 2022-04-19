@@ -85,7 +85,7 @@ class RbioTextFormField extends StatelessWidget {
         suffixIcon: suffixIcon,
         backColor: backColor,
       ),
-      cursorColor: getIt<ITheme>().mainColor,
+      cursorColor: getIt<IAppConfig>().theme.mainColor,
       onChanged: onChanged,
       inputFormatters: inputFormatters,
       onFieldSubmitted: onFieldSubmitted,
@@ -114,7 +114,7 @@ class RbioTextFormField extends StatelessWidget {
         )
         .copyWith(
           filled: true,
-          fillColor: backColor ?? getIt<ITheme>().cardBackgroundColor,
+          fillColor: backColor ?? getIt<IAppConfig>().theme.cardBackgroundColor,
           suffixIcon: suffixIcon,
         );
   }
@@ -135,7 +135,7 @@ class RbioTextFormField extends StatelessWidget {
         borderSide: BorderSide(
           width: 0,
           style: BorderStyle.solid,
-          color: getIt<ITheme>().mainColor,
+          color: getIt<IAppConfig>().theme.mainColor,
         ),
       );
 }

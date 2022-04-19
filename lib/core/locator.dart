@@ -12,11 +12,11 @@ import 'core.dart';
 // This is our global ServiceLocator
 GetIt getIt = GetIt.instance;
 
-Future<void> setupLocator(AppConfig appConfig) async {
+Future<void> setupLocator(IAppConfig appConfig) async {
   getIt.registerSingleton<KeyManager>(KeyManager());
-  await getIt<KeyManager>().setup(Environment.prod);
+  await getIt<KeyManager>().setup(appConfig.endpoints.envPath);
 
-  getIt.registerSingleton<AppConfig>(appConfig);
+  getIt.registerSingleton<IAppConfig>(appConfig);
   getIt.registerSingleton<CacheClient>(CacheClient());
 
   getIt.registerSingleton<DeviceLocalDataSource>(

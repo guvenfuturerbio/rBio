@@ -39,7 +39,7 @@ class __MeasurementListState extends State<_MeasurementList> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 2),
             decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
+              color: getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Padding(
@@ -91,7 +91,7 @@ Widget _buildCard(
         Text(
           DateFormat("kk : mm").format(bgMeasurementViewModel.date),
           style: context.xBodyText1.copyWith(
-            color: getIt<ITheme>().textColorPassive,
+            color: getIt<IAppConfig>().theme.textColorPassive,
           ),
         ),
 
@@ -102,7 +102,7 @@ Widget _buildCard(
             height: (context.height * .08) * context.textScale,
             margin: const EdgeInsets.only(left: 4, right: 8, top: 8),
             decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
+              color: getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: const BorderRadius.all(Radius.circular(30.0)),
             ),
             child: Row(

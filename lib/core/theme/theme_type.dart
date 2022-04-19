@@ -15,16 +15,16 @@ extension ThemeTypeStringExt on String {
 extension ThemeTypeExt on ThemeType {
   String get xRawValue => getEnumValue(this);
 
-  ITheme get xGetTheme {
+  IAppTheme get xGetTheme {
     switch (this) {
       case ThemeType.green:
-        return RbioTheme();
+        return OneDoseTheme();
 
       case ThemeType.burgundy:
         return GuvenTheme();
 
       default:
-        return RbioTheme();
+        return OneDoseTheme();
     }
   }
 }

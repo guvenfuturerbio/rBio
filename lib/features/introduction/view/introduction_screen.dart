@@ -117,7 +117,7 @@ class IntroductionScreenState extends State<IntroductionScreen> {
   Widget build(BuildContext context) {
     return RbioDarkStatusBar(
       child: Scaffold(
-        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
         body: SafeArea(
           child: Stack(
             fit: StackFit.expand,
@@ -155,8 +155,8 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                   effect: ExpandingDotsEffect(
                     dotHeight: 10,
                     dotWidth: 16,
-                    activeDotColor: getIt<ITheme>().mainColor,
-                    dotColor: getIt<ITheme>().grey.withOpacity(0.5),
+                    activeDotColor: getIt<IAppConfig>().theme.mainColor,
+                    dotColor: getIt<IAppConfig>().theme.grey.withOpacity(0.5),
                   ),
                 ),
               ),
@@ -188,9 +188,11 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                                     curve: Curves.ease,
                                   );
                                 },
-                                backColor: getIt<ITheme>().cardBackgroundColor,
+                                backColor: getIt<IAppConfig>()
+                                    .theme
+                                    .cardBackgroundColor,
                                 showElevation: false,
-                                textColor: getIt<ITheme>().mainColor,
+                                textColor: getIt<IAppConfig>().theme.mainColor,
                               ),
                             ),
 
@@ -289,7 +291,7 @@ class AnimatedIntroCard extends StatelessWidget {
                         item.title,
                         textAlign: TextAlign.center,
                         style: context.xHeadline1.copyWith(
-                          color: getIt<ITheme>().mainColor,
+                          color: getIt<IAppConfig>().theme.mainColor,
                           fontSize: context.xHeadline1.fontSize! * 1.5,
                           fontWeight: FontWeight.bold,
                           height: 1.35,
@@ -328,8 +330,9 @@ class AnimatedIntroCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: RbioElevatedButton(
-                          backColor: getIt<ITheme>().cardBackgroundColor,
-                          textColor: getIt<ITheme>().mainColor,
+                          backColor:
+                              getIt<IAppConfig>().theme.cardBackgroundColor,
+                          textColor: getIt<IAppConfig>().theme.mainColor,
                           showElevation: false,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.login,
@@ -376,7 +379,7 @@ class IntroCard extends StatelessWidget {
           SizedBox(
             height: Atom.height * 0.4,
             child: item.isLast
-                ? Container(color: getIt<ITheme>().mainColor)
+                ? Container(color: getIt<IAppConfig>().theme.mainColor)
                 : RiveAnimation.asset(
                     item.animationPath,
                     fit: BoxFit.scaleDown,

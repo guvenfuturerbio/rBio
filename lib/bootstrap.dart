@@ -10,7 +10,7 @@ import 'app/app.dart';
 import 'app/bluetooth_v2/bluetooth_v2.dart';
 import 'core/core.dart';
 
-Future<void> bootstrap(AppConfig appConfig) async {
+Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();

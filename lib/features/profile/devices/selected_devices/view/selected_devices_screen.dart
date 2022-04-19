@@ -56,8 +56,8 @@ class SelectedDevicesScreen extends StatelessWidget {
                             Center(
                               child: Text(
                                 LocaleProvider.current.pair_steps,
-                                style: Atom.context.xHeadline1
-                                    .copyWith(color: getIt<ITheme>().mainColor),
+                                style: Atom.context.xHeadline1.copyWith(
+                                    color: getIt<IAppConfig>().theme.mainColor),
                               ),
                             ),
 
@@ -88,7 +88,7 @@ class SelectedDevicesScreen extends StatelessWidget {
                                             .getStatus(device.id)
                                             ?.connectionState ==
                                         DeviceConnectionState.connected
-                                    ? getIt<ITheme>().mainColor
+                                    ? getIt<IAppConfig>().theme.mainColor
                                     : getIt<BleConnector>()
                                                 .getStatus(device.id)
                                                 ?.connectionState ==
@@ -124,7 +124,7 @@ class SelectedDevicesScreen extends StatelessWidget {
             child: Text(
               sequence,
               style: Atom.context.xHeadline1.copyWith(
-                color: getIt<ITheme>().mainColor,
+                color: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
           ),

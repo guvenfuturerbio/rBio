@@ -84,7 +84,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
               LocaleProvider.current.request_and_suggestions_text,
               textAlign: TextAlign.center,
               style: context.xHeadline5.copyWith(
-                color: getIt<ITheme>().mainColor,
+                color: getIt<IAppConfig>().theme.mainColor,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
               ),

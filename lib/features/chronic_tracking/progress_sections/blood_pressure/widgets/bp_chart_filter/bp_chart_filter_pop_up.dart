@@ -56,7 +56,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                   (key) => CheckboxListTile(
                     title: Text(key, style: context.xHeadline5),
                     value: vm.measurements[key],
-                    activeColor: getIt<ITheme>().mainColor,
+                    activeColor: getIt<IAppConfig>().theme.mainColor,
                     dense: true,
                     onChanged: (_) => vm.changeFilter(key),
                   ),
@@ -74,8 +74,8 @@ class BpChartFilterPopUp extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  backColor: getIt<ITheme>().cardBackgroundColor,
-                  textColor: getIt<ITheme>().textColorSecondary,
+                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
                   showElevation: false,
                 ),
 

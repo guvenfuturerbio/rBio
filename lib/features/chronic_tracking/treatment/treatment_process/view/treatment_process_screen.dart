@@ -108,7 +108,7 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
                     Text(
                       item.description ?? '',
                       style: context.xHeadline5.copyWith(
-                        color: getIt<ITheme>().textColorPassive,
+                        color: getIt<IAppConfig>().theme.textColorPassive,
                       ),
                     ),
                   ],

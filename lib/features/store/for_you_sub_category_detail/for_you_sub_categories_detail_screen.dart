@@ -170,8 +170,9 @@ class _ForYouSubCategoriesDetailScreenState
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: _currentIndex == index
-                                    ? getIt<ITheme>().mainColor
-                                    : getIt<ITheme>()
+                                    ? getIt<IAppConfig>().theme.mainColor
+                                    : getIt<IAppConfig>()
+                                        .theme
                                         .textColorSecondary
                                         .withOpacity(0.5),
                               ),
@@ -266,7 +267,7 @@ class ListCard extends StatelessWidget {
               child: Text(
                 title,
                 style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
+                    color: getIt<IAppConfig>().theme.textColorSecondary,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
@@ -284,7 +285,7 @@ class ListCard extends StatelessWidget {
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<ITheme>().textColorSecondary,
+                  color: getIt<IAppConfig>().theme.textColorSecondary,
                   fontStyle: FontStyle.italic,
                 ),
                 textAlign: TextAlign.center,
@@ -311,15 +312,15 @@ Widget _itemTakeCovid({
         borderRadius: R.sizes.borderRadiusCircular,
         gradient: LinearGradient(
           colors: [
-            getIt<ITheme>().mainColor,
-            getIt<ITheme>().mainColor,
+            getIt<IAppConfig>().theme.mainColor,
+            getIt<IAppConfig>().theme.mainColor,
           ],
           begin: Alignment.topLeft,
           end: Alignment.topRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: getIt<ITheme>().textColorSecondary.withAlpha(50),
+            color: getIt<IAppConfig>().theme.textColorSecondary.withAlpha(50),
             blurRadius: 15,
             spreadRadius: 0,
             offset: const Offset(5, 10),
@@ -338,7 +339,7 @@ Widget _itemTakeCovid({
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: context.xHeadline3.copyWith(
-                          color: getIt<ITheme>().textColor,
+                          color: getIt<IAppConfig>().theme.textColor,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),

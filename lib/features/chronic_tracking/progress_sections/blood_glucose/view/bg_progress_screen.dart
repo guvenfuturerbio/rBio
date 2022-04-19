@@ -143,7 +143,7 @@ class BgProgressScreen extends StatelessWidget {
 
   Widget _buildFAB(BgProgressVm vm, BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPressed: () => vm.manuelEntry(context),
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -170,7 +170,7 @@ class BgProgressScreen extends StatelessWidget {
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Row(
@@ -178,7 +178,8 @@ class BgProgressScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     foregroundImage: Utils.instance.getCacheProfileImage,
-                    backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                    backgroundColor:
+                        getIt<IAppConfig>().theme.cardBackgroundColor,
                   ),
 
                   //
@@ -213,7 +214,7 @@ class BgProgressScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Text(

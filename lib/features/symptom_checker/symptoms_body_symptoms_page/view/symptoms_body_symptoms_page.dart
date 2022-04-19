@@ -114,7 +114,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                     : LocaleProvider.of(context).girl,
                         style: context.xHeadline3.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: getIt<ITheme>().mainColor),
+                            color: getIt<IAppConfig>().theme.mainColor),
                         textAlign: TextAlign.start,
                       ),
                     ),
@@ -126,7 +126,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                           widget.selectedBodyLocation!.name!,
                           style: context.xHeadline3.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: getIt<ITheme>().mainColor),
+                              color: getIt<IAppConfig>().theme.mainColor),
                           textAlign: TextAlign.start,
                         ),
                       ),
@@ -139,7 +139,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                           LocaleProvider.of(context).your_complaints,
                           style: context.xHeadline3.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: getIt<ITheme>()
+                              color: getIt<IAppConfig>()
+                                  .theme
                                   .textColorSecondary
                                   .withOpacity(0.5)),
                           textAlign: TextAlign.start,
@@ -172,7 +173,9 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                       '${value.selectedBodySymptoms[index].name}',
                                       style: context.xHeadline3.copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color: getIt<ITheme>().mainColor),
+                                          color: getIt<IAppConfig>()
+                                              .theme
+                                              .mainColor),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     GestureDetector(
@@ -263,8 +266,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: Text(
                   LocaleProvider.current.proposed_symptom,
-                  style: context.xHeadline1
-                      .copyWith(color: getIt<ITheme>().textColorSecondary),
+                  style: context.xHeadline1.copyWith(
+                      color: getIt<IAppConfig>().theme.textColorSecondary),
                 ),
               ),
               SizedBox(
@@ -289,7 +292,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                   '${value.proposedSymptomList[index].name}',
                                   style: context.xHeadline3.copyWith(
                                       fontWeight: FontWeight.bold,
-                                      color: getIt<ITheme>().mainColor),
+                                      color:
+                                          getIt<IAppConfig>().theme.mainColor),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),

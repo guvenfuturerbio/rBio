@@ -92,7 +92,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
 
   Widget _buildFab() {
     return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPressed: () {
         Atom.to(PagePaths.addPatientRelatives);
       },

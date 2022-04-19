@@ -13,7 +13,6 @@ import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_
 import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_detail_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_manuel_add_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/view/scale_progress_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/dashboard_navigation.dart';
@@ -135,11 +134,11 @@ class VRouterRoutes {
     VGuard(
       beforeEnter: (vRedirector) async {
         if (vRedirector.toUrl?.contains('forOnline=true') ?? false) {
-          if (!getIt<AppConfig>().takeOnlineAppointment) {
+          if (!getIt<IAppConfig>().functionality.takeOnlineAppointment) {
             vRedirector.to(PagePaths.main);
           }
         } else if (vRedirector.toUrl?.contains('forOnline=false') ?? false) {
-          if (!getIt<AppConfig>().takeHospitalAppointment) {
+          if (!getIt<IAppConfig>().functionality.takeHospitalAppointment) {
             vRedirector.to(PagePaths.main);
           }
         }
@@ -322,7 +321,7 @@ class VRouterRoutes {
     // Symptom Checker
     VGuard(
       beforeEnter: (vRedirector) async {
-        if (!getIt<AppConfig>().symptomChecker) {
+        if (!getIt<IAppConfig>().functionality.symptomChecker) {
           vRedirector.to(PagePaths.main);
         }
       },
@@ -416,7 +415,7 @@ class VRouterRoutes {
     // Mediminder
     VGuard(
       beforeEnter: (vRedirector) async {
-        if (!getIt<AppConfig>().mediminder) {
+        if (!getIt<IAppConfig>().functionality.mediminder) {
           vRedirector.to(PagePaths.main);
         }
       },
@@ -450,7 +449,8 @@ class VRouterRoutes {
             Future<void> showAlert() async {
               await Atom.show(
                 GuvenAlert(
-                  backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                  backgroundColor:
+                      getIt<IAppConfig>().theme.cardBackgroundColor,
                   title: GuvenAlert.buildTitle(LocaleProvider.current.info),
                   content: GuvenAlert.buildDescription(
                     LocaleProvider.current.device_register,

@@ -1,10 +1,6 @@
-import '../../core/core.dart';
+part of 'app_config.dart';
 
-part 'guven_config.dart';
-part 'rbio_config.dart';
-
-abstract class AppConfig {
-  ITheme get theme;
+abstract class IAppFunctionality {
   bool get chronicTracking;
   bool get symptomChecker;
   bool get takeOnlineAppointment;

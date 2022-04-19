@@ -208,8 +208,8 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         //
         Expanded(
           child: RbioElevatedButton(
-            backColor: getIt<ITheme>().cardBackgroundColor,
-            textColor: getIt<ITheme>().textColorSecondary,
+            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            textColor: getIt<IAppConfig>().theme.textColorSecondary,
             title: LocaleProvider.current.btn_cancel,
             onTap: () {
               Atom.historyBack();
@@ -241,7 +241,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -283,7 +283,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
     return Center(
       child: CircleAvatar(
         radius: 90,
-        backgroundColor: getIt<ITheme>().mainColor,
+        backgroundColor: getIt<IAppConfig>().theme.mainColor,
         child: CircleAvatar(
           backgroundColor: Colors.white,
           radius: 70,
@@ -338,7 +338,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
                 style: context.xHeadline3.copyWith(
                   height: 1,
                   fontSize: 35,
-                  color: getIt<ITheme>().textColorSecondary,
+                  color: getIt<IAppConfig>().theme.textColorSecondary,
                 ),
               ),
             ],
@@ -404,7 +404,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: getIt<ITheme>().mainColor,
+          color: getIt<IAppConfig>().theme.mainColor,
           shape: BoxShape.circle,
         ),
         child: SvgPicture.asset(
@@ -428,7 +428,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
           LocaleProvider.current.strip_page_info_message,
           style: context.xHeadline4.copyWith(
               fontWeight: FontWeight.w100,
-              color: getIt<ITheme>().textColorPassive),
+              color: getIt<IAppConfig>().theme.textColorPassive),
           textAlign: TextAlign.center,
         ),
       ),

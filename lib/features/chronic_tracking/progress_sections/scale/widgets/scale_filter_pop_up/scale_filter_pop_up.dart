@@ -66,7 +66,7 @@ class ScaleChartFilterPopup extends StatelessWidget {
                     onChanged: (SelectedScaleType? type) =>
                         vm.changeScaleType(type),
                     dense: true,
-                    activeColor: getIt<ITheme>().mainColor,
+                    activeColor: getIt<IAppConfig>().theme.mainColor,
                   ),
                 ),
               ],
@@ -82,8 +82,8 @@ class ScaleChartFilterPopup extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  backColor: getIt<ITheme>().cardBackgroundColor,
-                  textColor: getIt<ITheme>().textColorSecondary,
+                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
                   showElevation: false,
                 ),
 

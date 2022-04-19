@@ -35,7 +35,7 @@ abstract class PatientListModel<T> {
   ) {
     return GestureDetector(
       child: Container(
-        color: getIt<ITheme>().scaffoldBackgroundColor,
+        color: getIt<IAppConfig>().theme.scaffoldBackgroundColor,
         padding: const EdgeInsets.all(12),
         child: Text(
           text,

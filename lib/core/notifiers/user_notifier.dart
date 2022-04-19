@@ -215,7 +215,7 @@ class UserNotifier extends ChangeNotifier {
     final result = await Atom.show(
       AlertDialog(
         contentPadding: EdgeInsets.zero,
-        backgroundColor: getIt<ITheme>().cardBackgroundColor,
+        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),

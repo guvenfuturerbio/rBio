@@ -139,7 +139,7 @@ class _CreateAppointmentSummaryScreenState
                         LocaleProvider.current.appo_created,
                         textAlign: TextAlign.center,
                         style: context.xHeadline3.copyWith(
-                          color: getIt<ITheme>().mainColor,
+                          color: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
 
@@ -207,7 +207,7 @@ class _CreateAppointmentSummaryScreenState
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: isKeyboardVisible ? 5 : 0),
                 decoration: BoxDecoration(
-                  color: getIt<ITheme>().cardBackgroundColor,
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -283,7 +283,7 @@ class _CreateAppointmentSummaryScreenState
                 height: 55,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: getIt<ITheme>().cardBackgroundColor,
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -497,7 +497,7 @@ class _CreateAppointmentSummaryScreenState
                     decoration: TextDecoration.lineThrough,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.normal,
-                    color: getIt<ITheme>().textColorPassive,
+                    color: getIt<IAppConfig>().theme.textColorPassive,
                   ),
                 ),
                 _buildHorizontalGap(),
@@ -507,7 +507,7 @@ class _CreateAppointmentSummaryScreenState
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline1.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: getIt<ITheme>().mainColor,
+                    color: getIt<IAppConfig>().theme.mainColor,
                   ),
                 )
               ],
@@ -518,7 +518,7 @@ class _CreateAppointmentSummaryScreenState
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline1.copyWith(
                 fontWeight: FontWeight.bold,
-                color: getIt<ITheme>().mainColor,
+                color: getIt<IAppConfig>().theme.mainColor,
               ),
             );
     } else {
@@ -571,11 +571,11 @@ class _CreateAppointmentSummaryScreenState
       onTap: onTap,
       title: title,
       backColor: vm.summaryButton == SummaryButtons.add
-          ? getIt<ITheme>().cardBackgroundColor
-          : getIt<ITheme>().mainColor,
+          ? getIt<IAppConfig>().theme.cardBackgroundColor
+          : getIt<IAppConfig>().theme.mainColor,
       textColor: vm.summaryButton == SummaryButtons.add
-          ? getIt<ITheme>().textColorSecondary
-          : getIt<ITheme>().textColor,
+          ? getIt<IAppConfig>().theme.textColorSecondary
+          : getIt<IAppConfig>().theme.textColor,
       fontWeight: FontWeight.w600,
       showElevation: false,
     );
@@ -586,7 +586,7 @@ class _CreateAppointmentSummaryScreenState
       width: double.infinity,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -699,7 +699,7 @@ class _CreateAppointmentSummaryScreenState
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline4.copyWith(
-          color: getIt<ITheme>().textColorPassive,
+          color: getIt<IAppConfig>().theme.textColorPassive,
         ),
       );
 }

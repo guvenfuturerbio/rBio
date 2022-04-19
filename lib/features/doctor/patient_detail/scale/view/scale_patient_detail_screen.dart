@@ -132,7 +132,9 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                                       child: Card(
                                         color: result.graphType ==
                                                 GraphTypes.weight
-                                            ? getIt<ITheme>().mainColor
+                                            ? getIt<IAppConfig>()
+                                                .theme
+                                                .mainColor
                                             : null,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -164,7 +166,9 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                                       child: Card(
                                         color:
                                             result.graphType == GraphTypes.bmi
-                                                ? getIt<ITheme>().mainColor
+                                                ? getIt<IAppConfig>()
+                                                    .theme
+                                                    .mainColor
                                                 : null,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -249,7 +253,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: getIt<ITheme>().cardBackgroundColor,
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -257,7 +261,8 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                   children: [
                     CircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
-                      backgroundColor: getIt<ITheme>().cardBackgroundColor,
+                      backgroundColor:
+                          getIt<IAppConfig>().theme.cardBackgroundColor,
                     ),
 
                     //
@@ -299,7 +304,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Text(

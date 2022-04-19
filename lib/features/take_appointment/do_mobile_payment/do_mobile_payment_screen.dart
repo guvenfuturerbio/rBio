@@ -272,7 +272,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                           onChanged: (newValue) {
                             value.toggleSalesContract();
                           },
-                          activeColor: getIt<ITheme>().mainColor,
+                          activeColor: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       Expanded(
@@ -310,7 +310,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                           onChanged: (newValue) {
                             value.toggleCancellationForm();
                           },
-                          activeColor: getIt<ITheme>().mainColor,
+                          activeColor: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       Expanded(

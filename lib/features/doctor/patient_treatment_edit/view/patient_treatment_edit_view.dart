@@ -11,7 +11,6 @@ import '../view_model/patient_treatment_vm.dart';
 class PatientTreatmentEditView extends StatefulWidget {
   const PatientTreatmentEditView({Key? key}) : super(key: key);
 
-
   @override
   State<PatientTreatmentEditView> createState() =>
       _PatientTreatmentEditViewState();
@@ -112,7 +111,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: RbioTextFormField(
@@ -175,7 +174,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -183,7 +182,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
         children: [
           CircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
-            backgroundColor: getIt<ITheme>().cardBackgroundColor,
+            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
           ),
 
           //

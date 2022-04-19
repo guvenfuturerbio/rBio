@@ -86,8 +86,8 @@ class RbioCardAppoCard extends StatelessWidget {
               height: 42,
               decoration: BoxDecoration(
                 color: isActiveHeader
-                    ? getIt<ITheme>().mainColor
-                    : getIt<ITheme>().secondaryColor,
+                    ? getIt<IAppConfig>().theme.mainColor
+                    : getIt<IAppConfig>().theme.secondaryColor,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
@@ -109,8 +109,8 @@ class RbioCardAppoCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: context.xHeadline2.copyWith(
                         color: isActiveHeader
-                            ? getIt<ITheme>().textColor
-                            : getIt<ITheme>().textColorSecondary,
+                            ? getIt<IAppConfig>().theme.textColor
+                            : getIt<IAppConfig>().theme.textColorSecondary,
                       ),
                     ),
                   ),
@@ -125,7 +125,7 @@ class RbioCardAppoCard extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
+              color: getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(15),
                 bottomRight: Radius.circular(15),
@@ -148,7 +148,7 @@ class RbioCardAppoCard extends StatelessWidget {
                     Text(
                       LocaleProvider.of(context).hint_doctor,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<ITheme>().textColorPassive,
+                        color: getIt<IAppConfig>().theme.textColorPassive,
                       ),
                     ),
                     Text(
@@ -170,7 +170,7 @@ class RbioCardAppoCard extends StatelessWidget {
                     Text(
                       LocaleProvider.of(context).department,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<ITheme>().textColorPassive,
+                        color: getIt<IAppConfig>().theme.textColorPassive,
                       ),
                     ),
                     Text(
@@ -196,7 +196,7 @@ class RbioCardAppoCard extends StatelessWidget {
                           Text(
                             LocaleProvider.of(context).hint_date,
                             style: context.xHeadline4.copyWith(
-                              color: getIt<ITheme>().textColorPassive,
+                              color: getIt<IAppConfig>().theme.textColorPassive,
                             ),
                           ),
                           Text(
@@ -221,7 +221,8 @@ class RbioCardAppoCard extends StatelessWidget {
                             Text(
                               LocaleProvider.current.hint_time,
                               style: context.xHeadline4.copyWith(
-                                color: getIt<ITheme>().textColorPassive,
+                                color:
+                                    getIt<IAppConfig>().theme.textColorPassive,
                               ),
                             ),
                             Text(

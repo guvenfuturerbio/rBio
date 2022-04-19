@@ -275,7 +275,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                         (vm.selectedDate == null)
                             ? Text('DD/MM/YYYY',
                                 style: context.xHeadline3.copyWith(
-                                    color: getIt<ITheme>()
+                                    color: getIt<IAppConfig>()
+                                        .theme
                                         .textColorSecondary
                                         .withOpacity(0.5)))
                             : Text(
@@ -405,14 +406,14 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 Text(
                   LocaleProvider.of(context).lbl_have_account,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColorSecondary,
+                    color: getIt<IAppConfig>().theme.textColorSecondary,
                   ),
                 ),
                 InkWell(
                   child: Text(
                     LocaleProvider.of(context).btn_sign_in,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<ITheme>().mainColor,
+                      color: getIt<IAppConfig>().theme.mainColor,
                     ),
                   ),
                   onTap: () {
@@ -438,7 +439,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         Expanded(
           child: Container(
             height: 1,
-            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+            color:
+                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
           ),
         ),
 
@@ -448,7 +450,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
           child: Text(
             "or",
             style: context.xHeadline3.copyWith(
-              color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+              color:
+                  getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
             ),
           ),
         ),
@@ -457,7 +460,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         Expanded(
           child: Container(
             height: 1,
-            color: getIt<ITheme>().textColorSecondary.withOpacity(0.4),
+            color:
+                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
           ),
         ),
       ],

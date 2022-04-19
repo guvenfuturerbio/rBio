@@ -71,7 +71,7 @@ class _ReminderListView extends StatelessWidget {
 
   Widget _buildFAB(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
       onPressed: () {
         Atom.to(PagePaths.selectReminder);
       },
@@ -105,8 +105,8 @@ class _ReminderListView extends StatelessWidget {
             },
             title: LocaleProvider.current.filter,
             showElevation: false,
-            backColor: getIt<ITheme>().cardBackgroundColor,
-            textColor: getIt<ITheme>().textColorSecondary,
+            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            textColor: getIt<IAppConfig>().theme.textColorSecondary,
             fontWeight: FontWeight.bold,
           ),
         ),

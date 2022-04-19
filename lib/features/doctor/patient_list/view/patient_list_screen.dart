@@ -124,7 +124,7 @@ class DoctorPatientListScreen extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: R.sizes.borderRadiusCircular,
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
               ),
               child: RbioTextFormField(
                 focusNode: _searchfocusNode,
@@ -154,7 +154,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: getIt<ITheme>().cardBackgroundColor,
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Text(
@@ -173,7 +173,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                     child: RbioOverlayMenu(
                       tiles: vm.getPopupWidgets(),
                       margin: const EdgeInsets.only(top: 50),
-                      color: getIt<ITheme>().cardBackgroundColor,
+                      color: getIt<IAppConfig>().theme.cardBackgroundColor,
                       borderRadius: R.sizes.borderRadiusCircular,
                       separator: Container(
                         width: double.infinity,
@@ -307,7 +307,7 @@ class DoctorPatientListScreen extends StatelessWidget {
       onTap: onTap,
       child: Card(
         elevation: R.sizes.defaultElevation,
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -329,14 +329,14 @@ class DoctorPatientListScreen extends StatelessWidget {
                         _buildBigSmallCardText(
                           context,
                           LocaleProvider.current.patient_name_2,
-                          getIt<ITheme>().textColorPassive,
+                          getIt<IAppConfig>().theme.textColorPassive,
                         ),
 
                         //
                         _buildBigSmallCardText(
                           context,
                           name,
-                          getIt<ITheme>().textColorSecondary,
+                          getIt<IAppConfig>().theme.textColorSecondary,
                         ),
                       ],
                     ),
@@ -405,7 +405,7 @@ class DoctorPatientListScreen extends StatelessWidget {
       onTap: onTap,
       child: Card(
         elevation: R.sizes.defaultElevation,
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -432,7 +432,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                           child: _buildBigSmallCardText(
                             context,
                             LocaleProvider.current.patient_name_2,
-                            getIt<ITheme>().textColorPassive,
+                            getIt<IAppConfig>().theme.textColorPassive,
                           ),
                         ),
 
@@ -453,7 +453,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                           child: _buildBigSmallCardText(
                             context,
                             name,
-                            getIt<ITheme>().textColorSecondary,
+                            getIt<IAppConfig>().theme.textColorSecondary,
                           ),
                         ),
 

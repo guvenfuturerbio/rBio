@@ -29,7 +29,7 @@ class RegisterStep3ScreenVm extends RbioVm {
         Atom.show(
           GuvenAlert(
             title: GuvenAlert.buildTitle(LocaleProvider.current.info),
-            backgroundColor: getIt<ITheme>().cardBackgroundColor,
+            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
             content: GuvenAlert.buildDescription(
                 LocaleProvider.current.succefully_created_account),
             actions: [

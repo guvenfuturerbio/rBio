@@ -19,7 +19,7 @@ class __ExpandablePostponeComponentState
     return AnimatedContainer(
       duration: kTabScrollDuration,
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: _isExpanded
             ? R.sizes.borderRadiusCircular
             : BorderRadius.circular(50),

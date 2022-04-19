@@ -114,7 +114,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               LocaleProvider.current.password_security,
               textAlign: TextAlign.center,
               style: context.xHeadline4.copyWith(
-                color: getIt<ITheme>().mainColor,
+                color: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
 
@@ -307,7 +307,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<ITheme>().textColorSecondary,
+                color: getIt<IAppConfig>().theme.textColorSecondary,
               ),
             ),
           ),
@@ -316,7 +316,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           Checkbox(
             value: checkboxValue,
             onChanged: (value) {},
-            activeColor: getIt<ITheme>().mainColor,
+            activeColor: getIt<IAppConfig>().theme.mainColor,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         ],

@@ -180,7 +180,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                 child: Text(
                   LocaleProvider.current.btn_cancel,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<ITheme>().textColor,
+                    color: getIt<IAppConfig>().theme.textColor,
                   ),
                 ),
               ),

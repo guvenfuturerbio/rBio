@@ -159,8 +159,8 @@ class _ListBodyState extends State<ListBody>
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.value == value
-                ? getIt<ITheme>().mainColor
-                : getIt<ITheme>().cardBackgroundColor,
+                ? getIt<IAppConfig>().theme.mainColor
+                : getIt<IAppConfig>().theme.cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
@@ -169,8 +169,8 @@ class _ListBodyState extends State<ListBody>
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.value == value
-                  ? getIt<ITheme>().textColor
-                  : getIt<ITheme>().textColorSecondary,
+                  ? getIt<IAppConfig>().theme.textColor
+                  : getIt<IAppConfig>().theme.textColorSecondary,
             ),
           ),
         ),
@@ -231,8 +231,8 @@ class _ListBodyState extends State<ListBody>
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.selected?.from == item.from
-                ? getIt<ITheme>().mainColor
-                : getIt<ITheme>().cardBackgroundColor,
+                ? getIt<IAppConfig>().theme.mainColor
+                : getIt<IAppConfig>().theme.cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
@@ -241,8 +241,8 @@ class _ListBodyState extends State<ListBody>
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.selected?.from == item.from
-                  ? getIt<ITheme>().textColor
-                  : getIt<ITheme>().textColorSecondary,
+                  ? getIt<IAppConfig>().theme.textColor
+                  : getIt<IAppConfig>().theme.textColorSecondary,
             ),
           ),
         ),

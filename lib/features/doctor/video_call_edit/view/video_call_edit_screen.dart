@@ -7,7 +7,6 @@ import '../../../../core/core.dart';
 class DoctorVideoCallEditScreen extends StatefulWidget {
   const DoctorVideoCallEditScreen({Key? key}) : super(key: key);
 
-
   @override
   _DoctorVideoCallEditScreenState createState() =>
       _DoctorVideoCallEditScreenState();
@@ -91,7 +90,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: getIt<ITheme>().cardBackgroundColor,
+                color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: RbioTextFormField(
@@ -132,8 +131,8 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
               Expanded(
                 child: RbioElevatedButton(
                   title: LocaleProvider.current.back,
-                  backColor: getIt<ITheme>().cardBackgroundColor,
-                  textColor: getIt<ITheme>().textColorSecondary,
+                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
                   onTap: () {},
                   showElevation: false,
                   fontWeight: FontWeight.bold,
@@ -167,7 +166,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: getIt<ITheme>().cardBackgroundColor,
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -175,7 +174,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
         children: [
           CircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
-            backgroundColor: getIt<ITheme>().cardBackgroundColor,
+            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
           ),
 
           //

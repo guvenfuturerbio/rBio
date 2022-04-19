@@ -215,8 +215,8 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
             title: LocaleProvider.current.btn_cancel,
             showElevation: false,
             padding: EdgeInsets.zero,
-            backColor: getIt<ITheme>().cardBackgroundColor,
-            textColor: getIt<ITheme>().textColorSecondary,
+            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            textColor: getIt<IAppConfig>().theme.textColorSecondary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -291,7 +291,7 @@ class _FilterRowState extends State<FilterRow> {
                   });
                   widget.onChanged(newValue);
                 },
-                activeColor: getIt<ITheme>().mainColor,
+                activeColor: getIt<IAppConfig>().theme.mainColor,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             ),

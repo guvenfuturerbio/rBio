@@ -38,8 +38,8 @@ class RbioBadge extends StatelessWidget {
               child: SvgPicture.asset(
                 path ?? image,
                 color: isDark
-                    ? getIt<ITheme>().iconColor
-                    : getIt<ITheme>().iconSecondaryColor,
+                    ? getIt<IAppConfig>().theme.iconColor
+                    : getIt<IAppConfig>().theme.iconSecondaryColor,
                 width: R.sizes.iconSize,
               ),
             ),
@@ -54,7 +54,7 @@ class RbioBadge extends StatelessWidget {
                   child: Text(
                     '$count',
                     style: context.xBodyText1.copyWith(
-                      color: getIt<ITheme>().textColor,
+                      color: getIt<IAppConfig>().theme.textColor,
                     ),
                   ),
                 ),
