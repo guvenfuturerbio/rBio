@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
-import '../hba1c.dart';
 
 part 'widget/last_test_dialog.dart';
 

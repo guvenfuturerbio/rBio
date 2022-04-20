@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activate": MessageLookupByLibrary.simpleMessage("Aktifleştir"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("İndirim kodu ekle"),
+        "add_medicine": MessageLookupByLibrary.simpleMessage("İlaç ekle"),
         "add_new_device": MessageLookupByLibrary.simpleMessage(
             "Eşleştirilmiş bir cihazınız yok. Yeni bir cihaz ekleyin"),
         "add_new_relative":
@@ -566,7 +567,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hosp_selection":
             MessageLookupByLibrary.simpleMessage("Hastane seçimi :"),
         "hour": MessageLookupByLibrary.simpleMessage("Saatte"),
-        "hours": MessageLookupByLibrary.simpleMessage("Saatte"),
+        "hours": MessageLookupByLibrary.simpleMessage("Saatler"),
         "how_many_reminder_is_needed": MessageLookupByLibrary.simpleMessage(
             "Kaç adet hatırlatıcıya ihtiyacınız var?"),
         "how_many_times_a_day":

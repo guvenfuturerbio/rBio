@@ -14,16 +14,21 @@ class ScaleRepository {
     this._scaleHealthImpl,
   );
 
-  final firstLoadCount = 30;
+  final _firstLoadCount = 30;
 
+  // #region init
   Future<void> init(String boxKey) async {
     await _scaleHiveImpl.init(boxKey);
   }
+  // #endregion
 
+  // #region clear
   Future<void> clear() async {
     await _scaleHiveImpl.clear();
   }
+  // #endregion
 
+  // #region getLatestMeasurement
   ScaleEntity? getLatestMeasurement(
     int age,
     int gender,
@@ -33,12 +38,18 @@ class ScaleRepository {
     list.sort((a, b) {
       return (DateTime.fromMillisecondsSinceEpoch(
               int.tryParse(b.occurrenceTime) ?? 0))
-          .compareTo((DateTime.fromMillisecondsSinceEpoch(
-              int.tryParse(a.occurrenceTime) ?? 0)));
+          .compareTo(
+        (DateTime.fromMillisecondsSinceEpoch(
+            int.tryParse(a.occurrenceTime) ?? 0)),
+      );
     });
-    return list.isEmpty ? null : list[0].xToChronicEntity(age, gender, height);
+    return list.isEmpty
+        ? null
+        : list.first.xToChronicEntity(age, gender, height);
   }
+  // #endregion
 
+  // #region readLocalScaleData
   List<ScaleEntity> readLocalScaleData(int age, int gender, int height) {
     final list = _scaleHiveImpl.readScaleData();
     List<ScaleEntity> result = [];
@@ -47,7 +58,9 @@ class ScaleRepository {
     }
     return result;
   }
+  // #endregion
 
+  // #region fetchScaleData
   Future<bool> fetchScaleData(int entegrationId) async {
     try {
       final list = await _fetchNetworkFirstLoad(entegrationId);
@@ -64,7 +77,9 @@ class ScaleRepository {
       return false;
     }
   }
+  // #endregion
 
+  // #region fetchOtherLoad
   Future<List<ScaleNetworkModel>> fetchOtherLoad(
     GuvenService _guvenService,
     int entegrationId,
@@ -83,13 +98,15 @@ class ScaleRepository {
             [];
     return list;
   }
+  // #endregion
 
+  // #region _fetchNetworkFirstLoad
   Future<List<ScaleNetworkModel>> _fetchNetworkFirstLoad(
       int entegrationId) async {
     final response = await _guvenService.getScaleMasurement(
       GetScaleMasurementBody(
         entegrationId: entegrationId,
-        count: firstLoadCount,
+        count: _firstLoadCount,
       ),
     );
     final list =
@@ -98,6 +115,7 @@ class ScaleRepository {
             [];
     return list;
   }
+  // #endregion
 
   // #region addScaleMeasurement
   Future<bool> addScaleMeasurement(AddScaleMasurementBody model) async {
@@ -123,7 +141,6 @@ class ScaleRepository {
         return false;
       }
     } catch (e) {
-      print("[ScaleRepository] - addScale() - $e");
       return false;
     }
   }
@@ -150,7 +167,6 @@ class ScaleRepository {
 
       return false;
     } catch (e) {
-      print("[ScaleRepository] - deleteScale() - $e");
       return false;
     }
   }

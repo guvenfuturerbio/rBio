@@ -18,6 +18,7 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
           scheduledDate: scheduledDate,
           createdDate: createdDate,
           entegrationId: entegrationId,
+          status: true,
         );
 
   factory Hba1CReminderModel.empty() => Hba1CReminderModel(
