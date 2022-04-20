@@ -96,4 +96,70 @@ class OneDoseTheme extends IAppTheme {
 
   @override
   Color get grayColor => const Color.fromARGB(255, 237, 237, 237);
+
+  @override
+  Color get bgGray => const Color(0xFFF3F3F3);
+
+  @override
+  Color get black => const Color(0xFF131313);
+
+  @override
+  // TODO: implement chartGray
+  Color get chartGray => throw UnimplementedError();
+
+  @override
+  // TODO: implement darkBlack
+  Color get darkBlack => throw UnimplementedError();
+
+  @override
+  // TODO: implement darkRed
+  Color get darkRed => throw UnimplementedError();
+
+  @override
+  // TODO: implement darkWhite
+  Color get darkWhite => throw UnimplementedError();
+
+  @override
+  // TODO: implement graphPlotRange
+  Color get graphPlotRange => throw UnimplementedError();
+
+  @override
+  // TODO: implement graphRangeColor
+  Color get graphRangeColor => throw UnimplementedError();
+
+  @override
+  // TODO: implement gray
+  Color get gray => throw UnimplementedError();
+
+  @override
+  // TODO: implement high
+  Color get high => throw UnimplementedError();
+
+  @override
+  // TODO: implement low
+  Color get low => throw UnimplementedError();
+
+  @override
+  // TODO: implement stateColor
+  Color get stateColor => throw UnimplementedError();
+
+  @override
+  // TODO: implement target
+  Color get target => throw UnimplementedError();
+
+  @override
+  // TODO: implement veryHigh
+  Color get veryHigh => throw UnimplementedError();
+
+  @override
+  // TODO: implement veryLow
+  Color get veryLow => throw UnimplementedError();
+
+  @override
+  // TODO: implement warning
+  Color get warning => throw UnimplementedError();
+
+  @override
+  // TODO: implement white
+  Color get white => throw UnimplementedError();
 }

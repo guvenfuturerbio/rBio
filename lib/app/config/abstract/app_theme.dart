@@ -16,4 +16,23 @@ abstract class IAppTheme {
   Color get iconColor;
   Color get iconSecondaryColor;
   Color get grayColor;
+
+  // Common
+  Color get gray;
+  Color get black;
+  Color get white;
+  Color get darkBlack;
+  Color get darkWhite;
+  Color get high;
+  Color get veryHigh;
+  Color get target;
+  Color get low;
+  Color get veryLow;
+  Color get graphPlotRange;
+  Color get stateColor;
+  Color get bgGray;
+  Color get chartGray;
+  Color get darkRed;
+  Color get graphRangeColor;
+  Color get warning;
 }

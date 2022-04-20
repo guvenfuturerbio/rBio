@@ -12,7 +12,6 @@ part 'view.dart';
 class R {
   static final apiEnums = _ApiEnums();
   static final image = _Images();
-  static final color = _Color();
   static final sizes = _Sizes();
   static final regExp = _RegExp();
   static final constants = _Constants();

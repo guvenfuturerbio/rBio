@@ -14,6 +14,29 @@ class GuvenColors {
   static const Color burgundy2 = Color(0xffaa6871);
 }
 
+// class _Color {
+//   final gray = const Color(0xFF969696);
+//   final grey = const Color(0xFF696969);
+//   final black = const Color(0xFF131313);
+//   final white = const Color(0xFFFFFFFF);
+//   final dark_black = const Color(0xFF000000);
+//   final dark_white = const Color(0xFFE5E5E5);
+
+//   final very_high = const Color(0xFFf4bb44);
+//   final high = const Color(0xFFf7ec57);
+//   final target = const Color(0xFF66c791);
+//   final low = const Color(0xFFe98884);
+//   final very_low = const Color(0xFFe2605b);
+//   final graph_plot_range = const Color(0xFFCBEBD9);
+//   final state_color = const Color(0xFF7a7a7a);
+//   final bg_gray = const Color(0xFFF3F3F3);
+//   final chart_gray = const Color(0xffDDDEDE);
+//   final darkRed = const Color.fromRGBO(219, 56, 50, 1);
+//   final graphRangeColor = const Color(0xFFCBEBD9);
+
+//   final warning = const Color.fromARGB(255, 244, 183, 63);
+// }
+
 class _Sizes {
   final double _mobilePadding = 12;
   final double _tabletPadding = 24;
@@ -143,27 +166,4 @@ class _Sizes {
   final double iconSize3 = 18;
   final double iconSize4 = 14;
   final double iconSize5 = 10;
-}
-
-class _Color {
-  final gray = const Color(0xFF969696);
-  final grey = const Color(0xFF696969);
-  final black = const Color(0xFF131313);
-  final white = const Color(0xFFFFFFFF);
-  final dark_black = const Color(0xFF000000);
-  final dark_white = const Color(0xFFE5E5E5);
-
-  final very_high = const Color(0xFFf4bb44);
-  final high = const Color(0xFFf7ec57);
-  final target = const Color(0xFF66c791);
-  final low = const Color(0xFFe98884);
-  final very_low = const Color(0xFFe2605b);
-  final graph_plot_range = const Color(0xFFCBEBD9);
-  final state_color = const Color(0xFF7a7a7a);
-  final bg_gray = const Color(0xFFF3F3F3);
-  final chart_gray = const Color(0xffDDDEDE);
-  final darkRed = const Color.fromRGBO(219, 56, 50, 1);
-  final graphRangeColor = const Color(0xFFCBEBD9);
-
-  final warning = const Color.fromARGB(255, 244, 183, 63);
 }
