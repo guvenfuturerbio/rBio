@@ -34,18 +34,18 @@ class _DoctorTreatmentProcessScreenState
           LocaleProvider.current.treatment_process,
         ),
         actions: [
-          Center(
-            child: RbioBadge(
-              image: R.image.chat,
-              isDark: false,
-              onTap: () {
-                Atom.to(PagePaths.doctorCosultation);
-              },
-            ),
-          ),
-          const SizedBox(
-            width: 12,
-          ),
+          // Center(
+          //   child: RbioBadge(
+          //     image: R.image.chat,
+          //     isDark: false,
+          //     onTap: () {
+          //       Atom.to(PagePaths.doctorCosultation);
+          //     },
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 12,
+          // ),
         ],
       );
 

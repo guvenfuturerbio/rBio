@@ -124,28 +124,28 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
           LocaleProvider.current.bg_measurement_tracking,
         ),
         actions: [
-          Center(
-            child: RbioBadge(
-              image: R.image.chat,
-              isDark: false,
-              onTap: () {
-                // final chatPerson = ChatPerson(
-                //   id: patientId.toString(),
-                //   name: patientName,
-                //   firebaseToken: '',
-                // );
-                // Atom.to(
-                //   PagePaths.chat,
-                //   queryParameters: {
-                //     'otherPerson': chatPerson.toJson(),
-                //   },
-                // );
-              },
-            ),
-          ),
-          const SizedBox(
-            width: 12,
-          ),
+          // Center(
+          //   child: RbioBadge(
+          //     image: R.image.chat,
+          //     isDark: false,
+          //     onTap: () {
+          //       // final chatPerson = ChatPerson(
+          //       //   id: patientId.toString(),
+          //       //   name: patientName,
+          //       //   firebaseToken: '',
+          //       // );
+          //       // Atom.to(
+          //       //   PagePaths.chat,
+          //       //   queryParameters: {
+          //       //     'otherPerson': chatPerson.toJson(),
+          //       //   },
+          //       // );
+          //     },
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 12,
+          // ),
         ],
       );
 
