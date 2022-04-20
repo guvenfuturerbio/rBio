@@ -232,7 +232,7 @@ class BgTaggerPopUp extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 16, top: 16),
         child: Card(
           elevation: R.sizes.defaultElevation,
-          color: R.color.white,
+          color: getIt<IAppConfig>().theme.white,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),

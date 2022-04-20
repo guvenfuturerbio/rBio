@@ -66,7 +66,7 @@ class _ScaleLineChartState
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: R.color.black),
+              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
               interval: 6)
           : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
@@ -85,7 +85,7 @@ class _ScaleLineChartState
         majorTickLines: const MajorTickLines(color: Colors.transparent),
         axisLine: const AxisLine(width: 0),
         labelFormat: '{value}',
-        labelStyle: TextStyle(color: R.color.black),
+        labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
         plotBands: [
           PlotBand(
               isVisible: true,
@@ -93,7 +93,7 @@ class _ScaleLineChartState
               end: _targetMin,
               shouldRenderAboveSeries: false,
               textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-              color: R.color.graph_plot_range),
+              color: getIt<IAppConfig>().theme.graphPlotRange),
         ],
         minimum: _minValue.toDouble(),
         maximum: _maxValue.toDouble(),

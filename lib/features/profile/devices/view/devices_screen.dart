@@ -150,7 +150,7 @@ class DevicesScreen extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.cancel,
-                        color: R.color.darkRed,
+                        color: getIt<IAppConfig>().theme.darkRed,
                         size: R.sizes.iconSize * 1.25,
                       ),
                     ),
@@ -188,7 +188,7 @@ class DevicesScreen extends StatelessWidget {
   Color _getBackgroundColorV2(DeviceStatus? deviceStatus) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
-        return R.color.high;
+        return getIt<IAppConfig>().theme.high;
 
       case DeviceStatus.connected:
         return getIt<IAppConfig>().theme.mainColor;
@@ -253,7 +253,7 @@ class DevicesScreen extends StatelessWidget {
             },
             icon: Icon(
               Icons.cancel,
-              color: R.color.darkRed,
+              color: getIt<IAppConfig>().theme.darkRed,
               size: R.sizes.iconSize * 1.25,
             ),
           ),

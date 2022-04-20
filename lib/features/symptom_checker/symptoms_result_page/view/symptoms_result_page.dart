@@ -107,7 +107,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                   progressColor:
                                       getIt<IAppConfig>().theme.mainColor,
                                   backgroundColor:
-                                      R.color.grey.withOpacity(0.2),
+                                      getIt<IAppConfig>().theme.grey.withOpacity(0.2),
                                   lineHeight: 20,
                                   barRadius: const Radius.circular(25),
                                   animationDuration: 1100,
@@ -242,7 +242,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                 animation: true,
                                 progressColor:
                                     getIt<IAppConfig>().theme.mainColor,
-                                backgroundColor: R.color.grey.withOpacity(0.2),
+                                backgroundColor: getIt<IAppConfig>().theme.grey.withOpacity(0.2),
                                 lineHeight: 20,
                                 animationDuration: 1100,
                                 barRadius: const Radius.circular(25),

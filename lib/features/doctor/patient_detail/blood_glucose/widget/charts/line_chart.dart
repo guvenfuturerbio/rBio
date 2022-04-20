@@ -69,7 +69,7 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: R.color.black),
+              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
               interval: 6)
           : _selected == LocaleProvider.current.weekly
               ? DateTimeAxis(
@@ -90,8 +90,8 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
         labelFormat: '{value}',
         title: AxisTitle(
             text: "mg/dL",
-            textStyle: TextStyle(fontSize: 10, color: R.color.black)),
-        labelStyle: TextStyle(color: R.color.black),
+            textStyle: TextStyle(fontSize: 10, color: getIt<IAppConfig>().theme.black)),
+        labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
         plotBands: [
           PlotBand(
               isVisible: true,
@@ -99,7 +99,7 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
               end: _targetMin,
               shouldRenderAboveSeries: false,
               textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-              color: R.color.graphRangeColor),
+              color: getIt<IAppConfig>().theme.graphRangeColor),
         ],
         minimum: _minValue.toDouble(),
         maximum: _maxValue.toDouble(),

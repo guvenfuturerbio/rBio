@@ -42,7 +42,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     //               message['value'] +
     //               " mg/dL",
     //           color:
-    //               message['type'] == "4" ? R.color.veryLow : R.color.veryHigh);
+    //               message['type'] == "4" ? getIt<IAppConfig>().theme.veryLow : getIt<IAppConfig>().theme.veryHigh);
     //       await update();
     //     } else {
     //       DropdownBanner.showBanner(
@@ -55,7 +55,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     //               message['value'] +
     //               " mg/dL",
     //           color:
-    //               message['type'] == "4" ? R.color.veryLow : R.color.veryHigh);
+    //               message['type'] == "4" ? getIt<IAppConfig>().theme.veryLow : getIt<IAppConfig>().theme.veryHigh);
     //     }
     //   }
     // });
@@ -212,12 +212,12 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   Map<Color, GlucoseMarginsFilter> get colorInfo {
     _colorInfo.putIfAbsent(
-        R.color.very_low, () => GlucoseMarginsFilter.veryLow);
-    _colorInfo.putIfAbsent(R.color.low, () => GlucoseMarginsFilter.low);
-    _colorInfo.putIfAbsent(R.color.target, () => GlucoseMarginsFilter.target);
-    _colorInfo.putIfAbsent(R.color.high, () => GlucoseMarginsFilter.high);
+        getIt<IAppConfig>().theme.veryLow, () => GlucoseMarginsFilter.veryLow);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
     _colorInfo.putIfAbsent(
-        R.color.very_high, () => GlucoseMarginsFilter.veryHigh);
+        getIt<IAppConfig>().theme.veryHigh, () => GlucoseMarginsFilter.veryHigh);
     return _colorInfo;
   }
 
@@ -565,7 +565,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == R.color.very_low) {
+      if (data.resultColor == getIt<IAppConfig>().theme.veryLow) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -596,7 +596,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == R.color.low) {
+      if (data.resultColor == getIt<IAppConfig>().theme.low) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -627,7 +627,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == R.color.target) {
+      if (data.resultColor == getIt<IAppConfig>().theme.target) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -658,7 +658,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == R.color.high) {
+      if (data.resultColor == getIt<IAppConfig>().theme.high) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -689,7 +689,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == R.color.very_high) {
+      if (data.resultColor == getIt<IAppConfig>().theme.veryHigh) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -777,15 +777,15 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
             .bgMeasurements;
     bgMeasurements.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-            element.resultColor == R.color.very_high) ||
+            element.resultColor == getIt<IAppConfig>().theme.veryHigh) ||
         (!isFilterSelected(GlucoseMarginsFilter.high) &&
-            element.resultColor == R.color.high) ||
+            element.resultColor == getIt<IAppConfig>().theme.high) ||
         (!isFilterSelected(GlucoseMarginsFilter.target) &&
-            element.resultColor == R.color.target) ||
+            element.resultColor == getIt<IAppConfig>().theme.target) ||
         (!isFilterSelected(GlucoseMarginsFilter.low) &&
-            element.resultColor == R.color.low) ||
+            element.resultColor == getIt<IAppConfig>().theme.low) ||
         (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-            element.resultColor == R.color.very_low) ||
+            element.resultColor == getIt<IAppConfig>().theme.veryLow) ||
         (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
         (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
         (!isFilterSelected(GlucoseMarginsFilter.other) &&
@@ -795,15 +795,15 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
         .fetchBgMeasurementsDateList(bgMeasurements);
     bgMeasurementsDailyData.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-            element.resultColor == R.color.very_high) ||
+            element.resultColor == getIt<IAppConfig>().theme.veryHigh) ||
         (!isFilterSelected(GlucoseMarginsFilter.high) &&
-            element.resultColor == R.color.high) ||
+            element.resultColor == getIt<IAppConfig>().theme.high) ||
         (!isFilterSelected(GlucoseMarginsFilter.target) &&
-            element.resultColor == R.color.target) ||
+            element.resultColor == getIt<IAppConfig>().theme.target) ||
         (!isFilterSelected(GlucoseMarginsFilter.low) &&
-            element.resultColor == R.color.low) ||
+            element.resultColor == getIt<IAppConfig>().theme.low) ||
         (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-            element.resultColor == R.color.very_low) ||
+            element.resultColor == getIt<IAppConfig>().theme.veryLow) ||
         (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
         (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
         (!isFilterSelected(GlucoseMarginsFilter.other) &&

@@ -263,9 +263,9 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   child: Container(
                     padding: const EdgeInsets.all(13),
                     decoration: BoxDecoration(
-                      color: R.color.white,
+                      color: getIt<IAppConfig>().theme.white,
                       border: Border.all(
-                        color: R.color.dark_white,
+                        color: getIt<IAppConfig>().theme.darkWhite,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),

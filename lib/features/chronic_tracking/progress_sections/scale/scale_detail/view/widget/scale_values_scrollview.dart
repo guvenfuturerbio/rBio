@@ -375,7 +375,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                       title,
                       style: context.xHeadline4.copyWith(
                         color: isRedTheme
-                            ? R.color.darkRed
+                            ? getIt<IAppConfig>().theme.darkRed
                             : getIt<IAppConfig>().theme.mainColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -392,7 +392,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: isRedTheme
-                        ? R.color.darkRed
+                        ? getIt<IAppConfig>().theme.darkRed
                         : getIt<IAppConfig>().theme.mainColor,
                   ),
                   child: Text(

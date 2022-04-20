@@ -134,7 +134,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
               ),
               shape: BoxShape.circle,
               color: isUpdate || scaleModel == null
-                  ? R.color.white
+                  ? getIt<IAppConfig>().theme.white
                   : context.scaffoldBackgroundColor,
             ),
             child: Column(
@@ -188,27 +188,27 @@ class ScaleTaggerPopUp extends StatelessWidget {
               children: [
                 _buildItemOfColorInfoDialog(
                   context,
-                  R.color.very_low,
+                  getIt<IAppConfig>().theme.veryLow,
                   LocaleProvider.current.very_low,
                 ),
                 _buildItemOfColorInfoDialog(
                   context,
-                  R.color.low,
+                  getIt<IAppConfig>().theme.low,
                   LocaleProvider.current.low,
                 ),
                 _buildItemOfColorInfoDialog(
                   context,
-                  R.color.target,
+                  getIt<IAppConfig>().theme.target,
                   LocaleProvider.current.target,
                 ),
                 _buildItemOfColorInfoDialog(
                   context,
-                  R.color.high,
+                  getIt<IAppConfig>().theme.high,
                   LocaleProvider.current.high,
                 ),
                 _buildItemOfColorInfoDialog(
                   context,
-                  R.color.very_high,
+                  getIt<IAppConfig>().theme.veryHigh,
                   LocaleProvider.current.very_high,
                 ),
               ],
@@ -278,7 +278,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 16, top: 16),
         child: Card(
           elevation: R.sizes.defaultElevation,
-          color: R.color.white,
+          color: getIt<IAppConfig>().theme.white,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
@@ -448,7 +448,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 color: !isBmi &&
                         (scaleModel == null || (scaleModel?.isManuel ?? true))
-                    ? R.color.white
+                    ? getIt<IAppConfig>().theme.white
                     : context.scaffoldBackgroundColor,
               ),
               child: Padding(

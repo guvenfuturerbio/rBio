@@ -45,7 +45,7 @@ class ChronicGraphHeader extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: R.sizes.borderRadiusCircular,
-        color: R.color.chart_gray,
+        color: getIt<IAppConfig>().theme.chartGray,
       ),
       child: Stack(
         alignment: Alignment.topRight,

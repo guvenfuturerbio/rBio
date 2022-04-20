@@ -59,7 +59,7 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
                       children: [
                         Text(
                           widget.translators[index].language ?? '',
-                          style: TextStyle(color: R.color.black),
+                          style: TextStyle(color: getIt<IAppConfig>().theme.black),
                           textAlign: TextAlign.center,
                         ),
                       ],

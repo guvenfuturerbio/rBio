@@ -91,7 +91,7 @@ class AvailableDevices extends StatelessWidget {
             : const EdgeInsets.symmetric(horizontal: 8),
         child: Card(
           elevation: R.sizes.defaultElevation,
-          color: (device.enable ?? false) ? null : R.color.bg_gray,
+          color: (device.enable ?? false) ? null : getIt<IAppConfig>().theme.bgGray,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),

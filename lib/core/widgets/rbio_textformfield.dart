@@ -126,7 +126,7 @@ class RbioTextFormField extends StatelessWidget {
         borderSide: BorderSide(
           width: 0,
           style: BorderStyle.solid,
-          color: R.color.dark_white,
+          color: getIt<IAppConfig>().theme.darkWhite,
         ),
       );
 

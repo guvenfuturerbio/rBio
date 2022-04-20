@@ -105,15 +105,15 @@ class ScaleTagger extends StatelessWidget {
                     child: ListView(
                   shrinkWrap: true,
                   children: [
-                    _itemOfColorInfoDialog(context, R.color.very_low,
+                    _itemOfColorInfoDialog(context, getIt<IAppConfig>().theme.veryLow,
                         LocaleProvider.current.very_low),
                     _itemOfColorInfoDialog(
-                        context, R.color.low, LocaleProvider.current.low),
+                        context, getIt<IAppConfig>().theme.low, LocaleProvider.current.low),
                     _itemOfColorInfoDialog(
-                        context, R.color.target, LocaleProvider.current.target),
+                        context, getIt<IAppConfig>().theme.target, LocaleProvider.current.target),
                     _itemOfColorInfoDialog(
-                        context, R.color.high, LocaleProvider.current.high),
-                    _itemOfColorInfoDialog(context, R.color.very_high,
+                        context, getIt<IAppConfig>().theme.high, LocaleProvider.current.high),
+                    _itemOfColorInfoDialog(context, getIt<IAppConfig>().theme.veryHigh,
                         LocaleProvider.current.very_high),
                   ],
                 )),
@@ -174,7 +174,7 @@ class ScaleTagger extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16),
       child: Card(
           elevation: R.sizes.defaultElevation,
-          color: R.color.white,
+          color: getIt<IAppConfig>().theme.white,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
@@ -191,7 +191,7 @@ class ScaleTagger extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
         elevation: R.sizes.defaultElevation,
-        color: R.color.white,
+        color: getIt<IAppConfig>().theme.white,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),
@@ -309,7 +309,7 @@ class ScaleTagger extends StatelessWidget {
                   width: 13,
                 ),
                 shape: BoxShape.circle,
-                color: R.color.white,
+                color: getIt<IAppConfig>().theme.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -370,9 +370,9 @@ class ScaleTagger extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(17),
                   border: Border.all(
-                      width: 6, color: color ?? R.color.grey.withOpacity(.2)),
+                      width: 6, color: color ?? getIt<IAppConfig>().theme.grey.withOpacity(.2)),
                   shape: BoxShape.rectangle,
-                  color: R.color.white),
+                  color: getIt<IAppConfig>().theme.white),
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: _inputSection(

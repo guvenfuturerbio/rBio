@@ -119,7 +119,7 @@ class ScaleProgressScreen extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: SvgPicture.asset(
           R.image.add,
-          color: R.color.white,
+          color: getIt<IAppConfig>().theme.white,
         ),
       ),
     );

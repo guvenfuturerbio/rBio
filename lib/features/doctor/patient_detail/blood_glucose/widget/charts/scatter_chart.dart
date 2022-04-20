@@ -87,7 +87,7 @@ class BloodGlucosePatientScatterState
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: R.color.black),
+              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
               interval: 6)
           : _selected == LocaleProvider.current.weekly
               ? DateTimeAxis(
@@ -105,11 +105,11 @@ class BloodGlucosePatientScatterState
           labelFormat: '{value}',
           title: AxisTitle(
               text: "mg/dL",
-              textStyle: TextStyle(fontSize: 10, color: R.color.black)),
+              textStyle: TextStyle(fontSize: 10, color: getIt<IAppConfig>().theme.black)),
           minimum: _minimum.toDouble(),
           maximum: _maximum.toDouble(),
           interval: 30,
-          labelStyle: TextStyle(color: R.color.black),
+          labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
           plotBands: [
             PlotBand(
                 isVisible: true,
@@ -117,7 +117,7 @@ class BloodGlucosePatientScatterState
                 end: _targetMin,
                 shouldRenderAboveSeries: false,
                 textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-                color: R.color.graphRangeColor),
+                color: getIt<IAppConfig>().theme.graphRangeColor),
           ],
           majorGridLines: const MajorGridLines(color: Colors.black12)),
       enableAxisAnimation: true,
@@ -142,13 +142,13 @@ class BloodGlucosePatientScatterState
               height: markerSize,
               width: markerSize,
               borderWidth: 5,
-              borderColor: R.color.very_high,
+              borderColor: getIt<IAppConfig>().theme.veryHigh,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
           dataSource: _chartVeryHighTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.very_high,
+          color: getIt<IAppConfig>().theme.veryHigh,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
@@ -156,13 +156,13 @@ class BloodGlucosePatientScatterState
           dataSource: _chartVeryHighTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.very_high,
+          color: getIt<IAppConfig>().theme.veryHigh,
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize,
               width: markerSize,
-              borderColor: R.color.very_high,
+              borderColor: getIt<IAppConfig>().theme.veryHigh,
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
@@ -176,13 +176,13 @@ class BloodGlucosePatientScatterState
               height: markerSize,
               width: markerSize,
               borderWidth: 2,
-              borderColor: R.color.high,
+              borderColor: getIt<IAppConfig>().theme.high,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
           dataSource: _chartHighTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.high,
+          color: getIt<IAppConfig>().theme.high,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
@@ -190,13 +190,13 @@ class BloodGlucosePatientScatterState
           dataSource: _chartHighTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.high,
+          color: getIt<IAppConfig>().theme.high,
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize,
               width: markerSize,
-              borderColor: R.color.high,
+              borderColor: getIt<IAppConfig>().theme.high,
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
@@ -210,13 +210,13 @@ class BloodGlucosePatientScatterState
               height: markerSize,
               width: markerSize,
               borderWidth: 2,
-              borderColor: R.color.target,
+              borderColor: getIt<IAppConfig>().theme.target,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
           dataSource: _chartTargetTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.target,
+          color: getIt<IAppConfig>().theme.target,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
@@ -224,13 +224,13 @@ class BloodGlucosePatientScatterState
           dataSource: _chartTargetTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.target,
+          color: getIt<IAppConfig>().theme.target,
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize,
               width: markerSize,
-              borderColor: R.color.target,
+              borderColor: getIt<IAppConfig>().theme.target,
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
@@ -244,13 +244,13 @@ class BloodGlucosePatientScatterState
               height: markerSize,
               width: markerSize,
               borderWidth: 2,
-              borderColor: R.color.low,
+              borderColor: getIt<IAppConfig>().theme.low,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
           dataSource: _chartLowTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.low,
+          color: getIt<IAppConfig>().theme.low,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
@@ -258,13 +258,13 @@ class BloodGlucosePatientScatterState
           dataSource: _chartLowTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.low,
+          color: getIt<IAppConfig>().theme.low,
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize,
               width: markerSize,
-              borderColor: R.color.low,
+              borderColor: getIt<IAppConfig>().theme.low,
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
@@ -278,13 +278,13 @@ class BloodGlucosePatientScatterState
               height: markerSize,
               width: markerSize,
               borderWidth: 2,
-              borderColor: R.color.very_low,
+              borderColor: getIt<IAppConfig>().theme.veryLow,
               isVisible: true)),
       ScatterSeries<ChartData, DateTime>(
           dataSource: _chartVeryLowTagged[2]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.very_low,
+          color: getIt<IAppConfig>().theme.veryLow,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize, width: markerSize, isVisible: true)),
@@ -292,13 +292,13 @@ class BloodGlucosePatientScatterState
           dataSource: _chartVeryLowTagged[3]!,
           xValueMapper: (ChartData sales, _) => sales.x,
           yValueMapper: (ChartData sales, _) => sales.y,
-          color: R.color.very_low,
+          color: getIt<IAppConfig>().theme.veryLow,
           borderWidth: 3,
           xAxisName: "Time",
           markerSettings: MarkerSettings(
               height: markerSize,
               width: markerSize,
-              borderColor: R.color.very_low,
+              borderColor: getIt<IAppConfig>().theme.veryLow,
               shape: DataMarkerType.rectangle,
               isVisible: true)),
       _selected == LocaleProvider.current.daily ||

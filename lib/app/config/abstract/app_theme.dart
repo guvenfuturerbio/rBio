@@ -34,5 +34,4 @@ abstract class IAppTheme {
   Color get chartGray;
   Color get darkRed;
   Color get graphRangeColor;
-  Color get warning;
 }

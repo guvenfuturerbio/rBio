@@ -43,7 +43,7 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [R.color.very_low, R.color.very_low],
+                        colors: [getIt<IAppConfig>().theme.veryLow, getIt<IAppConfig>().theme.veryLow],
                         begin: Alignment.topLeft,
                         end: Alignment.topRight),
                   ),
@@ -64,7 +64,7 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [R.color.low, R.color.low],
+                        colors: [getIt<IAppConfig>().theme.low, getIt<IAppConfig>().theme.low],
                         begin: Alignment.topLeft,
                         end: Alignment.topRight),
                   ),
@@ -85,7 +85,7 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [R.color.target, R.color.target],
+                        colors: [getIt<IAppConfig>().theme.target, getIt<IAppConfig>().theme.target],
                         begin: Alignment.topLeft,
                         end: Alignment.topRight),
                   ),
@@ -106,7 +106,7 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [R.color.high, R.color.high],
+                        colors: [getIt<IAppConfig>().theme.high, getIt<IAppConfig>().theme.high],
                         begin: Alignment.topLeft,
                         end: Alignment.topRight),
                   ),
@@ -127,7 +127,7 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [R.color.very_high, R.color.very_high],
+                        colors: [getIt<IAppConfig>().theme.veryHigh, getIt<IAppConfig>().theme.veryHigh],
                         begin: Alignment.topLeft,
                         end: Alignment.topRight),
                   ),

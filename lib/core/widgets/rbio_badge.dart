@@ -49,7 +49,7 @@ class RbioBadge extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: CircleAvatar(
-                  backgroundColor: R.color.darkRed,
+                  backgroundColor: getIt<IAppConfig>().theme.darkRed,
                   radius: isBigSize ? 10.5 : 9,
                   child: Text(
                     '$count',

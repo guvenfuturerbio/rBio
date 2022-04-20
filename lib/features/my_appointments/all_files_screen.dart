@@ -108,7 +108,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
               Expanded(
                 child: Text(
                   file.file ?? '',
-                  style: TextStyle(color: R.color.black, fontSize: 18),
+                  style: TextStyle(color: getIt<IAppConfig>().theme.black, fontSize: 18),
                 ),
               ),
 

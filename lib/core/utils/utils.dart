@@ -370,10 +370,10 @@ class Utils {
 
   TextStyle inputTextStyle([Color? textColor]) => TextStyle(
         fontSize: 16,
-        color: textColor ?? R.color.dark_black,
+        color: textColor ?? getIt<IAppConfig>().theme.darkBlack,
       );
 
-  TextStyle hintStyle() => TextStyle(fontSize: 16, color: R.color.gray);
+  TextStyle hintStyle() => TextStyle(fontSize: 16, color: getIt<IAppConfig>().theme.gray);
 
   GradientButton button({
     text: String,
@@ -389,10 +389,10 @@ class Utils {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
+              fontSize: 16, fontWeight: FontWeight.w600, color: getIt<IAppConfig>().theme.white),
         ),
         textStyle: TextStyle(
-            fontSize: 16, fontWeight: FontWeight.w600, color: R.color.white),
+            fontSize: 16, fontWeight: FontWeight.w600, color: getIt<IAppConfig>().theme.white),
         callback: onPressed,
         gradient: appGradient(),
         shadowColor: Colors.black,
@@ -416,7 +416,7 @@ class Utils {
         textStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: R.color.grey,
+          color: getIt<IAppConfig>().theme.grey,
         ),
         gradient: LinearGradient(
           colors: [
@@ -529,7 +529,7 @@ class Utils {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: R.color.dark_black.withAlpha(50),
+                          color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
                           blurRadius: 15,
                           spreadRadius: 0,
                           offset: const Offset(5, 10),
@@ -578,15 +578,15 @@ class Utils {
   }) {
     Color color;
     if (measurement <= criticMin) {
-      color = R.color.very_low;
+      color = getIt<IAppConfig>().theme.veryLow;
     } else if (measurement > criticMin && measurement < targetMin) {
-      color = R.color.low;
+      color = getIt<IAppConfig>().theme.low;
     } else if (measurement >= targetMin && measurement <= targetMax) {
-      color = R.color.target;
+      color = getIt<IAppConfig>().theme.target;
     } else if (measurement > targetMax && measurement < criticMax) {
-      color = R.color.high;
+      color = getIt<IAppConfig>().theme.high;
     } else if (measurement >= criticMax) {
-      color = R.color.very_high;
+      color = getIt<IAppConfig>().theme.veryHigh;
     } else {
       color = Colors.white;
     }
@@ -598,7 +598,7 @@ class Utils {
         borderSide: BorderSide(
           width: 0,
           style: BorderStyle.solid,
-          color: R.color.dark_white,
+          color: getIt<IAppConfig>().theme.darkWhite,
         ),
       );
 
@@ -740,18 +740,18 @@ class UtilityManager {
     Person activeProfile = getIt<ProfileStorageImpl>().getFirst();
 
     if (result < activeProfile.hypo!) {
-      return R.color.very_low;
+      return getIt<IAppConfig>().theme.veryLow;
     } else if (result >= activeProfile.hypo! &&
         result < activeProfile.rangeMin!) {
-      return R.color.low;
+      return getIt<IAppConfig>().theme.low;
     } else if (result >= activeProfile.rangeMin! &&
         result < activeProfile.rangeMax!) {
-      return R.color.target;
+      return getIt<IAppConfig>().theme.target;
     } else if (result >= activeProfile.rangeMax! &&
         result < activeProfile.hyper!) {
-      return R.color.high;
+      return getIt<IAppConfig>().theme.high;
     } else {
-      return R.color.very_high;
+      return getIt<IAppConfig>().theme.veryHigh;
     }
   }
 

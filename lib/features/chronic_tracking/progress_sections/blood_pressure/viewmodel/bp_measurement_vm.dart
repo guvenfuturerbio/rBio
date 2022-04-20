@@ -43,13 +43,13 @@ class BpMeasurementViewModel {
       return Colors.grey[300]!;
     }
     if (sys! > 89 && sys! < 120) {
-      return R.color.target;
+      return getIt<IAppConfig>().theme.target;
     } else if (sys! > 119 && sys! < 139) {
-      return R.color.high;
+      return getIt<IAppConfig>().theme.high;
     } else if (sys! >= 139) {
-      return R.color.very_high;
+      return getIt<IAppConfig>().theme.veryHigh;
     } else if (90 > sys!) {
-      return R.color.low;
+      return getIt<IAppConfig>().theme.low;
     } else {
       return Colors.grey[300]!;
     }
@@ -60,13 +60,13 @@ class BpMeasurementViewModel {
       return Colors.grey[300]!;
     }
     if (dia! > 59 && dia! < 80) {
-      return R.color.target;
+      return getIt<IAppConfig>().theme.target;
     } else if (dia! > 79 && dia! < 90) {
-      return R.color.high;
+      return getIt<IAppConfig>().theme.high;
     } else if (dia! >= 89) {
-      return R.color.very_high;
+      return getIt<IAppConfig>().theme.veryHigh;
     } else if (dia! < 60) {
-      return R.color.low;
+      return getIt<IAppConfig>().theme.low;
     } else {
       return Colors.grey[300]!;
     }
@@ -77,13 +77,13 @@ class BpMeasurementViewModel {
       return Colors.grey[300]!;
     }
     if (pulse! > 59 && pulse! < 101) {
-      return R.color.target;
+      return getIt<IAppConfig>().theme.target;
     } else if (pulse! > 100 && pulse! < 121) {
-      return R.color.high;
+      return getIt<IAppConfig>().theme.high;
     } else if (pulse! > 120) {
-      return R.color.very_high;
+      return getIt<IAppConfig>().theme.veryHigh;
     } else if (pulse! < 60) {
-      return R.color.low;
+      return getIt<IAppConfig>().theme.low;
     } else {
       return Colors.grey[300]!;
     }

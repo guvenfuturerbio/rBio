@@ -52,7 +52,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
       InkWell(
         child: SvgPicture.asset(
           R.image.allFilesGrey,
-          color: R.color.white,
+          color: getIt<IAppConfig>().theme.white,
         ),
         onTap: () {
           Atom.to(PagePaths.allFiles);

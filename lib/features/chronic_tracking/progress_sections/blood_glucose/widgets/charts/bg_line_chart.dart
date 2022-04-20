@@ -72,7 +72,7 @@ class _BgLineChartState extends State<BgLineChart> {
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: R.color.black),
+              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
               interval: 6)
           : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
@@ -94,8 +94,8 @@ class _BgLineChartState extends State<BgLineChart> {
         title: AxisTitle(
             text: "mg/dL",
             textStyle:
-                TextStyle(fontSize: 10, color: R.color.graph_plot_range)),
-        labelStyle: TextStyle(color: R.color.black),
+                TextStyle(fontSize: 10, color: getIt<IAppConfig>().theme.graphPlotRange)),
+        labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
         plotBands: [
           PlotBand(
               isVisible: true,
@@ -103,7 +103,7 @@ class _BgLineChartState extends State<BgLineChart> {
               end: _targetMin,
               shouldRenderAboveSeries: false,
               textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-              color: R.color.graph_plot_range),
+              color: getIt<IAppConfig>().theme.graphPlotRange),
         ],
         minimum: _minValue.toDouble(),
         maximum: _maxValue.toDouble(),

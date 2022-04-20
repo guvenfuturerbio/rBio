@@ -103,7 +103,7 @@ class BgTaggerVm extends ChangeNotifier {
       LocaleProvider.current.warning,
       LocaleProvider.current.allow_permission_gallery,
       TextButton(
-        style: TextButton.styleFrom(primary: R.color.white),
+        style: TextButton.styleFrom(primary: getIt<IAppConfig>().theme.white),
         child: Text(LocaleProvider.current.confirm),
         onPressed: () async {
           Navigator.pop(context, 'dialog');

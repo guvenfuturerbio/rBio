@@ -22,7 +22,7 @@ class RbioRedButton extends StatelessWidget {
       onTap: onTap,
       fontWeight: FontWeight.bold,
       textColor: getIt<IAppConfig>().theme.textColor,
-      backColor: R.color.darkRed,
+      backColor: getIt<IAppConfig>().theme.darkRed,
       infinityWidth: infinityWidth,
       showElevation: true,
     );

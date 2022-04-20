@@ -80,7 +80,7 @@ class DateRangePicker extends StatelessWidget {
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: R.color.chart_gray,
+                color: getIt<IAppConfig>().theme.chartGray,
               ),
               child: Row(
                 children: [
@@ -134,7 +134,7 @@ class DateRangePicker extends StatelessWidget {
         width: context.width / items.length,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: R.color.white,
+          color: getIt<IAppConfig>().theme.white,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(50),
@@ -183,7 +183,7 @@ class DateRangePicker extends StatelessWidget {
                       : null,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: e == selected ? R.color.white : null,
+                    color: e == selected ? getIt<IAppConfig>().theme.white : null,
                     boxShadow: e == selected
                         ? [
                             BoxShadow(

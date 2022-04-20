@@ -278,7 +278,7 @@ Widget _itemTakeCovid({
         ),
         boxShadow: [
           BoxShadow(
-            color: R.color.dark_black.withAlpha(50),
+            color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
             blurRadius: 15,
             spreadRadius: 0,
             offset: const Offset(5, 10),

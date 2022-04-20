@@ -118,7 +118,7 @@ class _TaggerPopUp extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
         elevation: R.sizes.defaultElevation,
-        color: R.color.white,
+        color: getIt<IAppConfig>().theme.white,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),
@@ -178,7 +178,7 @@ class _TaggerPopUp extends StatelessWidget {
   Widget getTagElement(bool isCurrent, String icon, String title) {
     return Card(
       elevation: R.sizes.defaultElevation,
-      color: isCurrent ? getIt<IAppConfig>().theme.mainColor : R.color.white,
+      color: isCurrent ? getIt<IAppConfig>().theme.mainColor : getIt<IAppConfig>().theme.white,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -223,7 +223,7 @@ class _TaggerPopUp extends StatelessWidget {
       width: double.infinity,
       child: Card(
         elevation: R.sizes.defaultElevation,
-        color: R.color.white,
+        color: getIt<IAppConfig>().theme.white,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),

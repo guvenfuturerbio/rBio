@@ -84,7 +84,7 @@ class _ChartFilter extends StatelessWidget {
                             context: context,
                             text: state.toShortString(),
                             status: value.isFilterSelected(state),
-                            color: R.color.state_color,
+                            color: getIt<IAppConfig>().theme.stateColor,
                             size: 15,
                             style: state == GlucoseMarginsFilter.full ||
                                     state == GlucoseMarginsFilter.hungry

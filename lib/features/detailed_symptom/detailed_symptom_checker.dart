@@ -23,7 +23,7 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
       appBar: RbioAppBar(
         title: Text(
           LocaleProvider.current.detailed_check,
-          style: TextStyle(color: R.color.white),
+          style: TextStyle(color: getIt<IAppConfig>().theme.white),
         ),
       ),
       body: SafeArea(

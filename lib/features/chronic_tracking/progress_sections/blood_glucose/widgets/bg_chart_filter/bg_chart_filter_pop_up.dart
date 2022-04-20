@@ -65,7 +65,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                     context: context,
                     text: state.toShortString(),
                     status: vm.isFilterSelected(state),
-                    color: R.color.state_color,
+                    color: getIt<IAppConfig>().theme.stateColor,
                     style: state == GlucoseMarginsFilter.full ||
                             state == GlucoseMarginsFilter.hungry
                         ? BoxShape.circle

@@ -93,7 +93,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     hintText: LocaleProvider.current.credit_card_holder,
                     image: R.image.user,
                   )
-                  .copyWith(fillColor: R.color.white, filled: true),
+                  .copyWith(fillColor: getIt<IAppConfig>().theme.white, filled: true),
               focusNode: cardHolderNameFNode,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
@@ -128,7 +128,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     image: R.image.creditCardNumber,
                   )
                   .copyWith(
-                    fillColor: R.color.white,
+                    fillColor: getIt<IAppConfig>().theme.white,
                     filled: true,
                   ),
               focusNode: cardNumberFNode,
@@ -163,7 +163,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     image: R.image.password,
                   )
                   .copyWith(
-                    fillColor: R.color.white,
+                    fillColor: getIt<IAppConfig>().theme.white,
                     filled: true,
                   ),
               focusNode: cardCcvFNode,
@@ -199,7 +199,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     image: R.image.creditCalendar,
                   )
                   .copyWith(
-                    fillColor: R.color.white,
+                    fillColor: getIt<IAppConfig>().theme.white,
                     filled: true,
                   ),
               focusNode: cardExpirityDateFNode,

@@ -36,8 +36,8 @@ class Stepper extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(context.aspectRatio * 45),
                         color: currentIndex == index
-                            ? activeColor ?? R.color.grey
-                            : deactiveColor ?? R.color.grey.withOpacity(.3)),
+                            ? activeColor ?? getIt<IAppConfig>().theme.grey
+                            : deactiveColor ?? getIt<IAppConfig>().theme.grey.withOpacity(.3)),
                   ),
                 ))
       ],

@@ -102,12 +102,12 @@ class ScaleProgressVm extends ChangeNotifier
       <Color, ScaleMarginsFilter>{};
 
   Map<Color, ScaleMarginsFilter> get colorInfo {
-    _colorInfo.putIfAbsent(R.color.very_low, () => ScaleMarginsFilter.veryLow);
-    _colorInfo.putIfAbsent(R.color.low, () => ScaleMarginsFilter.low);
-    _colorInfo.putIfAbsent(R.color.target, () => ScaleMarginsFilter.target);
-    _colorInfo.putIfAbsent(R.color.high, () => ScaleMarginsFilter.high);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryLow, () => ScaleMarginsFilter.veryLow);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.low, () => ScaleMarginsFilter.low);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.target, () => ScaleMarginsFilter.target);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.high, () => ScaleMarginsFilter.high);
     _colorInfo.putIfAbsent(
-        R.color.very_high, () => ScaleMarginsFilter.veryHigh);
+        getIt<IAppConfig>().theme.veryHigh, () => ScaleMarginsFilter.veryHigh);
     return _colorInfo;
   }
 
@@ -450,7 +450,7 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
 
     for (var data in scaleMeasurementsDailyData) {
-      if (data.getColor(currentScaleType) == R.color.very_low) {
+      if (data.getColor(currentScaleType) == getIt<IAppConfig>().theme.veryLow) {
         tempChartData.add(ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
@@ -467,7 +467,7 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
 
     for (var data in scaleMeasurementsDailyData) {
-      if (data.getColor(currentScaleType) == R.color.low) {
+      if (data.getColor(currentScaleType) == getIt<IAppConfig>().theme.low) {
         tempChartData.add(ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
@@ -484,7 +484,7 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
 
     for (var data in scaleMeasurementsDailyData) {
-      if (data.getColor(currentScaleType) == R.color.target) {
+      if (data.getColor(currentScaleType) == getIt<IAppConfig>().theme.target) {
         tempChartData.add(ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
@@ -501,7 +501,7 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
 
     for (var data in scaleMeasurementsDailyData) {
-      if (data.getColor(currentScaleType) == R.color.high) {
+      if (data.getColor(currentScaleType) == getIt<IAppConfig>().theme.high) {
         tempChartData.add(ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
@@ -518,7 +518,7 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
 
     for (var data in scaleMeasurementsDailyData) {
-      if (data.getColor(currentScaleType) == R.color.very_high) {
+      if (data.getColor(currentScaleType) == getIt<IAppConfig>().theme.veryHigh) {
         tempChartData.add(ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
@@ -587,7 +587,7 @@ class ScaleProgressVm extends ChangeNotifier
         dataSource: chartVeryLow,
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: R.color.very_low,
+        color: getIt<IAppConfig>().theme.veryLow,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -600,7 +600,7 @@ class ScaleProgressVm extends ChangeNotifier
         dataSource: chartLow,
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: R.color.low,
+        color: getIt<IAppConfig>().theme.low,
         borderWidth: 3,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
@@ -614,10 +614,10 @@ class ScaleProgressVm extends ChangeNotifier
         dataSource: chartTarget,
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: R.color.target,
+        color: getIt<IAppConfig>().theme.target,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
-          color: R.color.very_low,
+          color: getIt<IAppConfig>().theme.veryLow,
           height: 15,
           width: 15,
           shape: DataMarkerType.circle,
@@ -628,14 +628,14 @@ class ScaleProgressVm extends ChangeNotifier
         dataSource: chartHigh,
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: R.color.high,
+        color: getIt<IAppConfig>().theme.high,
         borderWidth: 3,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
-          color: R.color.high,
+          color: getIt<IAppConfig>().theme.high,
           height: 15,
           width: 15,
-          borderColor: R.color.very_high,
+          borderColor: getIt<IAppConfig>().theme.veryHigh,
           shape: DataMarkerType.circle,
           isVisible: true,
         ),
@@ -644,10 +644,10 @@ class ScaleProgressVm extends ChangeNotifier
         dataSource: chartVeryHigh,
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: R.color.very_high,
+        color: getIt<IAppConfig>().theme.veryHigh,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
-          color: R.color.very_high,
+          color: getIt<IAppConfig>().theme.veryHigh,
           height: 15,
           width: 15,
           isVisible: true,

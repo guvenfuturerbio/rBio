@@ -288,7 +288,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
   Color _getBackColor(DeviceStatus? deviceStatus) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
-        return R.color.high;
+        return getIt<IAppConfig>().theme.high;
 
       case DeviceStatus.connected:
         return getIt<IAppConfig>().theme.mainColor;
