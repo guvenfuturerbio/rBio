@@ -1,4 +1,4 @@
-part of '../device_listing_screen.dart';
+part of '../device_search_screen.dart';
 
 class DeviceSetupDialog extends StatefulWidget {
   final DeviceType deviceType;

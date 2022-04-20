@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -207,6 +208,18 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         //
         RbioElevatedButton(
           onTap: () async {
+            FirebaseAnalytics.instance.logEvent(
+              name: "SikayetlerimSayfa1_Devam",
+              parameters: {
+                'randevu_alacak_kisi_id': getIt<UserNotifier>().firebaseEmail,
+                /* Randevu alınan kişinin unique id’si */
+                'cinsiyet_id': value.genderIdHolder.toString(),
+                /* Erkek ise M, Kadın ise F olarak gönderilmelidir. */
+                'dogum_tarihi_id': getIt<ProfileStorageImpl>()
+                    .getFirst()
+                    .birthDate, /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
+              },
+            );
             Atom.to(
               PagePaths.symptomBodyLocations,
               queryParameters: {

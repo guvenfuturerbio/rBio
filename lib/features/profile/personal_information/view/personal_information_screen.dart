@@ -232,9 +232,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       children: [
                         //
                         RbioCountryCodePicker(
-                          initialSelection: userAccount.countryCode,
+                          initialSelection: userAccount.countryCode == null
+                              ? '+90'
+                              : userAccount.countryCode!.contains('+')
+                                  ? userAccount.countryCode
+                                  : '+' + userAccount.countryCode!,
                           onChanged: (code) {
-                            print(code.dialCode);
                             countryCode = code.dialCode!;
                           },
                         ),
@@ -251,8 +254,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             controller: _phoneNumberEditingController,
                             keyboardType: TextInputType.phone,
                             textInputAction: TextInputAction.done,
-                            hintText:
-                                LocaleProvider.of(context).hint_input_password,
+                            hintText: LocaleProvider.of(context).phone_number,
                             inputFormatters: <TextInputFormatter>[
                               TabToNextFieldTextInputFormatter(
                                 context,

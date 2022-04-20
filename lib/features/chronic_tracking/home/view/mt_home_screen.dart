@@ -1,5 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +57,6 @@ class _MeasurementTrackingHomeScreenState
                 return RbioStackedScaffold(
                   appbar: _buildAppBar(isLandscape, context),
                   body: _buildBody(context, vm, isLandscape),
-                  floatingActionButton: _buildFAB(vm),
                 );
               },
             ),
@@ -149,35 +148,6 @@ class _MeasurementTrackingHomeScreenState
     );
   }
 
-  FloatingActionButton? _buildFAB(MeasurementTrackingVm val) {
-    return val.activeItem != null
-        ? FloatingActionButton(
-            heroTag: 'adder',
-            onPressed: () {
-              final manuelEntry = val.activeItem?.manuelEntry;
-              if (manuelEntry != null) {
-                manuelEntry();
-              }
-            },
-            child: Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: getIt<IAppConfig>().theme.mainColor,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: SvgPicture.asset(
-                  R.image.add,
-                  color: R.color.white,
-                ),
-              ),
-            ),
-            backgroundColor: R.color.white,
-          )
-        : null;
-  }
 
   Widget _buildExpandedUser() {
     return SizedBox(
@@ -231,6 +201,12 @@ class _MeasurementTrackingHomeScreenState
           //
           GestureDetector(
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(
+                name: "SaglikTakibi_Butonlar",
+                parameters: {
+                  'element': 'Tedavi',
+                },
+              );
               Atom.to(PagePaths.treatmentProgress);
             },
             child: Container(

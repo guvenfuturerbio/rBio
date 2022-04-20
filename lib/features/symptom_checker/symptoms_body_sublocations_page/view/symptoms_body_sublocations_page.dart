@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -243,6 +244,20 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
             RbioElevatedButton(
               onTap: value.selectedSymptoms?.isNotEmpty ?? false
                   ? () async {
+                      FirebaseAnalytics.instance.logEvent(
+                        name: "SikayetlerimSayfa3_Devam",
+                        parameters: {
+                          'randevu_alacak_kisi_id':
+                              getIt<UserNotifier>().firebaseEmail,
+                          /* Randevu alınan kişinin unique id’si */
+                          'cinsiyet_id': widget.selectedGenderId.toString(),
+                          /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
+                          'dogum_tarihi_id': widget.yearOfBirth!,
+                          /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
+                          'agri_bolgesi': widget.selectedBodyLocation
+                              ?.name, /* Eğer seçim string olarak verilemezse agri_bolgesi id’si gönderilebilir. */
+                        },
+                      );
                       AppInheritedWidget.of(context)?.bodyLocationRsp =
                           widget.selectedBodyLocation;
                       AppInheritedWidget.of(context)?.listBodySympRsp =

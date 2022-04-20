@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -244,8 +245,8 @@ class CreateAppointmentScreen extends StatelessWidget {
                   ? [
                       RbioElevatedButton(
                         title: LocaleProvider.current.create_appo,
-                        onTap: () {
-                          _openCreateAppointmentsEvents(vm);
+                        onTap: () async {
+                          await _openCreateAppointmentsEvents(vm);
                         },
                         infinityWidth: true,
                       ),
@@ -277,7 +278,25 @@ class CreateAppointmentScreen extends StatelessWidget {
     );
   }
 
-  void _openCreateAppointmentsEvents(CreateAppointmentVm val) {
+  Future<void> _openCreateAppointmentsEvents(CreateAppointmentVm val) async {
+    try {
+      await FirebaseAnalytics.instance.logEvent(
+        name: "RandevuOlustur_RandevuAra",
+        parameters: {
+          'randevu_alacak_kisi_id': getIt<UserNotifier>().firebaseEmail,
+          /* Randevu alınan kişinin unique id’si */
+          'hastane_secimi': val.dropdownValueTenant!.title.toString(),
+          /* Hastane adı */
+          'bolum_secimi': val.dropdownValueDepartment!.title.toString(),
+          /*Eğer Bölüm Adı verilemiyor ise Bölüm ID’si de uygundur*/
+          'doktor_secimi': val.dropdownValueDoctor!.id
+              .toString(), /* Doktorlara atanan ID (İsim verisi gönderilmemeli) */
+        },
+      );
+    } catch (e) {
+      LoggerUtils.instance.wtf('wtf');
+    }
+
     Atom.to(
       PagePaths.createAppointmentEvents,
       queryParameters: {

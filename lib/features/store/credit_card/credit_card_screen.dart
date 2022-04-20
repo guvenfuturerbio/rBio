@@ -89,9 +89,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               style: Utils.instance.inputTextStyle(),
               decoration: Utils.instance
                   .inputImageDecoration(
-                    suffixIconClicked: () {
-                      LoggerUtils.instance.i("icon clicked!");
-                    },
+                    suffixIconClicked: () {},
                     hintText: LocaleProvider.current.credit_card_holder,
                     image: R.image.user,
                   )
@@ -99,11 +97,17 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               focusNode: cardHolderNameFNode,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, cardHolderNameFNode, cardNumberFNode)
+                  context,
+                  cardHolderNameFNode,
+                  cardNumberFNode,
+                ),
               ],
               onFieldSubmitted: (term) {
                 UtilityManager().fieldFocusChange(
-                    context, cardHolderNameFNode, cardNumberFNode);
+                  context,
+                  cardHolderNameFNode,
+                  cardNumberFNode,
+                );
               },
             ),
             margin: const EdgeInsets.only(bottom: 20, top: 40),
@@ -119,9 +123,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               style: Utils.instance.inputTextStyle(),
               decoration: Utils.instance
                   .inputImageDecoration(
-                    suffixIconClicked: () {
-                      LoggerUtils.instance.i("icon clicked!");
-                    },
+                    suffixIconClicked: () {},
                     hintText: LocaleProvider.current.credit_card_number,
                     image: R.image.creditCardNumber,
                   )
@@ -146,6 +148,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               },
             ),
           ),
+
+          //
           Container(
             child: TextFormField(
               controller: _cvvCodeController,
@@ -154,25 +158,34 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               style: Utils.instance.inputTextStyle(),
               decoration: Utils.instance
                   .inputImageDecoration(
-                    suffixIconClicked: () {
-                      LoggerUtils.instance.i("icon clicked!");
-                    },
+                    suffixIconClicked: () {},
                     hintText: LocaleProvider.current.credit_card_cvv,
                     image: R.image.password,
                   )
-                  .copyWith(fillColor: R.color.white, filled: true),
+                  .copyWith(
+                    fillColor: R.color.white,
+                    filled: true,
+                  ),
               focusNode: cardCcvFNode,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, cardCcvFNode, cardExpirityDateFNode)
+                  context,
+                  cardCcvFNode,
+                  cardExpirityDateFNode,
+                ),
               ],
               onFieldSubmitted: (term) {
                 UtilityManager().fieldFocusChange(
-                    context, cardCcvFNode, cardExpirityDateFNode);
+                  context,
+                  cardCcvFNode,
+                  cardExpirityDateFNode,
+                );
               },
             ),
             margin: const EdgeInsets.only(bottom: 20),
           ),
+
+          //
           Container(
             child: TextFormField(
               controller: _expiryDateController,
@@ -181,25 +194,34 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
               style: Utils.instance.inputTextStyle(),
               decoration: Utils.instance
                   .inputImageDecoration(
-                    suffixIconClicked: () {
-                      LoggerUtils.instance.i("icon clicked!");
-                    },
+                    suffixIconClicked: () {},
                     hintText: LocaleProvider.current.credit_card_expired_date,
                     image: R.image.creditCalendar,
                   )
-                  .copyWith(fillColor: R.color.white, filled: true),
+                  .copyWith(
+                    fillColor: R.color.white,
+                    filled: true,
+                  ),
               focusNode: cardExpirityDateFNode,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, cardExpirityDateFNode, null)
+                  context,
+                  cardExpirityDateFNode,
+                  null,
+                ),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, cardExpirityDateFNode, null);
+                UtilityManager().fieldFocusChange(
+                  context,
+                  cardExpirityDateFNode,
+                  null,
+                );
               },
             ),
             margin: const EdgeInsets.only(bottom: 5),
           ),
+
+          //
           Row(
             children: [
               Container(
@@ -211,63 +233,69 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       value.toggleDistanceContract();
                     });
                   },
-                  activeColor: getIt<IAppConfig>()
-                      .theme
-                      .mainColor, //  <-- leading Checkbox
+                  activeColor: getIt<IAppTheme>().mainColor,
                 ),
               ),
               Expanded(
-                  child: InkWell(
-                onTap: () => {
-                  value.showDistanceSaleContract(
-                    price: widget.price!,
-                    packageName: widget.packageName!,
-                  )
-                },
-                child:
-                    Text(LocaleProvider.current.accept_distance_sales_contract,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>().theme.textColorSecondary,
-                          decoration: TextDecoration.underline,
-                        )),
-              )),
-            ],
-          ),
-          Row(children: [
-            Container(
-              alignment: Alignment.bottomLeft,
-              child: Checkbox(
-                value: value.isInformationFormAccepted,
-                onChanged: (newValue) {
-                  setState(() {
-                    value.toggleInformationForm();
-                  });
-                },
-                activeColor: getIt<IAppConfig>().theme.mainColor,
-              ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  value.showCancellationAndRefund(
-                    packageName: widget.packageName!,
-                    price: widget.price!,
-                  );
-                },
-                child: Text(
-                  LocaleProvider.current.information_form,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorSecondary,
-                    decoration: TextDecoration.underline,
+                child: InkWell(
+                  onTap: () => {
+                    value.showDistanceSaleContract(
+                      price: widget.price!,
+                      packageName: widget.packageName!,
+                    )
+                  },
+                  child: Text(
+                    LocaleProvider.current.accept_distance_sales_contract,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.xHeadline3.copyWith(
+                      color: getIt<IAppTheme>().textColorSecondary,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
               ),
-            )
-          ]),
+            ],
+          ),
+
+          //
+          Row(
+            children: [
+              Container(
+                alignment: Alignment.bottomLeft,
+                child: Checkbox(
+                  value: value.isInformationFormAccepted,
+                  onChanged: (newValue) {
+                    setState(() {
+                      value.toggleInformationForm();
+                    });
+                  },
+                  activeColor: getIt<IAppTheme>().mainColor,
+                ),
+              ),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    value.showCancellationAndRefund(
+                      packageName: widget.packageName!,
+                      price: widget.price!,
+                    );
+                  },
+                  child: Text(
+                    LocaleProvider.current.information_form,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.xHeadline3.copyWith(
+                      color: getIt<IAppTheme>().textColorSecondary,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          //
           Container(
             child: value.progress == LoadingProgress.loading
                 ? const RbioLoading()
@@ -296,7 +324,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                           ),
                         );
                       }
-                    }),
+                    },
+                  ),
             margin: const EdgeInsets.only(top: 5, bottom: 20),
           )
         ],
@@ -311,11 +340,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   void showLoadingDialog(BuildContext context) async {
     await Future.delayed(const Duration(milliseconds: 30));
     await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
-    //builder: (BuildContext context) => WillPopScope(child:loadingDialog = LoadingDialog() , onWillPop:  () async => false,));
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
   }
 
   void hideDialog(BuildContext context) {

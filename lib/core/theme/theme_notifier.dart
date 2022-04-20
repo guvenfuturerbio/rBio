@@ -13,7 +13,7 @@ class ThemeNotifier extends ChangeNotifier {
       final sharedThemeKey = sharedTheme.xTheme;
       theme = sharedThemeKey!.xGetTheme;
     } else {
-      theme = GuvenTheme();
+      theme = OneDoseTheme();
     }
 
     final sharedTextScale = getIt<ISharedPreferencesManager>()

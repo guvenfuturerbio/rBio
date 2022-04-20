@@ -40,7 +40,7 @@ class _TaggerPopUp extends StatelessWidget {
 
   // InputSection #start
   Widget getSquareBg(BuildContext context) {
-    var level = int.parse((data.result == '' ? '0' : data.result)!);
+    var level = double.parse((data.result == '' ? '0' : data.result)!).toInt();
     return Container(
       height: 130 * context.textScale,
       width: 130 * context.textScale,
@@ -58,7 +58,7 @@ class _TaggerPopUp extends StatelessWidget {
   }
 
   Widget getCircleBg(BuildContext context) {
-    var level = int.parse((data.result == '' ? '0' : data.result)!);
+    var level = double.parse((data.result == '' ? '0' : data.result)!).toInt();
 
     return Container(
       alignment: Alignment.center,

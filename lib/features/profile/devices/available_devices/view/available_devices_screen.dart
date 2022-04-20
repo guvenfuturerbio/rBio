@@ -70,7 +70,7 @@ class AvailableDevices extends StatelessWidget {
               if (device.deviceType == DeviceType.miScale ||
                   device.deviceType == DeviceType.pillarSmall) {
                 Atom.to(
-                  PagePaths.deviceListing,
+                  PagePaths.deviceSearch,
                   queryParameters: {
                     'device_type': device.deviceType!.xRawValue,
                   },

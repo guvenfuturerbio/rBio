@@ -409,9 +409,10 @@ class _CreateAppointmentSummaryScreenState
                               _buildSummaryButton(vm),
 
                               //
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
+
                               //
                               RbioElevatedButton(
                                 showElevation: false,

@@ -563,8 +563,8 @@ class VRouterRoutes {
 
     // Bluetooth v2
     VWidget(
-      path: PagePaths.deviceListing,
-      widget: const DeviceListingScreen(),
+      path: PagePaths.deviceSearch,
+      widget: DeviceSearchScreen(),
     ),
 
     //
@@ -681,5 +681,5 @@ class PagePaths {
   static const doctorCosultation = '/doctor-consultation';
 
   // Bluetooth v2
-  static const deviceListing = '/device-listing';
+  static const deviceSearch = '/device-search';
 }
