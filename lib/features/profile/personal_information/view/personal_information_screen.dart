@@ -232,7 +232,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       children: [
                         //
                         RbioCountryCodePicker(
-                          initialSelection: userAccount.countryCode,
+                          initialSelection: userAccount.countryCode == null
+                              ? '+90'
+                              : userAccount.countryCode!.contains('+')
+                                  ? userAccount.countryCode
+                                  : '+' + userAccount.countryCode!,
                           onChanged: (code) {
                             print(code.dialCode);
                             countryCode = code.dialCode!;

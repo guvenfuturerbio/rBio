@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -116,6 +117,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                   onPressed: () {
+                    FirebaseAnalytics.instance
+                        .logEvent(name: "Menu_Buton_Tiklama", parameters: null);
                     if (widget.drawerKey.currentState?.isDrawerOpen ?? false) {
                       widget.drawerKey.currentState?.openEndDrawer();
                     }
@@ -235,6 +238,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   elevation: 0,
                   onPressed: () {
+                    FirebaseAnalytics.instance.logEvent(
+                      name: "Alt_Bar_Tiklama",
+                      parameters: {'element': 'Logo'},
+                    );
                     if (Atom.url != '/home/') {
                       DashboardNavigation.toHome(context);
                     }
@@ -260,6 +267,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationSearchGreen,
                     ),
                     onPressed: () {
+                      FirebaseAnalytics.instance.logEvent(
+                        name: "Alt_Bar_Tiklama",
+                        parameters: {'element': 'Arama'},
+                      );
                       DashboardNavigation.toSearch(context);
                     },
                     splashColor: Colors.white,
@@ -271,6 +282,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationChatGreen,
                     ),
                     onPressed: () {
+                      FirebaseAnalytics.instance.logEvent(
+                        name: "Alt_Bar_Tiklama",
+                        parameters: {'element': 'Chat'},
+                      );
                       DashboardNavigation.toChat(context);
                     },
                   ),
@@ -284,6 +299,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationGraphGreen,
                     ),
                     onPressed: () {
+                      FirebaseAnalytics.instance.logEvent(
+                        name: "Alt_Bar_Tiklama",
+                        parameters: {'element': 'Grafik'},
+                      );
                       DashboardNavigation.toGraph(context);
                     },
                   ),
@@ -294,6 +313,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationNotificationGreen,
                     ),
                     onPressed: () {
+                      FirebaseAnalytics.instance.logEvent(
+                        name: "Alt_Bar_Tiklama",
+                        parameters: {'element': 'Bildirim'},
+                      );
                       DashboardNavigation.toNotifications(context);
                     },
                   ),
@@ -319,12 +342,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.profile,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'profil', 
+              },
+            );
             Atom.to(PagePaths.profile);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element":
+                    'hastane_randevusu_olustur', 
+              },
+            );
             Atom.to(
               PagePaths.createAppointment,
               queryParameters: {
@@ -338,6 +374,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element":
+                    'online_randevu_olustur', 
+              },
+            );
             Atom.to(
               PagePaths.createAppointment,
               queryParameters: {
@@ -351,36 +394,72 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'saglik_takibi', 
+              },
+            );
             Atom.to(PagePaths.measurementTracking);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'randevu',
+              },
+            );
             Atom.to(PagePaths.appointment);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.results,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'sonuclar', 
+              },
+            );
             Atom.to(PagePaths.eResult);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.for_you,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'size_ozel',
+              },
+            );
             Atom.to(PagePaths.forYouCategories);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'symptom_checker', 
+              },
+            );
             Atom.to(PagePaths.symptomMainMenu);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.devices,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'cihazlarim',
+              },
+            );
             Atom.to(PagePaths.devices);
           },
         ),
@@ -388,18 +467,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
           DrawerModel(
             title: LocaleProvider.current.reminders,
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(
+                name: "Menu_Element_Tiklama",
+                parameters: {
+                  "element": 'hatirlaticilar', 
+                },
+              );
               Atom.to(PagePaths.reminderList);
             },
           ),
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'oneriler', 
+              },
+            );
             Atom.to(PagePaths.suggestResult);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.detailed_symptom,
           onTap: () {
+            FirebaseAnalytics.instance.logEvent(
+              name: "detailed_symptom_checker",
+              parameters: {
+                "element": 'profil', 
+              },
+            );
             Atom.to(
               PagePaths.detailedSymptom,
             );
@@ -408,6 +505,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.log_out,
           onTap: () async {
+            FirebaseAnalytics.instance.logEvent(
+              name: "Menu_Element_Tiklama",
+              parameters: {
+                "element": 'cikis', 
+              },
+            );
             await getIt<UserNotifier>().logout(context);
           },
         ),

@@ -58,6 +58,7 @@ dependencies:
   expandable: ^5.0.1
   file_picker: ^3.0.0
   firebase: 9.0.2
+  firebase_analytics: ^9.1.5
   firebase_auth: 3.3.7
   firebase_core: 1.12.0
   firebase_dynamic_links: 4.0.6
@@ -136,8 +137,8 @@ dependencies:
   universal_html: ^2.0.8
   url_launcher: ^6.0.18
   url_strategy: ^0.2.0
-  webview_flutter: ^2.3.1
   video_player: ^2.3.0
+  webview_flutter: ^2.3.1
 
 dev_dependencies:
   build_runner: ^2.1.7

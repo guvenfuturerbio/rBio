@@ -1,5 +1,6 @@
 import 'dart:io' as platform;
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -354,6 +355,16 @@ class LoginScreenVm extends ChangeNotifier {
             .fetchScaleData(getIt<ProfileStorageImpl>().getFirst().id ?? 0);
 
         final term = Atom.queryParameters['then'];
+        FirebaseAnalytics.instance
+            .setUserId(id: getIt<UserNotifier>().firebaseEmail);
+        FirebaseAnalytics.instance
+            .setUserProperty(name: 'Login', value: 'authed');
+        FirebaseAnalytics.instance.setUserProperty(
+            name: 'user_age',
+            value: getIt<ProfileStorageImpl>().getFirst().birthDate);
+
+        FirebaseAnalytics.instance
+            .logEvent(name: "Basarili_Giris", parameters: null);
         if (term != null && term != '') {
           Atom.to(term, isReplacement: true);
         }

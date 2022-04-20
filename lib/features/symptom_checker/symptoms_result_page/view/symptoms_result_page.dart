@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,8 @@ class SymptomsResultPage extends StatefulWidget {
   late String? gender;
   late String? yearOfBirth;
   late bool? isFromVoice;
-
+  late String? body_part;
+  late int? body_part_length;
   SymptomsResultPage({
     Key? key,
     this.symptoms,
@@ -31,6 +33,9 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
       widget.symptoms = AppInheritedWidget.of(context)?.listBodySympRsp
           as List<GetBodySymptomsResponse>;
       widget.gender = Atom.queryParameters['gender'];
+      widget.body_part = Atom.queryParameters['body_part'];
+      widget.body_part_length =
+          int.parse(Atom.queryParameters['body_part_length']!);
       widget.yearOfBirth = Atom.queryParameters['year_of_birth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (_) {
@@ -129,6 +134,27 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     //
                                     child: RbioTextButton(
                                       onPressed: () {
+                                        FirebaseAnalytics.instance.logEvent(
+                                          name: "Sonuclarim_RandevuAra",
+                                          parameters: {
+                                            'randevu_alacak_kisi_id':
+                                                getIt<UserNotifier>()
+                                                    .firebaseEmail,
+                                            /* Randevu alınan kişinin unique id’si */
+                                            'cinsiyet_id': widget.gender,
+                                            /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
+                                            'dogum_tarihi_id':
+                                                widget.yearOfBirth!,
+                                            /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
+                                            'agrı_bolgesi': widget.body_part,
+                                            'sikayet_kapsam_secili_adet':
+                                                widget.body_part_length,
+                                            /* Örn: el ve el bilegi - 2 / Kol - 1 / On Kol ve Bilek - 0 / Parmak - 0 / Ust Kol ve Omuz - 0 */
+                                            'birim_adi': 'danisma',
+                                            /* Tıklanan birim adı */
+                                            'tiklanan_birim_yuzdelik': 95,
+                                          },
+                                        );
                                         Atom.to(
                                           PagePaths.createAppointment,
                                           queryParameters: {
@@ -258,6 +284,30 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                             },
                                           );
                                         } else {
+                                          FirebaseAnalytics.instance.logEvent(
+                                            name: "Sonuclarim_RandevuAra",
+                                            parameters: {
+                                              'randevu_alacak_kisi_id':
+                                                  getIt<UserNotifier>()
+                                                      .firebaseEmail,
+                                              /* Randevu alınan kişinin unique id’si */
+                                              'cinsiyet_id': widget.gender,
+                                              /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
+                                              'dogum_tarihi_id':
+                                                  widget.yearOfBirth!,
+                                              /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
+                                              'agrı_bolgesi': widget.body_part,
+                                              'sikayet_kapsam_secili_adet':
+                                                  widget.body_part_length,
+                                              /* Örn: el ve el bilegi - 2 / Kol - 1 / On Kol ve Bilek - 0 / Parmak - 0 / Ust Kol ve Omuz - 0 */
+                                              'birim_adi': value
+                                                  .specialisations[index].name,
+                                              /* Tıklanan birim adı */
+                                              'tiklanan_birim_yuzdelik': value
+                                                  .specialisations[index]
+                                                  .accuracy,
+                                            },
+                                          );
                                           Atom.to(PagePaths.createAppointment,
                                               queryParameters: {
                                                 'forOnline': false.toString(),
