@@ -13,7 +13,6 @@ import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_
 import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_detail_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_manuel_add_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/view/scale_progress_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/dashboard_navigation.dart';
@@ -563,8 +562,8 @@ class VRouterRoutes {
 
     // Bluetooth v2
     VWidget(
-      path: PagePaths.deviceListing,
-      widget: const DeviceListingScreen(),
+      path: PagePaths.deviceSearch,
+      widget: DeviceSearchScreen(),
     ),
 
     //
@@ -681,5 +680,5 @@ class PagePaths {
   static const doctorCosultation = '/doctor-consultation';
 
   // Bluetooth v2
-  static const deviceListing = '/device-listing';
+  static const deviceSearch = '/device-search';
 }

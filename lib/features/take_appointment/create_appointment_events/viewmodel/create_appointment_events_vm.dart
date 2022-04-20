@@ -57,6 +57,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   Future<void> getAvailableDates(DateTime date, bool isFirstLaunch) async {
     initDate = date;
     availableDatesProgress = LoadingProgress.loading;
+    slotsProgress = LoadingProgress.loading;
     notifyListeners();
 
     try {
@@ -65,7 +66,6 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         availableDates.addAll(await getAvailableLists(date, true, 7));
       } else {
         if (availableDates.isNotEmpty) {
-          LoggerUtils.instance.w(availableDates.length);
           var tmpList = await getAvailableLists(date, false, tenantId);
           for (var item in tmpList) {
             if (!(availableDates.any((element) => element.xIsSameDate(item)))) {

@@ -63,45 +63,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 //
                 Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 6,
-                      horizontal: 4,
-                    ),
-                    margin: const EdgeInsets.only(
-                      left: 15,
-                      right: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: getIt<ITheme>().secondaryColor,
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        //
-                        CircleAvatar(
-                          backgroundImage: Utils.instance.getCacheProfileImage,
-                          radius: R.sizes.iconSize2,
-                          backgroundColor: getIt<ITheme>().cardBackgroundColor,
-                        ),
-
-                        //
-                        R.sizes.wSizer12,
-
-                        //
-                        Expanded(
-                          child: Text(
-                            Utils.instance.getCurrentUserNameAndSurname,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: context.xHeadline4,
+                  child: GestureDetector(
+                    onTap: () {
+                      FirebaseAnalytics.instance.logEvent(
+                        name: "Menu_Element_Tiklama",
+                        parameters: {
+                          "element": 'profil',
+                        },
+                      );
+                      Atom.to(PagePaths.profile);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 6,
+                        horizontal: 4,
+                      ),
+                      margin: const EdgeInsets.only(
+                        left: 15,
+                        right: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: getIt<ITheme>().secondaryColor,
+                        borderRadius: R.sizes.borderRadiusCircular,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          //
+                          CircleAvatar(
+                            backgroundImage:
+                                Utils.instance.getCacheProfileImage,
+                            radius: R.sizes.iconSize2,
+                            backgroundColor:
+                                getIt<ITheme>().cardBackgroundColor,
                           ),
-                        ),
-                      ],
+
+                          //
+                          R.sizes.wSizer12,
+
+                          //
+                          Expanded(
+                            child: Text(
+                              Utils.instance.getCurrentUserNameAndSurname,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.xHeadline4,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -345,7 +358,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element": 'profil', 
+                "element": 'profil',
               },
             );
             Atom.to(PagePaths.profile);
@@ -357,8 +370,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element":
-                    'hastane_randevusu_olustur', 
+                "element": 'hastane_randevusu_olustur',
               },
             );
             Atom.to(
@@ -377,8 +389,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element":
-                    'online_randevu_olustur', 
+                "element": 'online_randevu_olustur',
               },
             );
             Atom.to(
@@ -397,7 +408,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element": 'saglik_takibi', 
+                "element": 'saglik_takibi',
               },
             );
             Atom.to(PagePaths.measurementTracking);
@@ -421,7 +432,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element": 'sonuclar', 
+                "element": 'sonuclar',
               },
             );
             Atom.to(PagePaths.eResult);
@@ -445,7 +456,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element": 'symptom_checker', 
+                "element": 'symptom_checker',
               },
             );
             Atom.to(PagePaths.symptomMainMenu);
@@ -470,7 +481,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               FirebaseAnalytics.instance.logEvent(
                 name: "Menu_Element_Tiklama",
                 parameters: {
-                  "element": 'hatirlaticilar', 
+                  "element": 'hatirlaticilar',
                 },
               );
               Atom.to(PagePaths.reminderList);
@@ -482,7 +493,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element": 'oneriler', 
+                "element": 'oneriler',
               },
             );
             Atom.to(PagePaths.suggestResult);
@@ -494,7 +505,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "detailed_symptom_checker",
               parameters: {
-                "element": 'profil', 
+                "element": 'profil',
               },
             );
             Atom.to(
@@ -508,7 +519,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             FirebaseAnalytics.instance.logEvent(
               name: "Menu_Element_Tiklama",
               parameters: {
-                "element": 'cikis', 
+                "element": 'cikis',
               },
             );
             await getIt<UserNotifier>().logout(context);

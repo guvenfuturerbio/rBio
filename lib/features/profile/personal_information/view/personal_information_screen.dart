@@ -238,7 +238,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ? userAccount.countryCode
                                   : '+' + userAccount.countryCode!,
                           onChanged: (code) {
-                            print(code.dialCode);
                             countryCode = code.dialCode!;
                           },
                         ),
@@ -255,8 +254,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             controller: _phoneNumberEditingController,
                             keyboardType: TextInputType.phone,
                             textInputAction: TextInputAction.done,
-                            hintText:
-                                LocaleProvider.of(context).hint_input_password,
+                            hintText: LocaleProvider.of(context).phone_number,
                             inputFormatters: <TextInputFormatter>[
                               TabToNextFieldTextInputFormatter(
                                 context,

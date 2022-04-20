@@ -19,17 +19,17 @@ class CreditCardScreenVm extends ChangeNotifier {
 
   BuildContext? mContext;
 
-  bool? isDistanceContractSelected;
+  bool isDistanceContractSelected = false;
 
-  bool? isInformationFormAccepted;
+  bool isInformationFormAccepted = false;
 
   void toggleDistanceContract() {
-    isDistanceContractSelected = !isDistanceContractSelected!;
+    isDistanceContractSelected = !isDistanceContractSelected;
     notifyListeners();
   }
 
   void toggleInformationForm() {
-    isInformationFormAccepted = !isInformationFormAccepted!;
+    isInformationFormAccepted = !isInformationFormAccepted;
     notifyListeners();
   }
 
@@ -40,8 +40,8 @@ class CreditCardScreenVm extends ChangeNotifier {
     required String date,
   }) {
     bool isCorrect = false;
-    if (isDistanceContractSelected!) {
-      if (isInformationFormAccepted!) {
+    if (isDistanceContractSelected) {
+      if (isInformationFormAccepted) {
         if (cardHolder.isNotEmpty) {
           if (cardNumber.replaceAll(" ", "").length == 16) {
             if (cvv.length > 2) {

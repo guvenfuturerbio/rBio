@@ -7,29 +7,10 @@ import '../../bluetooth_v2.dart';
 
 part 'widget/setup_dialog.dart';
 
-class DeviceListingScreen extends StatefulWidget {
-  const DeviceListingScreen({Key? key}) : super(key: key);
+class DeviceSearchScreen extends StatelessWidget {
+  DeviceSearchScreen({Key? key}) : super(key: key);
 
-  @override
-  State<DeviceListingScreen> createState() => _DeviceListingScreenState();
-}
-
-class _DeviceListingScreenState extends State<DeviceListingScreen> {
   DeviceType? deviceType;
-
-  void _showSetupDialog() {
-    Future(
-      () {
-        return showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return DeviceSetupDialog(deviceType: deviceType!);
-          },
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +22,66 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
         if (deviceType == DeviceType.miScale) {
           final heightCheck = Utils.instance.checkUserHeight();
           if (heightCheck) {
-            _restartScan(context);
-            _showSetupDialog();
+            return DeviceSearchView(deviceType: deviceType!);
           }
         } else {
-          _restartScan(context);
-          _showSetupDialog();
+          return DeviceSearchView(deviceType: deviceType!);
         }
+
+        return RbioScaffold(
+          appbar: RbioAppBar(),
+          body: Container(),
+        );
       }
+
+      return const RbioRouteError();
     } catch (e) {
       return const RbioRouteError();
     }
+  }
+}
 
+class DeviceSearchView extends StatefulWidget {
+  final DeviceType deviceType;
+
+  const DeviceSearchView({
+    Key? key,
+    required this.deviceType,
+  }) : super(key: key);
+
+  @override
+  _DeviceSearchViewState createState() => _DeviceSearchViewState();
+}
+
+class _DeviceSearchViewState extends State<DeviceSearchView> {
+  void _showSetupDialog() {
+    Future(
+      () {
+        return showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return DeviceSetupDialog(deviceType: widget.deviceType);
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final widgetsBinding = WidgetsBinding.instance;
+    if (widgetsBinding != null) {
+      widgetsBinding.addPostFrameCallback((_) {
+        _showSetupDialog();
+        _restartScan(context);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         _setInitState(context);
@@ -203,7 +232,8 @@ class _DeviceListingScreenState extends State<DeviceListingScreen> {
   }
 
   void _startScan(BuildContext context) {
-    BlocProvider.of<DeviceSearchCubit>(context).startSearching(deviceType!);
+    BlocProvider.of<DeviceSearchCubit>(context)
+        .startSearching(widget.deviceType);
   }
 
   void _stopScan(BuildContext context) {
