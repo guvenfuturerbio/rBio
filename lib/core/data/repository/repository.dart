@@ -63,7 +63,7 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
-    final url = R.endpoints.getAllPackagePath;
+    final url = getIt<IAppConfig>().endpoints.base.getAllPackagePath;
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllPackage(url),
@@ -74,7 +74,7 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
-    final url = R.endpoints.getAllSubCategoriesPath(id);
+    final url = getIt<IAppConfig>().endpoints.base.getAllSubCategoriesPath(id);
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllSubCategories(url),
@@ -94,7 +94,7 @@ class Repository {
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
       int id) async {
-    final url = R.endpoints.getSubCategoryDetailPath(id);
+    final url = getIt<IAppConfig>().endpoints.base.getSubCategoryDetailPath(id);
     return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getSubCategoryDetail(url),
@@ -141,7 +141,7 @@ class Repository {
       apiService.getCurrentApplicationVersion();
 
   Future<PatientResponse?> getPatientDetail() async {
-    final url = R.endpoints.getPatientDetailPath;
+    final url = getIt<IAppConfig>().endpoints.base.getPatientDetailPath;
     final response = await apiService.getPatientDetail(url);
     return response;
   }
@@ -154,7 +154,7 @@ class Repository {
 
   Future<List<FilterTenantsResponse>> filterTenants(
       FilterTenantsRequest filterTenantsRequest) async {
-    final url = R.endpoints.filterTenantsPath;
+    final url = getIt<IAppConfig>().endpoints.base.filterTenantsPath;
     return await Utils.instance.getCacheApiCallList<FilterTenantsResponse>(
       url,
       () => apiService.filterTenants(url, filterTenantsRequest),
@@ -166,7 +166,7 @@ class Repository {
 
   Future<List<FilterDepartmentsResponse>> filterDepartments(
       FilterDepartmentsRequest filterDepartmentsRequest) async {
-    final url = R.endpoints.filterDepartmentsPath;
+    final url = getIt<IAppConfig>().endpoints.base.filterDepartmentsPath;
     final bodyString = json.encode(filterDepartmentsRequest.toJson());
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url + bodyString,
@@ -180,7 +180,7 @@ class Repository {
 
   Future<List<FilterResourcesResponse>> filterResources(
       FilterResourcesRequest filterResourcesRequest) async {
-    final url = R.endpoints.filterResourcesPath;
+    final url = getIt<IAppConfig>().endpoints.base.filterResourcesPath;
     final bodyString = json.encode(filterResourcesRequest.toJson());
     return await Utils.instance.getCacheApiCallList<FilterResourcesResponse>(
       url + bodyString,
@@ -192,7 +192,7 @@ class Repository {
   }
 
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
-    final url = R.endpoints.getDoctorCvDetailsPath(doctorWebID);
+    final url = getIt<IAppConfig>().endpoints.common.getDoctorCvDetailsPath(doctorWebID);
     return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
       url,
       () => apiService.getDoctorCvDetails(doctorWebID),
@@ -345,7 +345,7 @@ class Repository {
       apiService.filterSocialPlatform(search);
 
   Future<GuvenResponseModel> socialResource() async {
-    final url = R.endpoints.socialResourcePath;
+    final url = getIt<IAppConfig>().endpoints.base.socialResourcePath;
     return await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
       url,
       () => apiService.socialResource(),
@@ -421,7 +421,7 @@ class Repository {
 
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
-    final url = R.endpoints.fetchOnlineDepartmentsPath;
+    final url = getIt<IAppConfig>().endpoints.base.fetchOnlineDepartmentsPath;
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url,
       () => apiService.fetchOnlineDepartments(filterOnlineDepartmentsRequest),

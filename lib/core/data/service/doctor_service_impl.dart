@@ -23,7 +23,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   @override
   Future<RbioLoginResponse> login(String userId, String password) async {
     final response =
-        await helper.postGuven(R.endpoints.dcLogin(userId, password), {});
+        await helper.postGuven(getIt<IAppConfig>().endpoints.doctor.login(userId, password), {});
     if (response.isSuccessful == true) {
       return RbioLoginResponse.fromJson(response.xGetMap);
     } else {
@@ -36,7 +36,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     AppointmentFilter appointmentFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetAllAppointment,
+      getIt<IAppConfig>().endpoints.doctor.getAllAppointment,
       appointmentFilter.toJson(),
       options: authOptions,
     );
@@ -55,7 +55,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetMySugarPatient,
+      getIt<IAppConfig>().endpoints.doctor.getMySugarPatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -74,7 +74,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetMyScalePatient,
+      getIt<IAppConfig>().endpoints.doctor.getMyScalePatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -93,7 +93,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetMyBpPatient,
+      getIt<IAppConfig>().endpoints.doctor.getMyBpPatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -112,7 +112,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetMyBMIPatient,
+      getIt<IAppConfig>().endpoints.doctor.getMyBMIPatient,
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -130,7 +130,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   @override
   Future<DoctorPatientDetailModel> getMyPatientDetail(int patientId) async {
     final response = await helper.getGuven(
-      R.endpoints.dcGetMyPatientDetail(patientId),
+      getIt<IAppConfig>().endpoints.doctor.getMyPatientDetail(patientId),
       options: authOptions,
     );
     if (response.isSuccessful == true) {
@@ -146,7 +146,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     UpdateMyPatientLimit updateMyPatientLimit,
   ) async {
     final response = await helper.patchGuven(
-      R.endpoints.dcUpdateMyPatientLimit(patientId),
+      getIt<IAppConfig>().endpoints.doctor.updateMyPatientLimit(patientId),
       data: updateMyPatientLimit.toJson(),
       options: authOptions,
     );
@@ -163,7 +163,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetMyPatientBloodGlucose(patientId),
+      getIt<IAppConfig>().endpoints.doctor.getMyPatientBloodGlucose(patientId),
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -183,7 +183,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetMyPatientScale(patientId),
+      getIt<IAppConfig>().endpoints.doctor.getMyPatientScale(patientId),
       getMyPatientFilter.toJson(),
       options: authOptions,
     );
@@ -203,7 +203,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     GetMyPatientFilter getMyPatientFilter,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.dcGetMyPatientPressure(patientId),
+      getIt<IAppConfig>().endpoints.doctor.getMyPatientPressure(patientId),
       getMyPatientFilter.toJson(),
       options: authOptions,
     );

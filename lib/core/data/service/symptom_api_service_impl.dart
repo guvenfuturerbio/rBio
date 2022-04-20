@@ -15,7 +15,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
   Future<SymptomAuthResponse> getSymtptomsApiToken() async {
     try {
       final response = await helper.dioPost(
-        R.endpoints.symptomCheckerLogin,
+        getIt<IAppConfig>().endpoints.symptomLogin.symptomCheckerLogin,
         {},
         options: authOptions,
       );
@@ -43,7 +43,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
   ) async {
     try {
       final response = await helper.dioGet(
-        R.endpoints.symptomGetProposed,
+        getIt<IAppConfig>().endpoints.symptom.symptomGetProposed,
         queryParameters: <String, dynamic>{
           'symptoms': symptoms,
           'gender': gender,
@@ -83,7 +83,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
   ) async {
     try {
       final response = await helper.dioGet(
-        R.endpoints.symptomGetSpecialisations,
+        getIt<IAppConfig>().endpoints.symptom.symptomGetSpecialisations,
         queryParameters: <String, dynamic>{
           'symptoms': symptoms,
           'gender': gender,
@@ -120,7 +120,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
   ) async {
     try {
       final response = await helper.dioGet(
-        R.endpoints.symptomGetBodyLocations,
+        getIt<IAppConfig>().endpoints.symptom.symptomGetBodyLocations,
         queryParameters: <String, dynamic>{
           'token': token,
           'language': language
@@ -154,7 +154,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
   ) async {
     try {
       final response = await helper.dioGet(
-        R.endpoints.symptomGetBodySubLocations(locationID),
+        getIt<IAppConfig>().endpoints.symptom.symptomGetBodySubLocations(locationID),
         queryParameters: <String, dynamic>{
           'token': token,
           'language': language,
@@ -189,7 +189,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
   ) async {
     try {
       final response = await helper.dioGet(
-        R.endpoints.symptomGetBodySymptoms(locationID, gender),
+        getIt<IAppConfig>().endpoints.symptom.symptomGetBodySymptoms(locationID, gender),
         queryParameters: <String, dynamic>{
           'token': token,
           'language': language,

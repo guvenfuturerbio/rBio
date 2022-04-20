@@ -20,7 +20,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model) async {
     final response = await helper.postGuven(
-      R.endpoints.addStep1,
+      getIt<IAppConfig>().endpoints.devApi.addStep1,
       addStep1Model.toJson(),
       options: authOptions,
     );
@@ -28,7 +28,7 @@ class ApiServiceImpl extends ApiService {
       return response;
     } else {
       throw RbioNotSuccessfulException<GuvenResponseModel>(
-        R.endpoints.addStep1,
+        getIt<IAppConfig>().endpoints.devApi.addStep1,
         response,
       );
     }
@@ -39,7 +39,7 @@ class ApiServiceImpl extends ApiService {
     UserRegistrationStep2Model userRegistrationStep2,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.addStep2,
+      getIt<IAppConfig>().endpoints.devApi.addStep2,
       userRegistrationStep2.toJson(),
       options: authOptions,
     );
@@ -55,7 +55,7 @@ class ApiServiceImpl extends ApiService {
     UserRegistrationStep3Model userRegistrationStep3,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.addStep3,
+      getIt<IAppConfig>().endpoints.devApi.addStep3,
       userRegistrationStep3.toJson(),
       options: authOptions,
     );
@@ -65,7 +65,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> login(String username, String password) async {
     final response = await helper.postGuven(
-      R.endpoints.loginPath,
+      getIt<IAppConfig>().endpoints.devApi.loginPath,
       <String, dynamic>{},
       queryParameters: {
         'userName': username,
@@ -128,7 +128,7 @@ class ApiServiceImpl extends ApiService {
     String id,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.getSubCategoryItemsPath(id),
+      getIt<IAppConfig>().endpoints.base.getSubCategoryItemsPath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -147,7 +147,7 @@ class ApiServiceImpl extends ApiService {
     //return "\r\n\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head id=\"Head1\"><title>\r\n\tPayment MPI Service\r\n</title></head>\r\n<body>\r\n    <form method=\"post\" action=\"https://goguvenliodeme.bkm.com.tr/troy/approve\" id=\"step1Form\">\r\n<div class=\"aspNetHidden\">\r\n<input type=\"hidden\" name=\"goreq\" id=\"goreq\" value=\"eyJpZCI6IjAxMTEyOWVkYjA2Ni1iMzM1LTQ5ZjMtYTUxOS1hYTNkMzNmMzlmZjYiLCJ0aW1lIjoiMjAyMTAzMDYxMzI2MjUiLCJ2ZXJzaW9uIjoiMC4wMyIsImV4cGlyeSI6IjI0MTAiLCJnb1N0YW1wIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKemRXSWlPaUl3T1RFM01EQXdNREF3TVRVME1EUWlMQ0owYVcxbGIzVjBVMlZqYjI1a2N5STZORE15TURBd01EQXNJbkp2YkdWeklqb2lJaXdpWlhod0lqb3hOalU0TWpJMk16ZzFmUS5FUEJMeXpTclpTaHh2Tkljb0dhdGRGbkVfbTZEUVlhdTVuUWg4T0V6cExMbjA2Vm1JV2FiOTBVa1NnaEo0UTBjZ2JfcFg1ekxkUWkxUks1U1ZTUHpWUSIsIm1hYyI6Inh5WXNQRC81SENxR3pQeEt3VkhhTDFRemc5TTgyYUllRUJlNFk2akV4MlF2U2k1dWVMSWdjRVJibzh3WkZ1V3VwQ2JUUkxHb3NlOGFHZlVSSVhjdHRrWWUrN3pYUkJIendLQXhPNzBnU2J2VDNYd1MydDF3dzRJY0tTbTlWcnVrc0ZxUUFXdWFHWXIwY0h2bzQwWStNa1QrSkRkQ0VXWVErK1hVY1FvSTE0c2tqTENOOVlxZ1lRVFY5Q3V2NzErbkhvVWpPNCsvaFFPeFFHREpUaktTb2xEVG96V3U4L05qb0VFRVN4elRvaEZqdEZrczlCMkZtQ25OWEV6OFphNXlTc1F2V2Z0NXAvUGlQZ0pBalRSdFAwUTg4cG9rWENoZnpHZ1NtcXNmU3ZsSndrRmlRRWNxYlVzMzZXQk1WaGNabHQ4dGxUNjdXcXQvWXJZREtsR1lRQT09In0=\" />\r\n\r\n</div>\r\n\r\n<script type='text/javascript'>var frm = document.getElementById('step1Form');frm.action = 'https://goguvenliodeme.bkm.com.tr/troy/approve' ;frm.method = \"POST\";frm.submit();</script>\r\n    \r\n<div class=\"aspNetHidden\">\r\n\r\n\t<input type=\"hidden\" name=\"__VIEWSTATEGENERATOR\" id=\"__VIEWSTATEGENERATOR\" value=\"BFED9D85\" />\r\n</div></form>\r\n</body>\r\n</html>\r\n";
 
     final response = await helper.postGuven(
-      R.endpoints.doPackagePaymentPath,
+      getIt<IAppConfig>().endpoints.base.doPackagePaymentPath,
       packagePayment.toJson(),
       options: authOptions,
     );
@@ -166,7 +166,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> updateUserSystemName(String identityNumber) async {
     final response = await helper.postGuven(
-      R.endpoints.updateUserSystemNamePath,
+      getIt<IAppConfig>().endpoints.base.updateUserSystemNamePath,
       {'identityNumber': identityNumber},
       options: authOptions,
     );
@@ -180,7 +180,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<UserAccount> getUserProfile() async {
     final response = await helper.getGuven(
-      R.endpoints.getUserProfilePath,
+      getIt<IAppConfig>().endpoints.devApi.getUserProfilePath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -194,7 +194,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<Map<String, dynamic>> getActiveStream() async {
     final response = await helper.getGuven(
-      R.endpoints.getActiveStreamPath,
+      getIt<IAppConfig>().endpoints.base.getActiveStreamPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -207,7 +207,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<String> getProfilePicture() async {
     final response = await helper.getGuven(
-      R.endpoints.getProfilePicturePath,
+      getIt<IAppConfig>().endpoints.base.getProfilePicturePath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -225,7 +225,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<ConsentForm> getConsentForm() async {
     final response = await helper.getGuven(
-      R.endpoints.consentFormPath,
+      getIt<IAppConfig>().endpoints.common.consentFormPath,
     );
 
     if (response.xIsSuccessful) {
@@ -240,7 +240,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<ApplicationVersionResponse> getCurrentApplicationVersion() async {
     final response = await helper.getGuven(
-      R.endpoints.getCurrentApplicationVersionPath,
+      getIt<IAppConfig>().endpoints.doctor.getCurrentApplicationVersionPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -293,7 +293,7 @@ class ApiServiceImpl extends ApiService {
     FilterDepartmentsRequest filterDepartmentsRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.filterDepartmentsPath,
+      getIt<IAppConfig>().endpoints.base.filterDepartmentsPath,
       filterDepartmentsRequest.toJson(),
       options: authOptions,
     );
@@ -313,7 +313,7 @@ class ApiServiceImpl extends ApiService {
     FilterResourcesRequest filterResourcesRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.filterResourcesPath,
+      getIt<IAppConfig>().endpoints.base.filterResourcesPath,
       filterResourcesRequest.toJson(),
       options: authOptions,
     );
@@ -336,7 +336,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
     final response =
-        await helper.dioGet(R.endpoints.getDoctorCvDetailsPath(doctorWebID));
+        await helper.dioGet(getIt<IAppConfig>().endpoints.common.getDoctorCvDetailsPath(doctorWebID));
     if (response == null) {
       throw Exception('Doctor CV Empty');
     }
@@ -362,7 +362,7 @@ class ApiServiceImpl extends ApiService {
     GetEventsRequest getEventsRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getEventsPath,
+      getIt<IAppConfig>().endpoints.base.getEventsPath,
       getEventsRequest.toJson(),
       options: authOptions,
     );
@@ -391,7 +391,7 @@ class ApiServiceImpl extends ApiService {
     ResourceForAvailablePlanRequest resourceForAvailablePlanRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.findResourceClosestAvailablePlanPath,
+      getIt<IAppConfig>().endpoints.base.findResourceClosestAvailablePlanPath,
       resourceForAvailablePlanRequest.toJson(),
       options: authOptions,
     );
@@ -411,7 +411,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<int> saveAppointment(AppointmentRequest appointmentRequest) async {
     final response = await helper.postGuven(
-      R.endpoints.saveAppointmentPath,
+      getIt<IAppConfig>().endpoints.base.saveAppointmentPath,
       appointmentRequest.toJson(),
       options: authOptions,
     );
@@ -437,7 +437,7 @@ class ApiServiceImpl extends ApiService {
     GetAllRelativesRequest bodyPages,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getAllRelativesPath,
+      getIt<IAppConfig>().endpoints.devApi.getAllRelativesPath,
       bodyPages.toJson(),
       options: authOptions,
     );
@@ -451,7 +451,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getCountries() async {
     final response = await helper.postGuven(
-      R.endpoints.getCountriesPath,
+      getIt<IAppConfig>().endpoints.base.getCountriesPath,
       {},
       options: authOptions,
     );
@@ -467,7 +467,7 @@ class ApiServiceImpl extends ApiService {
     UserRegistrationStep1Model userRegistrationStep1,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.forgotPassword,
+      getIt<IAppConfig>().endpoints.devApi.forgotPassword,
       userRegistrationStep1.toJson(),
       options: emptyAuthOptions,
     );
@@ -483,7 +483,7 @@ class ApiServiceImpl extends ApiService {
     ChangePasswordModel changePasswordModel,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.changePassword,
+      getIt<IAppConfig>().endpoints.devApi.changePassword,
       changePasswordModel.toJson(),
       options: authOptions,
     );
@@ -499,7 +499,7 @@ class ApiServiceImpl extends ApiService {
     ChangeContactInfoRequest changeContactInfo,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.updateContactInfoPath,
+      getIt<IAppConfig>().endpoints.devApi.updateContactInfoPath,
       changeContactInfo.toJson(),
       options: authOptions,
     );
@@ -515,7 +515,7 @@ class ApiServiceImpl extends ApiService {
     ChangeContactInfoRequest changeContactInfo,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.updatePusulaContactInfoPath,
+      getIt<IAppConfig>().endpoints.base.updatePusulaContactInfoPath,
       changeContactInfo.toJson(),
       options: authOptions,
     );
@@ -532,7 +532,7 @@ class ApiServiceImpl extends ApiService {
     String password,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.changeUserPasswordUiPath(oldPassword, password),
+      getIt<IAppConfig>().endpoints.base.changeUserPasswordUiPath(oldPassword, password),
       options: authOptions,
     );
     return response;
@@ -543,7 +543,7 @@ class ApiServiceImpl extends ApiService {
     AddFirebaseTokenRequest addFirebaseToken,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.addFirebaseTokenUiPath,
+      getIt<IAppConfig>().endpoints.devApi.addFirebaseTokenUiPath,
       addFirebaseToken.toJson(),
       options: authOptions,
     );
@@ -557,7 +557,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getRoomStatusUi(String roomId) async {
     final response = await helper.getGuven(
-      R.endpoints.getRoomStatusUiPath(roomId),
+      getIt<IAppConfig>().endpoints.base.getRoomStatusUiPath(roomId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -570,7 +570,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId) async {
     final response = await helper.getGuven(
-      R.endpoints.getOnlineAppoFilesPath(roomId),
+      getIt<IAppConfig>().endpoints.base.getOnlineAppoFilesPath(roomId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -586,7 +586,7 @@ class ApiServiceImpl extends ApiService {
     String fileName,
   ) async {
     final response = await helper.deleteGuven(
-      R.endpoints.deleteOnlineAppoFilePath(webAppoId, fileName),
+      getIt<IAppConfig>().endpoints.base.deleteOnlineAppoFilePath(webAppoId, fileName),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -601,7 +601,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getAllTranslator() async {
     final response = await helper.getGuven(
-      R.endpoints.getAllTranslatorPath,
+      getIt<IAppConfig>().endpoints.base.getAllTranslatorPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -614,7 +614,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getUserKvkkInfo() async {
     final response = await helper.getGuven(
-      R.endpoints.getUserKvkkInfoPath,
+      getIt<IAppConfig>().endpoints.base.getUserKvkkInfoPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -627,7 +627,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> updateUserKvkkInfo() async {
     final response = await helper.getGuven(
-      R.endpoints.updateUserKvkkInfoPath,
+      getIt<IAppConfig>().endpoints.base.updateUserKvkkInfoPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -642,7 +642,7 @@ class ApiServiceImpl extends ApiService {
     SuggestionRequest suggestionRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.addSuggestionPath,
+      getIt<IAppConfig>().endpoints.base.addSuggestionPath,
       suggestionRequest.toJson(),
       options: authOptions,
     );
@@ -662,7 +662,7 @@ class ApiServiceImpl extends ApiService {
           'b776be7e007b40d38f1f4b73bb53481cf946c0d21c5b4ad7a0842bc1be2b70ce',
     };
     final response = await helper.postGuven(
-      R.endpoints.setYoutubeSurveyUserPath,
+      getIt<IAppConfig>().endpoints.base.setYoutubeSurveyUserPath,
       bodyPages.toJson(),
       options: authOptions..headers?.addAll($headers),
     );
@@ -676,7 +676,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getCourseId() async {
     final response = await helper.getGuven(
-      R.endpoints.getCourseIdPath,
+      getIt<IAppConfig>().endpoints.base.getCourseIdPath,
       options: authOptions..headers?.addAll(getCourseHeader),
     );
     if (response.xIsSuccessful) {
@@ -691,7 +691,7 @@ class ApiServiceImpl extends ApiService {
     String webConsultantId,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.setJitsiWebConsultantIdPath(webConsultantId),
+      getIt<IAppConfig>().endpoints.base.setJitsiWebConsultantIdPath(webConsultantId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -706,7 +706,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> deleteProfilePicture() async {
     final response = await helper.deleteGuven(
-      R.endpoints.deleteProfilePicturePath,
+      getIt<IAppConfig>().endpoints.base.deleteProfilePicturePath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -725,7 +725,7 @@ class ApiServiceImpl extends ApiService {
     });
 
     final response = await helper.postGuven(
-      R.endpoints.uploadProfilePicturePath,
+      getIt<IAppConfig>().endpoints.base.uploadProfilePicturePath,
       formData,
       options: authOptions..headers?.addAll($headers),
     );
@@ -742,7 +742,7 @@ class ApiServiceImpl extends ApiService {
     String path,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.downloadAppointmentSingleFilePath(folder, path),
+      getIt<IAppConfig>().endpoints.base.downloadAppointmentSingleFilePath(folder, path),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -757,7 +757,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getAllFiles() async {
     final response = await helper.getGuven(
-      R.endpoints.getAllFilesPath,
+      getIt<IAppConfig>().endpoints.base.getAllFilesPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -773,7 +773,7 @@ class ApiServiceImpl extends ApiService {
     String name,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.downloadAppointmentFilePath(id, name),
+      getIt<IAppConfig>().endpoints.base.downloadAppointmentFilePath(id, name),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -786,7 +786,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> removePatientRelative(String id) async {
     final response = await helper.deleteGuven(
-      R.endpoints.removePatientRelativePath(id),
+      getIt<IAppConfig>().endpoints.base.removePatientRelativePath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -799,7 +799,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getRelativeRelationships() async {
     final response = await helper.getGuven(
-      R.endpoints.getRelativeRelationshipsPath,
+      getIt<IAppConfig>().endpoints.base.getRelativeRelationshipsPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -812,7 +812,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> changeActiveUserToRelative(String id) async {
     final response = await helper.getGuven(
-      R.endpoints.changeActiveUserToRelativePath(id),
+      getIt<IAppConfig>().endpoints.base.changeActiveUserToRelativePath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -827,7 +827,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> clickPost(int postId) async {
     final response = await helper.getGuven(
-      R.endpoints.clickPostPath(postId),
+      getIt<IAppConfig>().endpoints.base.clickPostPath(postId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -840,7 +840,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> filterSocialPosts(String search) async {
     final response = await helper.getGuven(
-      R.endpoints.filterSocialPostsPath(search),
+      getIt<IAppConfig>().endpoints.base.filterSocialPostsPath(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -853,7 +853,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> filterSocialPlatform(String search) async {
     final response = await helper.getGuven(
-      R.endpoints.filterSocialPostsPlatform(search),
+      getIt<IAppConfig>().endpoints.base.filterSocialPostsPlatform(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -871,7 +871,7 @@ class ApiServiceImpl extends ApiService {
     String groupName,
   ) async {
     final response = await helper.getGuven(
-      R.endpoints.getBannerTab(applicationName, groupName),
+      getIt<IAppConfig>().endpoints.devApi.getBannerTab(applicationName, groupName),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -891,7 +891,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> socialResource() async {
     final response = await helper.getGuven(
-      R.endpoints.socialResourcePath,
+      getIt<IAppConfig>().endpoints.base.socialResourcePath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -904,7 +904,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getAppointmentTypeViaWebConsultantId() async {
     final response = await helper.getGuven(
-      R.endpoints.getAppointmentTypeViaWebConsultantIdPath,
+      getIt<IAppConfig>().endpoints.base.getAppointmentTypeViaWebConsultantIdPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -922,7 +922,7 @@ class ApiServiceImpl extends ApiService {
     TranslatorRequest translatorPost,
   ) async {
     final response = await helper.patchGuven(
-      R.endpoints.requestTranslatorPath(appoId),
+      getIt<IAppConfig>().endpoints.base.requestTranslatorPath(appoId),
       data: translatorPost.toJson(),
       options: authOptions,
     );
@@ -950,7 +950,7 @@ class ApiServiceImpl extends ApiService {
       "file": await MultipartFile.fromFile(file.path, filename: fileName),
     });
     final response = await helper.postGuven(
-      R.endpoints.uploadFileToAppoPath(webAppoId),
+      getIt<IAppConfig>().endpoints.base.uploadFileToAppoPath(webAppoId),
       formData,
       options: authOptions..headers?.addAll($headers),
     );
@@ -964,7 +964,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<List<VisitResponse>> getVisits(VisitRequest visitRequestBody) async {
     final response = await helper.postGuven(
-      R.endpoints.getVisitsPath,
+      getIt<IAppConfig>().endpoints.base.getVisitsPath,
       visitRequestBody.toJson(),
       options: authOptions,
     );
@@ -983,7 +983,7 @@ class ApiServiceImpl extends ApiService {
     VisitDetailRequest detailRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getLaboratoryResultsPath,
+      getIt<IAppConfig>().endpoints.base.getLaboratoryResultsPath,
       detailRequest.toJson(),
       options: authOptions,
     );
@@ -1011,7 +1011,7 @@ class ApiServiceImpl extends ApiService {
     CallRateRequest callRateRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.rateOnlineCallPath,
+      getIt<IAppConfig>().endpoints.base.rateOnlineCallPath,
       callRateRequest.toJson(),
       options: authOptions,
     );
@@ -1027,7 +1027,7 @@ class ApiServiceImpl extends ApiService {
     VisitDetailRequest detailRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getRadiologyResultsPath,
+      getIt<IAppConfig>().endpoints.base.getRadiologyResultsPath,
       detailRequest.toJson(),
       options: authOptions,
     );
@@ -1045,7 +1045,7 @@ class ApiServiceImpl extends ApiService {
   Future<List<PathologyResponse>> getPathologyResults(
       VisitDetailRequest detailRequest) async {
     final response = await helper.postGuven(
-      R.endpoints.getPathologyResultsPath,
+      getIt<IAppConfig>().endpoints.base.getPathologyResultsPath,
       detailRequest.toJson(),
       options: authOptions,
     );
@@ -1064,7 +1064,7 @@ class ApiServiceImpl extends ApiService {
     LaboratoryPdfResultRequest laboratoryPdfResultRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getLaboratoryPdfResultPath,
+      getIt<IAppConfig>().endpoints.base.getLaboratoryPdfResultPath,
       laboratoryPdfResultRequest.toJson(),
       options: authOptions,
     );
@@ -1087,7 +1087,7 @@ class ApiServiceImpl extends ApiService {
     RadiologyPdfRequest radiologyPdfResultRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getRadiologyPdfResultPath,
+      getIt<IAppConfig>().endpoints.base.getRadiologyPdfResultPath,
       radiologyPdfResultRequest.toJson(),
       options: authOptions,
     );
@@ -1110,7 +1110,7 @@ class ApiServiceImpl extends ApiService {
     PatientAppointmentRequest patientAppointmentRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getPatientAppointmentsPath,
+      getIt<IAppConfig>().endpoints.base.getPatientAppointmentsPath,
       patientAppointmentRequest.toJson(),
       options: authOptions,
     );
@@ -1137,7 +1137,7 @@ class ApiServiceImpl extends ApiService {
     CancelAppointmentRequest cancelAppointmentRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.cancelAppointmentPath,
+      getIt<IAppConfig>().endpoints.base.cancelAppointmentPath,
       cancelAppointmentRequest.toJson(),
       options: authOptions,
     );
@@ -1153,7 +1153,7 @@ class ApiServiceImpl extends ApiService {
     GetVideoCallPriceRequest getVideoCallPriceRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getResourceVideoCallPricePath,
+      getIt<IAppConfig>().endpoints.base.getResourceVideoCallPricePath,
       getVideoCallPriceRequest.toJson(),
       options: authOptions,
     );
@@ -1169,7 +1169,7 @@ class ApiServiceImpl extends ApiService {
     DoMobilePaymentRequest doMobilePaymentRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.doMobilePaymentPath,
+      getIt<IAppConfig>().endpoints.base.doMobilePaymentPath,
       doMobilePaymentRequest.toJson(),
       options: authOptions,
     );
@@ -1185,7 +1185,7 @@ class ApiServiceImpl extends ApiService {
     DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.doMobilePaymentWithVoucher,
+      getIt<IAppConfig>().endpoints.base.doMobilePaymentWithVoucher,
       doMobilePaymentWithVoucherRequest.toJson(),
       options: authOptions,
     );
@@ -1201,7 +1201,7 @@ class ApiServiceImpl extends ApiService {
     FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.fetchOnlineDepartmentsPath,
+      getIt<IAppConfig>().endpoints.base.fetchOnlineDepartmentsPath,
       filterOnlineDepartmentsRequest.toJson(),
       options: authOptions,
     );
@@ -1220,7 +1220,7 @@ class ApiServiceImpl extends ApiService {
     CheckPaymentRequest request,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.checkOnlineAppointmentPaymentPath,
+      getIt<IAppConfig>().endpoints.base.checkOnlineAppointmentPaymentPath,
       request.toJson(),
       options: authOptions,
     );
@@ -1238,7 +1238,7 @@ class ApiServiceImpl extends ApiService {
     GetAvailabilityRateRequest getAvailabilityRateRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getAvailabilityRatePath,
+      getIt<IAppConfig>().endpoints.base.getAvailabilityRatePath,
       getAvailabilityRateRequest.toJson(),
       options: authOptions,
     );
@@ -1253,7 +1253,7 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> addNewPatientRelative(
       AddPatientRelativeRequest addPatientRelative) async {
     final response = await helper.postGuven(
-      R.endpoints.addNewPatientRelativePath,
+      getIt<IAppConfig>().endpoints.base.addNewPatientRelativePath,
       addPatientRelative.toJson(),
       options: authOptions,
     );
@@ -1275,7 +1275,7 @@ class ApiServiceImpl extends ApiService {
           filename: DateTime.now().xFormatTime6()),
     });
     final response = await helper.postGuven(
-      R.endpoints.uploadPatientDocumentsPath(webAppoId),
+      getIt<IAppConfig>().endpoints.base.uploadPatientDocumentsPath(webAppoId),
       formData,
       options: authOptions..headers?.addAll($headers),
     );
@@ -1291,7 +1291,7 @@ class ApiServiceImpl extends ApiService {
     FindResourceAvailableDaysRequest findResourceAvailableDaysRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.findResourceAvailableDays,
+      getIt<IAppConfig>().endpoints.base.findResourceAvailableDays,
       findResourceAvailableDaysRequest.toJson(),
       options: authOptions,
     );
@@ -1310,7 +1310,7 @@ class ApiServiceImpl extends ApiService {
     VoucherPriceRequest voucherPriceRequest,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.getResourceVideoCallPriceWithVoucher,
+      getIt<IAppConfig>().endpoints.base.getResourceVideoCallPriceWithVoucher,
       voucherPriceRequest.toJson(),
       options: authOptions,
     );
@@ -1326,7 +1326,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getChatContacts() async {
     final response = await helper.postGuven(
-      R.endpoints.getChatContacts,
+      getIt<IAppConfig>().endpoints.devApi.getChatContacts,
       {'isActiveChats': 'true'},
       options: authOptions,
     );
@@ -1342,7 +1342,7 @@ class ApiServiceImpl extends ApiService {
     ChatNotificationModel model,
   ) async {
     final response = await helper.postGuven(
-      R.endpoints.sendNotification,
+      getIt<IAppConfig>().endpoints.devApi.sendNotification,
       model.toJson(),
       options: authOptions,
     );
@@ -1357,7 +1357,7 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> synchronizeOneDoseUser(
       SynchronizeOneDoseUserRequest synchronizeOnedoseUserRequest) async {
     final response = await helper.postGuven(
-      R.endpoints.syncronizeOneDoseUser,
+      getIt<IAppConfig>().endpoints.base.syncronizeOneDoseUser,
       synchronizeOnedoseUserRequest.toJson(),
       options: authOptions,
     );
