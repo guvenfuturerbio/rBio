@@ -1,12 +1,5 @@
 part of 'app_config.dart';
 
-// xdevapitest --
-//xbaseurl --
-//xguvenpath --
-//xDoctorBaseUrl --
-// xApiGuven --
-// xSymptomCheckerRequest --
-//xSymptomCheckerLogin
 abstract class IAppEndpoints {
   String get envPath;
   DoctorEndpoints get doctor;
@@ -14,12 +7,10 @@ abstract class IAppEndpoints {
   DevApiEndpoints get devApi;
   CommonEndpoints get common;
   SymptomCheckerEndpoints get symptom;
-  SymptomCheckerLogin get symptomLogin;
+
 }
 
-abstract class SymptomCheckerLogin {
-  String get symptomCheckerLogin;
-}
+
 
 abstract class SymptomCheckerEndpoints {
   String get symptomGetProposed;
@@ -27,6 +18,7 @@ abstract class SymptomCheckerEndpoints {
   String get symptomGetBodyLocations;
   String symptomGetBodySubLocations(int locationID);
   String symptomGetBodySymptoms(int locationID, int gender);
+  String get symptomCheckerLogin;
 }
 
 abstract class CommonEndpoints {

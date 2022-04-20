@@ -19,15 +19,8 @@ class GuvenEndpoints extends IAppEndpoints {
   @override
   SymptomCheckerEndpoints get symptom => GuvenSymptomCheckerEndpoints();
 
-  @override
-  SymptomCheckerLogin get symptomLogin => GuvenSymptomCheckerLogin();
 }
 
-class GuvenSymptomCheckerLogin extends SymptomCheckerLogin {
-  @override
-
-  String get symptomCheckerLogin => throw UnimplementedError();
-}
 
 class GuvenSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
   @override
@@ -53,6 +46,10 @@ class GuvenSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
   @override
   // TODO: implement symptomGetSpecialisations
   String get symptomGetSpecialisations => throw UnimplementedError();
+
+  @override
+  // TODO: implement symptomCheckerLogin
+  String get symptomCheckerLogin => throw UnimplementedError();
 }
 
 class GuvenCommonEndpoints extends CommonEndpoints {

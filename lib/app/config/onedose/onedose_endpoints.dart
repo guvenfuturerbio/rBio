@@ -18,14 +18,6 @@ class OneDoseEndpoints extends IAppEndpoints {
 
   @override
   SymptomCheckerEndpoints get symptom => OneDoseSymptomCheckerEndpoints();
-
-  @override
-  SymptomCheckerLogin get symptomLogin => OneDoseSymptomCheckerLogin();
-}
-
-class OneDoseSymptomCheckerLogin extends SymptomCheckerLogin {
-  @override
-  String get symptomCheckerLogin => '/login'.xSymptomCheckerLogin;
 }
 
 class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
@@ -47,6 +39,9 @@ class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
   @override
   String symptomGetBodySymptoms(int locationID, int gender) =>
       '/symptoms/$locationID/$gender'.xSymptomCheckerRequest;
+
+  @override
+  String get symptomCheckerLogin => '/login'.xSymptomCheckerLogin;
 }
 
 class OneDoseCommonEndpoints extends CommonEndpoints {

@@ -15,7 +15,7 @@ class SymptomApiServiceImpl extends SymptomApiService {
   Future<SymptomAuthResponse> getSymtptomsApiToken() async {
     try {
       final response = await helper.dioPost(
-        getIt<IAppConfig>().endpoints.symptomLogin.symptomCheckerLogin,
+        getIt<IAppConfig>().endpoints.symptom.symptomCheckerLogin,
         {},
         options: authOptions,
       );
