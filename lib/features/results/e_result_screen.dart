@@ -42,7 +42,7 @@ class EResultScreen extends StatelessWidget {
 
         //
         Container(
-          margin: const EdgeInsets.only(left: 8, top: 8, right: 8),
+          margin: const EdgeInsets.only(top: 8, right: 8),
           child: GuvenDateRange(
             startCurrentDate: vm.startDate,
             onStartDateChange: (date) {
