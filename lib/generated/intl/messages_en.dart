@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_cart": MessageLookupByLibrary.simpleMessage("Add to Cart"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("Add discount code"),
+        "add_medicine": MessageLookupByLibrary.simpleMessage("Add medicine"),
         "add_new_device": MessageLookupByLibrary.simpleMessage(
             "You do not have a paired device. Add a new device"),
         "add_new_relative":

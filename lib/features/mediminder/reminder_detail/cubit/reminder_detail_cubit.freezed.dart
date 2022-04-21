@@ -976,15 +976,16 @@ class _$ReminderDetailResultTearOff {
     );
   }
 
-  ReminderDetailBloodGlucose bloodGlucose(BloodGlucoseReminderModel model) {
+  ReminderDetailBloodGlucose bloodGlucose(
+      List<BloodGlucoseReminderModel> list) {
     return ReminderDetailBloodGlucose(
-      model,
+      list,
     );
   }
 
-  ReminderDetailMedication medication(MedicationReminderModel model) {
+  ReminderDetailMedication medication(List<MedicationReminderModel> list) {
     return ReminderDetailMedication(
-      model,
+      list,
     );
   }
 }
@@ -997,22 +998,23 @@ mixin _$ReminderDetailResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Hba1CReminderModel model) hba1C,
-    required TResult Function(BloodGlucoseReminderModel model) bloodGlucose,
-    required TResult Function(MedicationReminderModel model) medication,
+    required TResult Function(List<BloodGlucoseReminderModel> list)
+        bloodGlucose,
+    required TResult Function(List<MedicationReminderModel> list) medication,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1123,8 +1125,9 @@ class _$ReminderDetailHba1C implements ReminderDetailHba1C {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Hba1CReminderModel model) hba1C,
-    required TResult Function(BloodGlucoseReminderModel model) bloodGlucose,
-    required TResult Function(MedicationReminderModel model) medication,
+    required TResult Function(List<BloodGlucoseReminderModel> list)
+        bloodGlucose,
+    required TResult Function(List<MedicationReminderModel> list) medication,
   }) {
     return hba1C(model);
   }
@@ -1133,8 +1136,8 @@ class _$ReminderDetailHba1C implements ReminderDetailHba1C {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
   }) {
     return hba1C?.call(model);
   }
@@ -1143,8 +1146,8 @@ class _$ReminderDetailHba1C implements ReminderDetailHba1C {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
     required TResult orElse(),
   }) {
     if (hba1C != null) {
@@ -1203,7 +1206,7 @@ abstract class $ReminderDetailBloodGlucoseCopyWith<$Res> {
   factory $ReminderDetailBloodGlucoseCopyWith(ReminderDetailBloodGlucose value,
           $Res Function(ReminderDetailBloodGlucose) then) =
       _$ReminderDetailBloodGlucoseCopyWithImpl<$Res>;
-  $Res call({BloodGlucoseReminderModel model});
+  $Res call({List<BloodGlucoseReminderModel> list});
 }
 
 /// @nodoc
@@ -1220,13 +1223,13 @@ class _$ReminderDetailBloodGlucoseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? model = freezed,
+    Object? list = freezed,
   }) {
     return _then(ReminderDetailBloodGlucose(
-      model == freezed
-          ? _value.model
-          : model // ignore: cast_nullable_to_non_nullable
-              as BloodGlucoseReminderModel,
+      list == freezed
+          ? _value.list
+          : list // ignore: cast_nullable_to_non_nullable
+              as List<BloodGlucoseReminderModel>,
     ));
   }
 }
@@ -1234,14 +1237,14 @@ class _$ReminderDetailBloodGlucoseCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ReminderDetailBloodGlucose implements ReminderDetailBloodGlucose {
-  const _$ReminderDetailBloodGlucose(this.model);
+  const _$ReminderDetailBloodGlucose(this.list);
 
   @override
-  final BloodGlucoseReminderModel model;
+  final List<BloodGlucoseReminderModel> list;
 
   @override
   String toString() {
-    return 'ReminderDetailResult.bloodGlucose(model: $model)';
+    return 'ReminderDetailResult.bloodGlucose(list: $list)';
   }
 
   @override
@@ -1249,12 +1252,12 @@ class _$ReminderDetailBloodGlucose implements ReminderDetailBloodGlucose {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReminderDetailBloodGlucose &&
-            const DeepCollectionEquality().equals(other.model, model));
+            const DeepCollectionEquality().equals(other.list, list));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(model));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(list));
 
   @JsonKey(ignore: true)
   @override
@@ -1267,32 +1270,33 @@ class _$ReminderDetailBloodGlucose implements ReminderDetailBloodGlucose {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Hba1CReminderModel model) hba1C,
-    required TResult Function(BloodGlucoseReminderModel model) bloodGlucose,
-    required TResult Function(MedicationReminderModel model) medication,
+    required TResult Function(List<BloodGlucoseReminderModel> list)
+        bloodGlucose,
+    required TResult Function(List<MedicationReminderModel> list) medication,
   }) {
-    return bloodGlucose(model);
+    return bloodGlucose(list);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
   }) {
-    return bloodGlucose?.call(model);
+    return bloodGlucose?.call(list);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
     required TResult orElse(),
   }) {
     if (bloodGlucose != null) {
-      return bloodGlucose(model);
+      return bloodGlucose(list);
     }
     return orElse();
   }
@@ -1333,10 +1337,10 @@ class _$ReminderDetailBloodGlucose implements ReminderDetailBloodGlucose {
 }
 
 abstract class ReminderDetailBloodGlucose implements ReminderDetailResult {
-  const factory ReminderDetailBloodGlucose(BloodGlucoseReminderModel model) =
-      _$ReminderDetailBloodGlucose;
+  const factory ReminderDetailBloodGlucose(
+      List<BloodGlucoseReminderModel> list) = _$ReminderDetailBloodGlucose;
 
-  BloodGlucoseReminderModel get model;
+  List<BloodGlucoseReminderModel> get list;
   @JsonKey(ignore: true)
   $ReminderDetailBloodGlucoseCopyWith<ReminderDetailBloodGlucose>
       get copyWith => throw _privateConstructorUsedError;
@@ -1347,7 +1351,7 @@ abstract class $ReminderDetailMedicationCopyWith<$Res> {
   factory $ReminderDetailMedicationCopyWith(ReminderDetailMedication value,
           $Res Function(ReminderDetailMedication) then) =
       _$ReminderDetailMedicationCopyWithImpl<$Res>;
-  $Res call({MedicationReminderModel model});
+  $Res call({List<MedicationReminderModel> list});
 }
 
 /// @nodoc
@@ -1364,13 +1368,13 @@ class _$ReminderDetailMedicationCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? model = freezed,
+    Object? list = freezed,
   }) {
     return _then(ReminderDetailMedication(
-      model == freezed
-          ? _value.model
-          : model // ignore: cast_nullable_to_non_nullable
-              as MedicationReminderModel,
+      list == freezed
+          ? _value.list
+          : list // ignore: cast_nullable_to_non_nullable
+              as List<MedicationReminderModel>,
     ));
   }
 }
@@ -1378,14 +1382,14 @@ class _$ReminderDetailMedicationCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ReminderDetailMedication implements ReminderDetailMedication {
-  const _$ReminderDetailMedication(this.model);
+  const _$ReminderDetailMedication(this.list);
 
   @override
-  final MedicationReminderModel model;
+  final List<MedicationReminderModel> list;
 
   @override
   String toString() {
-    return 'ReminderDetailResult.medication(model: $model)';
+    return 'ReminderDetailResult.medication(list: $list)';
   }
 
   @override
@@ -1393,12 +1397,12 @@ class _$ReminderDetailMedication implements ReminderDetailMedication {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReminderDetailMedication &&
-            const DeepCollectionEquality().equals(other.model, model));
+            const DeepCollectionEquality().equals(other.list, list));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(model));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(list));
 
   @JsonKey(ignore: true)
   @override
@@ -1410,32 +1414,33 @@ class _$ReminderDetailMedication implements ReminderDetailMedication {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Hba1CReminderModel model) hba1C,
-    required TResult Function(BloodGlucoseReminderModel model) bloodGlucose,
-    required TResult Function(MedicationReminderModel model) medication,
+    required TResult Function(List<BloodGlucoseReminderModel> list)
+        bloodGlucose,
+    required TResult Function(List<MedicationReminderModel> list) medication,
   }) {
-    return medication(model);
+    return medication(list);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
   }) {
-    return medication?.call(model);
+    return medication?.call(list);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Hba1CReminderModel model)? hba1C,
-    TResult Function(BloodGlucoseReminderModel model)? bloodGlucose,
-    TResult Function(MedicationReminderModel model)? medication,
+    TResult Function(List<BloodGlucoseReminderModel> list)? bloodGlucose,
+    TResult Function(List<MedicationReminderModel> list)? medication,
     required TResult orElse(),
   }) {
     if (medication != null) {
-      return medication(model);
+      return medication(list);
     }
     return orElse();
   }
@@ -1476,10 +1481,10 @@ class _$ReminderDetailMedication implements ReminderDetailMedication {
 }
 
 abstract class ReminderDetailMedication implements ReminderDetailResult {
-  const factory ReminderDetailMedication(MedicationReminderModel model) =
+  const factory ReminderDetailMedication(List<MedicationReminderModel> list) =
       _$ReminderDetailMedication;
 
-  MedicationReminderModel get model;
+  List<MedicationReminderModel> get list;
   @JsonKey(ignore: true)
   $ReminderDetailMedicationCopyWith<ReminderDetailMedication> get copyWith =>
       throw _privateConstructorUsedError;

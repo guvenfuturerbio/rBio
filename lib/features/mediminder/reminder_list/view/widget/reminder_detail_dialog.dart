@@ -71,6 +71,7 @@ class ReminderDetailDialog extends StatelessWidget {
                       queryParameters: <String, String>{
                         'title': model.title,
                         'remindable': model.remindable.toRouteString(),
+                        'createdDate': model.createdDate.toString(),
                         'notificationId': model.notificationId.toString(),
                       },
                     );

@@ -240,7 +240,7 @@
   "every": "Her",
   "hour": "Saatte",
   "select_appo_type": "İşlem yapmak istediğiniz randevu tipini seçiniz",
-  "hours": "Saatte",
+  "hours": "Saatler",
   "profile_picture_delete": "Profil resmi silinecektir. Onaylıyor musunuz?",
   "delete": "Sil",
   "delete_measurement_succesfull": "Ölçüm başarıyla silindi...",
@@ -843,5 +843,6 @@
   "weighing_completed": "Lütfen tartının üzerinde ölçümünüzün\ntamamlanmasını bekleyin",
   "weighing_results": "Ölçüm sonuçları",
   "required_user_height_info_message": "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir.",
-  "measurement_saved": "Ölçüm kaydedildi"
+  "measurement_saved": "Ölçüm kaydedildi",
+  "add_medicine": "İlaç ekle"
 }

@@ -8539,6 +8539,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Add medicine`
+  String get add_medicine {
+    return Intl.message(
+      'Add medicine',
+      name: 'add_medicine',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
