@@ -44,10 +44,73 @@ class BgTaggerPopUp extends StatelessWidget {
       ),
       child: RbioDarkStatusBar(
         child: KeyboardDismissOnTap(
-          child: _buildConsumer(),
+          child: _BgTaggerView(
+            data: data ??
+                GlucoseData(
+                  level: "0",
+                  tag: null,
+                  deviceName: "",
+                  time: (DateTime.now()).millisecondsSinceEpoch,
+                  device: 103,
+                  manual: true,
+                  note: "",
+                ),
+            isEdit: isEdit,
+          ),
         ),
       ),
     );
+  }
+}
+
+class _BgTaggerView extends StatefulWidget {
+  final GlucoseData data;
+  final bool isEdit;
+
+  const _BgTaggerView({
+    Key? key,
+    required this.data,
+    required this.isEdit,
+  }) : super(key: key);
+
+  @override
+  __BgTaggerViewState createState() => __BgTaggerViewState();
+}
+
+class __BgTaggerViewState extends State<_BgTaggerView> {
+  late FocusNode focusNode;
+  late TextEditingController controller = TextEditingController();
+  late TextEditingController noteController = TextEditingController();
+
+  @override
+  void initState() {
+    focusNode = FocusNode();
+    controller = TextEditingController();
+    noteController = TextEditingController();
+    controller.text = widget.data.level;
+    noteController.text = widget.data.note;
+
+    focusNode.addListener(() {
+      if (focusNode.hasFocus && controller.text == "0") {
+        controller.clear();
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    controller.dispose();
+    noteController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildConsumer();
   }
 
   Widget _buildConsumer() {
@@ -82,7 +145,7 @@ class BgTaggerPopUp extends StatelessWidget {
                         _buildDateTimeSection(context, vm),
                         _buildTags(context, vm.data.tag, vm.changeTag),
                         _buildImageSection(context, vm),
-                        _buildNoteSection(context, vm.noteController),
+                        _buildNoteSection(context),
                       ],
                     ),
                   ),
@@ -93,10 +156,7 @@ class BgTaggerPopUp extends StatelessWidget {
               R.sizes.hSizer8,
 
               //
-              _buildActions(
-                vm.leftAction,
-                isEdit ? vm.update : vm.rightAction,
-              ),
+              _buildActions(vm),
 
               //
               R.sizes.hSizer8,
@@ -130,9 +190,8 @@ class BgTaggerPopUp extends StatelessWidget {
       child: _buildInsideSection(context, value, true),
     );
   }
-  // #endregion
 
-  // #region _buildCircleBg
+  // #endregion
   Widget _buildCircleBg(BuildContext context, BgTaggerVm value) {
     return Container(
       alignment: Alignment.center,
@@ -154,9 +213,8 @@ class BgTaggerPopUp extends StatelessWidget {
       child: _buildInsideSection(context, value, value.data.tag == 2),
     );
   }
-  // #endregion
 
-  // #region _buildInsideSection
+  // #endregion
   Widget _buildInsideSection(
     BuildContext context,
     BgTaggerVm value,
@@ -172,8 +230,9 @@ class BgTaggerPopUp extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: TextFormField(
-                enabled: data?.manual ?? true,
-                controller: value.controller,
+                enabled: widget.data.manual,
+                focusNode: focusNode,
+                controller: controller,
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -206,9 +265,8 @@ class BgTaggerPopUp extends StatelessWidget {
       ),
     );
   }
-  // #endregion
 
-  // #region _buildDateTimeSection
+  // #endregion
   Widget _buildDateTimeSection(
     BuildContext context,
     BgTaggerVm vm,
@@ -264,9 +322,8 @@ class BgTaggerPopUp extends StatelessWidget {
       ),
     );
   }
-  // #endregion
 
-  // #region _buildTags
+  // #endregion
   Widget _buildTags(
       BuildContext context, int? currentTag, Function(int) changeTag) {
     return Wrap(
@@ -302,9 +359,8 @@ class BgTaggerPopUp extends StatelessWidget {
       ],
     );
   }
-  // #endregion
 
-  // #region _buildTagItem
+  // #endregion
   Widget _buildTagItem(
       BuildContext context, bool isCurrent, String icon, String title) {
     return Card(
@@ -348,9 +404,8 @@ class BgTaggerPopUp extends StatelessWidget {
       ),
     );
   }
-  // #endregion
 
-  // #region _buildImageSection
+  // #endregion
   Widget _buildImageSection(BuildContext context, BgTaggerVm value) {
     return GestureDetector(
       onTap: () {
@@ -409,9 +464,8 @@ class BgTaggerPopUp extends StatelessWidget {
       ),
     );
   }
-  // #endregion
 
-  // #region takeImage
+  // #endregion
   Future<void> takeImage(BuildContext context, BgTaggerVm value) async {
     String title = LocaleProvider.current.how_to_get_photo;
 
@@ -463,11 +517,9 @@ class BgTaggerPopUp extends StatelessWidget {
             ),
     );
   }
-  // #endregion
 
-  // #region _buildNoteSection
-  Widget _buildNoteSection(
-      BuildContext context, TextEditingController controller) {
+  // #endregion
+  Widget _buildNoteSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
@@ -496,19 +548,17 @@ class BgTaggerPopUp extends StatelessWidget {
       ),
     );
   }
-  // #endregion
 
-  // #region _buildActions
-  Widget _buildActions(
-    VoidCallback leftButtonAction,
-    VoidCallback rightButtonAction,
-  ) {
+  // #endregion
+  Widget _buildActions(BgTaggerVm vm) {
     return Wrap(
       children: [
         //
         _buildActionButton(
           isSave: false,
-          onTap: leftButtonAction,
+          onTap: () {
+            vm.leftAction();
+          },
         ),
 
         //
@@ -517,17 +567,20 @@ class BgTaggerPopUp extends StatelessWidget {
         //
         _buildActionButton(
           isSave: true,
-          onTap: rightButtonAction,
+          onTap: () {
+            widget.isEdit
+                ? vm.update(noteController.text)
+                : vm.rightAction(noteController.text);
+          },
         ),
       ],
     );
   }
-  // #endregion
 
-  // #region _buildActionButton
+  // #endregion
   Widget _buildActionButton({
     required bool isSave,
-    required void Function()? onTap,
+    required void Function() onTap,
   }) {
     return RbioElevatedButton(
       title:
@@ -538,5 +591,4 @@ class BgTaggerPopUp extends StatelessWidget {
       textColor: isSave ? null : getIt<ITheme>().textColorSecondary,
     );
   }
-  // #endregion
 }

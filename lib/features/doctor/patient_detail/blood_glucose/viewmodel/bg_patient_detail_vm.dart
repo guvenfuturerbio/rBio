@@ -131,6 +131,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   Future<void> fetchPatientDetail() async {
     _stateProcessPatientDetail = LoadingProgress.loading;
     notifyListeners();
+
     try {
       await Provider.of<PatientNotifiers>(mContext, listen: false)
           .fetchPatientDetail(patientId: _patientId);
