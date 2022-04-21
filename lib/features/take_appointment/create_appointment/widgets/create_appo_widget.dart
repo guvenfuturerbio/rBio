@@ -51,49 +51,52 @@ Widget _buildDropdown(
   String hint,
 ) {
   return Center(
-    child: DropdownButton<dynamic>(
-      icon: isOnline ? const Icon(Icons.close, size: 0) : null,
-      isExpanded: true,
-      underline: const SizedBox(),
-      focusColor: Colors.white,
-      value: whichField == Fields.department
-          ? val.dropdownValueDepartment
-          : whichField == Fields.tenant
-              ? val.dropdownValueTenant
-              : whichField == Fields.relative
-                  ? val.dropdownValueRelative
-                  : val.dropdownValueDoctor,
-      style: context.xHeadline5,
-      iconEnabledColor: Colors.black,
-      items: itemList.map<DropdownMenuItem<dynamic>>(
-        (dynamic value) {
-          return DropdownMenuItem<dynamic>(
-            value: value,
-            child: Text(
-              whichField == Fields.relative
-                  ? '${value.name} ${value.surname}'
-                  : value.title,
-              style: context.xHeadline5,
-            ),
-          );
-        },
-      ).toList(),
-      hint: Text(
-        hint,
+    child: Container(
+      margin: const EdgeInsets.fromLTRB(5, 0, 13, 0),
+      child: DropdownButton<dynamic>(
+        icon: isOnline ? const Icon(Icons.close, size: 0) : null,
+        isExpanded: true,
+        underline: const SizedBox(),
+        focusColor: Colors.white,
+        value: whichField == Fields.department
+            ? val.dropdownValueDepartment
+            : whichField == Fields.tenant
+                ? val.dropdownValueTenant
+                : whichField == Fields.relative
+                    ? val.dropdownValueRelative
+                    : val.dropdownValueDoctor,
         style: context.xHeadline5,
+        iconEnabledColor: Colors.black,
+        items: itemList.map<DropdownMenuItem<dynamic>>(
+          (dynamic value) {
+            return DropdownMenuItem<dynamic>(
+              value: value,
+              child: Text(
+                whichField == Fields.relative
+                    ? '${value.name} ${value.surname}'
+                    : value.title,
+                style: context.xHeadline5,
+              ),
+            );
+          },
+        ).toList(),
+        hint: Text(
+          hint,
+          style: context.xHeadline5,
+        ),
+        onChanged: (dynamic value) {
+          if (whichField == Fields.department) {
+            val.departmentSelection(value);
+          } else if (whichField == Fields.tenant) {
+            val.hospitalSelection(value);
+          } else if (whichField == Fields.doctors) {
+            val.doctorSelection(value);
+          } else if (whichField == Fields.relative) {
+            val.relativeSelection(value);
+          }
+        },
+        itemHeight: context.xTextScaleType == TextScaleType.small ? 50 : 70,
       ),
-      onChanged: (dynamic value) {
-        if (whichField == Fields.department) {
-          val.departmentSelection(value);
-        } else if (whichField == Fields.tenant) {
-          val.hospitalSelection(value);
-        } else if (whichField == Fields.doctors) {
-          val.doctorSelection(value);
-        } else if (whichField == Fields.relative) {
-          val.relativeSelection(value);
-        }
-      },
-      itemHeight: context.xTextScaleType == TextScaleType.small ? 50 : 70,
     ),
   );
 }
