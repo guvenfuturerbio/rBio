@@ -10,6 +10,8 @@ abstract class DeviceRepository {
     DeviceType deviceType,
   );
 
+  Either<BluetoothFailures, bool> readDataFromOmronDevice();
+
   Either<BluetoothFailures, bool> connect(DeviceEntity device);
 
   Either<BluetoothFailures, bool> disconnect(DeviceEntity device);

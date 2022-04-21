@@ -8,10 +8,13 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
 import 'app/bluetooth_v2/bluetooth_v2.dart';
+import 'app/omron_wrist/omron_connectivity_platform.dart';
 import 'core/core.dart';
 
 Future<void> bootstrap(AppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await setKey("A055ACB2-2C4B-445B-A47C-C0EB77B5E7CC");
 
   await Firebase.initializeApp();
   await setupLocator(appConfig);

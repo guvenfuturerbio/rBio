@@ -16,6 +16,7 @@ class DeviceSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       final deviceTypeStr = Atom.queryParameters['device_type'];
+      LoggerUtils.instance.wtf(deviceTypeStr);
       if (deviceTypeStr != null) {
         deviceType = deviceTypeStr.xDeviceType;
 
@@ -200,29 +201,36 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
                 ),
                 color: _getBackColor(deviceStatusState),
                 child: ListTile(
-                  onTap: () => _deviceOnTap(
-                    context,
-                    deviceStatusState,
-                    discoveredDevice,
-                  ),
-                  title: Text(
-                    discoveredDevice.name,
-                    style: context.xHeadline3.copyWith(
-                      fontWeight: FontWeight.bold,
+                    onTap: () => _deviceOnTap(
+                          context,
+                          deviceStatusState,
+                          discoveredDevice,
+                        ),
+                    title: Text(
+                      discoveredDevice.name,
+                      style: context.xHeadline3.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    discoveredDevice.id,
-                    style: context.xHeadline4,
-                  ),
-                  trailing: Visibility(
-                    visible: deviceStatusState == DeviceStatus.connected,
-                    child: const Icon(
-                      Icons.check,
-                      color: Colors.white,
+                    subtitle: Text(
+                      discoveredDevice.id,
+                      style: context.xHeadline4,
                     ),
-                  ),
-                ),
+                    trailing: IconButton(
+                        onPressed: () => context
+                            .read<DeviceSelectedCubit>()
+                            .connectDeviceUseCase
+                            .repository
+                            .readDataFromOmronDevice(),
+                        icon: const Icon(Icons.download))
+                    // Visibility(
+                    //   visible: deviceStatusState == DeviceStatus.connected,
+                    //   child: const Icon(
+                    //     Icons.check,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
+                    ),
               );
             },
           ),

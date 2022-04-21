@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		1B142F0A2806FFB50093339F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B142F092806FFB50093339F /* CoreBluetooth.framework */; };
+		1B142F0E2806FFD10093339F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B142F0D2806FFD10093339F /* CoreData.framework */; };
+		1B142F102806FFD60093339F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B142F0F2806FFD60093339F /* QuartzCore.framework */; };
+		1B930C0E28080B3800FAD248 /* OmronConnectivityLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD4F5362806AF7D0056EE9F /* OmronConnectivityLibrary.framework */; };
+		1B930C0F28080B3800FAD248 /* OmronConnectivityLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD4F5362806AF7D0056EE9F /* OmronConnectivityLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		6183D11027847763004AF378 /* chat_bildirim.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 6183D10F27847763004AF378 /* chat_bildirim.aiff */; };
 		6D8B673B2786E3BF008D826B /* strip_azalma.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 6D8B67352786E3BF008D826B /* strip_azalma.aiff */; };
@@ -26,12 +31,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
+		1B930C1028080B3800FAD248 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				1B930C0F28080B3800FAD248 /* OmronConnectivityLibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -41,6 +47,12 @@
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		1B142F092806FFB50093339F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		1B142F0B2806FFC40093339F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1B142F0D2806FFD10093339F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1B142F0F2806FFD60093339F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1BD4F5322806ABC20056EE9F /* Framework */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Framework; path = "../../../Downloads/Omron Healthcare Connectivity SDK v1.1.4/iOS/OmronConnectivityLibraryiOS_v3.0.23/Framework"; sourceTree = "<group>"; };
+		1BD4F5362806AF7D0056EE9F /* OmronConnectivityLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OmronConnectivityLibrary.framework; sourceTree = "<group>"; };
 		1EAD018A270AC8FA8505DD0A /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		4231B0C2E869568051019909 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,8 +85,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B142F0E2806FFD10093339F /* CoreData.framework in Frameworks */,
+				1B142F102806FFD60093339F /* QuartzCore.framework in Frameworks */,
 				CF9661ACE68C53422B32B3FC /* Pods_Runner.framework in Frameworks */,
+				1B142F0A2806FFB50093339F /* CoreBluetooth.framework in Frameworks */,
 				6DDF4C4B27B3E95C00FFD4AB /* HealthKit.framework in Frameworks */,
+				1B930C0E28080B3800FAD248 /* OmronConnectivityLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +100,12 @@
 		2A19D26729F87A897C5C035B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B142F0F2806FFD60093339F /* QuartzCore.framework */,
+				1B142F0D2806FFD10093339F /* CoreData.framework */,
+				1B142F0B2806FFC40093339F /* AVFoundation.framework */,
+				1B142F092806FFB50093339F /* CoreBluetooth.framework */,
+				1BD4F5362806AF7D0056EE9F /* OmronConnectivityLibrary.framework */,
+				1BD4F5322806ABC20056EE9F /* Framework */,
 				6DDF4C4A27B3E95C00FFD4AB /* HealthKit.framework */,
 				81DE88588C7748E6DA6C27BD /* Pods_Runner.framework */,
 			);
@@ -166,9 +188,9 @@
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
-				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				5C62962A974FF29EA927BBAD /* [CP] Embed Pods Frameworks */,
+				1B930C1028080B3800FAD248 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -398,6 +420,10 @@
 				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = D6UATBX96V;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -533,6 +559,10 @@
 				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = D6UATBX96V;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -557,9 +587,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = D6UATBX96V;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -569,6 +605,7 @@
 				MARKETING_VERSION = 1.0.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onedose.onedosehealth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

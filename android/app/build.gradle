@@ -102,6 +102,7 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:20.1.0"
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     implementation "com.polidea.rxandroidble2:rxandroidble:1.11.1"
+    implementation 'com.google.code.gson:gson:2.8.2'
 
-    // implementation(name: 'omronconnectivitylibrary', ext: 'aar')
+    implementation(name: 'omronconnectivitylibrary', ext: 'aar')
 }

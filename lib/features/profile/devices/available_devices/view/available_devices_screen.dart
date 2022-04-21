@@ -68,7 +68,9 @@ class AvailableDevices extends StatelessWidget {
       onTap: (device.enable ?? false)
           ? () {
               if (device.deviceType == DeviceType.miScale ||
-                  device.deviceType == DeviceType.pillarSmall) {
+                  device.deviceType == DeviceType.pillarSmall ||
+                  device.deviceType == DeviceType.omronBloodPressureWrist ||
+                  device.deviceType == DeviceType.omronBloodPressureArm) {
                 Atom.to(
                   PagePaths.deviceSearch,
                   queryParameters: {

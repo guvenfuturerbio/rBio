@@ -119,4 +119,13 @@ class DeviceRepositoryImpl extends DeviceRepository {
       return Left(BluetoothFailure());
     }
   }
+
+  @override
+  Either<BluetoothFailures, bool> readDataFromOmronDevice() {
+    try {
+      return Right(localDataSource.readFromOmronMethode());
+    } catch (e) {
+      return Left(BluetoothFailure());
+    }
+  }
 }

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:scale_dependencies/scale_dependencies.dart';
 
+import '../../../omron_wrist/omron_connectivity_platform.dart';
+import '../../../omron_wrist/omron_wrist_core/core.dart';
 import '../../bluetooth_v2.dart';
 
 abstract class DeviceLocalDataSource {
@@ -11,6 +14,7 @@ abstract class DeviceLocalDataSource {
   Stream<List<DeviceModel>> searchDevices(DeviceType deviceType);
   Future<void> stopScan();
   bool connect(DeviceModel device);
+  bool readFromOmronMethode();
   bool disconnect(DeviceModel device);
   Stream<DeviceStatus> readStatus(DeviceModel device);
   Stream<MiScaleModel> miScaleReadValues(DeviceModel device);
@@ -37,10 +41,10 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
         var tempList = event;
         tempList = tempList.where((element) {
           if (deviceType == DeviceType.miScale) {
-            if (element.device.name == 'MIBFS' &&
+            if ((element.device.name == 'MIBFS' &&
                 element.advertisementData.serviceData.length == 1 &&
                 element.advertisementData.serviceData.values.first.length ==
-                    13) {
+                    13)) {
               return true;
             }
           } else if (deviceType == DeviceType.accuCheck) {
@@ -56,15 +60,25 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
               LoggerUtils.instance.i("BURADA");
               LoggerUtils.instance
                   .i(element.advertisementData.manufacturerData);
+            }
+          } else if (deviceType == DeviceType.omronBloodPressureWrist) {
+            if (element.device.id.id.substring(0, 8) == '28:FF:B2' &&
+                element.device.name.contains('BLEsmart_00000244')) {
+              return true;
+            }
+          } else if (deviceType == DeviceType.omronBloodPressureArm) {
+            if ((element.device.id.id.substring(0, 8) == '28:FF:B2' &&
+                    element.device.name.contains("BLEsmart_00000264")) ||
+                element.device.name.contains("M4 Intelli")) {
               return true;
             }
           }
-
           return false;
         }).toList();
 
         return tempList.map(
           (e) {
+            LoggerUtils.instance.wtf(e.device.name);
             return DeviceModel(
               id: e.device.id.id,
               name: e.device.name,
@@ -91,6 +105,36 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     bluetoothDevice.connect().onError(
           (error, stackTrace) => throw UnableToConnectDeviceFailure(),
         );
+    //
+    if (device.deviceType == DeviceType.omronBloodPressureArm) {
+      // ignore: void_checks
+      connectAndReadFromOmron().onError((error, stackTrace) {
+        LoggerUtils.instance.wtf(stackTrace);
+        throw UnableToConnectDeviceFailure();
+      });
+    } else {
+      // ignore: void_checks
+      bluetoothDevice.connect().onError((error, stackTrace) {
+        LoggerUtils.instance.wtf(stackTrace);
+        throw UnableToConnectDeviceFailure();
+      });
+    }
+
+    return true;
+  }
+
+  @override
+  readFromOmronMethode() {
+    CancelListening? transferListener;
+    Map<String, dynamic> map = {};
+    List<Map> mapl = [];
+    map = {
+      'userType': 1,
+      'name': 'BLEsmart_0000026428FFB297052D',
+      'uuid': '28:FF:B2:97:05:2D',
+      'hashId': 'eyc'
+    };
+    readDatasFromOmron(map, mapl, transferListener);
     return true;
   }
 
@@ -194,5 +238,36 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
         BluetoothConstants.pillarSmall.characteristicUuid);
     await characteristic.write([1]);
     return true;
+  }
+
+  Future<void> connectAndReadFromOmron() async {
+    Map<String, dynamic> map = {};
+    map = {
+      'userType': 1,
+      'name': 'BLEsmart_0000026428FFB297052D',
+      'uuid': '28:FF:B2:97:05:2D',
+      'hashId': 'eyc'
+    };
+    await connectDevice(map);
+    await continueToConnection(map);
+  }
+
+  void readDatasFromOmron(Map<String, dynamic> map,
+      List<Map<dynamic, dynamic>> mapl, CancelListening? transferListener) {
+    startTransferProcess(map, 'eyc');
+    connectionStateChecker(
+      (val) {
+        LoggerUtils.instance.e('EYC ' + val.toString());
+        if (val == ConnState.connected) {
+          transferData((data) {
+            mapl.add(PulseModel.fromMap(data).toMap());
+            LoggerUtils.instance
+                .e(PulseModel.fromMap(data).toJson().toString());
+          });
+        } else if (val == ConnState.disConnected && transferListener != null) {
+          transferListener();
+        }
+      },
+    );
   }
 }

@@ -1,0 +1,148 @@
+Version 3.0.23 - 1/16/2022
+  1) Improvements to connectivity functionalities
+  
+Version 3.0.22 - 11/05/2021
+  1) Fix issue with M2 Intelli IT
+  2) Improvements to connectivity functionalities
+  
+Version 3.0.21 - 07/31/2021
+  1) Add support for SC-150, X2 Smart, M2 Intelli IT, M300 Intelli IT
+  2) Update to asset catalog for device images
+  3) Improvements to connectivity functionalities
+  
+Version 3.0.20 - 07/31/2021
+  1) Add support for HWZ-1000T-E, MC-280B, HPO-300T, HN-300T2, HEM-7530T-E3
+  2) Improvements to connectivity functionalities
+  
+Version 3.0.19 - 07/10/2021
+  1) Improvements to connectivity functionalities
+  2) Add partner keys
+  3) Update for Blood pressure measurement mode flag
+
+Version 3.0.18 - 05/05/2021
+  1) Update device support
+  2) Improvements to connectivity functionalities
+  3) Update to asset catalog for device images
+  4) Add body composition features for guest user for BCM devices
+  
+Version 3.0.17 - 03/10/2021
+  1) Updated iOS Deployment Target to iOS 10.0
+  2) Update library to support Xcode 12
+  3) Update to asset catalog for device images
+  4) Update support for devices for partner keys
+  5) Add weight only measurement configuration for body composition monitor
+  
+Version 3.0.16 - 01/05/2021
+  1) Update support for devices for partner keys
+ 
+Version 3.0.14 - 09/15/2020
+  1) Support for NightView
+  2) Improvements to connectivity functionalities
+  2) Add partner keys
+  
+Version 3.0.13 - 08/22/2020
+  1) Update to asset catalog for device images
+  2) Additional feature support for connectivity pairing and data transfer
+  
+Version 3.0.12 - 06/08/2020
+  1) Update to asset catalog for device images
+  2) Improvements to connectivity
+  3) Support unique identifier for library
+  4) Add support for HEM-7280T-AP, HEM-7600T-AP3, HBF-222T-APW, HEM-6232T-AP, HEM-7361T-AP
+
+Version 3.0.11 - 03/31/2020
+  1) Improvement to connectivity
+  2) Add partner keys
+  
+Version 3.0.10 - 03/03/2020
+  1) Update library to support Xcode 11
+  2) Removed support for Google Analytics
+
+Version 3.0.9 - 11/10/2019
+  1) Add support for RS3 Intelli IT, HeartGuide, MIT5s, M4 Intelli IT, M7 Intelli IT 2nd Gen
+  2) Add partner keys
+
+Version 3.0.8 - 11/08/2019
+  1) Update library configurations to improve connectivity
+
+Version 3.0.7 - 11/06/2019
+  1) Added support for HeartGuide, RS3 Intelli IT, M4 Intelli IT, X4 Smart, M400 Intelli IT
+
+Version 3.0.6 - 11/04/2019
+  1) Added support for BP7250CAN, BP7350CAN, BP7450CAN
+
+Version 3.0.5 - 06/04/2019
+  1) Added support for BP5250, BP5350, BP5450
+
+Version 3.0.4 - 05/01/2019
+  1) Added support for EVOLV, RS7 Intelli IT, VIVA
+
+Version 3.0.3 - 04/16/2019
+  1) Added support for HBF-222T-Z
+
+Version 3.0.2 - 02/20/2019
+  1) Added support for BP6350, BP4350, BP7250, BP7350, BP7450
+
+Version 3.0.1 - 01/10/2019
+  1) Added support for BP8000
+
+Version 3.0.0 - 01/07/2019
+  1) Add support for M700 Intelli IT
+
+Version 2.0.8 - 12/06/2018
+  1) Update device model name "Complete"
+
+Version 2.0.7 - 09/14/2018
+  1) Added support for BP300
+  2) Update Google Analytics
+
+Version 2.0.6 - 08/28/2018
+  1) Added Google Analytics for tracking
+
+Version 2.0.5.1 - 07/02/2018
+  1) Added support for BP7900
+  
+Version 2.0.5 - 05/15/2018
+  1) Removing umbrella framework
+  2) Support for BP6000/BP6001
+  3) New functions for Activity device
+
+Version 2.0.4 - 02/21/2018
+  1) Updating configuration file for BP786/CAN and BP761/CAN
+
+Version 2.0.3 - 02/12/2018
+  1) New Functionality to pause and resume data transfer
+
+Version 2.0.2 - 02/09/2018
+  1) New status codes for configuration files availability check for connectivity functions
+  2) Notification feature for configuration files availability
+
+Version 2.0.1 - 01/17/2018
+  1) Updating to expose Key-Value for OmronPeripheral
+  2) New function to return configuration details of a specific Omron Peripheral
+
+Version 2.0.0 - 08/01/2017
+  1) Improved Connectivity Library with better configuration support
+  2) Support Added for Omron Connected Device BP769CAN
+  3) Updated iOS Deployment Target to iOS 8.2
+  4) New function to listen to Omron Bluetooth Device state changes
+  5) Improved Error Handling with new error codes
+
+Version 1.0.5 - 12/12/2016
+  1) Update OmronConnectivityLibrary framework to support Omron BLE Protocol for BP7000 Omron Device
+
+Version 1.0.4 - 12/08/2016
+  1) Update OmronConnectivityLibrary framework for STP support
+
+Version 1.0.3 - 07/20/2016
+  1) Update OmronConnectivityLibrary framework to capture device disconnect error scenarios
+
+Version 1.0.2 - 07/12/2016
+  1) Update OmronConnectivityLibrary framework to optimize Transfer process
+
+Version 1.0.1 - 07/06/2016
+  1) Update OmronConnectivityLibrary framework to separate Pair and Transfer
+  2) Explicitly Stop Scanning of devices when Connecting to an Omron Connected Device
+
+Version 1.0.0 - 06/24/2016
+  1) Initial Release for OmronConnectivityLibrary framework
