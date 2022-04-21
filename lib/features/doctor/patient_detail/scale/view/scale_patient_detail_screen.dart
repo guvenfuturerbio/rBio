@@ -11,6 +11,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../core/core.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../../core/data/service/model/patient_scale_measurement.dart';
+
+part '../widget/scale_expanded_detail_widget.dart';
 
 class ScalePatientDetailScreen extends StatelessWidget {
   const ScalePatientDetailScreen({Key? key}) : super(key: key);
@@ -99,6 +102,19 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(height: 50, child: _buildExpandedUser()),
+                      //
+                      ClipRRect(
+                        borderRadius: R.sizes.borderRadiusCircular,
+                        child: SizeTransition(
+                          sizeFactor: sizeAnimation,
+                          child: _UserScaleDetailCard(
+                            patientDetail: context
+                                .read<ScaleDoctorCubit>()
+                                .patientScaleMeasurements!
+                                .first,
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 15,
                       ),
