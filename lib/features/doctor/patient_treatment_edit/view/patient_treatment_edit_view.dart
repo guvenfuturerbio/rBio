@@ -11,7 +11,6 @@ import '../view_model/patient_treatment_vm.dart';
 class PatientTreatmentEditView extends StatefulWidget {
   const PatientTreatmentEditView({Key? key}) : super(key: key);
 
-
   @override
   State<PatientTreatmentEditView> createState() =>
       _PatientTreatmentEditViewState();
@@ -48,15 +47,18 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
       LoggerUtils.instance.e(e.toString());
       return const RbioRouteError();
     }
+
     return KeyboardDismissOnTap(
       child: ChangeNotifierProvider<PatientTreatmentEditVm>(
         create: (_) => PatientTreatmentEditVm(_treatmentModel),
-        child: Consumer<PatientTreatmentEditVm>(builder: (ctx, vm, __) {
-          return RbioScaffold(
-            appbar: _buildAppBar(),
-            body: _buildBody(ctx),
-          );
-        }),
+        child: Consumer<PatientTreatmentEditVm>(
+          builder: (ctx, vm, __) {
+            return RbioScaffold(
+              appbar: _buildAppBar(),
+              body: _buildBody(ctx),
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:countup/countup.dart';
@@ -20,6 +21,7 @@ import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
 import '../../../../../core/enums/glucose_margins_filter.dart';
 import '../../../notifiers/bg_measurements_notifiers.dart';
 import '../../../notifiers/patient_notifiers.dart';
+import '../../../treatment_process/view/treatment_process_screen.dart';
 
 part '../viewmodel/bg_patient_detail_vm.dart';
 part '../viewmodel/bg_patient_picker_vm.dart';
@@ -123,30 +125,6 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
           context,
           LocaleProvider.current.bg_measurement_tracking,
         ),
-        actions: [
-          // Center(
-          //   child: RbioBadge(
-          //     image: R.image.chat,
-          //     isDark: false,
-          //     onTap: () {
-          //       // final chatPerson = ChatPerson(
-          //       //   id: patientId.toString(),
-          //       //   name: patientName,
-          //       //   firebaseToken: '',
-          //       // );
-          //       // Atom.to(
-          //       //   PagePaths.chat,
-          //       //   queryParameters: {
-          //       //     'otherPerson': chatPerson.toJson(),
-          //       //   },
-          //       // );
-          //     },
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 12,
-          // ),
-        ],
       );
 
   Widget _buildBody(BgPatientDetailVm vm) => SingleChildScrollView(
@@ -312,7 +290,25 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.doctorTreatmentProgress);
+              final patient = context.read<PatientNotifiers>().patientDetail;
+
+              if (patient.treatmentModelList == null ||
+                  patient.treatmentModelList!.isEmpty) {
+                Atom.to(
+                  PagePaths.doctorTreatmentEdit,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(TreatmentProcessItemModel(
+                      dateTime: DateTime.now(),
+                      description: '',
+                      id: -1,
+                      title: '',
+                    ).toJson()),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.doctorTreatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,

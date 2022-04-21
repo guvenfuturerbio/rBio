@@ -79,12 +79,15 @@ class _BgTaggerView extends StatefulWidget {
 
 class __BgTaggerViewState extends State<_BgTaggerView> {
   late FocusNode focusNode;
+  late FocusNode noteFocusNode;
+
   late TextEditingController controller = TextEditingController();
   late TextEditingController noteController = TextEditingController();
 
   @override
   void initState() {
     focusNode = FocusNode();
+    noteFocusNode = FocusNode();
     controller = TextEditingController();
     noteController = TextEditingController();
     controller.text = widget.data.level;
@@ -102,6 +105,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
   @override
   void dispose() {
     focusNode.dispose();
+    noteFocusNode.dispose();
     controller.dispose();
     noteController.dispose();
 
@@ -137,16 +141,22 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
                       right: 8,
                       bottom: context.xMediaQuery.viewInsets.bottom,
                     ),
-                    child: Column(
-                      children: [
-                        vm.data.tag == 3 || vm.data.tag == null
-                            ? _buildSquareBg(context, vm)
-                            : _buildCircleBg(context, vm),
-                        _buildDateTimeSection(context, vm),
-                        _buildTags(context, vm.data.tag, vm.changeTag),
-                        _buildImageSection(context, vm),
-                        _buildNoteSection(context),
+                    child: RbioKeyboardActions(
+                      focusList: [
+                        focusNode,
+                        noteFocusNode,
                       ],
+                      child: Column(
+                        children: [
+                          vm.data.tag == 3 || vm.data.tag == null
+                              ? _buildSquareBg(context, vm)
+                              : _buildCircleBg(context, vm),
+                          _buildDateTimeSection(context, vm),
+                          _buildTags(context, vm.data.tag, vm.changeTag),
+                          _buildImageSection(context, vm),
+                          _buildNoteSection(context),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -528,6 +538,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: TextField(
+          focusNode: noteFocusNode,
           controller: controller,
           keyboardType: TextInputType.multiline,
           maxLines: null,

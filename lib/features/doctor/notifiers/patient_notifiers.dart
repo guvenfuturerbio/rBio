@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/model/treatment_model/treatment_model.dart';
 
 import '../../../core/data/repository/doctor_repository.dart';
 import '../../../core/locator.dart';

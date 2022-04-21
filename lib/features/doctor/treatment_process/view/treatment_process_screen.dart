@@ -33,20 +33,6 @@ class _DoctorTreatmentProcessScreenState
           context,
           LocaleProvider.current.treatment_process,
         ),
-        actions: [
-          // Center(
-          //   child: RbioBadge(
-          //     image: R.image.chat,
-          //     isDark: false,
-          //     onTap: () {
-          //       Atom.to(PagePaths.doctorCosultation);
-          //     },
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 12,
-          // ),
-        ],
       );
 
   Widget _buildBody() {
@@ -108,34 +94,17 @@ class _DoctorTreatmentProcessScreenState
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        //
-                        Expanded(
-                          child: Text(
-                            item.title ?? "",
-                            style: context.xHeadline4.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-
-                        //
-                        Text(
-                          '',
-                          style: context.xHeadline4.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      item.title ?? "",
+                      style: context.xHeadline4.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
 
                     //
                     Text(
                       item.description ?? "",
+                      maxLines: 3,
                       style: context.xHeadline5.copyWith(
                         color: getIt<ITheme>().textColorPassive,
                       ),

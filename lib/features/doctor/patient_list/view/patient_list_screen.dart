@@ -50,18 +50,10 @@ class DoctorPatientListScreen extends StatelessWidget {
 
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
-        title: RbioAppBar.textTitle(context, getTitle()),
-        actions: [
-          // Center(
-          //   child: RbioBadge(
-          //     image: R.image.chat,
-          //     isDark: false,
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 12,
-          // ),
-        ],
+        title: RbioAppBar.textTitle(
+          context,
+          getTitle(),
+        ),
       );
   // #endregion
 
