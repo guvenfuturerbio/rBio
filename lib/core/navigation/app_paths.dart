@@ -12,7 +12,7 @@ import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
 import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_progress_screen.dart';
 import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_detail_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/view/scale_progress_screen.dart';
+import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_manuel_add_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/dashboard_navigation.dart';
@@ -357,6 +357,7 @@ class VRouterRoutes {
       ],
     ),
 
+    //
     VGuard(
       beforeEnter: (vRedirector) async {
         if (!getIt<UserNotifier>().isCronic) {
@@ -369,10 +370,6 @@ class VRouterRoutes {
           path: PagePaths.measurementTracking,
           widget: const MeasurementTrackingHomeScreen(),
           stackedRoutes: [
-            VWidget(
-              path: PagePaths.bmiProgress,
-              widget: const ScaleProgressScreen(),
-            ),
             VWidget(
               path: PagePaths.bpProgress,
               widget: const BpProgressScreen(),
@@ -558,11 +555,15 @@ class VRouterRoutes {
       path: PagePaths.scaleDetail,
       widget: const ScaleDetailScreen(),
     ),
+    VWidget(
+      path: PagePaths.scaleManuelAdd,
+      widget: const ScaleManuelAddScreen(),
+    ),
 
     // Bluetooth v2
     VWidget(
-      path: PagePaths.deviceListing,
-      widget: const DeviceListingScreen(),
+      path: PagePaths.deviceSearch,
+      widget: DeviceSearchScreen(),
     ),
 
     //
@@ -656,6 +657,7 @@ class PagePaths {
   static const treatmentEditProgress = '/tretment-edit-progress';
 
   static const scaleDetail = '/scale-detail';
+  static const scaleManuelAdd = '/scale-manuel-add';
 
   // Symptom Checker
   static const symptomMainMenu = '/symptom-main';
@@ -678,5 +680,5 @@ class PagePaths {
   static const doctorCosultation = '/doctor-consultation';
 
   // Bluetooth v2
-  static const deviceListing = '/device-listing';
+  static const deviceSearch = '/device-search';
 }

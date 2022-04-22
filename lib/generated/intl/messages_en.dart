@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_cart": MessageLookupByLibrary.simpleMessage("Add to Cart"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("Add discount code"),
+        "add_medicine": MessageLookupByLibrary.simpleMessage("Add medicine"),
         "add_new_device": MessageLookupByLibrary.simpleMessage(
             "You do not have a paired device. Add a new device"),
         "add_new_relative":
@@ -118,6 +119,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "as_png": MessageLookupByLibrary.simpleMessage("as PNG"),
         "awards": MessageLookupByLibrary.simpleMessage("Awards"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
+        "basal_metabolism":
+            MessageLookupByLibrary.simpleMessage("Basal metabolism"),
         "bef": MessageLookupByLibrary.simpleMessage("Bef."),
         "before": MessageLookupByLibrary.simpleMessage("Before"),
         "before_meal": MessageLookupByLibrary.simpleMessage("Hungry"),
@@ -410,6 +413,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "diabetes_type_1": MessageLookupByLibrary.simpleMessage("Type 1"),
         "diabetes_type_2": MessageLookupByLibrary.simpleMessage("Type 2"),
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Diagnosis Date"),
+        "didnt_reach_goals":
+            MessageLookupByLibrary.simpleMessage("Didn\'t reach goals"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Digital Checkup"),
         "discard": MessageLookupByLibrary.simpleMessage("Discard"),
@@ -456,6 +461,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "end_time": MessageLookupByLibrary.simpleMessage("End Time"),
         "enter_the_code":
             MessageLookupByLibrary.simpleMessage("Enter the code"),
+        "enter_weight":
+            MessageLookupByLibrary.simpleMessage("Enter the weight"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "error_empty_dosage_name": MessageLookupByLibrary.simpleMessage(
             "Please enter the dosage required"),
@@ -533,6 +540,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Glucometer is already in use for an other account!"),
         "glucose_data_detail":
             MessageLookupByLibrary.simpleMessage("Blood Glucose Detail"),
+        "great": MessageLookupByLibrary.simpleMessage("Great"),
         "group_name": MessageLookupByLibrary.simpleMessage("Group Name"),
         "guven_cayyolu_campus":
             MessageLookupByLibrary.simpleMessage("Güven Çayyolu Campus"),
@@ -589,6 +597,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("TC / Passport no"),
         "if_want_to_be_reminded": MessageLookupByLibrary.simpleMessage(
             "If you want to be reminded for HbA1c measurement"),
+        "increased": MessageLookupByLibrary.simpleMessage("Increased"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "info_report":
             MessageLookupByLibrary.simpleMessage("Complaint Declaration"),
@@ -599,6 +608,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Informed consent forṁ"),
         "informed_consent_form_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/onam_en.html"),
+        "insufficient": MessageLookupByLibrary.simpleMessage("Insufficient"),
         "intermittent_days":
             MessageLookupByLibrary.simpleMessage("Intermittent Days"),
         "invalid_authorization": MessageLookupByLibrary.simpleMessage(
@@ -687,10 +697,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "manuel": MessageLookupByLibrary.simpleMessage("Manuel"),
         "mars_hosp":
             MessageLookupByLibrary.simpleMessage("Güven Hospital Ayrancı"),
+        "mass_unit": MessageLookupByLibrary.simpleMessage("Mass unit"),
         "max_range": MessageLookupByLibrary.simpleMessage("Max Range: "),
         "meal": MessageLookupByLibrary.simpleMessage("Meal"),
         "measurement_delete_question": MessageLookupByLibrary.simpleMessage(
             "Do you want to delete the measurement?"),
+        "measurement_saved": MessageLookupByLibrary.simpleMessage(
+            "The measurement has been saved"),
         "medication_reminder":
             MessageLookupByLibrary.simpleMessage("Medication Reminder"),
         "medication_reminders":
@@ -837,6 +850,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "No results were found for the specified symptoms."),
         "non_diabetes": MessageLookupByLibrary.simpleMessage("Non-Diabetes"),
         "non_smoker": MessageLookupByLibrary.simpleMessage("Non-Smoker"),
+        "normal": MessageLookupByLibrary.simpleMessage("Normal"),
         "normal_range": MessageLookupByLibrary.simpleMessage("Normal range"),
         "not": MessageLookupByLibrary.simpleMessage("Note"),
         "not_chronic_warning": MessageLookupByLibrary.simpleMessage(
@@ -1010,6 +1024,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profiles": MessageLookupByLibrary.simpleMessage("Profiles"),
         "proposed_symptom": MessageLookupByLibrary.simpleMessage(
             "Do you have one of the following symptoms?"),
+        "protein": MessageLookupByLibrary.simpleMessage("Protein"),
         "publications": MessageLookupByLibrary.simpleMessage("Publications"),
         "pulse": MessageLookupByLibrary.simpleMessage("Pulse"),
         "radiology_result":
@@ -1018,6 +1033,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rate": MessageLookupByLibrary.simpleMessage("Rate"),
         "rate_appointment": MessageLookupByLibrary.simpleMessage(
             "Would you like to rate your appointment ?"),
+        "reach_goal": MessageLookupByLibrary.simpleMessage("Reach goal"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(
             "I have read and understood the notice of information regarding the policy of protection and processing of personal data."),
         "recent_appointments":
@@ -1052,6 +1068,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution."),
         "required_area": MessageLookupByLibrary.simpleMessage("are required"),
+        "required_user_height_info_message":
+            MessageLookupByLibrary.simpleMessage(
+                "You need to enter your Height information to continue."),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Reset Filter Values"),
         "result_detail": MessageLookupByLibrary.simpleMessage("Result Detail"),
@@ -1119,6 +1138,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sign_with_google":
             MessageLookupByLibrary.simpleMessage("Sign in with Google"),
         "single_day": MessageLookupByLibrary.simpleMessage("Single Day"),
+        "six_months": MessageLookupByLibrary.simpleMessage("6 months"),
         "smoker": MessageLookupByLibrary.simpleMessage("Smoker"),
         "smoker_type": MessageLookupByLibrary.simpleMessage("Smoker Type"),
         "smokes_occasionally":
@@ -1229,6 +1249,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("It\'s time to take medicine"),
         "time_take_medicine_title":
             MessageLookupByLibrary.simpleMessage("It\'s time to take medicine"),
+        "time_text": MessageLookupByLibrary.simpleMessage("Time"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),
         "title_appointment_detail":
@@ -1319,7 +1340,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "weekdays_wednesday": MessageLookupByLibrary.simpleMessage("Wednesday"),
         "weekdays_wednesday_short": MessageLookupByLibrary.simpleMessage("Wed"),
         "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
+        "weighing": MessageLookupByLibrary.simpleMessage("Weighing"),
+        "weighing_completed": MessageLookupByLibrary.simpleMessage(
+            "Please wait until\nweighing completed"),
+        "weighing_results":
+            MessageLookupByLibrary.simpleMessage("Weighing results"),
         "weight": MessageLookupByLibrary.simpleMessage("Weight"),
+        "weight_text": MessageLookupByLibrary.simpleMessage("Weight"),
+        "weight_tracking":
+            MessageLookupByLibrary.simpleMessage("Weight Tracking"),
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "When would you like to be notified?"),
@@ -1339,6 +1368,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Wrong Username or Password!"),
         "year_of_diagnosis":
             MessageLookupByLibrary.simpleMessage("Year of diagnosis"),
+        "yearly": MessageLookupByLibrary.simpleMessage("Yearly"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "you_have_strip": MessageLookupByLibrary.simpleMessage(
             "You have <stripCount> strips left"),

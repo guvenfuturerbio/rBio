@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
@@ -34,15 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
       final widgetsBinding = WidgetsBinding.instance;
       if (widgetsBinding != null) {
         widgetsBinding.addPostFrameCallback((_) {
-          Utils.instance.showSnackbar(
+          Utils.instance.showSuccessSnackbar(
             context,
             LocaleProvider.of(context).succefully_created_pass,
-            backColor: getIt<ITheme>().mainColor,
-            trailing: SvgPicture.asset(
-              R.image.done,
-              height: R.sizes.iconSize2,
-              color: getIt<ITheme>().iconSecondaryColor,
-            ),
           );
         });
       }
@@ -362,7 +355,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //
         Expanded(
           child: TextButton(
-            onPressed: ()  => value.showApplicationContestForm(),
+            onPressed: () => value.showApplicationContestForm(),
             child: Text(
               LocaleProvider.of(context).accept_application_consent_form,
               maxLines: 2,

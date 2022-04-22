@@ -87,6 +87,7 @@ class BloodGlucoseReminderAddEditCubit
           BloodGlucoseReminderAddEditState.success(
             result.copyWith(
               dailyDose: value,
+              doseTimeStatus: List.filled(value, true),
               doseTimes: doseTimeList,
             ),
           ),

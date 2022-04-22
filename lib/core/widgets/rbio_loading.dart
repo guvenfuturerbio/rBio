@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class RbioLoading extends StatelessWidget {
-  final Color? color;
-
   const RbioLoading({
     Key? key,
-    this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(color ?? getIt<ITheme>().mainColor),
+        valueColor: AlwaysStoppedAnimation<Color>(getIt<ITheme>().mainColor),
       ),
     );
   }
@@ -23,4 +20,19 @@ class RbioLoading extends StatelessWidget {
         backgroundColor: Colors.black38,
         body: Center(child: RbioLoading()),
       );
+}
+
+class RbioWhiteLoading extends StatelessWidget {
+  const RbioWhiteLoading({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      ),
+    );
+  }
 }

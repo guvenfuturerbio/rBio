@@ -42,4 +42,9 @@ class DeviceSearchCubit extends Cubit<DeviceSearchState> {
       LoggerUtils.instance.e("[DeviceSearchCubit] - Right - true");
     });
   }
+
+  void setInitState() {
+    stopScan();
+    emit(const DeviceSearchState.initial());
+  }
 }

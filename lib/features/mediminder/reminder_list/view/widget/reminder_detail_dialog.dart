@@ -44,6 +44,9 @@ class ReminderDetailDialog extends StatelessWidget {
             ),
 
             //
+            R.sizes.hSizer8,
+
+            //
             RbioElevatedButton(
               onTap: () {
                 Atom.dismiss();
@@ -68,6 +71,7 @@ class ReminderDetailDialog extends StatelessWidget {
                       queryParameters: <String, String>{
                         'title': model.title,
                         'remindable': model.remindable.toRouteString(),
+                        'createdDate': model.createdDate.toString(),
                         'notificationId': model.notificationId.toString(),
                       },
                     );

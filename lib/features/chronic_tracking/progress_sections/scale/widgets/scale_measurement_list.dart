@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../core/core.dart';
 import '../viewmodel/scale_progress_vm.dart';
@@ -249,6 +248,7 @@ Expanded _textAndScaleSection(
     flex: 4,
     child: Row(
       children: [
+        //
         Expanded(
           flex: 2,
           child: Column(
@@ -256,20 +256,29 @@ Expanded _textAndScaleSection(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                  scaleMeasurementViewModel
-                          .getMeasurement(Provider.of<ScaleProgressVm>(context)
-                              .currentScaleType)
-                          ?.toStringAsFixed(2) ??
-                      '',
-                  style: context.xHeadline1),
-              Text(scaleMeasurementViewModel.unit.toStr,
-                  style: context.xBodyText1),
+                scaleMeasurementViewModel
+                        .getMeasurement(Provider.of<ScaleProgressVm>(context)
+                            .currentScaleType)
+                        ?.xGetFriendyString ??
+                    '',
+                style: context.xHeadline1,
+              ),
+
+              //
+              Text(
+                scaleMeasurementViewModel.unit.toStr,
+                style: context.xBodyText1,
+              ),
             ],
           ),
         ),
+
+        //
         Expanded(
           flex: 4,
-          child: Text(scaleMeasurementViewModel.note),
+          child: Text(
+            scaleMeasurementViewModel.note,
+          ),
         ),
       ],
     ),

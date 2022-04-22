@@ -16,7 +16,7 @@ EventTransformer<Event> debounceSequential<Event>(Duration duration) {
 
 const _debounce = Duration(milliseconds: 350);
 
-class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
+class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothV1State> {
   final BleScanner scanner;
   final BleConnector connector;
   final BleDeviceManager deviceManager;
@@ -27,7 +27,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     this.scanner,
     this.connector,
     this.deviceManager,
-  ) : super(BluetoothState()) {
+  ) : super(BluetoothV1State()) {
     // ! ------------ ------------ Init ------------ ------------
 
     on<_BluetoothInitEvent>((event, emit) async {

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:scale_repository/scale_repository.dart';
 
+import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
 
 class DeviceRepositoryImpl extends DeviceRepository {
@@ -79,7 +79,7 @@ class DeviceRepositoryImpl extends DeviceRepository {
         miScaleStream.map(
           (event) => event.xGetEntityWithCalculate(
             Utils.instance.getAge(),
-            Utils.instance.getHeight(),
+            Utils.instance.getHeight()!,
             Utils.instance.getGender(),
           ),
         ),
@@ -111,7 +111,8 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(DeviceEntity device) {
+  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(
+      DeviceEntity device) {
     try {
       return Right(localDataSource.pillarSmallTrigger(device.xGetModel));
     } catch (e) {

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../../bottom_actions_of_graph.dart';
 import '../../widgets/chronic_graph_header.dart';
 import '../../widgets/landscape_chronic_component.dart';
@@ -206,7 +209,26 @@ class BgProgressScreen extends StatelessWidget {
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.treatmentProgress);
+              final treatmentList =
+                  getIt<ProfileStorageImpl>().getFirst().treatmentList;
+              if ((treatmentList ?? []).isEmpty) {
+                Atom.to(
+                  PagePaths.treatmentEditProgress,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(
+                      TreatmentProcessItemModel(
+                        dateTime: DateTime.now(),
+                        description: '',
+                        id: -1,
+                        title: '',
+                      ).toJson(),
+                    ),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.treatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,

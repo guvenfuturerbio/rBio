@@ -84,6 +84,24 @@ class _Sizes {
     );
   }
 
+  EdgeInsets screenPaddingOnlyHorizontal(BuildContext context) {
+    return screenHandler<EdgeInsets>(
+      context,
+      mobile: EdgeInsets.only(
+        left: _mobilePadding,
+        right: _mobilePadding,
+      ),
+      tablet: EdgeInsets.only(
+        left: _tabletPadding,
+        right: _tabletPadding,
+      ),
+      desktop: EdgeInsets.only(
+        left: _desktopPadding,
+        right: _desktopPadding,
+      ),
+    );
+  }
+
   double get defaultBottomValue => Atom.safeBottom + 12;
   Widget get defaultBottomPadding => SizedBox(height: defaultBottomValue);
   double stackedTopPaddingValue(BuildContext context) =>

@@ -178,7 +178,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<ScaleModel>> getMyPatientScale(
+  Future<List<PatientScaleMeasurement>> getMyPatientScale(
     int patientId,
     GetMyPatientFilter getMyPatientFilter,
   ) async {
@@ -189,8 +189,8 @@ class DoctorApiServiceImpl extends DoctorApiService {
     );
     if (response.isSuccessful == true) {
       return response.xGetMapList
-          .map((item) => ScaleModel.fromMap(item))
-          .cast<ScaleModel>()
+          .map((item) => PatientScaleMeasurement.fromJson(item))
+          .cast<PatientScaleMeasurement>()
           .toList();
     } else {
       throw Exception('/getMyPatientScale : ${response.isSuccessful}');

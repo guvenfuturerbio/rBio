@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:scale_repository/scale_repository.dart';
 
 import '../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../features/home/view/home_screen.dart';
@@ -188,7 +187,6 @@ class UserNotifier extends ChangeNotifier {
         for (var item in localDevices) {
           if (item.deviceType == DeviceType.miScale) {
             context.read<DeviceSelectedCubit>().disconnect(item);
-            context.read<MiScaleCubit>().stopListen();
           }
         }
       }

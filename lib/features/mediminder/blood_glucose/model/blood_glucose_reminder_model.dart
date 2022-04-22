@@ -13,6 +13,7 @@ class BloodGlucoseReminderModel
     required int scheduledDate,
     required int createdDate,
     required int entegrationId,
+    required bool status,
     this.dayIndex,
     this.dailyDose,
     this.reminderPeriod,
@@ -23,6 +24,7 @@ class BloodGlucoseReminderModel
           scheduledDate: scheduledDate,
           createdDate: createdDate,
           entegrationId: entegrationId,
+          status: status,
         );
 
   factory BloodGlucoseReminderModel.empty() => BloodGlucoseReminderModel(
@@ -30,6 +32,7 @@ class BloodGlucoseReminderModel
         scheduledDate: -1,
         createdDate: -1,
         entegrationId: -1,
+        status: true,
       );
 
   @override
@@ -52,6 +55,7 @@ class BloodGlucoseReminderModel
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
       entegrationId: json['entegrationId'] as int,
+      status: json['status'] as bool,
       dayIndex: json['dayIndex'] as int?,
       dailyDose: json['dailyDose'] as int?,
       reminderPeriod: json['reminderPeriod'] == null
@@ -66,5 +70,19 @@ class BloodGlucoseReminderModel
   @override
   BloodGlucoseReminderModel fromJson(Map<String, dynamic> json) {
     return BloodGlucoseReminderModel.fromJson(json);
+  }
+
+  BloodGlucoseReminderModel changeStatus(bool newStatus) {
+    return BloodGlucoseReminderModel(
+      status: newStatus,
+      notificationId: notificationId,
+      scheduledDate: scheduledDate,
+      createdDate: createdDate,
+      entegrationId: entegrationId,
+      dayIndex: dayIndex,
+      dailyDose: dailyDose,
+      reminderPeriod: reminderPeriod,
+      usageType: usageType,
+    );
   }
 }

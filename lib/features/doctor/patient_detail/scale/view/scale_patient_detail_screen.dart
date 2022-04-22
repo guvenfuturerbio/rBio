@@ -1,48 +1,54 @@
-import 'dart:developer';
-import 'dart:io';
-import 'dart:ui';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:scale_calculations/scale_calculations.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../core/core.dart';
-import '../../../../../model/model.dart';
-import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
-import '../../../../chronic_tracking/progress_sections/scale/viewmodel/scale_progress_vm.dart';
-import '../../../../chronic_tracking/progress_sections/scale/widgets/scale_filter_pop_up/scale_filter_pop_up.dart';
-import '../../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';
-import '../../../notifiers/patient_notifiers.dart';
-
 import '../../../../../../core/core.dart';
-import '../../../../../../model/model.dart';
+import '../../../../../core/core.dart';
+import '../../../../../core/data/service/model/patient_scale_measurement.dart';
+import '../../../notifiers/patient_notifiers.dart';
+import '../../../treatment_process/view/treatment_process_screen.dart';
+import '../cubit/scale_doctor_cubit.dart';
+import '../widget/doctor_scale_chart.dart';
+import '../widget/measurement_list.dart';
 
-part '../viewmodel/scale_patient_detail_vm.dart';
-part '../widget/graph_header_section.dart';
-part '../widget/measurement_list.dart';
-part '../widget/charts/scale_bubble_chart.dart';
-part '../widget/charts/scale_line_chart.dart';
-part '../widget/tagger_popup.dart';
+part '../widget/scale_expanded_detail_widget.dart';
 
-class ScalePatientDetailScreen extends StatefulWidget {
+class ScalePatientDetailScreen extends StatelessWidget {
   const ScalePatientDetailScreen({Key? key}) : super(key: key);
 
   @override
-  _ScalePatientDetailScreenState createState() =>
-      _ScalePatientDetailScreenState();
+  Widget build(BuildContext context) {
+    late int patientId;
+    late String patientName;
+    try {
+      patientName = Atom.queryParameters['patientName']!;
+      patientId = int.parse(Atom.queryParameters['patientId']!);
+    } catch (_) {
+      return const RbioRouteError();
+    }
+    return BlocProvider(
+      create: (context) => ScaleDoctorCubit(patientId)..fetchScaleData(),
+      child: ScalePatientDetailView(patientName),
+    );
+  }
 }
 
-class _ScalePatientDetailScreenState extends State<ScalePatientDetailScreen>
+class ScalePatientDetailView extends StatefulWidget {
+  String patientName;
+  ScalePatientDetailView(this.patientName, {Key? key}) : super(key: key);
+
+  @override
+  _ScalePatientDetailViewState createState() => _ScalePatientDetailViewState();
+}
+
+class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
     with SingleTickerProviderStateMixin {
   // Page Params Section
-  late int patientId;
-  late String patientName;
+
   // #Page Params Section End
 
   late AnimationController animationController;
@@ -77,35 +83,145 @@ class _ScalePatientDetailScreenState extends State<ScalePatientDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    try {
-      patientName = Atom.queryParameters['patientName']!;
-      patientId = int.parse(Atom.queryParameters['patientId']!);
-    } catch (_) {
-      return const RbioRouteError();
-    }
-
     MediaQuery.of(context).orientation == Orientation.landscape
         ? SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [])
         : SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
             overlays: SystemUiOverlay.values);
 
-    return ChangeNotifierProvider<ScalePatientDetailVm>(
-      create: (ctx) => ScalePatientDetailVm(ctx, patientId),
-      child: Consumer<ScalePatientDetailVm>(
-        builder: (_, vm, __) => AtomDropdownBanner(
-          navigatorKey: _dropdownBannerKey,
-          child: !vm.isDataLoading &&
-                  MediaQuery.of(context).orientation == Orientation.landscape
-              ? _GraphHeaderSection(
-                  value: vm,
-                  controller: _controller,
-                )
-              : RbioScaffold(
-                  appbar: _buildAppBar(),
-                  body: _buildBody(vm),
-                ),
-        ),
-      ),
+    return BlocBuilder<ScaleDoctorCubit, ScaleDoctorState>(
+      builder: (context, state) {
+        return AtomDropdownBanner(
+            navigatorKey: _dropdownBannerKey,
+            child: RbioScaffold(
+              appbar: _buildAppBar(),
+              body: state.when(
+                error: () => const SizedBox(),
+                initial: () => const SizedBox(),
+                loading: () => const RbioLoading(),
+                loaded: (result) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(height: 50, child: _buildExpandedUser()),
+                      //
+                      ClipRRect(
+                        borderRadius: R.sizes.borderRadiusCircular,
+                        child: SizeTransition(
+                          sizeFactor: sizeAnimation,
+                          child: _UserScaleDetailCard(
+                            patientDetail: context
+                                .read<ScaleDoctorCubit>()
+                                .patientScaleMeasurements!
+                                .first,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      RbioElevatedButton(
+                        title: result.isChartVisible
+                            ? LocaleProvider.current.close_chart
+                            : LocaleProvider.current.open_chart,
+                        onTap: () {
+                          context.read<ScaleDoctorCubit>().toogleChart();
+                        },
+                      ),
+                      Visibility(
+                        visible: result.isChartVisible,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<ScaleDoctorCubit>()
+                                            .changeGraph(GraphTypes.weight);
+                                      },
+                                      child: Card(
+                                        color: result.graphType ==
+                                                GraphTypes.weight
+                                            ? getIt<ITheme>().mainColor
+                                            : null,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Text(
+                                            'Weight',
+                                            style: result.graphType ==
+                                                    GraphTypes.weight
+                                                ? const TextStyle(
+                                                    color: Colors.white)
+                                                : const TextStyle(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<ScaleDoctorCubit>()
+                                            .changeGraph(GraphTypes.bmi);
+                                      },
+                                      child: Card(
+                                        color:
+                                            result.graphType == GraphTypes.bmi
+                                                ? getIt<ITheme>().mainColor
+                                                : null,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Text(
+                                            'BMI',
+                                            style: result.graphType ==
+                                                    GraphTypes.bmi
+                                                ? const TextStyle(
+                                                    color: Colors.white)
+                                                : const TextStyle(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                            DoctorScaleChart(
+                                type: result.graphType,
+                                list: result.patientScaleMeasurements,
+                                zoomPanBehavior: ZoomPanBehavior(
+                                  enableDoubleTapZooming: true,
+                                  enablePanning: true,
+                                  enablePinching: true,
+                                  enableSelectionZooming: true,
+                                  zoomMode: ZoomMode.x,
+                                )),
+                          ],
+                        ),
+                      ),
+                      MeasurementList(
+                          scaleMeasurements: result.patientScaleMeasurements),
+                    ]),
+              ),
+            ));
+      },
     );
   }
 
@@ -125,69 +241,6 @@ class _ScalePatientDetailScreenState extends State<ScalePatientDetailScreen>
             width: 12,
           ),
         ],
-      );
-
-  Widget _buildBody(ScalePatientDetailVm vm) => SingleChildScrollView(
-        padding: EdgeInsets.zero,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            //
-            _buildExpandedUser(),
-
-            //
-            const SizedBox(height: 12),
-
-            //
-            if (!vm.isDataLoading) ...[
-              vm.isChartShow
-                  ? _GraphHeaderSection(
-                      value: vm,
-                      controller: _controller,
-                    )
-                  : Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: context.height * .02),
-                      child: RbioElevatedButton(
-                        title: LocaleProvider.current.open_chart,
-                        onTap: vm.changeChartShowStatus,
-                      ),
-                    ),
-
-              //
-              if (MediaQuery.of(context).orientation == Orientation.portrait)
-                SizedBox(
-                  height: vm.isChartShow
-                      ? context.height * .5
-                      : context.height * .8,
-                  child: _MeasurementList(
-                    scaleMeasurements: vm.scaleMeasurement,
-                    fetchScrolledData: vm.fetchScrolledData,
-                    scrollController: vm.controller,
-                    useStickyGroupSeparatorsValue:
-                        vm.selected == TimePeriodFilter.daily ||
-                                vm.selected == TimePeriodFilter.spesific
-                            ? true
-                            : false,
-                    selected: vm.currentScaleType,
-                  ),
-                ),
-            ] else ...[
-              Shimmer.fromColors(
-                child: SizedBox(
-                  height: context.height * .3,
-                  width: double.infinity,
-                ),
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-              ),
-            ],
-          ],
-        ),
       );
 
   Widget _buildExpandedUser() {
@@ -230,7 +283,7 @@ class _ScalePatientDetailScreenState extends State<ScalePatientDetailScreen>
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          patientName,
+                          widget.patientName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(
@@ -257,7 +310,27 @@ class _ScalePatientDetailScreenState extends State<ScalePatientDetailScreen>
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.doctorTreatmentProgress);
+              final patient = context.read<PatientNotifiers>().patientDetail;
+
+              if (patient.treatmentModelList == null ||
+                  patient.treatmentModelList!.isEmpty) {
+                Atom.to(
+                  PagePaths.doctorTreatmentEdit,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(
+                      TreatmentProcessItemModel(
+                        dateTime: DateTime.now(),
+                        description: '',
+                        id: -1,
+                        title: '',
+                      ).toJson(),
+                    ),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.doctorTreatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,

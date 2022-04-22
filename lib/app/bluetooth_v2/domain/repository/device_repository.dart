@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:scale_repository/scale_repository.dart';
 
+import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
 
 abstract class DeviceRepository {
@@ -27,5 +27,6 @@ abstract class DeviceRepository {
   Either<BluetoothFailures, Future<DeviceStatus>> deviceLastState(
       DeviceEntity device);
 
-  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(DeviceEntity device);
+  Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(
+      DeviceEntity device);
 }

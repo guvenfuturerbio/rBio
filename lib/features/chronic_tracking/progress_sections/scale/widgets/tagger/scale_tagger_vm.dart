@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../../core/core.dart';

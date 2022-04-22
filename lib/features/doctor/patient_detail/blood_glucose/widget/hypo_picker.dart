@@ -70,7 +70,7 @@ class _HypoPicker extends StatelessWidget {
               ),
             ),
             onTap: () {
-              vm.setHypoValue(hypo);
+              vm.setHypoValue(hypo * 1.0);
               vm.updatePatientLimit(
                 id: Provider.of<PatientNotifiers>(context, listen: false)
                     .patientDetail

@@ -1009,7 +1009,7 @@ class BgProgressVm
       callback: callBack,
       lastMeasurement: lastMeasurement == null
           ? LocaleProvider.current.no_measurement
-          : '${(double.tryParse(lastMeasurement.result) ?? 0).toStringAsFixed(1)}  mg/dl',
+          : '${(double.tryParse(lastMeasurement.result) ?? 0).xGetFriendyString}  mg/dl',
       lastMeasurementDate: lastMeasurement?.date ?? DateTime.now(),
       imageUrl: R.image.bloodGlucose,
     );

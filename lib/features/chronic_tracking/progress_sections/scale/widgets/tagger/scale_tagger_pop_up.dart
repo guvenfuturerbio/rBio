@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
-import 'package:scale_repository/scale_repository.dart';
 
 import '../../../../../../../core/core.dart';
 import 'scale_tagger_vm.dart';

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health/health.dart';
@@ -6,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../dashboard/not_chronic_screen.dart';
+import '../../../doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
@@ -57,7 +61,6 @@ class _MeasurementTrackingHomeScreenState
                 return RbioStackedScaffold(
                   appbar: _buildAppBar(isLandscape, context),
                   body: _buildBody(context, vm, isLandscape),
-                  floatingActionButton: _buildFAB(vm),
                 );
               },
             ),
@@ -133,11 +136,8 @@ class _MeasurementTrackingHomeScreenState
               children: vm.items
                   .map(
                     (parentElement) => _SectionCard(
-                      isActive: vm.activeItem != null &&
-                          vm.activeItem!.key == parentElement.key,
                       isVisible: vm.activeItem == null,
                       smallChild: parentElement.smallChild ?? const SizedBox(),
-                      largeChild: parentElement.largeChild ?? const SizedBox(),
                       hasDivider: vm.activeItem == null &&
                           vm.items.indexWhere((element) =>
                                   element.key == parentElement.key) <
@@ -150,36 +150,6 @@ class _MeasurementTrackingHomeScreenState
         ),
       ],
     );
-  }
-
-  FloatingActionButton? _buildFAB(MeasurementTrackingVm val) {
-    return val.activeItem != null
-        ? FloatingActionButton(
-            heroTag: 'adder',
-            onPressed: () {
-              final manuelEntry = val.activeItem?.manuelEntry;
-              if (manuelEntry != null) {
-                manuelEntry();
-              }
-            },
-            child: Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: getIt<ITheme>().mainColor,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: SvgPicture.asset(
-                  R.image.add,
-                  color: R.color.white,
-                ),
-              ),
-            ),
-            backgroundColor: R.color.white,
-          )
-        : null;
   }
 
   Widget _buildExpandedUser() {
@@ -233,7 +203,33 @@ class _MeasurementTrackingHomeScreenState
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.treatmentProgress);
+              FirebaseAnalytics.instance.logEvent(
+                name: "SaglikTakibi_Butonlar",
+                parameters: {
+                  'element': 'Tedavi',
+                },
+              );
+
+              final treatmentList =
+                  getIt<ProfileStorageImpl>().getFirst().treatmentList;
+              if ((treatmentList ?? []).isEmpty) {
+                Atom.to(
+                  PagePaths.treatmentEditProgress,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(
+                      TreatmentProcessItemModel(
+                        dateTime: DateTime.now(),
+                        description: '',
+                        id: -1,
+                        title: '',
+                      ).toJson(),
+                    ),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.treatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,

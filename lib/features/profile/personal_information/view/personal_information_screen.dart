@@ -26,7 +26,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   late TextEditingController _birthdayEditingController;
   late TextEditingController _phoneNumberEditingController;
   late TextEditingController _emailEditingController;
-
+  late String countryCode;
   late FocusNode _phoneNumberFocus;
   late FocusNode _emailFocus;
 
@@ -72,7 +72,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           ? userAccount.identificationNumber ?? ''
           : userAccount.passaportNumber ?? '';
     }
-
+    countryCode = userAccount.countryCode ?? '+90';
     final userName = userAccount.name ?? '';
     final userSurname = userAccount.surname ?? '';
     _nameEditingController.text = userName + " " + userSurname;
@@ -231,7 +231,16 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         //
-                        const RbioCountryCodePicker(),
+                        RbioCountryCodePicker(
+                          initialSelection: userAccount.countryCode == null
+                              ? '+90'
+                              : userAccount.countryCode!.contains('+')
+                                  ? userAccount.countryCode
+                                  : '+' + userAccount.countryCode!,
+                          onChanged: (code) {
+                            countryCode = code.dialCode!;
+                          },
+                        ),
 
                         //
                         const SizedBox(
@@ -245,8 +254,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             controller: _phoneNumberEditingController,
                             keyboardType: TextInputType.phone,
                             textInputAction: TextInputAction.done,
-                            hintText:
-                                LocaleProvider.of(context).hint_input_password,
+                            hintText: LocaleProvider.of(context).phone_number,
                             inputFormatters: <TextInputFormatter>[
                               TabToNextFieldTextInputFormatter(
                                 context,
@@ -315,6 +323,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       title: LocaleProvider.current.update,
                       onTap: () {
                         vm.updateValues(
+                          countryCode: countryCode,
                           newPhoneNumber:
                               _phoneNumberEditingController.text.trim(),
                           newEmail: _emailEditingController.text.trim(),

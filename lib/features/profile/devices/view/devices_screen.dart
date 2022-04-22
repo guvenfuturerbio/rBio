@@ -80,14 +80,7 @@ class DevicesScreen extends StatelessWidget {
   Widget _buildV2Card(BuildContext context, DeviceEntity device, DevicesVm vm) {
     return BlocProvider<DeviceStatusCubit>(
       create: (context) => DeviceStatusCubit(getIt())..readStatus(device),
-      child: BlocConsumer<DeviceStatusCubit, DeviceStatus?>(
-        listener: (context, deviceStatus) {
-          if (deviceStatus == DeviceStatus.connected) {
-            if (device.deviceType == DeviceType.miScale) {
-              BlocProvider.of<MiScaleCubit>(context).readValue(device);
-            }
-          }
-        },
+      child: BlocBuilder<DeviceStatusCubit, DeviceStatus?>(
         builder: (context, deviceStatus) {
           Widget deviceCard({
             Widget? pillarSmallTrigger,
@@ -98,12 +91,9 @@ class DevicesScreen extends StatelessWidget {
                 image: UtilityManager()
                         .getDeviceImageFromType(device.deviceType!) ??
                     const SizedBox(),
-                onTap: () {
+                onTap: () async {
                   if (deviceStatus == DeviceStatus.connected) {
                     context.read<DeviceSelectedCubit>().disconnect(device);
-                    if (device.deviceType == DeviceType.miScale) {
-                      BlocProvider.of<MiScaleCubit>(context).stopListen();
-                    }
                   } else if (deviceStatus == DeviceStatus.disconnected) {
                     BlocProvider.of<DeviceSelectedCubit>(context)
                         .connect(device);

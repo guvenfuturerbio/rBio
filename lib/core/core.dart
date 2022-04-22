@@ -1,9 +1,9 @@
 export 'package:atom/atom.dart';
 export 'package:shared_preferences_manager/shared_preferences_manager.dart';
 export 'package:local_notification_manager/local_notification_manager.dart';
-export 'package:scale_api/scale_api.dart';
 export 'package:key_manager/key_manager.dart';
 export 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+export 'package:scale_dependencies/scale_dependencies.dart';
 
 export '../app/bluetooth/bluetooth.dart';
 export '../app/config/app_config.dart';
@@ -38,6 +38,8 @@ export "domain/glucose_model.dart";
 export "domain/network_cache_model.dart";
 export "domain/person_model.dart";
 
+export "enums/diabetes_type.dart";
+export "enums/glucose_margins_filter.dart";
 export "enums/loading_progress.dart";
 export 'enums/patient_type.dart';
 export 'enums/payment_type.dart';

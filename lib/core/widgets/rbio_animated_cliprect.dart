@@ -1,4 +1,122 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../core.dart';
+
+class RbioExpansionTile extends StatefulWidget {
+  final Widget child;
+  final List<Widget> children;
+
+  const RbioExpansionTile({
+    Key? key,
+    required this.child,
+    required this.children,
+  }) : super(key: key);
+
+  @override
+  State<RbioExpansionTile> createState() => _RbioExpansionTileState();
+}
+
+class _RbioExpansionTileState extends State<RbioExpansionTile>
+    with SingleTickerProviderStateMixin {
+  static final Animatable<double> _easeInTween =
+      CurveTween(curve: Curves.easeIn);
+  static final Animatable<double> _halfTween =
+      Tween<double>(begin: 0.0, end: 0.5);
+
+  late AnimationController _controller;
+  late Animation<double> _iconTurns;
+
+  bool _isExpanded = false;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 200), vsync: this);
+    _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        //
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _isExpanded = !_isExpanded;
+              if (_isExpanded) {
+                _controller.forward();
+              } else {
+                _controller.reverse().then<void>((void value) {
+                  if (!mounted) return;
+                  setState(() {
+                    // Rebuild without widget.children.
+                  });
+                });
+              }
+              PageStorage.of(context)?.writeState(context, _isExpanded);
+            });
+          },
+          child: Container(
+            color: Colors.transparent,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 6,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                Expanded(
+                  child: widget.child,
+                ),
+
+                //
+                RotationTransition(
+                  turns: _iconTurns,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: SvgPicture.asset(
+                      R.image.arrowDown,
+                      width: R.sizes.iconSize3,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        //
+        SizedBox(
+          width: double.infinity,
+          child: RbioAnimatedClipRect(
+            open: !_isExpanded,
+            alignment: Alignment.centerLeft,
+            duration: const Duration(milliseconds: 250),
+            child: Column(
+              children: widget.children,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class RbioAnimatedClipRect extends StatefulWidget {
   final Widget child;

@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activate": MessageLookupByLibrary.simpleMessage("Aktifleştir"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("İndirim kodu ekle"),
+        "add_medicine": MessageLookupByLibrary.simpleMessage("İlaç ekle"),
         "add_new_device": MessageLookupByLibrary.simpleMessage(
             "Eşleştirilmiş bir cihazınız yok. Yeni bir cihaz ekleyin"),
         "add_new_relative":
@@ -114,6 +115,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "as_png": MessageLookupByLibrary.simpleMessage("PNG olarak"),
         "awards": MessageLookupByLibrary.simpleMessage("Ödüller"),
         "back": MessageLookupByLibrary.simpleMessage("Geri"),
+        "basal_metabolism":
+            MessageLookupByLibrary.simpleMessage("Bazal metabolizma"),
         "bef": MessageLookupByLibrary.simpleMessage("Önc."),
         "before": MessageLookupByLibrary.simpleMessage("Önce"),
         "before_meal": MessageLookupByLibrary.simpleMessage("Aç"),
@@ -402,6 +405,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "diabetes_type_1": MessageLookupByLibrary.simpleMessage("Tip 1"),
         "diabetes_type_2": MessageLookupByLibrary.simpleMessage("Tip 2"),
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Tanı Tarihi"),
+        "didnt_reach_goals": MessageLookupByLibrary.simpleMessage(
+            "Değer aralığına uyulmayanlar"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Dijital Checkup"),
         "discard": MessageLookupByLibrary.simpleMessage("İptal et"),
@@ -449,6 +454,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "end_time": MessageLookupByLibrary.simpleMessage("End Time"),
         "enter_the_code":
             MessageLookupByLibrary.simpleMessage("Lütfen kodu giriniz"),
+        "enter_weight": MessageLookupByLibrary.simpleMessage("Değer girme"),
         "error": MessageLookupByLibrary.simpleMessage("Hata"),
         "error_empty_dosage_name":
             MessageLookupByLibrary.simpleMessage("Lütfen dozu giriniz."),
@@ -527,6 +533,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Gluokmetre başka bir hesapta kullanılmakta!"),
         "glucose_data_detail":
             MessageLookupByLibrary.simpleMessage("Kan Şekeri Detay"),
+        "great": MessageLookupByLibrary.simpleMessage("Mükemmel"),
         "group_name": MessageLookupByLibrary.simpleMessage("Grup Adı"),
         "guven_cayyolu_campus":
             MessageLookupByLibrary.simpleMessage("Güven Çayyolu Kampüsü"),
@@ -560,7 +567,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hosp_selection":
             MessageLookupByLibrary.simpleMessage("Hastane seçimi :"),
         "hour": MessageLookupByLibrary.simpleMessage("Saatte"),
-        "hours": MessageLookupByLibrary.simpleMessage("Saatte"),
+        "hours": MessageLookupByLibrary.simpleMessage("Saatler"),
         "how_many_reminder_is_needed": MessageLookupByLibrary.simpleMessage(
             "Kaç adet hatırlatıcıya ihtiyacınız var?"),
         "how_many_times_a_day":
@@ -583,6 +590,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Vatandaşlık/Pasaport Numarası"),
         "if_want_to_be_reminded": MessageLookupByLibrary.simpleMessage(
             "HbA1c ölçümünüzden önce bildirim almak için"),
+        "increased": MessageLookupByLibrary.simpleMessage("Artış"),
         "info": MessageLookupByLibrary.simpleMessage("Bilgi"),
         "info_report":
             MessageLookupByLibrary.simpleMessage("Şikayet Bildirimi"),
@@ -593,6 +601,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aydınlatılmış onam belgesi̇"),
         "informed_consent_form_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/onam_tr.html"),
+        "insufficient": MessageLookupByLibrary.simpleMessage("Yetersiz"),
         "intermittent_days":
             MessageLookupByLibrary.simpleMessage("Aralıklı Günler"),
         "invalid_authorization": MessageLookupByLibrary.simpleMessage(
@@ -680,10 +689,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "manuel": MessageLookupByLibrary.simpleMessage("Manuel"),
         "mars_hosp":
             MessageLookupByLibrary.simpleMessage("Güven Hastanesi Ayrancı"),
+        "mass_unit": MessageLookupByLibrary.simpleMessage("Kütle birimi"),
         "max_range": MessageLookupByLibrary.simpleMessage("Max Aralık: "),
         "meal": MessageLookupByLibrary.simpleMessage("Yemek"),
         "measurement_delete_question": MessageLookupByLibrary.simpleMessage(
             "Ölçümü silmek istiyor musunuz ?"),
+        "measurement_saved":
+            MessageLookupByLibrary.simpleMessage("Ölçüm kaydedildi"),
         "medication_reminder":
             MessageLookupByLibrary.simpleMessage("İlaç Hatırlatıcı"),
         "medication_reminders":
@@ -828,6 +840,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Belirtilen semptomlar için sonuç bulunamadı."),
         "non_diabetes": MessageLookupByLibrary.simpleMessage("Diyabet Yok"),
         "non_smoker": MessageLookupByLibrary.simpleMessage("İçmiyor"),
+        "normal": MessageLookupByLibrary.simpleMessage("Normal"),
         "normal_range": MessageLookupByLibrary.simpleMessage("Normal Aralık"),
         "not": MessageLookupByLibrary.simpleMessage("Açıklama"),
         "not_chronic_warning": MessageLookupByLibrary.simpleMessage(
@@ -999,6 +1012,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profiles": MessageLookupByLibrary.simpleMessage("Profiller"),
         "proposed_symptom": MessageLookupByLibrary.simpleMessage(
             "Aşağıdaki belirtilerden birine sahip misiniz?"),
+        "protein": MessageLookupByLibrary.simpleMessage("Protein"),
         "publications": MessageLookupByLibrary.simpleMessage("Yayınları"),
         "pulse": MessageLookupByLibrary.simpleMessage("Nabız"),
         "radiology_result":
@@ -1007,6 +1021,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rate": MessageLookupByLibrary.simpleMessage("Değerlendir"),
         "rate_appointment": MessageLookupByLibrary.simpleMessage(
             "Randevunuzu değerlendirmek ister misiniz ?"),
+        "reach_goal":
+            MessageLookupByLibrary.simpleMessage("Değer aralığına uyulanlar"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(
             "Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okudum ve anladım."),
         "recent_appointments":
@@ -1043,6 +1059,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "Bu Form; sizlere daha iyi hizmet verebilmek amacıyla uygulamada yaşadığınız ve gözlemlediğiniz sorunları / önerilerinizi ve teşekkürlerinizi bildirmeniz için hazırlanmıştır. Bildiriminiz Hastane Yönetimi tarafından en kısa sürede incelenecek, alınan önlemler ve yapılacak düzenlemeler hakkında size bilgi verilecektir. İlgilerinize ve katkılarınıza teşekkür ederiz."),
         "required_area": MessageLookupByLibrary.simpleMessage("alanı zorunlu"),
+        "required_user_height_info_message":
+            MessageLookupByLibrary.simpleMessage(
+                "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir."),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Filtre verilerini temizle"),
         "result_detail": MessageLookupByLibrary.simpleMessage("Sonuç Detayı"),
@@ -1059,7 +1078,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kemik Kütlesi"),
         "scale_data_muscle": MessageLookupByLibrary.simpleMessage("Kas"),
         "scale_data_visceral_fat":
-            MessageLookupByLibrary.simpleMessage("Vücut Yağlanması"),
+            MessageLookupByLibrary.simpleMessage("İç organ yağı"),
         "scale_data_water": MessageLookupByLibrary.simpleMessage("Su"),
         "scale_graph":
             MessageLookupByLibrary.simpleMessage(" Vücut Ölçüm Değişimi"),
@@ -1111,6 +1130,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sign_with_google":
             MessageLookupByLibrary.simpleMessage("Google ile Giriş Yap"),
         "single_day": MessageLookupByLibrary.simpleMessage("Tek Gün"),
+        "six_months": MessageLookupByLibrary.simpleMessage("6 aylık"),
         "smoker": MessageLookupByLibrary.simpleMessage("İçiyor"),
         "smoker_type": MessageLookupByLibrary.simpleMessage("Sigara Geçmişi"),
         "smokes_occasionally":
@@ -1220,6 +1240,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("İlaç vakti geldi"),
         "time_take_medicine_title": MessageLookupByLibrary.simpleMessage(
             "İlacınızı almanız gerekmektedir"),
+        "time_text": MessageLookupByLibrary.simpleMessage("Zaman"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
         "title_appointment_detail":
@@ -1310,7 +1331,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "weekdays_wednesday": MessageLookupByLibrary.simpleMessage("Çarşamba"),
         "weekdays_wednesday_short": MessageLookupByLibrary.simpleMessage("Çar"),
         "weekly": MessageLookupByLibrary.simpleMessage("Haftalık"),
+        "weighing": MessageLookupByLibrary.simpleMessage("Ölçüm yapılıyor"),
+        "weighing_completed": MessageLookupByLibrary.simpleMessage(
+            "Lütfen tartının üzerinde ölçümünüzün\ntamamlanmasını bekleyin"),
+        "weighing_results":
+            MessageLookupByLibrary.simpleMessage("Ölçüm sonuçları"),
         "weight": MessageLookupByLibrary.simpleMessage("Kilo"),
+        "weight_text": MessageLookupByLibrary.simpleMessage("Ağırlık"),
+        "weight_tracking": MessageLookupByLibrary.simpleMessage("Kilo Takibi"),
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "Kaç strip kaldığında hatırlatılsın"),
@@ -1329,6 +1357,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Hatalı kullanıcı adı ya da Şifre !"),
         "year_of_diagnosis":
             MessageLookupByLibrary.simpleMessage("Teşhis Yılı"),
+        "yearly": MessageLookupByLibrary.simpleMessage("Yıllık"),
         "yes": MessageLookupByLibrary.simpleMessage("Evet"),
         "you_have_strip": MessageLookupByLibrary.simpleMessage(
             "<stripCount> stripiniz kaldı"),

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -103,7 +104,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(left: 25, top: 15),
+                      margin: const EdgeInsets.only(left: 2, top: 15),
                       child: Text(
                         widget.selectedGenderId == 0
                             ? LocaleProvider.of(context).gender_male
@@ -158,7 +159,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                       child: ListView.builder(
                           padding: EdgeInsets.symmetric(
                               horizontal:
-                                  MediaQuery.of(context).size.width / 7),
+                                  MediaQuery.of(context).size.width / 8),
                           itemCount: value.selectedBodySymptoms.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Column(
@@ -226,6 +227,27 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
               ? () async {
                   AppInheritedWidget.of(context)?.listBodySympRsp =
                       value.selectedBodySymptoms;
+                  FirebaseAnalytics.instance.logEvent(
+                    name: "SikayetlerimSayfa4_BolumAnaliziYapin",
+                    parameters: {
+                      'randevu_alacak_kisi_id':
+                          getIt<UserNotifier>().firebaseEmail,
+                      /* Randevu alınan kişinin unique id’si */
+                      'cinsiyet_id': widget.selectedGenderId == 0 ||
+                              widget.selectedGenderId == 2
+                          ? 'M'
+                          : 'F',
+                      /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
+                      'dogum_tarihi_id': widget.yearOfBirth!,
+                      /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
+                      'agrı_bolgesi': widget.myPv?.bodyLocNames,
+                      /* Eğer seçim string olarak verilemezse agri_bolgesi id’si gönderilebilir. */
+                      'sikayet_kapsam_secili_adet': widget
+                          .myPv
+                          ?.bodyLocNamesList
+                          .length, /* Örn: el ve el bilegi - 2 / Kol - 1 / On Kol ve Bilek - 0 / Parmak - 0 / Ust Kol ve Omuz - 0 */
+                    },
+                  );
                   Atom.to(
                     PagePaths.symptomResultPage,
                     queryParameters: {
@@ -233,6 +255,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                               widget.selectedGenderId == 2
                           ? 'male'
                           : 'female',
+                      'body_part': widget.myPv!.bodyLocNames!,
+                      'body_part_length': widget.myPv!.bodyLocNamesList.length.toString(),
                       'year_of_birth': widget.yearOfBirth!,
                       'isFromVoice': false.toString(),
                     },

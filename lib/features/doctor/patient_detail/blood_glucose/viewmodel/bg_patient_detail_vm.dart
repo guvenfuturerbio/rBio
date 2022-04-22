@@ -131,6 +131,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   Future<void> fetchPatientDetail() async {
     _stateProcessPatientDetail = LoadingProgress.loading;
     notifyListeners();
+
     try {
       await Provider.of<PatientNotifiers>(mContext, listen: false)
           .fetchPatientDetail(patientId: _patientId);
@@ -310,11 +311,11 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   int get dailyHighestValue {
     int highest = bgMeasurementsDailyData.isNotEmpty
-        ? int.parse(bgMeasurementsDailyData[0].result!)
+        ? double.parse(bgMeasurementsDailyData[0].result!).toInt()
         : 300;
     for (var data in bgMeasurementsDailyData) {
-      if (int.parse(data.result!) > highest) {
-        highest = int.parse(data.result!);
+      if (double.parse(data.result!).toInt() > highest) {
+        highest = double.parse(data.result!).toInt();
       }
     }
     return highest > targetMax ? highest + 50 : targetMax + 50;
@@ -322,22 +323,23 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   int get dailyLowestValue {
     int lowest = bgMeasurementsDailyData.isNotEmpty
-        ? int.parse(bgMeasurementsDailyData[0].result!)
+        ? double.parse(bgMeasurementsDailyData[0].result!).toInt()
         : 50;
     for (var data in bgMeasurementsDailyData) {
-      if (int.parse(data.result!) < lowest) {
-        lowest = int.parse(data.result!);
+      if (double.parse(data.result!) < lowest) {
+        lowest = double.parse(data.result!).toInt();
       }
     }
     return 0; //lowest < targetMin ?  targetMin - 50 : lowest;
   }
 
   int get highestValue {
-    int highest =
-        bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result!) : 300;
+    int highest = bgMeasurements.isNotEmpty
+        ? double.parse(bgMeasurements[0].result!).toInt()
+        : 300;
     for (var data in bgMeasurements) {
-      if (int.parse(data.result!) > highest) {
-        highest = int.parse(data.result!);
+      if (double.parse(data.result!) > highest) {
+        highest = double.parse(data.result!).toInt();
       }
     }
     return 300;
@@ -345,11 +347,12 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   }
 
   int get lowestValue {
-    int lowest =
-        bgMeasurements.isNotEmpty ? int.parse(bgMeasurements[0].result!) : 50;
+    int lowest = bgMeasurements.isNotEmpty
+        ? double.parse(bgMeasurements[0].result!).toInt()
+        : 50;
     for (var data in bgMeasurements) {
-      if (int.parse(data.result!) < lowest) {
-        lowest = int.parse(data.result!);
+      if (double.parse(data.result!) < lowest) {
+        lowest = double.parse(data.result!).toInt();
       }
     }
     return 0;
@@ -533,8 +536,8 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   void setChartDailyData() {
     List<ChartData> chartData = [];
     for (var data in bgMeasurementsDailyData) {
-      chartData.add(
-          ChartData(data.date, int.parse(data.result!), data.resultColor!));
+      chartData.add(ChartData(
+          data.date, double.parse(data.result!).toInt(), data.resultColor!));
     }
     _chartData = chartData;
     _chartVeryHighTagged.clear();
@@ -564,17 +567,17 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.very_low) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result!), data.resultColor!));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataAc.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataTok.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataUnTagged.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         }
       }
     }
@@ -595,17 +598,17 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.low) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result!), data.resultColor!));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataAc.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataTok.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataUnTagged.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         }
       }
     }
@@ -626,17 +629,17 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.target) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result!), data.resultColor!));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataAc.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataTok.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataUnTagged.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         }
       }
     }
@@ -657,17 +660,17 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.high) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result!), data.resultColor!));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataAc.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataTok.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataUnTagged.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         }
       }
     }
@@ -688,17 +691,17 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
     for (var data in bgMeasurementsDailyData) {
       if (data.resultColor == R.color.very_high) {
-        chartData.add(
-            ChartData(data.date, int.parse(data.result!), data.resultColor!));
+        chartData.add(ChartData(
+            data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
-          chartDataAc.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataAc.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else if (data.tag == 2) {
-          chartDataTok.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataTok.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         } else {
-          chartDataUnTagged.add(
-              ChartData(data.date, int.parse(data.result!), data.resultColor!));
+          chartDataUnTagged.add(ChartData(data.date,
+              double.parse(data.result!).toInt(), data.resultColor!));
         }
       }
     }

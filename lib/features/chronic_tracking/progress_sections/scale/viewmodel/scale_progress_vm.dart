@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scale_repository/scale_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:scale_calculations/scale_calculations.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
@@ -29,7 +27,7 @@ class ScaleProgressVm extends ChangeNotifier
       scaleMeasurementsDailyData = getIt<ScaleRepository>().readLocalScaleData(
         Utils.instance.getAge(),
         Utils.instance.getGender(),
-        Utils.instance.getHeight(),
+        Utils.instance.getHeight()!,
       );
       scaleMeasurements = scaleMeasurementsDailyData;
 
@@ -724,7 +722,7 @@ class ScaleProgressVm extends ChangeNotifier
     final result = getIt<ScaleRepository>().readLocalScaleData(
       Utils.instance.getAge(),
       Utils.instance.getGender(),
-      Utils.instance.getHeight(),
+      Utils.instance.getHeight()!,
     );
     scaleMeasurements.clear();
     scaleMeasurements = result.map((e) => e).toList();
@@ -788,14 +786,14 @@ class ScaleProgressVm extends ChangeNotifier
     final scaleEntity = getIt<ScaleRepository>().getLatestMeasurement(
       Utils.instance.getAge(),
       Utils.instance.getGender(),
-      Utils.instance.getHeight(),
+      Utils.instance.getHeight()!,
     );
 
     return SmallChronicComponent(
       callback: callBack,
       lastMeasurement: scaleEntity == null
           ? LocaleProvider.current.no_measurement
-          : '${(scaleEntity.weight ?? 0).toStringAsFixed(2)} ${scaleEntity.unit.toStr}',
+          : '${(scaleEntity.weight ?? 0).xGetFriendyString} ${scaleEntity.getUnit}',
       lastMeasurementDate: scaleEntity?.dateTime ?? DateTime.now(),
       imageUrl: R.image.bodyScale,
     );

@@ -154,5 +154,6 @@ class _Images {
   final riveRandevu = 'assets/animations/introduction/randevu.riv';
   final riveReminer = 'assets/animations/introduction/reminer.riv';
   final riveSaglikTakibi = 'assets/animations/introduction/saglık_takibi.riv';
+  final scaleLoadingLines = 'assets/animations/scale_loading_lines.riv';
   // #endregion
 }

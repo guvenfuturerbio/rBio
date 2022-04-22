@@ -249,9 +249,7 @@ class _TableCalendarState extends State<_TableCalendar> {
               _onDaySelected(widget.val, selectedDay, focusedDay),
           onFormatChanged: (format) {},
           onPageChanged: (focusedDay) {
-            LoggerUtils.instance.i('Month Change : $focusedDay');
             widget.val.getAvailableDates(focusedDay, false);
-
             _focusedDay = focusedDay;
           },
         ),

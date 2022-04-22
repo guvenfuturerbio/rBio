@@ -202,6 +202,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
           ),
           child: Center(
             child: RbioElevatedButton(
+              infinityWidth: true,
               title: LocaleProvider.current.update_information,
               onTap: () {
                 vm.updateInformation(vm.selection);

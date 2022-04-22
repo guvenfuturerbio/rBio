@@ -94,15 +94,9 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
             );
           },
           showSuccessMessage: () {
-            Utils.instance.showSnackbar(
+            Utils.instance.showSuccessSnackbar(
               context,
               LocaleProvider.of(context).successfully_updated,
-              backColor: getIt<ITheme>().mainColor,
-              trailing: SvgPicture.asset(
-                R.image.done,
-                height: R.sizes.iconSize2,
-                color: getIt<ITheme>().iconSecondaryColor,
-              ),
             );
           },
         );

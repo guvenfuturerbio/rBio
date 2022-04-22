@@ -3,83 +3,135 @@ import 'package:flutter/material.dart';
 
 import '../core.dart';
 
-class RbioSelectBottomSheet<T> extends StatelessWidget {
-  final dynamic initalItem;
+Future<dynamic> showRbioSelectBottomSheet<T>(
+  BuildContext context, {
+  required String title,
+  required dynamic initialItem,
+  required List<Widget> children,
+}) async {
+  final result = await showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(16),
+      ),
+    ),
+    builder: (BuildContext builder) {
+      return SizedBox(
+        height: Atom.height * 0.45,
+        child: RbioSelectBottomSheet<T>(
+          title: title,
+          children: children,
+          initialItem: initialItem,
+        ),
+      );
+    },
+  );
+
+  return result;
+}
+
+class RbioSelectBottomSheet<T> extends StatefulWidget {
+  final String title;
+  final dynamic initialItem;
   final List<Widget> children;
-  final Function(dynamic) onSelectedItemChanged;
-  final void Function()? pick;
 
   const RbioSelectBottomSheet({
     Key? key,
-    required this.onSelectedItemChanged,
+    required this.title,
     required this.children,
-    required this.initalItem,
-    required this.pick,
+    required this.initialItem,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: Atom.height * 0.35,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //
-          _buildHeader(context),
+  State<RbioSelectBottomSheet<T>> createState() =>
+      _RbioSelectBottomSheetState<T>();
+}
 
-          //
-          const Divider(
-            color: Colors.black26,
-            height: 0,
-          ),
+class _RbioSelectBottomSheetState<T> extends State<RbioSelectBottomSheet<T>> {
+  late dynamic _currentValue;
 
-          //
-          Expanded(
-            child: CupertinoPicker(
-              scrollController: FixedExtentScrollController(
-                initialItem: initalItem ?? 0,
-              ),
-              backgroundColor: Colors.white,
-              onSelectedItemChanged: onSelectedItemChanged,
-              itemExtent: 45.0,
-              children: children,
-            ),
-          ),
-        ],
-      ),
-    );
+  @override
+  void initState() {
+    _currentValue = widget.initialItem;
+    super.initState();
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          //
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              LocaleProvider.current.cancel,
-              style: context.xHeadline2,
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        //
+        const Spacer(flex: 10),
+
+        //
+        Container(
+          width: 40,
+          height: 4,
+          decoration: BoxDecoration(
+            color: Colors.black12,
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+
+        //
+        const Spacer(flex: 20),
+
+        //
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            widget.title,
+            style: context.xHeadline2.copyWith(
+              fontWeight: FontWeight.w600,
             ),
           ),
+        ),
 
-          //
-          GestureDetector(
-            onTap: pick,
-            child: Text(
-              LocaleProvider.current.pick,
-              style: context.xHeadline2,
+        //
+        R.sizes.hSizer8,
+
+        //
+        const Spacer(flex: 30),
+
+        //
+        Expanded(
+          flex: 200,
+          child: CupertinoPicker(
+            scrollController: FixedExtentScrollController(
+              initialItem: widget.initialItem ?? 0,
             ),
-          )
-        ],
-      ),
+            backgroundColor: Colors.transparent,
+            onSelectedItemChanged: (val) {
+              _currentValue = val;
+            },
+            itemExtent: 45.0,
+            children: widget.children,
+          ),
+        ),
+
+        //
+        const Spacer(flex: 30),
+
+        //
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 32),
+          child: RbioElevatedButton(
+            title: LocaleProvider.current.Ok,
+            infinityWidth: true,
+            fontWeight: FontWeight.bold,
+            onTap: () {
+              Navigator.of(context).pop(_currentValue);
+            },
+          ),
+        ),
+
+        //
+        R.sizes.defaultBottomPadding,
+      ],
     );
   }
 }

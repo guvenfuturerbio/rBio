@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:scale_dependencies/scale_dependencies.dart';
 
 import '../../bluetooth_v2.dart';
 
@@ -87,9 +88,9 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
   @override
   bool connect(DeviceModel device) {
     final bluetoothDevice = device.toBluetoothDevice();
-    bluetoothDevice
-        .connect()
-        .onError((error, stackTrace) => throw UnableToConnectDeviceFailure());
+    bluetoothDevice.connect().onError(
+          (error, stackTrace) => throw UnableToConnectDeviceFailure(),
+        );
     return true;
   }
 
@@ -133,11 +134,11 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     await characteristic.setNotifyValue(true);
 
     try {
+      miScaleTimer?.cancel();
+      miScaleTimer = null;
       miScaleTimer = Timer.periodic(BluetoothConstants.miScaleNotifyDuration,
           (timer) async {
         if (await ble.state.last == BluetoothDeviceState.disconnected) {
-          LoggerUtils.instance.w('Timer canceled!! ');
-
           timer.cancel();
           return;
         }

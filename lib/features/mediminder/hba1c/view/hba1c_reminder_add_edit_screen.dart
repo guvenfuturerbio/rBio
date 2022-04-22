@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/core.dart';
-import '../hba1c.dart';
+import '../../mediminder.dart';
 
 part 'widget/last_test_dialog.dart';
 
@@ -116,9 +116,8 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             //
-                            _buildBoldTitle(
-                              context,
-                              LocaleProvider.current.last_test_date,
+                            ReminderBoldTitle(
+                              title: LocaleProvider.current.last_test_date,
                             ),
                             _buildLastTestDate(context, result),
 
@@ -126,9 +125,8 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                             _buildGap(),
 
                             //
-                            _buildBoldTitle(
-                              context,
-                              LocaleProvider.current.last_result,
+                            ReminderBoldTitle(
+                              title: LocaleProvider.current.last_result,
                             ),
                             _buildLastTestValue(context, result),
 
@@ -136,9 +134,8 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                             _buildGap(),
 
                             //
-                            _buildBoldTitle(
-                              context,
-                              LocaleProvider.current.reminder_date,
+                            ReminderBoldTitle(
+                              title: LocaleProvider.current.reminder_date,
                             ),
                             _buildReminderDate(context, result),
 
@@ -146,9 +143,8 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                             _buildGap(),
 
                             //
-                            _buildBoldTitle(
-                              context,
-                              LocaleProvider.current.reminder_hour,
+                            ReminderBoldTitle(
+                              title: LocaleProvider.current.reminder_hour,
                             ),
                             _buildReminderHour(context, result),
 
@@ -485,24 +481,4 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       return const SizedBox();
     }
   }
-
-  // #region _buildBoldTitle
-  Widget _buildBoldTitle(
-    BuildContext context,
-    String title,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 8,
-      ),
-      child: Text(
-        title,
-        textAlign: TextAlign.left,
-        style: context.xHeadline3.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-  // #endregion
 }

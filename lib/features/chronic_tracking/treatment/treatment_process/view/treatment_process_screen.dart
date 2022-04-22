@@ -54,10 +54,13 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
   Widget _buildCard(TreatmentProcessItemModel item, {bool newModel = false}) {
     return GestureDetector(
       onTap: () {
-        Atom.to(PagePaths.treatmentEditProgress, queryParameters: {
-          'treatment_model': jsonEncode(item.toJson()),
-          'newModel': newModel.toString()
-        });
+        Atom.to(
+          PagePaths.treatmentEditProgress,
+          queryParameters: {
+            'treatment_model': jsonEncode(item.toJson()),
+            'newModel': newModel.toString()
+          },
+        );
       },
       child: Card(
         elevation: R.sizes.defaultElevation,

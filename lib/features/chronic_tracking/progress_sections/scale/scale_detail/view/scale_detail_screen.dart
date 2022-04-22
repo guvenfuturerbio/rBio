@@ -2,38 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/utils/logger_helper.dart';
-import 'package:scale_repository/scale_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
-import '../../scale.dart';
-import '../bloc/cubit/scale_detail_cubit.dart';
+import '../scale_detail.dart';
+import 'widget/scale_chart.dart';
 
 class ScaleDetailScreen extends StatelessWidget {
-  const ScaleDetailScreen({
-    Key? key,
-  }) : super(key: key);
+  const ScaleDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ScaleDetailCubit>(
       create: (ctx) => ScaleDetailCubit()..fetchAll(),
-      child: const ScaleDetailView(),
+      child: const _ScaleDetailView(),
     );
   }
 }
 
-class ScaleDetailView extends StatefulWidget {
-  const ScaleDetailView({Key? key}) : super(key: key);
+class _ScaleDetailView extends StatefulWidget {
+  const _ScaleDetailView({Key? key}) : super(key: key);
 
   @override
-  _ScaleDetailViewState createState() => _ScaleDetailViewState();
+  __ScaleDetailViewState createState() => __ScaleDetailViewState();
 }
 
-class _ScaleDetailViewState extends State<ScaleDetailView> {
+class __ScaleDetailViewState extends State<_ScaleDetailView> {
   final ValueNotifier<ScaleEntity?> _pointTapNotifier = ValueNotifier(null);
-
   late ZoomPanBehavior _zoomPanBehavior;
 
   @override
@@ -44,6 +39,7 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
       enablePinching: true,
       enableSelectionZooming: true,
       zoomMode: ZoomMode.x,
+      enableMouseWheelZooming: true,
     );
 
     super.initState();
@@ -54,329 +50,189 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
     return RbioScaffold(
       backgroundColor: getIt<ITheme>().mainColor,
       bodyPadding: EdgeInsets.zero,
-      appbar: RbioAppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.read<ScaleDetailCubit>().fetchAll();
-            },
-            icon: const Icon(
-              Icons.refresh,
-            ),
-          ),
-        ],
-      ),
-      body: BlocBuilder<ScaleDetailCubit, ScaleDetailState>(
-        builder: (context, state) {
-          return _buildBody(state);
-        },
-      ),
+      appbar: _buildAppBar(),
+      body: _buildBody(),
       floatingActionButton: _buildFAB(context),
     );
   }
 
-  Widget _buildBody(ScaleDetailState state) {
-    return state.when(
-      initial: () => const SizedBox(),
-      loadInProgress: () => const RbioLoading(color: Colors.white),
-      success: (result) {
-        if (result.list.isNotEmpty) {
-          _pointTapNotifier.value ??= result.list.first;
-          if (result.list.length < 10) {
-            Future.delayed(
-              const Duration(milliseconds: 10),
-              () {
-                _zoomPanBehavior.zoomByFactor(1);
-              },
-            );
-          }
-        }
-
-        return _buildSuccess(result);
-      },
-      failure: () => const RbioBodyError(),
+  // #region _buildAppBar
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.weight_tracking,
+      ),
     );
   }
+  // #endregion
 
+  // #region _buildBody
+  Widget _buildBody() {
+    return BlocConsumer<ScaleDetailCubit, ScaleDetailState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          success: (result) {
+            _pointTapNotifier.value ??= result.filterList.first;
+
+            if (result.filterType == ScaleChartFilterType.weekly) {
+              if (result.filterList.length < 10) {
+                Future.delayed(
+                  const Duration(milliseconds: 100),
+                  () {
+                    _zoomPanBehavior.zoomByFactor(1);
+                  },
+                );
+              }
+            } else {
+              _zoomPanBehavior.reset();
+              _zoomPanBehavior.panToDirection('right');
+            }
+          },
+        );
+      },
+      builder: (context, state) {
+        return state.when(
+          initial: () => const SizedBox(),
+          loadInProgress: () => const RbioWhiteLoading(),
+          success: (result) => _buildSuccess(result),
+          failure: () => const RbioBodyError(),
+        );
+      },
+    );
+  }
+  // #endregion
+
+  // #region _buildSuccess
   Widget _buildSuccess(ScaleDetailSuccessResult result) {
+    if (result.allList.isEmpty) {
+      return RbioEmptyText(
+        title: LocaleProvider.current.no_measurement,
+        textColor: getIt<ITheme>().textColor,
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Container(
-          width: double.infinity,
-          height: 1.0,
-          color: Colors.white24,
-        ),
-
-        //
         Expanded(
           flex: 30,
-          child: Container(
-            color: Colors.transparent,
-            child: SfCartesianChart(
-              // Zoom
-              zoomPanBehavior: _zoomPanBehavior,
-              onZooming: (ZoomPanArgs args) {
-                // print(args.currentZoomFactor);
-                // print(args.currentZoomPosition);
-              },
-
-              // Title
-              title: ChartTitle(
-                text: "",
-                alignment: ChartAlignment.center,
-                backgroundColor: Colors.transparent,
-                borderColor: Colors.transparent,
-                borderWidth: 0,
-                textStyle: Theme.of(context).textTheme.headline6,
-              ),
-
-              // Plot Area
-              plotAreaBorderWidth: 0,
-              plotAreaBorderColor: Colors.transparent,
-              plotAreaBackgroundColor: Colors.transparent,
-              onPlotAreaSwipe: (detail) {},
-              // plotAreaBackgroundImage: const AssetImage('images/bike.png'),
-
-              // Legend
-              legend: Legend(
-                isVisible: false,
-                title: LegendTitle(),
-                backgroundColor: Colors.transparent,
-                isResponsive: true,
-                alignment: ChartAlignment.center,
-                borderWidth: 2.0,
-                borderColor: Colors.transparent,
-                iconBorderWidth: 2.0,
-                iconBorderColor: Colors.transparent,
-                itemPadding: 10,
-              ),
-              onLegendTapped: (detail) {},
-              onLegendItemRender: (detail) {},
-
-              // General
-              borderWidth: 0,
-              borderColor: Colors.transparent,
-              backgroundColor: Colors.transparent,
-              margin: R.sizes.screenPadding(context),
-              // selectionType: SelectionType.point,
-
-              // Primary
-              primaryXAxis: CategoryAxis(
-                plotOffset: 10,
-                visibleMaximum: 10,
-                labelPlacement: LabelPlacement.onTicks,
-                majorGridLines: const MajorGridLines(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                minorGridLines: const MinorGridLines(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                majorTickLines: const MajorTickLines(
-                  size: 0,
-                  color: Colors.transparent,
-                ),
-
-                //
-                borderWidth: 0,
-                borderColor: Colors.transparent,
-
-                axisLine: const AxisLine(
-                  width: 0.01,
-                  color: Colors.transparent,
-                ),
-                axisLabelFormatter: (detail) {
-                  return ChartAxisLabel(
-                    "",
-                    const TextStyle(fontSize: 0),
-                  );
-                },
-                axisBorderType: AxisBorderType.rectangle,
-              ),
-              primaryYAxis: NumericAxis(
-                minimum: result.minimumWeight,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              //
+              ScaleChart(
+                list: result.filterList,
                 maximum: result.maximumWeight,
-                edgeLabelPlacement: EdgeLabelPlacement.shift,
-
-                //
-                majorGridLines: const MajorGridLines(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                majorTickLines: const MajorTickLines(
-                  size: 0,
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                minorTickLines: const MinorTickLines(
-                  size: 0,
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-
-                //
-                title: AxisTitle(
-                  text: "",
-                  alignment: ChartAlignment.center,
-                  textStyle: const TextStyle(),
-                ),
-
-                //
-                axisLine: const AxisLine(
-                  width: 0,
-                  color: Colors.transparent,
-                ),
-                axisBorderType: AxisBorderType.withoutTopAndBottom,
-
-                //
-                labelFormat: '{value}',
-                labelStyle: const TextStyle(fontSize: 0),
-
-                //
-                borderWidth: 0,
-                borderColor: Colors.transparent,
+                minimum: result.minimumWeight,
+                zoomPanBehavior: _zoomPanBehavior,
+                pointTapNotifier: _pointTapNotifier,
               ),
 
-              // Series
-              series: _getSeries(result.list),
-
-              // Trackball
-              trackballBehavior: TrackballBehavior(),
-
-              // Tooltip
-              onTooltipRender: (detail) {},
-              tooltipBehavior: TooltipBehavior(
-                enable: true,
-                color: Colors.black, // Background Color
-                borderWidth: 0,
-                borderColor: Colors.transparent,
-                // header: "Header",
-                textStyle: const TextStyle(fontSize: 13),
-                elevation: 4,
-                shadowColor: Colors.black,
-                shouldAlwaysShow: false,
-                tooltipPosition: TooltipPosition.auto,
-                format: 'point.x | point.y KG',
+              //
+              Align(
+                alignment: Alignment.topCenter,
+                child: _buildCurrentWeight(),
               ),
-            ),
+            ],
           ),
         ),
 
         //
         Expanded(
           flex: 70,
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: getIt<ITheme>().cardBackgroundColor,
-              borderRadius: R.sizes.borderRadiusCircular,
-            ),
-            child: ListView.builder(
-              padding: EdgeInsets.only(bottom: R.sizes.defaultBottomValue),
-              itemCount: result.list.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ValueListenableBuilder<ScaleEntity?>(
-                  valueListenable: _pointTapNotifier,
-                  builder: (
-                    BuildContext context,
-                    ScaleEntity? selectedItem,
-                    Widget? child,
-                  ) {
-                    return ScaleCard(
-                      entity: result.list[index],
-                      isSelected: result.list[index].dateTime.xIsSameDateTime(
-                        selectedItem?.dateTime ?? DateTime.now(),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
+          child: _buildBottomBody(result),
         ),
       ],
     );
   }
+  // #endregion
 
-  List<SplineSeries<ScaleEntity, String>> _getSeries(
-    List<ScaleEntity> list,
-  ) {
-    return <SplineSeries<ScaleEntity, String>>[
-      SplineSeries<ScaleEntity, String>(
-        name: LocaleProvider.of(context).scale_graph,
-        width: 5,
-        trendlines: const [],
-        enableTooltip: true,
-
-        //
-        pointColorMapper: (d1, d2) {
-          return Colors.green;
-        },
-        onPointTap: (detail) {
-          if (detail.pointIndex != null) {
-            final selectedItem = list[detail.pointIndex!];
-            _pointTapNotifier.value = selectedItem;
-          }
-        },
-        onPointDoubleTap: (detail) {
-          // print("[onPointDoubleTap] - ${detail.dataPoints}");
-        },
-        onPointLongPress: (detail) {
-          // print("[onPointLongPress] - ${detail.dataPoints}");
-        },
-        onRendererCreated: (controller) {
-          //
-        },
-
-        // Legend
-        legendItemText: LocaleProvider.of(context).weight,
-        isVisibleInLegend: true,
-        legendIconType: LegendIconType.seriesType,
-
-        // Data Source
-        dataSource: list,
-        xValueMapper: (ScaleEntity sales, int index) =>
-            sales.dateTime.xFormatTime3(),
-        yValueMapper: (ScaleEntity sales, int index) => sales.weight,
-
-        // Marker
-        markerSettings: const MarkerSettings(
-          isVisible: true,
-          borderColor: null,
-          color: null,
-          height: null,
-          width: null,
-        ),
-
-        //
-        isVisible: true,
-        splineType: SplineType.natural,
-        sortingOrder: SortingOrder.ascending,
-        sortFieldValueMapper: (_, __) => _.dateTime,
-      ),
-    ];
+  // #region _buildCurrentWeight
+  Widget _buildCurrentWeight() {
+    return ValueListenableBuilder<ScaleEntity?>(
+      valueListenable: _pointTapNotifier,
+      builder: (
+        BuildContext context,
+        ScaleEntity? selectedItem,
+        Widget? child,
+      ) {
+        if (selectedItem == null) {
+          return const SizedBox();
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(top: 24),
+            child: Text(
+              ((selectedItem.weight ?? 0.0).xGetFriendyString)
+                  .replaceAll(".", ","),
+              style: context.xHeadline1.copyWith(
+                fontSize: context.xHeadline1.fontSize! * 1.5,
+                color: getIt<ITheme>().textColor,
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
+  // #endregion
 
+  // #region _buildBottomBody
+  Widget _buildBottomBody(ScaleDetailSuccessResult result) {
+    return Container(
+      width: double.infinity,
+      padding: R.sizes.screenPaddingOnlyHorizontal(context),
+      color: getIt<ITheme>().scaffoldBackgroundColor,
+      child: Column(
+        children: [
+          //
+          const ChartFilterComponent(),
+
+          //
+          Expanded(
+            child: ValueListenableBuilder<ScaleEntity?>(
+              valueListenable: _pointTapNotifier,
+              builder: (
+                BuildContext context,
+                ScaleEntity? selectedItem,
+                Widget? child,
+              ) {
+                if (selectedItem == null) {
+                  return const SizedBox();
+                } else {
+                  return ScaleValuesScrollView(
+                    scaleEntity: selectedItem,
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  // #endregion
+
+  // #region _buildFAB
   Widget _buildFAB(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: getIt<ITheme>().mainColor,
       onPressed: () async {
-        final isAdded = await Atom.show(
-          const ScaleTaggerPopUp(),
-          barrierDismissible: false,
-          barrierColor: Colors.transparent,
-        );
+        Atom.to(PagePaths.scaleManuelAdd);
+        // final isAdded = await Atom.show(
+        //   const ScaleTaggerPopUp(),
+        //   barrierDismissible: false,
+        //   barrierColor: Colors.transparent,
+        // );
 
-        if (isAdded != null) {
-          if (isAdded == true) {
-            await context.read<ScaleDetailCubit>().fetchAll();
-          }
-        }
+        // if (isAdded != null) {
+        //   if (isAdded == true) {
+        //     await context.read<ScaleDetailCubit>().fetchAll();
+        //   }
+        // }
       },
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -387,6 +243,7 @@ class _ScaleDetailViewState extends State<ScaleDetailView> {
       ),
     );
   }
+  // #endregion
 }
 
 class ScaleCard extends StatelessWidget {
@@ -421,14 +278,14 @@ class ScaleCard extends StatelessWidget {
         ],
         child: GestureDetector(
           onTap: () async {
-            Atom.show(
-              ScaleTaggerPopUp(
-                scaleModel: entity,
-                isUpdate: true,
-              ),
-              barrierDismissible: false,
-              barrierColor: Colors.transparent,
-            );
+            // Atom.show(
+            //   ScaleTaggerPopUp(
+            //     scaleModel: entity,
+            //     isUpdate: true,
+            //   ),
+            //   barrierDismissible: false,
+            //   barrierColor: Colors.transparent,
+            // );
           },
           child: Container(
             color: Colors.transparent,
@@ -487,7 +344,9 @@ class ScaleCard extends StatelessWidget {
                         ),
                         child: _buildColumn(
                           context,
-                          entity.weight!.toStringAsFixed(1),
+                          entity.weight == null
+                              ? ''
+                              : entity.weight!.xGetFriendyString,
                           entity.getUnit,
                           textColor: isSelected
                               ? null
@@ -515,7 +374,7 @@ class ScaleCard extends StatelessWidget {
                                 context,
                                 entity.bmi == null
                                     ? "0"
-                                    : entity.bmi!.toStringAsFixed(2),
+                                    : entity.bmi!.xGetFriendyString,
                                 "BMI",
                                 textColor: getIt<ITheme>().textColorSecondary,
                               ),
@@ -527,7 +386,7 @@ class ScaleCard extends StatelessWidget {
                                 context,
                                 entity.bmh == null
                                     ? "0"
-                                    : entity.bmh!.toStringAsFixed(2),
+                                    : entity.bmh!.xGetFriendyString,
                                 "BMH",
                                 textColor: getIt<ITheme>().textColorSecondary,
                               ),
@@ -558,10 +417,7 @@ class ScaleCard extends StatelessWidget {
           entity.dateTime,
         );
         if (isDeleted) {
-          context.read<ScaleDetailCubit>().deleteItem(
-                entity,
-                context.read<ScaleDetailCubit>().state as ScaleDetailSuccess,
-              );
+          context.read<ScaleDetailCubit>().deleteItem(entity);
         }
       } catch (e) {
         LoggerUtils.instance.e(e);

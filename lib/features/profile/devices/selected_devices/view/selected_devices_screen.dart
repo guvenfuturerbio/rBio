@@ -34,7 +34,7 @@ class SelectedDevicesScreen extends StatelessWidget {
             _selectedDeviceVm,
             __,
           ) {
-            return BlocBuilder<BluetoothBloc, BluetoothState>(
+            return BlocBuilder<BluetoothBloc, BluetoothV1State>(
               builder: (context, bluetoothState) {
                 return ListView(
                   shrinkWrap: true,

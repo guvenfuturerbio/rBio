@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/core.dart';
@@ -41,25 +40,25 @@ class PersonalInformationScreenVm extends RbioVm {
   Future<void> updateValues({
     required String newPhoneNumber,
     required String newEmail,
+    required String countryCode,
   }) async {
     phoneNumber = newPhoneNumber;
     email = newEmail;
     showLoadingOverlay = true;
 
     try {
-      ChangeContactInfoRequest changeInfo = ChangeContactInfoRequest();
+      var changeInfo = ChangeContactInfoRequest();
       var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
       var pusulaAccount = getIt<UserNotifier>().getPatient();
       if (pusulaAccount != null && pusulaAccount.id != null) {
         changeInfo.gsm = newPhoneNumber;
-        changeInfo.gsmCountryCode = null;
+        changeInfo.gsmCountryCode = countryCode;
         changeInfo.email = newEmail;
         changeInfo.patientId = pusulaAccount.id;
         changeInfo.patientType = int.parse(pusulaAccount.patientType!);
         changeInfo.nationalityId = pusulaAccount.nationalityId;
         changeInfo.hasETKApproval = pusulaAccount.hasETKApproval ?? true;
         changeInfo.hasKVKKApproval = pusulaAccount.hasKVKKApproval ?? true;
-        await getIt<Repository>().updatePusulaContactInfo(changeInfo);
         await getIt<Repository>().updateContactInfo(changeInfo);
       } else {
         changeInfo.gsm = newPhoneNumber;
@@ -74,15 +73,9 @@ class PersonalInformationScreenVm extends RbioVm {
       );
       await getIt<UserNotifier>().setUserAccount(sharedUserAccount);
       await savePhoto();
-      Utils.instance.showSnackbar(
+      Utils.instance.showSuccessSnackbar(
         mContext,
         LocaleProvider.current.personal_update_success,
-        backColor: getIt<ITheme>().mainColor,
-        trailing: SvgPicture.asset(
-          R.image.done,
-          height: R.sizes.iconSize2,
-          color: getIt<ITheme>().iconSecondaryColor,
-        ),
       );
       Utils.instance.hideKeyboard(mContext);
     } catch (e, stackTrace) {

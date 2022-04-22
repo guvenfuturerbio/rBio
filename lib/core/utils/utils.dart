@@ -39,9 +39,52 @@ class Utils {
     }
   }
 
-  int getHeight() =>
-      int.tryParse(getIt<ProfileStorageImpl>().getFirst().height ?? '170') ??
-      170;
+  /// * device_listing_screen.dart'da "DeviceType.miScale" kontrol ediyorum.
+  ///
+  /// * scale_manuel_add_cubit.dart'da kontrol ediyorum, yoksa "Kaydet" butonunu disable yapıyorum.
+  bool checkUserHeight() {
+    final height = getHeight();
+    if (height != null) {
+      return true;
+    } else {
+      Atom.show(
+        GuvenAlert(
+          contentPadding: const EdgeInsets.all(16),
+          backgroundColor: getIt<ITheme>().cardBackgroundColor,
+          title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
+          content: GuvenAlert.buildDescription(
+            LocaleProvider.current.required_user_height_info_message,
+          ),
+          actions: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: RbioElevatedButton(
+                    infinityWidth: true,
+                    title: LocaleProvider.current.update_information,
+                    onTap: () {
+                      Atom.dismiss();
+                      Atom.to(PagePaths.healthInformation);
+                    },
+                  ),
+                ),
+                R.sizes.hSizer8,
+              ],
+            ),
+          ],
+        ),
+      );
+      return false;
+    }
+  }
+
+  int? getHeight() {
+    final height = getIt<ProfileStorageImpl>().getFirst().height;
+    return height == null ? null : int.tryParse(height);
+  }
 
   int getGender() {
     return getIt<ProfileStorageImpl>().getFirst().gender == 'Male' ||
@@ -88,6 +131,21 @@ class Utils {
       ),
     );
   }
+
+  // #region showSuccessSnackbar
+  void showSuccessSnackbar(BuildContext context, String text) {
+    showSnackbar(
+      context,
+      text,
+      backColor: getIt<ITheme>().mainColor,
+      trailing: SvgPicture.asset(
+        R.image.done,
+        height: R.sizes.iconSize2,
+        color: getIt<ITheme>().iconSecondaryColor,
+      ),
+    );
+  }
+  // #endregion
 
   String encryptWithSalsa20(String plainText, String email) {
     //final key = encrypt.Key.fromLength(32);
@@ -458,7 +516,7 @@ class Utils {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.06,
+                    height: MediaQuery.of(context).size.height * 0.065,
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -481,13 +539,13 @@ class Utils {
                     child: Wrap(
                       children: <Widget>[
                         Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(6),
                           child: Text(
                             title ?? "No title",
                             textAlign: TextAlign.left,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: context.xHeadline4.copyWith(
+                            style: context.xHeadline5.copyWith(
                               fontWeight: FontWeight.bold,
                               color: getIt<ITheme>().textColor,
                             ),
@@ -1089,6 +1147,9 @@ extension SclaeToStringExtension on SelectedScaleType {
 
       case SelectedScaleType.muscle:
         return LocaleProvider.current.scale_data_muscle;
+
+      default:
+        return "";
     }
   }
 }
