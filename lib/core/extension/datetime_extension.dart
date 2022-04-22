@@ -3,6 +3,10 @@
 import 'package:intl/intl.dart';
 
 extension BuildContextExtensions on DateTime {
+  DateTime get getStartOfTheDay {
+    return DateTime(year, month, day, 0, 0, 0);
+  }
+
   /// Format : Last Day of Month
   DateTime get xLastDayOfMonth =>
       month < 12 ? DateTime(year, month + 1, 0) : DateTime(year + 1, 1, 0);
