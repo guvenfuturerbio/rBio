@@ -40,9 +40,15 @@ class EResultScreen extends StatelessWidget {
           style: context.xHeadline1,
         ),
 
+        //  startMinDate: DateTime(1900).getStartOfTheDay,
+        //     startMaxDate: DateTime.now().getStartOfTheDay,
+        //     endMinDate: DateTime.now().getStartOfTheDay,
+        //     endMaxDate:
+        //         DateTime.now().add(const Duration(days: 365)).getStartOfTheDay,
+
         //
         Container(
-          margin: const EdgeInsets.only(left: 8, top: 8, right: 8),
+          margin: const EdgeInsets.only(top: 8, right: 8),
           child: GuvenDateRange(
             startCurrentDate: vm.startDate,
             onStartDateChange: (date) {
@@ -56,6 +62,11 @@ class EResultScreen extends StatelessWidget {
                 vm.setEndDate(date);
               }
             },
+            startMinDate: DateTime(1900).getStartOfTheDay,
+            startMaxDate: DateTime.now().getStartOfTheDay,
+            endMinDate: DateTime.now().getStartOfTheDay,
+            endMaxDate:
+                DateTime.now().add(const Duration(days: 365)).getStartOfTheDay,
           ),
         ),
 

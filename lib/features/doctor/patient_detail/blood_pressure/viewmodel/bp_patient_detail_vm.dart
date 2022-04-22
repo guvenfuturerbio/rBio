@@ -3,6 +3,7 @@ part of '../view/bp_patient_detail_screen.dart';
 class BpPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   List<BpMeasurementViewModel> bpMeasurements = [];
   List<BpMeasurementViewModel> bpMeasurementsDailyData = [];
+  LoadingProgress? loading;
 
   Map<String, bool>? _measurementFilters;
   Map<String, bool> get measurements =>
@@ -24,6 +25,7 @@ class BpPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
   BpPatientDetailVm({required this.mContext, required this.patientId}) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      loading = LoadingProgress.loading;
       isChartShow = false;
       update();
       controller!.addListener(() async {
@@ -69,6 +71,8 @@ class BpPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   bool? isDataLoading;
 
   fetchBpMeasurement() async {
+    loading = LoadingProgress.loading;
+    notifyListeners();
     final result = await getIt<DoctorRepository>().getMyPatientBloodPressure(
       patientId,
       GetMyPatientFilter(end: null, start: null),
@@ -78,6 +82,9 @@ class BpPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
         result.map((e) => BpMeasurementViewModel(bpModel: e)).toList();
 
     bpMeasurements.sort((a, b) => a.date.compareTo(b.date));
+
+    loading = LoadingProgress.done;
+    notifyListeners();
   }
 
   Future<void> getMoreData() async {

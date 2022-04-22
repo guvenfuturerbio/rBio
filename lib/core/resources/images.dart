@@ -114,6 +114,9 @@ class _Images {
   final weight = 'assets/images/weight_icon.svg';
   final women = "assets/images/women_icon.svg";
   final youtube = "assets/images/youtubeicon.svg";
+  final upload = "assets/images/upload.svg";
+  final startVideo = "assets/images/start_video_call.svg";
+  final rate = "assets/images/ic_star_blue.svg";
 
   final minus = 'assets/images/minus.svg';
   final warning = 'assets/images/warning.svg';

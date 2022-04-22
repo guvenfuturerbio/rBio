@@ -41,6 +41,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
       } else {
         throw Exception('newModel argument does not exist');
       }
+
       if (Atom.queryParameters['treatment_model'] != null) {
         _treatmentModel = TreatmentModel.fromJson(
             jsonDecode(Atom.queryParameters['treatment_model']!));
@@ -49,11 +50,10 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
         throw Exception('treatment_model argument does not exist');
       }
       textEditingController.text = _treatmentModel!.treatment!;
-    } catch (e, stk) {
-      debugPrintStack(stackTrace: stk);
-      LoggerUtils.instance.e(e.toString());
+    } catch (e) {
       return const RbioRouteError();
     }
+
     return KeyboardDismissOnTap(
       child: ChangeNotifierProvider<TreatmentEditVm>(
         create: (_) => TreatmentEditVm(_treatmentModel!),

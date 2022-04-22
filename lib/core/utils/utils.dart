@@ -516,7 +516,7 @@ class Utils {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.06,
+                    height: MediaQuery.of(context).size.height * 0.065,
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -539,13 +539,13 @@ class Utils {
                     child: Wrap(
                       children: <Widget>[
                         Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(6),
                           child: Text(
                             title ?? "No title",
                             textAlign: TextAlign.left,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: context.xHeadline4.copyWith(
+                            style: context.xHeadline5.copyWith(
                               fontWeight: FontWeight.bold,
                               color: getIt<IAppConfig>().theme.textColor,
                             ),

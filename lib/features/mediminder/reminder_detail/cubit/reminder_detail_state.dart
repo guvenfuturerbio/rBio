@@ -11,8 +11,26 @@ class ReminderDetailState with _$ReminderDetailState {
 }
 
 @freezed
-class ReminderDetailResult with _$ReminderDetailResult{
+class ReminderDetailResult with _$ReminderDetailResult {
   const factory ReminderDetailResult.hba1C(Hba1CReminderModel model) = ReminderDetailHba1C;
-  const factory ReminderDetailResult.bloodGlucose(BloodGlucoseReminderModel model) = ReminderDetailBloodGlucose;
-  const factory ReminderDetailResult.medication(MedicationReminderModel model) = ReminderDetailMedication;
+  const factory ReminderDetailResult.bloodGlucose(List<BloodGlucoseReminderModel> list) = ReminderDetailBloodGlucose;
+  const factory ReminderDetailResult.medication(List<MedicationReminderModel> list) = ReminderDetailMedication;
+}
+
+class ReminderChangeTimeStatus {
+  int notificationId;
+  bool value;
+  tz.TZDateTime dateTime;
+  List<ExpandableHoursModel> list;
+  BloodGlucoseReminderModel? bloodGlucoseModel;
+  MedicationReminderModel? medicationModel;
+
+  ReminderChangeTimeStatus({
+    required this.notificationId,
+    required this.value,
+    required this.dateTime,
+    required this.list,
+    this.bloodGlucoseModel,
+    this.medicationModel,
+  });
 }

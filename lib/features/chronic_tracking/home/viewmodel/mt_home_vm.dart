@@ -110,7 +110,7 @@ class MeasurementTrackingVm with ChangeNotifier {
             device: 4))
         .toList();
 
-    getIt<GlucoseStorageImpl>().writeAll(glucoseData, isFromHealth: true);
+    getIt<GlucoseStorageImpl>().writeAll(glucoseData, isFromHealth: false);
   }
 
   savePressureData(List<HealthDataPoint> data) {
@@ -174,7 +174,7 @@ class MeasurementTrackingVm with ChangeNotifier {
         .toList();
 
     getIt<BloodPressureStorageImpl>()
-        .writeAll(pressureData, isFromHealth: true);
+        .writeAll(pressureData, isFromHealth: false);
   }
 
   Future<void> getValues() async {

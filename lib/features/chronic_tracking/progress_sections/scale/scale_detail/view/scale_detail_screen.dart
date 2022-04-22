@@ -73,7 +73,9 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
       listener: (context, state) {
         state.whenOrNull(
           success: (result) {
-            _pointTapNotifier.value ??= result.filterList.first;
+            if (result.filterList.isNotEmpty) {
+              _pointTapNotifier.value ??= result.filterList.first;
+            }
 
             if (result.filterType == ScaleChartFilterType.weekly) {
               if (result.filterList.length < 10) {
@@ -135,7 +137,7 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
               //
               Align(
                 alignment: Alignment.topCenter,
-                child: _buildCurrentWeight(),
+                child: _buildCurrentWeight(result),
               ),
             ],
           ),
@@ -152,7 +154,7 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
   // #endregion
 
   // #region _buildCurrentWeight
-  Widget _buildCurrentWeight() {
+  Widget _buildCurrentWeight(ScaleDetailSuccessResult result) {
     return ValueListenableBuilder<ScaleEntity?>(
       valueListenable: _pointTapNotifier,
       builder: (
@@ -166,8 +168,10 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
           return Padding(
             padding: const EdgeInsets.only(top: 24),
             child: Text(
-              ((selectedItem.weight ?? 0.0).xGetFriendyString)
-                  .replaceAll(".", ","),
+              result.filterList.isEmpty
+                  ? ""
+                  : ((selectedItem.weight ?? 0.0).xGetFriendyString)
+                      .replaceAll(".", ","),
               style: context.xHeadline1.copyWith(
                 fontSize: context.xHeadline1.fontSize! * 1.5,
                 color: getIt<IAppConfig>().theme.textColor,
@@ -193,22 +197,27 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
 
           //
           Expanded(
-            child: ValueListenableBuilder<ScaleEntity?>(
-              valueListenable: _pointTapNotifier,
-              builder: (
-                BuildContext context,
-                ScaleEntity? selectedItem,
-                Widget? child,
-              ) {
-                if (selectedItem == null) {
-                  return const SizedBox();
-                } else {
-                  return ScaleValuesScrollView(
-                    scaleEntity: selectedItem,
-                  );
-                }
-              },
-            ),
+            child: result.filterList.isEmpty
+                ? RbioEmptyText(
+                    title: LocaleProvider.current.no_measurement,
+                    textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                  )
+                : ValueListenableBuilder<ScaleEntity?>(
+                    valueListenable: _pointTapNotifier,
+                    builder: (
+                      BuildContext context,
+                      ScaleEntity? selectedItem,
+                      Widget? child,
+                    ) {
+                      if (selectedItem == null) {
+                        return const SizedBox();
+                      } else {
+                        return ScaleValuesScrollView(
+                          scaleEntity: selectedItem,
+                        );
+                      }
+                    },
+                  ),
           ),
         ],
       ),

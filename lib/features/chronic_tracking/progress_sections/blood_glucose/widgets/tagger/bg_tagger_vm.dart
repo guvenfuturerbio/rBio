@@ -15,22 +15,17 @@ class BgTaggerVm extends ChangeNotifier {
     required this.data,
     required this.isManual,
     required this.key,
-  }) {
-    controller.text = data.level;
-    noteController.text = data.note;
-  }
+  });
 
   final int? key;
   final BuildContext context;
   final GlucoseData data;
   final bool isEdit;
   final bool isManual;
-  final TextEditingController controller = TextEditingController();
-  final TextEditingController noteController = TextEditingController();
   DateTime get date => DateTime.fromMillisecondsSinceEpoch(data.time);
 
   void onChanged(String value) {
-    data.level = controller.text == '' ? '0' : controller.text;
+    data.level = value == '' ? '0' : value;
     notifyListeners();
   }
 
@@ -117,9 +112,9 @@ class BgTaggerVm extends ChangeNotifier {
     Atom.dismiss();
   }
 
-  Future<void> rightAction() async {
+  Future<void> rightAction(String note) async {
     if (data.level != "" && data.level != "0") {
-      data.note = noteController.text;
+      data.note = note;
       data.userId = getIt<ProfileStorageImpl>().getFirst().id;
       data.tag = data.tag ?? 3;
 
@@ -131,8 +126,8 @@ class BgTaggerVm extends ChangeNotifier {
     Atom.dismiss();
   }
 
-  Future<void> update() async {
-    data.note = noteController.text;
+  Future<void> update(String note) async {
+    data.note = note;
     if (data.imageURL != null && data.imageURL != "") {
       getIt<GlucoseStorageImpl>().updateImage(data.imageURL!, key);
     } else {

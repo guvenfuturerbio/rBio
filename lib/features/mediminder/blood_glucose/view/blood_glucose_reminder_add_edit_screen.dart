@@ -381,8 +381,10 @@ class __BloodGlucoseReminderAddEditViewState
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            for (var i = 0; i < result.doseTimes.length; i++)
-              _buildTimeCard(i, result.doseTimes[i]),
+            for (var i = 0; i < result.doseTimes.length; i++) ...[
+              if (result.doseTimeStatus[i] == true)
+                _buildTimeCard(i, result.doseTimes[i]),
+            ],
           ],
         )
       ],

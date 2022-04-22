@@ -104,7 +104,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(left: 25, top: 15),
+                      margin: const EdgeInsets.only(left: 2, top: 15),
                       child: Text(
                         widget.selectedGenderId == 0
                             ? LocaleProvider.of(context).gender_male
@@ -160,7 +160,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                       child: ListView.builder(
                           padding: EdgeInsets.symmetric(
                               horizontal:
-                                  MediaQuery.of(context).size.width / 7),
+                                  MediaQuery.of(context).size.width / 8),
                           itemCount: value.selectedBodySymptoms.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Column(

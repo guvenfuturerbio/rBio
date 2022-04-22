@@ -18,6 +18,7 @@ class BloodGlucoseReminderAddEditResult {
   ReminderPeriod? reminderPeriod;
   int? dailyDose;
   List<tz.TZDateTime> doseTimes;
+  List<bool> doseTimeStatus;
   List<SelectableDay> days;
 
   BloodGlucoseReminderAddEditResult({
@@ -26,6 +27,7 @@ class BloodGlucoseReminderAddEditResult {
     this.usageType,
     this.reminderPeriod,
     this.dailyDose,
+    this.doseTimeStatus = const [],
     this.doseTimes = const [],
     this.days = const [],
   });
@@ -36,6 +38,7 @@ class BloodGlucoseReminderAddEditResult {
     UsageType? usageType,
     ReminderPeriod? reminderPeriod,
     int? dailyDose,
+    List<bool>? doseTimeStatus,
     List<tz.TZDateTime>? doseTimes,
     List<SelectableDay>? days,
   }) {
@@ -45,6 +48,7 @@ class BloodGlucoseReminderAddEditResult {
       usageType: usageType ?? this.usageType,
       reminderPeriod: reminderPeriod ?? this.reminderPeriod,
       dailyDose: dailyDose ?? this.dailyDose,
+      doseTimeStatus: doseTimeStatus ?? this.doseTimeStatus,
       doseTimes: doseTimes ?? this.doseTimes,
       days: days ?? this.days,
     );
@@ -57,6 +61,7 @@ class BloodGlucoseReminderAddEditResult {
       usageType: usageType,
       reminderPeriod: reminderPeriod,
       dailyDose: null,
+      doseTimeStatus: [],
       doseTimes: [],
       days: days,
     );

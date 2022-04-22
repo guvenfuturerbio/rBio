@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_cart": MessageLookupByLibrary.simpleMessage("Add to Cart"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("Add discount code"),
+        "add_medicine": MessageLookupByLibrary.simpleMessage("Add medicine"),
         "add_new_device": MessageLookupByLibrary.simpleMessage(
             "You do not have a paired device. Add a new device"),
         "add_new_relative":
@@ -181,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "btn_navigation_skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "btn_next": MessageLookupByLibrary.simpleMessage("next"),
         "btn_remember_me": MessageLookupByLibrary.simpleMessage("Remember me"),
+        "btn_send_code": MessageLookupByLibrary.simpleMessage("Send Code"),
         "btn_sign_in": MessageLookupByLibrary.simpleMessage("Sign In"),
         "btn_sign_up": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "buy_package": MessageLookupByLibrary.simpleMessage("Buy Package"),

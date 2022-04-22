@@ -4,12 +4,12 @@ class ReminderListModel {
   final int notificationId;
   final int scheduledDate;
   final int createdDate;
-  /// /profile/get-all
   final int entegrationId;
   final Remindable remindable;
   final String title;
   final String? subTitle;
   final String nameAndSurname;
+  final bool status;
 
   ReminderListModel({
     required this.notificationId,
@@ -20,5 +20,6 @@ class ReminderListModel {
     required this.title,
     this.subTitle,
     required this.nameAndSurname,
+    required this.status,
   });
 }

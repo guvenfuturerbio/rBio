@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/features/search/utils/debouncer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/core.dart';
@@ -61,6 +62,8 @@ class SearchView extends StatelessWidget {
   }
 
   IRbioAppBar _buildAppBar(BuildContext context) {
+    // adds delay
+    final _debouncer = Debouncer(milliseconds: 500);
     return RbioAppBar(
       leading: drawerKey != null
           ? RbioLeadingMenu(drawerKey: drawerKey)
@@ -71,7 +74,8 @@ class SearchView extends StatelessWidget {
           focusNode: focusNode,
           hintText: LocaleProvider.of(context).search_hint,
           onChanged: (text) {
-            context.read<SearchBloc>().add(SearchTextFiltered(text));
+            _debouncer.run(
+                () => context.read<SearchBloc>().add(SearchTextFiltered(text)));
           },
         ),
       ),

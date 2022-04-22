@@ -10,6 +10,7 @@
   "btn_remember_me": "Remember me",
   "btn_sign_in": "Sign In",
   "btn_sign_up": "Sign Up",
+  "btn_send_code": "Send Code",
   "chronic_track": "Chronic Tracking",
   "done": "Done",
   "create_appointment_events": "Create Appointment",
@@ -851,5 +852,6 @@
   "weighing_completed": "Please wait until\nweighing completed",
   "weighing_results": "Weighing results",
   "required_user_height_info_message": "You need to enter your Height information to continue.",
-  "measurement_saved": "The measurement has been saved"
+  "measurement_saved": "The measurement has been saved",
+  "add_medicine": "Add medicine"
 }

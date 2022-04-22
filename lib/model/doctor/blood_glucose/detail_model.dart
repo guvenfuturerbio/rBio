@@ -19,11 +19,11 @@ class DetailModel {
 
   DetailModel.fromJson(Map<String, dynamic> json) {
     occurrenceTime = json['occurrence_time'] as String?;
-    normalMin = (json['normal_min'] as double).toInt();
-    normalMax = (json['normal_max'] as double).toInt();
-    alertMin = (json['alert_min'] as double).toInt();
-    alertMax = (json['alert_max'] as double).toInt();
-    target = (json['target'] as double).toInt();
+    normalMin = (json['normal_min'] ?? 0.0).toInt();
+    normalMax = (json['normal_max'] ?? 0.0).toInt();
+    alertMin = (json['alert_min'] ?? 0.0).toInt();
+    alertMax = (json['alert_max'] ?? 0.0).toInt();
+    target = (json['target'] ?? 0.0).toInt();
     //isSmoker = json['is_smoker'] ;
   }
 

@@ -127,7 +127,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
             //
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(8),
                 itemCount: value.bodySubLocations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(

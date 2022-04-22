@@ -160,6 +160,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Send Code`
+  String get btn_send_code {
+    return Intl.message(
+      'Send Code',
+      name: 'btn_send_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Chronic Tracking`
   String get chronic_track {
     return Intl.message(
@@ -8535,6 +8545,16 @@ class LocaleProvider {
     return Intl.message(
       'The measurement has been saved',
       name: 'measurement_saved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add medicine`
+  String get add_medicine {
+    return Intl.message(
+      'Add medicine',
+      name: 'add_medicine',
       desc: '',
       args: [],
     );

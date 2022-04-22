@@ -55,6 +55,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
           return RbioScaffold(
             appbar: _buildAppBar(context),
             body: _buildResultList(context, value),
+            floatingActionButton: _buildFAB(context),
           );
         },
       ),
@@ -106,8 +107,10 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                   animation: true,
                                   progressColor:
                                       getIt<IAppConfig>().theme.mainColor,
-                                  backgroundColor:
-                                      getIt<IAppConfig>().theme.grey.withOpacity(0.2),
+                                  backgroundColor: getIt<IAppConfig>()
+                                      .theme
+                                      .grey
+                                      .withOpacity(0.2),
                                   lineHeight: 20,
                                   barRadius: const Radius.circular(25),
                                   animationDuration: 1100,
@@ -242,7 +245,10 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                 animation: true,
                                 progressColor:
                                     getIt<IAppConfig>().theme.mainColor,
-                                backgroundColor: getIt<IAppConfig>().theme.grey.withOpacity(0.2),
+                                backgroundColor: getIt<IAppConfig>()
+                                    .theme
+                                    .grey
+                                    .withOpacity(0.2),
                                 lineHeight: 20,
                                 animationDuration: 1100,
                                 barRadius: const Radius.circular(25),
@@ -375,4 +381,14 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
         return const SizedBox();
     }
   }
+}
+
+FloatingActionButton _buildFAB(BuildContext context) {
+  return FloatingActionButton(
+    backgroundColor: getIt<IAppConfig>().theme.mainColor,
+    onPressed: () {
+      Atom.to(PagePaths.main);
+    },
+    child: const Icon(Icons.home),
+  );
 }

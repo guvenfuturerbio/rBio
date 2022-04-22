@@ -215,7 +215,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                       child: RbioElevatedButton(
                         infinityWidth: true,
                         title:
-                            LocaleProvider.of(context).btn_next.toUpperCase(),
+                            LocaleProvider.of(context).btn_send_code.toUpperCase(),
                         onTap: () {
                           UserRegistrationStep1Model userRegisterStep1 =
                               UserRegistrationStep1Model();
@@ -261,7 +261,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                             ),
                           ),
                           onTap: () {
-                            Atom.to(PagePaths.registerStep2);
+                            Atom.to(PagePaths.registerStep1);
                           },
                         )
                       ],

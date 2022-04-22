@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../model/treatment_model/treatment_model.dart';
+import '../../core/core.dart';
 
 part 'person_model.g.dart';
 
@@ -127,6 +128,13 @@ class Person extends HiveObject {
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 
   Map<String, dynamic> toJson() => _$PersonToJson(this);
+
+  Map<String, dynamic> getRequestBody() {
+    final diabetesType = this.diabetesType.xGetDiabetesType.xRawValue;
+    final json = _$PersonToJson(this);
+    json['diabetes_type'] = diabetesType;
+    return json;
+  }
 
   Person fromDefault({
     String name = 'First',

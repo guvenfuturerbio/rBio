@@ -18,6 +18,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
     required int scheduledDate,
     required int createdDate,
     required int entegrationId,
+    required bool status,
     this.drugTracking,
     this.drugName,
     this.usageType,
@@ -34,6 +35,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
           scheduledDate: scheduledDate,
           createdDate: createdDate,
           entegrationId: entegrationId,
+          status: status,
         );
 
   factory MedicationReminderModel.empty() => MedicationReminderModel(
@@ -41,6 +43,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
         scheduledDate: -1,
         createdDate: -1,
         entegrationId: -1,
+        status: true,
       );
 
   @override
@@ -69,6 +72,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
       entegrationId: json['entegrationId'] as int,
+      status: json['status'] as bool,
       drugTracking: json['drugTracking'] == null
           ? null
           : (json['drugTracking'] as String).xGetDrugTracking,
@@ -92,4 +96,43 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
   MedicationReminderModel fromJson(Map<String, dynamic> json) {
     return MedicationReminderModel.fromJson(json);
   }
+
+  MedicationReminderModel changeStatus(bool newStatus) {
+    return MedicationReminderModel(
+      status: newStatus,
+      notificationId: notificationId,
+      scheduledDate: scheduledDate,
+      createdDate: createdDate,
+      entegrationId: entegrationId,
+      drugTracking: drugTracking,
+      drugName: drugName,
+      usageType: usageType,
+      reminderPeriod: reminderPeriod,
+      dayIndex: dayIndex,
+      dailyDose: dailyDose,
+      oneTimeDose: oneTimeDose,
+      drugCount: drugCount,
+      remainingCountNotification: remainingCountNotification,
+      boxCode: boxCode,
+    );
+  }
+
+  MedicationReminderModel addDrugCount(int newValue) =>
+      MedicationReminderModel(
+        createdDate: createdDate,
+        entegrationId: entegrationId,
+        notificationId: notificationId,
+        scheduledDate: scheduledDate,
+        status: status,
+        drugTracking: drugTracking,
+        drugName: drugName,
+        usageType: usageType,
+        reminderPeriod: reminderPeriod,
+        dayIndex: dayIndex,
+        dailyDose: dailyDose,
+        oneTimeDose: oneTimeDose,
+        drugCount: (drugCount ?? 0) + newValue,
+        remainingCountNotification: remainingCountNotification,
+        boxCode: boxCode,
+      );
 }

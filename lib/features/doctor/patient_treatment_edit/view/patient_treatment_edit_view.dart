@@ -47,15 +47,18 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
       LoggerUtils.instance.e(e.toString());
       return const RbioRouteError();
     }
+
     return KeyboardDismissOnTap(
       child: ChangeNotifierProvider<PatientTreatmentEditVm>(
         create: (_) => PatientTreatmentEditVm(_treatmentModel),
-        child: Consumer<PatientTreatmentEditVm>(builder: (ctx, vm, __) {
-          return RbioScaffold(
-            appbar: _buildAppBar(),
-            body: _buildBody(ctx),
-          );
-        }),
+        child: Consumer<PatientTreatmentEditVm>(
+          builder: (ctx, vm, __) {
+            return RbioScaffold(
+              appbar: _buildAppBar(),
+              body: _buildBody(ctx),
+            );
+          },
+        ),
       ),
     );
   }

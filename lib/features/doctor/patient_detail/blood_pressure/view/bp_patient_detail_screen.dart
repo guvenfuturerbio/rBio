@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,11 +16,14 @@ import '../../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/
 import '../../../../chronic_tracking/progress_sections/blood_pressure/widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
 import '../../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
 import '../../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';
+import '../../../notifiers/patient_notifiers.dart';
+import '../../../treatment_process/view/treatment_process_screen.dart';
 
 part '../viewmodel/bp_patient_detail_vm.dart';
 part '../widget/charts/bp_line_chart.dart';
 part '../widget/graph_header_section.dart';
 part '../widget/measurement_list.dart';
+part '../widget/blood_pressure_detail_card.dart';
 
 class BpPatientDetailScreen extends StatefulWidget {
   const BpPatientDetailScreen({Key? key}) : super(key: key);
@@ -31,8 +36,8 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
     with SingleTickerProviderStateMixin {
   int? patientId;
   String? patientName;
-  AnimationController? animationController;
-  Animation<double>? sizeAnimation;
+  late AnimationController animationController;
+  late Animation<double> sizeAnimation;
 
   final _controller = ScrollController();
   final _dropdownBannerKey = GlobalKey<NavigatorState>();
@@ -45,7 +50,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
     );
 
     sizeAnimation = CurvedAnimation(
-      parent: animationController!,
+      parent: animationController,
       curve: Curves.fastOutSlowIn,
     );
     Utils.instance.releaseOrientation();
@@ -55,7 +60,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
 
   @override
   void dispose() {
-    animationController?.dispose();
+    animationController.dispose();
     Utils.instance.forcePortraitOrientation();
 
     super.dispose();
@@ -125,57 +130,74 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            //
-            if (MediaQuery.of(context).orientation == Orientation.portrait)
-              _buildExpandedUser(),
+        child: vm.loading == LoadingProgress.loading
+            ? const RbioLoading()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  if (MediaQuery.of(context).orientation ==
+                      Orientation.portrait)
+                    _buildExpandedUser(),
 
-            //
-            if (MediaQuery.of(context).orientation == Orientation.portrait)
-              const SizedBox(height: 12),
-
-            if (!vm.isDataLoading! &&
-                MediaQuery.of(context).orientation == Orientation.portrait) ...[
-              vm.isChartShow
-                  ? _GraphHeaderSection(
-                      value: vm,
-                      controller: _controller,
-                    )
-                  : Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: context.height * .02),
-                      child: RbioElevatedButton(
-                        title: LocaleProvider.current.open_chart,
-                        onTap: vm.changeChartShowStatus,
-                      ),
+                  ClipRRect(
+                    borderRadius: R.sizes.borderRadiusCircular,
+                    child: SizeTransition(
+                      sizeFactor: sizeAnimation,
+                      child: _UserBloodPressureDetailCard(
+                          patientDetail: vm.bpMeasurements.isNotEmpty
+                              ? vm.bpMeasurements.first.bpModel
+                              : null),
                     ),
-              if (MediaQuery.of(context).orientation == Orientation.portrait)
-                //
-                SizedBox(
-                  height: vm.isChartShow
-                      ? context.height * .5
-                      : context.height * .8,
-                  child: _MeasurementList(
-                      bpMeasurements: vm.bpMeasurements,
-                      scrollController: vm.controller!,
-                      fetchScrolledData: vm.fetchScrolledData),
-                ),
-            ] else ...[
-              Shimmer.fromColors(
-                child: SizedBox(
-                  height: context.height * .3,
-                  width: double.infinity,
-                ),
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
+                  ),
+
+                  //
+                  if (MediaQuery.of(context).orientation ==
+                      Orientation.portrait)
+                    const SizedBox(height: 12),
+
+                  if (!vm.isDataLoading! &&
+                      MediaQuery.of(context).orientation ==
+                          Orientation.portrait) ...[
+                    vm.isChartShow
+                        ? _GraphHeaderSection(
+                            value: vm,
+                            controller: _controller,
+                          )
+                        : Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: context.height * .02),
+                            child: RbioElevatedButton(
+                              title: LocaleProvider.current.open_chart,
+                              onTap: vm.changeChartShowStatus,
+                            ),
+                          ),
+                    if (MediaQuery.of(context).orientation ==
+                        Orientation.portrait)
+                      //
+                      SizedBox(
+                        height: vm.isChartShow
+                            ? context.height * .5
+                            : context.height * .8,
+                        child: _MeasurementList(
+                            bpMeasurements: vm.bpMeasurements,
+                            scrollController: vm.controller!,
+                            fetchScrolledData: vm.fetchScrolledData),
+                      ),
+                  ] else ...[
+                    Shimmer.fromColors(
+                      child: SizedBox(
+                        height: context.height * .3,
+                        width: double.infinity,
+                      ),
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                    ),
+                  ],
+                ],
               ),
-            ],
-          ],
-        ),
       );
 
   Widget _buildExpandedUser() {
@@ -191,11 +213,11 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                if (animationController!.status == AnimationStatus.completed) {
-                  animationController!.reverse();
-                } else if (animationController!.status ==
+                if (animationController.status == AnimationStatus.completed) {
+                  animationController.reverse();
+                } else if (animationController.status ==
                     AnimationStatus.dismissed) {
-                  animationController!.forward();
+                  animationController.forward();
                 }
               },
               child: Container(
@@ -246,7 +268,25 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.doctorTreatmentProgress);
+              final patient = context.read<PatientNotifiers>().patientDetail;
+
+              if (patient.treatmentModelList == null ||
+                  patient.treatmentModelList!.isEmpty) {
+                Atom.to(
+                  PagePaths.doctorTreatmentEdit,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(TreatmentProcessItemModel(
+                      dateTime: DateTime.now(),
+                      description: '',
+                      id: -1,
+                      title: '',
+                    ).toJson()),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.doctorTreatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,

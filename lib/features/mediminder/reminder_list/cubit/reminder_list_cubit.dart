@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
 part 'reminder_list_cubit.freezed.dart';
@@ -35,12 +36,13 @@ class ReminderListCubit extends Cubit<ReminderListState> {
         final allList = successResult.allList;
         final filterList = successResult.filterList;
 
-        final isSuccess = await reminderManager.cancelAndRemoveNotification(
+        final cancelSuccess =
+            await reminderManager.cancelNotification(model.notificationId);
+        if (!cancelSuccess) return;
+
+        final isSuccess = await reminderManager.removeNotification(
           model.remindable,
           model.notificationId,
-          model.scheduledDate,
-          model.createdDate,
-          model.entegrationId,
         );
         if (isSuccess) {
           allList.removeWhere(
@@ -64,15 +66,13 @@ class ReminderListCubit extends Cubit<ReminderListState> {
     );
   }
 
+  // #region changeFilterResult
   void changeFilterResult(ReminderListFilterResult filterResult) {
     final currentState = state;
     currentState.whenOrNull(
       success: (successResult) async {
         final allList = successResult.allList;
-        final filterList = reminderManager.filterList(
-          allList,
-          filterResult,
-        );
+        final filterList = _filterList(allList, filterResult);
         emit(
           ReminderListState.success(
             ReminderListResult(
@@ -85,4 +85,55 @@ class ReminderListCubit extends Cubit<ReminderListState> {
       },
     );
   }
+  // #endregion
+
+  // #region _filterList
+  List<ReminderListModel> _filterList(
+    List<ReminderListModel> allList,
+    ReminderListFilterResult filterResult,
+  ) {
+    final relativeList = filterResult.relativeList
+        .where((element) => element.isEnabled)
+        .toList();
+    var filterList = allList.where((element) {
+      if (filterResult.isBloodGlucose) {
+        if (element.remindable == Remindable.bloodGlucose) {
+          return true;
+        }
+      }
+
+      if (filterResult.isHbA1c) {
+        if (element.remindable == Remindable.hbA1c) {
+          return true;
+        }
+      }
+
+      if (filterResult.isStrip) {
+        if (element.remindable == Remindable.strip) {
+          return true;
+        }
+      }
+
+      if (filterResult.isMedication) {
+        if (element.remindable == Remindable.medication) {
+          return true;
+        }
+      }
+
+      return false;
+    }).toList();
+
+    filterList = filterList.where((element) {
+      for (var relative in relativeList) {
+        if (relative.id == element.entegrationId) {
+          return true;
+        }
+      }
+
+      return false;
+    }).toList();
+
+    return filterList;
+  }
+  // #endregion
 }
