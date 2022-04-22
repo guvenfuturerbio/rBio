@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../../home/view/home_screen.dart';
 import '../viewmodel/symptoms_result_page_vm.dart';
 
 class SymptomsResultPage extends StatefulWidget {
@@ -55,6 +56,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
           return RbioScaffold(
             appbar: _buildAppBar(context),
             body: _buildResultList(context, value),
+            floatingActionButton: _buildFAB(context),
           );
         },
       ),
@@ -365,4 +367,14 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
         return const SizedBox();
     }
   }
+}
+
+FloatingActionButton _buildFAB(BuildContext context) {
+  return FloatingActionButton(
+    backgroundColor: getIt<ITheme>().mainColor,
+    onPressed: () {
+      Atom.to(PagePaths.main);
+    },
+    child: const Icon(Icons.home),
+  );
 }
