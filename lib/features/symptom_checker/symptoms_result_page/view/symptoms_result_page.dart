@@ -78,7 +78,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
       backgroundColor: getIt<ITheme>().mainColor,
 
       onPressed: () {
-        Atom.to(const HomeScreen().toString());
+        Atom.to(PagePaths.main);
       },
         child: const Icon(Icons.home),
         );
