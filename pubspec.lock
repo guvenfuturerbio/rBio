@@ -502,27 +502,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "9.0.2"
-  firebase_analytics:
-    dependency: "direct main"
-    description:
-      name: firebase_analytics
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "9.1.5"
-  firebase_analytics_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_analytics_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.3"
-  firebase_analytics_web:
-    dependency: transitive
-    description:
-      name: firebase_analytics_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0+10"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -557,14 +536,14 @@ packages:
       name: firebase_core_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.5"
+    version: "4.2.4"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.2"
+    version: "1.5.4"
   firebase_dynamic_links:
     dependency: "direct main"
     description:
@@ -1151,6 +1130,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  mi_scale:
+    dependency: "direct overridden"
+    description:
+      path: "packages/health_packages/mi_scale"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   mime:
     dependency: transitive
     description:
@@ -1515,10 +1501,38 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
-  scale_dependencies:
+  scale_api:
     dependency: "direct overridden"
     description:
-      path: "packages/health_packages/scale_dependencies"
+      path: "packages/health_packages/scale_api"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  scale_calculations:
+    dependency: "direct overridden"
+    description:
+      path: "packages/health_packages/scale_calculations"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  scale_health_impl:
+    dependency: "direct overridden"
+    description:
+      path: "packages/health_packages/scale_health_impl"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  scale_hive_impl:
+    dependency: "direct overridden"
+    description:
+      path: "packages/health_packages/scale_hive_impl"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  scale_repository:
+    dependency: "direct overridden"
+    description:
+      path: "packages/health_packages/scale_repository"
       relative: true
     source: path
     version: "1.0.0+1"
@@ -1764,63 +1778,56 @@ packages:
       name: syncfusion_flutter_charts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48"
+    version: "19.4.53"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48"
+    version: "19.4.53"
   syncfusion_flutter_gauges:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_gauges
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48"
+    version: "19.4.53"
   syncfusion_flutter_pdf:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48-beta"
+    version: "19.4.53-beta"
   syncfusion_flutter_pdfviewer:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_pdfviewer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48-beta.1"
-  syncfusion_pdfviewer_macos:
+    version: "19.4.53-beta"
+  syncfusion_flutter_pdfviewer_macos:
     dependency: transitive
     description:
-      name: syncfusion_pdfviewer_macos
+      name: syncfusion_flutter_pdfviewer_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48-beta.1"
-  syncfusion_pdfviewer_platform_interface:
+    version: "19.4.53-beta"
+  syncfusion_flutter_pdfviewer_platform_interface:
     dependency: transitive
     description:
-      name: syncfusion_pdfviewer_platform_interface
+      name: syncfusion_flutter_pdfviewer_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48-beta.1"
-  syncfusion_pdfviewer_web:
+    version: "19.4.53-beta"
+  syncfusion_flutter_pdfviewer_web:
     dependency: transitive
     description:
-      name: syncfusion_pdfviewer_web
+      name: syncfusion_flutter_pdfviewer_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.48-beta.1"
-  syncfusion_pdfviewer_windows:
-    dependency: transitive
-    description:
-      name: syncfusion_pdfviewer_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "20.1.48-beta.1"
+    version: "19.4.53-beta"
   synchronized:
     dependency: transitive
     description:
@@ -2130,5 +2137,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.16.0 <3.0.0"
+  dart: ">=2.15.1 <3.0.0"
   flutter: ">=2.8.0"
