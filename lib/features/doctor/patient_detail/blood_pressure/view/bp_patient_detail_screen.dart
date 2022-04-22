@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +16,8 @@ import '../../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/
 import '../../../../chronic_tracking/progress_sections/blood_pressure/widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
 import '../../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
 import '../../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';
+import '../../../notifiers/patient_notifiers.dart';
+import '../../../treatment_process/view/treatment_process_screen.dart';
 
 part '../viewmodel/bp_patient_detail_vm.dart';
 part '../widget/charts/bp_line_chart.dart';
@@ -245,7 +249,25 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.doctorTreatmentProgress);
+              final patient = context.read<PatientNotifiers>().patientDetail;
+
+              if (patient.treatmentModelList == null ||
+                  patient.treatmentModelList!.isEmpty) {
+                Atom.to(
+                  PagePaths.doctorTreatmentEdit,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(TreatmentProcessItemModel(
+                      dateTime: DateTime.now(),
+                      description: '',
+                      id: -1,
+                      title: '',
+                    ).toJson()),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.doctorTreatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,

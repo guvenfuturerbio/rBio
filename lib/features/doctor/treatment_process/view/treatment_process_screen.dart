@@ -36,10 +36,6 @@ class _DoctorTreatmentProcessScreenState
       );
 
   Widget _buildBody() {
-    return _buildSuccess();
-  }
-
-  Widget _buildSuccess() {
     return Consumer<PatientNotifiers>(
       builder: (context, value, child) {
         return ListView.builder(

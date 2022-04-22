@@ -1,17 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'package:onedosehealth/features/doctor/patient_detail/scale/cubit/scale_doctor_cubit.dart';
-import 'package:onedosehealth/features/doctor/patient_detail/scale/widget/doctor_scale_chart.dart';
-import 'package:onedosehealth/features/doctor/patient_detail/scale/widget/measurement_list.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../core/core.dart';
-
 import '../../../../../../core/core.dart';
+import '../../../../../core/core.dart';
 import '../../../../../core/data/service/model/patient_scale_measurement.dart';
+import '../../../notifiers/patient_notifiers.dart';
+import '../../../treatment_process/view/treatment_process_screen.dart';
+import '../cubit/scale_doctor_cubit.dart';
+import '../widget/doctor_scale_chart.dart';
+import '../widget/measurement_list.dart';
 
 part '../widget/scale_expanded_detail_widget.dart';
 
@@ -308,7 +310,27 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
           //
           GestureDetector(
             onTap: () {
-              Atom.to(PagePaths.doctorTreatmentProgress);
+              final patient = context.read<PatientNotifiers>().patientDetail;
+
+              if (patient.treatmentModelList == null ||
+                  patient.treatmentModelList!.isEmpty) {
+                Atom.to(
+                  PagePaths.doctorTreatmentEdit,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(
+                      TreatmentProcessItemModel(
+                        dateTime: DateTime.now(),
+                        description: '',
+                        id: -1,
+                        title: '',
+                      ).toJson(),
+                    ),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.doctorTreatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,

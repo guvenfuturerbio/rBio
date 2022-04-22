@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../dashboard/not_chronic_screen.dart';
+import '../../../doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
@@ -149,7 +152,6 @@ class _MeasurementTrackingHomeScreenState
     );
   }
 
-
   Widget _buildExpandedUser() {
     return SizedBox(
       height: 50,
@@ -207,7 +209,27 @@ class _MeasurementTrackingHomeScreenState
                   'element': 'Tedavi',
                 },
               );
-              Atom.to(PagePaths.treatmentProgress);
+
+              final treatmentList =
+                  getIt<ProfileStorageImpl>().getFirst().treatmentList;
+              if ((treatmentList ?? []).isEmpty) {
+                Atom.to(
+                  PagePaths.treatmentEditProgress,
+                  queryParameters: {
+                    'treatment_model': jsonEncode(
+                      TreatmentProcessItemModel(
+                        dateTime: DateTime.now(),
+                        description: '',
+                        id: -1,
+                        title: '',
+                      ).toJson(),
+                    ),
+                    'newModel': true.toString(),
+                  },
+                );
+              } else {
+                Atom.to(PagePaths.treatmentProgress);
+              }
             },
             child: Container(
               height: double.infinity,
