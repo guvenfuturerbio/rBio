@@ -205,163 +205,83 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     if (data.type == R.constants.onlineAppointmentType) {
       if (DateTime.parse(data.from ?? '').isBefore(DateTime.now())) {
         return Center(
-          child: RbioElevatedButton(
-            title: LocaleProvider.current.rate,
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            onTap: () {
-              final itemId = data.id;
-              if (itemId != null) {
-                value.showRateDialog(itemId);
-              }
-            },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: RbioIconButton(
+                onPressed: () {
+                  final itemId = data.id;
+                  if (itemId != null) {
+                    value.showRateDialog(itemId);
+                  }
+                },
+                icon: SvgPicture.asset(
+                  R.image.rate,
+                  color: R.color.white,
+                )),
           ),
         );
       } else {
         return Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: context.xTextScaleType == TextScaleType.small
-                ? Row(
-                    children: [
-                      Expanded(
-                        child: RbioElevatedAutoButton(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                            vertical: 2.0,
-                          ),
-                          title: LocaleProvider.current.uploadFile,
-                          onTap: () async {
-                            File? fileBytes = await value.getSelectedFile();
-                            if (fileBytes != null) {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (BuildContext context) {
-                                  return GuvenAlert(
-                                    backgroundColor: Colors.white,
-                                    title: GuvenAlert.buildTitle(
-                                      LocaleProvider().upload_file_question,
-                                    ),
-                                    actions: [
-                                      GuvenAlert.buildMaterialAction(
-                                        LocaleProvider.of(context).confirm,
-                                        () async {
-                                          await value.uploadFile(fileBytes);
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                    content: const SizedBox(),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        ),
-                      ),
-
-                      //
-                      R.sizes.wSizer4,
-
-                      //
-                      Expanded(
-                        child: RbioElevatedAutoButton(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                            vertical: 2.0,
-                          ),
-                          title: LocaleProvider.current.requestTranslator,
-                          onTap: () {
-                            value.showTranslatorSelector(data.id.toString());
-                          },
-                        ),
-                      ),
-
-                      //
-                      R.sizes.wSizer4,
-
-                      //
-                      Expanded(
-                        child: RbioElevatedAutoButton(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                            vertical: 2.0,
-                          ),
-                          title: LocaleProvider.current.startMeeting,
-                          onTap: () {
-                            value.handleAppointment(data);
-                          },
-                        ),
-                      ),
-                    ],
-                  )
-                : Wrap(
-                    spacing: 4,
-                    runSpacing: 5,
-                    alignment: WrapAlignment.center,
-                    runAlignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      RbioElevatedButton(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 2.0,
-                        ),
-                        title: "Upload\nFile",
-                        onTap: () async {
-                          File? fileBytes = await value.getSelectedFile();
-                          if (fileBytes != null) {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (BuildContext context) {
-                                return GuvenAlert(
-                                  backgroundColor: Colors.white,
-                                  title: GuvenAlert.buildTitle(
-                                    LocaleProvider().upload_file_question,
-                                  ),
-                                  actions: [
-                                    GuvenAlert.buildMaterialAction(
-                                      LocaleProvider.of(context).confirm,
-                                      () async {
-                                        await value.uploadFile(fileBytes);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                  content: const SizedBox(),
-                                );
-                              },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                RbioIconButton(
+                    onPressed: () async {
+                      File? fileBytes = await value.getSelectedFile();
+                      if (fileBytes != null) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            return GuvenAlert(
+                              backgroundColor: Colors.white,
+                              title: GuvenAlert.buildTitle(
+                                LocaleProvider().upload_file_question,
+                              ),
+                              actions: [
+                                GuvenAlert.buildMaterialAction(
+                                  LocaleProvider.of(context).confirm,
+                                  () async {
+                                    await value.uploadFile(fileBytes);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                              content: const SizedBox(),
                             );
-                          }
-                        },
-                      ),
+                          },
+                        );
+                      }
+                    },
+                    icon: SvgPicture.asset(
+                      R.image.upload,
+                      color: R.color.white,
+                    )),
 
-                      //
-                      RbioElevatedButton(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 2.0,
-                        ),
-                        title: "Request\nTranslator",
-                        onTap: () {
-                          value.showTranslatorSelector(data.id.toString());
-                        },
-                      ),
+                //
 
-                      //
-                      RbioElevatedButton(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 2.0,
-                        ),
-                        title: "Start\nMeeting",
-                        onTap: () {
-                          value.handleAppointment(data);
-                        },
-                      ),
-                    ],
-                  ),
+                RbioIconButton(
+                    onPressed: () {
+                      value.showTranslatorSelector(data.id.toString());
+                    },
+                    icon: SvgPicture.asset(
+                      R.image.translator,
+                      color: R.color.white,
+                    )),
+
+                //
+                RbioIconButton(
+                    onPressed: () {
+                      value.handleAppointment(data);
+                    },
+                    icon: SvgPicture.asset(
+                      R.image.startVideo,
+                      color: R.color.white,
+                    )),
+              ],
+            ),
           ),
         );
       }

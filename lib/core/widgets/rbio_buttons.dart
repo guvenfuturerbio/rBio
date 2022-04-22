@@ -1,5 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../core.dart';
 
@@ -191,3 +192,52 @@ class RbioElevatedAutoButton extends StatelessWidget {
       );
 }
 // #endregion
+
+class RbioIconButton extends StatelessWidget {
+  final void Function() onPressed;
+  final bool infinityWidth;
+  final SvgPicture icon;
+  final Color? color;
+  final double? iconSize;
+
+  final Color? backColor;
+  final Color? textColor;
+  final bool showElevation;
+
+  const RbioIconButton({
+    Key? key,
+    required this.onPressed,
+    this.infinityWidth = false,
+    required this.icon,
+    this.color,
+    this.iconSize,
+    this.backColor,
+    this.textColor,
+    this.showElevation = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: backColor ?? getIt<ITheme>().mainColor,
+          shape: BoxShape.circle),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: icon,
+        color: backColor ?? getIt<ITheme>().mainColor,
+        iconSize: iconSize,
+      ),
+    );
+  }
+
+  static EdgeInsets defaultPadding() => const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 12.0,
+      );
+
+  static EdgeInsets minPadding() => const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 5.0,
+      );
+}
