@@ -72,18 +72,6 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
     );
   }
 
-
-    FloatingActionButton _buildFAB(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: getIt<ITheme>().mainColor,
-
-      onPressed: () {
-        Atom.to(PagePaths.main);
-      },
-        child: const Icon(Icons.home),
-        );
-  }
-
   Widget _buildResultList(BuildContext context, SymptomsResultPageVm value) {
     switch (value.progress) {
       case LoadingProgress.loading:
@@ -218,7 +206,6 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 itemCount: value.specialisations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    
                     elevation: R.sizes.defaultElevation,
                     shape: RoundedRectangleBorder(
                       borderRadius: R.sizes.borderRadiusCircular,
@@ -241,7 +228,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                               style: context.xHeadline2,
                             ),
                           ),
-                          
+
                           //
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -373,23 +360,21 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 },
               );
 
-              
-
       case LoadingProgress.error:
         return const RbioBodyError();
 
-
       default:
         return const SizedBox();
-
     }
   }
 }
 
-
-
-
-
-
-
-
+FloatingActionButton _buildFAB(BuildContext context) {
+  return FloatingActionButton(
+    backgroundColor: getIt<ITheme>().mainColor,
+    onPressed: () {
+      Atom.to(PagePaths.main);
+    },
+    child: const Icon(Icons.home),
+  );
+}
