@@ -248,7 +248,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   Future<GuvenResponseModel> updateProfile(Person person, int id) async {
     final response = await helper.patchGuven(
       R.endpoints.ctUpdateProfile(id),
-      data: person.toJson(),
+      data: person.getRequestBody(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {

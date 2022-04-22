@@ -38,6 +38,8 @@ export "domain/glucose_model.dart";
 export "domain/network_cache_model.dart";
 export "domain/person_model.dart";
 
+export "enums/diabetes_type.dart";
+export "enums/glucose_margins_filter.dart";
 export "enums/loading_progress.dart";
 export 'enums/patient_type.dart';
 export 'enums/payment_type.dart';
