@@ -176,6 +176,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "btn_navigation_skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "btn_next": MessageLookupByLibrary.simpleMessage("İLERİ"),
         "btn_remember_me": MessageLookupByLibrary.simpleMessage("Beni hatırla"),
+        "btn_send_code": MessageLookupByLibrary.simpleMessage("Kod Gönder"),
         "btn_sign_in": MessageLookupByLibrary.simpleMessage("Giriş Yap"),
         "btn_sign_up": MessageLookupByLibrary.simpleMessage("Kayıt Ol"),
         "buy_package": MessageLookupByLibrary.simpleMessage("Paket Satın Al"),
