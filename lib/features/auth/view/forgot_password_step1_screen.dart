@@ -261,7 +261,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                             ),
                           ),
                           onTap: () {
-                            Atom.to(PagePaths.registerStep2);
+                            Atom.to(PagePaths.registerStep1);
                           },
                         )
                       ],
