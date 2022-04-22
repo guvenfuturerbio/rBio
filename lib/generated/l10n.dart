@@ -160,6 +160,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Send Code`
+  String get btn_send_code {
+    return Intl.message(
+      'Send Code',
+      name: 'btn_send_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Chronic Tracking`
   String get chronic_track {
     return Intl.message(

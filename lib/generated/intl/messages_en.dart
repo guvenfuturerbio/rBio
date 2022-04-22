@@ -182,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "btn_navigation_skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "btn_next": MessageLookupByLibrary.simpleMessage("next"),
         "btn_remember_me": MessageLookupByLibrary.simpleMessage("Remember me"),
+        "btn_send_code": MessageLookupByLibrary.simpleMessage("Send Code"),
         "btn_sign_in": MessageLookupByLibrary.simpleMessage("Sign In"),
         "btn_sign_up": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "buy_package": MessageLookupByLibrary.simpleMessage("Buy Package"),
