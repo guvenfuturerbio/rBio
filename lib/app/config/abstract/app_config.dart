@@ -15,7 +15,13 @@ part 'app_functionality.dart';
 part 'app_theme.dart';
 
 abstract class IAppConfig {
-  IAppTheme get theme;
-  IAppFunctionality get functionality;
-  IAppEndpoints get endpoints;
+  late IAppTheme theme;
+  late IAppFunctionality functionality;
+  late IAppEndpoints endpoints;
+
+  IAppConfig({
+    required this.theme,
+    required this.functionality,
+    required this.endpoints,
+  });
 }
