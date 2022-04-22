@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../../home/view/home_screen.dart';
 import '../viewmodel/symptoms_result_page_vm.dart';
 
 class SymptomsResultPage extends StatefulWidget {
@@ -55,6 +56,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
           return RbioScaffold(
             appbar: _buildAppBar(context),
             body: _buildResultList(context, value),
+            floatingActionButton: _buildFAB(context),
           );
         },
       ),
@@ -68,6 +70,18 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
         LocaleProvider.of(context).results,
       ),
     );
+  }
+
+
+    FloatingActionButton _buildFAB(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: getIt<ITheme>().mainColor,
+
+      onPressed: () {
+        Atom.to(const HomeScreen().toString());
+      },
+        child: const Icon(Icons.home),
+        );
   }
 
   Widget _buildResultList(BuildContext context, SymptomsResultPageVm value) {
@@ -204,6 +218,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 itemCount: value.specialisations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
+                    
                     elevation: R.sizes.defaultElevation,
                     shape: RoundedRectangleBorder(
                       borderRadius: R.sizes.borderRadiusCircular,
@@ -226,7 +241,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                               style: context.xHeadline2,
                             ),
                           ),
-
+                          
                           //
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,11 +373,23 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 },
               );
 
+              
+
       case LoadingProgress.error:
         return const RbioBodyError();
 
+
       default:
         return const SizedBox();
+
     }
   }
 }
+
+
+
+
+
+
+
+
