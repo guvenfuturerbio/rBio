@@ -7,10 +7,7 @@ abstract class IAppEndpoints {
   DevApiEndpoints get devApi;
   CommonEndpoints get common;
   SymptomCheckerEndpoints get symptom;
-
 }
-
-
 
 abstract class SymptomCheckerEndpoints {
   String get symptomGetProposed;

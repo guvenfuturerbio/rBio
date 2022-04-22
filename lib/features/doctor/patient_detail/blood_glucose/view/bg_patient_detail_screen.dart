@@ -16,9 +16,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
-import '../../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
-import '../../../../../core/enums/glucose_margins_filter.dart';
+import '../../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';
 import '../../../notifiers/bg_measurements_notifiers.dart';
 import '../../../notifiers/patient_notifiers.dart';
 import '../../../treatment_process/view/treatment_process_screen.dart';

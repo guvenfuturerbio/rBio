@@ -84,7 +84,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         right: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: getIt<IAppTheme>().secondaryColor,
+                        color: getIt<IAppConfig>().theme.secondaryColor,
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: Row(
@@ -98,7 +98,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 Utils.instance.getCacheProfileImage,
                             radius: R.sizes.iconSize2,
                             backgroundColor:
-                                getIt<IAppTheme>().cardBackgroundColor,
+                                getIt<IAppConfig>().theme.cardBackgroundColor,
                           ),
 
                           //

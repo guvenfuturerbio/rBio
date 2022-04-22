@@ -93,7 +93,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     hintText: LocaleProvider.current.credit_card_holder,
                     image: R.image.user,
                   )
-                  .copyWith(fillColor: getIt<IAppConfig>().theme.white, filled: true),
+                  .copyWith(
+                      fillColor: getIt<IAppConfig>().theme.white, filled: true),
               focusNode: cardHolderNameFNode,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
@@ -233,7 +234,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       value.toggleDistanceContract();
                     });
                   },
-                  activeColor: getIt<IAppTheme>().mainColor,
+                  activeColor: getIt<IAppConfig>().theme.mainColor,
                 ),
               ),
               Expanded(
@@ -249,7 +250,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<IAppTheme>().textColorSecondary,
+                      color: getIt<IAppConfig>().theme.textColorSecondary,
                       decoration: TextDecoration.underline,
                     ),
                   ),
@@ -270,7 +271,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       value.toggleInformationForm();
                     });
                   },
-                  activeColor: getIt<IAppTheme>().mainColor,
+                  activeColor: getIt<IAppConfig>().theme.mainColor,
                 ),
               ),
               Expanded(
@@ -286,7 +287,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<IAppTheme>().textColorSecondary,
+                      color: getIt<IAppConfig>().theme.textColorSecondary,
                       decoration: TextDecoration.underline,
                     ),
                   ),
