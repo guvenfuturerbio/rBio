@@ -458,7 +458,6 @@ class UserManagerImpl extends UserManager {
           SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       allSocialResources.add(allSocialPostsResponse);
     }
-     allSocialResources.sort((a,b) => a.title!.toLowerCase().compareTo(b.title!.toLowerCase()));
    return allSocialResources;
   }
 
