@@ -209,7 +209,8 @@ class _Endpoints {
   String dcGetMyPatientPressure(int patientId) =>
       '/api/v1/doctorpatient/get-my-patient-bp/$patientId'.xDoctorBaseUrl;
 
-  String consentFormPath = '/userregister/get-consent-form'.xApiGuven;
+  String consentFormPath(String locale) =>
+      '/userregister/get-consent-form/$locale'.xDevApiTest;
 }
 
 extension _EndpointsExtension on String {

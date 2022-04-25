@@ -19,6 +19,16 @@ extension StringExtension on String {
   String format(List<String> params) => interpolate(this, params);
 
   bool get xIsTCNationality => this == "TC";
+
+  String get xCurrentTrimLocale {
+    if (this == 'en_US') {
+      return 'en';
+    } else if (this == 'tr_TR') {
+      return 'tr';
+    }
+
+    throw Exception("Undefined");
+  }
 }
 
 String interpolate(String string, List<String> params) {
