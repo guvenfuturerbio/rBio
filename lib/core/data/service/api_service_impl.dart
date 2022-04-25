@@ -225,7 +225,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<ConsentForm> getConsentForm() async {
     final response = await helper.getGuven(
-      R.endpoints.consentFormPath,
+      R.endpoints.consentFormPath(Intl.getCurrentLocale().xCurrentTrimLocale),
     );
 
     if (response.xIsSuccessful) {
