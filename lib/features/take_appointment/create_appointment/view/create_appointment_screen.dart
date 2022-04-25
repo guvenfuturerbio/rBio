@@ -1,7 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/home/view/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';

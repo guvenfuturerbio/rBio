@@ -225,7 +225,10 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<ConsentForm> getConsentForm() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.common.consentFormPath,
+      getIt<IAppConfig>()
+          .endpoints
+          .common
+          .consentFormPath(Intl.getCurrentLocale().xCurrentTrimLocale),
     );
 
     if (response.xIsSuccessful) {
@@ -335,8 +338,10 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
-    final response =
-        await helper.dioGet(getIt<IAppConfig>().endpoints.common.getDoctorCvDetailsPath(doctorWebID));
+    final response = await helper.dioGet(getIt<IAppConfig>()
+        .endpoints
+        .common
+        .getDoctorCvDetailsPath(doctorWebID));
     if (response == null) {
       throw Exception('Doctor CV Empty');
     }
@@ -532,7 +537,10 @@ class ApiServiceImpl extends ApiService {
     String password,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.changeUserPasswordUiPath(oldPassword, password),
+      getIt<IAppConfig>()
+          .endpoints
+          .base
+          .changeUserPasswordUiPath(oldPassword, password),
       options: authOptions,
     );
     return response;
@@ -586,7 +594,10 @@ class ApiServiceImpl extends ApiService {
     String fileName,
   ) async {
     final response = await helper.deleteGuven(
-      getIt<IAppConfig>().endpoints.base.deleteOnlineAppoFilePath(webAppoId, fileName),
+      getIt<IAppConfig>()
+          .endpoints
+          .base
+          .deleteOnlineAppoFilePath(webAppoId, fileName),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -691,7 +702,10 @@ class ApiServiceImpl extends ApiService {
     String webConsultantId,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.setJitsiWebConsultantIdPath(webConsultantId),
+      getIt<IAppConfig>()
+          .endpoints
+          .base
+          .setJitsiWebConsultantIdPath(webConsultantId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -742,7 +756,10 @@ class ApiServiceImpl extends ApiService {
     String path,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.downloadAppointmentSingleFilePath(folder, path),
+      getIt<IAppConfig>()
+          .endpoints
+          .base
+          .downloadAppointmentSingleFilePath(folder, path),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -871,7 +888,10 @@ class ApiServiceImpl extends ApiService {
     String groupName,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.devApi.getBannerTab(applicationName, groupName),
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .getBannerTab(applicationName, groupName),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -904,7 +924,10 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getAppointmentTypeViaWebConsultantId() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getAppointmentTypeViaWebConsultantIdPath,
+      getIt<IAppConfig>()
+          .endpoints
+          .base
+          .getAppointmentTypeViaWebConsultantIdPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {

@@ -18,6 +18,7 @@ Future<void> setupLocator(IAppConfig appConfig) async {
 
   getIt.registerSingleton<IAppConfig>(appConfig);
   getIt.registerSingleton<CacheClient>(CacheClient());
+  getIt.registerSingleton<UrlLauncherManager>(UrlLauncherManagerImpl());
 
   getIt.registerSingleton<DeviceLocalDataSource>(
       BluetoothDeviceLocalDataSourceImpl());

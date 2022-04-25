@@ -20,7 +20,7 @@ abstract class SymptomCheckerEndpoints {
 
 abstract class CommonEndpoints {
   String getDoctorCvDetailsPath(String doctorWebID);
-  String get consentFormPath;
+  String consentFormPath(String locale);
 }
 
 abstract class DevApiEndpoints {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import '../core.dart';
 
@@ -28,6 +29,7 @@ class RbioTextFormField extends StatelessWidget {
   final Color? textColor;
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
+  final bool isForSms;
 
   const RbioTextFormField({
     Key? key,
@@ -56,40 +58,61 @@ class RbioTextFormField extends StatelessWidget {
     this.backColor,
     this.textColor,
     this.autovalidateMode,
+    this.isForSms = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      maxLength: maxLength,
-      maxLines: maxLines,
-      initialValue: initialValue,
-      style: Utils.instance.inputTextStyle(textColor),
-      focusNode: focusNode,
-      controller: controller,
-      autocorrect: autocorrect ?? true,
-      enabled: enabled,
-      autovalidateMode: autovalidateMode,
-      validator: validator,
-      enableSuggestions: enableSuggestions ?? true,
-      obscureText: obscureText ?? false,
-      keyboardType: keyboardType,
-      textInputAction: textInputAction,
-      decoration: defaultDecoration(
-        context,
-        hintText: hintText,
-        labelText: labelText,
-        contentPadding: contentPadding,
-        border: border,
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
-        backColor: backColor,
-      ),
-      cursorColor: getIt<IAppConfig>().theme.mainColor,
-      onChanged: onChanged,
-      inputFormatters: inputFormatters,
-      onFieldSubmitted: onFieldSubmitted,
-    );
+    return isForSms
+        ? TextFieldPinAutoFill(
+            style: Utils.instance.inputTextStyle(textColor),
+            focusNode: focusNode,
+            obscureText: obscureText ?? false,
+            currentCode: controller?.text ?? "",
+            decoration: defaultDecoration(
+              context,
+              hintText: hintText,
+              labelText: labelText,
+              contentPadding: contentPadding,
+              border: border,
+              prefixIcon: prefixIcon,
+              suffixIcon: suffixIcon,
+              backColor: backColor,
+            ).copyWith(counterText: ""),
+            inputFormatters: inputFormatters,
+            onCodeSubmitted: onFieldSubmitted,
+            onCodeChanged: onChanged,
+          )
+        : TextFormField(
+            maxLength: maxLength,
+            maxLines: maxLines,
+            initialValue: initialValue,
+            style: Utils.instance.inputTextStyle(textColor),
+            focusNode: focusNode,
+            controller: controller,
+            autocorrect: autocorrect ?? true,
+            enabled: enabled,
+            autovalidateMode: autovalidateMode,
+            validator: validator,
+            enableSuggestions: enableSuggestions ?? true,
+            obscureText: obscureText ?? false,
+            keyboardType: keyboardType,
+            textInputAction: textInputAction,
+            decoration: defaultDecoration(
+              context,
+              hintText: hintText,
+              labelText: labelText,
+              contentPadding: contentPadding,
+              border: border,
+              prefixIcon: prefixIcon,
+              suffixIcon: suffixIcon,
+              backColor: backColor,
+            ),
+            cursorColor: getIt<IAppConfig>().theme.mainColor,
+            onChanged: onChanged,
+            inputFormatters: inputFormatters,
+            onFieldSubmitted: onFieldSubmitted,
+          );
   }
 
   static InputDecoration defaultDecoration(

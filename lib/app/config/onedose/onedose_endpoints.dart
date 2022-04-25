@@ -50,7 +50,8 @@ class OneDoseCommonEndpoints extends CommonEndpoints {
       '/api/doctor/$doctorWebID'.xGuvenPath;
 
   @override
-  String get consentFormPath => '/userregister/get-consent-form'.xApiGuven;
+  String consentFormPath(String locale) =>
+      '/userregister/get-consent-form/$locale'.xDevApiTest;
 }
 
 class OneDoseDevApiEndpoints extends DevApiEndpoints {

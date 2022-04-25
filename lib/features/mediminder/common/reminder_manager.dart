@@ -29,6 +29,7 @@ class ReminderManager {
   // ! ReminderListCubit
 
   // #region getAllReminders - List<ReminderListModel>
+  /// Hba1CReminderModel, MedicationReminderModel, BloodGlucoseReminderModel listelerini birleştirerek geriye List<ReminderListModel> dönmektedir.
   List<ReminderListModel> getAllReminders() {
     final allProfiles = profileStorage.getAll();
 
@@ -136,6 +137,7 @@ class ReminderManager {
   // #endregion
 
   // #region getAllRelatives - List<ReminderRelativePerson>
+  /// Profile ait tüm Relative'leri getiren metod.
   List<ReminderRelativePerson> getAllRelatives() => profileStorage.getAll().map(
         (e) {
           return ReminderRelativePerson(
@@ -148,6 +150,7 @@ class ReminderManager {
   // #endregion
 
   // #region cancelNotification - Future<bool>
+  /// flutter_local_notifications paketini kullanarak gönderilen notificationId'ye göre iptal eder.
   Future<bool> cancelNotification(int notificationId) async {
     try {
       await localNotificationManager.cancelNotification(notificationId);
@@ -164,7 +167,7 @@ class ReminderManager {
     int notificationId,
   ) async {
     try {
-      final entity = _getEmptyEntityFromRemindable(remindable);
+      final entity = _getRemindersFromRemindable[remindable];
       await deleteItemLocalList(notificationId, entity);
       return true;
     } catch (_) {
@@ -227,7 +230,7 @@ class ReminderManager {
     Remindable remindable,
     int createdDate,
   ) async {
-    final entity = _getEmptyEntityFromRemindable(remindable);
+    final entity = _getRemindersFromRemindable[remindable];
     await cancelRemindersGroupAndRemove(createdDate, entity);
     return true;
   }
@@ -266,127 +269,127 @@ class ReminderManager {
   }
   // #endregion
 
-  // ! ------------- ------------- ------------- ------------- -------------
-
-  // #region createOrEditBgReminderPlan
-  Future<bool> createOrEditBgReminderPlan(
-    BloodGlucoseReminderAddEditResult result,
+  // #region updateAndRemoveOrCreateNotification - Future<bool>
+  Future<bool> updateAndRemoveOrCreateNotification(
+    Remindable remindable,
+    int notificationId,
+    bool value,
+    tz.TZDateTime scheduledDate,
+    ReminderPeriod period,
+    String title,
   ) async {
-    // #region _createNotificationAndSaved
-    Future<void> _createNotificationAndSaved(
-      int id,
-      tz.TZDateTime scheduledDate,
-      ReminderPeriod period,
-      int? dayIndex,
-      int createdDate,
-      BloodGlucoseReminderAddEditResult result,
-      bool status,
-    ) async {
-      if (status) {
-        await reminderNotificationsManager.createBloodGlucose(
-          id,
-          scheduledDate,
-          period,
-        );
+    try {
+      // Bildirim pasif duruma geçtiyse iptal ediyorum.
+      if (!value) {
+        await cancelNotification(notificationId);
       }
 
-      await _saveReminderEntity<BloodGlucoseReminderModel>(
-        BloodGlucoseReminderModel(
-          notificationId: id,
-          scheduledDate: scheduledDate.millisecondsSinceEpoch,
-          createdDate: createdDate,
-          entegrationId: profileStorage.getFirst().id ?? 0,
-          status: status,
-          dayIndex: dayIndex,
-          dailyDose: result.dailyDose,
-          reminderPeriod: result.reminderPeriod,
-          usageType: result.usageType,
-        ),
+      // Shared Preferences'da ki listeyi güncelle
+      switch (remindable) {
+        case Remindable.bloodGlucose:
+          {
+            await _updateStatusItemLocalList(
+              notificationId,
+              SharedPreferencesKeys.bloodGlucoseList,
+              BloodGlucoseReminderModel.empty(),
+            );
+
+            if (value) {
+              reminderNotificationsManager.createBloodGlucose(
+                notificationId,
+                scheduledDate,
+                period,
+              );
+            }
+            break;
+          }
+
+        case Remindable.medication:
+          {
+            await _updateStatusItemLocalList(
+              notificationId,
+              SharedPreferencesKeys.medicineList,
+              MedicationReminderModel.empty(),
+            );
+
+            if (value) {
+              reminderNotificationsManager.createMedinicine(
+                notificationId,
+                title,
+                scheduledDate,
+                period,
+              );
+            }
+            break;
+          }
+
+        default:
+          break;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  // #endregion
+
+  // ! ------------- ------------- ------------- ------------- -------------
+  // ! BloodGlucoseReminderAddEditCubit
+
+  // #region getBgDetailResult - BloodGlucoseReminderAddEditResult?
+  BloodGlucoseReminderAddEditResult? getBgDetailResult(
+    int createdDate,
+  ) {
+    final sharedList =
+        getRemindersGroupWithCreatedDate<BloodGlucoseReminderModel>(
+      createdDate,
+      BloodGlucoseReminderModel.empty(),
+    );
+    if (sharedList.isNotEmpty) {
+      // Hangi günlerin aktif olduğunu bul.
+      final activeDays = sharedList.map((e) => e.dayIndex).toSet().toList();
+      final days = getSelectableDays(activeDays);
+
+      var doseTimeStatus = <bool>[];
+      for (var item in sharedList) {
+        doseTimeStatus.add(item.status);
+      }
+      ;
+
+      final now = TZHelper.instance.currentDay();
+      var tempList = <TimeOfDay>[];
+      for (var element in sharedList) {
+        final itemDate =
+            TZHelper.instance.fromMillisecondsSinceEpoch(element.scheduledDate);
+        tempList.add(TimeOfDay(hour: itemDate.hour, minute: itemDate.minute));
+      }
+      tempList = tempList.toSet().toList();
+      var doseTimes = tempList
+          .map((e) => now.add(Duration(hours: e.hour, minutes: e.minute)))
+          .toList();
+
+      final firstItem = sharedList.first;
+      return BloodGlucoseReminderAddEditResult(
+        isCreated: false,
+        editCreatedDate: createdDate,
+        usageType: firstItem.usageType,
+        reminderPeriod: firstItem.reminderPeriod,
+        dailyDose: firstItem.dailyDose,
+        doseTimeStatus: doseTimeStatus,
+        doseTimes: doseTimes,
+        days: days,
       );
     }
-    // #endregion
 
-    // #region _scheduleForOneTime
-    Future<void> _scheduleForOneTime(
-      List<int> notificationIds,
-      BloodGlucoseReminderAddEditResult result,
-    ) async {
-      final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+    return null;
+  }
+  // #endregion
 
-      for (int i = 0; i < result.doseTimes.length; i++) {
-        var itemScheduledTime = result.doseTimes[i];
-        itemScheduledTime =
-            TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
-
-        await _createNotificationAndSaved(
-          notificationIds[i],
-          itemScheduledTime,
-          ReminderPeriod.oneTime,
-          null,
-          dateTimeNow,
-          result,
-          result.doseTimeStatus[i],
-        );
-      }
-    }
-    // #endregion
-
-    // #region  _scheduleForEveryDay
-    Future<void> _scheduleForEveryDay(
-      List<int> notificationIds,
-      BloodGlucoseReminderAddEditResult result,
-    ) async {
-      final dateTimeNow = TZHelper.instance.now();
-      final dateTimeNowMilliSeconds = dateTimeNow.millisecondsSinceEpoch;
-
-      for (int i = 0; i < result.doseTimes.length; i++) {
-        var itemScheduledTime = result.doseTimes[i];
-        itemScheduledTime =
-            TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
-
-        await _createNotificationAndSaved(
-          notificationIds[i],
-          itemScheduledTime,
-          ReminderPeriod.everyDay,
-          null,
-          dateTimeNowMilliSeconds,
-          result,
-          result.doseTimeStatus[i],
-        );
-      }
-    }
-    // #endregion
-
-    // #region _scheduleForSpecificDays
-    Future<void> _scheduleForSpecificDays(
-      List<int> notificationIds,
-      BloodGlucoseReminderAddEditResult result,
-    ) async {
-      int idIndex = 0;
-      final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
-
-      for (int i = 0; i < result.days.length; i++) {
-        if (result.days[i].selected) {
-          for (int y = 0; y < result.doseTimes.length; y++) {
-            if (result.days[i].dayIndex != null) {
-              await _createNotificationAndSaved(
-                notificationIds[idIndex],
-                TZHelper.instance.nextInstanceOfDay(i + 1, result.doseTimes[y]),
-                ReminderPeriod.specificDays,
-                result.days[i].dayIndex!,
-                dateTimeNow,
-                result,
-                result.doseTimeStatus[i],
-              );
-
-              idIndex++;
-            }
-          }
-        }
-      }
-    }
-    // #endregion
-
+  // #region addUpdateBgPlan
+  Future<bool> addUpdateBgPlan(
+    BloodGlucoseReminderAddEditResult result,
+  ) async {
     //
     try {
       if (!result.isCreated) {
@@ -406,15 +409,15 @@ class ReminderManager {
 
       switch (result.reminderPeriod) {
         case ReminderPeriod.oneTime:
-          await _scheduleForOneTime(notificationIds, result);
+          await _scheduleBGForOneTime(notificationIds, result);
           break;
 
         case ReminderPeriod.everyDay:
-          await _scheduleForEveryDay(notificationIds, result);
+          await _scheduleBGForEveryDay(notificationIds, result);
           break;
 
         case ReminderPeriod.specificDays:
-          await _scheduleForSpecificDays(notificationIds, result);
+          await _scheduleBGForSpecificDays(notificationIds, result);
           break;
 
         default:
@@ -428,126 +431,174 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region createOrEditMedicationReminderPlan
-  Future<bool> createOrEditMedicationReminderPlan(
-    MedicationReminderAddEditResult result,
+  // #region _createBGNotificationAndSaved
+  Future<void> _createBGNotificationAndSaved(
+    int id,
+    tz.TZDateTime scheduledDate,
+    ReminderPeriod period,
+    int? dayIndex,
+    int createdDate,
+    BloodGlucoseReminderAddEditResult result,
+    bool status,
   ) async {
-    // #region _createNotificationAndSaved
-    Future<void> _createNotificationAndSaved(
-      int id,
-      tz.TZDateTime scheduledDate,
-      ReminderPeriod period,
-      int? dayIndex,
-      int createdDate,
-      MedicationReminderAddEditResult result,
-    ) async {
-      await reminderNotificationsManager.createMedinicine(
+    if (status) {
+      await reminderNotificationsManager.createBloodGlucose(
         id,
-        result.drugName ?? '',
         scheduledDate,
         period,
       );
+    }
 
-      await _saveReminderEntity<MedicationReminderModel>(
-        MedicationReminderModel(
-          notificationId: id,
-          scheduledDate: scheduledDate.millisecondsSinceEpoch,
-          createdDate: createdDate,
-          entegrationId: profileStorage.getFirst().id ?? 0,
-          status: true,
-          drugTracking: result.drugTracking,
-          drugName: result.drugName,
-          usageType: result.usageType,
-          reminderPeriod: result.reminderPeriod,
-          dailyDose: result.dailyDose,
-          oneTimeDose: result.oneTimeDose,
-          dayIndex: dayIndex,
-          drugCount: result.drugCount,
-          remainingCountNotification: result.remainingCountNotification,
-          boxCode: result.boxCode,
-        ),
+    await _saveReminderEntity<BloodGlucoseReminderModel>(
+      BloodGlucoseReminderModel(
+        notificationId: id,
+        scheduledDate: scheduledDate.millisecondsSinceEpoch,
+        createdDate: createdDate,
+        entegrationId: profileStorage.getFirst().id ?? 0,
+        status: status,
+        dayIndex: dayIndex,
+        dailyDose: result.dailyDose,
+        reminderPeriod: result.reminderPeriod,
+        usageType: result.usageType,
+      ),
+    );
+  }
+  // #endregion
+
+  // #region _scheduleBGForOneTime
+  Future<void> _scheduleBGForOneTime(
+    List<int> notificationIds,
+    BloodGlucoseReminderAddEditResult result,
+  ) async {
+    final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+
+    for (int i = 0; i < result.doseTimes.length; i++) {
+      var itemScheduledTime = result.doseTimes[i];
+      itemScheduledTime =
+          TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
+
+      await _createBGNotificationAndSaved(
+        notificationIds[i],
+        itemScheduledTime,
+        ReminderPeriod.oneTime,
+        null,
+        dateTimeNow,
+        result,
+        result.doseTimeStatus[i],
       );
     }
-    // #endregion
+  }
+  // #endregion
 
-    // #region _scheduleForOneTime
-    Future<void> _scheduleForOneTime(
-      List<int> notificationIds,
-      MedicationReminderAddEditResult result,
-    ) async {
-      final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+  // #region _scheduleBGForEveryDay
+  Future<void> _scheduleBGForEveryDay(
+    List<int> notificationIds,
+    BloodGlucoseReminderAddEditResult result,
+  ) async {
+    final dateTimeNow = TZHelper.instance.now();
+    final dateTimeNowMilliSeconds = dateTimeNow.millisecondsSinceEpoch;
 
-      for (int i = 0; i < result.doseTimes.length; i++) {
-        var itemScheduledTime = result.doseTimes[i];
-        itemScheduledTime =
-            TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
+    for (int i = 0; i < result.doseTimes.length; i++) {
+      var itemScheduledTime = result.doseTimes[i];
+      itemScheduledTime =
+          TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
 
-        await _createNotificationAndSaved(
-          notificationIds[i],
-          itemScheduledTime,
-          ReminderPeriod.oneTime,
-          null,
-          dateTimeNow,
-          result,
-        );
-      }
+      await _createBGNotificationAndSaved(
+        notificationIds[i],
+        itemScheduledTime,
+        ReminderPeriod.everyDay,
+        null,
+        dateTimeNowMilliSeconds,
+        result,
+        result.doseTimeStatus[i],
+      );
     }
-    // #endregion
+  }
+  // #endregion
 
-    // #region  _scheduleForEveryDay
-    Future<void> _scheduleForEveryDay(
-      List<int> notificationIds,
-      MedicationReminderAddEditResult result,
-    ) async {
-      final dateTimeNow = TZHelper.instance.now();
-      final dateTimeNowMilliSeconds = dateTimeNow.millisecondsSinceEpoch;
+  // #region _scheduleBGForSpecificDays
+  Future<void> _scheduleBGForSpecificDays(
+    List<int> notificationIds,
+    BloodGlucoseReminderAddEditResult result,
+  ) async {
+    int idIndex = 0;
+    final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
 
-      for (int i = 0; i < result.doseTimes.length; i++) {
-        var itemScheduledTime = result.doseTimes[i];
-        itemScheduledTime =
-            TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
+    for (int i = 0; i < result.days.length; i++) {
+      if (result.days[i].selected) {
+        for (int y = 0; y < result.doseTimes.length; y++) {
+          if (result.days[i].dayIndex != null) {
+            await _createBGNotificationAndSaved(
+              notificationIds[idIndex],
+              TZHelper.instance.nextInstanceOfDay(i + 1, result.doseTimes[y]),
+              ReminderPeriod.specificDays,
+              result.days[i].dayIndex!,
+              dateTimeNow,
+              result,
+              result.doseTimeStatus[i],
+            );
 
-        await _createNotificationAndSaved(
-          notificationIds[i],
-          itemScheduledTime,
-          ReminderPeriod.everyDay,
-          null,
-          dateTimeNowMilliSeconds,
-          result,
-        );
-      }
-    }
-    // #endregion
-
-    // #region _scheduleForSpecificDays
-    Future<void> _scheduleForSpecificDays(
-      List<int> notificationIds,
-      MedicationReminderAddEditResult result,
-    ) async {
-      int idIndex = 0;
-      final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
-
-      for (int i = 0; i < result.days.length; i++) {
-        if (result.days[i].selected) {
-          for (int y = 0; y < result.doseTimes.length; y++) {
-            if (result.days[i].dayIndex != null) {
-              await _createNotificationAndSaved(
-                notificationIds[idIndex],
-                TZHelper.instance.nextInstanceOfDay(i + 1, result.doseTimes[y]),
-                ReminderPeriod.specificDays,
-                result.days[i].dayIndex!,
-                dateTimeNow,
-                result,
-              );
-
-              idIndex++;
-            }
+            idIndex++;
           }
         }
       }
     }
-    // #endregion
+  }
+  // #endregion
 
+  // ! ------------- ------------- ------------- ------------- -------------
+  // ! MedicationReminderAddEditCubit
+
+  // #region getMedicationDetailResult - MedicationReminderAddEditResult?
+  MedicationReminderAddEditResult? getMedicationDetailResult(int createdDate) {
+    final sharedList =
+        getRemindersGroupWithCreatedDate<MedicationReminderModel>(
+      createdDate,
+      MedicationReminderModel.empty(),
+    );
+
+    if (sharedList.isNotEmpty) {
+      final activeDays = sharedList.map((e) => e.dayIndex).toSet().toList();
+      final days = getSelectableDays(activeDays);
+
+      final now = TZHelper.instance.currentDay();
+      var tempList = <TimeOfDay>[];
+      for (var element in sharedList) {
+        final itemDate =
+            TZHelper.instance.fromMillisecondsSinceEpoch(element.scheduledDate);
+        tempList.add(TimeOfDay(hour: itemDate.hour, minute: itemDate.minute));
+      }
+      tempList = tempList.toSet().toList();
+      var doseTimes = tempList
+          .map((e) => now.add(Duration(hours: e.hour, minutes: e.minute)))
+          .toList();
+
+      final firstItem = sharedList.first;
+      return MedicationReminderAddEditResult(
+        isCreated: false,
+        editCreatedDate: createdDate,
+        drugTracking: firstItem.drugTracking ?? DrugTracking.manuel,
+        drugName: firstItem.drugName,
+        usageType: firstItem.usageType,
+        reminderPeriod: firstItem.reminderPeriod,
+        dailyDose: firstItem.dailyDose,
+        oneTimeDose: firstItem.oneTimeDose,
+        doseTimes: doseTimes,
+        days: days,
+        drugCount: firstItem.drugCount,
+        remainingCountNotification: firstItem.remainingCountNotification,
+        boxCode: firstItem.boxCode,
+      );
+    }
+
+    return null;
+  }
+  // #endregion
+
+  // #region addUpdateMedicationPlan
+  Future<bool> addUpdateMedicationPlan(
+    MedicationReminderAddEditResult result,
+  ) async {
     //
     try {
       if (!result.isCreated) {
@@ -567,15 +618,15 @@ class ReminderManager {
 
       switch (result.reminderPeriod) {
         case ReminderPeriod.oneTime:
-          await _scheduleForOneTime(notificationIds, result);
+          await _scheduleMedicationForOneTime(notificationIds, result);
           break;
 
         case ReminderPeriod.everyDay:
-          await _scheduleForEveryDay(notificationIds, result);
+          await _scheduleMedicationForEveryDay(notificationIds, result);
           break;
 
         case ReminderPeriod.specificDays:
-          await _scheduleForSpecificDays(notificationIds, result);
+          await _scheduleMedicationForSpecificDays(notificationIds, result);
           break;
 
         default:
@@ -586,6 +637,153 @@ class ReminderManager {
     } catch (e) {
       return false;
     }
+  }
+  // #endregion
+
+  // #region _createMedicationNotificationAndSaved
+  Future<void> _createMedicationNotificationAndSaved(
+    int id,
+    tz.TZDateTime scheduledDate,
+    ReminderPeriod period,
+    int? dayIndex,
+    int createdDate,
+    MedicationReminderAddEditResult result,
+  ) async {
+    await reminderNotificationsManager.createMedinicine(
+      id,
+      result.drugName ?? '',
+      scheduledDate,
+      period,
+    );
+
+    await _saveReminderEntity<MedicationReminderModel>(
+      MedicationReminderModel(
+        notificationId: id,
+        scheduledDate: scheduledDate.millisecondsSinceEpoch,
+        createdDate: createdDate,
+        entegrationId: profileStorage.getFirst().id ?? 0,
+        status: true,
+        drugTracking: result.drugTracking,
+        drugName: result.drugName,
+        usageType: result.usageType,
+        reminderPeriod: result.reminderPeriod,
+        dailyDose: result.dailyDose,
+        oneTimeDose: result.oneTimeDose,
+        dayIndex: dayIndex,
+        drugCount: result.drugCount,
+        remainingCountNotification: result.remainingCountNotification,
+        boxCode: result.boxCode,
+      ),
+    );
+  }
+  // #endregion
+
+  // #region _scheduleMedicationForOneTime
+  Future<void> _scheduleMedicationForOneTime(
+    List<int> notificationIds,
+    MedicationReminderAddEditResult result,
+  ) async {
+    final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+
+    for (int i = 0; i < result.doseTimes.length; i++) {
+      var itemScheduledTime = result.doseTimes[i];
+      itemScheduledTime =
+          TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
+
+      await _createMedicationNotificationAndSaved(
+        notificationIds[i],
+        itemScheduledTime,
+        ReminderPeriod.oneTime,
+        null,
+        dateTimeNow,
+        result,
+      );
+    }
+  }
+  // #endregion
+
+  // #region  _scheduleMedicationForEveryDay
+  Future<void> _scheduleMedicationForEveryDay(
+    List<int> notificationIds,
+    MedicationReminderAddEditResult result,
+  ) async {
+    final dateTimeNow = TZHelper.instance.now();
+    final dateTimeNowMilliSeconds = dateTimeNow.millisecondsSinceEpoch;
+
+    for (int i = 0; i < result.doseTimes.length; i++) {
+      var itemScheduledTime = result.doseTimes[i];
+      itemScheduledTime =
+          TZHelper.instance.nextSameTimeAfterDay(itemScheduledTime);
+
+      await _createMedicationNotificationAndSaved(
+        notificationIds[i],
+        itemScheduledTime,
+        ReminderPeriod.everyDay,
+        null,
+        dateTimeNowMilliSeconds,
+        result,
+      );
+    }
+  }
+  // #endregion
+
+  // #region _scheduleMedicationForSpecificDays
+  Future<void> _scheduleMedicationForSpecificDays(
+    List<int> notificationIds,
+    MedicationReminderAddEditResult result,
+  ) async {
+    int idIndex = 0;
+    final dateTimeNow = TZHelper.instance.now().millisecondsSinceEpoch;
+
+    for (int i = 0; i < result.days.length; i++) {
+      if (result.days[i].selected) {
+        for (int y = 0; y < result.doseTimes.length; y++) {
+          if (result.days[i].dayIndex != null) {
+            await _createMedicationNotificationAndSaved(
+              notificationIds[idIndex],
+              TZHelper.instance.nextInstanceOfDay(i + 1, result.doseTimes[y]),
+              ReminderPeriod.specificDays,
+              result.days[i].dayIndex!,
+              dateTimeNow,
+              result,
+            );
+
+            idIndex++;
+          }
+        }
+      }
+    }
+  }
+  // #endregion
+
+  // ! ------------- ------------- ------------- ------------- -------------
+  // ! Hba1cReminderAddEditCubit
+
+  // #region getHba1CDetailResult - Hba1cReminderAddEditResult?
+  Hba1cReminderAddEditResult? getHba1CDetailResult(int notificationId) {
+    final localModel = getHba1CById(notificationId);
+    if (localModel != null) {
+      final createdDate = localModel.createdDate;
+      final remindDate = localModel.scheduledDate.xGetTZDateTime;
+      final scheduledDate = remindDate.toString();
+      final scheduledHour = TimeOfDay(
+        hour: remindDate.hour,
+        minute: remindDate.minute,
+      );
+      final lastTestDate = localModel.lastTestDate!.xGetTZDateTime.toString();
+      final lastTestValue = localModel.lastTestValue ?? 0;
+      return Hba1cReminderAddEditResult(
+        isCreated: false,
+        editNotificationId: notificationId,
+        editCreatedDate: createdDate,
+        scheduledDate: scheduledDate,
+        scheduledHour: scheduledHour,
+        lastTestDate: lastTestDate,
+        lastTestValue: lastTestValue,
+      );
+    }
+
+    return null;
   }
   // #endregion
 
@@ -647,211 +845,8 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region updateAndRemoveOrCreateNotification - Future<bool>
-  Future<bool> updateAndRemoveOrCreateNotification(
-    Remindable remindable,
-    int notificationId,
-    bool value,
-    tz.TZDateTime scheduledDate,
-    ReminderPeriod period,
-    String title,
-  ) async {
-    try {
-      // Bildirim pasif duruma geçtiyse iptal ediyorum.
-      if (!value) {
-        await localNotificationManager.cancelNotification(notificationId);
-      }
-
-      // Shared Preferences'da ki listeyi güncelle
-      switch (remindable) {
-        case Remindable.bloodGlucose:
-          {
-            await _updateStatusItemLocalList(
-              notificationId,
-              SharedPreferencesKeys.bloodGlucoseList,
-              BloodGlucoseReminderModel.empty(),
-            );
-
-            if (value) {
-              reminderNotificationsManager.createBloodGlucose(
-                notificationId,
-                scheduledDate,
-                period,
-              );
-            }
-            break;
-          }
-
-        case Remindable.medication:
-          {
-            await _updateStatusItemLocalList(
-              notificationId,
-              SharedPreferencesKeys.medicineList,
-              MedicationReminderModel.empty(),
-            );
-
-            if (value) {
-              reminderNotificationsManager.createMedinicine(
-                notificationId,
-                title,
-                scheduledDate,
-                period,
-              );
-            }
-            break;
-          }
-
-        default:
-          break;
-      }
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-  // #endregion
-
-  // #region getBloodGlucoseDetailResult - BloodGlucoseReminderAddEditResult?
-  BloodGlucoseReminderAddEditResult? getBloodGlucoseDetailResult(
-    int createdDate,
-  ) {
-    final sharedList =
-        getRemindersGroupWithCreatedDate<BloodGlucoseReminderModel>(
-      createdDate,
-      BloodGlucoseReminderModel.empty(),
-    );
-    if (sharedList.isNotEmpty) {
-      // Hangi günlerin aktif olduğunu bul.
-      final activeDays = sharedList.map((e) => e.dayIndex).toSet().toList();
-      final days = getSelectableDays(activeDays);
-
-      var doseTimeStatus = <bool>[];
-      for (var item in sharedList) {
-        doseTimeStatus.add(item.status);
-      }
-      ;
-
-      final now = TZHelper.instance.currentDay();
-      var tempList = <TimeOfDay>[];
-      for (var element in sharedList) {
-        final itemDate =
-            TZHelper.instance.fromMillisecondsSinceEpoch(element.scheduledDate);
-        tempList.add(TimeOfDay(hour: itemDate.hour, minute: itemDate.minute));
-      }
-      tempList = tempList.toSet().toList();
-      var doseTimes = tempList
-          .map((e) => now.add(Duration(hours: e.hour, minutes: e.minute)))
-          .toList();
-
-      final firstItem = sharedList.first;
-      return BloodGlucoseReminderAddEditResult(
-        isCreated: false,
-        editCreatedDate: createdDate,
-        usageType: firstItem.usageType,
-        reminderPeriod: firstItem.reminderPeriod,
-        dailyDose: firstItem.dailyDose,
-        doseTimeStatus: doseTimeStatus,
-        doseTimes: doseTimes,
-        days: days,
-      );
-    }
-
-    return null;
-  }
-  // #endregion
-
-  // #region getMedicationDetailResult - MedicationReminderAddEditResult?
-  MedicationReminderAddEditResult? getMedicationDetailResult(int createdDate) {
-    final sharedList =
-        getRemindersGroupWithCreatedDate<MedicationReminderModel>(
-      createdDate,
-      MedicationReminderModel.empty(),
-    );
-
-    if (sharedList.isNotEmpty) {
-      final activeDays = sharedList.map((e) => e.dayIndex).toSet().toList();
-      final days = getSelectableDays(activeDays);
-
-      final now = TZHelper.instance.currentDay();
-      var tempList = <TimeOfDay>[];
-      for (var element in sharedList) {
-        final itemDate =
-            TZHelper.instance.fromMillisecondsSinceEpoch(element.scheduledDate);
-        tempList.add(TimeOfDay(hour: itemDate.hour, minute: itemDate.minute));
-      }
-      tempList = tempList.toSet().toList();
-      var doseTimes = tempList
-          .map((e) => now.add(Duration(hours: e.hour, minutes: e.minute)))
-          .toList();
-
-      final firstItem = sharedList.first;
-      return MedicationReminderAddEditResult(
-        isCreated: false,
-        editCreatedDate: createdDate,
-        drugTracking: firstItem.drugTracking ?? DrugTracking.manuel,
-        drugName: firstItem.drugName,
-        usageType: firstItem.usageType,
-        reminderPeriod: firstItem.reminderPeriod,
-        dailyDose: firstItem.dailyDose,
-        oneTimeDose: firstItem.oneTimeDose,
-        doseTimes: doseTimes,
-        days: days,
-        drugCount: firstItem.drugCount,
-        remainingCountNotification: firstItem.remainingCountNotification,
-        boxCode: firstItem.boxCode,
-      );
-    }
-
-    return null;
-  }
-  // #endregion
-
-  // #region getHba1CDetailResult - Hba1cReminderAddEditResult?
-  Hba1cReminderAddEditResult? getHba1CDetailResult(int notificationId) {
-    final localModel = getHba1CById(notificationId);
-    if (localModel != null) {
-      final createdDate = localModel.createdDate;
-      final remindDate = localModel.scheduledDate.xGetTZDateTime;
-      final scheduledDate = remindDate.toString();
-      final scheduledHour = TimeOfDay(
-        hour: remindDate.hour,
-        minute: remindDate.minute,
-      );
-      final lastTestDate = localModel.lastTestDate!.xGetTZDateTime.toString();
-      final lastTestValue = localModel.lastTestValue ?? 0;
-      return Hba1cReminderAddEditResult(
-        isCreated: false,
-        editNotificationId: notificationId,
-        editCreatedDate: createdDate,
-        scheduledDate: scheduledDate,
-        scheduledHour: scheduledHour,
-        lastTestDate: lastTestDate,
-        lastTestValue: lastTestValue,
-      );
-    }
-
-    return null;
-  }
-  // #endregion
-
-  // #region getBloodGlucoseById - BloodGlucoseReminderModel?
-  BloodGlucoseReminderModel? getBloodGlucoseById(int notificationId) =>
-      _getNotificationDetail(
-        notificationId,
-        BloodGlucoseReminderModel.empty(),
-        SharedPreferencesKeys.bloodGlucoseList,
-      );
-  // #endregion
-
-  // #region getMedicationById - MedicationReminderModel?
-  MedicationReminderModel? getMedicationById(int notificationId) =>
-      _getNotificationDetail(
-        notificationId,
-        MedicationReminderModel.empty(),
-        SharedPreferencesKeys.medicineList,
-      );
-  // #endregion
+  // ! ------------- ------------- ------------- ------------- -------------
+  // ! Common
 
   // #region getHba1CById - Hba1CReminderModel?
   Hba1CReminderModel? getHba1CById(int notificationId) =>
@@ -955,13 +950,12 @@ class ReminderManager {
   }
   // #endregion
 
-  // ! ------- ------- Generics ------- -------
-
   // #region cancelRemindersGroupAndRemove - Future<void>
   Future<void> cancelRemindersGroupAndRemove<T extends ReminderEntity>(
     int createdDate,
-    T entity,
+    ReminderEntity<dynamic>? entity,
   ) async {
+    if (entity == null) return;
     final sharedList = _getAllReminderWithType<T>(entity);
     final cancellResult = await cancelNotifications(createdDate, sharedList);
     if (cancellResult) {
@@ -982,8 +976,7 @@ class ReminderManager {
         (item) async {
           if (item.createdDate == createdDate) {
             // Notification'ı iptal et
-            await localNotificationManager
-                .cancelNotification(item.notificationId);
+            await cancelNotification(item.notificationId);
           }
         },
       );
@@ -1013,13 +1006,15 @@ class ReminderManager {
   // #endregion
 
   // #region _getAllReminderWithType - List<T>
-  List<T> _getAllReminderWithType<T extends ReminderEntity>(T entity) {
+  List<T> _getAllReminderWithType<T extends ReminderEntity>(
+    ReminderEntity<dynamic>? entity,
+  ) {
     final sharedList =
         sharedPreferencesManager.getStringList(entity.xGetSharedKeys) ?? [];
     final tempList = <T>[];
     for (String item in sharedList) {
       final json = jsonDecode(item);
-      tempList.add(entity.fromJson(json));
+      tempList.add(entity!.fromJson(json));
     }
     return tempList;
   }
@@ -1078,9 +1073,11 @@ class ReminderManager {
   // #region deleteItemLocalList - Future<void>
   Future<void> deleteItemLocalList<T extends ReminderEntity>(
     int notificationId,
-    T entity,
+    ReminderEntity<dynamic>? entity,
   ) async {
-    final sharedKeys = _getSharedKeysFromRemindable(entity.remindable);
+    if (entity == null) return;
+    final sharedKeys = _getSPKeysFromRemindable[entity.remindable];
+    if (sharedKeys == null) return;
     final localList = sharedPreferencesManager.getStringList(sharedKeys) ?? [];
     List<T> prefList = [];
     for (String item in localList) {
@@ -1121,12 +1118,6 @@ class ReminderManager {
       item.status = !item.status;
       prefList = prefList.update(index, item);
 
-      if (item.status) {
-        // Yeni Notification Oluştur
-      } else {
-        // Notification'ı iptal et.
-      }
-
       List<String> saveList = [];
       for (var item in prefList) {
         final itemStr = jsonEncode(item.toJson());
@@ -1142,45 +1133,20 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region _getSharedKeysFromRemindable
-  SharedPreferencesKeys _getSharedKeysFromRemindable(Remindable remindable) {
-    switch (remindable) {
-      case Remindable.bloodGlucose:
-        return SharedPreferencesKeys.bloodGlucoseList;
-
-      case Remindable.medication:
-        return SharedPreferencesKeys.medicineList;
-
-      case Remindable.hbA1c:
-        return SharedPreferencesKeys.hba1cList;
-
-      case Remindable.strip:
-        throw Exception("Undefined");
-    }
-  }
-  // #endregion
-
-  // #region _getEmptyEntityFromRemindable
-  ReminderEntity _getEmptyEntityFromRemindable(Remindable remindable) {
-    switch (remindable) {
-      case Remindable.bloodGlucose:
-        return BloodGlucoseReminderModel.empty();
-
-      case Remindable.medication:
-        return MedicationReminderModel.empty();
-
-      case Remindable.hbA1c:
-        return Hba1CReminderModel.empty();
-
-      case Remindable.strip:
-        throw Exception("Undefined");
-    }
-  }
-  // #endregion
-
   // ! ------- ------- Constants ------- -------
 
-  // #region _kDaysOfWeek
+  final _getRemindersFromRemindable = <Remindable, ReminderEntity>{
+    Remindable.bloodGlucose: BloodGlucoseReminderModel.empty(),
+    Remindable.medication: MedicationReminderModel.empty(),
+    Remindable.hbA1c: Hba1CReminderModel.empty(),
+  };
+
+  final _getSPKeysFromRemindable = <Remindable, SharedPreferencesKeys>{
+    Remindable.bloodGlucose: SharedPreferencesKeys.bloodGlucoseList,
+    Remindable.medication: SharedPreferencesKeys.medicineList,
+    Remindable.hbA1c: SharedPreferencesKeys.hba1cList,
+  };
+
   List<Map<String, dynamic>> get _kDaysOfWeek => [
         {
           'name': LocaleProvider.current.weekdays_monday,
@@ -1218,5 +1184,4 @@ class ReminderManager {
           'shortName': LocaleProvider.current.weekdays_sunday_short,
         }
       ];
-  // #endregion
 }

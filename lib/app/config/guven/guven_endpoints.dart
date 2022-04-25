@@ -1,3 +1,5 @@
+// ignore_for_file: todo
+
 part of '../abstract/app_config.dart';
 
 class GuvenEndpoints extends IAppEndpoints {
@@ -18,9 +20,7 @@ class GuvenEndpoints extends IAppEndpoints {
 
   @override
   SymptomCheckerEndpoints get symptom => GuvenSymptomCheckerEndpoints();
-
 }
-
 
 class GuvenSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
   @override
@@ -61,7 +61,7 @@ class GuvenCommonEndpoints extends CommonEndpoints {
 
   @override
   // TODO: implement consentFormPath
-  String get consentFormPath => throw UnimplementedError();
+  String consentFormPath(String locale) => throw UnimplementedError();
 }
 
 class GuvenDevApiEndpoints extends DevApiEndpoints {
@@ -96,7 +96,6 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
   }
 
   @override
-
   String get ctAddProfile => throw UnimplementedError();
 
   @override

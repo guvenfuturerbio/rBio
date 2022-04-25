@@ -1,3 +1,5 @@
+// ignore_for_file: todo
+
 part of '../abstract/app_config.dart';
 
 class GuvenTheme extends IAppTheme {

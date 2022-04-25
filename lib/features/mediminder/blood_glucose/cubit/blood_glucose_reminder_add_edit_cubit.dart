@@ -18,7 +18,7 @@ class BloodGlucoseReminderAddEditCubit
   // #region setInitState
   void setInitState(int? createdDate) {
     if (createdDate != null) {
-      final editResult = reminderManager.getBloodGlucoseDetailResult(
+      final editResult = reminderManager.getBgDetailResult(
         createdDate,
       );
       if (editResult != null) {
@@ -164,7 +164,7 @@ class BloodGlucoseReminderAddEditCubit
         if (!isValid) return;
 
         final isSuccess =
-            await reminderManager.createOrEditBgReminderPlan(result);
+            await reminderManager.addUpdateBgPlan(result);
         if (isSuccess) {
           emit(const BloodGlucoseReminderAddEditState.openListScreen());
         }

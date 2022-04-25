@@ -29,9 +29,13 @@ abstract class ReminderEntity<T> {
       };
 }
 
-extension ReminderEntityExtension on ReminderEntity {
+extension ReminderEntityExtension on ReminderEntity<dynamic>? {
   SharedPreferencesKeys get xGetSharedKeys {
-    switch (remindable) {
+    if (this == null) {
+      throw Exception("ReminderEntity is null");
+    }
+
+    switch (this!.remindable) {
       case Remindable.bloodGlucose:
         return SharedPreferencesKeys.bloodGlucoseList;
 

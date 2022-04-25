@@ -13,6 +13,7 @@ import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import '../model/home_page_model.dart';
+import '../../../../core/widgets/rbio_error_screen.dart';
 
 part '../viewmodel/mt_home_vm.dart';
 part '../widgets/section_card.dart';
@@ -93,7 +94,9 @@ class _MeasurementTrackingHomeScreenState
         return _buildList(context, vm, isLandscape);
 
       case LoadingProgress.error:
-        return const RbioBodyError();
+        return RbioErrorScreenBody(
+          errorMsg: LocaleProvider.current.chronic_track_error,
+        );
 
       default:
         return const SizedBox();
