@@ -263,7 +263,7 @@ class MedicationReminderAddEditCubit
         if (!isValid) return;
 
         final isSuccess =
-            await reminderManager.createOrEditMedicationReminderPlan(result);
+            await reminderManager.addUpdateMedicationPlan(result);
         if (isSuccess) {
           emit(const MedicationReminderAddEditState.openListScreen());
         }
