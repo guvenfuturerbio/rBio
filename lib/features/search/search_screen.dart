@@ -174,7 +174,7 @@ class SearchListView extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.only(
-        bottom: R.sizes.defaultBottomValue,
+        bottom: R.sizes.bottomNavigationBarHeight,
       ),
       scrollDirection: Axis.vertical,
       physics: const BouncingScrollPhysics(),
@@ -296,7 +296,7 @@ class _ResourceCard extends StatelessWidget {
             },
           );
         },
-      ),
+      )
     );
   }
 }
