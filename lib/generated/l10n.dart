@@ -180,6 +180,16 @@ class LocaleProvider {
     );
   }
 
+  /// `To follow up your health monitoring 7/24 with expert doctors, you can check our health packages`
+  String get chronic_track_error {
+    return Intl.message(
+      'To follow up your health monitoring 7/24 with expert doctors, you can check our health packages',
+      name: 'chronic_track_error',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Done`
   String get done {
     return Intl.message(

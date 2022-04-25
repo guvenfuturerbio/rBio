@@ -240,6 +240,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose": MessageLookupByLibrary.simpleMessage("Choose"),
         "chronic_track":
             MessageLookupByLibrary.simpleMessage("Chronic Tracking"),
+        "chronic_track_error": MessageLookupByLibrary.simpleMessage(
+            "To follow up your health monitoring 7/24 with expert doctors, you can check our health packages"),
         "chronic_track_home":
             MessageLookupByLibrary.simpleMessage("Health Tracker"),
         "citizen_of_tc": MessageLookupByLibrary.simpleMessage("Citizen of T.C"),
