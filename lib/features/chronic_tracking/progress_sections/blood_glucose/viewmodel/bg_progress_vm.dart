@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/enums/glucose_margins_filter.dart';
 import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
 import '../../../../../model/model.dart';
 import '../../../bottom_actions_of_graph.dart';

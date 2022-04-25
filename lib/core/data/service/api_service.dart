@@ -2,10 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/generated/intl/messages_en.dart';
-import 'package:path/path.dart';
 
 import '../../../features/auth/auth.dart';
 import '../../../features/auth/model/consent_form_model.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../../../core/enums/glucose_margins_filter.dart';
 
 class BgChartFilterPopUpVm extends ChangeNotifier {
   Map<GlucoseMarginsFilter, bool> filters;

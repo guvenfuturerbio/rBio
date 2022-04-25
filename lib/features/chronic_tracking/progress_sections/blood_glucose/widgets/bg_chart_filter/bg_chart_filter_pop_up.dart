@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../../../core/enums/glucose_margins_filter.dart';
 import '../../viewmodel/bg_progress_vm.dart';
 import 'bg_chart_filter_pop_up_vm.dart';
 
