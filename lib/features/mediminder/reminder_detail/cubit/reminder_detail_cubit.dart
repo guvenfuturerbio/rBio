@@ -58,7 +58,7 @@ class ReminderDetailCubit extends Cubit<ReminderDetailState> {
       if (scheduledDate != null) {
         await reminderManager.updateAndRemoveOrCreateNotification(
           remindable,
-          notificationId,
+          model.notificationId,
           model.value,
           scheduledDate,
           model.bloodGlucoseModel!.reminderPeriod!,
@@ -75,7 +75,7 @@ class ReminderDetailCubit extends Cubit<ReminderDetailState> {
       if (scheduledDate != null) {
         await reminderManager.updateAndRemoveOrCreateNotification(
           remindable,
-          notificationId,
+          model.notificationId,
           model.value,
           scheduledDate,
           model.medicationModel!.reminderPeriod!,
