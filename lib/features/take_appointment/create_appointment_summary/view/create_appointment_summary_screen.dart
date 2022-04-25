@@ -340,7 +340,7 @@ class _CreateAppointmentSummaryScreenState
                 ;
               },
               title: vm.appointmentSuccess
-                  ? LocaleProvider.current.Ok
+                  ? LocaleProvider.current.home
                   : LocaleProvider.current.confirm,
               fontWeight: FontWeight.w600,
             ),
@@ -391,7 +391,7 @@ class _CreateAppointmentSummaryScreenState
                           }
                         },
                         title: vm.appointmentSuccess
-                            ? LocaleProvider.current.Ok
+                            ? LocaleProvider.current.home
                             : LocaleProvider.current.confirm,
                         fontWeight: FontWeight.w600,
                       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../core/core.dart';
 import '../auth.dart';
@@ -36,6 +37,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     _passwordController = TextEditingController();
     _passwordAgainController = TextEditingController();
 
+    listenForCode();
     super.initState();
   }
 
@@ -50,6 +52,12 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     _passwordAgainController.dispose();
 
     super.dispose();
+  }
+
+  listenForCode() async {
+    Future.delayed(const Duration(seconds: 3)).then((value) async {
+      await SmsAutoFill().listenForCode();
+    });
   }
 
   @override
@@ -96,16 +104,25 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              //
+              ElevatedButton(
+                  onPressed: () async {
+                    var tmp = await SmsAutoFill().getAppSignature;
+                    LoggerUtils.instance.e("EYC - $tmp");
+                  },
+                  child: const Text("Signature")),
               Container(
                 margin: const EdgeInsets.only(bottom: 20, top: 40),
                 child: RbioTextFormField(
+                  isForSms: true,
                   focusNode: _temporaryFocusNode,
                   controller: _temporaryController,
                   textInputAction: TextInputAction.next,
                   obscureText: value.passwordVisibility ? false : true,
                   hintText: LocaleProvider.of(context).temporary_pass,
                   onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  onChanged: (val) {
+                    _temporaryController.text = val;
+                  },
                 ),
               ),
 
