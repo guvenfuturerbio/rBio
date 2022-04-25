@@ -126,6 +126,7 @@ dependencies:
   simple_gesture_detector: ^0.2.0
   slugify: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
+  sms_autofill: ^2.2.0
   spring: ^2.0.2
   syncfusion_flutter_charts: ^20.1.48
   syncfusion_flutter_gauges: ^20.1.48
