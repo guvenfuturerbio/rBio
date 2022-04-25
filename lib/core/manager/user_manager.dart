@@ -427,7 +427,8 @@ class UserManagerImpl extends UserManager {
           SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       filteredSocialResources.add(filteredSocialResponse);
     }
-    return filteredSocialResources;
+     filteredSocialResources.sort((a,b) => a.title!.toLowerCase().compareTo(b.title!.toLowerCase()));
+   return filteredSocialResources;
   }
 
   @override
@@ -443,7 +444,7 @@ class UserManagerImpl extends UserManager {
           SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       filteredSocialResources.add(filteredSocialResponse);
     }
-    return filteredSocialResources;
+   return filteredSocialResources;
   }
 
   @override
@@ -457,7 +458,7 @@ class UserManagerImpl extends UserManager {
           SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       allSocialResources.add(allSocialPostsResponse);
     }
-    return allSocialResources;
+   return allSocialResources;
   }
 
   @override
