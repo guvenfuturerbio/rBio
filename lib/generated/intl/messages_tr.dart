@@ -233,6 +233,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "choice": MessageLookupByLibrary.simpleMessage("Seçiminiz : "),
         "choose": MessageLookupByLibrary.simpleMessage("Seç"),
         "chronic_track": MessageLookupByLibrary.simpleMessage("Kronik Takip"),
+        "chronic_track_error": MessageLookupByLibrary.simpleMessage(
+            "Sağlık takibinizi uzman doktorlar ile 7/24 takip etmek için paketlerimize göz atabilirsiniz"),
         "chronic_track_home":
             MessageLookupByLibrary.simpleMessage("Sağlık Takibi"),
         "citizen_of_tc":

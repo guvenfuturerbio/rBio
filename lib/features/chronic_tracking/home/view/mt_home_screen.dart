@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +13,7 @@ import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
 import '../model/home_page_model.dart';
+import 'mt_error_screen.dart';
 
 part '../viewmodel/mt_home_vm.dart';
 part '../widgets/section_card.dart';
@@ -94,7 +94,7 @@ class _MeasurementTrackingHomeScreenState
         return _buildList(context, vm, isLandscape);
 
       case LoadingProgress.error:
-        return const RbioBodyError();
+        return const MtErrorScreen();
 
       default:
         return const SizedBox();
