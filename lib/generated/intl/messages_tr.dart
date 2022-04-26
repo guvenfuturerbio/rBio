@@ -824,6 +824,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Seçili tarihler için uygun bir boşluk bulunamadı. Sizi aramamızı ister misiniz ?"),
         "no_appointment": MessageLookupByLibrary.simpleMessage(
             "Seçilen tarih için randevunuz yok"),
+        "no_data_chat": MessageLookupByLibrary.simpleMessage(
+            "Sohbet bağlantısı bulunamadı. Bağlantı için lütfen ilgili departman ile iletişime geçiniz."),
         "no_file_found":
             MessageLookupByLibrary.simpleMessage("Dosya bulunamadı"),
         "no_measurement": MessageLookupByLibrary.simpleMessage("Son ölçüm yok"),

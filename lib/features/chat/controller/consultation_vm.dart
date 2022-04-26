@@ -28,9 +28,12 @@ class DoctorConsultationVm extends RbioVm {
       apiUserList = [];
       progress = LoadingProgress.loading;
       apiUserList = await getChatContactsFirebaseId();
-      stream = getIt<FirestoreManager>().getContactsAndMessages();
+      if(apiUserList.isNotEmpty){
+        stream = getIt<FirestoreManager>().getContactsAndMessages();
+      }
       progress = LoadingProgress.done;
-    } catch (e) {
+    } catch (e, stk) {
+      debugPrintStack(stackTrace: stk);
       progress = LoadingProgress.error;
       showGradientDialog(
         LocaleProvider.current.warning,

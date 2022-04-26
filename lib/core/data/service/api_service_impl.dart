@@ -1353,11 +1353,7 @@ class ApiServiceImpl extends ApiService {
       {'isActiveChats': 'true'},
       options: authOptions,
     );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/getChatContacts : ${response.isSuccessful}');
-    }
+    return response;
   }
 
   @override

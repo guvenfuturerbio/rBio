@@ -70,39 +70,43 @@ class ConsultationScreen extends StatelessWidget {
 
   // #region _buildList
   Widget _buildList(BuildContext context, DoctorConsultationVm vm) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: vm.stream,
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamList,
-      ) {
-        if (streamList.hasData) {
-          final list = vm.getChatPersonListWithStream(streamList.data!);
-          getIt<CacheClient>().write<List<ChatPerson>>(
-            key: R.constants.chatPersonListKey,
-            value: list,
-          );
+    return vm.apiUserList.isEmpty
+        ? RbioEmptyText(title: LocaleProvider.current.no_data_chat)
+        : StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: vm.stream,
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamList,
+            ) {
+              if (streamList.hasData) {
+                final list = vm.getChatPersonListWithStream(streamList.data!);
+                getIt<CacheClient>().write<List<ChatPerson>>(
+                  key: R.constants.chatPersonListKey,
+                  value: list,
+                );
 
-          return ListView.builder(
-            padding: EdgeInsets.only(
-              bottom: drawerKey == null ? 0 : R.sizes.bottomNavigationBarHeight,
-            ),
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            itemCount: list.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildCard(context, list[index]);
+                return ListView.builder(
+                  padding: EdgeInsets.only(
+                    bottom: drawerKey == null
+                        ? 0
+                        : R.sizes.bottomNavigationBarHeight,
+                  ),
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: list.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _buildCard(context, list[index]);
+                  },
+                );
+              }
+
+              if (streamList.hasError) {
+                return const RbioBodyError();
+              }
+
+              return const RbioLoading();
             },
           );
-        }
-
-        if (streamList.hasError) {
-          return const RbioBodyError();
-        }
-
-        return const RbioLoading();
-      },
-    );
   }
   // #endregion
 

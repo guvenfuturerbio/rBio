@@ -86,10 +86,15 @@ class Repository {
 
   Future<List<GetChatContactsResponse>> getChatContacts() async {
     final response = await apiService.getChatContacts();
-    return response.datum
-        .map((item) => GetChatContactsResponse.fromJson(item))
-        .cast<GetChatContactsResponse>()
-        .toList();
+    if (response.xIsSuccessful) {
+      return response.datum
+          .map((item) => GetChatContactsResponse.fromJson(item))
+          .cast<GetChatContactsResponse>()
+          .toList();
+    } else {
+      LoggerUtils.instance.e("/getChatContacts - The list is empty!");
+      return [];
+    }
   }
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(

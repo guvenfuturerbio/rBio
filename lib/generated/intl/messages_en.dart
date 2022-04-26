@@ -833,6 +833,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "No suitable spaces were found for the selected dates. Would you like us to call you?"),
         "no_appointment": MessageLookupByLibrary.simpleMessage(
             "You have no appointments for the selected date"),
+        "no_data_chat": MessageLookupByLibrary.simpleMessage(
+            "Chat link not found. For connection, please contact the relevant department."),
         "no_file_found": MessageLookupByLibrary.simpleMessage(
             "No file was found for the selected appointment"),
         "no_measurement": MessageLookupByLibrary.simpleMessage(
