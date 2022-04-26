@@ -15,13 +15,20 @@ part 'app_functionality.dart';
 part 'app_theme.dart';
 
 abstract class IAppConfig {
+  late ProductType productType;
   late IAppTheme theme;
   late IAppFunctionality functionality;
   late IAppEndpoints endpoints;
 
   IAppConfig({
+    required this.productType,
     required this.theme,
     required this.functionality,
     required this.endpoints,
   });
+}
+
+enum ProductType {
+  oneDose,
+  guven,
 }
