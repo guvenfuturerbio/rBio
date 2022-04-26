@@ -587,6 +587,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hungry": MessageLookupByLibrary.simpleMessage("Aç"),
         "hyper": MessageLookupByLibrary.simpleMessage("Hiper"),
         "hypo": MessageLookupByLibrary.simpleMessage("Hipo"),
+        "identification_match_problem": MessageLookupByLibrary.simpleMessage(
+            "Kimlik numarası formatı veya pasaport numarası formatı ile eşleşme bulunamadı."),
         "identification_passport_number":
             MessageLookupByLibrary.simpleMessage("T.C ya da Pasaport Numarası"),
         "identity_passport": MessageLookupByLibrary.simpleMessage(
@@ -803,6 +805,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nationality": MessageLookupByLibrary.simpleMessage("Uyruk"),
         "necessary_identity_message": MessageLookupByLibrary.simpleMessage(
             "Bu özelliği kullanabilmeniz için kimlik/pasaport numaranızı girmeniz gerekiyor"),
+        "need_identification_number": MessageLookupByLibrary.simpleMessage(
+            "Kimlik veya pasaport numaranızı girmeniz gerekiyor"),
         "neptune_hosp":
             MessageLookupByLibrary.simpleMessage("Güven Çayyolu Kampüsü"),
         "never_ask_again":

@@ -111,11 +111,18 @@ class _LoginScreenState extends State<LoginScreen> {
             //
             _buildHeader(),
 
-            //
-            _buildEmail(value),
+            Form(
+                autovalidateMode: value.autovalidateMode,
+                key: value.key,
+                child: Column(
+                  children: [
+                    //
+                    _buildEmail(value),
 
-            //
-            _buildPassword(value),
+                    //
+                    _buildPassword(value),
+                  ],
+                )),
 
             //
             _buildRememberMe(value),
@@ -201,6 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
             obscureText: false,
             autocorrect: false,
             focusNode: _usernameFocusNode,
+            validator: Utils.instance.validateIdentificationNumber,
             controller: _userNameEditingController,
             textInputAction: TextInputAction.next,
             hintText: '', // LocaleProvider.of(context).email_or_identity,
@@ -245,6 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
           autocorrect: false,
           enableSuggestions: false,
           focusNode: _passwordFocusNode,
+          validator: Utils.instance.validatePassword,
           controller: _passwordEditingController,
           textInputAction: TextInputAction.done,
           obscureText: value.passwordVisibility ? false : true,

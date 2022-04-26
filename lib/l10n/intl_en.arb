@@ -851,5 +851,7 @@
   "required_user_height_info_message": "You need to enter your Height information to continue.",
   "measurement_saved": "The measurement has been saved",
   "add_medicine": "Add medicine",
-  "no_data_chat": "Chat link not found. For connection, please contact the relevant department."
+  "no_data_chat": "Chat link not found. For connection, please contact the relevant department.",
+  "need_identification_number": "We need an identification number",
+  "identification_match_problem": "No match found for ID number format or passport number format."
 }

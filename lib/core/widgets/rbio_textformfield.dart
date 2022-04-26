@@ -107,12 +107,37 @@ class RbioTextFormField extends StatelessWidget {
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               backColor: backColor,
+            ).copyWith(
+              errorStyle: context.xBodyText1Error,
+              errorBorder: _redErrorBorder(),
+              focusedBorder: _focusedBorder(),
+              focusedErrorBorder: _focusedRedErrorBorder(),
             ),
             cursorColor: getIt<IAppConfig>().theme.mainColor,
             onChanged: onChanged,
             inputFormatters: inputFormatters,
             onFieldSubmitted: onFieldSubmitted,
           );
+  }
+
+  static OutlineInputBorder _focusedRedErrorBorder() {
+    return OutlineInputBorder(
+        borderSide:
+            BorderSide(color: getIt<IAppConfig>().theme.darkRed, width: 2.0),
+        borderRadius: BorderRadius.circular(15));
+  }
+
+  static OutlineInputBorder _focusedBorder() {
+    return OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.transparent, width: 1.0),
+        borderRadius: BorderRadius.circular(15));
+  }
+
+  static OutlineInputBorder _redErrorBorder() {
+    return OutlineInputBorder(
+        borderSide:
+            BorderSide(color: getIt<IAppConfig>().theme.darkRed, width: 1.0),
+        borderRadius: BorderRadius.circular(15));
   }
 
   static InputDecoration defaultDecoration(

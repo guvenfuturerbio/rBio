@@ -49,6 +49,12 @@ extension BuildContextThemeExtensions on BuildContext {
   TextStyle get xButton => Theme.of(this).textTheme.button ?? const TextStyle();
   TextStyle get xOverline =>
       Theme.of(this).textTheme.overline ?? const TextStyle();
+  TextStyle get xBodyText1Error =>
+      Theme.of(this)
+          .textTheme
+          .bodyText1
+          ?.copyWith(color: getIt<IAppConfig>().theme.darkRed) ??
+      const TextStyle();
   // #endregion
 
   // #region Color Scheme

@@ -594,6 +594,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hungry": MessageLookupByLibrary.simpleMessage("Hungry"),
         "hyper": MessageLookupByLibrary.simpleMessage("Hyper"),
         "hypo": MessageLookupByLibrary.simpleMessage("Hypo"),
+        "identification_match_problem": MessageLookupByLibrary.simpleMessage(
+            "No match found for ID number format or passport number format."),
         "identification_passport_number":
             MessageLookupByLibrary.simpleMessage("T.C or Passport Number"),
         "identity_passport":
@@ -811,6 +813,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nationality": MessageLookupByLibrary.simpleMessage("Nationality"),
         "necessary_identity_message": MessageLookupByLibrary.simpleMessage(
             "In order to use this feature, you need to enter your ID/passport number."),
+        "need_identification_number": MessageLookupByLibrary.simpleMessage(
+            "We need an identification number"),
         "neptune_hosp":
             MessageLookupByLibrary.simpleMessage("Güven Çayyolu Campus"),
         "never_ask_again":

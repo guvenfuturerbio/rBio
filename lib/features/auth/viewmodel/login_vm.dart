@@ -30,6 +30,12 @@ class LoginScreenVm extends ChangeNotifier {
     });
   }
 
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
+
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  GlobalKey<FormState>? get key => _key;
+
   String locale = "";
   LoadingDialog? loadingDialog;
 
@@ -189,9 +195,13 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> login(String username, String password) async {
+    _autovalidateMode = AutovalidateMode.always;
+    notifyListeners();
+    if (_key.currentState?.validate() ?? false) {
+      _key.currentState?.save();
+    }
     if (checkFields(username, password)) {
       showLoadingDialog();
-
       try {
         // Roles and token
         try {
