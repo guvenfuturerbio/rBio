@@ -30,9 +30,9 @@ class ScaleRepository {
 
   // #region getLatestMeasurement
   ScaleEntity? getLatestMeasurement(
-    int age,
-    int gender,
-    int height,
+    int? age,
+    int? gender,
+    int? height,
   ) {
     List<ScaleHiveModel> list = _scaleHiveImpl.readScaleData();
     list.sort((a, b) {
@@ -45,16 +45,16 @@ class ScaleRepository {
     });
     return list.isEmpty
         ? null
-        : list.first.xToChronicEntity(age, gender, height);
+        : list.first.xToChronicEntity(age ?? 0, gender ?? 0, height ?? 0);
   }
   // #endregion
 
   // #region readLocalScaleData
-  List<ScaleEntity> readLocalScaleData(int age, int gender, int height) {
+  List<ScaleEntity> readLocalScaleData(int? age, int? gender, int? height) {
     final list = _scaleHiveImpl.readScaleData();
     List<ScaleEntity> result = [];
     for (var item in list) {
-      result.add(item.xToChronicEntity(age, gender, height));
+      result.add(item.xToChronicEntity(age ?? 0, gender ?? 0, height ?? 0));
     }
     return result;
   }
