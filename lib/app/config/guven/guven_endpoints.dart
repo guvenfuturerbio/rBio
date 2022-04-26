@@ -54,10 +54,8 @@ class GuvenSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
 
 class GuvenCommonEndpoints extends CommonEndpoints {
   @override
-  String getDoctorCvDetailsPath(String doctorWebID) {
-    // TODO: implement getDoctorCvDetailsPath
-    throw UnimplementedError();
-  }
+  String getDoctorCvDetailsPath(String doctorWebID) =>
+      '/api/doctor/$doctorWebID'.xGuvenPath;
 
   @override
   // TODO: implement consentFormPath
@@ -66,24 +64,20 @@ class GuvenCommonEndpoints extends CommonEndpoints {
 
 class GuvenDevApiEndpoints extends DevApiEndpoints {
   @override
-  // TODO: implement addFirebaseTokenUiPath
-  String get addFirebaseTokenUiPath => throw UnimplementedError();
+  String get addFirebaseTokenUiPath => '/user/add-user-firebaseId'.xBaseUrl;
 
   @override
-  // TODO: implement addStep1
-  String get addStep1 => throw UnimplementedError();
+  String get addStep1 => '/userregister/add-step1-pusula'.xBaseUrl;
 
   @override
-  // TODO: implement addStep2
-  String get addStep2 => throw UnimplementedError();
+  String get addStep2 => "/userregister/add-step2".xBaseUrl;
 
   @override
-  // TODO: implement addStep3
-  String get addStep3 => throw UnimplementedError();
+  String get addStep3 => '/userregister/add-step3'.xBaseUrl;
 
   @override
-  // TODO: implement changePassword
-  String get changePassword => throw UnimplementedError();
+  String get changePassword =>
+      '/userregister/change-password-with-old-password'.xBaseUrl;
 
   @override
   // TODO: implement ctAddFirebaseToken
@@ -198,7 +192,7 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
 
   @override
   // TODO: implement forgotPassword
-  String get forgotPassword => throw UnimplementedError();
+  String get forgotPassword => '/userregister/forgot-password'.xBaseUrl;
 
   @override
   String getBannerTab(String applicationName, String groupName) {
@@ -207,24 +201,21 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
   }
 
   @override
-  // TODO: implement getUserProfilePath
-  String get getUserProfilePath => throw UnimplementedError();
+  String get getUserProfilePath => '/user/get-user-info'.xBaseUrl;
 
   @override
-  // TODO: implement loginPath
-  String get loginPath => throw UnimplementedError();
+  String get loginPath => "AccessToken/get-token-for-guven-online".xBaseUrl;
 
   @override
   // TODO: implement sendNotification
   String get sendNotification => throw UnimplementedError();
 
   @override
-  // TODO: implement getAllRelativesPath
-  String get getAllRelativesPath => throw UnimplementedError();
+  String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
 
   @override
-  // TODO: implement updateContactInfoPath
-  String get updateContactInfoPath => throw UnimplementedError();
+  String get updateContactInfoPath =>
+      '/pusula/UpdatePatientContactInfo'.xBaseUrl;
 
   @override
   // TODO: implement getChatContacts
@@ -237,102 +228,84 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
 
 class GuvenBaseEndpoints extends BaseEndpoints {
   @override
-  String get getAllPackagePath => throw UnimplementedError();
+  String get getAllPackagePath => '/Package/get-all'.xBaseUrl;
 
   @override
-  String getAllSubCategoriesPath(int id) => throw UnimplementedError();
+  String getAllSubCategoriesPath(int id) =>
+      '/Package/get-all-sub-categories/$id'.xBaseUrl;
 
   @override
-  String getSubCategoryDetailPath(id) => throw UnimplementedError();
+  String getSubCategoryDetailPath(id) =>
+      '/Package/get-all-sub-category-pages/$id'.xBaseUrl;
 
   @override
-  String getSubCategoryItemsPath(id) => throw UnimplementedError();
+  String getSubCategoryItemsPath(id) =>
+      '/Package/get-all-sub-category-items/$id'.xBaseUrl;
 
   @override
-  // TODO: implement doPackagePaymentPath
-  String get doPackagePaymentPath => throw UnimplementedError();
+  String get doPackagePaymentPath =>
+      '/Package/do-mobile-payment-without-firebase'.xBaseUrl;
 
   @override
   // TODO: implement findResourceAvailableDays
   String get findResourceAvailableDays => throw UnimplementedError();
 
   @override
-  // TODO: implement updateUserSystemNamePath
-  String get updateUserSystemNamePath => throw UnimplementedError();
+  String get updateUserSystemNamePath =>
+      '/Authentication/update-user-system-name-pusula'.xBaseUrl;
 
   @override
-  // TODO: implement getActiveStreamPath
-  String get getActiveStreamPath => throw UnimplementedError();
+  String get getActiveStreamPath => '/profile/get-active-stream'.xBaseUrl;
 
   @override
-  // TODO: implement getProfilePicturePath
-  String get getProfilePicturePath => throw UnimplementedError();
+  String get getProfilePicturePath =>
+      '/file/retrieve-user-profile-image'.xBaseUrl;
 
   @override
-  // TODO: implement getPatientDetailPath
-  String get getPatientDetailPath => throw UnimplementedError();
+  String get getPatientDetailPath => '/Pusula/getPatientByToken'.xBaseUrl;
 
   @override
-  // TODO: implement filterTenantsPath
-  String get filterTenantsPath => throw UnimplementedError();
+  String get filterTenantsPath => '/Pusula/filterTenants'.xBaseUrl;
 
   @override
-  // TODO: implement filterDepartmentsPath
-  String get filterDepartmentsPath => throw UnimplementedError();
+  String get filterDepartmentsPath => '/Pusula/FilterDepartments'.xBaseUrl;
 
   @override
-  // TODO: implement filterResourcesPath
-  String get filterResourcesPath => throw UnimplementedError();
+  String get filterResourcesPath => '/Pusula/filterResources'.xBaseUrl;
 
   @override
-  // TODO: implement addSuggestionPath
-  String get addSuggestionPath => throw UnimplementedError();
+  String get addSuggestionPath => '/SuggestionRate/Add-Suggestion'.xBaseUrl;
 
   @override
-  String changeActiveUserToRelativePath(String id) {
-    // TODO: implement changeActiveUserToRelativePath
-    throw UnimplementedError();
-  }
+  String changeActiveUserToRelativePath(String id) =>
+      '/profile/set-profile/$id'.xBaseUrl;
 
   @override
-  String changeUserPasswordUiPath(String oldPassword, String password) {
-    // TODO: implement changeUserPasswordUiPath
-    throw UnimplementedError();
-  }
+  String changeUserPasswordUiPath(String oldPassword, String password) =>
+      '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
 
   @override
-  String clickPostPath(int postId) {
-    // TODO: implement clickPostPath
-    throw UnimplementedError();
-  }
+  String clickPostPath(int postId) => '/SocialPost/clickPost/$postId'.xBaseUrl;
 
   @override
-  String deleteOnlineAppoFilePath(String webAppoId, String fileName) {
-    // TODO: implement deleteOnlineAppoFilePath
-    throw UnimplementedError();
-  }
+  String deleteOnlineAppoFilePath(String webAppoId, String fileName) =>
+      '/file/report-file-delete/$webAppoId/$fileName'.xBaseUrl;
 
   @override
   // TODO: implement deleteProfilePicturePath
   String get deleteProfilePicturePath => throw UnimplementedError();
 
   @override
-  String downloadAppointmentFilePath(String id, String name) {
-    // TODO: implement downloadAppointmentFilePath
-    throw UnimplementedError();
-  }
+  String downloadAppointmentFilePath(String id, String name) =>
+      '/file/report-file-download/$id/$name'.xBaseUrl;
 
   @override
-  String downloadAppointmentSingleFilePath(String folder, String path) {
-    // TODO: implement downloadAppointmentSingleFilePath
-    throw UnimplementedError();
-  }
+  String downloadAppointmentSingleFilePath(String folder, String path) =>
+      '/file/download-patient-appointment-single-file/$folder/$path'.xBaseUrl;
 
   @override
-  String filterSocialPostsPath(String search) {
-    // TODO: implement filterSocialPostsPath
-    throw UnimplementedError();
-  }
+  String filterSocialPostsPath(String search) =>
+      '/SocialPost/getPostWithTagsByText/$search'.xBaseUrl;
 
   @override
   String filterSocialPostsPlatform(String platform) {
@@ -341,91 +314,71 @@ class GuvenBaseEndpoints extends BaseEndpoints {
   }
 
   @override
-  // TODO: implement findResourceClosestAvailablePlanPath
-  String get findResourceClosestAvailablePlanPath => throw UnimplementedError();
+  String get findResourceClosestAvailablePlanPath =>
+      '/Pusula/findResourceClosestAvailablePlan'.xBaseUrl;
 
   @override
-  // TODO: implement getAllFilesPath
-  String get getAllFilesPath => throw UnimplementedError();
+  String get getAllFilesPath =>
+      '/file/get-patient-all-appointments-file-names'.xBaseUrl;
 
   @override
-  // TODO: implement getAllTranslatorPath
-  String get getAllTranslatorPath => throw UnimplementedError();
+  String get getAllTranslatorPath => '/appointmentinterpreter/get-all'.xBaseUrl;
 
   @override
-  // TODO: implement getAppointmentTypeViaWebConsultantIdPath
   String get getAppointmentTypeViaWebConsultantIdPath =>
-      throw UnimplementedError();
+      '/videoCall/get-stream-type-mobile'.xBaseUrl;
 
   @override
-  // TODO: implement getCountriesPath
-  String get getCountriesPath => throw UnimplementedError();
+  String get getCountriesPath => '/Pusula/getCountries'.xBaseUrl;
 
   @override
-  // TODO: implement getCourseIdPath
-  String get getCourseIdPath => throw UnimplementedError();
+  String get getCourseIdPath => '/course/get-active'.xBaseUrl;
 
   @override
-  // TODO: implement getEventsPath
-  String get getEventsPath => throw UnimplementedError();
+  String get getEventsPath => '/Pusula/getevents'.xBaseUrl;
 
   @override
-  // TODO: implement getLaboratoryResultsPath
-  String get getLaboratoryResultsPath => throw UnimplementedError();
+  String get getLaboratoryResultsPath =>
+      '/Pusula/getLaboratoryResults'.xBaseUrl;
 
   @override
-  String getOnlineAppoFilesPath(String roomId) {
-    // TODO: implement getOnlineAppoFilesPath
-    throw UnimplementedError();
-  }
+  String getOnlineAppoFilesPath(String roomId) =>
+      '/file/get-patient-appointments-file-names/$roomId'.xBaseUrl;
 
   @override
-  // TODO: implement getRelativeRelationshipsPath
-  String get getRelativeRelationshipsPath => throw UnimplementedError();
+  String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
 
   @override
-  String getRoomStatusUiPath(String roomId) {
-    // TODO: implement getRoomStatusUiPath
-    throw UnimplementedError();
-  }
+  String getRoomStatusUiPath(String roomId) =>
+      '/liveappointment/get-room-status/$roomId'.xBaseUrl;
 
   @override
-  // TODO: implement getUserKvkkInfoPath
-  String get getUserKvkkInfoPath => throw UnimplementedError();
+  String get getUserKvkkInfoPath => '/user/get-user-kvkk-info'.xBaseUrl;
 
   @override
-  // TODO: implement getVisitsPath
-  String get getVisitsPath => throw UnimplementedError();
+  String get getVisitsPath => '/Pusula/getVisits'.xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) {
-    // TODO: implement removePatientRelativePath
-    throw UnimplementedError();
-  }
+  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
 
   @override
-  String requestTranslatorPath(String appoId) {
-    // TODO: implement requestTranslatorPath
-    throw UnimplementedError();
-  }
+  String requestTranslatorPath(String appoId) =>
+      '/appointmentinterpreter/add-update-appointment-interpreter-pusula/$appoId'
+          .xBaseUrl;
 
   @override
-  // TODO: implement saveAppointmentPath
-  String get saveAppointmentPath => throw UnimplementedError();
+  String get saveAppointmentPath => '/Pusula/saveAppointment'.xBaseUrl;
 
   @override
-  String setJitsiWebConsultantIdPath(String webConsultantId) {
-    // TODO: implement setJitsiWebConsultantIdPath
-    throw UnimplementedError();
-  }
+  String setJitsiWebConsultantIdPath(String webConsultantId) =>
+      '/CerebrumOnlineAppointment/set-mobile-appointment-entrance-c4dd4e4ac7c34592827f0dbbfc233c56/$webConsultantId'
+          .xBaseUrl;
 
   @override
-  // TODO: implement setYoutubeSurveyUserPath
-  String get setYoutubeSurveyUserPath => throw UnimplementedError();
+  String get setYoutubeSurveyUserPath => '/course/save-user'.xBaseUrl;
 
   @override
-  // TODO: implement socialResourcePath
-  String get socialResourcePath => throw UnimplementedError();
+  String get socialResourcePath => '/SocialPost/getAllPosts'.xBaseUrl;
 
   @override
   // TODO: implement syncronizeOneDoseUser
@@ -436,88 +389,79 @@ class GuvenBaseEndpoints extends BaseEndpoints {
   String get updatePusulaContactInfoPath => throw UnimplementedError();
 
   @override
-  // TODO: implement updateUserKvkkInfoPath
-  String get updateUserKvkkInfoPath => throw UnimplementedError();
+  String get updateUserKvkkInfoPath => '/user/update-user-kvkk-info'.xBaseUrl;
 
   @override
-  String uploadFileToAppoPath(String webAppoId) {
-    // TODO: implement uploadFileToAppoPath
-    throw UnimplementedError();
-  }
+  String uploadFileToAppoPath(String webAppoId) =>
+      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
 
   @override
   // TODO: implement uploadProfilePicturePath
   String get uploadProfilePicturePath => throw UnimplementedError();
 
   @override
-  // TODO: implement addNewPatientRelativePath
-  String get addNewPatientRelativePath => throw UnimplementedError();
+  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
 
   @override
-  // TODO: implement cancelAppointmentPath
-  String get cancelAppointmentPath => throw UnimplementedError();
+  String get cancelAppointmentPath => '/Pusula/cancelAppointment'.xBaseUrl;
 
   @override
-  // TODO: implement checkOnlineAppointmentPaymentPath
-  String get checkOnlineAppointmentPaymentPath => throw UnimplementedError();
+  String get checkOnlineAppointmentPaymentPath =>
+      '/pusula/checkOnlineAppointmentPayment'.xBaseUrl;
 
   @override
   // TODO: implement ctSaveAndRetrieveToken
   String get ctSaveAndRetrieveToken => throw UnimplementedError();
 
   @override
-  // TODO: implement doMobilePaymentPath
-  String get doMobilePaymentPath => throw UnimplementedError();
+  String get doMobilePaymentPath =>
+      '/Pusula/do-mobile-payment-without-firebase'.xBaseUrl;
 
   @override
-  // TODO: implement doMobilePaymentWithVoucher
-  String get doMobilePaymentWithVoucher => throw UnimplementedError();
+  String get doMobilePaymentWithVoucher =>
+      '/Pusula/do-mobile-payment-with-voucher'.xBaseUrl;
 
   @override
-  // TODO: implement fetchOnlineDepartmentsPath
-  String get fetchOnlineDepartmentsPath => throw UnimplementedError();
+  String get fetchOnlineDepartmentsPath =>
+      '/Pusula/getOnlineDepartments'.xBaseUrl;
 
   @override
-  // TODO: implement getAvailabilityRatePath
-  String get getAvailabilityRatePath => throw UnimplementedError();
+  String get getAvailabilityRatePath =>
+      '/SuggestionRate/Get-Availability-Rate-Pusula'.xBaseUrl;
 
   @override
-  // TODO: implement getLaboratoryPdfResultPath
-  String get getLaboratoryPdfResultPath => throw UnimplementedError();
+  String get getLaboratoryPdfResultPath =>
+      '/Pusula/getLaboratoryResultsPdf'.xBaseUrl;
 
   @override
-  // TODO: implement getPathologyResultsPath
-  String get getPathologyResultsPath => throw UnimplementedError();
+  String get getPathologyResultsPath => '/Pusula/getPathologyResults'.xBaseUrl;
 
   @override
-  // TODO: implement getPatientAppointmentsPath
-  String get getPatientAppointmentsPath => throw UnimplementedError();
+  String get getPatientAppointmentsPath =>
+      '/Pusula/getPatientAppointments'.xBaseUrl;
 
   @override
-  // TODO: implement getRadiologyPdfResultPath
-  String get getRadiologyPdfResultPath => throw UnimplementedError();
+  String get getRadiologyPdfResultPath =>
+      '/Pusula/getRadiologyResultsPdf'.xBaseUrl;
 
   @override
-  // TODO: implement getRadiologyResultsPath
-  String get getRadiologyResultsPath => throw UnimplementedError();
+  String get getRadiologyResultsPath => '/Pusula/getRadiologyResults'.xBaseUrl;
 
   @override
-  // TODO: implement getResourceVideoCallPricePath
-  String get getResourceVideoCallPricePath => throw UnimplementedError();
+  String get getResourceVideoCallPricePath =>
+      '/Pusula/getResourceVideoCallPrice'.xBaseUrl;
 
   @override
-  // TODO: implement getResourceVideoCallPriceWithVoucher
-  String get getResourceVideoCallPriceWithVoucher => throw UnimplementedError();
+  String get getResourceVideoCallPriceWithVoucher =>
+      '/Pusula/getResourceVideoCallPriceWithVoucher'.xBaseUrl;
 
   @override
-  // TODO: implement rateOnlineCallPath
-  String get rateOnlineCallPath => throw UnimplementedError();
+  String get rateOnlineCallPath =>
+      '/SuggestionRate/Add-Availability-Rate-pusula'.xBaseUrl;
 
   @override
-  String uploadPatientDocumentsPath(String webAppoId) {
-    // TODO: implement uploadPatientDocumentsPath
-    throw UnimplementedError();
-  }
+  String uploadPatientDocumentsPath(String webAppoId) =>
+      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
 }
 
 class GuvenDoctorEndpoints extends DoctorEndpoints {
@@ -578,6 +522,6 @@ class GuvenDoctorEndpoints extends DoctorEndpoints {
   }
 
   @override
-  // TODO: implement getCurrentApplicationVersionPath
-  String get getCurrentApplicationVersionPath => throw UnimplementedError();
+  String get getCurrentApplicationVersionPath =>
+      '/applicationmobilecheckversion/get-current'.xBaseUrl;
 }
