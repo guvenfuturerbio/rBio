@@ -116,9 +116,7 @@ class __ExpandableHoursState extends State<_ExpandableHours> {
           //
           Expanded(
             child: Text(
-              model.dateTime.xFormatTime10() +
-                  ' ' +
-                  model.dateTime.xFormatTime8(),
+              model.dateTime.xFormatTime8(),
               style: context.xHeadline3.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -136,6 +134,7 @@ class __ExpandableHoursState extends State<_ExpandableHours> {
                       dateTime: model.dateTime,
                       list: widget.list,
                       bloodGlucoseModel: model.bloodGlucoseModel,
+                      medicationModel: model.medicationModel,
                     ),
                   );
             },

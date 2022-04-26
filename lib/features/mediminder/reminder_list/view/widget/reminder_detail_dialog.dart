@@ -46,18 +46,18 @@ class ReminderDetailDialog extends StatelessWidget {
             //
             R.sizes.hSizer8,
 
-            //
-            RbioElevatedButton(
-              onTap: () {
-                Atom.dismiss();
-              },
-              title: LocaleProvider.current.done_text,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              fontWeight: FontWeight.bold,
-            ),
+            // //
+            // RbioElevatedButton(
+            //   onTap: () {
+            //     Atom.dismiss();
+            //   },
+            //   title: LocaleProvider.current.done_text,
+            //   padding: const EdgeInsets.symmetric(vertical: 10),
+            //   fontWeight: FontWeight.bold,
+            // ),
 
-            //
-            R.sizes.hSizer4,
+            // //
+            // R.sizes.hSizer4,
 
             //
             RbioElevatedButton(

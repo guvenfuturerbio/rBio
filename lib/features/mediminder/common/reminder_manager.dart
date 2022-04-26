@@ -269,8 +269,8 @@ class ReminderManager {
   }
   // #endregion
 
-  // #region updateAndRemoveOrCreateNotification - Future<bool>
-  Future<bool> updateAndRemoveOrCreateNotification(
+  // #region changeTimeStatus - Future<bool>
+  Future<bool> changeTimeStatus(
     Remindable remindable,
     int notificationId,
     bool value,
@@ -279,52 +279,30 @@ class ReminderManager {
     String title,
   ) async {
     try {
-      // Bildirim pasif duruma geçtiyse iptal ediyorum.
-      if (!value) {
+      await _updateStatusItemLocalList(
+        notificationId,
+        _getSPKeysFromRemindable[remindable],
+        _getRemindersFromRemindable[remindable],
+      );
+
+      if (value) {
+        if (remindable == Remindable.bloodGlucose) {
+          reminderNotificationsManager.createBloodGlucose(
+            notificationId,
+            scheduledDate,
+            period,
+          );
+        } else {
+          reminderNotificationsManager.createMedinicine(
+            notificationId,
+            title,
+            scheduledDate,
+            period,
+          );
+        }
+      } else {
+        // Bildirim pasif duruma geçtiyse iptal ediyorum.
         await cancelNotification(notificationId);
-      }
-
-      // Shared Preferences'da ki listeyi güncelle
-      switch (remindable) {
-        case Remindable.bloodGlucose:
-          {
-            await _updateStatusItemLocalList(
-              notificationId,
-              SharedPreferencesKeys.bloodGlucoseList,
-              BloodGlucoseReminderModel.empty(),
-            );
-
-            if (value) {
-              reminderNotificationsManager.createBloodGlucose(
-                notificationId,
-                scheduledDate,
-                period,
-              );
-            }
-            break;
-          }
-
-        case Remindable.medication:
-          {
-            await _updateStatusItemLocalList(
-              notificationId,
-              SharedPreferencesKeys.medicineList,
-              MedicationReminderModel.empty(),
-            );
-
-            if (value) {
-              reminderNotificationsManager.createMedinicine(
-                notificationId,
-                title,
-                scheduledDate,
-                period,
-              );
-            }
-            break;
-          }
-
-        default:
-          break;
       }
 
       return true;
@@ -355,7 +333,6 @@ class ReminderManager {
       for (var item in sharedList) {
         doseTimeStatus.add(item.status);
       }
-      ;
 
       final now = TZHelper.instance.currentDay();
       var tempList = <TimeOfDay>[];
@@ -1100,9 +1077,10 @@ class ReminderManager {
   // #region _updateStatusItemLocalList - Future<bool>
   Future<bool> _updateStatusItemLocalList<T extends ReminderEntity>(
     int notificationId,
-    SharedPreferencesKeys sharedKeys,
-    T entity,
+    SharedPreferencesKeys? sharedKeys,
+    ReminderEntity? entity,
   ) async {
+    if (sharedKeys == null || entity == null) return true;
     final localList = sharedPreferencesManager.getStringList(sharedKeys) ?? [];
     List<T> prefList = [];
     for (String item in localList) {

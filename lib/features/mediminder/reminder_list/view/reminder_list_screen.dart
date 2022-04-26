@@ -43,16 +43,6 @@ class _ReminderListView extends StatelessWidget {
         context,
         LocaleProvider.current.reminders,
       ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            R.image.relatives,
-            color: Colors.white,
-            width: 50,
-          ),
-        ),
-      ],
     );
   }
 

@@ -229,10 +229,10 @@ class __MedicationReminderAddEditViewState
             children: <Widget>[
               //
               R.sizes.stackedTopPadding(context),
-              _buildGap(),
 
               // İlaç Kutusu & Manuel
-              ..._buildMedicineTypes(result),
+              // _buildGap(),
+              // ..._buildMedicineTypes(result),
 
               //
               _buildGap(),

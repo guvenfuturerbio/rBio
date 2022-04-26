@@ -56,7 +56,7 @@ class ReminderDetailCubit extends Cubit<ReminderDetailState> {
       );
 
       if (scheduledDate != null) {
-        await reminderManager.updateAndRemoveOrCreateNotification(
+        await reminderManager.changeTimeStatus(
           remindable,
           model.notificationId,
           model.value,
@@ -73,7 +73,7 @@ class ReminderDetailCubit extends Cubit<ReminderDetailState> {
       );
 
       if (scheduledDate != null) {
-        await reminderManager.updateAndRemoveOrCreateNotification(
+        await reminderManager.changeTimeStatus(
           remindable,
           model.notificationId,
           model.value,
