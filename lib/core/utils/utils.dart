@@ -373,7 +373,8 @@ class Utils {
         color: textColor ?? getIt<IAppConfig>().theme.darkBlack,
       );
 
-  TextStyle hintStyle() => TextStyle(fontSize: 16, color: getIt<IAppConfig>().theme.gray);
+  TextStyle hintStyle() =>
+      TextStyle(fontSize: 16, color: getIt<IAppConfig>().theme.gray);
 
   GradientButton button({
     text: String,
@@ -389,10 +390,14 @@ class Utils {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w600, color: getIt<IAppConfig>().theme.white),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: getIt<IAppConfig>().theme.white),
         ),
         textStyle: TextStyle(
-            fontSize: 16, fontWeight: FontWeight.w600, color: getIt<IAppConfig>().theme.white),
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: getIt<IAppConfig>().theme.white),
         callback: onPressed,
         gradient: appGradient(),
         shadowColor: Colors.black,
@@ -529,7 +534,8 @@ class Utils {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+                          color:
+                              getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
                           blurRadius: 15,
                           spreadRadius: 0,
                           offset: const Offset(5, 10),
@@ -656,6 +662,43 @@ class Utils {
 
   String getFormattedDateWithTime(String date) =>
       DateTime.parse(date).xFormatTime3();
+
+  String? validateIdentificationNumber(String? identificationNum) {
+    RegExp regex = RegExp(r'^[a-zA-Z0-9]+$');
+
+    if ((identificationNum ?? "").isEmpty) {
+      return LocaleProvider.current.need_identification_number;
+    } else if (!regex.hasMatch(identificationNum ?? "")) {
+      return LocaleProvider.current.identification_match_problem;
+    } else {
+      return null;
+    }
+  }
+
+  String? validatePassword(String? password) {
+    RegExp hasUpper = RegExp(r'[A-Z]');
+    RegExp hasLower = RegExp(r'[a-z]');
+    RegExp hasDigit = RegExp(r'\d');
+    RegExp hasPunct = RegExp(r'[_!@#\$()!+%.,$€₺&*~-]');
+
+    if (!hasUpper.hasMatch(password ?? "")) {
+      return LocaleProvider.current.must_contain_uppercase;
+    }
+    if (!hasLower.hasMatch(password ?? "")) {
+      return LocaleProvider.current.must_contain_lowercase;
+    }
+    if (!hasDigit.hasMatch(password ?? "")) {
+      return LocaleProvider.current.must_contain_digit;
+    }
+    if (!hasPunct.hasMatch(password ?? "")) {
+      return LocaleProvider.current.must_contain_special;
+    }
+    if (!RegExp(r'.{8,}').hasMatch(password ?? "")) {
+      return LocaleProvider.current.password_must_8_char;
+    }
+
+    return null;
+  }
 }
 
 /// Page Irrelevant operations

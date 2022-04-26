@@ -244,18 +244,6 @@ class ReminderNotificationsManagerImpl extends ReminderNotificationsManager {
         return DateTimeComponents.dayOfWeekAndTime;
     }
   }
-
-  final remindableTitles = <Remindable, String>{
-    Remindable.medication: '',
-    Remindable.bloodGlucose: LocaleProvider.current.blood_glucose_measurement,
-    Remindable.hbA1c: LocaleProvider.current.hbA1c_measurement_title,
-  };
-
-  final remindableBodies = <Remindable, String>{
-    Remindable.medication: LocaleProvider.current.time_take_medicine,
-    Remindable.bloodGlucose: LocaleProvider.current.bg_measurement_time,
-    Remindable.hbA1c: LocaleProvider.current.time_hba1c,
-  };
 }
 
 class _NotificationDetails {

@@ -27,7 +27,7 @@ class ScaleProgressVm extends ChangeNotifier
       scaleMeasurementsDailyData = getIt<ScaleRepository>().readLocalScaleData(
         Utils.instance.getAge(),
         Utils.instance.getGender(),
-        Utils.instance.getHeight()!,
+        Utils.instance.getHeight() ?? 0,
       );
       scaleMeasurements = scaleMeasurementsDailyData;
 
@@ -102,10 +102,14 @@ class ScaleProgressVm extends ChangeNotifier
       <Color, ScaleMarginsFilter>{};
 
   Map<Color, ScaleMarginsFilter> get colorInfo {
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryLow, () => ScaleMarginsFilter.veryLow);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.low, () => ScaleMarginsFilter.low);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.target, () => ScaleMarginsFilter.target);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.high, () => ScaleMarginsFilter.high);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.veryLow, () => ScaleMarginsFilter.veryLow);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.low, () => ScaleMarginsFilter.low);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.target, () => ScaleMarginsFilter.target);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.high, () => ScaleMarginsFilter.high);
     _colorInfo.putIfAbsent(
         getIt<IAppConfig>().theme.veryHigh, () => ScaleMarginsFilter.veryHigh);
     return _colorInfo;
@@ -450,7 +454,8 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
 
     for (var data in scaleMeasurementsDailyData) {
-      if (data.getColor(currentScaleType) == getIt<IAppConfig>().theme.veryLow) {
+      if (data.getColor(currentScaleType) ==
+          getIt<IAppConfig>().theme.veryLow) {
         tempChartData.add(ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
@@ -518,7 +523,8 @@ class ScaleProgressVm extends ChangeNotifier
     List<ChartData> tempChartData = <ChartData>[];
 
     for (var data in scaleMeasurementsDailyData) {
-      if (data.getColor(currentScaleType) == getIt<IAppConfig>().theme.veryHigh) {
+      if (data.getColor(currentScaleType) ==
+          getIt<IAppConfig>().theme.veryHigh) {
         tempChartData.add(ChartData(
             data.dateTime,
             data.getMeasurement(currentScaleType)!.toInt(),
@@ -722,7 +728,7 @@ class ScaleProgressVm extends ChangeNotifier
     final result = getIt<ScaleRepository>().readLocalScaleData(
       Utils.instance.getAge(),
       Utils.instance.getGender(),
-      Utils.instance.getHeight()!,
+      Utils.instance.getHeight(),
     );
     scaleMeasurements.clear();
     scaleMeasurements = result.map((e) => e).toList();
@@ -786,7 +792,7 @@ class ScaleProgressVm extends ChangeNotifier
     final scaleEntity = getIt<ScaleRepository>().getLatestMeasurement(
       Utils.instance.getAge(),
       Utils.instance.getGender(),
-      Utils.instance.getHeight()!,
+      Utils.instance.getHeight(),
     );
 
     return SmallChronicComponent(

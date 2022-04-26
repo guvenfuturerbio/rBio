@@ -86,10 +86,18 @@ class Repository {
 
   Future<List<GetChatContactsResponse>> getChatContacts() async {
     final response = await apiService.getChatContacts();
-    return response.datum
-        .map((item) => GetChatContactsResponse.fromJson(item))
-        .cast<GetChatContactsResponse>()
-        .toList();
+    if (response.xIsSuccessful) {
+      if (response.datum == false) {
+        return [];
+      }
+
+      return response.datum
+          .map((item) => GetChatContactsResponse.fromJson(item))
+          .cast<GetChatContactsResponse>()
+          .toList();
+    } else {
+      return [];
+    }
   }
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
@@ -192,7 +200,10 @@ class Repository {
   }
 
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
-    final url = getIt<IAppConfig>().endpoints.common.getDoctorCvDetailsPath(doctorWebID);
+    final url = getIt<IAppConfig>()
+        .endpoints
+        .common
+        .getDoctorCvDetailsPath(doctorWebID);
     return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
       url,
       () => apiService.getDoctorCvDetails(doctorWebID),

@@ -81,7 +81,8 @@ Future<void> bootstrap(IAppConfig appConfig) async {
                           ),
                         ),
                         BlocProvider<MiScaleOpsCubit>(
-                          create: (context) => MiScaleOpsCubit(getIt(), getIt()),
+                          create: (context) =>
+                              MiScaleOpsCubit(getIt(), getIt()),
                         ),
                       ],
                       child: MyApp(initialRoute: initialRoute),

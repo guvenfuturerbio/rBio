@@ -8569,6 +8569,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Chat link not found. For connection, please contact the relevant department.`
+  String get no_data_chat {
+    return Intl.message(
+      'Chat link not found. For connection, please contact the relevant department.',
+      name: 'no_data_chat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We need an identification number`
+  String get need_identification_number {
+    return Intl.message(
+      'We need an identification number',
+      name: 'need_identification_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No match found for ID number format or passport number format.`
+  String get identification_match_problem {
+    return Intl.message(
+      'No match found for ID number format or passport number format.',
+      name: 'identification_match_problem',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
