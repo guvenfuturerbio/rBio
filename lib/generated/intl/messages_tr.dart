@@ -234,7 +234,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose": MessageLookupByLibrary.simpleMessage("Seç"),
         "chronic_track": MessageLookupByLibrary.simpleMessage("Kronik Takip"),
         "chronic_track_error": MessageLookupByLibrary.simpleMessage(
-            "Sağlık takibinizi uzman doktorlar ile 7/24 takip etmek için paketlerimize göz atabilirsiniz"),
+            "Sağlık takibinizi uzman doktorlar ile 7/24 takip etmek için paketlerimize göz atabilirsiniz www.onedosehealth.io daha fazla bilgi için 444 94 94 numaralı telefondan bize ulaşın"),
         "chronic_track_home":
             MessageLookupByLibrary.simpleMessage("Sağlık Takibi"),
         "citizen_of_tc":
@@ -253,8 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "connect_glucometer":
             MessageLookupByLibrary.simpleMessage("Glukometre Ekle"),
         "connect_scale": MessageLookupByLibrary.simpleMessage("Tartı Ekle"),
-        "consultation":
-            MessageLookupByLibrary.simpleMessage("Doktor Danışma Hattı"),
+        "consultation": MessageLookupByLibrary.simpleMessage("Sağlık Desteği"),
         "content_delete_doctor": MessageLookupByLibrary.simpleMessage(
             "Do you want delete doctor \$doctor on list?"),
         "content_delete_doctor_first":

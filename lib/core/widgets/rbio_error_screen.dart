@@ -10,7 +10,6 @@ class RbioErrorScreenBody extends StatelessWidget {
     Key? key,
     required this.errorMsg,
   }) : super(key: key);
-  final String oneDoseLink = "www.onedosehealth.io";
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class RbioErrorScreenBody extends StatelessWidget {
           onOpen: (link) async {
             await getIt<UrlLauncherManager>().canLaunch(link.url);
           },
-          text: "$errorMsg  $oneDoseLink",
+          text: errorMsg,
           style: context.xHeadline2,
           textAlign: TextAlign.center,
         ),

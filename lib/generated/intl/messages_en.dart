@@ -241,7 +241,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chronic_track":
             MessageLookupByLibrary.simpleMessage("Chronic Tracking"),
         "chronic_track_error": MessageLookupByLibrary.simpleMessage(
-            "To follow up your health monitoring 7/24 with expert doctors, you can check our health packages"),
+            "To follow up your health monitoring 7/24 with expert doctors, you can check our health packages at www.onedosehealth.io or you can reach us from 444 94 94"),
         "chronic_track_home":
             MessageLookupByLibrary.simpleMessage("Health Tracker"),
         "citizen_of_tc": MessageLookupByLibrary.simpleMessage("Citizen of T.C"),
@@ -260,7 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Connect a Glucometer"),
         "connect_scale":
             MessageLookupByLibrary.simpleMessage("Connect a Scale Device"),
-        "consultation": MessageLookupByLibrary.simpleMessage("MD Hotline"),
+        "consultation": MessageLookupByLibrary.simpleMessage("Health Support"),
         "content_delete_doctor": MessageLookupByLibrary.simpleMessage(
             "Do you want delete doctor \$doctor on list?"),
         "content_delete_doctor_first":

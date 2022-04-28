@@ -180,10 +180,10 @@ class LocaleProvider {
     );
   }
 
-  /// `To follow up your health monitoring 7/24 with expert doctors, you can check our health packages`
+  /// `To follow up your health monitoring 7/24 with expert doctors, you can check our health packages at www.onedosehealth.io or you can reach us from 444 94 94`
   String get chronic_track_error {
     return Intl.message(
-      'To follow up your health monitoring 7/24 with expert doctors, you can check our health packages',
+      'To follow up your health monitoring 7/24 with expert doctors, you can check our health packages at www.onedosehealth.io or you can reach us from 444 94 94',
       name: 'chronic_track_error',
       desc: '',
       args: [],
@@ -4500,10 +4500,10 @@ class LocaleProvider {
     );
   }
 
-  /// `MD Hotline`
+  /// `Health Support`
   String get consultation {
     return Intl.message(
-      'MD Hotline',
+      'Health Support',
       name: 'consultation',
       desc: '',
       args: [],
