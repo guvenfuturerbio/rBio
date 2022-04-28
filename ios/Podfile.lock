@@ -338,6 +338,12 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - Adjust (4.29.7):
+    - Adjust/Core (= 4.29.7)
+  - Adjust/Core (4.29.7)
+  - adjust_sdk (4.29.2):
+    - Adjust (= 4.29.7)
+    - Flutter
   - "app_settings (3.0.0+1)":
     - Flutter
   - BoringSSL-GRPC (0.0.7):
@@ -649,6 +655,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - adjust_sdk (from `.symlinks/plugins/adjust_sdk/ios`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -690,6 +697,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - Adjust
     - BoringSSL-GRPC
     - DKImagePickerController
     - DKPhotoGallery
@@ -723,6 +731,8 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
+  adjust_sdk:
+    :path: ".symlinks/plugins/adjust_sdk/ios"
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
   cloud_firestore:
@@ -800,6 +810,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
+  Adjust: 91a06a01e4bb35b432e26b5d5bb8995b95fc381c
+  adjust_sdk: 35d9da526160bfea774bd44536b2223697c0b86b
   app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: 3c826b654a9a56290690f2cfc7398b4a113fc778
@@ -871,4 +883,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a2f192e61830d64958f73736363ee8d3e282c323
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2
