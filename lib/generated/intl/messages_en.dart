@@ -1080,6 +1080,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(
                 "You need to enter your Height information to continue."),
+        "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Reset Filter Values"),
         "result_detail": MessageLookupByLibrary.simpleMessage("Result Detail"),
@@ -1288,6 +1289,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "turn_back": MessageLookupByLibrary.simpleMessage("Turn Back"),
         "two_Week": MessageLookupByLibrary.simpleMessage("2 Week"),
         "two_week": MessageLookupByLibrary.simpleMessage("2 weeks"),
+        "twofa": MessageLookupByLibrary.simpleMessage(
+            "Two-Factor Authentication (2FA)"),
         "type": MessageLookupByLibrary.simpleMessage("Type"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unspecified": MessageLookupByLibrary.simpleMessage("Unspecified"),
@@ -1314,6 +1317,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user_with_email_does_not_exists": MessageLookupByLibrary.simpleMessage(
             "User with this email doesn\'t exist."),
         "value": MessageLookupByLibrary.simpleMessage("Değer"),
+        "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verify_email_error":
             MessageLookupByLibrary.simpleMessage("Please verify your email."),
         "very_high": MessageLookupByLibrary.simpleMessage("Very High"),

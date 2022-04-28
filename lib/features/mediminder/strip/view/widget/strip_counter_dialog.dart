@@ -135,7 +135,6 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
           Atom.dismiss(inputValue.replaceAll(",", "."));
         }
       },
-      showElevation: false,
       fontWeight: FontWeight.bold,
       infinityWidth: infinityWidth,
     );
@@ -153,7 +152,6 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
       onTap: () {
         Atom.dismiss();
       },
-      showElevation: false,
       fontWeight: FontWeight.bold,
       infinityWidth: infinityWidth,
     );

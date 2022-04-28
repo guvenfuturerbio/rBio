@@ -597,7 +597,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       title:
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
-      showElevation: false,
       backColor: isSave ? null : getIt<IAppConfig>().theme.cardBackgroundColor,
       textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
     );

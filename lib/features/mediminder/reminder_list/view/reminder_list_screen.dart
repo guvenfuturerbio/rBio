@@ -94,7 +94,6 @@ class _ReminderListView extends StatelessWidget {
               );
             },
             title: LocaleProvider.current.filter,
-            showElevation: false,
             backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
             textColor: getIt<IAppConfig>().theme.textColorSecondary,
             fontWeight: FontWeight.bold,

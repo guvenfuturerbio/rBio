@@ -430,6 +430,7 @@ class _LoginScreenState extends State<LoginScreen> {
             width: double.infinity,
             child: Column(
               children: [
+                //
                 Container(
                   child:
                       value.versionCheckProgress == VersionCheckProgress.loading
@@ -451,6 +452,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                             ),
                 ),
+
+                //
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

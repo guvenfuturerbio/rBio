@@ -13,6 +13,7 @@ class PersonalInformationScreenVm extends RbioVm {
 
   String phoneNumber;
   String email;
+  late bool isTwoFactorAuth;
 
   final imagePicker = ImagePicker();
 

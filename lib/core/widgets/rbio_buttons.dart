@@ -25,7 +25,6 @@ class RbioRedButton extends StatelessWidget {
       textColor: getIt<IAppConfig>().theme.textColor,
       backColor: getIt<IAppConfig>().theme.darkRed,
       infinityWidth: infinityWidth,
-      showElevation: true,
     );
   }
 }
@@ -51,7 +50,6 @@ class RbioWhiteButton extends StatelessWidget {
       textColor: getIt<IAppConfig>().theme.textColorSecondary,
       backColor: Colors.white,
       infinityWidth: infinityWidth,
-      showElevation: true,
     );
   }
 }
@@ -64,7 +62,6 @@ class RbioElevatedButton extends StatelessWidget {
   final bool infinityWidth;
   final Color? backColor;
   final Color? textColor;
-  final bool showElevation;
   final EdgeInsetsGeometry? padding;
   final BorderRadius? borderRadius;
 
@@ -76,7 +73,6 @@ class RbioElevatedButton extends StatelessWidget {
     this.infinityWidth = false,
     this.backColor,
     this.textColor,
-    this.showElevation = true,
     this.padding,
     this.borderRadius,
   }) : super(key: key);
@@ -93,7 +89,7 @@ class RbioElevatedButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(50.0),
           ),
-          elevation: showElevation ? null : 0,
+          elevation: null,
         ),
         child: Padding(
           padding: padding ?? defaultPadding(),

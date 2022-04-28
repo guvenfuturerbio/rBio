@@ -4,14 +4,12 @@ import '../core.dart';
 
 class GradientDialogForPaymentDialog extends StatefulWidget {
   final String errorText;
-  final String videoId;
   final String code;
   final String name;
 
   const GradientDialogForPaymentDialog({
     Key? key,
     required this.errorText,
-    required this.videoId,
     required this.code,
     required this.name,
   }) : super(key: key);

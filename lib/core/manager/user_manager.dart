@@ -8,6 +8,7 @@ import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserManager {
+  Future<GuvenResponseModel> loginStarter(String userName, String password);
   Future<RbioLoginResponse> login(String userName, String password);
   Future<void> saveLoginInfo(
     String userName,
@@ -45,6 +46,16 @@ abstract class UserManager {
 }
 
 class UserManagerImpl extends UserManager {
+  @override
+  Future<GuvenResponseModel> loginStarter(
+      String userName, String password) async {
+    final response = await getIt<Repository>().loginStarter(
+      userName,
+      password,
+    );
+    return response;
+  }
+
   @override
   Future<RbioLoginResponse> login(String userName, String password) async {
     var either = await getIt<Repository>().login(userName, password);
@@ -427,8 +438,9 @@ class UserManagerImpl extends UserManager {
           SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       filteredSocialResources.add(filteredSocialResponse);
     }
-     filteredSocialResources.sort((a,b) => a.title!.toLowerCase().compareTo(b.title!.toLowerCase()));
-   return filteredSocialResources;
+    filteredSocialResources.sort(
+        (a, b) => a.title!.toLowerCase().compareTo(b.title!.toLowerCase()));
+    return filteredSocialResources;
   }
 
   @override
@@ -444,7 +456,7 @@ class UserManagerImpl extends UserManager {
           SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       filteredSocialResources.add(filteredSocialResponse);
     }
-   return filteredSocialResources;
+    return filteredSocialResources;
   }
 
   @override
@@ -458,7 +470,7 @@ class UserManagerImpl extends UserManager {
           SocialPostsResponse.fromJson(data as Map<String, dynamic>);
       allSocialResources.add(allSocialPostsResponse);
     }
-   return allSocialResources;
+    return allSocialResources;
   }
 
   @override

@@ -29,6 +29,13 @@ class Repository {
     required this.localCacheService,
   });
 
+  Future<GuvenResponseModel> loginStarter(String username, String password) =>
+      apiService.loginStarter(username, password);
+
+  Future<GuvenResponseModel> verifyConfirmation2fa(
+          String smsCode, int userId) =>
+      apiService.verifyConfirmation2fa(smsCode, userId);
+
   Future<Either<GuvenResponseModel, LoginExceptions>> login(
     String username,
     String password,

@@ -194,6 +194,13 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
 
 class OneDoseBaseEndpoints extends BaseEndpoints {
   @override
+  String get userLoginStarter => '/AccessToken/user-login-starter'.xDevApiTest;
+
+  @override
+  String get verifyConfirmation2fa =>
+      '/AccessToken/verify-confirmation-2fa'.xDevApiTest;
+
+  @override
   String get getAllPackagePath => '/Package/get-all'.xBaseUrl;
 
   @override

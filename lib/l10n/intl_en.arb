@@ -853,5 +853,8 @@
   "add_medicine": "Add medicine",
   "no_data_chat": "Chat link not found. For connection, please contact the relevant department.",
   "need_identification_number": "We need an identification number",
-  "identification_match_problem": "No match found for ID number format or passport number format."
+  "identification_match_problem": "No match found for ID number format or passport number format.",
+  "verify": "Verify",
+  "twofa": "Two-Factor Authentication (2FA)",
+  "resend": "Resend"
 }

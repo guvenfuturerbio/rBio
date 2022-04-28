@@ -35,19 +35,22 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
       try {
         _paymentResponse = await getIt<Repository>().doMobilePaymentWithVoucher(
           DoMobilePaymentWithVoucherRequest(
-              appointmentId: appointmentId,
-              cc: cc,
-              appointmentRequest: appointmentRequest?.saveAppointmentsRequest,
-              voucherCode: voucherCode),
+            appointmentId: appointmentId,
+            cc: cc,
+            appointmentRequest: appointmentRequest?.saveAppointmentsRequest,
+            voucherCode: voucherCode,
+          ),
         );
 
         final html = Map.from(_paymentResponse.datum)['do_result'];
+        final transId = _paymentResponse.datum['trans_id'];
         RegisterViews.instance.doMobilePayment(html);
         Navigator.push(
           mContext,
           MaterialPageRoute(
             builder: (context) => IyzicoResponseSmsPaymentScreen(
               html: html,
+              uid: transId,
             ),
             settings:
                 const RouteSettings(name: PagePaths.iyzicoResponseSmsPayment),

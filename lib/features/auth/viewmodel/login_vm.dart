@@ -10,6 +10,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
+import '../../../model/account/user_login_starter_response.dart';
 import '../../../model/model.dart';
 import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../home/viewmodel/home_vm.dart';
@@ -17,6 +18,7 @@ import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import '../auth.dart';
 import '../model/login_exception.dart';
+import '../view/2fa_dialog/2fa_dialog.dart';
 
 enum VersionCheckProgress { done, loading, error }
 
@@ -200,10 +202,55 @@ class LoginScreenVm extends ChangeNotifier {
       notifyListeners();
       showLoadingDialog();
       try {
-        if (getIt<IAppConfig>().productType == ProductType.oneDose) {
-          await loginOneDose(username, password);
-        } else {
-          await loginGuven(username, password);
+        final starterResponse =
+            await getIt<UserManager>().loginStarter(username, password);
+        hideDialog(mContext);
+
+        if (starterResponse.datum is Map<String, dynamic>) {
+          final starterBody =
+              UserLoginStarterResponse.fromJson(starterResponse.datum);
+          await getIt<ISharedPreferencesManager>().setBool(
+            SharedPreferencesKeys.isTwoFactorAuth,
+            starterBody.isTwoFa ?? false,
+          );
+
+          if (starterBody.isTwoFa == true && starterBody.isSsoValid == true) {
+            if (starterBody.userId == null) return;
+
+            // Verify Confirmation 2FA
+            final dialogResult = await showDialog(
+              context: mContext,
+              barrierDismissible: true,
+              builder: (context) {
+                return TwoFaDialog(
+                  userId: starterBody.userId!,
+                );
+              },
+            );
+
+            if (dialogResult == true) {
+              // Get Token by GOs
+              await loginWithProductType(username, password);
+            } else if (dialogResult == false) {
+              await login(username, password);
+              return;
+            }
+          } else if (starterBody.isTwoFa == false &&
+              starterBody.isSsoValid == true) {
+            // Get Token by GOs
+            await loginWithProductType(username, password);
+          } else if (starterBody.isTwoFa == false &&
+              starterBody.isSsoValid == false) {
+            // Get Token by GO
+            await loginWithProductType(username, password);
+          } else if (starterBody.isTwoFa == true &&
+              starterBody.isSsoValid == false) {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          }
         }
       } catch (e) {
         hideDialog(mContext);
@@ -214,6 +261,15 @@ class LoginScreenVm extends ChangeNotifier {
           LocaleProvider.current.sorry_dont_transaction,
         );
       }
+    }
+  }
+
+  Future<void> loginWithProductType(String username, String password) async {
+    showLoadingDialog();
+    if (getIt<IAppConfig>().productType == ProductType.oneDose) {
+      await loginOneDose(username, password);
+    } else {
+      await loginGuven(username, password);
     }
   }
 

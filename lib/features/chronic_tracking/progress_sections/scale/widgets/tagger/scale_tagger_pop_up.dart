@@ -547,7 +547,6 @@ class ScaleTaggerPopUp extends StatelessWidget {
       title:
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
-      showElevation: false,
       backColor: isSave ? null : getIt<IAppConfig>().theme.cardBackgroundColor,
       textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
     );

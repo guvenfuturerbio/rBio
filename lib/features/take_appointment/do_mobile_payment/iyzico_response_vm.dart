@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import '../../../core/core.dart';
 
 class IyzicoResponseVm with ChangeNotifier {
@@ -32,8 +33,6 @@ class IyzicoResponseVm with ChangeNotifier {
         String userName = Utils.instance.parseJwtPayLoad(
             getIt<ISharedPreferencesManager>()
                 .get(SharedPreferencesKeys.jwtToken))['name'];
-        errorText = event.data()?['errorText'];
-        videoId = event.data()?['videoId'];
         code = event.data()?['code'];
         Atom.to(PagePaths.main, isReplacement: true);
 
@@ -41,7 +40,6 @@ class IyzicoResponseVm with ChangeNotifier {
           Atom.show(
             GradientDialogForPaymentDialog(
               errorText: LocaleProvider.current.payment_successful,
-              videoId: videoId,
               code: code,
               name: userName,
             ),
@@ -50,7 +48,6 @@ class IyzicoResponseVm with ChangeNotifier {
           Atom.show(
             GradientDialogForPaymentDialog(
               errorText: LocaleProvider.current.payment_not_successful,
-              videoId: videoId,
               code: code,
               name: userName,
             ),
