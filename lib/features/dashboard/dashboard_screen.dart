@@ -110,7 +110,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Utils.instance.getCurrentUserNameAndSurname,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: context.xHeadline4,
+                              style: context.xHeadline4.copyWith(color:  getIt<IAppConfig>().theme.textContrastColor),
                             ),
                           ),
                         ],

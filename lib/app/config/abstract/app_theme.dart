@@ -3,6 +3,7 @@ part of 'app_config.dart';
 abstract class IAppTheme {
   ThemeType get type;
   String get fontFamily;
+  String get appLogo;
   Color get mainColor;
   Color get secondaryColor;
   Color get scaffoldBackgroundColor;
@@ -16,6 +17,7 @@ abstract class IAppTheme {
   Color get iconColor;
   Color get iconSecondaryColor;
   Color get grayColor;
+  Color get textContrastColor;
 
   // Common
   Color get gray;

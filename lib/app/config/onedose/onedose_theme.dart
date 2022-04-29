@@ -5,6 +5,9 @@ class OneDoseTheme extends IAppTheme {
   ThemeType get type => ThemeType.green;
 
   @override
+  String get appLogo => 'assets/images/oneDose/onedose_logo.svg';
+
+  @override
   String get fontFamily => 'SourceSans';
 
   @override
@@ -145,4 +148,7 @@ class OneDoseTheme extends IAppTheme {
 
   @override
   Color get white => const Color(0xFFFFFFFF);
+
+  @override
+  Color get textContrastColor => Colors.black;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MaskedTextController extends TextEditingController {
+  
   MaskedTextController({
     String? text,
     required this.mask,

@@ -86,6 +86,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           rangeSelectionMode: RangeSelectionMode.toggledOff,
           startingDayOfWeek: StartingDayOfWeek.monday,
           calendarStyle: const CalendarStyle(
+
             // Use `CalendarStyle` to customize the UI
             outsideDaysVisible: true,
           ),
@@ -189,7 +190,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<IAppConfig>().theme.textColorSecondary
+                        ? getIt<IAppConfig>().theme.textContrastColor
                         : getIt<IAppConfig>().theme.textColorPassive,
                   ),
                 ),

@@ -89,7 +89,6 @@ class _Images {
   final omronBloodPressureWrist =
       "assets/images/omron_blood_pressure_wrist.png";
   final omronScale = "assets/images/omron_scale.png";
-  final oneDoseHealth = 'assets/images/onedose_logo.svg';
   final other = "assets/images/other_black.svg";
   final otherIcon = 'assets/images/other_icon.svg';
   final phone = 'assets/images/phone_icon.svg';
