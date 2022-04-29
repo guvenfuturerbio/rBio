@@ -232,7 +232,10 @@ class MeasurementTrackingVm with ChangeNotifier {
           'element': 'Tartı',
         },
       );
-      Atom.to(PagePaths.scaleDetail);
+      final heightCheck = Utils.instance.checkUserHeight();
+      if (heightCheck) {
+        Atom.to(PagePaths.scaleDetail);
+      }
     } else if (key == const Key('Pressure')) {
       FirebaseAnalytics.instance.logEvent(
         name: "SaglikTakibi_Butonlar",

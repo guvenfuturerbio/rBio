@@ -1069,7 +1069,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "required_area": MessageLookupByLibrary.simpleMessage("alanı zorunlu"),
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(
-                "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir."),
+                "İşlem yapabilmeniz için boy bilginizi girmeniz gerekmektedir."),
         "resend": MessageLookupByLibrary.simpleMessage("Tekrar Gönder"),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Filtre verilerini temizle"),

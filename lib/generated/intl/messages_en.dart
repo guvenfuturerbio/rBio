@@ -1079,7 +1079,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "required_area": MessageLookupByLibrary.simpleMessage("are required"),
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(
-                "You need to enter your Height information to continue."),
+                "You need to enter your height information to continue."),
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Reset Filter Values"),

@@ -13,7 +13,7 @@ class ScaleManuelAddScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<ScaleManuelAddCubit>(
       create: (context) =>
-          ScaleManuelAddCubit(getIt(), getIt())..chechHeightValue(),
+          ScaleManuelAddCubit(getIt(), getIt()),
       child: Builder(
         builder: (context) {
           return BlocListener<ScaleManuelAddCubit, ScaleManuelAddState>(

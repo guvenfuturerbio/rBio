@@ -78,7 +78,8 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
             }
 
             if (result.filterType == ScaleChartFilterType.weekly) {
-              if (result.filterList.length < 10) {
+              if (result.filterList.length < 10 &&
+                  result.filterList.isNotEmpty) {
                 Future.delayed(
                   const Duration(milliseconds: 100),
                   () {

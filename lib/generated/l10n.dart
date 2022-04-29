@@ -8540,10 +8540,10 @@ class LocaleProvider {
     );
   }
 
-  /// `You need to enter your Height information to continue.`
+  /// `You need to enter your height information to continue.`
   String get required_user_height_info_message {
     return Intl.message(
-      'You need to enter your Height information to continue.',
+      'You need to enter your height information to continue.',
       name: 'required_user_height_info_message',
       desc: '',
       args: [],

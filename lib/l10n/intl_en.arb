@@ -848,7 +848,7 @@
   "weighing": "Weighing",
   "weighing_completed": "Please wait until\nweighing completed",
   "weighing_results": "Weighing results",
-  "required_user_height_info_message": "You need to enter your Height information to continue.",
+  "required_user_height_info_message": "You need to enter your height information to continue.",
   "measurement_saved": "The measurement has been saved",
   "add_medicine": "Add medicine",
   "no_data_chat": "Chat link not found. For connection, please contact the relevant department.",
