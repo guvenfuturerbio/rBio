@@ -49,7 +49,6 @@ class _IyzicoResponseSmsPaymentScreenState
 
   @override
   Widget build(BuildContext context) {
-    LoggerUtils.instance.d(Atom.isWeb);
     return ChangeNotifierProvider<IyzicoResponseVm>(
       create: (context) => IyzicoResponseVm(widget.uid),
       child: Consumer<IyzicoResponseVm>(

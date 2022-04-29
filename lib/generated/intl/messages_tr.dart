@@ -1070,6 +1070,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(
                 "İşlem yapabilmeniz için Boy bilginizi girmeniz gerekmektedir."),
+        "resend": MessageLookupByLibrary.simpleMessage("Tekrar Gönder"),
         "reset_filter_value":
             MessageLookupByLibrary.simpleMessage("Filtre verilerini temizle"),
         "result_detail": MessageLookupByLibrary.simpleMessage("Sonuç Detayı"),
@@ -1278,6 +1279,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "turn_back": MessageLookupByLibrary.simpleMessage("Geriye Dön"),
         "two_Week": MessageLookupByLibrary.simpleMessage("2 Hafta"),
         "two_week": MessageLookupByLibrary.simpleMessage("2 Hafta"),
+        "twofa": MessageLookupByLibrary.simpleMessage(
+            "İki Faktörlü Kimlik Doğrulama"),
         "type": MessageLookupByLibrary.simpleMessage("Tür"),
         "unknown": MessageLookupByLibrary.simpleMessage("Bilinmeyen"),
         "unspecified": MessageLookupByLibrary.simpleMessage("Belirtilmemiş"),
@@ -1304,6 +1307,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user_with_email_does_not_exists": MessageLookupByLibrary.simpleMessage(
             "Bu e-posta adresine kayıtlı kullanıcı yoktur."),
         "value": MessageLookupByLibrary.simpleMessage("Value"),
+        "verify": MessageLookupByLibrary.simpleMessage("Doğrula"),
         "verify_email_error": MessageLookupByLibrary.simpleMessage(
             "Email adresinizi doğrulayınız."),
         "very_high": MessageLookupByLibrary.simpleMessage("Çok Yüksek"),

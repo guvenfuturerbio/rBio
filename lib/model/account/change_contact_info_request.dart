@@ -12,6 +12,7 @@ class ChangeContactInfoRequest {
   bool? hasETKApproval;
   bool? hasKVKKApproval;
   String? passportNumber;
+  bool? isTwoFactorAuth;
 
   ChangeContactInfoRequest({
     this.patientId,
@@ -27,6 +28,7 @@ class ChangeContactInfoRequest {
     this.hasETKApproval,
     this.hasKVKKApproval,
     this.passportNumber,
+    this.isTwoFactorAuth,
   });
 
   factory ChangeContactInfoRequest.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +46,7 @@ class ChangeContactInfoRequest {
         hasETKApproval: json['hasETKApproval'] as bool?,
         hasKVKKApproval: json['hasKVKKApproval'] as bool?,
         passportNumber: json['passportNumber'] as String?,
+        isTwoFactorAuth: json['isTwoFactorAuth'] as bool?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -60,5 +63,6 @@ class ChangeContactInfoRequest {
         'hasETKApproval': hasETKApproval,
         'hasKVKKApproval': hasKVKKApproval,
         'passportNumber': passportNumber,
+        'isTwoFactorAuth': isTwoFactorAuth,
       };
 }

@@ -848,5 +848,8 @@
   "add_medicine": "İlaç ekle",
   "no_data_chat": "Sohbet bağlantısı bulunamadı. Bağlantı için lütfen ilgili departman ile iletişime geçiniz.",
   "need_identification_number": "Kimlik veya pasaport numaranızı girmeniz gerekiyor",
-  "identification_match_problem": "Kimlik numarası formatı veya pasaport numarası formatı ile eşleşme bulunamadı."
+  "identification_match_problem": "Kimlik numarası formatı veya pasaport numarası formatı ile eşleşme bulunamadı.",
+  "verify": "Doğrula",
+  "twofa": "İki Faktörlü Kimlik Doğrulama",
+  "resend": "Tekrar Gönder"
 }

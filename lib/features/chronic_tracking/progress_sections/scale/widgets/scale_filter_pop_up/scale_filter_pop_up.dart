@@ -84,7 +84,6 @@ class ScaleChartFilterPopup extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
                   textColor: getIt<IAppConfig>().theme.textColorSecondary,
-                  showElevation: false,
                 ),
 
                 //
@@ -103,7 +102,6 @@ class ScaleChartFilterPopup extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  showElevation: false,
                 ),
               ],
             ),

@@ -88,7 +88,6 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
             RbioElevatedButton(
               title: LocaleProvider.of(context).Ok,
               infinityWidth: true,
-              showElevation: false,
               onTap: () {
                 Navigator.of(context).pop();
               },

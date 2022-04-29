@@ -191,7 +191,6 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                                 backColor: getIt<IAppConfig>()
                                     .theme
                                     .cardBackgroundColor,
-                                showElevation: false,
                                 textColor: getIt<IAppConfig>().theme.mainColor,
                               ),
                             ),
@@ -199,7 +198,6 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                             //
                             Expanded(
                               child: RbioElevatedButton(
-                                showElevation: false,
                                 title: _devam,
                                 onTap: () {
                                   if (currentPage != itemCount - 1) {
@@ -317,7 +315,6 @@ class AnimatedIntroCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: RbioElevatedButton(
-                          showElevation: false,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.sign_up,
                           onTap: () async {
@@ -333,7 +330,6 @@ class AnimatedIntroCard extends StatelessWidget {
                           backColor:
                               getIt<IAppConfig>().theme.cardBackgroundColor,
                           textColor: getIt<IAppConfig>().theme.mainColor,
-                          showElevation: false,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.login,
                           onTap: () async {

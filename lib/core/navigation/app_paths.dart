@@ -83,7 +83,7 @@ class VRouterRoutes {
     VWidget(
       path: PagePaths.profile,
       widget: ChangeNotifierProvider<ProfileVm>(
-        create: (context) => ProfileVm(),
+        create: (context) => ProfileVm(context),
         child: const ProfileScreen(),
       ),
       stackedRoutes: [

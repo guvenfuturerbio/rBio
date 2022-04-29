@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -169,6 +170,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       () {
                         Atom.to(PagePaths.termsAndPrivacy);
                       },
+                    ),
+                  ],
+                ),
+              ),
+
+              // 2FA
+              R.sizes.hSizer8,
+              Padding(
+                padding: R.sizes.screenPadding(context).copyWith(top: 0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    Expanded(
+                      child: Text(
+                        LocaleProvider.of(context).twofa,
+                        style: context.xHeadline3,
+                      ),
+                    ),
+
+                    //
+                    CupertinoSwitch(
+                      value: vm.isTwoFactorAuth,
+                      onChanged: (newValue) {
+                        vm.update2FA(newValue);
+                      },
+                      activeColor: getIt<IAppConfig>().theme.mainColor,
                     ),
                   ],
                 ),

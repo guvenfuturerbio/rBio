@@ -199,7 +199,14 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
 
 class GuvenBaseEndpoints extends BaseEndpoints {
   @override
-  String get getAllPackagePath => '/Package/get-all'.xBaseUrl;
+  String get userLoginStarter => '/AccessToken/user-login-starter'.xBaseUrl;
+
+  @override
+  String get verifyConfirmation2fa =>
+      '/AccessToken/verify-confirmation-2fa'.xBaseUrl;
+
+  @override
+  String get getAllPackagePath => throw UnimplementedError();
 
   @override
   String getAllSubCategoriesPath(int id) =>

@@ -76,7 +76,6 @@ class BpChartFilterPopUp extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
                   textColor: getIt<IAppConfig>().theme.textColorSecondary,
-                  showElevation: false,
                 ),
 
                 //
@@ -95,7 +94,6 @@ class BpChartFilterPopUp extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  showElevation: false,
                 ),
               ],
             ),

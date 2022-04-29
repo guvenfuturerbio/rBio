@@ -5,6 +5,7 @@ class PatientResponse {
   String? firstName;
   String? gender;
   String? gsm;
+  String? gsmCountryCode;
   bool? hasETKApproval;
   bool? hasKVKKApproval;
   int? id;
@@ -21,6 +22,7 @@ class PatientResponse {
     this.firstName = '',
     this.gender,
     this.gsm,
+    this.gsmCountryCode,
     this.hasETKApproval,
     this.hasKVKKApproval,
     this.id,
@@ -38,6 +40,7 @@ class PatientResponse {
     firstName = json['firstName'] as String?;
     gender = json['gender'] as String?;
     gsm = json['gsm'] as String?;
+    gsmCountryCode = json['gsmCountryCode'];
     hasETKApproval = json['hasETKApproval'] as bool?;
     hasKVKKApproval = json['hasKVKKApproval'] as bool?;
     id = int.parse(json['id'].toString());
@@ -56,6 +59,7 @@ class PatientResponse {
     data['firstName'] = firstName;
     data['gender'] = gender;
     data['gsm'] = gsm;
+    data['gsmCountryCode'] = gsmCountryCode;
     data['hasETKApproval'] = hasETKApproval;
     data['hasKVKKApproval'] = hasKVKKApproval;
     data['id'] = id;

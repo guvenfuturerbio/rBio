@@ -22,6 +22,8 @@ abstract class ApiService {
   final IDioHelper helper;
   ApiService(this.helper);
 
+  Future<GuvenResponseModel> loginStarter(String username, String password);
+  Future<GuvenResponseModel> verifyConfirmation2fa(String smsCode, int userId);
   Future<GuvenResponseModel> login(String username, String password);
 
   // for_you_services.dart

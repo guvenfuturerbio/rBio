@@ -137,7 +137,6 @@ class _LastTestDialogState extends State<_LastTestDialog> {
           Atom.dismiss(inputValue.replaceAll(",", "."));
         }
       },
-      showElevation: false,
       fontWeight: FontWeight.bold,
       infinityWidth: infinityWidth,
     );
@@ -153,7 +152,6 @@ class _LastTestDialogState extends State<_LastTestDialog> {
       onTap: () {
         Atom.dismiss();
       },
-      showElevation: false,
       fontWeight: FontWeight.bold,
       infinityWidth: infinityWidth,
     );

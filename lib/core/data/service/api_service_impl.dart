@@ -63,6 +63,40 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
+  Future<GuvenResponseModel> loginStarter(
+    String username,
+    String password,
+  ) async {
+    final response = await helper.dioPost(
+      getIt<IAppConfig>().endpoints.base.userLoginStarter,
+      [],
+      queryParameters: <String, dynamic>{
+        'userName': username,
+        'password': password
+      },
+      options: emptyAuthOptions,
+    );
+    return GuvenResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<GuvenResponseModel> verifyConfirmation2fa(
+    String smsCode,
+    int userId,
+  ) async {
+    final response = await helper.dioPost(
+      getIt<IAppConfig>().endpoints.base.verifyConfirmation2fa,
+      [],
+      queryParameters: <String, dynamic>{
+        'pSmsCode': smsCode,
+        'pUserId': userId
+      },
+      options: emptyAuthOptions,
+    );
+    return GuvenResponseModel.fromJson(response);
+  }
+
+  @override
   Future<GuvenResponseModel> login(String username, String password) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.devApi.loginPath,

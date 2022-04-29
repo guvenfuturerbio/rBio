@@ -130,7 +130,6 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
           Atom.dismiss(int.parse(inputValue));
         }
       },
-      showElevation: false,
       fontWeight: FontWeight.bold,
       infinityWidth: infinityWidth,
     );
@@ -146,7 +145,6 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
       onTap: () {
         Atom.dismiss();
       },
-      showElevation: false,
       fontWeight: FontWeight.bold,
       infinityWidth: infinityWidth,
     );

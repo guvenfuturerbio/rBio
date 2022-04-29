@@ -8599,6 +8599,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Verify`
+  String get verify {
+    return Intl.message(
+      'Verify',
+      name: 'verify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Two-Factor Authentication (2FA)`
+  String get twofa {
+    return Intl.message(
+      'Two-Factor Authentication (2FA)',
+      name: 'twofa',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend`
+  String get resend {
+    return Intl.message(
+      'Resend',
+      name: 'resend',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

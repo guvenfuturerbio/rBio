@@ -213,7 +213,6 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
               Atom.dismiss();
             },
             title: LocaleProvider.current.btn_cancel,
-            showElevation: false,
             padding: EdgeInsets.zero,
             backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
             textColor: getIt<IAppConfig>().theme.textColorSecondary,
@@ -234,7 +233,6 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
               Atom.dismiss();
             },
             title: LocaleProvider.current.apply,
-            showElevation: false,
             padding: EdgeInsets.zero,
             fontWeight: FontWeight.bold,
           ),

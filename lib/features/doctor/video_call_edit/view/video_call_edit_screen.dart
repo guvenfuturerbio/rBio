@@ -134,7 +134,6 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
                   backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
                   textColor: getIt<IAppConfig>().theme.textColorSecondary,
                   onTap: () {},
-                  showElevation: false,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -147,7 +146,6 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
                 child: RbioElevatedButton(
                   title: 'Kaydet',
                   onTap: () {},
-                  showElevation: false,
                   fontWeight: FontWeight.bold,
                 ),
               ),

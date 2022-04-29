@@ -64,6 +64,8 @@ abstract class DevApiEndpoints {
 }
 
 abstract class BaseEndpoints {
+  String get userLoginStarter;
+  String get verifyConfirmation2fa;
   String get getAllPackagePath;
   String getAllSubCategoriesPath(int id);
   String getSubCategoryDetailPath(id);
