@@ -21,7 +21,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       responseType: ResponseType.json,
       headers: {
         HttpHeaders.userAgentHeader: 'dio',
-        'clientVersion': getIt<GuvenSettings>().version,
+       // 'clientVersion': getIt<GuvenSettings>().version,
       },
     );
 

@@ -52,7 +52,7 @@ class GuvenCommonEndpoints extends CommonEndpoints {
 
   @override
   String consentFormPath(String locale) =>
-      throw RbioUndefinedEndpointException("consentFormPath");
+      "/UserRegister/get-consent-form/$locale".xBaseUrl;
 }
 
 class GuvenDevApiEndpoints extends DevApiEndpoints {
@@ -175,7 +175,7 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
   String get getUserProfilePath => '/user/get-user-info'.xBaseUrl;
 
   @override
-  String get loginPath => "AccessToken/get-token-for-guven-online".xBaseUrl;
+  String get loginPath => "/AccessToken/get-token-for-guven-online".xBaseUrl;
 
   @override
   String get sendNotification =>
@@ -206,7 +206,7 @@ class GuvenBaseEndpoints extends BaseEndpoints {
       '/AccessToken/verify-confirmation-2fa'.xBaseUrl;
 
   @override
-  String get getAllPackagePath => throw UnimplementedError();
+  String get getAllPackagePath => '/Package/get-all'.xBaseUrl;
 
   @override
   String getAllSubCategoriesPath(int id) =>

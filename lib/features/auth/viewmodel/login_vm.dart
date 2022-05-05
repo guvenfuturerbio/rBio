@@ -116,7 +116,7 @@ class LoginScreenVm extends ChangeNotifier {
     setUserIdText(userLoginInfo.username ?? '');
     setPasswordText(userLoginInfo.password ?? '');
     notifyListeners();
-    await fetchAppVersion(userLoginInfo);
+    //await fetchAppVersion(userLoginInfo);
   }
 
   Future<void> startAppVersionOperation() async {

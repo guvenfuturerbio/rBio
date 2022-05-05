@@ -5,5 +5,5 @@ class RbioUndefinedEndpointException implements Exception {
   );
 
   @override
-  String toString() => '[RbioUndefinedEndpointException]';
+  String toString() => '[RbioUndefinedEndpointException] $url';
 }
