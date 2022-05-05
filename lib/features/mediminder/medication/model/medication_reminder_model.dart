@@ -18,6 +18,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
     required int scheduledDate,
     required int createdDate,
     required int entegrationId,
+    required String? nameAndSurname,
     required bool status,
     this.drugTracking,
     this.drugName,
@@ -34,6 +35,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
           remindable: Remindable.medication,
           scheduledDate: scheduledDate,
           createdDate: createdDate,
+          nameAndSurname: nameAndSurname,
           entegrationId: entegrationId,
           status: status,
         );
@@ -43,6 +45,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
         scheduledDate: -1,
         createdDate: -1,
         entegrationId: -1,
+        nameAndSurname: '',
         status: true,
       );
 
@@ -71,6 +74,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
       notificationId: json['notificationId'] as int,
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
+      nameAndSurname: json['nameAndSurname'] as String,
       entegrationId: json['entegrationId'] as int,
       status: json['status'] as bool,
       drugTracking: json['drugTracking'] == null
@@ -103,6 +107,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
       notificationId: notificationId,
       scheduledDate: scheduledDate,
       createdDate: createdDate,
+      nameAndSurname: nameAndSurname,
       entegrationId: entegrationId,
       drugTracking: drugTracking,
       drugName: drugName,
@@ -117,12 +122,12 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
     );
   }
 
-  MedicationReminderModel addDrugCount(int newValue) =>
-      MedicationReminderModel(
+  MedicationReminderModel addDrugCount(int newValue) => MedicationReminderModel(
         createdDate: createdDate,
         entegrationId: entegrationId,
         notificationId: notificationId,
         scheduledDate: scheduledDate,
+        nameAndSurname: nameAndSurname,
         status: status,
         drugTracking: drugTracking,
         drugName: drugName,

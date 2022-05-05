@@ -416,8 +416,9 @@ class ReminderManager {
     int? dayIndex,
     int createdDate,
     BloodGlucoseReminderAddEditResult result,
-    bool status,
-  ) async {
+    bool status, {
+    String? nameAndSurname,
+  }) async {
     if (status) {
       await reminderNotificationsManager.createBloodGlucose(
         id,
@@ -432,6 +433,7 @@ class ReminderManager {
         scheduledDate: scheduledDate.millisecondsSinceEpoch,
         createdDate: createdDate,
         entegrationId: profileStorage.getFirst().id ?? 0,
+        nameAndSurname: nameAndSurname,
         status: status,
         dayIndex: dayIndex,
         dailyDose: result.dailyDose,
@@ -624,8 +626,9 @@ class ReminderManager {
     ReminderPeriod period,
     int? dayIndex,
     int createdDate,
-    MedicationReminderAddEditResult result,
-  ) async {
+    MedicationReminderAddEditResult result, {
+    String? nameAndSurname,
+  }) async {
     await reminderNotificationsManager.createMedinicine(
       id,
       result.drugName ?? '',
@@ -639,6 +642,7 @@ class ReminderManager {
         scheduledDate: scheduledDate.millisecondsSinceEpoch,
         createdDate: createdDate,
         entegrationId: profileStorage.getFirst().id ?? 0,
+        nameAndSurname: nameAndSurname,
         status: true,
         drugTracking: result.drugTracking,
         drugName: result.drugName,
@@ -766,8 +770,9 @@ class ReminderManager {
 
   // #region createOrEditHba1CReminderPlan
   Future<bool> createOrEditHba1CReminderPlan(
-    Hba1cReminderAddEditResult result,
-  ) async {
+    Hba1cReminderAddEditResult result, {
+    String? nameAndSurname,
+  }) async {
     try {
       //
       if (!result.isCreated) {
@@ -799,6 +804,7 @@ class ReminderManager {
         scheduledDate: remindDateTimeTZ.millisecondsSinceEpoch,
         createdDate: TZHelper.instance.now().millisecondsSinceEpoch,
         entegrationId: profileStorage.getFirst().id ?? 0,
+        nameAndSurname: nameAndSurname,
         lastTestDate: lastMeasurementDateTimeTZ.millisecondsSinceEpoch,
         lastTestValue: result.lastTestValue,
       );
