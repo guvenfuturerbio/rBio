@@ -4,6 +4,8 @@ abstract class IAppTheme {
   ThemeType get type;
   String get fontFamily;
   String get appLogo;
+  String get successAppointmentImage;
+
   Color get mainColor;
   Color get secondaryColor;
   Color get scaffoldBackgroundColor;

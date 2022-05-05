@@ -104,7 +104,6 @@ class _Images {
   final spotify = "assets/images/spotifyicon.svg";
   final stethoscope = "assets/images/stethoscope.svg";
   final stripIconBlack = "assets/images/strip_icon_black.svg";
-  final successAppointment = 'assets/images/success_appointment.svg';
   final test = "assets/images/test_white.svg";
   final translator = "assets/images/translator.svg";
   final twitter = "assets/images/twittericon.svg";
