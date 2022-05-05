@@ -32,7 +32,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
       appbar: RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
-          LocaleProvider.current.kids,
+          LocaleProvider.current.relatives,
         ),
       ),
       body: Consumer<RelativesVm>(

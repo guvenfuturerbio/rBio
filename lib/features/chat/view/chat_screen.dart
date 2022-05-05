@@ -251,7 +251,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: IconButton(
                       color: getIt<IAppConfig>().theme.mainColor,
                       icon: SvgPicture.asset(R.image.send, width: 25),
-                      onPressed: () => _sendMessage(chatVm),
+                      onPressed: () {
+                        _sendMessage(chatVm);
+                      },
                     ),
                   ),
                 ],

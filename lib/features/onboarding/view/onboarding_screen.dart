@@ -26,14 +26,23 @@ const _desc4 =
 const _title5 = "One Dose Health";
 const _desc5 = "Sağlığınız Parmaklarınızın Ucunda";
 
-class IntroductionScreen extends StatefulWidget {
-  const IntroductionScreen({Key? key}) : super(key: key);
+class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
-  IntroductionScreenState createState() => IntroductionScreenState();
+  Widget build(BuildContext context) {
+    return const OnboardingView();
+  }
 }
 
-class IntroductionScreenState extends State<IntroductionScreen> {
+class OnboardingView extends StatefulWidget {
+  const OnboardingView({Key? key}) : super(key: key);
+
+  @override
+  _OnboardingViewState createState() => _OnboardingViewState();
+}
+
+class _OnboardingViewState extends State<OnboardingView> {
   ValueNotifier<bool> valueNotifier = ValueNotifier(true);
 
   final itemCount = 5;

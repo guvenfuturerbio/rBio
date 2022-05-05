@@ -6,6 +6,7 @@ abstract class ReminderEntity<T> {
   final int scheduledDate;
   final int createdDate;
   final int entegrationId;
+  final String? nameAndSurname;
   bool status;
 
   ReminderEntity({
@@ -14,6 +15,7 @@ abstract class ReminderEntity<T> {
     required this.scheduledDate,
     required this.createdDate,
     required this.entegrationId,
+    required this.nameAndSurname,
     required this.status,
   });
 
@@ -25,6 +27,7 @@ abstract class ReminderEntity<T> {
         'scheduledDate': scheduledDate,
         'createdDate': createdDate,
         'entegrationId': entegrationId,
+        'nameAndSurname': nameAndSurname,
         'status': status,
       };
 }

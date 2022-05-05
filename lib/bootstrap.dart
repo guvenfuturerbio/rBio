@@ -38,7 +38,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
             .getBool(SharedPreferencesKeys.firstLaunch) ??
         false;
     if (!mobileIntroduction) {
-      initialRoute = PagePaths.introduction;
+      initialRoute = PagePaths.onboarding;
     }
   }
 

@@ -13,6 +13,7 @@ class BloodGlucoseReminderModel
     required int scheduledDate,
     required int createdDate,
     required int entegrationId,
+    required String? nameAndSurname,
     required bool status,
     this.dayIndex,
     this.dailyDose,
@@ -24,6 +25,7 @@ class BloodGlucoseReminderModel
           scheduledDate: scheduledDate,
           createdDate: createdDate,
           entegrationId: entegrationId,
+          nameAndSurname: nameAndSurname,
           status: status,
         );
 
@@ -32,6 +34,7 @@ class BloodGlucoseReminderModel
         scheduledDate: -1,
         createdDate: -1,
         entegrationId: -1,
+        nameAndSurname: '',
         status: true,
       );
 
@@ -54,6 +57,7 @@ class BloodGlucoseReminderModel
       notificationId: json['notificationId'] as int,
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
+      nameAndSurname: json['nameAndSurname'] as String,
       entegrationId: json['entegrationId'] as int,
       status: json['status'] as bool,
       dayIndex: json['dayIndex'] as int?,
@@ -78,6 +82,7 @@ class BloodGlucoseReminderModel
       notificationId: notificationId,
       scheduledDate: scheduledDate,
       createdDate: createdDate,
+      nameAndSurname: nameAndSurname,
       entegrationId: entegrationId,
       dayIndex: dayIndex,
       dailyDose: dailyDose,

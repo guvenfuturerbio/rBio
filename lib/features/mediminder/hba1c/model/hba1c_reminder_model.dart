@@ -9,6 +9,7 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
     required int notificationId,
     required int scheduledDate,
     required int createdDate,
+    required String? nameAndSurname,
     required int entegrationId,
     this.lastTestDate,
     this.lastTestValue,
@@ -17,6 +18,7 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
           remindable: Remindable.hbA1c,
           scheduledDate: scheduledDate,
           createdDate: createdDate,
+          nameAndSurname: nameAndSurname,
           entegrationId: entegrationId,
           status: true,
         );
@@ -26,6 +28,7 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
         scheduledDate: -1,
         createdDate: -1,
         entegrationId: -1,
+        nameAndSurname: '',
       );
 
   @override
@@ -45,6 +48,7 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
       notificationId: json['notificationId'] as int,
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
+      nameAndSurname: json['nameAndSurname'] as String,
       entegrationId: json['entegrationId'] as int,
       lastTestDate: json['lastTestDate'] as int?,
       lastTestValue: json['lastTestValue'] as double?,
