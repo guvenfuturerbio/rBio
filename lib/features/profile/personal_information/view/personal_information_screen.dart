@@ -305,7 +305,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     child: RbioElevatedButton(
                       title: LocaleProvider.current.btn_cancel,
                       onTap: () {
-                        vm.resetValues();
+                        Atom.historyBack();
                       },
                       backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
                       textColor: getIt<IAppConfig>().theme.textColorSecondary,

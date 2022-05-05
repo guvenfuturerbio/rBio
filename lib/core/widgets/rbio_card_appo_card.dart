@@ -110,8 +110,9 @@ class RbioCardAppoCard extends StatelessWidget {
                       style: context.xHeadline2.copyWith(
                         color: isActiveHeader
                             ? getIt<IAppConfig>().theme.textColor
-                            : getIt<IAppConfig>().theme.textColorSecondary,
+                            : getIt<IAppConfig>().theme.textContrastColor,
                       ),
+
                     ),
                   ),
 

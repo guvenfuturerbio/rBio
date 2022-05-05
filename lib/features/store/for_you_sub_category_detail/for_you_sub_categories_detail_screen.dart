@@ -183,17 +183,19 @@ class _ForYouSubCategoriesDetailScreenState
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconButton(
-                              icon: const Icon(Icons.arrow_left),
+                          if ((vm.cardList ?? []).length > 1) ...[
+                            IconButton(
+                                icon: const Icon(Icons.arrow_left),
+                                onPressed: () {
+                                  controller.previousPage();
+                                }),
+                            IconButton(
+                              icon: const Icon(Icons.arrow_right),
                               onPressed: () {
-                                controller.previousPage();
-                              }),
-                          IconButton(
-                            icon: const Icon(Icons.arrow_right),
-                            onPressed: () {
-                              controller.nextPage();
-                            },
-                          ),
+                                controller.nextPage();
+                              },
+                            ),
+                          ],
                         ],
                       ),
                     ],

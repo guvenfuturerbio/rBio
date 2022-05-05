@@ -275,7 +275,7 @@ class _ResourceCard extends StatelessWidget {
                   : MediaQuery.of(context).size.width * 0.03
               : MediaQuery.of(context).size.width * 0.12,
           child: SvgPicture.asset(
-            tenantsFirstId == 1 ? R.image.oneDoseHealth : R.image.oneDoseHealth,
+            tenantsFirstId == 1 ?  getIt<IAppConfig>().theme.appLogo :  getIt<IAppConfig>().theme.appLogo,
           ),
         ),
         subtitle: Text((tenantsFirstId == 1

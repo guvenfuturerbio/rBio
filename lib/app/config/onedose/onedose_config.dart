@@ -4,7 +4,7 @@ class OneDoseConfig extends IAppConfig {
   OneDoseConfig()
       : super(
           productType: ProductType.oneDose,
-          theme: OneDoseTheme(),
+          theme: GuvenTheme(),
           functionality: OneDoseFunctionality(),
           endpoints: OneDoseEndpoints(),
         );
