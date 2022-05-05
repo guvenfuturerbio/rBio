@@ -889,9 +889,9 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> filterSocialPosts(String search) async {
+  Future<GuvenResponseModel> getPostWithTagsByText(String search) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.filterSocialPostsPath(search),
+      getIt<IAppConfig>().endpoints.search.getPostWithTagsByText(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -902,9 +902,9 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> filterSocialPlatform(String search) async {
+  Future<GuvenResponseModel> getPostWithTagsByPlatform(String search) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.filterSocialPostsPlatform(search),
+      getIt<IAppConfig>().endpoints.search.getPostWithTagsByPlatform(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -945,7 +945,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> socialResource() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.socialResourcePath,
+      getIt<IAppConfig>().endpoints.search.getAllPosts,
       options: authOptions,
     );
     if (response.xIsSuccessful) {

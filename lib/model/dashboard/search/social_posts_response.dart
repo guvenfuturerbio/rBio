@@ -1,6 +1,5 @@
-import 'package:onedosehealth/features/search/search_vm.dart';
-
 import '../../../core/core.dart';
+import '../../../features/search/bloc/search_bloc.dart';
 
 class SocialPostsResponse with SearchModel {
   String? title;

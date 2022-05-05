@@ -39,9 +39,6 @@ abstract class UserManager {
   bool getApplicationConsentFormState();
   Future setKvkkFormState(bool isChecked);
   Future<bool> getKvkkFormState();
-  Future<List<SocialPostsResponse>> getSocialPostWithTagsByText(String text);
-  Future<List<SocialPostsResponse>> getAllSocialResources();
-  Future<List<SocialPostsResponse>> getPostsWithByTagsByPlatform(String text);
   Future<GuvenResponseModel> clickPost(int postId);
 }
 
@@ -423,54 +420,6 @@ class UserManagerImpl extends UserManager {
     } catch (_) {
       return false;
     }
-  }
-
-  @override
-  Future<List<SocialPostsResponse>> getPostsWithByTagsByPlatform(
-    String text,
-  ) async {
-    final response = await getIt<Repository>().filterSocialPlatform(text);
-    final List<SocialPostsResponse> filteredSocialResources =
-        <SocialPostsResponse>[];
-    final datum = response.datum;
-    for (final data in datum) {
-      final filteredSocialResponse =
-          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
-      filteredSocialResources.add(filteredSocialResponse);
-    }
-    filteredSocialResources.sort(
-        (a, b) => a.title!.toLowerCase().compareTo(b.title!.toLowerCase()));
-    return filteredSocialResources;
-  }
-
-  @override
-  Future<List<SocialPostsResponse>> getSocialPostWithTagsByText(
-    String text,
-  ) async {
-    final response = await getIt<Repository>().filterSocialPosts(text);
-    final List<SocialPostsResponse> filteredSocialResources =
-        <SocialPostsResponse>[];
-    final datum = response.datum;
-    for (final data in datum) {
-      final filteredSocialResponse =
-          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
-      filteredSocialResources.add(filteredSocialResponse);
-    }
-    return filteredSocialResources;
-  }
-
-  @override
-  Future<List<SocialPostsResponse>> getAllSocialResources() async {
-    final response = await getIt<Repository>().socialResource();
-    final List<SocialPostsResponse> allSocialResources =
-        <SocialPostsResponse>[];
-    final datum = response.datum;
-    for (final data in datum) {
-      final allSocialPostsResponse =
-          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
-      allSocialResources.add(allSocialPostsResponse);
-    }
-    return allSocialResources;
   }
 
   @override

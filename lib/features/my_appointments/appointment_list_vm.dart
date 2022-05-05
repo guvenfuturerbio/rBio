@@ -42,8 +42,7 @@ class AppointmentListVm extends RbioVm {
 
   DateTime get startDate => _startDate != null
       ? DateTime(_startDate!.year, _startDate!.month, _startDate!.day)
-      : DateTime(
-          DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
+      : DateTime.now().subtract(const Duration(days: 15));
 
   void setStartDate(DateTime d) {
     _startDate = d;
@@ -53,8 +52,7 @@ class AppointmentListVm extends RbioVm {
 
   DateTime get endDate => _endDate != null
       ? DateTime(_endDate!.year, _endDate!.month, _endDate!.day, 23, 59, 59)
-      : DateTime(
-          DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+      : DateTime.now().add(const Duration(days: 15));
 
   void setEndDate(DateTime d) {
     _endDate = d;

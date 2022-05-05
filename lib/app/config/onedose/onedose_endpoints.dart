@@ -18,6 +18,9 @@ class OneDoseEndpoints extends IAppEndpoints {
 
   @override
   SymptomCheckerEndpoints get symptom => OneDoseSymptomCheckerEndpoints();
+
+  @override
+  SearchEndpoints get search => OneDoseSearchEndpoints();
 }
 
 class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
@@ -42,6 +45,19 @@ class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
 
   @override
   String get symptomCheckerLogin => '/login'.xSymptomCheckerLogin;
+}
+
+class OneDoseSearchEndpoints extends SearchEndpoints {
+  @override
+  String getPostWithTagsByText(String search) =>
+      '/socialpost/getPostWithTagsByText/$search'.xBaseUrl;
+
+  @override
+  String getPostWithTagsByPlatform(String platform) =>
+      '/socialPost/getPostWithTagsByPlatform/$platform'.xBaseUrl;
+
+  @override
+  String get getAllPosts => '/socialpost/getAllPosts'.xBaseUrl;
 }
 
 class OneDoseCommonEndpoints extends CommonEndpoints {
@@ -335,17 +351,6 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
 
   @override
   String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBaseUrl;
-
-  @override
-  String filterSocialPostsPath(String search) =>
-      '/socialpost/getPostWithTagsByText/$search'.xBaseUrl;
-
-  @override
-  String filterSocialPostsPlatform(String platform) =>
-      '/socialPost/getPostWithTagsByPlatform/$platform'.xBaseUrl;
-
-  @override
-  String get socialResourcePath => '/socialpost/getAllPosts'.xBaseUrl;
 
   @override
   String get getAppointmentTypeViaWebConsultantIdPath =>

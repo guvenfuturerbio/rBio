@@ -7,6 +7,7 @@ abstract class IAppEndpoints {
   DevApiEndpoints get devApi;
   CommonEndpoints get common;
   SymptomCheckerEndpoints get symptom;
+  SearchEndpoints get search;
 }
 
 abstract class SymptomCheckerEndpoints {
@@ -63,6 +64,12 @@ abstract class DevApiEndpoints {
   String get ctUpdateUserStrip;
 }
 
+abstract class SearchEndpoints {
+  String getPostWithTagsByText(String search);
+  String getPostWithTagsByPlatform(String platform);
+  String get getAllPosts;
+}
+
 abstract class BaseEndpoints {
   String get userLoginStarter;
   String get verifyConfirmation2fa;
@@ -105,9 +112,6 @@ abstract class BaseEndpoints {
   String get getRelativeRelationshipsPath;
   String changeActiveUserToRelativePath(String id);
   String clickPostPath(int postId);
-  String filterSocialPostsPath(String search);
-  String filterSocialPostsPlatform(String platform);
-  String get socialResourcePath;
   String get getAppointmentTypeViaWebConsultantIdPath;
   String requestTranslatorPath(String appoId);
   String uploadFileToAppoPath(String webAppoId);

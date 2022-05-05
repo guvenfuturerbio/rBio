@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/features/search/utils/debouncer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/core.dart';
@@ -11,7 +10,7 @@ import '../../model/dashboard/search/social_posts_response.dart';
 import '../../model/shared/filter_resources_response.dart';
 import 'bloc/search_bloc.dart';
 import 'model/search_social_type.dart';
-import 'search_vm.dart';
+import 'utils/debouncer.dart';
 
 class SearchScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState>? drawerKey;
@@ -25,7 +24,6 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SearchBloc>(
       create: (ctx) => SearchBloc(
-        getIt<UserManager>(),
         getIt<Repository>(),
       )..add(const SearchFetched()),
       child: SearchView(drawerKey: drawerKey),
@@ -259,44 +257,45 @@ class _ResourceCard extends StatelessWidget {
     final departmentTitle = item.departments?.first.title ?? '';
 
     return Card(
-      elevation: R.sizes.defaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: ListTile(
-        title: Text(
-          item.title ?? '',
-          style: context.xHeadline3,
+        elevation: R.sizes.defaultElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
-        leading: SizedBox(
-          width: kIsWeb
-              ? MediaQuery.of(context).size.width < 1000
-                  ? MediaQuery.of(context).size.width * 0.10
-                  : MediaQuery.of(context).size.width * 0.03
-              : MediaQuery.of(context).size.width * 0.12,
-          child: SvgPicture.asset(
-            tenantsFirstId == 1 ?  getIt<IAppConfig>().theme.appLogo :  getIt<IAppConfig>().theme.appLogo,
+        child: ListTile(
+          title: Text(
+            item.title ?? '',
+            style: context.xHeadline3,
           ),
-        ),
-        subtitle: Text((tenantsFirstId == 1
-                ? LocaleProvider.current.guven_hospital_ayranci
-                : LocaleProvider.current.guven_cayyolu_campus) +
-            "\n" +
-            departmentTitle),
-        onTap: () {
-          Atom.to(
-            PagePaths.doctorCv,
-            queryParameters: {
-              'tenantId': tenantsFirstId.toString(),
-              'departmentId': departmentId.toString(),
-              'resourceId': item.id.toString(),
-              'doctorName': Uri.encodeFull(filterResourceTitle),
-              'departmentName': Uri.encodeFull(departmentTitle),
-              'doctorNameNoTitle': Uri.encodeFull(filterResourceTitle),
-            },
-          );
-        },
-      )
-    );
+          leading: SizedBox(
+            width: kIsWeb
+                ? MediaQuery.of(context).size.width < 1000
+                    ? MediaQuery.of(context).size.width * 0.10
+                    : MediaQuery.of(context).size.width * 0.03
+                : MediaQuery.of(context).size.width * 0.12,
+            child: SvgPicture.asset(
+              tenantsFirstId == 1
+                  ? getIt<IAppConfig>().theme.appLogo
+                  : getIt<IAppConfig>().theme.appLogo,
+            ),
+          ),
+          subtitle: Text((tenantsFirstId == 1
+                  ? LocaleProvider.current.guven_hospital_ayranci
+                  : LocaleProvider.current.guven_cayyolu_campus) +
+              "\n" +
+              departmentTitle),
+          onTap: () {
+            Atom.to(
+              PagePaths.doctorCv,
+              queryParameters: {
+                'tenantId': tenantsFirstId.toString(),
+                'departmentId': departmentId.toString(),
+                'resourceId': item.id.toString(),
+                'doctorName': Uri.encodeFull(filterResourceTitle),
+                'departmentName': Uri.encodeFull(departmentTitle),
+                'doctorNameNoTitle': Uri.encodeFull(filterResourceTitle),
+              },
+            );
+          },
+        ));
   }
 }

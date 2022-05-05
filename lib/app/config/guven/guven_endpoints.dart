@@ -18,6 +18,9 @@ class GuvenEndpoints extends IAppEndpoints {
 
   @override
   SymptomCheckerEndpoints get symptom => GuvenSymptomCheckerEndpoints();
+
+  @override
+  SearchEndpoints get search => GuvenSearchEndpoints();
 }
 
 class GuvenSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
@@ -53,6 +56,19 @@ class GuvenCommonEndpoints extends CommonEndpoints {
   @override
   String consentFormPath(String locale) =>
       "/UserRegister/get-consent-form/$locale".xBaseUrl;
+}
+
+class GuvenSearchEndpoints extends SearchEndpoints {
+  @override
+  String getPostWithTagsByText(String search) =>
+      '/SocialPost/getPostWithTagsByText/$search'.xBaseUrl;
+
+  @override
+  String getPostWithTagsByPlatform(String platform) =>
+      throw RbioUndefinedEndpointException("getPostWithTagsByPlatform");
+
+  @override
+  String get getAllPosts => '/SocialPost/getAllPosts'.xBaseUrl;
 }
 
 class GuvenDevApiEndpoints extends DevApiEndpoints {
@@ -281,14 +297,6 @@ class GuvenBaseEndpoints extends BaseEndpoints {
       '/file/download-patient-appointment-single-file/$folder/$path'.xBaseUrl;
 
   @override
-  String filterSocialPostsPath(String search) =>
-      '/SocialPost/getPostWithTagsByText/$search'.xBaseUrl;
-
-  @override
-  String filterSocialPostsPlatform(String platform) =>
-      throw RbioUndefinedEndpointException("filterSocialPostsPlatform");
-
-  @override
   String get findResourceClosestAvailablePlanPath =>
       '/Pusula/findResourceClosestAvailablePlan'.xBaseUrl;
 
@@ -351,9 +359,6 @@ class GuvenBaseEndpoints extends BaseEndpoints {
 
   @override
   String get setYoutubeSurveyUserPath => '/course/save-user'.xBaseUrl;
-
-  @override
-  String get socialResourcePath => '/SocialPost/getAllPosts'.xBaseUrl;
 
   @override
   String get syncronizeOneDoseUser =>
