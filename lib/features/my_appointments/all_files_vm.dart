@@ -101,7 +101,6 @@ class AllFilesVm extends RbioVm {
         );
       }
     } catch (e) {
-      LoggerUtils.instance.e(e);
       showProgressOverlay = false;
     }
   }
