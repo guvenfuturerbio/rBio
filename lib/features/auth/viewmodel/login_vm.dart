@@ -116,7 +116,7 @@ class LoginScreenVm extends ChangeNotifier {
     setUserIdText(userLoginInfo.username ?? '');
     setPasswordText(userLoginInfo.password ?? '');
     notifyListeners();
-    //await fetchAppVersion(userLoginInfo);
+    await fetchAppVersion(userLoginInfo);
   }
 
   Future<void> startAppVersionOperation() async {
@@ -145,8 +145,10 @@ class LoginScreenVm extends ChangeNotifier {
 
   Future<void> fetchAppVersion(UserLoginInfo userLoginInfo) async {
     try {
-      _applicationVersionResponse =
-          await getIt<Repository>().getCurrentApplicationVersion();
+      if (getIt<IAppConfig>().productType == ProductType.oneDose) {
+        _applicationVersionResponse =
+            await getIt<Repository>().getCurrentApplicationVersion();
+      }
     } catch (e) {
       LoggerUtils.instance.e(e);
     } finally {
@@ -157,8 +159,9 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> checkAppVersion(UserLoginInfo userLoginInfo) async {
-    final requiredMinVersion = Version.parse(applicationVersion?.minimum ?? '');
-    final latestVersion = Version.parse(applicationVersion?.latest ?? '');
+    final requiredMinVersion =
+        Version.parse(applicationVersion?.minimum ?? '0.0.0');
+    final latestVersion = Version.parse(applicationVersion?.latest ?? '0.0.0');
 
     final packageInfo = await PackageInfo.fromPlatform();
     final currentVersion = Version.parse(packageInfo.version);
@@ -341,7 +344,7 @@ class LoginScreenVm extends ChangeNotifier {
       ],
     );
 
-     final patientDetail = results[1] as UserAccount;
+    final patientDetail = results[1] as UserAccount;
     var result;
     var pusulaPatientDetail;
     try {
@@ -414,7 +417,6 @@ class LoginScreenVm extends ChangeNotifier {
     hideDialog(mContext);
     notifyListeners();
     Atom.to(PagePaths.main, isReplacement: true);
-
   }
 
   Future<void> loginOneDose(String username, String password) async {

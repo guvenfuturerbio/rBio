@@ -85,7 +85,8 @@ class SearchView extends StatelessWidget {
       initial: () => const SizedBox(),
       loadInProgress: (socialTypes) => Column(
         children: [
-          if (socialTypes != null) ...[
+          if (socialTypes != null &&
+              getIt<IAppConfig>().productType == ProductType.oneDose) ...[
             Wrap(spacing: 8, children: _chips(socialTypes)),
           ],
           const Expanded(child: RbioLoading()),
@@ -93,7 +94,9 @@ class SearchView extends StatelessWidget {
       ),
       success: (list, socialTypes) => Column(
         children: [
-          Wrap(spacing: 8, children: _chips(socialTypes)),
+          if (getIt<IAppConfig>().productType == ProductType.oneDose) ...[
+            Wrap(spacing: 8, children: _chips(socialTypes)),
+          ],
           Expanded(child: SearchListView(list: list)),
         ],
       ),
