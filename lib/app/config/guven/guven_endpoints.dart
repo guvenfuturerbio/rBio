@@ -226,7 +226,7 @@ class GuvenBaseEndpoints extends BaseEndpoints {
 
   @override
   String get findResourceAvailableDays =>
-      throw RbioUndefinedEndpointException("findResourceAvailableDays");
+      '/Pusula/findResourceAvailableDays'.xBaseUrl;
 
   @override
   String get updateUserSystemNamePath =>

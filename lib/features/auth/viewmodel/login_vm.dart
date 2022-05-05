@@ -274,7 +274,147 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> loginGuven(String username, String password) async {
-    //
+    try {
+      _guvenLogin = await getIt<UserManager>().login(username, password);
+    } catch (e) {
+      hideDialog(mContext);
+
+      if (e is LoginExceptions) {
+        e.when(
+          invalidUser: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.wrong_user_credential,
+            );
+          },
+          accountNotFullySetUp: () {
+            Atom.to(PagePaths.forgotPasswordStep1);
+          },
+          accountDisabled: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.account_disabled,
+            );
+          },
+          serverError: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          },
+          networkError: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.no_network,
+            );
+          },
+          undefined: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          },
+        );
+      }
+
+      return;
+    }
+
+    await saveLoginInfo(
+      username,
+      password,
+      _guvenLogin?.ssoResponse?.accessToken ?? '',
+    );
+
+    List<dynamic> results = await Future.wait(
+      [
+        getIt<UserManager>().setApplicationConsentFormState(true),
+        //One dose hasta bilgileri
+        // Güven online kullanıcı bilgileri
+        getIt<UserManager>().getUserProfile(),
+        getIt<UserManager>().getKvkkFormState(),
+      ],
+    );
+
+     final patientDetail = results[1] as UserAccount;
+    var result;
+    var pusulaPatientDetail;
+    try {
+      pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
+    } catch (e) {
+      if (pusulaPatientDetail == null) {
+        var inputFormat = DateFormat('dd.MM.yyyy');
+        var date1 = inputFormat.parse(patientDetail.patients!.first.birthDate!);
+
+        var outputFormat = DateFormat('yyyy-MM-dd');
+        var date2 = outputFormat.format(date1);
+        SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
+            SynchronizeOneDoseUserRequest(
+                birthDate: date2,
+                email: patientDetail.electronicMail,
+                firstName: patientDetail.name,
+                gender: patientDetail.patients?.first.gender,
+                gsm: patientDetail.phoneNumber,
+                countryCode: patientDetail.countryCode,
+                id: 0,
+                hasEtkApproval: true,
+                hasKvkkApproval: true,
+                identityNumber: patientDetail.identificationNumber,
+                lastName: patientDetail.surname,
+                nationalityId: (patientDetail.nationality!) == 'TC' ? 213 : 98,
+                passportNumber: patientDetail.passaportNumber,
+                patientType: 1);
+        await getIt<Repository>()
+            .synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
+      }
+    }
+    if (pusulaPatientDetail == null) {
+      pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
+      await getIt<UserNotifier>().setPatient(pusulaPatientDetail);
+    }
+    _checkedKvkk = results[2];
+
+    try {
+      final profilImage = await getIt<Repository>().getProfilePicture();
+      await getIt<ISharedPreferencesManager>().setString(
+        SharedPreferencesKeys.profileImage,
+        profilImage,
+      );
+    } catch (e) {
+      //
+    }
+
+    final term = Atom.queryParameters['then'];
+    FirebaseAnalytics.instance.setUserId(
+      id: getIt<UserNotifier>().firebaseEmail,
+    );
+    FirebaseAnalytics.instance.setUserProperty(
+      name: 'Login',
+      value: 'authed',
+    );
+    FirebaseAnalytics.instance.setUserProperty(
+      name: 'user_age',
+      value: getIt<ProfileStorageImpl>().getFirst().birthDate,
+    );
+    FirebaseAnalytics.instance.logEvent(
+      name: "Basarili_Giris",
+      parameters: null,
+    );
+    if (term != null && term != '') {
+      Atom.to(term, isReplacement: true);
+    }
+    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+    mContext.read<HomeVm>().init(allUsersModel);
+    await Future.delayed(const Duration(milliseconds: 100));
+    hideDialog(mContext);
+    notifyListeners();
+    Atom.to(PagePaths.main, isReplacement: true);
+
   }
 
   Future<void> loginOneDose(String username, String password) async {

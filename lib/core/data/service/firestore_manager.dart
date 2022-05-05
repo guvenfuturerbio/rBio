@@ -40,7 +40,9 @@ class FirestoreManager {
         getIt<UserNotifier>().firebaseID = user.uid;
       }
     } else {
-      throw Exception('Firebase email or password null');
+      if (getIt<IAppConfig>().productType == ProductType.oneDose) {
+        throw Exception('Firebase email or password null');
+      }
     }
   }
 
