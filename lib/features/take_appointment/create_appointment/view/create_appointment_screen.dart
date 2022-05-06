@@ -253,23 +253,26 @@ class CreateAppointmentScreen extends StatelessWidget {
                       R.sizes.defaultBottomPadding,
                     ]
                   : [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Center(
-                          child: Text(
-                            LocaleProvider.current.which_depart_i_go,
-                            style: context.xHeadline3,
+                      if (getIt<IAppConfig>().productType ==
+                          ProductType.oneDose) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5.0),
+                          child: Center(
+                            child: Text(
+                              LocaleProvider.current.which_depart_i_go,
+                              style: context.xHeadline3,
+                            ),
                           ),
                         ),
-                      ),
-                      RbioElevatedButton(
-                        onTap: () {
-                          Atom.to(PagePaths.symptomMainMenu);
-                        },
-                        title: LocaleProvider.current.depart_analyse,
-                        infinityWidth: true,
-                      ),
-                      R.sizes.defaultBottomPadding,
+                        RbioElevatedButton(
+                          onTap: () {
+                            Atom.to(PagePaths.symptomMainMenu);
+                          },
+                          title: LocaleProvider.current.depart_analyse,
+                          infinityWidth: true,
+                        ),
+                        R.sizes.defaultBottomPadding,
+                      ],
                     ],
             ],
           ),
