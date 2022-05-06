@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 import '../model/banner_model.dart';
 import '../utils/appointments_painter.dart';
 import '../utils/chronic_tracking_painter.dart';
@@ -442,7 +442,7 @@ class HomeVm extends ChangeNotifier {
                 },
               ),
               onTap: () {
-                Atom.to(PagePaths.measurementTracking);
+                Atom.to(PagePaths.measurementTrackingHome);
               },
             );
           }

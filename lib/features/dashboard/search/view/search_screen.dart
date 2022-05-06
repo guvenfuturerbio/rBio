@@ -5,12 +5,11 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../core/core.dart';
-import '../../model/dashboard/search/social_posts_response.dart';
-import '../../model/shared/filter_resources_response.dart';
-import 'bloc/search_bloc.dart';
-import 'model/search_social_type.dart';
-import 'utils/debouncer.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
+import '../bloc/search_bloc.dart';
+import '../model/search_social_type.dart';
+import '../utils/debouncer.dart';
 
 class SearchScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState>? drawerKey;

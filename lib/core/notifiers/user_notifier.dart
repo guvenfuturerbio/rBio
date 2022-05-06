@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../../app/bluetooth_v2/bluetooth_v2.dart';
-import '../../features/home/view/home_screen.dart';
+import '../../features/dashboard/home/view/home_screen.dart';
 import '../../model/model.dart';
 import '../core.dart';
 

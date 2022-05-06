@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 import '../utils/home_sizer.dart';
 
 class VerticalCard extends StatelessWidget {

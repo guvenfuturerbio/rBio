@@ -4,10 +4,10 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
+import 'package:onedosehealth/features/dashboard/home/model/banner_model.dart';
 import '../../../features/auth/auth.dart';
 import '../../../features/auth/model/consent_form_model.dart';
 import '../../../features/chat/model/chat_notification.dart';
-import '../../../features/home/model/banner_model.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
 import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 import '../../../features/take_appointment/create_appointment/model/voucher_price_request.dart';

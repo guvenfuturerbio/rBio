@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 
 class NotificationInboxScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState>? drawerKey;

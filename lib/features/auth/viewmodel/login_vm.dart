@@ -13,7 +13,7 @@ import '../../../core/core.dart';
 import '../../../model/account/user_login_starter_response.dart';
 import '../../../model/model.dart';
 import '../../../model/user/synchronize_onedose_user_req.dart';
-import '../../home/viewmodel/home_vm.dart';
+import '../../dashboard/home/viewmodel/home_vm.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import '../auth.dart';

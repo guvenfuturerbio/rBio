@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 import '../utils/home_sizer.dart';
 import '../view/home_screen.dart';
 import '../viewmodel/home_vm.dart';

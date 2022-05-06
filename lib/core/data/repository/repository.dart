@@ -1,23 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:dartz/dartz.dart';
-import 'package:onedosehealth/features/auth/model/consent_form_model.dart';
 
-import 'package:onedosehealth/features/auth/model/login_exception.dart';
-import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
+import 'package:dartz/dartz.dart';
+import 'package:onedosehealth/features/dashboard/home/model/banner_model.dart';
 
 import '../../../features/auth/auth.dart';
 import '../../../features/auth/model/change_password_exception.dart';
+import '../../../features/auth/model/consent_form_model.dart';
 import '../../../features/auth/model/forgot_password_exception.dart';
+import '../../../features/auth/model/login_exception.dart';
 import '../../../features/chat/model/chat_notification.dart';
 import '../../../features/chat/model/get_chat_contacts_response.dart';
-import '../../../features/home/model/banner_model.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
 import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 import '../../../features/take_appointment/create_appointment/model/voucher_price_request.dart';
 import '../../../model/home/take_appointment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
+import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../core.dart';
 
 class Repository {

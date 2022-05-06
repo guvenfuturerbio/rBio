@@ -1,9 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/features/dashboard/home/model/drawer_model.dart';
 
 import '../../core/core.dart';
-import '../home/model/drawer_model.dart';
 import 'bottom_navbar_painter.dart';
 import 'dashboard_navigation.dart';
 
@@ -110,7 +110,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Utils.instance.getCurrentUserNameAndSurname,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: context.xHeadline4.copyWith(color:  getIt<IAppConfig>().theme.textContrastColor),
+                              style: context.xHeadline4.copyWith(
+                                  color: getIt<IAppConfig>()
+                                      .theme
+                                      .textContrastColor),
                             ),
                           ),
                         ],
@@ -411,7 +414,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 "element": 'saglik_takibi',
               },
             );
-            Atom.to(PagePaths.measurementTracking);
+            Atom.to(PagePaths.measurementTrackingHome);
           },
         ),
         DrawerModel(
