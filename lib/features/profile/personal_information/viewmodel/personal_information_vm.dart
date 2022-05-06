@@ -60,11 +60,17 @@ class PersonalInformationScreenVm extends RbioVm {
         changeInfo.nationalityId = pusulaAccount.nationalityId;
         changeInfo.hasETKApproval = pusulaAccount.hasETKApproval ?? true;
         changeInfo.hasKVKKApproval = pusulaAccount.hasKVKKApproval ?? true;
+        changeInfo.isTwoFactorAuth = getIt<ISharedPreferencesManager>()
+                .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
+            false;
         await getIt<Repository>().updateContactInfo(changeInfo);
       } else {
         changeInfo.gsm = newPhoneNumber;
         changeInfo.gsmCountryCode = null;
         changeInfo.email = newEmail;
+        changeInfo.isTwoFactorAuth = getIt<ISharedPreferencesManager>()
+                .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
+            false;
         await getIt<Repository>().updateContactInfo(changeInfo);
       }
 

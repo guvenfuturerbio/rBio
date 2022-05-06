@@ -28,24 +28,20 @@ class OneDoseEndpoints extends IAppEndpoints {
 
 class OneDoseRelativeEndpoints extends RelativeEndpoints {
   @override
-  String get getAllRelativesPath =>
-      throw RbioUndefinedEndpointException("getAllRelativesPath");
+  String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) =>
-      throw RbioUndefinedEndpointException("removePatientRelativePath");
+  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
 
   @override
   String changeActiveUserToRelativePath(String id) =>
-      throw RbioUndefinedEndpointException("changeActiveUserToRelativePath");
+      '/profile/set-profile/$id'.xBaseUrl;
 
   @override
-  String get addNewPatientRelativePath =>
-      throw RbioUndefinedEndpointException("addNewPatientRelativePath");
+  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
 
   @override
-  String get getRelativeRelationshipsPath =>
-      throw RbioUndefinedEndpointException("getRelativeRelationshipsPath");
+  String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
 }
 
 class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
