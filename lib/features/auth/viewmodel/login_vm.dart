@@ -722,7 +722,9 @@ class LoginScreenVm extends ChangeNotifier {
         builder: (BuildContext context) {
           return KvkkFormScreen(
             title: LocaleProvider.current.kvkk_title,
-            text: LocaleProvider.current.kvkk_url_text,
+            text: getIt<IAppConfig>().productType == ProductType.oneDose
+                ? LocaleProvider.current.one_dose_kvkk_url_text
+                : LocaleProvider.current.guven_kvkk_url_text,
             alwaysAsk: true,
           );
         }).then((value) async {

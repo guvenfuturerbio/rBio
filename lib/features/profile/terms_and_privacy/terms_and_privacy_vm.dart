@@ -30,10 +30,10 @@ class TermsAndPrivacyVm extends ChangeNotifier {
     checkedKvkk = await getIt<UserManager>().getKvkkFormState();
   }
 
-  void showApplicationContestForm() async{
+  void showApplicationContestForm() async {
     final consentForm = await getIt<Repository>().getConsentForm();
     Atom.show(ConsentFormDialog(
-title:  consentForm.consentHeader,
+      title: consentForm.consentHeader,
       text: consentForm.consentContent,
       alwaysAsk: false,
     )).then((value) async {
@@ -48,7 +48,9 @@ title:  consentForm.consentHeader,
   void showKvkkInfo() {
     Atom.show(KvkkFormScreen(
       title: LocaleProvider.current.kvkk_title,
-      text: LocaleProvider.current.kvkk_url_text,
+      text: getIt<IAppConfig>().productType == ProductType.oneDose
+          ? LocaleProvider.current.one_dose_kvkk_url_text
+          : LocaleProvider.current.guven_kvkk_url_text,
       alwaysAsk: true,
     )).then((value) async {
       if (value != null && value) {
