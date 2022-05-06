@@ -95,7 +95,6 @@ Future<void> setupLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton<FirebaseMessagingManager>(
     () => FirebaseMessagingManagerImpl(
       localNotificationManager: getIt<LocalNotificationManager>(),
-      notificationBadgeNotifier: getIt<NotificationBadgeNotifier>(),
       repository: getIt<Repository>(),
     ),
   );
@@ -183,9 +182,6 @@ Future<void> setupLocator(IAppConfig appConfig) async {
   // #region Notifiers
   getIt.registerLazySingleton<LocaleNotifier>(
     () => LocaleNotifier(),
-  );
-  getIt.registerLazySingleton<NotificationBadgeNotifier>(
-    () => NotificationBadgeNotifier(),
   );
   getIt.registerLazySingleton<UserNotifier>(
     () => UserNotifier(),

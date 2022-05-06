@@ -8,6 +8,7 @@ abstract class IAppEndpoints {
   CommonEndpoints get common;
   SymptomCheckerEndpoints get symptom;
   SearchEndpoints get search;
+  RelativeEndpoints get relative;
 }
 
 abstract class SymptomCheckerEndpoints {
@@ -17,6 +18,14 @@ abstract class SymptomCheckerEndpoints {
   String symptomGetBodySubLocations(int locationID);
   String symptomGetBodySymptoms(int locationID, int gender);
   String get symptomCheckerLogin;
+}
+
+abstract class RelativeEndpoints {
+  String get getAllRelativesPath;
+  String removePatientRelativePath(String id);
+  String changeActiveUserToRelativePath(String id);
+  String get addNewPatientRelativePath;
+  String get getRelativeRelationshipsPath;
 }
 
 abstract class CommonEndpoints {
@@ -58,7 +67,6 @@ abstract class DevApiEndpoints {
   String get ctDeleteBpMeasurement;
   String get ctGetBpMeasurement;
   String get ctUpdateBpMeasurement;
-  String get getAllRelativesPath;
   String get updateContactInfoPath;
   String get getChatContacts;
   String get ctUpdateUserStrip;
@@ -108,9 +116,6 @@ abstract class BaseEndpoints {
   String downloadAppointmentSingleFilePath(String folder, String path);
   String get getAllFilesPath;
   String downloadAppointmentFilePath(String id, String name);
-  String removePatientRelativePath(String id);
-  String get getRelativeRelationshipsPath;
-  String changeActiveUserToRelativePath(String id);
   String clickPostPath(int postId);
   String get getAppointmentTypeViaWebConsultantIdPath;
   String requestTranslatorPath(String appoId);
@@ -131,7 +136,6 @@ abstract class BaseEndpoints {
   String get fetchOnlineDepartmentsPath;
   String get checkOnlineAppointmentPaymentPath;
   String get getAvailabilityRatePath;
-  String get addNewPatientRelativePath;
   String uploadPatientDocumentsPath(String webAppoId);
   String get ctSaveAndRetrieveToken;
 }

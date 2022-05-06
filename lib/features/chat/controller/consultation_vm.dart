@@ -15,7 +15,6 @@ class DoctorConsultationVm extends RbioVm {
   late Stream<QuerySnapshot<Map<String, dynamic>>> stream;
 
   DoctorConsultationVm(this.mContext) {
-    getIt<NotificationBadgeNotifier>().changeValue(false);
     fetchAll();
   }
 
@@ -28,7 +27,7 @@ class DoctorConsultationVm extends RbioVm {
       apiUserList = [];
       progress = LoadingProgress.loading;
       apiUserList = await getChatContactsFirebaseId();
-      if(apiUserList.isNotEmpty){
+      if (apiUserList.isNotEmpty) {
         stream = getIt<FirestoreManager>().getContactsAndMessages();
       }
       progress = LoadingProgress.done;

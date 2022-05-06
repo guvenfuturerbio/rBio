@@ -476,7 +476,7 @@ class ApiServiceImpl extends ApiService {
     GetAllRelativesRequest bodyPages,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.getAllRelativesPath,
+      getIt<IAppConfig>().endpoints.relative.getAllRelativesPath,
       bodyPages.toJson(),
       options: authOptions,
     );
@@ -837,7 +837,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> removePatientRelative(String id) async {
     final response = await helper.deleteGuven(
-      getIt<IAppConfig>().endpoints.base.removePatientRelativePath(id),
+      getIt<IAppConfig>().endpoints.relative.removePatientRelativePath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -850,7 +850,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getRelativeRelationships() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getRelativeRelationshipsPath,
+      getIt<IAppConfig>().endpoints.relative.getRelativeRelationshipsPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -863,7 +863,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> changeActiveUserToRelative(String id) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.changeActiveUserToRelativePath(id),
+      getIt<IAppConfig>().endpoints.relative.changeActiveUserToRelativePath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -1310,7 +1310,7 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> addNewPatientRelative(
       AddPatientRelativeRequest addPatientRelative) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.addNewPatientRelativePath,
+      getIt<IAppConfig>().endpoints.relative.addNewPatientRelativePath,
       addPatientRelative.toJson(),
       options: authOptions,
     );

@@ -21,6 +21,31 @@ class OneDoseEndpoints extends IAppEndpoints {
 
   @override
   SearchEndpoints get search => OneDoseSearchEndpoints();
+
+  @override
+  RelativeEndpoints get relative => OneDoseRelativeEndpoints();
+}
+
+class OneDoseRelativeEndpoints extends RelativeEndpoints {
+  @override
+  String get getAllRelativesPath =>
+      throw RbioUndefinedEndpointException("getAllRelativesPath");
+
+  @override
+  String removePatientRelativePath(String id) =>
+      throw RbioUndefinedEndpointException("removePatientRelativePath");
+
+  @override
+  String changeActiveUserToRelativePath(String id) =>
+      throw RbioUndefinedEndpointException("changeActiveUserToRelativePath");
+
+  @override
+  String get addNewPatientRelativePath =>
+      throw RbioUndefinedEndpointException("addNewPatientRelativePath");
+
+  @override
+  String get getRelativeRelationshipsPath =>
+      throw RbioUndefinedEndpointException("getRelativeRelationshipsPath");
 }
 
 class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
@@ -195,9 +220,6 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
       '/Measurement/update-bp-measurement'.xDevApiTest;
 
   @override
-  String get getAllRelativesPath => '/profile/get-all-table'.xDevApiTest;
-
-  @override
   String get updateContactInfoPath =>
       '/User/UpdatePatientContactInfo'.xDevApiTest;
 
@@ -340,14 +362,7 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
       '/file/report-file-download/$id/$name'.xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
-
-  @override
   String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
-
-  @override
-  String changeActiveUserToRelativePath(String id) =>
-      '/profile/set-profile/$id'.xBaseUrl;
 
   @override
   String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBaseUrl;

@@ -37,11 +37,9 @@ late AndroidNotificationChannel _channel;
 
 abstract class FirebaseMessagingManager {
   late LocalNotificationManager localNotificationManager;
-  late NotificationBadgeNotifier notificationBadgeNotifier;
   late Repository repository;
   FirebaseMessagingManager({
     required this.localNotificationManager,
-    required this.notificationBadgeNotifier,
     required this.repository,
   });
 
@@ -55,11 +53,9 @@ abstract class FirebaseMessagingManager {
 class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
   FirebaseMessagingManagerImpl({
     required LocalNotificationManager localNotificationManager,
-    required NotificationBadgeNotifier notificationBadgeNotifier,
     required Repository repository,
   }) : super(
           localNotificationManager: localNotificationManager,
-          notificationBadgeNotifier: notificationBadgeNotifier,
           repository: repository,
         );
 
@@ -163,7 +159,6 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
             if (notification != null && !kIsWeb) {
               showNotification(message);
               await _checkChatNotification(message);
-              await notificationBadgeNotifier.changeValue(true);
             }
           });
 

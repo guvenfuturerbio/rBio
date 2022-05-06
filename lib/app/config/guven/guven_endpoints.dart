@@ -21,6 +21,27 @@ class GuvenEndpoints extends IAppEndpoints {
 
   @override
   SearchEndpoints get search => GuvenSearchEndpoints();
+
+  @override
+  RelativeEndpoints get relative => GuvenRelativeEndpoints();
+}
+
+class GuvenRelativeEndpoints extends RelativeEndpoints {
+  @override
+  String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
+
+  @override
+  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
+
+  @override
+  String changeActiveUserToRelativePath(String id) =>
+      '/profile/set-profile/$id'.xBaseUrl;
+
+  @override
+  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
+
+  @override
+  String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
 }
 
 class GuvenSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
@@ -198,9 +219,6 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
       throw RbioUndefinedEndpointException("sendNotification");
 
   @override
-  String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
-
-  @override
   String get updateContactInfoPath =>
       '/pusula/UpdatePatientContactInfo'.xBaseUrl;
 
@@ -271,10 +289,6 @@ class GuvenBaseEndpoints extends BaseEndpoints {
   String get addSuggestionPath => '/SuggestionRate/Add-Suggestion'.xBaseUrl;
 
   @override
-  String changeActiveUserToRelativePath(String id) =>
-      '/profile/set-profile/$id'.xBaseUrl;
-
-  @override
   String changeUserPasswordUiPath(String oldPassword, String password) =>
       '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
 
@@ -329,9 +343,6 @@ class GuvenBaseEndpoints extends BaseEndpoints {
       '/file/get-patient-appointments-file-names/$roomId'.xBaseUrl;
 
   @override
-  String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
-
-  @override
   String getRoomStatusUiPath(String roomId) =>
       '/liveappointment/get-room-status/$roomId'.xBaseUrl;
 
@@ -340,9 +351,6 @@ class GuvenBaseEndpoints extends BaseEndpoints {
 
   @override
   String get getVisitsPath => '/Pusula/getVisits'.xBaseUrl;
-
-  @override
-  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
 
   @override
   String requestTranslatorPath(String appoId) =>
@@ -378,9 +386,6 @@ class GuvenBaseEndpoints extends BaseEndpoints {
   @override
   String get uploadProfilePicturePath =>
       throw RbioUndefinedEndpointException("uploadProfilePicturePath");
-
-  @override
-  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
 
   @override
   String get cancelAppointmentPath => '/Pusula/cancelAppointment'.xBaseUrl;
