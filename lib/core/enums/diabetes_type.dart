@@ -19,7 +19,7 @@ extension DiabetesTypeExtension on DiabetesType {
 
 extension DiabetesTypeStringExtension on String? {
   DiabetesType get xGetDiabetesType {
-    if (this == 'Diyabet Tip' || this == 'Diabet type') {
+    if (this == 'Diyabet Yok' || this == 'Non-Diabetes') {
       return DiabetesType.nonDiabetes;
     } else if (this == 'Tip 1' || this == 'Type 1') {
       return DiabetesType.type1;
