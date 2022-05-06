@@ -19,6 +19,7 @@ enum SharedPreferencesKeys {
   chatNotification,
   allUsers, // Home Widget List Tutuyor
   firstLaunch,
+  isTwoFactorAuth,
 
   pairedDevicesV2,
 

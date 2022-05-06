@@ -1,10 +1,8 @@
-// ignore_for_file: todo
-
 part of '../abstract/app_config.dart';
 
 class GuvenEndpoints extends IAppEndpoints {
   @override
-  String get envPath => throw UnimplementedError();
+  String get envPath => 'env/guven/.prod.env';
 
   @override
   BaseEndpoints get base => GuvenBaseEndpoints();
@@ -20,564 +18,483 @@ class GuvenEndpoints extends IAppEndpoints {
 
   @override
   SymptomCheckerEndpoints get symptom => GuvenSymptomCheckerEndpoints();
+
+  @override
+  SearchEndpoints get search => GuvenSearchEndpoints();
+
+  @override
+  RelativeEndpoints get relative => GuvenRelativeEndpoints();
+}
+
+class GuvenRelativeEndpoints extends RelativeEndpoints {
+  @override
+  String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
+
+  @override
+  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
+
+  @override
+  String changeActiveUserToRelativePath(String id) =>
+      '/profile/set-profile/$id'.xBaseUrl;
+
+  @override
+  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
+
+  @override
+  String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
 }
 
 class GuvenSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
   @override
-  // TODO: implement symptomGetBodyLocations
-  String get symptomGetBodyLocations => throw UnimplementedError();
+  String get symptomGetBodyLocations =>
+      throw RbioUndefinedEndpointException("symptomGetBodyLocations");
 
   @override
-  String symptomGetBodySubLocations(int locationID) {
-    // TODO: implement symptomGetBodySubLocations
-    throw UnimplementedError();
-  }
+  String symptomGetBodySubLocations(int locationID) => 'env/onedose/.prod.env';
 
   @override
-  String symptomGetBodySymptoms(int locationID, int gender) {
-    // TODO: implement symptomGetBodySymptoms
-    throw UnimplementedError();
-  }
+  String symptomGetBodySymptoms(int locationID, int gender) =>
+      throw RbioUndefinedEndpointException("symptomGetBodySymptoms");
 
   @override
-  // TODO: implement symptomGetProposed
-  String get symptomGetProposed => throw UnimplementedError();
+  String get symptomGetProposed =>
+      throw RbioUndefinedEndpointException("symptomGetProposed");
 
   @override
-  // TODO: implement symptomGetSpecialisations
-  String get symptomGetSpecialisations => throw UnimplementedError();
+  String get symptomGetSpecialisations =>
+      throw RbioUndefinedEndpointException("symptomGetSpecialisations");
 
   @override
-  // TODO: implement symptomCheckerLogin
-  String get symptomCheckerLogin => throw UnimplementedError();
+  String get symptomCheckerLogin =>
+      throw RbioUndefinedEndpointException("symptomCheckerLogin");
 }
 
 class GuvenCommonEndpoints extends CommonEndpoints {
   @override
-  String getDoctorCvDetailsPath(String doctorWebID) {
-    // TODO: implement getDoctorCvDetailsPath
-    throw UnimplementedError();
-  }
+  String getDoctorCvDetailsPath(String doctorWebID) =>
+      '/api/doctor/$doctorWebID'.xGuvenPath;
 
   @override
-  // TODO: implement consentFormPath
-  String consentFormPath(String locale) => throw UnimplementedError();
+  String consentFormPath(String locale) =>
+      "/UserRegister/get-consent-form/$locale".xBaseUrl;
+}
+
+class GuvenSearchEndpoints extends SearchEndpoints {
+  @override
+  String getPostWithTagsByText(String search) =>
+      '/SocialPost/getPostWithTagsByText/$search'.xBaseUrl;
+
+  @override
+  String getPostWithTagsByPlatform(String platform) =>
+      throw RbioUndefinedEndpointException("getPostWithTagsByPlatform");
+
+  @override
+  String get getAllPosts => '/SocialPost/getAllPosts'.xBaseUrl;
 }
 
 class GuvenDevApiEndpoints extends DevApiEndpoints {
   @override
-  // TODO: implement addFirebaseTokenUiPath
-  String get addFirebaseTokenUiPath => throw UnimplementedError();
+  String get addFirebaseTokenUiPath => '/user/add-user-firebaseId'.xBaseUrl;
 
   @override
-  // TODO: implement addStep1
-  String get addStep1 => throw UnimplementedError();
+  String get addStep1 => '/userregister/add-step1-pusula'.xBaseUrl;
 
   @override
-  // TODO: implement addStep2
-  String get addStep2 => throw UnimplementedError();
+  String get addStep2 => "/userregister/add-step2".xBaseUrl;
 
   @override
-  // TODO: implement addStep3
-  String get addStep3 => throw UnimplementedError();
+  String get addStep3 => '/userregister/add-step3'.xBaseUrl;
 
   @override
-  // TODO: implement changePassword
-  String get changePassword => throw UnimplementedError();
+  String get changePassword =>
+      '/userregister/change-password-with-old-password'.xBaseUrl;
 
   @override
-  // TODO: implement ctAddFirebaseToken
-  String get ctAddFirebaseToken => throw UnimplementedError();
+  String get ctAddFirebaseToken =>
+      throw RbioUndefinedEndpointException("ctAddFirebaseToken");
 
   @override
-  String ctAddHospitalHba1cMeasurement(entegrationId) {
-    // TODO: implement ctAddHospitalHba1cMeasurement
-    throw UnimplementedError();
-  }
+  String ctAddHospitalHba1cMeasurement(entegrationId) =>
+      throw RbioUndefinedEndpointException("ctAddHospitalHba1cMeasurement");
 
   @override
-  String get ctAddProfile => throw UnimplementedError();
+  String get ctAddProfile =>
+      throw RbioUndefinedEndpointException("ctAddProfile");
 
   @override
-  String ctChangeProfile(entegrationId) {
-    // TODO: implement ctChangeProfile
-    throw UnimplementedError();
-  }
+  String ctChangeProfile(entegrationId) =>
+      throw RbioUndefinedEndpointException("ctChangeProfile");
 
   @override
-  // TODO: implement ctDeleteBloodGlucoseValue
-  String get ctDeleteBloodGlucoseValue => throw UnimplementedError();
+  String get ctDeleteBloodGlucoseValue =>
+      throw RbioUndefinedEndpointException("ctDeleteBloodGlucoseValue");
 
   @override
-  // TODO: implement ctDeleteBpMeasurement
-  String get ctDeleteBpMeasurement => throw UnimplementedError();
+  String get ctDeleteBpMeasurement =>
+      throw RbioUndefinedEndpointException("ctDeleteBpMeasurement");
 
   @override
-  String ctDeleteProfile(userId) {
-    // TODO: implement ctDeleteProfile
-    throw UnimplementedError();
-  }
+  String ctDeleteProfile(userId) =>
+      throw RbioUndefinedEndpointException("ctDeleteProfile");
 
   @override
-  String ctDeleteUserStrip(int id, entegrationId) {
-    // TODO: implement ctDeleteUserStrip
-    throw UnimplementedError();
-  }
+  String ctDeleteUserStrip(int id, entegrationId) =>
+      throw RbioUndefinedEndpointException("ctDeleteUserStrip");
 
   @override
-  // TODO: implement ctGetAllProfiles
-  String get ctGetAllProfiles => throw UnimplementedError();
+  String get ctGetAllProfiles =>
+      throw RbioUndefinedEndpointException("ctGetAllProfiles");
 
   @override
-  // TODO: implement ctGetBloodGlucoseDataOfPerson
-  String get ctGetBloodGlucoseDataOfPerson => throw UnimplementedError();
+  String get ctGetBloodGlucoseDataOfPerson =>
+      throw RbioUndefinedEndpointException("ctGetBloodGlucoseDataOfPerson");
 
   @override
-  // TODO: implement ctGetBloodGlucoseReport
-  String get ctGetBloodGlucoseReport => throw UnimplementedError();
+  String get ctGetBloodGlucoseReport =>
+      throw RbioUndefinedEndpointException("ctGetBloodGlucoseReport");
 
   @override
-  // TODO: implement ctGetBpMeasurement
-  String get ctGetBpMeasurement => throw UnimplementedError();
+  String get ctGetBpMeasurement =>
+      throw RbioUndefinedEndpointException("ctGetBpMeasurement");
 
   @override
-  String ctGetHba1cMeasurementList(entegrationId) {
-    // TODO: implement ctGetHba1cMeasurementList
-    throw UnimplementedError();
-  }
+  String ctGetHba1cMeasurementList(entegrationId) =>
+      throw RbioUndefinedEndpointException("ctGetHba1cMeasurementList");
 
   @override
-  String ctGetMedicineByFilter(String text) {
-    // TODO: implement ctGetMedicineByFilter
-    throw UnimplementedError();
-  }
+  String ctGetMedicineByFilter(String text) =>
+      throw RbioUndefinedEndpointException("ctGetMedicineByFilter");
 
   @override
-  String ctGetUserStrip(int entegrationId, String deviceuuid) {
-    // TODO: implement ctGetUserStrip
-    throw UnimplementedError();
-  }
+  String ctGetUserStrip(int entegrationId, String deviceuuid) =>
+      throw RbioUndefinedEndpointException("ctGetUserStrip");
 
   @override
-  // TODO: implement ctInsertNewBloodGlucoseValue
-  String get ctInsertNewBloodGlucoseValue => throw UnimplementedError();
+  String get ctInsertNewBloodGlucoseValue =>
+      throw RbioUndefinedEndpointException("ctInsertNewBloodGlucoseValue");
 
   @override
-  // TODO: implement ctInsertNewBpValue
-  String get ctInsertNewBpValue => throw UnimplementedError();
+  String get ctInsertNewBpValue =>
+      throw RbioUndefinedEndpointException("ctInsertNewBpValue");
 
   @override
-  String ctIsDeviceIdRegisteredForSomeUser(deviceId, entegrationId) {
-    // TODO: implement ctIsDeviceIdRegisteredForSomeUser
-    throw UnimplementedError();
-  }
+  String ctIsDeviceIdRegisteredForSomeUser(deviceId, entegrationId) =>
+      throw RbioUndefinedEndpointException("ctIsDeviceIdRegisteredForSomeUser");
 
   @override
-  // TODO: implement ctSetDefaultProfile
-  String get ctSetDefaultProfile => throw UnimplementedError();
+  String get ctSetDefaultProfile =>
+      throw RbioUndefinedEndpointException("ctSetDefaultProfile");
 
   @override
-  // TODO: implement ctUpdateBloodGlucoseValue
-  String get ctUpdateBloodGlucoseValue => throw UnimplementedError();
+  String get ctUpdateBloodGlucoseValue =>
+      throw RbioUndefinedEndpointException("ctUpdateBloodGlucoseValue");
 
   @override
-  // TODO: implement ctUpdateBpMeasurement
-  String get ctUpdateBpMeasurement => throw UnimplementedError();
+  String get ctUpdateBpMeasurement =>
+      throw RbioUndefinedEndpointException("ctUpdateBpMeasurement");
 
   @override
-  String ctUpdateProfile(id) {
-    // TODO: implement ctUpdateProfile
-    throw UnimplementedError();
-  }
+  String ctUpdateProfile(id) =>
+      throw RbioUndefinedEndpointException("ctUpdateProfile");
 
   @override
-  String ctUploadMeasurementImage(entegrationId, measurementId) {
-    // TODO: implement ctUploadMeasurementImage
-    throw UnimplementedError();
-  }
+  String ctUploadMeasurementImage(entegrationId, measurementId) =>
+      throw RbioUndefinedEndpointException("ctUploadMeasurementImage");
 
   @override
-  // TODO: implement forgotPassword
-  String get forgotPassword => throw UnimplementedError();
+  String get forgotPassword => '/userregister/forgot-password'.xBaseUrl;
 
   @override
-  String getBannerTab(String applicationName, String groupName) {
-    // TODO: implement getBannerTab
-    throw UnimplementedError();
-  }
+  String getBannerTab(String applicationName, String groupName) =>
+      throw RbioUndefinedEndpointException("getBannerTab");
 
   @override
-  // TODO: implement getUserProfilePath
-  String get getUserProfilePath => throw UnimplementedError();
+  String get getUserProfilePath => '/user/get-user-info'.xBaseUrl;
 
   @override
-  // TODO: implement loginPath
-  String get loginPath => throw UnimplementedError();
+  String get loginPath => "/AccessToken/get-token-for-guven-online".xBaseUrl;
 
   @override
-  // TODO: implement sendNotification
-  String get sendNotification => throw UnimplementedError();
+  String get sendNotification =>
+      throw RbioUndefinedEndpointException("sendNotification");
 
   @override
-  // TODO: implement getAllRelativesPath
-  String get getAllRelativesPath => throw UnimplementedError();
+  String get updateContactInfoPath =>
+      '/pusula/UpdatePatientContactInfo'.xBaseUrl;
 
   @override
-  // TODO: implement updateContactInfoPath
-  String get updateContactInfoPath => throw UnimplementedError();
+  String get getChatContacts =>
+      throw RbioUndefinedEndpointException("getChatContacts");
 
   @override
-  // TODO: implement getChatContacts
-  String get getChatContacts => throw UnimplementedError();
-
-  @override
-  // TODO: implement ctUpdateUserStrip
-  String get ctUpdateUserStrip => throw UnimplementedError();
+  String get ctUpdateUserStrip =>
+      throw RbioUndefinedEndpointException("ctUpdateUserStrip");
 }
 
 class GuvenBaseEndpoints extends BaseEndpoints {
   @override
-  String get getAllPackagePath => throw UnimplementedError();
+  String get userLoginStarter => '/AccessToken/user-login-starter'.xBaseUrl;
 
   @override
-  String getAllSubCategoriesPath(int id) => throw UnimplementedError();
+  String get verifyConfirmation2fa =>
+      '/AccessToken/verify-confirmation-2fa'.xBaseUrl;
 
   @override
-  String getSubCategoryDetailPath(id) => throw UnimplementedError();
+  String get getAllPackagePath => '/Package/get-all'.xBaseUrl;
 
   @override
-  String getSubCategoryItemsPath(id) => throw UnimplementedError();
+  String getAllSubCategoriesPath(int id) =>
+      '/Package/get-all-sub-categories/$id'.xBaseUrl;
 
   @override
-  // TODO: implement doPackagePaymentPath
-  String get doPackagePaymentPath => throw UnimplementedError();
+  String getSubCategoryDetailPath(id) =>
+      '/Package/get-all-sub-category-pages/$id'.xBaseUrl;
 
   @override
-  // TODO: implement findResourceAvailableDays
-  String get findResourceAvailableDays => throw UnimplementedError();
+  String getSubCategoryItemsPath(id) =>
+      '/Package/get-all-sub-category-items/$id'.xBaseUrl;
 
   @override
-  // TODO: implement updateUserSystemNamePath
-  String get updateUserSystemNamePath => throw UnimplementedError();
+  String get doPackagePaymentPath =>
+      '/Package/do-mobile-payment-without-firebase'.xBaseUrl;
 
   @override
-  // TODO: implement getActiveStreamPath
-  String get getActiveStreamPath => throw UnimplementedError();
+  String get findResourceAvailableDays =>
+      '/Pusula/findResourceAvailableDays'.xBaseUrl;
 
   @override
-  // TODO: implement getProfilePicturePath
-  String get getProfilePicturePath => throw UnimplementedError();
+  String get updateUserSystemNamePath =>
+      '/Authentication/update-user-system-name-pusula'.xBaseUrl;
 
   @override
-  // TODO: implement getPatientDetailPath
-  String get getPatientDetailPath => throw UnimplementedError();
+  String get getActiveStreamPath => '/profile/get-active-stream'.xBaseUrl;
 
   @override
-  // TODO: implement filterTenantsPath
-  String get filterTenantsPath => throw UnimplementedError();
+  String get getProfilePicturePath =>
+      '/file/retrieve-user-profile-image'.xBaseUrl;
 
   @override
-  // TODO: implement filterDepartmentsPath
-  String get filterDepartmentsPath => throw UnimplementedError();
+  String get getPatientDetailPath => '/Pusula/getPatientByToken'.xBaseUrl;
 
   @override
-  // TODO: implement filterResourcesPath
-  String get filterResourcesPath => throw UnimplementedError();
+  String get filterTenantsPath => '/Pusula/filterTenants'.xBaseUrl;
 
   @override
-  // TODO: implement addSuggestionPath
-  String get addSuggestionPath => throw UnimplementedError();
+  String get filterDepartmentsPath => '/Pusula/FilterDepartments'.xBaseUrl;
 
   @override
-  String changeActiveUserToRelativePath(String id) {
-    // TODO: implement changeActiveUserToRelativePath
-    throw UnimplementedError();
-  }
+  String get filterResourcesPath => '/Pusula/filterResources'.xBaseUrl;
 
   @override
-  String changeUserPasswordUiPath(String oldPassword, String password) {
-    // TODO: implement changeUserPasswordUiPath
-    throw UnimplementedError();
-  }
+  String get addSuggestionPath => '/SuggestionRate/Add-Suggestion'.xBaseUrl;
 
   @override
-  String clickPostPath(int postId) {
-    // TODO: implement clickPostPath
-    throw UnimplementedError();
-  }
+  String changeUserPasswordUiPath(String oldPassword, String password) =>
+      '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
 
   @override
-  String deleteOnlineAppoFilePath(String webAppoId, String fileName) {
-    // TODO: implement deleteOnlineAppoFilePath
-    throw UnimplementedError();
-  }
+  String clickPostPath(int postId) => '/SocialPost/clickPost/$postId'.xBaseUrl;
 
   @override
-  // TODO: implement deleteProfilePicturePath
-  String get deleteProfilePicturePath => throw UnimplementedError();
+  String deleteOnlineAppoFilePath(String webAppoId, String fileName) =>
+      '/file/report-file-delete/$webAppoId/$fileName'.xBaseUrl;
 
   @override
-  String downloadAppointmentFilePath(String id, String name) {
-    // TODO: implement downloadAppointmentFilePath
-    throw UnimplementedError();
-  }
+  String get deleteProfilePicturePath => '/file/delete-profile-photo'.xBaseUrl;
 
   @override
-  String downloadAppointmentSingleFilePath(String folder, String path) {
-    // TODO: implement downloadAppointmentSingleFilePath
-    throw UnimplementedError();
-  }
+  String downloadAppointmentFilePath(String id, String name) =>
+      '/file/report-file-download/$id/$name'.xBaseUrl;
 
   @override
-  String filterSocialPostsPath(String search) {
-    // TODO: implement filterSocialPostsPath
-    throw UnimplementedError();
-  }
+  String downloadAppointmentSingleFilePath(String folder, String path) =>
+      '/file/download-patient-appointment-single-file/$folder/$path'.xBaseUrl;
 
   @override
-  String filterSocialPostsPlatform(String platform) {
-    // TODO: implement filterSocialPostsPlatform
-    throw UnimplementedError();
-  }
+  String get findResourceClosestAvailablePlanPath =>
+      '/Pusula/findResourceClosestAvailablePlan'.xBaseUrl;
 
   @override
-  // TODO: implement findResourceClosestAvailablePlanPath
-  String get findResourceClosestAvailablePlanPath => throw UnimplementedError();
+  String get getAllFilesPath =>
+      '/file/get-patient-all-appointments-file-names'.xBaseUrl;
 
   @override
-  // TODO: implement getAllFilesPath
-  String get getAllFilesPath => throw UnimplementedError();
+  String get getAllTranslatorPath => '/appointmentinterpreter/get-all'.xBaseUrl;
 
   @override
-  // TODO: implement getAllTranslatorPath
-  String get getAllTranslatorPath => throw UnimplementedError();
-
-  @override
-  // TODO: implement getAppointmentTypeViaWebConsultantIdPath
   String get getAppointmentTypeViaWebConsultantIdPath =>
-      throw UnimplementedError();
+      '/videoCall/get-stream-type-mobile'.xBaseUrl;
 
   @override
-  // TODO: implement getCountriesPath
-  String get getCountriesPath => throw UnimplementedError();
+  String get getCountriesPath => '/Pusula/getCountries'.xBaseUrl;
 
   @override
-  // TODO: implement getCourseIdPath
-  String get getCourseIdPath => throw UnimplementedError();
+  String get getCourseIdPath => '/course/get-active'.xBaseUrl;
 
   @override
-  // TODO: implement getEventsPath
-  String get getEventsPath => throw UnimplementedError();
+  String get getEventsPath => '/Pusula/getevents'.xBaseUrl;
 
   @override
-  // TODO: implement getLaboratoryResultsPath
-  String get getLaboratoryResultsPath => throw UnimplementedError();
+  String get getLaboratoryResultsPath =>
+      '/Pusula/getLaboratoryResults'.xBaseUrl;
 
   @override
-  String getOnlineAppoFilesPath(String roomId) {
-    // TODO: implement getOnlineAppoFilesPath
-    throw UnimplementedError();
-  }
+  String getOnlineAppoFilesPath(String roomId) =>
+      '/file/get-patient-appointments-file-names/$roomId'.xBaseUrl;
 
   @override
-  // TODO: implement getRelativeRelationshipsPath
-  String get getRelativeRelationshipsPath => throw UnimplementedError();
+  String getRoomStatusUiPath(String roomId) =>
+      '/liveappointment/get-room-status/$roomId'.xBaseUrl;
 
   @override
-  String getRoomStatusUiPath(String roomId) {
-    // TODO: implement getRoomStatusUiPath
-    throw UnimplementedError();
-  }
+  String get getUserKvkkInfoPath => '/user/get-user-kvkk-info'.xBaseUrl;
 
   @override
-  // TODO: implement getUserKvkkInfoPath
-  String get getUserKvkkInfoPath => throw UnimplementedError();
+  String get getVisitsPath => '/Pusula/getVisits'.xBaseUrl;
 
   @override
-  // TODO: implement getVisitsPath
-  String get getVisitsPath => throw UnimplementedError();
+  String requestTranslatorPath(String appoId) =>
+      '/appointmentinterpreter/add-update-appointment-interpreter-pusula/$appoId'
+          .xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) {
-    // TODO: implement removePatientRelativePath
-    throw UnimplementedError();
-  }
+  String get saveAppointmentPath => '/Pusula/saveAppointment'.xBaseUrl;
 
   @override
-  String requestTranslatorPath(String appoId) {
-    // TODO: implement requestTranslatorPath
-    throw UnimplementedError();
-  }
+  String setJitsiWebConsultantIdPath(String webConsultantId) =>
+      '/CerebrumOnlineAppointment/set-mobile-appointment-entrance-c4dd4e4ac7c34592827f0dbbfc233c56/$webConsultantId'
+          .xBaseUrl;
 
   @override
-  // TODO: implement saveAppointmentPath
-  String get saveAppointmentPath => throw UnimplementedError();
+  String get setYoutubeSurveyUserPath => '/course/save-user'.xBaseUrl;
 
   @override
-  String setJitsiWebConsultantIdPath(String webConsultantId) {
-    // TODO: implement setJitsiWebConsultantIdPath
-    throw UnimplementedError();
-  }
+  String get syncronizeOneDoseUser =>
+      throw RbioUndefinedEndpointException("syncronizeOneDoseUser");
 
   @override
-  // TODO: implement setYoutubeSurveyUserPath
-  String get setYoutubeSurveyUserPath => throw UnimplementedError();
+  String get updatePusulaContactInfoPath =>
+      throw RbioUndefinedEndpointException("updatePusulaContactInfoPath");
 
   @override
-  // TODO: implement socialResourcePath
-  String get socialResourcePath => throw UnimplementedError();
+  String get updateUserKvkkInfoPath => '/user/update-user-kvkk-info'.xBaseUrl;
 
   @override
-  // TODO: implement syncronizeOneDoseUser
-  String get syncronizeOneDoseUser => throw UnimplementedError();
+  String uploadFileToAppoPath(String webAppoId) =>
+      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
 
   @override
-  // TODO: implement updatePusulaContactInfoPath
-  String get updatePusulaContactInfoPath => throw UnimplementedError();
+  String get uploadProfilePicturePath =>
+      throw RbioUndefinedEndpointException("uploadProfilePicturePath");
 
   @override
-  // TODO: implement updateUserKvkkInfoPath
-  String get updateUserKvkkInfoPath => throw UnimplementedError();
+  String get cancelAppointmentPath => '/Pusula/cancelAppointment'.xBaseUrl;
 
   @override
-  String uploadFileToAppoPath(String webAppoId) {
-    // TODO: implement uploadFileToAppoPath
-    throw UnimplementedError();
-  }
+  String get checkOnlineAppointmentPaymentPath =>
+      '/pusula/checkOnlineAppointmentPayment'.xBaseUrl;
 
   @override
-  // TODO: implement uploadProfilePicturePath
-  String get uploadProfilePicturePath => throw UnimplementedError();
+  String get ctSaveAndRetrieveToken =>
+      throw RbioUndefinedEndpointException("ctSaveAndRetrieveToken");
 
   @override
-  // TODO: implement addNewPatientRelativePath
-  String get addNewPatientRelativePath => throw UnimplementedError();
+  String get doMobilePaymentPath =>
+      '/Pusula/do-mobile-payment-without-firebase'.xBaseUrl;
 
   @override
-  // TODO: implement cancelAppointmentPath
-  String get cancelAppointmentPath => throw UnimplementedError();
+  String get doMobilePaymentWithVoucher =>
+      '/Pusula/do-mobile-payment-with-voucher'.xBaseUrl;
 
   @override
-  // TODO: implement checkOnlineAppointmentPaymentPath
-  String get checkOnlineAppointmentPaymentPath => throw UnimplementedError();
+  String get fetchOnlineDepartmentsPath =>
+      '/Pusula/getOnlineDepartments'.xBaseUrl;
 
   @override
-  // TODO: implement ctSaveAndRetrieveToken
-  String get ctSaveAndRetrieveToken => throw UnimplementedError();
+  String get getAvailabilityRatePath =>
+      '/SuggestionRate/Get-Availability-Rate-Pusula'.xBaseUrl;
 
   @override
-  // TODO: implement doMobilePaymentPath
-  String get doMobilePaymentPath => throw UnimplementedError();
+  String get getLaboratoryPdfResultPath =>
+      '/Pusula/getLaboratoryResultsPdf'.xBaseUrl;
 
   @override
-  // TODO: implement doMobilePaymentWithVoucher
-  String get doMobilePaymentWithVoucher => throw UnimplementedError();
+  String get getPathologyResultsPath => '/Pusula/getPathologyResults'.xBaseUrl;
 
   @override
-  // TODO: implement fetchOnlineDepartmentsPath
-  String get fetchOnlineDepartmentsPath => throw UnimplementedError();
+  String get getPatientAppointmentsPath =>
+      '/Pusula/getPatientAppointments'.xBaseUrl;
 
   @override
-  // TODO: implement getAvailabilityRatePath
-  String get getAvailabilityRatePath => throw UnimplementedError();
+  String get getRadiologyPdfResultPath =>
+      '/Pusula/getRadiologyResultsPdf'.xBaseUrl;
 
   @override
-  // TODO: implement getLaboratoryPdfResultPath
-  String get getLaboratoryPdfResultPath => throw UnimplementedError();
+  String get getRadiologyResultsPath => '/Pusula/getRadiologyResults'.xBaseUrl;
 
   @override
-  // TODO: implement getPathologyResultsPath
-  String get getPathologyResultsPath => throw UnimplementedError();
+  String get getResourceVideoCallPricePath =>
+      '/Pusula/getResourceVideoCallPrice'.xBaseUrl;
 
   @override
-  // TODO: implement getPatientAppointmentsPath
-  String get getPatientAppointmentsPath => throw UnimplementedError();
+  String get getResourceVideoCallPriceWithVoucher =>
+      '/Pusula/getResourceVideoCallPriceWithVoucher'.xBaseUrl;
 
   @override
-  // TODO: implement getRadiologyPdfResultPath
-  String get getRadiologyPdfResultPath => throw UnimplementedError();
+  String get rateOnlineCallPath =>
+      '/SuggestionRate/Add-Availability-Rate-pusula'.xBaseUrl;
 
   @override
-  // TODO: implement getRadiologyResultsPath
-  String get getRadiologyResultsPath => throw UnimplementedError();
-
-  @override
-  // TODO: implement getResourceVideoCallPricePath
-  String get getResourceVideoCallPricePath => throw UnimplementedError();
-
-  @override
-  // TODO: implement getResourceVideoCallPriceWithVoucher
-  String get getResourceVideoCallPriceWithVoucher => throw UnimplementedError();
-
-  @override
-  // TODO: implement rateOnlineCallPath
-  String get rateOnlineCallPath => throw UnimplementedError();
-
-  @override
-  String uploadPatientDocumentsPath(String webAppoId) {
-    // TODO: implement uploadPatientDocumentsPath
-    throw UnimplementedError();
-  }
+  String uploadPatientDocumentsPath(String webAppoId) =>
+      '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
 }
 
 class GuvenDoctorEndpoints extends DoctorEndpoints {
   @override
-  // TODO: implement getAllAppointment
-  String get getAllAppointment => throw UnimplementedError();
+  String get getAllAppointment =>
+      throw RbioUndefinedEndpointException("getAllAppointment");
 
   @override
-  // TODO: implement getMyBMIPatient
-  String get getMyBMIPatient => throw UnimplementedError();
+  String get getMyBMIPatient =>
+      throw RbioUndefinedEndpointException("getMyBMIPatient");
 
   @override
-  // TODO: implement getMyBpPatient
-  String get getMyBpPatient => throw UnimplementedError();
+  String get getMyBpPatient =>
+      throw RbioUndefinedEndpointException("getMyBpPatient");
 
   @override
-  String getMyPatientBloodGlucose(int patientId) {
-    // TODO: implement getMyPatientBloodGlucose
-    throw UnimplementedError();
-  }
+  String getMyPatientBloodGlucose(int patientId) =>
+      throw RbioUndefinedEndpointException("getMyPatientBloodGlucose");
 
   @override
-  String getMyPatientDetail(int patientId) {
-    // TODO: implement getMyPatientDetail
-    throw UnimplementedError();
-  }
+  String getMyPatientDetail(int patientId) =>
+      throw RbioUndefinedEndpointException("getMyPatientDetail");
 
   @override
-  String getMyPatientPressure(int patientId) {
-    // TODO: implement getMyPatientPressure
-    throw UnimplementedError();
-  }
+  String getMyPatientPressure(int patientId) =>
+      throw RbioUndefinedEndpointException("getMyPatientPressure");
 
   @override
-  String getMyPatientScale(int patientId) {
-    // TODO: implement getMyPatientScale
-    throw UnimplementedError();
-  }
+  String getMyPatientScale(int patientId) =>
+      throw RbioUndefinedEndpointException("getMyPatientScale");
 
   @override
-  // TODO: implement getMyScalePatient
-  String get getMyScalePatient => throw UnimplementedError();
+  String get getMyScalePatient =>
+      throw RbioUndefinedEndpointException("getMyScalePatient");
 
   @override
-  // TODO: implement getMySugarPatient
-  String get getMySugarPatient => throw UnimplementedError();
+  String get getMySugarPatient =>
+      throw RbioUndefinedEndpointException("getMySugarPatient");
 
   @override
-  String login(String userName, String password) {
-    // TODO: implement login
-    throw UnimplementedError();
-  }
+  String login(String userName, String password) =>
+      throw RbioUndefinedEndpointException("login");
 
   @override
-  String updateMyPatientLimit(int patientId) {
-    // TODO: implement updateMyPatientLimit
-    throw UnimplementedError();
-  }
+  String updateMyPatientLimit(int patientId) =>
+      throw RbioUndefinedEndpointException("updateMyPatientLimit");
 
   @override
-  // TODO: implement getCurrentApplicationVersionPath
-  String get getCurrentApplicationVersionPath => throw UnimplementedError();
+  String get getCurrentApplicationVersionPath =>
+      '/applicationmobilecheckversion/get-current'.xBaseUrl;
 }

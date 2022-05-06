@@ -89,7 +89,6 @@ class _Images {
   final omronBloodPressureWrist =
       "assets/images/omron_blood_pressure_wrist.png";
   final omronScale = "assets/images/omron_scale.png";
-  final oneDoseHealth = 'assets/images/onedose_logo.svg';
   final other = "assets/images/other_black.svg";
   final otherIcon = 'assets/images/other_icon.svg';
   final phone = 'assets/images/phone_icon.svg';
@@ -105,7 +104,6 @@ class _Images {
   final spotify = "assets/images/spotifyicon.svg";
   final stethoscope = "assets/images/stethoscope.svg";
   final stripIconBlack = "assets/images/strip_icon_black.svg";
-  final successAppointment = 'assets/images/success_appointment.svg';
   final test = "assets/images/test_white.svg";
   final translator = "assets/images/translator.svg";
   final twitter = "assets/images/twittericon.svg";

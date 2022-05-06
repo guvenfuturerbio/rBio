@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
+import '../../../core/exception/undefined_endpoint_exception.dart';
 
 part '../guven/guven_config.dart';
 part '../guven/guven_endpoints.dart';

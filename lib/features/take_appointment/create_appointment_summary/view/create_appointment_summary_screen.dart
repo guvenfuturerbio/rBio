@@ -127,7 +127,7 @@ class _CreateAppointmentSummaryScreenState
 
                       //
                       SvgPicture.asset(
-                        R.image.successAppointment,
+                        getIt<IAppConfig>().theme.successAppointmentImage,
                         width: Atom.width * 0.4,
                       ),
 
@@ -331,7 +331,6 @@ class _CreateAppointmentSummaryScreenState
           if (!forOnline) ...[
             RbioElevatedButton(
               infinityWidth: true,
-              showElevation: false,
               onTap: () async {
                 LoggerUtils.instance.i("heyo");
                 vm.appointmentSuccess
@@ -355,7 +354,6 @@ class _CreateAppointmentSummaryScreenState
                     if (!forOnline) ...[
                       RbioElevatedButton(
                         infinityWidth: true,
-                        showElevation: false,
                         onTap: () async {
                           if (vm.appointmentSuccess) {
                             Atom.to(PagePaths.main, isReplacement: true);
@@ -415,7 +413,6 @@ class _CreateAppointmentSummaryScreenState
 
                               //
                               RbioElevatedButton(
-                                showElevation: false,
                                 onTap: () {
                                   if (vm.newVideoCallPriceResponse
                                           ?.patientPrice ==
@@ -578,7 +575,6 @@ class _CreateAppointmentSummaryScreenState
           ? getIt<IAppConfig>().theme.textColorSecondary
           : getIt<IAppConfig>().theme.textColor,
       fontWeight: FontWeight.w600,
-      showElevation: false,
     );
   }
 

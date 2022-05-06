@@ -158,7 +158,6 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
                   onTap: () => ctx
                       .read<PatientTreatmentEditVm>()
                       .save(textEditingController.text),
-                  showElevation: false,
                   fontWeight: FontWeight.bold,
                 ),
               ),

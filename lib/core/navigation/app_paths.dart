@@ -24,11 +24,11 @@ import '../../features/doctor/patient_detail/scale/view/scale_patient_detail_scr
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../features/introduction/view/introduction_screen.dart';
 import '../../features/mediminder/mediminder.dart';
 import '../../features/my_appointments/all_files_screen.dart';
 import '../../features/my_appointments/appointment_list_screen.dart';
 import '../../features/my_appointments/web_conferance_screen.dart';
+import '../../features/onboarding/view/onboarding_screen.dart';
 import '../../features/profile/devices/devices.dart';
 import '../../features/profile/health_information/view/health_information_screen.dart';
 import '../../features/profile/personal_information/view/personal_information_screen.dart';
@@ -68,6 +68,8 @@ class VRouterRoutes {
       widget: const LoginScreen(),
     ),
 
+    // ! ----------- ----------- Auth ----------- -----------
+
     VWidget(
       path: PagePaths.main,
       widget: Container(),
@@ -75,15 +77,11 @@ class VRouterRoutes {
         DashboardNavigation(),
       ],
     ),
-    // VWidget(
-    //   path: PagePaths.MAIN,
-    //   widget: HomeScreen(),
-    // ),
 
     VWidget(
       path: PagePaths.profile,
       widget: ChangeNotifierProvider<ProfileVm>(
-        create: (context) => ProfileVm(),
+        create: (context) => ProfileVm(context),
         child: const ProfileScreen(),
       ),
       stackedRoutes: [
@@ -96,8 +94,8 @@ class VRouterRoutes {
     ),
 
     VWidget(
-      path: PagePaths.introduction,
-      widget: const IntroductionScreen(),
+      path: PagePaths.onboarding,
+      widget: const OnboardingScreen(),
     ),
 
     VWidget(
@@ -603,7 +601,7 @@ class PagePaths {
   static const forgotPasswordStep2 = '/change-password-with-old';
   static const doctorCv = '/doctor-cv';
   static const appointmentSummary = '/appointment-summary';
-  static const introduction = '/introduction';
+  static const onboarding = '/onboarding';
 
   static const covid19 = '/covid19';
   static const eResult = '/results';

@@ -56,11 +56,12 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
 
   Widget _buildListView(AllFilesVm vm) {
     if (vm.fileLists.isEmpty) {
-      return Center(
-        child: Text(
-          LocaleProvider.of(context).no_file_found,
-          textAlign: TextAlign.center,
-          textScaleFactor: 1.3,
+      return Padding(
+        padding: EdgeInsets.only(
+          top: R.sizes.stackedTopPaddingValue(context) + 8,
+        ),
+        child: RbioEmptyText(
+          title: LocaleProvider.of(context).no_file_found,
         ),
       );
     }
@@ -108,7 +109,10 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
               Expanded(
                 child: Text(
                   file.file ?? '',
-                  style: TextStyle(color: getIt<IAppConfig>().theme.black, fontSize: 18),
+                  style: TextStyle(
+                    color: getIt<IAppConfig>().theme.black,
+                    fontSize: 18,
+                  ),
                 ),
               ),
 

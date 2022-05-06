@@ -10,6 +10,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
+import '../../../model/account/user_login_starter_response.dart';
 import '../../../model/model.dart';
 import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../home/viewmodel/home_vm.dart';
@@ -17,6 +18,7 @@ import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';
 import '../auth.dart';
 import '../model/login_exception.dart';
+import '../view/2fa_dialog/2fa_dialog.dart';
 
 enum VersionCheckProgress { done, loading, error }
 
@@ -143,8 +145,10 @@ class LoginScreenVm extends ChangeNotifier {
 
   Future<void> fetchAppVersion(UserLoginInfo userLoginInfo) async {
     try {
-      _applicationVersionResponse =
-          await getIt<Repository>().getCurrentApplicationVersion();
+      if (getIt<IAppConfig>().productType == ProductType.oneDose) {
+        _applicationVersionResponse =
+            await getIt<Repository>().getCurrentApplicationVersion();
+      }
     } catch (e) {
       LoggerUtils.instance.e(e);
     } finally {
@@ -155,8 +159,9 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> checkAppVersion(UserLoginInfo userLoginInfo) async {
-    final requiredMinVersion = Version.parse(applicationVersion?.minimum ?? '');
-    final latestVersion = Version.parse(applicationVersion?.latest ?? '');
+    final requiredMinVersion =
+        Version.parse(applicationVersion?.minimum ?? '0.0.0');
+    final latestVersion = Version.parse(applicationVersion?.latest ?? '0.0.0');
 
     final packageInfo = await PackageInfo.fromPlatform();
     final currentVersion = Version.parse(packageInfo.version);
@@ -200,10 +205,55 @@ class LoginScreenVm extends ChangeNotifier {
       notifyListeners();
       showLoadingDialog();
       try {
-        if (getIt<IAppConfig>().productType == ProductType.oneDose) {
-          await loginOneDose(username, password);
-        } else {
-          await loginGuven(username, password);
+        final starterResponse =
+            await getIt<UserManager>().loginStarter(username, password);
+        hideDialog(mContext);
+
+        if (starterResponse.datum is Map<String, dynamic>) {
+          final starterBody =
+              UserLoginStarterResponse.fromJson(starterResponse.datum);
+          await getIt<ISharedPreferencesManager>().setBool(
+            SharedPreferencesKeys.isTwoFactorAuth,
+            starterBody.isTwoFa ?? false,
+          );
+
+          if (starterBody.isTwoFa == true && starterBody.isSsoValid == true) {
+            if (starterBody.userId == null) return;
+
+            // Verify Confirmation 2FA
+            final dialogResult = await showDialog(
+              context: mContext,
+              barrierDismissible: true,
+              builder: (context) {
+                return TwoFaDialog(
+                  userId: starterBody.userId!,
+                );
+              },
+            );
+
+            if (dialogResult == true) {
+              // Get Token by GOs
+              await loginWithProductType(username, password);
+            } else if (dialogResult == false) {
+              await login(username, password);
+              return;
+            }
+          } else if (starterBody.isTwoFa == false &&
+              starterBody.isSsoValid == true) {
+            // Get Token by GOs
+            await loginWithProductType(username, password);
+          } else if (starterBody.isTwoFa == false &&
+              starterBody.isSsoValid == false) {
+            // Get Token by GO
+            await loginWithProductType(username, password);
+          } else if (starterBody.isTwoFa == true &&
+              starterBody.isSsoValid == false) {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          }
         }
       } catch (e) {
         hideDialog(mContext);
@@ -217,8 +267,156 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
+  Future<void> loginWithProductType(String username, String password) async {
+    showLoadingDialog();
+    if (getIt<IAppConfig>().productType == ProductType.oneDose) {
+      await loginOneDose(username, password);
+    } else {
+      await loginGuven(username, password);
+    }
+  }
+
   Future<void> loginGuven(String username, String password) async {
-    //
+    try {
+      _guvenLogin = await getIt<UserManager>().login(username, password);
+    } catch (e) {
+      hideDialog(mContext);
+
+      if (e is LoginExceptions) {
+        e.when(
+          invalidUser: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.wrong_user_credential,
+            );
+          },
+          accountNotFullySetUp: () {
+            Atom.to(PagePaths.forgotPasswordStep1);
+          },
+          accountDisabled: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.account_disabled,
+            );
+          },
+          serverError: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          },
+          networkError: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.no_network,
+            );
+          },
+          undefined: () {
+            showGradientDialog(
+              mContext,
+              LocaleProvider.current.warning,
+              LocaleProvider.current.sorry_dont_transaction,
+            );
+          },
+        );
+      }
+
+      return;
+    }
+
+    await saveLoginInfo(
+      username,
+      password,
+      _guvenLogin?.ssoResponse?.accessToken ?? '',
+    );
+
+    List<dynamic> results = await Future.wait(
+      [
+        getIt<UserManager>().setApplicationConsentFormState(true),
+        //One dose hasta bilgileri
+        // Güven online kullanıcı bilgileri
+        getIt<UserManager>().getUserProfile(),
+        getIt<UserManager>().getKvkkFormState(),
+      ],
+    );
+
+    final patientDetail = results[1] as UserAccount;
+    var result;
+    var pusulaPatientDetail;
+    try {
+      pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
+    } catch (e) {
+      if (pusulaPatientDetail == null) {
+        var inputFormat = DateFormat('dd.MM.yyyy');
+        var date1 = inputFormat.parse(patientDetail.patients!.first.birthDate!);
+
+        var outputFormat = DateFormat('yyyy-MM-dd');
+        var date2 = outputFormat.format(date1);
+        SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
+            SynchronizeOneDoseUserRequest(
+                birthDate: date2,
+                email: patientDetail.electronicMail,
+                firstName: patientDetail.name,
+                gender: patientDetail.patients?.first.gender,
+                gsm: patientDetail.phoneNumber,
+                countryCode: patientDetail.countryCode,
+                id: 0,
+                hasEtkApproval: true,
+                hasKvkkApproval: true,
+                identityNumber: patientDetail.identificationNumber,
+                lastName: patientDetail.surname,
+                nationalityId: (patientDetail.nationality!) == 'TC' ? 213 : 98,
+                passportNumber: patientDetail.passaportNumber,
+                patientType: 1);
+        await getIt<Repository>()
+            .synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
+      }
+    }
+    if (pusulaPatientDetail == null) {
+      pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
+      await getIt<UserNotifier>().setPatient(pusulaPatientDetail);
+    }
+    _checkedKvkk = results[2];
+
+    try {
+      final profilImage = await getIt<Repository>().getProfilePicture();
+      await getIt<ISharedPreferencesManager>().setString(
+        SharedPreferencesKeys.profileImage,
+        profilImage,
+      );
+    } catch (e) {
+      //
+    }
+
+    final term = Atom.queryParameters['then'];
+    FirebaseAnalytics.instance.setUserId(
+      id: getIt<UserNotifier>().firebaseEmail,
+    );
+    FirebaseAnalytics.instance.setUserProperty(
+      name: 'Login',
+      value: 'authed',
+    );
+    FirebaseAnalytics.instance.setUserProperty(
+      name: 'user_age',
+      value: getIt<ProfileStorageImpl>().getFirst().birthDate,
+    );
+    FirebaseAnalytics.instance.logEvent(
+      name: "Basarili_Giris",
+      parameters: null,
+    );
+    if (term != null && term != '') {
+      Atom.to(term, isReplacement: true);
+    }
+    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+    mContext.read<HomeVm>().init(allUsersModel);
+    await Future.delayed(const Duration(milliseconds: 100));
+    hideDialog(mContext);
+    notifyListeners();
+    Atom.to(PagePaths.main, isReplacement: true);
   }
 
   Future<void> loginOneDose(String username, String password) async {
@@ -524,7 +722,9 @@ class LoginScreenVm extends ChangeNotifier {
         builder: (BuildContext context) {
           return KvkkFormScreen(
             title: LocaleProvider.current.kvkk_title,
-            text: LocaleProvider.current.kvkk_url_text,
+            text: getIt<IAppConfig>().productType == ProductType.oneDose
+                ? LocaleProvider.current.one_dose_kvkk_url_text
+                : LocaleProvider.current.guven_kvkk_url_text,
             alwaysAsk: true,
           );
         }).then((value) async {

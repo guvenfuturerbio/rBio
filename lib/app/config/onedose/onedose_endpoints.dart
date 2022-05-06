@@ -18,6 +18,34 @@ class OneDoseEndpoints extends IAppEndpoints {
 
   @override
   SymptomCheckerEndpoints get symptom => OneDoseSymptomCheckerEndpoints();
+
+  @override
+  SearchEndpoints get search => OneDoseSearchEndpoints();
+
+  @override
+  RelativeEndpoints get relative => OneDoseRelativeEndpoints();
+}
+
+class OneDoseRelativeEndpoints extends RelativeEndpoints {
+  @override
+  String get getAllRelativesPath =>
+      throw RbioUndefinedEndpointException("getAllRelativesPath");
+
+  @override
+  String removePatientRelativePath(String id) =>
+      throw RbioUndefinedEndpointException("removePatientRelativePath");
+
+  @override
+  String changeActiveUserToRelativePath(String id) =>
+      throw RbioUndefinedEndpointException("changeActiveUserToRelativePath");
+
+  @override
+  String get addNewPatientRelativePath =>
+      throw RbioUndefinedEndpointException("addNewPatientRelativePath");
+
+  @override
+  String get getRelativeRelationshipsPath =>
+      throw RbioUndefinedEndpointException("getRelativeRelationshipsPath");
 }
 
 class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
@@ -42,6 +70,19 @@ class OneDoseSymptomCheckerEndpoints extends SymptomCheckerEndpoints {
 
   @override
   String get symptomCheckerLogin => '/login'.xSymptomCheckerLogin;
+}
+
+class OneDoseSearchEndpoints extends SearchEndpoints {
+  @override
+  String getPostWithTagsByText(String search) =>
+      '/socialpost/getPostWithTagsByText/$search'.xBaseUrl;
+
+  @override
+  String getPostWithTagsByPlatform(String platform) =>
+      '/socialPost/getPostWithTagsByPlatform/$platform'.xBaseUrl;
+
+  @override
+  String get getAllPosts => '/socialpost/getAllPosts'.xBaseUrl;
 }
 
 class OneDoseCommonEndpoints extends CommonEndpoints {
@@ -179,9 +220,6 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
       '/Measurement/update-bp-measurement'.xDevApiTest;
 
   @override
-  String get getAllRelativesPath => '/profile/get-all-table'.xDevApiTest;
-
-  @override
   String get updateContactInfoPath =>
       '/User/UpdatePatientContactInfo'.xDevApiTest;
 
@@ -193,6 +231,13 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
 }
 
 class OneDoseBaseEndpoints extends BaseEndpoints {
+  @override
+  String get userLoginStarter => '/AccessToken/user-login-starter'.xDevApiTest;
+
+  @override
+  String get verifyConfirmation2fa =>
+      '/AccessToken/verify-confirmation-2fa'.xDevApiTest;
+
   @override
   String get getAllPackagePath => '/Package/get-all'.xBaseUrl;
 
@@ -317,28 +362,10 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
       '/file/report-file-download/$id/$name'.xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
-
-  @override
   String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
 
   @override
-  String changeActiveUserToRelativePath(String id) =>
-      '/profile/set-profile/$id'.xBaseUrl;
-
-  @override
   String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBaseUrl;
-
-  @override
-  String filterSocialPostsPath(String search) =>
-      '/socialpost/getPostWithTagsByText/$search'.xBaseUrl;
-
-  @override
-  String filterSocialPostsPlatform(String platform) =>
-      '/socialPost/getPostWithTagsByPlatform/$platform'.xBaseUrl;
-
-  @override
-  String get socialResourcePath => '/socialpost/getAllPosts'.xBaseUrl;
 
   @override
   String get getAppointmentTypeViaWebConsultantIdPath =>

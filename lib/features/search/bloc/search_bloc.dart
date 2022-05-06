@@ -6,26 +6,24 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../core/core.dart';
 import '../../../model/model.dart';
 import '../model/search_social_type.dart';
-import '../search_vm.dart';
 
 part 'search_bloc.freezed.dart';
 part 'search_event.dart';
 part 'search_state.dart';
 
+class SearchModel {}
+
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final UserManager userManager;
   final Repository repository;
 
   var socialTypes = <SearchSocialType>[];
   List<SocialPostsResponse> allSocialList = [];
 
-  SearchBloc(this.userManager, this.repository)
-      : super(const SearchState.initial()) {
+  SearchBloc(this.repository) : super(const SearchState.initial()) {
     on<SearchFetched>(onFetched);
     on<SearchTextFiltered>(onTextFiltered);
     on<SearchPlatformFiltered>(onPlatformFiltered);
     on<SearchFilterRetrieved>(onFilterRetrieved);
-  
   }
 
   FutureOr<void> onFetched(
@@ -34,7 +32,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     emit(const SearchState.loadInProgress(null));
     try {
-      allSocialList = await userManager.getAllSocialResources();
+      allSocialList = await repository.getAllSocialResources();
       emit(SearchState.success(allSocialList, socialTypes));
     } catch (error) {
       LoggerUtils.instance.e(error);
@@ -108,7 +106,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     for (var item in socialTypes) {
       try {
         var tmpList =
-            await userManager.getPostsWithByTagsByPlatform(item.xGetTitle);
+            await repository.getPostWithTagsByPlatform(item.xGetTitle);
         result.addAll(tmpList);
       } catch (error) {
         LoggerUtils.instance.e(error);
@@ -130,7 +128,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Future<List<SocialPostsResponse>> _fetchPostsByText(String text) async {
-    return await userManager
+    return await repository
         .getSocialPostWithTagsByText(text.xTurkishCharacterToEnglish);
   }
 }

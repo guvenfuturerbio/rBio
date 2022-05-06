@@ -7,7 +7,14 @@ class GuvenTheme extends IAppTheme {
   ThemeType get type => ThemeType.burgundy;
 
   @override
-  String get fontFamily => 'SourceSans';
+  String get fontFamily => 'Poppins';
+
+  @override
+  String get appLogo => 'assets/images/guven/guven_logo_white.svg';
+
+  @override
+  String get successAppointmentImage =>
+      'assets/images/guven/success_appointment.svg';
 
   @override
   Color get mainColor => GuvenColors.burgundy;
@@ -100,70 +107,53 @@ class GuvenTheme extends IAppTheme {
   Color get grayColor => const Color.fromARGB(255, 237, 237, 237);
 
   @override
-  // TODO: implement bgGray
-  Color get bgGray => throw UnimplementedError();
+  Color get bgGray => const Color(0xFFF3F3F3);
 
   @override
-  // TODO: implement black
-  Color get black => throw UnimplementedError();
+  Color get black => const Color(0xFF131313);
 
   @override
-  // TODO: implement chartGray
-  Color get chartGray => throw UnimplementedError();
+  Color get chartGray => const Color(0xffDDDEDE);
 
   @override
-  // TODO: implement darkBlack
-  Color get darkBlack => throw UnimplementedError();
+  Color get darkBlack => const Color(0xFF000000);
 
   @override
-  // TODO: implement darkRed
-  Color get darkRed => throw UnimplementedError();
+  Color get darkRed => const Color.fromRGBO(219, 56, 50, 1);
 
   @override
-  // TODO: implement darkWhite
-  Color get darkWhite => throw UnimplementedError();
+  Color get darkWhite => const Color(0xFFE5E5E5);
 
   @override
-  // TODO: implement graphPlotRange
-  Color get graphPlotRange => throw UnimplementedError();
+  Color get graphPlotRange => const Color(0xFFCBEBD9);
 
   @override
-  // TODO: implement graphRangeColor
-  Color get graphRangeColor => throw UnimplementedError();
+  Color get graphRangeColor => const Color(0xFFCBEBD9);
 
   @override
-  // TODO: implement gray
-  Color get gray => throw UnimplementedError();
+  Color get gray => const Color(0xFF969696);
 
   @override
-  // TODO: implement high
-  Color get high => throw UnimplementedError();
+  Color get high => const Color(0xFFf7ec57);
 
   @override
-  // TODO: implement low
-  Color get low => throw UnimplementedError();
+  Color get low => const Color(0xFFe98884);
 
   @override
-  // TODO: implement stateColor
-  Color get stateColor => throw UnimplementedError();
+  Color get stateColor => const Color(0xFF7a7a7a);
 
   @override
-  // TODO: implement target
-  Color get target => throw UnimplementedError();
+  Color get target => const Color(0xFF66c791);
 
   @override
-  // TODO: implement veryHigh
-  Color get veryHigh => throw UnimplementedError();
+  Color get veryHigh => const Color(0xFFf4bb44);
 
   @override
-  // TODO: implement veryLow
-  Color get veryLow => throw UnimplementedError();
+  Color get veryLow => const Color(0xFFe2605b);
 
   @override
-  // TODO: implement warning
-  Color get warning => throw UnimplementedError();
+  Color get white => const Color(0xFFFFFFFF);
 
   @override
-  // TODO: implement white
-  Color get white => throw UnimplementedError();
+  Color get textContrastColor => Colors.white;
 }

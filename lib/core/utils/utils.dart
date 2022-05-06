@@ -42,39 +42,52 @@ class Utils {
   /// * device_listing_screen.dart'da "DeviceType.miScale" kontrol ediyorum.
   ///
   /// * scale_manuel_add_cubit.dart'da kontrol ediyorum, yoksa "Kaydet" butonunu disable yapıyorum.
-  bool checkUserHeight() {
+  bool checkUserHeight([bool backRoute = false]) {
     final height = getHeight();
     if (height != null) {
       return true;
     } else {
       Atom.show(
-        GuvenAlert(
-          contentPadding: const EdgeInsets.all(16),
-          backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-          title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
-          content: GuvenAlert.buildDescription(
-            LocaleProvider.current.required_user_height_info_message,
-          ),
-          actions: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: RbioElevatedButton(
-                    infinityWidth: true,
-                    title: LocaleProvider.current.update_information,
-                    onTap: () {
-                      Atom.dismiss();
-                      Atom.to(PagePaths.healthInformation);
-                    },
-                  ),
+        GestureDetector(
+          onTap: () {
+            Atom.dismiss();
+
+            if (backRoute) {
+              Atom.historyBack();
+            }
+          },
+          child: Container(
+            color: Colors.transparent,
+            constraints: const BoxConstraints.expand(),
+            child: GuvenAlert(
+              contentPadding: const EdgeInsets.all(16),
+              backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+              title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
+              content: GuvenAlert.buildDescription(
+                LocaleProvider.current.required_user_height_info_message,
+              ),
+              actions: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
+                      child: RbioElevatedButton(
+                        infinityWidth: true,
+                        title: LocaleProvider.current.update_information,
+                        onTap: () {
+                          Atom.dismiss();
+                          Atom.to(PagePaths.healthInformation);
+                        },
+                      ),
+                    ),
+                    R.sizes.hSizer8,
+                  ],
                 ),
-                R.sizes.hSizer8,
               ],
             ),
-          ],
+          ),
         ),
       );
       return false;

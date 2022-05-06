@@ -2,6 +2,7 @@ import 'package:cache/cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onedosehealth/core/widgets/rbio_error_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -60,7 +61,9 @@ class ConsultationScreen extends StatelessWidget {
         return _buildList(context, vm);
 
       case LoadingProgress.error:
-        return const RbioBodyError();
+        return RbioErrorScreenBody(
+          errorMsg: LocaleProvider.current.chronic_track_error,
+        );
 
       default:
         return const SizedBox();

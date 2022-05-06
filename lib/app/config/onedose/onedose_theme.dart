@@ -8,6 +8,13 @@ class OneDoseTheme extends IAppTheme {
   String get fontFamily => 'SourceSans';
 
   @override
+  String get appLogo => 'assets/images/oneDose/onedose_logo.svg';
+
+  @override
+  String get successAppointmentImage =>
+      'assets/images/oneDose/success_appointment.svg';
+
+  @override
   Color get mainColor => GuvenColors.green;
 
   @override
@@ -142,7 +149,9 @@ class OneDoseTheme extends IAppTheme {
   @override
   Color get veryLow => const Color(0xFFe2605b);
 
-
   @override
   Color get white => const Color(0xFFFFFFFF);
+
+  @override
+  Color get textContrastColor => Colors.black;
 }

@@ -60,7 +60,6 @@ export 'manager/url_launcher_manager.dart';
 export 'navigation/app_paths.dart';
 
 export 'notifiers/locale_notifier.dart';
-export 'notifiers/notification_badge_notifier.dart';
 export 'notifiers/rbio_vm.dart';
 export "notifiers/user_notifier.dart";
 

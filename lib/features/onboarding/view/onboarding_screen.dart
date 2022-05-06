@@ -26,14 +26,23 @@ const _desc4 =
 const _title5 = "One Dose Health";
 const _desc5 = "Sağlığınız Parmaklarınızın Ucunda";
 
-class IntroductionScreen extends StatefulWidget {
-  const IntroductionScreen({Key? key}) : super(key: key);
+class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
-  IntroductionScreenState createState() => IntroductionScreenState();
+  Widget build(BuildContext context) {
+    return const OnboardingView();
+  }
 }
 
-class IntroductionScreenState extends State<IntroductionScreen> {
+class OnboardingView extends StatefulWidget {
+  const OnboardingView({Key? key}) : super(key: key);
+
+  @override
+  _OnboardingViewState createState() => _OnboardingViewState();
+}
+
+class _OnboardingViewState extends State<OnboardingView> {
   ValueNotifier<bool> valueNotifier = ValueNotifier(true);
 
   final itemCount = 5;
@@ -191,7 +200,6 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                                 backColor: getIt<IAppConfig>()
                                     .theme
                                     .cardBackgroundColor,
-                                showElevation: false,
                                 textColor: getIt<IAppConfig>().theme.mainColor,
                               ),
                             ),
@@ -199,7 +207,6 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                             //
                             Expanded(
                               child: RbioElevatedButton(
-                                showElevation: false,
                                 title: _devam,
                                 onTap: () {
                                   if (currentPage != itemCount - 1) {
@@ -317,7 +324,6 @@ class AnimatedIntroCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: RbioElevatedButton(
-                          showElevation: false,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.sign_up,
                           onTap: () async {
@@ -333,7 +339,6 @@ class AnimatedIntroCard extends StatelessWidget {
                           backColor:
                               getIt<IAppConfig>().theme.cardBackgroundColor,
                           textColor: getIt<IAppConfig>().theme.mainColor,
-                          showElevation: false,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.login,
                           onTap: () async {

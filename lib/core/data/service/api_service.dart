@@ -22,6 +22,8 @@ abstract class ApiService {
   final IDioHelper helper;
   ApiService(this.helper);
 
+  Future<GuvenResponseModel> loginStarter(String username, String password);
+  Future<GuvenResponseModel> verifyConfirmation2fa(String smsCode, int userId);
   Future<GuvenResponseModel> login(String username, String password);
 
   // for_you_services.dart
@@ -113,8 +115,6 @@ abstract class ApiService {
   Future<GuvenResponseModel> getRelativeRelationships();
   Future<GuvenResponseModel> changeActiveUserToRelative(String id);
   Future<GuvenResponseModel> clickPost(int postId);
-  Future<GuvenResponseModel> filterSocialPosts(String search);
-  Future<GuvenResponseModel> filterSocialPlatform(String search);
   Future<GuvenResponseModel> socialResource();
   Future<GuvenResponseModel> getAppointmentTypeViaWebConsultantId();
   Future<GuvenResponseModel> requestTranslator(
@@ -156,4 +156,7 @@ abstract class ApiService {
 
   Future<GuvenResponseModel> getResourceVideoCallPriceVoucher(
       VoucherPriceRequest voucherPriceRequest);
+
+  Future<GuvenResponseModel> getPostWithTagsByText(String search);
+  Future<GuvenResponseModel> getPostWithTagsByPlatform(String search);
 }

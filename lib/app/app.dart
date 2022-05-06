@@ -57,9 +57,6 @@ class _MyAppState extends State<MyApp> {
           color: Colors.white,
           child: MultiProvider(
             providers: [
-              ChangeNotifierProvider<NotificationBadgeNotifier>(
-                create: (context) => getIt<NotificationBadgeNotifier>(),
-              ),
               ChangeNotifierProvider(
                 create: (context) => PatientNotifiers(),
               ),

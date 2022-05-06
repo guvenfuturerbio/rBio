@@ -24,6 +24,8 @@ class RequestSuggestionsScreenVm extends RbioVm {
   }
 
   Future<void> sendSuggestion() async {
+    if (text == '') return;
+
     progressOverlay = true;
 
     try {

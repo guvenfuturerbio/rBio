@@ -116,7 +116,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             leftChevronVisible: true,
             leftChevronIcon: SvgPicture.asset(
               R.image.arrowLeft,
-              color: Colors.black,
+              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
             ),
 
@@ -130,7 +130,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             rightChevronVisible: true,
             rightChevronIcon: SvgPicture.asset(
               R.image.arrowRightIcon,
-              color: Colors.black,
+              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
             ),
           ),
@@ -189,7 +189,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<IAppConfig>().theme.textColorSecondary
+                        ? getIt<IAppConfig>().theme.textContrastColor
                         : getIt<IAppConfig>().theme.textColorPassive,
                   ),
                 ),

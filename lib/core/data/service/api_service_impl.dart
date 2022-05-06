@@ -63,6 +63,40 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
+  Future<GuvenResponseModel> loginStarter(
+    String username,
+    String password,
+  ) async {
+    final response = await helper.dioPost(
+      getIt<IAppConfig>().endpoints.base.userLoginStarter,
+      [],
+      queryParameters: <String, dynamic>{
+        'userName': username,
+        'password': password
+      },
+      options: emptyAuthOptions,
+    );
+    return GuvenResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<GuvenResponseModel> verifyConfirmation2fa(
+    String smsCode,
+    int userId,
+  ) async {
+    final response = await helper.dioPost(
+      getIt<IAppConfig>().endpoints.base.verifyConfirmation2fa,
+      [],
+      queryParameters: <String, dynamic>{
+        'pSmsCode': smsCode,
+        'pUserId': userId
+      },
+      options: emptyAuthOptions,
+    );
+    return GuvenResponseModel.fromJson(response);
+  }
+
+  @override
   Future<GuvenResponseModel> login(String username, String password) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.devApi.loginPath,
@@ -442,7 +476,7 @@ class ApiServiceImpl extends ApiService {
     GetAllRelativesRequest bodyPages,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.getAllRelativesPath,
+      getIt<IAppConfig>().endpoints.relative.getAllRelativesPath,
       bodyPages.toJson(),
       options: authOptions,
     );
@@ -803,7 +837,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> removePatientRelative(String id) async {
     final response = await helper.deleteGuven(
-      getIt<IAppConfig>().endpoints.base.removePatientRelativePath(id),
+      getIt<IAppConfig>().endpoints.relative.removePatientRelativePath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -816,7 +850,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getRelativeRelationships() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getRelativeRelationshipsPath,
+      getIt<IAppConfig>().endpoints.relative.getRelativeRelationshipsPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -829,7 +863,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> changeActiveUserToRelative(String id) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.changeActiveUserToRelativePath(id),
+      getIt<IAppConfig>().endpoints.relative.changeActiveUserToRelativePath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -855,9 +889,9 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> filterSocialPosts(String search) async {
+  Future<GuvenResponseModel> getPostWithTagsByText(String search) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.filterSocialPostsPath(search),
+      getIt<IAppConfig>().endpoints.search.getPostWithTagsByText(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -868,9 +902,9 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> filterSocialPlatform(String search) async {
+  Future<GuvenResponseModel> getPostWithTagsByPlatform(String search) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.filterSocialPostsPlatform(search),
+      getIt<IAppConfig>().endpoints.search.getPostWithTagsByPlatform(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -911,7 +945,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> socialResource() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.socialResourcePath,
+      getIt<IAppConfig>().endpoints.search.getAllPosts,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -1276,7 +1310,7 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> addNewPatientRelative(
       AddPatientRelativeRequest addPatientRelative) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.addNewPatientRelativePath,
+      getIt<IAppConfig>().endpoints.relative.addNewPatientRelativePath,
       addPatientRelative.toJson(),
       options: authOptions,
     );

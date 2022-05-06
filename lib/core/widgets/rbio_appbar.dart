@@ -51,9 +51,11 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    height: 50,
+                    height: getIt<IAppConfig>().productType == ProductType.guven
+                        ? 27
+                        : 50,
                     child: SvgPicture.asset(
-                      R.image.oneDoseHealth,
+                      getIt<IAppConfig>().theme.appLogo,
                       fit: BoxFit.fitHeight,
                     ),
                   ),

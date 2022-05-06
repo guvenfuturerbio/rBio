@@ -163,7 +163,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           //
                           CircleAvatar(
                             backgroundImage: vm.getProfileImage,
-                            radius: R.sizes.iconSize * 1.5,
+                            radius: R.sizes.iconSize * 1.3,
                             backgroundColor:
                                 getIt<IAppConfig>().theme.cardBackgroundColor,
                           ),
@@ -305,12 +305,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     child: RbioElevatedButton(
                       title: LocaleProvider.current.btn_cancel,
                       onTap: () {
-                        vm.resetValues();
+                        Atom.historyBack();
                       },
                       backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
                       textColor: getIt<IAppConfig>().theme.textColorSecondary,
                       fontWeight: FontWeight.bold,
-                      showElevation: false,
                     ),
                   ),
 
@@ -330,7 +329,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         );
                       },
                       fontWeight: FontWeight.bold,
-                      showElevation: false,
                     ),
                   ),
                 ],

@@ -29,6 +29,13 @@ class Repository {
     required this.localCacheService,
   });
 
+  Future<GuvenResponseModel> loginStarter(String username, String password) =>
+      apiService.loginStarter(username, password);
+
+  Future<GuvenResponseModel> verifyConfirmation2fa(
+          String smsCode, int userId) =>
+      apiService.verifyConfirmation2fa(smsCode, userId);
+
   Future<Either<GuvenResponseModel, LoginExceptions>> login(
     String username,
     String password,
@@ -349,23 +356,6 @@ class Repository {
   Future<GuvenResponseModel> clickPost(int postId) =>
       apiService.clickPost(postId);
 
-  Future<GuvenResponseModel> filterSocialPosts(String search) =>
-      apiService.filterSocialPosts(search);
-
-  Future<GuvenResponseModel> filterSocialPlatform(String search) =>
-      apiService.filterSocialPlatform(search);
-
-  Future<GuvenResponseModel> socialResource() async {
-    final url = getIt<IAppConfig>().endpoints.base.socialResourcePath;
-    return await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
-      url,
-      () => apiService.socialResource(),
-      const Duration(days: 1),
-      GuvenResponseModel(),
-      localCacheService,
-    );
-  }
-
   Future<List<AvailableDate>> findResourceAvailableDays(
           FindResourceAvailableDaysRequest request) =>
       apiService.findResourceAvailableDays(request);
@@ -458,4 +448,56 @@ class Repository {
   Future<GuvenResponseModel> uploadPatientDocuments(
           String webAppoId, Uint8List file) =>
       apiService.uploadPatientDocuments(webAppoId, file);
+
+  // #region Search
+  Future<List<SocialPostsResponse>> getAllSocialResources() async {
+    final url = getIt<IAppConfig>().endpoints.search.getAllPosts;
+    final response =
+        await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
+      url,
+      () => apiService.socialResource(),
+      const Duration(days: 1),
+      GuvenResponseModel(),
+      localCacheService,
+    );
+    final allSocialResources = <SocialPostsResponse>[];
+    final datum = response.datum;
+    for (final data in datum) {
+      final allSocialPostsResponse =
+          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
+      allSocialResources.add(allSocialPostsResponse);
+    }
+    return allSocialResources;
+  }
+
+  Future<List<SocialPostsResponse>> getPostWithTagsByPlatform(
+    String text,
+  ) async {
+    final response = await apiService.getPostWithTagsByPlatform(text);
+    final filteredSocialResources = <SocialPostsResponse>[];
+    final datum = response.datum;
+    for (final data in datum) {
+      final filteredSocialResponse =
+          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
+      filteredSocialResources.add(filteredSocialResponse);
+    }
+    filteredSocialResources.sort(
+        (a, b) => a.title!.toLowerCase().compareTo(b.title!.toLowerCase()));
+    return filteredSocialResources;
+  }
+
+  Future<List<SocialPostsResponse>> getSocialPostWithTagsByText(
+    String text,
+  ) async {
+    final response = await apiService.getPostWithTagsByText(text);
+    final filteredSocialResources = <SocialPostsResponse>[];
+    final datum = response.datum;
+    for (final data in datum) {
+      final filteredSocialResponse =
+          SocialPostsResponse.fromJson(data as Map<String, dynamic>);
+      filteredSocialResources.add(filteredSocialResponse);
+    }
+    return filteredSocialResources;
+  }
+  // #endregion
 }

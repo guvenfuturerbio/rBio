@@ -13,26 +13,6 @@ class ScaleManuelAddCubit extends Cubit<ScaleManuelAddState> {
   late final ProfileStorageImpl profileStorageImpl;
   late final ScaleRepository scaleRepository;
 
-  // #region chechHeightValue
-  void chechHeightValue() {
-    final heightCheck = Utils.instance.checkUserHeight();
-    if (!heightCheck) {
-      final currentState = state;
-      currentState.whenOrNull(
-        initial: (result) {
-          emit(
-            ScaleManuelAddState.initial(
-              result.copyWith(
-                isHeightNull: true,
-              ),
-            ),
-          );
-        },
-      );
-    }
-  }
-  // #endregion
-
   // #region changeDateTime
   void changeDateTime(DateTime dateTime) {
     final currentState = state;

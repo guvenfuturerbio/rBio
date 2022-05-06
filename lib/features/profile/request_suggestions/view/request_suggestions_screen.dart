@@ -16,15 +16,18 @@ class RequestSuggestionsScreen extends StatefulWidget {
 
 class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
   late TextEditingController textEditingController;
+  late FocusNode focusNode;
 
   @override
   void initState() {
-    textEditingController = TextEditingController();
     super.initState();
+    focusNode = FocusNode();
+    textEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
+    focusNode.dispose();
     textEditingController.dispose();
     super.dispose();
   }
@@ -68,78 +71,87 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
       padding: EdgeInsets.zero,
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          R.sizes.stackedTopPadding(context),
-          R.sizes.hSizer16,
-
-          //
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              LocaleProvider.current.request_and_suggestions_text,
-              textAlign: TextAlign.center,
-              style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.mainColor,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ),
-
-          //
-          Container(
-            padding: const EdgeInsets.only(top: 8),
-            height: MediaQuery.of(context).size.height * 0.40,
-            child: Card(
-              elevation: R.sizes.defaultElevation,
-              child: RbioTextFormField(
-                controller: textEditingController,
-                keyboardType: TextInputType.multiline,
-                border: RbioTextFormField.noneBorder(),
-                maxLines: null,
-                textInputAction: TextInputAction.newline,
-                onChanged: (text) {
-                  vm.setText(text);
-                },
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(500),
-                ],
-                hintText: LocaleProvider.current.request_and_suggestions,
-              ),
-            ),
-          ),
-
-          //
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              vm.textLength.toString() + "/500",
-              style: context.xHeadline5,
-            ),
-          ),
-
-          //
-          R.sizes.hSizer8,
-
-          //
-          Center(
-            child: RbioElevatedButton(
-              title: LocaleProvider.current.send,
-              onTap: () {
-                vm.sendSuggestion();
-              },
-              infinityWidth: true,
-            ),
-          ),
-
-          //
-          R.sizes.defaultBottomPadding,
+      child: RbioKeyboardActions(
+        focusList: [
+          focusNode,
         ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            R.sizes.stackedTopPadding(context),
+            R.sizes.hSizer16,
+
+            //
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                LocaleProvider.current.request_and_suggestions_text,
+                textAlign: TextAlign.center,
+                style: context.xHeadline5.copyWith(
+                  color: getIt<IAppConfig>().theme.mainColor,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+
+            //
+            Container(
+              height: MediaQuery.of(context).size.height * 0.40,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
+              child: ClipRRect(
+                borderRadius: R.sizes.borderRadiusCircular,
+                child: RbioTextFormField(
+                  focusNode: focusNode,
+                  controller: textEditingController,
+                  keyboardType: TextInputType.multiline,
+                  border: RbioTextFormField.noneBorder(),
+                  maxLines: null,
+                  textInputAction: TextInputAction.newline,
+                  onChanged: (text) {
+                    vm.setText(text);
+                  },
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(500),
+                  ],
+                  hintText: LocaleProvider.current.request_and_suggestions,
+                ),
+              ),
+            ),
+
+            //
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                vm.textLength.toString() + "/500",
+                style: context.xHeadline5,
+              ),
+            ),
+
+            //
+            R.sizes.hSizer8,
+
+            //
+            Center(
+              child: RbioElevatedButton(
+                title: LocaleProvider.current.send,
+                onTap: () {
+                  vm.sendSuggestion();
+                },
+                infinityWidth: true,
+              ),
+            ),
+
+            //
+            R.sizes.defaultBottomPadding,
+          ],
+        ),
       ),
     );
   }
