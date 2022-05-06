@@ -533,8 +533,14 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                       child: Text(
                         weekdayString,
                         style: isWeekend
-                            ? widget.daysOfWeekStyle.weekendStyle
-                            : widget.daysOfWeekStyle.weekdayStyle,
+                            ? widget.daysOfWeekStyle.weekendStyle.copyWith(
+                                color:
+                                    getIt<IAppConfig>().theme.textContrastColor,
+                              )
+                            : widget.daysOfWeekStyle.weekdayStyle.copyWith(
+                                color:
+                                    getIt<IAppConfig>().theme.textContrastColor,
+                              ),
                       ),
                     ),
                   );

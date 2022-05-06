@@ -86,7 +86,6 @@ class _TableCalendarState extends State<_TableCalendar> {
           rangeSelectionMode: RangeSelectionMode.toggledOff,
           startingDayOfWeek: StartingDayOfWeek.monday,
           calendarStyle: const CalendarStyle(
-
             // Use `CalendarStyle` to customize the UI
             outsideDaysVisible: true,
           ),
@@ -117,7 +116,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             leftChevronVisible: true,
             leftChevronIcon: SvgPicture.asset(
               R.image.arrowLeft,
-              color: Colors.black,
+              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
             ),
 
@@ -131,7 +130,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             rightChevronVisible: true,
             rightChevronIcon: SvgPicture.asset(
               R.image.arrowRightIcon,
-              color: Colors.black,
+              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
             ),
           ),

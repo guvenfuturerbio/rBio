@@ -7,10 +7,14 @@ class GuvenTheme extends IAppTheme {
   ThemeType get type => ThemeType.burgundy;
 
   @override
+  String get fontFamily => 'Poppins';
+
+  @override
   String get appLogo => 'assets/images/guven/guven_logo_white.svg';
 
   @override
-  String get fontFamily => 'Poppins';
+  String get successAppointmentImage =>
+      'assets/images/guven/success_appointment.svg';
 
   @override
   Color get mainColor => GuvenColors.burgundy;
@@ -146,7 +150,6 @@ class GuvenTheme extends IAppTheme {
 
   @override
   Color get veryLow => const Color(0xFFe2605b);
-
 
   @override
   Color get white => const Color(0xFFFFFFFF);
