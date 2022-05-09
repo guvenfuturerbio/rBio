@@ -581,91 +581,41 @@ class VRouterRoutes {
 
 class PagePaths {
   PagePaths._();
-
-  static const main = '/home';
-  static const profile = '/profile';
-  static const follwer = '/followers';
-  static const devices = '/devices';
-  static const allDevices = '/available_devices';
-  static const selectedDevice = '/selected_device/';
-  static const createAppointment = '/create-appointment';
-  static const createAppointmentEvents = '/create-appointment-events';
-  static const createAppointmentSummary = '/create-appointment-summary';
-  static const createOnlineAppo = '/create-online-appointment';
-  static const consultation = '/e-consultation';
-  static const chat = '/chat';
-  static const termsAndPrivacy = '/terms-and-privacy';
-  static const login = '/login';
-  static const registerStep1 = '/register-1';
-  static const registerStep1Intro = '/register-1?from=intro';
-  static loginWithSuccessChangePassword() => '/login?changePassword=true';
-  static const registerStep2 = '/register-2';
-  static const registerStep3 = '/register-3';
+  // #region Auth
+  static const changePassword = '/change-password';
   static const forgotPasswordStep1 = '/forgot-password';
   static const forgotPasswordStep2 = '/change-password-with-old';
-  static const doctorCv = '/doctor-cv';
-  static const appointmentSummary = '/appointment-summary';
-  static const onboarding = '/onboarding';
+  static const login = '/login';
+  static const registerStep1 = '/register-1';
+  static const registerStep2 = '/register-2';
+  static const registerStep3 = '/register-3';
+  static loginWithSuccessChangePassword() => '/login?changePassword=true';
+  static const registerStep1Intro = '/register-1?from=intro';
+  // #endregion
 
-  static const covid19 = '/covid19';
-  static const eResult = '/results';
-  static const visitDetail = '/visit-detail';
-  static const forYouCategories = '/for-you';
-  static const forYouSubCategories = '/for-you-categories';
-  static const forYouSubCategoriesDetail = '/for-you-categories-detail';
-  static const personalInformation = '/personel-info';
-  static const orderSummary = '/order-summary';
-  static const allFiles = '/all-files';
-  static const relatives = '/relatives';
-  static const changePassword = '/change-password';
-  static const departments = '/departments';
-  static const resources = '/resources';
-  static const events = '/events';
-  static const appointment = '/appointments';
-  static const shoppingChart = '/shopping-cart';
-  static const creditCard = '/credit-card';
-  static const youtubeViewerMobile = '/stream';
-  static const youtubeViewerWeb = '/stream';
-  static const webView = '/webview';
-  static const profileImageViewer = '/profile-image';
-  static const addPatientRelatives = '/add-patient-relatives';
-  static const fullImageViewer = '/full-image-viewer';
-  static const fullPdfViewer = '/full-pdf-viewer';
-  static const webConferance = '/web-conferance';
-  static const suggestResult = '/suggest-request';
-  static const healthInformation = '/health-information';
+  // #region Chat
+  static const consultation = '/e-consultation';
+  static const chat = '/chat';
+  // #endregion
 
-  static const doMobilePayment = '/online-payment';
-  static const iyzicoResponseSmsPayment = '/form-submit';
-
-  // Mediminder
-  static const reminderList = "/reminder-list";
-  static const selectReminder = '/select-reminder';
-  static const reminderDetail = '/reminder/reminder-detail';
-  static const strip = '/reminder/strips';
-  static const medicationReminderAddEdit = '/reminder/medication-add-edit';
-  static const hba1cReminderAddEdit = '/reminder/hba1c-add-edit';
-  static const bloodGlucoseReminderAddEdit = '/reminder/blood-glucose-add-edit';
-
-  // Chronic Tracking
+  // #region Chronic Tracking
   static const measurementTrackingHome = '/measurement-tracking-home';
   static const bloodGlucoseProgress = '/blood-glucose-progress';
   static const bpProgress = '/blood-pressure-progress';
   static const treatmentProgress = '/treatment-progress';
   static const treatmentEditProgress = '/tretment-edit-progress';
-
   static const scaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
+  // #endregion
 
-  // Symptom Checker
-  static const symptomMainMenu = '/symptom-main';
-  static const symptomBodyLocations = '/symptom-body-locations';
-  static const symptomSubBodyLocations = '/symptom-sub-body-locations';
-  static const symptomSelectPage = '/symptom-selection-page';
-  static const symptomResultPage = '/symptom-result-page';
+  // #region Dashboard
+  static const main = '/home';
+  static const doctorCv = '/doctor-cv';
+  // #endregion
 
   //Detailed Symptom
   static const detailedSymptom = '/detailed-symptom';
+  // #endregion
 
   // Doctor
   static const doctorHome = '/doctor';
@@ -676,9 +626,79 @@ class PagePaths {
   static const doctorTreatmentProgress = '/doctor-treatment_process';
   static const doctorTreatmentEdit = '/doctor-patient-treatment-edit';
   static const doctorCosultation = '/doctor-consultation';
+  // #endregion
 
-  // Bluetooth v2
+  // Mediminder
+  static const reminderList = "/reminder-list";
+  static const selectReminder = '/select-reminder';
+  static const bloodGlucoseReminderAddEdit = '/reminder/blood-glucose-add-edit';
+  static const medicationReminderAddEdit = '/reminder/medication-add-edit';
+  static const hba1cReminderAddEdit = '/reminder/hba1c-add-edit';
+  static const reminderDetail = '/reminder/reminder-detail';
+  static const strip = '/reminder/strips';
+  // #endregion
+
+  // #region My Appointments
+  static const allFiles = '/all-files';
+  static const appointment = '/appointments';
+  static const webConferance = '/web-conferance';
+  static const doMobilePayment = '/online-payment';
+  // #endregion
+
+  // #region Profile
+  static const allDevices = '/available_devices';
+  static const selectedDevice = '/selected_device/';
+  static const devices = '/devices';
+  static const healthInformation = '/health-information';
+  static const personalInformation = '/personel-info';
+  static const profile = '/profile';
+  static const suggestResult = '/suggest-request';
+  static const termsAndPrivacy = '/terms-and-privacy';
   static const deviceSearch = '/device-search';
+  // #endregion
+
+  // #region Onboarding
+  static const onboarding = '/onboarding';
+  // #endregion
+
+  // #region Relatives
+  static const relatives = '/relatives';
+  static const addPatientRelatives = '/add-patient-relatives';
+  // #endregion
+
+  // Symptom Checker
+  static const symptomMainMenu = '/symptom-main';
+  static const symptomBodyLocations = '/symptom-body-locations';
+  static const symptomSubBodyLocations = '/symptom-sub-body-locations';
+  static const symptomSelectPage = '/symptom-selection-page';
+  static const symptomResultPage = '/symptom-result-page';
+  // #endregion
+
+  // #region Take Appointment
+  static const createAppointment = '/create-appointment';
+  static const createAppointmentEvents = '/create-appointment-events';
+  static const createAppointmentSummary = '/create-appointment-summary';
+  static const appointmentSummary = '/appointment-summary';
+  // #endregion
+
+  // #region Store
+  static const covid19 = '/covid19';
+  static const creditCard = '/credit-card';
+  static const forYouCategories = '/for-you';
+  static const orderSummary = '/order-summary';
+  static const forYouSubCategories = '/for-you-categories';
+  static const forYouSubCategoriesDetail = '/for-you-categories-detail';
+  static const shoppingChart = '/shopping-cart';
+  // #endregion
+
+  // #region Eresult
+  static const eResult = '/results';
+  static const visitDetail = '/visit-detail';
+  // #endregion
+
+  static const webView = '/webview';
+  static const fullPdfViewer = '/full-pdf-viewer';
+  static const iyzicoResponseSmsPayment = '/form-submit';
 }
 
 void openDefaultScreen(VRedirector vRedirector) {
