@@ -249,7 +249,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                               getIt<UserNotifier>().firebaseEmail,
                               widget.selectedGenderId.toString(),
                               widget.yearOfBirth!,
-                              widget.selectedBodyLocation));
+                              widget.selectedBodyLocation?.name));
 
                       AppInheritedWidget.of(context)?.bodyLocationRsp =
                           widget.selectedBodyLocation;

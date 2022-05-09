@@ -1,7 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import 'package:onedosehealth/features/symptom_checker/symptoms_body_location/model/get_bodylocations_response.dart';
-
 class BaseEvent {
   late final String name;
   late final Map<String, dynamic>? parameters;
@@ -28,8 +26,8 @@ class FirebaseAnalyticsManager {
     await FirebaseAnalytics.instance.setUserId(id: id);
   }
 
-    Future<void> setUserProperty(String name,String? value) async {
-    await FirebaseAnalytics.instance.setUserProperty(name: name,value : value);
+  Future<void> setUserProperty(String name, String? value) async {
+    await FirebaseAnalytics.instance.setUserProperty(name: name, value: value);
   }
 }
 
@@ -87,7 +85,7 @@ class SikayetlerimSayfa1DevamEvent extends BaseEvent {
 
 class SikayetlerimSayfa2DevamEvent extends BaseEvent {
   SikayetlerimSayfa2DevamEvent(String? randevuAlacakKisiId, String? cinsiyetId,
-      String? dogumTarihiId, GetBodyLocationResponse? agriBolgesi)
+      String? dogumTarihiId, String? agriBolgesi)
       : super(_EventConstants.sikayetlerimSayfa2Devam, {
           'randevu_alacak_kisi_id': randevuAlacakKisiId,
           'cinsiyet_id': cinsiyetId,
@@ -98,7 +96,7 @@ class SikayetlerimSayfa2DevamEvent extends BaseEvent {
 
 class SikayetlerimSayfa3DevamEvent extends BaseEvent {
   SikayetlerimSayfa3DevamEvent(String? randevuAlacakKisiId, String? cinsiyetId,
-      String? dogumTarihiId, GetBodyLocationResponse? agriBolgesi)
+      String? dogumTarihiId, String? agriBolgesi)
       : super(_EventConstants.sikayetlerimSayfa3Devam, {
           'randevu_alacak_kisi_id': randevuAlacakKisiId,
           'cinsiyet_id': cinsiyetId,

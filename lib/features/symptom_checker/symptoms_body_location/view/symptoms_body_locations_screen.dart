@@ -185,7 +185,7 @@ class _SymptomsBodyLocationsScreenState
                           getIt<UserNotifier>().firebaseEmail,
                           selectedGenderId.toString(),
                           yearOfBirth,
-                          value.selectedBodyLocation));
+                          value.selectedBodyLocation?.name));
 
                   AppInheritedWidget.of(context)?.bodyLocationRsp =
                       value.selectedBodyLocation;
