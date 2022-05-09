@@ -44,6 +44,10 @@ class HealthInformationVm extends RbioVm {
       );
       if (response.xIsSuccessful) {
         getIt<ProfileStorageImpl>().update(selection, key);
+        Utils.instance.showSuccessSnackbar(
+          mContext,
+          LocaleProvider.of(mContext).personal_update_success,
+        );
       }
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
