@@ -244,20 +244,13 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
             RbioElevatedButton(
               onTap: value.selectedSymptoms?.isNotEmpty ?? false
                   ? () async {
-                      FirebaseAnalytics.instance.logEvent(
-                        name: "SikayetlerimSayfa3_Devam",
-                        parameters: {
-                          'randevu_alacak_kisi_id':
+                      getIt<FirebaseAnalyticsManager>().logEvent(
+                          SikayetlerimSayfa3DevamEvent(
                               getIt<UserNotifier>().firebaseEmail,
-                          /* Randevu alınan kişinin unique id’si */
-                          'cinsiyet_id': widget.selectedGenderId.toString(),
-                          /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
-                          'dogum_tarihi_id': widget.yearOfBirth!,
-                          /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
-                          'agri_bolgesi': widget.selectedBodyLocation
-                              ?.name, /* Eğer seçim string olarak verilemezse agri_bolgesi id’si gönderilebilir. */
-                        },
-                      );
+                              widget.selectedGenderId.toString(),
+                              widget.yearOfBirth!,
+                              widget.selectedBodyLocation));
+
                       AppInheritedWidget.of(context)?.bodyLocationRsp =
                           widget.selectedBodyLocation;
                       AppInheritedWidget.of(context)?.listBodySympRsp =

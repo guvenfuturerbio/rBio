@@ -231,27 +231,17 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
               ? () async {
                   AppInheritedWidget.of(context)?.listBodySympRsp =
                       value.selectedBodySymptoms;
-                  FirebaseAnalytics.instance.logEvent(
-                    name: "SikayetlerimSayfa4_BolumAnaliziYapin",
-                    parameters: {
-                      'randevu_alacak_kisi_id':
+
+                  getIt<FirebaseAnalyticsManager>().logEvent(
+                      SikayetlerimSayfa4BolumAnaliziYapin(
                           getIt<UserNotifier>().firebaseEmail,
-                      /* Randevu alınan kişinin unique id’si */
-                      'cinsiyet_id': widget.selectedGenderId == 0 ||
-                              widget.selectedGenderId == 2
-                          ? 'M'
-                          : 'F',
-                      /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
-                      'dogum_tarihi_id': widget.yearOfBirth!,
-                      /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
-                      'agrı_bolgesi': widget.myPv?.bodyLocNames,
-                      /* Eğer seçim string olarak verilemezse agri_bolgesi id’si gönderilebilir. */
-                      'sikayet_kapsam_secili_adet': widget
-                          .myPv
-                          ?.bodyLocNamesList
-                          .length, /* Örn: el ve el bilegi - 2 / Kol - 1 / On Kol ve Bilek - 0 / Parmak - 0 / Ust Kol ve Omuz - 0 */
-                    },
-                  );
+                          widget.selectedGenderId == 0 ||
+                                  widget.selectedGenderId == 2
+                              ? 'M'
+                              : 'F',
+                          widget.yearOfBirth!,
+                          widget.myPv?.bodyLocNames,
+                          widget.myPv?.bodyLocNamesList.length));
                   Atom.to(
                     PagePaths.symptomResultPage,
                     queryParameters: {
@@ -260,7 +250,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                           ? 'male'
                           : 'female',
                       'body_part': widget.myPv!.bodyLocNames!,
-                      'body_part_length': widget.myPv!.bodyLocNamesList.length.toString(),
+                      'body_part_length':
+                          widget.myPv!.bodyLocNamesList.length.toString(),
                       'year_of_birth': widget.yearOfBirth!,
                       'isFromVoice': false.toString(),
                     },

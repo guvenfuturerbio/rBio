@@ -391,21 +391,14 @@ class LoginScreenVm extends ChangeNotifier {
     }
 
     final term = Atom.queryParameters['then'];
-    FirebaseAnalytics.instance.setUserId(
-      id: getIt<UserNotifier>().firebaseEmail,
-    );
-    FirebaseAnalytics.instance.setUserProperty(
-      name: 'Login',
-      value: 'authed',
-    );
-    FirebaseAnalytics.instance.setUserProperty(
-      name: 'user_age',
-      value: getIt<ProfileStorageImpl>().getFirst().birthDate,
-    );
-    FirebaseAnalytics.instance.logEvent(
-      name: "Basarili_Giris",
-      parameters: null,
-    );
+
+    getIt<FirebaseAnalyticsManager>()
+        .setUserId(getIt<UserNotifier>().firebaseEmail);
+    getIt<FirebaseAnalyticsManager>().setUserProperty('Login', 'authed');
+    getIt<FirebaseAnalyticsManager>().setUserProperty(
+        'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
+
+    getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
@@ -577,21 +570,14 @@ class LoginScreenVm extends ChangeNotifier {
     );
 
     final term = Atom.queryParameters['then'];
-    FirebaseAnalytics.instance.setUserId(
-      id: getIt<UserNotifier>().firebaseEmail,
-    );
-    FirebaseAnalytics.instance.setUserProperty(
-      name: 'Login',
-      value: 'authed',
-    );
-    FirebaseAnalytics.instance.setUserProperty(
-      name: 'user_age',
-      value: getIt<ProfileStorageImpl>().getFirst().birthDate,
-    );
-    FirebaseAnalytics.instance.logEvent(
-      name: "Basarili_Giris",
-      parameters: null,
-    );
+    getIt<FirebaseAnalyticsManager>()
+        .setUserId(getIt<UserNotifier>().firebaseEmail);
+
+    getIt<FirebaseAnalyticsManager>().setUserProperty('Login', 'authed');
+    getIt<FirebaseAnalyticsManager>().setUserProperty(
+        'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
+
+    getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }

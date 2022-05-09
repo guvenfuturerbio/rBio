@@ -218,31 +218,20 @@ class MeasurementTrackingVm with ChangeNotifier {
     Utils.instance.releaseOrientation();
 
     if (key == const Key('Glucose')) {
-      FirebaseAnalytics.instance.logEvent(
-        name: "SaglikTakibi_Butonlar",
-        parameters: {
-          'element': 'Kan_Şekeri',
-        },
-      );
+      getIt<FirebaseAnalyticsManager>()
+          .logEvent(SaglikTakibiButonlarEvent('Kan_Şekeri'));
       Atom.to(PagePaths.bloodGlucoseProgress);
     } else if (key == const Key('Scale')) {
-      FirebaseAnalytics.instance.logEvent(
-        name: "SaglikTakibi_Butonlar",
-        parameters: {
-          'element': 'Tartı',
-        },
-      );
+      getIt<FirebaseAnalyticsManager>()
+          .logEvent(SaglikTakibiButonlarEvent('Tartı'));
+
       final heightCheck = Utils.instance.checkUserHeight();
       if (heightCheck) {
         Atom.to(PagePaths.scaleDetail);
       }
     } else if (key == const Key('Pressure')) {
-      FirebaseAnalytics.instance.logEvent(
-        name: "SaglikTakibi_Butonlar",
-        parameters: {
-          'element': 'Tansiyon',
-        },
-      );
+      getIt<FirebaseAnalyticsManager>()
+          .logEvent(SaglikTakibiButonlarEvent('Tansiyon'));
       Atom.to(PagePaths.bpProgress);
     }
 
