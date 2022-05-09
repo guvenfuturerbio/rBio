@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../model/model.dart';
+import '../../features/my_appointments/my_appointments.dart';
 import '../core.dart';
 
 class CustomPopUpDropDown extends StatefulWidget {

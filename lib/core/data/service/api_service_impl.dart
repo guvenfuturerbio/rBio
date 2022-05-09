@@ -426,28 +426,6 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<List<GetEventsResponse>> findResourceClosestAvailablePlan(
-    ResourceForAvailablePlanRequest resourceForAvailablePlanRequest,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.findResourceClosestAvailablePlanPath,
-      resourceForAvailablePlanRequest.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      final result = response.xGetMapList
-          .map((item) => GetEventsResponse.fromJson(item))
-          .cast<GetEventsResponse>()
-          .toList();
-      return result;
-    } else {
-      throw Exception(
-        '/findResourceClosestAvailablePlan : ${response.isSuccessful}',
-      );
-    }
-  }
-
-  @override
   Future<int> saveAppointment(AppointmentRequest appointmentRequest) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.base.saveAppointmentPath,
@@ -695,26 +673,6 @@ class ApiServiceImpl extends ApiService {
       return response;
     } else {
       throw Exception('/addSuggestion : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> setYoutubeSurveyUser(
-    YoutubeSurveyUserRequest bodyPages,
-  ) async {
-    final $headers = {
-      'mobileapiauthkey':
-          'b776be7e007b40d38f1f4b73bb53481cf946c0d21c5b4ad7a0842bc1be2b70ce',
-    };
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.setYoutubeSurveyUserPath,
-      bodyPages.toJson(),
-      options: authOptions..headers?.addAll($headers),
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/setYoutubeSurveyUser : ${response.isSuccessful}');
     }
   }
 
@@ -1218,22 +1176,6 @@ class ApiServiceImpl extends ApiService {
       return GetVideoCallPriceResponse.fromJson(response.xGetMap);
     } else {
       throw Exception('/getResourceVideoCallPrice : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> doMobilePayment(
-    DoMobilePaymentRequest doMobilePaymentRequest,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.doMobilePaymentPath,
-      doMobilePaymentRequest.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/doMobilePayment : ${response.isSuccessful}');
     }
   }
 

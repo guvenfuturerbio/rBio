@@ -5,7 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../model/treatment_model/treatment_model.dart';
+import '../model/treatment_model.dart';
 import '../view_model/treatment_edit_vm.dart';
 
 class TreatmentEditView extends StatefulWidget {

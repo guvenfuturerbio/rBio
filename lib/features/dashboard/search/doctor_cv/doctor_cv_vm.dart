@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slugify/slugify.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/home/take_appointment/doctor_cv_response.dart';
+import 'doctor_cv_response.dart';
 
 class DoctorCvScreenVm extends ChangeNotifier {
   late DoctorCvResponse _doctorCvResponse;

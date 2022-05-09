@@ -358,9 +358,6 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
       '/file/report-file-download/$id/$name'.xBaseUrl;
 
   @override
-  String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
-
-  @override
   String clickPostPath(int postId) => '/socialpost/clickPost/$postId'.xBaseUrl;
 
   @override
@@ -434,9 +431,6 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
   @override
   String get getAvailabilityRatePath =>
       '/SuggestionRate/Get-Availability-Rate-Pusula'.xBaseUrl;
-
-  @override
-  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
 
   @override
   String uploadPatientDocumentsPath(String webAppoId) =>

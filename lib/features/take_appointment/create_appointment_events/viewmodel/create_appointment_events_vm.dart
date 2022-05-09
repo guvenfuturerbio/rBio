@@ -6,6 +6,7 @@ import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../../create_appointment/model/find_resource_available_days_request.dart';
 import '../../create_appointment/model/resource_request.dart';
+import '../model/get_events_response.dart';
 
 class CreateAppointmentEventsVm extends ChangeNotifier {
   final BuildContext mContext;

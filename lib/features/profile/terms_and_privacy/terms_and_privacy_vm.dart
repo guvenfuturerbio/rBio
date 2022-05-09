@@ -45,12 +45,10 @@ class TermsAndPrivacyVm extends ChangeNotifier {
     });
   }
 
-  void showKvkkInfo() {
+  void showKvkkInfo(BuildContext context) {
     Atom.show(KvkkFormScreen(
       title: LocaleProvider.current.kvkk_title,
-      text: getIt<IAppConfig>().productType == ProductType.oneDose
-          ? LocaleProvider.current.one_dose_kvkk_url_text
-          : LocaleProvider.current.guven_kvkk_url_text,
+      text: getIt<IAppConfig>().constants.kvkkUrl(context),
       alwaysAsk: true,
     )).then((value) async {
       if (value != null && value) {

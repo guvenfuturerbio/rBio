@@ -4,7 +4,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/get_body_symptoms_response.dart';
 import '../viewmodel/symptoms_result_page_vm.dart';
 
 class SymptomsResultPage extends StatefulWidget {

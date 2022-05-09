@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/doctor/doctor.dart';
-import '../../../../model/treatment_model/treatment_model.dart';
+import '../../../chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 import '../../notifiers/patient_notifiers.dart';
 
 class PatientTreatmentEditVm extends ChangeNotifier {

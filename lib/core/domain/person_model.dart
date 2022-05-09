@@ -6,8 +6,8 @@ import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../model/treatment_model/treatment_model.dart';
 import '../../core/core.dart';
+import '../../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 
 part 'person_model.g.dart';
 

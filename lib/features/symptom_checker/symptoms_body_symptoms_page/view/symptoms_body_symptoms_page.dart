@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';

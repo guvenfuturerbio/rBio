@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
 
 import '../core/core.dart';
 import '../features/mediminder/mediminder.dart';

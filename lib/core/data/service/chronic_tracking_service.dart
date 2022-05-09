@@ -10,7 +10,6 @@ import '../../../model/bg_measurement/get_blood_glucose_data_of_person.dart';
 import '../../../model/bg_measurement/get_hba1c_measurement_list.dart';
 import '../../../model/bg_measurement/hospital_hba1c_measurement.dart';
 import '../../../model/bg_measurement/update_bg_measurement_request.dart';
-import '../../../model/firebase/add_firebase_body.dart';
 import '../../../model/model.dart';
 import '../../../model/user_profiles/save_and_retrieve_token_model.dart';
 import '../../core.dart';
@@ -50,9 +49,6 @@ abstract class ChronicTrackingApiService {
   Future<GuvenResponseModel> addProfile(Person person);
   Future<GuvenResponseModel> changeProfile(int userId);
   Future<GuvenResponseModel> deleteProfile(int userId);
-  Future<GuvenResponseModel> addFirebaseToken(
-    AddFirebaseToken addFirebaseToken,
-  );
   Future<GuvenResponseModel> updateProfile(Person person, int id);
   Future<GuvenResponseModel> setDefaultProfile(Person person);
   Future<GuvenResponseModel> updateUserStrip(StripDetailModel stripDetailModel);

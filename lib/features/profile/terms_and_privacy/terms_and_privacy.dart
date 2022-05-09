@@ -108,7 +108,7 @@ class TermsAndPrivacyScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(3.0),
             child: TextButton(
-              onPressed: () => {value.showKvkkInfo()},
+              onPressed: () => {value.showKvkkInfo(context)},
               child: Text(
                 LocaleProvider.of(context).read_understood_kvkk,
                 maxLines: 3,

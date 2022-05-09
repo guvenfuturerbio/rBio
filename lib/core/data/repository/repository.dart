@@ -3,19 +3,21 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
-import 'package:onedosehealth/features/dashboard/home/model/banner_model.dart';
 
 import '../../../features/auth/auth.dart';
-import '../../../features/auth/model/change_password_exception.dart';
-import '../../../features/auth/model/consent_form_model.dart';
-import '../../../features/auth/model/forgot_password_exception.dart';
-import '../../../features/auth/model/login_exception.dart';
 import '../../../features/chat/model/chat_notification.dart';
 import '../../../features/chat/model/get_chat_contacts_response.dart';
+import '../../../features/dashboard/home/model/banner_model.dart';
+import '../../../features/my_appointments/my_appointments.dart';
+import '../../../features/results/results.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
+import '../../../features/take_appointment/create_appointment/model/filter_tenants_response.dart';
 import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 import '../../../features/take_appointment/create_appointment/model/voucher_price_request.dart';
-import '../../../model/home/take_appointment/do_mobil_payment_voucher.dart';
+import '../../../features/take_appointment/create_appointment_events/model/get_events_response.dart';
+import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_request.dart';
+import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_response.dart';
+import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
 import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../core.dart';
@@ -224,11 +226,6 @@ class Repository {
           GetEventsRequest getEventsRequest) =>
       apiService.getEvents(getEventsRequest);
 
-  Future<List<GetEventsResponse>> findResourceClosestAvailablePlan(
-          ResourceForAvailablePlanRequest resourceForAvailablePlanRequest) =>
-      apiService
-          .findResourceClosestAvailablePlan(resourceForAvailablePlanRequest);
-
   Future<int> saveAppointment(AppointmentRequest appointmentRequest) =>
       apiService.saveAppointment(appointmentRequest);
 
@@ -320,10 +317,6 @@ class Repository {
           SuggestionRequest suggestionRequest) =>
       apiService.addSuggestion(suggestionRequest);
 
-  Future<GuvenResponseModel> setYoutubeSurveyUser(
-          YoutubeSurveyUserRequest bodyPages) =>
-      apiService.setYoutubeSurveyUser(bodyPages);
-
   Future<GuvenResponseModel> getCourseId() => apiService.getCourseId();
 
   Future<GuvenResponseModel> setJitsiWebConsultantId(String id) =>
@@ -410,10 +403,6 @@ class Repository {
   Future<GuvenResponseModel> synchronizeOneDoseUser(
           SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest) =>
       apiService.synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
-
-  Future<GuvenResponseModel> doMobilePayment(
-          DoMobilePaymentRequest doMobilePaymentRequest) =>
-      apiService.doMobilePayment(doMobilePaymentRequest);
 
   Future<GuvenResponseModel> doMobilePaymentWithVoucher(
           DoMobilePaymentWithVoucherRequest

@@ -47,7 +47,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   ) async {
     if (deviceUUID != null) {
       final response = await helper.getGuven(
-        getIt<IAppConfig>().endpoints.devApi.ctGetUserStrip(entegrationId, deviceUUID),
+        getIt<IAppConfig>()
+            .endpoints
+            .devApi
+            .ctGetUserStrip(entegrationId, deviceUUID),
         options: authOptions,
       );
       if (response.xIsSuccessful) {
@@ -120,7 +123,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       "file": await MultipartFile.fromFile(file, filename: fileName),
     });
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctUploadMeasurementImage(entegrationId, measurementId),
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .ctUploadMeasurementImage(entegrationId, measurementId),
       formData,
       options: authOptions..headers?.addAll($headers),
     );
@@ -229,22 +235,6 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> addFirebaseToken(
-    AddFirebaseToken addFirebaseToken,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctAddFirebaseToken,
-      addFirebaseToken.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/addFirebaseToken : ${response.isSuccessful}');
-    }
-  }
-
-  @override
   Future<GuvenResponseModel> updateProfile(Person person, int id) async {
     final response = await helper.patchGuven(
       getIt<IAppConfig>().endpoints.devApi.ctUpdateProfile(id),
@@ -324,7 +314,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     int entegrationId,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctIsDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .ctIsDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -342,7 +335,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     int entegrationId,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctAddHospitalHba1cMeasurement(entegrationId),
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .ctAddHospitalHba1cMeasurement(entegrationId),
       hospitalHba1cMeasurementModel.toJson(),
       options: authOptions,
     );
@@ -361,7 +357,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     int entegrationId,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctGetHba1cMeasurementList(entegrationId),
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .ctGetHba1cMeasurementList(entegrationId),
       getHba1cMeasurementListModel.toJson(),
       options: authOptions,
     );

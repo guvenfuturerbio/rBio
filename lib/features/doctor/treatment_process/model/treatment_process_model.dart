@@ -13,7 +13,10 @@ class TreatmentProcessItemModel {
     this.dateTime,
   });
   toJson() {
-    return TreatmentModel(treatment: description, createDate: dateTime, id: id)
-        .toJson();
+    return TreatmentModel(
+      treatment: description,
+      createDate: dateTime,
+      id: id,
+    ).toJson();
   }
 }

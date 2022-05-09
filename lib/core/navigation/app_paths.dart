@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -26,9 +25,7 @@ import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../features/mediminder/mediminder.dart';
-import '../../features/my_appointments/all_files_screen.dart';
-import '../../features/my_appointments/appointment_list_screen.dart';
-import '../../features/my_appointments/web_conferance_screen.dart';
+import '../../features/my_appointments/my_appointments.dart';
 import '../../features/onboarding/view/onboarding_screen.dart';
 import '../../features/profile/devices/devices.dart';
 import '../../features/profile/health_information/view/health_information_screen.dart';
@@ -38,9 +35,7 @@ import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import '../../features/profile/terms_and_privacy/terms_and_privacy.dart';
 import '../../features/relatives/relatives.dart';
-import '../../features/results/e_result_screen.dart';
-import '../../features/results/e_result_vm.dart';
-import '../../features/results/visit_detail_screen.dart';
+import '../../features/results/results.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
 import '../../features/store/covid_19/covid_19_screen.dart';
@@ -106,8 +101,6 @@ class VRouterRoutes {
             getIt<UserNotifier>().isDoctor)) {
           vRedirector.stopRedirection();
           Atom.show(const NotChronicWarning());
-        } else {
-          FlutterAppBadger.removeBadge();
         }
       },
       stackedRoutes: [

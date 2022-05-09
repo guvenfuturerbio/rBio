@@ -5,8 +5,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../app/bluetooth_v2/bluetooth_v2.dart';
+import '../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 import '../features/mediminder/mediminder.dart';
-import '../model/treatment_model/treatment_model.dart';
 import 'core.dart';
 
 // This is our global ServiceLocator
