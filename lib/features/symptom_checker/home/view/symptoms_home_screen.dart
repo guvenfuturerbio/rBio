@@ -208,18 +208,11 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         //
         RbioElevatedButton(
           onTap: () async {
-            FirebaseAnalytics.instance.logEvent(
-              name: "SikayetlerimSayfa1_Devam",
-              parameters: {
-                'randevu_alacak_kisi_id': getIt<UserNotifier>().firebaseEmail,
-                /* Randevu alınan kişinin unique id’si */
-                'cinsiyet_id': value.genderIdHolder.toString(),
-                /* Erkek ise M, Kadın ise F olarak gönderilmelidir. */
-                'dogum_tarihi_id': getIt<ProfileStorageImpl>()
-                    .getFirst()
-                    .birthDate, /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
-              },
-            );
+            getIt<FirebaseAnalyticsManager>().logEvent(
+                SikayetlerimSayfa1DevamEvent(
+                    getIt<UserNotifier>().firebaseEmail,
+                    value.genderIdHolder.toString(),
+                    getIt<ProfileStorageImpl>().getFirst().birthDate));
             Atom.to(
               PagePaths.symptomBodyLocations,
               queryParameters: {
@@ -286,7 +279,9 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                   child: SvgPicture.asset(
                     iconPath,
                     height: R.sizes.iconSize,
-                    color: value.genderIdHolder == index ? getIt<IAppConfig>().theme.white : null,
+                    color: value.genderIdHolder == index
+                        ? getIt<IAppConfig>().theme.white
+                        : null,
                   ),
                 ),
 
@@ -296,8 +291,9 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                     title,
                     textAlign: TextAlign.center,
                     style: context.xHeadline4.copyWith(
-                      color:
-                          value.genderIdHolder == index ? getIt<IAppConfig>().theme.white : null,
+                      color: value.genderIdHolder == index
+                          ? getIt<IAppConfig>().theme.white
+                          : null,
                     ),
                   ),
                 ),

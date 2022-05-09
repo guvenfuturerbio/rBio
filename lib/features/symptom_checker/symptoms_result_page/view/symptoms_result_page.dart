@@ -141,27 +141,16 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     //
                                     child: RbioTextButton(
                                       onPressed: () {
-                                        FirebaseAnalytics.instance.logEvent(
-                                          name: "Sonuclarim_RandevuAra",
-                                          parameters: {
-                                            'randevu_alacak_kisi_id':
+                                        getIt<FirebaseAnalyticsManager>()
+                                            .logEvent(SonuclarimRandevuAraEvent(
                                                 getIt<UserNotifier>()
                                                     .firebaseEmail,
-                                            /* Randevu alınan kişinin unique id’si */
-                                            'cinsiyet_id': widget.gender,
-                                            /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
-                                            'dogum_tarihi_id':
+                                                widget.gender,
                                                 widget.yearOfBirth!,
-                                            /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
-                                            'agrı_bolgesi': widget.body_part,
-                                            'sikayet_kapsam_secili_adet':
+                                                widget.body_part,
                                                 widget.body_part_length,
-                                            /* Örn: el ve el bilegi - 2 / Kol - 1 / On Kol ve Bilek - 0 / Parmak - 0 / Ust Kol ve Omuz - 0 */
-                                            'birim_adi': 'danisma',
-                                            /* Tıklanan birim adı */
-                                            'tiklanan_birim_yuzdelik': 95,
-                                          },
-                                        );
+                                                'danisma',
+                                                95));
                                         Atom.to(
                                           PagePaths.createAppointment,
                                           queryParameters: {
@@ -299,30 +288,24 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                             },
                                           );
                                         } else {
-                                          FirebaseAnalytics.instance.logEvent(
-                                            name: "Sonuclarim_RandevuAra",
-                                            parameters: {
-                                              'randevu_alacak_kisi_id':
-                                                  getIt<UserNotifier>()
-                                                      .firebaseEmail,
-                                              /* Randevu alınan kişinin unique id’si */
-                                              'cinsiyet_id': widget.gender,
-                                              /* Erkek ise M, Kadın ise F olarak gönderilmelidir.  */
-                                              'dogum_tarihi_id':
-                                                  widget.yearOfBirth!,
-                                              /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
-                                              'agrı_bolgesi': widget.body_part,
-                                              'sikayet_kapsam_secili_adet':
-                                                  widget.body_part_length,
-                                              /* Örn: el ve el bilegi - 2 / Kol - 1 / On Kol ve Bilek - 0 / Parmak - 0 / Ust Kol ve Omuz - 0 */
-                                              'birim_adi': value
-                                                  .specialisations[index].name,
-                                              /* Tıklanan birim adı */
-                                              'tiklanan_birim_yuzdelik': value
-                                                  .specialisations[index]
-                                                  .accuracy,
-                                            },
-                                          );
+                                          getIt<FirebaseAnalyticsManager>()
+                                              .logEvent(
+                                                  SonuclarimRandevuAraEvent(
+                                                      getIt<UserNotifier>()
+                                                          .firebaseEmail,
+                                                      widget.gender,
+                                                      widget.yearOfBirth!,
+                                                      widget.body_part,
+                                                      widget.body_part_length,
+                                                      value
+                                                          .specialisations[
+                                                              index]
+                                                          .name,
+                                                      value
+                                                          .specialisations[
+                                                              index]
+                                                          .accuracy));
+
                                           Atom.to(PagePaths.createAppointment,
                                               queryParameters: {
                                                 'forOnline': false.toString(),

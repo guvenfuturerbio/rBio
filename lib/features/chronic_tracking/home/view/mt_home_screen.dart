@@ -206,12 +206,8 @@ class _MeasurementTrackingHomeScreenState
           //
           GestureDetector(
             onTap: () {
-              FirebaseAnalytics.instance.logEvent(
-                name: "SaglikTakibi_Butonlar",
-                parameters: {
-                  'element': 'Tedavi',
-                },
-              );
+              getIt<FirebaseAnalyticsManager>()
+                  .logEvent(SaglikTakibiButonlarEvent('Tedavi'));
 
               final treatmentList =
                   getIt<ProfileStorageImpl>().getFirst().treatmentList;
