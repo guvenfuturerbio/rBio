@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -176,13 +178,21 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                     hintText: vm.isTcCitizen
                         ? LocaleProvider.of(context).tc_identity_number
                         : LocaleProvider.of(context).passport_number,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if ((value!.isNotEmpty &&
+                          value.length < 5 &&
+                          !vm.isTcCitizen)) {
+                        return LocaleProvider.current.passport_validation;
+                      }
+                      return null;
+                    },
                     inputFormatters: <TextInputFormatter>[
                       TabToNextFieldTextInputFormatter(
                         context,
                         _identityFocusNode,
                         _emailFocusNode,
                       ),
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
                     ],
                     onFieldSubmitted: (term) {
                       UtilityManager().fieldFocusChange(
