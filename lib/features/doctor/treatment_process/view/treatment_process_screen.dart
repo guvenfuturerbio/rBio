@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/treatment_model/treatment_model.dart';
+import '../../../chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 import '../../notifiers/patient_notifiers.dart';
 
 part '../model/treatment_process_model.dart';

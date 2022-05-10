@@ -399,6 +399,7 @@ class __MedicationReminderAddEditViewState
   // #endregion
 
   // #region _buildMedicineTypes
+  // ignore: unused_element
   List<Widget> _buildMedicineTypes(
     MedicationReminderAddEditResult result,
   ) {

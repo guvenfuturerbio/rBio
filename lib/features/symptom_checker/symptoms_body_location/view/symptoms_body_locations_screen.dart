@@ -180,14 +180,13 @@ class _SymptomsBodyLocationsScreenState
                   : false,
               child: RbioElevatedButton(
                 onTap: () async {
-                  FirebaseAnalytics.instance.logEvent(name: "SikayetlerimSayfa2_Devam",    
-parameters: {
-    'randevu_alacak_kisi_id': getIt<UserNotifier>().firebaseEmail, /* Randevu alınan kişinin unique id’si */
-    'cinsiyet_id':  selectedGenderId.toString(), /* Erkek ise M, Kadın ise F olarak gönderilmelidir. */
-    'dogum_tarihi_id': yearOfBirth, /* Doğum tarihi id’si Örn: AIIG (sayı -> harf) */
-    'agri_bolgesi':  value.selectedBodyLocation, /* Eğer seçim string olarak verilemezse agri_bolgesi id’si gönderilebilir. */
-    },
-);
+                  getIt<FirebaseAnalyticsManager>().logEvent(
+                      SikayetlerimSayfa2DevamEvent(
+                          getIt<UserNotifier>().firebaseEmail,
+                          selectedGenderId.toString(),
+                          yearOfBirth,
+                          value.selectedBodyLocation?.name));
+
                   AppInheritedWidget.of(context)?.bodyLocationRsp =
                       value.selectedBodyLocation;
                   Atom.to(

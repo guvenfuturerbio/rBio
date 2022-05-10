@@ -1,13 +1,4 @@
-export 'model/add_step1_model.dart';
-export 'model/application_version_response.dart';
-export 'model/change_password_model.dart';
-export 'model/user_registration_step1_model.dart';
-export 'model/user_registration_step2_model.dart';
-export 'model/user_registration_step3_model.dart';
-export 'view/change_password_screen.dart';
-export 'view/forgot_password_step1_screen.dart';
-export 'view/forgot_password_step2_screen.dart';
-export 'view/login_screen.dart';
-export 'view/register_step1_screen.dart';
-export 'view/register_step2_screen.dart';
-export 'view/register_step3_screen.dart';
+export 'change_password/change_password.dart';
+export 'forgot_password/forgot_password.dart';
+export 'login/login.dart';
+export 'register/register.dart';

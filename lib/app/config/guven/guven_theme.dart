@@ -17,6 +17,9 @@ class GuvenTheme extends IAppTheme {
       'assets/images/guven/success_appointment.svg';
 
   @override
+  double get appBarLogoHeight => 27;
+
+  @override
   Color get mainColor => GuvenColors.burgundy;
 
   @override

@@ -7,5 +7,6 @@ class OneDoseConfig extends IAppConfig {
           theme: OneDoseTheme(),
           functionality: OneDoseFunctionality(),
           endpoints: OneDoseEndpoints(),
+          constants: OneDoseConstants(),
         );
 }

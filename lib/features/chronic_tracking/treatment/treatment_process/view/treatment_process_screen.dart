@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../model/treatment_model/treatment_model.dart';
+import '../../treatment_detail/model/treatment_model.dart';
 
 part '../model/treatment_process_model.dart';
 

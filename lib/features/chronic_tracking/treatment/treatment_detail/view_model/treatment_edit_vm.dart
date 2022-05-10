@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../model/treatment_model/treatment_model.dart';
+import '../model/treatment_model.dart';
 
 class TreatmentEditVm extends ChangeNotifier {
   TreatmentModel selectedModel;

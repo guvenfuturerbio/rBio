@@ -1012,40 +1012,6 @@ Gradient appGradient() => LinearGradient(
       ],
     );
 
-// MEDIMINDER WIDGETS AND RESOURCES
-class Mediminder {
-  Mediminder._();
-
-  static late Mediminder _instance;
-
-  static Mediminder get instance {
-    return _instance;
-  }
-
-  Person selection = Person(
-    userId: 56265,
-    id: 1627287863112,
-    imageURL:
-        'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png',
-    name: 'Mustafa TÜRKMEN',
-    birthDate: '09.11.1997',
-    gender: 'Male',
-    height: '170',
-    weight: '50',
-    diabetesType: 'Type 1',
-    hypo: 36,
-    rangeMin: 76,
-    target: 120,
-    rangeMax: 151,
-    hyper: 301,
-    deviceUUID: "",
-    manufacturerId: 0,
-    yearOfDiagnosis: 2021,
-    smoker: true,
-    isFirstUser: false,
-  );
-}
-
 class GradientDialog extends StatefulWidget {
   final String? title;
   final String? text;

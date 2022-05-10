@@ -253,23 +253,26 @@ class CreateAppointmentScreen extends StatelessWidget {
                       R.sizes.defaultBottomPadding,
                     ]
                   : [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Center(
-                          child: Text(
-                            LocaleProvider.current.which_depart_i_go,
-                            style: context.xHeadline3,
+                      if (getIt<IAppConfig>().productType ==
+                          ProductType.oneDose) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5.0),
+                          child: Center(
+                            child: Text(
+                              LocaleProvider.current.which_depart_i_go,
+                              style: context.xHeadline3,
+                            ),
                           ),
                         ),
-                      ),
-                      RbioElevatedButton(
-                        onTap: () {
-                          Atom.to(PagePaths.symptomMainMenu);
-                        },
-                        title: LocaleProvider.current.depart_analyse,
-                        infinityWidth: true,
-                      ),
-                      R.sizes.defaultBottomPadding,
+                        RbioElevatedButton(
+                          onTap: () {
+                            Atom.to(PagePaths.symptomMainMenu);
+                          },
+                          title: LocaleProvider.current.depart_analyse,
+                          infinityWidth: true,
+                        ),
+                        R.sizes.defaultBottomPadding,
+                      ],
                     ],
             ],
           ),
@@ -280,19 +283,12 @@ class CreateAppointmentScreen extends StatelessWidget {
 
   Future<void> _openCreateAppointmentsEvents(CreateAppointmentVm val) async {
     try {
-      await FirebaseAnalytics.instance.logEvent(
-        name: "RandevuOlustur_RandevuAra",
-        parameters: {
-          'randevu_alacak_kisi_id': getIt<UserNotifier>().firebaseEmail,
-          /* Randevu alınan kişinin unique id’si */
-          'hastane_secimi': val.dropdownValueTenant!.title.toString(),
-          /* Hastane adı */
-          'bolum_secimi': val.dropdownValueDepartment!.title.toString(),
-          /*Eğer Bölüm Adı verilemiyor ise Bölüm ID’si de uygundur*/
-          'doktor_secimi': val.dropdownValueDoctor!.id
-              .toString(), /* Doktorlara atanan ID (İsim verisi gönderilmemeli) */
-        },
-      );
+      await getIt<FirebaseAnalyticsManager>().logEvent(
+          RandevuOlusturRandevuAraEvent(
+              getIt<UserNotifier>().firebaseEmail,
+              val.dropdownValueTenant!.title.toString(),
+              val.dropdownValueDepartment!.title.toString(),
+              val.dropdownValueDoctor!.id));
     } catch (e) {
       LoggerUtils.instance.wtf('wtf');
     }

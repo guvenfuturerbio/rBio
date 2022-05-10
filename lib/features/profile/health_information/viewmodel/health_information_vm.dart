@@ -44,6 +44,10 @@ class HealthInformationVm extends RbioVm {
       );
       if (response.xIsSuccessful) {
         getIt<ProfileStorageImpl>().update(selection, key);
+        Utils.instance.showSuccessSnackbar(
+          mContext,
+          LocaleProvider.of(mContext).personal_update_success,
+        );
       }
     } catch (e, stackTrace) {
       showDefaultErrorDialog(e, stackTrace);
@@ -452,9 +456,9 @@ class HealthInformationVm extends RbioVm {
     required TextEditingController smokerController,
     required TextEditingController yearofDiagnosisController,
   }) {
-    diabetTypeController.text = selection.diabetesType == 'Non-Diabetes'
-        ? LocaleProvider.current.non_diabetes
-        : selection.diabetesType ?? '';
+    diabetTypeController.text =
+        selection.diabetesType.xGetDiabetesType.xLocaleLabel;
+
     weightController.text = "${selection.weight} kg";
     normalRangeController.text =
         "${selection.rangeMin}-${selection.rangeMax} mg/dl";

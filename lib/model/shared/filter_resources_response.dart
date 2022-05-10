@@ -1,6 +1,6 @@
 import '../../core/core.dart';
-import '../../features/search/bloc/search_bloc.dart';
-import '../model.dart';
+import '../../features/dashboard/search/bloc/search_bloc.dart';
+import '../../features/take_appointment/create_appointment/model/filter_tenants_response.dart';
 
 class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse>
     with SearchModel {

@@ -5,15 +5,20 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 import '../../../features/auth/auth.dart';
-import '../../../features/auth/model/consent_form_model.dart';
 import '../../../features/chat/model/chat_notification.dart';
-import '../../../features/home/model/banner_model.dart';
+import '../../../features/dashboard/home/model/banner_model.dart';
+import '../../../features/my_appointments/my_appointments.dart';
+import '../../../features/results/results.dart';
 import '../../../features/take_appointment/create_appointment/model/available_dates.dart';
+import '../../../features/take_appointment/create_appointment/model/filter_tenants_response.dart';
 import '../../../features/take_appointment/create_appointment/model/find_resource_available_days_request.dart';
 import '../../../features/take_appointment/create_appointment/model/voucher_price_request.dart';
-import '../../../model/home/take_appointment/do_mobil_payment_voucher.dart';
+import '../../../features/take_appointment/create_appointment_events/model/get_events_response.dart';
+import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_request.dart';
+import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_response.dart';
+import '../../../features/take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
+import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
-import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../core.dart';
 
 part 'api_service_impl.dart';
@@ -62,9 +67,6 @@ abstract class ApiService {
   );
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID);
   Future<List<GetEventsResponse>> getEvents(GetEventsRequest getEventsRequest);
-  Future<List<GetEventsResponse>> findResourceClosestAvailablePlan(
-    ResourceForAvailablePlanRequest resourceForAvailablePlanRequest,
-  );
   Future<int> saveAppointment(AppointmentRequest appointmentRequest);
   Future<List<AvailableDate>> findResourceAvailableDays(
     FindResourceAvailableDaysRequest findResourceAvailableDaysRequest,
@@ -99,8 +101,6 @@ abstract class ApiService {
   Future<GuvenResponseModel> getUserKvkkInfo();
   Future<GuvenResponseModel> updateUserKvkkInfo();
   Future<GuvenResponseModel> addSuggestion(SuggestionRequest suggestionRequest);
-  Future<GuvenResponseModel> setYoutubeSurveyUser(
-      YoutubeSurveyUserRequest bodyPages);
   Future<GuvenResponseModel> getCourseId();
   Future<GuvenResponseModel> setJitsiWebConsultantId(String webConsultantId);
   Future<GuvenResponseModel> deleteProfilePicture();
@@ -139,8 +139,6 @@ abstract class ApiService {
       CancelAppointmentRequest cancelAppointmentRequest);
   Future<GetVideoCallPriceResponse> getResourceVideoCallPrice(
       GetVideoCallPriceRequest getVideoCallPriceRequest);
-  Future<GuvenResponseModel> doMobilePayment(
-      DoMobilePaymentRequest doMobilePaymentRequest);
   Future<GuvenResponseModel> doMobilePaymentWithVoucher(
       DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest);
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(

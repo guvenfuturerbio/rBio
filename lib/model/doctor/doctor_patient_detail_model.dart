@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import '../treatment_model/treatment_model.dart';
+import '../../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 
 import 'diabet_type.dart';
 

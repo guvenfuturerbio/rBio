@@ -9,9 +9,9 @@ import '../features/chronic_tracking/progress_sections/blood_glucose/viewmodel/b
 import '../features/chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
 import '../features/chronic_tracking/progress_sections/scale/scale.dart';
 import '../features/chronic_tracking/progress_sections/scale/scale_detail/scale_detail.dart';
+import '../features/dashboard/home/viewmodel/home_vm.dart';
 import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
 import '../features/doctor/notifiers/patient_notifiers.dart';
-import '../features/home/viewmodel/home_vm.dart';
 import 'bluetooth_v2/bluetooth_v2.dart';
 
 class MyApp extends StatefulWidget {
@@ -147,11 +147,11 @@ class _MyAppState extends State<MyApp> {
 
                       //
                       theme: ThemeData(
-                        primaryColor: themeNotifier.theme.mainColor,
+                        primaryColor: getIt<IAppConfig>().theme.mainColor,
                         scaffoldBackgroundColor:
-                            themeNotifier.theme.scaffoldBackgroundColor,
-                        fontFamily: themeNotifier.theme.fontFamily,
-                        textTheme: themeNotifier.theme.textTheme,
+                            getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+                        fontFamily: getIt<IAppConfig>().theme.fontFamily,
+                        textTheme: getIt<IAppConfig>().theme.textTheme,
                         textSelectionTheme: TextSelectionThemeData(
                           cursorColor: getIt<IAppConfig>().theme.mainColor,
                           selectionColor: getIt<IAppConfig>().theme.mainColor,

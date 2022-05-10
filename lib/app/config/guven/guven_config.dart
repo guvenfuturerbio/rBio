@@ -7,5 +7,6 @@ class GuvenConfig extends IAppConfig {
           theme: GuvenTheme(),
           functionality: GuvenFunctionality(),
           endpoints: GuvenEndpoints(),
+          constants: GuvenConstants(),
         );
 }

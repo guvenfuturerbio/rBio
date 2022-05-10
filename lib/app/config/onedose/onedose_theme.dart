@@ -15,6 +15,9 @@ class OneDoseTheme extends IAppTheme {
       'assets/images/oneDose/success_appointment.svg';
 
   @override
+  double get appBarLogoHeight => 50;
+
+  @override
   Color get mainColor => GuvenColors.green;
 
   @override
