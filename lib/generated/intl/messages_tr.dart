@@ -941,7 +941,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pass_must_same": MessageLookupByLibrary.simpleMessage(
             "\'Yeni Şifre\' ve \'Yeni Şifre Tekrar\' değerleri uyuşmuyor"),
         "passport_number": MessageLookupByLibrary.simpleMessage(
-            "Pasaport/Vatandaşlık Numaranız"),
+            "Pasaport/Yabancı Vatandaşlık Numaranız"),
+        "passport_validation": MessageLookupByLibrary.simpleMessage(
+            "Pasaport numarası 5 karakterden kısa olamaz"),
         "password": MessageLookupByLibrary.simpleMessage("Şifre"),
         "password_again": MessageLookupByLibrary.simpleMessage("Şifre Tekrarı"),
         "password_at_least_6": MessageLookupByLibrary.simpleMessage(

@@ -953,8 +953,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pairing": MessageLookupByLibrary.simpleMessage("Pairing"),
         "pass_must_same": MessageLookupByLibrary.simpleMessage(
             "\'new password\' and \'again new password\' values must be the same."),
-        "passport_number":
-            MessageLookupByLibrary.simpleMessage("Passport Number/Citizen Id"),
+        "passport_number": MessageLookupByLibrary.simpleMessage(
+            "Passport Number/Foreign Citizen ID"),
+        "passport_validation": MessageLookupByLibrary.simpleMessage(
+            "Passport number cannot be less than 5 characters"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "password_again":
             MessageLookupByLibrary.simpleMessage("Password Again"),
@@ -1233,7 +1235,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tawkto_url": MessageLookupByLibrary.simpleMessage(
             "https://tawk.to/chat/5f86c131a2eb1124c0bcccc5/default"),
         "tc_identity_number":
-            MessageLookupByLibrary.simpleMessage("T.C identity Number"),
+            MessageLookupByLibrary.simpleMessage("T.C Identity Number"),
         "tc_or_pass_cannot_empty": MessageLookupByLibrary.simpleMessage(
             "Username or password cannot be empty !"),
         "tc_or_passport": MessageLookupByLibrary.simpleMessage(
