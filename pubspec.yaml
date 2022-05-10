@@ -43,7 +43,7 @@ dependencies:
   bloc_test: ^9.0.2
   cached_network_image: ^3.1.0+1
   carousel_slider: ^4.0.0
-  cloud_firestore: 3.1.0
+  cloud_firestore: 3.1.10
   connectivity_plus: ^2.2.0
   country_code_picker: ^2.0.2
   countup:
@@ -58,12 +58,12 @@ dependencies:
   expandable: ^5.0.1
   file_picker: ^3.0.0
   firebase: 9.0.2
-  firebase_analytics: ^9.1.5
-  firebase_auth: 3.3.7
-  firebase_core: 1.12.0
-  firebase_dynamic_links: 4.0.6
-  firebase_messaging: 11.2.6
-  firebase_storage: 10.2.7
+  firebase_analytics: ^9.1.7
+  firebase_auth: ^3.3.17
+  firebase_core: ^1.16.0
+  firebase_dynamic_links: ^4.2.2
+  firebase_messaging: ^11.3.0
+  firebase_storage: ^10.2.15
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -40,145 +41,148 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
-      listener: (context, state) => _miScaleListener(context, state),
-      child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
-        listener: (context, miScaleStatus) {
-          if (miScaleStatus.status == DeviceStatus.connected) {
-            if (miScaleStatus.device != null) {
-              BlocProvider.of<MiScaleOpsCubit>(context)
-                  .readValue(miScaleStatus.device!);
-            }
-          } else if (miScaleStatus.status == DeviceStatus.disconnected) {
-            BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
-          }
-        },
-        child: Container(
-          color: Colors.white,
-          child: MultiProvider(
-            providers: [
-              ChangeNotifierProvider(
-                create: (context) => PatientNotifiers(),
-              ),
-              ChangeNotifierProvider<LocaleNotifier>.value(
-                value: getIt<LocaleNotifier>(),
-              ),
-              ChangeNotifierProvider(
-                create: (context) => BgMeasurementsNotifierDoc(),
-              ),
-              ChangeNotifierProvider<HomeVm>(
-                create: (context) => HomeVm(context),
-              ),
-              ChangeNotifierProvider<ThemeNotifier>(
-                create: (context) => ThemeNotifier(),
-              ),
-              ChangeNotifierProvider<UserNotifier>(
-                create: (context) => getIt<UserNotifier>(),
-              ),
-              ChangeNotifierProvider<ScaleProgressVm>(
-                create: (ctx) => ScaleProgressVm(),
-              ),
-              ChangeNotifierProvider<BgProgressVm>.value(
-                value: BgProgressVm(context: context),
-              ),
-              ChangeNotifierProvider<BpProgressVm>.value(
-                value: BpProgressVm(),
-              ),
-              if (!Atom.isWeb) ...[
-                ChangeNotifierProvider<BleReactorOps>.value(
-                  value: getIt<BleReactorOps>(),
-                ),
-              ],
-            ],
+    return !kIsWeb
+        ? BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
+            listener: (context, state) => _miScaleListener(context, state),
+            child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
+              listener: (context, miScaleStatus) {
+                if (miScaleStatus.status == DeviceStatus.connected) {
+                  if (miScaleStatus.device != null) {
+                    BlocProvider.of<MiScaleOpsCubit>(context)
+                        .readValue(miScaleStatus.device!);
+                  }
+                } else if (miScaleStatus.status == DeviceStatus.disconnected) {
+                  BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
+                }
+              },
+              child: _buildMultiProvider(context),
+            ),
+          )
+        : _buildMultiProvider(context);
+  }
 
-            //
-            child: Consumer<ThemeNotifier>(
-              builder: (
-                BuildContext context,
-                ThemeNotifier themeNotifier,
-                Widget? child,
-              ) {
-                return OrientationBuilder(
-                  builder: (BuildContext context, Orientation orientation) {
-                    AppInheritedWidget.of(context)
-                        ?.changeOrientation(orientation);
+  Widget _buildMultiProvider(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => PatientNotifiers(),
+          ),
+          ChangeNotifierProvider<LocaleNotifier>.value(
+            value: getIt<LocaleNotifier>(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => BgMeasurementsNotifierDoc(),
+          ),
+          ChangeNotifierProvider<HomeVm>(
+            create: (context) => HomeVm(context),
+          ),
+          ChangeNotifierProvider<ThemeNotifier>(
+            create: (context) => ThemeNotifier(),
+          ),
+          ChangeNotifierProvider<UserNotifier>(
+            create: (context) => getIt<UserNotifier>(),
+          ),
+          ChangeNotifierProvider<ScaleProgressVm>(
+            create: (ctx) => ScaleProgressVm(),
+          ),
+          ChangeNotifierProvider<BgProgressVm>.value(
+            value: BgProgressVm(context: context),
+          ),
+          ChangeNotifierProvider<BpProgressVm>.value(
+            value: BpProgressVm(),
+          ),
+          if (!Atom.isWeb) ...[
+            ChangeNotifierProvider<BleReactorOps>.value(
+              value: getIt<BleReactorOps>(),
+            ),
+          ],
+        ],
 
-                    return AtomMaterialApp(
-                      initialUrl: widget.initialRoute,
-                      routes: VRouterRoutes.routes,
-                      onSystemPop: (data) async {
-                        if (Atom.isDialogShow) {
-                          try {
-                            Atom.dismiss();
-                            data.stopRedirection();
-                          } catch (e) {
-                            LoggerUtils.instance.i(e);
-                          }
-                        } else {
-                          final currentUrl = data.fromUrl ?? "";
-                          if (currentUrl.contains('/home')) {
-                            SystemNavigator.pop();
-                          } else if (data.historyCanBack()) {
-                            data.historyBack();
-                          }
-                        }
-                      },
+        //
+        child: Consumer<ThemeNotifier>(
+          builder: (
+            BuildContext context,
+            ThemeNotifier themeNotifier,
+            Widget? child,
+          ) {
+            return OrientationBuilder(
+              builder: (BuildContext context, Orientation orientation) {
+                AppInheritedWidget.of(context)?.changeOrientation(orientation);
 
-                      //
-                      title: 'One Dose Health',
-                      debugShowCheckedModeBanner: false,
-                      navigatorObservers: const [],
+                return AtomMaterialApp(
+                  initialUrl: widget.initialRoute,
+                  routes: VRouterRoutes.routes,
+                  onSystemPop: (data) async {
+                    if (Atom.isDialogShow) {
+                      try {
+                        Atom.dismiss();
+                        data.stopRedirection();
+                      } catch (e) {
+                        LoggerUtils.instance.i(e);
+                      }
+                    } else {
+                      final currentUrl = data.fromUrl ?? "";
+                      if (currentUrl.contains('/home')) {
+                        SystemNavigator.pop();
+                      } else if (data.historyCanBack()) {
+                        data.historyBack();
+                      }
+                    }
+                  },
 
-                      showPerformanceOverlay: false,
+                  //
+                  title: 'One Dose Health',
+                  debugShowCheckedModeBanner: false,
+                  navigatorObservers: const [],
 
-                      //
-                      builder: (BuildContext context, Widget? child) {
-                        return Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: MediaQuery(
-                            data: MediaQuery.of(context).copyWith(
-                              textScaleFactor:
-                                  themeNotifier.textScale.getValue(),
-                            ),
-                            child: child!,
-                          ),
-                        );
-                      },
+                  showPerformanceOverlay: false,
 
-                      //
-                      theme: ThemeData(
-                        primaryColor: getIt<IAppConfig>().theme.mainColor,
-                        scaffoldBackgroundColor:
-                            getIt<IAppConfig>().theme.scaffoldBackgroundColor,
-                        fontFamily: getIt<IAppConfig>().theme.fontFamily,
-                        textTheme: getIt<IAppConfig>().theme.textTheme,
-                        textSelectionTheme: TextSelectionThemeData(
-                          cursorColor: getIt<IAppConfig>().theme.mainColor,
-                          selectionColor: getIt<IAppConfig>().theme.mainColor,
-                          selectionHandleColor:
-                              getIt<IAppConfig>().theme.mainColor,
+                  //
+                  builder: (BuildContext context, Widget? child) {
+                    return Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: MediaQuery(
+                        data: MediaQuery.of(context).copyWith(
+                          textScaleFactor: themeNotifier.textScale.getValue(),
                         ),
-                        cupertinoOverrideTheme: CupertinoThemeData(
-                          primaryColor: getIt<IAppConfig>().theme.mainColor,
-                        ),
+                        child: child!,
                       ),
-                      locale: context.watch<LocaleNotifier>().current,
-                      localizationsDelegates: const [
-                        LocaleProvider.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                        DefaultCupertinoLocalizations.delegate
-                      ],
-                      supportedLocales:
-                          context.read<LocaleNotifier>().supportedLocales,
-                      onPop: (vRedirector) async {},
                     );
                   },
+
+                  //
+                  theme: ThemeData(
+                    primaryColor: getIt<IAppConfig>().theme.mainColor,
+                    scaffoldBackgroundColor:
+                        getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+                    fontFamily: getIt<IAppConfig>().theme.fontFamily,
+                    textTheme: getIt<IAppConfig>().theme.textTheme,
+                    textSelectionTheme: TextSelectionThemeData(
+                      cursorColor: getIt<IAppConfig>().theme.mainColor,
+                      selectionColor: getIt<IAppConfig>().theme.mainColor,
+                      selectionHandleColor: getIt<IAppConfig>().theme.mainColor,
+                    ),
+                    cupertinoOverrideTheme: CupertinoThemeData(
+                      primaryColor: getIt<IAppConfig>().theme.mainColor,
+                    ),
+                  ),
+                  locale: context.watch<LocaleNotifier>().current,
+                  localizationsDelegates: const [
+                    LocaleProvider.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    DefaultCupertinoLocalizations.delegate
+                  ],
+                  supportedLocales:
+                      context.read<LocaleNotifier>().supportedLocales,
+                  onPop: (vRedirector) async {},
                 );
               },
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
