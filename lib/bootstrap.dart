@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +15,15 @@ import 'core/core.dart';
 
 Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
+    AdjustConfig adjustConfig = Platform.isAndroid
+        ? AdjustConfig('txz9u7ienu2o', AdjustEnvironment.production)
+        : AdjustConfig('1vvx05nbpkio', AdjustEnvironment.production);
+    Platform.isAndroid
+        ? adjustConfig.setAppSecret(
+            1, 906297473, 1083274081, 1970775532, 1133128523)
+        : adjustConfig.setAppSecret(
+            1, 492801584, 1304692510, 331550936, 2085469560);
+    Adjust.start(adjustConfig);
 
   await Firebase.initializeApp();
   await setupLocator(appConfig);

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_event.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';

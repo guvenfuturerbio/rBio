@@ -397,6 +397,7 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
+
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
