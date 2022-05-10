@@ -17,9 +17,9 @@ import '../../../features/take_appointment/create_appointment/model/voucher_pric
 import '../../../features/take_appointment/create_appointment_events/model/get_events_response.dart';
 import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_request.dart';
 import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_response.dart';
+import '../../../features/take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
 import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
-import '../../../model/user/synchronize_onedose_user_req.dart';
 import '../../core.dart';
 
 class Repository {

@@ -48,7 +48,7 @@ class Hba1CReminderModel extends ReminderEntity<Hba1CReminderModel> {
       notificationId: json['notificationId'] as int,
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
-      nameAndSurname: json['nameAndSurname'] as String,
+      nameAndSurname: json['nameAndSurname'] as String?,
       entegrationId: json['entegrationId'] as int,
       lastTestDate: json['lastTestDate'] as int?,
       lastTestValue: json['lastTestValue'] as double?,

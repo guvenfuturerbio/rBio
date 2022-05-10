@@ -147,11 +147,11 @@ class _MyAppState extends State<MyApp> {
 
                       //
                       theme: ThemeData(
-                        primaryColor: themeNotifier.theme.mainColor,
+                        primaryColor: getIt<IAppConfig>().theme.mainColor,
                         scaffoldBackgroundColor:
-                            themeNotifier.theme.scaffoldBackgroundColor,
-                        fontFamily: themeNotifier.theme.fontFamily,
-                        textTheme: themeNotifier.theme.textTheme,
+                            getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+                        fontFamily: getIt<IAppConfig>().theme.fontFamily,
+                        textTheme: getIt<IAppConfig>().theme.textTheme,
                         textSelectionTheme: TextSelectionThemeData(
                           cursorColor: getIt<IAppConfig>().theme.mainColor,
                           selectionColor: getIt<IAppConfig>().theme.mainColor,

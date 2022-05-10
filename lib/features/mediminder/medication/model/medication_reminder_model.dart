@@ -74,7 +74,7 @@ class MedicationReminderModel extends ReminderEntity<MedicationReminderModel> {
       notificationId: json['notificationId'] as int,
       scheduledDate: json['scheduledDate'] as int,
       createdDate: json['createdDate'] as int,
-      nameAndSurname: json['nameAndSurname'] as String,
+      nameAndSurname: json['nameAndSurname'] as String?,
       entegrationId: json['entegrationId'] as int,
       status: json['status'] as bool,
       drugTracking: json['drugTracking'] == null

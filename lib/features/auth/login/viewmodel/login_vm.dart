@@ -1,6 +1,5 @@
 import 'dart:io' as platform;
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,12 +9,11 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/core.dart';
-import '../model/user_login_starter_response.dart';
 import '../../../../model/model.dart';
-import '../../../../model/user/synchronize_onedose_user_req.dart';
 import '../../../dashboard/home/viewmodel/home_vm.dart';
 import '../../../shared/consent_form/consent_form_dialog.dart';
 import '../../../shared/kvkk_form/kvkk_form_screen.dart';
+import '../../../take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
 import '../../auth.dart';
 
 enum VersionCheckProgress { done, loading, error }

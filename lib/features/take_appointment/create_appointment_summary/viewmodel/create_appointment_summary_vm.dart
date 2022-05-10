@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/model/user/synchronize_onedose_user_req.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -9,6 +8,7 @@ import '../../create_appointment/model/voucher_price_request.dart';
 import '../../do_mobile_payment/do_mobile_payment_screen.dart';
 import '../model/get_video_call_price_request.dart';
 import '../model/get_video_call_price_response.dart';
+import '../model/synchronize_onedose_user_req.dart';
 
 enum SummaryButtons {
   add,
