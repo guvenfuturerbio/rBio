@@ -26,9 +26,6 @@ class Utils {
     return _instance ??= Utils._();
   }
 
-  String get getCurrentUserNameAndSurname =>
-      '${getIt<UserNotifier>().getUserAccount().name} ${getIt<UserNotifier>().getUserAccount().surname}';
-
   String? get getCacheProfileImageStr => getIt<ISharedPreferencesManager>()
       .getString(SharedPreferencesKeys.profileImage);
   ImageProvider<Object> get getCacheProfileImage {
