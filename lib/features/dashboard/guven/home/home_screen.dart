@@ -32,7 +32,7 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
                   child: Text(
                     LocaleProvider.of(context).lbl_hello +
                         " " +
-                        Utils.instance.getCurrentUserNameAndSurname,
+                        getIt<UserNotifier>().getCurrentUserNameAndSurname(),
                     style: TextStyle(
                       color: getIt<IAppConfig>().theme.black,
                       fontWeight: FontWeight.w600,
@@ -128,11 +128,45 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
             children: [
               InkWell(
                 child: _itemOption(
+                  title: LocaleProvider.of(context).my_appointments,
+                  image: R.image.icAppointmentWhite,
+                  number: LocaleProvider.of(context).lbl_number_appointment,
+                  margin: const EdgeInsetsDirectional.only(
+                    top: 10, end: 10, bottom: 10
+                  ),
+                ),
+                onTap: () {
+                  getIt<FirebaseAnalyticsManager>()
+                      .logEvent(MenuElementTiklamaEvent('randevu'));
+                  Atom.to(PagePaths.appointment);
+                },
+              ),
+              InkWell(
+                child: _itemOption(
+                  title: LocaleProvider.of(context).results,
+                  image: R.image.icPriceServices,
+                  number: LocaleProvider.of(context).lbl_number_services,
+                  margin: const EdgeInsetsDirectional.only(top: 10, start: 10, bottom: 10),
+                ),
+                onTap: () {
+                  getIt<FirebaseAnalyticsManager>()
+                      .logEvent(MenuElementTiklamaEvent('sonuclar'));
+                  Atom.to(PagePaths.eResult);
+                },
+              ),
+            ],
+          ),
+
+          //
+          TableRow(
+            children: [
+              InkWell(
+                child: _itemOption(
                   title: LocaleProvider.of(context).for_you,
                   image: R.image.forYou,
                   number: LocaleProvider.of(context).lbl_number_doctor,
                   margin: const EdgeInsetsDirectional.only(
-                      top: 10, end: 10, bottom: 10),
+                       end: 10),
                   isFocused: false,
                 ),
                 onTap: () {
@@ -147,45 +181,11 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
                     image: R.image.icEditWhite,
                     number: LocaleProvider.of(context).lbl_number_doctor,
                     margin: const EdgeInsetsDirectional.only(
-                        top: 10, start: 10, bottom: 10)),
+                        start: 10)),
                 onTap: () {
                   getIt<FirebaseAnalyticsManager>()
                       .logEvent(MenuElementTiklamaEvent('oneriler'));
                   Atom.to(PagePaths.suggestResult);
-                },
-              ),
-            ],
-          ),
-
-          //
-          TableRow(
-            children: [
-              InkWell(
-                child: _itemOption(
-                  title: LocaleProvider.of(context).my_appointments,
-                  image: R.image.icAppointmentWhite,
-                  number: LocaleProvider.of(context).lbl_number_appointment,
-                  margin: const EdgeInsetsDirectional.only(
-                    end: 10,
-                  ),
-                ),
-                onTap: () {
-                  getIt<FirebaseAnalyticsManager>()
-                      .logEvent(MenuElementTiklamaEvent('randevu'));
-                  Atom.to(PagePaths.appointment);
-                },
-              ),
-              InkWell(
-                child: _itemOption(
-                  title: LocaleProvider.of(context).results,
-                  image: R.image.icPriceServices,
-                  number: LocaleProvider.of(context).lbl_number_services,
-                  margin: const EdgeInsetsDirectional.only(start: 10),
-                ),
-                onTap: () {
-                  getIt<FirebaseAnalyticsManager>()
-                      .logEvent(MenuElementTiklamaEvent('sonuclar'));
-                  Atom.to(PagePaths.eResult);
                 },
               ),
             ],

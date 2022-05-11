@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/core.dart';
-import '../../../shared/webview_screen.dart';
 
 class ContactUsScreen extends StatefulWidget {
   String url;
@@ -25,14 +24,22 @@ class ContactUsScreen extends StatefulWidget {
 }
 
 class _ContactUsScreenState extends State<ContactUsScreen> {
-  Completer<WebViewController> _controller = Completer<WebViewController>();
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return RbioScaffold(
+      appbar: _buildAppBar(),
       // We're using a Builder here so we have a context that is below the Scaffold
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: _buildBody(),
+    );
+  }
+
+  RbioAppBar _buildAppBar() {
+    return RbioAppBar(
+      leading: const SizedBox(),
     );
   }
 
@@ -50,11 +57,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           child: ListView(
             children: <Widget>[
               //
-              Container(
+              SizedBox(
                 height: 130,
                 child: Column(
                   children: <Widget>[
-                    (kIsWeb || Intl.getCurrentLocale() != 'tr')
+                    ((!Platform.isAndroid && !Platform.isIOS) ||
+                            Intl.getCurrentLocale() != 'tr')
                         ? const SizedBox()
                         : InkWell(
                             onTap: () {
@@ -64,7 +72,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(200),
                                 gradient: LinearGradient(
-                                    colors: [getIt<IAppConfig>().theme.red, getIt<IAppConfig>().theme.lightRed],
+                                    colors: [
+                                      getIt<IAppConfig>().theme.red,
+                                      getIt<IAppConfig>().theme.lightRed
+                                    ],
                                     begin: Alignment.bottomLeft,
                                     end: Alignment.centerRight),
                                 border: Border.all(
@@ -88,7 +99,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   ),
                                   Text(
                                     LocaleProvider.of(context).call_us,
-                                    style: TextStyle(color: getIt<IAppConfig>().theme.white),
+                                    style: TextStyle(
+                                        color: getIt<IAppConfig>().theme.white),
                                   ),
                                 ],
                               ),
@@ -98,15 +110,17 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         ? Center(
                             child: Text(
                               LocaleProvider.of(context).we_are_online,
-                              style:
-                                  TextStyle(color: getIt<IAppConfig>().theme.red, fontSize: 16),
+                              style: TextStyle(
+                                  color: getIt<IAppConfig>().theme.red,
+                                  fontSize: 16),
                             ),
                           )
                         : Center(
                             child: Text(
                               LocaleProvider.of(context).call_us_message,
-                              style:
-                                  TextStyle(color: getIt<IAppConfig>().theme.red, fontSize: 16),
+                              style: TextStyle(
+                                  color: getIt<IAppConfig>().theme.red,
+                                  fontSize: 16),
                             ),
                           )
                   ],
@@ -114,7 +128,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               ),
 
               //
-              kIsWeb
+              (!Platform.isAndroid && !Platform.isIOS)
                   ? Material(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
@@ -125,7 +139,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           constraints: BoxConstraints(
                               maxWidth: context.width * 0.6,
                               maxHeight: context.height * 0.6),
-                          child: kIsWeb ? HtmlElementView(viewType: 'tawkto') : WebView(initialUrl: LocaleProvider.current.tawkto_url),
+                          child: (!Platform.isAndroid && !Platform.isIOS)
+                              ? HtmlElementView(viewType: 'tawkto')
+                              : WebView(
+                                  initialUrl:
+                                      LocaleProvider.current.tawkto_url),
                         ),
                       ),
                     )
