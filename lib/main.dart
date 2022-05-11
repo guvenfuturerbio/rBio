@@ -2,6 +2,6 @@ import 'core/core.dart';
 import 'bootstrap.dart';
 
 Future<void> main() async {
-  final config = GuvenConfig();
+  final config = OneDoseConfig();
   await bootstrap(config);
 }
