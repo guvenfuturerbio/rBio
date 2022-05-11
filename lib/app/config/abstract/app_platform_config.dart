@@ -5,6 +5,7 @@ abstract class IAppPlatformConfig {
   IAppPlatformConfig(this.options);
   Widget runApp(String initialRoute);
   void initializeAdjust(AdjustManager manager);
+  String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager);
 }
 
 abstract class IAppWebPlatformConfig {
@@ -14,6 +15,10 @@ abstract class IAppWebPlatformConfig {
 
   void initializeAdjust(AdjustManager manager) {
     //
+  }
+
+  String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
+    return PagePaths.login;
   }
 }
 

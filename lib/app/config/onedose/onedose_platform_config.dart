@@ -7,6 +7,18 @@ abstract class IOneDosePlatformConfig extends IAppPlatformConfig {
 class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
     with IAppMobilePlatformConfig {
   OneDoseMobilePlatformConfig() : super(null);
+
+  @override
+  String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
+    String initialRoute = PagePaths.login;
+    final mobileIntroduction =
+        sharedPreferencesManager.getBool(SharedPreferencesKeys.firstLaunch) ??
+            false;
+    if (!mobileIntroduction) {
+      initialRoute = PagePaths.onboarding;
+    }
+    return initialRoute;
+  }
 }
 
 class OneDoseWebPlatformConfig extends IOneDosePlatformConfig

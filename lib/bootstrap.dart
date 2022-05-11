@@ -18,6 +18,8 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   appConfig.platform.initializeAdjust(getIt<AdjustManager>());
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
+  await _sendFirstOpenFirebaseEvent();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -33,23 +35,17 @@ Future<void> bootstrap(IAppConfig appConfig) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  String initialRoute = PagePaths.login;
-  if (!Atom.isWeb) {
-    final mobileIntroduction = getIt<ISharedPreferencesManager>()
-            .getBool(SharedPreferencesKeys.firstLaunch) ??
-        false;
-    if (!mobileIntroduction) {
-      initialRoute = PagePaths.onboarding;
-    }
-  }
-  await _sendFirstOpenFirebaseEvent();
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
         () async => runApp(
           AppInheritedWidget(
             localNotificationManager: getIt(),
-            child: appConfig.platform.runApp(initialRoute),
+            child: appConfig.platform.runApp(
+              appConfig.platform.getInitialRoute(
+                getIt<ISharedPreferencesManager>(),
+              ),
+            ),
           ),
         ),
         blocObserver: AppBlocObserver(),
