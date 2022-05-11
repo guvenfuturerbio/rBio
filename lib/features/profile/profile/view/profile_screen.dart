@@ -7,7 +7,12 @@ import '../../../../core/core.dart';
 import '../viewmodel/profile_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final bool isFromDashboard;
+
+  const ProfileScreen({
+    Key? key,
+    this.isFromDashboard = false,
+  }) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -40,6 +45,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      leading: widget.isFromDashboard ? const SizedBox() : null,
+      leadingWidth: widget.isFromDashboard ? 0 : null,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.profile,

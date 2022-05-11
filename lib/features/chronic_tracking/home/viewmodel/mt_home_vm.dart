@@ -74,12 +74,14 @@ class MeasurementTrackingVm with ChangeNotifier {
           .where((e) => e.type == HealthDataType.BLOOD_GLUCOSE)
           .toList();
 
+    /*
       List<HealthDataPoint> scaleData = healthData
           .where((e) =>
               e.type == HealthDataType.BODY_MASS_INDEX ||
               e.type == HealthDataType.BODY_FAT_PERCENTAGE ||
               e.type == HealthDataType.WEIGHT)
           .toList();
+          */
 
       List<HealthDataPoint> pressureData = healthData
           .where(

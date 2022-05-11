@@ -106,6 +106,15 @@ class Utils {
         : 0;
   }
 
+  Gradient appGradient() => LinearGradient(
+        colors: [
+          getIt<IAppConfig>().theme.red,
+          getIt<IAppConfig>().theme.lightRed
+        ],
+        begin: Alignment.bottomLeft,
+        end: Alignment.centerRight,
+      );
+
   int getAge() {
     final List<String> nums =
         getIt<ProfileStorageImpl>().getFirst().birthDate!.split(".");

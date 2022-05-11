@@ -156,3 +156,7 @@ class MenuButonTiklamaEvent extends BaseEvent {
   MenuButonTiklamaEvent()
       : super(_EventConstants.menuButonTiklama, {'element': null});
 }
+
+class LiveSupportClickEvent extends BaseEvent {
+  LiveSupportClickEvent() : super("AnaSayfa_DestekHatti_Tiklama", null);
+}

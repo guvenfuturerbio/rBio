@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:onedosehealth/features/dashboard/home/model/drawer_model.dart';
 
-import '../../core/core.dart';
+import '../../../core/core.dart';
 import 'bottom_navbar_painter.dart';
 import 'dashboard_navigation.dart';
 

@@ -21,6 +21,13 @@ abstract class IAppTheme {
   Color get iconSecondaryColor;
   Color get grayColor;
   Color get textContrastColor;
+  Color get danisma;
+  Color get danismaLight;
+  Color get red;
+  Color get lightRed;
+  Color get darkRedGuven;
+  Color get onlineAppointment;
+  Color get lightOnlineAppointment;
 
   // Common
   Color get gray;

@@ -1321,6 +1321,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sesli Sağlık Asistanı"),
         "waiting": MessageLookupByLibrary.simpleMessage("Bekleniyor"),
         "warning": MessageLookupByLibrary.simpleMessage("Uyarı"),
+        "we_are_online": MessageLookupByLibrary.simpleMessage(
+            "Şuan çevrimiçiyiz! Nasıl yardımcı olabiliriz?"),
         "we_couldnt_find_account": MessageLookupByLibrary.simpleMessage(
             "Girilen bilgilere karşılık gelen bir hesap bulamadık. Dilerseniz kayıt ol butonuna tıklayarak yeni bir hesap oluşturabilirsiniz."),
         "we_have_an_error": MessageLookupByLibrary.simpleMessage(
