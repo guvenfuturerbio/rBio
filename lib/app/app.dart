@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,19 +14,91 @@ import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
 import '../features/doctor/notifiers/patient_notifiers.dart';
 import 'bluetooth_v2/bluetooth_v2.dart';
 
-class MyApp extends StatefulWidget {
+abstract class MyApp {
+  Widget build(BuildContext context);
+}
+
+class MobileMyApp extends StatelessWidget with MyApp {
   final String initialRoute;
 
-  const MyApp({
+  const MobileMyApp({
     Key? key,
     required this.initialRoute,
   }) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
+      listener: (context, state) => _miScaleListener(context, state),
+      child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
+        listener: (context, miScaleStatus) {
+          if (miScaleStatus.status == DeviceStatus.connected) {
+            if (miScaleStatus.device != null) {
+              BlocProvider.of<MiScaleOpsCubit>(context)
+                  .readValue(miScaleStatus.device!);
+            }
+          } else if (miScaleStatus.status == DeviceStatus.disconnected) {
+            BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
+          }
+        },
+        child: MyAppCommon(initialRoute: initialRoute),
+      ),
+    );
+  }
+
+  void _miScaleListener(
+    BuildContext context,
+    MiScaleOpsState miScaleState,
+  ) async {
+    miScaleState.when(
+      initial: () {
+        //
+      },
+      showLoading: (scaleEntity) {
+        if (!Atom.isDialogShow) {
+          Atom.show(const ScaleMeasurementPopup());
+        }
+      },
+      dismissLoading: () {
+        Atom.dismiss();
+      },
+      showScalePopup: (scaleEntity) {
+        Atom.show(
+          ScaleMeasurementResultScreen(scaleEntity: scaleEntity),
+          barrierDismissible: false,
+        );
+      },
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class WebMyApp extends StatelessWidget with MyApp {
+  final String initialRoute;
+
+  const WebMyApp({
+    Key? key,
+    required this.initialRoute,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyAppCommon(initialRoute: initialRoute);
+  }
+}
+
+class MyAppCommon extends StatefulWidget {
+  final String initialRoute;
+
+  const MyAppCommon({
+    Key? key,
+    required this.initialRoute,
+  }) : super(key: key);
+
+  @override
+  State<MyAppCommon> createState() => _MyAppCommonState();
+}
+
+class _MyAppCommonState extends State<MyAppCommon> {
   @override
   void initState() {
     super.initState();
@@ -41,27 +112,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return !kIsWeb
-        ? BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
-            listener: (context, state) => _miScaleListener(context, state),
-            child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
-              listener: (context, miScaleStatus) {
-                if (miScaleStatus.status == DeviceStatus.connected) {
-                  if (miScaleStatus.device != null) {
-                    BlocProvider.of<MiScaleOpsCubit>(context)
-                        .readValue(miScaleStatus.device!);
-                  }
-                } else if (miScaleStatus.status == DeviceStatus.disconnected) {
-                  BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
-                }
-              },
-              child: _buildMultiProvider(context),
-            ),
-          )
-        : _buildMultiProvider(context);
-  }
-
-  Widget _buildMultiProvider(BuildContext context) {
     return Container(
       color: Colors.white,
       child: MultiProvider(
@@ -185,31 +235,6 @@ class _MyAppState extends State<MyApp> {
           },
         ),
       ),
-    );
-  }
-
-  void _miScaleListener(
-    BuildContext context,
-    MiScaleOpsState miScaleState,
-  ) async {
-    miScaleState.when(
-      initial: () {
-        //
-      },
-      showLoading: (scaleEntity) {
-        if (!Atom.isDialogShow) {
-          Atom.show(const ScaleMeasurementPopup());
-        }
-      },
-      dismissLoading: () {
-        Atom.dismiss();
-      },
-      showScalePopup: (scaleEntity) {
-        Atom.show(
-          ScaleMeasurementResultScreen(scaleEntity: scaleEntity),
-          barrierDismissible: false,
-        );
-      },
     );
   }
 }

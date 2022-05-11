@@ -1,6 +1,6 @@
 part of '../abstract/app_config.dart';
 
-class GuvenConfig extends IAppConfig {
+class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
   GuvenConfig()
       : super(
           productType: ProductType.guven,
@@ -8,5 +8,16 @@ class GuvenConfig extends IAppConfig {
           functionality: GuvenFunctionality(),
           endpoints: GuvenEndpoints(),
           constants: GuvenConstants(),
-        );
+        ) {
+    setDeviceConfig();
+  }
+
+  @override
+  void setDeviceConfig() {
+    if (kIsWeb) {
+      super.platform = GuvenWebPlatformConfig();
+    } else {
+      super.platform = GuvenMobilePlatformConfig();
+    }
+  }
 }
