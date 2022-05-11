@@ -12,7 +12,6 @@ enum SharedPreferencesKeys {
   patient,
   userAccount,
   canAccessHospitalOps,
-  theme,
   textScale,
   symtomAuthToken,
   pairedDevices,

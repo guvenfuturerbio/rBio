@@ -37,8 +37,8 @@ class _ChatScreenState extends State<ChatScreen> {
   String getCurrentUserId = getIt<UserNotifier>().firebaseID!;
   ChatPerson get getCurrentPerson => ChatPerson(
         id: getIt<UserNotifier>().firebaseID,
-        name: Utils.instance.getCurrentUserNameAndSurname,
-        url: "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png",
+        name: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+        url: R.image.avatarUrl,
         firebaseToken: getIt<FirebaseMessagingManager>().getToken,
       );
   final topPadding = 64 + Atom.safeTop;

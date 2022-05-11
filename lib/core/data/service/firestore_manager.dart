@@ -224,11 +224,11 @@ class FirestoreManager {
         contentAvailable: true,
         notification: NotificationModel(
           body: message.type == 0 ? message.message : "Media",
-          title: Utils.instance.getCurrentUserNameAndSurname,
+          title: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
         ),
         data: NotificationData(
           body: message.type == 0 ? message.message : "Media",
-          title: Utils.instance.getCurrentUserNameAndSurname,
+          title: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
           chatPerson: currentUser,
           type: 'chat',
         ),

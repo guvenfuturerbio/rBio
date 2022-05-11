@@ -242,7 +242,7 @@ class _SocialCard extends StatelessWidget {
   }
 
   Future<void> clickPost(int postId, String url) async {
-    getIt<UserManager>().clickPost(postId);
+    getIt<Repository>().clickPost(postId);
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 }

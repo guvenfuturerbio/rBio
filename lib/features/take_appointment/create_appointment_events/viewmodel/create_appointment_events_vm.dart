@@ -79,7 +79,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         }
       }
       availableDates.sort();
-      if (isFirstLaunch) {
+      if (isFirstLaunch && availableDates.isNotEmpty) {
         initDate = availableDates.first;
       }
 

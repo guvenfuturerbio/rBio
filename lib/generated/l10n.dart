@@ -760,10 +760,10 @@ class LocaleProvider {
     );
   }
 
-  /// `T.C identity Number`
+  /// `T.C Identity Number`
   String get tc_identity_number {
     return Intl.message(
-      'T.C identity Number',
+      'T.C Identity Number',
       name: 'tc_identity_number',
       desc: '',
       args: [],
@@ -810,10 +810,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Passport Number/Citizen Id`
+  /// `Passport Number/Foreign Citizen ID`
   String get passport_number {
     return Intl.message(
-      'Passport Number/Citizen Id',
+      'Passport Number/Foreign Citizen ID',
       name: 'passport_number',
       desc: '',
       args: [],
@@ -1135,6 +1135,16 @@ class LocaleProvider {
     return Intl.message(
       'Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, ',
       name: 'password_validation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passport number cannot be less than 5 characters`
+  String get passport_validation {
+    return Intl.message(
+      'Passport number cannot be less than 5 characters',
+      name: 'passport_validation',
       desc: '',
       args: [],
     );

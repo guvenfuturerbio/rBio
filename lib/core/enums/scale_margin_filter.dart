@@ -1,6 +1,13 @@
 import '../core.dart';
 
-enum ScaleMarginsFilter { veryLow, low, target, high, veryHigh, other }
+enum ScaleMarginsFilter {
+  veryLow,
+  low,
+  target,
+  high,
+  veryHigh,
+  other,
+}
 
 extension ScaleMarginsFilterExtension on ScaleMarginsFilter {
   String toShortString() {

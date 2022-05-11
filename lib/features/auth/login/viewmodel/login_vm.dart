@@ -10,10 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
-import '../../../../model/user/synchronize_onedose_user_req.dart';
 import '../../../dashboard/home/viewmodel/home_vm.dart';
 import '../../../shared/consent_form/consent_form_dialog.dart';
 import '../../../shared/kvkk_form/kvkk_form_screen.dart';
+import '../../../take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
 import '../../auth.dart';
 
 enum VersionCheckProgress { done, loading, error }
@@ -201,8 +201,10 @@ class LoginScreenVm extends ChangeNotifier {
       notifyListeners();
       showLoadingDialog();
       try {
-        final starterResponse =
-            await getIt<UserManager>().loginStarter(username, password);
+        final starterResponse = await getIt<Repository>().loginStarter(
+          username,
+          password,
+        );
         hideDialog(mContext);
 
         if (starterResponse.datum is Map<String, dynamic>) {

@@ -1,3 +1,5 @@
+import 'package:onedosehealth/core/core.dart';
+
 enum DiabetesType {
   type1,
   type2,
@@ -14,6 +16,18 @@ extension DiabetesTypeExtension on DiabetesType {
       case DiabetesType.nonDiabetes:
         return 3;
     }
+  }
+
+  String get xLocaleLabel{
+    switch (this) {
+      case DiabetesType.type1:
+        return LocaleProvider.current.diabetes_type_1;
+      case DiabetesType.type2:
+        return LocaleProvider.current.diabetes_type_2;
+      case DiabetesType.nonDiabetes:
+        return LocaleProvider.current.non_diabetes;
+    }
+  
   }
 }
 
