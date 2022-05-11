@@ -44,5 +44,6 @@ export 'rbio_textformfield.dart';
 export 'rbio_user_tile.dart';
 export 'rbio_visibility_suffix_icon.dart';
 export 'rbio_visiblity.dart';
+export 'rbio_for_you_category_card.dart';
 export 'stack_of_cards.dart';
 export 'warning_dialog.dart';

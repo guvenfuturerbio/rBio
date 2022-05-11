@@ -41,7 +41,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
       initialRoute = PagePaths.onboarding;
     }
   }
-
+  await _sendFirstOpenFirebaseEvent();
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
@@ -56,6 +56,16 @@ Future<void> bootstrap(IAppConfig appConfig) async {
     },
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
+}
+
+Future<void> _sendFirstOpenFirebaseEvent() async {
+  if (getIt<ISharedPreferencesManager>()
+          .get(SharedPreferencesKeys.appDownload) ==
+      null) {
+    await getIt<ISharedPreferencesManager>()
+        .setBool(SharedPreferencesKeys.appDownload, false);
+    getIt<FirebaseAnalyticsManager>().logEvent(NewDownloadEvent());
+  }
 }
 
 class WebApp extends StatelessWidget {
