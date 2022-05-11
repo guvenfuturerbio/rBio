@@ -384,8 +384,7 @@ class GuvenBaseEndpoints extends BaseEndpoints {
       '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
 
   @override
-  String get uploadProfilePicturePath =>
-      throw RbioUndefinedEndpointException("uploadProfilePicturePath");
+  String get uploadProfilePicturePath => '/file/profil-image-upload'.xBaseUrl;
 
   @override
   String get cancelAppointmentPath => '/Pusula/cancelAppointment'.xBaseUrl;
