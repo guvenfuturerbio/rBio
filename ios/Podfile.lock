@@ -613,14 +613,14 @@ PODS:
     - ReachabilitySwift
   - device_info_plus (0.0.1):
     - Flutter
-  - DKImagePickerController/Core (4.3.2):
+  - DKImagePickerController/Core (4.3.3):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
-  - DKImagePickerController/ImageDataManager (4.3.2)
-  - DKImagePickerController/PhotoGallery (4.3.2):
+  - DKImagePickerController/ImageDataManager (4.3.3)
+  - DKImagePickerController/PhotoGallery (4.3.3):
     - DKImagePickerController/Core
     - DKPhotoGallery
-  - DKImagePickerController/Resource (4.3.2)
+  - DKImagePickerController/Resource (4.3.3)
   - DKPhotoGallery (0.0.17):
     - DKPhotoGallery/Core (= 0.0.17)
     - DKPhotoGallery/Model (= 0.0.17)
@@ -904,7 +904,7 @@ PODS:
   - "permission_handler (5.1.0+2)":
     - Flutter
   - PromisesObjC (2.1.0)
-  - Protobuf (3.19.4)
+  - Protobuf (3.20.1)
   - qr_code_scanner (0.2.0):
     - Flutter
     - MTBBarcodeScanner
@@ -913,9 +913,9 @@ PODS:
     - Flutter
     - Protobuf (~> 3.5)
     - SwiftProtobuf (~> 1.0)
-  - SDWebImage (5.12.3):
-    - SDWebImage/Core (= 5.12.3)
-  - SDWebImage/Core (5.12.3)
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
   - share (0.0.1):
     - Flutter
   - shared_preferences_ios (0.0.1):
@@ -925,8 +925,8 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - SwiftProtobuf (1.18.0)
-  - SwiftyGif (5.4.2)
+  - SwiftProtobuf (1.19.0)
+  - SwiftyGif (5.4.3)
   - syncfusion_flutter_pdfviewer (0.0.1):
     - Flutter
   - Toast (4.0.0)
@@ -976,7 +976,7 @@ DEPENDENCIES:
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - abseil
     - BoringSSL-GRPC
     - DKImagePickerController
@@ -1092,7 +1092,7 @@ SPEC CHECKSUMS:
   cloud_firestore: 3787100e41165409bdba916f9de54774d2ba21e6
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
-  DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
+  DKImagePickerController: 72fd378f244cef3d27288e0aebf217a4467e4012
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
@@ -1139,23 +1139,23 @@ SPEC CHECKSUMS:
   path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
-  Protobuf: 235750e4696ff59fb07d949a9dbbc92b3c0700fe
+  Protobuf: b60ec2f51ad74765f44d0c09d2e0579d7de21745
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c
-  SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sms_autofill: c461043483362c3f1709ee76eaae6eb570b31686
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  SwiftProtobuf: c3c12645230d9b09c72267e0de89468c5543bd86
-  SwiftyGif: dec758a9dd3d278e5a855dbf279bf062c923c387
+  SwiftProtobuf: 6ef3f0e422ef90d6605ca20b21a94f6c1324d6b3
+  SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   syncfusion_flutter_pdfviewer: bb9998884b864cfedf72628df3503bdf57e397c0
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
   webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
 
-PODFILE CHECKSUM: a2f192e61830d64958f73736363ee8d3e282c323
+PODFILE CHECKSUM: 563a376a07f717e725e6535abcf02822bf303e7b
 
 COCOAPODS: 1.11.3
