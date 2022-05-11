@@ -106,6 +106,9 @@ class _ForYouSubCategoriesDetailScreenState
                         child: _buildBuyPackageButton(
                           context,
                           () {
+                            getIt<FirebaseAnalyticsManager>().logEvent(
+                                SizeOzelAltKategoriOzeteTiklandiEvent(
+                                    widget.itemId));
                             Atom.to(
                               PagePaths.orderSummary,
                               queryParameters: {

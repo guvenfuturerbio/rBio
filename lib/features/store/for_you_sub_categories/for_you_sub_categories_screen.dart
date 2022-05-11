@@ -59,14 +59,25 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
           itemCount: vm.categories.length,
           itemBuilder: (BuildContext context, int index) {
             final item = vm.categories[index];
-            return Utils.instance.forYouCategoryCard(
-              context: context,
+
+            return RbioForYouCategoryCard(
               title: item.text,
               id: item.id,
               icon: (item.icon != null)
                   ? Image.memory(base64Decode(item.icon ?? ''))
                   : Image.asset(R.image.covidCat),
-              isSubCat: true,
+              onTap: () {
+                getIt<FirebaseAnalyticsManager>()
+                    .logEvent(SizeOzelAltKategoriTiklandiEvent(item.text ?? ''));
+                Atom.to(
+                  PagePaths.forYouSubCategoriesDetail,
+                  queryParameters: {
+                    'title':
+                        title != null ? Uri.encodeFull(title!) : "No title",
+                    'subCategoryId': item.id.toString()
+                  },
+                );
+              },
             );
           },
         );

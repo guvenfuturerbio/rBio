@@ -19,9 +19,8 @@ enum SharedPreferencesKeys {
   allUsers, // Home Widget List Tutuyor
   firstLaunch,
   isTwoFactorAuth,
-
   pairedDevicesV2,
-
+  appDownload,
   hba1cList,
   medicineList,
   bloodGlucoseList,

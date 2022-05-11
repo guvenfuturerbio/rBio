@@ -63,14 +63,26 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
           itemCount: vm.categories.length,
           itemBuilder: (BuildContext context, int index) {
             final item = vm.categories[index];
-            return Utils.instance.forYouCategoryCard(
-              context: context,
+
+            return RbioForYouCategoryCard(
               title: item.text,
               id: item.id,
               icon: item.icon != null
                   ? Image.memory(base64Decode(item.icon ?? ''))
                   : Image.asset(R.image.covidCat),
-              isSubCat: false,
+              onTap: () {
+                getIt<FirebaseAnalyticsManager>()
+                    .logEvent(SizeOzelKategoriTiklandiEvent(item.text ?? ''));
+                Atom.to(
+                  PagePaths.forYouSubCategories,
+                  queryParameters: {
+                    'title': item.text != null
+                        ? Uri.encodeFull(item.text!)
+                        : "No title",
+                    'categoryId': item.id.toString(),
+                  },
+                );
+              },
             );
           },
         );

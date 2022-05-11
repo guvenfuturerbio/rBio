@@ -162,7 +162,6 @@ class UserNotifier extends ChangeNotifier {
     } else {
       sharedMap = jsonDecode(sharedData);
     }
-
     sharedMap.addAll(
       {
         currentUserName: AllUsersModel(
@@ -210,6 +209,7 @@ class UserNotifier extends ChangeNotifier {
       LoggerUtils.instance.e(e);
     } finally {
       Atom.dismiss();
+      getIt<FirebaseAnalyticsManager>().logEvent(UygulamaCikisEvent());
       Atom.to(PagePaths.login, isReplacement: true);
     }
   }
