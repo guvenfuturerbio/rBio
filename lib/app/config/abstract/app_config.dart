@@ -26,6 +26,7 @@ part 'app_platform_config.dart';
 part 'app_theme.dart';
 
 abstract class IAppConfig<T extends IAppPlatformConfig> {
+  final String title;
   late ProductType productType;
   late IAppTheme theme;
   late IAppFunctionality functionality;
@@ -34,6 +35,7 @@ abstract class IAppConfig<T extends IAppPlatformConfig> {
   late T platform;
 
   IAppConfig({
+    required this.title,
     required this.productType,
     required this.theme,
     required this.functionality,

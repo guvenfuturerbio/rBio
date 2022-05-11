@@ -3,6 +3,7 @@ part of '../abstract/app_config.dart';
 class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
   GuvenConfig()
       : super(
+          title: 'Güven Online',
           productType: ProductType.guven,
           theme: GuvenTheme(),
           functionality: GuvenFunctionality(),

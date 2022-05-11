@@ -183,10 +183,9 @@ class _MyAppCommonState extends State<MyAppCommon> {
                   },
 
                   //
-                  title: 'One Dose Health',
+                  title: getIt<IAppConfig>().title,
                   debugShowCheckedModeBanner: false,
                   navigatorObservers: const [],
-
                   showPerformanceOverlay: false,
 
                   //
