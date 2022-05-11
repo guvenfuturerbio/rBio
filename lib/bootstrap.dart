@@ -14,11 +14,14 @@ import 'core/manager/adjust_manager.dart';
 Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: appConfig.platform.options);
-  await setupLocator(appConfig);
+  await initializeLocator(appConfig);
   appConfig.platform.initializeAdjust(getIt<AdjustManager>());
   timeago.setLocaleMessages('tr', timeago.TrMessages());
-  RegisterViews.instance.init();
-  await _sendFirstOpenFirebaseEvent();
+  RegisterViews.instance.initialize();
+  await appConfig.platform.sendFirstOpenFirebaseEvent(
+    getIt<ISharedPreferencesManager>(),
+    getIt<FirebaseAnalyticsManager>(),
+  );
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -53,16 +56,6 @@ Future<void> bootstrap(IAppConfig appConfig) async {
     },
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
-}
-
-Future<void> _sendFirstOpenFirebaseEvent() async {
-  if (getIt<ISharedPreferencesManager>()
-          .get(SharedPreferencesKeys.appDownload) ==
-      null) {
-    await getIt<ISharedPreferencesManager>()
-        .setBool(SharedPreferencesKeys.appDownload, false);
-    getIt<FirebaseAnalyticsManager>().logEvent(NewDownloadEvent());
-  }
 }
 
 class WebApp extends StatelessWidget {

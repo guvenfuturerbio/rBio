@@ -14,7 +14,7 @@ class RegisterViews {
     return _instance!;
   }
 
-  void init() {
+  void initialize() {
     MobileWebInterface.registerViewFactory(
       'kvkk',
       (int viewId) => IFrameElement()

@@ -6,6 +6,10 @@ abstract class IAppPlatformConfig {
   Widget runApp(String initialRoute);
   void initializeAdjust(AdjustManager manager);
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager);
+  Future<void> sendFirstOpenFirebaseEvent(
+    ISharedPreferencesManager sharedPreferencesManager,
+    FirebaseAnalyticsManager firebaseAnalyticsManager,
+  );
 }
 
 abstract class IAppWebPlatformConfig {
@@ -20,6 +24,13 @@ abstract class IAppWebPlatformConfig {
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
     return PagePaths.login;
   }
+
+  Future<void> sendFirstOpenFirebaseEvent(
+    ISharedPreferencesManager sharedPreferencesManager,
+    FirebaseAnalyticsManager firebaseAnalyticsManager,
+  ) async {
+    //
+  }
 }
 
 abstract class IAppMobilePlatformConfig {
@@ -29,5 +40,17 @@ abstract class IAppMobilePlatformConfig {
 
   void initializeAdjust(AdjustManager manager) {
     manager.initializeAdjust();
+  }
+
+  Future<void> sendFirstOpenFirebaseEvent(
+    ISharedPreferencesManager sharedPreferencesManager,
+    FirebaseAnalyticsManager firebaseAnalyticsManager,
+  ) async {
+    if (sharedPreferencesManager.get(SharedPreferencesKeys.appDownload) ==
+        null) {
+      await sharedPreferencesManager.setBool(
+          SharedPreferencesKeys.appDownload, false);
+      firebaseAnalyticsManager.logEvent(NewDownloadEvent());
+    }
   }
 }
