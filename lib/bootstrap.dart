@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:onedosehealth/core/manager/adjust_manager.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
@@ -15,6 +17,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
 
   await Firebase.initializeApp(options: appConfig.platform.options);
   await setupLocator(appConfig);
+  getIt<AdjustManager>().initializeAdjust();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(

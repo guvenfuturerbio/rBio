@@ -7,6 +7,7 @@ import 'package:encrypt/encrypt.dart' as encrypt_pac;
 import 'package:tuple/tuple.dart';
 
 
+
 abstract class EncryptManager {
   String encrypt(String plainText);
   String decrypt(String encrypted);
