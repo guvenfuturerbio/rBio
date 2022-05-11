@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../bootstrap.dart';
 import '../../../core/core.dart';
 import '../../../core/exception/undefined_endpoint_exception.dart';
+import '../../../core/manager/adjust_manager.dart';
 import '../../app.dart';
 
 part '../guven/guven_config.dart';
