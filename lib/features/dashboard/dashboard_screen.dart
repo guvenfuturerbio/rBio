@@ -1,7 +1,3 @@
-import 'dart:developer';
-
-import 'package:adjust_sdk/adjust.dart';
-import 'package:adjust_sdk/adjust_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:onedosehealth/features/dashboard/home/model/drawer_model.dart';
@@ -106,7 +102,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //
                           Expanded(
                             child: Text(
-                              getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                              getIt<UserNotifier>()
+                                  .getCurrentUserNameAndSurname(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.xHeadline4.copyWith(
@@ -355,12 +352,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           onTap: () {
-            log("clicked");
-
-            AdjustEvent adjustEvent = AdjustEvent('e3bfvq');
-            
-            Adjust.trackEvent(adjustEvent);
-
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('hastane_randevusu_olustur'));
             Atom.to(

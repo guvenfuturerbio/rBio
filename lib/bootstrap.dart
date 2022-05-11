@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:adjust_sdk/adjust.dart';
-import 'package:adjust_sdk/adjust_config.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:onedosehealth/core/manager/adjust_manager.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
@@ -15,16 +14,10 @@ import 'core/core.dart';
 
 Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
-  AdjustConfig adjustConfig =
-      AdjustConfig('1vvx05nbpkio', AdjustEnvironment.production);
-  adjustConfig.setAppSecret(1, 492801584, 1304692510, 331550936, 2085469560);
-
-  Adjust.start(adjustConfig);
-
-  adjustConfig.logLevel = AdjustLogLevel.verbose;
 
   await Firebase.initializeApp(options: appConfig.platform.options);
   await setupLocator(appConfig);
+  getIt<AdjustManager>().initializeAdjust();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.init();
   SystemChrome.setSystemUIOverlayStyle(
