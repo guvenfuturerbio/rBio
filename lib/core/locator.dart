@@ -110,7 +110,7 @@ Future<void> setupLocator(IAppConfig appConfig) async {
     () => SharedPreferencesManager(),
   );
   getIt.registerLazySingleton<UserManager>(
-    () => UserManagerImpl(),
+    () => UserManagerImpl(getIt(), getIt()),
   );
   // #endregion
 

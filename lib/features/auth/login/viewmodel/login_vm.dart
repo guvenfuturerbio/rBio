@@ -201,8 +201,10 @@ class LoginScreenVm extends ChangeNotifier {
       notifyListeners();
       showLoadingDialog();
       try {
-        final starterResponse =
-            await getIt<UserManager>().loginStarter(username, password);
+        final starterResponse = await getIt<Repository>().loginStarter(
+          username,
+          password,
+        );
         hideDialog(mContext);
 
         if (starterResponse.datum is Map<String, dynamic>) {
