@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
 import '../../features/auth/login/model/login_exception.dart';
-import '../../features/my_appointments/my_appointments.dart';
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/rate_dialog.dart';
 import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserManager {
-  Future<GuvenResponseModel> loginStarter(String userName, String password);
   Future<RbioLoginResponse> login(String userName, String password);
   Future<void> saveLoginInfo(
     String userName,
@@ -18,45 +16,30 @@ abstract class UserManager {
     String token,
   );
   UserLoginInfo getSavedLoginInfo();
-  Future updateIdentityNumber(String identityNumber);
-  Future changeLoginUserParameter(String identityNumber);
-  Future refreshToken();
-  Future getUserProfile();
+  Future<UserAccount> getUserProfile();
   Future updateIdentityOps(String identityNumber);
-  Future getAllTranslator();
-  Future requestTranslator(
-    String appointmentId,
-    TranslatorRequest translatorPost,
-  );
-  Future<String> getAppointmentType(String roomId);
-  Future checkOnlineMeetingAccessible(String roomId);
   Future startMeeting(
     BuildContext context,
     String webConsultantId,
     int availabilityId,
   );
-  Future setOnlineAppointmentMobileEntrance(String webConsultantId);
   Future setApplicationConsentFormState(bool isChecked);
   bool getApplicationConsentFormState();
   Future setKvkkFormState(bool isChecked);
   Future<bool> getKvkkFormState();
-  Future<GuvenResponseModel> clickPost(int postId);
 }
 
 class UserManagerImpl extends UserManager {
-  @override
-  Future<GuvenResponseModel> loginStarter(
-      String userName, String password) async {
-    final response = await getIt<Repository>().loginStarter(
-      userName,
-      password,
-    );
-    return response;
-  }
+  late final ISharedPreferencesManager _sharedPreferencesManager;
+  late final Repository _repository;
+  UserManagerImpl(
+    this._sharedPreferencesManager,
+    this._repository,
+  );
 
   @override
   Future<RbioLoginResponse> login(String userName, String password) async {
-    var either = await getIt<Repository>().login(userName, password);
+    var either = await _repository.login(userName, password);
     return either.fold(
       (response) async {
         final loginResponse =
@@ -69,7 +52,7 @@ class UserManagerImpl extends UserManager {
               loginResponse.ssoResponse!.accessToken!,
             );
 
-            loginToFirebase(loginResponse);
+            _loginToFirebase(loginResponse);
             //Update user notifier depending on roles
             getIt<UserNotifier>().userTypeFetcher(loginResponse);
             return loginResponse;
@@ -84,7 +67,7 @@ class UserManagerImpl extends UserManager {
     );
   }
 
-  Future<void> loginToFirebase(RbioLoginResponse? response) async {
+  Future<void> _loginToFirebase(RbioLoginResponse? response) async {
     getIt<UserNotifier>().firebaseEmail = response?.firebaseUserEmail;
     getIt<UserNotifier>().firebasePassword = response?.firebaseUserSalt;
     await getIt<FirestoreManager>().loginFirebase();
@@ -97,36 +80,52 @@ class UserManagerImpl extends UserManager {
     bool rememberMeChecked,
     String token,
   ) async {
-    await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.loginUserName, userName);
+    await _sharedPreferencesManager.setString(
+      SharedPreferencesKeys.loginUserName,
+      userName,
+    );
     if (rememberMeChecked) {
-      await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.loginPassword, password);
+      await _sharedPreferencesManager.setString(
+        SharedPreferencesKeys.loginPassword,
+        password,
+      );
     } else {
-      await getIt<ISharedPreferencesManager>()
-          .setString(SharedPreferencesKeys.loginPassword, "");
+      await _sharedPreferencesManager.setString(
+        SharedPreferencesKeys.loginPassword,
+        "",
+      );
     }
 
-    await getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.jwtToken, token);
+    await _sharedPreferencesManager.setString(
+      SharedPreferencesKeys.jwtToken,
+      token,
+    );
   }
 
   @override
   UserLoginInfo getSavedLoginInfo() {
-    final UserLoginInfo userLoginInfo = UserLoginInfo();
-    final String? username = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.loginUserName);
+    final userLoginInfo = UserLoginInfo();
+    final username = _sharedPreferencesManager.getString(
+      SharedPreferencesKeys.loginUserName,
+    );
     userLoginInfo.username = username;
-    final String? password = getIt<ISharedPreferencesManager>()
-        .getString(SharedPreferencesKeys.loginPassword);
+    final password = _sharedPreferencesManager.getString(
+      SharedPreferencesKeys.loginPassword,
+    );
     userLoginInfo.password = password;
     return userLoginInfo;
   }
 
   @override
-  Future updateIdentityNumber(String identityNumber) async {
-    final response =
-        await getIt<Repository>().updateUserSystemName(identityNumber);
+  Future updateIdentityOps(String identityNumber) async {
+    await _updateIdentityNumber(identityNumber);
+    await _changeLoginUserParameter(identityNumber);
+    await _refreshToken();
+    await getUserProfile();
+  }
+
+  Future _updateIdentityNumber(String identityNumber) async {
+    final response = await _repository.updateUserSystemName(identityNumber);
     if (response.datum == 10) {
       return response.datum;
     } else if (response.datum == 5) {
@@ -136,11 +135,9 @@ class UserManagerImpl extends UserManager {
     }
   }
 
-  @override
-  Future changeLoginUserParameter(String identityNumber) async {
-    final token =
-        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.jwtToken);
-    final UserLoginInfo userLoginInfo = getSavedLoginInfo();
+  Future _changeLoginUserParameter(String identityNumber) async {
+    final token = _sharedPreferencesManager.get(SharedPreferencesKeys.jwtToken);
+    final userLoginInfo = getSavedLoginInfo();
     if (userLoginInfo.password != null && token != null) {
       saveLoginInfo(
         identityNumber,
@@ -153,15 +150,14 @@ class UserManagerImpl extends UserManager {
     }
   }
 
-  @override
-  Future refreshToken() async {
-    final token =
-        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.jwtToken);
-    final UserLoginInfo userLoginInfo = getSavedLoginInfo();
+  Future _refreshToken() async {
+    final token = _sharedPreferencesManager.get(SharedPreferencesKeys.jwtToken);
+    final userLoginInfo = getSavedLoginInfo();
     await login(
       userLoginInfo.username as String,
-      getIt<ISharedPreferencesManager>()
-          .getString(SharedPreferencesKeys.loginPassword) as String,
+      _sharedPreferencesManager
+              .getString(SharedPreferencesKeys.loginPassword) ??
+          '',
     );
     if (userLoginInfo.username != null &&
         userLoginInfo.password != null &&
@@ -178,89 +174,10 @@ class UserManagerImpl extends UserManager {
   }
 
   @override
-  Future getUserProfile() async {
-    final response = await getIt<Repository>().getUserProfile();
+  Future<UserAccount> getUserProfile() async {
+    final response = await _repository.getUserProfile();
     await getIt<UserNotifier>().setUserAccount(response);
     return response;
-  }
-
-  @override
-  Future updateIdentityOps(String identityNumber) async {
-    await updateIdentityNumber(identityNumber);
-    await changeLoginUserParameter(identityNumber);
-    await refreshToken();
-    await getUserProfile();
-  }
-
-  @override
-  Future getAllTranslator() async {
-    final response = await getIt<Repository>().getAllTranslator();
-    final List<TranslatorResponse> translators = <TranslatorResponse>[];
-    final data = response.datum;
-    for (final data1 in data) {
-      translators
-          .add(TranslatorResponse.fromJson(data1 as Map<String, dynamic>));
-    }
-    return translators;
-  }
-
-  @override
-  Future requestTranslator(
-    String appointmentId,
-    TranslatorRequest translatorPost,
-  ) async {
-    await getIt<Repository>().requestTranslator(appointmentId, translatorPost);
-    return true;
-  }
-
-  @override
-  Future<String> getAppointmentType(String roomId) async {
-    String streamType = "Jitsi";
-    try {
-      final responseForType =
-          await getIt<Repository>().getAppointmentTypeViaWebConsultantId();
-      final datum = responseForType.datum;
-      final StreamType streamTypeResponse =
-          StreamType.fromJson(datum as Map<String, dynamic>);
-      if (streamTypeResponse.provider != null) {
-        streamType = streamTypeResponse.provider!;
-      } else {
-        throw "streamTypeResponse.provider is null!";
-      }
-      return streamType;
-    } catch (_) {
-      return streamType;
-    }
-  }
-
-  @override
-  Future checkOnlineMeetingAccessible(String roomId) async {
-    final streamType = await getAppointmentType(roomId);
-    final response = await getIt<Repository>().getRoomStatusUi(roomId);
-    final datum = response.datum;
-    if (streamType == "Zoom" && datum != -1) {
-      return true;
-    } else if (datum == 5) {
-      return true;
-    } else if (datum == -1) {
-      //ödemesi yapılmamış girilemez.
-      throw Exception("show${LocaleProvider.current.online_appo_error_eksi1}");
-    } else if (datum == 0) {
-      //daha önce bitmiş girilemez
-      throw Exception("show${LocaleProvider.current.online_appo_error_0}");
-    } else if (datum == 1) {
-      //erken geldi açılmaz
-      throw Exception("show${LocaleProvider.current.online_appo_error_1}");
-    } else if (datum == 2) {
-      //oda açılır doktor beklenir
-      return true;
-    } else if (datum == 3) {
-      //geç geldi oda açılır
-      return true;
-    } else if (datum == 4) {
-      //geç geldi oda açılmaz.
-      throw Exception("show${LocaleProvider.current.online_appo_error_4}");
-    }
   }
 
   @override
@@ -269,8 +186,7 @@ class UserManagerImpl extends UserManager {
     String webConsultantId,
     int availabilityId,
   ) async {
-    final token =
-        getIt<ISharedPreferencesManager>().get(SharedPreferencesKeys.jwtToken);
+    final token = _sharedPreferencesManager.get(SharedPreferencesKeys.jwtToken);
     const String streamType = "Jitsi";
 
     if (streamType == "Zoom") {
@@ -356,32 +272,27 @@ class UserManagerImpl extends UserManager {
             ),
           );
 
-          setOnlineAppointmentMobileEntrance(webConsultantId);
+          await _repository.setJitsiWebConsultantId(webConsultantId);
         } else if (value != null && !(value as bool)) {}
       });
     }
   }
 
   @override
-  Future setOnlineAppointmentMobileEntrance(String webConsultantId) async {
-    await getIt<Repository>().setJitsiWebConsultantId(webConsultantId);
-  }
-
-  @override
   Future setApplicationConsentFormState(bool isChecked) async {
     if (isChecked) {
-      await getIt<ISharedPreferencesManager>()
-          .setBool(SharedPreferencesKeys.applicationConsentForm, true);
+      await _sharedPreferencesManager.setBool(
+          SharedPreferencesKeys.applicationConsentForm, true);
     } else {
-      await getIt<ISharedPreferencesManager>()
-          .setBool(SharedPreferencesKeys.applicationConsentForm, false);
+      await _sharedPreferencesManager.setBool(
+          SharedPreferencesKeys.applicationConsentForm, false);
     }
   }
 
   @override
   bool getApplicationConsentFormState() {
     try {
-      final sharedValue = getIt<ISharedPreferencesManager>()
+      final sharedValue = _sharedPreferencesManager
           .getBool(SharedPreferencesKeys.applicationConsentForm);
       if (sharedValue != null) {
         return sharedValue;
@@ -397,7 +308,7 @@ class UserManagerImpl extends UserManager {
   Future setKvkkFormState(bool isChecked) async {
     if (isChecked) {
       try {
-        await getIt<Repository>().updateUserKvkkInfo();
+        await _repository.updateUserKvkkInfo();
         // if the user didn't get the token then try until they get the token
         await Future.delayed(const Duration(seconds: 5));
         setKvkkFormState(isChecked);
@@ -412,7 +323,7 @@ class UserManagerImpl extends UserManager {
   @override
   Future<bool> getKvkkFormState() async {
     try {
-      final response = await getIt<Repository>().getUserKvkkInfo();
+      final response = await _repository.getUserKvkkInfo();
       final datum = response.datum;
       KvkkApproveResponse kvkkApproveResponse = KvkkApproveResponse();
       kvkkApproveResponse =
@@ -422,8 +333,4 @@ class UserManagerImpl extends UserManager {
       return false;
     }
   }
-
-  @override
-  Future<GuvenResponseModel> clickPost(int postId) =>
-      getIt<Repository>().clickPost(postId);
 }

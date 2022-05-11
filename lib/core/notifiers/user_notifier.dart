@@ -44,6 +44,9 @@ class UserNotifier extends ChangeNotifier {
     return PatientResponse();
   }
 
+  String getCurrentUserNameAndSurname() =>
+      '${getUserAccount().name} ${getUserAccount().surname}';
+
   void userTypeFetcher(RbioLoginResponse rsp) {
     if (rsp.roles?.contains("Doctor") ?? false) {
       _userType.add(UserType.doctor);

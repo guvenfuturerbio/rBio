@@ -305,8 +305,16 @@ class Repository {
           String webAppoId, String fileName) =>
       apiService.deleteOnlineAppoFile(webAppoId, fileName);
 
-  Future<GuvenResponseModel> getAllTranslator() =>
-      apiService.getAllTranslator();
+  Future<List<TranslatorResponse>> getAllTranslator() async {
+    final response = await apiService.getAllTranslator();
+    final List<TranslatorResponse> translators = <TranslatorResponse>[];
+    final data = response.datum;
+    for (final data1 in data) {
+      translators
+          .add(TranslatorResponse.fromJson(data1 as Map<String, dynamic>));
+    }
+    return translators;
+  }
 
   Future<GuvenResponseModel> getUserKvkkInfo() => apiService.getUserKvkkInfo();
 

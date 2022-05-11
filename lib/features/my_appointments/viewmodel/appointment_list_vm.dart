@@ -63,7 +63,7 @@ class AppointmentListVm extends RbioVm {
     try {
       progress = LoadingProgress.loading;
       notifyListeners();
-      translator = await getIt<UserManager>().getAllTranslator();
+      translator = await getIt<Repository>().getAllTranslator();
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e) {
@@ -81,7 +81,7 @@ class AppointmentListVm extends RbioVm {
     TranslatorRequest translatorPost,
   ) async {
     try {
-      await getIt<UserManager>().requestTranslator(
+      await getIt<Repository>().requestTranslator(
         appointmentId,
         translatorPost,
       );

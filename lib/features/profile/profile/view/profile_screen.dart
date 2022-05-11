@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               //
               RbioUserTile(
-                name: Utils.instance.getCurrentUserNameAndSurname,
+                name: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.profileImage),
                 leadingImage: UserLeadingImage.circle,

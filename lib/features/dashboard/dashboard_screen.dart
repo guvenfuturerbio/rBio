@@ -106,7 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //
                           Expanded(
                             child: Text(
-                              Utils.instance.getCurrentUserNameAndSurname,
+                              getIt<UserNotifier>().getCurrentUserNameAndSurname(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.xHeadline4.copyWith(

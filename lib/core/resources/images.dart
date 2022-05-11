@@ -5,6 +5,8 @@ class _Images {
       'https://ak.picdn.net/shutterstock/videos/24223855/thumb/1.jpg';
   final circlevatar =
       'https://www.pinclipart.com/picdir/middle/148-1486972_mystery-man-avatar-circle-clipart.png';
+  final avatarUrl =
+      "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png";
 
   final accuCheckPng = "assets/images/accu_check.png";
   final add = 'assets/images/add_icon.svg';
