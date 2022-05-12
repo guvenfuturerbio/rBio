@@ -57,6 +57,43 @@ class _EventConstants {
   static const sizeOzelAltKategoriOzeteTiklandi =
       "sub_category_summary_clicked";
   static const urunOdemesiTiklandiEvent = "item_payment_clicked";
+
+  static const anaSayfaOnlineRandevuTiklama = "AnaSayfa_OnlineRandevu_Tiklama";
+  static const anaSayfaPcrTestiTiklama = "AnaSayfa_pcrTesti_Tiklama";
+  static const anaSayfaDoktorBulTiklama = "AnaSayfa_DoktorBul_Tiklama";
+  static const anaSayfaRandevularimTiklama = "AnaSayfa_Randevularim_Tiklama";
+  static const anaSayfaSonuclarimTiklama = "AnaSayfa_Sonuclarim_Tiklama";
+  static const anaSayfaDestekHattiTiklama = "AnaSayfa_DestekHatti_Tiklama";
+  static const doktorBulTabTiklama = "DoktorBul_TabTiklama";
+  static const randevularimTabTiklama = "Randevularim_TabTiklama";
+  static const anaSayfaTabTiklama = "anaSayfaTabTiklama";
+  static const profilimTabTiklama = "Profilim_TabTiklama";
+  static const onlineRandevuBirimSecimi = "OnlineRandevu_BirimSecimi";
+  static const onlineRandevuDoktorSecimi = "OnlineRandevu_DoktorSecimi";
+  static const doktorDetayRandevuAl = "DoktorDetay_RandevuAl";
+  static const pcrTestiHastaneSecim = "pcrTesti_HastaneSecim";
+  static const sifreDegisikligiBasarili = "sifreDegisikligi_Basarili";
+  static const yakinlarimTabTiklama = "yakinlarimTab_Tiklama";
+  static const yakinDegistirmeBasarili = "yakinDegistirme_Basarili";
+  static const yakinEklemeBasarili = "yakinEkleme_Basarili";
+  static const yakinlarimAnaHesapGecisBasarili =
+      "yakinlarimAnaHesapGecis_Basarili";
+  static const kisiselBilgilerTiklama = "kisiselBilgiler_Tiklama";
+  static const profilResmiYukleme = "profilResmi_Yukleme";
+  static const profilResmiSilme = "profilResmi_Silme";
+
+// #region FailEvents
+
+  static const sifreDegistirmeHata = "sifreDegisikligi_Basarisiz";
+  static const yakinDegistirmeHata = "yakinDegistirme_Basarisiz";
+  static const yakinEklemeHata = "yakinEkleme_Basarisiz";
+  static const yakinlarimAnaHesapGecisHata =
+      "yakinlarimAnaHesapGecis_Basarisiz";
+  static const yakinSilmeHata = "yakinSilme_Basarisiz";
+  static const kayitOlAdim1Hata = "RegisterStep1FailEvent";
+
+// #endregion
+
 }
 
 // ----------- ----------- ----------- ----------- -----------
@@ -205,15 +242,6 @@ class UygulamaCikisEvent extends BaseEvent {
   UygulamaCikisEvent() : super(_EventConstants.uygulamaCikis, {});
 }
 
-// ! ----------- ----------- ----------- ----------- -----------
-// Güven Online
-
-// güven homeScreen'de küçük Size Özel kartına tıklanınca çağırılıyor.
-class SizeOzelSayfasiTiklamaEvent extends BaseEvent {
-  SizeOzelSayfasiTiklamaEvent()
-      : super(_EventConstants.sizeOzelSayfasiTiklamaEvent, null);
-}
-
 class SizeOzelKategoriTiklandiEvent extends BaseEvent {
   SizeOzelKategoriTiklandiEvent(String categoryName)
       : super(_EventConstants.sizeOzelKategoriTiklandiEvent,
@@ -241,13 +269,25 @@ class NewDownloadEvent extends BaseEvent {
   NewDownloadEvent() : super(_EventConstants.appDownloadEvent, null);
 }
 
-// userManager'da jitsi görüşmesi terminated durumuna geçince çağırılıyor.
 class VideoCallSuccessfulEvent extends BaseEvent {
   VideoCallSuccessfulEvent()
       : super(_EventConstants.videoCallSuccessEvent, null);
 }
+class Covid19PcrTestiTiklandiEvent extends BaseEvent {
+  Covid19PcrTestiTiklandiEvent()
+      : super(_EventConstants.anaSayfaPcrTestiTiklama, null);
+}
 
-// iyzico_response_vm.dart'da if(code == '13') durumunda çağırılır.
+class SifreDegistirBasariliEvent extends BaseEvent {
+  SifreDegistirBasariliEvent()
+      : super(_EventConstants.sifreDegisikligiBasarili, null);
+}
+
+class YakinEklemeBasariliEvent extends BaseEvent {
+  YakinEklemeBasariliEvent(int datumType)
+      : super(_EventConstants.yakinEklemeBasarili, {"eklenme_tipi": datumType});
+}
+
 class BasariliOdemeEvent extends BaseEvent {
   BasariliOdemeEvent({
     String? patientName,
@@ -265,7 +305,143 @@ class BasariliOdemeEvent extends BaseEvent {
         );
 }
 
-// patient_relatives_vm.dart'da deleteRelative() fonksiyonunda if(success == true) ise çağırılır.
+// #region FailEvents
+
+class KayitOlAdim1Hata extends BaseEvent {
+  KayitOlAdim1Hata(String param1, int param2)
+      : super(_EventConstants.kayitOlAdim1Hata, {
+          'test_param1': param1,
+          'test_param2': param2,
+          'test_param3': 12345670,
+          'test_param4': 42.0,
+          'test_param5': true,
+        });
+}
+
+class SifreDegistirmeHataEvent extends BaseEvent {
+  SifreDegistirmeHataEvent() : super(_EventConstants.sifreDegistirmeHata, null);
+}
+
+class YakinEklemeHataEvent extends BaseEvent {
+  YakinEklemeHataEvent() : super(_EventConstants.yakinEklemeHata, null);
+}
+
+// #endregion
+
+// #region NoReference
+class YakinDegistirmeHataEvent extends BaseEvent {
+  YakinDegistirmeHataEvent(String relativeNameAndSurname)
+      : super(_EventConstants.yakinDegistirmeHata,
+            {'yakin_ismi': relativeNameAndSurname});
+}
+
+class YakinlarimAnaHesapGecisHataEvent extends BaseEvent {
+  YakinlarimAnaHesapGecisHataEvent()
+      : super(_EventConstants.yakinlarimAnaHesapGecisHata, null);
+}
+
+class YakinSilmeHataEvent extends BaseEvent {
+  YakinSilmeHataEvent(String relativeNameAndSurname)
+      : super(_EventConstants.yakinSilmeHata,
+            {'yakin_ismi': relativeNameAndSurname});
+}
+
+class AnaSayfaOnlineRandevuTiklamaEvent extends BaseEvent {
+  AnaSayfaOnlineRandevuTiklamaEvent()
+      : super(_EventConstants.anaSayfaOnlineRandevuTiklama, null);
+}
+
+class DoktorBulTiklandiEvent extends BaseEvent {
+  DoktorBulTiklandiEvent()
+      : super(_EventConstants.anaSayfaDoktorBulTiklama, null);
+}
+
+class RandevularimTiklandiEvent extends BaseEvent {
+  RandevularimTiklandiEvent()
+      : super(_EventConstants.anaSayfaRandevularimTiklama, null);
+}
+
+class SonuclarimTiklandiEvent extends BaseEvent {
+  SonuclarimTiklandiEvent()
+      : super(_EventConstants.anaSayfaSonuclarimTiklama, null);
+}
+
+class CanliDestekTiklandiEvent extends BaseEvent {
+  CanliDestekTiklandiEvent()
+      : super(_EventConstants.anaSayfaDestekHattiTiklama, null);
+}
+
+class DoktorBulTabTiklandiEvent extends BaseEvent {
+  DoktorBulTabTiklandiEvent()
+      : super(_EventConstants.doktorBulTabTiklama, null);
+}
+
+class RandevularimTabTiklamaEvent extends BaseEvent {
+  RandevularimTabTiklamaEvent()
+      : super(_EventConstants.randevularimTabTiklama, null);
+}
+
+class AnasayfaTabTiklandiEvent extends BaseEvent {
+  AnasayfaTabTiklandiEvent() : super(_EventConstants.anaSayfaTabTiklama, null);
+}
+
+class ProfilTabTiklandiEvent extends BaseEvent {
+  ProfilTabTiklandiEvent() : super(_EventConstants.profilimTabTiklama, null);
+}
+
+class OnlineRandevuDepartmanSecimiEvent extends BaseEvent {
+  OnlineRandevuDepartmanSecimiEvent(String department)
+      : super(_EventConstants.onlineRandevuBirimSecimi, {
+          'birim_adi': department,
+        });
+}
+
+class OnlineRandevuDoktorSecimiEvent extends BaseEvent {
+  OnlineRandevuDoktorSecimiEvent(String department, String doctorName)
+      : super(_EventConstants.onlineRandevuDoktorSecimi,
+            {'birim_adi': department, 'doktor_adi': doctorName});
+}
+
+class OnlineRandevuAlTiklandiEvent extends BaseEvent {
+  OnlineRandevuAlTiklandiEvent(String department, String doctorName)
+      : super(_EventConstants.doktorDetayRandevuAl,
+            {'birim_adi': department, 'doktor_adi': doctorName});
+}
+
+class PcrHastaneSecimiEvent extends BaseEvent {
+  PcrHastaneSecimiEvent(String hospitalName)
+      : super(_EventConstants.pcrTestiHastaneSecim,
+            {'hastane_adi': hospitalName});
+}
+
+class YakinlarimTabTiklandiEvent extends BaseEvent {
+  YakinlarimTabTiklandiEvent()
+      : super(_EventConstants.yakinlarimTabTiklama, null);
+}
+
+class YakinDegistirmeBasariliEvent extends BaseEvent {
+  YakinDegistirmeBasariliEvent(String relativeNameAndSurname)
+      : super(_EventConstants.yakinDegistirmeBasarili,
+            {'yakin_ismi': relativeNameAndSurname});
+}
+
+class YakinlarimAnaHesabaGecisBasariliEvent extends BaseEvent {
+  YakinlarimAnaHesabaGecisBasariliEvent()
+      : super(_EventConstants.yakinlarimAnaHesapGecisBasarili, null);
+}
+
+class KisiselBilgilerTiklandiEvent extends BaseEvent {
+  KisiselBilgilerTiklandiEvent()
+      : super(_EventConstants.kisiselBilgilerTiklama, null);
+}
+
+class ProfilResmiYuklemeEvent extends BaseEvent {
+  ProfilResmiYuklemeEvent() : super(_EventConstants.profilResmiYukleme, null);
+}
+
+class ProfilResmiSilmeEvent extends BaseEvent {
+  ProfilResmiSilmeEvent() : super(_EventConstants.profilResmiSilme, null);
+}
 class YakinSilmeBasariliEvent extends BaseEvent {
   YakinSilmeBasariliEvent(
     String relativeNameAndSurname,
@@ -273,3 +449,10 @@ class YakinSilmeBasariliEvent extends BaseEvent {
           'yakin_ismi': relativeNameAndSurname,
         });
 }
+class SizeOzelSayfasiTiklamaEvent extends BaseEvent {
+  SizeOzelSayfasiTiklamaEvent()
+      : super(_EventConstants.sizeOzelSayfasiTiklamaEvent, null);
+}
+
+// #endregion
+

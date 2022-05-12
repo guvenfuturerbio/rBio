@@ -61,22 +61,29 @@ class AddPatientRelativesScreenVm extends RbioVm {
       hideDialog(context);
       String responseMessage = response.message.toString();
       if (response.datum == 0) {
+        getIt<FirebaseAnalyticsManager>()
+            .logEvent(YakinEklemeBasariliEvent(response.datum));
         showInfoDialog(
           LocaleProvider.of(context).success_message_title,
           LocaleProvider.of(context).existing_relative_add,
         );
       } else if (response.datum == 1) {
+        getIt<FirebaseAnalyticsManager>()
+            .logEvent(YakinEklemeBasariliEvent(response.datum));
         showInfoDialog(
           LocaleProvider.of(context).success_message_title,
           LocaleProvider.of(context).add_new_relative,
         );
       } else {
+        getIt<FirebaseAnalyticsManager>()
+            .logEvent(YakinEklemeBasariliEvent(response.datum));
         showInfoDialog(
           LocaleProvider.of(context).warning,
           responseMessage,
         );
       }
     } catch (error) {
+      getIt<FirebaseAnalyticsManager>().logEvent(YakinEklemeHataEvent());
       Future.delayed(const Duration(milliseconds: 500), () {
         hideDialog(context);
         showInfoDialog(

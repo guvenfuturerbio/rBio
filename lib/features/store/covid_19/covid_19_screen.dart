@@ -87,7 +87,10 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                 number: LocaleProvider.current.lbl_number_hospital,
                 context: context,
               ),
-              onTap: () {},
+              onTap: () {
+                getIt<FirebaseAnalyticsManager>()
+                    .logEvent(Covid19PcrTestiTiklandiEvent());
+              },
             ),
           ),
 

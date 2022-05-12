@@ -90,6 +90,8 @@ class ChangePasswordScreenVm extends RbioVm {
                     .getString(SharedPreferencesKeys.jwtToken) ??
                 '',
           );
+          getIt<FirebaseAnalyticsManager>()
+              .logEvent(SifreDegistirBasariliEvent());
           showInfoDialog(
             LocaleProvider.of(mContext).success_message_title,
             LocaleProvider.of(mContext).succefully_created_pass,
@@ -98,6 +100,7 @@ class ChangePasswordScreenVm extends RbioVm {
           errorParse(response);
         }
       } catch (error, stackTrace) {
+        getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
         showDelayedErrorDialog(error, stackTrace);
       } finally {
         showProgressOverlay = false;
@@ -108,6 +111,7 @@ class ChangePasswordScreenVm extends RbioVm {
   void errorParse(GuvenResponseModel response) {
     var errorCode = response.datum;
     if (errorCode is int) {
+      getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
       switch (errorCode) {
         case 1:
           {
