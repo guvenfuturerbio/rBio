@@ -15,7 +15,6 @@ import '../../features/chronic_tracking/progress_sections/scale/scale_detail/vie
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/guven/dashboard_navigation.dart';
-
 import '../../features/dashboard/onedose/dashboard_navigation.dart';
 import '../../features/dashboard/search/doctor_cv/doctor_cv_screen.dart';
 import '../../features/detailed_symptom/detailed_symptom_checker.dart';
@@ -195,9 +194,9 @@ class VRouterRoutes {
       path: PagePaths.main,
       widget: Container(),
       stackedRoutes: [
-        getIt<IAppConfig>().productType== ProductType.oneDose ?
-        DashboardNavigation() :
-        GuvenDashboardNavigation(),
+        getIt<IAppConfig>().productType == ProductType.oneDose
+            ? DashboardNavigation()
+            : GuvenDashboardNavigation(),
       ],
     ),
 
@@ -617,11 +616,11 @@ class PagePaths {
   static const doctorCv = '/doctor-cv';
   // #endregion
 
-  //Detailed Symptom
+  // #region Detailed Symptom
   static const detailedSymptom = '/detailed-symptom';
   // #endregion
 
-  // Doctor
+  // #region Doctor
   static const doctorHome = '/doctor';
   static const doctorPatientList = '/doctor-patient-list';
   static const doctorGlucosePatientDetailL = '/blood-glucose-patient-detail';
@@ -632,7 +631,7 @@ class PagePaths {
   static const doctorCosultation = '/doctor-consultation';
   // #endregion
 
-  // Mediminder
+  // #region Mediminder
   static const reminderList = "/reminder-list";
   static const selectReminder = '/select-reminder';
   static const bloodGlucoseReminderAddEdit = '/reminder/blood-glucose-add-edit';
@@ -670,7 +669,7 @@ class PagePaths {
   static const addPatientRelatives = '/add-patient-relatives';
   // #endregion
 
-  // Symptom Checker
+  // #region Symptom Checker
   static const symptomMainMenu = '/symptom-main';
   static const symptomBodyLocations = '/symptom-body-locations';
   static const symptomSubBodyLocations = '/symptom-sub-body-locations';
