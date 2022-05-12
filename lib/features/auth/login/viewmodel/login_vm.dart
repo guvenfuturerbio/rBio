@@ -3,6 +3,7 @@ import 'dart:io' as platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/manager/adjust_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -399,6 +400,8 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
+    getIt<AdjustManager>().trackEvent(SuccessfulLoginEvent());
+
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
@@ -578,6 +581,7 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
+    getIt<AdjustManager>().trackEvent(SuccessfulLoginEvent());
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }

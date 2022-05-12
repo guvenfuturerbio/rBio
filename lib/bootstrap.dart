@@ -9,14 +9,20 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'app/app.dart';
 import 'app/bluetooth_v2/bluetooth_v2.dart';
 import 'core/core.dart';
+import 'core/manager/adjust_manager.dart';
 
 Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(options: appConfig.platform.options);
-  await setupLocator(appConfig);
+  await initializeLocator(appConfig);
+  appConfig.platform.initializeAdjust(getIt<AdjustManager>());
   timeago.setLocaleMessages('tr', timeago.TrMessages());
-  RegisterViews.instance.init();
+  RegisterViews.instance.initialize();
+  await appConfig.platform.sendFirstOpenFirebaseEvent(
+    getIt<ISharedPreferencesManager>(),
+    getIt<FirebaseAnalyticsManager>(),
+  );
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -32,23 +38,17 @@ Future<void> bootstrap(IAppConfig appConfig) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  String initialRoute = PagePaths.login;
-  if (!Atom.isWeb) {
-    final mobileIntroduction = getIt<ISharedPreferencesManager>()
-            .getBool(SharedPreferencesKeys.firstLaunch) ??
-        false;
-    if (!mobileIntroduction) {
-      initialRoute = PagePaths.onboarding;
-    }
-  }
-
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
         () async => runApp(
           AppInheritedWidget(
             localNotificationManager: getIt(),
-            child: appConfig.platform.runApp(initialRoute),
+            child: appConfig.platform.runApp(
+              appConfig.platform.getInitialRoute(
+                getIt<ISharedPreferencesManager>(),
+              ),
+            ),
           ),
         ),
         blocObserver: AppBlocObserver(),

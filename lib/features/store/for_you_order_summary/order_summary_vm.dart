@@ -11,7 +11,7 @@ class OrderSummaryScreenVm extends ChangeNotifier {
       setSelectedItem(subCategoryItems![0]);
     });
   }
-  
+
   int? selectedIndex;
 
   BuildContext? mContext;

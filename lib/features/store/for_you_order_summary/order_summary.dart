@@ -299,6 +299,9 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                     width: 260,
                     text: LocaleProvider.current.payment,
                     onPressed: () {
+                      getIt<FirebaseAnalyticsManager>().logEvent(
+                          UrunOdemesiTiklandiEvent(
+                              value.selectedItem!.title ?? ''));
                       Atom.to(
                         PagePaths.creditCard,
                         queryParameters: {

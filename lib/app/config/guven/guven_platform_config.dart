@@ -7,6 +7,11 @@ abstract class IGuvenPlatformConfig extends IAppPlatformConfig {
 class GuvenMobilePlatformConfig extends IGuvenPlatformConfig
     with IAppMobilePlatformConfig {
   GuvenMobilePlatformConfig() : super(null);
+
+  @override
+  String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
+    return PagePaths.login;
+  }
 }
 
 class GuvenWebPlatformConfig extends IGuvenPlatformConfig

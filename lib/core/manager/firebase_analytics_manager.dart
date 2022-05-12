@@ -32,18 +32,20 @@ class FirebaseAnalyticsManager {
 }
 
 class _EventConstants {
-  static const basariliGiris = "Basarili_Giris";
-  static const saglikTakibiButonlar = "SaglikTakibi_Butonlar";
-  static const menuElementTiklama = "Menu_Element_Tiklama";
   static const altBarTiklama = "Alt_Bar_Tiklama";
+  static const basariliGiris = "Basarili_Giris";
   static const detailedSymptomChecker = "detailed_symptom_checker";
+  static const menuButonTiklama = "Menu_Buton_Tiklama";
+  static const menuElementTiklama = "Menu_Element_Tiklama";
+  static const randevuOlusturRandevuAra = "RandevuOlustur_RandevuAra";
+  static const saglikTakibiButonlar = "SaglikTakibi_Butonlar";
   static const sikayetlerimSayfa1Devam = "SikayetlerimSayfa1_Devam";
   static const sikayetlerimSayfa2Devam = "SikayetlerimSayfa2_Devam";
   static const sikayetlerimSayfa3Devam = "SikayetlerimSayfa3_Devam";
-  static const sikayetlerimSayfa4BolumAnaliziYapin = "SikayetlerimSayfa4_BolumAnaliziYapin";
+  static const sikayetlerimSayfa4BolumAnaliziYapin =
+      "SikayetlerimSayfa4_BolumAnaliziYapin";
   static const sonuclarimRandevuAra = "Sonuclarim_RandevuAra";
-  static const randevuOlusturRandevuAra = "RandevuOlustur_RandevuAra";
-  static const menuButonTiklama = "Menu_Buton_Tiklama";
+  static const uygulamaCikis = "uygulamaCikis";
 
   static const sizeOzelSayfasiTiklamaEvent = "Size_Özel_sayfası_Tiklama";
   static const appDownloadEvent = "app_download";
@@ -52,28 +54,12 @@ class _EventConstants {
   static const basariliOdeme = "payment_success";
   static const sizeOzelKategoriTiklandiEvent = "category_clicked";
   static const sizeOzelAltKategoriTiklandiEvent = "sub_category_clicked";
-  static const sizeOzelAltKategoriOzeteTiklandi = "sub_category_summary_clicked";
+  static const sizeOzelAltKategoriOzeteTiklandi =
+      "sub_category_summary_clicked";
   static const urunOdemesiTiklandiEvent = "item_payment_clicked";
 }
 
 // ----------- ----------- ----------- ----------- -----------
-
-class BasariliGirisEvent extends BaseEvent {
-  BasariliGirisEvent() : super(_EventConstants.basariliGiris, null);
-}
-
-class SaglikTakibiButonlarEvent extends BaseEvent {
-  SaglikTakibiButonlarEvent(String element)
-      : super(
-          _EventConstants.saglikTakibiButonlar,
-          {'element': element},
-        );
-}
-
-class MenuElementTiklamaEvent extends BaseEvent {
-  MenuElementTiklamaEvent(String element)
-      : super(_EventConstants.menuElementTiklama, {'element': element});
-}
 
 class AltBarTiklamaEvent extends BaseEvent {
   AltBarTiklamaEvent(String element)
@@ -83,11 +69,53 @@ class AltBarTiklamaEvent extends BaseEvent {
         );
 }
 
+class BasariliGirisEvent extends BaseEvent {
+  BasariliGirisEvent() : super(_EventConstants.basariliGiris, null);
+}
+
 class DetailedSymptomCheckerEvent extends BaseEvent {
   DetailedSymptomCheckerEvent()
       : super(
           _EventConstants.detailedSymptomChecker,
           {'element': 'profil'},
+        );
+}
+
+class MenuButonTiklamaEvent extends BaseEvent {
+  MenuButonTiklamaEvent()
+      : super(
+          _EventConstants.menuButonTiklama,
+          {'element': null},
+        );
+}
+
+class MenuElementTiklamaEvent extends BaseEvent {
+  MenuElementTiklamaEvent(String element)
+      : super(_EventConstants.menuElementTiklama, {'element': element});
+}
+
+class RandevuOlusturRandevuAraEvent extends BaseEvent {
+  RandevuOlusturRandevuAraEvent(
+    String? randevuAlacakKisiId,
+    String? hastaneSecimi,
+    String? bolumSecimi,
+    int? doktorSecimi,
+  ) : super(
+          _EventConstants.randevuOlusturRandevuAra,
+          {
+            'randevu_alacak_kisi_id': randevuAlacakKisiId,
+            'hastane_secimi': hastaneSecimi,
+            'bolum_secimi': bolumSecimi,
+            'doktor_secimi': doktorSecimi,
+          },
+        );
+}
+
+class SaglikTakibiButonlarEvent extends BaseEvent {
+  SaglikTakibiButonlarEvent(String element)
+      : super(
+          _EventConstants.saglikTakibiButonlar,
+          {'element': element},
         );
 }
 
@@ -173,67 +201,42 @@ class SonuclarimRandevuAraEvent extends BaseEvent {
         );
 }
 
-class RandevuOlusturRandevuAraEvent extends BaseEvent {
-  RandevuOlusturRandevuAraEvent(
-    String? randevuAlacakKisiId,
-    String? hastaneSecimi,
-    String? bolumSecimi,
-    int? doktorSecimi,
-  ) : super(
-          _EventConstants.randevuOlusturRandevuAra,
-          {
-            'randevu_alacak_kisi_id': randevuAlacakKisiId,
-            'hastane_secimi': hastaneSecimi,
-            'bolum_secimi': bolumSecimi,
-            'doktor_secimi': doktorSecimi,
-          },
-        );
-}
-
-class MenuButonTiklamaEvent extends BaseEvent {
-  MenuButonTiklamaEvent()
-      : super(
-          _EventConstants.menuButonTiklama,
-          {'element': null},
-        );
+class UygulamaCikisEvent extends BaseEvent {
+  UygulamaCikisEvent() : super(_EventConstants.uygulamaCikis, {});
 }
 
 // ! ----------- ----------- ----------- ----------- -----------
 // Güven Online
 
-// homeScreen'de küçük Size Özel kartına tıklanınca çağırılıyor.
+// güven homeScreen'de küçük Size Özel kartına tıklanınca çağırılıyor.
 class SizeOzelSayfasiTiklamaEvent extends BaseEvent {
   SizeOzelSayfasiTiklamaEvent()
       : super(_EventConstants.sizeOzelSayfasiTiklamaEvent, null);
 }
 
-// Size Özel sayfalarındaki alt kategoriyse SubCategoryClicked değilse CategoryClicked çağırılır.
 class SizeOzelKategoriTiklandiEvent extends BaseEvent {
   SizeOzelKategoriTiklandiEvent(String categoryName)
       : super(_EventConstants.sizeOzelKategoriTiklandiEvent,
-            {"categoryName": categoryName});
+            {"categoryId": categoryName});
 }
 
 class SizeOzelAltKategoriTiklandiEvent extends BaseEvent {
   SizeOzelAltKategoriTiklandiEvent(String subCategoryName)
       : super(_EventConstants.sizeOzelAltKategoriTiklandiEvent,
-            {"subCategoryName": subCategoryName});
+            {"subCategoryId": subCategoryName});
 }
 
-// for_you_sub_categories_detail_screen.dart'da buy_package butonunda çağırılır.
 class SizeOzelAltKategoriOzeteTiklandiEvent extends BaseEvent {
   SizeOzelAltKategoriOzeteTiklandiEvent(String subCategoryName)
       : super(_EventConstants.sizeOzelAltKategoriOzeteTiklandi,
             {"subCategoryName": subCategoryName});
 }
 
-// order_summary.dart'da payment butonunda çağırılır.
 class UrunOdemesiTiklandiEvent extends BaseEvent {
   UrunOdemesiTiklandiEvent(String itemName)
       : super(_EventConstants.urunOdemesiTiklandiEvent, {"itemName": itemName});
 }
 
-// main.dart'da SP'de appDownload değeri null ise çağırıyor.
 class NewDownloadEvent extends BaseEvent {
   NewDownloadEvent() : super(_EventConstants.appDownloadEvent, null);
 }
