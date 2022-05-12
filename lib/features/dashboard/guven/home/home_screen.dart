@@ -55,7 +55,7 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
                     top: 10,
                     bottom: 10,
                     left: 20,
-                    right: 20,
+                    right: 120,
                   ),
                 ),
 
@@ -75,6 +75,7 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
                       );
                     },
                     child: _itemFindHospital(
+                      context: context,
                       title: LocaleProvider.of(context).online_appo,
                       image: R.image.icVideoIcon,
                       number: LocaleProvider.of(context).title_appointment,
@@ -92,12 +93,13 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
                   width: double.infinity,
                   child: InkWell(
                     child: _itemFindHospital(
+                        context: context,
                         title: LocaleProvider.of(context).lbl_find_hospital,
                         image: R.image.icHospitalWhite,
                         colorLeft: getIt<IAppConfig>().theme.red,
                         colorRight: getIt<IAppConfig>().theme.lightRed,
                         number: LocaleProvider.of(context).lbl_number_hospital,
-                        margin: const EdgeInsets.only(top: 10)),
+                        margin: const EdgeInsets.only(top: 10, bottom: 10)),
                     onTap: () {
                       getIt<FirebaseAnalyticsManager>().logEvent(
                           MenuElementTiklamaEvent('hastane_randevusu_olustur'));
@@ -128,12 +130,12 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
             children: [
               InkWell(
                 child: _itemOption(
+                  context: context,
                   title: LocaleProvider.of(context).my_appointments,
                   image: R.image.icAppointmentWhite,
                   number: LocaleProvider.of(context).lbl_number_appointment,
                   margin: const EdgeInsetsDirectional.only(
-                    top: 10, end: 10, bottom: 10
-                  ),
+                      top: 10, end: 10, bottom: 10),
                 ),
                 onTap: () {
                   getIt<FirebaseAnalyticsManager>()
@@ -143,10 +145,12 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
               ),
               InkWell(
                 child: _itemOption(
+                  context: context,
                   title: LocaleProvider.of(context).results,
                   image: R.image.icPriceServices,
                   number: LocaleProvider.of(context).lbl_number_services,
-                  margin: const EdgeInsetsDirectional.only(top: 10, start: 10, bottom: 10),
+                  margin: const EdgeInsetsDirectional.only(
+                      top: 10, start: 10, bottom: 10),
                 ),
                 onTap: () {
                   getIt<FirebaseAnalyticsManager>()
@@ -162,11 +166,11 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
             children: [
               InkWell(
                 child: _itemOption(
+                  context: context,
                   title: LocaleProvider.of(context).for_you,
                   image: R.image.forYou,
                   number: LocaleProvider.of(context).lbl_number_doctor,
-                  margin: const EdgeInsetsDirectional.only(
-                       end: 10),
+                  margin: const EdgeInsetsDirectional.only(end: 10),
                   isFocused: false,
                 ),
                 onTap: () {
@@ -177,11 +181,11 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
               ),
               InkWell(
                 child: _itemOption(
+                  context: context,
                     title: LocaleProvider.of(context).request_and_suggestions,
                     image: R.image.icEditWhite,
                     number: LocaleProvider.of(context).lbl_number_doctor,
-                    margin: const EdgeInsetsDirectional.only(
-                        start: 10)),
+                    margin: const EdgeInsetsDirectional.only(start: 10)),
                 onTap: () {
                   getIt<FirebaseAnalyticsManager>()
                       .logEvent(MenuElementTiklamaEvent('oneriler'));
@@ -209,6 +213,7 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
 }
 
 Widget _itemOption({
+  required BuildContext context,
   required String title,
   required String image,
   required String number,
@@ -227,15 +232,14 @@ Widget _itemOption({
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Text(
                   title,
-                  maxLines: 2,
+                  maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: getIt<IAppConfig>().theme.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    style: context.xHeadline5.copyWith(
+                fontWeight: FontWeight.bold,
+                color: getIt<IAppConfig>().theme.textColor,
                   ),
                 ),
               ),
@@ -282,6 +286,8 @@ Widget _itemOption({
     );
 
 Widget _itemFindHospital({
+
+  required BuildContext context,
   required String title,
   required String image,
   required String number,
@@ -289,13 +295,74 @@ Widget _itemFindHospital({
   required Color colorRight,
   required EdgeInsets margin,
 }) {
-  return Container(
-    height: 100,
-    margin: margin,
-    padding: const EdgeInsets.only(
-      left: 15,
-      top: 15,
+  return context.xTextScaleType == TextScaleType.small
+      ? Container(
+	 height: 100,
+          margin: margin,
+          padding: const EdgeInsets.only(
+            left: 15,
+            top: 15,
+          ),
+        child: ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          //
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: context.xHeadline3.copyWith(
+                fontWeight: FontWeight.bold,
+                color: getIt<IAppConfig>().theme.textColor,
+              ),
+            ),
+          ),
+
+          //
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Opacity(
+              opacity: 0.5,
+              child: SvgPicture.asset(
+                image,
+                width: 80,
+              ),
+            ),
+          ),
+        ],
+      ),
     ),
+    decoration: BoxDecoration(
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      gradient: LinearGradient(
+        colors: [
+          colorLeft,
+          colorRight,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.topRight,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+          blurRadius: 15,
+          spreadRadius: 0,
+          offset: const Offset(5, 10),
+        ),
+      ],
+    ),
+  )
+      : Container(
+          height: 150,
+          margin: margin,
+          padding: const EdgeInsets.only(
+            left: 15,
+            top: 15,
+          ),
     child: ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(16)),
       child: Stack(
@@ -308,11 +375,9 @@ Widget _itemFindHospital({
               title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: getIt<IAppConfig>().theme.white,
-                fontSize: 18,
+              style: context.xHeadline3.copyWith(
                 fontWeight: FontWeight.bold,
-                height: 0,
+                color: getIt<IAppConfig>().theme.textColor,
               ),
             ),
           ),

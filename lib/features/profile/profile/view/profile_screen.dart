@@ -130,15 +130,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     //
 
-                    //
-                    _buildListItem(
+                    getIt<IAppConfig>().functionality.chronicTracking ? 
+                    _buildListItem( 
                       LocaleProvider.current.health_information,
                       () {
                         Atom.to(PagePaths.healthInformation);
-                      },
-                    ),
+                      } ,
+                    ) : const SizedBox(),
 
-                    if (!Atom.isWeb && getIt<UserNotifier>().isCronic)
+                    if (!Atom.isWeb && getIt<UserNotifier>().isCronic && getIt<IAppConfig>().functionality.chronicTracking)
                       _buildListItem(
                         LocaleProvider.current.devices,
                         () {

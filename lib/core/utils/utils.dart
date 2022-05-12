@@ -105,8 +105,8 @@ class Utils {
 
   Gradient appGradient() => LinearGradient(
         colors: [
-          getIt<IAppConfig>().theme.red,
-          getIt<IAppConfig>().theme.lightRed
+          getIt<IAppConfig>().theme.mainColor,
+          getIt<IAppConfig>().theme.mainColor,
         ],
         begin: Alignment.bottomLeft,
         end: Alignment.centerRight,
@@ -409,7 +409,7 @@ class Utils {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.w600,
               color: getIt<IAppConfig>().theme.white),
         ),
