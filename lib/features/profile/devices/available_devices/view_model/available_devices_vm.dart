@@ -44,13 +44,13 @@ class AvailableDevicesVm extends ChangeNotifier {
       enable: true,
       usesBLE: false,
     ),
-    // DeviceConnectionType(
-    //   deviceType: DeviceType.pillarSmall,
-    //   name: "Pillar Small",
-    //   imagePath: R.image.trFlag,
-    //   enable: true,
-    //   usesBLE: false,
-    // ),
+    DeviceConnectionType(
+      deviceType: DeviceType.pillarSmall,
+      name: LocaleProvider.current.pillar_small,
+      imagePath: R.image.pillar,
+      enable: true,
+      usesBLE: false,
+    ),
   ];
 
   final prodDevices = [

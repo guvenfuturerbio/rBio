@@ -990,7 +990,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Opsiyon seçiniz"),
         "pick_time": MessageLookupByLibrary.simpleMessage("Zaman Seç"),
         "piece": MessageLookupByLibrary.simpleMessage("adet"),
-        "pillar_small": MessageLookupByLibrary.simpleMessage("İlaç kutusu"),
+        "pillar_small": MessageLookupByLibrary.simpleMessage("İlaç Kutusu"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Seçiniz"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Lütfen departman seçiniz"),

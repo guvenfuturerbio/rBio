@@ -117,6 +117,7 @@ class _Images {
   final upload = "assets/images/upload.svg";
   final startVideo = "assets/images/start_video_call.svg";
   final rate = "assets/images/ic_star_blue.svg";
+  final pillar = "assets/images/pillar.png";
 
   final minus = 'assets/images/minus.svg';
   final warning = 'assets/images/warning.svg';

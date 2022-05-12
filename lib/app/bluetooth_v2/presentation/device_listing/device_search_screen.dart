@@ -55,17 +55,19 @@ class DeviceSearchView extends StatefulWidget {
 
 class _DeviceSearchViewState extends State<DeviceSearchView> {
   void _showSetupDialog() {
-    Future(
-      () {
-        return showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return DeviceSetupDialog(deviceType: widget.deviceType);
-          },
-        );
-      },
-    );
+    if (widget.deviceType == DeviceType.miScale) {
+      Future(
+        () {
+          return showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return DeviceSetupDialog(deviceType: widget.deviceType);
+            },
+          );
+        },
+      );
+    }
   }
 
   @override

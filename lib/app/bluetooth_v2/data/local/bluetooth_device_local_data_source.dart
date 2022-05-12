@@ -53,9 +53,6 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
             }
           } else if (deviceType == DeviceType.pillarSmall) {
             if (element.device.name.contains("Arduino")) {
-              LoggerUtils.instance.i("BURADA");
-              LoggerUtils.instance
-                  .i(element.advertisementData.manufacturerData);
               return true;
             }
           }
@@ -67,7 +64,7 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
           (e) {
             return DeviceModel(
               id: e.device.id.id,
-              name: e.device.name,
+              name: e.device.name == 'Arduino' ? 'Pillar Small' : e.device.name,
               localName: e.advertisementData.localName,
               strength: e.rssi,
               kind: DeviceKind.ble,

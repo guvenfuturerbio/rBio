@@ -737,6 +737,14 @@ class UtilityManager {
       case DeviceType.accuCheck:
         return Image.asset(R.image.accuCheckPng);
 
+      case DeviceType.pillarSmall:
+        return SizedBox(
+          height: 45,
+          child: Image.asset(
+            R.image.pillar,
+          ),
+        );
+
       default:
         return null;
     }
