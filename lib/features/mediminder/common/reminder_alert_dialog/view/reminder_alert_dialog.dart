@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onedosehealth/app/bluetooth_v2/bluetooth_v2.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../core/utils/tz_helper.dart';
@@ -143,7 +143,18 @@ class _ReminderAlertView extends StatelessWidget {
                 //
                 Expanded(
                   child: RbioElevatedButton(
-                    onTap: () {},
+                    onTap: () {
+                      if (notificationModel.remindable ==
+                              Remindable.medication &&
+                          model.medicationReminderModel != null) {
+                        if (model.medicationReminderModel?.drugTracking ==
+                            DrugTracking.pillarSmall) {
+                          context.read<PillarSmallCubit>().trigger();
+                        }
+                      }
+
+                      Atom.dismiss();
+                    },
                     title: LocaleProvider.current.Ok,
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     fontWeight: FontWeight.bold,

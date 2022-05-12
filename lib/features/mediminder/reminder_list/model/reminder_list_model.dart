@@ -1,4 +1,5 @@
 import '../../../../../core/core.dart';
+import '../../mediminder.dart';
 
 class ReminderListModel {
   final int notificationId;
@@ -10,6 +11,7 @@ class ReminderListModel {
   final String? subTitle;
   final String nameAndSurname;
   final bool status;
+  final MedicationReminderModel? medicationReminderModel;
 
   ReminderListModel({
     required this.notificationId,
@@ -21,5 +23,6 @@ class ReminderListModel {
     this.subTitle,
     required this.nameAndSurname,
     required this.status,
+    this.medicationReminderModel,
   });
 }

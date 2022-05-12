@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../model/model.dart';
 import '../my_appointments.dart';
 
 class AppointmentListScreen extends StatefulWidget {

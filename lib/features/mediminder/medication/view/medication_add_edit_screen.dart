@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
 
@@ -231,8 +231,8 @@ class __MedicationReminderAddEditViewState
               R.sizes.stackedTopPadding(context),
 
               // İlaç Kutusu & Manuel
-              // _buildGap(),
-              // ..._buildMedicineTypes(result),
+              _buildGap(),
+              ..._buildMedicineTypes(result),
 
               //
               _buildGap(),
@@ -454,6 +454,61 @@ class __MedicationReminderAddEditViewState
 
     return GestureDetector(
       onTap: () {
+        if (type == DrugTracking.pillarSmall) {
+          final pillarDevice =
+              getIt<BluetoothLocalManager>().anyPillarSmallConnect();
+          if (pillarDevice == null) {
+            Atom.show(
+              GestureDetector(
+                onTap: () {
+                  Atom.dismiss();
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  constraints: const BoxConstraints.expand(),
+                  child: GuvenAlert(
+                    contentPadding: const EdgeInsets.all(16),
+                    backgroundColor:
+                        getIt<IAppConfig>().theme.cardBackgroundColor,
+                    title:
+                        GuvenAlert.buildTitle(LocaleProvider.current.warning),
+                    content: GuvenAlert.buildDescription(
+                      LocaleProvider.current.please_connect_pillar_small,
+                    ),
+                    actions: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                            ),
+                            child: RbioElevatedButton(
+                              infinityWidth: true,
+                              title: LocaleProvider.current.pair_device,
+                              onTap: () {
+                                Atom.dismiss();
+                                Atom.to(
+                                  PagePaths.deviceSearch,
+                                  queryParameters: {
+                                    'device_type':
+                                        DeviceType.pillarSmall.xRawValue,
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          R.sizes.hSizer8,
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+            return;
+          }
+        }
+
         context.read<MedicationReminderAddEditCubit>().setDrugTracking(type);
       },
       child: Container(

@@ -94,6 +94,7 @@ class ReminderManager {
                   .name ??
               '',
           status: medicationModel.status,
+          medicationReminderModel: medicationModel,
         ),
       );
     }

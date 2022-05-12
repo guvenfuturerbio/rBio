@@ -929,6 +929,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "https://www.guven.com.tr/8-mart/mesafeli-satis-sozlesmesi"),
         "package_information_form": MessageLookupByLibrary.simpleMessage(
             "https://www.guven.com.tr/8-mart/on-bilgilendirme-formu"),
+        "pair_device": MessageLookupByLibrary.simpleMessage("Cihaz Eşleştir"),
         "pair_steps":
             MessageLookupByLibrary.simpleMessage("Bağlantı Adımları:"),
         "pair_successful": MessageLookupByLibrary.simpleMessage(
@@ -991,6 +992,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pick_time": MessageLookupByLibrary.simpleMessage("Zaman Seç"),
         "piece": MessageLookupByLibrary.simpleMessage("adet"),
         "pillar_small": MessageLookupByLibrary.simpleMessage("İlaç Kutusu"),
+        "please_connect_pillar_small":
+            MessageLookupByLibrary.simpleMessage("Lütfen bir cihaz bağlayın"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Seçiniz"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Lütfen departman seçiniz"),

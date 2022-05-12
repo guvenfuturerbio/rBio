@@ -159,23 +159,20 @@ class DevicesScreen extends StatelessWidget {
               );
 
           if (device.deviceType == DeviceType.pillarSmall) {
-            return BlocProvider<PillarSmallCubit>(
-              create: (context) => PillarSmallCubit(getIt()),
-              child: BlocBuilder<PillarSmallCubit, bool>(
-                builder: (context, pillarSmallState) {
-                  return deviceCard(
-                    pillarSmallTrigger: IconButton(
-                      onPressed: () {
-                        context.read<PillarSmallCubit>().trigger(device);
-                      },
-                      icon: Icon(
-                        Icons.turn_slight_right,
-                        size: R.sizes.iconSize * 1.25,
-                      ),
+            return BlocBuilder<PillarSmallCubit, PillarSmallStatus>(
+              builder: (context, pillarSmallState) {
+                return deviceCard(
+                  pillarSmallTrigger: IconButton(
+                    onPressed: () {
+                      context.read<PillarSmallCubit>().trigger();
+                    },
+                    icon: Icon(
+                      Icons.turn_slight_right,
+                      size: R.sizes.iconSize * 1.25,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             );
           } else {
             return deviceCard();

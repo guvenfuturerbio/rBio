@@ -943,6 +943,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "https://www.guven.com.tr/8-mart/mesafeli-satis-sozlesmesi"),
         "package_information_form": MessageLookupByLibrary.simpleMessage(
             "https://www.guven.com.tr/8-mart/on-bilgilendirme-formu"),
+        "pair_device": MessageLookupByLibrary.simpleMessage("Pair Device"),
         "pair_steps": MessageLookupByLibrary.simpleMessage("Pair Steps:"),
         "pair_successful": MessageLookupByLibrary.simpleMessage(
             "The device has been successfully paired"),
@@ -1004,6 +1005,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pick_time": MessageLookupByLibrary.simpleMessage("Pick Time"),
         "piece": MessageLookupByLibrary.simpleMessage("piece"),
         "pillar_small": MessageLookupByLibrary.simpleMessage("Pillar small"),
+        "please_connect_pillar_small":
+            MessageLookupByLibrary.simpleMessage("Please connect a device"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Choose"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Please select department"),

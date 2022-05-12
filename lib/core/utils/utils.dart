@@ -933,12 +933,12 @@ class GradientDialog extends StatefulWidget {
 class _GradientDialogState extends State<GradientDialog> {
   @override
   Widget build(BuildContext context) {
-    Widget okButton = TextButton(
-      style: TextButton.styleFrom(primary: getIt<IAppConfig>().theme.textColor),
-      child: Text(LocaleProvider.current.ok),
-      onPressed: () {
+    Widget okButton = RbioElevatedButton(
+      title: LocaleProvider.current.ok,
+      onTap: () {
         Navigator.of(context).pop();
       },
+      infinityWidth: true,
     );
 
     return AlertDialog(
@@ -947,8 +947,9 @@ class _GradientDialogState extends State<GradientDialog> {
       title: Text(
         widget.title ?? '',
         style: context.xHeadline1.copyWith(
-            fontWeight: FontWeight.w700,
-            color: getIt<IAppConfig>().theme.textColor),
+          fontWeight: FontWeight.w700,
+          color: getIt<IAppConfig>().theme.textColor,
+        ),
       ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -959,7 +960,7 @@ class _GradientDialogState extends State<GradientDialog> {
         okButton,
       ],
       content: Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,

@@ -8639,6 +8639,26 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Please connect a device`
+  String get please_connect_pillar_small {
+    return Intl.message(
+      'Please connect a device',
+      name: 'please_connect_pillar_small',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pair Device`
+  String get pair_device {
+    return Intl.message(
+      'Pair Device',
+      name: 'pair_device',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

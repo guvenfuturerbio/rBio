@@ -2,12 +2,19 @@ import 'dart:async';
 
 import '../../../bluetooth_v2.dart';
 
-class PillarSmallCubit extends Cubit<bool> {
+part 'pillar_small_status.dart';
+
+class PillarSmallCubit extends Cubit<PillarSmallStatus> {
   final PillarSmallTriggerUseCase useCase;
+  final BluetoothLocalManager bluetoothLocalManager;
 
-  PillarSmallCubit(this.useCase) : super(true);
+  PillarSmallCubit(this.useCase, this.bluetoothLocalManager)
+      : super(PillarSmallStatus(device: null, status: null));
 
-  FutureOr<void> trigger(DeviceEntity device) async {
-    useCase.call(DeviceParams(device: device));
+  FutureOr<void> trigger() async {
+    final device = bluetoothLocalManager.anyPillarSmallConnect();
+    if (device != null) {
+      useCase.call(DeviceParams(device: device));
+    }
   }
 }

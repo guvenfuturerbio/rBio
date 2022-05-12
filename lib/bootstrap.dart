@@ -116,6 +116,9 @@ class MobileApp extends StatelessWidget {
                 BlocProvider<MiScaleOpsCubit>(
                   create: (context) => MiScaleOpsCubit(getIt(), getIt()),
                 ),
+                BlocProvider<PillarSmallCubit>(
+                  create: (context) => PillarSmallCubit(getIt(), getIt()),
+                ),
               ],
               child: myApp.build(context),
             );
