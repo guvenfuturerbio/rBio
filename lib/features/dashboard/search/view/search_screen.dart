@@ -65,6 +65,7 @@ class SearchView extends StatelessWidget {
       leading: drawerKey != null
           ? RbioLeadingMenu(drawerKey: drawerKey)
           : const SizedBox(width: 0, height: 0),
+      leadingWidth: drawerKey != null ? null : 0,
       title: SizedBox(
         width: double.infinity,
         child: RbioTextFormField(

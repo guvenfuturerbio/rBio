@@ -1333,6 +1333,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Voice Health Assistant"),
         "waiting": MessageLookupByLibrary.simpleMessage("Waiting"),
         "warning": MessageLookupByLibrary.simpleMessage("Warning"),
+        "we_are_online": MessageLookupByLibrary.simpleMessage(
+            "We are currently online! How can we help?"),
         "we_couldnt_find_account": MessageLookupByLibrary.simpleMessage(
             "We could not find an account corresponding to the information entered. If you wish, you can create a new account by clicking the sign up button."),
         "we_have_an_error": MessageLookupByLibrary.simpleMessage(

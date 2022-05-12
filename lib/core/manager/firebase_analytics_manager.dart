@@ -273,3 +273,7 @@ class YakinSilmeBasariliEvent extends BaseEvent {
           'yakin_ismi': relativeNameAndSurname,
         });
 }
+
+class LiveSupportClickEvent extends BaseEvent {
+  LiveSupportClickEvent() : super("AnaSayfa_DestekHatti_Tiklama", null);
+}

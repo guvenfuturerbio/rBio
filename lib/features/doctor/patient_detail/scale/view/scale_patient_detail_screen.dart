@@ -54,7 +54,6 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
   late AnimationController animationController;
   late Animation<double> sizeAnimation;
 
-  final _controller = ScrollController();
   final _dropdownBannerKey = GlobalKey<NavigatorState>();
 
   @override

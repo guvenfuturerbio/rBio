@@ -157,4 +157,25 @@ class OneDoseTheme extends IAppTheme {
 
   @override
   Color get textContrastColor => Colors.black;
+
+  @override
+  Color get danisma => const Color(0xff65c0b8);
+
+  @override
+  Color get danismaLight => const Color(0xffafdfdb);
+
+  @override
+  Color get red => const Color(0xFFC74852);
+
+  @override
+  Color get lightRed => const Color(0xFFC74852);
+
+  @override
+  Color get darkRedGuven => const Color(0xFF862634);
+
+  @override
+  Color get onlineAppointment => const Color(0xFF100A9F);
+
+  @override
+  Color get lightOnlineAppointment => const Color(0xFF648DE5);
 }

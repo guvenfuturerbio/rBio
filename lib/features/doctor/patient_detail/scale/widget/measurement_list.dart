@@ -11,9 +11,10 @@ class MeasurementList extends StatefulWidget {
 
   final bool? useStickyGroupSeparatorsValue;
   const MeasurementList({
+    Key? key,
     required this.scaleMeasurements,
     this.useStickyGroupSeparatorsValue,
-  });
+  }): super(key: key);
 
   @override
   MeasurementListState createState() => MeasurementListState();

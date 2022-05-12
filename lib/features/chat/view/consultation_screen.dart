@@ -6,7 +6,7 @@ import 'package:onedosehealth/core/widgets/rbio_error_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
-import '../../dashboard/not_chronic_screen.dart';
+import '../../dashboard/onedose/not_chronic_screen.dart';
 import '../controller/consultation_vm.dart';
 import '../model/chat_person.dart';
 

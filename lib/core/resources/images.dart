@@ -118,6 +118,31 @@ class _Images {
   final startVideo = "assets/images/start_video_call.svg";
   final rate = "assets/images/ic_star_blue.svg";
 
+  //GuvenOnlineDashboard
+  final appointmentsRed = "assets/images/guven/dashboard/appointments_red.svg";
+  final appointmentsGrey =
+      "assets/images/guven/dashboard/appointments_grey.svg";
+  final icAppointmentWhite =
+      'assets/images/guven/dashboard/ic_appointment_white.svg';
+  final danismaIcon = "assets/images/guven/dashboard/ic_danisma.svg";
+  final icEditWhite = 'assets/images/guven/dashboard/ic_edit_white.svg';
+  final icHospitalWhite = 'assets/images/guven/dashboard/ic_hospital_white.svg';
+  final icPhoneGrey = "assets/images/guven/dashboard/ic_phone_grey.svg";
+  final icPhoneRed = "assets/images/guven/dashboard/ic_phone_red.svg";
+  final icPriceServices = 'assets/images/guven/dashboard/ic_price_services.svg';
+  final icTabbarServicesWhite =
+      'assets/images/guven/dashboard/ic_tabbar_services_white.svg';
+  final icTabbarServicesGrey =
+      'assets/images/guven/dashboard/ic_tabbar_services_grey.svg';
+  final myProfileRed = "assets/images/guven/dashboard/myprofile_red.svg";
+  final myProfileGrey = "assets/images/guven/dashboard/myprofile_grey.svg";
+  final searchRed = "assets/images/guven/dashboard/search_red.svg";
+  final searchGrey = "assets/images/guven/dashboard/search_grey.svg";
+  final forYou = 'assets/images/guven/dashboard/sizeozel_icon.svg';
+  final icVideoIcon = "assets/images/guven/dashboard/video_icon.svg";
+  final guvenLogoWhite = "assets/images/guven/dashboard/guvenonline_icon.svg";
+  final icPhoneGreyCall = "assets/images/guven/ic_phone_call_grey";
+
   final minus = 'assets/images/minus.svg';
   final warning = 'assets/images/warning.svg';
 

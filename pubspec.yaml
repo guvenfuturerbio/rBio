@@ -162,6 +162,7 @@ flutter:
     - env/onedose/
     - assets/images/
     - assets/images/guven/
+    - assets/images/guven/dashboard/
     - assets/images/oneDose/
     - assets/images/bottom_navigation/
     - assets/images/reminders/

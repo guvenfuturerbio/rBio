@@ -14,7 +14,9 @@ import '../../features/chronic_tracking/progress_sections/scale/scale_detail/vie
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_manuel_add_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
-import '../../features/dashboard/dashboard_navigation.dart';
+import '../../features/dashboard/guven/dashboard_navigation.dart';
+
+import '../../features/dashboard/onedose/dashboard_navigation.dart';
 import '../../features/dashboard/search/doctor_cv/doctor_cv_screen.dart';
 import '../../features/detailed_symptom/detailed_symptom_checker.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
@@ -193,7 +195,9 @@ class VRouterRoutes {
       path: PagePaths.main,
       widget: Container(),
       stackedRoutes: [
-        DashboardNavigation(),
+        getIt<IAppConfig>().productType== ProductType.oneDose ?
+        DashboardNavigation() :
+        GuvenDashboardNavigation(),
       ],
     ),
 

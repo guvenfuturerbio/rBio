@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:vrouter/vrouter.dart';
 
-import '../../core/core.dart';
-import '../chat/view/consultation_screen.dart';
-import '../chronic_tracking/home/view/mt_home_screen.dart';
+import '../../../core/core.dart';
+import '../../chat/view/consultation_screen.dart';
+import '../../chronic_tracking/home/view/mt_home_screen.dart';
 import 'dashboard_screen.dart';
-import 'home/view/home_screen.dart';
-import 'notification_inbox/view/notification_inbox_screen.dart';
-import 'search/view/search_screen.dart';
+import '../home/view/home_screen.dart';
+import '../notification_inbox/view/notification_inbox_screen.dart';
+import '../search/view/search_screen.dart';
 
 class DashboardNavigation extends VRouteElementBuilder {
   DashboardNavigation();
