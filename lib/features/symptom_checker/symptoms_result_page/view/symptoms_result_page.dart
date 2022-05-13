@@ -140,6 +140,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     //
                                     child: RbioTextButton(
                                       onPressed: () {
+                                        getIt<AdjustManager>().trackEvent(
+                                            MyResultsSearchAppointmentEvent());
                                         getIt<FirebaseAnalyticsManager>()
                                             .logEvent(SonuclarimRandevuAraEvent(
                                                 getIt<UserNotifier>()
@@ -287,6 +289,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                             },
                                           );
                                         } else {
+                                          getIt<AdjustManager>().trackEvent(
+                                              MyResultsSearchAppointmentEvent());
                                           getIt<FirebaseAnalyticsManager>()
                                               .logEvent(
                                                   SonuclarimRandevuAraEvent(

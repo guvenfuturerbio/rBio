@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 import '../../../../core/core.dart';
 import '../../../../model/shared/user_login_info.dart';
 
@@ -90,6 +91,9 @@ class ChangePasswordScreenVm extends RbioVm {
                     .getString(SharedPreferencesKeys.jwtToken) ??
                 '',
           );
+          getIt<AdjustManager>().trackEvent(SuccessfulPasswordChangeEvent());
+          getIt<FirebaseAnalyticsManager>()
+              .logEvent(SifreDegistirBasariliEvent());
           showInfoDialog(
             LocaleProvider.of(mContext).success_message_title,
             LocaleProvider.of(mContext).succefully_created_pass,
@@ -98,6 +102,8 @@ class ChangePasswordScreenVm extends RbioVm {
           errorParse(response);
         }
       } catch (error, stackTrace) {
+        getIt<AdjustManager>().trackEvent(UnsuccessfulPasswordChangeEvent());
+        getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
         showDelayedErrorDialog(error, stackTrace);
       } finally {
         showProgressOverlay = false;
@@ -108,6 +114,8 @@ class ChangePasswordScreenVm extends RbioVm {
   void errorParse(GuvenResponseModel response) {
     var errorCode = response.datum;
     if (errorCode is int) {
+      getIt<AdjustManager>().trackEvent(UnsuccessfulPasswordChangeEvent());
+      getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
       switch (errorCode) {
         case 1:
           {

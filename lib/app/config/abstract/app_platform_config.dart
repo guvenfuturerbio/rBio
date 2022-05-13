@@ -9,6 +9,7 @@ abstract class IAppPlatformConfig {
   Future<void> sendFirstOpenFirebaseEvent(
     ISharedPreferencesManager sharedPreferencesManager,
     FirebaseAnalyticsManager firebaseAnalyticsManager,
+    AdjustManager adjustManager,
   );
 }
 
@@ -28,6 +29,7 @@ abstract class IAppWebPlatformConfig {
   Future<void> sendFirstOpenFirebaseEvent(
     ISharedPreferencesManager sharedPreferencesManager,
     FirebaseAnalyticsManager firebaseAnalyticsManager,
+    AdjustManager adjustManager,
   ) async {
     //
   }
@@ -45,12 +47,14 @@ abstract class IAppMobilePlatformConfig {
   Future<void> sendFirstOpenFirebaseEvent(
     ISharedPreferencesManager sharedPreferencesManager,
     FirebaseAnalyticsManager firebaseAnalyticsManager,
+    AdjustManager adjustManager,
   ) async {
     if (sharedPreferencesManager.get(SharedPreferencesKeys.appDownload) ==
         null) {
       await sharedPreferencesManager.setBool(
           SharedPreferencesKeys.appDownload, false);
       firebaseAnalyticsManager.logEvent(NewDownloadEvent());
+      adjustManager.trackEvent(NewDownloadsEvent());
     }
   }
 }

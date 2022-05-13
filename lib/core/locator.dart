@@ -1,7 +1,6 @@
 import 'package:cache/cache.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:onedosehealth/core/manager/adjust_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 

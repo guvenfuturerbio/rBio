@@ -9,7 +9,6 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'app/app.dart';
 import 'app/bluetooth_v2/bluetooth_v2.dart';
 import 'core/core.dart';
-import 'core/manager/adjust_manager.dart';
 
 Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +20,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   await appConfig.platform.sendFirstOpenFirebaseEvent(
     getIt<ISharedPreferencesManager>(),
     getIt<FirebaseAnalyticsManager>(),
+    getIt<AdjustManager>(),
   );
 
   SystemChrome.setSystemUIOverlayStyle(

@@ -256,6 +256,9 @@ class UserManagerImpl extends UserManager {
                 );
               },
               onConferenceTerminated: (message, _) async {
+                getIt<AdjustManager>().trackEvent(SuccessfulVideoCallEvent());
+                getIt<FirebaseAnalyticsManager>()
+                    .logEvent(VideoCallSuccessfulEvent());
                 await showDialog(
                   context: context,
                   barrierDismissible: true,

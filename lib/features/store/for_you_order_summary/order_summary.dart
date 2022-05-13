@@ -299,6 +299,8 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                     width: 260,
                     text: LocaleProvider.current.payment,
                     onPressed: () {
+                      getIt<AdjustManager>()
+                          .trackEvent(ForYouItemPaymentClickedEvent());
                       getIt<FirebaseAnalyticsManager>().logEvent(
                           UrunOdemesiTiklandiEvent(
                               value.selectedItem!.title ?? ''));

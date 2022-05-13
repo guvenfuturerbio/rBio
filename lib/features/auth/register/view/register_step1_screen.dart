@@ -343,7 +343,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                               _phoneNumberFocusNode,
                               null,
                             ),
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9\t\r]'))
                           ],
                           onFieldSubmitted: (term) {
                             UtilityManager().fieldFocusChange(
@@ -391,6 +392,10 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                       },
                     );
                   } else {
+                    getIt<AdjustManager>()
+                        .trackEvent(UnsuccessfulRegisterStep1Event());
+                    getIt<FirebaseAnalyticsManager>()
+                        .logEvent(KayitOlAdim1Hata("Register1 User TC", 22));
                     vm.showInfoDialog(
                       LocaleProvider.of(context).warning,
                       LocaleProvider.of(context).fill_all_field,

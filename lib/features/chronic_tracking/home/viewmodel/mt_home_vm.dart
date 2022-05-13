@@ -220,10 +220,12 @@ class MeasurementTrackingVm with ChangeNotifier {
     Utils.instance.releaseOrientation();
 
     if (key == const Key('Glucose')) {
+      getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
       getIt<FirebaseAnalyticsManager>()
           .logEvent(SaglikTakibiButonlarEvent('Kan_Şekeri'));
       Atom.to(PagePaths.bloodGlucoseProgress);
     } else if (key == const Key('Scale')) {
+      getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
       getIt<FirebaseAnalyticsManager>()
           .logEvent(SaglikTakibiButonlarEvent('Tartı'));
 
@@ -232,6 +234,7 @@ class MeasurementTrackingVm with ChangeNotifier {
         Atom.to(PagePaths.scaleDetail);
       }
     } else if (key == const Key('Pressure')) {
+      getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
       getIt<FirebaseAnalyticsManager>()
           .logEvent(SaglikTakibiButonlarEvent('Tansiyon'));
       Atom.to(PagePaths.bpProgress);
