@@ -67,8 +67,10 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
                   ? Image.memory(base64Decode(item.icon ?? ''))
                   : Image.asset(R.image.covidCat),
               onTap: () {
-                getIt<FirebaseAnalyticsManager>()
-                    .logEvent(SizeOzelAltKategoriTiklandiEvent(item.text ?? ''));
+                getIt<AdjustManager>()
+                    .trackEvent(ForYouSubCategoryClickedEvent());
+                getIt<FirebaseAnalyticsManager>().logEvent(
+                    SizeOzelAltKategoriTiklandiEvent(item.text ?? ''));
                 Atom.to(
                   PagePaths.forYouSubCategoriesDetail,
                   queryParameters: {

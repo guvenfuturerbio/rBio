@@ -230,7 +230,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
               ? () async {
                   AppInheritedWidget.of(context)?.listBodySympRsp =
                       value.selectedBodySymptoms;
-
+                  getIt<AdjustManager>()
+                      .trackEvent(MySymptomsPage4DepartmentAnalysisEvent());
                   getIt<FirebaseAnalyticsManager>().logEvent(
                       SikayetlerimSayfa4BolumAnaliziYapin(
                           getIt<UserNotifier>().firebaseEmail,

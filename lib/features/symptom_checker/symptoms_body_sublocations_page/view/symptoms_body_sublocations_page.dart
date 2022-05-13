@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/manager/adjust_manager.dart';
 import '../../../../model/model.dart';
 import '../viewmodel/symptoms_body_sublocations_vm.dart';
 
@@ -243,6 +244,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
             RbioElevatedButton(
               onTap: value.selectedSymptoms?.isNotEmpty ?? false
                   ? () async {
+                    getIt<AdjustManager>().trackEvent(MySymptomsPage3Event());
                       getIt<FirebaseAnalyticsManager>().logEvent(
                           SikayetlerimSayfa3DevamEvent(
                               getIt<UserNotifier>().firebaseEmail,
