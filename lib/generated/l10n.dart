@@ -1160,6 +1160,16 @@ class LocaleProvider {
     );
   }
 
+  /// `We are currently online! How can we help?`
+  String get we_are_online {
+    return Intl.message(
+      'We are currently online! How can we help?',
+      name: 'we_are_online',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Yes`
   String get yes {
     return Intl.message(

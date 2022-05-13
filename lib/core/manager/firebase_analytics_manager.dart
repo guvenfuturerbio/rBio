@@ -273,6 +273,7 @@ class VideoCallSuccessfulEvent extends BaseEvent {
   VideoCallSuccessfulEvent()
       : super(_EventConstants.videoCallSuccessEvent, null);
 }
+
 class Covid19PcrTestiTiklandiEvent extends BaseEvent {
   Covid19PcrTestiTiklandiEvent()
       : super(_EventConstants.anaSayfaPcrTestiTiklama, null);
@@ -442,6 +443,7 @@ class ProfilResmiYuklemeEvent extends BaseEvent {
 class ProfilResmiSilmeEvent extends BaseEvent {
   ProfilResmiSilmeEvent() : super(_EventConstants.profilResmiSilme, null);
 }
+
 class YakinSilmeBasariliEvent extends BaseEvent {
   YakinSilmeBasariliEvent(
     String relativeNameAndSurname,
@@ -449,6 +451,7 @@ class YakinSilmeBasariliEvent extends BaseEvent {
           'yakin_ismi': relativeNameAndSurname,
         });
 }
+
 class SizeOzelSayfasiTiklamaEvent extends BaseEvent {
   SizeOzelSayfasiTiklamaEvent()
       : super(_EventConstants.sizeOzelSayfasiTiklamaEvent, null);

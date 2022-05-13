@@ -110,6 +110,7 @@
   "password_validation": "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, ",
   "passport_validation" : "Passport number cannot be less than 5 characters",
   "appo_created": "Your appointment has been created successfully",
+  "we_are_online": "We are currently online! How can we help?",
   "yes": "Yes",
   "no": "No",
   "cancel_appo_question": "Are you sure you want to cancel your appointment ?",

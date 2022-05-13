@@ -398,7 +398,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         vm.pathologyResults[index].procedures ?? '',
-                        style: context.xHeadline4.copyWith(
+                        style: context.xHeadline3.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -562,10 +562,11 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     //
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 8, right: 8),
+                        padding: const EdgeInsets.only(top: 8),
                         child: vm.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(
                                 text: LocaleProvider.current.show_result,
+                                width: 130,
                                 onPressed: () {
                                   final name = vm.radiologyResults[index].name;
                                   final reportLink =
@@ -585,7 +586,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     //
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.only(top: 8, left:10),
                         child: vm.radiologyResults[index].report != null &&
                                 vm.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(

@@ -285,6 +285,7 @@ Expanded _textAndScaleSection(
   );
 }
 
+/*
 Future<dynamic> _galeryView(BuildContext context, List<String> images) {
   return Atom.show(
     GalleryView(
@@ -294,3 +295,4 @@ Future<dynamic> _galeryView(BuildContext context, List<String> images) {
     barrierDismissible: false,
   );
 }
+*/

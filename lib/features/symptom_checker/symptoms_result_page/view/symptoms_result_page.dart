@@ -11,8 +11,8 @@ class SymptomsResultPage extends StatefulWidget {
   late String? gender;
   late String? yearOfBirth;
   late bool? isFromVoice;
-  late String? body_part;
-  late int? body_part_length;
+  late String? bodyPart;
+  late int? bodyPartLength;
   SymptomsResultPage({
     Key? key,
     this.symptoms,
@@ -32,8 +32,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
       widget.symptoms = AppInheritedWidget.of(context)?.listBodySympRsp
           as List<GetBodySymptomsResponse>;
       widget.gender = Atom.queryParameters['gender'];
-      widget.body_part = Atom.queryParameters['body_part'];
-      widget.body_part_length =
+      widget.bodyPart = Atom.queryParameters['body_part'];
+      widget.bodyPartLength =
           int.parse(Atom.queryParameters['body_part_length']!);
       widget.yearOfBirth = Atom.queryParameters['year_of_birth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
@@ -148,8 +148,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                                     .firebaseEmail,
                                                 widget.gender,
                                                 widget.yearOfBirth!,
-                                                widget.body_part,
-                                                widget.body_part_length,
+                                                widget.bodyPart,
+                                                widget.bodyPartLength,
                                                 'danisma',
                                                 95));
                                         Atom.to(
@@ -298,8 +298,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                                           .firebaseEmail,
                                                       widget.gender,
                                                       widget.yearOfBirth!,
-                                                      widget.body_part,
-                                                      widget.body_part_length,
+                                                      widget.bodyPart,
+                                                      widget.bodyPartLength,
                                                       value
                                                           .specialisations[
                                                               index]

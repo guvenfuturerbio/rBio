@@ -2,7 +2,61 @@
 
 import 'package:intl/intl.dart';
 
-extension BuildContextExtensions on DateTime {
+extension LocaleDateFromString on String {
+  /// timeZoneOffset = +11:00:00.000000 - Currie
+  ///
+  /// Input  = 2021-12-28T16:20:00+03:00
+  ///
+  /// Output = 29 December 2021 = Currie
+  String xGetUTCLocalDate() {
+    if (this == '-') return this;
+    DateTime localDate = DateTime.parse(this).toLocal();
+    return localDate.xFormatTime2();
+  }
+
+  /// timeZoneOffset = +11:00:00.000000 - Currie
+  ///
+  /// Input  = 2021-12-28T16:20:00+03:00
+  ///
+  /// Output = 00:20 = Currie
+  String xGetUTCLocalTime() {
+    if (this == '-') return this;
+    DateTime localDate = DateTime.parse(this).toLocal();
+    return localDate.xFormatTime8();
+  }
+
+  /// timeZoneOffset = +11:00:00.000000 - Currie
+  ///
+  /// Input  = 2021-12-28T16:20:00+03:00
+  ///
+  /// Output = 29 December 2021 00:20 = Currie
+  String xGetUTCLocalDateTime() {
+    if (this == '-') return this;
+    DateTime localDate = DateTime.parse(this).toLocal();
+    return localDate.xFormatTime3();
+  }
+}
+
+extension DateTimeExtensions on DateTime {
+  /// timeZoneOffset = +11:00:00.000000 - Currie
+  ///
+  /// Input  = 2022-01-28 16:20:00.000
+  ///
+  /// Output = 2022-01-29 00:20:00.000
+  DateTime xTurkishTimeToLocal() {
+    final timeZoneOffset = DateTime.now().timeZoneOffset;
+    return subtract(const Duration(hours: 3)).add(timeZoneOffset);
+  }
+
+  /// timeZoneOffset = +11:00:00.000000 - Currie
+  ///
+  /// Input  = 2022-01-28 16:20:00.000
+  ///
+  /// Output = 2022-01-28 08:20:00.000Z
+  String xLocalToTurkishTime() {
+    return toUtc().add(const Duration(hours: 3)).toString();
+  }
+
   DateTime get getStartOfTheDay {
     return DateTime(year, month, day, 0, 0, 0);
   }

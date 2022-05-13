@@ -10,14 +10,14 @@ class GuvenTheme extends IAppTheme {
   String get fontFamily => 'Poppins';
 
   @override
-  String get appLogo => 'assets/images/guven/guven_logo_white.svg';
+  String get appLogo => 'assets/images/guven/guvenonline_icon.svg';
 
   @override
   String get successAppointmentImage =>
       'assets/images/guven/success_appointment.svg';
 
   @override
-  double get appBarLogoHeight => 27;
+  double get appBarLogoHeight => 40;
 
   @override
   Color get mainColor => GuvenColors.burgundy;
@@ -159,4 +159,25 @@ class GuvenTheme extends IAppTheme {
 
   @override
   Color get textContrastColor => Colors.white;
+
+  @override
+  Color get danisma => const Color(0xff65c0b8);
+
+  @override
+  Color get danismaLight => const Color(0xffafdfdb);
+
+  @override
+  Color get red => const Color(0xFFC74852);
+
+  @override
+  Color get lightRed => const Color(0xFFC74852);
+
+  @override
+  Color get darkRedGuven => const Color(0xFF862634);
+
+  @override
+  Color get onlineAppointment => const Color(0xFF100A9F);
+
+  @override
+  Color get lightOnlineAppointment => const Color(0xFF648DE5);
 }

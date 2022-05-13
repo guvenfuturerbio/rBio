@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../dashboard/not_chronic_screen.dart';
+import '../../../dashboard/onedose/not_chronic_screen.dart';
 import '../../../doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
 import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';

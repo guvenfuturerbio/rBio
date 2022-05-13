@@ -9,7 +9,12 @@ import '../../../../core/core.dart';
 import '../my_appointments.dart';
 
 class AppointmentListScreen extends StatefulWidget {
-  const AppointmentListScreen({Key? key}) : super(key: key);
+  final bool isFromDashboard;
+
+  const AppointmentListScreen({
+    Key? key,
+    this.isFromDashboard = false,
+  }) : super(key: key);
 
   @override
   _AppointmentListScreenState createState() => _AppointmentListScreenState();
@@ -38,6 +43,8 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      leading: widget.isFromDashboard ? const SizedBox() : null,
+      leadingWidth: widget.isFromDashboard ? 0 : null,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_appointments,
