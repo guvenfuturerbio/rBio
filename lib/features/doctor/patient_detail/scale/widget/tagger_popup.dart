@@ -158,7 +158,7 @@ class ScaleTagger extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: R.sizes.borderRadiusCircular,
             color: getIt<IAppConfig>().theme.mainColor),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
@@ -368,7 +368,7 @@ class ScaleTagger extends StatelessWidget {
               width: width * .24,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(17),
+                  borderRadius: R.sizes.borderRadiusCircular,
                   border: Border.all(
                       width: 6, color: color ?? getIt<IAppConfig>().theme.grey.withOpacity(.2)),
                   shape: BoxShape.rectangle,

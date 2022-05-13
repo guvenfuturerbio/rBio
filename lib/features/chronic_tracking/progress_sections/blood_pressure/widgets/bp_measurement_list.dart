@@ -57,7 +57,7 @@ class BpMeasurementList extends StatelessWidget {
                           spreadRadius: 0,
                           offset: const Offset(5, 5))
                     ],
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: R.sizes.borderRadiusCircular,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

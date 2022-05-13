@@ -951,10 +951,8 @@ class _GradientDialogState extends State<GradientDialog> {
             fontWeight: FontWeight.w700,
             color: getIt<IAppConfig>().theme.textColor),
       ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(20.0),
-        ),
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       actions: [
         okButton,
@@ -1008,7 +1006,7 @@ class _ProgressDialogState extends State<ProgressDialog> {
             height: 150,
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: BorderRadius.all(R.sizes.radiusCircular),
               gradient: blueGradient(),
             ),
             child: Column(

@@ -267,7 +267,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                       border: Border.all(
                         color: getIt<IAppConfig>().theme.darkWhite,
                       ),
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: R.sizes.borderRadiusCircular,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -505,7 +505,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
     return Expanded(
       child: Card(
         elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shape: RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

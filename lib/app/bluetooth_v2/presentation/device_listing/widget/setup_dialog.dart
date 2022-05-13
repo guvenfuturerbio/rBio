@@ -69,8 +69,8 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
             //
             _controller.value.isInitialized
                 ? ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
+                    borderRadius: BorderRadius.vertical(
+                      top: R.sizes.radiusCircular,
                     ),
                     child: AspectRatio(
                       aspectRatio: _controller.value.aspectRatio,
@@ -91,9 +91,8 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(12),
-              ),
+              borderRadius:
+                  BorderRadius.vertical(bottom: R.sizes.radiusCircular),
               padding: const EdgeInsets.symmetric(
                 horizontal: 8.0,
                 vertical: 16.0,

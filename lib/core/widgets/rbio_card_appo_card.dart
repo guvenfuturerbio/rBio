@@ -79,8 +79,8 @@ class RbioCardAppoCard extends StatelessWidget {
         children: [
           //
           ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(15),
+            borderRadius: BorderRadius.only(
+              topRight: R.sizes.radiusCircular,
             ),
             child: Container(
               height: 42,
@@ -88,9 +88,9 @@ class RbioCardAppoCard extends StatelessWidget {
                 color: isActiveHeader
                     ? getIt<IAppConfig>().theme.mainColor
                     : getIt<IAppConfig>().theme.secondaryColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
+                borderRadius: BorderRadius.only(
+                  topLeft: R.sizes.radiusCircular,
+                  topRight: R.sizes.radiusCircular,
                 ),
               ),
               padding: const EdgeInsets.only(
@@ -112,7 +112,6 @@ class RbioCardAppoCard extends StatelessWidget {
                             ? getIt<IAppConfig>().theme.textColor
                             : getIt<IAppConfig>().theme.textContrastColor,
                       ),
-
                     ),
                   ),
 
@@ -127,9 +126,9 @@ class RbioCardAppoCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: getIt<IAppConfig>().theme.cardBackgroundColor,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15),
+              borderRadius: BorderRadius.only(
+                bottomLeft: R.sizes.radiusCircular,
+                bottomRight: R.sizes.radiusCircular,
               ),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10.0),

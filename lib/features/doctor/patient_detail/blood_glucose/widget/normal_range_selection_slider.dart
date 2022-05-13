@@ -56,8 +56,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                     boxStyle: FlutterSliderTooltipBox(
                       decoration: BoxDecoration(
                         color: getIt<IAppConfig>().theme.mainColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
+                        borderRadius: R.sizes.borderRadiusCircular,
                       ),
                     ),
                     alwaysShowTooltip: true,
@@ -69,7 +68,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                     inactiveTrackBarHeight: 14,
                     activeTrackBarHeight: 10,
                     inactiveTrackBar: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: R.sizes.borderRadiusCircular,
                       color: Colors.black12,
                       border: Border.all(
                         width: 3,
@@ -77,7 +76,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                       ),
                     ),
                     activeTrackBar: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: R.sizes.borderRadiusCircular,
                       color: getIt<IAppConfig>().theme.mainColor,
                     ),
                   ),
@@ -96,9 +95,9 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
                   color: getIt<IAppConfig>().theme.mainColor,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(12.0),
-                    bottomRight: Radius.circular(12.0),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: R.sizes.radiusCircular,
+                    bottomRight: R.sizes.radiusCircular,
                   ),
                 ),
                 child: Text(

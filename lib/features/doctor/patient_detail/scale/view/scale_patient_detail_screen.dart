@@ -155,7 +155,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                                             : null,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(15.0),
+                                              R.sizes.borderRadiusCircular,
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(6.0),
@@ -189,7 +189,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                                                 : null,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(15.0),
+                                              R.sizes.borderRadiusCircular,
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(6.0),
@@ -342,7 +342,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Text(
                 LocaleProvider.current.treatment,

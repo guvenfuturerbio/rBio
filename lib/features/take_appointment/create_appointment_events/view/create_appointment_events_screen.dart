@@ -153,8 +153,8 @@ class _CreateAppointmentEventsScreenState
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: getIt<IAppConfig>().theme.cardBackgroundColor,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(12),
+        borderRadius: BorderRadius.vertical(
+          top: R.sizes.radiusCircular,
         ),
       ),
       padding: const EdgeInsets.all(10),

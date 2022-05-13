@@ -347,9 +347,9 @@ class ScaleCard extends StatelessWidget {
                           color: isSelected
                               ? getIt<IAppConfig>().theme.mainColor
                               : getIt<IAppConfig>().theme.grayColor,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            bottomLeft: Radius.circular(16),
+                          borderRadius:  BorderRadius.only(
+                            topLeft: R.sizes.radiusCircular,
+                            bottomLeft: R.sizes.radiusCircular,
                           ),
                         ),
                         child: _buildColumn(
