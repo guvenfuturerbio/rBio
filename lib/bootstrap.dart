@@ -101,9 +101,13 @@ class MobileApp extends StatelessWidget {
                   create: (context) =>
                       BluetoothStatusCubit(getIt())..listenStateOfBluetooth(),
                 ),
+
+                //
                 BlocProvider<DeviceSearchCubit>(
                   create: (context) => DeviceSearchCubit(getIt(), getIt()),
                 ),
+
+                //
                 BlocProvider<DeviceSelectedCubit>(
                   create: (context) => DeviceSelectedCubit(
                     context.read<MiScaleStatusCubit>(),
@@ -113,6 +117,8 @@ class MobileApp extends StatelessWidget {
                     getIt(),
                   ),
                 ),
+
+                //
                 BlocProvider<MiScaleOpsCubit>(
                   create: (context) => MiScaleOpsCubit(getIt(), getIt()),
                 ),

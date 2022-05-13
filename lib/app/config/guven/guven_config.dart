@@ -21,4 +21,9 @@ class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
       super.platform = GuvenMobilePlatformConfig();
     }
   }
+
+  @override
+  IProductDashboard getDashboard() {
+    return GuvenDashboardNavigation();
+  }
 }

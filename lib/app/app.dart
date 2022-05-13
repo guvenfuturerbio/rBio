@@ -163,7 +163,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
 
                 return AtomMaterialApp(
                   initialUrl: widget.initialRoute,
-                  routes: VRouterRoutes.routes,
+                  routes: VRouterRoutes.routes(getIt<IAppConfig>()),
                   onSystemPop: (data) async {
                     if (Atom.isDialogShow) {
                       try {

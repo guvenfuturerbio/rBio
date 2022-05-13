@@ -57,464 +57,465 @@ import '../../features/take_appointment/create_appointment_summary/view/create_a
 import '../core.dart';
 
 class VRouterRoutes {
-  static var routes = [
-    // #region Auth
-    VWidget(
-      path: PagePaths.changePassword,
-      widget: const ChangePasswordScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.forgotPasswordStep1,
-      widget: const ForgotPasswordStep1Screen(),
-    ),
-
-    VWidget(
-      path: PagePaths.forgotPasswordStep2,
-      widget: const ForgotPasswordStep2Screen(),
-    ),
-
-    VWidget(
-      path: PagePaths.login,
-      widget: const LoginScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.registerStep1,
-      widget: const RegisterStep1Screen(),
-    ),
-
-    VWidget(
-      path: PagePaths.registerStep2,
-      widget: const RegisterStep2Screen(),
-    ),
-
-    VWidget(
-      path: PagePaths.registerStep3,
-      widget: const RegisterStep3Screen(),
-    ),
-    // #endregion
-
-    // #region Chat
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (!(getIt<UserNotifier>().isCronic ||
-            getIt<UserNotifier>().isDoctor)) {
-          vRedirector.stopRedirection();
-          Atom.show(const NotChronicWarning());
-        }
-      },
-      stackedRoutes: [
+  static routes(IAppConfig config) => [
+        // #region Auth
         VWidget(
-          path: PagePaths.consultation,
-          widget: const ConsultationScreen(),
-          stackedRoutes: [
-            VWidget(
-              path: PagePaths.chat,
-              widget: ChangeNotifierProvider<ChatVm>(
-                create: (context) => ChatVm(),
-                child: const ChatScreen(key: Key('ChatScreen')),
-              ),
-            ),
-          ],
+          path: PagePaths.changePassword,
+          widget: const ChangePasswordScreen(),
         ),
-      ],
-    ),
-    // #endregion
 
-    // #region Chronic Tracking
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (!getIt<IAppConfig>().functionality.chronicTracking) {
-          openDefaultScreen(vRedirector);
-        } else if (!getIt<UserNotifier>().isCronic) {
-          vRedirector.stopRedirection();
-          Atom.show(const NotChronicWarning());
-        }
-      },
-      stackedRoutes: [
         VWidget(
-          path: PagePaths.measurementTrackingHome,
-          widget: const MeasurementTrackingHomeScreen(),
-          stackedRoutes: [
-            VWidget(
-              path: PagePaths.bloodGlucoseProgress,
-              widget: const BgProgressScreen(),
-            ),
-            VWidget(
-              path: PagePaths.bpProgress,
-              widget: const BpProgressScreen(),
-            ),
-            VWidget(
-              path: PagePaths.scaleDetail,
-              widget: const ScaleDetailScreen(),
-            ),
-            VWidget(
-              path: PagePaths.scaleManuelAdd,
-              widget: const ScaleManuelAddScreen(),
-            ),
-          ],
+          path: PagePaths.forgotPasswordStep1,
+          widget: const ForgotPasswordStep1Screen(),
         ),
-      ],
-    ),
 
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (!getIt<UserNotifier>().isCronic) {
-          vRedirector.stopRedirection();
-          Atom.show(const NotChronicWarning());
-        }
-      },
-      stackedRoutes: [
         VWidget(
-          path: PagePaths.treatmentEditProgress,
-          widget: const TreatmentEditView(),
+          path: PagePaths.forgotPasswordStep2,
+          widget: const ForgotPasswordStep2Screen(),
         ),
-      ],
-    ),
 
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (!getIt<UserNotifier>().isCronic) {
-          vRedirector.stopRedirection();
-          Atom.show(const NotChronicWarning());
-        }
-      },
-      stackedRoutes: [
         VWidget(
-          path: PagePaths.treatmentProgress,
-          widget: const TreatmentProcessScreen(),
-        )
-      ],
-    ),
-    // #endregion
+          path: PagePaths.login,
+          widget: const LoginScreen(),
+        ),
 
-    // #region Dashboard
-    VWidget(
-      path: PagePaths.main,
-      widget: Container(),
-      stackedRoutes: [
-        getIt<IAppConfig>().productType == ProductType.oneDose
-            ? DashboardNavigation()
-            : GuvenDashboardNavigation(),
-      ],
-    ),
+        VWidget(
+          path: PagePaths.registerStep1,
+          widget: const RegisterStep1Screen(),
+        ),
 
-    VWidget(
-      path: PagePaths.doctorCv,
-      widget: DoctorCvScreen(),
-    ),
-    // #endregion
+        VWidget(
+          path: PagePaths.registerStep2,
+          widget: const RegisterStep2Screen(),
+        ),
 
-    // #region Detailed Symptom
-    VWidget(
-      path: PagePaths.detailedSymptom,
-      widget: const DetailedSymptomChecker(),
-    ),
-    // #endregion
+        VWidget(
+          path: PagePaths.registerStep3,
+          widget: const RegisterStep3Screen(),
+        ),
+        // #endregion
 
-    // #region Doctor
-    VWidget(
-      path: PagePaths.doctorHome,
-      widget: const DoctorHomeScreen(),
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.doctorPatientList,
-          widget: DoctorPatientListScreen(),
-          stackedRoutes: [
-            VWidget(
-              path: PagePaths.doctorGlucosePatientDetailL,
-              widget: const BgPatientDetailScreen(),
-            ),
-            VWidget(
-              path: PagePaths.doctorPressurePatientDetail,
-              widget: const BpPatientDetailScreen(),
-            ),
-            VWidget(
-              path: PagePaths.doctorBmiPatientDetail,
-              widget: const ScalePatientDetailScreen(),
-            ),
-            VWidget(
-              path: PagePaths.doctorTreatmentProgress,
-              widget: const DoctorTreatmentProcessScreen(),
-              stackedRoutes: [
-                VWidget(
-                  path: PagePaths.doctorTreatmentEdit,
-                  widget: const PatientTreatmentEditView(),
-                ),
-              ],
-            ),
-            VWidget(
-              path: PagePaths.doctorCosultation,
-              widget: const ConsultationScreen(),
-            ),
-          ],
-        ),
-      ],
-    ),
-    // #endregion
-
-    // #region Mediminder
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (!getIt<IAppConfig>().functionality.mediminder) {
-          openDefaultScreen(vRedirector);
-        }
-      },
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.reminderList,
-          widget: const ReminderListScreen(),
-        ),
-        VWidget(
-          path: PagePaths.selectReminder,
-          widget: const SelectReminderScreen(),
-        ),
-        VWidget(
-          path: PagePaths.bloodGlucoseReminderAddEdit,
-          widget: const BloodGlucoseReminderAddEditScreen(),
-        ),
-        VWidget(
-          path: PagePaths.medicationReminderAddEdit,
-          widget: const MedicationReminderAddEditScreen(),
-        ),
-        VWidget(
-          path: PagePaths.hba1cReminderAddEdit,
-          widget: const Hba1cReminderAddEditScreen(),
-        ),
-        VWidget(
-          path: PagePaths.reminderDetail,
-          widget: const ReminderDetailScreen(),
-        ),
+        // #region Chat
         VGuard(
           beforeEnter: (vRedirector) async {
-            Future<void> showAlert() async {
-              await Atom.show(
-                GuvenAlert(
-                  backgroundColor:
-                      getIt<IAppConfig>().theme.cardBackgroundColor,
-                  title: GuvenAlert.buildTitle(LocaleProvider.current.info),
-                  content: GuvenAlert.buildDescription(
-                    LocaleProvider.current.device_register,
-                  ),
-                  actions: [
-                    //
-                    GuvenAlert.buildMaterialAction(
-                      LocaleProvider.current.Ok,
-                      () {
-                        Atom.dismiss();
-                        vRedirector.to(PagePaths.allDevices);
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            final pairedDevices = getIt<BleDeviceManager>().getPairedDevices();
-            if (pairedDevices.isEmpty) {
-              await showAlert();
-              //vRedirector.stopRedirection();
-            } else {
-              final hasSugarDevice = pairedDevices.any((item) =>
-                  item.deviceType == DeviceType.accuCheck ||
-                  item.deviceType == DeviceType.contourPlusOne);
-              if (!hasSugarDevice) {
-                await showAlert();
-                vRedirector.stopRedirection();
-              }
+            if (!(getIt<UserNotifier>().isCronic ||
+                getIt<UserNotifier>().isDoctor)) {
+              vRedirector.stopRedirection();
+              Atom.show(const NotChronicWarning());
             }
           },
           stackedRoutes: [
             VWidget(
-              path: PagePaths.strip,
-              widget: const StripReminderAddEditScreen(),
+              path: PagePaths.consultation,
+              widget: const ConsultationScreen(),
+              stackedRoutes: [
+                VWidget(
+                  path: PagePaths.chat,
+                  widget: ChangeNotifierProvider<ChatVm>(
+                    create: (context) => ChatVm(),
+                    child: const ChatScreen(key: Key('ChatScreen')),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-      ],
-    ),
-    // #endregion
+        // #endregion
 
-    // #region My Appointments
-    VWidget(
-      path: PagePaths.allFiles,
-      widget: const AllFilesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.appointment,
-      widget: const AppointmentListScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.webConferance,
-      widget: WebConferanceScreen(),
-    ),
-    // #endregion
-
-    // #region Profile
-    VWidget(
-      path: PagePaths.allDevices,
-      widget: const AvailableDevices(),
-    ),
-
-    VWidget(
-      path: PagePaths.selectedDevice,
-      widget: SelectedDevicesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.devices,
-      widget: const DevicesScreen(),
-    ),
-
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (!getIt<UserNotifier>().isCronic) {
-          vRedirector.stopRedirection();
-          Atom.show(const NotChronicWarning());
-        }
-      },
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.healthInformation,
-          widget: const HealthInformationScreen(),
-        ),
-      ],
-    ),
-
-    VWidget(
-      path: PagePaths.personalInformation,
-      widget: const PersonalInformationScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.profile,
-      widget: ChangeNotifierProvider<ProfileVm>(
-        create: (context) => ProfileVm(context),
-        child: const ProfileScreen(),
-      ),
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.suggestResult,
-          widget: const RequestSuggestionsScreen(),
-        ),
-      ],
-    ),
-
-    VWidget(
-      path: PagePaths.termsAndPrivacy,
-      widget: const TermsAndPrivacyScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.deviceSearch,
-      widget: DeviceSearchScreen(),
-    ),
-    // #endregion
-
-    // #region Onboarding
-    VWidget(
-      path: PagePaths.onboarding,
-      widget: const OnboardingScreen(),
-    ),
-    // #endregion
-
-    // #region Relatives
-    VWidget(
-      path: PagePaths.addPatientRelatives,
-      widget: const AddPatientRelativesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.relatives,
-      widget: ChangeNotifierProvider<RelativesVm>(
-        create: (context) => RelativesVm(),
-        child: const RelativesScreen(),
-      ),
-    ),
-    // #endregion
-
-    // #region EResult
-    VWidget(
-      path: PagePaths.eResult,
-      widget: ChangeNotifierProvider<EResultScreenVm>(
-        create: (context) => EResultScreenVm(context),
-        child: const EResultScreen(),
-      ),
-    ),
-
-    VWidget(
-      path: PagePaths.visitDetail,
-      widget: VisitDetailScreen(),
-    ),
-    // #endregion
-
-    // #region Store
-    VWidget(
-      path: PagePaths.covid19,
-      widget: const Covid19Screen(key: Key('Covid19Screen')),
-    ),
-
-    VWidget(
-      path: PagePaths.creditCard,
-      widget: CreditCardScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.forYouCategories,
-      widget: const ForYouCategoriesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.orderSummary,
-      widget: OrderSummaryScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.forYouSubCategories,
-      widget: ForYouSubCategoriesScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.forYouSubCategoriesDetail,
-      widget: ForYouSubCategoriesDetailScreen(),
-    ),
-
-    VWidget(
-      path: PagePaths.shoppingChart,
-      widget: const ShoppingCartScreen(),
-    ),
-    // #endregion
-
-    // #region Symptom Checker
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (!getIt<IAppConfig>().functionality.symptomChecker) {
-          openDefaultScreen(vRedirector);
-        }
-      },
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.symptomMainMenu,
-          widget: const SymptomsHomeScreen(),
+        // #region Chronic Tracking
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<IAppConfig>().functionality.chronicTracking) {
+              openDefaultScreen(vRedirector);
+            } else if (!getIt<UserNotifier>().isCronic) {
+              vRedirector.stopRedirection();
+              Atom.show(const NotChronicWarning());
+            }
+          },
           stackedRoutes: [
             VWidget(
-              path: PagePaths.symptomBodyLocations,
-              widget: const SymptomsBodyLocationsScreen(),
+              path: PagePaths.measurementTrackingHome,
+              widget: const MeasurementTrackingHomeScreen(),
               stackedRoutes: [
                 VWidget(
-                  path: PagePaths.symptomSubBodyLocations,
-                  widget: BodySubLocationsPage(),
+                  path: PagePaths.bloodGlucoseProgress,
+                  widget: const BgProgressScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.bpProgress,
+                  widget: const BpProgressScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.scaleDetail,
+                  widget: const ScaleDetailScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.scaleManuelAdd,
+                  widget: const ScaleManuelAddScreen(),
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<UserNotifier>().isCronic) {
+              vRedirector.stopRedirection();
+              Atom.show(const NotChronicWarning());
+            }
+          },
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.treatmentEditProgress,
+              widget: const TreatmentEditView(),
+            ),
+          ],
+        ),
+
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<UserNotifier>().isCronic) {
+              vRedirector.stopRedirection();
+              Atom.show(const NotChronicWarning());
+            }
+          },
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.treatmentProgress,
+              widget: const TreatmentProcessScreen(),
+            )
+          ],
+        ),
+        // #endregion
+
+        // #region Dashboard
+        VWidget(
+          path: PagePaths.main,
+          widget: Container(),
+          stackedRoutes: [
+            config.getDashboard(),
+          ],
+        ),
+
+        VWidget(
+          path: PagePaths.doctorCv,
+          widget: DoctorCvScreen(),
+        ),
+        // #endregion
+
+        // #region Detailed Symptom
+        VWidget(
+          path: PagePaths.detailedSymptom,
+          widget: const DetailedSymptomChecker(),
+        ),
+        // #endregion
+
+        // #region Doctor
+        VWidget(
+          path: PagePaths.doctorHome,
+          widget: const DoctorHomeScreen(),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.doctorPatientList,
+              widget: DoctorPatientListScreen(),
+              stackedRoutes: [
+                VWidget(
+                  path: PagePaths.doctorGlucosePatientDetailL,
+                  widget: const BgPatientDetailScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorPressurePatientDetail,
+                  widget: const BpPatientDetailScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorBmiPatientDetail,
+                  widget: const ScalePatientDetailScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorTreatmentProgress,
+                  widget: const DoctorTreatmentProcessScreen(),
                   stackedRoutes: [
                     VWidget(
-                      path: PagePaths.symptomSelectPage,
-                      widget: BodySymptomsSelectionPage(),
+                      path: PagePaths.doctorTreatmentEdit,
+                      widget: const PatientTreatmentEditView(),
+                    ),
+                  ],
+                ),
+                VWidget(
+                  path: PagePaths.doctorCosultation,
+                  widget: const ConsultationScreen(),
+                ),
+              ],
+            ),
+          ],
+        ),
+        // #endregion
+
+        // #region Mediminder
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<IAppConfig>().functionality.mediminder) {
+              openDefaultScreen(vRedirector);
+            }
+          },
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.reminderList,
+              widget: const ReminderListScreen(),
+            ),
+            VWidget(
+              path: PagePaths.selectReminder,
+              widget: const SelectReminderScreen(),
+            ),
+            VWidget(
+              path: PagePaths.bloodGlucoseReminderAddEdit,
+              widget: const BloodGlucoseReminderAddEditScreen(),
+            ),
+            VWidget(
+              path: PagePaths.medicationReminderAddEdit,
+              widget: const MedicationReminderAddEditScreen(),
+            ),
+            VWidget(
+              path: PagePaths.hba1cReminderAddEdit,
+              widget: const Hba1cReminderAddEditScreen(),
+            ),
+            VWidget(
+              path: PagePaths.reminderDetail,
+              widget: const ReminderDetailScreen(),
+            ),
+            VGuard(
+              beforeEnter: (vRedirector) async {
+                Future<void> showAlert() async {
+                  await Atom.show(
+                    GuvenAlert(
+                      backgroundColor:
+                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+                      content: GuvenAlert.buildDescription(
+                        LocaleProvider.current.device_register,
+                      ),
+                      actions: [
+                        //
+                        GuvenAlert.buildMaterialAction(
+                          LocaleProvider.current.Ok,
+                          () {
+                            Atom.dismiss();
+                            vRedirector.to(PagePaths.allDevices);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                final pairedDevices =
+                    getIt<BleDeviceManager>().getPairedDevices();
+                if (pairedDevices.isEmpty) {
+                  await showAlert();
+                  //vRedirector.stopRedirection();
+                } else {
+                  final hasSugarDevice = pairedDevices.any((item) =>
+                      item.deviceType == DeviceType.accuCheck ||
+                      item.deviceType == DeviceType.contourPlusOne);
+                  if (!hasSugarDevice) {
+                    await showAlert();
+                    vRedirector.stopRedirection();
+                  }
+                }
+              },
+              stackedRoutes: [
+                VWidget(
+                  path: PagePaths.strip,
+                  widget: const StripReminderAddEditScreen(),
+                ),
+              ],
+            ),
+          ],
+        ),
+        // #endregion
+
+        // #region My Appointments
+        VWidget(
+          path: PagePaths.allFiles,
+          widget: const AllFilesScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.appointment,
+          widget: const AppointmentListScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.webConferance,
+          widget: WebConferanceScreen(),
+        ),
+        // #endregion
+
+        // #region Profile
+        VWidget(
+          path: PagePaths.allDevices,
+          widget: const AvailableDevices(),
+        ),
+
+        VWidget(
+          path: PagePaths.selectedDevice,
+          widget: SelectedDevicesScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.devices,
+          widget: const DevicesScreen(),
+        ),
+
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<UserNotifier>().isCronic) {
+              vRedirector.stopRedirection();
+              Atom.show(const NotChronicWarning());
+            }
+          },
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.healthInformation,
+              widget: const HealthInformationScreen(),
+            ),
+          ],
+        ),
+
+        VWidget(
+          path: PagePaths.personalInformation,
+          widget: const PersonalInformationScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.profile,
+          widget: ChangeNotifierProvider<ProfileVm>(
+            create: (context) => ProfileVm(context),
+            child: const ProfileScreen(),
+          ),
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.suggestResult,
+              widget: const RequestSuggestionsScreen(),
+            ),
+          ],
+        ),
+
+        VWidget(
+          path: PagePaths.termsAndPrivacy,
+          widget: const TermsAndPrivacyScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.deviceSearch,
+          widget: DeviceSearchScreen(),
+        ),
+        // #endregion
+
+        // #region Onboarding
+        VWidget(
+          path: PagePaths.onboarding,
+          widget: const OnboardingScreen(),
+        ),
+        // #endregion
+
+        // #region Relatives
+        VWidget(
+          path: PagePaths.addPatientRelatives,
+          widget: const AddPatientRelativesScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.relatives,
+          widget: ChangeNotifierProvider<RelativesVm>(
+            create: (context) => RelativesVm(),
+            child: const RelativesScreen(),
+          ),
+        ),
+        // #endregion
+
+        // #region EResult
+        VWidget(
+          path: PagePaths.eResult,
+          widget: ChangeNotifierProvider<EResultScreenVm>(
+            create: (context) => EResultScreenVm(context),
+            child: const EResultScreen(),
+          ),
+        ),
+
+        VWidget(
+          path: PagePaths.visitDetail,
+          widget: VisitDetailScreen(),
+        ),
+        // #endregion
+
+        // #region Store
+        VWidget(
+          path: PagePaths.covid19,
+          widget: const Covid19Screen(key: Key('Covid19Screen')),
+        ),
+
+        VWidget(
+          path: PagePaths.creditCard,
+          widget: CreditCardScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.forYouCategories,
+          widget: const ForYouCategoriesScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.orderSummary,
+          widget: OrderSummaryScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.forYouSubCategories,
+          widget: ForYouSubCategoriesScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.forYouSubCategoriesDetail,
+          widget: ForYouSubCategoriesDetailScreen(),
+        ),
+
+        VWidget(
+          path: PagePaths.shoppingChart,
+          widget: const ShoppingCartScreen(),
+        ),
+        // #endregion
+
+        // #region Symptom Checker
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<IAppConfig>().functionality.symptomChecker) {
+              openDefaultScreen(vRedirector);
+            }
+          },
+          stackedRoutes: [
+            VWidget(
+              path: PagePaths.symptomMainMenu,
+              widget: const SymptomsHomeScreen(),
+              stackedRoutes: [
+                VWidget(
+                  path: PagePaths.symptomBodyLocations,
+                  widget: const SymptomsBodyLocationsScreen(),
+                  stackedRoutes: [
+                    VWidget(
+                      path: PagePaths.symptomSubBodyLocations,
+                      widget: BodySubLocationsPage(),
                       stackedRoutes: [
                         VWidget(
-                          path: PagePaths.symptomResultPage,
-                          widget: SymptomsResultPage(),
+                          path: PagePaths.symptomSelectPage,
+                          widget: BodySymptomsSelectionPage(),
+                          stackedRoutes: [
+                            VWidget(
+                              path: PagePaths.symptomResultPage,
+                              widget: SymptomsResultPage(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -524,62 +525,61 @@ class VRouterRoutes {
             ),
           ],
         ),
-      ],
-    ),
-    // #endregion
+        // #endregion
 
-    // #region Take Appointment
-    VGuard(
-      beforeEnter: (vRedirector) async {
-        if (vRedirector.toUrl?.contains('forOnline=true') ?? false) {
-          if (!getIt<IAppConfig>().functionality.takeOnlineAppointment) {
-            vRedirector.to(PagePaths.main);
-          }
-        } else if (vRedirector.toUrl?.contains('forOnline=false') ?? false) {
-          if (!getIt<IAppConfig>().functionality.takeHospitalAppointment) {
-            vRedirector.to(PagePaths.main);
-          }
-        }
-      },
-      stackedRoutes: [
-        VWidget(
-          path: PagePaths.createAppointment,
-          widget: CreateAppointmentScreen(),
+        // #region Take Appointment
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (vRedirector.toUrl?.contains('forOnline=true') ?? false) {
+              if (!getIt<IAppConfig>().functionality.takeOnlineAppointment) {
+                vRedirector.to(PagePaths.main);
+              }
+            } else if (vRedirector.toUrl?.contains('forOnline=false') ??
+                false) {
+              if (!getIt<IAppConfig>().functionality.takeHospitalAppointment) {
+                vRedirector.to(PagePaths.main);
+              }
+            }
+          },
           stackedRoutes: [
             VWidget(
-              path: PagePaths.createAppointmentEvents,
-              widget: CreateAppointmentEventsScreen(),
+              path: PagePaths.createAppointment,
+              widget: CreateAppointmentScreen(),
               stackedRoutes: [
                 VWidget(
-                  path: PagePaths.createAppointmentSummary,
-                  widget: const CreateAppointmentSummaryScreen(),
+                  path: PagePaths.createAppointmentEvents,
+                  widget: CreateAppointmentEventsScreen(),
+                  stackedRoutes: [
+                    VWidget(
+                      path: PagePaths.createAppointmentSummary,
+                      widget: const CreateAppointmentSummaryScreen(),
+                    ),
+                  ],
                 ),
               ],
             ),
           ],
         ),
-      ],
-    ),
-    // #endregion
+        // #endregion
 
-    VWidget(
-      path: PagePaths.webView,
-      widget: WebViewScreen(),
-    ),
+        VWidget(
+          path: PagePaths.webView,
+          widget: WebViewScreen(),
+        ),
 
-    VWidget(
-      path: PagePaths.fullPdfViewer,
-      widget: FullPdfViewerScreen(),
-    ),
+        VWidget(
+          path: PagePaths.fullPdfViewer,
+          widget: FullPdfViewerScreen(),
+        ),
 
-    //
-    // :_ is a path parameters named _
-    // .+ is a regexp to match any path
-    VRouteRedirector(
-      path: r':_(.+)',
-      redirectTo: '/home',
-    ),
-  ];
+        //
+        // :_ is a path parameters named _
+        // .+ is a regexp to match any path
+        VRouteRedirector(
+          path: r':_(.+)',
+          redirectTo: '/home',
+        ),
+      ];
 }
 
 class PagePaths {

@@ -21,4 +21,9 @@ class OneDoseConfig extends IAppConfig<IOneDosePlatformConfig> {
       super.platform = OneDoseMobilePlatformConfig();
     }
   }
+
+  @override
+  IProductDashboard getDashboard() {
+    return DashboardNavigation();
+  }
 }

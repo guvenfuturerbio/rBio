@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:vrouter/vrouter.dart';
 
 import '../../../bootstrap.dart';
 import '../../../core/core.dart';
 import '../../../core/exception/undefined_endpoint_exception.dart';
+import '../../../features/dashboard/guven/dashboard_navigation.dart';
+import '../../../features/dashboard/onedose/dashboard_navigation.dart';
 import '../../app.dart';
 
 part '../guven/guven_config.dart';
@@ -44,9 +47,12 @@ abstract class IAppConfig<T extends IAppPlatformConfig> {
   });
 
   void setDeviceConfig();
+  IProductDashboard getDashboard();
 }
 
 enum ProductType {
   oneDose,
   guven,
 }
+
+abstract class IProductDashboard extends VRouteElementBuilder {}

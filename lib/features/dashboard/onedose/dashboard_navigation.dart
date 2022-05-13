@@ -9,7 +9,7 @@ import '../home/view/home_screen.dart';
 import '../notification_inbox/view/notification_inbox_screen.dart';
 import '../search/view/search_screen.dart';
 
-class DashboardNavigation extends VRouteElementBuilder {
+class DashboardNavigation extends IProductDashboard {
   DashboardNavigation();
 
   static String search = 'search';
