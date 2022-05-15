@@ -336,7 +336,7 @@ Widget _itemFindHospital({
             ),
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(R.sizes.radiusCircular),
+            borderRadius: R.sizes.borderRadiusCircular,
             gradient: LinearGradient(
               colors: [
                 colorLeft,

@@ -1006,7 +1006,7 @@ class _ProgressDialogState extends State<ProgressDialog> {
             height: 150,
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(R.sizes.radiusCircular),
+              borderRadius: R.sizes.borderRadiusCircular,
               gradient: blueGradient(),
             ),
             child: Column(
