@@ -209,10 +209,12 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
           onTap: () async {
             getIt<AdjustManager>().trackEvent(MySymptomsPage1Event());
             getIt<FirebaseAnalyticsManager>().logEvent(
-                SikayetlerimSayfa1DevamEvent(
-                    getIt<UserNotifier>().firebaseEmail,
-                    value.genderIdHolder.toString(),
-                    getIt<ProfileStorageImpl>().getFirst().birthDate));
+              SikayetlerimSayfa1DevamEvent(
+                getIt<UserNotifier>().firebaseEmail.toString(),
+                value.genderIdHolder.toString(),
+                getIt<ProfileStorageImpl>().getFirst().birthDate.toString(),
+              ),
+            );
             Atom.to(
               PagePaths.symptomBodyLocations,
               queryParameters: {

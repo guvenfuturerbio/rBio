@@ -233,15 +233,17 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                   getIt<AdjustManager>()
                       .trackEvent(MySymptomsPage4DepartmentAnalysisEvent());
                   getIt<FirebaseAnalyticsManager>().logEvent(
-                      SikayetlerimSayfa4BolumAnaliziYapin(
-                          getIt<UserNotifier>().firebaseEmail,
-                          widget.selectedGenderId == 0 ||
-                                  widget.selectedGenderId == 2
-                              ? 'M'
-                              : 'F',
-                          widget.yearOfBirth!,
-                          widget.myPv?.bodyLocNames,
-                          widget.myPv?.bodyLocNamesList.length));
+                    SikayetlerimSayfa4BolumAnaliziYapin(
+                      getIt<UserNotifier>().firebaseEmail,
+                      widget.selectedGenderId == 0 ||
+                              widget.selectedGenderId == 2
+                          ? 'M'
+                          : 'F',
+                      widget.yearOfBirth!.toString(),
+                      widget.myPv?.bodyLocNames.toString(),
+                      widget.myPv?.bodyLocNamesList.length.toString(),
+                    ),
+                  );
                   Atom.to(
                     PagePaths.symptomResultPage,
                     queryParameters: {

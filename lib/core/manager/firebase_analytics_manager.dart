@@ -136,7 +136,7 @@ class RandevuOlusturRandevuAraEvent extends BaseEvent {
     String? randevuAlacakKisiId,
     String? hastaneSecimi,
     String? bolumSecimi,
-    int? doktorSecimi,
+    String? doktorSecimi,
   ) : super(
           _EventConstants.randevuOlusturRandevuAra,
           {
@@ -189,24 +189,30 @@ class SikayetlerimSayfa2DevamEvent extends BaseEvent {
 }
 
 class SikayetlerimSayfa3DevamEvent extends BaseEvent {
-  SikayetlerimSayfa3DevamEvent(String? randevuAlacakKisiId, String? cinsiyetId,
-      String? dogumTarihiId, String? agriBolgesi)
-      : super(_EventConstants.sikayetlerimSayfa3Devam, {
-          'randevu_alacak_kisi_id': randevuAlacakKisiId,
-          'cinsiyet_id': cinsiyetId,
-          'dogum_tarihi_id': dogumTarihiId,
-          'agri_bolgesi': agriBolgesi
-        });
+  SikayetlerimSayfa3DevamEvent(
+    String? randevuAlacakKisiId,
+    String? cinsiyetId,
+    String? dogumTarihiId,
+    String? agriBolgesi,
+  ) : super(
+          _EventConstants.sikayetlerimSayfa3Devam,
+          {
+            'randevu_alacak_kisi_id': randevuAlacakKisiId,
+            'cinsiyet_id': cinsiyetId,
+            'dogum_tarihi_id': dogumTarihiId,
+            'agri_bolgesi': agriBolgesi
+          },
+        );
 }
 
 class SikayetlerimSayfa4BolumAnaliziYapin extends BaseEvent {
   SikayetlerimSayfa4BolumAnaliziYapin(
-      String? randevuAlacakKisiId,
-      String? cinsiyetId,
-      String? dogumTarihiId,
-      String? agriBolgesi,
-      int? sikayetKapsamSeciliAdet)
-      : super(_EventConstants.sikayetlerimSayfa4BolumAnaliziYapin, {
+    String? randevuAlacakKisiId,
+    String? cinsiyetId,
+    String? dogumTarihiId,
+    String? agriBolgesi,
+    String? sikayetKapsamSeciliAdet,
+  ) : super(_EventConstants.sikayetlerimSayfa4BolumAnaliziYapin, {
           'randevu_alacak_kisi_id': randevuAlacakKisiId,
           'cinsiyet_id': cinsiyetId,
           'dogum_tarihi_id': dogumTarihiId,
@@ -217,14 +223,14 @@ class SikayetlerimSayfa4BolumAnaliziYapin extends BaseEvent {
 
 class SonuclarimRandevuAraEvent extends BaseEvent {
   SonuclarimRandevuAraEvent(
-      String? randevuAlacakKisiId,
-      String? cinsiyetId,
-      String? dogumTarihiId,
-      String? agriBolgesi,
-      int? sikayetKapsamSeciliAdet,
-      String? birimAdi,
-      int? tiklananBirimYuzdelik)
-      : super(
+    String? randevuAlacakKisiId,
+    String? cinsiyetId,
+    String? dogumTarihiId,
+    String? agriBolgesi,
+    String? sikayetKapsamSeciliAdet,
+    String? birimAdi,
+    String? tiklananBirimYuzdelik,
+  ) : super(
           _EventConstants.sonuclarimRandevuAra,
           {
             'randevu_alacak_kisi_id': randevuAlacakKisiId,
@@ -244,25 +250,34 @@ class UygulamaCikisEvent extends BaseEvent {
 
 class SizeOzelKategoriTiklandiEvent extends BaseEvent {
   SizeOzelKategoriTiklandiEvent(String categoryName)
-      : super(_EventConstants.sizeOzelKategoriTiklandiEvent,
-            {"categoryId": categoryName});
+      : super(
+          _EventConstants.sizeOzelKategoriTiklandiEvent,
+          {"categoryId": categoryName},
+        );
 }
 
 class SizeOzelAltKategoriTiklandiEvent extends BaseEvent {
   SizeOzelAltKategoriTiklandiEvent(String subCategoryName)
-      : super(_EventConstants.sizeOzelAltKategoriTiklandiEvent,
-            {"subCategoryId": subCategoryName});
+      : super(
+          _EventConstants.sizeOzelAltKategoriTiklandiEvent,
+          {"subCategoryId": subCategoryName},
+        );
 }
 
 class SizeOzelAltKategoriOzeteTiklandiEvent extends BaseEvent {
   SizeOzelAltKategoriOzeteTiklandiEvent(String subCategoryName)
-      : super(_EventConstants.sizeOzelAltKategoriOzeteTiklandi,
-            {"subCategoryName": subCategoryName});
+      : super(
+          _EventConstants.sizeOzelAltKategoriOzeteTiklandi,
+          {"subCategoryName": subCategoryName},
+        );
 }
 
 class UrunOdemesiTiklandiEvent extends BaseEvent {
   UrunOdemesiTiklandiEvent(String itemName)
-      : super(_EventConstants.urunOdemesiTiklandiEvent, {"itemName": itemName});
+      : super(
+          _EventConstants.urunOdemesiTiklandiEvent,
+          {"itemName": itemName},
+        );
 }
 
 class NewDownloadEvent extends BaseEvent {
@@ -309,7 +324,7 @@ class BasariliOdemeEvent extends BaseEvent {
 // #region FailEvents
 
 class KayitOlAdim1Hata extends BaseEvent {
-  KayitOlAdim1Hata(String param1, int param2)
+  KayitOlAdim1Hata(String param1, String param2)
       : super(_EventConstants.kayitOlAdim1Hata, {
           'test_param1': param1,
           'test_param2': param2,

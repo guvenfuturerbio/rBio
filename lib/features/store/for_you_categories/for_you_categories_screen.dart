@@ -72,8 +72,12 @@ class _ForYouCategoriesScreenState extends State<ForYouCategoriesScreen> {
                   : Image.asset(R.image.covidCat),
               onTap: () {
                 getIt<AdjustManager>().trackEvent(ForYouCategoryClickedEvent());
-                getIt<FirebaseAnalyticsManager>()
-                    .logEvent(SizeOzelKategoriTiklandiEvent(item.text ?? ''));
+                getIt<FirebaseAnalyticsManager>().logEvent(
+                  SizeOzelKategoriTiklandiEvent(
+                    item.text ?? '',
+                  ),
+                );
+
                 Atom.to(
                   PagePaths.forYouSubCategories,
                   queryParameters: {

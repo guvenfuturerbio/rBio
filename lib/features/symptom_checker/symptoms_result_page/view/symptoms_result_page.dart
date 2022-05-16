@@ -143,15 +143,19 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                         getIt<AdjustManager>().trackEvent(
                                             MyResultsSearchAppointmentEvent());
                                         getIt<FirebaseAnalyticsManager>()
-                                            .logEvent(SonuclarimRandevuAraEvent(
-                                                getIt<UserNotifier>()
-                                                    .firebaseEmail,
-                                                widget.gender,
-                                                widget.yearOfBirth!,
-                                                widget.bodyPart,
-                                                widget.bodyPartLength,
-                                                'danisma',
-                                                95));
+                                            .logEvent(
+                                          SonuclarimRandevuAraEvent(
+                                            getIt<UserNotifier>()
+                                                .firebaseEmail
+                                                .toString(),
+                                            widget.gender.toString(),
+                                            widget.yearOfBirth!.toString(),
+                                            widget.bodyPart.toString(),
+                                            widget.bodyPartLength.toString(),
+                                            'danisma',
+                                            95.toString(),
+                                          ),
+                                        );
                                         Atom.to(
                                           PagePaths.createAppointment,
                                           queryParameters: {
@@ -293,21 +297,21 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                               MyResultsSearchAppointmentEvent());
                                           getIt<FirebaseAnalyticsManager>()
                                               .logEvent(
-                                                  SonuclarimRandevuAraEvent(
-                                                      getIt<UserNotifier>()
-                                                          .firebaseEmail,
-                                                      widget.gender,
-                                                      widget.yearOfBirth!,
-                                                      widget.bodyPart,
-                                                      widget.bodyPartLength,
-                                                      value
-                                                          .specialisations[
-                                                              index]
-                                                          .name,
-                                                      value
-                                                          .specialisations[
-                                                              index]
-                                                          .accuracy));
+                                            SonuclarimRandevuAraEvent(
+                                              getIt<UserNotifier>()
+                                                  .firebaseEmail
+                                                  .toString(),
+                                              widget.gender.toString(),
+                                              widget.yearOfBirth!.toString(),
+                                              widget.bodyPart.toString(),
+                                              widget.bodyPartLength.toString(),
+                                              value.specialisations[index].name
+                                                  .toString(),
+                                              value.specialisations[index]
+                                                  .accuracy
+                                                  .toString(),
+                                            ),
+                                          );
 
                                           Atom.to(PagePaths.createAppointment,
                                               queryParameters: {

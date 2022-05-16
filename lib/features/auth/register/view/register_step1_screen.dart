@@ -394,8 +394,12 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   } else {
                     getIt<AdjustManager>()
                         .trackEvent(UnsuccessfulRegisterStep1Event());
-                    getIt<FirebaseAnalyticsManager>()
-                        .logEvent(KayitOlAdim1Hata("Register1 User TC", 22));
+                    getIt<FirebaseAnalyticsManager>().logEvent(
+                      KayitOlAdim1Hata(
+                        "Register1 User TC",
+                        22.toString(),
+                      ),
+                    );
                     vm.showInfoDialog(
                       LocaleProvider.of(context).warning,
                       LocaleProvider.of(context).fill_all_field,

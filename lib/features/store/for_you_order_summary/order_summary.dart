@@ -302,8 +302,11 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                       getIt<AdjustManager>()
                           .trackEvent(ForYouItemPaymentClickedEvent());
                       getIt<FirebaseAnalyticsManager>().logEvent(
-                          UrunOdemesiTiklandiEvent(
-                              value.selectedItem!.title ?? ''));
+                        UrunOdemesiTiklandiEvent(
+                          value.selectedItem!.title ?? '',
+                        ),
+                      );
+
                       Atom.to(
                         PagePaths.creditCard,
                         queryParameters: {

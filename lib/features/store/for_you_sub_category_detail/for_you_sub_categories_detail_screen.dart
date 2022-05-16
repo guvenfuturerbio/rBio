@@ -109,8 +109,10 @@ class _ForYouSubCategoriesDetailScreenState
                             getIt<AdjustManager>()
                                 .trackEvent(ForYouPackageSummaryClickedEvent());
                             getIt<FirebaseAnalyticsManager>().logEvent(
-                                SizeOzelAltKategoriOzeteTiklandiEvent(
-                                    widget.itemId));
+                              SizeOzelAltKategoriOzeteTiklandiEvent(
+                                widget.itemId.toString(),
+                              ),
+                            );
                             Atom.to(
                               PagePaths.orderSummary,
                               queryParameters: {
