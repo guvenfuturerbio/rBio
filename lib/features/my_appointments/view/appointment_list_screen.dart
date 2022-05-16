@@ -55,18 +55,18 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
   List<Widget> getActions(BuildContext context) {
     return [
-      InkWell(
-        child: SvgPicture.asset(
-          R.image.allFilesGrey,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-        onTap: () {
-          Atom.to(PagePaths.allFiles);
-        },
-      ),
-      const SizedBox(
-        width: 12,
-      ),
+      // InkWell(
+      //   child: SvgPicture.asset(
+      //     R.image.allFilesGrey,
+      //     color: getIt<IAppConfig>().theme.white,
+      //   ),
+      //   onTap: () {
+      //     Atom.to(PagePaths.allFiles);
+      //   },
+      // ),
+      // const SizedBox(
+      //   width: 12,
+      // ),
     ];
   }
 
@@ -235,49 +235,51 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                RbioIconButton(
-                    onPressed: () async {
-                      File? fileBytes = await value.getSelectedFile();
-                      if (fileBytes != null) {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          builder: (BuildContext context) {
-                            return GuvenAlert(
-                              backgroundColor: Colors.white,
-                              title: GuvenAlert.buildTitle(
-                                LocaleProvider().upload_file_question,
-                              ),
-                              actions: [
-                                GuvenAlert.buildMaterialAction(
-                                  LocaleProvider.of(context).confirm,
-                                  () async {
-                                    await value.uploadFile(fileBytes);
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                              content: const SizedBox(),
-                            );
-                          },
-                        );
-                      }
-                    },
-                    icon: SvgPicture.asset(
-                      R.image.upload,
-                      color: getIt<IAppConfig>().theme.white,
-                    )),
+                // RbioIconButton(
+                //   onPressed: () async {
+                //     File? fileBytes = await value.getSelectedFile();
+                //     if (fileBytes != null) {
+                //       showDialog(
+                //         context: context,
+                //         barrierDismissible: true,
+                //         builder: (BuildContext context) {
+                //           return GuvenAlert(
+                //             backgroundColor: Colors.white,
+                //             title: GuvenAlert.buildTitle(
+                //               LocaleProvider().upload_file_question,
+                //             ),
+                //             actions: [
+                //               GuvenAlert.buildMaterialAction(
+                //                 LocaleProvider.of(context).confirm,
+                //                 () async {
+                //                   await value.uploadFile(fileBytes);
+                //                   Navigator.pop(context);
+                //                 },
+                //               ),
+                //             ],
+                //             content: const SizedBox(),
+                //           );
+                //         },
+                //       );
+                //     }
+                //   },
+                //   icon: SvgPicture.asset(
+                //     R.image.upload,
+                //     color: getIt<IAppConfig>().theme.white,
+                //   ),
+                // ),
 
                 //
 
                 RbioIconButton(
-                    onPressed: () {
-                      value.showTranslatorSelector(data.id.toString());
-                    },
-                    icon: SvgPicture.asset(
-                      R.image.translator,
-                      color: getIt<IAppConfig>().theme.white,
-                    )),
+                  onPressed: () {
+                    value.showTranslatorSelector(data.id.toString());
+                  },
+                  icon: SvgPicture.asset(
+                    R.image.translator,
+                    color: getIt<IAppConfig>().theme.white,
+                  ),
+                ),
 
                 //
                 RbioIconButton(
