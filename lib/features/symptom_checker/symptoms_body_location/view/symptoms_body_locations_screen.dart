@@ -181,11 +181,13 @@ class _SymptomsBodyLocationsScreenState
                 onTap: () async {
                   getIt<AdjustManager>().trackEvent(MySymptomsPage2Event());
                   getIt<FirebaseAnalyticsManager>().logEvent(
-                      SikayetlerimSayfa2DevamEvent(
-                          getIt<UserNotifier>().firebaseEmail,
-                          selectedGenderId.toString(),
-                          yearOfBirth,
-                          value.selectedBodyLocation?.name));
+                    SikayetlerimSayfa2DevamEvent(
+                      getIt<UserNotifier>().firebaseEmail.toString(),
+                      selectedGenderId.toString(),
+                      yearOfBirth.toString(),
+                      value.selectedBodyLocation?.name.toString(),
+                    ),
+                  );
 
                   AppInheritedWidget.of(context)?.bodyLocationRsp =
                       value.selectedBodyLocation;
