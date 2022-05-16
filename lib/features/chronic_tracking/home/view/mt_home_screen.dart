@@ -154,101 +154,33 @@ class _MeasurementTrackingHomeScreenState
   }
 
   Widget _buildExpandedUser() {
-    return SizedBox(
-      height: 50,
-      width: double.infinity,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Expanded(
-            child: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: R.sizes.borderRadiusCircular,
+    return RbioUserAndTreatmentTile(
+      onTap: () {
+        getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
+        getIt<FirebaseAnalyticsManager>()
+            .logEvent(SaglikTakibiButonlarEvent('Tedavi'));
+
+        final treatmentList =
+            getIt<ProfileStorageImpl>().getFirst().treatmentList;
+        if ((treatmentList ?? []).isEmpty) {
+          Atom.to(
+            PagePaths.treatmentEditProgress,
+            queryParameters: {
+              'treatment_model': jsonEncode(
+                TreatmentProcessItemModel(
+                  dateTime: DateTime.now(),
+                  description: '',
+                  id: -1,
+                  title: '',
+                ).toJson(),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    foregroundImage: Utils.instance.getCacheProfileImage,
-                    backgroundColor:
-                        getIt<IAppConfig>().theme.cardBackgroundColor,
-                  ),
-
-                  //
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        getIt<ProfileStorageImpl>().getFirst().name ?? 'Name',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.xHeadline5.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          //
-          const SizedBox(width: 6),
-
-          //
-          GestureDetector(
-            onTap: () {
-              getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
-              getIt<FirebaseAnalyticsManager>()
-                  .logEvent(SaglikTakibiButonlarEvent('Tedavi'));
-
-              final treatmentList =
-                  getIt<ProfileStorageImpl>().getFirst().treatmentList;
-              if ((treatmentList ?? []).isEmpty) {
-                Atom.to(
-                  PagePaths.treatmentEditProgress,
-                  queryParameters: {
-                    'treatment_model': jsonEncode(
-                      TreatmentProcessItemModel(
-                        dateTime: DateTime.now(),
-                        description: '',
-                        id: -1,
-                        title: '',
-                      ).toJson(),
-                    ),
-                    'newModel': true.toString(),
-                  },
-                );
-              } else {
-                Atom.to(PagePaths.treatmentProgress);
-              }
+              'newModel': true.toString(),
             },
-            child: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Text(
-                LocaleProvider.current.treatment,
-                style: context.xHeadline5.copyWith(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+          );
+        } else {
+          Atom.to(PagePaths.treatmentProgress);
+        }
+      },
     );
   }
 }

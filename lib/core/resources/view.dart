@@ -136,6 +136,7 @@ class _Sizes {
 
   // BorderRadius
   final BorderRadius borderRadiusCircular = BorderRadius.circular(12);
+  final radiusValue = 12;
 
   // Icons
   final double iconSize = 30;

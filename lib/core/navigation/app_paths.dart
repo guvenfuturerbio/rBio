@@ -12,6 +12,7 @@ import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_
 import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_detail_screen.dart';
 import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_manuel_add_screen.dart';
+import '../../features/chronic_tracking/progress_sections/scale/treatment/view/patient_scale_treatment_list_screen.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/guven/dashboard_navigation.dart';
@@ -152,6 +153,10 @@ class VRouterRoutes {
                 VWidget(
                   path: PagePaths.scaleManuelAdd,
                   widget: const ScaleManuelAddScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.patientScaleTreatmentList,
+                  widget: const PatientScaleTreatmentListScreen(),
                 ),
               ],
             ),
@@ -609,6 +614,8 @@ class PagePaths {
   static const treatmentEditProgress = '/tretment-edit-progress';
   static const scaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
+
+  static const patientScaleTreatmentList = "patient-scale-treatment-list";
   // #endregion
 
   // #region Dashboard

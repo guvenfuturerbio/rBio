@@ -121,6 +121,11 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
       mainAxisSize: MainAxisSize.max,
       children: [
         //
+        RbioUserAndTreatmentTile(
+          onTap: () {},
+        ),
+
+        //
         Expanded(
           flex: 30,
           child: Stack(
