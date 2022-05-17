@@ -66,7 +66,7 @@ class RbioUserAndTreatmentTile extends StatelessWidget {
 
             //
             GestureDetector(
-              onTap: () {},
+              onTap: onTap,
               child: Container(
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 32),

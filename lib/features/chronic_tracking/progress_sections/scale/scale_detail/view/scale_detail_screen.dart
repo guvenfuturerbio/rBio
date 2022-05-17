@@ -122,7 +122,9 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
       children: [
         //
         RbioUserAndTreatmentTile(
-          onTap: () {},
+          onTap: () {
+            Atom.to(PagePaths.patientScaleTreatmentList);
+          },
         ),
 
         //

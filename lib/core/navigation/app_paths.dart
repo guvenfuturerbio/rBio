@@ -144,17 +144,21 @@ class VRouterRoutes {
                   path: PagePaths.bpProgress,
                   widget: const BpProgressScreen(),
                 ),
-                VWidget(
-                  path: PagePaths.scaleDetail,
-                  widget: const ScaleDetailScreen(),
+                VGuard(
+                  stackedRoutes: [
+                    VWidget(
+                      path: PagePaths.scaleDetail,
+                      widget: const ScaleDetailScreen(),
+                    ),
+                    VWidget(
+                      path: PagePaths.patientScaleTreatmentList,
+                      widget: const PatientScaleTreatmentListScreen(),
+                    ),
+                  ],
                 ),
                 VWidget(
                   path: PagePaths.scaleManuelAdd,
                   widget: const ScaleManuelAddScreen(),
-                ),
-                VWidget(
-                  path: PagePaths.patientScaleTreatmentList,
-                  widget: const PatientScaleTreatmentListScreen(),
                 ),
               ],
             ),
@@ -623,7 +627,8 @@ class PagePaths {
   static const scaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
 
-  static const patientScaleTreatmentList = "patient-scale-treatment-list";
+  static const patientScaleTreatmentList =
+      "/scale-detail/patient-scale-treatment-list";
   // #endregion
 
   // #region Dashboard
