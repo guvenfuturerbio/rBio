@@ -136,8 +136,8 @@ class Hba1cReminderAddEditCubit extends Cubit<Hba1cReminderAddEditState> {
     }
 
     final scheduledDate = DateTime.parse(result.scheduledDate!)
-      ..add(Duration(hours: result.scheduledHour!.hour))
-      ..add(Duration(minutes: result.scheduledHour!.minute));
+      .add(Duration(hours: result.scheduledHour!.hour))
+      .add(Duration(minutes: result.scheduledHour!.minute));
     final now = DateTime.now();
     if (scheduledDate.isBefore(now)) {
       _showWarningDialog(LocaleProvider.current.reminders_past_create_message);
