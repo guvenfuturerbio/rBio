@@ -18,7 +18,7 @@ class RequestSuggestionsScreenVm extends RbioVm {
   String text = '';
   int textLength = 0;
   setText(String text) {
-    text = text;
+    this.text = text;
     textLength = text.length;
     notifyListeners();
   }
