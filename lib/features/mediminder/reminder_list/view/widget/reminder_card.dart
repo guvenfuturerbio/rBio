@@ -29,7 +29,7 @@ class ReminderCard extends StatelessWidget {
           color: Colors.transparent,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: R.sizes.borderRadiusCircular,
           child: ColorFiltered(
             colorFilter: ColorFilter.mode(
               model.status ? Colors.transparent : Colors.grey,
@@ -49,8 +49,8 @@ class ReminderCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: getIt<IAppConfig>().theme.mainColor,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
+                    borderRadius: BorderRadius.vertical(
+                      top: R.sizes.radiusCircular,
                     ),
                   ),
                   child: Row(
@@ -85,8 +85,8 @@ class ReminderCard extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                    borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(12),
+                    borderRadius: BorderRadius.vertical(
+                      bottom: R.sizes.radiusCircular,
                     ),
                   ),
                   child: Row(

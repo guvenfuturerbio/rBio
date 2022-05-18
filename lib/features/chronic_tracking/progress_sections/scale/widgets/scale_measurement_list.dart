@@ -67,7 +67,7 @@ class ScaleMeasurementList extends StatelessWidget {
                         offset: const Offset(5, 5),
                       ),
                     ],
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: R.sizes.borderRadiusCircular,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

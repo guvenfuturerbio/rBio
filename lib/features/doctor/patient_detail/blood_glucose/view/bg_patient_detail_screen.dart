@@ -316,7 +316,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: R.sizes.borderRadiusCircular
               ),
               child: Text(
                 LocaleProvider.current.treatment,

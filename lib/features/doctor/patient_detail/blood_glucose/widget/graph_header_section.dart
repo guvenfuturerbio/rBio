@@ -89,7 +89,7 @@ class _GraphHeaderSection extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(4),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: R.sizes.borderRadiusCircular,
               child: LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                 return _CustomBarPie(

@@ -181,7 +181,7 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
               ),
               InkWell(
                 child: _itemOption(
-                  context: context,
+                    context: context,
                     title: LocaleProvider.of(context).request_and_suggestions,
                     image: R.image.icEditWhite,
                     number: LocaleProvider.of(context).lbl_number_doctor,
@@ -224,7 +224,7 @@ Widget _itemOption({
       height: 100,
       margin: margin,
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: R.sizes.borderRadiusCircular,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -237,9 +237,9 @@ Widget _itemOption({
                   title,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                    style: context.xHeadline5.copyWith(
-                fontWeight: FontWeight.bold,
-                color: getIt<IAppConfig>().theme.textColor,
+                  style: context.xHeadline5.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: getIt<IAppConfig>().theme.textColor,
                   ),
                 ),
               ),
@@ -260,7 +260,7 @@ Widget _itemOption({
         ),
       ),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: R.sizes.borderRadiusCircular,
         gradient: LinearGradient(
           colors: isFocused
               ? [
@@ -286,7 +286,6 @@ Widget _itemOption({
     );
 
 Widget _itemFindHospital({
-
   required BuildContext context,
   required String title,
   required String image,
@@ -297,65 +296,65 @@ Widget _itemFindHospital({
 }) {
   return context.xTextScaleType == TextScaleType.small
       ? Container(
-	 height: 100,
+          height: 100,
           margin: margin,
           padding: const EdgeInsets.only(
             left: 15,
             top: 15,
           ),
-        child: ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(16)),
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          //
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.bold,
-                color: getIt<IAppConfig>().theme.textColor,
-              ),
-            ),
-          ),
+          child: ClipRRect(
+            borderRadius: R.sizes.borderRadiusCircular,
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                //
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.xHeadline3.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: getIt<IAppConfig>().theme.textColor,
+                    ),
+                  ),
+                ),
 
-          //
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Opacity(
-              opacity: 0.5,
-              child: SvgPicture.asset(
-                image,
-                width: 80,
-              ),
+                //
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: SvgPicture.asset(
+                      image,
+                      width: 80,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-    ),
-    decoration: BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(16)),
-      gradient: LinearGradient(
-        colors: [
-          colorLeft,
-          colorRight,
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.topRight,
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
-          blurRadius: 15,
-          spreadRadius: 0,
-          offset: const Offset(5, 10),
-        ),
-      ],
-    ),
-  )
+          decoration: BoxDecoration(
+            borderRadius: R.sizes.borderRadiusCircular,
+            gradient: LinearGradient(
+              colors: [
+                colorLeft,
+                colorRight,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+                blurRadius: 15,
+                spreadRadius: 0,
+                offset: const Offset(5, 10),
+              ),
+            ],
+          ),
+        )
       : Container(
           height: 150,
           margin: margin,
@@ -363,57 +362,57 @@ Widget _itemFindHospital({
             left: 15,
             top: 15,
           ),
-    child: ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(16)),
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          //
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.bold,
-                color: getIt<IAppConfig>().theme.textColor,
-              ),
-            ),
-          ),
+          child: ClipRRect(
+            borderRadius: R.sizes.borderRadiusCircular,
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                //
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.xHeadline3.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: getIt<IAppConfig>().theme.textColor,
+                    ),
+                  ),
+                ),
 
-          //
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Opacity(
-              opacity: 0.5,
-              child: SvgPicture.asset(
-                image,
-                width: 80,
-              ),
+                //
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: SvgPicture.asset(
+                      image,
+                      width: 80,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-    ),
-    decoration: BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(16)),
-      gradient: LinearGradient(
-        colors: [
-          colorLeft,
-          colorRight,
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.topRight,
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
-          blurRadius: 15,
-          spreadRadius: 0,
-          offset: const Offset(5, 10),
-        ),
-      ],
-    ),
-  );
+          decoration: BoxDecoration(
+            borderRadius: R.sizes.borderRadiusCircular,
+            gradient: LinearGradient(
+              colors: [
+                colorLeft,
+                colorRight,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+                blurRadius: 15,
+                spreadRadius: 0,
+                offset: const Offset(5, 10),
+              ),
+            ],
+          ),
+        );
 }

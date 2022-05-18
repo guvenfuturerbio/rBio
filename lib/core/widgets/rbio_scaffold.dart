@@ -69,8 +69,8 @@ class RbioScaffold extends StatelessWidget {
         children: [
           //
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              bottom: Radius.circular(15),
+            borderRadius: BorderRadius.vertical(
+              bottom: R.sizes.radiusCircular,
             ),
             child: SizedBox(
               height: 64 + MediaQuery.of(context).viewPadding.top,

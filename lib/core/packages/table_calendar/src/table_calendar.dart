@@ -446,8 +446,8 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     return Container(
       decoration: BoxDecoration(
         color: getIt<IAppConfig>().theme.secondaryColor,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(15),
+        borderRadius: BorderRadius.vertical(
+          top: R.sizes.radiusCircular,
         ),
       ),
       child: Column(
