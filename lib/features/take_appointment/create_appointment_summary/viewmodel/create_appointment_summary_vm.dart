@@ -76,7 +76,13 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     }
     textDate = DateTime.parse(from).xFormatTime2();
 
-    appointmentRange = from.substring(11, 16) + " - " + to.substring(11, 16);
+    DateTime fromDateTime = DateTime.parse(from);
+    DateTime toDateTime = DateTime.parse(to);
+    fromDateTime = fromDateTime.xTurkishTimeToLocal();
+    toDateTime = toDateTime.xTurkishTimeToLocal();
+    appointmentRange = fromDateTime.toString().xGetUTCLocalTime() +
+        " - " +
+        toDateTime.toString().xGetUTCLocalTime();
   }
 
   bool _showOverlayLoading = false;

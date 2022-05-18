@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/core.dart';
 
 extension LocaleDateFromString on String {
   /// timeZoneOffset = +11:00:00.000000 - Currie
@@ -14,10 +15,16 @@ extension LocaleDateFromString on String {
     return localDate.xFormatTime2();
   }
 
+  String xGetUTCLocalDateHourValue() {
+    if (this == '-') return this;
+    DateTime localDate = DateTime.parse(this).toLocal();
+    return localDate.hour.toString();
+  }
+
   /// timeZoneOffset = +11:00:00.000000 - Currie
   ///
   /// Input  = 2021-12-28T16:20:00+03:00
-  ///
+  /// 2022-05-10T06:45:44.089219+00:00
   /// Output = 00:20 = Currie
   String xGetUTCLocalTime() {
     if (this == '-') return this;
@@ -35,6 +42,12 @@ extension LocaleDateFromString on String {
     DateTime localDate = DateTime.parse(this).toLocal();
     return localDate.xFormatTime3();
   }
+
+  String xGetUTCLocalDateTimeTwo() {
+    if (this == '-') return this;
+    DateTime localDate = DateTime.parse(this).toLocal();
+    return localDate.xFormatTime9();
+  }
 }
 
 extension DateTimeExtensions on DateTime {
@@ -48,6 +61,7 @@ extension DateTimeExtensions on DateTime {
     return subtract(const Duration(hours: 3)).add(timeZoneOffset);
   }
 
+//2022-05-10T06:45:44.089219+00:00
   /// timeZoneOffset = +11:00:00.000000 - Currie
   ///
   /// Input  = 2022-01-28 16:20:00.000

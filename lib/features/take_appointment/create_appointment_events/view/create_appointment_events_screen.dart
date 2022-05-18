@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -133,8 +134,10 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': completeNotifier.value!.selected!.from!.toString(),
-                    'to': completeNotifier.value!.selected!.to!.toString(),
+                    'from': 
+                    completeNotifier.value!.selected!.from!.toString(),
+                    'to': 
+                    completeNotifier.value!.selected!.to!.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );

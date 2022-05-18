@@ -459,8 +459,9 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        DateTime.parse(vm.radiologyResults[index].takenAt ?? "")
-                            .xFormatTime2(),
+                        vm.radiologyResults[index].takenAt
+                                ?.xGetUTCLocalDate() ??
+                            "",
                         style: context.xHeadline4.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
