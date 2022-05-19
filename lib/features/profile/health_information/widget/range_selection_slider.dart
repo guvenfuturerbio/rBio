@@ -107,9 +107,9 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
                   color: getIt<IAppConfig>().theme.mainColor,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(12.0),
-                    bottomRight: Radius.circular(12.0),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: R.sizes.radiusCircular,
+                    bottomRight: R.sizes.radiusCircular,
                   ),
                 ),
                 child: Text(

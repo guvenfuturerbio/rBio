@@ -519,12 +519,24 @@ class LoginScreenVm extends ChangeNotifier {
     }
     _checkedKvkk = results[2];
 
-    var profiles = await getIt<ChronicTrackingRepository>().getAllProfiles();
-    if (profiles.isNotEmpty) {
-      await getIt<ProfileStorageImpl>().write(
-        profiles.last,
-        shouldSendToServer: false,
-      );
+    if (getIt<UserNotifier>().isCronic) {
+      var profiles = await getIt<ChronicTrackingRepository>().getAllProfiles();
+      if (profiles.isNotEmpty) {
+        await getIt<ProfileStorageImpl>().write(
+          profiles.last,
+          shouldSendToServer: false,
+        );
+      } else {
+        await getIt<ProfileStorageImpl>().write(
+          Person().fromDefault(
+            name: patientDetail.name ?? 'Name',
+            lastName: patientDetail.surname ?? 'LastName',
+            birthDate: patientDetail.patients?.first.birthDate ?? '01.01.2000',
+            gender: patientDetail.patients?.first.gender ?? 'unsp',
+          ),
+          shouldSendToServer: true,
+        );
+      }
     }
 
     if (!Atom.isWeb && getIt<UserNotifier>().isCronic) {

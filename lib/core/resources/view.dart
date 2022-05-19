@@ -138,6 +138,8 @@ class _Sizes {
   final BorderRadius borderRadiusCircular = BorderRadius.circular(12);
   final radiusValue = 12;
 
+  final Radius radiusCircular =  const Radius.circular(12);
+
   // Icons
   final double iconSize = 30;
   final double iconSize2 = 24;

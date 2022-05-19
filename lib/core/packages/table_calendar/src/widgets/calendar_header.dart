@@ -3,6 +3,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:onedosehealth/core/core.dart';
 
 import '../../../../../app/config/abstract/app_config.dart';
 import '../../../../locator.dart';
@@ -44,8 +45,8 @@ class CalendarHeader extends StatelessWidget {
         DateFormat.yMMMM(locale).format(focusedMonth);
 
     return ClipRRect(
-      borderRadius: const BorderRadius.vertical(
-        top: Radius.circular(15),
+      borderRadius: BorderRadius.vertical(
+        top: R.sizes.radiusCircular,
       ),
       child: Container(
         decoration: headerStyle.decoration,

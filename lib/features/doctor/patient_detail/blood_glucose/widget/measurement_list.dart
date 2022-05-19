@@ -103,7 +103,7 @@ Widget _buildCard(
             margin: const EdgeInsets.only(left: 4, right: 8, top: 8),
             decoration: BoxDecoration(
               color: getIt<IAppConfig>().theme.cardBackgroundColor,
-              borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+              borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

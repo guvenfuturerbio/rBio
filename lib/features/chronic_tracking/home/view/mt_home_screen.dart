@@ -123,7 +123,7 @@ class _MeasurementTrackingHomeScreenState
         //
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(17),
+            borderRadius: R.sizes.borderRadiusCircular,
             color: vm.activeItem != null ? Colors.transparent : Colors.white,
             boxShadow: vm.activeItem != null
                 ? [
@@ -132,7 +132,7 @@ class _MeasurementTrackingHomeScreenState
                 : null,
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(17),
+            borderRadius: R.sizes.borderRadiusCircular,
             child: Column(
               children: vm.items
                   .map(

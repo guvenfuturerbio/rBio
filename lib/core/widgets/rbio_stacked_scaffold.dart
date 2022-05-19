@@ -77,8 +77,8 @@ class RbioStackedScaffold extends StatelessWidget {
           //
           if (appbar != null)
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(15),
+              borderRadius: BorderRadius.vertical(
+                bottom: R.sizes.radiusCircular,
               ),
               child: SizedBox(
                 height: kHeight(context),

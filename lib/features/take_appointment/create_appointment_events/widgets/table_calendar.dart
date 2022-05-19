@@ -101,8 +101,8 @@ class _TableCalendarState extends State<_TableCalendar> {
             headerPadding: EdgeInsets.zero,
             decoration: BoxDecoration(
               color: getIt<IAppConfig>().theme.secondaryColor,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(12),
+              borderRadius: BorderRadius.vertical(
+                top: R.sizes.radiusCircular,
               ),
             ),
 

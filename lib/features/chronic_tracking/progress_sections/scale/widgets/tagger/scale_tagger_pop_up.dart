@@ -443,7 +443,7 @@ class ScaleTaggerPopUp extends StatelessWidget {
               width: width * .24,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(17),
+                borderRadius: R.sizes.borderRadiusCircular,
                 border: Border.all(width: 6, color: color),
                 shape: BoxShape.rectangle,
                 color: !isBmi &&

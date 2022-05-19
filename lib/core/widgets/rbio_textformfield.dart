@@ -124,20 +124,20 @@ class RbioTextFormField extends StatelessWidget {
     return OutlineInputBorder(
         borderSide:
             BorderSide(color: getIt<IAppConfig>().theme.darkRed, width: 2.0),
-        borderRadius: BorderRadius.circular(15));
+        borderRadius: R.sizes.borderRadiusCircular);
   }
 
   static OutlineInputBorder _focusedBorder() {
     return OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.transparent, width: 1.0),
-        borderRadius: BorderRadius.circular(15));
+        borderRadius: R.sizes.borderRadiusCircular);
   }
 
   static OutlineInputBorder _redErrorBorder() {
     return OutlineInputBorder(
         borderSide:
             BorderSide(color: getIt<IAppConfig>().theme.darkRed, width: 1.0),
-        borderRadius: BorderRadius.circular(15));
+        borderRadius: R.sizes.borderRadiusCircular);
   }
 
   static InputDecoration defaultDecoration(
@@ -170,7 +170,7 @@ class RbioTextFormField extends StatelessWidget {
   static InputBorder noneBorder() => InputBorder.none;
 
   static InputBorder defaultBorder() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: R.sizes.borderRadiusCircular,
         borderSide: BorderSide(
           width: 0,
           style: BorderStyle.solid,
@@ -179,7 +179,7 @@ class RbioTextFormField extends StatelessWidget {
       );
 
   static InputBorder activeBorder() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: R.sizes.borderRadiusCircular,
         borderSide: BorderSide(
           width: 0,
           style: BorderStyle.solid,

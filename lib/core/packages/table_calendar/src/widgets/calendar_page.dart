@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../../core.dart';
+
 class CalendarPage extends StatelessWidget {
   final Color daysBackgroundColor;
   final Color cellBackgroundColor;
@@ -62,7 +64,7 @@ class CalendarPage extends StatelessWidget {
                   ? BoxDecoration(
                       color: cellBackgroundColor,
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(15),
+                        top: R.sizes.radiusCircular,
                       ),
                     )
                   : BoxDecoration(
