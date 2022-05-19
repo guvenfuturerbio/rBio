@@ -336,7 +336,6 @@ class _CreateAppointmentSummaryScreenState
                 vm.appointmentSuccess
                     ? Atom.to(PagePaths.main, isReplacement: true)
                     : await vm.saveAppointment(forOnline: false, forFree: true);
-                ;
               },
               title: vm.appointmentSuccess
                   ? LocaleProvider.current.home
