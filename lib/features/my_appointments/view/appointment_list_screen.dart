@@ -173,8 +173,10 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           : (data.tenant ?? ''),
       doctorName: data.resources?[0].resource ?? '',
       departmentName: data.resources?[0].department ?? '',
-      date: _getFormattedDate((data.from ?? '').substring(0, 10)),
-      time: (data.from ?? '').substring(11, 16),
+      date: data.from?.xGetUTCLocalDate() ?? '',
+      //_getFormattedDate((data.from ?? '').substring(0, 10)),
+      time: ("${data.from?.xGetUTCLocalTime()} ${data.to?.xGetUTCLocalTime()}"),
+      //(data.from ?? '').substring(11, 16),
       suffix: data.type != R.constants.onlineAppointmentType &&
               DateTime.parse(data.from ?? '').isAfter(DateTime.now())
           ? InkWell(

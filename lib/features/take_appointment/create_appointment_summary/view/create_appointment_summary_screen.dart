@@ -654,7 +654,7 @@ class _CreateAppointmentSummaryScreenState
                   children: [
                     //
                     _buildPassiveText(LocaleProvider.current.hint_date),
-                    _buildActiveText(DateTime.parse(date).xFormatTime1()),
+                    _buildActiveText(date.xGetUTCLocalDate()),
                   ],
                 ),
               ),
@@ -668,8 +668,9 @@ class _CreateAppointmentSummaryScreenState
                   children: [
                     //
                     _buildPassiveText(LocaleProvider.current.time),
-                    _buildActiveText(
-                        '${from.substring(11, 16)} - ${to.substring(11, 16)}'),
+                    _buildActiveText('$from+03:00'.xGetUTCLocalTime() +
+                        '-' +
+                        '$to+03:00'.xGetUTCLocalTime()),
                   ],
                 ),
               ),
