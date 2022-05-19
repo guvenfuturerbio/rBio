@@ -37,6 +37,8 @@ class SymptomsBodyLocationsVm extends ChangeNotifier {
         return location;
       }
     }
+
+    return null;
   }
 
   //Vücut bölgelerini gösteren yapıyı çeken method.

@@ -17,7 +17,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
 
   int? patientId = getIt<UserNotifier>().getPatient().id;
 
-  DateTime selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
   late String filterFromDate;
   late String filterToDate;
 
@@ -54,6 +54,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       await getAvailableDates(DateTime.now(), true);
     });
   }
+
+  DateTime get selectedDate => _selectedDate;
 
   Future<void> getAvailableDates(DateTime date, bool isFirstLaunch) async {
     initDate = date;
@@ -114,7 +116,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   }
 
   Future<void> setSelectedDate(DateTime date, bool fetchData) async {
-    selectedDate = date;
+    _selectedDate = date;
     setFilterRangeDate(date);
     for (var data in resourceRequestList) {
       data.from = filterFromDate;
@@ -180,12 +182,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         );
         availableSlots = await compute(
           calculateAppointmentHours,
-          _EventArgs(
-            getOnlineEventsResponse,
-            true,
-            filterFromDate,
-            filterToDate,
-          ),
+          _EventArgs(getOnlineEventsResponse, true, filterFromDate,
+              filterToDate, selectedDate),
         );
         // availableSlots = await calculateAppointmentHours(
         //   _EventArgs(
@@ -207,12 +205,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           );
           availableSlots = await compute(
             calculateAppointmentHours,
-            _EventArgs(
-              getEventsResponse,
-              false,
-              filterFromDate,
-              filterToDate,
-            ),
+            _EventArgs(getEventsResponse, false, filterFromDate, filterToDate,
+                selectedDate),
           );
           // availableSlots = await calculateAppointmentHours(
           //   _EventArgs(
@@ -304,21 +298,32 @@ Future<Map<String, List<ResourcesRequest>>> calculateAppointmentHours(
             }
           }
         }
-
         availableSlotsList =
             availableSlotsList.toSet().difference(removedList.toSet()).toList();
 
         if (availableSlotsList.isNotEmpty) {
           for (var element in availableSlotsList) {
-            appointments.add(
-              ResourcesRequest(
-                from: convertDatetime(element),
-                to: convertDatetime(
-                  element.addMinutes(data.serviceTime ?? 0),
+            final itemDate = element.xTurkishTimeToLocal();
+            if (itemDate.xIsSameDate(args.selectedDateTime ?? DateTime.now())) {
+              appointments.add(
+                ResourcesRequest(
+                  from: convertDatetime(element),
+                  to: convertDatetime(
+                    element.addMinutes(data.serviceTime ?? 0),
+                  ),
+                  tenantId: data.resource?.tenantId,
                 ),
-                tenantId: data.resource?.tenantId,
-              ),
-            );
+              );
+            }
+            // appointments.add(
+            //   ResourcesRequest(
+            //     from: convertDatetime(element),
+            //     to: convertDatetime(
+            //       element.addMinutes(data.serviceTime ?? 0),
+            //     ),
+            //     tenantId: data.resource?.tenantId,
+            //   ),
+            // );
           }
         }
       }
@@ -340,11 +345,19 @@ class _EventArgs {
   bool forOnline;
   String filterFromDate;
   String filterToDate;
+  DateTime? selectedDateTime;
 
-  _EventArgs(
-    this.getEventsResponse,
-    this.forOnline,
-    this.filterFromDate,
-    this.filterToDate,
-  );
+  _EventArgs(this.getEventsResponse, this.forOnline, this.filterFromDate,
+      this.filterToDate, this.selectedDateTime);
+}
+
+extension EventListExtension on List<ResourcesRequest> {
+  List<ResourcesRequest> xToLocalDateHandler(DateTime selectedDate) {
+    final result = where((item) {
+      final itemDate =
+          DateTime.parse(item.from.toString()).xTurkishTimeToLocal();
+      return itemDate.xIsSameDate(selectedDate);
+    }).toList();
+    return result;
+  }
 }
