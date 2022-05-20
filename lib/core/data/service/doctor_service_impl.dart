@@ -21,9 +21,11 @@ class DoctorApiServiceImpl extends DoctorApiService {
       });
 
   @override
-  Future<RbioLoginResponse> login(String userId, String password) async {
-    final response =
-        await helper.postGuven(getIt<IAppConfig>().endpoints.doctor.login(userId, password), {});
+  Future<RbioLoginResponse> login(
+      String userId, String password, String consentId) async {
+    final response = await helper.postGuven(
+        getIt<IAppConfig>().endpoints.doctor.login(userId, password, consentId),
+        {});
     if (response.isSuccessful == true) {
       return RbioLoginResponse.fromJson(response.xGetMap);
     } else {

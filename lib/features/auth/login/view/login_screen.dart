@@ -448,6 +448,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 value.login(
                                   _userNameEditingController.text,
                                   _passwordEditingController.text,
+                                  getIt<ISharedPreferencesManager>().getString(
+                                          SharedPreferencesKeys.consentId) ??
+                                      "",
                                 );
                               },
                             ),
@@ -504,6 +507,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 value.login(
                                   _userNameEditingController.text,
                                   _passwordEditingController.text,
+                                  getIt<ISharedPreferencesManager>().getString(
+                                          SharedPreferencesKeys.consentId) ??
+                                      "",
                                 );
                               },
                             )

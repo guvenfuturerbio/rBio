@@ -25,4 +25,5 @@ enum SharedPreferencesKeys {
   medicineList,
   bloodGlucoseList,
   usedStripCount,
+  consentId,
 }

@@ -97,13 +97,15 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> login(String username, String password) async {
+  Future<GuvenResponseModel> login(
+      String username, String password, String consentId) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.devApi.loginPath,
       <String, dynamic>{},
       queryParameters: {
         'userName': username,
         'password': password,
+        'ConsentId': consentId,
       },
     );
     if (response.xIsSuccessful) {

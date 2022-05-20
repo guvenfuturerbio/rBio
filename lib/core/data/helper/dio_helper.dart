@@ -21,7 +21,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       responseType: ResponseType.json,
       headers: {
         HttpHeaders.userAgentHeader: 'dio',
-       // 'clientVersion': getIt<GuvenSettings>().version,
+        // 'clientVersion': getIt<GuvenSettings>().version,
       },
     );
 
@@ -95,14 +95,20 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                     .getString(SharedPreferencesKeys.loginPassword);
                 final userName = getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.loginUserName);
+                final consentId = getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.loginPassword);
 
                 if (password != null && userName != null) {
-                  if (getIt<IAppConfig>().endpoints.devApi.loginPath
+                  if (getIt<IAppConfig>()
+                      .endpoints
+                      .devApi
+                      .loginPath
                       .contains(error.response!.requestOptions.uri.path)) {
                     Atom.to(PagePaths.login, isReplacement: true);
                   } else {
                     try {
-                      await getIt<UserManager>().login(userName, password);
+                      await getIt<UserManager>()
+                          .login(userName, password, consentId ?? '');
 
                       final requestModel = error.requestOptions;
                       final response = await request(
