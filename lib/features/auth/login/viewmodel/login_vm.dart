@@ -23,6 +23,10 @@ class LoginScreenVm extends ChangeNotifier {
 
   LoginScreenVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      consentForm = await getIt<Repository>().getConsentForm();
+ 
+       getIt<ISharedPreferencesManager>().setString(
+      SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
     });
@@ -30,6 +34,7 @@ class LoginScreenVm extends ChangeNotifier {
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
+  late ConsentForm consentForm;
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   GlobalKey<FormState>? get key => _key;
@@ -190,12 +195,12 @@ class LoginScreenVm extends ChangeNotifier {
     } else {
       if ((userLoginInfo.username ?? "").isNotEmpty &&
           (userLoginInfo.password ?? "").isNotEmpty) {
-        await login(userLoginInfo.username ?? '', userLoginInfo.password ?? '');
+        await login(userLoginInfo.username ?? '', userLoginInfo.password ?? '', getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.consentId) ?? '');
       }
     }
   }
 
-  Future<void> login(String username, String password) async {
+  Future<void> login(String username, String password, String consentId) async {
     if (checkFields(username, password)) {
       _autovalidateMode = AutovalidateMode.always;
       notifyListeners();
@@ -231,19 +236,19 @@ class LoginScreenVm extends ChangeNotifier {
 
             if (dialogResult == true) {
               // Get Token by GOs
-              await loginWithProductType(username, password);
+              await loginWithProductType(username, password, consentId);
             } else if (dialogResult == false) {
-              await login(username, password);
+              await login(username, password, consentId);
               return;
             }
           } else if (starterBody.isTwoFa == false &&
               starterBody.isSsoValid == true) {
             // Get Token by GOs
-            await loginWithProductType(username, password);
+            await loginWithProductType(username, password, consentId);
           } else if (starterBody.isTwoFa == false &&
               starterBody.isSsoValid == false) {
             // Get Token by GO
-            await loginWithProductType(username, password);
+            await loginWithProductType(username, password, consentId);
           } else if (starterBody.isTwoFa == true &&
               starterBody.isSsoValid == false) {
             showGradientDialog(
@@ -265,18 +270,18 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  Future<void> loginWithProductType(String username, String password) async {
+  Future<void> loginWithProductType(String username, String password, String consentId) async {
     showLoadingDialog();
     if (getIt<IAppConfig>().productType == ProductType.oneDose) {
-      await loginOneDose(username, password);
+      await loginOneDose(username, password, consentId);
     } else {
-      await loginGuven(username, password);
+      await loginGuven(username, password, consentId);
     }
   }
 
-  Future<void> loginGuven(String username, String password) async {
+  Future<void> loginGuven(String username, String password, String consentId) async {
     try {
-      _guvenLogin = await getIt<UserManager>().login(username, password);
+      _guvenLogin = await getIt<UserManager>().login(username, password, consentId);
     } catch (e) {
       hideDialog(mContext);
 
@@ -412,10 +417,10 @@ class LoginScreenVm extends ChangeNotifier {
     Atom.to(PagePaths.main, isReplacement: true);
   }
 
-  Future<void> loginOneDose(String username, String password) async {
+  Future<void> loginOneDose(String username, String password, String consentId) async {
     // Roles and token
     try {
-      _guvenLogin = await getIt<UserManager>().login(username, password);
+      _guvenLogin = await getIt<UserManager>().login(username, password, consentId);
     } catch (e) {
       hideDialog(mContext);
 
@@ -671,7 +676,6 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   showApplicationContestForm() async {
-    final consentForm = await getIt<Repository>().getConsentForm();
 
     showDialog(
         context: mContext,
