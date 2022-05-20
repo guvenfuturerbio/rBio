@@ -23,6 +23,10 @@ class LoginScreenVm extends ChangeNotifier {
 
   LoginScreenVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      consentForm = await getIt<Repository>().getConsentForm();
+
+      getIt<ISharedPreferencesManager>().setString(
+          SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
     });
@@ -30,6 +34,7 @@ class LoginScreenVm extends ChangeNotifier {
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
+  late ConsentForm consentForm;
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   GlobalKey<FormState>? get key => _key;
@@ -529,24 +534,12 @@ class LoginScreenVm extends ChangeNotifier {
     }
     _checkedKvkk = results[2];
 
-    if (getIt<UserNotifier>().isCronic) {
-      var profiles = await getIt<ChronicTrackingRepository>().getAllProfiles();
-      if (profiles.isNotEmpty) {
-        await getIt<ProfileStorageImpl>().write(
-          profiles.last,
-          shouldSendToServer: false,
-        );
-      } else {
-        await getIt<ProfileStorageImpl>().write(
-          Person().fromDefault(
-            name: patientDetail.name ?? 'Name',
-            lastName: patientDetail.surname ?? 'LastName',
-            birthDate: patientDetail.patients?.first.birthDate ?? '01.01.2000',
-            gender: patientDetail.patients?.first.gender ?? 'unsp',
-          ),
-          shouldSendToServer: true,
-        );
-      }
+    var profiles = await getIt<ChronicTrackingRepository>().getAllProfiles();
+    if (profiles.isNotEmpty) {
+      await getIt<ProfileStorageImpl>().write(
+        profiles.last,
+        shouldSendToServer: false,
+      );
     }
 
     if (!Atom.isWeb && getIt<UserNotifier>().isCronic) {
@@ -681,11 +674,6 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   showApplicationContestForm() async {
-    final consentForm = await getIt<Repository>().getConsentForm();
-
-    getIt<ISharedPreferencesManager>()
-        .setString(SharedPreferencesKeys.consentId, consentForm.id.toString());
-
     showDialog(
         context: mContext,
         barrierDismissible: true,
