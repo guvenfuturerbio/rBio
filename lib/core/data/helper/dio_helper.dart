@@ -95,6 +95,8 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                     .getString(SharedPreferencesKeys.loginPassword);
                 final userName = getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.loginUserName);
+                final consentId = getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.consentId);
 
                 if (password != null && userName != null) {
                   if (getIt<IAppConfig>().endpoints.devApi.loginPath
@@ -102,7 +104,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                     Atom.to(PagePaths.login, isReplacement: true);
                   } else {
                     try {
-                      await getIt<UserManager>().login(userName, password);
+                      await getIt<UserManager>().login(userName, password, consentId ?? '');
 
                       final requestModel = error.requestOptions;
                       final response = await request(
