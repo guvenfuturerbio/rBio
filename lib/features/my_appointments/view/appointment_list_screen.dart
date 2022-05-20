@@ -122,8 +122,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             startMinDate: DateTime(1900).getStartOfTheDay,
             startMaxDate: DateTime.now().getStartOfTheDay,
             endMinDate: DateTime.now().getStartOfTheDay,
-            endMaxDate:
-                DateTime.now().add(const Duration(days: 365)).getStartOfTheDay,
+            endMaxDate: DateTime.now().add(const Duration(days: 365)).getStartOfTheDay,
           ),
         ),
 

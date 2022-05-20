@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../features/chronic_tracking/progress_sections/scale/treatment/model/scale_treatment_request.dart';
 import '../../../features/mediminder/mediminder.dart';
 import '../../../model/bg_measurement/blood_glucose_report_body.dart';
 import '../../../model/bg_measurement/blood_glucose_value_model.dart';
@@ -82,4 +83,9 @@ abstract class ChronicTrackingApiService {
   );
 
   Future<GuvenResponseModel> addTreatment(Person person, String treatment);
+
+  Future<GuvenResponseModel> getTreatmentNoteWithDiet(
+    int? entegrationId,
+    ScaleTreatmentRequest request,
+  );
 }

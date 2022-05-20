@@ -180,4 +180,10 @@ class GuvenTheme extends IAppTheme {
 
   @override
   Color get lightOnlineAppointment => const Color(0xFF648DE5);
+
+  @override
+  Color get blue => const Color(0xFFBAECFF);
+
+  @override
+  Color get yellow => const Color(0xFFFFE57B);
 }

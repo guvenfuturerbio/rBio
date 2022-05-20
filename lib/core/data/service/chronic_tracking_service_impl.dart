@@ -447,4 +447,24 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       throw Exception('/updateBpMeasurement : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<GuvenResponseModel> getTreatmentNoteWithDiet(
+    int? entegrationId,
+    ScaleTreatmentRequest request,
+  ) async {
+    final response = await helper.getGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .getTreatmentNoteWithDiet(entegrationId),
+      queryParameters: request.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/getTreatmentNoteWithDiet : ${response.isSuccessful}');
+    }
+  }
 }

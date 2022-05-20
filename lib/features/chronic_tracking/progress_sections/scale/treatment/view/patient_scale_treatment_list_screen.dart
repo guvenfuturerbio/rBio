@@ -1,172 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../core/core.dart';
+import '../cubit/patient_scale_treatment_list_cubit.dart';
+import '../model/scale_treatment_request.dart';
+import '../model/treatment_filter_type.dart';
+
+part 'widget/detail_search_component.dart';
 
 class PatientScaleTreatmentListScreen extends StatelessWidget {
   const PatientScaleTreatmentListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-      appbar: RbioAppBar(),
-      body: Column(
-        children: [
-          RbioTreatmentCard(
-            title: "Diyet Listesi",
-            description: "Tedavi notları",
-            dateTime: DateTime.now(),
-            onTap: () {},
-          ),
-        ],
-      ),
+    return BlocProvider<PatientScaleTreatmentListCubit>(
+      create: (context) => PatientScaleTreatmentListCubit(getIt(), getIt())
+        ..fetchAll(ScaleTreatmentRequest(count: 1)),
+      child: const PatientScaleTreatmentListView(),
     );
   }
 }
 
-class RbioTreatmentCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final DateTime dateTime;
-  final VoidCallback onTap;
-
-  const RbioTreatmentCard({
-    Key? key,
-    required this.title,
-    required this.description,
-    required this.dateTime,
-    required this.onTap,
-  }) : super(key: key);
+class PatientScaleTreatmentListView extends StatelessWidget {
+  const PatientScaleTreatmentListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        margin: const EdgeInsets.only(top: 8),
-        decoration: const BoxDecoration(
-          color: Colors.transparent,
+    return RbioScaffold(
+      appbar: _buildAppBar(context),
+      body: _buildBody(),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.of(context).treatment,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              //
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 12,
-                ),
-                decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.mainColor,
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    //
-                    Expanded(
-                      child: Text(
-                        "model.title",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.xHeadline4.copyWith(
-                          color: getIt<IAppConfig>().theme.textColor,
-                        ),
-                      ),
-                    ),
+      );
 
-                    //
-                    Text(
-                      "model.subTitle",
-                      style: context.xHeadline4.copyWith(
-                        color: getIt<IAppConfig>().theme.textColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+  Widget _buildBody() {
+    return BlocBuilder<PatientScaleTreatmentListCubit,
+        PatientScaleTreatmentListState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => const SizedBox(),
+          loadInProgress: () => const RbioLoading(),
+          success: (result) => _buildSuccess(context, result),
+          failure: () => const RbioBodyError(),
+        );
+      },
+    );
+  }
 
-              //
-              Container(
-                decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    //
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(
-                          left: 12,
-                        ),
-                        child: Text(
-                          "sadasd",
-                          style: context.xHeadline3.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: getIt<IAppConfig>().theme.mainColor,
-                          ),
-                        ),
-                      ),
-                    ),
+  Widget _buildSuccess(
+    BuildContext context,
+    PatientScaleTreatmentListResult result,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        DetailSearchComponent(result: result),
 
-                    //
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(
-                          top: 12,
-                          bottom: 12,
-                          right: 12,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            //
-                            Text(
-                              "sad",
-                              style: context.xHeadline4.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-
-                            //
-                            R.sizes.hSizer8,
-
-                            //
-                            Text(
-                              "sad",
-                              style: context.xHeadline4.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+        //
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            padding: const EdgeInsets.only(top: 10),
+            physics: const BouncingScrollPhysics(),
+            itemCount: result.list.length,
+            itemBuilder: (BuildContext context, int index) {
+              return RbioTreatmentCard(
+                item: result.list[index],
+              );
+            },
           ),
         ),
-      ),
+      ],
     );
   }
 }

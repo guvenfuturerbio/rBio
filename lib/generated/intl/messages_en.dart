@@ -315,6 +315,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create Password"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Create Reminder"),
+        "created_by": MessageLookupByLibrary.simpleMessage("Created By"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Credentials already exist linked to an account. First of all, it must be deleted from the account it is linked to"),
         "credit_card_cvv": MessageLookupByLibrary.simpleMessage("CVV"),
@@ -328,6 +329,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Card number"),
         "critical_metrics":
             MessageLookupByLibrary.simpleMessage("Critical metrics"),
+        "current_treatments":
+            MessageLookupByLibrary.simpleMessage("Current Treatments"),
         "cv": MessageLookupByLibrary.simpleMessage("Cv"),
         "cvv_code_least_3_digit": MessageLookupByLibrary.simpleMessage(
             "Cvv code must be at least 3 digits"),
@@ -368,6 +371,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "We just need your Passport and Phone number to send you temporary password"),
         "des_forgot_password_tc": MessageLookupByLibrary.simpleMessage(
             "We just need your T.C identity and Phone number to send you temporary password"),
+        "detail_search": MessageLookupByLibrary.simpleMessage("Detail Search"),
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detailed Health Check"),
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
@@ -972,6 +976,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please enter valid password."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(
             "The passwords entered do not match."),
+        "past_treatments":
+            MessageLookupByLibrary.simpleMessage("Past Treatments"),
         "pathology_result":
             MessageLookupByLibrary.simpleMessage("Pathology\nResults"),
         "patient_name": MessageLookupByLibrary.simpleMessage("Patient Name :"),

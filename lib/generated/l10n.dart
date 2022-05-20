@@ -8649,6 +8649,46 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Created By`
+  String get created_by {
+    return Intl.message(
+      'Created By',
+      name: 'created_by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detail Search`
+  String get detail_search {
+    return Intl.message(
+      'Detail Search',
+      name: 'detail_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Past Treatments`
+  String get past_treatments {
+    return Intl.message(
+      'Past Treatments',
+      name: 'past_treatments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Treatments`
+  String get current_treatments {
+    return Intl.message(
+      'Current Treatments',
+      name: 'current_treatments',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

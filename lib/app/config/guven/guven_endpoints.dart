@@ -229,6 +229,10 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
   @override
   String get ctUpdateUserStrip =>
       throw RbioUndefinedEndpointException("ctUpdateUserStrip");
+
+  @override
+  String getTreatmentNoteWithDiet(int? entegrationId) =>
+      throw RbioUndefinedEndpointException("getTreatmentNoteWithDiet");
 }
 
 class GuvenBaseEndpoints extends BaseEndpoints {

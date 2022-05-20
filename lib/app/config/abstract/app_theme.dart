@@ -29,6 +29,9 @@ abstract class IAppTheme {
   Color get onlineAppointment;
   Color get lightOnlineAppointment;
 
+  Color get yellow;
+  Color get blue;
+
   // Common
   Color get gray;
   Color get black;

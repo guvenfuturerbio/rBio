@@ -307,6 +307,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Şifre Oluştur"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı oluştur"),
+        "created_by": MessageLookupByLibrary.simpleMessage("Oluşturan"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Kimlik bilgileri bir hesaba bağlı olarak zaten mevcuttur. Öncelikle bağlı olduğu hesabın altından silinmesi gereklidir"),
         "credit_card_cvv": MessageLookupByLibrary.simpleMessage("CVV"),
@@ -320,6 +321,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kart Numarası"),
         "critical_metrics":
             MessageLookupByLibrary.simpleMessage("Kritik ölçümler"),
+        "current_treatments":
+            MessageLookupByLibrary.simpleMessage("Güncel Tedaviler"),
         "cv": MessageLookupByLibrary.simpleMessage("Özgeçmiş"),
         "cvv_code_least_3_digit": MessageLookupByLibrary.simpleMessage(
             "Cvv kod en az 3 haneli olmalıdır"),
@@ -359,6 +362,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Size geçici şifrenizi iletebilmemiz için Pasaport numaranız ve telefon numaranıza ihtiyacımız var"),
         "des_forgot_password_tc": MessageLookupByLibrary.simpleMessage(
             "Size geçici şifrenizi iletebilmemiz için T.C kimlik numaranız ve telefon numaranıza ihtiyacımız var"),
+        "detail_search": MessageLookupByLibrary.simpleMessage("Detaylı Arama"),
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detaylı Sağlık Kontrolü"),
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
@@ -958,6 +962,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Geçerli bir şifre giriniz."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(
             "Girilen şifreler eşleşmiyor."),
+        "past_treatments":
+            MessageLookupByLibrary.simpleMessage("Geçmiş Tedaviler"),
         "pathology_result":
             MessageLookupByLibrary.simpleMessage("Patoloji\nSonuçları"),
         "patient_name": MessageLookupByLibrary.simpleMessage("Hasta Adı :"),

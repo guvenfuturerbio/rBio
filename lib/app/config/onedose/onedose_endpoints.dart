@@ -224,6 +224,10 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
 
   @override
   String get ctUpdateUserStrip => '/user/add-update-user-strip'.xDevApiTest;
+
+  @override
+  String getTreatmentNoteWithDiet(int? entegrationId) =>
+      '/Treatment/get-treatment-note-with-diet/$entegrationId'.xDevApiTest;
 }
 
 class OneDoseBaseEndpoints extends BaseEndpoints {

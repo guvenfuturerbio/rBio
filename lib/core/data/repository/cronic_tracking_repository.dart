@@ -1,3 +1,4 @@
+import '../../../features/chronic_tracking/progress_sections/scale/treatment/model/scale_treatment_request.dart';
 import '../../../features/mediminder/mediminder.dart';
 import '../../../model/bg_measurement/blood_glucose_report_body.dart';
 import '../../../model/bg_measurement/blood_glucose_value_model.dart';
@@ -111,4 +112,10 @@ class ChronicTrackingRepository {
     UpdateBpMeasurements updateBpMeasurements,
   ) =>
       apiService.updateBpMeasurement(updateBpMeasurements);
+
+  Future<GuvenResponseModel> getTreatmentNoteWithDiet(
+    int? entegrationId,
+    ScaleTreatmentRequest request,
+  ) =>
+      apiService.getTreatmentNoteWithDiet(entegrationId, request);
 }

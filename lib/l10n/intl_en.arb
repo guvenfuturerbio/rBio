@@ -859,5 +859,9 @@
   "identification_match_problem": "No match found for ID number format or passport number format.",
   "verify": "Verify",
   "twofa": "Two-Factor Authentication (2FA)",
-  "resend": "Resend"
+  "resend": "Resend",
+  "created_by": "Created By",
+  "detail_search": "Detail Search",
+  "past_treatments": "Past Treatments",
+  "current_treatments": "Current Treatments"
 }

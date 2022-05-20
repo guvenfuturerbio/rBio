@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../core.dart';
 
 class GuvenDateRange extends StatelessWidget {
+  final Color? backColor;
   DateTime startCurrentDate;
   DateTime? startMinDate;
   DateTime? startMaxDate;
@@ -16,6 +17,7 @@ class GuvenDateRange extends StatelessWidget {
 
   GuvenDateRange({
     Key? key,
+    this.backColor,
     required this.startCurrentDate,
     this.startMinDate,
     this.startMaxDate,
@@ -53,7 +55,7 @@ class GuvenDateRange extends StatelessWidget {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: backColor ?? getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             padding: const EdgeInsets.symmetric(
@@ -108,7 +110,7 @@ class GuvenDateRange extends StatelessWidget {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: backColor ?? getIt<IAppConfig>().theme.cardBackgroundColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             padding: const EdgeInsets.symmetric(
