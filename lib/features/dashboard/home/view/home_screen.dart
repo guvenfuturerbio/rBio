@@ -133,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.vertical,
         maxMainAxisCount: 2,
         minMainAxisCount: 1,
+        crossAxisAlignment: WrapCrossAlignment.center,
         padding: EdgeInsets.only(
           bottom: R.sizes.bottomNavigationBarHeight + 16,
         ),

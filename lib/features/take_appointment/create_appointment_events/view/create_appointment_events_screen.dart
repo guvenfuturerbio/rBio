@@ -89,6 +89,8 @@ class _CreateAppointmentEventsScreenState
         //
         _buildHeaderInfo(),
 
+        const SizedBox(height: 15),
+
         //
         if (val.availableDatesProgress == LoadingProgress.loading) ...[
           SizedBox(
@@ -148,46 +150,54 @@ class _CreateAppointmentEventsScreenState
   }
 
   Widget _buildHeaderInfo() {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
-        borderRadius: BorderRadius.vertical(
-          top: R.sizes.radiusCircular,
+    return ExpansionTile(
+      title: const Text('Randevu Bilgisi'),
+      initiallyExpanded: true,
+      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      collapsedBackgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      children: [
+        Container(
+          width: double.infinity,
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            borderRadius: BorderRadius.vertical(
+              top: R.sizes.radiusCircular,
+            ),
+          ),
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //
+              _buildHeaderPassiveText(LocaleProvider.current.patient_name),
+              _buildHeaderActiveText(widget.patientName),
+
+              //
+              _buildHeaderVerticalGap(),
+
+              //
+              _buildHeaderPassiveText(LocaleProvider.current.tenant_name),
+              _buildHeaderActiveText(widget.tenantName),
+
+              //
+              _buildHeaderVerticalGap(),
+
+              //
+              _buildHeaderPassiveText(LocaleProvider.current.doctor_name),
+              _buildHeaderActiveText(widget.resourceName),
+
+              _buildHeaderVerticalGap(),
+
+              //
+              _buildHeaderPassiveText(LocaleProvider.current.depart_name),
+              _buildHeaderActiveText(widget.departmentName),
+            ],
+          ),
         ),
-      ),
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //
-          _buildHeaderPassiveText(LocaleProvider.current.patient_name),
-          _buildHeaderActiveText(widget.patientName),
-
-          //
-          _buildHeaderVerticalGap(),
-
-          //
-          _buildHeaderPassiveText(LocaleProvider.current.tenant_name),
-          _buildHeaderActiveText(widget.tenantName),
-
-          //
-          _buildHeaderVerticalGap(),
-
-          //
-          _buildHeaderPassiveText(LocaleProvider.current.doctor_name),
-          _buildHeaderActiveText(widget.resourceName),
-
-          _buildHeaderVerticalGap(),
-
-          //
-          _buildHeaderPassiveText(LocaleProvider.current.depart_name),
-          _buildHeaderActiveText(widget.departmentName),
-        ],
-      ),
+      ],
     );
   }
 

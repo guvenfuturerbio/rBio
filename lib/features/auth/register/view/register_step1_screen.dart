@@ -331,6 +331,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
                       //
                       Expanded(
+                        flex: 10,
                         child: RbioTextFormField(
                           focusNode: _phoneNumberFocusNode,
                           controller: _phoneNumberEditingController,
@@ -509,7 +510,8 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
     return Expanded(
       child: Card(
         elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+        shape:
+            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

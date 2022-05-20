@@ -365,7 +365,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementHospitalAppointmentClickedEvent());
+            getIt<AdjustManager>()
+                .trackEvent(MenuElementHospitalAppointmentClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('hastane_randevusu_olustur'));
             Atom.to(
@@ -381,7 +382,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementOnlineAppoClickedEvent());
+            getIt<AdjustManager>()
+                .trackEvent(MenuElementOnlineAppoClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('online_randevu_olustur'));
             Atom.to(
@@ -397,7 +399,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementHealthTrackerClickedEvent());
+            getIt<AdjustManager>()
+                .trackEvent(MenuElementHealthTrackerClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('saglik_takibi'));
             Atom.to(PagePaths.measurementTrackingHome);
@@ -406,7 +409,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementAppointmentsClickedEvent());
+            getIt<AdjustManager>()
+                .trackEvent(MenuElementAppointmentsClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('randevu'));
             Atom.to(PagePaths.appointment);
@@ -433,7 +437,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementSymptomCheckerClickedEvent());
+            getIt<AdjustManager>()
+                .trackEvent(MenuElementSymptomCheckerClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('symptom_checker'));
             Atom.to(PagePaths.symptomMainMenu);
@@ -452,7 +457,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           DrawerModel(
             title: LocaleProvider.current.reminders,
             onTap: () {
-              getIt<AdjustManager>().trackEvent(MenuElementRemindersClickedEvent());
+              getIt<AdjustManager>()
+                  .trackEvent(MenuElementRemindersClickedEvent());
               getIt<FirebaseAnalyticsManager>()
                   .logEvent(MenuElementTiklamaEvent('hatirlaticilar'));
               Atom.to(PagePaths.reminderList);
@@ -461,7 +467,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementSuggestionsClickedEvent());
+            getIt<AdjustManager>()
+                .trackEvent(MenuElementSuggestionsClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('oneriler'));
             Atom.to(PagePaths.suggestResult);

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -27,29 +28,31 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
         ),
       ),
       body: SafeArea(
-        child: WebView(
-          initialUrl: "https://tsdc.onedosehealth.com/",
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) {
-            _controller.complete(webViewController);
-            myWebController = webViewController;
-          },
-          navigationDelegate: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              LoggerUtils.instance.d('blocking navigation to $request}');
-              return NavigationDecision.prevent;
-            }
-            LoggerUtils.instance.d('allowing navigation to $request');
-            return NavigationDecision.navigate;
-          },
-          onPageStarted: (String url) {
-            LoggerUtils.instance.d('Page started loading: $url');
-          },
-          onPageFinished: (String url) {
-            LoggerUtils.instance.d('Page finished loading: $url');
-          },
-          gestureNavigationEnabled: true,
-        ),
+        child: kIsWeb
+            ? const HtmlElementView(viewType: 'detailed_symptom')
+            : WebView(
+                initialUrl: "https://tsdc.onedosehealth.com/",
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webViewController) {
+                  _controller.complete(webViewController);
+                  myWebController = webViewController;
+                },
+                navigationDelegate: (NavigationRequest request) {
+                  if (request.url.startsWith('https://www.youtube.com/')) {
+                    LoggerUtils.instance.d('blocking navigation to $request}');
+                    return NavigationDecision.prevent;
+                  }
+                  LoggerUtils.instance.d('allowing navigation to $request');
+                  return NavigationDecision.navigate;
+                },
+                onPageStarted: (String url) {
+                  LoggerUtils.instance.d('Page started loading: $url');
+                },
+                onPageFinished: (String url) {
+                  LoggerUtils.instance.d('Page finished loading: $url');
+                },
+                gestureNavigationEnabled: true,
+              ),
       ),
     );
   }

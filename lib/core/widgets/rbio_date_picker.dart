@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,28 +14,52 @@ Future<DateTime?> showRbioDatePicker(
   DateTime? maximumDate,
   CupertinoDatePickerMode? mode,
 }) async {
-  final result = await showModalBottomSheet(
-    context: context,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: R.sizes.radiusCircular,
-      ),
-    ),
-    builder: (BuildContext builder) {
-      return SizedBox(
-        height: Atom.height * 0.45,
-        child: RbioDatePicker(
-          mode: mode ?? CupertinoDatePickerMode.date,
-          title: title,
-          initialDateTime: initialDateTime,
-          minimumDate: minimumDate ?? DateTime(2000),
-          maximumDate:
-              maximumDate ?? DateTime.now().add(const Duration(days: 365)),
+  dynamic result;
+  if (kIsWeb) {
+    result = showDatePicker(
+        context: context,
+        initialDate: initialDateTime,
+        firstDate: minimumDate ?? DateTime(2000),
+        lastDate: maximumDate ?? DateTime.now().add(const Duration(days: 365)),
+        fieldLabelText: title,
+        builder: (context, widget) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: getIt<IAppConfig>().theme.mainColor,
+              buttonTheme:
+                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+              colorScheme: ColorScheme.light(
+                      primary: getIt<IAppConfig>().theme.mainColor)
+                  .copyWith(
+                secondary: getIt<IAppConfig>().theme.mainColor,
+              ),
+            ),
+            child: widget!,
+          );
+        });
+  } else {
+    result = await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: R.sizes.radiusCircular,
         ),
-      );
-    },
-  );
-
+      ),
+      builder: (BuildContext builder) {
+        return SizedBox(
+          height: Atom.height * 0.45,
+          child: RbioDatePicker(
+            mode: mode ?? CupertinoDatePickerMode.date,
+            title: title,
+            initialDateTime: initialDateTime,
+            minimumDate: minimumDate ?? DateTime(2000),
+            maximumDate:
+                maximumDate ?? DateTime.now().add(const Duration(days: 365)),
+          ),
+        );
+      },
+    );
+  }
   return result;
 }
 
