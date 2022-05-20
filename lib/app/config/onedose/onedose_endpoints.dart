@@ -451,8 +451,8 @@ class OneDoseDoctorEndpoints extends DoctorEndpoints {
       "/api/v1/DoctorPatient/get-my-bp-patient".xDoctorBaseUrl;
 
   @override
-  String login(userName, password) =>
-      '/AccessToken/get-token-for-rbio?userName=$userName&password=$password'
+  String login(userName, password, consentId) =>
+      '/AccessToken/get-token-for-rbio?userName=$userName&password=$password&ConsentId=$consentId'
           .xDoctorBaseUrl;
 
   @override

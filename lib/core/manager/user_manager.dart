@@ -8,7 +8,7 @@ import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserManager {
-  Future<RbioLoginResponse> login(String userName, String password);
+  Future<RbioLoginResponse> login(String userName, String password, String consentId);
   Future<void> saveLoginInfo(
     String userName,
     String password,
@@ -38,8 +38,8 @@ class UserManagerImpl extends UserManager {
   );
 
   @override
-  Future<RbioLoginResponse> login(String userName, String password) async {
-    var either = await _repository.login(userName, password);
+  Future<RbioLoginResponse> login(String userName, String password, String consentId) async {
+    var either = await _repository.login(userName, password, consentId);
     return either.fold(
       (response) async {
         final loginResponse =
@@ -157,7 +157,7 @@ class UserManagerImpl extends UserManager {
       userLoginInfo.username as String,
       _sharedPreferencesManager
               .getString(SharedPreferencesKeys.loginPassword) ??
-          '',
+          '', _sharedPreferencesManager.getString(SharedPreferencesKeys.consentId) ?? ''
     );
     if (userLoginInfo.username != null &&
         userLoginInfo.password != null &&

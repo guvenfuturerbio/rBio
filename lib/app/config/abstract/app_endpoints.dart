@@ -143,7 +143,7 @@ abstract class BaseEndpoints {
 
 abstract class DoctorEndpoints {
   String get getMyBpPatient;
-  String login(String userName, String password);
+  String login(String userName, String password, String consentId);
   String get getAllAppointment;
   String get getMySugarPatient;
   String get getMyScalePatient;

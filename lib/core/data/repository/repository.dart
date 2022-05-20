@@ -41,9 +41,10 @@ class Repository {
   Future<Either<GuvenResponseModel, LoginExceptions>> login(
     String username,
     String password,
+    String consentId,
   ) async {
     try {
-      final response = await apiService.login(username, password);
+      final response = await apiService.login(username, password, consentId);
       return left(response);
     } on RbioClientException catch (e) {
       final errorData = e.xGetModel<RbioLoginResponse>(RbioLoginResponse());

@@ -490,7 +490,7 @@ class GuvenDoctorEndpoints extends DoctorEndpoints {
       throw RbioUndefinedEndpointException("getMySugarPatient");
 
   @override
-  String login(String userName, String password) =>
+  String login(String userName, String password, String consentId) =>
       throw RbioUndefinedEndpointException("login");
 
   @override
