@@ -125,7 +125,8 @@ class EResultScreen extends StatelessWidget {
         final item = vm.visits[index];
 
         return RbioCardAppoCard.result(
-          date: DateTime.parse(item.openingDate ?? '').xFormatTime2(),
+          date: vm.visits[index].openingDate?.xGetUTCLocalDateTime() ?? '',
+          //DateTime.parse(item.openingDate ?? '').xFormatTime2(),
           departmentName: vm.visits[index].department ?? '',
           doctorName: vm.visits[index].physician ?? '',
           tenantName: getTenantName(item.tenantId),

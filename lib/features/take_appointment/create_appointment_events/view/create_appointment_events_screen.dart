@@ -135,8 +135,10 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': completeNotifier.value!.selected!.from!.toString(),
-                    'to': completeNotifier.value!.selected!.to!.toString(),
+                    'from': 
+                    completeNotifier.value!.selected!.from!.toString(),
+                    'to': 
+                    completeNotifier.value!.selected!.to!.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );
