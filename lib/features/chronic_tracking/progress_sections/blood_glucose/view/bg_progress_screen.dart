@@ -111,7 +111,7 @@ class BgProgressScreen extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: R.sizes.borderRadiusCircular,
                     child: BgCustomBarPie(
                       width: constraints.maxWidth,
                       height: (context.height * .05) * context.textScale,
@@ -237,7 +237,7 @@ class BgProgressScreen extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Text(
                 LocaleProvider.current.treatment,

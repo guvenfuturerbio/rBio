@@ -44,10 +44,8 @@ class GuvenAlert extends StatelessWidget {
             )
           : title,
       shape: shape ??
-          const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.0),
-            ),
+          RoundedRectangleBorder(
+            borderRadius: R.sizes.borderRadiusCircular,
           ),
       actions: actions,
       content: !Atom.isWeb
@@ -148,12 +146,13 @@ class GuvenAlert extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: appGradient(),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: RbioTextButton(
         backgroundColor: Colors.transparent,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape:
+            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           title,

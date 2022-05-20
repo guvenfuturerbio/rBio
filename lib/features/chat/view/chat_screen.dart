@@ -383,7 +383,7 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Container(
         decoration: BoxDecoration(
           color: getIt<IAppConfig>().theme.cardBackgroundColor,
-          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+          borderRadius: R.sizes.borderRadiusCircular,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(50),
@@ -431,7 +431,7 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: const EdgeInsets.all(0),
               child: Material(
                 child: widgetShowImages(message.message!),
-                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                borderRadius: R.sizes.borderRadiusCircular,
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {
@@ -474,7 +474,7 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: const EdgeInsets.all(0),
               child: Material(
                 child: widgetShowImages(message.message!),
-                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                borderRadius: R.sizes.borderRadiusCircular,
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: () {

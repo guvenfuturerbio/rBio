@@ -131,7 +131,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               (!Platform.isAndroid && !Platform.isIOS)
                   ? Material(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

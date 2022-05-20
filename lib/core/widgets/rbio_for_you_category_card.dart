@@ -24,7 +24,7 @@ class RbioForYouCategoryCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         elevation: 10,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: SizedBox(
           height: 300,

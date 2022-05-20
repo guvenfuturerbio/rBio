@@ -21,8 +21,8 @@ class _HypoPicker extends StatelessWidget {
 
   Dialog _buildDialog(BgPatientPickerVm vm, BuildContext context) {
     return Dialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +31,7 @@ class _HypoPicker extends StatelessWidget {
         children: [
           //
           ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+            borderRadius: R.sizes.borderRadiusCircular,
             child: SizedBox(
               height: 300,
               child: CupertinoPicker(
@@ -55,9 +55,9 @@ class _HypoPicker extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
                 color: getIt<IAppConfig>().theme.mainColor,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(12.0),
-                  bottomRight: Radius.circular(12.0),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: R.sizes.radiusCircular,
+                  bottomRight: R.sizes.radiusCircular,
                 ),
               ),
               child: Text(

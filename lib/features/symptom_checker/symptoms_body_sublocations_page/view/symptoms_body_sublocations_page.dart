@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/manager/adjust_manager.dart';
 import '../../../../model/model.dart';
 import '../viewmodel/symptoms_body_sublocations_vm.dart';
 

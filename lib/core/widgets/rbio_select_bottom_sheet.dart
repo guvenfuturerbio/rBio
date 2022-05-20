@@ -11,9 +11,9 @@ Future<dynamic> showRbioSelectBottomSheet<T>(
 }) async {
   final result = await showModalBottomSheet(
     context: context,
-    shape: const RoundedRectangleBorder(
+    shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
-        top: Radius.circular(16),
+        top: R.sizes.radiusCircular,
       ),
     ),
     builder: (BuildContext builder) {
@@ -73,7 +73,7 @@ class _RbioSelectBottomSheetState<T> extends State<RbioSelectBottomSheet<T>> {
           height: 4,
           decoration: BoxDecoration(
             color: Colors.black12,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: R.sizes.borderRadiusCircular,
           ),
         ),
 

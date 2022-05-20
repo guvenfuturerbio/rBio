@@ -127,7 +127,7 @@ Widget measurementList(
                 spreadRadius: 0,
                 offset: const Offset(5, 5))
           ],
-          borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+          borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.all(10),
         height: context.height * .1 * context.textScale,
@@ -199,7 +199,7 @@ Widget measurementList(
                         child: Card(
                           elevation: R.sizes.defaultElevation,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: R.sizes.borderRadiusCircular,
                           ),
                           child: Container(
                             padding: const EdgeInsets.all(8),

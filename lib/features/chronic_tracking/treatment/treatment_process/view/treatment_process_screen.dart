@@ -43,7 +43,7 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
             getIt<ProfileStorageImpl>().getFirst().treatmentList![index];
         TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
             id: _item.id,
-            title: _item.createDate!.xFormatTime9(),
+            title: _item.createDate!.toString().xGetUTCLocalDateTimeTwo(),
             description: _item.treatment,
             dateTime: _item.createDate);
         return _buildCard(_tempItem, newModel: index == 0 ? true : false);

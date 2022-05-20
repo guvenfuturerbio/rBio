@@ -214,7 +214,8 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
                       .read<TreatmentEditVm>()
                       .selectedModel
                       .createDate
-                      ?.xFormatTime9() ??
+                      ?.toString()
+                      .xGetUTCLocalDateTimeTwo() ??
                   DateTime.now().xFormatTime9(),
               textAlign: TextAlign.end,
               style: context.xHeadline4.copyWith(

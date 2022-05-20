@@ -14,7 +14,7 @@ class MeasurementList extends StatefulWidget {
     Key? key,
     required this.scaleMeasurements,
     this.useStickyGroupSeparatorsValue,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   MeasurementListState createState() => MeasurementListState();
@@ -56,7 +56,7 @@ class MeasurementListState extends State<MeasurementList> {
                             spreadRadius: 0,
                             offset: const Offset(5, 5))
                       ],
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: R.sizes.borderRadiusCircular,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -108,7 +108,7 @@ class MeasurementListState extends State<MeasurementList> {
                       spreadRadius: 0,
                       offset: const Offset(5, 5))
                 ],
-                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                borderRadius: R.sizes.borderRadiusCircular,
               ),
               padding: const EdgeInsets.all(10),
               child: Row(

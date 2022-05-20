@@ -79,7 +79,7 @@ class DateRangePicker extends StatelessWidget {
                       (context.textScale > 1 ? (context.textScale / 2) : 1),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: R.sizes.borderRadiusCircular,
                 color: getIt<IAppConfig>().theme.chartGray,
               ),
               child: Row(
@@ -133,7 +133,7 @@ class DateRangePicker extends StatelessWidget {
         height: double.infinity,
         width: context.width / items.length,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: R.sizes.borderRadiusCircular,
           color: getIt<IAppConfig>().theme.white,
           boxShadow: [
             BoxShadow(
@@ -182,7 +182,7 @@ class DateRangePicker extends StatelessWidget {
                       ? const EdgeInsets.symmetric(horizontal: 10)
                       : null,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: R.sizes.borderRadiusCircular,
                     color: e == selected ? getIt<IAppConfig>().theme.white : null,
                     boxShadow: e == selected
                         ? [

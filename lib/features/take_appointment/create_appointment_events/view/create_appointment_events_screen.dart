@@ -133,8 +133,10 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': completeNotifier.value!.selected!.from!.toString(),
-                    'to': completeNotifier.value!.selected!.to!.toString(),
+                    'from': 
+                    completeNotifier.value!.selected!.from!.toString(),
+                    'to': 
+                    completeNotifier.value!.selected!.to!.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );
@@ -153,8 +155,8 @@ class _CreateAppointmentEventsScreenState
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: getIt<IAppConfig>().theme.cardBackgroundColor,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(12),
+        borderRadius: BorderRadius.vertical(
+          top: R.sizes.radiusCircular,
         ),
       ),
       padding: const EdgeInsets.all(10),

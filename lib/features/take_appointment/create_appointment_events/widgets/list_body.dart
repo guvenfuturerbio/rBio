@@ -125,7 +125,7 @@ class _ListBodyState extends State<ListBody>
               for (var item in widget.vm.availableSlots.keys) ...[
                 _buildLeftCard(
                   context,
-                  item,
+                  widget.vm.availableSlots[item]![0].from.toString(),
                   widget.vm.availableSlots[item]!,
                 ),
               ],
@@ -164,7 +164,7 @@ class _ListBodyState extends State<ListBody>
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
-            '$value:00',
+            '$value+03:00'.xGetUTCLocalDateHourValue() + ":00",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
@@ -236,7 +236,9 @@ class _ListBodyState extends State<ListBody>
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
-            '${item.from?.substring(11, 16)} : ${item.to?.substring(11, 16)}',
+            '${item.from}+03:00'.xGetUTCLocalTime() +
+                ":" +
+                '${item.to}+03:00'.xGetUTCLocalTime(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
